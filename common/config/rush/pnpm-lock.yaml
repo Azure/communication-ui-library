@@ -21446,6 +21446,7 @@ packages:
       '@azure/communication-identity': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-http': 1.2.4
+      '@azure/core-paging': 1.1.3
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_ef89b9d44e70903856bf583071c7248b
@@ -21519,7 +21520,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-YBTiLtsPxmRABXKv+PDDs44ryXVGbQ0VLC9wL1XXVzrY3dbtdmRnyfe4kTSh8CL4xSLpRFmubjz+FCltK4rmvQ==
+      integrity: sha512-1rHqaBlJOOX/E1zq8tTbzfi4tACW0WJGAYXugeTEx4fH2P+QtdybZg90o0fv5qinSsGkw9MknNUA0RXBLScFFw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
