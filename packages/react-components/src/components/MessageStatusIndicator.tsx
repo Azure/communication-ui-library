@@ -15,6 +15,21 @@ import {
   EyeShow20Filled
 } from '@fluentui/react-icons';
 import { BaseCustomStylesProps } from '../types';
+import { useLocale } from '../localization';
+
+/**
+ * Strings of SendBoxButton that can be overridden
+ */
+export interface MessageStatusIndicatorStrings {
+  /** Text to display in the delivered message icon tooltip. */
+  deliveredTooltipText: string;
+  /** Text to display in the seen message icon tooltip. */
+  seenTooltipText: string;
+  /** Text to display in the sending message icon tooltip. */
+  sendingTooltipText: string;
+  /** Text to display in the failed message icon tooltip. */
+  failedToSendTooltipText: string;
+}
 
 /**
  * Props for MessageStatusIndicator component
@@ -22,14 +37,6 @@ import { BaseCustomStylesProps } from '../types';
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
-  /** Text to display in the delivered message icon tooltip. */
-  deliveredTooltipText?: string;
-  /** Text to display in the seen message icon tooltip. */
-  seenTooltipText?: string;
-  /** Text to display in the sending message icon tooltip. */
-  sendingTooltipText?: string;
-  /** Text to display in the failed message icon tooltip. */
-  failedToSendTooltipText?: string;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -38,25 +45,25 @@ export interface MessageStatusIndicatorProps {
    * ```
    */
   styles?: BaseCustomStylesProps;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: MessageStatusIndicatorStrings;
 }
 
 /**
  * MessageStatusIndicator component.
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const {
-    status,
-    deliveredTooltipText = 'Sent',
-    seenTooltipText = 'Seen',
-    sendingTooltipText = 'Sending',
-    failedToSendTooltipText = 'Failed to send',
-    styles
-  } = props;
+  const { status, styles } = props;
+
+  const localeStrings = useLocale().strings.messageStatusIndicator;
+  const strings = { ...localeStrings, ...props.strings };
 
   switch (status) {
     case 'failed':
       return (
-        <TooltipHost content={failedToSendTooltipText}>
+        <TooltipHost content={strings.failedToSendTooltipText}>
           <ErrorCircle20Regular
             primaryFill="currentColor"
             className={mergeStyles(MessageStatusIndicatorErrorIconStyle, styles?.root)}
@@ -65,7 +72,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'sending':
       return (
-        <TooltipHost content={sendingTooltipText}>
+        <TooltipHost content={strings.sendingTooltipText}>
           <Circle20Regular
             primaryFill="currentColor"
             className={mergeStyles(MessageStatusIndicatorIconStyle, styles?.root)}
@@ -74,13 +81,13 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       );
     case 'seen':
       return (
-        <TooltipHost content={seenTooltipText}>
+        <TooltipHost content={strings.seenTooltipText}>
           <EyeShow20Filled primaryFill="currentColor" className={mergeStyles(styles?.root)} />
         </TooltipHost>
       );
     case 'delivered':
       return (
-        <TooltipHost content={deliveredTooltipText}>
+        <TooltipHost content={strings.deliveredTooltipText}>
           <CheckmarkCircle20Regular
             primaryFill="currentColor"
             className={mergeStyles(MessageStatusIndicatorIconStyle, styles?.root)}
