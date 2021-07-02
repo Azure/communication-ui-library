@@ -18,7 +18,7 @@ import { BaseCustomStylesProps } from '../types';
 import { useLocale } from '../localization';
 
 /**
- * Strings of SendBoxButton that can be overridden
+ * Strings of MessageStatusIndicator that can be overridden
  */
 export interface MessageStatusIndicatorStrings {
   /** Text to display in the delivered message icon tooltip. */
