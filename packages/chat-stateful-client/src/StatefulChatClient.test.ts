@@ -367,7 +367,7 @@ describe('stateful chatClient tees errors to state', () => {
     expect(latestError).toBeDefined();
   });
 
-  test('when startRealtimeNotifications fails', async () => {
+  test('when stopRealtimeNotifications fails', async () => {
     const baseClient = createMockChatClient();
     baseClient.stopRealtimeNotifications = async () => {
       throw Error('injected error');
