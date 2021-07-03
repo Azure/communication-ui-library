@@ -366,19 +366,6 @@ describe('stateful chatClient tees errors to state', () => {
     const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
     expect(latestError).toBeDefined();
   });
-
-  test('when stopRealtimeNotifications fails', async () => {
-    const baseClient = createMockChatClient();
-    baseClient.stopRealtimeNotifications = async () => {
-      throw Error('injected error');
-    };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
-    const listener = new StateChangeListener(client);
-    await expect(client.stopRealtimeNotifications()).rejects.toThrow();
-    expect(listener.onChangeCalledCount).toBe(2);
-    const latestError = listener.state.latestErrors['ChatClient.stopRealtimeNotifications'];
-    expect(latestError).toBeDefined();
-  });
 });
 
 describe('complex error handling for startRealtimeNotifications', () => {
