@@ -11,7 +11,7 @@ import {
   mockParticipants,
   mockReadReceipts
 } from './mocks/createMockChatThreadClient';
-import { createMockChatClient, defaultClientArgs, StateChangeListener } from './StatefulChatClient.test';
+import { createMockChatClient, defaultClientArgs, StateChangeListener } from './TestHelpers';
 import { createStatefulChatClientWithDeps, StatefulChatClient } from './StatefulChatClient';
 
 const threadId = '1';
