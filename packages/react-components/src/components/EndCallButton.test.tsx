@@ -9,12 +9,18 @@ import { createTestLocale, mountWithLocalization } from './utils/testUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('EndCallButton should work with localization', () => {
+describe('EndCallButton strings should be localizable and overridable', () => {
   test('Should localize button label', async () => {
+    const testLocale = createTestLocale({ endCallButton: { label: Math.random().toString() } });
+    const component = mountWithLocalization(<EndCallButton showLabel={true} />, testLocale);
+    expect(component.text()).toBe(testLocale.strings.endCallButton.label);
+  });
+
+  test('Should override button label with `strings` prop', async () => {
+    const testLocale = createTestLocale({ endCallButton: { label: Math.random().toString() } });
     const endCallButtonStrings = { label: Math.random().toString() };
-    const testLocale = createTestLocale({ endCallButton: endCallButtonStrings });
     const component = mountWithLocalization(
-      <EndCallButton strings={endCallButtonStrings} showLabel={true} />,
+      <EndCallButton showLabel={true} strings={endCallButtonStrings} />,
       testLocale
     );
     expect(component.text()).toBe(endCallButtonStrings.label);

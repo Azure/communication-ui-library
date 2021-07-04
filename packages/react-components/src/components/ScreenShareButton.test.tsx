@@ -9,12 +9,24 @@ import { createTestLocale, mountWithLocalization } from './utils/testUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('ScreenShareButton should work with localization', () => {
-  test('Should localize button label ', async () => {
+describe('ScreenShareButton strings should be localizable and overridable', () => {
+  test('Should localize button label', async () => {
+    const testLocale = createTestLocale({
+      screenShareButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<ScreenShareButton showLabel={true} />, testLocale);
+    expect(component.text()).toBe(testLocale.strings.screenShareButton.offLabel);
+    component.setProps({ checked: true });
+    expect(component.text()).toBe(testLocale.strings.screenShareButton.onLabel);
+  });
+
+  test('Should override button label with `strings` prop', async () => {
+    const testLocale = createTestLocale({
+      screenShareButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
+    });
     const screenShareButtonStrings = { offLabel: Math.random().toString(), onLabel: Math.random().toString() };
-    const testLocale = createTestLocale({ screenShareButton: screenShareButtonStrings });
     const component = mountWithLocalization(
-      <ScreenShareButton strings={screenShareButtonStrings} showLabel={true} />,
+      <ScreenShareButton showLabel={true} strings={screenShareButtonStrings} />,
       testLocale
     );
     expect(component.text()).toBe(screenShareButtonStrings.offLabel);

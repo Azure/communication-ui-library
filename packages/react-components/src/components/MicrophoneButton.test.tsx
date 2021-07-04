@@ -9,10 +9,22 @@ import { createTestLocale, mountWithLocalization } from './utils/testUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('MicrophoneButton should work with localization', () => {
-  test('Should localize button label ', async () => {
+describe('MicrophoneButton strings should be localizable and overridable', () => {
+  test('Should localize button label', async () => {
+    const testLocale = createTestLocale({
+      microphoneButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
+    });
+    const component = mountWithLocalization(<MicrophoneButton showLabel={true} />, testLocale);
+    expect(component.text()).toBe(testLocale.strings.microphoneButton.offLabel);
+    component.setProps({ checked: true });
+    expect(component.text()).toBe(testLocale.strings.microphoneButton.onLabel);
+  });
+
+  test('Should override button label with `strings` prop', async () => {
+    const testLocale = createTestLocale({
+      microphoneButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
+    });
     const microphoneButtonStrings = { offLabel: Math.random().toString(), onLabel: Math.random().toString() };
-    const testLocale = createTestLocale({ microphoneButton: microphoneButtonStrings });
     const component = mountWithLocalization(
       <MicrophoneButton strings={microphoneButtonStrings} showLabel={true} />,
       testLocale

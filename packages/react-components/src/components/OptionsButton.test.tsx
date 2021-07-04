@@ -24,12 +24,18 @@ const mockProps: OptionsButtonProps = {
   onSelectSpeaker: async () => {}
 };
 
-describe('OptionsButton should work with localization', () => {
+describe('OptionsButton strings should be localizable and overridable', () => {
   test('Should localize button label', async () => {
+    const testLocale = createTestLocale({ optionsButton: { label: Math.random().toString() } });
+    const component = mountWithLocalization(<OptionsButton showLabel={true} {...mockProps} />, testLocale);
+    expect(component.text()).toBe(testLocale.strings.optionsButton.label);
+  });
+
+  test('Should override button label with `strings` prop', async () => {
+    const testLocale = createTestLocale({ optionsButton: { label: Math.random().toString() } });
     const optionsButtonStrings = { label: Math.random().toString() };
-    const testLocale = createTestLocale({ optionsButton: optionsButtonStrings });
     const component = mountWithLocalization(
-      <OptionsButton strings={optionsButtonStrings} showLabel={true} {...mockProps} />,
+      <OptionsButton showLabel={true} {...mockProps} strings={optionsButtonStrings} />,
       testLocale
     );
     expect(component.text()).toBe(optionsButtonStrings.label);

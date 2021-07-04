@@ -9,18 +9,27 @@ import { createTestLocale, mountWithLocalization } from './utils/testUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('ParticipantsButton should work with localization', () => {
+describe('ParticipantsButton strings should be localizable and overridable', () => {
   test('Should localize button label', async () => {
-    const participantsButtonStrings = { label: Math.random().toString() };
-    const testLocale = createTestLocale({ participantsButton: participantsButtonStrings });
+    const testLocale = createTestLocale({ participantsButton: { label: Math.random().toString() } });
+    const component = mountWithLocalization(
+      <ParticipantsButton showLabel={true} participantListProps={{ participants: [] }} />,
+      testLocale
+    );
+    expect(component.text()).toBe(testLocale.strings.participantsButton.label);
+  });
+
+  test('Should override button label with `strings` prop', async () => {
+    const testLocale = createTestLocale({ participantsButton: { label: Math.random().toString() } });
+    const participantButtonStrings = { label: Math.random().toString() };
     const component = mountWithLocalization(
       <ParticipantsButton
-        strings={participantsButtonStrings}
         showLabel={true}
         participantListProps={{ participants: [] }}
+        strings={participantButtonStrings}
       />,
       testLocale
     );
-    expect(component.text()).toBe(participantsButtonStrings.label);
+    expect(component.text()).toBe(participantButtonStrings.label);
   });
 });
