@@ -9,6 +9,7 @@ import {
 } from '@azure/communication-react';
 import { useTheme } from '@fluentui/react';
 import React from 'react';
+import { useVideoStreams } from '../../../utils';
 
 export interface LobbyProps {
   isVideoReady: boolean;
@@ -29,16 +30,14 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
     root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' }
   };
 
+  const videoStreamElement = useVideoStreams(1)[0];
   return (
     <VideoTile
       styles={videoTileStyles}
       isMirrored={true}
       isVideoReady={props.isVideoReady}
       onRenderPlaceholder={() => <></>}
-      renderElement={
-        // Replace with your own html local video render element.
-        <StreamMedia videoStreamElement={{} as any} />
-      }
+      renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
     >
       <div
         style={{
