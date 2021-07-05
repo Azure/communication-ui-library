@@ -65,24 +65,34 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       }
       case 'startRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
-          return context.asyncTeeErrorToState(async () => {
-            const ret = await chatClient.startRealtimeNotifications(...args);
-            if (!receiver.eventSubscriber) {
-              receiver.eventSubscriber = new EventSubscriber(chatClient, context);
-            }
-            return ret;
-          }, 'ChatClient.startRealtimeNotifications');
+          return context.asyncTeeErrorToState(
+            async () => {
+              const ret = await chatClient.startRealtimeNotifications(...args);
+              if (!receiver.eventSubscriber) {
+                receiver.eventSubscriber = new EventSubscriber(chatClient, context);
+              }
+              return ret;
+            },
+            'ChatClient.startRealtimeNotifications',
+            ['ChatClient.startRealtimeNotifications', 'ChatClient.stopRealtimeNotifications']
+          );
         };
       }
       case 'stopRealtimeNotifications': {
         return async function (...args: Parameters<ChatClient['stopRealtimeNotifications']>) {
-          const ret = await chatClient.stopRealtimeNotifications(...args);
-          if (receiver.eventSubscriber) {
-            receiver.eventSubscriber.unsubscribe();
-            receiver.eventSubscriber = undefined;
-          }
+          return context.asyncTeeErrorToState(
+            async () => {
+              const ret = await chatClient.stopRealtimeNotifications(...args);
+              if (receiver.eventSubscriber) {
+                receiver.eventSubscriber.unsubscribe();
+                receiver.eventSubscriber = undefined;
+              }
 
-          return ret;
+              return ret;
+            },
+            'ChatClient.stopRealtimeNotifications',
+            ['ChatClient.stopRealtimeNotifications', 'ChatClient.startRealtimeNotifications']
+          );
         };
       }
       default:
