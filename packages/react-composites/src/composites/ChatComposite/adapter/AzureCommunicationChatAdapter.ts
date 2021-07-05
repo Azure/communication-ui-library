@@ -242,9 +242,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     try {
       return await f();
     } catch (error) {
-      // Stateful chat client wraps all relevant errors as `ChatError`.
-      const e = error as ChatError;
-      this.emitter.emit('error', { operation: e.target, error: e.inner });
+      if (isChatError(error)) {
+        this.emitter.emit('error', { operation: error.target, error: error.inner });
+      }
       throw error;
     }
   }
@@ -283,4 +283,8 @@ export const createAzureCommunicationChatAdapter = async (
 
   const adapter = new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
   return adapter;
+};
+
+const isChatError = (e: Error): e is ChatError => {
+  return e['target'] !== undefined && e['inner'] !== undefined;
 };
