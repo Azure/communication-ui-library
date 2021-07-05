@@ -3,11 +3,11 @@ name: 'Publish Chromatic'
 on:
   pull_request:
     branches: [main]
-    paths:
-      - packages/storybook/**
-      - packages/react-components/**
-      - packages/react-composites/**
-      - packages/communication-react/**
+    # paths: // removing for testing in PR
+    #   - packages/storybook/**
+    #   - packages/react-components/**
+    #   - packages/react-composites/**
+    #   - packages/communication-react/**
   push:
     branches: [main]
   workflow_dispatch:
@@ -51,9 +51,14 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            # Get url from chromatic job
+            storybookurl=${{ steps.publish_chromatic.outputs.storybookUrl }}
+            # Remove the iframe.html at the end of the url (this looks like a bug)
+            newurl=${storybookurl/%iframe.html}
+            # Create github comment
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Storybook URL ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+              body: 'Storybook URL $newurl'
             })
