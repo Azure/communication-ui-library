@@ -411,4 +411,22 @@ describe('complex error handling for startRealtimeNotifications', () => {
     const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
     expect(latestError).toBeUndefined();
   });
+
+  test('related errors are cleared on successful method call', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+
+    // Generates error.
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    // Succeeds, should clear errors in state.
+    await client.stopRealtimeNotifications();
+
+    expect(listener.onChangeCalledCount).toBe(2);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeUndefined();
+  });
 });
