@@ -201,7 +201,14 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
 
     return menuProps;
-  }, [participantListProps, callInvitationURL, strings, generateDefaultParticipantsSubMenuProps, onCopyCallback]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    participantListProps,
+    participantListProps.participants,
+    participantListProps?.myUserId,
+    callInvitationURL,
+    styles?.participantListContainerStyle
+  ]);
 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 

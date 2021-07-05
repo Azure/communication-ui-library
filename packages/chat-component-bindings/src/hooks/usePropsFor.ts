@@ -25,7 +25,10 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   return undefined as any;
 };
 
-export type GetSelector<Component> = AreEqual<Component, typeof SendBox> extends true
+export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
+  Component,
+  typeof SendBox
+> extends true
   ? typeof sendBoxSelector
   : AreEqual<Component, typeof MessageThread> extends true
   ? typeof chatThreadSelector

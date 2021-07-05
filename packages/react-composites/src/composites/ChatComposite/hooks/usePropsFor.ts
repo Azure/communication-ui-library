@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { getChatSelector, DefaultChatHandlers, GetChatSelector } from 'chat-component-bindings';
 
 import { useHandlers } from './useHandlers';

@@ -110,13 +110,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
     sendTextFieldRef.current?.focus();
   };
-  const setText = (e: any): void => {
-    if (e.target.value.length > MAXIMUM_LENGTH_OF_MESSAGE) {
+  const setText = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    newValue?: string | undefined
+  ): void => {
+    if (newValue === undefined) return;
+
+    if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
       setTextValueOverflow(true);
     } else {
       setTextValueOverflow(false);
     }
-    setTextValue(e.target.value);
+    setTextValue(newValue);
   };
 
   const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;

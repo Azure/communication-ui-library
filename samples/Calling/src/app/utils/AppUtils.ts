@@ -7,6 +7,7 @@ import { v1 as generateGUID } from 'uuid';
 /**
  * Get ACS user token from the Contoso server.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchTokenResponse = async (): Promise<any> => {
   const response = await fetch('/token');
   if (response.ok) {
