@@ -351,6 +351,17 @@ describe('stateful wraps thrown error', () => {
       new ChatError('ChatClient.startRealtimeNotifications', new Error('injected error'))
     );
   });
+
+  test('when stopRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.stopRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.stopRealtimeNotifications()).rejects.toThrow(
+      new ChatError('ChatClient.stopRealtimeNotifications', new Error('injected error'))
+    );
+  });
 });
 
 describe('stateful chatClient tees errors to state', () => {
