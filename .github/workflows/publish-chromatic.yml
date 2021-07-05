@@ -9,7 +9,7 @@ on:
       - packages/react-composites/**
       - packages/communication-react/**
   push:
-    branches: [main]
+    branches: [main, beta-candidate]
   workflow_dispatch:
 
 jobs:
