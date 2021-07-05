@@ -45,20 +45,26 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
+      - name: Format storybook URL
+        id: storybook_url
+        # Get the url from chromatic job then remove the iframe.html at the end of the url (this looks like a bug)
+        run: |
+          storybookurl=${{ steps.publish_chromatic.outputs.storybookUrl }}
+          echo "Storybook URL before: $storybookurl"
+          newurl=${storybookurl/%iframe.html}
+          echo "Storybook URL after: $newurl"
+          echo "::set-output name=url::$newurl"
+
       - name: Add Storybook URL as Issue Comment
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            # Get url from chromatic job
-            storybookurl=${{ steps.publish_chromatic.outputs.storybookUrl }}
-            # Remove the iframe.html at the end of the url (this looks like a bug)
-            newurl=${storybookurl/%iframe.html}
             # Create github comment
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Storybook URL $newurl'
+              body: 'Storybook URL ${{ steps.storybook_url.outputs.url }}'
             })
