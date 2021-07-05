@@ -3,11 +3,11 @@ name: 'Publish Chromatic'
 on:
   pull_request:
     branches: [main]
-    # paths: // removing for testing in PR
-    #   - packages/storybook/**
-    #   - packages/react-components/**
-    #   - packages/react-composites/**
-    #   - packages/communication-react/**
+    paths:
+      - packages/storybook/**
+      - packages/react-components/**
+      - packages/react-composites/**
+      - packages/communication-react/**
   push:
     branches: [main]
   workflow_dispatch:
