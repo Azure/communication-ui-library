@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed RTL responsiveness for components MessageThread, ControlBar, and FluentThemeProvider. TypingIndicator set always to LTR.",
+  "packageName": "react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
