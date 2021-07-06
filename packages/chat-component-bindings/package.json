@@ -26,7 +26,7 @@
     "@azure/communication-chat": "1.0.0",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-signaling": "1.0.0-beta.5",
-    "react-components": "1.0.0-beta.1",
+    "@internal/react-components": "1.0.0-beta.1",
     "reselect": "~4.0.0",
     "memoize-one": "~5.2.1"
   },

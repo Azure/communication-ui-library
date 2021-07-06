@@ -14,7 +14,7 @@ import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier 
 import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 
 export type DefaultCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;

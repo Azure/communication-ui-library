@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { CommunicationParticipant, ParticipantItem } from '@azure/communication-react';
-import { propagateError } from 'react-composites';
+import { propagateError } from '@internal/react-composites';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {

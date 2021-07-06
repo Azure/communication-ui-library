@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
+import { MessageThread, ParticipantList, SendBox, TypingIndicator } from '@internal/react-components';
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';

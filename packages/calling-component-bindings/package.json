@@ -27,7 +27,7 @@
     "@azure/communication-calling": "1.2.0-beta.1",
     "reselect": "~4.0.0",
     "memoize-one": "~5.2.1",
-    "react-components": "1.0.0-beta.1"
+    "@internal/react-components": "1.0.0-beta.1"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",

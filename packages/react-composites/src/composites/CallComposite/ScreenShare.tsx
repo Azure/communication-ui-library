@@ -11,7 +11,7 @@ import {
   VideoGalleryRemoteParticipant,
   VideoStreamOptions,
   VideoTile
-} from 'react-components';
+} from '@internal/react-components';
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,

@@ -10,7 +10,7 @@ import type {
   RemoteParticipant
 } from '@azure/communication-calling';
 
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 import type {
   CommunicationUserKind,
   PhoneNumberKind,

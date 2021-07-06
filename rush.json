@@ -28,12 +28,12 @@
       "reviewCategory": "production"
     },
     {
-      "packageName": "react-components",
+      "packageName": "@internal/react-components",
       "projectFolder": "packages/react-components",
       "reviewCategory": "internal"
     },
     {
-      "packageName": "react-composites",
+      "packageName": "@internal/react-composites",
       "projectFolder": "packages/react-composites",
       "reviewCategory": "internal"
     },
@@ -78,7 +78,7 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "storybook",
+      "packageName": "@internal/storybook",
       "projectFolder": "packages/storybook",
       "reviewCategory": "tools"
     },

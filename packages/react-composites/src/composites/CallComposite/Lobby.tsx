@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useEffect, useState } from 'react';
-import { StreamMedia, VideoGalleryStream, VideoStreamOptions, VideoTile } from 'react-components';
+import { StreamMedia, VideoGalleryStream, VideoStreamOptions, VideoTile } from '@internal/react-components';
 import { useTheme } from '@fluentui/react';
 import { LobbyCallControlBar } from './LobbyControlBar';
 import { useSelector } from './hooks/useSelector';

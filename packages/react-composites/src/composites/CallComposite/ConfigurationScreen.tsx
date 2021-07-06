@@ -11,7 +11,7 @@ import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { StartCallButton } from './StartCallButton';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { useSelector } from './hooks/useSelector';
-import { OptionsButton } from 'react-components';
+import { OptionsButton } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { titleContainerStyle } from './styles/ConfigurationScreen.styles';
 

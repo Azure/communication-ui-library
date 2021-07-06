@@ -5,7 +5,7 @@ import { ChatClientState, ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { MessageContentType } from 'react-components';
+import { MessageContentType } from '@internal/react-components';
 export type ChatBaseSelectorProps = {
   threadId: string;
 };

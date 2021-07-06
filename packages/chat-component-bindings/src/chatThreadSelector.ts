@@ -11,7 +11,7 @@ import {
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
-import { ChatMessage, MessageAttachedStatus } from 'react-components';
+import { ChatMessage, MessageAttachedStatus } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { compareMessages } from './utils/compareMessages';
 

@@ -1,5 +1,5 @@
 {
-  "name": "storybook",
+  "name": "@internal/storybook",
   "private": true,
   "version": "0.1.0",
   "description": "Azure Communication Services UI Library Storybook",
@@ -36,7 +36,7 @@
     "copy-to-clipboard": "~3.3.1",
     "history": "~5.0.0",
     "react-aria-live": "^2.0.5",
-    "react-composites": "1.0.0-beta.1",
+    "@internal/react-composites": "1.0.0-beta.1",
     "react-linkify": "^1.0.0-alpha",
     "@fluentui/theme-samples": "8.1.5"
   },

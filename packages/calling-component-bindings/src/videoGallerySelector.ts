@@ -6,7 +6,7 @@ import { CallState, RemoteParticipantState, RemoteVideoStreamState } from 'calli
 import { createSelector } from 'reselect';
 import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
 import { memoizeFnAll } from '@internal/acs-ui-common';
-import { VideoGalleryRemoteParticipant, VideoGalleryStream } from 'react-components';
+import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 
 const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamState): VideoGalleryStream => {
   return {

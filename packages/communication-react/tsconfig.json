@@ -9,8 +9,8 @@
       "@internal/acs-ui-common": ["../../acs-ui-common/src"],
       "calling-stateful-client": ["../../calling-stateful-client/src"],
       "chat-stateful-client": ["../../chat-stateful-client/src"],
-      "react-components": ["../../react-components/src"],
-      "react-composites": ["../../react-composites/src/index.release"]
+      "@internal/react-components": ["../../react-components/src"],
+      "@internal/react-composites": ["../../react-composites/src/index.release"]
     },
     "plugins": [
       {

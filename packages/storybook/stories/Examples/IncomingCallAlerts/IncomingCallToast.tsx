@@ -4,7 +4,7 @@
 import { Stack } from '@fluentui/react';
 import { text, files } from '@storybook/addon-knobs';
 import React from 'react';
-import { IncomingCallToast as IncomingCallToastComponent } from 'react-composites';
+import { IncomingCallToast as IncomingCallToastComponent } from '@internal/react-composites';
 
 export const IncomingCallToast: () => JSX.Element = () => {
   const callerName = text('Caller Name', 'John Doe');

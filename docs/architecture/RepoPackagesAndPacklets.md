@@ -19,8 +19,8 @@ List of current Packlets:
 * `calling-stateful-client`
 * `@internal/chat-component-bindings`
 * `chat-stateful-client`
-* `react-components`
-* `react-composites`
+* `@internal/react-components`
+* `@internal/react-composites`
 
 ## Dependency chain issues when building Packages
 

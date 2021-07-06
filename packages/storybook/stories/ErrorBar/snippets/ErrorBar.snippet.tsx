@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorBar } from 'react-composites';
+import { ErrorBar } from '@internal/react-composites';
 
 export const ErrorBarExample: () => JSX.Element = () => {
   const message = 'Something went wrong';

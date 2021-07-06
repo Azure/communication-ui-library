@@ -1,4 +1,4 @@
-# Change Log - react-composites
+# Change Log - @internal/react-composites
 
 This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
 
@@ -45,7 +45,7 @@ Fri, 21 May 2021 16:16:28 GMT
 - Prune exports and add chat composite to @azure/communication-react ([PR #276](https://github.com/azure/communication-ui-library/pull/276) by mail@jamesburnside.com)
 - migrate call composite to statuful ([PR #290](https://github.com/azure/communication-ui-library/pull/290) by easony@microsoft.com)
 - added CallingTheme and used it for EndCallButton styles ([PR #249](https://github.com/azure/communication-ui-library/pull/249) by alcail@microsoft.com)
-- Create composite package. Migrate files from react-components to new package. ([PR #188](https://github.com/azure/communication-ui-library/pull/188) by mail@jamesburnside.com)
+- Create composite package. Migrate files from @internal/react-components to new package. ([PR #188](https://github.com/azure/communication-ui-library/pull/188) by mail@jamesburnside.com)
 - First stab at GroupCallAdapter interface ([PR #216](https://github.com/azure/communication-ui-library/pull/216) by domessin@microsoft.com)
 - rename declarative packages to stateful ([PR #250](https://github.com/azure/communication-ui-library/pull/250) by domessin@microsoft.com)
 - Fix copyright header to MIT and add LICENSE files ([PR #225](https://github.com/azure/communication-ui-library/pull/225) by domessin@microsoft.com)

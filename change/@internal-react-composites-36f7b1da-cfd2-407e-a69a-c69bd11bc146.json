@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "cleanup unused chat and call event exports",
+  "packageName": "@internal/react-composites",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

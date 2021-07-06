@@ -10,18 +10,18 @@ import { ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommonProperties } from '@internal/acs-ui-common';
-import { CommunicationParticipant } from 'react-components';
-import { Message } from 'react-components';
-import { MessageThread } from 'react-components';
+import { CommunicationParticipant } from '@internal/react-components';
+import { Message } from '@internal/react-components';
+import { MessageThread } from '@internal/react-components';
 import { OutputParametricSelector } from 'reselect';
 import { OutputSelector } from 'reselect';
-import { ParticipantList } from 'react-components';
+import { ParticipantList } from '@internal/react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
-import { SendBox } from 'react-components';
+import { SendBox } from '@internal/react-components';
 import { StatefulChatClient } from 'chat-stateful-client';
-import { TypingIndicator } from 'react-components';
+import { TypingIndicator } from '@internal/react-components';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)

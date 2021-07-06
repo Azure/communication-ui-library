@@ -39,7 +39,7 @@ import {
   ParticipantLeftListener
 } from './CallAdapter';
 import { createAzureCommunicationUserCredential, isInCall } from '../../../utils';
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';

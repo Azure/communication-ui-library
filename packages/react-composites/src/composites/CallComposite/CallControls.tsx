@@ -10,7 +10,7 @@ import {
   OptionsButton,
   ParticipantsButton,
   ScreenShareButton
-} from 'react-components';
+} from '@internal/react-components';
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
 

@@ -1,5 +1,5 @@
 {
-  "name": "react-composites",
+  "name": "@internal/react-composites",
   "version": "1.0.0-beta.1",
   "description": "Complete Azure Communication Services experiences",
   "module": "dist/dist-esm/index.js",
@@ -46,7 +46,7 @@
     "react-linkify": "^1.0.0-alpha",
     "memoize-one": "~5.2.1",
     "events": "~3.3.0",
-    "react-components": "1.0.0-beta.1",
+    "@internal/react-components": "1.0.0-beta.1",
     "uuid": "^8.1.0",
     "reselect": "~4.0.0"
   },

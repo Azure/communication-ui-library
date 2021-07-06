@@ -5,7 +5,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from 'calling-stateful-client';
 import * as reselect from 'reselect';
 import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
-import { CallParticipant } from 'react-components';
+import { CallParticipant } from '@internal/react-components';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
   remoteParticipants: RemoteParticipantState[]

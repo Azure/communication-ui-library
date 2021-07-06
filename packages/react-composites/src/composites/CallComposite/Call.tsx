@@ -8,10 +8,10 @@ import { Error } from './Error';
 import { mergeStyles, Stack, Theme, PartialTheme, useTheme } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
-import { PlaceholderProps } from 'react-components';
+import { PlaceholderProps } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { FluentThemeProvider } from 'react-components';
+import { FluentThemeProvider } from '@internal/react-components';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
