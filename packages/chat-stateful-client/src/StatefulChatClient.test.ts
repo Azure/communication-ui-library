@@ -345,7 +345,6 @@ describe('stateful wraps thrown error', () => {
   test('[xkcd] when listChatThreads fails', async () => {
     const baseClient = createMockChatClient();
     baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
-      console.log('[xkcd] injected error');
       throw Error('injected error');
     };
     const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);

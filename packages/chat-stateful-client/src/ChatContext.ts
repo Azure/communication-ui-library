@@ -357,6 +357,36 @@ export class ChatContext {
     }
   }
 
+  /**
+   * Tees any errors encountered in an function to the state.
+   *
+   * If the function succeeds, clears associated errors from the state.
+   *
+   * @param f Function to execute.
+   * @param target The error target to tee error to.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
+   * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
+   */
+  public withErrorTeedToState<T>(f: () => T, target: ChatErrorTargets, clearTargets?: ChatErrorTargets[]): () => T {
+    return (): T => {
+      try {
+        const ret = f();
+
+        if (clearTargets !== undefined) {
+          this.clearError(clearTargets);
+        } else {
+          this.clearError([target]);
+        }
+
+        return ret;
+      } catch (error) {
+        this.setLatestError(target, error);
+        throw new ChatError(target, error);
+      }
+    };
+  }
+
   private setLatestError(target: ChatErrorTargets, error: Error): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {

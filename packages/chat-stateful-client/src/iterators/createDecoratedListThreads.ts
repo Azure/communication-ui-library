@@ -18,5 +18,10 @@ export const createDecoratedListThreads = (
       context.updateThread(chatThreadItem.id, properties);
     }
   };
-  return createDecoratedIterator(chatClient.listChatThreads.bind(chatClient), context, setThreadProperties);
+
+  return createDecoratedIterator(
+    context.withErrorTeedToState(chatClient.listChatThreads.bind(chatClient), 'ChatClient.listChatThreads'),
+    context,
+    setThreadProperties
+  );
 };
