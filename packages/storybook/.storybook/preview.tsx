@@ -4,7 +4,7 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider, LocalizationProvider, locales } from '@azure/communication-react';
-import { initializeIcons, loadTheme } from '@fluentui/react';
+import { initializeIcons, loadTheme, setRTL } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
 import {
@@ -104,7 +104,12 @@ const withCenterStory = (Story: any) => {
   );
 };
 
-export const decorators = [withKnobs, withCenterStory, withThemeProvider, withLocalization];
+const withRTL = (Story: any, context: any) => {
+  setRTL(context.globals.rtl === 'rtl');
+  return <Story {...context} />;
+};
+
+export const decorators = [withKnobs, withCenterStory, withThemeProvider, withLocalization, withRTL];
 
 export const globalTypes = {
   theme: {
@@ -129,5 +134,17 @@ export const globalTypes = {
         { value: 'ar', title: 'Arabic' }
       ],
     },
+  },
+  rtl: {
+    name: 'RTL',
+    description: 'Whether the direction of components is right-to-left or left-to-right',
+    defaultValue: 'ltr',
+    toolbar: {
+      icon: 'transfer',
+      items: [
+        { value: 'ltr', title: 'Left-to-right' },
+        { value: 'rtl', title: 'Right-to-left' }
+      ]
+    }
   }
 };
