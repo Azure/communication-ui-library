@@ -402,13 +402,18 @@ export class ChatContext {
   }
 
   private clearError(targets: ChatErrorTargets[]): void {
-    this.setState(
-      produce(this._state, (draft: ChatClientState) => {
-        for (const target of targets) {
+    let changed = false;
+    const newState = produce(this._state, (draft: ChatClientState) => {
+      for (const target of targets) {
+        if (draft.latestErrors[target] !== undefined) {
           delete draft.latestErrors[target];
+          changed = true;
         }
-      })
-    );
+      }
+    });
+    if (changed) {
+      this.setState(newState);
+    }
   }
 
   // This is a mutating function, only use it inside of a produce() function
