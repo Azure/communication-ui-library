@@ -7,11 +7,11 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
+import { CommunicationUiErrorSeverity, ErrorBar as ErrorBarComponent } from '@internal/react-composites';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
 import { text, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { CommunicationUiErrorSeverity, ErrorBar as ErrorBarComponent } from '@internal/react-composites';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { ErrorBarExample } from './snippets/ErrorBar.snippet';

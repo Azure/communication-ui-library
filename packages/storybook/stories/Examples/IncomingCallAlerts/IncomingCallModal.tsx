@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { IncomingCallModal as IncomingCallModalComponent } from '@internal/react-composites';
 import { text, files, boolean } from '@storybook/addon-knobs';
 import React from 'react';
-import { IncomingCallModal as IncomingCallModalComponent } from '@internal/react-composites';
 import { useVideoStreams } from '../../utils';
 
 export const IncomingCallModal: () => JSX.Element = () => {

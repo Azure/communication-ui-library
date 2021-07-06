@@ -1,5 +1,5 @@
-import React from 'react';
 import { ErrorBar } from '@internal/react-composites';
+import React from 'react';
 
 export const OtherSeverityErrorBarExample: () => JSX.Element = () => {
   return (
