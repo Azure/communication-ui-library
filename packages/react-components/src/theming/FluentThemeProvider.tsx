@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { mergeStyles } from '@fluentui/react';
-import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react';
+import { ThemeProvider, Theme, PartialTheme, getRTL } from '@fluentui/react';
 import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
 import { lightTheme } from './themes';
 
@@ -44,6 +44,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   const fluentUITheme = fluentTheme ?? lightTheme;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [fluentNorthstarTheme, setFluentNorthstarTheme] = useState<ThemeInput<any>>(initialFluentNorthstarTheme);
+  const rtl = getRTL();
 
   useEffect(() => {
     setFluentNorthstarTheme(
@@ -63,18 +64,23 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
           ChatMessage: {
             timestamp: {
               WebkitTextFillColor: fluentUITheme?.palette?.neutralSecondary
+            },
+            // This is a bug in fluentui react northstar not reversing left and right margins for the author
+            // in the message bubble
+            author: {
+              marginRight: rtl ? '0rem' : '0.75rem',
+              marginLeft: rtl ? '0.75rem' : '0rem'
             }
           }
         }
         // add more northstar components to align with Fluent UI theme
       })
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fluentUITheme]);
+  }, [fluentUITheme, rtl]);
 
   return (
     <ThemeProvider theme={fluentUITheme} className={wrapper}>
-      <Provider theme={fluentNorthstarTheme} className={wrapper}>
+      <Provider theme={fluentNorthstarTheme} className={wrapper} dir={rtl ? 'rtl' : 'ltr'}>
         {children}
       </Provider>
     </ThemeProvider>

@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
+import { Stack, setRTL } from '@fluentui/react';
 import {
   CameraButtonStrings,
   EndCallButtonStrings,
@@ -19,6 +20,8 @@ import en_US from './translated/en-US.json';
  * Data structure for localization
  */
 export interface Locale {
+  /** Whether component directions are right-to-left */
+  rtl: boolean;
   /** Strings for components */
   strings: ComponentStrings;
 }
@@ -48,7 +51,7 @@ export interface ComponentStrings {
 /**
  * Context for providing localized strings to components
  */
-export const LocaleContext = createContext<Locale>({ strings: en_US });
+export const LocaleContext = createContext<Locale>({ strings: en_US, rtl: false });
 
 /**
  * Props to LocalizationProvider
@@ -67,7 +70,14 @@ export type LocalizationProviderProps = {
  */
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
   const { locale, children } = props;
-  return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
+  setRTL(locale.rtl);
+  return (
+    <LocaleContext.Provider value={locale}>
+      <Stack style={{ height: '100%', width: '100% ' }} dir={locale.rtl ? 'rtl' : 'ltr'}>
+        {children}
+      </Stack>
+    </LocaleContext.Provider>
+  );
 };
 
 export const useLocale = (): Locale => useContext(LocaleContext);

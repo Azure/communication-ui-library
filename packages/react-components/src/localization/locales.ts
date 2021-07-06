@@ -9,21 +9,24 @@ import { Locale } from './LocalizationProvider';
 export const locales: Record<string, { locale: Locale; englishName: string; displayName: string }> = {
   'en-US': {
     locale: {
-      strings: en_US
+      strings: en_US,
+      rtl: false
     },
     englishName: 'English (US)',
     displayName: 'English (US)'
   },
   de: {
     locale: {
-      strings: de
+      strings: de,
+      rtl: false
     },
     englishName: 'German',
     displayName: 'Deutsche'
   },
   ar: {
     locale: {
-      strings: ar
+      strings: ar,
+      rtl: true
     },
     englishName: 'Arabic',
     displayName: 'عربى'
