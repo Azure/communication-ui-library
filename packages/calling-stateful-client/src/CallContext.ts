@@ -16,7 +16,7 @@ import {
   CallState as CallStatus,
   RemoteParticipantState as RemoteParticipantStatus
 } from '@azure/communication-calling';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
   CallClientState,

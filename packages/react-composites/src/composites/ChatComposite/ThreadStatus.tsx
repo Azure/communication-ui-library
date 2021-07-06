@@ -7,7 +7,7 @@ import { ChatClientState } from 'chat-stateful-client';
 import * as reselect from 'reselect';
 import { ChatBaseSelectorProps } from 'chat-component-bindings';
 import { ChatParticipant } from '@azure/communication-chat';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 export type ThreadStatusProps = {
   amIRemovedFromThread: boolean;

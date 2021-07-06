@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from 'calling-stateful-client';
 import * as reselect from 'reselect';
 import { getCall, getIdentifier, getDisplayName } from './baseSelectors';

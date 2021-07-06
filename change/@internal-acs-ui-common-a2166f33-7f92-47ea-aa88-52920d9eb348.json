@@ -1,7 +1,7 @@
 {
   "type": "none",
   "comment": "update versions to be consistent across repo",
-  "packageName": "acs-ui-common",
+  "packageName": "@internal/acs-ui-common",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }

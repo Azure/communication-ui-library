@@ -4,12 +4,12 @@
 
 ```ts
 
-import { AreEqual } from 'acs-ui-common';
+import { AreEqual } from '@internal/acs-ui-common';
 import { ChatClientState } from 'chat-stateful-client';
 import { ChatMessageWithStatus } from 'chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
-import { CommonProperties } from 'acs-ui-common';
+import { CommonProperties } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from 'react-components';
 import { Message } from 'react-components';
 import { MessageThread } from 'react-components';

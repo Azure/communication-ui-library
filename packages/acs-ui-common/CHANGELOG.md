@@ -1,4 +1,4 @@
-# Change Log - acs-ui-common
+# Change Log - @internal/acs-ui-common
 
 This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
 

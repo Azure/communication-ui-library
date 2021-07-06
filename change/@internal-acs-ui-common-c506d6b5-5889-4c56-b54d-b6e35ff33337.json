@@ -1,7 +1,7 @@
 {
   "type": "none",
-  "comment": "Remove any types",
-  "packageName": "acs-ui-common",
+  "comment": "Update package to beta.1",
+  "packageName": "@internal/acs-ui-common",
   "email": "mail@jamesburnside.com",
   "dependentChangeType": "none"
 }

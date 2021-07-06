@@ -12,7 +12,7 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
-import { MessageStatus } from 'acs-ui-common';
+import { MessageStatus } from '@internal/acs-ui-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 // @public (undocumented)

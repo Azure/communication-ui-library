@@ -6,7 +6,7 @@
     "paths": {
       "chat-component-bindings": ["../../../packages/chat-component-bindings/src"],
       "calling-component-bindings": ["../../../packages/calling-component-bindings/src"],
-      "acs-ui-common": ["../../../packages/acs-ui-common/src"],
+      "@internal/acs-ui-common": ["../../../packages/acs-ui-common/src"],
       "calling-stateful-client": ["../../../packages/calling-stateful-client/src"],
       "chat-stateful-client": ["../../../packages/chat-stateful-client/src"],
       "react-components": ["../../../packages/react-components/src"],

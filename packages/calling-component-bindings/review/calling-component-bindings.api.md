@@ -4,7 +4,7 @@
 
 ```ts
 
-import { AreEqual } from 'acs-ui-common';
+import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -12,7 +12,7 @@ import { CallClientState } from 'calling-stateful-client';
 import { CallParticipant } from 'react-components';
 import { CallState } from 'calling-stateful-client';
 import { CameraButton } from 'react-components';
-import { CommonProperties } from 'acs-ui-common';
+import { CommonProperties } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from 'calling-stateful-client';
 import { EndCallButton } from 'react-components';

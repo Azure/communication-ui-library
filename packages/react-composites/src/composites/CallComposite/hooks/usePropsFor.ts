@@ -3,7 +3,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Common } from 'acs-ui-common';
+import { Common } from '@internal/acs-ui-common';
 import { DefaultCallingHandlers, getCallingSelector, GetCallingSelector } from 'calling-component-bindings';
 import { useAdaptedSelector } from './useAdaptedSelector';
 import { useHandlers } from './useHandlers';

@@ -21,8 +21,8 @@ import { participantListSelector } from '../participantListSelector';
 import { participantsButtonSelector } from '../participantsButtonSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
-import { Common } from 'acs-ui-common';
-import { AreEqual } from 'acs-ui-common';
+import { Common } from '@internal/acs-ui-common';
+import { AreEqual } from '@internal/acs-ui-common';
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
 import { ParticipantsButton } from 'react-components';
 

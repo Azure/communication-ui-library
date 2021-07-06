@@ -80,7 +80,7 @@
             "package": "calling-component-bindings"
           },
           {
-            "comment": "Move common type to acs-ui-common",
+            "comment": "Move common type to @internal/acs-ui-common",
             "author": "prprabhu@microsoft.com",
             "commit": "ddffe05acae25c042be42393759d7d8cf4f4de50",
             "package": "calling-component-bindings"

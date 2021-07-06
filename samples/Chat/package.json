@@ -26,7 +26,7 @@
     "@fluentui/react-icons": "~1.1.134",
     "@types/react-aria-live": "^2.0.0",
     "@types/react-linkify": "^1.0.0",
-    "acs-ui-common": "1.0.0-beta.1",
+    "@internal/acs-ui-common": "1.0.0-beta.1",
     "json-stringify-safe": "^5.0.1",
     "react": "~16.14.0",
     "react-aria-live": "^2.0.5",

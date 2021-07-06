@@ -18,7 +18,7 @@
   "telemetryEnabled": false,
   "projects": [
     {
-      "packageName": "acs-ui-common",
+      "packageName": "@internal/acs-ui-common",
       "projectFolder": "packages/acs-ui-common",
       "reviewCategory": "internal"
     },

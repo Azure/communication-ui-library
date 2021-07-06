@@ -7,7 +7,7 @@ import { getChatSelector, DefaultChatHandlers, GetChatSelector } from 'chat-comp
 
 import { useHandlers } from './useHandlers';
 import { useAdaptedSelector } from './useAdaptedSelector';
-import { Common } from 'acs-ui-common';
+import { Common } from '@internal/acs-ui-common';
 
 type Selector = (state: any, props: any) => any;
 

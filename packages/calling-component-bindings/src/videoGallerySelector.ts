@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallState, RemoteParticipantState, RemoteVideoStreamState } from 'calling-stateful-client';
 import { createSelector } from 'reselect';
 import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
-import { memoizeFnAll } from 'acs-ui-common';
+import { memoizeFnAll } from '@internal/acs-ui-common';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from 'react-components';
 
 const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamState): VideoGalleryStream => {

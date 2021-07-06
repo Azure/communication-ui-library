@@ -21,7 +21,7 @@
     "generate-doc": "api-documenter markdown -i temp -o docGen"
   },
   "dependencies": {
-    "acs-ui-common": "1.0.0-beta.1",
+    "@internal/acs-ui-common": "1.0.0-beta.1",
     "calling-stateful-client": "~1.0.0-beta.1",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-calling": "1.2.0-beta.1",

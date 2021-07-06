@@ -16,7 +16,7 @@ import {
 } from 'chat-component-bindings';
 import { ChatClientState } from 'chat-stateful-client';
 import { CallClientState } from 'calling-stateful-client';
-import { Common } from 'acs-ui-common';
+import { Common } from '@internal/acs-ui-common';
 
 export type ClientState = CallClientState & ChatClientState;
 export type Selector = (state: ClientState, props: any) => any;

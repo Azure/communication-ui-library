@@ -7,7 +7,7 @@ import { useSelector } from './useSelector';
 import { sendBoxSelector } from '../sendBoxSelector';
 import { chatThreadSelector } from '../chatThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
-import { Common, AreEqual } from 'acs-ui-common';
+import { Common, AreEqual } from '@internal/acs-ui-common';
 import { DefaultChatHandlers } from '../handlers/createHandlers';
 import { chatParticipantListSelector } from '../chatParticipantListSelector';
 

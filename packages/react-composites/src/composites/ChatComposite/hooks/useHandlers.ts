@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommonProperties } from 'acs-ui-common';
+import { CommonProperties } from '@internal/acs-ui-common';
 import { DefaultChatHandlers } from 'chat-component-bindings';
 
 import { ReactElement } from 'react';

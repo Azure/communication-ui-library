@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallState, DeviceManagerState } from 'calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 

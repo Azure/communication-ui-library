@@ -26,7 +26,7 @@ Fri, 21 May 2021 16:16:28 GMT
 - Introduce common identifier format ([PR #315](https://github.com/azure/communication-ui-library/pull/315) by prprabhu@microsoft.com)
 - Rename DeviceManager to avoid name conflict ([PR #319](https://github.com/azure/communication-ui-library/pull/319) by prprabhu@microsoft.com)
 - removed all Text/Label children of VideoTile, also renamed local/remoteParticipantName to local/remoteParticipantDisplay name and removed label props from RemoteVideoTile  ([PR #313](https://github.com/azure/communication-ui-library/pull/313) by alcail@microsoft.com)
-- Move common type to acs-ui-common ([PR #303](https://github.com/azure/communication-ui-library/pull/303) by prprabhu@microsoft.com)
+- Move common type to @internal/acs-ui-common ([PR #303](https://github.com/azure/communication-ui-library/pull/303) by prprabhu@microsoft.com)
 - add event implemeration to calling adapter ([PR #311](https://github.com/azure/communication-ui-library/pull/311) by jinan@microsoft.com)
 - [#2404092] Adding stateful attributes to CallClientProvider for starting a call with camera on/off ([PR #292](https://github.com/azure/communication-ui-library/pull/292) by anjulgarg@live.com)
 - Move legacy mappers, providers and hooks to 1to1 composite ([PR #309](https://github.com/azure/communication-ui-library/pull/309) by easony@microsoft.com)
