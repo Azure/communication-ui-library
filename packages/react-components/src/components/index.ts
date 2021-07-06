@@ -8,10 +8,10 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 
 export { SendBox } from './SendBox';
-export type { SendBoxProps, SendBoxStylesProps } from './SendBox';
+export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
-export type { MessageStatusIndicatorProps } from './MessageStatusIndicator';
+export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
 
 export { MessageThread } from './MessageThread';
 export type {
