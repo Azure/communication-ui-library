@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallState, CallClientState, DeviceManagerState, IncomingCallState } from 'calling-stateful-client';
+import { CallState, CallClientState, DeviceManagerState, IncomingCallState } from '@internal/calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.

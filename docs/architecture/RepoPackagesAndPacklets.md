@@ -16,9 +16,9 @@ Packlets are internal-only libraries we use to ensure correct code seperation.
 List of current Packlets:
 
 * `@internal/calling-component-bindings`
-* `calling-stateful-client`
+* `@internal/calling-stateful-client`
 * `@internal/chat-component-bindings`
-* `chat-stateful-client`
+* `@internal/chat-stateful-client`
 * `@internal/react-components`
 * `@internal/react-composites`
 

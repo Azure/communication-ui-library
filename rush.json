@@ -38,7 +38,7 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "chat-stateful-client",
+      "packageName": "@internal/chat-stateful-client",
       "projectFolder": "packages/chat-stateful-client",
       "reviewCategory": "internal"
     },
@@ -48,7 +48,7 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "calling-stateful-client",
+      "packageName": "@internal/calling-stateful-client",
       "projectFolder": "packages/calling-stateful-client",
       "reviewCategory": "internal"
     },

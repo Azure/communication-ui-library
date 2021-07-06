@@ -9,7 +9,7 @@ import {
   createStatefulCallClient,
   DeviceManagerState,
   CallState
-} from 'calling-stateful-client';
+} from '@internal/calling-stateful-client';
 import {
   AudioOptions,
   CallAgent,

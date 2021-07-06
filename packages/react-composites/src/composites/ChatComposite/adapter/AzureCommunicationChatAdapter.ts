@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { createStatefulChatClient, ChatClientState, ChatError, StatefulChatClient } from 'chat-stateful-client';
+import {
+  createStatefulChatClient,
+  ChatClientState,
+  ChatError,
+  StatefulChatClient
+} from '@internal/chat-stateful-client';
 import { DefaultChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 

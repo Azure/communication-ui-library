@@ -3,7 +3,7 @@
 
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallState, DeviceManagerState } from 'calling-stateful-client';
+import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 
 export const getCall = (state: CallAdapterState): CallState | undefined => state.call;

@@ -14,8 +14,8 @@ import {
   useChatHandlers,
   useChatSelector
 } from '@internal/chat-component-bindings';
-import { ChatClientState } from 'chat-stateful-client';
-import { CallClientState } from 'calling-stateful-client';
+import { ChatClientState } from '@internal/chat-stateful-client';
+import { CallClientState } from '@internal/calling-stateful-client';
 import { Common } from '@internal/acs-ui-common';
 
 export type ClientState = CallClientState & ChatClientState;

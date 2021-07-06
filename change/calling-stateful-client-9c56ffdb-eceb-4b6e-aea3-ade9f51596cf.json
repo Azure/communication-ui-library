@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Deduplicating audio and video devices from SDK",
-  "packageName": "calling-stateful-client",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

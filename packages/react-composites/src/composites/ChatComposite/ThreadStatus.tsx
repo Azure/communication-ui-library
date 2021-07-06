@@ -3,7 +3,7 @@
 
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import React from 'react';
-import { ChatClientState } from 'chat-stateful-client';
+import { ChatClientState } from '@internal/chat-stateful-client';
 import * as reselect from 'reselect';
 import { ChatBaseSelectorProps } from '@internal/chat-component-bindings';
 import { ChatParticipant } from '@azure/communication-chat';

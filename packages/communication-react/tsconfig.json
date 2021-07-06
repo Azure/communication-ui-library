@@ -7,8 +7,8 @@
       "@internal/chat-component-bindings": ["../../chat-component-bindings/src"],
       "@internal/calling-component-bindings": ["../../calling-component-bindings/src"],
       "@internal/acs-ui-common": ["../../acs-ui-common/src"],
-      "calling-stateful-client": ["../../calling-stateful-client/src"],
-      "chat-stateful-client": ["../../chat-stateful-client/src"],
+      "@internal/calling-stateful-client": ["../../calling-stateful-client/src"],
+      "@internal/chat-stateful-client": ["../../chat-stateful-client/src"],
       "@internal/react-components": ["../../react-components/src"],
       "@internal/react-composites": ["../../react-composites/src/index.release"]
     },

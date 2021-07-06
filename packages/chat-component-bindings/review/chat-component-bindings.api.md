@@ -5,8 +5,8 @@
 ```ts
 
 import { AreEqual } from '@internal/acs-ui-common';
-import { ChatClientState } from 'chat-stateful-client';
-import { ChatMessageWithStatus } from 'chat-stateful-client';
+import { ChatClientState } from '@internal/chat-stateful-client';
+import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommonProperties } from '@internal/acs-ui-common';
@@ -20,7 +20,7 @@ import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import * as reselect from 'reselect';
 import { SendBox } from '@internal/react-components';
-import { StatefulChatClient } from 'chat-stateful-client';
+import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TypingIndicator } from '@internal/react-components';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 

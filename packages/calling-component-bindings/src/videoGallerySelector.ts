@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallState, RemoteParticipantState, RemoteVideoStreamState } from 'calling-stateful-client';
+import { CallState, RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { createSelector } from 'reselect';
 import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
 import { memoizeFnAll } from '@internal/acs-ui-common';
