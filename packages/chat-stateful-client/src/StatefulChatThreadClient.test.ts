@@ -13,6 +13,7 @@ import {
 } from './mocks/createMockChatThreadClient';
 import { createMockChatClient, defaultClientArgs, StateChangeListener } from './TestHelpers';
 import { createStatefulChatClientWithDeps, StatefulChatClient } from './StatefulChatClient';
+import { ChatError } from './ChatClientState';
 
 const threadId = '1';
 
@@ -237,7 +238,7 @@ describe('stateful chatThreadClient tees errors to state', () => {
   test('when updateTopic fails', async () => {
     const chatThreadClient = createMockChatThreadClient('threadId');
     chatThreadClient.updateTopic = async (): Promise<void> => {
-      throw Error('inejected error');
+      throw Error('injected error');
     };
     const client = createMockChatClientWithChatThreadClient(chatThreadClient);
 
@@ -251,6 +252,20 @@ describe('stateful chatThreadClient tees errors to state', () => {
     expect(listener.onChangeCalledCount).toBe(1);
     const latestError = listener.state.latestErrors['ChatThreadClient.updateTopic'];
     expect(latestError).toBeDefined();
+  });
+});
+
+describe('stateful chatThreadClient correctly wraps errors', () => {
+  test('when updateTopic fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.updateTopic = async (): Promise<void> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+
+    await expect(client.getChatThreadClient('threadId').updateTopic('topic')).rejects.toThrow(
+      new ChatError('ChatThreadClient.updateTopic', new Error('injected error'))
+    );
   });
 });
 
