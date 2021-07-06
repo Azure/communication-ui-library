@@ -8,11 +8,13 @@ import {
   MessageStatusIndicatorStrings,
   MessageThreadStrings,
   MicrophoneButtonStrings,
+  OptionsButtonStrings,
+  ParticipantsButtonStrings,
   ParticipantItemStrings,
+  ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings
 } from '../components';
-
 import en_US from './translated/en-US.json';
 
 /**
@@ -37,6 +39,12 @@ export interface ComponentStrings {
   microphoneButton: MicrophoneButtonStrings;
   /** Strings for EndCallButton */
   endCallButton: EndCallButtonStrings;
+  /** Strings for OptionsButton */
+  optionsButton: OptionsButtonStrings;
+  /** Strings for ParticipantsButton */
+  participantsButton: ParticipantsButtonStrings;
+  /** Strings for OptionsButton */
+  screenShareButton: ScreenShareButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */

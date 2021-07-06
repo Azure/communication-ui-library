@@ -43,3 +43,24 @@ export const formatSpanElements = (str: string, vars: IObjectMap<JSX.Element>): 
   elements.push(<span key={elementKey++}>{str.substring(prev)}</span>);
   return elements;
 };
+
+/**
+ * Replace the pattern "{}" in str with the values passed in as vars
+ * eg: formatString("hello {name}. '{name}' is a rare name.", {name: "Foo"})
+ * return "hello Foo. 'Foo' is a rare name."
+ * @param {string} str The string to be formatted
+ * @param {Object} variables Variables to use to format the string
+ * @returns {string} formatted string
+ */
+export const formatString = (str: string, vars: IObjectMap<string>): string => {
+  if (!str) {
+    return '';
+  }
+  if (!vars) {
+    return str;
+  }
+
+  // regex to search for the pattern "{}"
+  const placeholdersRegex = /{(\w+)}/g;
+  return str.replace(placeholdersRegex, (_: string, k: string) => vars[k] || `{${k}}`);
+};
