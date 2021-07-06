@@ -6,7 +6,6 @@ import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
 import { LocalizationProvider, Locale, ComponentStrings } from '../../localization/LocalizationProvider';
 import en_US from '../../localization/translated/en-US.json';
 import { PartialDeep } from 'type-fest';
-import renderer from 'react-test-renderer';
 
 export const mountWithLocalization = (node: React.ReactElement, locale: Locale): ReactWrapper => {
   return mount(node, {
@@ -28,8 +27,4 @@ export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Lo
     strings[key] = { ...strings[key], ...testStrings[key] };
   });
   return { strings };
-};
-
-export const createComponentWithIntl = (children: React.ReactElement, locale: Locale) => {
-  return renderer.create(<LocalizationProvider locale={locale}>{children}</LocalizationProvider>);
 };
