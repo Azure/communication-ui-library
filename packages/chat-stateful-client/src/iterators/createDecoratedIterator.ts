@@ -75,18 +75,14 @@ export const createErrorHandlingIterator = <ItemType, OptionsType>(
   return (...args: Parameters<IteratorCreatorFn<ItemType, OptionsType>>): PagedAsyncIterableIterator<ItemType> => {
     const innerIter = iteratorCreator(...args);
     return {
-      async next() {
-        return await context.asyncTeeErrorToState(innerIter.next.bind(innerIter), target, clearTargets);
-      },
+      next: context.withAsycnErrorTeedToState(innerIter.next.bind(innerIter), target, clearTargets),
       [Symbol.asyncIterator]() {
         return this;
       },
       byPage: (settings: ListPageSettings = {}): AsyncIterableIterator<ItemType[]> => {
         const pages = innerIter.byPage(settings);
         return {
-          async next() {
-            return await context.asyncTeeErrorToState(pages.next.bind(pages), target, clearTargets);
-          },
+          next: context.withAsycnErrorTeedToState(pages.next.bind(pages), target, clearTargets),
           [Symbol.asyncIterator]() {
             return this;
           }

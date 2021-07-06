@@ -336,25 +336,27 @@ export class ChatContext {
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
    */
-  public async asyncTeeErrorToState<T>(
-    f: () => Promise<T>,
+  public withAsycnErrorTeedToState<R, T extends unknown[]>(
+    f: (...args: T) => Promise<R>,
     target: ChatErrorTargets,
     clearTargets?: ChatErrorTargets[]
-  ): Promise<T> {
-    try {
-      const ret = await f();
+  ): (...args: T) => Promise<R> {
+    return async (...args: T): Promise<R> => {
+      try {
+        const ret = await f(...args);
 
-      if (clearTargets !== undefined) {
-        this.clearError(clearTargets);
-      } else {
-        this.clearError([target]);
+        if (clearTargets !== undefined) {
+          this.clearError(clearTargets);
+        } else {
+          this.clearError([target]);
+        }
+
+        return ret;
+      } catch (error) {
+        this.setLatestError(target, error);
+        throw new ChatError(target, error);
       }
-
-      return ret;
-    } catch (error) {
-      this.setLatestError(target, error);
-      throw new ChatError(target, error);
-    }
+    };
   }
 
   /**
