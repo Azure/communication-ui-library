@@ -9,6 +9,6 @@ export const configurationStackTokens: IStackTokens = {
 };
 
 export const configurationContainer = mergeStyles({
-  // offset for the children gap
+  // we need offset for the token's childrenGap here
   height: 'calc(100% - 3rem)'
 });
