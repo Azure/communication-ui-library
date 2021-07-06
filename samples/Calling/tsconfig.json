@@ -4,8 +4,8 @@
     "outDir": "./dist/dist-esm",
     "baseUrl": "./src",
     "paths": {
-      "chat-component-bindings": ["../../../packages/chat-component-bindings/src"],
-      "calling-component-bindings": ["../../../packages/calling-component-bindings/src"],
+      "@internal/chat-component-bindings": ["../../../packages/chat-component-bindings/src"],
+      "@internal/calling-component-bindings": ["../../../packages/calling-component-bindings/src"],
       "@internal/acs-ui-common": ["../../../packages/acs-ui-common/src"],
       "calling-stateful-client": ["../../../packages/calling-stateful-client/src"],
       "chat-stateful-client": ["../../../packages/chat-stateful-client/src"],

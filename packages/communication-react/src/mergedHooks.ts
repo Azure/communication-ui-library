@@ -6,14 +6,14 @@ import {
   GetCallingSelector,
   useCallingHandlers,
   useCallingSelector
-} from 'calling-component-bindings';
+} from '@internal/calling-component-bindings';
 import {
   DefaultChatHandlers,
   getChatSelector,
   GetChatSelector,
   useChatHandlers,
   useChatSelector
-} from 'chat-component-bindings';
+} from '@internal/chat-component-bindings';
 import { ChatClientState } from 'chat-stateful-client';
 import { CallClientState } from 'calling-stateful-client';
 import { Common } from '@internal/acs-ui-common';

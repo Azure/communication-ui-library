@@ -43,7 +43,7 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "chat-component-bindings",
+      "packageName": "@internal/chat-component-bindings",
       "projectFolder": "packages/chat-component-bindings",
       "reviewCategory": "internal"
     },
@@ -53,7 +53,7 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "calling-component-bindings",
+      "packageName": "@internal/calling-component-bindings",
       "projectFolder": "packages/calling-component-bindings",
       "reviewCategory": "internal"
     },

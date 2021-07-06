@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { createStatefulChatClient, ChatClientState, ChatError, StatefulChatClient } from 'chat-stateful-client';
-import { DefaultChatHandlers, createDefaultChatHandlers } from 'chat-component-bindings';
+import { DefaultChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 
 import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
