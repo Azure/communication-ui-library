@@ -34,27 +34,23 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
     const context = receiver.context;
     switch (prop) {
       case 'createChatThread': {
-        return async function (...args: Parameters<ChatClient['createChatThread']>) {
-          return context.asyncTeeErrorToState(async () => {
-            const result = await chatClient.createChatThread(...args);
-            const thread = result.chatThread;
-
-            if (thread) {
-              const [request] = args;
-              context.createThread(thread.id, { topic: request.topic });
-            }
-            return result;
-          }, 'ChatClient.createChatThread');
-        };
+        return context.withAsycnErrorTeedToState(async function (...args: Parameters<ChatClient['createChatThread']>) {
+          const result = await chatClient.createChatThread(...args);
+          const thread = result.chatThread;
+          if (thread) {
+            const [request] = args;
+            context.createThread(thread.id, { topic: request.topic });
+          }
+          return result;
+        }, 'ChatClient.createChatThread');
       }
+
       case 'deleteChatThread': {
-        return async function (...args: Parameters<ChatClient['deleteChatThread']>) {
-          return context.asyncTeeErrorToState(async () => {
-            const result = await chatClient.deleteChatThread(...args);
-            context.deleteThread(args[0]);
-            return result;
-          }, 'ChatClient.deleteChatThread');
-        };
+        return context.withAsycnErrorTeedToState(async function (...args: Parameters<ChatClient['deleteChatThread']>) {
+          const result = await chatClient.deleteChatThread(...args);
+          context.deleteThread(args[0]);
+          return result;
+        }, 'ChatClient.deleteChatThread');
       }
       case 'listChatThreads': {
         return createDecoratedListThreads(chatClient, context);
