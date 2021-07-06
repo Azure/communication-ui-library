@@ -4,6 +4,7 @@
 import { ListPageSettings } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
+import { ChatErrorTargets } from '../ChatClientState';
 
 type IteratorCreatorFn<T, OptionsType, PageT = T[]> = (options?: OptionsType) => PagedAsyncIterableIterator<T, PageT>;
 
@@ -47,6 +48,44 @@ export const createDecoratedIterator = <ItemType, OptionsType>(
               });
             }
             return result;
+          },
+          [Symbol.asyncIterator]() {
+            return this;
+          }
+        };
+      }
+    };
+  };
+};
+
+/**
+ *
+ * @param iteratorCreator Function that creates the base iteartor
+ * @param context The ChatContext that stores all internal state.
+ * @param target See {@Link ChatContext.asyncTeeErrorToState}.
+ * @param clearTargets See {@Link ChatContext.asyncTeeErrorToState}.
+ * @returns A function to create an iterator that handles errors when iterting over the iterator from `iteratorCreator`.
+ */
+export const createErrorHandlingIterator = <ItemType, OptionsType>(
+  iteratorCreator: IteratorCreatorFn<ItemType, OptionsType>,
+  context: ChatContext,
+  target: ChatErrorTargets,
+  clearTargets?: ChatErrorTargets[]
+): IteratorCreatorFn<ItemType, OptionsType> => {
+  return (...args: Parameters<IteratorCreatorFn<ItemType, OptionsType>>): PagedAsyncIterableIterator<ItemType> => {
+    const innerIter = iteratorCreator(...args);
+    return {
+      async next() {
+        return await context.asyncTeeErrorToState(innerIter.next.bind(innerIter), target, clearTargets);
+      },
+      [Symbol.asyncIterator]() {
+        return this;
+      },
+      byPage: (settings: ListPageSettings = {}): AsyncIterableIterator<ItemType[]> => {
+        const pages = innerIter.byPage(settings);
+        return {
+          async next() {
+            return await context.asyncTeeErrorToState(pages.next.bind(pages), target, clearTargets);
           },
           [Symbol.asyncIterator]() {
             return this;
