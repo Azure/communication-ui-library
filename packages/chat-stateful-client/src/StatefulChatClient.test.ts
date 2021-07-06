@@ -341,6 +341,28 @@ describe('declarative chatClient onStateChange', () => {
 });
 
 describe('stateful wraps thrown error', () => {
+  test('when createChatThread fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.createChatThread = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.createChatThread({ topic: '' })).rejects.toThrow(
+      new ChatError('ChatClient.createChatThread', new Error('injected error'))
+    );
+  });
+
+  test('when deleteChatThread fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.deleteChatThread = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.deleteChatThread('')).rejects.toThrow(
+      new ChatError('ChatClient.deleteChatThread', new Error('injected error'))
+    );
+  });
+
   test('when startRealtimeNotifications fails', async () => {
     const baseClient = createMockChatClient();
     baseClient.startRealtimeNotifications = async () => {
