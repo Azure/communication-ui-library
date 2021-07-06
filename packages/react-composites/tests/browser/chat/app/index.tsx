@@ -10,13 +10,18 @@ import { createUserAndThread } from './identity';
 
 const connectionString = process.env.CONNECTION_STRING;
 
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+
+const displayName = params.displayName ?? 'John Doe';
+const topic = params.topic ?? 'Test Topic';
+
 function App(): JSX.Element {
-  const displayName = 'John Doe';
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      const data = await createUserAndThread(connectionString, 'Test Chat', [displayName]);
+      const data = await createUserAndThread(connectionString, topic, [displayName]);
       setChatAdapter(
         await createAzureCommunicationChatAdapter(
           data[0].userId,

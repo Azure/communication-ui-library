@@ -84,6 +84,7 @@ export type CommunicationParticipant = {
 // @public (undocumented)
 export const COMPONENT_UI_IDS: {
     sendboxTextfield: string;
+    participantList: string;
 };
 
 // @public
