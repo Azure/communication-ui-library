@@ -1,4 +1,5 @@
-name: Bump npm packages and create changelogs
+# Bump package version numbers and create a release branch
+name: Create release branch
 
 on:
   # Allows you to run this workflow manually from the Actions tab
