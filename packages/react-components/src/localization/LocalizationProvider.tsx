@@ -5,12 +5,14 @@ import React, { createContext, useContext } from 'react';
 import {
   CameraButtonStrings,
   EndCallButtonStrings,
+  MessageStatusIndicatorStrings,
   MessageThreadStrings,
   MicrophoneButtonStrings,
   OptionsButtonStrings,
   ParticipantsButtonStrings,
   ParticipantItemStrings,
   ScreenShareButtonStrings,
+  SendBoxStrings,
   TypingIndicatorStrings
 } from '../components';
 import en_US from './translated/en-US.json';
@@ -45,6 +47,10 @@ export interface ComponentStrings {
   screenShareButton: ScreenShareButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
+  /** Strings for SendBox */
+  sendBox: SendBoxStrings;
+  /** Strings for MessageStatusIndicator */
+  messageStatusIndicator: MessageStatusIndicatorStrings;
 }
 
 /**

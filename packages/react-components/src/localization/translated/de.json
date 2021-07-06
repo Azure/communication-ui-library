@@ -10,6 +10,15 @@
     "multipleUsersAbbreviateMany": "{users} und {numOthers} andere tippen gerade ...",
     "delimiter": ", "
   },
+  "sendBox": {
+    "placeholderText": "Eine Nachricht schreiben"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Geschickt",
+    "seenTooltipText": "Gesehen",
+    "sendingTooltipText": "Senden",
+    "failedToSendTooltipText": "Senden fehlgeschlagen"
+  },
   "endCallButton": {
     "label": "Verlassen"
   },

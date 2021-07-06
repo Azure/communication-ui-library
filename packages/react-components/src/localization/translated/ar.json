@@ -10,6 +10,15 @@
     "multipleUsersAbbreviateMany": "... وآخرون يكتبون {users}",
     "delimiter": "و "
   },
+  "sendBox": {
+    "placeholderText": "أدخل رسالة"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "مرسل",
+    "seenTooltipText": "مرئي",
+    "sendingTooltipText": "إرسال",
+    "failedToSendTooltipText": "فشل فى الارسال"
+  },
   "endCallButton": {
     "label": "غادر"
   },

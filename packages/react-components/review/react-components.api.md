@@ -85,12 +85,14 @@ export type CommunicationParticipant = {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
+    messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
     optionsButton: OptionsButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
+    sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
 }
 
@@ -219,12 +221,17 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    deliveredTooltipText?: string;
-    failedToSendTooltipText?: string;
-    seenTooltipText?: string;
-    sendingTooltipText?: string;
     status?: MessageStatus;
+    strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStylesProps;
+}
+
+// @public
+export interface MessageStatusIndicatorStrings {
+    deliveredTooltipText: string;
+    failedToSendTooltipText: string;
+    seenTooltipText: string;
+    sendingTooltipText: string;
 }
 
 // @public
@@ -426,9 +433,15 @@ export interface SendBoxProps {
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
+    strings?: Partial<SendBoxStrings>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
     systemMessage?: string;
+}
+
+// @public
+export interface SendBoxStrings {
+    placeholderText: string;
 }
 
 // @public (undocumented)
