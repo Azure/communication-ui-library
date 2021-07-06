@@ -65,8 +65,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
             timestamp: {
               WebkitTextFillColor: fluentUITheme?.palette?.neutralSecondary
             },
-            // This is a bug in fluentui react northstar not reversing left and right margins for the author
-            // in the message bubble
+            // This is a bug in fluentui react northstar not reversing left and right margins for the author in message bubbles
             author: {
               marginRight: rtl ? '0rem' : '0.75rem',
               marginLeft: rtl ? '0.75rem' : '0rem'

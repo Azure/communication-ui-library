@@ -270,6 +270,8 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
         }
+        // This is a bug in fluentui react northstar not reversing left and right margins for the message bubbles of
+        // the user
         style={
           getRTL()
             ? payload.mine
