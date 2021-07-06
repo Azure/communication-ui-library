@@ -35,21 +35,25 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
     switch (prop) {
       case 'createChatThread': {
         return async function (...args: Parameters<ChatClient['createChatThread']>) {
-          const result = await chatClient.createChatThread(...args);
-          const thread = result.chatThread;
+          return context.asyncTeeErrorToState(async () => {
+            const result = await chatClient.createChatThread(...args);
+            const thread = result.chatThread;
 
-          if (thread) {
-            const [request] = args;
-            context.createThread(thread.id, { topic: request.topic });
-          }
-          return result;
+            if (thread) {
+              const [request] = args;
+              context.createThread(thread.id, { topic: request.topic });
+            }
+            return result;
+          }, 'ChatClient.createChatThread');
         };
       }
       case 'deleteChatThread': {
         return async function (...args: Parameters<ChatClient['deleteChatThread']>) {
-          const result = await chatClient.deleteChatThread(...args);
-          context.deleteThread(args[0]);
-          return result;
+          return context.asyncTeeErrorToState(async () => {
+            const result = await chatClient.deleteChatThread(...args);
+            context.deleteThread(args[0]);
+            return result;
+          }, 'ChatClient.deleteChatThread');
         };
       }
       case 'listChatThreads': {
