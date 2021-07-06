@@ -65,10 +65,8 @@ export const newMessageButtonStyle = mergeStyles({
 export const loadPreviousMessageButtonStyle = mergeStyles({
   border: 'none',
   minHeight: '1.5rem',
-  selectors: {
-    '&:hover': { background: 'none' },
-    '&:active': { background: 'none' }
-  }
+  '&:hover': { background: 'none' },
+  '&:active': { background: 'none' }
 });
 
 export const DownIconStyle = mergeStyles({
