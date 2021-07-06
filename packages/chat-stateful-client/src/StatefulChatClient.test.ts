@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatThreadItem } from '@azure/communication-chat';
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
@@ -341,6 +342,16 @@ describe('declarative chatClient onStateChange', () => {
 });
 
 describe('stateful wraps thrown error', () => {
+  test('[xkcd] when listChatThreads fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
+      console.log('[xkcd] injected error');
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    expect(client.listChatThreads).toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
+  });
+
   test('when startRealtimeNotifications fails', async () => {
     const baseClient = createMockChatClient();
     baseClient.startRealtimeNotifications = async () => {
