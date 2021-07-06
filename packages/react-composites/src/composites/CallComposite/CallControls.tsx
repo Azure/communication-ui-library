@@ -16,7 +16,7 @@ import { usePropsFor } from './hooks/usePropsFor';
 
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
-  compressedMode: boolean;
+  compressedMode?: boolean;
   showParticipants?: boolean;
   callInvitationURL?: string;
 };
