@@ -256,15 +256,91 @@ describe('stateful chatThreadClient tees errors to state', () => {
 });
 
 describe('stateful chatThreadClient correctly wraps errors', () => {
-  test('when updateTopic fails', async () => {
+  test('when getProperties fails', async () => {
     const chatThreadClient = createMockChatThreadClient('threadId');
-    chatThreadClient.updateTopic = async (): Promise<void> => {
+    chatThreadClient.getProperties = async (): Promise<any> => {
       throw Error('injected error');
     };
     const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').getProperties()).rejects.toThrow(
+      new ChatError('ChatThreadClient.getProperties', new Error('injected error'))
+    );
+  });
 
+  test('when updateTopic fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.updateTopic = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
     await expect(client.getChatThreadClient('threadId').updateTopic('topic')).rejects.toThrow(
       new ChatError('ChatThreadClient.updateTopic', new Error('injected error'))
+    );
+  });
+
+  test('when getMessage fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.getMessage = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').getMessage('threadId')).rejects.toThrow(
+      new ChatError('ChatThreadClient.getMessage', new Error('injected error'))
+    );
+  });
+
+  test('when sendMessage fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.sendMessage = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').sendMessage({ content: '' })).rejects.toThrow(
+      new ChatError('ChatThreadClient.sendMessage', new Error('injected error'))
+    );
+  });
+
+  test('when updateMessage fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.updateMessage = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').updateMessage('')).rejects.toThrow(
+      new ChatError('ChatThreadClient.updateMessage', new Error('injected error'))
+    );
+  });
+
+  test('when deleteMessage fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.deleteMessage = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').deleteMessage('')).rejects.toThrow(
+      new ChatError('ChatThreadClient.deleteMessage', new Error('injected error'))
+    );
+  });
+
+  test('when addParticipants fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.addParticipants = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').addParticipants({ participants: [] })).rejects.toThrow(
+      new ChatError('ChatThreadClient.addParticipants', new Error('injected error'))
+    );
+  });
+
+  test('when removeParticipant fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.removeParticipant = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').removeParticipant({ communicationUserId: '' })).rejects.toThrow(
+      new ChatError('ChatThreadClient.removeParticipant', new Error('injected error'))
     );
   });
 });
