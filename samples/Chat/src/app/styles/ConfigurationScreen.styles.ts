@@ -7,10 +7,8 @@ import { mergeStyles } from '@fluentui/react';
 export const responsiveLayoutStyle = mergeStyles({
   display: 'flex',
   flexDirection: 'row',
-  selectors: {
-    '@media (max-width: 37.5rem)': {
-      flexDirection: 'column'
-    }
+  '@media (max-width: 37.5rem)': {
+    flexDirection: 'column'
   }
 });
 
@@ -18,20 +16,16 @@ export const leftPreviewContainerStyle = mergeStyles({
   height: '10.563rem',
   width: '8.313rem',
   marginRight: '9.688rem',
-  selectors: {
-    '@media (max-width: 37.5rem)': {
-      marginRight: '0rem'
-    }
+  '@media (max-width: 37.5rem)': {
+    marginRight: '0rem'
   }
 });
 
 export const rightInputContainerStyle = mergeStyles({
   height: '14.75rem',
   width: '19rem',
-  selectors: {
-    '@media (max-width: 37.5rem)': {
-      marginTop: '6.25rem'
-    }
+  '@media (max-width: 37.5rem)': {
+    marginTop: '6.25rem'
   }
 });
 
@@ -117,11 +111,9 @@ export const configContainerStyle = mergeStyles({
   maxWidth: '46.875rem',
   width: '100%',
   height: '100%',
-  selectors: {
-    '@media (max-width: 46.875rem)': {
-      padding: 10,
-      height: '100%'
-    }
+  '@media (max-width: 46.875rem)': {
+    padding: 10,
+    height: '100%'
   },
   horizontalAlign: 'center',
   verticalAlign: 'center'
@@ -207,11 +199,9 @@ export const mainContainerStyle = mergeStyles({
   maxWidth: '46.875rem',
   width: '100%',
   height: '100%',
-  selectors: {
-    '@media (max-width: 46.875rem)': {
-      padding: '0.625rem',
-      height: '100%'
-    }
+  '@media (max-width: 46.875rem)': {
+    padding: '0.625rem',
+    height: '100%'
   }
 });
 
