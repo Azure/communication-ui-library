@@ -96,7 +96,7 @@
     }
     // Not working with the latest webpack: https://github.com/webpack/webpack/issues/2090#issuecomment-634301000
     // {
-    //   "packageName": "check-treeshaking",
+    //   "packageName": "@internal/check-treeshaking",
     //   "projectFolder": "packages/check-treeshaking",
     //   "reviewCategory": "tools"
     // }
