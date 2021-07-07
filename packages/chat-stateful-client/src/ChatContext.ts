@@ -336,25 +336,27 @@ export class ChatContext {
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
    */
-  public async asyncTeeErrorToState<T>(
-    f: () => Promise<T>,
+  public withAsyncErrorTeedToState<Args extends unknown[], R>(
+    f: (...args: Args) => Promise<R>,
     target: ChatErrorTargets,
     clearTargets?: ChatErrorTargets[]
-  ): Promise<T> {
-    try {
-      const ret = await f();
+  ): (...args: Args) => Promise<R> {
+    return async (...args: Args): Promise<R> => {
+      try {
+        const ret = await f(...args);
 
-      if (clearTargets !== undefined) {
-        this.clearError(clearTargets);
-      } else {
-        this.clearError([target]);
+        if (clearTargets !== undefined) {
+          this.clearError(clearTargets);
+        } else {
+          this.clearError([target]);
+        }
+
+        return ret;
+      } catch (error) {
+        this.setLatestError(target, error);
+        throw new ChatError(target, error);
       }
-
-      return ret;
-    } catch (error) {
-      this.setLatestError(target, error);
-      throw new ChatError(target, error);
-    }
+    };
   }
 
   /**
@@ -368,10 +370,14 @@ export class ChatContext {
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
    */
-  public withErrorTeedToState<T>(f: () => T, target: ChatErrorTargets, clearTargets?: ChatErrorTargets[]): () => T {
-    return (): T => {
+  public withErrorTeedToState<Args extends unknown[], R>(
+    f: (...args: Args) => R,
+    target: ChatErrorTargets,
+    clearTargets?: ChatErrorTargets[]
+  ): (...args: Args) => R {
+    return (...args: Args): R => {
       try {
-        const ret = f();
+        const ret = f(...args);
 
         if (clearTargets !== undefined) {
           this.clearError(clearTargets);
