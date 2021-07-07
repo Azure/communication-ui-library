@@ -15,7 +15,7 @@ import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
@@ -332,29 +332,65 @@ export class ChatContext {
    *
    * @param f Async function to execute.
    * @param target The error target to tee error to.
-   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
    */
-  public async asyncTeeErrorToState<T>(
-    f: () => Promise<T>,
+  public withAsyncErrorTeedToState<Args extends unknown[], R>(
+    f: (...args: Args) => Promise<R>,
     target: ChatErrorTargets,
     clearTargets?: ChatErrorTargets[]
-  ): Promise<T> {
-    try {
-      const ret = await f();
+  ): (...args: Args) => Promise<R> {
+    return async (...args: Args): Promise<R> => {
+      try {
+        const ret = await f(...args);
 
-      if (clearTargets !== undefined) {
-        clearTargets.forEach((target) => this.clearError(target));
-      } else {
-        this.clearError(target);
+        if (clearTargets !== undefined) {
+          this.clearError(clearTargets);
+        } else {
+          this.clearError([target]);
+        }
+
+        return ret;
+      } catch (error) {
+        this.setLatestError(target, error);
+        throw new ChatError(target, error);
       }
+    };
+  }
 
-      return ret;
-    } catch (error) {
-      this.setLatestError(target, error);
-      throw new ChatError(target, error);
-    }
+  /**
+   * Tees any errors encountered in an function to the state.
+   *
+   * If the function succeeds, clears associated errors from the state.
+   *
+   * @param f Function to execute.
+   * @param target The error target to tee error to.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
+   * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
+   */
+  public withErrorTeedToState<Args extends unknown[], R>(
+    f: (...args: Args) => R,
+    target: ChatErrorTargets,
+    clearTargets?: ChatErrorTargets[]
+  ): (...args: Args) => R {
+    return (...args: Args): R => {
+      try {
+        const ret = f(...args);
+
+        if (clearTargets !== undefined) {
+          this.clearError(clearTargets);
+        } else {
+          this.clearError([target]);
+        }
+
+        return ret;
+      } catch (error) {
+        this.setLatestError(target, error);
+        throw new ChatError(target, error);
+      }
+    };
   }
 
   private setLatestError(target: ChatErrorTargets, error: Error): void {
@@ -365,12 +401,19 @@ export class ChatContext {
     );
   }
 
-  private clearError(target: ChatErrorTargets): void {
-    this.setState(
-      produce(this._state, (draft: ChatClientState) => {
-        delete draft.latestErrors[target];
-      })
-    );
+  private clearError(targets: ChatErrorTargets[]): void {
+    let changed = false;
+    const newState = produce(this._state, (draft: ChatClientState) => {
+      for (const target of targets) {
+        if (draft.latestErrors[target] !== undefined) {
+          delete draft.latestErrors[target];
+          changed = true;
+        }
+      }
+    });
+    if (changed) {
+      this.setState(newState);
+    }
   }
 
   // This is a mutating function, only use it inside of a produce() function

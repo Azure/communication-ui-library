@@ -13,6 +13,9 @@ on:
 
 jobs:
   publish:
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@azure/communication-react
     name: Publish release
     runs-on: ubuntu-latest
     steps:
@@ -44,10 +47,6 @@ jobs:
       - name: Install dependencies
         run: rush install
 
-      # Perform changelog check
-      - name: Guard check - ensure no new changes were introduced
-        run: node common/config/node_modules/beachball/bin/beachball check
-
       # Builds
       - name: Build Packages and Samples
         run: rush build
@@ -58,6 +57,43 @@ jobs:
         env:
           CI: true
 
-      # Publish
-      - name: Publish to npm
-        run: echo Publishing not setup yet. Tag=${{ github.event.inputs.npm-tag }}
+      # Retrieve new version to tag and publish release with
+      - name: Retrieve new version from package.json
+        id: version
+        run: |
+          ver=$(jq -r .version packages/communication-react/package.json)
+          echo version: $ver
+          echo "::set-output name=version::$ver"
+
+      # Push git tags
+      - name: Create and push git tags
+        run: |
+          git tag ${{ steps.version.outputs.version }}
+          git push --tags
+
+      # Publish package
+      - name: Package alpha packages for release
+        run: npm pack
+        working-directory: ./packages/communication-react
+
+      # Deploy npm package - this is done by uploading to Azure's SDK blob storage then triggering their partner release pipeline.
+      # More info: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline
+      - name: Upload tarball to blob storage
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az login --service-principal -u ${{ secrets.AZURESDKPARTNERDROPS_CLIENT_ID }} -p ${{ secrets.AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY }} --tenant ${{ secrets.AZURESDKPARTNERDROPS_TENANT_ID }}
+            az extension add --name storage-preview
+            az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
+
+      - name: Install github actions dependencies
+        run: npm ci
+        working-directory: ./.github/workflows/azure-pipeline-action-fork
+
+      - name: Trigger alpha package release pipeline
+        uses: ./.github/workflows/azure-pipeline-action-fork
+        with:
+          azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
+          azure-pipeline-name: 'azuresdkpartnerdrops to npm'
+          azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
+          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "${{ github.event.inputs.npm-tag }}"}'

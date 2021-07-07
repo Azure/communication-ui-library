@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "upgrading version of calling to 1.1.0-beta.2",
-  "packageName": "calling-component-bindings",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

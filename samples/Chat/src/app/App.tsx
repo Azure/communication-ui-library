@@ -78,6 +78,7 @@ export default (): JSX.Element => {
           <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
             <ChatScreen
               endChatHandler={() => {
+                chatThreadClient.removeParticipant({ communicationUserId: userId });
                 setPage('end');
                 // Send up signal that the user wants to leave the chat
                 // Move to to next screen on success
@@ -95,7 +96,7 @@ export default (): JSX.Element => {
       return (
         <EndScreen
           rejoinHandler={() => {
-            setPage('chat'); // use store information to attempt to rejoin the chat thread
+            setPage('configuration'); // use store information to attempt to rejoin the chat thread
           }}
           homeHandler={() => {
             window.location.href = window.location.origin;

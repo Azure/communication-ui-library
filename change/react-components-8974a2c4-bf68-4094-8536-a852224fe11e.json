@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove private-preview references",
-  "packageName": "react-components",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

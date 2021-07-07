@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, StatefulChatClient } from 'chat-stateful-client';
+import { ChatClientState, StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatClientContext } from '../providers/ChatClientProvider';
 
 import { useState, useEffect, useRef, useMemo, useContext } from 'react';

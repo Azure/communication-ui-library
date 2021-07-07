@@ -8,10 +8,10 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 
 export { SendBox } from './SendBox';
-export type { SendBoxProps, SendBoxStylesProps } from './SendBox';
+export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
-export type { MessageStatusIndicatorProps } from './MessageStatusIndicator';
+export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
 
 export { MessageThread } from './MessageThread';
 export type {
@@ -48,13 +48,17 @@ export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
 
 export { OptionsButton } from './OptionsButton';
-export type { OptionsDevice, OptionsButtonProps } from './OptionsButton';
+export type { OptionsDevice, OptionsButtonProps, OptionsButtonStrings } from './OptionsButton';
 
 export { ParticipantsButton } from './ParticipantsButton';
-export type { ParticipantsButtonProps, ParticipantsButtonStylesProps } from './ParticipantsButton';
+export type {
+  ParticipantsButtonProps,
+  ParticipantsButtonStrings,
+  ParticipantsButtonStylesProps
+} from './ParticipantsButton';
 
 export { ScreenShareButton } from './ScreenShareButton';
-export type { ScreenShareButtonProps } from './ScreenShareButton';
+export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';

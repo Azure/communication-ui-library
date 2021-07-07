@@ -6,17 +6,17 @@ import {
   GetCallingSelector,
   useCallingHandlers,
   useCallingSelector
-} from 'calling-component-bindings';
+} from '@internal/calling-component-bindings';
 import {
   DefaultChatHandlers,
   getChatSelector,
   GetChatSelector,
   useChatHandlers,
   useChatSelector
-} from 'chat-component-bindings';
-import { ChatClientState } from 'chat-stateful-client';
-import { CallClientState } from 'calling-stateful-client';
-import { Common } from 'acs-ui-common';
+} from '@internal/chat-component-bindings';
+import { ChatClientState } from '@internal/chat-stateful-client';
+import { CallClientState } from '@internal/calling-stateful-client';
+import { Common } from '@internal/acs-ui-common';
 
 export type ClientState = CallClientState & ChatClientState;
 export type Selector = (state: ClientState, props: any) => any;

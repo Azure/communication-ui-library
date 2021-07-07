@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets, useTheme } from '@fluentui/react';
 import { Send20Regular, Send20Filled } from '@fluentui/react-icons';
 import {
@@ -14,6 +14,7 @@ import {
 import { BaseCustomStylesProps } from '../types';
 import { isDarkThemed } from '../theming/themeUtils';
 import { COMPONENT_UI_IDS } from './identifiers';
+import { useLocale } from '../localization';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -28,6 +29,16 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
   sendMessageIcon?: IStyle;
   /** Styles for the system message; These styles will be ignored when a custom system message component is provided. */
   systemMessage?: IStyle;
+}
+
+/**
+ * Strings of SendBox that can be overridden
+ */
+export interface SendBoxStrings {
+  /**
+   * Placeholder text in SendBox when there is no user input
+   */
+  placeholderText: string;
 }
 
 /**
@@ -74,6 +85,10 @@ export interface SendBoxProps {
    * ```
    */
   styles?: SendBoxStylesProps;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<SendBoxStrings>;
 }
 
 /**
@@ -92,6 +107,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     styles
   } = props;
   const theme = useTheme();
+  const localeStrings = useLocale().strings.sendBox;
+  const strings = { ...localeStrings, ...props.strings };
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
@@ -136,16 +153,24 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       errorMessage: styles?.systemMessage
     }
   );
-  const mergedSendButtonStyle = mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer);
-  const mergedSendIconStyle = mergeStyles(
-    sendIconStyle,
-    {
-      color:
-        !!errorMessage || !(textValue || isMouseOverSendIcon)
-          ? theme.palette.neutralTertiary
-          : theme.palette.themePrimary
-    },
-    styles?.sendMessageIcon
+  const mergedSendButtonStyle = useMemo(
+    () => mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer),
+    [styles?.sendMessageIconContainer]
+  );
+  const hasText = !!textValue;
+  const mergedSendIconStyle = useMemo(
+    () =>
+      mergeStyles(
+        sendIconStyle,
+        {
+          color:
+            !!errorMessage || !(hasText || isMouseOverSendIcon)
+              ? theme.palette.neutralTertiary
+              : theme.palette.themePrimary
+        },
+        styles?.sendMessageIcon
+      ),
+    [errorMessage, isMouseOverSendIcon, hasText, theme, styles?.sendMessageIcon]
   );
 
   return (
@@ -161,7 +186,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           id="sendbox"
           ariaLabel={'Type'}
           inputClassName={sendBoxStyle}
-          placeholder="Enter a message"
+          placeholder={strings.placeholderText}
           value={textValue}
           onChange={setText}
           autoComplete="off"

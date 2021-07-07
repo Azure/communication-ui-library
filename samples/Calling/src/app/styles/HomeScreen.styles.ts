@@ -5,10 +5,8 @@ import { IStackTokens, mergeStyles } from '@fluentui/react';
 
 export const imgStyle = mergeStyles({
   width: '16rem',
-  selectors: {
-    '@media (max-width: 67.1875rem)': {
-      display: 'none'
-    }
+  '@media (max-width: 67.1875rem)': {
+    display: 'none'
   }
 });
 export const containerTokens: IStackTokens = {
