@@ -5467,6 +5467,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-pTYas6FrP15B1Oa0bkN5tQMNqOcVXa9j4FTFtO8DWI9kppKib+6NJtfTOOLcwxuuYvcX2+dVG6et1SxW/Kc17Q==
+  /@types/faker/5.5.7:
+    dev: false
+    resolution:
+      integrity: sha512-ejzb61Q5zQTtS0ZIafgQ7ahO5ACzmGhG5PfX2hxWyth3k0/aysb4ZOxKQB8DbzwSPppA5jmFBwqnBxjv5hqI5Q==
   /@types/glob-base/0.3.0:
     dev: false
     resolution:
@@ -8548,6 +8552,12 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
+  /commander/6.2.1:
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==
   /commander/7.2.0:
     dev: false
     engines:
@@ -9612,6 +9622,12 @@ packages:
       webpack: ^4 || ^5
     resolution:
       integrity: sha512-O0O9pOEwrk+n1zzR3T2uuXRlw64QxHSPeNN1GaiNBloQFNaCUL9V8jxSVz4jlXXFP/CIqK8YecWf8BAvsSgMjw==
+  /dotenv/10.0.0:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
   /dotenv/6.2.0:
     dev: false
     engines:
@@ -10750,6 +10766,10 @@ packages:
       '0': node >=0.6.0
     resolution:
       integrity: sha1-lpGEQOMEGnpBT4xS48V06zw+HgU=
+  /faker/5.5.3:
+    dev: false
+    resolution:
+      integrity: sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==
   /fast-deep-equal/3.1.3:
     dev: false
     resolution:
@@ -14127,6 +14147,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-o6vicYryQaKykE+EpiWXDzia4yo=
+  /jpeg-js/0.4.3:
+    dev: false
+    resolution:
+      integrity: sha512-ru1HWKek8octvUHFHvE5ZzQ1yAsJmIvRdGWvSoKV52XKyuyYA437QWDttXT8eZXDSbuMpHlLzPDZUPd6idIz+Q==
   /jquery/3.6.0:
     dev: false
     resolution:
@@ -16180,6 +16204,29 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==
+  /playwright/1.12.3:
+    dependencies:
+      commander: 6.2.1
+      debug: 4.3.1
+      extract-zip: 2.0.1
+      https-proxy-agent: 5.0.0
+      jpeg-js: 0.4.3
+      mime: 2.5.2
+      pngjs: 5.0.0
+      progress: 2.0.3
+      proper-lockfile: 4.1.2
+      proxy-from-env: 1.1.0
+      rimraf: 3.0.2
+      stack-utils: 2.0.3
+      ws: 7.4.6
+      yazl: 2.5.1
+    dev: false
+    engines:
+      node: '>=12'
+    hasBin: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-eyhHvZV7dMAUltqjQsgJ9CjZM8dznzN1+rcfCI6W6lfQ7IlPvTFGLuKOCcI4ETbjfbxqaS5FKIkb1WDDzq2Nww==
   /please-upgrade-node/3.2.0:
     dependencies:
       semver-compare: 1.0.0
@@ -16190,6 +16237,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
+  /pngjs/5.0.0:
+    dev: false
+    engines:
+      node: '>=10.13.0'
+    resolution:
+      integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==
   /pnp-webpack-plugin/1.6.4_typescript@4.1.5:
     dependencies:
       ts-pnp: 1.2.0_typescript@4.1.5
@@ -16573,6 +16626,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
+  /proper-lockfile/4.1.2:
+    dependencies:
+      graceful-fs: 4.2.6
+      retry: 0.12.0
+      signal-exit: 3.0.3
+    dev: false
+    resolution:
+      integrity: sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==
   /property-information/5.6.0:
     dependencies:
       xtend: 4.0.2
@@ -16709,6 +16770,7 @@ packages:
     resolution:
       integrity: sha1-nsYfeQSYdXB9aUFFlv2Qek1xHnM=
   /querystring/0.2.0:
+    deprecated: The
     dev: false
     engines:
       node: '>=0.4.x'
@@ -20942,6 +21004,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-x+sXyT4RLLEIb6bY5R+wZnt5pfk=
+  /yazl/2.5.1:
+    dependencies:
+      buffer-crc32: 0.2.13
+    dev: false
+    resolution:
+      integrity: sha512-phENi2PLiHnHb6QBVot+dJnaAZ0xosj7p3fWl+znIjBDlnMI2PsZCJZ306BPTFOaHf5qdDEI8x5qFrSOBN5vrw==
   /yn/3.1.1:
     dev: false
     engines:
@@ -21457,6 +21525,7 @@ packages:
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/express': 4.17.12
+      '@types/faker': 5.5.7
       '@types/jest': 26.0.23
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 14.17.3
@@ -21476,6 +21545,7 @@ packages:
       copy-to-clipboard: 3.3.1
       copyfiles: 2.4.1
       core-js: 3.14.0
+      dotenv: 10.0.0
       dotenv-webpack: 7.0.3_webpack@5.38.1
       eslint: 7.28.0
       eslint-config-prettier: 6.15.0_eslint@7.28.0
@@ -21487,6 +21557,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.28.0
       events: 3.3.0
       express: 4.16.4
+      faker: 5.5.3
       html-webpack-plugin: 5.3.1_webpack@5.38.1
       husky: 4.3.8
       jest: 26.6.0_ts-node@9.1.1
@@ -21496,6 +21567,7 @@ packages:
       memoize-one: 5.2.1
       nan: 2.14.2
       node-forge: 0.10.0
+      playwright: 1.12.3
       prettier: 2.3.1
       pretty-quick: 3.1.0_prettier@2.3.1
       puppeteer: 10.0.0
@@ -21521,7 +21593,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-YBTiLtsPxmRABXKv+PDDs44ryXVGbQ0VLC9wL1XXVzrY3dbtdmRnyfe4kTSh8CL4xSLpRFmubjz+FCltK4rmvQ==
+      integrity: sha512-BpeKm4zvuWfypgq6QA1iq5wEWi/KsCbfZRcvYmaxPslxqKplon4uvBy7bZhqFl4VoYJmrtftKFBwYezpXIeBsQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:

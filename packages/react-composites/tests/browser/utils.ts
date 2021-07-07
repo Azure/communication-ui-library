@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { ChatClient } from '@azure/communication-chat';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 
 const DATA_UI_ID = 'data-ui-id';
@@ -17,7 +17,7 @@ export const encodeQueryData = (data: IdentityType): string => {
 };
 
 type IdentityType = {
-  userId: CommunicationUserIdentifier;
+  userId: string;
   token: string;
   endpointUrl: string;
   displayName: string;
@@ -44,11 +44,15 @@ export const createUserAndThread = async (
   });
 
   return displayNames.map((displayName, i) => ({
-    userId: userAndTokens[i].user,
+    userId: userAndTokens[i].user.communicationUserId,
     token: userAndTokens[i].token,
     endpointUrl,
     displayName,
     threadId,
     topic
   }));
+};
+
+export const getNameInitials = (name: string): string => {
+  return Array.prototype.map.call(name.split(' '), (x) => x.substring(0, 1).toUpperCase()).join('');
 };
