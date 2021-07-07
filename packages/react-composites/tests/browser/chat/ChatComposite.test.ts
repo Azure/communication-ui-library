@@ -35,7 +35,7 @@ describe('Chat Composite E2E Tests', () => {
 
     browser = await chromium.launch({
       args: ['--start-maximized', '--disable-features=site-per-process'],
-      headless: false
+      headless: true
     });
 
     for (let index = 0; index < MAX_PAGES; index++) {
