@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatThreadItem } from '@azure/communication-chat';
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
@@ -341,6 +342,28 @@ describe('declarative chatClient onStateChange', () => {
 });
 
 describe('stateful wraps thrown error', () => {
+  test('when listChatThreads fails immedately', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    expect(client.listChatThreads).toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
+  });
+
+  test('when listChatThreads fails while iterating items', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
+      return failingPagedAsyncIterator(new Error('injected error'));
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const iter = client.listChatThreads();
+    await expect(iter.next()).rejects.toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
+    await expect(iter.byPage().next()).rejects.toThrow(
+      new ChatError('ChatClient.listChatThreads', new Error('injected error'))
+    );
+  });
+
   test('when createChatThread fails', async () => {
     const baseClient = createMockChatClient();
     baseClient.createChatThread = async () => {
@@ -463,3 +486,25 @@ describe('complex error handling for startRealtimeNotifications', () => {
     expect(latestError).toBeUndefined();
   });
 });
+
+// An iterator that throws the given error when asynchronously iterating over items, directly or byPage.
+export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIterator<T, T[]> => {
+  return {
+    async next() {
+      throw error;
+    },
+    [Symbol.asyncIterator]() {
+      return this;
+    },
+    byPage: (): AsyncIterableIterator<T[]> => {
+      return {
+        async next() {
+          throw error;
+        },
+        [Symbol.asyncIterator]() {
+          return this;
+        }
+      };
+    }
+  };
+};
