@@ -686,6 +686,7 @@ export type CommunicationParticipant = {
 export const COMPONENT_UI_IDS: {
     sendboxTextfield: string;
     participantList: string;
+    messageContent: string;
 };
 
 // @public
