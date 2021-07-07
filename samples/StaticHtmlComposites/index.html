@@ -5,19 +5,20 @@
 </head>
 <body>
   <!-- height need to be set for composite to fit the layout -->
-  <div id="video-call" style="height: 500px"></div>
-  <div id="chat" style="height: 500px"></div>
-  <script src="./dist/chatComposite.js"></script>
-  <script src="./dist/callComposite.js"></script>
-  <script src="./dist/service.js"></script>
+  <div id="video-call" style="height: 50vh"></div>
+  <div id="chat" style="height: 50vh"></div>
+  <script src="./chatComposite.js"></script>
+  <script src="./callComposite.js"></script>
+  <script src="./service.js"></script>
   <script type="module">
     const { user, token } = await service.createUserWithToken();
+    const guid = await service.createGUID();
     // Call composite sample code starts here
     const displayName = 'Bob';
 
     const callAdapter = await callComposite.loadCallComposite({
       containerId: 'video-call',
-      groupId: '', // Provide any GUID to join a group
+      groupId: guid, // Provide any GUID to join a group
       displayName: displayName,
       userId: user,
       token: token
