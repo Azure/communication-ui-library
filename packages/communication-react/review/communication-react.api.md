@@ -590,6 +590,7 @@ export type ChatObjectMethodNames<TName extends string, T> = {
 
 // @public (undocumented)
 export type ChatOptions = {
+    showParticipantPane?: boolean;
     sendBoxMaxLength?: number;
 };
 

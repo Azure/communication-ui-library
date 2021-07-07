@@ -52,6 +52,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
       <ChatAdapterProvider adapter={adapter}>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <ChatScreen
+          showParticipantPane={options?.showParticipantPane}
           sendBoxMaxLength={options?.sendBoxMaxLength}
           onRenderAvatar={onRenderAvatar}
           onRenderTypingIndicator={onRenderTypingIndicator}

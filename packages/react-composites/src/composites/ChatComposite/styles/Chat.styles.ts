@@ -7,8 +7,6 @@ export const chatContainer = mergeStyles({
   height: '100%',
   width: '100%',
   overflow: 'hidden',
-  minHeight: '25rem',
-  minWidth: '25rem',
 
   '*::-webkit-scrollbar': {
     width: '0.3rem',
@@ -27,9 +25,6 @@ export const chatContainer = mergeStyles({
 export const chatArea = mergeStyles({
   height: '100%',
   width: '100%',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  paddingBottom: '1rem',
   overflow: 'hidden'
 });
 
@@ -43,9 +38,8 @@ export const chatWrapper = mergeStyles({
 
 export const chatHeaderContainerStyle = mergeStyles({
   width: '100%',
-  height: '3rem',
   paddingLeft: '1.5rem',
-  paddingRight: '3.25rem',
+  paddingRight: '1.5rem',
   '@media screen and (max-width: 25rem)': {
     paddingLeft: '5%',
     paddingRight: '5%'
@@ -54,8 +48,8 @@ export const chatHeaderContainerStyle = mergeStyles({
 });
 
 export const topicNameLabelStyle = mergeStyles({
-  fontSize: '1.1rem',
   lineHeight: '2.5rem',
+  fontSize: '1.1rem',
   fontWeight: 600,
   marginRight: '0.125rem',
   textOverflow: 'ellipsis',
