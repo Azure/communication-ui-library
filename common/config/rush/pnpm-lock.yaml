@@ -20709,12 +20709,13 @@ packages:
       http-server: 0.12.3
       react: 16.14.0
       react-dom: 16.13.1_react@16.14.0
+      uuid: 8.3.2
       webpack: 5.38.1_webpack-cli@4.7.2
       webpack-cli: 4.7.2_webpack@5.38.1
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-XlVIb5w90lqRVj/9rFvp+SbJ/P6m4EkK9In2uzoQcBIeNjLZckmkYujt+XZlw3X1Ne3VD3Y2d81FeCo+zKE5nw==
+      integrity: sha512-p3yq9+5TxOrRNg5tEbg2Grtaaf3fmeMIQBlSAc89dUY8irtgnJeDGzHyqXGyTyO5vWV8FILJdgc4Y8fDe3CdoQ==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:

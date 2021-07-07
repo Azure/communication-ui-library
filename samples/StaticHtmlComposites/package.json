@@ -4,19 +4,20 @@
   "description": "Basic bundle for communication react composites and usage on a static HTML page.",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.build.config.js",
+    "build": "webpack --mode=production",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
-    "start:app": "webpack && http-server -p 3000",
+    "start:app": "webpack serve",
     "lint": "echo skip",
     "lint:fix": "echo skip",
-		"prettier": "",
-		"prettier:check": ""
+    "prettier": "",
+    "prettier:check": ""
   },
   "license": "MIT",
   "dependencies": {
     "@azure/communication-react": "1.0.0-beta.1",
     "react": "~16.14.0",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

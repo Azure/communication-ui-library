@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Title } from '@storybook/addon-docs/blocks';
+
+<Meta id="use-composite-in-non-react-environment" title="Composites/UUsing Composites in a non-react environment" />
+
+# Use composites under non-react environment
+
+If you are not using React, you can still embed a calling/chat composite into your html page with a simple `<script>` tag and several lines of code like:
+
+```html
+<script src="[url of chatComposite.js]"></script>
+<!-- height need to be set for composite to fit the layout -->
+<div id="chat" style="height: 50vh"></div>
+<script>
+  const chatAdapter = await chatComposite.loadChatComposite({
+    containerId: 'chat',
+    displayName: displayName,
+    threadId: threadId,
+    endpointUrl: endpointUrl,
+    userId: user,
+    token: token
+  });
+</script>
+```
+
+Here's the step-by-step instruction to get the composite js bundle file:
+
+### git clone our repo
+
+```bash
+git clone https://github.com/Azure/communication-ui-library.git
+```
+
+### install packages and build js bundles
+
+```bash
+cd communication-ui-library\samples\StaticHtmlComposites\
+rush install
+rush build
+```
+
+Then you will be able to see 2 js bundle files:
+
+```
+.\samples\StaticHtmlComposites\dist\chatComposite.js
+.\samples\StaticHtmlComposites\dist\callComposite.js
+```
+
+There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check (Create and manage Communication Services resources)[https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp]:
+
+```
+.\samples\StaticHtmlComposites\index.html
+```
+
+### try it the sample
+
+After finishing building the bundle, you can also try the sample
+Firstly, put your own connection into
+
+```
+.\samples\Server\appsettings.json
+```
+
+Then run this command to start the server:
+
+```bash
+rushx start
+```
+
+Browse to http://localhost:3000 and start your journey\*
+
+_\*Please make sure you visit localhost not 127.0.0.1 to bypass the http limitation rules of sdk_.
