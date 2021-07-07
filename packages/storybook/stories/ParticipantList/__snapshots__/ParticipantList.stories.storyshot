@@ -24,6 +24,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
       >
         <div
           className="ms-Stack css-77 css-1"
+          data-ui-id="participant-list"
         >
           <div
             className="css-73"
