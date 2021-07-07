@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Title } from '@storybook/addon-docs/blocks';
 
-<Meta id="use-composite-in-non-react-environment" title="Composites/UUsing Composites in a non-react environment" />
+<Meta id="use-composite-in-non-react-environment" title="Composites/Using Composites in a non-react environment" />
 
 # Use composites under non-react environment
 
@@ -10,10 +10,10 @@ If you are not using React, you can still embed a calling/chat composite into yo
 ```html
 <script src="[url of chatComposite.js]"></script>
 <!-- height need to be set for composite to fit the layout -->
-<div id="chat" style="height: 50vh"></div>
+<div id="chat-container" style="height: 50vh"></div>
 <script>
   const chatAdapter = await chatComposite.loadChatComposite({
-    containerId: 'chat',
+    containerId: 'chat-container',
     displayName: displayName,
     threadId: threadId,
     endpointUrl: endpointUrl,
@@ -67,6 +67,4 @@ Then run this command to start the server:
 rushx start
 ```
 
-Browse to http://localhost:3000 and start your journey\*
-
-_\*Please make sure you visit localhost not 127.0.0.1 to bypass the http limitation rules of sdk_.
+Browse to http://localhost:3000

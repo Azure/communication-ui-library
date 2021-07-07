@@ -5,8 +5,8 @@
 </head>
 <body>
   <!-- height need to be set for composite to fit the layout -->
-  <div id="video-call" style="height: 50vh"></div>
-  <div id="chat" style="height: 50vh"></div>
+  <div id="video-call-container" style="height: 50vh"></div>
+  <div id="chat-container" style="height: 50vh"></div>
   <script src="./chatComposite.js"></script>
   <script src="./callComposite.js"></script>
   <script src="./service.js"></script>
@@ -17,7 +17,7 @@
     const displayName = 'Bob';
 
     const callAdapter = await callComposite.loadCallComposite({
-      containerId: 'video-call',
+      containerId: 'video-call-container',
       groupId: guid, // Provide any GUID to join a group
       displayName: displayName,
       userId: user,
@@ -30,7 +30,7 @@
 
     // Chat composite sample code starts here
     const chatAdapter = await chatComposite.loadChatComposite({
-      containerId: 'chat',
+      containerId: 'chat-container',
       displayName: displayName,
       threadId: threadId,
       endpointUrl: endpointUrl,
