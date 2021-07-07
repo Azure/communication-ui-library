@@ -118,7 +118,6 @@
     "webpack": "5.38.1",
     "webpack-cli": "4.7.2",
     "webpack-dev-server": "3.11.2",
-    "dotenv-webpack": "~7.0.3",
     "@types/puppeteer": "~5.4.3",
     "playwright": "~1.12.3",
     "dotenv": "~10.0.0",

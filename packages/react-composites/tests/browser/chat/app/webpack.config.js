@@ -5,8 +5,6 @@
 const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: path.join(__dirname, 'index.tsx'),
@@ -42,10 +40,7 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({ template: path.join(__dirname, 'public', 'index.html') }),
-    new Dotenv({ path: path.join(__dirname, '.env') })
-  ],
+  plugins: [new HtmlWebpackPlugin({ template: path.join(__dirname, 'public', 'index.html') })],
   devServer: {
     port: 3000,
     hot: true,
