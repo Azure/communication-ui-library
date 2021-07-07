@@ -30,6 +30,26 @@
     "onLabel": "صامت",
     "offLabel": "شغله"
   },
+  "optionsButton": {
+    "label": "خيارات",
+    "cameraMenuTitle": "آلة تصوير",
+    "cameraMenuTooltip": "اختر الكاميرا",
+    "microphoneMenuTitle": "ميكروفون",
+    "microphoneMenuTooltip": "اختر الميكروفون",
+    "speakerMenuTitle": "مكبر الصوت",
+    "speakerMenuTooltip": "اختر مكبر الصوت"
+  },
+  "participantsButton": {
+    "label": "الناس",
+    "menuHeader": "في هذه المكالمة",
+    "participantsListButtonLabel": "أشخاص {numParticipants}",
+    "muteAllButtonLabel": "كتم الكل",
+    "copyInviteLinkButtonLabel": "نسخ رابط الدعوة"
+  },
+  "screenShareButton": {
+    "onLabel": "قف",
+    "offLabel": "يشارك"
+  },
   "messageThread": {
     "yesterday": "أمس",
     "sunday": "الأحد",

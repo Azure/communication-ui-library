@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "move messagestatus to common package",
-  "packageName": "acs-ui-common",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
-import { FluentThemeProvider, lightTheme, darkTheme } from 'react-components';
+import { FluentThemeProvider, lightTheme, darkTheme } from '@internal/react-components';
 import { Theme, PartialTheme } from '@fluentui/react';
 
 /**

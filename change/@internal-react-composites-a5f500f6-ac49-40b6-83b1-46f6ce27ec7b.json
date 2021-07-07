@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix dependencies versions to match",
+  "packageName": "@internal/react-composites",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

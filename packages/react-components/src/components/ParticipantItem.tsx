@@ -101,10 +101,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const contextualMenuStyle = mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu);
   const menuButtonContainerStyle = mergeStyles({
     root: {
-      selectors: {
-        '&:hover': { background: 'none' },
-        '&:active': { background: 'none' }
-      }
+      '&:hover': { background: 'none' },
+      '&:active': { background: 'none' }
     }
   });
 
