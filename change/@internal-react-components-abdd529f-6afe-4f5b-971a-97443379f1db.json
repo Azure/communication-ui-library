@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bug fix: MesageThread scrollTop throws exception when chat composite is hidden",
+  "packageName": "@internal/react-components",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "patch"
+}

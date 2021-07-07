@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, DeviceManagerState } from 'calling-stateful-client';
+import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -10,7 +10,7 @@ import type {
   RemoteParticipant
 } from '@azure/communication-calling';
 
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 import type {
   CommunicationUserKind,
   PhoneNumberKind,

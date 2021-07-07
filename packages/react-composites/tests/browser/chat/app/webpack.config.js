@@ -13,7 +13,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
       // reference internal packlets src directly for hot reloading when developing
-      'react-components': path.resolve(__dirname, '../../../../../react-components/src')
+      '@internal/react-components': path.resolve(__dirname, '../../../../../react-components/src')
     }
   },
   output: {

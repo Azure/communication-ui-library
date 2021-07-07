@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatMessage } from '@azure/communication-chat';
-import { MessageStatus } from 'acs-ui-common';
+import { MessageStatus } from '@internal/acs-ui-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 export const convertChatMessage = (

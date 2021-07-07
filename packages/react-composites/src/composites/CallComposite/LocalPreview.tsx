@@ -5,7 +5,7 @@ import { VideoOff20Filled } from '@fluentui/react-icons';
 import { Stack, Text } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
-import { StreamMedia, VideoTile, MicrophoneButton, ControlBar, CameraButton } from 'react-components';
+import { StreamMedia, VideoTile, MicrophoneButton, ControlBar, CameraButton } from '@internal/react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { useSelector } from './hooks/useSelector';

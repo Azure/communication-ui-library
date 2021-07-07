@@ -8,10 +8,10 @@ import {
   getUserId,
   sanitizedMessageContentType
 } from './baseSelectors';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { ChatMessageWithStatus } from 'chat-stateful-client';
-import { memoizeFnAll } from 'acs-ui-common';
-import { ChatMessage, MessageAttachedStatus } from 'react-components';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { memoizeFnAll } from '@internal/acs-ui-common';
+import { ChatMessage, MessageAttachedStatus } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { compareMessages } from './utils/compareMessages';
 
