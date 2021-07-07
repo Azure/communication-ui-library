@@ -54,12 +54,11 @@ _Calling_
 - [OptionsButton](/?path=/docs/ui-components-controlbar-buttons-options--options)
 - [ScreenShareButton](/?path=/docs/ui-components-controlbar-buttons-screenshare--screen-share)
 
-## Choose your flavors
+## Choose your target
 
-usePropsFor() is context-awared so no need to worry which Provider you are using, there is only one exception:
-If usePropsFor() is under both ChatClientProvider and CallingClientProvider, and you are getting ParicipantList props -
-Since ParticipantList is a shared component between calling and chat, usePropsFor can't determine which side of data you want to collect.
-You need to pass the flavor parameter to usePropsFor() when it happens:
+usePropsFor() is context-aware. It picks out props from the relevant Provider for the component. One exception is ParticipantList -- a component applicable to both chat and calling settings. Thus, ChatClientProvider and CallingClientProvider both provide props for this component\*. Thus, usePropsFor() can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
+
+_\*only ParticipantList component is shared by both chat and calling_
 
 ```tsx
 import React from 'react';
@@ -67,12 +66,12 @@ import { ParticipantList, usePropsFor } from '@azure/communication-react';
 
 // This will show 2 different participantLists in parallel
 export const ParicipantLists = () => {
-  const chatPariticipantProps = usePropsFor(ParticipantList, 'chat');
-  const callingPariticipantProps = usePropsFor(ParticipantList, 'calling');
+  const chatParticipantProps = usePropsFor(ParticipantList, 'chat');
+  const callingParticipantProps = usePropsFor(ParticipantList, 'calling');
   return (
     <>
-      <ParticipantList {...chatPariticipantProps} />
-      <ParticipantList {...callingPariticipantProps} />
+      <ParticipantList {...chatParticipantProps} />
+      <ParticipantList {...callingParticipantProps} />
     </>
   );
 };
