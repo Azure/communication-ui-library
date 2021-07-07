@@ -34,7 +34,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
     const context = receiver.context;
     switch (prop) {
       case 'createChatThread': {
-        return context.withAsycnErrorTeedToState(async function (...args: Parameters<ChatClient['createChatThread']>) {
+        return context.withAsyncErrorTeedToState(async function (...args: Parameters<ChatClient['createChatThread']>) {
           const result = await chatClient.createChatThread(...args);
           const thread = result.chatThread;
           if (thread) {
@@ -46,7 +46,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
       }
 
       case 'deleteChatThread': {
-        return context.withAsycnErrorTeedToState(async function (...args: Parameters<ChatClient['deleteChatThread']>) {
+        return context.withAsyncErrorTeedToState(async function (...args: Parameters<ChatClient['deleteChatThread']>) {
           const result = await chatClient.deleteChatThread(...args);
           context.deleteThread(args[0]);
           return result;
@@ -64,7 +64,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
         };
       }
       case 'startRealtimeNotifications': {
-        return context.withAsycnErrorTeedToState(
+        return context.withAsyncErrorTeedToState(
           async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
             const ret = await chatClient.startRealtimeNotifications(...args);
             if (!receiver.eventSubscriber) {
@@ -77,7 +77,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
         );
       }
       case 'stopRealtimeNotifications': {
-        return context.withAsycnErrorTeedToState(
+        return context.withAsyncErrorTeedToState(
           async function (...args: Parameters<ChatClient['stopRealtimeNotifications']>) {
             const ret = await chatClient.stopRealtimeNotifications(...args);
             if (receiver.eventSubscriber) {

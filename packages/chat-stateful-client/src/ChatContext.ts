@@ -336,7 +336,7 @@ export class ChatContext {
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
    */
-  public withAsycnErrorTeedToState<Args extends unknown[], R>(
+  public withAsyncErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => Promise<R>,
     target: ChatErrorTargets,
     clearTargets?: ChatErrorTargets[]
