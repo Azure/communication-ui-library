@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add explicit userId to CallAdapter constructor arguments",
-  "packageName": "react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import { convertSdkRemoteStreamToDeclarativeRemoteStream } from './Converter';

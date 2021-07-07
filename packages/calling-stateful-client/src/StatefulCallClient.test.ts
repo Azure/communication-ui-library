@@ -15,7 +15,7 @@ import {
   VideoDeviceInfo,
   VideoStreamRendererView
 } from '@azure/communication-calling';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { convertSdkRemoteStreamToDeclarativeRemoteStream } from './Converter';
 import { createStatefulCallClient, StatefulCallClient } from './StatefulCallClient';
 import {

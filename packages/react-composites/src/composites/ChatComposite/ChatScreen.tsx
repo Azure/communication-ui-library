@@ -11,7 +11,7 @@ import {
   ParticipantList,
   SendBox,
   TypingIndicator
-} from 'react-components';
+} from '@internal/react-components';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
@@ -28,6 +28,7 @@ import {
 } from './styles/Chat.styles';
 
 export type ChatScreenProps = {
+  showParticipantPane?: boolean;
   sendBoxMaxLength?: number;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
@@ -35,7 +36,7 @@ export type ChatScreenProps = {
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onRenderAvatar, sendBoxMaxLength, onRenderMessage, onRenderTypingIndicator } = props;
+  const { onRenderAvatar, sendBoxMaxLength, onRenderMessage, onRenderTypingIndicator, showParticipantPane } = props;
 
   const pixelToRemConvertRatio = 16;
   const defaultNumberOfChatMessagesToReload = 5;
@@ -92,14 +93,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} />
           </Stack.Item>
         </Stack>
-        <Stack.Item className={participantListWrapper}>
-          <Stack className={participantListStack}>
-            <Stack.Item className={listHeader}>In this chat</Stack.Item>
-            <Stack.Item className={participantListStyle}>
-              <ParticipantList {...participantListProps} onRenderAvatar={onRenderParticipantAvatar} />
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
+        {showParticipantPane && (
+          <Stack.Item className={participantListWrapper}>
+            <Stack className={participantListStack}>
+              <Stack.Item className={listHeader}>In this chat</Stack.Item>
+              <Stack.Item className={participantListStyle}>
+                <ParticipantList {...participantListProps} onRenderAvatar={onRenderParticipantAvatar} />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        )}
       </Stack>
     </Stack>
   );

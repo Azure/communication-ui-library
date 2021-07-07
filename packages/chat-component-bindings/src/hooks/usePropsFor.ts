@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { MessageThread, ParticipantList, SendBox, TypingIndicator } from 'react-components';
+import { MessageThread, ParticipantList, SendBox, TypingIndicator } from '@internal/react-components';
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { sendBoxSelector } from '../sendBoxSelector';
 import { chatThreadSelector } from '../chatThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
-import { Common, AreEqual } from 'acs-ui-common';
+import { Common, AreEqual } from '@internal/acs-ui-common';
 import { DefaultChatHandlers } from '../handlers/createHandlers';
 import { chatParticipantListSelector } from '../chatParticipantListSelector';
 

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update dev dependencies to satisify peer dependencies",
-  "packageName": "chat-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

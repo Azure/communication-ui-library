@@ -3,7 +3,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ChatClientState, ChatErrors, ChatThreadClientState } from 'chat-stateful-client';
+import { ChatClientState, ChatErrors, ChatThreadClientState } from '@internal/chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { ChatState } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';

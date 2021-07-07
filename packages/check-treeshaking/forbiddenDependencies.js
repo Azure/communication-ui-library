@@ -12,8 +12,8 @@ module.exports = {
   '../chat-component-bindings/dist/dist-esm/index.js': [],
   '../calling-component-bindings/dist/dist-esm/index.js': [],
   '../acs-ui-common/dist/dist-esm/index.js': [
-    'calling-component-bindingss',
-    'chat-component-bindingss',
+    'calling-component-bindings',
+    'chat-component-bindings',
     'calling-stateful-client',
     'chat-stateful-client',
     'react-components',

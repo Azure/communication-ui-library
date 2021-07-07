@@ -10,6 +10,7 @@ export type ContainerProps = {
   endpointUrl: string;
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
+  showParticipants?: boolean;
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
@@ -34,5 +35,17 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props]);
 
-  return <>{adapter ? <ChatComposite adapter={adapter} fluentTheme={props.fluentTheme} /> : <h3>Loading...</h3>}</>;
+  return (
+    <>
+      {adapter ? (
+        <ChatComposite
+          adapter={adapter}
+          fluentTheme={props.fluentTheme}
+          options={{ showParticipantPane: props.showParticipants }}
+        />
+      ) : (
+        <h3>Loading...</h3>
+      )}
+    </>
+  );
 };

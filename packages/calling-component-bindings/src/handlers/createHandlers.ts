@@ -10,11 +10,11 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 
 export type DefaultCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
@@ -302,7 +302,7 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
  * @param callClient - StatefulCallClient returned from
- *   {@Link calling-stateful-client#createStatefulCallClient}.
+ *   {@Link @internal/calling-stateful-client#createStatefulCallClient}.
  * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@Link @azure/communication-calling#Call}.

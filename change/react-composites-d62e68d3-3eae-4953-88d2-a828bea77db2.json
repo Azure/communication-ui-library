@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Delete OneToOne call",
-  "packageName": "react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}
