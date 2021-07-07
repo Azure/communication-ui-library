@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move error handlers, WithErrorHandling to OneToOne composite",
-  "packageName": "react-composites",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

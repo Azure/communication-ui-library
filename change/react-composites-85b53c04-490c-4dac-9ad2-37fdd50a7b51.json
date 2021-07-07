@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "update react peer deps to be >=16.8.0 <18.0.0",
-  "packageName": "react-composites",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

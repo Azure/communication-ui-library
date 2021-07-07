@@ -44,7 +44,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonEnabled = displayName && !nameTooLongWarning && (!teamsCallChosen || teamsLink);
 
   return (
-    <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={containerTokens}>
+    <Stack horizontal wrap horizontalAlign="center" verticalAlign="center" tokens={containerTokens}>
       <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
       <div>
         <div className={headerStyle}>{headerTitle}</div>

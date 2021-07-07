@@ -24,14 +24,14 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return createDecoratedListMessages(chatThreadClient, this._context);
       }
       case 'getMessage': {
-        return this._context.withAsycnErrorTeedToState(async (...args: Parameters<ChatThreadClient['getMessage']>) => {
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<ChatThreadClient['getMessage']>) => {
           const message = await chatThreadClient.getMessage(...args);
           this._context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
           return message;
         }, 'ChatThreadClient.getMessage');
       }
       case 'sendMessage': {
-        return this._context.withAsycnErrorTeedToState(async (...args: Parameters<ChatThreadClient['sendMessage']>) => {
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<ChatThreadClient['sendMessage']>) => {
           // Retry logic?
           const { content } = args[0];
           const clientMessageId = nanoid(); // Generate a local short uuid for message
@@ -75,7 +75,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         }, 'ChatThreadClient.sendMessage');
       }
       case 'addParticipants': {
-        return this._context.withAsycnErrorTeedToState(
+        return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<ChatThreadClient['addParticipants']>) => {
             const result = await chatThreadClient.addParticipants(...args);
             const [addRequest] = args;
@@ -87,7 +87,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         );
       }
       case 'deleteMessage': {
-        return this._context.withAsycnErrorTeedToState(
+        return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<ChatThreadClient['deleteMessage']>) => {
             // DeleteMessage is able to either delete local one(for failed message) or synced message
             const [messageId] = args;
@@ -108,7 +108,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return createDecoratedListReadReceipts(chatThreadClient, this._context);
       }
       case 'removeParticipant': {
-        return this._context.withAsycnErrorTeedToState(
+        return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<ChatThreadClient['removeParticipant']>) => {
             const result = await chatThreadClient.removeParticipant(...args);
             const [removeIdentifier] = args;
@@ -119,7 +119,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         );
       }
       case 'updateMessage': {
-        return this._context.withAsycnErrorTeedToState(
+        return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<ChatThreadClient['updateMessage']>) => {
             const result = await chatThreadClient.updateMessage(...args);
             const [messageId, updateOption] = args;
@@ -131,7 +131,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         );
       }
       case 'updateTopic': {
-        return this._context.withAsycnErrorTeedToState(async (...args: Parameters<ChatThreadClient['updateTopic']>) => {
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<ChatThreadClient['updateTopic']>) => {
           const result = await chatThreadClient.updateTopic(...args);
           const [topic] = args;
           this._context.updateThreadTopic(chatThreadClient.threadId, topic);
@@ -139,7 +139,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         }, 'ChatThreadClient.updateTopic');
       }
       case 'getProperties': {
-        return this._context.withAsycnErrorTeedToState(
+        return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<ChatThreadClient['getProperties']>) => {
             const result = await chatThreadClient.getProperties(...args);
             this._context.updateThread(chatThreadClient.threadId, result);

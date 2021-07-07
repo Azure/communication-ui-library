@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add device options button to calling composite",
-  "packageName": "react-composites",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "patch"
-}

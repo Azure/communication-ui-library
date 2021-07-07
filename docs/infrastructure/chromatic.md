@@ -13,7 +13,7 @@ Chromatic automates gathering UI feedback, visual testing, and documentation, so
 
 ## Automatic Publish to Chromatic
 
-This repository has a github action for automatically publishing a branch to Chromatic on every Pull Request that changes code inside the package `storybook` or a package dependency like `react-composites`
+This repository has a github action for automatically publishing a branch to Chromatic on every Pull Request that changes code inside the package `storybook` or a package dependency like `@internal/react-composites`
 
 This Github action is called `Publish Chromatic`.
 

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update dev dependencies to satisify peer dependencies",
-  "packageName": "acs-ui-common",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}
