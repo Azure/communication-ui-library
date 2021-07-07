@@ -2,7 +2,7 @@
 
 ## Before Release
 
-Before we release version or beta version the following check list should be completed:
+Before we release a new version or beta version the following checklist should be completed:
 
 * ✅ Package version updates
   * Ensure packages to be released have the correct version number
@@ -23,7 +23,7 @@ Before we release version or beta version the following check list should be com
   * Ensure the new package has the correct tag (latest, next or dev)
   * Download the package and ensure the bits inside are the same as the ones you intended to publish
 * ✅ Verify documentation
-  * Ensure the public storybook site
+  * Ensure the documentation on the public storybook site matches the latest release.
 
 ## Test Plan
 
@@ -76,6 +76,7 @@ Automated test infrastructure is currently in development.
 | Chat Composite | When joining an existing chat with a lot of messages not all messages are fetched |
 | Chat Composite | A user can scroll up to retrieve more messages |
 | Chat Composite | A participant can be removed from the chat using the participant pane |
+| Chat Composite | A removed participant no longer appears in the participant pane |
 
 | Area | Test |
 | -- | -- |
