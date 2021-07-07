@@ -50,6 +50,7 @@ export const parameters = {
           'React Hooks',
           [
             'Setting up',
+            'Adapters',
             'UsePropsFor',
             'UseSelector'
           ]
