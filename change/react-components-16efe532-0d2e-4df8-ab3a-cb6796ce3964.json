@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix option button props",
-  "packageName": "react-components",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

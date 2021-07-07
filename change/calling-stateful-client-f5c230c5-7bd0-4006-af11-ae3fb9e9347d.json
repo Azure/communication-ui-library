@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make max listeners configurable",
-  "packageName": "calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

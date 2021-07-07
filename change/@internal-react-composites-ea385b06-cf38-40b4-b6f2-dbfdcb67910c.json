@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add error handling facilities to ChatAdapter",
+  "packageName": "@internal/react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

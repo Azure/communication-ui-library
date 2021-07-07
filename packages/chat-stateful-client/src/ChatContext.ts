@@ -15,7 +15,7 @@ import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 

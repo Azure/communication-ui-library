@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "sort+update stream when reaching remote limitation",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

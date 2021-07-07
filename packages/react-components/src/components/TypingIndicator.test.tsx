@@ -17,7 +17,6 @@ describe('TypingIndicator should format string correctly', () => {
       <TypingIndicator typingUsers={[{ userId: 'user2', displayName: 'Claire' }]} />,
       testLocale
     );
-    component.update();
     expect(component.text()).toBe('Claire ' + randomText);
   });
 });

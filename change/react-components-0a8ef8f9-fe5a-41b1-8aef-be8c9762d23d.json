@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix leave call button label",
-  "packageName": "react-components",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

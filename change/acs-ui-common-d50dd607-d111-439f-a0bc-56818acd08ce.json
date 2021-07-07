@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump prettier version and reformat",
-  "packageName": "acs-ui-common",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use Array for unparentedViews",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

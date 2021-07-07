@@ -3,11 +3,11 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { getChatSelector, DefaultChatHandlers, GetChatSelector } from 'chat-component-bindings';
+import { getChatSelector, DefaultChatHandlers, GetChatSelector } from '@internal/chat-component-bindings';
 
 import { useHandlers } from './useHandlers';
 import { useAdaptedSelector } from './useAdaptedSelector';
-import { Common } from 'acs-ui-common';
+import { Common } from '@internal/acs-ui-common';
 
 type Selector = (state: any, props: any) => any;
 

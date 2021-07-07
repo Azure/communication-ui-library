@@ -32,7 +32,7 @@ export const EndCall = (props: EndCallProps): JSX.Element => {
     <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
       <Stack tokens={upperStackTokens}>
         <div className={endCallTitleStyle}>{leftCall}</div>
-        <Stack horizontal tokens={buttonsStackTokens}>
+        <Stack horizontal wrap tokens={buttonsStackTokens}>
           <PrimaryButton className={buttonStyle} onClick={props.rejoinHandler}>
             <Video20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
             {rejoinCall}

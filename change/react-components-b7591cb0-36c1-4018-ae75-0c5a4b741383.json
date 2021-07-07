@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixing minor bugs and handling teams meeting denied.",
-  "packageName": "react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

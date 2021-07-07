@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
-import { mergeStyles, Stack, Theme, PartialTheme, useTheme } from '@fluentui/react';
+import { Theme, PartialTheme } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
-import { PlaceholderProps } from 'react-components';
+import { PlaceholderProps } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { FluentThemeProvider } from 'react-components';
+import { FluentThemeProvider } from '@internal/react-components';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
@@ -27,16 +27,15 @@ export type CallCompositeProps = {
 
 type MainScreenProps = {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-  screenWidth: number;
   callInvitationURL?: string;
 };
 
-const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
     case 'configuration':
-      return <ConfigurationScreen screenWidth={screenWidth} startCallHandler={(): void => adapter.setPage('call')} />;
+      return <ConfigurationScreen startCallHandler={(): void => adapter.setPage('call')} />;
     case 'error':
       return <Error rejoinHandler={() => adapter.setPage('configuration')} />;
     case 'errorJoiningTeamsMeeting':
@@ -65,7 +64,6 @@ const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScre
             customPage ? adapter.setPage(customPage) : adapter.setPage('error');
           }}
           onRenderAvatar={onRenderAvatar}
-          screenWidth={screenWidth}
           showParticipants={true}
           callInvitationURL={callInvitationURL}
         />
@@ -74,19 +72,6 @@ const MainScreen = ({ screenWidth, callInvitationURL, onRenderAvatar }: MainScre
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
-  const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 0);
-  const theme = useTheme();
-
-  useEffect(() => {
-    const setWindowWidth = (): void => {
-      const width = typeof window !== 'undefined' ? window.innerWidth : 0;
-      setScreenWidth(width);
-    };
-    setWindowWidth();
-    window.addEventListener('resize', setWindowWidth);
-    return () => window.removeEventListener('resize', setWindowWidth);
-  }, []);
-
   const { adapter, callInvitationURL, fluentTheme } = props;
 
   useEffect(() => {
@@ -101,25 +86,8 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
   return (
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <CallAdapterProvider adapter={adapter}>
-        <Stack className={callContainerStyle(theme)} grow>
-          <MainScreen
-            screenWidth={screenWidth}
-            onRenderAvatar={props.onRenderAvatar}
-            callInvitationURL={callInvitationURL}
-          />
-        </Stack>
+        <MainScreen onRenderAvatar={props.onRenderAvatar} callInvitationURL={callInvitationURL} />
       </CallAdapterProvider>
     </FluentThemeProvider>
   );
-};
-
-export const callContainerStyle = (theme: Theme): string => {
-  return mergeStyles({
-    height: '100%',
-    width: '100%',
-    overflow: 'auto',
-    minHeight: '30rem',
-    minWidth: '50rem',
-    boxShadow: theme.effects.elevation4
-  });
 };

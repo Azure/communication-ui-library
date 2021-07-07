@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove deviceManager selector - there is no component for it",
-  "packageName": "@azure/acs-calling-selector",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
