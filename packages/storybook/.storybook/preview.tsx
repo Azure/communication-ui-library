@@ -50,10 +50,10 @@ export const parameters = {
           'React Hooks',
           [
             'Setting up',
-            'Adapters',
             'UsePropsFor',
             'UseSelector'
-          ]
+          ],
+          'Adapters',
         ],
         QUICKSTARTS_FOLDER_PREFIX,
         COMPOSITE_FOLDER_PREFIX,
