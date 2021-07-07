@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatThreadClientState } from 'chat-stateful-client';
+import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
 

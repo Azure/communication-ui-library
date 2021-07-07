@@ -1,4 +1,4 @@
-# Change Log - calling-stateful-client
+# Change Log - @internal/calling-stateful-client
 
 This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
 

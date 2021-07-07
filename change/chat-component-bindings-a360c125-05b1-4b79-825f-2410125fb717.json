@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update to use Object for chatMessages",
-  "packageName": "chat-component-bindings",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

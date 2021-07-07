@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
 
 describe('typingIndicatorSelector tests', () => {

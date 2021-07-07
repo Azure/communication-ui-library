@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { mergeStyles, TooltipHost } from '@fluentui/react';
-import { MessageStatus } from 'acs-ui-common';
+import { MessageStatus } from '@internal/acs-ui-common';
 import {
   MessageStatusIndicatorErrorIconStyle,
   MessageStatusIndicatorIconStyle

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implement new screenshare popup design update",
-  "packageName": "react-composites",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

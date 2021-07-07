@@ -11,7 +11,7 @@ import {
   convertFromSDKToDeclarativeVideoStreamRendererView
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 async function createViewRemoteVideo(
   context: CallContext,

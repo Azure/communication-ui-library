@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "update styles to Figma for VideoTile and parents",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

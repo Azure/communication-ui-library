@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "sort+update stream when reaching remote limitation",
-  "packageName": "react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

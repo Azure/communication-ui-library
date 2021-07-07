@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers, createDefaultCallingHandlers } from 'calling-component-bindings';
+import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
   StatefulDeviceManager,
@@ -9,7 +9,7 @@ import {
   createStatefulCallClient,
   DeviceManagerState,
   CallState
-} from 'calling-stateful-client';
+} from '@internal/calling-stateful-client';
 import {
   AudioOptions,
   CallAgent,
@@ -39,8 +39,8 @@ import {
   ParticipantLeftListener
 } from './CallAdapter';
 import { createAzureCommunicationUserCredential, isInCall } from '../../../utils';
-import { VideoStreamOptions } from 'react-components';
-import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { VideoStreamOptions } from '@internal/react-components';
+import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 

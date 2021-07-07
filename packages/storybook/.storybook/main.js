@@ -31,13 +31,13 @@ module.exports = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@azure/communication-react': path.resolve(__dirname, '../../communication-react/src'),
-      'react-components': path.resolve(__dirname, '../../react-components/src'),
-      'react-composites': path.resolve(__dirname, '../../react-composites/src'),
-      'chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
-      'chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
-      'calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
-      'calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
-      'acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
+      '@internal/react-components': path.resolve(__dirname, '../../react-components/src'),
+      '@internal/react-composites': path.resolve(__dirname, '../../react-composites/src'),
+      '@internal/chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
+      '@internal/chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
+      '@internal/calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
+      '@internal/calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
+      '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
     };
 
     return config;
@@ -46,13 +46,13 @@ module.exports = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@azure/communication-react': path.resolve(__dirname, '../../communication-react/src'),
-      'react-components': path.resolve(__dirname, '../../react-components/src'),
-      'react-composites': path.resolve(__dirname, '../../react-composites/src'),
-      'chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
-      'chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
-      'calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
-      'calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
-      'acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
+      '@internal/react-components': path.resolve(__dirname, '../../react-components/src'),
+      '@internal/react-composites': path.resolve(__dirname, '../../react-composites/src'),
+      '@internal/chat-stateful-client': path.resolve(__dirname, '../../chat-stateful-client/src'),
+      '@internal/chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
+      '@internal/calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
+      '@internal/calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
+      '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
     };
 
     return config;

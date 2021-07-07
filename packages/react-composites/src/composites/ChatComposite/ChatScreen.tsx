@@ -11,7 +11,7 @@ import {
   ParticipantList,
   SendBox,
   TypingIndicator
-} from 'react-components';
+} from '@internal/react-components';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
