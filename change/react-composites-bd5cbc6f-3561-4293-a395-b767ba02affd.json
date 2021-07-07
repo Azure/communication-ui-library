@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add permissions banner",
-  "packageName": "react-composites",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

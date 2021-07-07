@@ -69,9 +69,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     );
   };
 
-  const { strings } = useLocale();
-  const onLabel = props.strings?.onLabel ?? strings.cameraButton.onLabel;
-  const offLabel = props.strings?.offLabel ?? strings.cameraButton.offLabel;
+  const localeStrings = useLocale().strings.cameraButton;
+  const onLabel = props.strings?.onLabel ?? localeStrings.onLabel;
+  const offLabel = props.strings?.offLabel ?? localeStrings.offLabel;
 
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {

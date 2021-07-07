@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Call, Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import {

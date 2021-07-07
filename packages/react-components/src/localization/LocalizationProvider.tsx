@@ -2,12 +2,19 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
-import { CameraButtonStrings } from '../components/CameraButton';
-import { EndCallButtonStrings } from '../components/EndCallButton';
-import { MessageThreadStrings } from '../components/MessageThread';
-import { MicrophoneButtonStrings } from '../components/MicrophoneButton';
-import { ParticipantItemStrings } from '../components/ParticipantItem';
-import { TypingIndicatorStrings } from '../components/TypingIndicator';
+import {
+  CameraButtonStrings,
+  EndCallButtonStrings,
+  MessageStatusIndicatorStrings,
+  MessageThreadStrings,
+  MicrophoneButtonStrings,
+  OptionsButtonStrings,
+  ParticipantsButtonStrings,
+  ParticipantItemStrings,
+  ScreenShareButtonStrings,
+  SendBoxStrings,
+  TypingIndicatorStrings
+} from '../components';
 import en_US from './translated/en-US.json';
 
 /**
@@ -32,8 +39,18 @@ export interface ComponentStrings {
   microphoneButton: MicrophoneButtonStrings;
   /** Strings for EndCallButton */
   endCallButton: EndCallButtonStrings;
+  /** Strings for OptionsButton */
+  optionsButton: OptionsButtonStrings;
+  /** Strings for ParticipantsButton */
+  participantsButton: ParticipantsButtonStrings;
+  /** Strings for OptionsButton */
+  screenShareButton: ScreenShareButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
+  /** Strings for SendBox */
+  sendBox: SendBoxStrings;
+  /** Strings for MessageStatusIndicator */
+  messageStatusIndicator: MessageStatusIndicatorStrings;
 }
 
 /**

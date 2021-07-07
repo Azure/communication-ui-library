@@ -5,8 +5,8 @@ import { getTypingIndicators, getParticipants, getUserId } from './baseSelectors
 import * as reselect from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { CommunicationParticipant } from 'react-components';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CommunicationParticipant } from '@internal/react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
 
 const filterTypingIndicators = (

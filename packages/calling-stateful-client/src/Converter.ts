@@ -12,7 +12,7 @@ import {
   Transfer
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
   RemoteParticipantState as DeclarativeRemoteParticipant,

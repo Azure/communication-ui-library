@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix styling of CallComposite controls",
-  "packageName": "react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

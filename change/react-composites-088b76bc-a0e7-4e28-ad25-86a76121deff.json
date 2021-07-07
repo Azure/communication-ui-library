@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "apply ux changes to composite",
-  "packageName": "react-composites",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

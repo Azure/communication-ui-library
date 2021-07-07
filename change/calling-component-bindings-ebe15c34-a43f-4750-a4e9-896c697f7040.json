@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update selectors for CallClientState",
-  "packageName": "calling-component-bindings",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

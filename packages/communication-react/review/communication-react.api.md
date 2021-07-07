@@ -588,8 +588,9 @@ export type ChatObjectMethodNames<TName extends string, T> = {
     [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
 }[keyof T];
 
-// @public (undocumented)
+// @public
 export type ChatOptions = {
+    showParticipantPane?: boolean;
     sendBoxMaxLength?: number;
 };
 
@@ -678,9 +679,14 @@ export type CommunicationParticipant = {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
+    messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
+    optionsButton: OptionsButtonStrings;
     participantItem: ParticipantItemStrings;
+    participantsButton: ParticipantsButtonStrings;
+    screenShareButton: ScreenShareButtonStrings;
+    sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
 }
 
@@ -970,12 +976,17 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    deliveredTooltipText?: string;
-    failedToSendTooltipText?: string;
-    seenTooltipText?: string;
-    sendingTooltipText?: string;
     status?: MessageStatus;
+    strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStylesProps;
+}
+
+// @public
+export interface MessageStatusIndicatorStrings {
+    deliveredTooltipText: string;
+    failedToSendTooltipText: string;
+    seenTooltipText: string;
+    sendingTooltipText: string;
 }
 
 // @public
@@ -1064,6 +1075,7 @@ export interface OptionsButtonProps extends IButtonProps {
     selectedSpeaker?: OptionsDevice;
     showLabel?: boolean;
     speakers?: OptionsDevice[];
+    strings?: Partial<OptionsButtonStrings>;
 }
 
 // @public (undocumented)
@@ -1082,6 +1094,17 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
 }>;
+
+// @public
+export interface OptionsButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
+    label: string;
+    microphoneMenuTitle: string;
+    microphoneMenuTooltip: string;
+    speakerMenuTitle: string;
+    speakerMenuTooltip: string;
+}
 
 // @public
 export interface OptionsDevice {
@@ -1165,6 +1188,7 @@ export interface ParticipantsButtonProps extends IButtonProps {
     onMuteAll?: () => void;
     participantListProps: ParticipantListProps;
     showLabel?: boolean;
+    strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStylesProps;
 }
 
@@ -1182,6 +1206,15 @@ export const participantsButtonSelector: reselect.OutputParametricSelector<CallC
     };
     callInvitationURL?: string | undefined;
 }>;
+
+// @public
+export interface ParticipantsButtonStrings {
+    copyInviteLinkButtonLabel: string;
+    label: string;
+    menuHeader: string;
+    muteAllButtonLabel: string;
+    participantsListButtonLabel: string;
+}
 
 // @public
 export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
@@ -1234,6 +1267,7 @@ export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 export interface ScreenShareButtonProps extends IButtonProps {
     onToggleScreenShare?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: Partial<ScreenShareButtonStrings>;
 }
 
 // @public (undocumented)
@@ -1242,6 +1276,12 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<CallCl
 }, (res: CallState | undefined) => {
     checked: boolean | undefined;
 }>;
+
+// @public
+export interface ScreenShareButtonStrings {
+    offLabel: string;
+    onLabel: string;
+}
 
 // @public (undocumented)
 export type Selector = (state: ClientState, props: any) => any;
@@ -1256,6 +1296,7 @@ export interface SendBoxProps {
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
+    strings?: Partial<SendBoxStrings>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
     systemMessage?: string;
@@ -1269,6 +1310,11 @@ export const sendBoxSelector: OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
 }>;
+
+// @public
+export interface SendBoxStrings {
+    placeholderText: string;
+}
 
 // @public (undocumented)
 export interface SendBoxStylesProps extends BaseCustomStylesProps {

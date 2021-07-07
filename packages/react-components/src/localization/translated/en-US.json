@@ -10,6 +10,15 @@
     "multipleUsersAbbreviateMany": "{users} and {numOthers} others are typing ...",
     "delimiter": ", "
   },
+  "sendBox": {
+    "placeholderText": "Enter a message"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Sent",
+    "seenTooltipText": "Seen",
+    "sendingTooltipText": "Sending",
+    "failedToSendTooltipText": "Failed to send"
+  },
   "endCallButton": {
     "label": "Leave"
   },
@@ -20,6 +29,26 @@
   "microphoneButton": {
     "onLabel": "Mute",
     "offLabel": "Unmute"
+  },
+  "optionsButton": {
+    "label": "Options",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Choose Camera",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choose Microphone",
+    "speakerMenuTitle": "Speaker",
+    "speakerMenuTooltip": "Choose Speaker"
+  },
+  "participantsButton": {
+    "label": "People",
+    "menuHeader": "In this call",
+    "participantsListButtonLabel": "{numParticipants} people",
+    "muteAllButtonLabel": "Mute all",
+    "copyInviteLinkButtonLabel": "Copy invite link"
+  },
+  "screenShareButton": {
+    "onLabel": "Stop",
+    "offLabel": "Share"
   },
   "messageThread": {
     "yesterday": "Yesterday",
