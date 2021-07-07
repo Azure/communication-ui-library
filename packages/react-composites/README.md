@@ -6,7 +6,7 @@ Todo: _documentation to follow_
 
 ### Automated Browser Tests (E2E)
 
-Currently, browser based tests for Chat composite on Chrome using puppeteer are supported.
+Currently, browser based tests for Chat composite on Chrome, Firefox and Webkit using Playwright are supported.
 
 #### Install Dependencies
 
