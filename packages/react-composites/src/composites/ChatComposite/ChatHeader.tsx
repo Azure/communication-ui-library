@@ -16,7 +16,7 @@ export type HeaderProps = {
 export const ChatHeader = (props: HeaderProps): JSX.Element => {
   return (
     <Stack data-ui-id={CHAT_UI_IDS.chatHeader} className={chatHeaderContainerStyle} horizontal>
-      <Stack.Item align="center" style={{ minWidth: '12.5rem' }}>
+      <Stack.Item align="center">
         <div data-ui-id={CHAT_UI_IDS.chatHeaderTopic} className={topicNameLabelStyle}>
           {props.topic}
         </div>
