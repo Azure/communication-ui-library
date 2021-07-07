@@ -37,7 +37,7 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <>{chatAdapter && <ChatComposite adapter={chatAdapter} />}</>;
+  return <>{chatAdapter && <ChatComposite adapter={chatAdapter} options={{ showParticipantPane: true }} />}</>;
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

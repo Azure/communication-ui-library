@@ -7,7 +7,7 @@ import faker from 'faker';
 import { dataUiId, createUserAndThread, encodeQueryData, getNameInitials } from '../utils';
 import { startServer, stopServer } from './app/server';
 import { CHAT_UI_IDS } from '../../../src';
-import { COMPONENT_UI_IDS } from 'react-components';
+import { COMPONENT_UI_IDS } from '@internal/react-components';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
