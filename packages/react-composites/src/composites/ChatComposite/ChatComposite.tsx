@@ -27,21 +27,14 @@ export type ChatCompositeProps = {
   options?: ChatOptions;
 };
 
+/**
+ * Additional customizations for the chat composite
+ */
 export type ChatOptions = {
   /** Choose to show the participant pane */
   showParticipantPane?: boolean;
   /** Set a max width of the send box */ // TODO: we should remove this.
   sendBoxMaxLength?: number;
-  /**
-   * Set the number of messages per page.
-   * @remarks Choosing a smaller number results in improved performance
-   */
-  // messagesPerPage?: number;
-  /**
-   * Choose to support new lines (shift+enter) in textArea.
-   * This is disabled until ACS backend supports line switch.
-   */
-  // supportNewline: boolean;
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {

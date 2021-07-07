@@ -48,8 +48,8 @@ export const chatHeaderContainerStyle = mergeStyles({
 });
 
 export const topicNameLabelStyle = mergeStyles({
-  lineHeight: '2.5rem',
   fontSize: '1.1rem',
+  lineHeight: '2.5rem',
   fontWeight: 600,
   marginRight: '0.125rem',
   textOverflow: 'ellipsis',
