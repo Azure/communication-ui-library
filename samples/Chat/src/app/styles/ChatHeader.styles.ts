@@ -9,11 +9,9 @@ export const chatHeaderContainerStyle = mergeStyles({
   paddingLeft: '3.25rem',
   paddingRight: '3.25rem',
   marginTop: '1rem',
-  selectors: {
-    '@media (max-width: 65rem)': {
-      paddingLeft: '5%',
-      paddingRight: '5%'
-    }
+  '@media (max-width: 65rem)': {
+    paddingLeft: '5%',
+    paddingRight: '5%'
   },
   borderBottom: '0.063rem solid #DDDDDD'
 });
@@ -72,9 +70,7 @@ export const pivotItemStyles: Partial<IPivotStyles> = {
     marginRight: 0,
     height: '100%',
     color: palette.themePrimary,
-    selectors: {
-      ':hover': { color: palette.themePrimary }
-    }
+    ':hover': { color: palette.themePrimary }
   },
   link: { padding: 0, marginRight: 0, height: 60 },
   root: {
@@ -88,18 +84,14 @@ export const pivotItemStyles: Partial<IPivotStyles> = {
 
 export const iconButtonContainerStyle = mergeStyles({
   whiteSpace: 'nowrap',
-  selectors: {
-    '@media (min-width: 50rem)': {
-      display: 'none'
-    }
+  '@media (min-width: 50rem)': {
+    display: 'none'
   }
 });
 
 export const largeButtonContainerStyle = mergeStyles({
   whiteSpace: 'nowrap',
-  selectors: {
-    '@media (max-width: 50rem)': {
-      display: 'none'
-    }
+  '@media (max-width: 50rem)': {
+    display: 'none'
   }
 });

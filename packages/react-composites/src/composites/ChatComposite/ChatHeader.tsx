@@ -4,8 +4,8 @@
 import { Stack } from '@fluentui/react';
 import React from 'react';
 import * as reselect from 'reselect';
-import { ChatClientState } from 'chat-stateful-client';
-import { ChatBaseSelectorProps } from 'chat-component-bindings';
+import { ChatClientState } from '@internal/chat-stateful-client';
+import { ChatBaseSelectorProps } from '@internal/chat-component-bindings';
 import { chatHeaderContainerStyle, topicNameLabelStyle } from './styles/Chat.styles';
 
 export type HeaderProps = {
@@ -25,12 +25,9 @@ export const ChatHeader = (props: HeaderProps): JSX.Element => {
 // TODO: Consider exporting building-block selectors internally to composites.
 // This will avoid code duplication but still keep the public API clean.
 export const getTopicName = (state: ChatClientState, props: ChatBaseSelectorProps): string => {
-  return state.threads.get(props.threadId)?.properties?.topic || '';
+  return state.threads[props.threadId]?.properties?.topic || '';
 };
 
-export const getHeaderProps = reselect.createSelector(
-  [getTopicName],
-  (topic): HeaderProps => {
-    return { topic: topic };
-  }
-);
+export const getHeaderProps = reselect.createSelector([getTopicName], (topic): HeaderProps => {
+  return { topic: topic };
+});

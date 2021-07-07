@@ -3,15 +3,33 @@
 
 import React from 'react';
 import { mergeStyles, TooltipHost } from '@fluentui/react';
-import { MessageStatus } from 'acs-ui-common';
-import { SizeValue } from '@fluentui/react-northstar';
+import { MessageStatus } from '@internal/acs-ui-common';
 import {
   MessageStatusIndicatorErrorIconStyle,
   MessageStatusIndicatorIconStyle
 } from './styles/MessageStatusIndicator.styles';
-import { CircleRingIcon, CompletedIcon, ErrorIcon } from '@fluentui/react-icons';
-import { MessageSeenIcon } from '@fluentui/react-icons-northstar';
+import {
+  Circle20Regular,
+  CheckmarkCircle20Regular,
+  ErrorCircle20Regular,
+  EyeShow20Filled
+} from '@fluentui/react-icons';
 import { BaseCustomStylesProps } from '../types';
+import { useLocale } from '../localization';
+
+/**
+ * Strings of MessageStatusIndicator that can be overridden
+ */
+export interface MessageStatusIndicatorStrings {
+  /** Text to display in the delivered message icon tooltip. */
+  deliveredTooltipText: string;
+  /** Text to display in the seen message icon tooltip. */
+  seenTooltipText: string;
+  /** Text to display in the sending message icon tooltip. */
+  sendingTooltipText: string;
+  /** Text to display in the failed message icon tooltip. */
+  failedToSendTooltipText: string;
+}
 
 /**
  * Props for MessageStatusIndicator component
@@ -19,16 +37,6 @@ import { BaseCustomStylesProps } from '../types';
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
   status?: MessageStatus;
-  /** Text to display in the delivered message icon tooltip. */
-  deliveredTooltipText?: string;
-  /** Text to display in the seen message icon tooltip. */
-  seenTooltipText?: string;
-  /** Text to display in the sending message icon tooltip. */
-  sendingTooltipText?: string;
-  /** Text to display in the failed message icon tooltip. */
-  failedToSendTooltipText?: string;
-  /** Size of the message status icon. */
-  size?: SizeValue;
   /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
@@ -37,47 +45,53 @@ export interface MessageStatusIndicatorProps {
    * ```
    */
   styles?: BaseCustomStylesProps;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: MessageStatusIndicatorStrings;
 }
 
 /**
  * MessageStatusIndicator component.
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
-  const {
-    status,
-    deliveredTooltipText = 'Sent',
-    seenTooltipText = 'Seen',
-    sendingTooltipText = 'Sending',
-    failedToSendTooltipText = 'Failed to send',
-    size = 'medium',
-    styles
-  } = props;
+  const { status, styles } = props;
+
+  const localeStrings = useLocale().strings.messageStatusIndicator;
+  const strings = { ...localeStrings, ...props.strings };
 
   switch (status) {
     case 'failed':
       return (
-        <TooltipHost content={failedToSendTooltipText}>
-          <ErrorIcon className={mergeStyles(MessageStatusIndicatorErrorIconStyle, styles?.root)} />
+        <TooltipHost content={strings.failedToSendTooltipText}>
+          <ErrorCircle20Regular
+            primaryFill="currentColor"
+            className={mergeStyles(MessageStatusIndicatorErrorIconStyle, styles?.root)}
+          />
         </TooltipHost>
       );
     case 'sending':
       return (
-        <TooltipHost content={sendingTooltipText}>
-          <CircleRingIcon className={mergeStyles(MessageStatusIndicatorIconStyle, styles?.root)} />
+        <TooltipHost content={strings.sendingTooltipText}>
+          <Circle20Regular
+            primaryFill="currentColor"
+            className={mergeStyles(MessageStatusIndicatorIconStyle, styles?.root)}
+          />
         </TooltipHost>
       );
     case 'seen':
-      // MessageSeenIcon is only one that takes in size because its a react-northstar-icon. There doesn't seem to be a
-      // equivalent one in react-icons and react-icons don't seem to have size property.
       return (
-        <TooltipHost content={seenTooltipText}>
-          <MessageSeenIcon size={size} className={mergeStyles(styles?.root)} />
+        <TooltipHost content={strings.seenTooltipText}>
+          <EyeShow20Filled primaryFill="currentColor" className={mergeStyles(styles?.root)} />
         </TooltipHost>
       );
     case 'delivered':
       return (
-        <TooltipHost content={deliveredTooltipText}>
-          <CompletedIcon className={mergeStyles(MessageStatusIndicatorIconStyle, styles?.root)} />
+        <TooltipHost content={strings.deliveredTooltipText}>
+          <CheckmarkCircle20Regular
+            primaryFill="currentColor"
+            className={mergeStyles(MessageStatusIndicatorIconStyle, styles?.root)}
+          />
         </TooltipHost>
       );
     default:

@@ -4,9 +4,14 @@ import React, { Dispatch, useCallback } from 'react';
 import { InviteFooter } from './InviteFooter';
 import { SettingsManagementComponent } from './SettingsManagement';
 import { SlideOutPanelComponent } from './SlideOutPanel';
-import { useChatSelector, useChatThreadClient, useChatPropsFor as usePropsFor } from 'chat-component-bindings';
+import {
+  useSelector,
+  useChatThreadClient,
+  usePropsFor,
+  ParticipantList,
+  CommunicationParticipant
+} from '@azure/communication-react';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
-import { ParticipantList, CommunicationParticipant } from 'react-components';
 
 export enum SidePanelTypes {
   None = 'none',
@@ -24,7 +29,7 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
   const { selectedPane, setSelectedPane, onRenderAvatar } = props;
   const chatParticipantProps = usePropsFor(ParticipantList);
 
-  const chatSettingsProps = useChatSelector(chatSettingsSelector);
+  const chatSettingsProps = useSelector(chatSettingsSelector);
   const chatThreadClient = useChatThreadClient();
   const updateThreadTopicName = useCallback(
     async (topicName: string) => {

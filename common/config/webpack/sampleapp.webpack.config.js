@@ -13,13 +13,13 @@ const webpackConfig = (sampleAppDir, env) => ({
     alias: {
       // reference internal packlets src directly for hot reloading when developing
       '@azure/communication-react': path.resolve(sampleAppDir, '../../packages/communication-react/src'),
-      'react-components': path.resolve(sampleAppDir, '../../packages/react-components/src'),
-      'react-composites': path.resolve(sampleAppDir, '../../packages/react-composites/src'),
-      'chat-stateful-client': path.resolve(sampleAppDir, '../../packages/chat-stateful-client/src'),
-      'chat-component-bindings': path.resolve(sampleAppDir, '../../packages/chat-component-bindings/src'),
-      'calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
-      'calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
-      'acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src')
+      '@internal/react-components': path.resolve(sampleAppDir, '../../packages/react-components/src'),
+      '@internal/react-composites': path.resolve(sampleAppDir, '../../packages/react-composites/src'),
+      '@internal/chat-stateful-client': path.resolve(sampleAppDir, '../../packages/chat-stateful-client/src'),
+      '@internal/chat-component-bindings': path.resolve(sampleAppDir, '../../packages/chat-component-bindings/src'),
+      '@internal/calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
+      '@internal/calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
+      '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src')
     }
   },
   output: {
@@ -51,9 +51,11 @@ const webpackConfig = (sampleAppDir, env) => ({
     new webpack.DefinePlugin({
       'process.env.PRODUCTION': env.production || !env.development,
       'process.env.NAME': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).name),
-      'process.env.VERSION': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).version)
+      'process.env.VERSION': JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).version),
+      __CALLINGVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-calling']),
+      __CHATVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-chat']),
+      __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
     }),
-    new webpack.DefinePlugin({ __BUILDTIME__: JSON.stringify(new Date().toLocaleString()) })
   ],
   devServer: {
     port: 3000,

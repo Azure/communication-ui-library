@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FluentThemeProvider } from '@azure/communication-react';
+import { FluentThemeProvider, LocalizationProvider, locales } from '@azure/communication-react';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
@@ -65,7 +65,7 @@ export const parameters = {
 };
 
 const withThemeProvider = (Story: any, context: any) => {
-  const themeName = context.globals.theme;
+  const themeName = context.globals.theme as string;
   let theme = THEMES[themeName]?.theme;
   if (context.globals.customTheme) {
     try {
@@ -82,6 +82,16 @@ const withThemeProvider = (Story: any, context: any) => {
   );
 };
 
+const withLocalization = (Story: any, context: any) => {
+  const localeKey = context.globals.locale as string;
+
+  return (
+    <LocalizationProvider locale={locales[localeKey].locale} >
+      <Story {...context} />
+    </LocalizationProvider>
+  );
+};
+
 const withCenterStory = (Story: any) => {
   return (
     <div style={{
@@ -95,7 +105,7 @@ const withCenterStory = (Story: any) => {
   );
 };
 
-export const decorators = [withKnobs, withCenterStory, withThemeProvider];
+export const decorators = [withKnobs, withCenterStory, withThemeProvider, withLocalization];
 
 export const globalTypes = {
   theme: {
@@ -107,5 +117,18 @@ export const globalTypes = {
     name: 'Custom theme',
     description: 'Custom global theme for components',
     defaultValue: ''
+  },
+  locale: {
+    name: 'Locale',
+    description: 'Locale for components',
+    defaultValue: 'en-US',
+    toolbar: {
+      icon: 'globe',
+      items: [
+        { value: 'en-US', title: 'English' },
+        { value: 'de', title: 'German' },
+        { value: 'ar', title: 'Arabic' }
+      ],
+    },
   }
 };

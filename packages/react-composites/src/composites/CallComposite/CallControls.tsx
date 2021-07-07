@@ -7,15 +7,16 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
+  OptionsButton,
   ParticipantsButton,
   ScreenShareButton
-} from 'react-components';
+} from '@internal/react-components';
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
 
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
-  compressedMode: boolean;
+  compressedMode?: boolean;
   showParticipants?: boolean;
   callInvitationURL?: string;
 };
@@ -27,6 +28,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
+  const optionsButtonProps = usePropsFor(OptionsButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
   const onHangUp = useCallback(async () => {
     await hangUpButtonProps.onHangUp();
@@ -45,6 +47,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
         />
       )}
+      <OptionsButton {...optionsButtonProps} showLabel={!compressedMode} />
       <EndCallButton
         {...hangUpButtonProps}
         onHangUp={onHangUp}

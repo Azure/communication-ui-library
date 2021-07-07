@@ -3,12 +3,19 @@
 
 import EventEmitter from 'events';
 import produce from 'immer';
-import { ChatClientState, ChatThreadClientState, ChatThreadProperties } from './ChatClientState';
+import {
+  ChatClientState,
+  ChatErrors,
+  ChatThreadClientState,
+  ChatThreadProperties,
+  ChatErrorTargets,
+  ChatError
+} from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { enableMapSet } from 'immer';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
@@ -19,7 +26,8 @@ export class ChatContext {
   private _state: ChatClientState = {
     userId: <UnknownIdentifierKind>{ id: '' },
     displayName: '',
-    threads: new Map()
+    threads: {},
+    latestErrors: {} as ChatErrors
   };
   private _batchMode = false;
   private _emitter: EventEmitter;
@@ -46,7 +54,7 @@ export class ChatContext {
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        draft.threads.set(threadId, threadState);
+        draft.threads[threadId] = threadState;
       })
     );
   }
@@ -54,15 +62,15 @@ export class ChatContext {
   public createThread(threadId: string, properties?: ChatThreadProperties): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        draft.threads.set(threadId, {
+        draft.threads[threadId] = {
           chatMessages: {},
           threadId: threadId,
           properties: properties,
-          participants: new Map(),
+          participants: {},
           readReceipts: [],
           typingIndicators: [],
           latestReadTime: new Date(0)
-        });
+        };
       })
     );
   }
@@ -77,7 +85,7 @@ export class ChatContext {
   }
 
   public createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean {
-    const exists = this.getState().threads.has(threadId);
+    const exists = Object.prototype.hasOwnProperty.call(this.getState().threads, threadId);
     if (!exists) {
       this.createThread(threadId, properties);
       return true;
@@ -88,7 +96,7 @@ export class ChatContext {
   public updateThread(threadId: string, properties?: ChatThreadProperties): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const thread = draft.threads.get(threadId);
+        const thread = draft.threads[threadId];
         if (thread) {
           thread.properties = properties;
         }
@@ -102,7 +110,7 @@ export class ChatContext {
         if (topic === undefined) {
           return;
         }
-        const thread = draft.threads.get(threadId);
+        const thread = draft.threads[threadId];
         if (thread && !thread.properties) {
           thread.properties = { topic: topic };
         } else if (thread && thread.properties) {
@@ -115,9 +123,9 @@ export class ChatContext {
   public deleteThread(threadId: string): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const thread = draft.threads.get(threadId);
+        const thread = draft.threads[threadId];
         if (thread) {
-          draft.threads.delete(threadId);
+          delete draft.threads[threadId];
         }
       })
     );
@@ -126,13 +134,13 @@ export class ChatContext {
   public setChatMessages(threadId: string, messages: { [key: string]: ChatMessageWithStatus }): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const threadState = draft.threads.get(threadId);
+        const threadState = draft.threads[threadId];
         if (threadState) {
           threadState.chatMessages = messages;
         }
 
         // remove typing indicator when receive messages
-        const thread = draft.threads.get(threadId);
+        const thread = draft.threads[threadId];
         if (thread) {
           for (const message of Object.values(messages)) {
             this.filterTypingIndicatorForUser(thread, message.sender);
@@ -145,7 +153,7 @@ export class ChatContext {
   public updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const chatMessage = draft.threads.get(threadId)?.chatMessages[messagesId];
+        const chatMessage = draft.threads[threadId]?.chatMessages[messagesId];
         if (chatMessage) {
           if (!chatMessage.content) {
             chatMessage.content = {};
@@ -160,7 +168,7 @@ export class ChatContext {
     let localMessageDeleted = false;
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const chatMessages = draft.threads.get(threadId)?.chatMessages;
+        const chatMessages = draft.threads[threadId]?.chatMessages;
         const message: ChatMessageWithStatus | undefined = chatMessages ? chatMessages[localId] : undefined;
         if (chatMessages && message && message.clientMessageId) {
           delete chatMessages[message.clientMessageId];
@@ -174,7 +182,7 @@ export class ChatContext {
   public deleteMessage(threadId: string, id: string): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const chatMessages = draft.threads.get(threadId)?.chatMessages;
+        const chatMessages = draft.threads[threadId]?.chatMessages;
         if (chatMessages) {
           delete chatMessages[id];
         }
@@ -185,9 +193,9 @@ export class ChatContext {
   public setParticipant(threadId: string, participant: ChatParticipant): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const participants = draft.threads.get(threadId)?.participants;
+        const participants = draft.threads[threadId]?.participants;
         if (participants) {
-          participants.set(toFlatCommunicationIdentifier(participant.id), participant);
+          participants[toFlatCommunicationIdentifier(participant.id)] = participant;
         }
       })
     );
@@ -196,10 +204,10 @@ export class ChatContext {
   public setParticipants(threadId: string, participants: ChatParticipant[]): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const participantsMap = draft.threads.get(threadId)?.participants;
+        const participantsMap = draft.threads[threadId]?.participants;
         if (participantsMap) {
           for (const participant of participants) {
-            participantsMap.set(toFlatCommunicationIdentifier(participant.id), participant);
+            participantsMap[toFlatCommunicationIdentifier(participant.id)] = participant;
           }
         }
       })
@@ -209,10 +217,10 @@ export class ChatContext {
   public deleteParticipants(threadId: string, participantIds: CommunicationIdentifierKind[]): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const participants = draft.threads.get(threadId)?.participants;
+        const participants = draft.threads[threadId]?.participants;
         if (participants) {
           participantIds.forEach((id) => {
-            participants.delete(toFlatCommunicationIdentifier(id));
+            delete participants[toFlatCommunicationIdentifier(id)];
           });
         }
       })
@@ -222,8 +230,10 @@ export class ChatContext {
   public deleteParticipant(threadId: string, participantId: CommunicationIdentifierKind): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const participants = draft.threads.get(threadId)?.participants;
-        participants?.delete(toFlatCommunicationIdentifier(participantId));
+        const participants = draft.threads[threadId]?.participants;
+        if (participants) {
+          delete participants[toFlatCommunicationIdentifier(participantId)];
+        }
       })
     );
   }
@@ -231,7 +241,7 @@ export class ChatContext {
   public addReadReceipt(threadId: string, readReceipt: ChatMessageReadReceipt): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const thread = draft.threads.get(threadId);
+        const thread = draft.threads[threadId];
         const readReceipts = thread?.readReceipts;
         if (thread && readReceipts) {
           // TODO(prprabhu): Replace `this.getState()` with `draft`?
@@ -250,7 +260,7 @@ export class ChatContext {
         let isTypingActive = false;
         let isStateChanged = false;
         const newState = produce(this._state, (draft: ChatClientState) => {
-          for (const thread of draft.threads.values()) {
+          for (const thread of Object.values(draft.threads)) {
             const filteredTypingIndicators = thread.typingIndicators.filter((typingIndicator) => {
               const timeGap = Date.now() - typingIndicator.receivedOn.getTime();
               return timeGap < Constants.TYPING_INDICATOR_MAINTAIN_TIME;
@@ -280,7 +290,7 @@ export class ChatContext {
   public addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorReceivedEvent): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
-        const thread = draft.threads.get(threadId);
+        const thread = draft.threads[threadId];
         if (thread) {
           const typingIndicators = thread.typingIndicators;
           typingIndicators.push(typingIndicator);
@@ -297,7 +307,7 @@ export class ChatContext {
     if (messageId || clientMessageId) {
       this.setState(
         produce(this._state, (draft: ChatClientState) => {
-          const threadMessages = draft.threads.get(threadId)?.chatMessages;
+          const threadMessages = draft.threads[threadId]?.chatMessages;
           const isLocalIdInMap = threadMessages && clientMessageId && threadMessages[clientMessageId];
           const messageKey = !messageId || isLocalIdInMap ? clientMessageId : messageId;
 
@@ -306,12 +316,103 @@ export class ChatContext {
           }
 
           // remove typing indicator when receive a message from a user
-          const thread = draft.threads.get(threadId);
+          const thread = draft.threads[threadId];
           if (thread) {
             this.filterTypingIndicatorForUser(thread, message.sender);
           }
         })
       );
+    }
+  }
+
+  /**
+   * Tees any errors encountered in an async function to the state.
+   *
+   * If the function succeeds, clears associated errors from the state.
+   *
+   * @param f Async function to execute.
+   * @param target The error target to tee error to.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
+   * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
+   */
+  public withAsyncErrorTeedToState<Args extends unknown[], R>(
+    f: (...args: Args) => Promise<R>,
+    target: ChatErrorTargets,
+    clearTargets?: ChatErrorTargets[]
+  ): (...args: Args) => Promise<R> {
+    return async (...args: Args): Promise<R> => {
+      try {
+        const ret = await f(...args);
+
+        if (clearTargets !== undefined) {
+          this.clearError(clearTargets);
+        } else {
+          this.clearError([target]);
+        }
+
+        return ret;
+      } catch (error) {
+        this.setLatestError(target, error);
+        throw new ChatError(target, error);
+      }
+    };
+  }
+
+  /**
+   * Tees any errors encountered in an function to the state.
+   *
+   * If the function succeeds, clears associated errors from the state.
+   *
+   * @param f Function to execute.
+   * @param target The error target to tee error to.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
+   * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
+   */
+  public withErrorTeedToState<Args extends unknown[], R>(
+    f: (...args: Args) => R,
+    target: ChatErrorTargets,
+    clearTargets?: ChatErrorTargets[]
+  ): (...args: Args) => R {
+    return (...args: Args): R => {
+      try {
+        const ret = f(...args);
+
+        if (clearTargets !== undefined) {
+          this.clearError(clearTargets);
+        } else {
+          this.clearError([target]);
+        }
+
+        return ret;
+      } catch (error) {
+        this.setLatestError(target, error);
+        throw new ChatError(target, error);
+      }
+    };
+  }
+
+  private setLatestError(target: ChatErrorTargets, error: Error): void {
+    this.setState(
+      produce(this._state, (draft: ChatClientState) => {
+        draft.latestErrors[target] = error;
+      })
+    );
+  }
+
+  private clearError(targets: ChatErrorTargets[]): void {
+    let changed = false;
+    const newState = produce(this._state, (draft: ChatClientState) => {
+      for (const target of targets) {
+        if (draft.latestErrors[target] !== undefined) {
+          delete draft.latestErrors[target];
+          changed = true;
+        }
+      }
+    });
+    if (changed) {
+      this.setState(newState);
     }
   }
 

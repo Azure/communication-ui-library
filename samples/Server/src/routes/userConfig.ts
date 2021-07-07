@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.post('/:userId', async function (req, res, next) {
   const userConfig = req.body;
-  //const userConfig = JSON.parse(req.body);
   userIdToUserConfigMap.set(req.params['userId'], {
     emoji: userConfig['Emoji'],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     id: (req.params as any)['threadId']
   });
 

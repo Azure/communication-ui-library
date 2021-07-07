@@ -29,9 +29,10 @@ import {
   SystemMessagePayload
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
-import { memoizeFnAll, MessageStatus } from 'acs-ui-common';
+import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
+import { useLocale } from '../localization';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -140,6 +141,28 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
   messageStatusContainer?: (mine: boolean) => IStyle;
 }
 
+/**
+ * Strings of MessageThread that can be overridden
+ */
+export interface MessageThreadStrings {
+  /** String for Sunday */
+  sunday: string;
+  /** String for Monday */
+  monday: string;
+  /** String for Tuesday */
+  tuesday: string;
+  /** String for Wednesday */
+  wednesday: string;
+  /** String for Thursday */
+  thursday: string;
+  /** String for Friday */
+  friday: string;
+  /** String for Saturday */
+  saturday: string;
+  /** String for Yesterday */
+  yesterday: string;
+}
+
 export interface JumpToNewMessageButtonProps {
   onClick: () => void;
 }
@@ -172,7 +195,7 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
 };
 
 // https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-function extractContent(s): string {
+function extractContent(s: string): string {
   const span = document.createElement('span');
   span.innerHTML = s;
   return span.textContent || span.innerText;
@@ -184,7 +207,7 @@ const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.El
   return (
     <div>
       <LiveMessage
-        message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content)}`}
+        message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content || '')}`}
         aria-live="polite"
       />
       {htmlToReactParser.parse(payload.content)}
@@ -212,7 +235,7 @@ const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element =>
   );
 };
 
-const generateMessageContent = (payload: ChatMessagePayload) => {
+const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
   switch (payload.type) {
     case 'text':
       return generateTextMessageContent(payload);
@@ -227,6 +250,7 @@ const generateMessageContent = (payload: ChatMessagePayload) => {
 };
 
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  const { strings } = useLocale();
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
     const messageContentItem = generateMessageContent(payload);
@@ -239,7 +263,10 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         timestamp={
           payload.createdOn
             ? props.showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date())
+              ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
+                  ...strings.messageThread,
+                  ...props.strings
+                })
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
         }
@@ -262,13 +289,15 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
+    strings?: Partial<MessageThreadStrings>,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
       message: message,
-      showDate: showMessageDate
+      showDate: showMessageDate,
+      strings: strings
     };
 
     if (message.type === 'chat') {
@@ -433,6 +462,10 @@ export type MessageThreadProps = {
    * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<MessageThreadStrings>;
 };
 
 /**
@@ -453,6 +486,10 @@ export type MessageProps = {
    * @defaultValue `false`
    */
   showDate?: boolean;
+  /**
+   * Strings of component that can be overridden
+   */
+  strings?: Partial<MessageThreadStrings>;
 };
 
 /**
@@ -478,7 +515,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
-    onRenderMessage
+    onRenderMessage,
+    strings
   } = props;
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -503,8 +541,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const isAllChatMessagesLoadedRef = useRef(isAllChatMessagesLoaded);
   isAllChatMessagesLoadedRef.current = isAllChatMessagesLoaded;
 
-  const chatScrollDivRef: any = useRef();
-  const chatThreadRef: any = useRef();
+  const chatScrollDivRef = useRef<HTMLElement>(null);
+  const chatThreadRef = useRef<HTMLElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
   const messagesRef = useRef(messages);
@@ -566,13 +604,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [showMessageStatus, onMessageSeen, chatMessageIdJustSeen]);
 
   const scrollToBottom = useCallback((): void => {
-    chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
+    if (chatScrollDivRef.current) {
+      chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollHeight;
+    }
     setExistsNewChatMessage(false);
     setIsAtBottomOfScrollRef(true);
     sendMessageStatusIfAtBottom();
   }, [sendMessageStatusIfAtBottom]);
 
   const handleScroll = (): void => {
+    if (!chatScrollDivRef.current) {
+      return;
+    }
+
     const atBottom =
       Math.floor(chatScrollDivRef.current.scrollTop) >=
       chatScrollDivRef.current.scrollHeight - chatScrollDivRef.current.clientHeight;
@@ -587,11 +631,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     setIsAtTopOfScrollRef(atTop);
 
     // Make sure we do not stuck at the top if more messages are being fetched.
-    if (chatScrollDivRef.current.scrollTop === 0 && !isAllChatMessagesLoadedRef.current)
+    if (chatScrollDivRef.current.scrollTop === 0 && !isAllChatMessagesLoadedRef.current) {
       chatScrollDivRef.current.scrollTop = 5;
+    }
 
     (async () => {
       if (
+        chatScrollDivRef.current &&
         chatScrollDivRef.current.scrollTop <= 200 &&
         !isAllChatMessagesLoadedRef.current &&
         !isLoadingChatMessagesRef.current
@@ -612,12 +658,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   useEffect(() => {
     window && window.addEventListener('click', sendMessageStatusIfAtBottom);
     window && window.addEventListener('focus', sendMessageStatusIfAtBottom);
-    chatScrollDivRef.current && chatScrollDivRef.current.addEventListener('scroll', handleScroll);
+    chatScrollDivRef.current?.addEventListener('scroll', handleScroll);
     const chatScrollDiv = chatScrollDivRef.current;
     return () => {
       window && window.removeEventListener('click', sendMessageStatusIfAtBottom);
       window && window.removeEventListener('focus', sendMessageStatusIfAtBottom);
-      chatScrollDiv && chatScrollDiv.removeEventListener('scroll', handleScroll);
+      chatScrollDiv?.removeEventListener('scroll', handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -674,7 +720,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       if (onLoadPreviousChatMessages) {
-        while (chatScrollDivRef.current.scrollTop <= 200 && !isAllChatMessagesLoadedRef.current) {
+        while (
+          chatScrollDivRef.current &&
+          chatScrollDivRef.current.scrollTop <= 200 &&
+          !isAllChatMessagesLoadedRef.current
+        ) {
           setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
           // Release CPU resources for 200 milliseconds between each loop.
           await delay(200);
@@ -732,6 +782,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               styles,
               onRenderMessageStatus,
               defaultChatMessageRenderer,
+              strings,
               // Temporary solution to make sure we re-render if attach attribute is changed.
               // The proper fix should be in selector.
               message.type === 'chat' ? message.payload.attached : undefined,
@@ -752,7 +803,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSeenChatMessage,
       lastSendingChatMessage,
       lastDeliveredChatMessage,
-      onRenderMessage
+      onRenderMessage,
+      strings
     ]
   );
 

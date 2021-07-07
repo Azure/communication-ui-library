@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, ChatThreadClientState } from 'chat-stateful-client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { ChatClientState, ChatErrors, ChatThreadClientState } from '@internal/chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { ChatState } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
@@ -69,21 +71,39 @@ export const useSelectorWithAdaptation = <
 };
 
 const memoizeState = memoizeOne(
-  (userId: CommunicationIdentifierKind, displayName: string, threads: Map<string, ChatThreadClientState>) => ({
+  (
+    userId: CommunicationIdentifierKind,
+    displayName: string,
+    threads: { [key: string]: ChatThreadClientState },
+    latestErrors: ChatErrors
+  ) => ({
     userId,
     displayName,
-    threads
+    threads,
+    latestErrors
   })
 );
 
-const memoizeThreadMap = memoizeOne((thread: ChatThreadClientState) => new Map([[thread.threadId, thread]]));
+const memoizeThreads = memoizeOne((thread: ChatThreadClientState) => ({ [thread.threadId]: thread }));
 
 const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
-  const thread = compositeState.thread;
-  const threadMap = memoizeThreadMap(thread);
   return memoizeState(
     { kind: 'communicationUser', communicationUserId: compositeState.userId },
     compositeState.displayName,
-    threadMap
+    memoizeThreads(compositeState.thread),
+    // This is an unsafe type expansion.
+    // compositeState.latestErrors can contain properties that are not valid in ChatErrors.
+    //
+    // But there is no way to check for valid property names at runtime:
+    // - The set of valid property names is built from types in the @azure/communication-chat.
+    //   Thus we don't have a literal array of allowed strings at runtime.
+    // - Due to minification / uglification, the property names from the objects at runtime can't be used
+    //   to compare against permissible values inferred from the types.
+    //
+    // This is not a huge problem -- it simply means that our adapted selector will include some extra operations
+    // that are unknown to the UI component and data binding libraries. Generic handling of the errors (e.g.,
+    // just displaying them in some UI surface) will continue to work for these operations. Handling of
+    // specific operations (e.g., acting on errors related to permission issues) will ignore these operations.
+    compositeState.latestErrors as ChatErrors
   );
 };

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Drop spurious references to userId in lobby",
+  "packageName": "@internal/react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

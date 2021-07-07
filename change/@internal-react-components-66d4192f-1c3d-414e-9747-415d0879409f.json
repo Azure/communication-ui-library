@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "include local user to Participant list in ParticipantsButton",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

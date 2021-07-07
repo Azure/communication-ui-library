@@ -12,10 +12,14 @@ import HomeScreen from './HomeScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
 import { refreshTokenAsync } from './utils/refreshToken';
-import { ChatClientProvider, ChatThreadClientProvider } from 'chat-component-bindings';
+import {
+  createStatefulChatClient,
+  StatefulChatClient,
+  ChatClientProvider,
+  ChatThreadClientProvider
+} from '@azure/communication-react';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { createStatefulChatClient, StatefulChatClient } from 'chat-stateful-client';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
@@ -74,6 +78,7 @@ export default (): JSX.Element => {
           <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
             <ChatScreen
               endChatHandler={() => {
+                chatThreadClient.removeParticipant({ communicationUserId: userId });
                 setPage('end');
                 // Send up signal that the user wants to leave the chat
                 // Move to to next screen on success
@@ -91,7 +96,7 @@ export default (): JSX.Element => {
       return (
         <EndScreen
           rejoinHandler={() => {
-            setPage('chat'); // use store information to attempt to rejoin the chat thread
+            setPage('configuration'); // use store information to attempt to rejoin the chat thread
           }}
           homeHandler={() => {
             window.location.href = window.location.origin;

@@ -20,28 +20,29 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
       }
     >
       <div
-        className="ms-Stack css-4"
+        className="ms-Stack css-6"
       >
         <div
-          className="ms-Stack css-5"
+          className="ms-Stack css-7"
         >
           <div
-            className="ms-Stack css-7"
+            className="ms-Stack css-9"
           >
             <div
-              className="ms-Persona ms-Persona--size100 root-8"
+              aria-label=""
+              className="ms-Persona ms-Persona--size100 root-10"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size100 coin-15"
+                className="ms-Persona-coin ms-Persona--size100 coin-17"
                 role="presentation"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-17"
+                  className="ms-Persona-imageArea imageArea-19"
                   role="presentation"
                 >
                   <div
                     aria-hidden="true"
-                    className="ms-Persona-initials initials-20"
+                    className="ms-Persona-initials initials-22"
                   >
                     <span>
                       JK
@@ -52,11 +53,44 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
             </div>
           </div>
         </div>
-        <span
-          className="css-80 css-23"
+        <div
+          className="ms-Stack css-80 css-25"
         >
-          John Krasinski
-        </span>
+          <div
+            className="ms-Stack css-26"
+          >
+            <span
+              className="css-27"
+            >
+              John Krasinski
+            </span>
+          </div>
+          <div
+            className="ms-Stack css-28"
+          >
+            <span
+              aria-hidden={true}
+              className="root-span"
+              primaryFill="currentColor"
+            >
+              <svg
+                className="svg"
+                fill="currentColor"
+                height={16}
+                viewBox="0 0 16 16"
+                width={16}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 2a2.5 2.5 0 00-2.5 2.5V8a2.5 2.5 0 005 0V4.5A2.5 2.5 0 008 2z"
+                />
+                <path
+                  d="M4 7.5c.28 0 .5.22.5.5a3.5 3.5 0 107 0 .5.5 0 011 0 4.5 4.5 0 01-4 4.47v1.03a.5.5 0 01-1 0v-1.03A4.5 4.5 0 013.5 8c0-.28.22-.5.5-.5z"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

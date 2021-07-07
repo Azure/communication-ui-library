@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, DefaultButton, IButtonProps, Label, mergeStyles } from '@fluentui/react';
-import { CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
+import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -11,6 +12,16 @@ const defaultLocalVideoViewOption = {
   scalingMode: 'Crop',
   isMirrored: true
 } as VideoStreamOptions;
+
+/**
+ * Strings of CameraButton that can be overridden
+ */
+export interface CameraButtonStrings {
+  /** Label when button is on. */
+  onLabel: string;
+  /** Label when button is off. */
+  offLabel: string;
+}
 
 /**
  * Props for CameraButton component
@@ -32,6 +43,11 @@ export interface CameraButtonProps extends IButtonProps {
    * Options for rendering local video view.
    */
   localVideoViewOption?: VideoStreamOptions;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<CameraButtonStrings>;
 }
 
 /**
@@ -46,16 +62,27 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const [waitForCamera, setWaitForCamera] = useState(false);
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? <CallVideoIcon key={'videoIconKey'} /> : <CallVideoOffIcon key={'videoOffIconKey'} />;
-  };
-
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {props?.checked ? 'Turn off' : 'Turn on'}
-      </Label>
+    return props?.checked ? (
+      <Video20Filled key={'videoIconKey'} primaryFill="currentColor" />
+    ) : (
+      <VideoOff20Filled key={'videoOffIconKey'} primaryFill="currentColor" />
     );
   };
+
+  const localeStrings = useLocale().strings.cameraButton;
+  const onLabel = props.strings?.onLabel ?? localeStrings.onLabel;
+  const offLabel = props.strings?.offLabel ?? localeStrings.offLabel;
+
+  const defaultRenderText = useCallback(
+    (props?: IButtonProps): JSX.Element => {
+      return (
+        <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {props?.checked ? onLabel : offLabel}
+        </Label>
+      );
+    },
+    [onLabel, offLabel]
+  );
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click

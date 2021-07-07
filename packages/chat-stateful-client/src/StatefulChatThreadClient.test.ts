@@ -11,6 +11,8 @@ import {
   mockParticipants,
   mockReadReceipts
 } from './mocks/createMockChatThreadClient';
+import { createMockChatClient, defaultClientArgs, StateChangeListener } from './TestHelpers';
+import { createStatefulChatClientWithDeps, StatefulChatClient } from './StatefulChatClient';
 
 const threadId = '1';
 
@@ -30,9 +32,7 @@ describe('declarative chatThreadClient list iterators', () => {
       proxiedMessages.push(message);
     }
     expect(proxiedMessages.length).toBe(mockMessages.length);
-    expect(Object.values(context.getState().threads.get(threadId)?.chatMessages ?? {}).length).toBe(
-      mockMessages.length
-    );
+    expect(Object.values(context.getState().threads[threadId]?.chatMessages ?? {}).length).toBe(mockMessages.length);
   });
 
   test('declarative listMessage should proxy listMessages paged iterator and store it in internal state', async () => {
@@ -45,9 +45,7 @@ describe('declarative chatThreadClient list iterators', () => {
       }
     }
     expect(proxiedMessages.length).toBe(mockMessages.length);
-    expect(Object.values(context.getState().threads.get(threadId)?.chatMessages ?? {}).length).toBe(
-      mockMessages.length
-    );
+    expect(Object.values(context.getState().threads[threadId]?.chatMessages ?? {}).length).toBe(mockMessages.length);
   });
 
   test('declarative listParticipants should proxy listParticipants iterator and store it in internal state', async () => {
@@ -58,7 +56,7 @@ describe('declarative chatThreadClient list iterators', () => {
       proxiedParticipants.push(participant);
     }
     expect(proxiedParticipants.length).toBe(mockParticipants.length);
-    expect(context.getState().threads.get(threadId)?.participants.size).toBe(mockParticipants.length);
+    expect(Object.keys(context.getState().threads[threadId]?.participants ?? {}).length).toBe(mockParticipants.length);
   });
 
   test('declarative listParticipants should proxy listParticipants paged iterator and store it in internal state', async () => {
@@ -71,7 +69,7 @@ describe('declarative chatThreadClient list iterators', () => {
       }
     }
     expect(proxiedParticipants.length).toBe(mockParticipants.length);
-    expect(context.getState().threads.get(threadId)?.participants.size).toBe(mockParticipants.length);
+    expect(Object.keys(context.getState().threads[threadId]?.participants ?? {}).length).toBe(mockParticipants.length);
   });
 
   test('declarative listReadReceipts should proxy listReadReceipts iterator and store it in internal state', async () => {
@@ -82,7 +80,7 @@ describe('declarative chatThreadClient list iterators', () => {
       proxiedReadReceipt.push(readReceipt);
     }
     expect(proxiedReadReceipt.length).toBe(mockReadReceipts.length);
-    expect(context.getState().threads.get(threadId)?.readReceipts.length).toBe(mockReadReceipts.length);
+    expect(context.getState().threads[threadId]?.readReceipts.length).toBe(mockReadReceipts.length);
   });
 
   test('declarative listReadReceipts should proxy listReadReceipts paged iterator and store it in internal state', async () => {
@@ -95,14 +93,14 @@ describe('declarative chatThreadClient list iterators', () => {
       }
     }
     expect(proxiedReadReceipt.length).toBe(mockReadReceipts.length);
-    expect(context.getState().threads.get(threadId)?.readReceipts.length).toBe(mockReadReceipts.length);
+    expect(context.getState().threads[threadId]?.readReceipts.length).toBe(mockReadReceipts.length);
   });
 
   test('declarative listReadReceipts should generate latestReadTime properly', async () => {
     const context = new ChatContext();
     const pages = createMockChatClientAndDeclaratify(context).listReadReceipts().byPage();
     for await (const _page of pages);
-    const latestReadTime = context.getState().threads.get(threadId)?.latestReadTime;
+    const latestReadTime = context.getState().threads[threadId]?.latestReadTime;
 
     const maxReadTime = mockReadReceipts[mockReadReceipts.length - 1].readOn;
     expect(latestReadTime && latestReadTime).toBe(maxReadTime);
@@ -114,7 +112,7 @@ describe('declarative chatThreadClient basic api functions', () => {
     const context = new ChatContext();
     const message = await createMockChatClientAndDeclaratify(context).getMessage('MessageId1');
 
-    const messageInContext = context.getState().threads.get(threadId)?.chatMessages['MessageId1'];
+    const messageInContext = context.getState().threads[threadId]?.chatMessages['MessageId1'];
     expect(messageInContext).toBeDefined();
     expect(message).toMatchObject(messageInContext ?? {});
   });
@@ -124,7 +122,7 @@ describe('declarative chatThreadClient basic api functions', () => {
     const content = 'test';
     const sendMessagePromise = createMockChatClientAndDeclaratify(context).sendMessage({ content });
 
-    const chatMessages = Object.values(context.getState().threads.get(threadId)?.chatMessages ?? {});
+    const chatMessages = Object.values(context.getState().threads[threadId]?.chatMessages ?? {});
 
     expect(chatMessages.length).toBe(1);
     expect(chatMessages[0].clientMessageId).toBeDefined();
@@ -132,7 +130,7 @@ describe('declarative chatThreadClient basic api functions', () => {
 
     // await sending message result
     const result = await sendMessagePromise;
-    const chatMessagesAfterSending = Object.values(context.getState().threads.get(threadId)?.chatMessages ?? {});
+    const chatMessagesAfterSending = Object.values(context.getState().threads[threadId]?.chatMessages ?? {});
 
     expect(chatMessagesAfterSending[0].id).toBe(result.id);
     expect(chatMessagesAfterSending[0].content?.message).toBe(content);
@@ -153,7 +151,7 @@ describe('declarative chatThreadClient basic api functions', () => {
       failResult = true;
     }
 
-    const chatMessagesAfterSending = Object.values(context.getState().threads.get(threadId)?.chatMessages ?? {});
+    const chatMessagesAfterSending = Object.values(context.getState().threads[threadId]?.chatMessages ?? {});
 
     expect(failResult).toBeTruthy();
     expect(chatMessagesAfterSending[0].content?.message).toBe(content);
@@ -169,13 +167,15 @@ describe('declarative chatThreadClient basic api functions', () => {
       participants
     });
 
-    const participantsInContext = context.getState().threads.get(threadId)?.participants;
-    expect(participantsInContext?.size).toBe(2);
+    const participantsInContext = context.getState().threads[threadId]?.participants ?? {};
+    expect(Object.keys(participantsInContext).length).toBe(2);
 
     // Test removal function
     await mockClient.removeParticipant(participants[0].id);
 
-    const participantsAfterRemoval = Array.from(context.getState().threads.get(threadId)?.participants.values() ?? []);
+    const participantsAfterRemoval = Array.from(
+      Object.values(context.getState().threads[threadId]?.participants ?? {}) ?? []
+    );
     expect(participantsAfterRemoval.length).toBe(1);
     expect(participantsAfterRemoval[0]).toEqual(participants[1]);
   });
@@ -188,7 +188,7 @@ describe('declarative chatThreadClient basic api functions', () => {
 
     await mockClient.updateMessage(messageTemplate.id, { content });
 
-    const chatMessage = context.getState().threads.get(threadId)?.chatMessages[messageTemplate.id];
+    const chatMessage = context.getState().threads[threadId]?.chatMessages[messageTemplate.id];
 
     expect(chatMessage).toBeDefined();
     chatMessage && expect(chatMessage.content?.message).toBe(content);
@@ -201,7 +201,7 @@ describe('declarative chatThreadClient basic api functions', () => {
 
     await mockClient.updateTopic(topic);
 
-    const properties = context.getState().threads.get(threadId)?.properties;
+    const properties = context.getState().threads[threadId]?.properties;
 
     expect(properties).toBeDefined();
     properties && expect(properties.topic).toBe(topic);
@@ -215,7 +215,7 @@ describe('declarative chatThreadClient basic api functions', () => {
 
     mockClient.deleteMessage(clientMessageId);
 
-    const chatMessages = context.getState().threads.get(threadId)?.chatMessages;
+    const chatMessages = context.getState().threads[threadId]?.chatMessages;
 
     expect(Object.values(chatMessages ?? {}).length).toBe(0);
   });
@@ -227,8 +227,38 @@ describe('declarative chatThreadClient basic api functions', () => {
 
     mockClient.deleteMessage(messageTemplate.id);
 
-    const chatMessages = context.getState().threads.get(threadId)?.chatMessages;
+    const chatMessages = context.getState().threads[threadId]?.chatMessages;
 
     expect(Object.values(chatMessages ?? {}).length).toBe(0);
   });
 });
+
+describe('stateful chatThreadClient tees errors to state', () => {
+  test('when updateTopic fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.updateTopic = async (): Promise<void> => {
+      throw Error('inejected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+
+    // Ignore state changes as a side-effect of thread creation on first call to getChatThreadClient().
+    client.getChatThreadClient('threadId');
+
+    const listener = new StateChangeListener(client);
+
+    await expect(client.getChatThreadClient('threadId').updateTopic('topic')).rejects.toThrow();
+
+    expect(listener.onChangeCalledCount).toBe(1);
+    const latestError = listener.state.latestErrors['ChatThreadClient.updateTopic'];
+    expect(latestError).toBeDefined();
+  });
+});
+
+// Creates a mock stateful chat client that returns the given thread client for all thread IDs.
+const createMockChatClientWithChatThreadClient = (chatThreadClient: ChatThreadClient): StatefulChatClient => {
+  const client = createMockChatClient();
+  client.getChatThreadClient = () => {
+    return chatThreadClient;
+  };
+  return createStatefulChatClientWithDeps(client, defaultClientArgs);
+};

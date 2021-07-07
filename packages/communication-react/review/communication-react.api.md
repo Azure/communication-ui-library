@@ -43,12 +43,10 @@ import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
-import { ReactElement } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import * as reselect from 'reselect';
 import { ScalingMode } from '@azure/communication-calling';
-import { SizeValue } from '@fluentui/react-northstar';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
@@ -60,7 +58,13 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public (undocumented)
-export type AreEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
+export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
+
+// @public (undocumented)
+export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = AreTypeEqual<Required<Parameters<A>[0]>, Required<Parameters<B>[0]>>;
+
+// @public (undocumented)
+export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
@@ -273,14 +277,6 @@ export type CallAdapterUiState = {
 };
 
 // @public (undocumented)
-export const CallAgentContext: React_2.Context<CallAgentContextType | undefined>;
-
-// @public (undocumented)
-export type CallAgentContextType = {
-    callAgent: CallAgent | undefined;
-};
-
-// @public (undocumented)
 export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 
 // @public (undocumented)
@@ -297,15 +293,6 @@ export interface CallAgentState {
 }
 
 // @public (undocumented)
-export const CallClientContext: React_2.Context<CallClientContextType | undefined>;
-
-// @public (undocumented)
-export type CallClientContextType = {
-    callClient: StatefulCallClient;
-    deviceManager: StatefulDeviceManager | undefined;
-};
-
-// @public (undocumented)
 export const CallClientProvider: (props: CallClientProviderProps) => JSX.Element;
 
 // @public (undocumented)
@@ -319,10 +306,14 @@ export interface CallClientProviderProps {
 // @public
 export interface CallClientState {
     callAgent: CallAgentState | undefined;
-    calls: Map<string, CallState>;
+    calls: {
+        [key: string]: CallState;
+    };
     callsEnded: CallState[];
     deviceManager: DeviceManagerState;
-    incomingCalls: Map<string, IncomingCallState>;
+    incomingCalls: {
+        [key: string]: IncomingCallState;
+    };
     incomingCallsEnded: IncomingCallState[];
     userId: CommunicationUserKind;
 }
@@ -342,14 +333,6 @@ export type CallCompositeProps = {
 };
 
 // @public (undocumented)
-export const CallContext: React_2.Context<CallContextType | undefined>;
-
-// @public (undocumented)
-export type CallContextType = {
-    call: Call | undefined;
-};
-
-// @public (undocumented)
 export type CallEndedListener = (event: {
     callId: string;
 }) => void;
@@ -366,6 +349,9 @@ export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | Micr
 export type CallingBaseSelectorProps = {
     callId: string;
 };
+
+// @public (undocumented)
+export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]> : never;
 
 // @public
 export interface CallingTheme {
@@ -407,8 +393,12 @@ export interface CallState {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStreamState[];
     recording: RecordingCallFeature;
-    remoteParticipants: Map<string, RemoteParticipantState>;
-    remoteParticipantsEnded: Map<string, RemoteParticipantState>;
+    remoteParticipants: {
+        [keys: string]: RemoteParticipantState;
+    };
+    remoteParticipantsEnded: {
+        [keys: string]: RemoteParticipantState;
+    };
     screenShareRemoteParticipant: string | undefined;
     startTime: Date;
     state: CallState_2;
@@ -424,6 +414,7 @@ export interface CameraButtonProps extends IButtonProps {
     localVideoViewOption?: VideoStreamOptions;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     showLabel?: boolean;
+    strings?: Partial<CameraButtonStrings>;
 }
 
 // @public (undocumented)
@@ -434,6 +425,12 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
     disabled: boolean;
     checked: boolean;
 }>;
+
+// @public
+export interface CameraButtonStrings {
+    offLabel: string;
+    onLabel: string;
+}
 
 // @public (undocumented)
 export interface ChatAdapter {
@@ -458,7 +455,7 @@ export interface ChatAdapter {
     // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
     offStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
@@ -474,7 +471,7 @@ export interface ChatAdapter {
     // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
     onStateChange(handler: (state: ChatState) => void): void;
     // (undocumented)
@@ -488,6 +485,11 @@ export interface ChatAdapter {
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
 }
+
+// @public
+export type ChatAdapterErrors = {
+    [operation: string]: Error;
+};
 
 // @public (undocumented)
 export type ChatBaseSelectorProps = {
@@ -507,7 +509,10 @@ export type ChatClientProviderProps = {
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
-    threads: Map<string, ChatThreadClientState>;
+    threads: {
+        [key: string]: ChatThreadClientState;
+    };
+    latestErrors: ChatErrors;
 };
 
 // @public (undocumented)
@@ -518,15 +523,39 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
+    latestErrors: ChatAdapterErrors;
 };
 
 // @public (undocumented)
 export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
-    onRenderAvatar?: (userId: string) => JSX.Element;
+    onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
 };
+
+// @public
+export class ChatError extends Error {
+    constructor(target: ChatErrorTargets, inner: Error);
+    inner: Error;
+    target: ChatErrorTargets;
+}
+
+// @public
+export type ChatErrorListener = (event: {
+    operation: string;
+    error: Error;
+}) => void;
+
+// @public
+export type ChatErrors = {
+    [target in ChatErrorTargets]: Error;
+};
+
+// @public
+export type ChatErrorTargets = ChatObjectMethodNames<'ChatClient', ChatClient> | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -551,6 +580,14 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     status: MessageStatus;
 };
 
+// @public
+export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+
+// @public
+export type ChatObjectMethodNames<TName extends string, T> = {
+    [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
+}[keyof T];
+
 // @public (undocumented)
 export type ChatOptions = {
     sendBoxMaxLength?: number;
@@ -560,10 +597,15 @@ export type ChatOptions = {
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     participants: CommunicationParticipant[];
-}, (res1: string, res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: string, res2: {
+    [key: string]: ChatParticipant;
+}, res3: string) => {
     myUserId: string;
     participants: CommunicationParticipant[];
 }>;
+
+// @public (undocumented)
+export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]> : never;
 
 // @public (undocumented)
 export type ChatState = ChatUIState & ChatCompositeClientState;
@@ -582,7 +624,9 @@ export type ChatThreadClientState = {
     chatMessages: {
         [key: string]: ChatMessageWithStatus;
     };
-    participants: Map<string, ChatParticipant>;
+    participants: {
+        [key: string]: ChatParticipant;
+    };
     threadId: string;
     properties?: ChatThreadProperties;
     readReceipts: ChatMessageReadReceipt[];
@@ -614,6 +658,12 @@ export type ChatUIState = {
 };
 
 // @public (undocumented)
+export type ClientState = CallClientState & ChatClientState;
+
+// @public (undocumented)
+export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+
+// @public (undocumented)
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
@@ -623,6 +673,21 @@ export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
 };
+
+// @public
+export interface ComponentStrings {
+    cameraButton: CameraButtonStrings;
+    endCallButton: EndCallButtonStrings;
+    messageStatusIndicator: MessageStatusIndicatorStrings;
+    messageThread: MessageThreadStrings;
+    microphoneButton: MicrophoneButtonStrings;
+    optionsButton: OptionsButtonStrings;
+    participantItem: ParticipantItemStrings;
+    participantsButton: ParticipantsButtonStrings;
+    screenShareButton: ScreenShareButtonStrings;
+    sendBox: SendBoxStrings;
+    typingIndicator: TypingIndicatorStrings;
+}
 
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
@@ -663,14 +728,8 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onDisposeLocalStreamView: () => Promise<void>;
 };
 
-// @public
-export const createDefaultCallingHandlersForComponent: <Props>(callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Pick<DefaultCallingHandlers, CommonProperties<DefaultCallingHandlers, Props>>;
-
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
-
-// @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Props>>;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
@@ -733,7 +792,7 @@ export type DeviceManagerState = {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     deviceAccess?: DeviceAccess;
-    unparentedViews: Map<LocalVideoStreamState, LocalVideoStreamState>;
+    unparentedViews: LocalVideoStreamState[];
 };
 
 // @public (undocumented)
@@ -752,6 +811,12 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 export interface EndCallButtonProps extends IButtonProps {
     onHangUp?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: EndCallButtonStrings;
+}
+
+// @public
+export interface EndCallButtonStrings {
+    label: string;
 }
 
 // @public
@@ -767,40 +832,16 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
-export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => CallState | undefined;
-
-// @public (undocumented)
-export type GetCallingSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : never;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : undefined;
 
 // @public (undocumented)
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export const getCalls: (state: CallClientState) => Map<string, CallState>;
-
-// @public (undocumented)
-export const getCallsEnded: (state: CallClientState) => CallState[];
-
-// @public (undocumented)
-export type GetChatSelector<Component> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : never;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
-
-// @public (undocumented)
-export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
-
-// @public (undocumented)
-export const getDisplayName: (state: CallClientState) => string | undefined;
-
-// @public (undocumented)
-export const getIdentifier: (state: CallClientState) => string;
-
-// @public (undocumented)
-export const getIncomingCalls: (state: CallClientState) => Map<string, IncomingCallState>;
-
-// @public (undocumented)
-export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -862,6 +903,30 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
+export interface Locale {
+    strings: ComponentStrings;
+}
+
+// @public
+export const LocaleContext: React_2.Context<Locale>;
+
+// @public (undocumented)
+export const locales: Record<string, {
+    locale: Locale;
+    englishName: string;
+    displayName: string;
+}>;
+
+// @public
+export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
+
+// @public
+export type LocalizationProviderProps = {
+    locale: Locale;
+    children: React_2.ReactNode;
+};
+
+// @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
@@ -885,6 +950,7 @@ export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
+    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public (undocumented)
@@ -909,13 +975,17 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 
 // @public
 export interface MessageStatusIndicatorProps {
-    deliveredTooltipText?: string;
-    failedToSendTooltipText?: string;
-    seenTooltipText?: string;
-    sendingTooltipText?: string;
-    size?: SizeValue;
     status?: MessageStatus;
+    strings?: MessageStatusIndicatorStrings;
     styles?: BaseCustomStylesProps;
+}
+
+// @public
+export interface MessageStatusIndicatorStrings {
+    deliveredTooltipText: string;
+    failedToSendTooltipText: string;
+    seenTooltipText: string;
+    sendingTooltipText: string;
 }
 
 // @public
@@ -936,7 +1006,20 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    strings?: Partial<MessageThreadStrings>;
 };
+
+// @public
+export interface MessageThreadStrings {
+    friday: string;
+    monday: string;
+    saturday: string;
+    sunday: string;
+    thursday: string;
+    tuesday: string;
+    wednesday: string;
+    yesterday: string;
+}
 
 // @public (undocumented)
 export interface MessageThreadStylesProps extends BaseCustomStylesProps {
@@ -958,6 +1041,7 @@ export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 export interface MicrophoneButtonProps extends IButtonProps {
     onToggleMicrophone?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: Partial<MicrophoneButtonStrings>;
 }
 
 // @public (undocumented)
@@ -970,20 +1054,27 @@ export const microphoneButtonSelector: reselect.OutputParametricSelector<CallCli
 }>;
 
 // @public
+export interface MicrophoneButtonStrings {
+    offLabel: string;
+    onLabel: string;
+}
+
+// @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
 export interface OptionsButtonProps extends IButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
-    onSelectCamera?: (device: any) => Promise<void>;
-    onSelectMicrophone?: (device: any) => Promise<void>;
-    onSelectSpeaker?: (device: any) => Promise<void>;
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
     selectedMicrophone?: OptionsDevice;
     selectedSpeaker?: OptionsDevice;
     showLabel?: boolean;
     speakers?: OptionsDevice[];
+    strings?: Partial<OptionsButtonStrings>;
 }
 
 // @public (undocumented)
@@ -1004,6 +1095,17 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
 }>;
 
 // @public
+export interface OptionsButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
+    label: string;
+    microphoneMenuTitle: string;
+    microphoneMenuTooltip: string;
+    speakerMenuTitle: string;
+    speakerMenuTooltip: string;
+}
+
+// @public
 export interface OptionsDevice {
     id: string;
     name: string;
@@ -1020,7 +1122,14 @@ export interface ParticipantItemProps {
     onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
+    strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStylesProps;
+}
+
+// @public
+export interface ParticipantItemStrings {
+    isMeText: string;
+    menuTitle: string;
 }
 
 // @public (undocumented)
@@ -1078,6 +1187,7 @@ export interface ParticipantsButtonProps extends IButtonProps {
     onMuteAll?: () => void;
     participantListProps: ParticipantListProps;
     showLabel?: boolean;
+    strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStylesProps;
 }
 
@@ -1095,6 +1205,15 @@ export const participantsButtonSelector: reselect.OutputParametricSelector<CallC
     };
     callInvitationURL?: string | undefined;
 }>;
+
+// @public
+export interface ParticipantsButtonStrings {
+    copyInviteLinkButtonLabel: string;
+    label: string;
+    menuHeader: string;
+    muteAllButtonLabel: string;
+    participantsListButtonLabel: string;
+}
 
 // @public
 export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
@@ -1127,7 +1246,9 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     state: RemoteParticipantState_2;
-    videoStreams: Map<number, RemoteVideoStreamState>;
+    videoStreams: {
+        [key: number]: RemoteVideoStreamState;
+    };
 }
 
 // @public
@@ -1145,6 +1266,7 @@ export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 export interface ScreenShareButtonProps extends IButtonProps {
     onToggleScreenShare?: () => Promise<void>;
     showLabel?: boolean;
+    strings?: Partial<ScreenShareButtonStrings>;
 }
 
 // @public (undocumented)
@@ -1153,6 +1275,15 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<CallCl
 }, (res: CallState | undefined) => {
     checked: boolean | undefined;
 }>;
+
+// @public
+export interface ScreenShareButtonStrings {
+    offLabel: string;
+    onLabel: string;
+}
+
+// @public (undocumented)
+export type Selector = (state: ClientState, props: any) => any;
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
@@ -1164,6 +1295,7 @@ export interface SendBoxProps {
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
+    strings?: Partial<SendBoxStrings>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
     systemMessage?: string;
@@ -1177,6 +1309,11 @@ export const sendBoxSelector: OutputSelector<ChatClientState, {
     displayName: string;
     userId: string;
 }>;
+
+// @public
+export interface SendBoxStrings {
+    placeholderText: string;
+}
 
 // @public (undocumented)
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
@@ -1293,18 +1430,29 @@ export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
 export interface TypingIndicatorProps {
-    onRenderUsers?: (users: CommunicationParticipant[]) => JSX.Element;
+    onRenderUser?: (users: CommunicationParticipant) => JSX.Element;
+    strings?: Partial<TypingIndicatorStrings>;
     styles?: TypingIndicatorStylesProps;
-    typingString?: string;
     typingUsers: CommunicationParticipant[];
 }
 
 // @public (undocumented)
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
-}, (res1: TypingIndicatorReceivedEvent[], res2: Map<string, ChatParticipant>, res3: string) => {
+}, (res1: TypingIndicatorReceivedEvent[], res2: {
+    [key: string]: ChatParticipant;
+}, res3: string) => {
     typingUsers: CommunicationParticipant[];
 }>;
+
+// @public
+export interface TypingIndicatorStrings {
+    delimiter: string;
+    multipleUsers: string;
+    multipleUsersAbbreviateMany: string;
+    multipleUsersAbbreviateOne: string;
+    singleUser: string;
+}
 
 // @public (undocumented)
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
@@ -1322,25 +1470,22 @@ export const useCallAgent: () => CallAgent | undefined;
 export const useCallClient: () => StatefulCallClient;
 
 // @public (undocumented)
-export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetCallingSelector<Component>> & Pick<DefaultCallingHandlers, CommonProperties<DefaultCallingHandlers, Parameters<Component>[0]>>;
-
-// @public (undocumented)
-export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
-
-// @public (undocumented)
 export const useChatClient: () => StatefulChatClient;
-
-// @public (undocumented)
-export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ReturnType<GetChatSelector<Component>> & Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, Parameters<Component>[0]>>;
-
-// @public (undocumented)
-export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any>(selector: SelectorT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ReturnType<SelectorT>;
 
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @public (undocumented)
+export const useLocale: () => Locale;
+
+// @public (undocumented)
+export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
+
+// @public (undocumented)
+export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
@@ -1372,6 +1517,7 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
+    showMuteIndicator?: boolean;
     styles?: BaseCustomStylesProps;
 }
 
@@ -1440,10 +1586,11 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
+    isMuted?: boolean;
     isVideoReady?: boolean;
     onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
-    showDisplayName?: boolean;
+    showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
 }
 

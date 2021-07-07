@@ -13,7 +13,7 @@ import {
   concatStyleSets,
   mergeStyles
 } from '@fluentui/react';
-import { UserFriendsIcon } from '@fluentui/react-northstar';
+import { People20Filled } from '@fluentui/react-icons';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import { ParticipantList, ParticipantListProps } from './ParticipantList';
@@ -23,14 +23,41 @@ import {
   defaultParticipantListContainerStyle,
   participantsButtonMenuPropsStyle
 } from './styles/ControlBar.styles';
+import { useLocale } from '../localization';
+import { formatString } from '../localization/localizationUtils';
 import { ButtonCustomStylesProps } from '../types';
-
 /**
  * Styles Props for ParticipantsButton component
  */
 export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
   /** Styles of ParticipantList container */
   participantListContainerStyle?: IStyle;
+}
+
+/**
+ * Strings of ParticipantsButtonStrings that can be overridden
+ */
+export interface ParticipantsButtonStrings {
+  /**
+   * Label of button
+   */
+  label: string;
+  /**
+   * Header of menu pop up
+   */
+  menuHeader: string;
+  /**
+   * Label of menu button to show list of participants. Placeholders: [numParticipants]
+   */
+  participantsListButtonLabel: string;
+  /**
+   * Label of menu button to copy invite link
+   */
+  copyInviteLinkButtonLabel: string;
+  /**
+   * Label of menu button to mute all participants
+   */
+  muteAllButtonLabel: string;
 }
 
 /**
@@ -64,6 +91,10 @@ export interface ParticipantsButtonProps extends IButtonProps {
    * CallBack to mute all remote participants
    */
   onMuteAll?: () => void;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<ParticipantsButtonStrings>;
 }
 
 /**
@@ -106,13 +137,15 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     return false;
   }, [callInvitationURL]);
 
-  const generateDefaultParticipantsSubMenuProps = (): IContextualMenuItem[] => {
+  const localeStrings = useLocale().strings.participantsButton;
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
+
+  const generateDefaultParticipantsSubMenuProps = useCallback((): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
     if (participantListProps.participants.length > 0) {
       items.push({
         key: 'participantListMenuItemKey',
-        text: 'Participant list',
         onRender: onRenderCallback
       });
 
@@ -121,8 +154,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       if (onMuteAll) {
         items.push({
           key: 'muteAllKey',
-          text: 'Mute all',
-          title: 'Mute all',
+          text: strings.muteAllButtonLabel,
+          title: strings.muteAllButtonLabel,
           iconProps: { iconName: 'MicOff2' },
           onClick: onMuteAllCallback
         });
@@ -130,11 +163,11 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
 
     return items;
-  };
+  }, [strings, participantListProps.participants.length, onRenderCallback, onMuteAll, onMuteAllCallback]);
 
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
-      title: 'In this call',
+      title: strings.menuHeader,
       styles: participantsButtonMenuPropsStyle,
       items: []
     };
@@ -149,7 +182,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
       menuProps.items.push({
         key: 'participantCountKey',
-        name: `${participantCount} people`,
+        name: formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCount}` }),
         iconProps: { iconName: 'People' },
         subMenuProps: {
           items: generateDefaultParticipantsSubMenuProps()
@@ -160,13 +193,15 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     if (callInvitationURL) {
       menuProps.items.push({
         key: 'InviteLinkKey',
-        name: 'Copy invite link',
+        name: strings.copyInviteLinkButtonLabel,
+        title: strings.copyInviteLinkButtonLabel,
         iconProps: { iconName: 'Link' },
         onClick: onCopyCallback
       });
     }
 
     return menuProps;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     participantListProps,
     participantListProps.participants,
@@ -178,16 +213,19 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderIcon = (): JSX.Element => {
-    return <UserFriendsIcon key={'participantsIconKey'} />;
+    return <People20Filled key={'participantsIconKey'} primaryFill="currentColor" />;
   };
 
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'participantsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {'People'}
-      </Label>
-    );
-  };
+  const defaultRenderText = useCallback(
+    (props?: IButtonProps): JSX.Element => {
+      return (
+        <Label key={'participantsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {strings.label}
+        </Label>
+      );
+    },
+    [strings.label]
+  );
 
   return (
     <DefaultButton

@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState, useEffect, useRef, useMemo } from 'react';
 
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
-import { CallState, CallClientState, DeviceManagerState } from 'calling-stateful-client';
+import { CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CommunicationUserKind } from '@azure/communication-common';
 
 // This function highly depends on chatClient.onChange event
@@ -73,11 +75,11 @@ const memoizeState = memoizeOne(
   (
     userId: CommunicationUserKind,
     deviceManager: DeviceManagerState,
-    calls: Map<string, CallState>,
+    calls: { [key: string]: CallState },
     displayName?: string
   ): CallClientState => ({
     userId,
-    incomingCalls: new Map([]),
+    incomingCalls: {},
     incomingCallsEnded: [],
     callsEnded: [],
     deviceManager,
@@ -86,12 +88,13 @@ const memoizeState = memoizeOne(
   })
 );
 
-const memoizeCallMap = memoizeOne(
-  (call?: CallState): Map<string, CallState> => (call ? new Map([[call.id, call]]) : new Map([]))
-);
+const memoizeCalls = memoizeOne((call?: CallState): { [key: string]: CallState } => (call ? { [call.id]: call } : {}));
 
 const adaptCompositeState = (compositeState: CallAdapterState): CallClientState => {
-  const call = compositeState.call;
-  const callMap = memoizeCallMap(call);
-  return memoizeState(compositeState.userId, compositeState.devices, callMap, compositeState.displayName);
+  return memoizeState(
+    compositeState.userId,
+    compositeState.devices,
+    memoizeCalls(compositeState.call),
+    compositeState.displayName
+  );
 };

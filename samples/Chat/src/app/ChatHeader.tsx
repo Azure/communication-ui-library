@@ -3,7 +3,7 @@
 
 import React, { Dispatch } from 'react';
 import { DefaultButton, Icon, IconButton, Pivot, PivotItem, Stack } from '@fluentui/react';
-import { SettingsIcon, UserFriendsIcon } from '@fluentui/react-icons-northstar';
+import { Settings20Filled, Settings20Regular, People20Filled, People20Regular } from '@fluentui/react-icons';
 import {
   chatHeaderContainerStyle,
   greyIconButtonStyle,
@@ -17,7 +17,7 @@ import {
 } from './styles/ChatHeader.styles';
 import { SidePanelTypes } from './SidePanel';
 import { copyIconStyle } from './styles/InviteFooter.styles';
-import { CommunicationParticipant } from 'react-components';
+import { CommunicationParticipant } from '@azure/communication-react';
 
 export type ChatHeaderProps = {
   myUserId: string;
@@ -75,24 +75,24 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
               {/* To Toggle People's Panel */}
               <PivotItem
                 itemKey={SidePanelTypes.People}
-                onRenderItemLink={() => (
-                  <UserFriendsIcon
-                    outline={props.selectedPane === SidePanelTypes.People ? false : true}
-                    size="medium"
-                    className={pivotItemStyle}
-                  />
-                )}
+                onRenderItemLink={() =>
+                  props.selectedPane === SidePanelTypes.People ? (
+                    <People20Filled primaryFill="currentColor" className={pivotItemStyle} />
+                  ) : (
+                    <People20Regular primaryFill="currentColor" className={pivotItemStyle} />
+                  )
+                }
               />
               {/* To Toggle Settings's Panel */}
               <PivotItem
                 itemKey={SidePanelTypes.Settings}
-                onRenderItemLink={() => (
-                  <SettingsIcon
-                    outline={props.selectedPane === SidePanelTypes.Settings ? false : true}
-                    size="medium"
-                    className={pivotItemStyle}
-                  />
-                )}
+                onRenderItemLink={() =>
+                  props.selectedPane === SidePanelTypes.Settings ? (
+                    <Settings20Filled primaryFill="currentColor" className={pivotItemStyle} />
+                  ) : (
+                    <Settings20Regular primaryFill="currentColor" className={pivotItemStyle} />
+                  )
+                }
               />
             </Pivot>
           </Stack.Item>

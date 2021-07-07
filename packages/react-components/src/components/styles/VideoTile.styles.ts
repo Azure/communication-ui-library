@@ -38,15 +38,30 @@ export const disabledVideoHint = mergeStyles({
   left: '0.5rem',
   overflow: 'hidden',
   position: 'absolute',
-  padding: '0.25rem',
-  fontSize: '12px',
-  fontWeight: 600,
-  lineHeight: '1rem',
   whiteSpace: 'nowrap',
   maxWidth: '95%',
-  borderRadius: theme.effects.roundedCorner4
+  borderRadius: theme.effects.roundedCorner4,
+  alignItems: 'center',
+  padding: '0.15rem'
 });
 
 export const videoHint = mergeStyles(disabledVideoHint, {
-  backgroundColor: 'rgba(255, 255, 255, 0.8)'
+  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  alignItems: 'center',
+  padding: '0.15rem'
 });
+
+export const displayNameStyle: IStyle = {
+  padding: '0.1rem',
+  fontSize: '0.75rem',
+  fontWeight: 600
+};
+
+export const iconContainerStyle: IStyle = {
+  padding: '0.1rem',
+  height: '100%',
+  alignItems: 'center',
+  '& svg': {
+    display: 'block'
+  }
+};

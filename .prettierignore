@@ -20,3 +20,6 @@ shrinkwrap.json
 
 # Prettier reformats code blocks inside Markdown, which affects rendered output
 *.md
+
+# Storybook intermediate files
+storybook-static/

@@ -27,6 +27,7 @@ export const incomingCallAcceptButtonStyle = mergeStyles({
   minWidth: '2rem',
   width: '2rem',
   border: 'none',
+  padding: 'none',
   ':hover, :active': {
     backgroundColor: palette.green,
     color: palette.white
@@ -40,6 +41,7 @@ export const incomingCallRejectButtonStyle = mergeStyles({
   minWidth: '2rem',
   width: '2rem',
   border: 'none',
+  padding: 'none',
   ':hover, :active': {
     backgroundColor: palette.red,
     color: palette.white

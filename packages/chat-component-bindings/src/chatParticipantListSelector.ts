@@ -3,9 +3,9 @@
 
 import { getUserId, getDisplayName, getParticipants } from './baseSelectors';
 import * as reselect from 'reselect';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatParticipant } from '@azure/communication-chat';
-import { CommunicationParticipant } from 'react-components';
+import { CommunicationParticipant } from '@internal/react-components';
 
 const convertChatParticipantsToCommunicationParticipants = (
   chatParticipants: ChatParticipant[]
@@ -27,8 +27,8 @@ const moderatorIndex = (participants: CommunicationParticipant[]): number => {
 
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
-  (userId, chatParticipants: Map<string, ChatParticipant>, displayName) => {
-    let participants = convertChatParticipantsToCommunicationParticipants(Array.from(chatParticipants.values()));
+  (userId, chatParticipants: { [key: string]: ChatParticipant }, displayName) => {
+    let participants = convertChatParticipantsToCommunicationParticipants(Object.values(chatParticipants));
     if (0 !== participants.length) {
       const moderatorIdx = moderatorIndex(participants);
 

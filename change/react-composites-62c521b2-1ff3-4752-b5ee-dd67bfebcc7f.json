@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adding floating localvideopreview layout to VideoGallery.",
-  "packageName": "react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

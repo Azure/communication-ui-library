@@ -1,12 +1,12 @@
 dependencies:
-  prettier: 2.0.5
-  pretty-quick: 3.1.0_prettier@2.0.5
+  prettier: 2.3.1
+  pretty-quick: 3.1.1_prettier@2.3.1
 lockfileVersion: 5.2
 packages:
-  /@types/minimatch/3.0.3:
+  /@types/minimatch/3.0.4:
     dev: false
     resolution:
-      integrity: sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
+      integrity: sha512-1z8k4wzFnNjVK/tlxvrWuK5WMt6mydWWP7+zvH5eFep4oj+UkrfiJTRtjCeBXNpwaA/FYqqtb4/QS4ianFpIRA==
   /ansi-styles/4.3.0:
     dependencies:
       color-convert: 2.0.1
@@ -33,13 +33,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==
-  /balanced-match/1.0.0:
+  /balanced-match/1.0.2:
     dev: false
     resolution:
-      integrity: sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
+      integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
   /brace-expansion/1.1.11:
     dependencies:
-      balanced-match: 1.0.0
+      balanced-match: 1.0.2
       concat-map: 0.0.1
     dev: false
     resolution:
@@ -178,7 +178,7 @@ packages:
       integrity: sha512-oi1b3MfbyGa7FJMP9GmLTttni5JoICpYBRlq+x5V16fZbLsnL9N3wFqqIm/nIG43FjUFkFh9Epzp/kzUGUnJxQ==
   /multimatch/4.0.0:
     dependencies:
-      '@types/minimatch': 3.0.3
+      '@types/minimatch': 3.0.4
       array-differ: 3.0.0
       array-union: 2.1.0
       arrify: 2.0.1
@@ -244,14 +244,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
-  /prettier/2.0.5:
+  /prettier/2.3.1:
     dev: false
     engines:
       node: '>=10.13.0'
     hasBin: true
     resolution:
-      integrity: sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
-  /pretty-quick/3.1.0_prettier@2.0.5:
+      integrity: sha512-p+vNbgpLjif/+D+DwAZAbndtRrR0md0MwfmOVN9N+2RgyACMT+7tfaRnT+WDPkqnuVwleyuBIG2XBxKDme3hPA==
+  /pretty-quick/3.1.1_prettier@2.3.1:
     dependencies:
       chalk: 3.0.0
       execa: 4.1.0
@@ -259,7 +259,7 @@ packages:
       ignore: 5.1.8
       mri: 1.1.6
       multimatch: 4.0.0
-      prettier: 2.0.5
+      prettier: 2.3.1
     dev: false
     engines:
       node: '>=10.13'
@@ -267,7 +267,7 @@ packages:
     peerDependencies:
       prettier: '>=2.0.0'
     resolution:
-      integrity: sha512-DtxIxksaUWCgPFN7E1ZZk4+Aav3CCuRdhrDSFZENb404sYMtuo9Zka823F+Mgeyt8Zt3bUiCjFzzWYE9LYqkmQ==
+      integrity: sha512-ZYLGiMoV2jcaas3vTJrLvKAYsxDoXQBUn8OSTxkl67Fyov9lyXivJTl0+2WVh+y6EovGcw7Lm5ThYpH+Sh3XxQ==
   /pump/3.0.0:
     dependencies:
       end-of-stream: 1.4.4
@@ -321,5 +321,5 @@ packages:
     resolution:
       integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 specifiers:
-  prettier: 2.0.5
+  prettier: 2.3.1
   pretty-quick: ~3.1.0

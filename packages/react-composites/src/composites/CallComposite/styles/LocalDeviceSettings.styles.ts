@@ -23,8 +23,10 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   },
   dropdown: {
     height: '2.5rem',
-    maxWidth: '20.75rem',
-    minWidth: '12.5rem'
+    width: '100%',
+    svg: {
+      verticalAlign: 'top'
+    }
   },
   title: {
     fontSize: '0.875rem',
@@ -41,8 +43,7 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
 });
 
 export const localSettingsContainer = mergeStyles({
-  width: '100%',
-  maxWidth: '18.75rem',
+  width: '18.75rem',
   minWidth: '12.5rem',
   maxHeight: '19.125rem',
   marginTop: '.313rem'
@@ -55,4 +56,9 @@ export const dropDownTitleIconStyles = mergeStyles({
   maxWidth: '100%',
   overflowWrap: 'break-word',
   margin: '.063rem'
+});
+
+export const optionIconStyles = mergeStyles({
+  marginRight: '8px',
+  verticalAlign: 'text-top'
 });

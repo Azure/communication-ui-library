@@ -1,16 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
-import { useCall, useCallClient } from '../providers';
+import { CallClientState, StatefulCallClient } from '@internal/calling-stateful-client';
+import { CallClientContext, useCall } from '../providers';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useContext } from 'react';
 
-export const useSelector = <SelectorT extends (state: CallClientState, props: any) => any>(
-  selector: SelectorT,
+export const useSelector = <
+  SelectorT extends (state: CallClientState, props: any) => any,
+  ParamT extends SelectorT | undefined
+>(
+  selector: ParamT,
   selectorProps?: Parameters<SelectorT>[1]
-): ReturnType<SelectorT> => {
-  const callClient: StatefulCallClient = useCallClient() as any;
+): ParamT extends SelectorT ? ReturnType<SelectorT> : undefined => {
+  const callClient: StatefulCallClient | undefined = useContext(CallClientContext)?.callClient;
   const callId = useCall()?.id;
 
   // Keeps track of whether the current component is mounted or not. If it has unmounted, make sure we do not modify the
@@ -31,10 +34,13 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
     [callId]
   );
 
-  const [props, setProps] = useState(selector(callClient.getState(), selectorProps ?? callIdConfigProps));
+  const [props, setProps] = useState(
+    callClient && selector ? selector(callClient.getState(), selectorProps ?? callIdConfigProps) : undefined
+  );
   const propRef = useRef(props);
   propRef.current = props;
   useEffect(() => {
+    if (!callClient || !selector) return;
     const onStateChange = (state: CallClientState): void => {
       if (!mounted.current) {
         return;
@@ -49,5 +55,5 @@ export const useSelector = <SelectorT extends (state: CallClientState, props: an
       callClient.offStateChange(onStateChange);
     };
   }, [callClient, selector, selectorProps, callIdConfigProps, mounted]);
-  return props;
+  return selector ? props : undefined;
 };

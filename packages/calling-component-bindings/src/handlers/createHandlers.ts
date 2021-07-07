@@ -10,11 +10,11 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
-import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from 'calling-stateful-client';
+import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 
 export type DefaultCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
@@ -92,9 +92,9 @@ export const createDefaultCallingHandlers = memoizeOne(
             // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
             // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
             // currently.
-            for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
-              await callClient.disposeView(undefined, undefined, stream);
-            }
+            callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
+              await callClient.disposeView(undefined, undefined, view);
+            });
           } else {
             await callClient.createView(
               undefined,
@@ -184,7 +184,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) {
         return;
       }
@@ -199,10 +199,10 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
       if (!call) return;
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const participant = Array.from(callState.remoteParticipants.values()).find(
+      const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
 
@@ -210,10 +210,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
-        (i) => i.mediaStreamType === 'Video'
-      );
-      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const screenShareStream = Object.values(participant.videoStreams).find(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
@@ -228,10 +226,10 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onDisposeRemoteStreamView = async (userId: string): Promise<void> => {
       if (!call) return;
-      const callState = callClient.getState().calls.get(call.id);
+      const callState = callClient.getState().calls[call.id];
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
 
-      const participant = Array.from(callState.remoteParticipants.values()).find(
+      const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
 
@@ -239,10 +237,8 @@ export const createDefaultCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Array.from(participant.videoStreams.values()).find(
-        (i) => i.mediaStreamType === 'Video'
-      );
-      const screenShareStream = Array.from(participant.videoStreams.values()).find(
+      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const screenShareStream = Object.values(participant.videoStreams).find(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
@@ -262,9 +258,9 @@ export const createDefaultCallingHandlers = memoizeOne(
         // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
         // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
         // currently.
-        for (const stream of callClient.getState().deviceManager.unparentedViews.keys()) {
-          await callClient.disposeView(undefined, undefined, stream);
-        }
+        callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
+          await callClient.disposeView(undefined, undefined, view);
+        });
       }
     };
 
@@ -297,7 +293,7 @@ export const createDefaultCallingHandlers = memoizeOne(
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
+  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
 /**
@@ -306,7 +302,7 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
  * @param callClient - StatefulCallClient returned from
- *   {@Link calling-stateful-client#createStatefulCallClient}.
+ *   {@Link @internal/calling-stateful-client#createStatefulCallClient}.
  * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@Link @azure/communication-calling#Call}.

@@ -1,7 +1,17 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "paths": {
+      "@internal/chat-component-bindings": ["../chat-component-bindings/src"],
+      "@internal/calling-component-bindings": ["../calling-component-bindings/src"],
+      "@internal/acs-ui-common": ["../acs-ui-common/src"],
+      "@internal/calling-stateful-client": ["../calling-stateful-client/src"],
+      "@internal/chat-stateful-client": ["../chat-stateful-client/src"],
+      "@internal/react-components": ["../react-components/src"],
+      "@internal/react-composites": ["../react-composites/src"],
+      "@azure/communication-react": ["../communication-react/src"]
+    }
   },
   "typeRoots": ["./node_modules/@types"],
   "include": ["stories/**/*"],

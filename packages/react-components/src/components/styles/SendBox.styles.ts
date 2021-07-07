@@ -18,11 +18,9 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
       borderRadius: '0.25rem',
       borderColor: borderColor,
       borderWidth: disabled ? '0px' : '1px',
-      selectors: {
-        ':hover': { borderColor: borderColor },
-        ':active': { borderColor: borderColor },
-        ':after': { borderColor: borderColor, borderRadius: '0.25rem' }
-      }
+      ':hover': { borderColor: borderColor },
+      ':active': { borderColor: borderColor },
+      ':after': { borderColor: borderColor, borderRadius: '0.25rem' }
     },
     field: {
       borderRadius: '0.25rem'
@@ -70,7 +68,7 @@ export const sendButtonStyle = mergeStyles({
   display: 'flex',
   justifyContent: 'center',
   position: 'absolute',
-  top: '0.875rem'
+  top: '0.75rem'
 });
 
 export const sendIconStyle = mergeStyles({

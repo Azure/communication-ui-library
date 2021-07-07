@@ -9,7 +9,7 @@ import {
   ParticipantList,
   ScreenShareButton,
   VideoGallery
-} from 'react-components';
+} from '@internal/react-components';
 import {
   cameraButtonSelector,
   microphoneButtonSelector,
@@ -21,21 +21,31 @@ import { participantListSelector } from '../participantListSelector';
 import { participantsButtonSelector } from '../participantsButtonSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
-import { Common } from 'acs-ui-common';
-import { AreEqual } from 'acs-ui-common';
+import { Common } from '@internal/acs-ui-common';
+import { AreEqual } from '@internal/acs-ui-common';
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
-import { ParticipantsButton } from 'react-components';
+import { ParticipantsButton } from '@internal/react-components';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
-): ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]> => {
+): GetSelector<Component> extends (props: any) => any
+  ? ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]>
+  : undefined => {
   const selector = getSelector(component);
-  return { ...useSelector(selector), ...useHandlers<Parameters<Component>[0]>(component) };
+  const props = useSelector(selector);
+  const handlers = useHandlers<Parameters<Component>[0]>(component);
+  if (props !== undefined) {
+    return { ...props, ...handlers } as any;
+  }
+  return undefined as any;
 };
 
 export const emptySelector = (): Record<string, never> => ({});
 
-export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> extends true
+export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
+  Component,
+  typeof VideoGallery
+> extends true
   ? typeof videoGallerySelector
   : AreEqual<Component, typeof OptionsButton> extends true
   ? typeof optionsButtonSelector
@@ -51,7 +61,7 @@ export type GetSelector<Component> = AreEqual<Component, typeof VideoGallery> ex
   ? typeof participantsButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
   ? typeof emptySelector
-  : never;
+  : undefined;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
@@ -79,5 +89,5 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     case EndCallButton:
       return emptySelector;
   }
-  throw 'Can\'t find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.';
+  return undefined;
 };

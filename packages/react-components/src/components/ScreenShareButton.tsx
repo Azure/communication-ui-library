@@ -1,10 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { CallControlCloseTrayIcon, CallControlPresentNewIcon } from '@fluentui/react-northstar';
+import { ShareScreenStart20Filled, ShareScreenStop20Filled } from '@fluentui/react-icons';
+import { useLocale } from '../localization';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+
+/**
+ * Strings of ScreenShareButton that can be overridden
+ */
+export interface ScreenShareButtonStrings {
+  /** Label when button is on. */
+  onLabel: string;
+  /** Label when button is off. */
+  offLabel: string;
+}
 
 /**
  * Props for ScreenShareButton component
@@ -21,6 +32,11 @@ export interface ScreenShareButtonProps extends IButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleScreenShare?: () => Promise<void>;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<ScreenShareButtonStrings>;
 }
 
 /**
@@ -33,21 +49,28 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
+  const localeStrings = useLocale().strings.screenShareButton;
+  const onLabel = props.strings?.onLabel ?? localeStrings.onLabel;
+  const offLabel = props.strings?.offLabel ?? localeStrings.offLabel;
+
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? (
-      <CallControlCloseTrayIcon key={'screenShareIconKey'} />
+      <ShareScreenStop20Filled key={'screenShareIconKey'} primaryFill="currentColor" />
     ) : (
-      <CallControlPresentNewIcon key={'screenShareBorderedIconKey'} bordered={false} />
+      <ShareScreenStart20Filled key={'screenShareBorderedIconKey'} primaryFill="currentColor" />
     );
   };
 
-  const defaultRenderText = (props?: IButtonProps): JSX.Element => {
-    return (
-      <Label key={'screenShareLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-        {props?.checked ? 'Stop' : 'Share'}
-      </Label>
-    );
-  };
+  const defaultRenderText = useCallback(
+    (props?: IButtonProps): JSX.Element => {
+      return (
+        <Label key={'screenShareLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {props?.checked ? onLabel : offLabel}
+        </Label>
+      );
+    },
+    [onLabel, offLabel]
+  );
 
   return (
     <DefaultButton

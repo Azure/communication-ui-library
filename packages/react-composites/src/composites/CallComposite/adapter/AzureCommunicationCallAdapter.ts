@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers, createDefaultCallingHandlers } from 'calling-component-bindings';
+import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
   StatefulDeviceManager,
@@ -9,7 +9,7 @@ import {
   createStatefulCallClient,
   DeviceManagerState,
   CallState
-} from 'calling-stateful-client';
+} from '@internal/calling-stateful-client';
 import {
   AudioOptions,
   CallAgent,
@@ -39,8 +39,8 @@ import {
   ParticipantLeftListener
 } from './CallAdapter';
 import { createAzureCommunicationUserCredential, isInCall } from '../../../utils';
-import { VideoStreamOptions } from 'react-components';
-import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { VideoStreamOptions } from '@internal/react-components';
+import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
@@ -95,7 +95,7 @@ class CallContext {
   }
 
   public updateClientState(clientState: CallClientState): void {
-    const call = clientState.calls.get(this.callId ?? '');
+    const call = this.callId ? clientState.calls[this.callId] : undefined;
     const endedCall =
       clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
     this.setState({
@@ -338,6 +338,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'error', errorHandler: (e: Error) => void): void;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: CallEvent, listener: (e: any) => void): void {
     this.emitter.on(event, listener);
   }
@@ -420,6 +421,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'error', errorHandler: (e: Error) => void): void;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: CallEvent, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
   }
@@ -428,7 +430,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.values().next().value?.view !== undefined;
+  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
 export const createAzureCommunicationCallAdapter = async (

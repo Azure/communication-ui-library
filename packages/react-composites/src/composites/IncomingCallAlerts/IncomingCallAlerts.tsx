@@ -11,7 +11,7 @@ import {
   DialogFooter,
   useTheme
 } from '@fluentui/react';
-import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import { Call20Filled, CallEnd20Filled, Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import React from 'react';
 import {
   incomingCallAcceptButtonStyle,
@@ -22,12 +22,12 @@ import {
   incomingCallModalContainerStyle
 } from './styles/IncomingCallAlerts.styles';
 import { useBoolean } from '@uifabric/react-hooks';
-import { StreamMedia, VideoTile } from 'react-components';
+import { StreamMedia, VideoTile } from '@internal/react-components';
 
 export type IncomingCallToastProps = {
   /** Caller's Name */
   callerName?: string;
-  /** Alert Text. For example "incoming vido call..." */
+  /** Alert Text. For example "incoming video call..." */
   alertText?: string;
   /** Caller's Avatar/Profile Image */
   avatar?: string;
@@ -63,10 +63,10 @@ export const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element =>
 
       <Stack horizontal tokens={{ childrenGap: 10 }}>
         <DefaultButton onClick={() => onClickReject()} className={incomingCallRejectButtonStyle}>
-          <CallEndIcon size={'medium'} />
+          <CallEnd20Filled primaryFill="currentColor" />
         </DefaultButton>
         <DefaultButton onClick={() => onClickAccept()} className={incomingCallAcceptButtonStyle}>
-          <CallIcon size={'medium'} />
+          <Call20Filled primaryFill="currentColor" />
         </DefaultButton>
       </Stack>
     </Stack>
@@ -164,7 +164,11 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
             onClick={() => onClickVideoToggle()}
             style={{ background: palette.neutralLighterAlt, border: 'none' }}
           >
-            {showLocalVideo ? <CallVideoIcon size="small" /> : <CallVideoOffIcon size="small" />}
+            {showLocalVideo ? (
+              <Video20Filled primaryFill="currentColor" />
+            ) : (
+              <VideoOff20Filled primaryFill="currentColor" />
+            )}
           </DefaultButton>
 
           <DefaultButton
