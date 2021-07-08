@@ -16,27 +16,31 @@
     // Call composite sample code starts here
     const displayName = 'Bob';
 
-    const callAdapter = await callComposite.loadCallComposite({
-      containerId: 'video-call-container',
-      groupId: guid, // Provide any GUID to join a group
-      displayName: displayName,
-      userId: user,
-      token: token
-    });
+    const callAdapter = await callComposite.loadCallComposite(
+      {
+        groupId: guid, // Provide any GUID to join a group
+        displayName: displayName,
+        userId: user,
+        token: token
+      },
+      document.getElementById('video-call-container')
+    );
 
     const threadId = await service.createChatThread();
     await service.addChatUser(threadId, user, displayName);
     const endpointUrl = await service.getEndpointUrl();
 
     // Chat composite sample code starts here
-    const chatAdapter = await chatComposite.loadChatComposite({
-      containerId: 'chat-container',
-      displayName: displayName,
-      threadId: threadId,
-      endpointUrl: endpointUrl,
-      userId: user,
-      token: token
-    });
+    const chatAdapter = await chatComposite.loadChatComposite(
+      {
+        displayName: displayName,
+        threadId: threadId,
+        endpointUrl: endpointUrl,
+        userId: user,
+        token: token
+      },
+      document.getElementById('chat-container')
+    );
 
     await chatAdapter.sendMessage('Hello to you! 👋');
 
