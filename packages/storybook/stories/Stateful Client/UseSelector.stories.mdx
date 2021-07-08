@@ -33,7 +33,7 @@ const ChatInfo = ({id: string, userName: string}) => {
 
 ### Passing your own props
 
-When creating your own selector, you can pass in your own parameters into selector by using second parameter of selector function:
+When creating your own selector, you can inject your own custom properties through the second parameter of the selector function.
 
 ```tsx
 const threadSelector = (state, props) => ({
