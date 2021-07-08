@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 // @public (undocumented)
@@ -40,7 +42,6 @@ export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
-
 
 // (No @packageDocumentation comment for this package)
 

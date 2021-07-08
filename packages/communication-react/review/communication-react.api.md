@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -160,7 +162,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     stopScreenShare(): Promise<void>;
     // (undocumented)
     unmute(): Promise<void>;
-    }
+}
 
 // @public
 export interface BaseCustomStylesProps {
@@ -645,15 +647,15 @@ export type ChatThreadProperties = {
 
 // @public (undocumented)
 export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
-    userId: string;
-    showMessageStatus: boolean;
-    messages: Message<"chat">[];
+userId: string;
+showMessageStatus: boolean;
+messages: Message<"chat">[];
 }, (res1: string, res2: {
-    [key: string]: ChatMessageWithStatus;
+[key: string]: ChatMessageWithStatus;
 }, res3: Date, res4: boolean) => {
-    userId: string;
-    showMessageStatus: boolean;
-    messages: Message<"chat">[];
+userId: string;
+showMessageStatus: boolean;
+messages: Message<"chat">[];
 }>;
 
 // @public (undocumented)
@@ -1319,11 +1321,11 @@ export interface SendBoxProps {
 
 // @public (undocumented)
 export const sendBoxSelector: OutputSelector<ChatClientState, {
-    displayName: string;
-    userId: string;
+displayName: string;
+userId: string;
 }, (res1: string, res2: string) => {
-    displayName: string;
-    userId: string;
+displayName: string;
+userId: string;
 }>;
 
 // @public
@@ -1545,33 +1547,33 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public (undocumented)
 export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-    remoteParticipants: VideoGalleryRemoteParticipant[];
+screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+localParticipant: {
+userId: string;
+displayName: string;
+isMuted: boolean | undefined;
+isScreenSharingOn: boolean | undefined;
+videoStream: {
+isAvailable: boolean;
+isMirrored: boolean | undefined;
+renderElement: HTMLElement | undefined;
+};
+};
+remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: CallState | undefined, res2: string | undefined, res3: string) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-    remoteParticipants: VideoGalleryRemoteParticipant[];
+screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+localParticipant: {
+userId: string;
+displayName: string;
+isMuted: boolean | undefined;
+isScreenSharingOn: boolean | undefined;
+videoStream: {
+isAvailable: boolean;
+isMirrored: boolean | undefined;
+renderElement: HTMLElement | undefined;
+};
+};
+remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
 
 // @public
@@ -1616,7 +1618,6 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
 
 // (No @packageDocumentation comment for this package)
 
