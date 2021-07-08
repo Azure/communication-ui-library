@@ -12,6 +12,44 @@ jest.mock('@azure/communication-chat');
 const ChatClientMock = ChatClient as jest.MockedClass<typeof ChatClient>;
 
 describe('Error is reflected in state and events', () => {
+  it('when sendMessage fails', async () => {
+    const threadClient = new StubChatThreadClient();
+    threadClient.sendMessage = (): Promise<any> => {
+      throw new Error('injected error');
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const stateListener = new StateChangeListener(adapter);
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.sendMessage('some message')).rejects.toThrow();
+
+    // Multiple state change notifications because message is saved as "sending" before backend API calls.
+    expect(stateListener.onChangeCalledCount).toBeGreaterThan(0);
+    const latestError = stateListener.state.latestErrors['ChatThreadClient.sendMessage'];
+    expect(latestError).toBeDefined();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.sendMessage');
+  });
+
+  it('when removeParticipant fails', async () => {
+    const threadClient = new StubChatThreadClient();
+    threadClient.removeParticipant = (): Promise<any> => {
+      throw new Error('injected error');
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const stateListener = new StateChangeListener(adapter);
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.removeParticipant('')).rejects.toThrow();
+
+    // Multiple state change notifications because message is saved as "sending" before backend API calls.
+    expect(stateListener.onChangeCalledCount).toBeGreaterThan(0);
+    const latestError = stateListener.state.latestErrors['ChatThreadClient.removeParticipant'];
+    expect(latestError).toBeDefined();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.removeParticipant');
+  });
+
   it('when setTopic fails', async () => {
     const threadClient = new StubChatThreadClient();
     threadClient.updateTopic = (): Promise<void> => {
