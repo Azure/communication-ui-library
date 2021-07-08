@@ -13,13 +13,13 @@ const webpackConfig = (sampleAppDir, env) => ({
     alias: {
       // reference internal packlets src directly for hot reloading when developing
       '@azure/communication-react': path.resolve(sampleAppDir, '../../packages/communication-react/src'),
-      'react-components': path.resolve(sampleAppDir, '../../packages/react-components/src'),
-      'react-composites': path.resolve(sampleAppDir, '../../packages/react-composites/src'),
-      'chat-stateful-client': path.resolve(sampleAppDir, '../../packages/chat-stateful-client/src'),
-      'chat-component-bindings': path.resolve(sampleAppDir, '../../packages/chat-component-bindings/src'),
-      'calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
-      'calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
-      'acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src')
+      '@internal/react-components': path.resolve(sampleAppDir, '../../packages/react-components/src'),
+      '@internal/react-composites': path.resolve(sampleAppDir, '../../packages/react-composites/src'),
+      '@internal/chat-stateful-client': path.resolve(sampleAppDir, '../../packages/chat-stateful-client/src'),
+      '@internal/chat-component-bindings': path.resolve(sampleAppDir, '../../packages/chat-component-bindings/src'),
+      '@internal/calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
+      '@internal/calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
+      '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src')
     }
   },
   output: {

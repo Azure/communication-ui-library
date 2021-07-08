@@ -52,7 +52,8 @@ export const parameters = {
             'Setting up',
             'UsePropsFor',
             'UseSelector'
-          ]
+          ],
+          'Adapters',
         ],
         QUICKSTARTS_FOLDER_PREFIX,
         COMPOSITE_FOLDER_PREFIX,

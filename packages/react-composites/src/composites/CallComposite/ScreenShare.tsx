@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { memoizeFnAll } from 'acs-ui-common';
+import { memoizeFnAll } from '@internal/acs-ui-common';
 import { mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
@@ -11,7 +11,7 @@ import {
   VideoGalleryRemoteParticipant,
   VideoStreamOptions,
   VideoTile
-} from 'react-components';
+} from '@internal/react-components';
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,

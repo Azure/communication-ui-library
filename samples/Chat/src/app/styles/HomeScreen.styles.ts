@@ -8,10 +8,8 @@ export const palette = getTheme().palette;
 export const imgStyle = mergeStyles({
   width: '26.813rem',
   height: '20.125rem',
-  selectors: {
-    '@media (max-width: 53.438rem)': {
-      display: 'none'
-    }
+  '@media (max-width: 53.438rem)': {
+    display: 'none'
   }
 });
 
@@ -55,18 +53,14 @@ export const buttonStyle = mergeStyles({
   width: 'fit-content',
   height: '2.5rem',
   borderRadius: 3,
-  selectors: {
-    '@media (max-width: 53.438rem)': {
-      padding: '0.625rem'
-    }
+  '@media (max-width: 53.438rem)': {
+    padding: '0.625rem'
   }
 });
 
 export const upperStackStyle = mergeStyles({
-  selectors: {
-    '@media (max-width: 53.438rem)': {
-      padding: '0.625'
-    }
+  '@media (max-width: 53.438rem)': {
+    padding: '0.625'
   }
 });
 

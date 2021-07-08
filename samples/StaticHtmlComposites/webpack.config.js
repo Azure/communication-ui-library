@@ -15,5 +15,28 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
     library: '[name]'
+  },
+  devServer: {
+    port: 3000,
+    injectClient: false,
+    open: true,
+    proxy: [
+      {
+        path: '/token',
+        target: 'http://[::1]:8080'
+      },
+      {
+        path: '/createThread',
+        target: 'http://[::1]:8080'
+      },
+      {
+        path: '/addUser',
+        target: 'http://[::1]:8080'
+      },
+      {
+        path: '/getEndpointUrl',
+        target: 'http://[::1]:8080'
+      }
+    ]
   }
 };

@@ -1,5 +1,5 @@
 {
-  "name": "check-treeshaking",
+  "name": "@internal/check-treeshaking",
   "version": "0.1.0",
   "private": "true",
   "description": "Utility to ensure proper dependencies across modules",
@@ -15,12 +15,12 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "acs-ui-common": "1.0.0-beta.1",
-    "react-components": "1.0.0-beta.1",
-    "chat-stateful-client": "1.0.0-beta.1",
-    "calling-stateful-client": "1.0.0-beta.1",
-    "chat-component-bindings": "1.0.0-beta.1",
-    "calling-component-bindings": "1.0.0-beta.1"
+    "@internal/acs-ui-common": "1.0.0-beta.1",
+    "@internal/react-components": "1.0.0-beta.1",
+    "@internal/chat-stateful-client": "1.0.0-beta.1",
+    "@internal/calling-stateful-client": "1.0.0-beta.1",
+    "@internal/chat-component-bindings": "1.0.0-beta.1",
+    "@internal/calling-component-bindings": "1.0.0-beta.1"
   },
   "devDependencies": {
     "webpack": "5.38.1",

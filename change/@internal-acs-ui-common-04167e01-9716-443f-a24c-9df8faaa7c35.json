@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "move messagestatus to common package",
+  "packageName": "@internal/acs-ui-common",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

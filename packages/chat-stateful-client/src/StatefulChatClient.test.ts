@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatThreadItem } from '@azure/communication-chat';
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
@@ -24,6 +25,7 @@ import {
   createMockChatClient,
   createStatefulChatClientMock,
   defaultClientArgs,
+  failingPagedAsyncIterator,
   mockChatThreads
 } from './TestHelpers';
 
@@ -341,6 +343,50 @@ describe('declarative chatClient onStateChange', () => {
 });
 
 describe('stateful wraps thrown error', () => {
+  test('when listChatThreads fails immedately', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    expect(client.listChatThreads).toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
+  });
+
+  test('when listChatThreads fails while iterating items', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
+      return failingPagedAsyncIterator(new Error('injected error'));
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const iter = client.listChatThreads();
+    await expect(iter.next()).rejects.toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
+    await expect(iter.byPage().next()).rejects.toThrow(
+      new ChatError('ChatClient.listChatThreads', new Error('injected error'))
+    );
+  });
+
+  test('when createChatThread fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.createChatThread = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.createChatThread({ topic: '' })).rejects.toThrow(
+      new ChatError('ChatClient.createChatThread', new Error('injected error'))
+    );
+  });
+
+  test('when deleteChatThread fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.deleteChatThread = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.deleteChatThread('')).rejects.toThrow(
+      new ChatError('ChatClient.deleteChatThread', new Error('injected error'))
+    );
+  });
+
   test('when startRealtimeNotifications fails', async () => {
     const baseClient = createMockChatClient();
     baseClient.startRealtimeNotifications = async () => {
@@ -349,6 +395,17 @@ describe('stateful wraps thrown error', () => {
     const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
     await expect(client.startRealtimeNotifications()).rejects.toThrow(
       new ChatError('ChatClient.startRealtimeNotifications', new Error('injected error'))
+    );
+  });
+
+  test('when stopRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.stopRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.stopRealtimeNotifications()).rejects.toThrow(
+      new ChatError('ChatClient.stopRealtimeNotifications', new Error('injected error'))
     );
   });
 });

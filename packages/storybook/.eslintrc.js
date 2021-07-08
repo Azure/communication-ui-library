@@ -56,7 +56,7 @@ module.exports = {
       {
         // Do not allow references to react-component package. These references should point to @azure/communication-react instead.
         // As internal packlets get added to the @azure/communication-react package they should be added as a restriction here as well.
-        name: 'react-components',
+        name: '@internal/react-components',
         message: 'Please use @azure/communication-react instead.'
       }
     ],

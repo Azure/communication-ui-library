@@ -3,7 +3,7 @@
 
 import { ChatParticipant, ChatThreadClient, RestListParticipantsOptions } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
-import { createDecoratedIterator } from './createDecoratedIterator';
+import { createDecoratedIterator, createErrorHandlingIterator } from './createDecoratedIterator';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
 export const createDecoratedListParticipants = (
@@ -13,5 +13,16 @@ export const createDecoratedListParticipants = (
   const setParticipant = (participant: ChatParticipant, context: ChatContext): void => {
     context.setParticipant(chatThreadClient.threadId, participant);
   };
-  return createDecoratedIterator(chatThreadClient.listParticipants.bind(chatThreadClient), context, setParticipant);
+  return createDecoratedIterator(
+    createErrorHandlingIterator(
+      context.withErrorTeedToState(
+        chatThreadClient.listParticipants.bind(chatThreadClient),
+        'ChatThreadClient.listParticipants'
+      ),
+      context,
+      'ChatThreadClient.listParticipants'
+    ),
+    context,
+    setParticipant
+  );
 };

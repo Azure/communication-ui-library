@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import * as reselect from 'reselect';
-import { CallState } from 'calling-stateful-client';
+import { CallState } from '@internal/calling-stateful-client';
 import { getCall } from './baseSelectors';
 
 export const lobbySelector = reselect.createSelector([getCall], (call: CallState | undefined) => {

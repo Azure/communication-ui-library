@@ -1,5 +1,5 @@
 {
-  "name": "react-components",
+  "name": "@internal/react-components",
   "version": "1.0.0-beta.1",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
@@ -30,7 +30,7 @@
     "@fluentui/react-northstar": "^0.51.2",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
-    "acs-ui-common": "1.0.0-beta.1",
+    "@internal/acs-ui-common": "1.0.0-beta.1",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "html-to-react": "~1.4.5"
@@ -46,7 +46,7 @@
     "@babel/preset-env": "7.13.10",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
-    "@microsoft/api-extractor": "7.16.1-pr1916.1.0",
+    "@microsoft/api-extractor": "~7.18.0",
     "@rollup/plugin-json": "~4.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react-hooks": "^3.4.2",

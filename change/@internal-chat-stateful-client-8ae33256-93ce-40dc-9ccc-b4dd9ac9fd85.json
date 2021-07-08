@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use Object for chat participants",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "patch"
+}

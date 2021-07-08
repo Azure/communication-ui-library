@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MessageStatus } from 'acs-ui-common';
+import { MessageStatus } from '@internal/acs-ui-common';
 
 export type MessageAttachedStatus = 'bottom' | 'top';
 

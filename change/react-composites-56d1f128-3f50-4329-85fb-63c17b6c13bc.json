@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add userId to ChatAdapter factory function",
-  "packageName": "react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

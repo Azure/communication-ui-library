@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatThreadItem } from '@azure/communication-chat';
 import { ChatClientState } from './ChatClientState';
 import { createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClientArgs } from './StatefulChatClient';
@@ -22,6 +23,28 @@ export class StateChangeListener {
     this.state = newState;
   }
 }
+
+// An iterator that throws the given error when asynchronously iterating over items, directly or byPage.
+export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIterator<T, T[]> => {
+  return {
+    async next() {
+      throw error;
+    },
+    [Symbol.asyncIterator]() {
+      return this;
+    },
+    byPage: (): AsyncIterableIterator<T[]> => {
+      return {
+        async next() {
+          throw error;
+        },
+        [Symbol.asyncIterator]() {
+          return this;
+        }
+      };
+    }
+  };
+};
 
 export const defaultClientArgs: StatefulChatClientArgs = {
   displayName: '',
