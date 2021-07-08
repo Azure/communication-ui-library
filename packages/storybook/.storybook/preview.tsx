@@ -131,8 +131,8 @@ export const globalTypes = {
       icon: 'globe',
       items: [
         { value: 'en-US', title: 'English' },
-        { value: 'de', title: 'German' },
-        { value: 'ar', title: 'Arabic' }
+        { value: 'de-DE', title: 'German' },
+        { value: 'ar-SA', title: 'Arabic' }
       ],
     },
   },

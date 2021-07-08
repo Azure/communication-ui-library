@@ -10,8 +10,7 @@ import {
 import React from 'react';
 
 export const CustomLocaleSnippet = (): JSX.Element => {
-  const customLocale = en_GB;
-  customLocale.strings.cameraButton.offLabel = 'Start';
+  en_GB.strings.cameraButton.offLabel = 'Start';
   return (
     <LocalizationProvider locale={en_GB}>
       <ControlBar>
