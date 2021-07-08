@@ -161,7 +161,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async removeParticipant(userId: string): Promise<void> {
-    await this.handlers.onParticipantRemove(userId);
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onParticipantRemove(userId);
+    });
   }
 
   async setTopic(topicName: string): Promise<void> {

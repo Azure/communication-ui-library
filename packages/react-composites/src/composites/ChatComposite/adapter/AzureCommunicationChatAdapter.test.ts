@@ -42,8 +42,7 @@ describe('Error is reflected in state and events', () => {
 
     await expect(adapter.removeParticipant('')).rejects.toThrow();
 
-    // Multiple state change notifications because message is saved as "sending" before backend API calls.
-    expect(stateListener.onChangeCalledCount).toBeGreaterThan(0);
+    expect(stateListener.onChangeCalledCount).toBe(1);
     const latestError = stateListener.state.latestErrors['ChatThreadClient.removeParticipant'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
