@@ -10,7 +10,7 @@ import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 const VideoGalleryStyles = {
   root: {
-    height: 'auto'
+    height: '100%'
   }
 };
 

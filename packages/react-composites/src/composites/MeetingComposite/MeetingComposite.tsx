@@ -20,13 +20,7 @@ export type MeetingCompositeProps = {
 let cachedChatComposite: null | JSX.Element = null;
 const getChatComposite = (chatAdapter: ChatAdapter, fluentTheme?: PartialTheme | Theme): JSX.Element => {
   if (!cachedChatComposite) {
-    cachedChatComposite = (
-      <ChatComposite
-        adapter={chatAdapter}
-        fluentTheme={fluentTheme}
-        options={{ hideParticipants: true, hideGroupTopic: true }}
-      />
-    );
+    cachedChatComposite = <ChatComposite adapter={chatAdapter} fluentTheme={fluentTheme} />;
   }
   return cachedChatComposite;
 };

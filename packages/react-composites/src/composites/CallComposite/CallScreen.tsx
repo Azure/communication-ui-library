@@ -4,11 +4,12 @@
 import { Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  activeContainerClassName,
+  mediaGalleryContainerStyles,
   containerStyles,
   callControlsStyles,
   subContainerStyles,
-  callControlsContainer
+  callControlsContainer,
+  sidePaneContainerStyles
 } from './styles/CallScreen.styles';
 
 import { MediaGallery } from './MediaGallery';
@@ -138,14 +139,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
-                <Stack styles={containerStyles} horizontal={true}>
-                  <Stack.Item grow={3} styles={activeContainerClassName} style={{ textAlign: 'left', width: '70%' }}>
+                <Stack styles={containerStyles} horizontal>
+                  <Stack.Item styles={mediaGalleryContainerStyles}>
                     <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
                   </Stack.Item>
                   {showPane && onRenderPane && (
-                    <Stack.Item style={{ textAlign: 'right', width: '30%', borderLeft: '1px solid #333' }} grow={1}>
-                      {onRenderPane()}
-                    </Stack.Item>
+                    <Stack.Item styles={sidePaneContainerStyles}>{onRenderPane()}</Stack.Item>
                   )}
                 </Stack>
                 {isScreenShareOn && (

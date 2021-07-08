@@ -1,12 +1,12 @@
 import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { Theme, PartialTheme } from '@fluentui/react';
 import {
   CallAdapter,
   ChatAdapter,
   MeetingComposite,
   createAzureCommunicationCallAdapter,
   createAzureCommunicationChatAdapter
-} from 'react-composites';
-import { Theme, PartialTheme } from '@fluentui/react';
+} from '@internal/react-composites';
 import React, { useState, useEffect } from 'react';
 
 export type MeetingExampleProps = {
