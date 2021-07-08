@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Canvas, Title } from '@storybook/addon-docs/blocks';
 
-<Meta id="use-composite-in-non-react-environment" title="Composites/UUsing Composites in a non-react environment" />
+<Meta id="use-composite-in-non-react-environment" title="Composites/Using Composites in a non-react environment" />
 
 # Use composites under non-react environment
 
@@ -10,16 +10,18 @@ If you are not using React, you can still embed a calling/chat composite into yo
 ```html
 <script src="[url of chatComposite.js]"></script>
 <!-- height need to be set for composite to fit the layout -->
-<div id="chat" style="height: 50vh"></div>
+<div id="chat-container" style="height: 50vh"></div>
 <script>
-  const chatAdapter = await chatComposite.loadChatComposite({
-    containerId: 'chat',
-    displayName: displayName,
-    threadId: threadId,
-    endpointUrl: endpointUrl,
-    userId: user,
-    token: token
-  });
+  const chatAdapter = await chatComposite.loadChatComposite(
+    {
+      displayName: displayName,
+      threadId: threadId,
+      endpointUrl: endpointUrl,
+      userId: user,
+      token: token
+    },
+    document.getElementById('chat-container')
+  );
 </script>
 ```
 
@@ -55,18 +57,13 @@ There is also an example html for how to use it, you might want to allocate your
 ### try it the sample
 
 After finishing building the bundle, you can also try the sample
-Firstly, put your own connection into
 
-```
-.\samples\Server\appsettings.json
-```
+1. Replace the `ResourceConnectionString` in the `samples/Server/appsettings.json` file with the connection string from your Azure Communication Services resource, which is listed in the Azure Portal under _Keys_.
 
-Then run this command to start the server:
+2. Run this command to start the server:
 
 ```bash
 rushx start
 ```
 
-Browse to http://localhost:3000 and start your journey\*
-
-_\*Please make sure you visit localhost not 127.0.0.1 to bypass the http limitation rules of sdk_.
+3. Browse to http://localhost:3000
