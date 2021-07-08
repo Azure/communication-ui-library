@@ -16,6 +16,9 @@ import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
+export const ar: Locale;
+
+// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -121,8 +124,17 @@ export type CustomMessagePayload = {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
+// @public
+export const de: Locale;
+
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
+
+// @public
+export const en_GB: Locale;
+
+// @public
+export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -180,7 +192,7 @@ export interface Locale {
 // @public
 export const LocaleContext: React_2.Context<Locale>;
 
-// @public (undocumented)
+// @public
 export const locales: Record<string, {
     locale: Locale;
     englishName: string;

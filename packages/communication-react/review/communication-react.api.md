@@ -57,6 +57,9 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
+// @public
+export const ar: Locale;
+
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
@@ -749,6 +752,9 @@ export type CustomMessagePayload = {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
+// @public
+export const de: Locale;
+
 // @public (undocumented)
 export type DefaultCallingHandlers = {
     onStartLocalVideo: () => Promise<void>;
@@ -803,6 +809,12 @@ export type DisplayNameChangedListener = (event: {
 
 // @public (undocumented)
 export const emptySelector: () => Record<string, never>;
+
+// @public
+export const en_GB: Locale;
+
+// @public
+export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -910,7 +922,7 @@ export interface Locale {
 // @public
 export const LocaleContext: React_2.Context<Locale>;
 
-// @public (undocumented)
+// @public
 export const locales: Record<string, {
     locale: Locale;
     englishName: string;
