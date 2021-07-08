@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
-import { ChatClient } from '@azure/communication-chat';
+import { ChatClient, ChatMessage } from '@azure/communication-chat';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator } from './StubChatClient';
@@ -15,7 +15,7 @@ const ChatClientMock = ChatClient as jest.MockedClass<typeof ChatClient>;
 describe('Error is reflected in state and events', () => {
   it('when sendMessage fails', async () => {
     const threadClient = new StubChatThreadClient();
-    threadClient.sendMessage = (): Promise<any> => {
+    threadClient.sendMessage = (): Promise<ChatMessage> => {
       throw new Error('injected error');
     };
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
@@ -34,7 +34,7 @@ describe('Error is reflected in state and events', () => {
 
   it('when removeParticipant fails', async () => {
     const threadClient = new StubChatThreadClient();
-    threadClient.removeParticipant = (): Promise<any> => {
+    threadClient.removeParticipant = (): Promise<void> => {
       throw new Error('injected error');
     };
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
@@ -70,7 +70,7 @@ describe('Error is reflected in state and events', () => {
 
   it('when listMessages fails on iteration', async () => {
     const threadClient = new StubChatThreadClient();
-    threadClient.listMessages = (): PagedAsyncIterableIterator<any> => {
+    threadClient.listMessages = (): PagedAsyncIterableIterator<ChatMessage> => {
       return failingPagedAsyncIterator(new Error('injected error'));
     };
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
