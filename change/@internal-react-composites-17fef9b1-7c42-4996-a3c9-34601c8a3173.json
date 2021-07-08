@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "update adapter to arrow function and remove azureCallAdapter from public api",
+  "packageName": "@internal/react-composites",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

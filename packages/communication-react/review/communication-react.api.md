@@ -38,7 +38,7 @@ import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { OutputParametricSelector } from 'reselect';
 import { OutputSelector } from 'reselect';
 import { PartialTheme } from '@fluentui/react';
-import { PermissionConstraints } from '@azure/communication-calling';
+import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
@@ -65,99 +65,6 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 
 // @public (undocumented)
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
-
-// @public (undocumented)
-export class AzureCommunicationCallAdapter implements CallAdapter {
-    constructor(callClient: StatefulCallClient, locator: TeamsMeetingLinkLocator | GroupCallLocator, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
-    // (undocumented)
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // (undocumented)
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    dispose(): void;
-    // (undocumented)
-    disposeStreamView(remoteUserId?: string): Promise<void>;
-    // (undocumented)
-    getState(): CallAdapterState;
-    // (undocumented)
-    isTeamsCall(): boolean;
-    // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
-    // (undocumented)
-    leaveCall(): Promise<void>;
-    // (undocumented)
-    mute(): Promise<void>;
-    // (undocumented)
-    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    off(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    offStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    onToggleCamera(options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
-    queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    setMicrophone(device: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
-    setPage: (page: CallCompositePage) => void;
-    // (undocumented)
-    setSpeaker(device: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
-    startCall(participants: string[]): Call | undefined;
-    // (undocumented)
-    startCamera(): Promise<void>;
-    // (undocumented)
-    startScreenShare(): Promise<void>;
-    // (undocumented)
-    stopCamera(): Promise<void>;
-    // (undocumented)
-    stopScreenShare(): Promise<void>;
-    // (undocumented)
-    unmute(): Promise<void>;
-    }
 
 // @public
 export interface BaseCustomStylesProps {

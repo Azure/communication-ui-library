@@ -110,11 +110,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.subscribeAllEvents();
   }
 
-  dispose(): void {
+  public dispose = (): void => {
     this.unsubscribeAllEvents();
-  }
+  };
 
-  async fetchInitialData(): Promise<void> {
+  public fetchInitialData = async (): Promise<void> => {
     try {
       await this.chatThreadClient.getProperties();
     } catch (e) {
@@ -130,45 +130,45 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
-  getState(): ChatState {
+  public getState = (): ChatState => {
     return this.context.getState();
-  }
+  };
 
-  onStateChange(handler: (state: ChatState) => void): void {
+  public onStateChange = (handler: (state: ChatState) => void): void => {
     this.context.onStateChange(handler);
-  }
+  };
 
-  offStateChange(handler: (state: ChatState) => void): void {
+  public offStateChange = (handler: (state: ChatState) => void): void => {
     this.context.offStateChange(handler);
-  }
+  };
 
-  async sendMessage(content: string): Promise<void> {
+  public sendMessage = async (content: string): Promise<void> => {
     await this.handlers.onSendMessage(content);
-  }
+  };
 
-  async sendReadReceipt(chatMessageId: string): Promise<void> {
+  public sendReadReceipt = async (chatMessageId: string): Promise<void> => {
     await this.handlers.onMessageSeen(chatMessageId);
-  }
+  };
 
-  async sendTypingIndicator(): Promise<void> {
+  public sendTypingIndicator = async (): Promise<void> => {
     await this.handlers.onTyping();
-  }
+  };
 
-  async removeParticipant(userId: string): Promise<void> {
+  public removeParticipant = async (userId: string): Promise<void> => {
     await this.handlers.onParticipantRemove(userId);
-  }
+  };
 
-  async setTopic(topicName: string): Promise<void> {
+  public setTopic = async (topicName: string): Promise<void> => {
     await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.updateThreadTopicName(topicName);
     });
-  }
+  };
 
-  async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
+  public loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> => {
     return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
-  }
+  };
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
     const message = convertEventToChatMessage(event);

@@ -25,11 +25,12 @@ import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
 import { Lobby } from './Lobby';
-import { AzureCommunicationCallAdapter, CallCompositePage } from './adapter';
+import { CallCompositePage } from './adapter';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
+import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
