@@ -62,5 +62,3 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
-
-export { COMPONENT_UI_IDS } from './identifiers';

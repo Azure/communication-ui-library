@@ -3,15 +3,20 @@
 import path from 'path';
 import dotenv from 'dotenv';
 import { chromium, Browser, Page } from 'playwright';
-import faker from 'faker';
-import { dataUiId, createUserAndThread, encodeQueryData, getNameInitials } from '../utils';
+import { PARTICIPANT_NAMES } from '../config';
+import { dataUiId, createUserAndThread, encodeQueryData } from '../utils';
 import { startServer, stopServer } from './app/server';
-import { CHAT_UI_IDS } from '../../../src';
-import { COMPONENT_UI_IDS } from '@internal/react-components';
+import { test, expect } from '@playwright/test';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
-jest.setTimeout(30000);
+const stubTimestamps = (page: Page): void => {
+  page.evaluate(() => {
+    Array.from(document.getElementsByClassName('ui-chat__message__timestamp')).forEach(
+      (i) => (i.innerHTML = 'timestamp')
+    );
+  });
+};
 
 const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
 const TOPIC_NAME = 'Cowabunga';
@@ -23,14 +28,14 @@ const PAGE_VIEWPORT = {
   height: 768
 };
 
-const MAX_PAGES = 2;
+const MAX_PARTICIPANTS = 2;
 
 let browser: Browser;
 const pages: Array<Page> = [];
-const participants: Array<string> = [];
+let participants: Array<string>;
 
-describe('Chat Composite E2E Tests', () => {
-  beforeAll(async () => {
+test.describe('Chat Composite E2E Tests', () => {
+  test.beforeAll(async () => {
     await startServer();
 
     browser = await chromium.launch({
@@ -38,13 +43,11 @@ describe('Chat Composite E2E Tests', () => {
       headless: true
     });
 
-    for (let index = 0; index < MAX_PAGES; index++) {
-      participants.push(`${faker.name.firstName()} ${faker.name.lastName()}`);
-    }
+    participants = PARTICIPANT_NAMES.slice(0, MAX_PARTICIPANTS);
 
     const users = await createUserAndThread(CONNECTION_STRING, TOPIC_NAME, participants);
 
-    for (let index = 0; index < MAX_PAGES; index++) {
+    for (let index = 0; index < MAX_PARTICIPANTS; index++) {
       const qs = encodeQueryData(users[index]);
       const page = await browser.newPage();
       await page.setViewportSize(PAGE_VIEWPORT);
@@ -53,64 +56,27 @@ describe('Chat Composite E2E Tests', () => {
     }
   });
 
-  afterAll(async () => {
+  test.afterAll(async () => {
     await stopServer();
     await browser.close();
   });
 
-  test('can load correctly', async () => {
+  test('composite loads correctly with participant list', async () => {
     await pages[0].bringToFront();
-    await pages[0].waitForSelector(dataUiId(CHAT_UI_IDS.chatScreen));
-    const chatCompositeSelector = await pages[0].$(dataUiId(CHAT_UI_IDS.chatScreen));
-    expect(chatCompositeSelector).toBeTruthy();
+    await pages[0].waitForSelector(dataUiId('chat-screen'));
+    await pages[0].waitForSelector(dataUiId('sendbox-textfield'));
+    await pages[0].waitForSelector(dataUiId('participant-list'));
+    stubTimestamps(pages[0]);
+    expect(await pages[0].screenshot()).toMatchSnapshot('1-chat-screen.png', { threshold: 1 });
   });
 
   test('can send message', async () => {
     await pages[0].bringToFront();
-    await pages[0].waitForSelector(dataUiId(COMPONENT_UI_IDS.sendboxTextfield));
-    await pages[0].type(dataUiId(COMPONENT_UI_IDS.sendboxTextfield), 'How the turn tables');
+    await pages[0].waitForSelector(dataUiId('sendbox-textfield'));
+    await pages[0].type(dataUiId('sendbox-textfield'), 'How the turn tables');
     await pages[0].keyboard.press('Enter');
     await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
-    const inner_html = await pages[0].$$eval(`[data-ui-status="delivered"]`, (nodes) => {
-      return nodes[nodes.length - 1].innerHTML;
-    });
-    expect(inner_html).toEqual('How the turn tables');
-  });
-
-  test('can view myself in participant list', async () => {
-    await pages[0].bringToFront();
-    await pages[0].waitForSelector(`${dataUiId(COMPONENT_UI_IDS.participantList)} .ms-Persona`);
-    const initials = await pages[0].$$eval(
-      `${dataUiId(COMPONENT_UI_IDS.participantList)} .ms-Persona .ms-Persona-initials span`,
-      (nodes) => nodes[0].innerHTML
-    );
-    expect(initials).toEqual(getNameInitials(participants[0]));
-
-    const name = await pages[0].$$eval(
-      `${dataUiId(COMPONENT_UI_IDS.participantList)} .ms-Persona .ms-Persona-primaryText .ms-TooltipHost`,
-      (nodes) => nodes[0].innerHTML
-    );
-    expect(name).toEqual(participants[0]);
-  });
-
-  test('can view all participants in list', async () => {
-    await pages[0].bringToFront();
-    await pages[0].waitForSelector(`${dataUiId(COMPONENT_UI_IDS.participantList)} .ms-Persona`);
-    const initials = await pages[0].$$(
-      `${dataUiId(COMPONENT_UI_IDS.participantList)} .ms-Persona .ms-Persona-initials span`
-    );
-
-    expect(initials.length).toEqual(participants.length);
-
-    for (const i in initials) {
-      expect(await initials[i].innerText()).toEqual(getNameInitials(participants[i]));
-    }
-
-    const names = await pages[0].$$(
-      `${dataUiId(COMPONENT_UI_IDS.participantList)} .ms-Persona .ms-Persona-primaryText .ms-TooltipHost`
-    );
-    for (const i in names) {
-      expect(await names[i].innerText()).toEqual(participants[i]);
-    }
+    stubTimestamps(pages[0]);
+    expect(await pages[0].screenshot()).toMatchSnapshot('2-send-message.png', { threshold: 1 });
   });
 });
