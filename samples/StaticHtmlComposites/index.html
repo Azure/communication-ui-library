@@ -12,13 +12,13 @@
   <script src="./service.js"></script>
   <script type="module">
     const { user, token } = await service.createUserWithToken();
-    const guid = await service.createGUID();
+    const groupId = await service.createGUID();
     // Call composite sample code starts here
     const displayName = 'Bob';
 
     const callAdapter = await callComposite.loadCallComposite(
       {
-        groupId: guid, // Provide any GUID to join a group
+        groupId, // Provide any GUID to join a group
         displayName: displayName,
         userId: user,
         token: token
