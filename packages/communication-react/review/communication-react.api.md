@@ -591,8 +591,9 @@ export type ChatObjectMethodNames<TName extends string, T> = {
     [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
 }[keyof T];
 
-// @public (undocumented)
+// @public
 export type ChatOptions = {
+    showParticipantPane?: boolean;
     sendBoxMaxLength?: number;
 };
 

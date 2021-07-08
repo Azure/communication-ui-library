@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bump package for release",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "mail@jamesburnside.com",
+  "dependentChangeType": "none"
+}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Dispose view when stream is not available",
-  "packageName": "react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

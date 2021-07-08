@@ -4,8 +4,8 @@
 import { Stack } from '@fluentui/react';
 import React from 'react';
 import * as reselect from 'reselect';
-import { ChatClientState } from 'chat-stateful-client';
-import { ChatBaseSelectorProps } from 'chat-component-bindings';
+import { ChatClientState } from '@internal/chat-stateful-client';
+import { ChatBaseSelectorProps } from '@internal/chat-component-bindings';
 import { chatHeaderContainerStyle, topicNameLabelStyle } from './styles/Chat.styles';
 
 export type HeaderProps = {
@@ -15,7 +15,7 @@ export type HeaderProps = {
 export const ChatHeader = (props: HeaderProps): JSX.Element => {
   return (
     <Stack className={chatHeaderContainerStyle} horizontal>
-      <Stack.Item align="center" style={{ minWidth: '12.5rem' }}>
+      <Stack.Item align="center">
         <div className={topicNameLabelStyle}>{props.topic}</div>
       </Stack.Item>
     </Stack>

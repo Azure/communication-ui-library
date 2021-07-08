@@ -69,7 +69,7 @@ While we provide a set of default props(which includes data and handler function
 In some situations, you may want to override default behavior and place your own API call (like call another service, or call another API in our stateful SDK). Here is an example of how to change the message before using the stateful client to send it.
 
 ```tsx
-const sendBoxProps = useChatPropsFor(SendBox);
+const sendBoxProps = usePropsFor(SendBox);
 // This hook will get stateful client you created
 const chatThreadClient = useChatThreadClient();
 
