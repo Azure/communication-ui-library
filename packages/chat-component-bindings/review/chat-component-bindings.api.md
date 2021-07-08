@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AreEqual } from '@internal/acs-ui-common';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
@@ -60,15 +62,15 @@ export type ChatThreadClientProviderProps = {
 
 // @public (undocumented)
 export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
-    userId: string;
-    showMessageStatus: boolean;
-    messages: Message<"chat">[];
+userId: string;
+showMessageStatus: boolean;
+messages: Message<"chat">[];
 }, (res1: string, res2: {
-    [key: string]: ChatMessageWithStatus;
+[key: string]: ChatMessageWithStatus;
 }, res3: Date, res4: boolean) => {
-    userId: string;
-    showMessageStatus: boolean;
-    messages: Message<"chat">[];
+userId: string;
+showMessageStatus: boolean;
+messages: Message<"chat">[];
 }>;
 
 // @public (undocumented)
@@ -95,11 +97,11 @@ export const getChatSelector: <Component extends (props: any) => JSX.Element | u
 
 // @public (undocumented)
 export const sendBoxSelector: OutputSelector<ChatClientState, {
-    displayName: string;
-    userId: string;
+displayName: string;
+userId: string;
 }, (res1: string, res2: string) => {
-    displayName: string;
-    userId: string;
+displayName: string;
+userId: string;
 }>;
 
 // @public (undocumented)
@@ -125,7 +127,6 @@ export const useChatSelector: <SelectorT extends (state: ChatClientState, props:
 
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
-
 
 // (No @packageDocumentation comment for this package)
 
