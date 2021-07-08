@@ -33,6 +33,7 @@ import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
 import { useLocale } from '../localization';
+import { COMPONENT_UI_IDS } from './identifiers';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -205,7 +206,7 @@ const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.El
   const htmlToReactParser = new Parser();
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
-    <div>
+    <div data-ui-id={COMPONENT_UI_IDS.messageContent} data-ui-status={payload.status}>
       <LiveMessage
         message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content || '')}`}
         aria-live="polite"
@@ -218,7 +219,7 @@ const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.El
 const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
-    <div>
+    <div data-ui-id={COMPONENT_UI_IDS.messageContent} data-ui-status={payload.status}>
       <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
