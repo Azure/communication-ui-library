@@ -88,7 +88,7 @@ describe('Error is reflected in state and events', () => {
 
   it('when listMessages fails immediately', async () => {
     const threadClient = new StubChatThreadClient();
-    threadClient.listMessages = (): any => {
+    threadClient.listMessages = (): PagedAsyncIterableIterator<ChatMessage> => {
       throw new Error('injected error');
     };
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
