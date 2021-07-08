@@ -6,7 +6,6 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 ## useSelector() <a name="useSelector"></a>
 
 `useSelector` allows you to provide your own selector function that maps the stateful SDK state to your own props for your own component. It subscribes to state changes and runs the selector every time when anything changes in the state, but note that it will only trigger a component re-render when the return value of the selector changes.
-`useSelector` comes in two flavors: `useCallSelector` and `useChatSelector` for each of the modalities.
 
 ### When to Call useSelector
 
@@ -23,13 +22,49 @@ const userInfoSelector = (state) => ({
   userName: state.displayName
 });
 
-const chatInfoProps = useChatSelector(userInfoSelector);
+const chatInfoProps = useSelector(userInfoSelector);
 
 const ChatInfo = ({id: string, userName: string}) => {
   return <div> userName: {userName}, id: {id} </div>;
 }
 
 <ChatInfo {...chatInfoProps} />
+```
+
+### Passing your own props
+
+When creating your own selector, you can pass in your own parameters into selector by using second parameter of selector function:
+
+```tsx
+const threadSelector = (state, props) => ({
+  thread: state.threads[props.threadId]
+});
+
+const selectorProps = useMemo(() => ({ threadId: myThreadId }), [threadId]);
+
+const threadProps = useSelector(threadSelector, selectorProps);
+```
+
+If you don't pass in any selector props or pass an undefined value into useSelector(), useSelector() will also provide a default props object for you, which includes threadId/callId under chat/call context, so this also works:
+
+```tsx
+const threadSelector = (state, props) => ({
+  thread: state.threads[props.threadId] // default props = {threadId: string} in chat, {callId: string} in call
+});
+
+const threadProps = useSelector(threadSelector);
+```
+
+### Choose your target
+
+Similar to usePropsFor, useSelector() is context-aware. It picks out props from available context from providers. Thus, when it is under both ChatClientProvider and CallingClientProvider, it can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
+
+```tsx
+const threadSelector = (state, props) => ({
+  thread: state.threads[props.threadId]
+});
+
+const threadProps = useSelector(threadSelector, undefined /* get default selector props */, 'chat');
 ```
 
 ### Memoizing your Selector
@@ -46,7 +81,7 @@ const userInfoSelector = createSelector([(state) => state.userId, (state) => sta
   userName
 }));
 
-const chatInfoProps = useChatSelector(userInfoSelector);
+const chatInfoProps = useSelector(userInfoSelector);
 
 const ChatInfo = ({ id: string, userName: string }) => {
   return (
@@ -71,7 +106,7 @@ In some situations, you may want to override default behavior and place your own
 ```tsx
 const sendBoxProps = usePropsFor(SendBox);
 // This hook will get stateful client you created
-const chatThreadClient = useChatThreadClient();
+const chatThreadClient = useThreadClient();
 
 const onSendMessage = useCallback(
   (message: string) => {
@@ -94,7 +129,7 @@ With the hooks that we provide it is also possible to override a selector withou
 
 ```tsx
 const customSelector = createSelector(....); // create your own selector
-const messageThreadProps = useChatSelector(customSelector);
+const messageThreadProps = useSelector(customSelector);
 const messageThreadHandlers = useChatHandlers(MessageThread);
 
 
@@ -107,9 +142,9 @@ By calling `useSelector`/`usePropsFor`, you can get the right combination of def
 
 ```tsx
 const customSelector = createSelector(....); // create your own selector
-const messageThreadProps = useChatSelector(customSelector);
+const messageThreadProps = useSelector(customSelector);
 // This hook will get stateful client you created
-const chatThreadClient = useChatThreadClient();
+const chatThreadClient = useThreadClient();
 
 // Create your own handlers
 const onMessageSeen = useCallback((message: string) => {
