@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
@@ -268,35 +270,34 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
 export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-    remoteParticipants: VideoGalleryRemoteParticipant[];
+screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+localParticipant: {
+userId: string;
+displayName: string;
+isMuted: boolean | undefined;
+isScreenSharingOn: boolean | undefined;
+videoStream: {
+isAvailable: boolean;
+isMirrored: boolean | undefined;
+renderElement: HTMLElement | undefined;
+};
+};
+remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: CallState | undefined, res2: string | undefined, res3: string) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-    remoteParticipants: VideoGalleryRemoteParticipant[];
+screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+localParticipant: {
+userId: string;
+displayName: string;
+isMuted: boolean | undefined;
+isScreenSharingOn: boolean | undefined;
+videoStream: {
+isAvailable: boolean;
+isMirrored: boolean | undefined;
+renderElement: HTMLElement | undefined;
+};
+};
+remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
-
 
 // (No @packageDocumentation comment for this package)
 
