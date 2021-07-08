@@ -25,6 +25,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
         <div
           className="css-82"
           data-uses-unhanded-props={true}
+          dir="ltr"
         >
           <div
             className="ms-Stack css-3"
@@ -65,7 +66,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                     className="ms-Stack css-16"
                   >
                     <div
-                      className="css-17"
+                      className="css-18"
                     >
                       <div
                         className="ms-Stack css-19"
