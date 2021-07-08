@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
-import { ChatClient } from '@azure/communication-chat';
+import { ChatClient, ChatMessage } from '@azure/communication-chat';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatState } from './ChatAdapter';
-import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator } from './StubChatClient';
+import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
 
 jest.useFakeTimers();
 jest.mock('@azure/communication-chat');
@@ -86,10 +86,6 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors[0].operation).toBe('ChatThreadClient.listMessages');
   });
 
-  /*
-  // This test current fails.
-  // If `listMessages` fails immediately (network flake), the adaptor construction throws an exception,
-  // and there is no way for the composite to recover.
   it('when listMessages fails immediately', async () => {
     const threadClient = new StubChatThreadClient();
     threadClient.listMessages = (): any => {
@@ -106,8 +102,13 @@ describe('Error is reflected in state and events', () => {
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
     expect(errorListener.errors[0].operation).toBe('ChatThreadClient.listMessages');
+
+    threadClient.listMessages = (): PagedAsyncIterableIterator<ChatMessage> => {
+      return pagedAsyncIterator([]);
+    };
+    const allLoaded = await adapter.loadPreviousChatMessages(1);
+    expect(allLoaded).toBe(true);
   });
-  */
 });
 
 export const createChatAdapterWithStubs = async (chatClient: StubChatClient): Promise<ChatAdapter> => {
