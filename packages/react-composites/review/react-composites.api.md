@@ -263,14 +263,6 @@ export type CallIdChangedListener = (event: {
 export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
 
 // @public (undocumented)
-export const CHAT_UI_IDS: {
-    chatHeader: string;
-    chatHeaderTopic: string;
-    chatScreen: string;
-    messageThread: string;
-};
-
-// @public (undocumented)
 export interface ChatAdapter {
     // (undocumented)
     dispose(): void;

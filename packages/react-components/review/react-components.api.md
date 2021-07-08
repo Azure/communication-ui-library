@@ -81,13 +81,6 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
-// @public (undocumented)
-export const COMPONENT_UI_IDS: {
-    sendboxTextfield: string;
-    participantList: string;
-    messageContent: string;
-};
-
 // @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
