@@ -10,7 +10,7 @@ import _fr_FR from './translated/fr_FR.json';
 
 /** Locale for English (US) */
 export const en_US: Locale = { strings: _en_US };
-/** Locale for English (British) */
+/** Locale for English (United Kingdom) */
 export const en_GB: Locale = { strings: _en_GB };
 /** Locale for German (Germany) */
 export const de_DE: Locale = { strings: _de_DE };
