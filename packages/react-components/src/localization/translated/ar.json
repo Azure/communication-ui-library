@@ -59,5 +59,8 @@
     "thursday": "يوم الخميس",
     "friday": "جمعة",
     "saturday": "السبت"
+  },
+  "errorBar": {
+    "sendMessageFailed": "فشل إرسال رسالة"
   }
 }

@@ -59,5 +59,8 @@
     "thursday": "Thursday",
     "friday": "Friday",
     "saturday": "Saturday"
+  },
+  "errorBar": {
+    "sendMessageFailed": "Failed to send message"
   }
 }
