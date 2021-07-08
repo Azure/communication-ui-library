@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -124,7 +126,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     stopScreenShare(): Promise<void>;
     // (undocumented)
     unmute(): Promise<void>;
-    }
+}
 
 // @public (undocumented)
 export interface CallAdapter {
@@ -440,7 +442,6 @@ export type ParticipantsRemovedListener = (event: {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
-
 
 // (No @packageDocumentation comment for this package)
 
