@@ -26,10 +26,13 @@ export type Selector = (state: ClientState, props: any) => any;
 // Return undefined and skip execution when not in that context
 export const useSelector = <ParamT extends Selector | undefined>(
   selector: ParamT,
-  selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined
+  selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined,
+  type?: 'calling' | 'chat'
 ): ParamT extends Selector ? ReturnType<ParamT> : undefined => {
-  const callProps = useCallingSelector(selector as any, selectorProps);
-  const chatProps = useChatSelector(selector as any, selectorProps);
+  const callingMode = !type || type === 'calling';
+  const chatMode = !type || type === 'chat';
+  const callProps = useCallingSelector(callingMode ? (selector as any) : undefined, selectorProps);
+  const chatProps = useChatSelector(chatMode ? (selector as any) : undefined, selectorProps);
   return callProps ?? chatProps;
 };
 
