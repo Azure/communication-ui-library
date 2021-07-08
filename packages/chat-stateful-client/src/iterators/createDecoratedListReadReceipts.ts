@@ -3,7 +3,7 @@
 
 import { ChatThreadClient, ChatMessageReadReceipt, RestListReadReceiptsOptions } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
-import { createDecoratedIterator } from './createDecoratedIterator';
+import { createDecoratedIterator, createErrorHandlingIterator } from './createDecoratedIterator';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
 export const createDecoratedListReadReceipts = (
@@ -15,5 +15,16 @@ export const createDecoratedListReadReceipts = (
       ...readReceipt
     });
   };
-  return createDecoratedIterator(chatThreadClient.listReadReceipts.bind(chatThreadClient), context, setReadReceipt);
+  return createDecoratedIterator(
+    createErrorHandlingIterator(
+      context.withErrorTeedToState(
+        chatThreadClient.listReadReceipts.bind(chatThreadClient),
+        'ChatThreadClient.listReadReceipts'
+      ),
+      context,
+      'ChatThreadClient.listReadReceipts'
+    ),
+    context,
+    setReadReceipt
+  );
 };
