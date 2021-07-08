@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
+import { ChatClient } from '@azure/communication-chat';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatState } from './ChatAdapter';
-import { StubChatClient, StubChatThreadClient } from './StubChatClient';
-import { ChatClient } from '@azure/communication-chat';
+import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator } from './StubChatClient';
 
 jest.useFakeTimers();
 jest.mock('@azure/communication-chat');
@@ -65,6 +66,24 @@ describe('Error is reflected in state and events', () => {
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
     expect(errorListener.errors[0].operation).toBe('ChatThreadClient.updateTopic');
+  });
+
+  it('when listMessages fails on iteration', async () => {
+    const threadClient = new StubChatThreadClient();
+    threadClient.listMessages = (): PagedAsyncIterableIterator<any> => {
+      return failingPagedAsyncIterator(new Error('injected error'));
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const stateListener = new StateChangeListener(adapter);
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.loadPreviousChatMessages(3)).rejects.toThrow();
+
+    expect(stateListener.onChangeCalledCount).toBe(1);
+    const latestError = stateListener.state.latestErrors['ChatThreadClient.listMessages'];
+    expect(latestError).toBeDefined();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.listMessages');
   });
 });
 

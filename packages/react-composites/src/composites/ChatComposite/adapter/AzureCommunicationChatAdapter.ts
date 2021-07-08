@@ -173,7 +173,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
-    return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    });
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
