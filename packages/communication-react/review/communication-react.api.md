@@ -58,7 +58,7 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
-export const ar: Locale;
+export const ar_SA: Locale;
 
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
@@ -754,7 +754,7 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de: Locale;
+export const de_DE: Locale;
 
 // @public (undocumented)
 export type DefaultCallingHandlers = {
@@ -840,6 +840,9 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public
+export const fr_FR: Locale;
 
 // @public (undocumented)
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;

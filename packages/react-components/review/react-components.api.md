@@ -16,7 +16,7 @@ import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
-export const ar: Locale;
+export const ar_SA: Locale;
 
 // @public
 export interface BaseCustomStylesProps {
@@ -125,7 +125,7 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de: Locale;
+export const de_DE: Locale;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
@@ -159,6 +159,9 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public
+export const fr_FR: Locale;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
