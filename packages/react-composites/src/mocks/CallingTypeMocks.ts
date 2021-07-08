@@ -3,7 +3,6 @@
 
 import {
   AddPhoneNumberOptions,
-  Call,
   CallApiFeature,
   CallDirection,
   CallEndReason,
@@ -278,7 +277,7 @@ export declare interface MockCallAgent {
   startCall(
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
-  ): Call;
+  ): MockCall;
   /**
    * Join a group call.
    * To join a group call just use a groupId.
@@ -286,7 +285,7 @@ export declare interface MockCallAgent {
    * @param options - Call start options.
    * @returns The Call object associated with the call.
    */
-  join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
+  join(groupLocator: GroupLocator, options?: JoinCallOptions): MockCall;
   /**
    * Join a group chat call.
    * To join a group chat call just use a threadId.
@@ -295,7 +294,7 @@ export declare interface MockCallAgent {
    * @returns The Call object associated with the call.
    * @beta
    */
-  join(groupChatCallLocator: GroupChatCallLocator, options?: JoinCallOptions): Call;
+  join(groupChatCallLocator: GroupChatCallLocator, options?: JoinCallOptions): MockCall;
   /**
    * Join a meeting.
    * @param meetingLocator - Meeting information.
@@ -303,7 +302,7 @@ export declare interface MockCallAgent {
    * @returns The Call object associated with the call.
    * @beta
    */
-  join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: MeetingLocator, options?: JoinCallOptions): MockCall;
   /**
    * Dispose this CallAgent ( required to create another new CallAgent)
    */
@@ -320,7 +319,7 @@ export declare interface MockCallAgent {
    * @param listener - callback fn that will be called when this collection will change,
    * it will pass arrays of added and removed elements
    */
-  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<MockCall>): void;
   /**
    * Unsubscribe function for incomingCall event.
    * @param event - event name.
@@ -332,5 +331,5 @@ export declare interface MockCallAgent {
    * @param event - event name.
    * @param listener - allback fn that was used to subscribe to this event.
    */
-  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<MockCall>): void;
 }

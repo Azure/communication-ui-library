@@ -15,7 +15,7 @@ import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, disposeAllViewsFromCall, disposeAllViews } from './StreamUtils';
 import { createMockRemoteVideoStream } from './TestUtils';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 jest.mock('@azure/communication-calling', () => {
   return {

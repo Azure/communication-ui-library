@@ -17,7 +17,7 @@ let allPeerDependencies = new Set();
 
 for (const packlet of Object.keys(downstreamPacklets)) {
   // special case while react-composites points to src/index.release and not src/index
-  const relativePath = packlet === 'react-composites' ? '../../' : '../';
+  const relativePath = packlet === '@internal/react-composites' ? '../../' : '../';
 
   const packletPackageData = require(path.resolve(
     __dirname,

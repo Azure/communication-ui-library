@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use CommunicationIdentifierKind in stream utils",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}

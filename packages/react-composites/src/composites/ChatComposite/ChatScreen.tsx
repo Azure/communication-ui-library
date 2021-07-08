@@ -11,7 +11,7 @@ import {
   ParticipantList,
   SendBox,
   TypingIndicator
-} from 'react-components';
+} from '@internal/react-components';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
@@ -26,10 +26,11 @@ import {
   participantListStack,
   participantListStyle
 } from './styles/Chat.styles';
+import { CHAT_UI_IDS } from './identifiers';
 
 export type ChatScreenProps = {
-  hideParticipants?: boolean;
-  hideTopic?: boolean;
+  showParticipantPane?: boolean;
+  showTopicHeader?: boolean;
   sendBoxMaxLength?: number;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
@@ -37,8 +38,14 @@ export type ChatScreenProps = {
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onRenderAvatar, sendBoxMaxLength, onRenderMessage, onRenderTypingIndicator, hideParticipants, hideTopic } =
-    props;
+  const {
+    onRenderAvatar,
+    sendBoxMaxLength,
+    onRenderMessage,
+    onRenderTypingIndicator,
+    showParticipantPane,
+    showTopicHeader
+  } = props;
 
   const pixelToRemConvertRatio = 16;
   const defaultNumberOfChatMessagesToReload = 5;
@@ -73,12 +80,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   return (
-    <Stack className={chatContainer} grow>
-      {!hideTopic && <ChatHeader {...headerProps} />}
+    <Stack data-ui-id={CHAT_UI_IDS.chatScreen} className={chatContainer} grow>
+      {!!showTopicHeader && <ChatHeader {...headerProps} />}
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
           <ThreadStatus {...threadStatusProps} />
           <MessageThread
+            data-ui-id={CHAT_UI_IDS.messageThread}
             {...messageThreadProps}
             onRenderAvatar={onRenderMessageAvatar}
             onRenderMessage={onRenderMessage}
@@ -95,11 +103,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} />
           </Stack.Item>
         </Stack>
-        {!hideParticipants && (
+        {showParticipantPane && (
           <Stack.Item className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>In this chat</Stack.Item>
-
               <Stack.Item className={participantListStyle}>
                 <ParticipantList {...participantListProps} onRenderAvatar={onRenderParticipantAvatar} />
               </Stack.Item>

@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export type FunctionWithKey<KeyT, ArgsT extends any[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
-export type CallbackType<KeyT, ArgsT extends any[], FnRetT> = (
+export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
+export type CallbackType<KeyT, ArgsT extends unknown[], FnRetT> = (
   memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>
 ) => FnRetT[];
 
-const argsCmp = (args1: any[], args2: any[], objCmp: (obj1: any, obj2: any) => boolean): boolean => {
+const argsCmp = (args1: unknown[], args2: unknown[], objCmp: (obj1: unknown, obj2: unknown) => boolean): boolean => {
   return args1.length === args2.length && args1.every((arg1, index) => objCmp(args2[index], arg1));
 };
 
@@ -47,9 +47,14 @@ const argsCmp = (args1: any[], args2: any[], objCmp: (obj1: any, obj2: any) => b
  * const result2 = memoizeHeavyFnAll(generateValueArray); // Cache: {1: 3, 3: 5 *hit}, nextCache: {3: 5}, heavyFn call times: 0
  * ```
  */
-export const memoizeFnAll = <KeyT, ArgsT extends any[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(
+export const memoizeFnAll = <
+  KeyT,
+  ArgsT extends unknown[],
+  FnRetT,
+  CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>
+>(
   fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>,
-  shouldCacheUpdate: (args1: any, args2: any) => boolean = Object.is
+  shouldCacheUpdate: (args1: unknown, args2: unknown) => boolean = Object.is
 ): ((callback: CallBackT) => FnRetT[]) => {
   let cache = new Map<KeyT, [ArgsT, FnRetT]>();
   let nextCache = new Map<KeyT, [ArgsT, FnRetT]>();

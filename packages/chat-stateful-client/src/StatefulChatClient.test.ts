@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient, ChatThreadItem } from '@azure/communication-chat';
+import { ChatThreadItem } from '@azure/communication-chat';
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
@@ -15,114 +16,25 @@ import {
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
 } from '@azure/communication-signaling';
-import { createStatefulChatClient, StatefulChatClient } from './StatefulChatClient';
-import { ChatClientState } from './ChatClientState';
+import { createStatefulChatClientWithDeps } from './StatefulChatClient';
+import { ChatClientState, ChatError } from './ChatClientState';
 import { Constants } from './Constants';
-import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
-import { createMockIterator } from './mocks/createMockIterator';
-import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
+import {
+  StateChangeListener,
+  StatefulChatClientWithEventTrigger,
+  createMockChatClient,
+  createStatefulChatClientMock,
+  defaultClientArgs,
+  failingPagedAsyncIterator,
+  mockChatThreads
+} from './TestHelpers';
 
 jest.useFakeTimers();
-
-// [1, 2 ... 5] array
-const seedArray = Array.from(Array(5).keys());
-
-const mockChatThreads: ChatThreadItem[] = seedArray.map((seed) => ({
-  id: 'chatThreadId' + seed,
-  topic: 'topic' + seed,
-  createdOn: new Date(seed * 10000),
-  createdBy: { communicationUserId: 'user' + seed }
-}));
 
 const mockParticipants: ChatParticipant[] = [
   { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: 'user1' },
   { id: { kind: 'communicationUser', communicationUserId: 'user2' }, displayName: 'user1' }
 ];
-
-const mockListChatThreads = (): any => {
-  return createMockIterator(mockChatThreads);
-};
-
-const emptyAsyncFunctionWithResponse = async (): Promise<any> => {
-  return { _response: {} as any };
-};
-
-const mockEventHandlersRef = { value: {} };
-beforeEach(() => {
-  mockEventHandlersRef.value = {};
-});
-
-function createMockChatClient(): ChatClient {
-  const mockChatClient: ChatClient = {} as any;
-
-  mockChatClient.createChatThread = async (request) => {
-    return {
-      chatThread: {
-        id: 'chatThreadId',
-        topic: request.topic,
-        createdOn: new Date(0),
-        createdBy: { kind: 'communicationUser', communicationUserId: 'user1' }
-      }
-    };
-  };
-
-  mockChatClient.listChatThreads = mockListChatThreads;
-
-  mockChatClient.deleteChatThread = emptyAsyncFunctionWithResponse;
-
-  mockChatClient.getChatThreadClient = (threadId) => {
-    return createMockChatThreadClient(threadId);
-  };
-
-  mockChatClient.on = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
-    mockEventHandlersRef.value[event] = listener;
-  }) as any;
-
-  mockChatClient.off = ((event: Parameters<ChatClient['on']>[0], listener: (e: Event) => void) => {
-    if (mockEventHandlersRef.value[event] === listener) {
-      mockEventHandlersRef.value[event] = undefined;
-    }
-  }) as any;
-
-  mockChatClient.startRealtimeNotifications = emptyAsyncFunctionWithResponse;
-  mockChatClient.stopRealtimeNotifications = emptyAsyncFunctionWithResponse;
-
-  return mockChatClient;
-}
-
-jest.mock('@azure/communication-chat', () => {
-  return {
-    ...jest.requireActual('@azure/communication-chat'),
-    ChatClient: jest.fn().mockImplementation(() => {
-      return createMockChatClient();
-    })
-  };
-});
-
-type StatefulChatClientWithEventTrigger = StatefulChatClient & {
-  triggerEvent: (eventName: string, e: any) => Promise<void>;
-};
-
-function createStatefulChatClientMock(): StatefulChatClientWithEventTrigger {
-  mockEventHandlersRef.value = {};
-  const declarativeClient = createStatefulChatClient({
-    displayName: '',
-    userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
-    endpoint: '',
-    credential: new MockCommunicationUserCredential()
-  });
-
-  Object.defineProperty(declarativeClient, 'triggerEvent', {
-    value: async (eventName: string, e: any): Promise<void> => {
-      const handler = mockEventHandlersRef.value[eventName];
-      if (handler !== undefined) {
-        await handler(e);
-      }
-    }
-  });
-
-  return declarativeClient as StatefulChatClientWithEventTrigger;
-}
 
 describe('declarative chatThread list iterators', () => {
   test('declarative listChatThreads should proxy listChatThreads iterator and store it in internal state', async () => {
@@ -427,5 +339,151 @@ describe('declarative chatClient onStateChange', () => {
     client.offStateChange(callback);
     await client.createChatThread({ topic: 'topic' });
     expect(onChangeCalledTimes).toBe(1);
+  });
+});
+
+describe('stateful wraps thrown error', () => {
+  test('when listChatThreads fails immedately', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    expect(client.listChatThreads).toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
+  });
+
+  test('when listChatThreads fails while iterating items', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.listChatThreads = (): PagedAsyncIterableIterator<ChatThreadItem> => {
+      return failingPagedAsyncIterator(new Error('injected error'));
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const iter = client.listChatThreads();
+    await expect(iter.next()).rejects.toThrow(new ChatError('ChatClient.listChatThreads', new Error('injected error')));
+    await expect(iter.byPage().next()).rejects.toThrow(
+      new ChatError('ChatClient.listChatThreads', new Error('injected error'))
+    );
+  });
+
+  test('when createChatThread fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.createChatThread = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.createChatThread({ topic: '' })).rejects.toThrow(
+      new ChatError('ChatClient.createChatThread', new Error('injected error'))
+    );
+  });
+
+  test('when deleteChatThread fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.deleteChatThread = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.deleteChatThread('')).rejects.toThrow(
+      new ChatError('ChatClient.deleteChatThread', new Error('injected error'))
+    );
+  });
+
+  test('when startRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.startRealtimeNotifications()).rejects.toThrow(
+      new ChatError('ChatClient.startRealtimeNotifications', new Error('injected error'))
+    );
+  });
+
+  test('when stopRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.stopRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    await expect(client.stopRealtimeNotifications()).rejects.toThrow(
+      new ChatError('ChatClient.stopRealtimeNotifications', new Error('injected error'))
+    );
+  });
+});
+
+describe('stateful chatClient tees errors to state', () => {
+  test('when startRealtimeNotifications fails', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    expect(listener.onChangeCalledCount).toBe(1);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeDefined();
+  });
+});
+
+describe('complex error handling for startRealtimeNotifications', () => {
+  test('latest error is stored in state', async () => {
+    const baseClient = createMockChatClient();
+    let errorCount = 0;
+    baseClient.startRealtimeNotifications = async () => {
+      errorCount++;
+      throw Error(`injected error #${errorCount}`);
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+
+    // Generate two errors.
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+
+    expect(listener.onChangeCalledCount).toBe(2);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeDefined();
+    expect(latestError.message).toBe('injected error #2');
+  });
+
+  test('errors are cleared on successful method call', async () => {
+    const baseClient = createMockChatClient();
+
+    let hasFailedOnce = false;
+    baseClient.startRealtimeNotifications = async () => {
+      if (!hasFailedOnce) {
+        hasFailedOnce = true;
+        throw Error('injected error');
+      }
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+
+    // Generates error.
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    // Succeeds, should clear errors in state.
+    await client.startRealtimeNotifications();
+
+    expect(listener.onChangeCalledCount).toBe(2);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeUndefined();
+  });
+
+  test('related errors are cleared on successful method call', async () => {
+    const baseClient = createMockChatClient();
+    baseClient.startRealtimeNotifications = async () => {
+      throw Error('injected error');
+    };
+    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
+    const listener = new StateChangeListener(client);
+
+    // Generates error.
+    await expect(client.startRealtimeNotifications()).rejects.toThrow();
+    // Succeeds, should clear errors in state.
+    await client.stopRealtimeNotifications();
+
+    expect(listener.onChangeCalledCount).toBe(2);
+    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
+    expect(latestError).toBeUndefined();
   });
 });

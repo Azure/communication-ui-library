@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Common } from 'acs-ui-common';
-import { DefaultCallingHandlers, getCallingSelector, GetCallingSelector } from 'calling-component-bindings';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Common } from '@internal/acs-ui-common';
+import { DefaultCallingHandlers, getCallingSelector, GetCallingSelector } from '@internal/calling-component-bindings';
 import { useAdaptedSelector } from './useAdaptedSelector';
 import { useHandlers } from './useHandlers';
 

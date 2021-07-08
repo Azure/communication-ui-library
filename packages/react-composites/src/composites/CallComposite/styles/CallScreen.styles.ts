@@ -18,7 +18,13 @@ export const callControlsContainer = mergeStyles({
   flexDirection: 'row',
   alignItems: 'center',
   marginBottom: 2,
-  justifyContent: 'center'
+  justifyContent: 'center',
+
+  '@media screen and (max-width: 30rem)': {
+    label: {
+      display: 'none'
+    }
+  }
 });
 
 export const containerStyles: IStackStyles = {

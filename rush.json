@@ -6,7 +6,7 @@
     "strictPeerDependencies": true
   },
   "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0",
-  "ensureConsistentVersions": false,
+  "ensureConsistentVersions": true,
   "gitPolicy": {
     "versionBumpCommitMessage": "Applying package updates. [skip-ci]",
     "changeLogUpdateCommitMessage": "Applying package updates. [skip-ci]"
@@ -18,7 +18,7 @@
   "telemetryEnabled": false,
   "projects": [
     {
-      "packageName": "acs-ui-common",
+      "packageName": "@internal/acs-ui-common",
       "projectFolder": "packages/acs-ui-common",
       "reviewCategory": "internal"
     },
@@ -28,32 +28,32 @@
       "reviewCategory": "production"
     },
     {
-      "packageName": "react-components",
+      "packageName": "@internal/react-components",
       "projectFolder": "packages/react-components",
       "reviewCategory": "internal"
     },
     {
-      "packageName": "react-composites",
+      "packageName": "@internal/react-composites",
       "projectFolder": "packages/react-composites",
       "reviewCategory": "internal"
     },
     {
-      "packageName": "chat-stateful-client",
+      "packageName": "@internal/chat-stateful-client",
       "projectFolder": "packages/chat-stateful-client",
       "reviewCategory": "internal"
     },
     {
-      "packageName": "chat-component-bindings",
+      "packageName": "@internal/chat-component-bindings",
       "projectFolder": "packages/chat-component-bindings",
       "reviewCategory": "internal"
     },
     {
-      "packageName": "calling-stateful-client",
+      "packageName": "@internal/calling-stateful-client",
       "projectFolder": "packages/calling-stateful-client",
       "reviewCategory": "internal"
     },
     {
-      "packageName": "calling-component-bindings",
+      "packageName": "@internal/calling-component-bindings",
       "projectFolder": "packages/calling-component-bindings",
       "reviewCategory": "internal"
     },
@@ -78,7 +78,7 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "storybook",
+      "packageName": "@internal/storybook",
       "projectFolder": "packages/storybook",
       "reviewCategory": "tools"
     },
@@ -86,17 +86,10 @@
       "packageName": "build-tools",
       "projectFolder": "common/config",
       "reviewCategory": "tools"
-    },
-    // We rely on the following fix: https://github.com/microsoft/rushstack/pull/1916
-    // This package should be removed once that fix has been published.
-    {
-      "packageName": "@microsoft/api-extractor",
-      "projectFolder": "packages/api-extractor-fork",
-      "reviewCategory": "tools"
     }
     // Not working with the latest webpack: https://github.com/webpack/webpack/issues/2090#issuecomment-634301000
     // {
-    //   "packageName": "check-treeshaking",
+    //   "packageName": "@internal/check-treeshaking",
     //   "projectFolder": "packages/check-treeshaking",
     //   "reviewCategory": "tools"
     // }

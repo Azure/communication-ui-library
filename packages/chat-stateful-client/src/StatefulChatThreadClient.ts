@@ -24,15 +24,15 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return createDecoratedListMessages(chatThreadClient, this._context);
       }
       case 'getMessage': {
-        return async (...args: Parameters<ChatThreadClient['getMessage']>) => {
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<ChatThreadClient['getMessage']>) => {
           const message = await chatThreadClient.getMessage(...args);
           this._context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
           return message;
-        };
+        }, 'ChatThreadClient.getMessage');
       }
       case 'sendMessage': {
-        // Retry logic?
-        return async (...args: Parameters<ChatThreadClient['sendMessage']>) => {
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<ChatThreadClient['sendMessage']>) => {
+          // Retry logic?
           const { content } = args[0];
           const clientMessageId = nanoid(); // Generate a local short uuid for message
           const newMessage: ChatMessageWithStatus = {
@@ -72,28 +72,34 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             });
           }
           return result;
-        };
+        }, 'ChatThreadClient.sendMessage');
       }
       case 'addParticipants': {
-        return async (...args: Parameters<ChatThreadClient['addParticipants']>) => {
-          const result = await chatThreadClient.addParticipants(...args);
-          const [addRequest] = args;
-          const participantsToAdd = addRequest.participants;
-          this._context.setParticipants(chatThreadClient.threadId, participantsToAdd);
-          return result;
-        };
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<ChatThreadClient['addParticipants']>) => {
+            const result = await chatThreadClient.addParticipants(...args);
+            const [addRequest] = args;
+            const participantsToAdd = addRequest.participants;
+            this._context.setParticipants(chatThreadClient.threadId, participantsToAdd);
+            return result;
+          },
+          'ChatThreadClient.addParticipants'
+        );
       }
       case 'deleteMessage': {
-        return async (...args: Parameters<ChatThreadClient['deleteMessage']>) => {
-          // DeleteMessage is able to either delete local one(for failed message) or synced message
-          const [messageId] = args;
-          if (this._context.deleteLocalMessage(chatThreadClient.threadId, messageId)) {
-            return {};
-          }
-          const result = await chatThreadClient.deleteMessage(...args);
-          this._context.deleteMessage(chatThreadClient.threadId, messageId);
-          return result;
-        };
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<ChatThreadClient['deleteMessage']>) => {
+            // DeleteMessage is able to either delete local one(for failed message) or synced message
+            const [messageId] = args;
+            if (this._context.deleteLocalMessage(chatThreadClient.threadId, messageId)) {
+              return {};
+            }
+            const result = await chatThreadClient.deleteMessage(...args);
+            this._context.deleteMessage(chatThreadClient.threadId, messageId);
+            return result;
+          },
+          'ChatThreadClient.deleteMessage'
+        );
       }
       case 'listParticipants': {
         return createDecoratedListParticipants(chatThreadClient, this._context);
@@ -102,37 +108,45 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return createDecoratedListReadReceipts(chatThreadClient, this._context);
       }
       case 'removeParticipant': {
-        return async (...args: Parameters<ChatThreadClient['removeParticipant']>) => {
-          const result = await chatThreadClient.removeParticipant(...args);
-          const [removeIdentifier] = args;
-          this._context.deleteParticipant(chatThreadClient.threadId, getIdentifierKind(removeIdentifier));
-          return result;
-        };
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<ChatThreadClient['removeParticipant']>) => {
+            const result = await chatThreadClient.removeParticipant(...args);
+            const [removeIdentifier] = args;
+            this._context.deleteParticipant(chatThreadClient.threadId, getIdentifierKind(removeIdentifier));
+            return result;
+          },
+          'ChatThreadClient.removeParticipant'
+        );
       }
       case 'updateMessage': {
-        return async (...args: Parameters<ChatThreadClient['updateMessage']>) => {
-          const result = await chatThreadClient.updateMessage(...args);
-          const [messageId, updateOption] = args;
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<ChatThreadClient['updateMessage']>) => {
+            const result = await chatThreadClient.updateMessage(...args);
+            const [messageId, updateOption] = args;
 
-          this._context.updateChatMessageContent(chatThreadClient.threadId, messageId, updateOption?.content);
-          return result;
-        };
+            this._context.updateChatMessageContent(chatThreadClient.threadId, messageId, updateOption?.content);
+            return result;
+          },
+          'ChatThreadClient.updateMessage'
+        );
       }
       case 'updateTopic': {
-        return async (...args: Parameters<ChatThreadClient['updateTopic']>) => {
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<ChatThreadClient['updateTopic']>) => {
           const result = await chatThreadClient.updateTopic(...args);
           const [topic] = args;
-
           this._context.updateThreadTopic(chatThreadClient.threadId, topic);
           return result;
-        };
+        }, 'ChatThreadClient.updateTopic');
       }
       case 'getProperties': {
-        return async (...args: Parameters<ChatThreadClient['getProperties']>) => {
-          const result = await chatThreadClient.getProperties(...args);
-          this._context.updateThread(chatThreadClient.threadId, result);
-          return result;
-        };
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<ChatThreadClient['getProperties']>) => {
+            const result = await chatThreadClient.getProperties(...args);
+            this._context.updateThread(chatThreadClient.threadId, result);
+            return result;
+          },
+          'ChatThreadClient.getProperties'
+        );
       }
       default:
         return Reflect.get(chatThreadClient, prop);

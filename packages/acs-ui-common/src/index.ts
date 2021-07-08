@@ -6,5 +6,5 @@ export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';
-export type { AreEqual } from './areEqual';
+export type { AreEqual, AreParamEqual, AreTypeEqual } from './areEqual';
 export type { MessageStatus } from './MessageStatus';

@@ -12,7 +12,7 @@ import {
 } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { Video20Filled, MicOn20Filled, Speaker220Filled } from '@fluentui/react-icons';
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
 const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';
@@ -20,14 +20,13 @@ type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
 const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropdownOption[] => {
   // Remove duplicates
-  const noDuplicates = new Map();
+  const noDuplicates = new Map<string, VideoDeviceInfo | AudioDeviceInfo>();
   for (const item of list) {
     noDuplicates.set(item.id, item);
   }
-  const dropdownList: any[] = [];
+  const dropdownList: IDropdownOption[] = [];
   for (const item of noDuplicates.values()) {
     dropdownList.push({
-      val: item,
       key: item.id,
       text: item.name === '' ? item.deviceType : item.name
     });

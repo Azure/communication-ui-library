@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { ReactElement } from 'react';
-import { Common, fromFlatCommunicationIdentifier } from 'acs-ui-common';
-import { StatefulChatClient } from 'chat-stateful-client';
+import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 

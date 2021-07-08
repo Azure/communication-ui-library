@@ -15,7 +15,7 @@ import {
   messageStatusContainerStyle,
   noMessageStatusStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link, getRTL } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
@@ -29,10 +29,11 @@ import {
   SystemMessagePayload
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
-import { memoizeFnAll, MessageStatus } from 'acs-ui-common';
+import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
 import { useLocale } from '../localization';
+import { COMPONENT_UI_IDS } from './identifiers';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -205,7 +206,7 @@ const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.El
   const htmlToReactParser = new Parser();
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
-    <div>
+    <div data-ui-id={COMPONENT_UI_IDS.messageContent} data-ui-status={payload.status}>
       <LiveMessage
         message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content || '')}`}
         aria-live="polite"
@@ -218,7 +219,7 @@ const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.El
 const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
-    <div>
+    <div data-ui-id={COMPONENT_UI_IDS.messageContent} data-ui-status={payload.status}>
       <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
@@ -270,6 +271,15 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
         }
+        // This is a bug in fluentui react northstar not reversing left and right margins for the message bubbles of
+        // the user
+        style={
+          getRTL()
+            ? payload.mine
+              ? { marginLeft: '0rem', marginRight: '6.25rem' }
+              : { marginLeft: '6.25rem', marginRight: '0rem' }
+            : {}
+        }
       />
     );
   }
@@ -317,7 +327,7 @@ const memoizeAllMessages = memoizeFnAll(
         ) : (
           <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
         ),
-        contentPosition: payload.mine ? 'end' : 'start',
+        contentPosition: (getRTL() ? !payload.mine : payload.mine) ? 'end' : 'start',
         message: (
           <Flex vAlign="end">
             {chatMessageComponent}

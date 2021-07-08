@@ -10,3 +10,6 @@ SDK/cached-package.json
 
 # Output files
 *.tgz
+
+# Puppeteer
+automation/screenshots

@@ -20,7 +20,7 @@ import { getCall } from './selectors/baseSelectors';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
-import { PlaceholderProps, VideoStreamOptions } from 'react-components';
+import { PlaceholderProps, VideoStreamOptions } from '@internal/react-components';
 import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
@@ -31,11 +31,8 @@ import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBan
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
 
-export const MINI_HEADER_WINDOW_WIDTH = 450;
-
 export interface CallScreenProps {
   callInvitationURL?: string;
-  screenWidth: number;
   showParticipants?: boolean;
   showPane?: boolean;
   endCallHandler(): void;
@@ -49,7 +46,6 @@ const spinnerLabel = 'Initializing call client...';
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const {
     callInvitationURL,
-    screenWidth,
     showParticipants,
     showPane,
     endCallHandler,
@@ -127,9 +123,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }
 
   return (
-    <>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       {isInCall(callStatus ?? 'None') ? (
-        <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles}>
+        <>
           <Stack.Item style={{ width: '100%' }}>
             <ComplianceBanner {...complianceBannerProps} />
           </Stack.Item>
@@ -166,16 +162,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             <Stack className={callControlsContainer}>
               <CallControls
                 onEndCallClick={endCallHandler}
-                compressedMode={screenWidth <= MINI_HEADER_WINDOW_WIDTH}
                 showParticipants={showParticipants}
                 callInvitationURL={callInvitationURL}
               />
             </Stack>
           </Stack.Item>
-        </Stack>
+        </>
       ) : (
         <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />
       )}
-    </>
+    </Stack>
   );
 };

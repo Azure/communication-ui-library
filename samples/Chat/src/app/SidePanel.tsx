@@ -66,7 +66,7 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
         onClose={() => setSelectedPane(SidePanelTypes.None)}
       >
         <ParticipantList
-          {...(chatParticipantProps as any)}
+          {...chatParticipantProps}
           onRenderAvatar={
             onRenderAvatar ? (participant: CommunicationParticipant) => onRenderAvatar(participant.userId) : undefined
           }
