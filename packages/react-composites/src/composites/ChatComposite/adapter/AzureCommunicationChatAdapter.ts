@@ -87,6 +87,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private emitter: EventEmitter = new EventEmitter();
 
   constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {
+    this.bindAllPublicMethods();
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
@@ -103,6 +104,22 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
     this.chatClient.onStateChange(onStateChange);
     this.subscribeAllEvents();
+  }
+
+  private bindAllPublicMethods() {
+    this.onStateChange = this.onStateChange.bind(this);
+    this.offStateChange = this.offStateChange.bind(this);
+    this.getState = this.getState.bind(this);
+    this.dispose = this.dispose.bind(this);
+    this.fetchInitialData = this.fetchInitialData.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
+    this.sendReadReceipt = this.sendReadReceipt.bind(this);
+    this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
+    this.removeParticipant = this.removeParticipant.bind(this);
+    this.setTopic = this.setTopic.bind(this);
+    this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
+    this.on = this.on.bind(this);
+    this.off = this.off.bind(this);
   }
 
   dispose(): void {
@@ -195,21 +212,21 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   private subscribeAllEvents(): void {
-    this.chatClient.on('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener);
-    this.chatClient.on('participantsAdded', this.participantsAddedListener);
-    this.chatClient.on('participantsRemoved', this.participantsRemovedListener);
-    this.chatClient.on('chatMessageReceived', this.messageReceivedListener);
-    this.chatClient.on('readReceiptReceived', this.messageReadListener);
-    this.chatClient.on('participantsRemoved', this.participantsRemovedListener);
+    this.chatClient.on('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener.bind(this));
+    this.chatClient.on('participantsAdded', this.participantsAddedListener.bind(this));
+    this.chatClient.on('participantsRemoved', this.participantsRemovedListener.bind(this));
+    this.chatClient.on('chatMessageReceived', this.messageReceivedListener.bind(this));
+    this.chatClient.on('readReceiptReceived', this.messageReadListener.bind(this));
+    this.chatClient.on('participantsRemoved', this.participantsRemovedListener.bind(this));
   }
 
   private unsubscribeAllEvents(): void {
-    this.chatClient.off('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener);
-    this.chatClient.off('participantsAdded', this.participantsAddedListener);
-    this.chatClient.off('participantsRemoved', this.participantsRemovedListener);
-    this.chatClient.off('chatMessageReceived', this.messageReceivedListener);
-    this.chatClient.off('readReceiptReceived', this.messageReadListener);
-    this.chatClient.off('participantsRemoved', this.participantsRemovedListener);
+    this.chatClient.off('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener.bind(this));
+    this.chatClient.off('participantsAdded', this.participantsAddedListener.bind(this));
+    this.chatClient.off('participantsRemoved', this.participantsRemovedListener.bind(this));
+    this.chatClient.off('chatMessageReceived', this.messageReceivedListener.bind(this));
+    this.chatClient.off('readReceiptReceived', this.messageReadListener.bind(this));
+    this.chatClient.off('participantsRemoved', this.participantsRemovedListener.bind(this));
   }
 
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
