@@ -19,6 +19,8 @@ Fri, 09 Jul 2021 20:41:33 GMT
 
 * Bundle optimizations when only using chat or only using calling components
 
+* Additions to storybook : Identity (How to get a token) and Feedback (Help us create even better components for you)
+
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.1)
 
 Fri, 21 May 2021 16:16:28 GMT
