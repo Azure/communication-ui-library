@@ -34,14 +34,17 @@ import { ScreenSharePopup } from './ScreenSharePopup';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
-  showParticipants?: boolean;
-  showChatButton?: boolean;
-  onToggleChat?: () => void;
-  showPane?: boolean;
+  showParticipantsButton?: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   onRenderPane?: () => JSX.Element;
+  showSideChatButton?: boolean;
+  showSidePeopleButton?: boolean;
+  chatButtonChecked?: boolean;
+  peopleButtonChecked?: boolean;
+  onChatButtonClick?: () => void;
+  onPeopleButtonClick?: () => void;
 }
 
 const spinnerLabel = 'Initializing call client...';
@@ -49,14 +52,17 @@ const spinnerLabel = 'Initializing call client...';
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const {
     callInvitationURL,
-    showParticipants,
-    showPane,
+    showParticipantsButton,
     endCallHandler,
     callErrorHandler,
     onRenderAvatar,
     onRenderPane,
-    showChatButton,
-    onToggleChat
+    showSideChatButton,
+    showSidePeopleButton,
+    chatButtonChecked,
+    peopleButtonChecked,
+    onChatButtonClick,
+    onPeopleButtonClick
   } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
@@ -147,9 +153,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                   <Stack.Item styles={mediaGalleryContainerStyles}>
                     <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
                   </Stack.Item>
-                  {showPane && onRenderPane && (
-                    <Stack.Item styles={sidePaneContainerStyles}>{onRenderPane()}</Stack.Item>
-                  )}
+                  {onRenderPane && <Stack.Item styles={sidePaneContainerStyles}>{onRenderPane()}</Stack.Item>}
                 </Stack>
                 {isScreenShareOn && (
                   <ScreenSharePopup
@@ -165,10 +169,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             <Stack className={callControlsContainer}>
               <CallControls
                 onEndCallClick={endCallHandler}
-                showParticipants={showParticipants}
-                showChatButton={showChatButton}
-                onToggleChat={onToggleChat}
+                showParticipantsButton={showParticipantsButton}
                 callInvitationURL={callInvitationURL}
+                showSideChatButton={showSideChatButton}
+                showSidePeopleButton={showSidePeopleButton}
+                chatButtonChecked={chatButtonChecked}
+                peopleButtonChecked={peopleButtonChecked}
+                onChatButtonClick={onChatButtonClick}
+                onPeopleButtonClick={onPeopleButtonClick}
               />
             </Stack>
           </Stack.Item>

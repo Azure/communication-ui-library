@@ -60,6 +60,9 @@ export type {
   ParticipantsButtonStylesProps
 } from './ParticipantsButton';
 
+export { PeopleButton } from './PeopleButton';
+export type { PeopleButtonProps, PeopleButtonStrings } from './PeopleButton';
+
 export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 

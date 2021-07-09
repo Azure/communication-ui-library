@@ -22,29 +22,41 @@ export type CallCompositeProps = {
    */
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
-  showCallScreenPane?: boolean;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   onRenderPane?: () => JSX.Element;
-  showChatButton?: boolean;
-  onToggleChat?: () => void;
+  showParticipantsButton?: boolean;
+  showSideChatButton?: boolean;
+  showSidePeopleButton?: boolean;
+  chatButtonChecked?: boolean;
+  peopleButtonChecked?: boolean;
+  onChatButtonClick?: () => void;
+  onPeopleButtonClick?: () => void;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   onRenderPane?: () => JSX.Element;
-  showPane: boolean;
   callInvitationURL?: string;
-  showChatButton?: boolean;
-  onToggleChat?: () => void;
+  showParticipantsButton?: boolean;
+  showSideChatButton?: boolean;
+  showSidePeopleButton?: boolean;
+  chatButtonChecked?: boolean;
+  peopleButtonChecked?: boolean;
+  onChatButtonClick?: () => void;
+  onPeopleButtonClick?: () => void;
 };
 
 const MainScreen = ({
   callInvitationURL,
+  showParticipantsButton,
   onRenderAvatar,
   onRenderPane,
-  showPane,
-  showChatButton,
-  onToggleChat
+  showSideChatButton,
+  showSidePeopleButton,
+  chatButtonChecked,
+  peopleButtonChecked,
+  onChatButtonClick,
+  onPeopleButtonClick
 }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
@@ -80,19 +92,33 @@ const MainScreen = ({
           }}
           onRenderAvatar={onRenderAvatar}
           onRenderPane={onRenderPane}
-          showPane={showPane}
-          showParticipants={true}
+          showParticipantsButton={showParticipantsButton}
           callInvitationURL={callInvitationURL}
-          showChatButton={showChatButton}
-          onToggleChat={onToggleChat}
+          showSideChatButton={showSideChatButton}
+          showSidePeopleButton={showSidePeopleButton}
+          chatButtonChecked={chatButtonChecked}
+          peopleButtonChecked={peopleButtonChecked}
+          onChatButtonClick={onChatButtonClick}
+          onPeopleButtonClick={onPeopleButtonClick}
         />
       );
   }
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme, showCallScreenPane, onRenderPane, showChatButton, onToggleChat } =
-    props;
+  const {
+    adapter,
+    callInvitationURL,
+    fluentTheme,
+    onRenderPane,
+    showParticipantsButton,
+    showSideChatButton,
+    showSidePeopleButton,
+    chatButtonChecked,
+    peopleButtonChecked,
+    onChatButtonClick,
+    onPeopleButtonClick
+  } = props;
 
   useEffect(() => {
     (async () => {
@@ -109,10 +135,14 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
         <MainScreen
           onRenderAvatar={props.onRenderAvatar}
           onRenderPane={onRenderPane}
-          showPane={showCallScreenPane ?? false}
           callInvitationURL={callInvitationURL}
-          showChatButton={showChatButton}
-          onToggleChat={onToggleChat}
+          showParticipantsButton={showParticipantsButton}
+          showSideChatButton={showSideChatButton}
+          showSidePeopleButton={showSidePeopleButton}
+          chatButtonChecked={chatButtonChecked}
+          peopleButtonChecked={peopleButtonChecked}
+          onChatButtonClick={onChatButtonClick}
+          onPeopleButtonClick={onPeopleButtonClick}
         />
       </CallAdapterProvider>
     </FluentThemeProvider>

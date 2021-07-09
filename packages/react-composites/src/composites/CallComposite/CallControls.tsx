@@ -9,6 +9,7 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
+  PeopleButton,
   ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
@@ -19,20 +20,28 @@ import { Stack } from '@fluentui/react';
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
   compressedMode?: boolean;
-  showParticipants?: boolean;
+  showParticipantsButton?: boolean;
   callInvitationURL?: string;
-  showChatButton?: boolean;
-  onToggleChat?: () => void;
+  showSideChatButton?: boolean;
+  showSidePeopleButton?: boolean;
+  chatButtonChecked?: boolean;
+  peopleButtonChecked?: boolean;
+  onChatButtonClick?: () => void;
+  onPeopleButtonClick?: () => void;
 };
 
 export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
   const {
     callInvitationURL,
     compressedMode,
-    showParticipants = false,
+    showParticipantsButton = true,
     onEndCallClick,
-    showChatButton,
-    onToggleChat
+    showSideChatButton,
+    showSidePeopleButton,
+    chatButtonChecked,
+    peopleButtonChecked,
+    onChatButtonClick,
+    onPeopleButtonClick
   } = props;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
@@ -54,7 +63,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
             <CameraButton {...cameraButtonProps} showLabel={!compressedMode} />
             <MicrophoneButton {...microphoneButtonProps} showLabel={!compressedMode} />
             <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
-            {showParticipants && (
+            {showParticipantsButton && (
               <ParticipantsButton
                 {...participantsButtonProps}
                 showLabel={!compressedMode}
@@ -70,21 +79,26 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
             />
           </Stack>
         </Stack.Item>
-        {showChatButton && (
-          <Stack.Item>
+        <Stack.Item>
+          {showSideChatButton && (
             <ChatButton
-              onToggleChat={() => {
-                onToggleChat && onToggleChat();
+              checked={chatButtonChecked}
+              onClick={() => {
+                onChatButtonClick && onChatButtonClick();
               }}
               showLabel={!compressedMode}
             />
-            <ParticipantsButton
-              {...participantsButtonProps}
+          )}
+          {showSidePeopleButton && (
+            <PeopleButton
+              checked={peopleButtonChecked}
+              onClick={() => {
+                onPeopleButtonClick && onPeopleButtonClick();
+              }}
               showLabel={!compressedMode}
-              callInvitationURL={callInvitationURL}
             />
-          </Stack.Item>
-        )}
+          )}
+        </Stack.Item>
       </Stack>
     </ControlBar>
   );

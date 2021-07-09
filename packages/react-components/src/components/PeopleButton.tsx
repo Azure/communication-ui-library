@@ -3,13 +3,13 @@
 
 import React, { useCallback } from 'react';
 import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
-import { Chat20Filled, Chat20Regular } from '@fluentui/react-icons';
+import { People20Filled, People20Regular } from '@fluentui/react-icons';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
- * Strings of ChatButton that can be overridden
+ * Strings of PeopleButton that can be overridden
  */
-export interface ChatButtonStrings {
+export interface PeopleButtonStrings {
   /** Label when button is on. */
   onLabel: string;
   /** Label when button is off. */
@@ -17,9 +17,9 @@ export interface ChatButtonStrings {
 }
 
 /**
- * Props for ChatButton component
+ * Props for PeopleButton component
  */
-export interface ChatButtonProps extends IButtonProps {
+export interface PeopleButtonProps extends IButtonProps {
   /**
    * Whether the label is displayed or not.
    * @defaultValue `false`
@@ -29,35 +29,35 @@ export interface ChatButtonProps extends IButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings?: Partial<ChatButtonStrings>;
+  strings?: Partial<PeopleButtonStrings>;
 }
 
 /**
- * `ChatButton` allows you to easily create a component for rendering a screen-share button.
+ * `PeopleButton` allows you to easily create a component for rendering a screen-share button.
  * It can be used in your ControlBar component for example.
  *
- * @param props - of type ChatButtonProps
+ * @param props - of type PeopleButtonProps
  */
-export const ChatButton = (props: ChatButtonProps): JSX.Element => {
+export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
   const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
-  // const localeStrings = useLocale().strings.screenShareButton; // todo
-  const onLabel = props.strings?.onLabel ?? 'Chat';
-  const offLabel = props.strings?.offLabel ?? 'Chat';
+  // const localeStrings = useLocale().strings.PeopleButton; // todo
+  const onLabel = props.strings?.onLabel ?? 'People';
+  const offLabel = props.strings?.offLabel ?? 'People';
 
   const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
     return props?.checked ? (
-      <Chat20Filled key={'chatOnIconKey'} primaryFill="currentColor" />
+      <People20Filled key={'peopleOnIconKey'} primaryFill="currentColor" />
     ) : (
-      <Chat20Regular key={'chatOffIconKey'} primaryFill="currentColor" />
+      <People20Regular key={'peopleOffIconKey'} primaryFill="currentColor" />
     );
   };
 
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {
       return (
-        <Label key={'chatLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        <Label key={'peopleLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
           {props?.checked ? onLabel : offLabel}
         </Label>
       );
