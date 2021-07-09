@@ -1,15 +1,11 @@
 name: Publish npm packages
 
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
-      release-branch:
-        description: 'Branch to create release from'
-        required: true
       npm-tag:
-        description: '(Optional) Npm tag for the release, e.g. latest, next, dev'
-        required: false
+        description: 'Npm tag for the release, e.g. latest, next, dev'
+        required: true
 
 jobs:
   publish:
