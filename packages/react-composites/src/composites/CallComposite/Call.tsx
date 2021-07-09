@@ -25,6 +25,8 @@ export type CallCompositeProps = {
   showCallScreenPane?: boolean;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   onRenderPane?: () => JSX.Element;
+  showChatButton?: boolean;
+  onToggleChat?: () => void;
 };
 
 type MainScreenProps = {
@@ -32,9 +34,18 @@ type MainScreenProps = {
   onRenderPane?: () => JSX.Element;
   showPane: boolean;
   callInvitationURL?: string;
+  showChatButton?: boolean;
+  onToggleChat?: () => void;
 };
 
-const MainScreen = ({ callInvitationURL, onRenderAvatar, onRenderPane, showPane }: MainScreenProps): JSX.Element => {
+const MainScreen = ({
+  callInvitationURL,
+  onRenderAvatar,
+  onRenderPane,
+  showPane,
+  showChatButton,
+  onToggleChat
+}: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -72,13 +83,16 @@ const MainScreen = ({ callInvitationURL, onRenderAvatar, onRenderPane, showPane 
           showPane={showPane}
           showParticipants={true}
           callInvitationURL={callInvitationURL}
+          showChatButton={showChatButton}
+          onToggleChat={onToggleChat}
         />
       );
   }
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme, showCallScreenPane, onRenderPane } = props;
+  const { adapter, callInvitationURL, fluentTheme, showCallScreenPane, onRenderPane, showChatButton, onToggleChat } =
+    props;
 
   useEffect(() => {
     (async () => {
@@ -97,6 +111,8 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
           onRenderPane={onRenderPane}
           showPane={showCallScreenPane ?? false}
           callInvitationURL={callInvitationURL}
+          showChatButton={showChatButton}
+          onToggleChat={onToggleChat}
         />
       </CallAdapterProvider>
     </FluentThemeProvider>

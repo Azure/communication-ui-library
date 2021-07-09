@@ -35,6 +35,8 @@ import { ScreenSharePopup } from './ScreenSharePopup';
 export interface CallScreenProps {
   callInvitationURL?: string;
   showParticipants?: boolean;
+  showChatButton?: boolean;
+  onToggleChat?: () => void;
   showPane?: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
@@ -52,7 +54,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     endCallHandler,
     callErrorHandler,
     onRenderAvatar,
-    onRenderPane
+    onRenderPane,
+    showChatButton,
+    onToggleChat
   } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
@@ -162,6 +166,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               <CallControls
                 onEndCallClick={endCallHandler}
                 showParticipants={showParticipants}
+                showChatButton={showChatButton}
+                onToggleChat={onToggleChat}
                 callInvitationURL={callInvitationURL}
               />
             </Stack>

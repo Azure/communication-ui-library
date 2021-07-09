@@ -38,6 +38,9 @@ export type { VideoGalleryProps } from './VideoGallery';
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
 
+export { ChatButton } from './ChatButton';
+export type { ChatButtonProps, ChatButtonStrings } from './ChatButton';
+
 export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
 
