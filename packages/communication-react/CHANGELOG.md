@@ -19,8 +19,6 @@ Fri, 09 Jul 2021 20:41:33 GMT
 
 * Bundle optimizations when only using chat or only using calling components
 
-- Bump react-components to v1.0.0-beta.2 ([PR #496](https://github.com/azure/communication-ui-library/pull/496) by jinan@microsoft.com)
-
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.1)
 
 Fri, 21 May 2021 16:16:28 GMT
