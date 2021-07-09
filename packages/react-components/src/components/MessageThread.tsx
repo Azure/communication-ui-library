@@ -287,6 +287,7 @@ const memoizeAllMessages = memoizeFnAll(
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
+    statusComponents: Record<MessageStatus, JSX.Element>,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
@@ -324,7 +325,7 @@ const memoizeAllMessages = memoizeFnAll(
                 onRenderMessageStatus ? (
                   onRenderMessageStatus({ status: statusToRender })
                 ) : (
-                  MessageStatusIndicator({ status: statusToRender })
+                  statusComponents[statusToRender]
                 )
               ) : (
                 <div className={mergeStyles(noMessageStatusStyle)} />
@@ -737,6 +738,16 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
+  const statusComponents: Record<MessageStatus, JSX.Element> = useMemo(
+    () => ({
+      seen: <MessageStatusIndicator status="seen" />,
+      delivered: <MessageStatusIndicator status="delivered" />,
+      sending: <MessageStatusIndicator status="sending" />,
+      failed: <MessageStatusIndicator status="failed" />
+    }),
+    []
+  );
+
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -778,6 +789,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               onRenderMessageStatus,
               defaultChatMessageRenderer,
               strings,
+              statusComponents,
               // Temporary solution to make sure we re-render if attach attribute is changed.
               // The proper fix should be in selector.
               message.type === 'chat' ? message.payload.attached : undefined,
@@ -799,7 +811,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSendingChatMessage,
       lastDeliveredChatMessage,
       onRenderMessage,
-      strings
+      strings,
+      statusComponents
     ]
   );
 
