@@ -162,11 +162,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async sendMessage(content: string): Promise<void> {
-    await this.handlers.onSendMessage(content);
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onSendMessage(content);
+    });
   }
 
   async sendReadReceipt(chatMessageId: string): Promise<void> {
-    await this.handlers.onMessageSeen(chatMessageId);
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onMessageSeen(chatMessageId);
+    });
   }
 
   async sendTypingIndicator(): Promise<void> {
@@ -174,7 +178,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async removeParticipant(userId: string): Promise<void> {
-    await this.handlers.onParticipantRemove(userId);
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onParticipantRemove(userId);
+    });
   }
 
   async setTopic(topicName: string): Promise<void> {
@@ -184,7 +190,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
-    return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    });
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
