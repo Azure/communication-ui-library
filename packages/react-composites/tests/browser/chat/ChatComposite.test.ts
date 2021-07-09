@@ -10,12 +10,11 @@ import { test, expect } from '@playwright/test';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
+const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
 const stubTimestamps = (page: Page): void => {
-  page.evaluate(() => {
-    Array.from(document.getElementsByClassName('ui-chat__message__timestamp')).forEach(
-      (i) => (i.innerHTML = 'timestamp')
-    );
-  });
+  page.evaluate((messageTimestampId) => {
+    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
+  }, messageTimestampId);
 };
 
 const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
@@ -52,6 +51,9 @@ test.describe('Chat Composite E2E Tests', () => {
       const page = await browser.newPage();
       await page.setViewportSize(PAGE_VIEWPORT);
       await page.goto(`${SERVER_URL}?${qs}`, { waitUntil: 'networkidle' });
+      // Important: For ensuring that blinking cursor doesn't get captured in
+      // snapshots and cause a diff in subsequent tests.
+      page.addStyleTag({ content: `* { caret-color: transparent !important; }` });
       pages.push(page);
     }
   });
@@ -66,7 +68,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await pages[0].waitForSelector(dataUiId(IDS.sendboxTextfield));
     await pages[0].waitForSelector(dataUiId(IDS.participantList));
     stubTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot('1-chat-screen.png', { threshold: 1 });
+    expect(await pages[0].screenshot()).toMatchSnapshot('1-chat-screen.png');
   });
 
   test('can send message', async () => {
@@ -76,6 +78,6 @@ test.describe('Chat Composite E2E Tests', () => {
     await pages[0].keyboard.press('Enter');
     await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
     stubTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot('2-send-message.png', { threshold: 1 });
+    expect(await pages[0].screenshot()).toMatchSnapshot('2-send-message.png');
   });
 });

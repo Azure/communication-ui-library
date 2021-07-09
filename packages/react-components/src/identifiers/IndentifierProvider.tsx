@@ -7,12 +7,14 @@ export interface Identifiers {
   sendboxTextfield: string;
   participantList: string;
   messageContent: string;
+  messageTimestamp: string;
 }
 
 export const defaultIdentifiers: Identifiers = {
   sendboxTextfield: 'sendbox-textfield',
   participantList: 'participant-list',
-  messageContent: 'message-content'
+  messageContent: 'message-content',
+  messageTimestamp: 'message-timestamp'
 };
 
 export const IdentifierContext = createContext<Identifiers>(defaultIdentifiers);

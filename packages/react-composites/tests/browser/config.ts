@@ -26,5 +26,6 @@ export const PARTICIPANT_NAMES = [
 export const IDS = {
   sendboxTextfield: 'sendbox-textfield',
   participantList: 'participant-list',
-  messageContent: 'message-content'
+  messageContent: 'message-content',
+  messageTimestamp: 'message-timestamp'
 };

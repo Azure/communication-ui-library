@@ -187,6 +187,8 @@ export interface Identifiers {
     // (undocumented)
     messageContent: string;
     // (undocumented)
+    messageTimestamp: string;
+    // (undocumented)
     participantList: string;
     // (undocumented)
     sendboxTextfield: string;

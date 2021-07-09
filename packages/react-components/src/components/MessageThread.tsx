@@ -254,6 +254,7 @@ const GenerateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
 
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   const { strings } = useLocale();
+  const ids = useIdentifiers();
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
     const messageContentItem = GenerateMessageContent(payload);
@@ -264,14 +265,16 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
         mine={payload.mine}
         timestamp={
-          payload.createdOn
-            ? props.showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
-                  ...strings.messageThread,
-                  ...props.strings
-                })
-              : formatTimeForChatMessage(payload.createdOn)
-            : undefined
+          <text data-ui-id={ids.messageTimestamp}>
+            {payload.createdOn
+              ? props.showDate
+                ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
+                    ...strings.messageThread,
+                    ...props.strings
+                  })
+                : formatTimeForChatMessage(payload.createdOn)
+              : undefined}
+          </text>
         }
         // This is a bug in fluentui react northstar not reversing left and right margins for the message bubbles of
         // the user
