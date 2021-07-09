@@ -13,7 +13,7 @@ Fri, 09 Jul 2021 20:41:33 GMT
 
 * Updated calling sdk dependency to 1.2.0-beta.1
 
-* Updated Calling UI Components with UI updates
+* UI Update improvements for Calling UI Components
 
 * Updates to selectors and adapters. Learn more about these updates in aka.ms/acsstorybook
 
