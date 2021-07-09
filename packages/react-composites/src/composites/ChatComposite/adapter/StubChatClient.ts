@@ -131,3 +131,25 @@ export const pagedAsyncIterator = <T>(values: T[]): PagedAsyncIterableIterator<T
     }
   };
 };
+
+// An iterator that throws the given error when asynchronously iterating over items, directly or byPage.
+export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIterator<T, T[]> => {
+  return {
+    async next() {
+      throw error;
+    },
+    [Symbol.asyncIterator]() {
+      return this;
+    },
+    byPage: (): AsyncIterableIterator<T[]> => {
+      return {
+        async next() {
+          throw error;
+        },
+        [Symbol.asyncIterator]() {
+          return this;
+        }
+      };
+    }
+  };
+};
