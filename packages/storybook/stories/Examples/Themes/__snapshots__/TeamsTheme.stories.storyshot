@@ -35,6 +35,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
           <div
             className="css-82"
             data-uses-unhanded-props={true}
+            dir="ltr"
           >
             <div
               className="ms-Stack css-3"
@@ -53,7 +54,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                   className="ms-StackItem css-5"
                 >
                   <div
-                    className="css-6"
+                    className="css-7"
                   >
                     <div
                       className="ms-Stack css-8"
