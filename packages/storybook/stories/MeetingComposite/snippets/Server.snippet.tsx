@@ -23,9 +23,9 @@ export const createUserCredentials = async (
     console.log(teamsMeetingLink);
     threadId = teamsMeetingLink.replace('https://teams.microsoft.com/l/meetup-join/', '');
     console.log(threadId);
-    threadId = threadId.split(/^(.*?@thread\.v2)/gm)[1];
-    console.log(threadId);
     threadId = threadId.replace('%3a', ':').replace('%40', '@');
+    console.log(threadId);
+    threadId = threadId.split(/^(.*?@thread\.v2)/gm)[1];
     console.log(threadId);
   } else {
     threadId = (await chatClient.createChatThread({ topic: 'DemoMeeting' })).chatThread?.id ?? '';
