@@ -7,21 +7,17 @@ import { useLocale } from '../localization';
 
 export interface ErrorBarProps extends IMessageBarProps {
   strings?: ErrorBarStrings;
-  activeErrors: ErrorType[];
+  activeError: ErrorType;
+  onClearActiveError: () => void;
 }
 
 export interface ErrorBarStrings {
-  sendMessageFailed: string;
+  sendMessageGeneric: string;
 }
 
 export type ErrorType = keyof ErrorBarStrings;
 
 export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
-  if (props.activeErrors.length === 0) {
-    return <></>;
-  }
-
   const strings = props.strings ?? useLocale().strings.errorBar;
-  const errors = props.activeErrors.map((k) => strings[k]);
-  return <MessageBar messageBarType={MessageBarType.error}>{errors[0]}</MessageBar>;
+  return <MessageBar messageBarType={MessageBarType.error}>{strings[props.activeError]}</MessageBar>;
 };

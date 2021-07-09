@@ -61,6 +61,6 @@
     "saturday": "Saturday"
   },
   "errorBar": {
-    "sendMessageFailed": "Failed to send message"
+    "sendMessageGeneric": "Failed to send message"
   }
 }

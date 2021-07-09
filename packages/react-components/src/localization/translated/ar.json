@@ -61,6 +61,6 @@
     "saturday": "السبت"
   },
   "errorBar": {
-    "sendMessageFailed": "فشل إرسال رسالة"
+    "sendMessageGeneric": "فشل إرسال رسالة"
   }
 }
