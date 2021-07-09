@@ -11,6 +11,14 @@ Fri, 09 Jul 2021 20:41:33 GMT
 
 ### Changes
 
+* Updated calling sdk dependency to 1.2.0-beta.1
+
+* Updated Calling UI Components with UI updates
+
+* Updates to selectors and adapters. Learn more about these updates in aka.ms/acsstorybook
+
+* Bundle optimizations when only using chat or only using calling components
+
 - Bump react-components to v1.0.0-beta.2 ([PR #496](https://github.com/azure/communication-ui-library/pull/496) by jinan@microsoft.com)
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.1)
