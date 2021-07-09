@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -157,7 +159,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     stopScreenShare(): Promise<void>;
     // (undocumented)
     unmute(): Promise<void>;
-    }
+}
 
 // @public
 export interface BaseCustomStylesProps {
@@ -642,15 +644,15 @@ export type ChatThreadProperties = {
 
 // @public (undocumented)
 export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
-    userId: string;
-    showMessageStatus: boolean;
-    messages: Message<"chat">[];
+userId: string;
+showMessageStatus: boolean;
+messages: Message<"chat">[];
 }, (res1: string, res2: {
-    [key: string]: ChatMessageWithStatus;
+[key: string]: ChatMessageWithStatus;
 }, res3: Date, res4: boolean) => {
-    userId: string;
-    showMessageStatus: boolean;
-    messages: Message<"chat">[];
+userId: string;
+showMessageStatus: boolean;
+messages: Message<"chat">[];
 }>;
 
 // @public (undocumented)
@@ -1304,11 +1306,11 @@ export interface SendBoxProps {
 
 // @public (undocumented)
 export const sendBoxSelector: OutputSelector<ChatClientState, {
-    displayName: string;
-    userId: string;
+displayName: string;
+userId: string;
 }, (res1: string, res2: string) => {
-    displayName: string;
-    userId: string;
+displayName: string;
+userId: string;
 }>;
 
 // @public
@@ -1486,7 +1488,7 @@ export const useLocale: () => Locale;
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
 
 // @public (undocumented)
-export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
@@ -1530,33 +1532,33 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public (undocumented)
 export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-    remoteParticipants: VideoGalleryRemoteParticipant[];
+screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+localParticipant: {
+userId: string;
+displayName: string;
+isMuted: boolean | undefined;
+isScreenSharingOn: boolean | undefined;
+videoStream: {
+isAvailable: boolean;
+isMirrored: boolean | undefined;
+renderElement: HTMLElement | undefined;
+};
+};
+remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: CallState | undefined, res2: string | undefined, res3: string) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    localParticipant: {
-        userId: string;
-        displayName: string;
-        isMuted: boolean | undefined;
-        isScreenSharingOn: boolean | undefined;
-        videoStream: {
-            isAvailable: boolean;
-            isMirrored: boolean | undefined;
-            renderElement: HTMLElement | undefined;
-        };
-    };
-    remoteParticipants: VideoGalleryRemoteParticipant[];
+screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+localParticipant: {
+userId: string;
+displayName: string;
+isMuted: boolean | undefined;
+isScreenSharingOn: boolean | undefined;
+videoStream: {
+isAvailable: boolean;
+isMirrored: boolean | undefined;
+renderElement: HTMLElement | undefined;
+};
+};
+remoteParticipants: VideoGalleryRemoteParticipant[];
 }>;
 
 // @public
@@ -1601,7 +1603,6 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
 
 // (No @packageDocumentation comment for this package)
 
