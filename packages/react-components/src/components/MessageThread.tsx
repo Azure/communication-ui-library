@@ -15,7 +15,7 @@ import {
   messageStatusContainerStyle,
   noMessageStatusStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link, getRTL } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
@@ -251,7 +251,6 @@ const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
 };
 
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
-  const { strings } = useLocale();
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
     const messageContentItem = generateMessageContent(payload);
@@ -264,21 +263,9 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         timestamp={
           payload.createdOn
             ? props.showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
-                  ...strings.messageThread,
-                  ...props.strings
-                })
+              ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.strings)
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
-        }
-        // This is a bug in fluentui react northstar not reversing left and right margins for the message bubbles of
-        // the user
-        style={
-          getRTL()
-            ? payload.mine
-              ? { marginLeft: '0rem', marginRight: '6.25rem' }
-              : { marginLeft: '6.25rem', marginRight: '0rem' }
-            : {}
         }
       />
     );
@@ -299,16 +286,12 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
-    strings?: Partial<MessageThreadStrings>,
+    strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
   ): ShorthandValue<ChatItemProps> => {
-    const messageProps: MessageProps = {
-      message: message,
-      showDate: showMessageDate,
-      strings: strings
-    };
+    const messageProps: MessageProps = { message, strings, showDate: showMessageDate };
 
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
@@ -327,7 +310,7 @@ const memoizeAllMessages = memoizeFnAll(
         ) : (
           <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
         ),
-        contentPosition: (getRTL() ? !payload.mine : payload.mine) ? 'end' : 'start',
+        contentPosition: payload.mine ? 'end' : 'start',
         message: (
           <Flex vAlign="end">
             {chatMessageComponent}
@@ -487,6 +470,10 @@ export type MessageProps = {
    */
   message: ChatMessage | SystemMessage | CustomMessage;
   /**
+   * Strings from parent MessageThread component
+   */
+  strings: MessageThreadStrings;
+  /**
    * Custom CSS styles for chat message container.
    */
   messageContainerStyle?: ComponentSlotStyle;
@@ -496,10 +483,6 @@ export type MessageProps = {
    * @defaultValue `false`
    */
   showDate?: boolean;
-  /**
-   * Strings of component that can be overridden
-   */
-  strings?: Partial<MessageThreadStrings>;
 };
 
 /**
@@ -525,8 +508,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
-    onRenderMessage,
-    strings
+    onRenderMessage
   } = props;
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -751,6 +733,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [new Date().toDateString()]
   );
+
+  const localeStrings = useLocale().strings.messageThread;
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
   const messagesToDisplay = useMemo(
     () =>
