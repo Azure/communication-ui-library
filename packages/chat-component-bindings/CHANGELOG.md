@@ -1,8 +1,24 @@
 # Change Log - chat-component-bindings
 
-This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/chat-component-bindings_v1.0.0-beta.2)
+
+Fri, 09 Jul 2021 20:41:33 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/chat-component-bindings_v1.0.0-beta.1..chat-component-bindings_v1.0.0-beta.2)
+
+### Changes
+
+- Update references to threads object ([PR #461](https://github.com/azure/communication-ui-library/pull/461) by prprabhu@microsoft.com)
+- Update to use Object for chat participants ([PR #462](https://github.com/azure/communication-ui-library/pull/462) by prprabhu@microsoft.com)
+- Bump prettier version and reformat ([PR #505](https://github.com/azure/communication-ui-library/pull/505) by prprabhu@microsoft.com)
+- Adjustments for merging chat&calling hooks ([PR #454](https://github.com/azure/communication-ui-library/pull/454) by jinan@microsoft.com)
+- Update to use Object for chatMessages ([PR #463](https://github.com/azure/communication-ui-library/pull/463) by prprabhu@microsoft.com)
+- remove extra selector export ([PR #383](https://github.com/azure/communication-ui-library/pull/383) by jinan@microsoft.com)
+- update react peer deps to be >=16.8.0 <18.0.0 ([PR #450](https://github.com/azure/communication-ui-library/pull/450) by mail@jamesburnside.com)
+- Update usePropsFor to use re-enforced version of type guard ([PR #496](https://github.com/azure/communication-ui-library/pull/496) by jinan@microsoft.com)
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/chat-component-bindings_v1.0.0-beta.1)
 

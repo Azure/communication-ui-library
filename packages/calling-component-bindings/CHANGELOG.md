@@ -1,8 +1,32 @@
 # Change Log - calling-component-bindings
 
-This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/calling-component-bindings_v1.0.0-beta.2)
+
+Fri, 09 Jul 2021 20:41:33 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/calling-component-bindings_v1.0.0-beta.1..calling-component-bindings_v1.0.0-beta.2)
+
+### Changes
+
+- added participantsButtonSelector ([PR #452](https://github.com/azure/communication-ui-library/pull/452) by alcail@microsoft.com)
+- Serialize userId from state ([PR #423](https://github.com/azure/communication-ui-library/pull/423) by prprabhu@microsoft.com)
+- Add undefined case to device permission selector ([PR #427](https://github.com/azure/communication-ui-library/pull/427) by allenhwang@microsoft.com)
+- Add selector to retrieve device permissions ([PR #402](https://github.com/azure/communication-ui-library/pull/402) by allenhwang@microsoft.com)
+- Bump prettier version and reformat ([PR #505](https://github.com/azure/communication-ui-library/pull/505) by prprabhu@microsoft.com)
+- remove selector export ([PR #383](https://github.com/azure/communication-ui-library/pull/383) by jinan@microsoft.com)
+- update react peer deps to be >=16.8.0 <18.0.0 ([PR #450](https://github.com/azure/communication-ui-library/pull/450) by mail@jamesburnside.com)
+- upgrading version of calling to 1.1.0-beta.2 ([PR #493](https://github.com/azure/communication-ui-library/pull/493) by alkwa@microsoft.com)
+- Update calling sdk to 1.1.0-beta1 ([PR #404](https://github.com/azure/communication-ui-library/pull/404) by jinan@microsoft.com)
+- Update usePropsFor to use re-enforced version of type guard. ([PR #496](https://github.com/azure/communication-ui-library/pull/496) by jinan@microsoft.com)
+- Adjustments for merging chat&calling hooks ([PR #454](https://github.com/azure/communication-ui-library/pull/454) by jinan@microsoft.com)
+- Add options to onSelectCamera and onToggleCamera ([PR #436](https://github.com/azure/communication-ui-library/pull/436) by easony@microsoft.com)
+- Update selectors for CallClientState ([PR #459](https://github.com/azure/communication-ui-library/pull/459) by prprabhu@microsoft.com)
+- Fix for 'no permission warning' everytime ([PR #402](https://github.com/azure/communication-ui-library/pull/402) by jinan@microsoft.com)
+- Update remote participants and video streams to use objects ([PR #460](https://github.com/azure/communication-ui-library/pull/460) by prprabhu@microsoft.com)
+- Update to use Array for unparentedViews ([PR #469](https://github.com/azure/communication-ui-library/pull/469) by prprabhu@microsoft.com)
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/calling-component-bindings_v1.0.0-beta.1)
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use objects for remote participants and video streams",
-  "packageName": "calling-stateful-client",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

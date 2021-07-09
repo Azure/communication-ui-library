@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add ParticipantsButton component with ParticipantsButtonStylesProps and ParticipantsButtonProps, as well as excludeMe props to ParticipantList component",
-  "packageName": "react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}

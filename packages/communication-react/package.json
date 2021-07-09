@@ -1,6 +1,6 @@
 {
   "name": "@azure/communication-react",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "sideEffects": false,
   "description": "React library for building modern communication user experiences utilizing Azure Communication Services",
   "keywords": [
@@ -70,8 +70,8 @@
     "postpack": "copyfiles -E \"./*.tgz\" release"
   },
   "devDependencies": {
-    "calling-component-bindings": "~1.0.0-beta.1",
-    "chat-component-bindings": "~1.0.0-beta.1",
+    "calling-component-bindings": "~1.0.0-beta.2",
+    "chat-component-bindings": "~1.0.0-beta.2",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "7.16.1-pr1916.1.0",
     "@rollup/plugin-json": "~4.1.0",
@@ -89,8 +89,8 @@
     "@typescript-eslint/parser": "^4.12.0",
     "@zerollup/ts-transform-paths": "~1.7.18",
     "ajv": "^6.9.1",
-    "calling-stateful-client": "~1.0.0-beta.1",
-    "chat-stateful-client": "~1.0.0-beta.1",
+    "calling-stateful-client": "~1.0.0-beta.2",
+    "chat-stateful-client": "~1.0.0-beta.2",
     "copyfiles": "^2.4.1",
     "enzyme": "~3.11.0",
     "enzyme-adapter-react-16": "~1.15.6",
@@ -110,8 +110,8 @@
     "react": "~16.14.0",
     "react-dom": "16.13.1",
     "react-is": "~17.0.1",
-    "react-components": "1.0.0-beta.1",
-    "react-composites": "1.0.0-beta.1",
+    "react-components": "1.0.0-beta.2",
+    "react-composites": "1.0.0-beta.2",
     "react-test-renderer": "^16.14.0",
     "regenerator-runtime": "^0.13.7",
     "rollup": "~2.42.4",

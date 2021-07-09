@@ -1,8 +1,62 @@
 # Change Log - react-composites
 
-This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/react-composites_v1.0.0-beta.2)
+
+Fri, 09 Jul 2021 20:41:33 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/react-composites_v1.0.0-beta.1..react-composites_v1.0.0-beta.2)
+
+### Changes
+
+- gallery height fix for safari ([PR #382](https://github.com/azure/communication-ui-library/pull/382) by alkwa@microsoft.com)
+- apply ux changes to composite ([PR #421](https://github.com/azure/communication-ui-library/pull/421) by easony@microsoft.com)
+- Update to use Array for unparentedViews ([PR #469](https://github.com/azure/communication-ui-library/pull/469) by prprabhu@microsoft.com)
+- Remove @fluentui/react-northstar-icons, use only @fluentui/react-icons ([PR #143](https://github.com/azure/communication-ui-library/pull/143) by mail@jamesburnside.com)
+- Use class methods in chat adapter implementation ([PR #515](https://github.com/azure/communication-ui-library/pull/515) by prprabhu@microsoft.com)
+- Add error handler for teams interop call denial ([PR #376](https://github.com/azure/communication-ui-library/pull/376) by anjulgarg@live.com)
+- Added page to handle removed partiicipant in call composite. ([PR #408](https://github.com/azure/communication-ui-library/pull/408) by miguelgamis@microsoft.com)
+- Set default state of permission to true Move deviceManager to outside selector package Remove usage of optionSelector, use getSelector instead ([PR #383](https://github.com/azure/communication-ui-library/pull/383) by jinan@microsoft.com)
+- Show mute indicator while screensharing. Fix icon padding ([PR #502](https://github.com/azure/communication-ui-library/pull/502) by anjulgarg@live.com)
+- Disable start call button when microphone permission is denied ([PR #427](https://github.com/azure/communication-ui-library/pull/427) by allenhwang@microsoft.com)
+- removing group call references and fixing call composite stories ([PR #370](https://github.com/azure/communication-ui-library/pull/370) by alkwa@microsoft.com)
+- Update references to threads object ([PR #461](https://github.com/azure/communication-ui-library/pull/461) by prprabhu@microsoft.com)
+- Dispose view when stream is not available ([PR #404](https://github.com/azure/communication-ui-library/pull/404) by jinan@microsoft.com)
+- Beautify style of chat composite ([PR #379](https://github.com/azure/communication-ui-library/pull/379) by jinan@microsoft.com)
+- Add userId to ChatAdapter factory function ([PR #420](https://github.com/azure/communication-ui-library/pull/420) by prprabhu@microsoft.com)
+- Push FluentThemeProvider inside composites ([PR #364](https://github.com/azure/communication-ui-library/pull/364) by prprabhu@microsoft.com)
+- Add options to onSelectCamera and onToggleCamera ([PR #436](https://github.com/azure/communication-ui-library/pull/436) by easony@microsoft.com)
+- Adding floating localvideopreview layout to VideoGallery. ([PR #425](https://github.com/azure/communication-ui-library/pull/425) by anjulgarg@live.com)
+- add ParticipantsButtonSelector to calling composite ([PR #452](https://github.com/azure/communication-ui-library/pull/452) by alcail@microsoft.com)
+- Drop internal export of getIdentifierFromToken ([PR #411](https://github.com/azure/communication-ui-library/pull/411) by prprabhu@microsoft.com)
+- Add device options button to calling composite ([PR #494](https://github.com/azure/communication-ui-library/pull/494) by mail@jamesburnside.com)
+- Add explicit userId to CallAdapter constructor arguments ([PR #419](https://github.com/azure/communication-ui-library/pull/419) by prprabhu@microsoft.com)
+- Move error handlers, WithErrorHandling to OneToOne composite ([PR #368](https://github.com/azure/communication-ui-library/pull/368) by easony@microsoft.com)
+- Automated browser test setup for Chat Composite ([PR #504](https://github.com/azure/communication-ui-library/pull/504) by anjulgarg@live.com)
+- Update to fluentui version 8 ([PR #448](https://github.com/azure/communication-ui-library/pull/448) by mail@jamesburnside.com)
+- Disable microphone and camera if permission is not granted ([PR #358](https://github.com/azure/communication-ui-library/pull/358) by allenhwang@microsoft.com)
+- update react peer deps to be >=16.8.0 <18.0.0 ([PR #450](https://github.com/azure/communication-ui-library/pull/450) by mail@jamesburnside.com)
+- CallAdapter: store userId as CommunicationUserKind ([PR #423](https://github.com/azure/communication-ui-library/pull/423) by prprabhu@microsoft.com)
+- Update to use Object for chatMessages ([PR #463](https://github.com/azure/communication-ui-library/pull/463) by prprabhu@microsoft.com)
+- Expose more customized api for rendering ([PR #457](https://github.com/azure/communication-ui-library/pull/457) by jinan@microsoft.com)
+- add teams interop functionality into calling composite ([PR #355](https://github.com/azure/communication-ui-library/pull/355) by alkwa@microsoft.com)
+- Add tooltip when permission is not granted in configuration screen ([PR #373](https://github.com/azure/communication-ui-library/pull/373) by allenhwang@microsoft.com)
+- Drop spurious references to userId in lobby ([PR #412](https://github.com/azure/communication-ui-library/pull/412) by prprabhu@microsoft.com)
+- Implement new screenshare popup design update ([PR #424](https://github.com/azure/communication-ui-library/pull/424) by allenhwang@microsoft.com)
+- Notify ChatComposite user when they leave a thread ([PR #380](https://github.com/azure/communication-ui-library/pull/380) by prprabhu@microsoft.com)
+- Fix styling of CallComposite controls ([PR #434](https://github.com/azure/communication-ui-library/pull/434) by prprabhu@microsoft.com)
+- upgrading version of calling to 1.1.0-beta.2 ([PR #493](https://github.com/azure/communication-ui-library/pull/493) by alkwa@microsoft.com)
+- Add permissions banner ([PR #399](https://github.com/azure/communication-ui-library/pull/399) by allenhwang@microsoft.com)
+- Make `getIdFromToken` internal to OneToOneCallComposite ([PR #432](https://github.com/azure/communication-ui-library/pull/432) by prprabhu@microsoft.com)
+- Update references to CallClientState maps ([PR #459](https://github.com/azure/communication-ui-library/pull/459) by prprabhu@microsoft.com)
+- Update to use Object for chat participants ([PR #462](https://github.com/azure/communication-ui-library/pull/462) by prprabhu@microsoft.com)
+- Delete OneToOne call ([PR #435](https://github.com/azure/communication-ui-library/pull/435) by prprabhu@microsoft.com)
+- Update parameter to Stateful client due to API change ([PR #393](https://github.com/azure/communication-ui-library/pull/393) by allenhwang@microsoft.com)
+- Bump prettier version and reformat ([PR #505](https://github.com/azure/communication-ui-library/pull/505) by prprabhu@microsoft.com)
+- Add error handling facilities to ChatAdapter ([PR #510](https://github.com/azure/communication-ui-library/pull/510) by prprabhu@microsoft.com)
+- Small responsive fixes for calling composite ([PR #536](https://github.com/azure/communication-ui-library/pull/536) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/react-composites_v1.0.0-beta.1)
 

@@ -2,6 +2,113 @@
   "name": "chat-stateful-client",
   "entries": [
     {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "chat-stateful-client_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Replace Map with Object in chatMessages",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Use Object for chat participants",
+            "author": "prprabhu@microsoft.com",
+            "commit": "a92d356a268249acc19cc2f640b7825884293c14",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Add error handling facilities",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c63928cf3a1bdac6d3d0aa2fe70b3aeb19d65d4d",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Bump up max listeners limit",
+            "author": "allenhwang@microsoft.com",
+            "commit": "dee92b4e1714152f8ebe06573d1d90051f1a22bb",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "14c1b30d6b058f9870c00668e03c1c427d33938f",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Replace Map with Object for ChatClientState.threads",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c7acbb18d4c59730dee93077348053560d2a64a9",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Make max listeners configurable",
+            "author": "allenhwang@microsoft.com",
+            "commit": "d5dbfa0ff9e61fdd728e399256adb7887e85fce0",
+            "package": "chat-stateful-client"
+          }
+        ],
+        "none": [
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "57a47760ac42c5cf1a961557e6a2fb64826a4f25",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "use common type",
+            "author": "mail@jamesburnside.com",
+            "commit": "b93cc2802d68882081a01c1817c2b6a9c44682dd",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "3f968408551da1baf2bf49cb355c3830e150ebce",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "c12dce6ff28eca13d342c6bcf02af166d58db709",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "a617f130ac4d0d90a19f85f0574a48ecad272cb3",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Update dev dependencies to satisify peer dependencies",
+            "author": "mail@jamesburnside.com",
+            "commit": "987fc4f5bfa468eb2675664ffd40d46b9a68795f",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "5645d1045230af3e91b94c5cb43ee7ba7403c8fa",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "3db1197f95bc433aa8242586cbb19290b639fc1b",
+            "package": "chat-stateful-client"
+          },
+          {
+            "comment": "Bump acs-ui-common to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
       "tag": "chat-stateful-client_v1.0.0-beta.1",
       "version": "1.0.0-beta.1",

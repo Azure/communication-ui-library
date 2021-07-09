@@ -2,6 +2,395 @@
   "name": "react-composites",
   "entries": [
     {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "react-composites_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "3db1197f95bc433aa8242586cbb19290b639fc1b",
+            "package": "react-composites"
+          },
+          {
+            "comment": "CallProps --> CallCompositeProps",
+            "author": "mail@jamesburnside.com",
+            "commit": "44201b93baa6253cf3742ff23a5770e0033fc48d",
+            "package": "react-composites"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "a617f130ac4d0d90a19f85f0574a48ecad272cb3",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "5645d1045230af3e91b94c5cb43ee7ba7403c8fa",
+            "package": "react-composites"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "57a47760ac42c5cf1a961557e6a2fb64826a4f25",
+            "package": "react-composites"
+          },
+          {
+            "comment": "cleanup unused chat and call event exports",
+            "author": "mail@jamesburnside.com",
+            "commit": "b93cc2802d68882081a01c1817c2b6a9c44682dd",
+            "package": "react-composites"
+          },
+          {
+            "comment": "packlet rename",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "c12dce6ff28eca13d342c6bcf02af166d58db709",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "3f968408551da1baf2bf49cb355c3830e150ebce",
+            "package": "react-composites"
+          },
+          {
+            "comment": "update styles to Figma for VideoTile and parents",
+            "author": "alcail@microsoft.com",
+            "commit": "17c79dc08733f8101bdfaf8f670125e80bafb098",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Remove any types",
+            "author": "mail@jamesburnside.com",
+            "commit": "d79c48a34add0e4bdcd66f9d581a7f935fd15dfc",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Bump react-components to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Bump acs-ui-common to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Bump chat-component-bindings to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Bump calling-component-bindings to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2f0729eed634693aeafd82c983ace6f3f6a249b1",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Bump chat-stateful-client to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Bump calling-stateful-client to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2f0729eed634693aeafd82c983ace6f3f6a249b1",
+            "package": "react-composites"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "gallery height fix for safari",
+            "author": "alkwa@microsoft.com",
+            "commit": "c68bbd2255697ad059bfb5bca266f58605fa6999",
+            "package": "react-composites"
+          },
+          {
+            "comment": "apply ux changes to composite",
+            "author": "easony@microsoft.com",
+            "commit": "6f448a666c1b26ac90b9283a39d164dd5f10939e",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Update to use Array for unparentedViews",
+            "author": "prprabhu@microsoft.com",
+            "commit": "39b8464c9c3b9ba90621b9103995b9d8dc5cfb4a",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Remove @fluentui/react-northstar-icons, use only @fluentui/react-icons",
+            "author": "mail@jamesburnside.com",
+            "commit": "e6307c937d9492119e6e4da8748271a730251b93",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Use class methods in chat adapter implementation",
+            "author": "prprabhu@microsoft.com",
+            "commit": "61845c81593f41f5154d7eac23c2a39fbed26705",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Add error handler for teams interop call denial",
+            "author": "anjulgarg@live.com",
+            "commit": "97b23872682d77767395027c16c2fc9ad94e700d",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Added page to handle removed partiicipant in call composite.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "0828d13d8d38b51494872b27c59b1b1d7c5384e2",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Set default state of permission to true Move deviceManager to outside selector package Remove usage of optionSelector, use getSelector instead",
+            "author": "jinan@microsoft.com",
+            "commit": "e189ab378939756ac003a64976d9d7dc776e1621",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Show mute indicator while screensharing. Fix icon padding",
+            "author": "anjulgarg@live.com",
+            "commit": "16a31a8362ae37022801c9bb736c398ef33c980a",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Disable start call button when microphone permission is denied",
+            "author": "allenhwang@microsoft.com",
+            "commit": "8e62c9d32eeaff4a9ab0ac86c5fc5616f44415be",
+            "package": "react-composites"
+          },
+          {
+            "comment": "removing group call references and fixing call composite stories",
+            "author": "alkwa@microsoft.com",
+            "commit": "43a612321419101180831399232a39a1ae197f37",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Update references to threads object",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c7acbb18d4c59730dee93077348053560d2a64a9",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Dispose view when stream is not available",
+            "author": "jinan@microsoft.com",
+            "commit": "1934937fb5d7a0112448388dd737984aa04afd56",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Beautify style of chat composite",
+            "author": "jinan@microsoft.com",
+            "commit": "3acef8f252cd1c0df408f7efbe96f65412fc0aec",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Add userId to ChatAdapter factory function",
+            "author": "prprabhu@microsoft.com",
+            "commit": "441a59a1e0b83e76cf90b5b2e6a7eb620e697aff",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Push FluentThemeProvider inside composites",
+            "author": "prprabhu@microsoft.com",
+            "commit": "28bfe0b478ae9dd29a8af66a59f93494906a64e5",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Add options to onSelectCamera and onToggleCamera",
+            "author": "easony@microsoft.com",
+            "commit": "df43b67b6ee241bcdfd1f31664f20eb80b5d366b",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Adding floating localvideopreview layout to VideoGallery.",
+            "author": "anjulgarg@live.com",
+            "commit": "b8aaa89b250b4b5608245f900ee50f511726e8f4",
+            "package": "react-composites"
+          },
+          {
+            "comment": "add ParticipantsButtonSelector to calling composite",
+            "author": "alcail@microsoft.com",
+            "commit": "0caa0447437edb33a98a2dfc145d9d68020f102f",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Drop internal export of getIdentifierFromToken",
+            "author": "prprabhu@microsoft.com",
+            "commit": "a7521a83377656b4ff95fcd0289dabb703423160",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Add device options button to calling composite",
+            "author": "mail@jamesburnside.com",
+            "commit": "c6fa86f5fc1fcc84b16a66f9af441d697eb0e5a5",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Add explicit userId to CallAdapter constructor arguments",
+            "author": "prprabhu@microsoft.com",
+            "commit": "d50575cb484e9cde1f1b203f7993dd1e6705bbf3",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Move error handlers, WithErrorHandling to OneToOne composite",
+            "author": "easony@microsoft.com",
+            "commit": "1e0e348cea04ab4079f4799c9aa6f4f3e923881c",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Automated browser test setup for Chat Composite",
+            "author": "anjulgarg@live.com",
+            "commit": "e8dc711e307dd0bbb37efe3600d2867cece3539a",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Update to fluentui version 8",
+            "author": "mail@jamesburnside.com",
+            "commit": "789c575e9b5db91e305037b87c9644bde9360b63",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Disable microphone and camera if permission is not granted",
+            "author": "allenhwang@microsoft.com",
+            "commit": "0a500fe41b505600fa82be361d47326f115323e2",
+            "package": "react-composites"
+          },
+          {
+            "comment": "update react peer deps to be >=16.8.0 <18.0.0",
+            "author": "mail@jamesburnside.com",
+            "commit": "987fc4f5bfa468eb2675664ffd40d46b9a68795f",
+            "package": "react-composites"
+          },
+          {
+            "comment": "CallAdapter: store userId as CommunicationUserKind",
+            "author": "prprabhu@microsoft.com",
+            "commit": "f6eb99250f193b9bd0ea612bcc6bbfbec9b66eaf",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Update to use Object for chatMessages",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Expose more customized api for rendering",
+            "author": "jinan@microsoft.com",
+            "commit": "c51312039044455320671ea46215ef8136670874",
+            "package": "react-composites"
+          },
+          {
+            "comment": "add teams interop functionality into calling composite",
+            "author": "alkwa@microsoft.com",
+            "commit": "6dc2dd5e0438b6d0bbcbe9e6c3b8801bdb8fccf3",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Add tooltip when permission is not granted in configuration screen",
+            "author": "allenhwang@microsoft.com",
+            "commit": "6a7e1a26ea244373d967d4ba3348a5ac55fd38e1",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Drop spurious references to userId in lobby",
+            "author": "prprabhu@microsoft.com",
+            "commit": "e9af68e53760c5094d033f20e32f463d14339842",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Implement new screenshare popup design update",
+            "author": "allenhwang@microsoft.com",
+            "commit": "e48677befc2a622d8e60e7f1f6fd1e4dfb18b191",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Notify ChatComposite user when they leave a thread",
+            "author": "prprabhu@microsoft.com",
+            "commit": "4e35e4b1568087e9afb3b35cd04b1577fcd600ef",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Fix styling of CallComposite controls",
+            "author": "prprabhu@microsoft.com",
+            "commit": "07181fb42ebb0ffe0f8794cb6e43e2c931bc82e9",
+            "package": "react-composites"
+          },
+          {
+            "comment": "upgrading version of calling to 1.1.0-beta.2",
+            "author": "alkwa@microsoft.com",
+            "commit": "2c6f314ad34a89fff189aa09eac469553867ecb4",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Add permissions banner",
+            "author": "allenhwang@microsoft.com",
+            "commit": "40fc8804cdbb509c1979b8c571ef4c777a7ffbcd",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Make `getIdFromToken` internal to OneToOneCallComposite",
+            "author": "prprabhu@microsoft.com",
+            "commit": "1c24f9ff78440753bef90f407b036cbab8e430ae",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Update references to CallClientState maps",
+            "author": "prprabhu@microsoft.com",
+            "commit": "7741fe7c1a7a9ccd145d2209959fd3296ece8cb1",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Update to use Object for chat participants",
+            "author": "prprabhu@microsoft.com",
+            "commit": "a92d356a268249acc19cc2f640b7825884293c14",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Delete OneToOne call",
+            "author": "prprabhu@microsoft.com",
+            "commit": "4533effa0f6b7ced9e17c29b1145b99096f10b44",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Update parameter to Stateful client due to API change",
+            "author": "allenhwang@microsoft.com",
+            "commit": "d5dbfa0ff9e61fdd728e399256adb7887e85fce0",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "14c1b30d6b058f9870c00668e03c1c427d33938f",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Add error handling facilities to ChatAdapter",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c63928cf3a1bdac6d3d0aa2fe70b3aeb19d65d4d",
+            "package": "react-composites"
+          },
+          {
+            "comment": "Small responsive fixes for calling composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0d186f28ff6910b7906471d9c1cc286911afa335",
+            "package": "react-composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
       "tag": "react-composites_v1.0.0-beta.1",
       "version": "1.0.0-beta.1",

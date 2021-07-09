@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.2)
+
+Fri, 09 Jul 2021 20:41:33 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.1..@azure/communication-react_v1.0.0-beta.2)
+
+### Changes
+
+- Bump react-components to v1.0.0-beta.2 ([PR #496](https://github.com/azure/communication-ui-library/pull/496) by jinan@microsoft.com)
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.1)
 

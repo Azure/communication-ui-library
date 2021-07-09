@@ -2,6 +2,131 @@
   "name": "chat-component-bindings",
   "entries": [
     {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "chat-component-bindings_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "5645d1045230af3e91b94c5cb43ee7ba7403c8fa",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "3f968408551da1baf2bf49cb355c3830e150ebce",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "57a47760ac42c5cf1a961557e6a2fb64826a4f25",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "remove useThreadID export",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "packlet rename",
+            "author": "mail@jamesburnside.com",
+            "commit": "02a1851fefc64b032612e3217a747e9fa702aff9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump react-components to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump acs-ui-common to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump chat-stateful-client to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Update references to threads object",
+            "author": "prprabhu@microsoft.com",
+            "commit": "c7acbb18d4c59730dee93077348053560d2a64a9",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Update to use Object for chat participants",
+            "author": "prprabhu@microsoft.com",
+            "commit": "a92d356a268249acc19cc2f640b7825884293c14",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "14c1b30d6b058f9870c00668e03c1c427d33938f",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Adjustments for merging chat&calling hooks",
+            "author": "jinan@microsoft.com",
+            "commit": "3a2d31dd2327a07a3d250dfb7f60fd1eedae2226",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Update to use Object for chatMessages",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "remove extra selector export",
+            "author": "jinan@microsoft.com",
+            "commit": "e189ab378939756ac003a64976d9d7dc776e1621",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "update react peer deps to be >=16.8.0 <18.0.0",
+            "author": "mail@jamesburnside.com",
+            "commit": "987fc4f5bfa468eb2675664ffd40d46b9a68795f",
+            "package": "chat-component-bindings"
+          },
+          {
+            "comment": "Update usePropsFor to use re-enforced version of type guard",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
       "tag": "chat-component-bindings_v1.0.0-beta.1",
       "version": "1.0.0-beta.1",

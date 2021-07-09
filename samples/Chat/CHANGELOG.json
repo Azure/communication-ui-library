@@ -2,6 +2,53 @@
   "name": "chat",
   "entries": [
     {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "chat_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-components to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat"
+          },
+          {
+            "comment": "Bump acs-ui-common to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "chat"
+          },
+          {
+            "comment": "Bump react-composites to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat"
+          },
+          {
+            "comment": "Bump chat-component-bindings to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat"
+          },
+          {
+            "comment": "Bump chat-stateful-client to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @azure/communication-react to v1.0.0-beta.2",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2b00c0539d02971ad99674810aa1072d32e103cd",
+            "package": "chat"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
       "tag": "chat_v0.0.1",
       "version": "0.0.1",

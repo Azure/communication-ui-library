@@ -1,8 +1,34 @@
 # Change Log - calling-stateful-client
 
-This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/calling-stateful-client_v1.0.0-beta.2)
+
+Fri, 09 Jul 2021 20:41:33 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/calling-stateful-client_v1.0.0-beta.1..calling-stateful-client_v1.0.0-beta.2)
+
+### Changes
+
+- Use objects for remote participants and video streams ([PR #460](https://github.com/azure/communication-ui-library/pull/460) by prprabhu@microsoft.com)
+- upgrading version of calling sdk to 1.1.0-beta.2 ([PR #493](https://github.com/azure/communication-ui-library/pull/493) by alkwa@microsoft.com)
+- Replace maps with objects in CallClientState ([PR #459](https://github.com/azure/communication-ui-library/pull/459) by prprabhu@microsoft.com)
+- Clean up and update tsdoc ([PR #365](https://github.com/azure/communication-ui-library/pull/365) by allenhwang@microsoft.com)
+- Store userId as CommunicationUserKind ([PR #423](https://github.com/azure/communication-ui-library/pull/423) by prprabhu@microsoft.com)
+- Fix maxListener warnings ([PR #426](https://github.com/azure/communication-ui-library/pull/426) by jinan@microsoft.com)
+- Fix issue where state change is not triggered for some arrays ([PR #358](https://github.com/azure/communication-ui-library/pull/358) by allenhwang@microsoft.com)
+- Fix stateful client selected camera assignment. ([PR #501](https://github.com/azure/communication-ui-library/pull/501) by miguelgamis@microsoft.com)
+- Bump up max listeners limit ([PR #360](https://github.com/azure/communication-ui-library/pull/360) by allenhwang@microsoft.com)
+- Deduplicating audio and video devices from SDK ([PR #439](https://github.com/azure/communication-ui-library/pull/439) by miguelgamis@microsoft.com)
+- Fixed initial value selectedCamera when permissions have been granted. ([PR #491](https://github.com/azure/communication-ui-library/pull/491) by miguelgamis@microsoft.com)
+- Fixing LocalPreview Toggle bug ([PR #367](https://github.com/azure/communication-ui-library/pull/367) by anjulgarg@live.com)
+- Use CommunicationIdentifierKind in stream utils ([PR #394](https://github.com/azure/communication-ui-library/pull/394) by allenhwang@microsoft.com)
+- Update calling sdk to 1.1.0-beta1 ([PR #404](https://github.com/azure/communication-ui-library/pull/404) by jinan@microsoft.com)
+- Use Array for unparentedViews ([PR #469](https://github.com/azure/communication-ui-library/pull/469) by prprabhu@microsoft.com)
+- Make max listeners configurable ([PR #393](https://github.com/azure/communication-ui-library/pull/393) by allenhwang@microsoft.com)
+- Bump prettier version and reformat ([PR #505](https://github.com/azure/communication-ui-library/pull/505) by prprabhu@microsoft.com)
+- Breaking: Make arguments to CreateStatefulCallClient optional ([PR #414](https://github.com/azure/communication-ui-library/pull/414) by prprabhu@microsoft.com)
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/calling-stateful-client_v1.0.0-beta.1)
 
