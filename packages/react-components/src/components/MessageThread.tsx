@@ -238,7 +238,7 @@ const GenerateTextMessageContent = (payload: ChatMessagePayload): JSX.Element =>
   );
 };
 
-const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+const GenerateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
   switch (payload.type) {
     case 'text':
       return GenerateTextMessageContent(payload);
@@ -256,7 +256,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
   const { strings } = useLocale();
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
-    const messageContentItem = generateMessageContent(payload);
+    const messageContentItem = GenerateMessageContent(payload);
     return (
       <Chat.Message
         className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
