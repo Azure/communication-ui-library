@@ -12,6 +12,7 @@ import {
   peopleSubheadingStyle
 } from './styles/SidePane.styles';
 import { ParticipantList, CommunicationParticipant } from '@internal/react-components';
+import copy from 'copy-to-clipboard';
 
 export type MeetingCompositeProps = {
   callAdapter: CallAdapter;
@@ -58,7 +59,9 @@ const EmbeddedPeoplePane = (props: {
       </Stack.Item>
       <Stack.Item styles={sidePaneBodyStyles}>
         <Stack tokens={{ childrenGap: '0.5rem' }}>
-          {inviteLink && <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} />}
+          {inviteLink && (
+            <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
+          )}
           <Stack.Item styles={peopleSubheadingStyle}>In this call</Stack.Item>
           <ParticipantList myUserId={'0'} participants={participants} />
         </Stack>

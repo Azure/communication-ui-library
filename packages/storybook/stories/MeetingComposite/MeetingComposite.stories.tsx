@@ -20,5 +20,6 @@ export default {
 } as Meta;
 
 export { BasicExample } from './BasicExample';
+export { JoinExample } from './JoinExample';
 
 const getDocs: () => JSX.Element = () => <></>;

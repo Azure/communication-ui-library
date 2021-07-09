@@ -8,18 +8,24 @@ import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
 import { createUserCredentials } from './snippets/Server.snippet';
 
-export const BasicExample: () => JSX.Element = () => {
+export const JoinExample: () => JSX.Element = () => {
   const [meetingProps, setMeetingProps] = useState<MeetingExampleProps>();
 
   const knobs = useRef({
-    connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
-    displayName: text('Display Name', '', 'Server Simulator')
+    connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Join Existing Call'),
+    displayName: text('Display Name', '', 'Join Existing Call'),
+    teamsMeetingLink: text('Teams meeting link', '', 'Join Existing Call')
   });
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (knobs.current.connectionString && knobs.current.displayName) {
-        const newProps = await createUserCredentials(knobs.current.connectionString, knobs.current.displayName);
+      if (!!knobs.current.connectionString && !!knobs.current.displayName && !!knobs.current.teamsMeetingLink) {
+        const newProps = await createUserCredentials(
+          knobs.current.connectionString,
+          knobs.current.displayName,
+          knobs.current.teamsMeetingLink
+        );
+        console.log('Meeting props: ', newProps);
         setMeetingProps(newProps);
       }
     };

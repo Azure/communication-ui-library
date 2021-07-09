@@ -1,3 +1,4 @@
+import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { Theme, PartialTheme } from '@fluentui/react';
 import {
@@ -14,7 +15,7 @@ export type MeetingExampleProps = {
   token: string;
   displayName: string;
   endpointUrl: string;
-  locator: string;
+  locator: GroupCallLocator | TeamsMeetingLinkLocator;
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
@@ -37,9 +38,8 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
       props.endpointUrl
     ) {
       const createAdapters = async (): Promise<void> => {
-        const callLocator = { groupId: props.locator };
         setCallAdapter(
-          await createAzureCommunicationCallAdapter(props.userId, props.token, callLocator, props.displayName)
+          await createAzureCommunicationCallAdapter(props.userId, props.token, props.locator, props.displayName)
         );
 
         setChatAdapter(
