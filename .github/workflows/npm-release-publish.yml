@@ -85,8 +85,8 @@ jobs:
           name: PublicPreview ${{ steps.releasenames.outputs.releasename }}
           tag_name: Release/${{ steps.releasenames.outputs.tagname }}
           files: |
-            samples\StaticHtmlComposites\dist\callComposite.js
-            samples\StaticHtmlComposites\dist\chatComposite.js
+            ./samples/StaticHtmlComposites/dist/callComposite.js
+            ./samples/StaticHtmlComposites/dist/chatComposite.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
