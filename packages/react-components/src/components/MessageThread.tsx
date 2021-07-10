@@ -15,7 +15,7 @@ import {
   messageStatusContainerStyle,
   noMessageStatusStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link, getRTL } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
@@ -267,6 +267,15 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
               : formatTimeForChatMessage(payload.createdOn)
             : undefined
         }
+        // This is a bug in fluentui react northstar not reversing left and right margins for the message bubbles of
+        // the user
+        style={
+          getRTL()
+            ? payload.mine
+              ? { marginLeft: '0rem', marginRight: '6.25rem' }
+              : { marginLeft: '6.25rem', marginRight: '0rem' }
+            : {}
+        }
       />
     );
   }
@@ -311,7 +320,7 @@ const memoizeAllMessages = memoizeFnAll(
         ) : (
           <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
         ),
-        contentPosition: payload.mine ? 'end' : 'start',
+        contentPosition: (getRTL() ? !payload.mine : payload.mine) ? 'end' : 'start',
         message: (
           <Flex vAlign="end">
             {chatMessageComponent}
