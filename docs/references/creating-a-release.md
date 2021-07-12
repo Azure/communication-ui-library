@@ -16,7 +16,7 @@ A release branch is created for each new version and beta release we do (alpha v
 
 ## Creating a release through GitHub actions (Preferred)
 
-1. Trigger the "Release branch - create" GitHub action
+1. Trigger the "Release branch - Create" GitHub action
     Enter the branch or tag you are looking to create a release off. This will usually be an alpha tag or the main branch.
 1. The triggered GitHub action will bump the package versions, generate the packlet changelogs and put up a PR up into main.
 1. Double check the package versions are as expected.
@@ -28,6 +28,7 @@ A release branch is created for each new version and beta release we do (alpha v
 1. Ensure the action completes successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
 1. Complete the post-release verification steps in [Release Checklist](../release-checklist.md).
 1. (If this is a latest release) Complete the PR to merge the release branch back into `main`.
+1. (If this is a latest release) Deploy the new version of storybook using the "Release branch - Publish Storybook" GitHub action..
 
 ## Manually creating a release
 
