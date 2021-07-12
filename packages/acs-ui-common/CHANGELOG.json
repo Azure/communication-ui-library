@@ -2,6 +2,83 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "acs-ui-common_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "move messagestatus to common package",
+            "author": "mail@jamesburnside.com",
+            "commit": "b93cc2802d68882081a01c1817c2b6a9c44682dd",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "c12dce6ff28eca13d342c6bcf02af166d58db709",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "5645d1045230af3e91b94c5cb43ee7ba7403c8fa",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Update dev dependencies to satisify peer dependencies",
+            "author": "mail@jamesburnside.com",
+            "commit": "987fc4f5bfa468eb2675664ffd40d46b9a68795f",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Remove any types",
+            "author": "mail@jamesburnside.com",
+            "commit": "d79c48a34add0e4bdcd66f9d581a7f935fd15dfc",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "57a47760ac42c5cf1a961557e6a2fb64826a4f25",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "a617f130ac4d0d90a19f85f0574a48ecad272cb3",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "3db1197f95bc433aa8242586cbb19290b639fc1b",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "3f968408551da1baf2bf49cb355c3830e150ebce",
+            "package": "acs-ui-common"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Re-enforce areEqual type for type guard",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "acs-ui-common"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "14c1b30d6b058f9870c00668e03c1c427d33938f",
+            "package": "acs-ui-common"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
       "tag": "@internal/acs-ui-common_v1.0.0-beta.1",
       "version": "1.0.0-beta.1",
