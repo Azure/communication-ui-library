@@ -13,17 +13,20 @@ Fri, 09 Jul 2021 20:41:33 GMT
 
 * Updated calling sdk dependency to 1.2.0-beta.1
 
-* Calling composite improvements including floating local video tile, permission banner when call is being recorded, changing local video device and microphone, and screensharing view improvements
+* Added Calling composite improvements including floating local video tile, permission banner when call is being recorded, changing local video device and microphone, and screen-sharing view improvements
 
-* Chat composite improvements including notifying a participant when they leave a thread and styling improvements.
+* Added Chat composite improvements including notifying a participant when they leave a thread and styling improvements
 
-* Updates to selectors and adapters. Read our updated documentation at aka.ms/acsstorybook
-
-* Bundle size optimizations when only using chat or only using calling components
+* Improved Bundle size optimizations when only using chat or only using calling components
 
 * Updated react peer dependency to >=16.8.0 <18.0.0
 
-* Additions to storybook : Identity (How to get a token) and Feedback (Help us create even better components for you) and a number of improvements.
+### Storybook pages added
+
+* Feedback (Help us create even better components for you)
+* Identity (How to get a token)
+* Adapters (What are adapters for and how you use them)
+* Using composites in a non-react environment
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.1)
 
