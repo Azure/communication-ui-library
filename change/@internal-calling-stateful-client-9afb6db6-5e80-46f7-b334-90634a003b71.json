@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump up max listeners limit",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

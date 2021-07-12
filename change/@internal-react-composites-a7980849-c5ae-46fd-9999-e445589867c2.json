@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add teams interop functionality into calling composite",
-  "packageName": "@internal/react-composites",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

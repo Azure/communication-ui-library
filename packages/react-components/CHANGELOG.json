@@ -2,6 +2,257 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "react-components_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updated SendBox component based on new visual design.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a2a6aadbafd070711fcf2aeb26c1dbfe73a16c48",
+            "package": "react-components"
+          },
+          {
+            "comment": "Dispose view when stream is not available",
+            "author": "jinan@microsoft.com",
+            "commit": "1934937fb5d7a0112448388dd737984aa04afd56",
+            "package": "react-components"
+          },
+          {
+            "comment": "Expose more customized api for rendering",
+            "author": "jinan@microsoft.com",
+            "commit": "c51312039044455320671ea46215ef8136670874",
+            "package": "react-components"
+          },
+          {
+            "comment": "update react peer deps to be >=16.8.0 <18.0.0",
+            "author": "mail@jamesburnside.com",
+            "commit": "987fc4f5bfa468eb2675664ffd40d46b9a68795f",
+            "package": "react-components"
+          },
+          {
+            "comment": "Adding floating localvideopreview layout to VideoGallery.",
+            "author": "anjulgarg@live.com",
+            "commit": "b8aaa89b250b4b5608245f900ee50f511726e8f4",
+            "package": "react-components"
+          },
+          {
+            "comment": "Update to fluentui version 8",
+            "author": "mail@jamesburnside.com",
+            "commit": "789c575e9b5db91e305037b87c9644bde9360b63",
+            "package": "react-components"
+          },
+          {
+            "comment": "Remove @fluentui/react-northstar-icons, use only @fluentui/react-icons",
+            "author": "mail@jamesburnside.com",
+            "commit": "e6307c937d9492119e6e4da8748271a730251b93",
+            "package": "react-components"
+          },
+          {
+            "comment": "Bug fix: MesageThread scrollTop throws exception when chat composite is hidden",
+            "author": "mail@jamesburnside.com",
+            "commit": "2a5fabc8ffbeb080cfff77fa0b5006e97db7755f",
+            "package": "react-components"
+          },
+          {
+            "comment": "add ButtonCustomStylesProps as new type",
+            "author": "alcail@microsoft.com",
+            "commit": "d1459ec54860ea0c1a100c9e402edd2baf1fe678",
+            "package": "react-components"
+          },
+          {
+            "comment": "Add options to onSelectCamera and onToggleCamera",
+            "author": "easony@microsoft.com",
+            "commit": "df43b67b6ee241bcdfd1f31664f20eb80b5d366b",
+            "package": "react-components"
+          },
+          {
+            "comment": "Fixing minor bugs and handling teams meeting denied.",
+            "author": "anjulgarg@live.com",
+            "commit": "d5240c0fee53bd477ecfa67e5fa3f161efd2e3ca",
+            "package": "react-components"
+          },
+          {
+            "comment": "Add mute indicator to VideoGallery and VideoTile",
+            "author": "anjulgarg@live.com",
+            "commit": "685e3e3e0fb6aa93a5e1188bf5f143e46d11a7c3",
+            "package": "react-components"
+          },
+          {
+            "comment": "Use sections in device settings context menu",
+            "author": "prprabhu@microsoft.com",
+            "commit": "38b9d1b9b219779c356d1e10664732feaf96d3cb",
+            "package": "react-components"
+          },
+          {
+            "comment": "Replace memoizeFn with react.memo Fix maxListener warning by default",
+            "author": "jinan@microsoft.com",
+            "commit": "3c3038970692557ec61f528d43ea50171f883c30",
+            "package": "react-components"
+          },
+          {
+            "comment": "added showMessageDate in MessageThreadProps and showDate in MessageProps",
+            "author": "alcail@microsoft.com",
+            "commit": "d9f749153dfd968d78b84407358d0294b4753cc8",
+            "package": "react-components"
+          },
+          {
+            "comment": "add ParticipantsButton component with ParticipantsButtonStylesProps and ParticipantsButtonProps, as well as excludeMe props to ParticipantList component",
+            "author": "alcail@microsoft.com",
+            "commit": "9d56d926767763ffb25248d37db68eb12399502d",
+            "package": "react-components"
+          },
+          {
+            "comment": "Fix leave call button label",
+            "author": "prprabhu@microsoft.com",
+            "commit": "07181fb42ebb0ffe0f8794cb6e43e2c931bc82e9",
+            "package": "react-components"
+          },
+          {
+            "comment": "Fix option button props",
+            "author": "jinan@microsoft.com",
+            "commit": "e189ab378939756ac003a64976d9d7dc776e1621",
+            "package": "react-components"
+          },
+          {
+            "comment": "Tiny fix for send button",
+            "author": "jinan@microsoft.com",
+            "commit": "2a3ec4954c7412b1774b59bb702f38922593b38c",
+            "package": "react-components"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "14c1b30d6b058f9870c00668e03c1c427d33938f",
+            "package": "react-components"
+          },
+          {
+            "comment": "Added LocalizationProvider.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a52c605f6a0ca72f54228b37d358b44550a60db6",
+            "package": "react-components"
+          },
+          {
+            "comment": "Show mute indicator while screensharing. Fix icon padding",
+            "author": "anjulgarg@live.com",
+            "commit": "16a31a8362ae37022801c9bb736c398ef33c980a",
+            "package": "react-components"
+          },
+          {
+            "comment": "Fixed OptionsButton cameras, microphones, and speakers property types. OptionButton default menu props only used not empty.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "fb5f67764a347ad4a52b243768d42720306f3c6c",
+            "package": "react-components"
+          },
+          {
+            "comment": "ParticipantItem has menu button when hovered. ParticipantItem showing '(you)' when me property is true. ",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "56ed63c4651f5b8836092ed6c784c128da13e498",
+            "package": "react-components"
+          },
+          {
+            "comment": "include local user to Participant list in ParticipantsButton",
+            "author": "alcail@microsoft.com",
+            "commit": "0caa0447437edb33a98a2dfc145d9d68020f102f",
+            "package": "react-components"
+          },
+          {
+            "comment": "Small responsive fixes for calling components",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0d186f28ff6910b7906471d9c1cc286911afa335",
+            "package": "react-components"
+          }
+        ],
+        "none": [
+          {
+            "comment": "use common type",
+            "author": "mail@jamesburnside.com",
+            "commit": "b93cc2802d68882081a01c1817c2b6a9c44682dd",
+            "package": "react-components"
+          },
+          {
+            "comment": "Fix minor type definitions",
+            "author": "mail@jamesburnside.com",
+            "commit": "91a49ab7c1e33e317b4afc0cf71af843477fc44e",
+            "package": "react-components"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "a617f130ac4d0d90a19f85f0574a48ecad272cb3",
+            "package": "react-components"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "57a47760ac42c5cf1a961557e6a2fb64826a4f25",
+            "package": "react-components"
+          },
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "3db1197f95bc433aa8242586cbb19290b639fc1b",
+            "package": "react-components"
+          },
+          {
+            "comment": "added documentation on VideoGallery component and its props",
+            "author": "alcail@microsoft.com",
+            "commit": "4018c82abb13d96739abbc0763556e96a8f4637f",
+            "package": "react-components"
+          },
+          {
+            "comment": "Remove any types",
+            "author": "mail@jamesburnside.com",
+            "commit": "d79c48a34add0e4bdcd66f9d581a7f935fd15dfc",
+            "package": "react-components"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "3f968408551da1baf2bf49cb355c3830e150ebce",
+            "package": "react-components"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "5645d1045230af3e91b94c5cb43ee7ba7403c8fa",
+            "package": "react-components"
+          },
+          {
+            "comment": "update styles to Figma for VideoTile and parents",
+            "author": "alcail@microsoft.com",
+            "commit": "17c79dc08733f8101bdfaf8f670125e80bafb098",
+            "package": "react-components"
+          },
+          {
+            "comment": "update description of participants props in ParticipantListProps",
+            "author": "alcail@microsoft.com",
+            "commit": "53a84c76e85dd2e2db3c655df7adaac7cdb9f77a",
+            "package": "react-components"
+          },
+          {
+            "comment": "sort+update stream when reaching remote limitation",
+            "author": "alcail@microsoft.com",
+            "commit": "e75803af57fe99c51094b61ae0ad38bd7bfae250",
+            "package": "react-components"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "c12dce6ff28eca13d342c6bcf02af166d58db709",
+            "package": "react-components"
+          },
+          {
+            "comment": "Bump acs-ui-common to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "react-components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
       "tag": "@internal/react-components_v1.0.0-beta.1",
       "version": "1.0.0-beta.1",
