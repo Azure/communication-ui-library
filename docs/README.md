@@ -33,5 +33,7 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 
 ## References
 
+- [Release checklist](./references/release-checklist.md)
 - [Tips for writing a change file](./references/tips-for-writing-changelog-entries.md)
 - [Pruning a changelog before release](./references/pruning-a-changelog.md)
+- [Updating npm publishing credentials](./references/updating-npm-publishing-credentials.md)
