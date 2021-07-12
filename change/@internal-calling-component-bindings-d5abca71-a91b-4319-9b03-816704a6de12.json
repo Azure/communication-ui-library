@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update callclientprovider prop from statefulCallClient to just callClient",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

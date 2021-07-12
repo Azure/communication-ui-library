@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Tiny fix for send button",
-  "packageName": "@internal/react-components",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
