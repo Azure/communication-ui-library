@@ -11,7 +11,7 @@ import {
   DefaultMessageRendererType,
   FluentThemeProvider,
   MessageProps
-} from 'react-components';
+} from '@internal/react-components';
 
 export type ChatCompositeProps = {
   adapter: ChatAdapter;

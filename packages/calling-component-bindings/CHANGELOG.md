@@ -1,4 +1,4 @@
-# Change Log - calling-component-bindings
+# Change Log - @internal/calling-component-bindings
 
 This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
@@ -46,7 +46,7 @@ Fri, 21 May 2021 16:16:28 GMT
 - Update handler to match adapter version of composite ([PR #301](https://github.com/azure/communication-ui-library/pull/301) by jinan@microsoft.com)
 - Introduce common identifier format ([PR #315](https://github.com/azure/communication-ui-library/pull/315) by prprabhu@microsoft.com)
 - Update videoGallery selectors to get active screenshare from Stateful ([PR #260](https://github.com/azure/communication-ui-library/pull/260) by allenhwang@microsoft.com)
-- Move common type to acs-ui-common ([PR #303](https://github.com/azure/communication-ui-library/pull/303) by prprabhu@microsoft.com)
+- Move common type to @internal/acs-ui-common ([PR #303](https://github.com/azure/communication-ui-library/pull/303) by prprabhu@microsoft.com)
 - Rename DeviceManager to avoid name conflict ([PR #319](https://github.com/azure/communication-ui-library/pull/319) by prprabhu@microsoft.com)
 - Throwing error when onToggleMicrophone is invoked before call is started. ([PR #323](https://github.com/azure/communication-ui-library/pull/323) by miguelgamis@microsoft.com)
 - fix bugs ([PR #290](https://github.com/azure/communication-ui-library/pull/290) by easony@microsoft.com)

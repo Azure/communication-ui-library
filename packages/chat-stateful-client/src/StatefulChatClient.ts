@@ -34,23 +34,23 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
     const context = receiver.context;
     switch (prop) {
       case 'createChatThread': {
-        return async function (...args: Parameters<ChatClient['createChatThread']>) {
+        return context.withAsyncErrorTeedToState(async function (...args: Parameters<ChatClient['createChatThread']>) {
           const result = await chatClient.createChatThread(...args);
           const thread = result.chatThread;
-
           if (thread) {
             const [request] = args;
             context.createThread(thread.id, { topic: request.topic });
           }
           return result;
-        };
+        }, 'ChatClient.createChatThread');
       }
+
       case 'deleteChatThread': {
-        return async function (...args: Parameters<ChatClient['deleteChatThread']>) {
+        return context.withAsyncErrorTeedToState(async function (...args: Parameters<ChatClient['deleteChatThread']>) {
           const result = await chatClient.deleteChatThread(...args);
           context.deleteThread(args[0]);
           return result;
-        };
+        }, 'ChatClient.deleteChatThread');
       }
       case 'listChatThreads': {
         return createDecoratedListThreads(chatClient, context);
@@ -64,26 +64,31 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
         };
       }
       case 'startRealtimeNotifications': {
-        return async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
-          return context.asyncTeeErrorToState(async () => {
+        return context.withAsyncErrorTeedToState(
+          async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
             const ret = await chatClient.startRealtimeNotifications(...args);
             if (!receiver.eventSubscriber) {
               receiver.eventSubscriber = new EventSubscriber(chatClient, context);
             }
             return ret;
-          }, 'ChatClient.startRealtimeNotifications');
-        };
+          },
+          'ChatClient.startRealtimeNotifications',
+          ['ChatClient.startRealtimeNotifications', 'ChatClient.stopRealtimeNotifications']
+        );
       }
       case 'stopRealtimeNotifications': {
-        return async function (...args: Parameters<ChatClient['stopRealtimeNotifications']>) {
-          const ret = await chatClient.stopRealtimeNotifications(...args);
-          if (receiver.eventSubscriber) {
-            receiver.eventSubscriber.unsubscribe();
-            receiver.eventSubscriber = undefined;
-          }
-
-          return ret;
-        };
+        return context.withAsyncErrorTeedToState(
+          async function (...args: Parameters<ChatClient['stopRealtimeNotifications']>) {
+            const ret = await chatClient.stopRealtimeNotifications(...args);
+            if (receiver.eventSubscriber) {
+              receiver.eventSubscriber.unsubscribe();
+              receiver.eventSubscriber = undefined;
+            }
+            return ret;
+          },
+          'ChatClient.stopRealtimeNotifications',
+          ['ChatClient.stopRealtimeNotifications', 'ChatClient.startRealtimeNotifications']
+        );
       }
       default:
         return Reflect.get(chatClient, prop);

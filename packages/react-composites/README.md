@@ -1,12 +1,12 @@
-# react-composites
+# @internal/react-composites
 
 Todo: _documentation to follow_
 
 ## Testing
 
-### Automated Browser Tests
+### Automated Browser Tests (E2E)
 
-Currently, browser based tests for Chat composite on Chrome using puppeteer are supported.
+Currently, browser based tests for Chat composite on Chrome, Firefox and Webkit using Playwright are supported.
 
 #### Install Dependencies
 
@@ -16,12 +16,12 @@ rush update
 
 #### Create `.env` file
 
-The webpack bundler for test react app reads environment variables from the `.env` file and assigns them to the `process.env` variable.
-These variables can then be accessed inside the code using `process.env.{VAR_NAME}`
+Create a `.env` file inside `tests/browser` directory.
 
-Create a `.env` file inside `tests/browser/app` directory.
+The E2E browser tests require a valid connection string to run. This connection string is provided to the test runner through environment variables.
+The environment variables inside a `.env` file are loaded at the beginning of E2E tests.
 
-Sample `tests/browser/app/.env` file
+Sample `tests/browser/.env` file
 
 ```sh
 CONNECTION_STRING=<Resource Connection String>

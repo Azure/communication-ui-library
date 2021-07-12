@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
-const webpack = require('webpack');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: path.join(__dirname, 'index.tsx'),
@@ -13,7 +13,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
       // reference internal packlets src directly for hot reloading when developing
-      'react-components': path.resolve(__dirname, '../../../../../react-components/src')
+      '@internal/react-components': path.resolve(__dirname, '../../../../../react-components/src')
     }
   },
   output: {
@@ -40,10 +40,7 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({ template: path.join(__dirname, 'public', 'index.html') }),
-    new Dotenv({ path: path.join(__dirname, '.env') })
-  ],
+  plugins: [new HtmlWebpackPlugin({ template: path.join(__dirname, 'public', 'index.html') })],
   devServer: {
     port: 3000,
     hot: true,

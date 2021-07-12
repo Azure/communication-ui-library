@@ -12,7 +12,7 @@ import {
 } from './styles/LocalDeviceSettings.styles';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { Video20Filled, MicOn20Filled, Speaker220Filled } from '@fluentui/react-icons';
-import { VideoStreamOptions } from 'react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 
 const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
 const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';

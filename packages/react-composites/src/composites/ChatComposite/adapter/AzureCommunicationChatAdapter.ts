@@ -1,8 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { createStatefulChatClient, ChatClientState, ChatError, StatefulChatClient } from 'chat-stateful-client';
-import { DefaultChatHandlers, createDefaultChatHandlers } from 'chat-component-bindings';
+import {
+  createStatefulChatClient,
+  ChatClientState,
+  ChatError,
+  StatefulChatClient
+} from '@internal/chat-stateful-client';
+import { DefaultChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 
 import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
@@ -13,7 +18,7 @@ import type {
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent
 } from '@azure/communication-signaling';
-import { toFlatCommunicationIdentifier } from 'acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import { createAzureCommunicationUserCredential } from '../../../utils';
 import {
@@ -157,11 +162,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async sendMessage(content: string): Promise<void> {
-    await this.handlers.onSendMessage(content);
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onSendMessage(content);
+    });
   }
 
   async sendReadReceipt(chatMessageId: string): Promise<void> {
-    await this.handlers.onMessageSeen(chatMessageId);
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onMessageSeen(chatMessageId);
+    });
   }
 
   async sendTypingIndicator(): Promise<void> {
@@ -169,7 +178,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async removeParticipant(userId: string): Promise<void> {
-    await this.handlers.onParticipantRemove(userId);
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onParticipantRemove(userId);
+    });
   }
 
   async setTopic(topicName: string): Promise<void> {
@@ -179,7 +190,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
-    return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    });
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
@@ -259,9 +272,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     try {
       return await f();
     } catch (error) {
-      // Stateful chat client wraps all relevant errors as `ChatError`.
-      const e = error as ChatError;
-      this.emitter.emit('error', { operation: e.target, error: e.inner });
+      if (isChatError(error)) {
+        this.emitter.emit('error', { operation: error.target, error: error.inner });
+      }
       throw error;
     }
   }
@@ -300,4 +313,8 @@ export const createAzureCommunicationChatAdapter = async (
 
   const adapter = new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
   return adapter;
+};
+
+const isChatError = (e: Error): e is ChatError => {
+  return e['target'] !== undefined && e['inner'] !== undefined;
 };

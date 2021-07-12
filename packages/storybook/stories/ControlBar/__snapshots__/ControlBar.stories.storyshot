@@ -32,7 +32,7 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
         }
       >
         <div
-          className="css-1"
+          className="css-2"
         >
           <div
             className="ms-Stack css-3"

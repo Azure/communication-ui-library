@@ -1,5 +1,5 @@
 {
-  "name": "chat-stateful-client",
+  "name": "@internal/chat-stateful-client",
   "entries": [
     {
       "date": "Fri, 09 Jul 2021 20:41:33 GMT",
@@ -110,7 +110,7 @@
     },
     {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
-      "tag": "chat-stateful-client_v1.0.0-beta.1",
+      "tag": "@internal/chat-stateful-client_v1.0.0-beta.1",
       "version": "1.0.0-beta.1",
       "comments": {
         "prerelease": [
@@ -118,97 +118,97 @@
             "comment": "Fix pipeline dependencies error",
             "author": "jinan@microsoft.com",
             "commit": "72a986961e00b7ca70b6e0f64ec3dddd3c109705",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Introduce common identifier format",
             "author": "prprabhu@microsoft.com",
             "commit": "5ae89e5ea40e1f6cbe4a7218694853132dd83850",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Update createStatefulChatClient to create the underlying chat client internally",
             "author": "mail@jamesburnside.com",
             "commit": "645399bb5b4c5975ae3128dd960d417347392ef4",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "bugfix: Persist fetched chat thread properties",
             "author": "prprabhu@microsoft.com",
             "commit": "a185d3458ceca8c431e461b451e0d8d2089ea908",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "removing unused chat error properties",
             "author": "alkwa@microsoft.com",
             "commit": "7abd067e3d62616a30ca7847bc627d3a74c39cd7",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "change StatefulChatClient.state to getState()",
             "author": "domessin@microsoft.com",
             "commit": "602288c7527f29ec2c3eda8415f5cd8501b928ab",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "removing chat coolperiod in chat selector",
             "author": "alkwa@microsoft.com",
             "commit": "e90af942dbca8073b49c498c1b51823f4b8a378a",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Remove TypingIndicatorEvent export",
             "author": "mail@jamesburnside.com",
             "commit": "5aeba5d3ba08330e21c866fb418c5449a18442ce",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Fix copyright header to MIT and add LICENSE files (#225)",
             "author": "mail@jamesburnside.com",
             "commit": "a7265cf3343f4431d4a5ab9add788275980ffd2d",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Add cleaning up timer for typingIndicator every 8 secs",
             "author": "jinan@microsoft.com",
             "commit": "e6c4c49309e3000d205a0e29c2d488cc7ac20b92",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Initial changelog setup",
             "author": "mail@jamesburnside.com",
             "commit": "b1004c47c0da5b5ba8e04aef9370851031ef3dc2",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Add api extractor for package",
             "author": "mail@jamesburnside.com",
             "commit": "55d164f6ce51618385dabcefd10e2f6ac65daa9e",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Bump azure-communication-{chat, common, identity} to 1.0.0",
             "author": "prprabhu@microsoft.com",
             "commit": "0cc8b86b561e6dd5096d383b9a16180adf3a3bef",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Fix copyright header to MIT and add LICENSE files",
             "author": "domessin@microsoft.com",
             "commit": "d7b62e0ea82df089d5fc994170ee0d6cd68f8d0b",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Add commonjs support",
             "author": "mail@jamesburnside.com",
             "commit": "0256e5a737f71c8d86d416fa7f5532f8e3b1403b",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Update exports to not conflict with other internal packages",
             "author": "mail@jamesburnside.com",
             "commit": "46ec7435b2027b36f2cf28181ffe1edb4f7aa3d6",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           }
         ],
         "none": [
@@ -216,79 +216,79 @@
             "comment": "Update usage of member to participant",
             "author": "mail@jamesburnside.com",
             "commit": "71383f324a2aec7b6662863dfa6f207d5aea8182",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "internal build cleanup",
             "author": "mail@jamesburnside.com",
             "commit": "7f8440f2a6a911e0911a0212804717216a225ca5",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Add initial readme files",
             "author": "mail@jamesburnside.com",
             "commit": "6b72826937bd090793ec114574b7af0b855ac252",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Complete chatClient's stopRealtimeNotification declarative implementation",
             "author": "jinan@microsoft.com",
             "commit": "eed30a775632f672f8af53d9f75a76f1b8c7dce6",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "ensure consistent eslint-plugin-import version across packages",
             "author": "mail@jamesburnside.com",
             "commit": "d3b01cf8bd61e7a2cc8a0f62a9742af125219bc5",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Add rest of implementation of chatThreadClient, including all the chatThread, chatParticipants, ReadReceipt related state and functions",
             "author": "jinan@microsoft.com",
             "commit": "39fb2ab1c4616d3dd5ad0d8f6fbbe411473ffde2",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Update to remove usage of npm run",
             "author": "mail@jamesburnside.com",
             "commit": "eeb1794d0f58730678f55670962bea36758be46e",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Add thread related functions & states for declarative, and fix a small bug for duplicate message receive",
             "author": "jinan@microsoft.com",
             "commit": "e2c65004c90488ad1e5157681a0a2f039935d422",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "fix running test and linting commands",
             "author": "mail@jamesburnside.com",
             "commit": "65b7f4421dbf70048d81874bea8f61142ddc17f1",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "cleanup exports",
             "author": "mail@jamesburnside.com",
             "commit": "129feae606a331accabc4d962d888a5d1f7690a2",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Add all UTs for declarative chat clients, Update some minor details: 1. Add logic to create thread while receiving events with no thread 2. Add logic to set participants into state when create chat thread",
             "author": "jinan@microsoft.com",
             "commit": "f2721412e1f8de874d825bce478a02bed5fb261d",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Update API extractor warnings to be errors",
             "author": "mail@jamesburnside.com",
             "commit": "6de72cc24413602f742623ec187980030d6fce00",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           },
           {
             "comment": "Merge export type sentence",
             "author": "jinan@microsoft.com",
             "commit": "65bee316c8248055f757cbe9e9779f1db4281fa0",
-            "package": "chat-stateful-client"
+            "package": "@internal/chat-stateful-client"
           }
         ]
       }

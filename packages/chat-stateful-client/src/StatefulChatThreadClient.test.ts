@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatMessage, ChatMessageReadReceipt, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
@@ -11,8 +12,9 @@ import {
   mockParticipants,
   mockReadReceipts
 } from './mocks/createMockChatThreadClient';
-import { createMockChatClient, defaultClientArgs, StateChangeListener } from './StatefulChatClient.test';
+import { StateChangeListener, createMockChatClient, defaultClientArgs, failingPagedAsyncIterator } from './TestHelpers';
 import { createStatefulChatClientWithDeps, StatefulChatClient } from './StatefulChatClient';
+import { ChatError } from './ChatClientState';
 
 const threadId = '1';
 
@@ -237,7 +239,7 @@ describe('stateful chatThreadClient tees errors to state', () => {
   test('when updateTopic fails', async () => {
     const chatThreadClient = createMockChatThreadClient('threadId');
     chatThreadClient.updateTopic = async (): Promise<void> => {
-      throw Error('inejected error');
+      throw Error('injected error');
     };
     const client = createMockChatClientWithChatThreadClient(chatThreadClient);
 
@@ -251,6 +253,174 @@ describe('stateful chatThreadClient tees errors to state', () => {
     expect(listener.onChangeCalledCount).toBe(1);
     const latestError = listener.state.latestErrors['ChatThreadClient.updateTopic'];
     expect(latestError).toBeDefined();
+  });
+});
+
+describe('stateful chatThreadClient correctly wraps errors', () => {
+  test('when getProperties fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.getProperties = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').getProperties()).rejects.toThrow(
+      new ChatError('ChatThreadClient.getProperties', new Error('injected error'))
+    );
+  });
+
+  test('when updateTopic fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.updateTopic = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').updateTopic('topic')).rejects.toThrow(
+      new ChatError('ChatThreadClient.updateTopic', new Error('injected error'))
+    );
+  });
+
+  test('when listMessages fails immediately', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.listMessages = (): any => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    expect(() => {
+      client.getChatThreadClient('threadId').listMessages();
+    }).toThrow(new ChatError('ChatThreadClient.listMessages', new Error('injected error')));
+  });
+
+  test('when listMessages fails while iterating items', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.listMessages = (): PagedAsyncIterableIterator<any> => {
+      return failingPagedAsyncIterator(new Error('injected error'));
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    const iter = client.getChatThreadClient('threadId').listMessages();
+    await expect(iter.next()).rejects.toThrow(
+      new ChatError('ChatThreadClient.listMessages', new Error('injected error'))
+    );
+    await expect(iter.byPage().next()).rejects.toThrow(
+      new ChatError('ChatThreadClient.listMessages', new Error('injected error'))
+    );
+  });
+
+  test('when getMessage fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.getMessage = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').getMessage('threadId')).rejects.toThrow(
+      new ChatError('ChatThreadClient.getMessage', new Error('injected error'))
+    );
+  });
+
+  test('when sendMessage fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.sendMessage = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').sendMessage({ content: '' })).rejects.toThrow(
+      new ChatError('ChatThreadClient.sendMessage', new Error('injected error'))
+    );
+  });
+
+  test('when updateMessage fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.updateMessage = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').updateMessage('')).rejects.toThrow(
+      new ChatError('ChatThreadClient.updateMessage', new Error('injected error'))
+    );
+  });
+
+  test('when deleteMessage fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.deleteMessage = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').deleteMessage('')).rejects.toThrow(
+      new ChatError('ChatThreadClient.deleteMessage', new Error('injected error'))
+    );
+  });
+
+  test('when addParticipants fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.addParticipants = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').addParticipants({ participants: [] })).rejects.toThrow(
+      new ChatError('ChatThreadClient.addParticipants', new Error('injected error'))
+    );
+  });
+
+  test('when removeParticipant fails', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.removeParticipant = async (): Promise<any> => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    await expect(client.getChatThreadClient('threadId').removeParticipant({ communicationUserId: '' })).rejects.toThrow(
+      new ChatError('ChatThreadClient.removeParticipant', new Error('injected error'))
+    );
+  });
+
+  test('when listParticipants fails immediately', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.listParticipants = (): any => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    expect(() => {
+      client.getChatThreadClient('threadId').listParticipants();
+    }).toThrow(new ChatError('ChatThreadClient.listParticipants', new Error('injected error')));
+  });
+
+  test('when listParticipants fails while iterating items', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.listParticipants = (): PagedAsyncIterableIterator<any> => {
+      return failingPagedAsyncIterator(new Error('injected error'));
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    const iter = client.getChatThreadClient('threadId').listParticipants();
+    await expect(iter.next()).rejects.toThrow(
+      new ChatError('ChatThreadClient.listParticipants', new Error('injected error'))
+    );
+    await expect(iter.byPage().next()).rejects.toThrow(
+      new ChatError('ChatThreadClient.listParticipants', new Error('injected error'))
+    );
+  });
+
+  test('when listReadReceipts fails immediately', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.listReadReceipts = (): any => {
+      throw Error('injected error');
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    expect(() => {
+      client.getChatThreadClient('threadId').listReadReceipts();
+    }).toThrow(new ChatError('ChatThreadClient.listReadReceipts', new Error('injected error')));
+  });
+
+  test('when listReadReceipts fails while iterating items', async () => {
+    const chatThreadClient = createMockChatThreadClient('threadId');
+    chatThreadClient.listReadReceipts = (): PagedAsyncIterableIterator<any> => {
+      return failingPagedAsyncIterator(new Error('injected error'));
+    };
+    const client = createMockChatClientWithChatThreadClient(chatThreadClient);
+    const iter = client.getChatThreadClient('threadId').listReadReceipts();
+    await expect(iter.next()).rejects.toThrow(
+      new ChatError('ChatThreadClient.listReadReceipts', new Error('injected error'))
+    );
+    await expect(iter.byPage().next()).rejects.toThrow(
+      new ChatError('ChatThreadClient.listReadReceipts', new Error('injected error'))
+    );
   });
 });
 

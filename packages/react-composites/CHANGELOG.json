@@ -1,5 +1,5 @@
 {
-  "name": "react-composites",
+  "name": "@internal/react-composites",
   "entries": [
     {
       "date": "Fri, 09 Jul 2021 20:41:33 GMT",
@@ -392,7 +392,7 @@
     },
     {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
-      "tag": "react-composites_v1.0.0-beta.1",
+      "tag": "@internal/react-composites_v1.0.0-beta.1",
       "version": "1.0.0-beta.1",
       "comments": {
         "prerelease": [
@@ -400,265 +400,265 @@
             "comment": "Fix wrong object passed to StreamMedia",
             "author": "allenhwang@microsoft.com",
             "commit": "6b938ce9dee82e1810788f740f4fbae32537be19",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Add leave call event Fix double leave call",
             "author": "jinan@microsoft.com",
             "commit": "05fdc852368fabb8c4c2df9c9555df84ab296ab5",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Move calling providers and hooks to the calling selector package",
             "author": "easony@microsoft.com",
             "commit": "a458a977e42cddc0d2d3d32e2fa71a547316fe1c",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Add check to avoid modifications after unmount",
             "author": "allenhwang@microsoft.com",
             "commit": "fe7b3b99250ea663fa248a7e8ebfbaac6e7d3c92",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Change how we get preview renders to use the new api",
             "author": "allenhwang@microsoft.com",
             "commit": "316a3e3da82de9cbc8ff2b17e6b750a48f482987",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Rename state-only shadow type for Call",
             "author": "prprabhu@microsoft.com",
             "commit": "c9279b6b83fe83fb66f481409ab772fa5c6492de",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Rename DTOs that shadow objects from Calling SDK",
             "author": "prprabhu@microsoft.com",
             "commit": "7a9006f767cb2b74ba23f223ef9aab7051759624",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "fix scroll bar for chat screen",
             "author": "jinan@microsoft.com",
             "commit": "a8c14395175abf7e71bc0680eaab99777aa38683",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Update sendMessage back to void return value",
             "author": "jinan@microsoft.com",
             "commit": "43a347ce1198f546fc27ca0f825ad895b978a3a6",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Add event support for chat composite",
             "author": "jinan@microsoft.com",
             "commit": "da16218ad2168e182d7ed98067ebee6764e7ea3b",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Add on render avatar for calling composite",
             "author": "jinan@microsoft.com",
             "commit": "963dc02c0bb199cb315b4bed9efe3c88dd3922de",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "fix rerender issue",
             "author": "jinan@microsoft.com",
             "commit": "7cb95263779d18b4a4ef944dde1ea5435648d26e",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Fix local preview mic problem in composite",
             "author": "jinan@microsoft.com",
             "commit": "213f4298bd009a02840be6e69c33716125798db0",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Introduce common identifier format",
             "author": "prprabhu@microsoft.com",
             "commit": "5ae89e5ea40e1f6cbe4a7218694853132dd83850",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Rename DeviceManager to avoid name conflict",
             "author": "prprabhu@microsoft.com",
             "commit": "b39695499e521747786302e7b0ee90e9011b3c42",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "removed all Text/Label children of VideoTile, also renamed local/remoteParticipantName to local/remoteParticipantDisplay name and removed label props from RemoteVideoTile ",
             "author": "alcail@microsoft.com",
             "commit": "407c446cba58c8c407ee1c9ae1179cf05be0f8e4",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
-            "comment": "Move common type to acs-ui-common",
+            "comment": "Move common type to @internal/acs-ui-common",
             "author": "prprabhu@microsoft.com",
             "commit": "ddffe05acae25c042be42393759d7d8cf4f4de50",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "add event implemeration to calling adapter",
             "author": "jinan@microsoft.com",
             "commit": "f67518ba2d987a8e452706d895c5d880b8471f27",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "[#2404092] Adding stateful attributes to CallClientProvider for starting a call with camera on/off",
             "author": "anjulgarg@live.com",
             "commit": "ba94db89af172725b7b1b22b2785a31ccc91049f",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Move legacy mappers, providers and hooks to 1to1 composite",
             "author": "easony@microsoft.com",
             "commit": "22e2b82d312be2f4f3aee2fe638f717d42ee1bf8",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Add chat header with thread topic name",
             "author": "prprabhu@microsoft.com",
             "commit": "a185d3458ceca8c431e461b451e0d8d2089ea908",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Add selectors and handlers for Calling",
             "author": "anjulgarg@live.com",
             "commit": "78cad6eca0b9814304dd8a4528f3a4bfb33fcfa1",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Add ParticipantList to ChatComposite",
             "author": "prprabhu@microsoft.com",
             "commit": "5d60f1998fda45ab786cd52019c0c00cb5d8a1f3",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Decouple composite from ACS client and add implement an acs adapter for the interface",
             "author": "jinan@microsoft.com",
             "commit": "ac1612cc8166e6e993baa4102fd2b37c6a641eb0",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Using new local preview in calling composite",
             "author": "alkwa@microsoft.com",
             "commit": "20cd0cc3c3ba95df0e26aed9bdc6a224532374a9",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "changing invertedVideo to isMirrored",
             "author": "alkwa@microsoft.com",
             "commit": "7b1700e54bffef9ec2d6f6e7eda5ee30c8c5a2ed",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Removed WebUiChatParticipant type.",
             "author": "miguelgamis@microsoft.com",
             "commit": "e312872bd229245045b024bb7bd27b481e094048",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "adding in MessageContentType for different message rendering in message thread",
             "author": "alkwa@microsoft.com",
             "commit": "88d09c848b99ad296dd9257c5c1f13ebd298a5f0",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "renamed VideoTile props placeholderProvider to placeholder",
             "author": "alcail@microsoft.com",
             "commit": "2a1e72241012fd78155b87854c4381a76cb406e0",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Rename GroupChat* to Chat* in composites",
             "author": "prprabhu@microsoft.com",
             "commit": "69fa7a71594a9979f164cfb0291c01ac843555b9",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "update name and avatarName to displayName",
             "author": "alcail@microsoft.com",
             "commit": "b48ec5345f3c97df9420386b94ffc3d2bcbcdaec",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Replacing admininstration with identity dependency",
             "author": "alkwa@microsoft.com",
             "commit": "b85a30a859c00f3c88e77b7cfb46af290c9df35c",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Prune exports and add chat composite to @azure/communication-react",
             "author": "mail@jamesburnside.com",
             "commit": "8a138fbde66abc6ebda4480c47db1713be4c674f",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "migrate call composite to statuful",
             "author": "easony@microsoft.com",
             "commit": "60d0d837ddafbddf0c407545df218cfedaf63daa",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "added CallingTheme and used it for EndCallButton styles",
             "author": "alcail@microsoft.com",
             "commit": "33f9ff81d2aef1ad082283c1ff97e5db0eae4ba1",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
-            "comment": "Create composite package. Migrate files from react-components to new package.",
+            "comment": "Create composite package. Migrate files from @internal/react-components to new package.",
             "author": "mail@jamesburnside.com",
             "commit": "c590ee09046fa6644f0cbf771cf648d2f4ff2e95",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "First stab at GroupCallAdapter interface",
             "author": "domessin@microsoft.com",
             "commit": "5953c943a21aa69e3d48b2d8a6a24d87b51364f1",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "rename declarative packages to stateful",
             "author": "domessin@microsoft.com",
             "commit": "602288c7527f29ec2c3eda8415f5cd8501b928ab",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Fix copyright header to MIT and add LICENSE files",
             "author": "domessin@microsoft.com",
             "commit": "d7b62e0ea82df089d5fc994170ee0d6cd68f8d0b",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Fix copyright header to MIT and add LICENSE files (#225)",
             "author": "mail@jamesburnside.com",
             "commit": "a7265cf3343f4431d4a5ab9add788275980ffd2d",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Add calling handler and selector for VideoGallery and ScreenShare",
             "author": "anjulgarg@live.com",
             "commit": "3321f647e948aaf307a2f69e146ea14fe29853a0",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Bump azure-communication-{chat, common, identity} to 1.0.0",
             "author": "prprabhu@microsoft.com",
             "commit": "0cc8b86b561e6dd5096d383b9a16180adf3a3bef",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Update from renaming declarative to stateful",
             "author": "mail@jamesburnside.com",
             "commit": "5c5cd639bdadccf200fcca10a80cbc67f611ae90",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "renamed startRenderVideo to createView and stopRenderVideo to disposeView",
             "author": "alcail@microsoft.com",
             "commit": "70e2f0ddff463a0713fc0438e0d0d4a0765f36b9",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           }
         ],
         "none": [
@@ -666,103 +666,103 @@
             "comment": "Migrate non-component selectors into package instead of import",
             "author": "mail@jamesburnside.com",
             "commit": "9673a1fbed2e7f96a7611ffc240606fef038e5ed",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "dedupe memoizefnall code",
             "author": "mail@jamesburnside.com",
             "commit": "b11203aad28ceb459f5cd7f04a4163bfb4832466",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Move error bar into this package",
             "author": "mail@jamesburnside.com",
             "commit": "b5d9a289dd51086c01269b377fab37f79ddb01ed",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Update to match new contructor signature",
             "author": "mail@jamesburnside.com",
             "commit": "645399bb5b4c5975ae3128dd960d417347392ef4",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Initial check in for calling adapter composite",
             "author": "jinan@microsoft.com",
             "commit": "72a986961e00b7ca70b6e0f64ec3dddd3c109705",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "update VideoHint style",
             "author": "alcail@microsoft.com",
             "commit": "953e795aa3fb734584792f3f7bda5c4ca0af8014",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "fix deps",
             "author": "mail@jamesburnside.com",
             "commit": "51c74cb366d265ef1d1b6a26dee2a567c81314d1",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "internal build cleanup",
             "author": "mail@jamesburnside.com",
             "commit": "7f8440f2a6a911e0911a0212804717216a225ca5",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Update renamed exports",
             "author": "mail@jamesburnside.com",
             "commit": "46ec7435b2027b36f2cf28181ffe1edb4f7aa3d6",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "ensure consistent eslint-plugin-import version across packages",
             "author": "mail@jamesburnside.com",
             "commit": "d3b01cf8bd61e7a2cc8a0f62a9742af125219bc5",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "fix GroupCallLeaveButton style",
             "author": "alcail@microsoft.com",
             "commit": "ff9617d93c76748094aee834b25ac8c6534177f8",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Updated Stories to hide/show code for code examples",
             "author": "alcail@microsoft.com",
             "commit": "a0514c0433967e2c6c2611d8317dae82cc5c34ec",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "update onMessageSend to onSendMessage",
             "author": "mail@jamesburnside.com",
             "commit": "d7ccfa757c023b9ff54b29d6cc3eb400a7098201",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Update usage of member to participant",
             "author": "mail@jamesburnside.com",
             "commit": "71383f324a2aec7b6662863dfa6f207d5aea8182",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "Fix npm pack step",
             "author": "mail@jamesburnside.com",
             "commit": "c676e3271e435f79a3993d7592c89f9806eb94ce",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "remove enums in favor of string literals",
             "author": "mail@jamesburnside.com",
             "commit": "901149609fbeea558b7c50b965afd7cc59bff81c",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           },
           {
             "comment": "update based on new import names",
             "author": "mail@jamesburnside.com",
             "commit": "129feae606a331accabc4d962d888a5d1f7690a2",
-            "package": "react-composites"
+            "package": "@internal/react-composites"
           }
         ]
       }

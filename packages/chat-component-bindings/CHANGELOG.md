@@ -1,4 +1,4 @@
-# Change Log - chat-component-bindings
+# Change Log - @internal/chat-component-bindings
 
 This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
@@ -34,7 +34,7 @@ Fri, 21 May 2021 16:16:28 GMT
 - Add event support for chat composite ([PR #324](https://github.com/azure/communication-ui-library/pull/324) by jinan@microsoft.com)
 - Add participant list to usePropsFor ([PR #329](https://github.com/azure/communication-ui-library/pull/329) by jinan@microsoft.com)
 - Introduce common identifier format ([PR #315](https://github.com/azure/communication-ui-library/pull/315) by prprabhu@microsoft.com)
-- Move common type to acs-ui-common ([PR #303](https://github.com/azure/communication-ui-library/pull/303) by prprabhu@microsoft.com)
+- Move common type to @internal/acs-ui-common ([PR #303](https://github.com/azure/communication-ui-library/pull/303) by prprabhu@microsoft.com)
 - Extract hooks and providers to selector package Simplified provider logic, move client creation logic to contoso ([PR #236](https://github.com/azure/communication-ui-library/pull/236) by jinan@microsoft.com)
 - Add selectors and handlers for Calling ([PR #232](https://github.com/azure/communication-ui-library/pull/232) by anjulgarg@live.com)
 - including message type so we know how to render the message payload ([PR #266](https://github.com/azure/communication-ui-library/pull/266) by alkwa@microsoft.com)

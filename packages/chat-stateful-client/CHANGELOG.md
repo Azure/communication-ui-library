@@ -1,4 +1,4 @@
-# Change Log - chat-stateful-client
+# Change Log - @internal/chat-stateful-client
 
 This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 

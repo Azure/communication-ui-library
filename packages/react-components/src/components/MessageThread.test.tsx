@@ -7,7 +7,6 @@ import { ChatMessage } from '../types';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { mountWithLocalization, createTestLocale } from './utils/testUtils';
-import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -37,7 +36,6 @@ describe('Message date should be formatted correctly', () => {
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
       testLocale
     );
-    await act(async () => component);
     expect(component.text()).toContain(testLocale.strings.messageThread.yesterday);
   });
 });

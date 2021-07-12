@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientState, StatefulCallClient } from 'calling-stateful-client';
+import { CallClientState, StatefulCallClient } from '@internal/calling-stateful-client';
 import { CallClientContext, useCall } from '../providers';
 
 import { useState, useEffect, useRef, useMemo, useContext } from 'react';
