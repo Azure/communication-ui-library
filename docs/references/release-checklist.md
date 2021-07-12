@@ -38,6 +38,11 @@ Automated test infrastructure is currently in development.
 
 | Area | Test |
 | -- | -- |
+| npm package | User can npm install the npm package |
+| npm package | User's app performs treeshaking on the parts of the npm package not used |
+
+| Area | Test |
+| -- | -- |
 | Call Composite | User can start/stop local video on the configuration page |
 | Call Composite | User can mute/unmute mic on the configuration page |
 | Call Composite | User can change camera on configuration page |
