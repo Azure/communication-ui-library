@@ -1,4 +1,4 @@
-name: Publish npm packages
+name: Release branch - Publish npm package
 
 on:
   # Allows you to run this workflow manually from the Actions tab

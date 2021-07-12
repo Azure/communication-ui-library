@@ -12,20 +12,22 @@ See the [release checklist](../references/release-checklist.md) for tasks that m
 
 ### Release branches
 
-The release branch is a short lived branch used to ensure high release quality. The release branch is merged into main at the end of its lifecycle, however, any bug fixes submitted to this branch while active should also be cherry-picked into main to ensure minimal merge conflicts.
+A release branch is created for each new version and beta release we do (alpha version are excluded from this). The release branch is a short lived branch used to ensure high release quality. The release branch is merged into main at the end of its lifecycle, however, any bug fixes submitted to this branch while active should also be cherry-picked into main to ensure minimal merge conflicts. The final release of the package is created off the release branch, the release branch can then be merged into main and closed.
 
 ## Creating a release through GitHub actions (Preferred)
 
-1. Trigger the "Bump npm packages and create changelogs" GitHub action
-    Enter the branch or tag you are looking to create a release off. This should will usually be a release branch that has been thoroughly tested.
-1. The triggered GitHub action will bump the package versions, generate the changelog and put up a PR into main.
-1. Review the changelog in the PR and prune the changelog as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
-1. Also double check the package versions are as expected.
-1. Complete the PR into main _without deleting the branch_ (or restore the branch if you accidentally forget to not delete it on completion).
-1. Run the "Publish npm packages" GitHub action and enter the branch name from the previous step
-    * Enter the tag also if desired, if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`.
+1. Trigger the "Release branch - create" GitHub action
+    Enter the branch or tag you are looking to create a release off. This will usually be an alpha tag or the main branch.
+1. The triggered GitHub action will bump the package versions, generate the packlet changelogs and put up a PR up into main.
+1. Double check the package versions are as expected.
+1. The PR will auto create a Storybook deployment that can be used for verifications.
+1. Create the `@azure/communication-react` changelog in the PR. This will involve grabbing changes from the packlet changelogs and pruning the changelog lines as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
+1. Ensure the "Before Release" steps of the [release checklist](../references/release-checklist.md) are completed.
+1. Run the "Publish npm packages" GitHub action _off the release branch_.
+    * Enter the tag also, if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`.
 1. Ensure the action completes successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
-1. Post that a new release has happened on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
+1. Complete the post-release verification steps in [Release Checklist](../release-checklist.md).
+1. (If this is a latest release) Complete the PR to merge the release branch back into `main`.
 
 ## Manually creating a release
 
@@ -37,7 +39,7 @@ To manually create a release:
     ```bash
     git fetch --all # Ensure you have the latest remote details
     git checkout v.1.2.3 # Checkout a git tag or release branch
-    git checkout -b release/manual/v.1.2.4 # Create feature branch
+    git checkout -b release/1.2.4 # Create feature branch
     ```
 
 1. Bump the package versions
