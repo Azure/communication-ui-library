@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo } from 'react';
-import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets, useTheme } from '@fluentui/react';
+import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets } from '@fluentui/react';
 import { Send20Regular, Send20Filled } from '@fluentui/react-icons';
 import {
   textFieldStyle,
@@ -14,6 +14,7 @@ import {
 import { BaseCustomStylesProps } from '../types';
 import { isDarkThemed } from '../theming/themeUtils';
 import { COMPONENT_UI_IDS } from './identifiers';
+import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;

@@ -1,16 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  DefaultButton,
-  Persona,
-  PersonaSize,
-  Stack,
-  Dialog,
-  DialogType,
-  DialogFooter,
-  useTheme
-} from '@fluentui/react';
+import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { Call20Filled, CallEnd20Filled, Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import React from 'react';
 import {
@@ -22,7 +13,7 @@ import {
   incomingCallModalContainerStyle
 } from './styles/IncomingCallAlerts.styles';
 import { useBoolean } from '@uifabric/react-hooks';
-import { StreamMedia, VideoTile } from '@internal/react-components';
+import { StreamMedia, VideoTile, useTheme } from '@internal/react-components';
 
 export type IncomingCallToastProps = {
   /** Caller's Name */

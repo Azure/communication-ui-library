@@ -1395,6 +1395,9 @@ export type SystemMessagePayload = {
     iconName?: string;
 };
 
+// @public (undocumented)
+export const ThemeContext: React_2.Context<Theme>;
+
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
 
@@ -1489,6 +1492,9 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 
 // @public (undocumented)
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+
+// @public (undocumented)
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

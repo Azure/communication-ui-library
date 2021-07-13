@@ -474,6 +474,9 @@ export type SystemMessagePayload = {
     iconName?: string;
 };
 
+// @public (undocumented)
+export const ThemeContext: React_2.Context<Theme>;
+
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
@@ -502,6 +505,9 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 
 // @public (undocumented)
 export const useLocale: () => Locale;
+
+// @public (undocumented)
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
