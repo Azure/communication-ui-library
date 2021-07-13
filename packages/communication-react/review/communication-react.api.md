@@ -814,9 +814,6 @@ export type DisplayNameChangedListener = (event: {
 export const emptySelector: () => Record<string, never>;
 
 // @public
-export const en_GB: Locale;
-
-// @public
 export const en_US: Locale;
 
 // @public
@@ -927,13 +924,6 @@ export interface Locale {
 
 // @public
 export const LocaleContext: React_2.Context<Locale>;
-
-// @public
-export const locales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -1076,6 +1066,13 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
+
+// @public
+export const namedLocales: Record<string, {
+    locale: Locale;
+    englishName: string;
+    displayName: string;
+}>;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
