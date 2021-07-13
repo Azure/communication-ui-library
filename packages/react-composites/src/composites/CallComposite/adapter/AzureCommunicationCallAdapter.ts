@@ -399,17 +399,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   };
 
-  public setPage = (page: CallCompositePage): void => {
+  public setPage(page: CallCompositePage): void {
     this.context.setPage(page);
-  };
+  }
 
-  private onRemoteParticipantsUpdated = ({
+  private onRemoteParticipantsUpdated({
     added,
     removed
   }: {
     added: RemoteParticipant[];
     removed: RemoteParticipant[];
-  }): void => {
+  }): void {
     if (added && added.length > 0) {
       this.emitter.emit('participantsJoined', added);
     }
@@ -429,18 +429,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       subscriber && subscriber.unsubscribeAll();
       this.participantSubscribers.delete(toFlatCommunicationIdentifier(participant.identifier));
     });
-  };
+  }
 
-  private isScreenSharingOnChanged = (): void => {
+  private isScreenSharingOnChanged(): void {
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
-  };
+  }
 
-  private callIdChanged = (): void => {
+  private callIdChanged(): void {
     this.context.setCallId(this.call?.id);
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
-    this.emitter.emit('callIdChanged', { callId: this.callIdChanged });
-  };
+    this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
+  }
 
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
