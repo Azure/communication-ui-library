@@ -474,7 +474,7 @@ export type SystemMessagePayload = {
     iconName?: string;
 };
 
-// @public (undocumented)
+// @public
 export const ThemeContext: React_2.Context<Theme>;
 
 // @public
@@ -503,10 +503,10 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
+// @public
 export const useLocale: () => Locale;
 
-// @public (undocumented)
+// @public
 export const useTheme: () => Theme;
 
 // @public
