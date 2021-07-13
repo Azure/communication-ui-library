@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed initial value selectedCamera when permissions have been granted.",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

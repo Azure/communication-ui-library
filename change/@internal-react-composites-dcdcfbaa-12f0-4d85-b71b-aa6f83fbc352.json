@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update parameter to Stateful client due to API change",
-  "packageName": "@internal/react-composites",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

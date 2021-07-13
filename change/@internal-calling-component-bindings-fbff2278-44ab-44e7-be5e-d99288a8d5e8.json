@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update remote participants and video streams to use objects",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

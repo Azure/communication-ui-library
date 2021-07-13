@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use sections in device settings context menu",
-  "packageName": "@internal/react-components",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}
