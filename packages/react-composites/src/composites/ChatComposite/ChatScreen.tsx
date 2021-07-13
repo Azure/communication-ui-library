@@ -6,6 +6,7 @@ import React, { useEffect, useMemo } from 'react';
 import {
   CommunicationParticipant,
   DefaultMessageRendererType,
+  ErrorBar,
   MessageProps,
   MessageThread,
   ParticipantList,
@@ -58,6 +59,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const threadStatusProps = useAdaptedSelector(getThreadStatusProps);
+  const errorBarProps = usePropsFor(ErrorBar);
 
   const onRenderMessageAvatar = useMemo(
     () => onRenderAvatar && ((userId: string) => onRenderAvatar(userId, 'chatThread')),
@@ -77,6 +79,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
           <ThreadStatus {...threadStatusProps} />
+          <ErrorBar {...errorBarProps} />
           <MessageThread
             data-ui-id={CHAT_UI_IDS.messageThread}
             {...messageThreadProps}

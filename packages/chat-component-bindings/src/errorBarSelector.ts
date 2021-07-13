@@ -12,7 +12,7 @@ import { createSelector } from 'reselect';
  *   - `ErrorType` is never repeated in the returned errors.
  *   - Errors are returned in a fixed order by `ErrorType`.
  */
-export const errorBarSelector = createSelector([getLatestErrors], (latestErrors): ErrorType[] => {
+export const errorBarSelector = createSelector([getLatestErrors], (latestErrors): { activeErrors: ErrorType[] } => {
   // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
   // There are several options for the ordering:
   //   - Sorted by when the errors happened (latest first / oldest first).
@@ -21,7 +21,7 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
   // have timestamps for errors.
   if (latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
-    return ['sendMessageGeneric'];
+    return { activeErrors: ['sendMessageGeneric'] };
   }
-  return [];
+  return { activeErrors: [] };
 });
