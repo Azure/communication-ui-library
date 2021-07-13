@@ -35,6 +35,33 @@ export interface ErrorBarProps extends IMessageBarProps {
  */
 export interface ErrorBarStrings {
   /**
+   * Unable to reach Chat service.
+   *
+   * This can mean:
+   *   - Incorrect Azure Communication Services endpoint was provided.
+   *   - User's network connection is down.
+   */
+  unableToReachChatService: string;
+
+  /**
+   * User does not have access to the Chat service.
+   * This usually means that either the Azure Communication Services endpiont or the token provided are incorrect.
+   */
+  accessDenied: string;
+
+  /**
+   * User is no longer on the thread.
+   *
+   * See also: {@Link ErrorBarStrings.sendMessageNotInThisThread} for a more specific error.
+   */
+  notInThisThread: string;
+
+  /**
+   * Sending message failed because user is no longer on the thread.
+   */
+  sendMessageNotInThisThread: string;
+
+  /**
    * A generic message when sending message fails.
    * Prefer more specific error strings when possible.
    */

@@ -4,6 +4,7 @@
 import { getLatestErrors } from './baseSelectors';
 import { ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
+import { ChatErrors, ChatErrorTargets } from '@internal/chat-stateful-client';
 
 /**
  * Select active errors from the state for the `ErrorBar` component.
@@ -20,8 +21,63 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   //
   // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
   // have timestamps for errors.
-  if (latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
-    return { activeErrors: ['sendMessageGeneric'] };
+  const activeErrors: ErrorType[] = [];
+  let specificSendMessageErrorSeen = false;
+  if (hasUnableToReachBackendError(latestErrors)) {
+    activeErrors.push('unableToReachChatService');
   }
-  return { activeErrors: [] };
+  if (hasAccessDeniedError(latestErrors)) {
+    activeErrors.push('accessDenied');
+  }
+  if (hasNotInThisThreadError(latestErrors)) {
+    if (latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
+      activeErrors.push('sendMessageNotInThisThread');
+      specificSendMessageErrorSeen = true;
+    } else {
+      activeErrors.push('notInThisThread');
+    }
+  }
+  if (!specificSendMessageErrorSeen && latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
+    activeErrors.push('sendMessageGeneric');
+  }
+  return { activeErrors: activeErrors };
 });
+
+const accessErrorTargets: ChatErrorTargets[] = [
+  'ChatThreadClient.getProperties',
+  'ChatThreadClient.listMessages',
+  'ChatThreadClient.listParticipants',
+  'ChatThreadClient.sendMessage',
+  'ChatThreadClient.sendTypingNotification'
+];
+
+const hasUnableToReachBackendError = (latestErrors: ChatErrors): boolean => {
+  for (const target of accessErrorTargets) {
+    const error = latestErrors[target];
+    if (error !== undefined && error['code'] === 'REQUEST_SEND_ERROR') {
+      return true;
+    }
+  }
+  return false;
+};
+
+const hasAccessDeniedError = (latestErrors: ChatErrors): boolean => {
+  for (const target of accessErrorTargets) {
+    const error = latestErrors[target];
+    // We see return codes 401 or 403, depending on how the thread ID is malformed.
+    if (error !== undefined && (error['statusCode'] === 401 || error['statusCode'] === 403)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const hasNotInThisThreadError = (latestErrors: ChatErrors): boolean => {
+  for (const target of accessErrorTargets) {
+    const error = latestErrors[target];
+    if (error !== undefined && error['statusCode'] === 400) {
+      return true;
+    }
+  }
+  return false;
+};

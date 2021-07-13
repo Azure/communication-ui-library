@@ -21,15 +21,24 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   useEffect(() => {
     if (props) {
       const createAdapter = async (): Promise<void> => {
-        setAdapter(
-          await createAzureCommunicationChatAdapter(
-            props.userId,
-            props.token,
-            props.endpointUrl,
-            props.threadId,
-            props.displayName
-          )
+        const newAdapter = await createAzureCommunicationChatAdapter(
+          props.userId,
+          props.token,
+          props.endpointUrl,
+          props.threadId,
+          props.displayName
         );
+
+        // [xkcd] This is added to help figure out error plumbing.
+        // Remove before submitting.
+        newAdapter.on('error', (event: { operation: string; error: Error }) => {
+          const { operation, error } = event;
+          console.log(`${operation} failed: `);
+          console.log(error);
+          console.log(JSON.stringify(error));
+        });
+
+        setAdapter(newAdapter);
       };
       createAdapter();
     }

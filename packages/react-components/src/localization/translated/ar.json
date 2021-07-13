@@ -61,6 +61,10 @@
     "saturday": "السبت"
   },
   "errorBar": {
+    "unableToReachChatService": "انت غير متصل",
+    "accessDenied": "يتعذر الوصول إلى خدمات الدردشة - يرجى التحقق من بيانات اعتماد المستخدم المقدمة",
+    "notInThisThread": "لم تعد في موضوع الدردشة هذا",
+    "sendMessageNotInThisThread": "فشل إرسال الرسالة لأنك لم تعد في سلسلة المحادثة هذه",
     "sendMessageGeneric": "فشل إرسال رسالة"
   }
 }
