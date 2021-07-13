@@ -1,5 +1,5 @@
 # Bump package version numbers and create a release branch
-name: Create release branch
+name: Release branch - Create
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -61,13 +61,19 @@ jobs:
           echo version: $ver
           echo "::set-output name=version::$ver"
 
-      # Commit and push changes
+      # Commit changes
       - name: Hop into new branch
         run: git checkout -b release/${{ steps.version.outputs.version }}
       - name: Commit changes
         run: |
           git add .
           git commit -m "Version bump"
+
+      # Create beachball change files
+      - name: Create change files
+        run: node common/config/node_modules/beachball/bin/beachball change --message 'Bump package version to ${{ steps.version.outputs.version }}' --type 'none'
+
+      # Push changes
       - name: Push branch
         run: git push --set-upstream origin release/${{ steps.version.outputs.version }}
 
@@ -79,5 +85,5 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"Package Version Bump - ${{ steps.version.outputs.version }}", "head":"release/${{ steps.version.outputs.version }}", "base":"main", "body":"PR setup by the automated version bump github action. Please review." }'
+            -d '{ "title":"${{ steps.version.outputs.version }} release branch merge", "head":"release/${{ steps.version.outputs.version }}", "base":"main", "body":"PR created by the 'Release branch - Create' GitHub action. Please review." }'
             --fail
