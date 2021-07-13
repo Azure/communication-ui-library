@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update usePropsFor to use re-enforced version of type guard",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

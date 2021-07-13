@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added page to handle removed partiicipant in call composite.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

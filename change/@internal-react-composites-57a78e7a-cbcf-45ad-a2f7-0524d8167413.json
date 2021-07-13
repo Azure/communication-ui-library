@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Push FluentThemeProvider inside composites",
-  "packageName": "@internal/react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}
