@@ -32,7 +32,7 @@ export const cameraButtonSelector = reselect.createSelector(
 
     return {
       disabled: !deviceManager.selectedCamera || !permission,
-      checked: !!localVideoFromCall || previewOn
+      checked: localVideoStreams !== undefined ? !!localVideoFromCall : previewOn
     };
   }
 );
