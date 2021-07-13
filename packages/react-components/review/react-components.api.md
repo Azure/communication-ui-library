@@ -124,6 +124,9 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
+export const defaultIdentifiers: Identifiers;
+
+// @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
@@ -164,6 +167,32 @@ export interface GridLayoutProps {
 
 // @public (undocumented)
 export type GridLayoutType = 'standard';
+
+// @public (undocumented)
+export const IdentifierContext: React_2.Context<Identifiers>;
+
+// @public (undocumented)
+export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface IdentifierProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    identifiers?: Identifiers;
+}
+
+// @public (undocumented)
+export interface Identifiers {
+    // (undocumented)
+    messageContent: string;
+    // (undocumented)
+    messageTimestamp: string;
+    // (undocumented)
+    participantList: string;
+    // (undocumented)
+    sendboxTextfield: string;
+}
 
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
@@ -499,6 +528,9 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @public (undocumented)
+export const useIdentifiers: () => Identifiers;
 
 // @public (undocumented)
 export const useLocale: () => Locale;

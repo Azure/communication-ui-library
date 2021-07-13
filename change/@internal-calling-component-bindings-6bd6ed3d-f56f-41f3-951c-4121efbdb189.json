@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add react as dev dep to ensure version",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

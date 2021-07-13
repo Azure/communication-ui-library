@@ -1,8 +1,23 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/chat-stateful-client_v1.0.0-beta.2)
+
+Fri, 09 Jul 2021 20:41:33 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/chat-stateful-client_v1.0.0-beta.1..chat-stateful-client_v1.0.0-beta.2)
+
+### Changes
+
+- Replace Map with Object in chatMessages ([PR #463](https://github.com/azure/communication-ui-library/pull/463) by prprabhu@microsoft.com)
+- Use Object for chat participants ([PR #462](https://github.com/azure/communication-ui-library/pull/462) by prprabhu@microsoft.com)
+- Add error handling facilities ([PR #510](https://github.com/azure/communication-ui-library/pull/510) by prprabhu@microsoft.com)
+- Bump up max listeners limit ([PR #360](https://github.com/azure/communication-ui-library/pull/360) by allenhwang@microsoft.com)
+- Bump prettier version and reformat ([PR #505](https://github.com/azure/communication-ui-library/pull/505) by prprabhu@microsoft.com)
+- Replace Map with Object for ChatClientState.threads ([PR #461](https://github.com/azure/communication-ui-library/pull/461) by prprabhu@microsoft.com)
+- Make max listeners configurable ([PR #393](https://github.com/azure/communication-ui-library/pull/393) by allenhwang@microsoft.com)
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/chat-stateful-client_v1.0.0-beta.1)
 

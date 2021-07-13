@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Breaking: Make arguments to CreateStatefulCallClient optional",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

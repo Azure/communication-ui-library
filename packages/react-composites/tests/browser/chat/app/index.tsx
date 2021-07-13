@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { ChatAdapter, createAzureCommunicationChatAdapter, ChatComposite } from '../../../../src';
+import { IDS } from '../../config';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -37,7 +38,11 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <>{chatAdapter && <ChatComposite adapter={chatAdapter} options={{ showParticipantPane: true }} />}</>;
+  return (
+    <>
+      {chatAdapter && <ChatComposite identifiers={IDS} adapter={chatAdapter} options={{ showParticipantPane: true }} />}
+    </>
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
