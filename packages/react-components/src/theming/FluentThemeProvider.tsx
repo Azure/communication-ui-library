@@ -23,6 +23,7 @@ const wrapper = mergeStyles({
 
 const defaultTheme = mergeThemes(getTheme(), lightTheme);
 
+/** Theme context for library's react components */
 export const ThemeContext = createContext<Theme>(defaultTheme);
 
 const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
@@ -86,4 +87,5 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   );
 };
 
+/** React hook to access theme */
 export const useTheme = (): Theme => useContext(ThemeContext);
