@@ -12,7 +12,7 @@ import { lightTheme } from './themes';
 export interface FluentThemeProviderProps {
   /** Children to be themed. */
   children: React.ReactNode;
-  /** Theme for components */
+  /** Theme for components. Defaults to a light theme if not provided. */
   fluentTheme?: PartialTheme | Theme;
 }
 
