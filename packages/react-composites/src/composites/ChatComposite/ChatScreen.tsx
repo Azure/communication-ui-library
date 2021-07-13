@@ -27,7 +27,6 @@ import {
   participantListStack,
   participantListStyle
 } from './styles/Chat.styles';
-import { CHAT_UI_IDS } from './identifiers';
 
 export type ChatScreenProps = {
   showParticipantPane?: boolean;
@@ -74,14 +73,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   return (
-    <Stack data-ui-id={CHAT_UI_IDS.chatScreen} className={chatContainer} grow>
+    <Stack className={chatContainer} grow>
       <ChatHeader {...headerProps} />
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
           <ThreadStatus {...threadStatusProps} />
           <ErrorBar {...errorBarProps} />
           <MessageThread
-            data-ui-id={CHAT_UI_IDS.messageThread}
             {...messageThreadProps}
             onRenderAvatar={onRenderMessageAvatar}
             onRenderMessage={onRenderMessage}

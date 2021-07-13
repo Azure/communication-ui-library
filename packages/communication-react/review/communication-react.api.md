@@ -145,7 +145,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    setPage: (page: CallCompositePage) => void;
+    setPage(page: CallCompositePage): void;
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
@@ -538,6 +538,7 @@ export type ChatCompositeProps = {
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
+    identifiers?: Identifiers;
 };
 
 // @public
@@ -787,6 +788,9 @@ export type DefaultChatHandlers = {
 };
 
 // @public (undocumented)
+export const defaultIdentifiers: Identifiers;
+
+// @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
@@ -889,6 +893,32 @@ export interface GridLayoutProps {
 
 // @public (undocumented)
 export type GridLayoutType = 'standard';
+
+// @public (undocumented)
+export const IdentifierContext: React_2.Context<Identifiers>;
+
+// @public (undocumented)
+export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface IdentifierProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    identifiers?: Identifiers;
+}
+
+// @public (undocumented)
+export interface Identifiers {
+    // (undocumented)
+    messageContent: string;
+    // (undocumented)
+    messageTimestamp: string;
+    // (undocumented)
+    participantList: string;
+    // (undocumented)
+    sendboxTextfield: string;
+}
 
 // @public (undocumented)
 export type IncomingCallListener = (event: {
@@ -1510,6 +1540,9 @@ export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @public (undocumented)
+export const useIdentifiers: () => Identifiers;
 
 // @public (undocumented)
 export const useLocale: () => Locale;
