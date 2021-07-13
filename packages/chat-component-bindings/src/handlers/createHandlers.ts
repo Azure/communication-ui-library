@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-import { ChatThreadClient } from '@azure/communication-chat';
+import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
 export type DefaultChatHandlers = {
@@ -19,7 +20,7 @@ export type DefaultChatHandlers = {
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
 export const createDefaultChatHandlers = memoizeOne(
   (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): DefaultChatHandlers => {
-    const messageIterator = chatThreadClient.listMessages();
+    let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
     return {
       onSendMessage: async (content: string) => {
         const sendMessageRequest = {
@@ -42,6 +43,12 @@ export const createDefaultChatHandlers = memoizeOne(
         await chatThreadClient.updateTopic(topicName);
       },
       onLoadPreviousChatMessages: async (messagesToLoad: number) => {
+        if (messageIterator === undefined) {
+          // Lazy definition so that errors in the method call are reported correctly.
+          // Also allows recovery via retries in case of transient errors.
+          messageIterator = chatThreadClient.listMessages();
+        }
+
         let remainingMessagesToGet = messagesToLoad;
         let isAllChatMessagesLoaded = false;
         while (remainingMessagesToGet >= 1) {
