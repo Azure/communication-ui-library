@@ -2,11 +2,10 @@
 // Licensed under the MIT license.
 
 import * as reselect from 'reselect';
-import { CallState } from '@internal/calling-stateful-client';
-import { getCall } from './baseSelectors';
+import { getLocalVideoStreams } from './baseSelectors';
 
-export const lobbySelector = reselect.createSelector([getCall], (call: CallState | undefined) => {
-  const localVideoStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
+export const lobbySelector = reselect.createSelector([getLocalVideoStreams], (localVideoStreams) => {
+  const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
   return {
     localParticipantVideoStream: {
       isAvailable: !!localVideoStream,
