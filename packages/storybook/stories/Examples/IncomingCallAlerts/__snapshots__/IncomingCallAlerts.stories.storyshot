@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incoming Call Modal 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -56,7 +56,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
           onTouchStart={[Function]}
         >
           <div
-            aria-labelledby="Dialog0-title"
+            aria-labelledby="Dialog1-title"
             aria-modal={true}
             onKeyDown={[Function]}
             role="alertdialog"
@@ -77,7 +77,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
               />
               <div
                 className="ms-Dialog-main main-4"
-                id="ModalFocusTrapZone1"
+                id="ModalFocusTrapZone2"
                 onBlurCapture={[Function]}
                 onFocusCapture={[Function]}
               >
@@ -105,7 +105,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                       <div
                         aria-level={1}
                         className="ms-Dialog-title title-18"
-                        id="Dialog0-title"
+                        id="Dialog1-title"
                         role="heading"
                       >
                         Incoming Video Call
@@ -245,11 +245,11 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                               className="ms-Stack css-54"
                             >
                               <div
-                                className="css-71"
+                                className="css-72"
                               />
                             </div>
                             <div
-                              className="ms-Stack css-81 css-55"
+                              className="ms-Stack css-82 css-55"
                             >
                               <div
                                 className="ms-Stack css-47"
@@ -350,7 +350,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                                 >
                                   <span
                                     className="ms-Button-label label-62"
-                                    id="id__8"
+                                    id="id__9"
                                   >
                                     Accept
                                   </span>
@@ -387,7 +387,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
                                 >
                                   <span
                                     className="ms-Button-label label-62"
-                                    id="id__11"
+                                    id="id__12"
                                   >
                                     Decline
                                   </span>
@@ -423,10 +423,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
 
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incoming Call Toast 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
