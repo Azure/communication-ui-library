@@ -110,7 +110,7 @@ describe('Error is reflected in state and events', () => {
   */
 });
 
-describe('[xkcd] clearErrors clears the error in stateful client and triggers a UI update', () => {
+describe('clearErrors clears the error in stateful client and triggers a UI update', () => {
   it('when clearning sendMessageGeneric error', async () => {
     const threadClient = new StubChatThreadClient();
     threadClient.sendMessage = (): Promise<ChatMessage> => {
