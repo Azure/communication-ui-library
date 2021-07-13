@@ -109,6 +109,17 @@ test.describe('Chat Composite E2E Tests', () => {
     await page.type(dataUiId(IDS.sendboxTextfield), 'I am not superstitious. Just a little stitious.');
     await pages[0].bringToFront();
     await pages[0].waitForSelector(dataUiId(IDS.typingIndicator));
+    const el = await pages[0].$(dataUiId(IDS.typingIndicator));
+    expect(await el?.innerHTML()).toContain(participants[1]);
     expect(await pages[0].screenshot()).toMatchSnapshot('5-typing-indicator.png');
+  });
+
+  test('typing indicator disappears after 12 seconds', async () => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.waitForTimeout(12000);
+    const el = await page.$(dataUiId(IDS.typingIndicator));
+    expect(await el?.innerHTML()).toBeFalsy();
+    expect(await page.screenshot()).toMatchSnapshot('6-typing-indicator-disappears.png');
   });
 });
