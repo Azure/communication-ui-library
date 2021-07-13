@@ -64,8 +64,7 @@ const hasUnableToReachBackendError = (latestErrors: ChatErrors): boolean => {
 const hasAccessDeniedError = (latestErrors: ChatErrors): boolean => {
   for (const target of accessErrorTargets) {
     const error = latestErrors[target];
-    // We see return codes 401 or 403, depending on how the thread ID is malformed.
-    if (error !== undefined && (error['statusCode'] === 401 || error['statusCode'] === 403)) {
+    if (error !== undefined && error['statusCode'] === 401) {
       return true;
     }
   }
@@ -75,7 +74,9 @@ const hasAccessDeniedError = (latestErrors: ChatErrors): boolean => {
 const hasNotInThisThreadError = (latestErrors: ChatErrors): boolean => {
   for (const target of accessErrorTargets) {
     const error = latestErrors[target];
-    if (error !== undefined && error['statusCode'] === 400) {
+    // Chat service returns 403 if a user has been removed from a thread.
+    // Chat service returns either 401 or 403 if the thread ID is malformed, depending on how the thread ID is malformed.
+    if (error !== undefined && (error['statusCode'] === 400 || error['statusCode'] === 403)) {
       return true;
     }
   }
