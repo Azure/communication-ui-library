@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixing LocalPreview Toggle bug",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

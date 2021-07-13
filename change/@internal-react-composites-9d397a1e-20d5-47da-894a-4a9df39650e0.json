@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Bump package for release",
-  "packageName": "@internal/react-composites",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

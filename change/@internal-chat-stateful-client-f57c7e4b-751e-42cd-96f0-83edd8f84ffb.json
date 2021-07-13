@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update package to beta.1",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

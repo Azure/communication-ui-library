@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add options to onSelectCamera and onToggleCamera",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "easony@microsoft.com",
-  "dependentChangeType": "patch"
-}

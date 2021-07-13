@@ -8,6 +8,8 @@ All new major/minor releases and new beta releases should be posted on the [inte
 
 We must do due diligence in testing our packages before any new major/minor or beta release (alpha releases are exempt). To do so a release branch should be created at least 1 week before release and thoroughly bug bashed. All critical bugs must be fixed.
 
+See the [release checklist](../references/release-checklist.md) for tasks that must be completed before releasing.
+
 ### Release branches
 
 The release branch is a short lived branch used to ensure high release quality. The release branch is merged into main at the end of its lifecycle, however, any bug fixes submitted to this branch while active should also be cherry-picked into main to ensure minimal merge conflicts.

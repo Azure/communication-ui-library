@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use class methods in chat adapter implementation",
-  "packageName": "@internal/react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

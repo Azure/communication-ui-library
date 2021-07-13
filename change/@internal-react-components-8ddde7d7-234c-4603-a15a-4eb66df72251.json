@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Expose more customized api for rendering",
-  "packageName": "@internal/react-components",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
