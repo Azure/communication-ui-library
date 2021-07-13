@@ -143,24 +143,22 @@ export interface EndCallButtonStrings {
     label: string;
 }
 
-// @public (undocumented)
+// @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface ErrorBarProps extends IMessageBarProps {
-    // (undocumented)
     activeErrors: ErrorType[];
-    // (undocumented)
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
     strings?: ErrorBarStrings;
 }
 
-// @public (undocumented)
+// @public
 export interface ErrorBarStrings {
-    // (undocumented)
-    sendMessageFailed: string;
+    sendMessageGeneric: string;
 }
 
-// @public (undocumented)
+// @public
 export type ErrorType = keyof ErrorBarStrings;
 
 // @public

@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { MessageBar, MessageBarType, IMessageBarProps } from '@fluentui/react';
+import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
 
 /**
  * {@Link ErrorBar} properties.
  *
  * In addition to the following, {@Link ErrorBar} forwards all
- * {@Link @fluentui/react/IMessageBarProps} to the underlying {@Link @fluentui/react/MessageBar}.
+ * {@Link @fluentui/react#IMessageBarProps} to the underlying {@Link @fluentui/react#MessageBar}.
  */
 export interface ErrorBarProps extends IMessageBarProps {
   /**
@@ -18,11 +18,16 @@ export interface ErrorBarProps extends IMessageBarProps {
   strings?: ErrorBarStrings;
 
   /**
-   * Currently active error. Must be defined.
+   * Currently active errors.
    *
    * When the error is cleared, the {@Link ErrorBar} must be removed instead of clearing {@Link ErrorBarProps.activeError}.
    */
-  activeError: ErrorType;
+  activeErrors: ErrorType[];
+
+  /**
+   * Callback trigerred when the {@Link MessageBar} for an active error is dismissed.
+   */
+  onDismissErrors: (errorTypes: ErrorType[]) => void;
 }
 
 /**
@@ -44,15 +49,29 @@ export type ErrorType = keyof ErrorBarStrings;
 /**
  * A component to show error messages on the UI.
  * All strings that can be shown are accepted as the {@Link ErrorBarProps.strings} so that they can be localized.
- * Active error is selected by {@Link ErrorBarProps.activeError}.
+ * Active errors are selected by {@Link ErrorBarProps.activeErrors}.
  *
- * Uses {@Link @fluentui/react/MessageBar} UI element.
+ * Uses {@Link @fluentui/react#MessageBar} UI element.
  */
 export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
+  if (props.activeErrors.length === 0) {
+    return <></>;
+  }
+
   const strings = props.strings ?? useLocale().strings.errorBar;
+  // FIXME: Memoize onDismiss callbacks.
   return (
-    <MessageBar {...props} messageBarType={MessageBarType.error}>
-      {strings[props.activeError]}
-    </MessageBar>
+    <Stack>
+      {props.activeErrors.map((activeError) => (
+        <MessageBar
+          {...props}
+          key={activeError}
+          messageBarType={MessageBarType.error}
+          onDismiss={() => props.onDismissErrors([activeError])}
+        >
+          {strings[activeError]}
+        </MessageBar>
+      ))}
+    </Stack>
   );
 };

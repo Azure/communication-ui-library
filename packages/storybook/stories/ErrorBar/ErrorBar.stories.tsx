@@ -53,7 +53,7 @@ export const SendMessageError = (): JSX.Element => {
         height: '50%'
       })}
     >
-      {enabledState ? <ErrorBar activeError="sendMessageGeneric" onDismiss={onClose} /> : <></>}
+      {enabledState ? <ErrorBar activeErrors={['sendMessageGeneric']} onDismissErrors={onClose} /> : <></>}
     </div>
   );
 };

@@ -79,6 +79,7 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
+    clearErrors(targets: ChatErrorTargets[]): void;
     // (undocumented)
     getState(): ChatClientState;
     // (undocumented)
@@ -100,7 +101,6 @@ export type StatefulChatClientOptions = {
     chatClientOptions: ChatClientOptions;
     maxStateChangeListeners?: number;
 };
-
 
 // (No @packageDocumentation comment for this package)
 

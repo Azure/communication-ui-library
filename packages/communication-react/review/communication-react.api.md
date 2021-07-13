@@ -437,6 +437,7 @@ export interface CameraButtonStrings {
 
 // @public (undocumented)
 export interface ChatAdapter {
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -782,6 +783,7 @@ export type DefaultChatHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public (undocumented)
@@ -824,24 +826,22 @@ export interface EndCallButtonStrings {
     label: string;
 }
 
-// @public (undocumented)
+// @public
 export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface ErrorBarProps extends IMessageBarProps {
-    // (undocumented)
     activeErrors: ErrorType[];
-    // (undocumented)
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
     strings?: ErrorBarStrings;
 }
 
-// @public (undocumented)
+// @public
 export interface ErrorBarStrings {
-    // (undocumented)
-    sendMessageFailed: string;
+    sendMessageGeneric: string;
 }
 
-// @public (undocumented)
+// @public
 export type ErrorType = keyof ErrorBarStrings;
 
 // @public
@@ -863,7 +863,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -1370,6 +1370,7 @@ export type StatefulCallClientOptions = {
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
+    clearErrors(targets: ChatErrorTargets[]): void;
     // (undocumented)
     getState(): ChatClientState;
     // (undocumented)
