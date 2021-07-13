@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add error handling facilities",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

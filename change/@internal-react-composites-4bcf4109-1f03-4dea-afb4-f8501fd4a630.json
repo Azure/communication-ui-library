@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "removing group call references and fixing call composite stories",
-  "packageName": "@internal/react-composites",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}
