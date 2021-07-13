@@ -17,6 +17,13 @@ const stubTimestamps = (page: Page): void => {
   }, messageTimestampId);
 };
 
+const compositeLoaded = async (page: Page): Promise<void> => {
+  await page.waitForLoadState('load');
+  await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
+  await page.waitForSelector(dataUiId(IDS.participantList));
+  await page.waitForTimeout(1000);
+};
+
 const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
 const TOPIC_NAME = 'Cowabunga';
 
@@ -63,21 +70,45 @@ test.describe('Chat Composite E2E Tests', () => {
     await browser.close();
   });
 
-  test('composite loads correctly with participant list', async () => {
-    await pages[0].bringToFront();
-    await pages[0].waitForSelector(dataUiId(IDS.sendboxTextfield));
-    await pages[0].waitForSelector(dataUiId(IDS.participantList));
-    stubTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot('1-chat-screen.png');
+  test('composite pages load completely', async () => {
+    for (const idx in pages) {
+      await compositeLoaded(pages[idx]);
+      expect(await pages[idx].screenshot()).toMatchSnapshot(`1-page-${idx}-chat-screen.png`);
+    }
   });
 
   test('can send message', async () => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page.keyboard.press('Enter');
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    stubTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('2-send-message.png');
+  });
+
+  test('can receive message', async () => {
+    const page = pages[1];
+    await page.bringToFront();
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    stubTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('3-receive-message.png');
+  });
+
+  test('read message has a viewed status', async () => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.waitForSelector(`[data-ui-status="seen"]`);
+    stubTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('4-read-message-status.png');
+  });
+
+  test('can view typing indicator', async () => {
+    const page = pages[1];
+    await page.bringToFront();
+    await page.type(dataUiId(IDS.sendboxTextfield), 'I am not superstitious. Just a little stitious.');
     await pages[0].bringToFront();
-    await pages[0].waitForSelector(dataUiId(IDS.sendboxTextfield));
-    await pages[0].type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
-    await pages[0].keyboard.press('Enter');
-    await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
-    stubTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot('2-send-message.png');
+    await pages[0].waitForSelector(dataUiId(IDS.typingIndicator));
+    expect(await pages[0].screenshot()).toMatchSnapshot('5-typing-indicator.png');
   });
 });

@@ -192,6 +192,8 @@ export interface Identifiers {
     participantList: string;
     // (undocumented)
     sendboxTextfield: string;
+    // (undocumented)
+    typingIndicator: string;
 }
 
 // @public (undocumented)
