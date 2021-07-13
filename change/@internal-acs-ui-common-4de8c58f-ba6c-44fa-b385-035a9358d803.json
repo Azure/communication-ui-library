@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove any types",
-  "packageName": "@internal/acs-ui-common",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

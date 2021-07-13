@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Show mute indicator while screensharing. Fix icon padding",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
