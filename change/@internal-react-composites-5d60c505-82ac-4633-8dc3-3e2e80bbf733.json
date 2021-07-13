@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bind all methods of CallAdapter on construction",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
