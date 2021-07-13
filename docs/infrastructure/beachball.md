@@ -21,7 +21,7 @@ Along with regular package version updates, we also produce alpha releases night
 * Nightly Alpha versions follow the following syntax: v.#.#.#-alpha+yyyymmdd-HHMM
 * Beta versions follow the following syntax: v.#.#.#-beta.#
 
-See [creating a release](./creating-a-release.md) for more information.
+See [creating a release](../references/creating-a-release.md) for more information.
 
 ## What does Beachball do
 
@@ -42,7 +42,7 @@ For writing a good changelog entry for the change file see: [Tips for writing me
 ### Package version bumping
 
 This is done by our github actions. If this needs to be down manually you can run `npm run beachball -- bump` under `common/config`.
-See [creating a release](./creating-a-release.md) for more information.
+See [creating a release](../references/creating-a-release.md) for more information.
 
 ### Changelog Generation
 
