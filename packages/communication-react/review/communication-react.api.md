@@ -837,6 +837,9 @@ export interface ErrorBarProps extends IMessageBarProps {
 }
 
 // @public
+export const errorBarSelector: OutputSelector<ChatClientState, "sendMessageGeneric"[], (res: ChatErrors) => "sendMessageGeneric"[]>;
+
+// @public
 export interface ErrorBarStrings {
     sendMessageGeneric: string;
 }
