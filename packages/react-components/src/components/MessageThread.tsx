@@ -33,7 +33,7 @@ import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { Parser } from 'html-to-react';
 import { useLocale } from '../localization';
-import { COMPONENT_UI_IDS } from './identifiers';
+import { useIdentifiers } from '../identifiers';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -202,11 +202,12 @@ function extractContent(s: string): string {
   return span.textContent || span.innerText;
 }
 
-const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+const GenerateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+  const ids = useIdentifiers();
   const htmlToReactParser = new Parser();
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
-    <div data-ui-id={COMPONENT_UI_IDS.messageContent} data-ui-status={payload.status}>
+    <div data-ui-id={ids.messageContent} data-ui-status={payload.status}>
       <LiveMessage
         message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content || '')}`}
         aria-live="polite"
@@ -216,10 +217,11 @@ const generateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.El
   );
 };
 
-const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+const GenerateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+  const ids = useIdentifiers();
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
-    <div data-ui-id={COMPONENT_UI_IDS.messageContent} data-ui-status={payload.status}>
+    <div data-ui-id={ids.messageContent} data-ui-status={payload.status}>
       <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
@@ -236,14 +238,14 @@ const generateTextMessageContent = (payload: ChatMessagePayload): JSX.Element =>
   );
 };
 
-const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+const GenerateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
   switch (payload.type) {
     case 'text':
-      return generateTextMessageContent(payload);
+      return GenerateTextMessageContent(payload);
     case 'html':
-      return generateRichTextHTMLMessageContent(payload);
+      return GenerateRichTextHTMLMessageContent(payload);
     case 'richtext/html':
-      return generateRichTextHTMLMessageContent(payload);
+      return GenerateRichTextHTMLMessageContent(payload);
     default:
       console.warn('unknown message content type');
       return <></>;
@@ -252,9 +254,10 @@ const generateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
 
 const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   const { strings } = useLocale();
+  const ids = useIdentifiers();
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
-    const messageContentItem = generateMessageContent(payload);
+    const messageContentItem = GenerateMessageContent(payload);
     return (
       <Chat.Message
         className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
@@ -262,14 +265,16 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
         mine={payload.mine}
         timestamp={
-          payload.createdOn
-            ? props.showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
-                  ...strings.messageThread,
-                  ...props.strings
-                })
-              : formatTimeForChatMessage(payload.createdOn)
-            : undefined
+          <text data-ui-id={ids.messageTimestamp}>
+            {payload.createdOn
+              ? props.showDate
+                ? formatTimestampForChatMessage(payload.createdOn, new Date(), {
+                    ...strings.messageThread,
+                    ...props.strings
+                  })
+                : formatTimeForChatMessage(payload.createdOn)
+              : undefined}
+          </text>
         }
         // This is a bug in fluentui react northstar not reversing left and right margins for the message bubbles of
         // the user
