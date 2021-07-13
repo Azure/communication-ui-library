@@ -134,6 +134,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager
   ) {
+    this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;
     this.locator = locator;
@@ -153,6 +154,36 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.onClientStateChange = onStateChange;
 
     this.callClient.onStateChange(onStateChange);
+  }
+
+  private bindPublicMethods() {
+    this.onStateChange.bind(this);
+    this.offStateChange.bind(this);
+    this.getState.bind(this);
+    this.dispose.bind(this);
+    this.joinCall.bind(this);
+    this.leaveCall.bind(this);
+    this.setCamera.bind(this);
+    this.setMicrophone.bind(this);
+    this.setSpeaker.bind(this);
+    this.askDevicePermission.bind(this);
+    this.queryCameras.bind(this);
+    this.queryMicrophones.bind(this);
+    this.querySpeakers.bind(this);
+    this.startCamera.bind(this);
+    this.stopCamera.bind(this);
+    this.onToggleCamera.bind(this);
+    this.mute.bind(this);
+    this.unmute.bind(this);
+    this.startCall.bind(this);
+    this.startScreenShare.bind(this);
+    this.stopScreenShare.bind(this);
+    this.removeParticipant.bind(this);
+    this.setPage.bind(this);
+    this.createStreamView.bind(this);
+    this.disposeStreamView.bind(this);
+    this.on.bind(this);
+    this.off.bind(this);
   }
 
   public dispose(): void {
@@ -344,10 +375,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   private subscribeCallEvents(): void {
-    this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated);
-    this.call?.on('isMutedChanged', this.isMyMutedChanged);
-    this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
-    this.call?.on('idChanged', this.callIdChanged);
+    this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
+    this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
+    this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
+    this.call?.on('idChanged', this.callIdChanged.bind(this));
   }
 
   private unsubscribeCallEvents(): void {
@@ -355,10 +386,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       subscriber.unsubscribeAll();
     }
     this.participantSubscribers.clear();
-    this.call?.off('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated);
-    this.call?.off('isMutedChanged', this.isMyMutedChanged);
-    this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
-    this.call?.off('idChanged', this.callIdChanged);
+    this.call?.off('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
+    this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
+    this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
+    this.call?.off('idChanged', this.callIdChanged.bind(this));
   }
 
   private isMyMutedChanged = (): void => {
@@ -368,17 +399,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   };
 
-  public setPage = (page: CallCompositePage): void => {
+  public setPage(page: CallCompositePage): void {
     this.context.setPage(page);
-  };
+  }
 
-  private onRemoteParticipantsUpdated = ({
+  private onRemoteParticipantsUpdated({
     added,
     removed
   }: {
     added: RemoteParticipant[];
     removed: RemoteParticipant[];
-  }): void => {
+  }): void {
     if (added && added.length > 0) {
       this.emitter.emit('participantsJoined', added);
     }
@@ -398,18 +429,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       subscriber && subscriber.unsubscribeAll();
       this.participantSubscribers.delete(toFlatCommunicationIdentifier(participant.identifier));
     });
-  };
+  }
 
-  private isScreenSharingOnChanged = (): void => {
+  private isScreenSharingOnChanged(): void {
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
-  };
+  }
 
-  private callIdChanged = (): void => {
+  private callIdChanged(): void {
     this.context.setCallId(this.call?.id);
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
-    this.emitter.emit('callIdChanged', { callId: this.callIdChanged });
-  };
+    this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
+  }
 
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
