@@ -18,10 +18,15 @@ export const createUserAndThread = async (resourceConnectionString: string, disp
   }
 
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
-  const threadId = (await chatClient.createChatThread({ topic: 'DemoThread' })).chatThread?.id ?? '';
-  await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
-  });
+  const threadId =
+    (
+      await chatClient.createChatThread(
+        { topic: 'DemoThread' },
+        {
+          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
+        }
+      )
+    ).chatThread?.id ?? '';
 
   return displayNames.map((displayName, i) => ({
     userId: userAndTokens[i].user,

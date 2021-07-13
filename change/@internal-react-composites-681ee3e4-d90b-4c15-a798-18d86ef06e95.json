@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Drop internal export of getIdentifierFromToken",
-  "packageName": "@internal/react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

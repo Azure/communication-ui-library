@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add mute indicator to VideoGallery and VideoTile",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

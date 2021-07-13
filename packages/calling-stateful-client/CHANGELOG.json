@@ -2,6 +2,173 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Fri, 09 Jul 2021 20:41:33 GMT",
+      "tag": "calling-stateful-client_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "57a47760ac42c5cf1a961557e6a2fb64826a4f25",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "5645d1045230af3e91b94c5cb43ee7ba7403c8fa",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "a617f130ac4d0d90a19f85f0574a48ecad272cb3",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "3db1197f95bc433aa8242586cbb19290b639fc1b",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "c12dce6ff28eca13d342c6bcf02af166d58db709",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "3f968408551da1baf2bf49cb355c3830e150ebce",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update dev dependencies to satisify peer dependencies",
+            "author": "mail@jamesburnside.com",
+            "commit": "987fc4f5bfa468eb2675664ffd40d46b9a68795f",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Bump acs-ui-common to v1.0.0-beta.2",
+            "author": "jinan@microsoft.com",
+            "commit": "0049ecf2840d44340fa9a38fc724dfcab9a5c781",
+            "package": "calling-stateful-client"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Use objects for remote participants and video streams",
+            "author": "prprabhu@microsoft.com",
+            "commit": "2f0729eed634693aeafd82c983ace6f3f6a249b1",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "upgrading version of calling sdk to 1.1.0-beta.2",
+            "author": "alkwa@microsoft.com",
+            "commit": "2c6f314ad34a89fff189aa09eac469553867ecb4",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Replace maps with objects in CallClientState",
+            "author": "prprabhu@microsoft.com",
+            "commit": "7741fe7c1a7a9ccd145d2209959fd3296ece8cb1",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Clean up and update tsdoc",
+            "author": "allenhwang@microsoft.com",
+            "commit": "904492ba3a190e4a7073de2209a344c69a3fbe7c",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Store userId as CommunicationUserKind",
+            "author": "prprabhu@microsoft.com",
+            "commit": "f6eb99250f193b9bd0ea612bcc6bbfbec9b66eaf",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Fix maxListener warnings",
+            "author": "jinan@microsoft.com",
+            "commit": "3c3038970692557ec61f528d43ea50171f883c30",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Fix issue where state change is not triggered for some arrays",
+            "author": "allenhwang@microsoft.com",
+            "commit": "0a500fe41b505600fa82be361d47326f115323e2",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Fix stateful client selected camera assignment.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "07d255154d02fdde2bb507c7b757a89219bf7a54",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Bump up max listeners limit",
+            "author": "allenhwang@microsoft.com",
+            "commit": "dee92b4e1714152f8ebe06573d1d90051f1a22bb",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Deduplicating audio and video devices from SDK",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "fb5f67764a347ad4a52b243768d42720306f3c6c",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Fixed initial value selectedCamera when permissions have been granted.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "c8809c719c30deff0f635524f267835feff8699d",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Fixing LocalPreview Toggle bug",
+            "author": "anjulgarg@live.com",
+            "commit": "d5240c0fee53bd477ecfa67e5fa3f161efd2e3ca",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Use CommunicationIdentifierKind in stream utils",
+            "author": "allenhwang@microsoft.com",
+            "commit": "97d80e1b8713051ff2099e7e33d8acd784c1f324",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Update calling sdk to 1.1.0-beta1",
+            "author": "jinan@microsoft.com",
+            "commit": "1934937fb5d7a0112448388dd737984aa04afd56",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Use Array for unparentedViews",
+            "author": "prprabhu@microsoft.com",
+            "commit": "39b8464c9c3b9ba90621b9103995b9d8dc5cfb4a",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Make max listeners configurable",
+            "author": "allenhwang@microsoft.com",
+            "commit": "d5dbfa0ff9e61fdd728e399256adb7887e85fce0",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "14c1b30d6b058f9870c00668e03c1c427d33938f",
+            "package": "calling-stateful-client"
+          },
+          {
+            "comment": "Breaking: Make arguments to CreateStatefulCallClient optional",
+            "author": "prprabhu@microsoft.com",
+            "commit": "8b8f29cfc2e238b956e36b13d5fc1199c555ce70",
+            "package": "calling-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 16:16:28 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.0-beta.1",
       "version": "1.0.0-beta.1",

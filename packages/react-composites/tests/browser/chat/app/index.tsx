@@ -5,24 +5,28 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { ChatAdapter, createAzureCommunicationChatAdapter, ChatComposite } from '../../../../src';
+import { IDS } from '../../config';
 
-import { createUserAndThread } from './identity';
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
 
-const connectionString = process.env.CONNECTION_STRING;
+const displayName = params.displayName;
+const token = params.token;
+const endpointUrl = params.endpointUrl;
+const threadId = params.threadId;
+const userId = params.userId;
 
 function App(): JSX.Element {
-  const displayName = 'John Doe';
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
-      const data = await createUserAndThread(connectionString, 'Test Chat', [displayName]);
       setChatAdapter(
         await createAzureCommunicationChatAdapter(
-          data[0].userId,
-          data[0].token,
-          data[0].endpointUrl,
-          data[0].threadId,
+          { communicationUserId: userId },
+          token,
+          endpointUrl,
+          threadId,
           displayName
         )
       );
@@ -34,7 +38,11 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <>{chatAdapter && <ChatComposite adapter={chatAdapter} />}</>;
+  return (
+    <>
+      {chatAdapter && <ChatComposite identifiers={IDS} adapter={chatAdapter} options={{ showParticipantPane: true }} />}
+    </>
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

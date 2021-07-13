@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Disable start call button when microphone permission is denied",
-  "packageName": "@internal/react-composites",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

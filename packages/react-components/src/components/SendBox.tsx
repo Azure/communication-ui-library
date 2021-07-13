@@ -14,6 +14,7 @@ import {
 import { BaseCustomStylesProps } from '../types';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useLocale } from '../localization';
+import { useIdentifiers } from '../identifiers';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -108,6 +109,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
+  const ids = useIdentifiers();
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
@@ -176,6 +178,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     <Stack className={mergedRootStyle}>
       <div style={{ position: 'relative', padding: '0.1875rem' }}>
         <TextField
+          data-ui-id={ids.sendboxTextfield}
           multiline
           autoAdjustHeight
           multiple={false}

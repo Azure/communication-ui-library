@@ -260,5 +260,9 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
     styles
   );
 
-  return <Stack className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>{indicatorComponent}</Stack>;
+  return (
+    <Stack dir="ltr" className={mergeStyles(typingIndicatorContainerStyle, styles?.root)}>
+      {indicatorComponent}
+    </Stack>
+  );
 };
