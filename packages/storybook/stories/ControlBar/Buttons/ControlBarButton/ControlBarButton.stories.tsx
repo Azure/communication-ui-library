@@ -83,10 +83,16 @@ const ControlBarButtonStory = (): JSX.Element => {
 
   const iconChoice = radios(label, options, defaultValue);
   const icon = iconDict[iconChoice];
-  console.log(icon);
   const showLabels = boolean('Show Labels', true);
 
-  return <ControlBarButton onRenderIcon={() => icon} strings={{ label: iconChoice }} showLabel={showLabels} />;
+  return (
+    <ControlBarButton
+      onRenderIcon={() => icon}
+      strings={{ label: iconChoice }}
+      showLabel={showLabels}
+      labelKey={iconChoice}
+    />
+  );
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
