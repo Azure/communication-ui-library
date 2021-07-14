@@ -11,7 +11,7 @@ export type ContainerProps = {
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   showParticipants?: boolean;
-  showTopicHeader?: boolean;
+  showTopic?: boolean;
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
@@ -42,7 +42,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         <ChatComposite
           adapter={adapter}
           fluentTheme={props.fluentTheme}
-          options={{ showParticipantPane: props.showParticipants, showTopicHeader: props.showTopicHeader }}
+          options={{ showParticipantPane: props.showParticipants, showTopic: props.showTopic }}
         />
       ) : (
         <h3>Loading...</h3>

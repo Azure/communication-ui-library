@@ -40,10 +40,10 @@ export type ChatOptions = {
    */
   showParticipantPane?: boolean;
   /**
-   * Choose to show the topic header
+   * Choose to show the topic at the top of the chat
    * @defaultValue true
    */
-  showTopicHeader?: boolean;
+  showTopic?: boolean;
   /** Set a max width of the send box */ // TODO: we should remove this.
   sendBoxMaxLength?: number;
 };
@@ -59,7 +59,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
           <ChatScreen
             showParticipantPane={options?.showParticipantPane}
-            showTopicHeader={options?.showTopicHeader}
+            showTopic={options?.showTopic}
             sendBoxMaxLength={options?.sendBoxMaxLength}
             onRenderAvatar={onRenderAvatar}
             onRenderTypingIndicator={onRenderTypingIndicator}

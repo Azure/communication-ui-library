@@ -16,7 +16,7 @@ export const BasicExample: () => JSX.Element = () => {
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
     displayName: text('Display Name', '', 'Server Simulator'),
     showParticipants: boolean('Show Participants Pane', false, 'Server Simulator'),
-    showTopicHeader: boolean('Show Topic Header', true, 'Server Simulator')
+    showTopic: boolean('Show Topic', true, 'Server Simulator')
   });
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const BasicExample: () => JSX.Element = () => {
         setContainerProps({
           ...newProps,
           showParticipants: knobs.current.showParticipants,
-          showTopicHeader: knobs.current.showTopicHeader
+          showTopic: knobs.current.showTopic
         });
       }
     };
