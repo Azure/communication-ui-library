@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Participant Item Participant Item 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-81 body-0"
 >
   <div
-    className="css-82"
+    className="css-81"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -27,7 +27,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
         }
       >
         <div
-          className="css-73"
+          className="css-72"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -85,7 +85,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
             </div>
           </div>
           <div
-            className="ms-Stack css-76 css-20"
+            className="ms-Stack css-75 css-20"
           >
             <div
               className="ms-Stack css-21"
