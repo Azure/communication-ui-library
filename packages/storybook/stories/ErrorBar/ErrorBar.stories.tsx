@@ -36,14 +36,10 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const errorOptions: { [key in ErrorType]: ErrorType } = {
-  sendMessageGeneric: 'sendMessageGeneric'
-};
-
-export const SendMessageError = (): JSX.Element => {
+export const ErrorTypesExample = (): JSX.Element => {
   const theme = useTheme();
 
-  const errorType = radios('ErrorType', errorOptions, 'sendMessageGeneric');
+  const errorType = radios<ErrorType>('ErrorType', errorOptions, 'accessDenied');
   const [enabledState, setEnabledState] = useState<boolean>(true);
   const onClose = useCallback(() => {
     setEnabledState(false);
@@ -59,6 +55,37 @@ export const SendMessageError = (): JSX.Element => {
       })}
     >
       {enabledState ? <ErrorBar activeErrors={[errorType]} onDismissErrors={onClose} /> : <></>}
+    </div>
+  );
+};
+
+const errorOptions: { [key in ErrorType]: ErrorType } = {
+  unableToReachChatService: 'unableToReachChatService',
+  accessDenied: 'accessDenied',
+  notInThisThread: 'notInThisThread',
+  sendMessageNotInThisThread: 'sendMessageNotInThisThread',
+  sendMessageGeneric: 'sendMessageGeneric'
+};
+
+export const MultipleErrorsExample = (): JSX.Element => {
+  const theme = useTheme();
+
+  const [activeErrors, setActiveErrors] = useState<ErrorType[]>(['accessDenied', 'notInThisThread']);
+  const onClose = (toRemove: ErrorType[]) => {
+    const toRemoveSet = new Set(toRemove);
+    setActiveErrors(activeErrors.filter((e) => !toRemoveSet.has(e)));
+  };
+
+  return (
+    <div
+      className={mergeStyles({
+        background: theme.palette.neutralLighterAlt,
+        padding: '2em',
+        width: '75%',
+        height: '50%'
+      })}
+    >
+      <ErrorBar activeErrors={activeErrors} onDismissErrors={onClose} />
     </div>
   );
 };
