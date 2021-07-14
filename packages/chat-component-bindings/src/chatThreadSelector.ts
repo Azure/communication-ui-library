@@ -46,6 +46,7 @@ export const chatThreadSelector = createSelector(
         .filter(
           (message) =>
             message.type.toLowerCase() === 'text' ||
+            message.type.toLowerCase() === 'html' ||
             message.type.toLowerCase() === 'richtext/html' ||
             message.clientMessageId !== undefined
         )
