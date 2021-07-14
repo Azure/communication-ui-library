@@ -6,6 +6,13 @@ import { OptionsButton, OptionsButtonProps } from './OptionsButton';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { createTestLocale, mountWithLocalization } from './utils/testUtils';
+import { setIconOptions } from '@fluentui/react';
+
+// Suppress icon warnings for tests. Icons are fetched from CDN which we do not want to perform during tests.
+// More information: https://github.com/microsoft/fluentui/wiki/Using-icons#test-scenarios
+setIconOptions({
+  disableWarnings: true
+});
 
 Enzyme.configure({ adapter: new Adapter() });
 
