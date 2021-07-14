@@ -15,7 +15,7 @@ export const BasicExample: () => JSX.Element = () => {
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
     displayName: text('Display Name', '', 'Server Simulator'),
-    showParticipants: boolean('Show Participants Pane', false, 'Server Simulator'),
+    showParticipants: boolean('Show Participants Pane', true, 'Server Simulator'),
     showTopic: boolean('Show Topic', true, 'Server Simulator')
   });
 
