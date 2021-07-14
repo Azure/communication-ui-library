@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video Gallery 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-81 body-0"
 >
   <div
-    className="css-82"
+    className="css-81"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -29,7 +29,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
         }
       >
         <div
-          className="ms-Stack css-79 css-1"
+          className="ms-Stack css-78 css-1"
         >
           <div
             className="ms-Stack css-7"
@@ -66,7 +66,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <div
-              className="ms-Stack css-80 css-26"
+              className="ms-Stack css-79 css-26"
             >
               <div
                 className="ms-Stack css-27"
