@@ -162,6 +162,7 @@ export interface ErrorBarStrings {
     notInThisThread: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
+    unableToReachChatService: string;
 }
 
 // @public
