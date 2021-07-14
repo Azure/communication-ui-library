@@ -29,6 +29,7 @@ import {
 
 export type ChatScreenProps = {
   showParticipantPane?: boolean;
+  showTopicHeader?: boolean;
   sendBoxMaxLength?: number;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
@@ -36,7 +37,14 @@ export type ChatScreenProps = {
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onRenderAvatar, sendBoxMaxLength, onRenderMessage, onRenderTypingIndicator, showParticipantPane } = props;
+  const {
+    onRenderAvatar,
+    sendBoxMaxLength,
+    onRenderMessage,
+    onRenderTypingIndicator,
+    showParticipantPane,
+    showTopicHeader
+  } = props;
 
   const pixelToRemConvertRatio = 16;
   const defaultNumberOfChatMessagesToReload = 5;
@@ -72,7 +80,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   return (
     <Stack className={chatContainer} grow>
-      <ChatHeader {...headerProps} />
+      {!!showTopicHeader && <ChatHeader {...headerProps} />}
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
           <ThreadStatus {...threadStatusProps} />

@@ -15,7 +15,8 @@ export const BasicExample: () => JSX.Element = () => {
   const knobs = useRef({
     connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
     displayName: text('Display Name', '', 'Server Simulator'),
-    showParticipants: boolean('Show Participants Pane', false, 'Server Simulator')
+    showParticipants: boolean('Show Participants Pane', false, 'Server Simulator'),
+    showTopicHeader: boolean('Show Topic Header', true, 'Server Simulator')
   });
 
   useEffect(() => {
@@ -23,7 +24,11 @@ export const BasicExample: () => JSX.Element = () => {
       if (knobs.current.connectionString && knobs.current.displayName) {
         const newProps = await createUserAndThread(knobs.current.connectionString, knobs.current.displayName);
         await addParrotBotToThread(knobs.current.connectionString, newProps.token, newProps.threadId, messageArray);
-        setContainerProps({ ...newProps, showParticipants: knobs.current.showParticipants });
+        setContainerProps({
+          ...newProps,
+          showParticipants: knobs.current.showParticipants,
+          showTopicHeader: knobs.current.showTopicHeader
+        });
       }
     };
     fetchToken();
