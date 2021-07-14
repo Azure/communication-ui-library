@@ -11,7 +11,7 @@ import { test, expect } from '@playwright/test';
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
-const stubTimestamps = (page: Page): void => {
+const stubMessageTimestamps = (page: Page): void => {
   page.evaluate((messageTimestampId) => {
     Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
   }, messageTimestampId);
@@ -73,37 +73,37 @@ test.describe('Chat Composite E2E Tests', () => {
   test('composite pages load completely', async () => {
     for (const idx in pages) {
       await compositeLoaded(pages[idx]);
-      expect(await pages[idx].screenshot()).toMatchSnapshot(`1-page-${idx}-chat-screen.png`);
+      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
     }
   });
 
-  test('can send message', async () => {
+  test('page[0] can send message', async () => {
     const page = pages[0];
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
-    stubTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('2-send-message.png');
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('send-message.png');
   });
 
-  test('can receive message', async () => {
+  test('page[1] can receive message', async () => {
     const page = pages[1];
     await page.bringToFront();
     await page.waitForSelector(`[data-ui-status="delivered"]`);
-    stubTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('3-receive-message.png');
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('receive-message.png');
   });
 
-  test('read message has a viewed status', async () => {
+  test('page[0] sent message has a viewed status', async () => {
     const page = pages[0];
     await page.bringToFront();
     await page.waitForSelector(`[data-ui-status="seen"]`);
-    stubTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('4-read-message-status.png');
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('read-message-status.png');
   });
 
-  test('can view typing indicator', async () => {
+  test('page[0] can view typing indicator', async () => {
     const page = pages[1];
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'I am not superstitious. Just a little stitious.');
@@ -111,15 +111,21 @@ test.describe('Chat Composite E2E Tests', () => {
     await pages[0].waitForSelector(dataUiId(IDS.typingIndicator));
     const el = await pages[0].$(dataUiId(IDS.typingIndicator));
     expect(await el?.innerHTML()).toContain(participants[1]);
-    expect(await pages[0].screenshot()).toMatchSnapshot('5-typing-indicator.png');
+    expect(await pages[0].screenshot()).toMatchSnapshot('typing-indicator.png');
   });
 
-  test('typing indicator disappears after 12 seconds', async () => {
+  test('typing indicator disappears after 10 seconds on page[0]', async () => {
     const page = pages[0];
     await page.bringToFront();
-    await page.waitForTimeout(12000);
+    // Advance time by 10 seconds to make typingindicator go away
+    await page.evaluate(() => {
+      const currentDate = new Date();
+      currentDate.setSeconds(currentDate.getSeconds() + 10);
+      Date.now = () => currentDate.getTime();
+    });
+    await page.waitForTimeout(1000);
     const el = await page.$(dataUiId(IDS.typingIndicator));
     expect(await el?.innerHTML()).toBeFalsy();
-    expect(await page.screenshot()).toMatchSnapshot('6-typing-indicator-disappears.png');
+    expect(await page.screenshot()).toMatchSnapshot('typing-indicator-disappears.png');
   });
 });
