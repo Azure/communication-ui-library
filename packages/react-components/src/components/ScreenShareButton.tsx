@@ -53,8 +53,8 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
     <ControlBarButton
       {...props}
       onClick={props.onToggleScreenShare ?? props.onClick}
-      onRenderOnIcon={onRenderOnIcon}
-      onRenderOffIcon={onRenderOffIcon}
+      onRenderOnIcon={props.onRenderOnIcon ?? onRenderOnIcon}
+      onRenderOffIcon={props.onRenderOnIcon ?? onRenderOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'screenShareButtonLabel'}
     />

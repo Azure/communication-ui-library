@@ -53,7 +53,7 @@ export interface ControlBarButtonProps extends IButtonProps {
 }
 
 /**
- * Default button styled for the Control Bar.
+ * Default button styled for the Control Bar. This can be used to create custom buttons that are styled the same as other buttons provided by the UI Library.
  */
 export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
   const {
@@ -66,13 +66,13 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
     onRenderOffIcon,
     strings
   } = props;
-  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
 
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {
+      const labelText = props?.text ?? strings?.label ?? (props?.checked ? strings?.onLabel : strings?.offLabel);
       return (
         <Label key={labelKey} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {props?.text ?? strings?.label ?? props?.checked ? strings?.onLabel : strings?.offLabel}
+          {labelText}
         </Label>
       );
     },
@@ -86,6 +86,7 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
     [onRenderOnIcon, onRenderOffIcon]
   );
 
+  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
   return (
     <DefaultButton
       {...props}

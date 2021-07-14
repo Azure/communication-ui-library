@@ -44,7 +44,7 @@ const defaultRenderIcon = (): JSX.Element => <CallEnd20Filled primaryFill="curre
  * @param props - of type EndCallButtonProps
  */
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
-  const { styles, onRenderIcon } = props;
+  const { styles } = props;
 
   const localeStrings = useLocale().strings.endCallButton;
   const strings = { ...localeStrings, ...props.strings };
@@ -71,7 +71,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
       {...props}
       onClick={props.onHangUp ?? props.onClick}
       styles={componentStyles}
-      onRenderOnIcon={onRenderIcon ?? defaultRenderIcon}
+      onRenderIcon={props.onRenderIcon ?? defaultRenderIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'endCallButtonLabel'}
     />
