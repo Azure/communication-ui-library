@@ -32,6 +32,11 @@ export interface ControlBarButtonProps extends IButtonProps {
   showLabel?: boolean;
 
   /**
+   * Key to use for the Label component
+   */
+  labelKey?: string;
+
+  /**
    * Optional strings to override in component.
    */
   strings?: ControlBarButtonStrings;
@@ -51,20 +56,27 @@ export interface ControlBarButtonProps extends IButtonProps {
  * Default button styled for the Control Bar.
  */
 export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
-  const { showLabel = false, styles, onRenderText, onRenderIcon, onRenderOnIcon, onRenderOffIcon, strings } = props;
+  const {
+    showLabel = false,
+    labelKey,
+    styles,
+    onRenderText,
+    onRenderIcon,
+    onRenderOnIcon,
+    onRenderOffIcon,
+    strings
+  } = props;
   const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
-  const onLabel = props.text ?? strings?.label ?? strings?.onLabel;
-  const offLabel = props.text ?? strings?.label ?? strings?.offLabel;
 
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {
       return (
-        <Label key={Math.random()} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {props?.checked ? onLabel : offLabel}
+        <Label key={labelKey} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+          {props?.text ?? strings?.label ?? props?.checked ? strings?.onLabel : strings?.offLabel}
         </Label>
       );
     },
-    [onLabel, offLabel]
+    [labelKey, strings?.label, strings?.offLabel, strings?.onLabel]
   );
 
   const defaultRenderIcon = useCallback(
