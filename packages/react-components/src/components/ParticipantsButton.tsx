@@ -80,7 +80,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings?: ParticipantsButtonStrings;
+  strings?: Partial<ParticipantsButtonStrings>;
 }
 
 const defaultRenderIcon = (): JSX.Element => {
@@ -203,6 +203,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       menuIconProps={{ hidden: true }}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       strings={strings}
+      labelKey={props.labelKey ?? 'participantsButtonLabel'}
     />
   );
 };

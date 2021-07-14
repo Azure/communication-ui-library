@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonProps } from '@fluentui/react';
 import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
-import { ControlBarButton } from './ControlBarButton';
+import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
 const defaultLocalVideoViewOption = {
   scalingMode: 'Crop',
@@ -26,7 +25,7 @@ export interface CameraButtonStrings {
 /**
  * Props for CameraButton component
  */
-export interface CameraButtonProps extends IButtonProps {
+export interface CameraButtonProps extends ControlBarButtonProps {
   /**
    * Whether the label is displayed or not.
    * @defaultValue `false`
@@ -47,7 +46,7 @@ export interface CameraButtonProps extends IButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings?: CameraButtonStrings;
+  strings?: Partial<CameraButtonStrings>;
 }
 
 const onRenderOnIcon = (): JSX.Element => <Video20Filled key={'videoIconKey'} primaryFill="currentColor" />;
@@ -64,8 +63,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const [waitForCamera, setWaitForCamera] = useState(false);
 
   const localeStrings = useLocale().strings.cameraButton;
-  const onLabel = props.strings?.onLabel ?? localeStrings.onLabel;
-  const offLabel = props.strings?.offLabel ?? localeStrings.offLabel;
+  const strings = { ...localeStrings, ...props.strings };
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
@@ -83,7 +81,8 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       onClick={onToggleCamera ? onToggleClick : props.onClick}
       onRenderOnIcon={onRenderOnIcon}
       onRenderOffIcon={onRenderOffIcon}
-      strings={{ onLabel, offLabel }}
+      strings={strings}
+      labelKey={props.labelKey ?? 'cameraButtonLabel'}
     />
   );
 };

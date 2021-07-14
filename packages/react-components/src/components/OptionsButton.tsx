@@ -60,11 +60,6 @@ export interface OptionsButtonStrings {
  */
 export interface OptionsButtonProps extends ControlBarButtonProps {
   /**
-   * Whether the label is displayed or not.
-   * @defaultValue `false`
-   */
-  showLabel?: boolean;
-  /**
    * Available microphones for selection
    */
   microphones?: OptionsDevice[];
@@ -235,6 +230,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
       menuIconProps={{ hidden: true }}
       onRenderIcon={onRenderIcon ?? defaultRenderIcon}
       strings={strings}
+      labelKey={props.labelKey ?? 'optionsButtonLabel'}
     />
   );
 };

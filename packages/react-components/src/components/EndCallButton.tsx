@@ -11,6 +11,16 @@ import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
 /**
+ * Strings of EndCallButton that can be overridden
+ */
+export interface EndCallButtonStrings {
+  /**
+   * Label of button
+   */
+  label: string;
+}
+
+/**
  * Props for EndCallButton component
  */
 export interface EndCallButtonProps extends ControlBarButtonProps {
@@ -19,6 +29,11 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
    * Maps directly to the `onClick` property.
    */
   onHangUp?: () => Promise<void>;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: EndCallButtonStrings;
 }
 
 const defaultRenderIcon = (): JSX.Element => <CallEnd20Filled primaryFill="currentColor" key={'callEndIconKey'} />;
@@ -58,6 +73,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
       styles={componentStyles}
       onRenderOnIcon={onRenderIcon ?? defaultRenderIcon}
       strings={strings}
+      labelKey={props.labelKey ?? 'endCallButtonLabel'}
     />
   );
 };

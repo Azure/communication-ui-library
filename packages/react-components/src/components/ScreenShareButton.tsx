@@ -7,6 +7,16 @@ import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
 /**
+ * Strings of ScreenShareButton that can be overridden
+ */
+export interface ScreenShareButtonStrings {
+  /** Label when button is on. */
+  onLabel: string;
+  /** Label when button is off. */
+  offLabel: string;
+}
+
+/**
  * Props for ScreenShareButton component
  */
 export interface ScreenShareButtonProps extends ControlBarButtonProps {
@@ -15,6 +25,11 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleScreenShare?: () => Promise<void>;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<ScreenShareButtonStrings>;
 }
 
 const onRenderOnIcon = (): JSX.Element => (
@@ -41,6 +56,7 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
       onRenderOnIcon={onRenderOnIcon}
       onRenderOffIcon={onRenderOffIcon}
       strings={strings}
+      labelKey={props.labelKey ?? 'screenShareButtonLabel'}
     />
   );
 };

@@ -7,7 +7,7 @@ import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlB
 
 export interface ControlBarButtonStrings {
   /**
-   * Label of the button. This overrides onLabel or offLabel.
+   * Label of the button. This supersedes onLabel or offLabel if used.
    */
   label?: string;
   /**
@@ -59,7 +59,7 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
   const defaultRenderText = useCallback(
     (props?: IButtonProps): JSX.Element => {
       return (
-        <Label className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+        <Label key={Math.random()} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
           {props?.checked ? onLabel : offLabel}
         </Label>
       );

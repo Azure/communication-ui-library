@@ -7,6 +7,16 @@ import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
 /**
+ * Strings of MicrophoneButton that can be overridden
+ */
+export interface MicrophoneButtonStrings {
+  /** Label when button is on. */
+  onLabel: string;
+  /** Label when button is off. */
+  offLabel: string;
+}
+
+/**
  * Props for MicrophoneButton component
  */
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
@@ -15,6 +25,11 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Maps directly to the `onClick` property.
    */
   onToggleMicrophone?: () => Promise<void>;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<MicrophoneButtonStrings>;
 }
 
 const onRenderOnIcon = (): JSX.Element => <MicOn20Filled primaryFill="currentColor" key={'microphoneIconKey'} />;
@@ -35,6 +50,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       onRenderOnIcon={onRenderOnIcon}
       onRenderOffIcon={onRenderOffIcon}
       strings={strings}
+      labelKey={props.labelKey ?? 'microphoneButtonLabel'}
     />
   );
 };
