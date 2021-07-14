@@ -30,6 +30,12 @@ const getDocs: () => JSX.Element = () => {
         Similar to other UI components in this library, `ErrorBarProps` accepts all strings shown on the UI as a
         `strings` field. The `activeErrors` field selects from these strings to show in the `ErrorBar` UI.
       </Description>
+      <Subheading>Multiple errors</Subheading>
+      <Description>
+        More than one error can occur at the same time. The `ErrorBar` component can show multiple active errors. To
+        avoid confusing the user, it is important to be mindful to limit the total number of errors that are shown
+        together.
+      </Description>
       <Heading>ErrorBar Props</Heading>
       <Props of={ErrorBar} />
     </>
