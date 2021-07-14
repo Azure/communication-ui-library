@@ -7,9 +7,9 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
-import { ErrorBar } from '@internal/react-components';
+import { ErrorBar, ErrorType } from '@internal/react-components';
 import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
+import { radios } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useCallback, useState } from 'react';
 import { mergeStyles, useTheme } from '@fluentui/react';
@@ -27,7 +27,7 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Localization</Subheading>
       <Description>
         Similar to other UI components in this library, `ErrorBarProps` accepts all strings shown on the UI as a
-        `strings` field. The active error selects one of these strings to show in the `ErrorBar` UI.
+        `strings` field. The `activeErrors` field selects from these strings to show in the `ErrorBar` UI.
       </Description>
       <Heading>ErrorBar Props</Heading>
       <Props of={ErrorBar} />
@@ -35,11 +35,15 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
+const errorOptions: { [key in ErrorType]: ErrorType } = {
+  sendMessageGeneric: 'sendMessageGeneric'
+};
+
 export const SendMessageError = (): JSX.Element => {
   const theme = useTheme();
 
-  const enabled = boolean('Sending message failed', true);
-  const [enabledState, setEnabledState] = useState<boolean>(enabled);
+  const errorType = radios('ErrorType', errorOptions, 'sendMessageGeneric');
+  const [enabledState, setEnabledState] = useState<boolean>(true);
   const onClose = useCallback(() => {
     setEnabledState(false);
   }, [setEnabledState]);
@@ -53,7 +57,7 @@ export const SendMessageError = (): JSX.Element => {
         height: '50%'
       })}
     >
-      {enabledState ? <ErrorBar activeErrors={['sendMessageGeneric']} onDismissErrors={onClose} /> : <></>}
+      {enabledState ? <ErrorBar activeErrors={[errorType]} onDismissErrors={onClose} /> : <></>}
     </div>
   );
 };
