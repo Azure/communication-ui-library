@@ -7,6 +7,7 @@ dependencies:
   '@rush-temp/chat': file:projects/chat.tgz
   '@rush-temp/chat-component-bindings': file:projects/chat-component-bindings.tgz
   '@rush-temp/chat-stateful-client': file:projects/chat-stateful-client.tgz
+  '@rush-temp/check-treeshaking': file:projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:projects/communication-react.tgz
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
@@ -5947,6 +5948,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2J0nE95rHXHyQ24cWjMKJ1tqB/ds8z/cyeOZxJhcb+rW+SQASVjuznUSmdz5GpVJTzU8JkhYut0D3siFDD6wsA==
+  /@webpack-cli/configtest/1.0.4_webpack-cli@4.7.2+webpack@4.46.0:
+    dependencies:
+      webpack: 4.46.0_webpack-cli@4.7.2
+      webpack-cli: 4.7.2_webpack@4.46.0
+    dev: false
+    peerDependencies:
+      webpack: 4.x.x || 5.x.x
+      webpack-cli: 4.x.x
+    resolution:
+      integrity: sha512-cs3XLy+UcxiP6bj0A6u7MLLuwdXJ1c3Dtc0RkKg+wiI1g/Ti1om8+/2hc2A2B60NbBNAbMgyBMHvyymWm/j4wQ==
   /@webpack-cli/configtest/1.0.4_webpack-cli@4.7.2+webpack@5.38.1:
     dependencies:
       webpack: 5.38.1_webpack-cli@4.7.2
@@ -5981,7 +5992,7 @@ packages:
       integrity: sha512-4vSVUiOPJLmr45S8rMGy7WDvpWxfFxfP/Qx/cxZFCfvoypTYpPPL1X8VIZMe0WTA+Jr7blUxwUSEZNkjoMTgSw==
   /@webpack-cli/serve/1.5.1_webpack-cli@4.7.2:
     dependencies:
-      webpack-cli: 4.7.2_webpack@5.38.1
+      webpack-cli: 4.7.2_webpack@4.46.0
     dev: false
     peerDependencies:
       webpack-cli: 4.x.x
@@ -17503,7 +17514,7 @@ packages:
       serialize-javascript: 4.0.0
       source-map: 0.6.1
       terser: 4.8.0
-      webpack: 4.46.0
+      webpack: 4.46.0_webpack-cli@4.7.2
       webpack-sources: 1.4.3
       worker-farm: 1.7.0
     dev: false
@@ -18561,6 +18572,43 @@ packages:
         optional: true
     resolution:
       integrity: sha512-mEoLmnmOIZQNiRl0ebnjzQ74Hk0iKS5SiEEnpq3dRezoyR3yPaeQZCMCe+db4524pj1Pd5ghZXjT41KLzIhSLw==
+  /webpack-cli/4.7.2_webpack@4.46.0:
+    dependencies:
+      '@discoveryjs/json-ext': 0.5.3
+      '@webpack-cli/configtest': 1.0.4_webpack-cli@4.7.2+webpack@4.46.0
+      '@webpack-cli/info': 1.3.0_webpack-cli@4.7.2
+      '@webpack-cli/serve': 1.5.1_webpack-cli@4.7.2
+      colorette: 1.2.2
+      commander: 7.2.0
+      execa: 5.1.1
+      fastest-levenshtein: 1.0.12
+      import-local: 3.0.2
+      interpret: 2.2.0
+      rechoir: 0.7.0
+      v8-compile-cache: 2.3.0
+      webpack: 4.46.0_webpack-cli@4.7.2
+      webpack-merge: 5.8.0
+    dev: false
+    engines:
+      node: '>=10.13.0'
+    hasBin: true
+    peerDependencies:
+      '@webpack-cli/generators': '*'
+      '@webpack-cli/migrate': '*'
+      webpack: 4.x.x || 5.x.x
+      webpack-bundle-analyzer: '*'
+      webpack-dev-server: '*'
+    peerDependenciesMeta:
+      '@webpack-cli/generators':
+        optional: true
+      '@webpack-cli/migrate':
+        optional: true
+      webpack-bundle-analyzer:
+        optional: true
+      webpack-dev-server:
+        optional: true
+    resolution:
+      integrity: sha512-mEoLmnmOIZQNiRl0ebnjzQ74Hk0iKS5SiEEnpq3dRezoyR3yPaeQZCMCe+db4524pj1Pd5ghZXjT41KLzIhSLw==
   /webpack-cli/4.7.2_webpack@5.38.1:
     dependencies:
       '@discoveryjs/json-ext': 0.5.3
@@ -18764,6 +18812,46 @@ packages:
       tapable: 1.1.3
       terser-webpack-plugin: 1.4.5_webpack@4.46.0
       watchpack: 1.7.5
+      webpack-sources: 1.4.3
+    dev: false
+    engines:
+      node: '>=6.11.5'
+    hasBin: true
+    peerDependencies:
+      webpack-cli: '*'
+      webpack-command: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+      webpack-command:
+        optional: true
+    resolution:
+      integrity: sha512-6jJuJjg8znb/xRItk7bkT0+Q7AHCYjjFnvKIWQPkNIOyRqoCGvkOs0ipeQzrqz4l5FtN5ZI/ukEHroeX/o1/5Q==
+  /webpack/4.46.0_webpack-cli@4.7.2:
+    dependencies:
+      '@webassemblyjs/ast': 1.9.0
+      '@webassemblyjs/helper-module-context': 1.9.0
+      '@webassemblyjs/wasm-edit': 1.9.0
+      '@webassemblyjs/wasm-parser': 1.9.0
+      acorn: 6.4.2
+      ajv: 6.12.6
+      ajv-keywords: 3.5.2_ajv@6.12.6
+      chrome-trace-event: 1.0.3
+      enhanced-resolve: 4.5.0
+      eslint-scope: 4.0.3
+      json-parse-better-errors: 1.0.2
+      loader-runner: 2.4.0
+      loader-utils: 1.4.0
+      memory-fs: 0.4.1
+      micromatch: 3.1.10
+      mkdirp: 0.5.5
+      neo-async: 2.6.2
+      node-libs-browser: 2.2.1
+      schema-utils: 1.0.0
+      tapable: 1.1.3
+      terser-webpack-plugin: 1.4.5_webpack@4.46.0
+      watchpack: 1.7.5
+      webpack-cli: 4.7.2_webpack@4.46.0
       webpack-sources: 1.4.3
     dev: false
     engines:
@@ -19497,6 +19585,22 @@ packages:
       integrity: sha512-NlqODS9/QLjtXMd14lQsEYM1/cuSOcrYauytt5/9hotwa3qtsNxaknxZqzD/UygYWiPYG8jpDAp85aZTGGc8Bg==
       tarball: file:projects/chat.tgz
     version: 0.0.0
+  file:projects/check-treeshaking.tgz:
+    dependencies:
+      eslint: 7.28.0
+      eslint-config-prettier: 6.15.0_eslint@7.28.0
+      eslint-plugin-header: 3.1.1_eslint@7.28.0
+      eslint-plugin-import: 2.22.1_eslint@7.28.0
+      eslint-plugin-prettier: 3.4.0_9ffac69d7e0f4c6fe45d155d53d9fe41
+      prettier: 2.3.1
+      webpack: 4.46.0_webpack-cli@4.7.2
+      webpack-cli: 4.7.2_webpack@4.46.0
+    dev: false
+    name: '@rush-temp/check-treeshaking'
+    resolution:
+      integrity: sha512-U+/qvpI1iETshQThPL+jYFkVKK5qn0+bmxwfoAwNTHpmF8SyQ2DkEkZQM6Rk2BbFz7IkzALEYpsTqqDfzK0Giw==
+      tarball: file:projects/check-treeshaking.tgz
+    version: 0.0.0
   file:projects/communication-react.tgz:
     dependencies:
       '@azure/communication-calling': 1.2.0-beta.1
@@ -19910,6 +20014,7 @@ specifiers:
   '@rush-temp/chat': file:./projects/chat.tgz
   '@rush-temp/chat-component-bindings': file:./projects/chat-component-bindings.tgz
   '@rush-temp/chat-stateful-client': file:./projects/chat-stateful-client.tgz
+  '@rush-temp/check-treeshaking': file:./projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:./projects/communication-react.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
