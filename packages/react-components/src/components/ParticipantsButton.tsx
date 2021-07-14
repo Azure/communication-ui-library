@@ -83,7 +83,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
   strings?: Partial<ParticipantsButtonStrings>;
 }
 
-const defaultRenderIcon = (): JSX.Element => {
+const onRenderPeopleIcon = (): JSX.Element => {
   return <People20Filled key={'participantsIconKey'} primaryFill="currentColor" />;
 };
 
@@ -201,7 +201,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       {...props}
       menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
-      onRenderIcon={onRenderIcon ?? defaultRenderIcon}
+      onRenderIcon={onRenderIcon ?? onRenderPeopleIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'participantsButtonLabel'}
     />

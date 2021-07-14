@@ -49,8 +49,10 @@ export interface CameraButtonProps extends ControlBarButtonProps {
   strings?: Partial<CameraButtonStrings>;
 }
 
-const onRenderOnIcon = (): JSX.Element => <Video20Filled key={'videoIconKey'} primaryFill="currentColor" />;
-const onRenderOffIcon = (): JSX.Element => <VideoOff20Filled key={'videoOffIconKey'} primaryFill="currentColor" />;
+const onRenderCameraOnIcon = (): JSX.Element => <Video20Filled key={'videoIconKey'} primaryFill="currentColor" />;
+const onRenderCameraOffIcon = (): JSX.Element => (
+  <VideoOff20Filled key={'videoOffIconKey'} primaryFill="currentColor" />
+);
 
 /**
  * `CameraButton` allows you to easily create a component for rendering a camera button.
@@ -79,8 +81,8 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       {...props}
       disabled={props.disabled || waitForCamera}
       onClick={onToggleCamera ? onToggleClick : props.onClick}
-      onRenderOnIcon={onRenderOnIcon}
-      onRenderOffIcon={onRenderOffIcon}
+      onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
+      onRenderOffIcon={props.onRenderOnIcon ?? onRenderCameraOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'cameraButtonLabel'}
     />

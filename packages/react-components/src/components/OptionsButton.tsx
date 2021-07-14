@@ -204,7 +204,7 @@ const generateDefaultMenuProps = (
   return defaultMenuProps;
 };
 
-const defaultRenderIcon = (): JSX.Element => (
+const onRenderOptionsIcon = (): JSX.Element => (
   <MoreHorizontal20Filled primaryFill="currentColor" key={'optionsIconKey'} />
 );
 
@@ -228,7 +228,7 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
       {...props}
       menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
-      onRenderIcon={onRenderIcon ?? defaultRenderIcon}
+      onRenderIcon={onRenderIcon ?? onRenderOptionsIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'optionsButtonLabel'}
     />

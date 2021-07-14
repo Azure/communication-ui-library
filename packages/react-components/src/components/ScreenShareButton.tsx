@@ -32,10 +32,10 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
   strings?: Partial<ScreenShareButtonStrings>;
 }
 
-const onRenderOnIcon = (): JSX.Element => (
+const onRenderScreenShareOnIcon = (): JSX.Element => (
   <ShareScreenStop20Filled key={'screenShareIconKey'} primaryFill="currentColor" />
 );
-const onRenderOffIcon = (): JSX.Element => (
+const onRenderScreenShareOffIcon = (): JSX.Element => (
   <ShareScreenStart20Filled key={'screenShareBorderedIconKey'} primaryFill="currentColor" />
 );
 
@@ -53,8 +53,8 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
     <ControlBarButton
       {...props}
       onClick={props.onToggleScreenShare ?? props.onClick}
-      onRenderOnIcon={props.onRenderOnIcon ?? onRenderOnIcon}
-      onRenderOffIcon={props.onRenderOnIcon ?? onRenderOffIcon}
+      onRenderOnIcon={props.onRenderOnIcon ?? onRenderScreenShareOnIcon}
+      onRenderOffIcon={props.onRenderOnIcon ?? onRenderScreenShareOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'screenShareButtonLabel'}
     />

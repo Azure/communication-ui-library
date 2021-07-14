@@ -36,7 +36,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   strings?: EndCallButtonStrings;
 }
 
-const defaultRenderIcon = (): JSX.Element => <CallEnd20Filled primaryFill="currentColor" key={'callEndIconKey'} />;
+const onRenderEndCallIcon = (): JSX.Element => <CallEnd20Filled primaryFill="currentColor" key={'callEndIconKey'} />;
 
 /**
  * `EndCallButton` allows you to easily create a component for rendering a end call button. It can be used in your ControlBar component for example.
@@ -71,7 +71,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
       {...props}
       onClick={props.onHangUp ?? props.onClick}
       styles={componentStyles}
-      onRenderIcon={props.onRenderIcon ?? defaultRenderIcon}
+      onRenderIcon={props.onRenderIcon ?? onRenderEndCallIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'endCallButtonLabel'}
     />

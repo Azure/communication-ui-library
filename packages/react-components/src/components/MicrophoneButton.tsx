@@ -32,8 +32,10 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
   strings?: Partial<MicrophoneButtonStrings>;
 }
 
-const onRenderOnIcon = (): JSX.Element => <MicOn20Filled primaryFill="currentColor" key={'microphoneIconKey'} />;
-const onRenderOffIcon = (): JSX.Element => <MicOff20Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />;
+const onRenderMicOnIcon = (): JSX.Element => <MicOn20Filled primaryFill="currentColor" key={'microphoneIconKey'} />;
+const onRenderMicOffIcon = (): JSX.Element => (
+  <MicOff20Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
+);
 
 /**
  * `MicrophoneButton` allows you to easily create a component for rendering an audio button. It can be used in your ControlBar component for example.
@@ -47,8 +49,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     <ControlBarButton
       {...props}
       onClick={props.onToggleMicrophone ?? props.onClick}
-      onRenderOnIcon={onRenderOnIcon}
-      onRenderOffIcon={onRenderOffIcon}
+      onRenderOnIcon={props.onRenderOnIcon ?? onRenderMicOnIcon}
+      onRenderOffIcon={props.onRenderOffIcon ?? onRenderMicOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'microphoneButtonLabel'}
     />
