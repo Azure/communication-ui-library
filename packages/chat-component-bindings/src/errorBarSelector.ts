@@ -40,8 +40,12 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   if (!specificSendMessageErrorSeen && latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
     activeErrors.push('sendMessageGeneric');
   }
-  return { activeErrors: activeErrors };
+
+  // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
+  return { activeErrors: activeErrors.splice(maxErrorCount) };
 });
+
+const maxErrorCount = 3;
 
 const accessErrorTargets: ChatErrorTargets[] = [
   'ChatThreadClient.getProperties',
