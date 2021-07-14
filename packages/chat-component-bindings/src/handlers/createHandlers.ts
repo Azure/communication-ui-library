@@ -65,7 +65,7 @@ export const createDefaultChatHandlers = memoizeOne(
         return isAllChatMessagesLoaded;
       },
       onDismissErrors: (errorTypes: ErrorType[]) => {
-        let targets: ChatErrorTargets[] = [];
+        const targets: ChatErrorTargets[] = [];
         for (const errorType of errorTypes) {
           switch (errorType) {
             case 'sendMessageGeneric':
