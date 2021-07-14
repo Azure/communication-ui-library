@@ -29,15 +29,6 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
           props.displayName
         );
 
-        // [xkcd] This is added to help figure out error plumbing.
-        // Remove before submitting.
-        newAdapter.on('error', (event: { operation: string; error: Error }) => {
-          const { operation, error } = event;
-          console.log(`${operation} failed: `);
-          console.log(error);
-          console.log(JSON.stringify(error));
-        });
-
         setAdapter(newAdapter);
       };
       createAdapter();
