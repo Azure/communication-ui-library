@@ -1,8 +1,42 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Fri, 21 May 2021 16:16:28 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/react-components_v1.0.0-beta.2)
+
+Fri, 09 Jul 2021 20:41:33 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/react-components_v1.0.0-beta.1..react-components_v1.0.0-beta.2)
+
+### Changes
+
+- Updated SendBox component based on new visual design. ([PR #398](https://github.com/azure/communication-ui-library/pull/398) by miguelgamis@microsoft.com)
+- Dispose view when stream is not available ([PR #404](https://github.com/azure/communication-ui-library/pull/404) by jinan@microsoft.com)
+- Expose more customized api for rendering ([PR #457](https://github.com/azure/communication-ui-library/pull/457) by jinan@microsoft.com)
+- update react peer deps to be >=16.8.0 <18.0.0 ([PR #450](https://github.com/azure/communication-ui-library/pull/450) by mail@jamesburnside.com)
+- Adding floating localvideopreview layout to VideoGallery. ([PR #425](https://github.com/azure/communication-ui-library/pull/425) by anjulgarg@live.com)
+- Update to fluentui version 8 ([PR #448](https://github.com/azure/communication-ui-library/pull/448) by mail@jamesburnside.com)
+- Remove @fluentui/react-northstar-icons, use only @fluentui/react-icons ([PR #143](https://github.com/azure/communication-ui-library/pull/143) by mail@jamesburnside.com)
+- Bug fix: MesageThread scrollTop throws exception when chat composite is hidden ([PR #506](https://github.com/azure/communication-ui-library/pull/506) by mail@jamesburnside.com)
+- add ButtonCustomStylesProps as new type ([PR #438](https://github.com/azure/communication-ui-library/pull/438) by alcail@microsoft.com)
+- Add options to onSelectCamera and onToggleCamera ([PR #436](https://github.com/azure/communication-ui-library/pull/436) by easony@microsoft.com)
+- Fixing minor bugs and handling teams meeting denied. ([PR #367](https://github.com/azure/communication-ui-library/pull/367) by anjulgarg@live.com)
+- Add mute indicator to VideoGallery and VideoTile ([PR #483](https://github.com/azure/communication-ui-library/pull/483) by anjulgarg@live.com)
+- Use sections in device settings context menu ([PR #442](https://github.com/azure/communication-ui-library/pull/442) by prprabhu@microsoft.com)
+- Replace memoizeFn with react.memo Fix maxListener warning by default ([PR #426](https://github.com/azure/communication-ui-library/pull/426) by jinan@microsoft.com)
+- added showMessageDate in MessageThreadProps and showDate in MessageProps ([PR #395](https://github.com/azure/communication-ui-library/pull/395) by alcail@microsoft.com)
+- add ParticipantsButton component with ParticipantsButtonStylesProps and ParticipantsButtonProps, as well as excludeMe props to ParticipantList component ([PR #415](https://github.com/azure/communication-ui-library/pull/415) by alcail@microsoft.com)
+- Fix leave call button label ([PR #434](https://github.com/azure/communication-ui-library/pull/434) by prprabhu@microsoft.com)
+- Fix option button props ([PR #383](https://github.com/azure/communication-ui-library/pull/383) by jinan@microsoft.com)
+- Tiny fix for send button ([PR #500](https://github.com/azure/communication-ui-library/pull/500) by jinan@microsoft.com)
+- Bump prettier version and reformat ([PR #505](https://github.com/azure/communication-ui-library/pull/505) by prprabhu@microsoft.com)
+- Added LocalizationProvider. ([PR #468](https://github.com/azure/communication-ui-library/pull/468) by miguelgamis@microsoft.com)
+- Show mute indicator while screensharing. Fix icon padding ([PR #502](https://github.com/azure/communication-ui-library/pull/502) by anjulgarg@live.com)
+- Fixed OptionsButton cameras, microphones, and speakers property types. OptionButton default menu props only used not empty. ([PR #439](https://github.com/azure/communication-ui-library/pull/439) by miguelgamis@microsoft.com)
+- ParticipantItem has menu button when hovered. ParticipantItem showing '(you)' when me property is true.  ([PR #405](https://github.com/azure/communication-ui-library/pull/405) by miguelgamis@microsoft.com)
+- include local user to Participant list in ParticipantsButton ([PR #452](https://github.com/azure/communication-ui-library/pull/452) by alcail@microsoft.com)
+- Small responsive fixes for calling components ([PR #536](https://github.com/azure/communication-ui-library/pull/536) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/react-components_v1.0.0-beta.1)
 

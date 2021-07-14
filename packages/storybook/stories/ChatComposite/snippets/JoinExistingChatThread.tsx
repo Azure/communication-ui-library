@@ -32,6 +32,7 @@ export const JoinExistingChatThread: () => JSX.Element = () => {
           userId={{ communicationUserId: knobs.current.userId }}
           token={knobs.current.token}
           displayName={knobs.current.displayName}
+          showParticipants={true}
         />
       ) : (
         <ConfigJoinChatThreadHintBanner />

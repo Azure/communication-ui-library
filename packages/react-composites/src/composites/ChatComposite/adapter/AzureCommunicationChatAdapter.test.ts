@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { PagedAsyncIterableIterator } from '@azure/core-paging';
+import { ChatClient, ChatMessage } from '@azure/communication-chat';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatState } from './ChatAdapter';
-import { StubChatClient, StubChatThreadClient } from './StubChatClient';
-import { ChatClient } from '@azure/communication-chat';
+import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
 
 jest.useFakeTimers();
 jest.mock('@azure/communication-chat');
@@ -12,6 +13,43 @@ jest.mock('@azure/communication-chat');
 const ChatClientMock = ChatClient as jest.MockedClass<typeof ChatClient>;
 
 describe('Error is reflected in state and events', () => {
+  it('when sendMessage fails', async () => {
+    const threadClient = new StubChatThreadClient();
+    threadClient.sendMessage = (): Promise<ChatMessage> => {
+      throw new Error('injected error');
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const stateListener = new StateChangeListener(adapter);
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.sendMessage('some message')).rejects.toThrow();
+
+    // Multiple state change notifications because message is saved as "sending" before backend API calls.
+    expect(stateListener.onChangeCalledCount).toBeGreaterThan(0);
+    const latestError = stateListener.state.latestErrors['ChatThreadClient.sendMessage'];
+    expect(latestError).toBeDefined();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.sendMessage');
+  });
+
+  it('when removeParticipant fails', async () => {
+    const threadClient = new StubChatThreadClient();
+    threadClient.removeParticipant = (): Promise<void> => {
+      throw new Error('injected error');
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const stateListener = new StateChangeListener(adapter);
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.removeParticipant('')).rejects.toThrow();
+
+    expect(stateListener.onChangeCalledCount).toBe(1);
+    const latestError = stateListener.state.latestErrors['ChatThreadClient.removeParticipant'];
+    expect(latestError).toBeDefined();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.removeParticipant');
+  });
+
   it('when setTopic fails', async () => {
     const threadClient = new StubChatThreadClient();
     threadClient.updateTopic = (): Promise<void> => {
@@ -28,6 +66,48 @@ describe('Error is reflected in state and events', () => {
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
     expect(errorListener.errors[0].operation).toBe('ChatThreadClient.updateTopic');
+  });
+
+  it('when listMessages fails on iteration', async () => {
+    const threadClient = new StubChatThreadClient();
+    threadClient.listMessages = (): PagedAsyncIterableIterator<ChatMessage> => {
+      return failingPagedAsyncIterator(new Error('injected error'));
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const stateListener = new StateChangeListener(adapter);
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.loadPreviousChatMessages(3)).rejects.toThrow();
+
+    expect(stateListener.onChangeCalledCount).toBe(1);
+    const latestError = stateListener.state.latestErrors['ChatThreadClient.listMessages'];
+    expect(latestError).toBeDefined();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.listMessages');
+  });
+
+  it('when listMessages fails immediately', async () => {
+    const threadClient = new StubChatThreadClient();
+    threadClient.listMessages = (): PagedAsyncIterableIterator<ChatMessage> => {
+      throw new Error('injected error');
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const stateListener = new StateChangeListener(adapter);
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.loadPreviousChatMessages(3)).rejects.toThrow();
+
+    expect(stateListener.onChangeCalledCount).toBe(1);
+    const latestError = stateListener.state.latestErrors['ChatThreadClient.listMessages'];
+    expect(latestError).toBeDefined();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.listMessages');
+
+    threadClient.listMessages = (): PagedAsyncIterableIterator<ChatMessage> => {
+      return pagedAsyncIterator([]);
+    };
+    const allLoaded = await adapter.loadPreviousChatMessages(1);
+    expect(allLoaded).toBe(true);
   });
 });
 

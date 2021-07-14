@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix issue where state change is not triggered for some arrays",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "allenhwang@microsoft.com",
-  "dependentChangeType": "patch"
-}

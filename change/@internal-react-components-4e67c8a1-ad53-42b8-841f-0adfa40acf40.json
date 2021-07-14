@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed OptionsButton cameras, microphones, and speakers property types. OptionButton default menu props only used not empty.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

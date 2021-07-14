@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Extract test helpers",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}
