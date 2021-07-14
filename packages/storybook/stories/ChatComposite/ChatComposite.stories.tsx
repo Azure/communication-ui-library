@@ -31,6 +31,7 @@ export { CustomBehaviorExample } from './CustomBehavior';
 export { CustomDataModelExample } from './CustomDataModelExample';
 export { ThemeExample } from './ThemesExample';
 export { JoinExistingChatThread } from './snippets/JoinExistingChatThread';
+export { ResizingExample } from './ResizingExample';
 
 const getDocs: () => JSX.Element = () => {
   return (
