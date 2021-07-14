@@ -54,7 +54,8 @@ export type ErrorType = keyof ErrorBarStrings;
  * Uses {@Link @fluentui/react#MessageBar} UI element.
  */
 export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
-  const strings = props.strings ?? useLocale().strings.errorBar;
+  const localeStrings = useLocale().strings.errorBar;
+  const strings = props.strings ?? localeStrings;
 
   if (props.activeErrors.length === 0) {
     return <></>;

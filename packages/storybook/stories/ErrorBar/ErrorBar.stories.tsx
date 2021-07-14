@@ -7,16 +7,17 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
-import { ErrorBar, ErrorType } from '@internal/react-components';
+import { ErrorBar, ErrorType } from '@azure/communication-react';
+import { mergeStyles, useTheme } from '@fluentui/react';
 import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs/blocks';
 import { radios } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useCallback, useState } from 'react';
-import { mergeStyles, useTheme } from '@fluentui/react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 const getDocs: () => JSX.Element = () => {
+  /* eslint-disable react/no-unescaped-entities */
   return (
     <>
       <Title>ErrorBar</Title>
