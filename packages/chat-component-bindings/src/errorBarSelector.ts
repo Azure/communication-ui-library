@@ -42,7 +42,8 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   }
 
   // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
-  return { activeErrors: activeErrors.splice(maxErrorCount) };
+  activeErrors.splice(maxErrorCount);
+  return { activeErrors: activeErrors };
 });
 
 const maxErrorCount = 3;
