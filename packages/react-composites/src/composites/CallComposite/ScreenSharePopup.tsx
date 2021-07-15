@@ -61,7 +61,7 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
   }, [onStopScreenShare]);
 
   // Beware: The FocusTrapCallout is a workaround to allow users to tab-navigate out of the Modal. There is an open
-  // issue here: https://github.com/microsoft/fluentui/issues/16179
+  // issue here: https://github.com/microsoft/fluentui/issues/18924
 
   return (
     <>
@@ -79,7 +79,9 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
             disabled={stoppingInProgress}
           />
         </Stack>
-        <FocusTrapCallout focusTrapProps={{ isClickableOutsideFocusTrap: true }}></FocusTrapCallout>
+        <FocusTrapCallout
+          focusTrapProps={{ isClickableOutsideFocusTrap: true, forceFocusInsideTrap: false }}
+        ></FocusTrapCallout>
       </Modal>
     </>
   );
