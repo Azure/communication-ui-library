@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-81 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-81"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -26,7 +26,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
           className="ms-Stack css-7"
         />
         <div
-          className="ms-Stack css-79 css-8"
+          className="ms-Stack css-80 css-8"
         >
           <div
             className="ms-Stack css-9"

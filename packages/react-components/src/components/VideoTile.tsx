@@ -1,16 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  DefaultPalette as palette,
-  IStyle,
-  mergeStyles,
-  Persona,
-  PersonaSize,
-  Stack,
-  Text,
-  useTheme
-} from '@fluentui/react';
+import { DefaultPalette as palette, IStyle, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
+import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
 import React from 'react';
 import {
   disabledVideoHint,
@@ -22,7 +14,7 @@ import {
   videoHint
 } from './styles/VideoTile.styles';
 import { BaseCustomStylesProps } from '../types';
-import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
+import { useTheme } from '../theming';
 
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
   /** Styles for video container. */

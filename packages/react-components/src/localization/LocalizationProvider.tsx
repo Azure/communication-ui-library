@@ -81,4 +81,5 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
 };
 
+/** React hook to access locale */
 export const useLocale = (): Locale => useContext(LocaleContext);

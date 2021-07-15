@@ -158,11 +158,15 @@ export interface ErrorBarProps extends IMessageBarProps {
 
 // @public
 export interface ErrorBarStrings {
+<<<<<<< HEAD
     accessDenied: string;
     notInThisThread: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
     unableToReachChatService: string;
+=======
+    sendMessageGeneric: string;
+>>>>>>> origin/main
 }
 
 // @public
@@ -525,6 +529,9 @@ export type SystemMessagePayload = {
 };
 
 // @public
+export const ThemeContext: React_2.Context<Theme>;
+
+// @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
@@ -553,8 +560,11 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
 
-// @public (undocumented)
+// @public
 export const useLocale: () => Locale;
+
+// @public
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
