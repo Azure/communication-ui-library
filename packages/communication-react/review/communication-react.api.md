@@ -848,15 +848,11 @@ activeErrors: ErrorType[];
 
 // @public
 export interface ErrorBarStrings {
-<<<<<<< HEAD
     accessDenied: string;
     notInThisThread: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
     unableToReachChatService: string;
-=======
-    sendMessageGeneric: string;
->>>>>>> origin/main
 }
 
 // @public
