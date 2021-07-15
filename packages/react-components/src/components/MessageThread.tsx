@@ -178,7 +178,7 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
   );
 };
 
-export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps, ids?: { messageTimestamp?: string }) => JSX.Element;
 
 const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   if (props.message.type === 'system') {
@@ -203,11 +203,10 @@ function extractContent(s: string): string {
 }
 
 const GenerateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.Element => {
-  const ids = useIdentifiers();
   const htmlToReactParser = new Parser();
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
-    <div data-ui-id={ids.messageContent} data-ui-status={payload.status}>
+    <div data-ui-status={payload.status}>
       <LiveMessage
         message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content || '')}`}
         aria-live="polite"
@@ -218,10 +217,9 @@ const GenerateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.El
 };
 
 const GenerateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
-  const ids = useIdentifiers();
   const liveAuthor = `${payload.senderDisplayName} says `;
   return (
-    <div data-ui-id={ids.messageContent} data-ui-status={payload.status}>
+    <div data-ui-status={payload.status}>
       <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
@@ -252,8 +250,10 @@ const GenerateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
   }
 };
 
-const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
-  const ids = useIdentifiers();
+const DefaultChatMessageRenderer: DefaultMessageRendererType = (
+  props: MessageProps,
+  ids?: { messageTimestamp?: string }
+) => {
   if (props.message.type === 'chat') {
     const payload: ChatMessagePayload = props.message.payload;
     const messageContentItem = GenerateMessageContent(payload);
@@ -264,7 +264,7 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (props: MessagePr
         author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
         mine={payload.mine}
         timestamp={
-          <text data-ui-id={ids.messageTimestamp}>
+          <text data-ui-id={ids?.messageTimestamp}>
             {payload.createdOn
               ? props.showDate
                 ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.strings)
@@ -552,6 +552,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const chatThreadRef = useRef<HTMLElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
+  const ids = useIdentifiers();
+
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
     messagesRef.current = messagesWithAttachedValue;
@@ -743,7 +745,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
-      return DefaultChatMessageRenderer(messageProps);
+      return DefaultChatMessageRenderer(messageProps, ids);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [new Date().toDateString()]
