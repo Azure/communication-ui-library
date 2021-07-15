@@ -5,6 +5,7 @@ import React, { createContext, useContext } from 'react';
 import {
   CameraButtonStrings,
   EndCallButtonStrings,
+  ErrorBarStrings,
   MessageStatusIndicatorStrings,
   MessageThreadStrings,
   MicrophoneButtonStrings,
@@ -51,6 +52,8 @@ export interface ComponentStrings {
   sendBox: SendBoxStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
+  /** Strings for ErroBar */
+  errorBar: ErrorBarStrings;
 }
 
 /**
@@ -78,4 +81,5 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
 };
 
+/** React hook to access locale */
 export const useLocale = (): Locale => useContext(LocaleContext);

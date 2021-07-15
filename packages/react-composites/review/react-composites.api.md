@@ -19,6 +19,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import type { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { Identifiers } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
@@ -267,6 +268,7 @@ export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | Micr
 
 // @public (undocumented)
 export interface ChatAdapter {
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     dispose(): void;
     // (undocumented)

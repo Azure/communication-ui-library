@@ -1,5 +1,5 @@
-import { FluentThemeProvider } from '@azure/communication-react';
-import { Dropdown, IDropdownOption, useTheme } from '@fluentui/react';
+import { FluentThemeProvider, useTheme } from '@azure/communication-react';
+import { Dropdown, IDropdownOption } from '@fluentui/react';
 import React from 'react';
 
 export interface DeviceSettingsProps {
