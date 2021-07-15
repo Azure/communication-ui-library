@@ -4,7 +4,8 @@
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { ChatErrorTargets, StatefulChatClient } from '@internal/chat-stateful-client';
+import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
@@ -15,6 +16,7 @@ export type DefaultChatHandlers = {
   onParticipantRemove: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+  onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
@@ -60,8 +62,17 @@ export const createDefaultChatHandlers = memoizeOne(
             break;
           }
         }
-
         return isAllChatMessagesLoaded;
+      },
+      onDismissErrors: (errorTypes: ErrorType[]) => {
+        const targets: ChatErrorTargets[] = [];
+        for (const errorType of errorTypes) {
+          switch (errorType) {
+            case 'sendMessageGeneric':
+              targets.push('ChatThreadClient.sendMessage');
+          }
+        }
+        chatClient.clearErrors(targets);
       }
     };
   }
