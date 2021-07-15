@@ -124,6 +124,9 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
+export const defaultIdentifiers: Identifiers;
+
+// @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
 
 // @public
@@ -164,6 +167,32 @@ export interface GridLayoutProps {
 
 // @public (undocumented)
 export type GridLayoutType = 'standard';
+
+// @public (undocumented)
+export const IdentifierContext: React_2.Context<Identifiers>;
+
+// @public (undocumented)
+export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface IdentifierProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    identifiers?: Identifiers;
+}
+
+// @public (undocumented)
+export interface Identifiers {
+    // (undocumented)
+    messageContent: string;
+    // (undocumented)
+    messageTimestamp: string;
+    // (undocumented)
+    participantList: string;
+    // (undocumented)
+    sendboxTextfield: string;
+}
 
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
@@ -213,9 +242,9 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
+    strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public
@@ -502,6 +531,9 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @public (undocumented)
+export const useIdentifiers: () => Identifiers;
 
 // @public
 export const useLocale: () => Locale;

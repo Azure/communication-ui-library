@@ -23,11 +23,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
         className="ms-Stack css-1"
       >
         <div
-          className="ms-Stack css-78 css-1"
+          className="ms-Stack css-77 css-1"
           data-ui-id="participant-list"
         >
           <div
-            className="css-74"
+            className="css-73"
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
           >
@@ -89,7 +89,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
               </div>
             </div>
             <div
-              className="ms-Stack css-77 css-22"
+              className="ms-Stack css-76 css-22"
             >
               <span
                 className="ms-layer"
@@ -221,7 +221,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             </div>
           </div>
           <div
-            className="css-74"
+            className="css-73"
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
           >
@@ -283,7 +283,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
               </div>
             </div>
             <div
-              className="ms-Stack css-77 css-22"
+              className="ms-Stack css-76 css-22"
             >
               <span
                 className="ms-layer"
@@ -415,7 +415,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             </div>
           </div>
           <div
-            className="css-74"
+            className="css-73"
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
           >
@@ -477,7 +477,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
               </div>
             </div>
             <div
-              className="ms-Stack css-77 css-22"
+              className="ms-Stack css-76 css-22"
             >
               <span
                 className="ms-layer"
@@ -609,7 +609,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             </div>
           </div>
           <div
-            className="css-74"
+            className="css-73"
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
           >
@@ -676,7 +676,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
               (you)
             </div>
             <div
-              className="ms-Stack css-77 css-22"
+              className="ms-Stack css-76 css-22"
             />
           </div>
         </div>

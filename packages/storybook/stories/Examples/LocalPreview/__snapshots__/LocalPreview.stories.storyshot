@@ -49,11 +49,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                     className="ms-Stack css-12"
                   >
                     <div
-                      className="css-72"
+                      className="css-71"
                     />
                   </div>
                   <div
-                    className="ms-Stack css-82 css-13"
+                    className="ms-Stack css-81 css-13"
                   >
                     <div
                       className="ms-Stack css-14"

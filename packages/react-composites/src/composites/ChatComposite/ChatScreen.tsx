@@ -26,25 +26,19 @@ import {
   participantListStack,
   participantListStyle
 } from './styles/Chat.styles';
-import { CHAT_UI_IDS } from './identifiers';
 
 export type ChatScreenProps = {
   showParticipantPane?: boolean;
-  sendBoxMaxLength?: number;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onRenderAvatar, sendBoxMaxLength, onRenderMessage, onRenderTypingIndicator, showParticipantPane } = props;
+  const { onRenderAvatar, onRenderMessage, onRenderTypingIndicator, showParticipantPane } = props;
 
-  const pixelToRemConvertRatio = 16;
   const defaultNumberOfChatMessagesToReload = 5;
-  const sendBoxParentStyle = mergeStyles({
-    maxWidth: sendBoxMaxLength ? `${sendBoxMaxLength / pixelToRemConvertRatio}rem` : 'unset',
-    width: '100%'
-  });
+  const sendBoxParentStyle = mergeStyles({ width: '100%' });
 
   const adapter = useAdapter();
 
@@ -72,13 +66,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   return (
-    <Stack data-ui-id={CHAT_UI_IDS.chatScreen} className={chatContainer} grow>
+    <Stack className={chatContainer} grow>
       <ChatHeader {...headerProps} />
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
           <ThreadStatus {...threadStatusProps} />
           <MessageThread
-            data-ui-id={CHAT_UI_IDS.messageThread}
             {...messageThreadProps}
             onRenderAvatar={onRenderMessageAvatar}
             onRenderMessage={onRenderMessage}

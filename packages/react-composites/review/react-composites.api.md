@@ -20,6 +20,7 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
+import { Identifiers } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
@@ -111,7 +112,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    setPage: (page: CallCompositePage) => void;
+    setPage(page: CallCompositePage): void;
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
@@ -342,6 +343,7 @@ export type ChatCompositeProps = {
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
+    identifiers?: Identifiers;
 };
 
 // @public
@@ -353,7 +355,6 @@ export type ChatErrorListener = (event: {
 // @public
 export type ChatOptions = {
     showParticipantPane?: boolean;
-    sendBoxMaxLength?: number;
 };
 
 // @public (undocumented)
