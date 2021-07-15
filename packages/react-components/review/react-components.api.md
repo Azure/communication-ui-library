@@ -159,10 +159,10 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
-    notInThisThread: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
     unableToReachChatService: string;
+    userNotInThisThread: string;
 }
 
 // @public
