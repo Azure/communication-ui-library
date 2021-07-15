@@ -4,7 +4,7 @@
 import { IStyle, FontIcon, mergeStyles, Stack } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import React from 'react';
-import { systemMessageContentStyle, systemMessageIconStyle } from './styles/SystemMessage.styles';
+import { systemMessageIconStyle } from './styles/SystemMessage.styles';
 
 // Todo: We need to add more types of system messages that we support.
 export type SystemMessageIconTypes = 'PeopleAdd' | 'PeopleBlock' | 'Edit';
@@ -31,7 +31,7 @@ export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   return (
     <Stack horizontal className={mergeStyles(props?.containerStyle as IStyle)}>
       {Icon}
-      <span className={mergeStyles(systemMessageContentStyle)}>{content}</span>
+      <span>{content}</span>
     </Stack>
   );
 };
