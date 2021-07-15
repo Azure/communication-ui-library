@@ -10,6 +10,7 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+import { IMessageBarProps } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
@@ -87,6 +88,7 @@ export type CommunicationParticipant = {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
+    errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -123,7 +125,7 @@ export type CustomMessagePayload = {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
-// @public (undocumented)
+// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
@@ -143,6 +145,24 @@ export interface EndCallButtonProps extends IButtonProps {
 export interface EndCallButtonStrings {
     label: string;
 }
+
+// @public
+export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
+
+// @public
+export interface ErrorBarProps extends IMessageBarProps {
+    activeErrors: ErrorType[];
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
+    strings?: ErrorBarStrings;
+}
+
+// @public
+export interface ErrorBarStrings {
+    sendMessageGeneric: string;
+}
+
+// @public
+export type ErrorType = keyof ErrorBarStrings;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -184,14 +204,11 @@ export interface IdentifierProviderProps {
 
 // @public (undocumented)
 export interface Identifiers {
-    // (undocumented)
     messageContent: string;
-    // (undocumented)
     messageTimestamp: string;
-    // (undocumented)
     participantList: string;
-    // (undocumented)
     sendboxTextfield: string;
+    typingIndicator: string;
 }
 
 // @public (undocumented)

@@ -34,6 +34,7 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+import { IMessageBarProps } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -436,6 +437,7 @@ export interface CameraButtonStrings {
 
 // @public (undocumented)
 export interface ChatAdapter {
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -681,6 +683,7 @@ export type CommunicationParticipant = {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
+    errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -780,9 +783,10 @@ export type DefaultChatHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
-// @public (undocumented)
+// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
@@ -826,6 +830,31 @@ export interface EndCallButtonStrings {
 }
 
 // @public
+export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
+
+// @public
+export interface ErrorBarProps extends IMessageBarProps {
+    activeErrors: ErrorType[];
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
+    strings?: ErrorBarStrings;
+}
+
+// @public
+export const errorBarSelector: OutputSelector<ChatClientState, {
+activeErrors: ErrorType[];
+}, (res: ChatErrors) => {
+activeErrors: ErrorType[];
+}>;
+
+// @public
+export interface ErrorBarStrings {
+    sendMessageGeneric: string;
+}
+
+// @public
+export type ErrorType = keyof ErrorBarStrings;
+
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -844,7 +873,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -880,14 +909,11 @@ export interface IdentifierProviderProps {
 
 // @public (undocumented)
 export interface Identifiers {
-    // (undocumented)
     messageContent: string;
-    // (undocumented)
     messageTimestamp: string;
-    // (undocumented)
     participantList: string;
-    // (undocumented)
     sendboxTextfield: string;
+    typingIndicator: string;
 }
 
 // @public (undocumented)
@@ -1377,6 +1403,7 @@ export type StatefulCallClientOptions = {
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
+    clearErrors(targets: ChatErrorTargets[]): void;
     // (undocumented)
     getState(): ChatClientState;
     // (undocumented)

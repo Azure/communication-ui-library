@@ -13,6 +13,7 @@ export { chatThreadSelector } from './chatThreadSelector';
 export { typingIndicatorSelector } from './typingIndicatorSelector';
 export { sendBoxSelector } from './sendBoxSelector';
 export { chatParticipantListSelector } from './chatParticipantListSelector';
+export { errorBarSelector } from './errorBarSelector';
 // ---- //
 
 export type { ChatClientProviderProps } from './providers/ChatClientProvider';

@@ -8,11 +8,14 @@
 
 import { AreEqual } from '@internal/acs-ui-common';
 import { ChatClientState } from '@internal/chat-stateful-client';
+import { ChatErrors } from '@internal/chat-stateful-client';
 import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommonProperties } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from '@internal/react-components';
+import { ErrorBar } from '@internal/react-components';
+import { ErrorType } from '@internal/react-components';
 import { Message } from '@internal/react-components';
 import { MessageThread } from '@internal/react-components';
 import { OutputParametricSelector } from 'reselect';
@@ -87,10 +90,18 @@ export type DefaultChatHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
+// @public
+export const errorBarSelector: OutputSelector<ChatClientState, {
+activeErrors: ErrorType[];
+}, (res: ChatErrors) => {
+activeErrors: ErrorType[];
+}>;
+
 // @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
