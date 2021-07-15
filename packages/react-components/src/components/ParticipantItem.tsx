@@ -11,12 +11,12 @@ import {
   mergeStyles,
   IStyle,
   ContextualMenu,
-  DirectionalHint,
-  useTheme
+  DirectionalHint
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
-import { useLocale } from '../localization/LocalizationProvider';
+import { useTheme } from '../theming';
+import { useLocale } from '../localization';
 import { MoreHorizontal20Filled, MoreHorizontal20Regular } from '@fluentui/react-icons';
 
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {

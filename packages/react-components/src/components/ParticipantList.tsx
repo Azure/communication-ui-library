@@ -8,7 +8,7 @@ import { ParticipantItem } from './ParticipantItem';
 import { MicOff20Filled, ShareScreenStart20Filled } from '@fluentui/react-icons';
 import { participantListStyle } from './styles/ParticipantList.styles';
 import { CommunicationParticipant, CallParticipant } from '../types';
-import { COMPONENT_UI_IDS } from './identifiers';
+import { useIdentifiers } from '../identifiers';
 
 /**
  * Props for component `ParticipantList`
@@ -102,6 +102,7 @@ const onRenderParticipantsDefault = (
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const { excludeMe = false, myUserId, participants, onParticipantRemove, onRenderAvatar, onRenderParticipant } = props;
+  const ids = useIdentifiers();
 
   const allParticipants: CommunicationParticipant[] = useMemo(() => {
     if (participants === undefined) {
@@ -125,7 +126,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   }, [participants, excludeMe, myUserId]);
 
   return (
-    <Stack data-ui-id={COMPONENT_UI_IDS.participantList} className={participantListStyle}>
+    <Stack data-ui-id={ids.participantList} className={participantListStyle}>
       {onRenderParticipant
         ? participants.map((participant: CommunicationParticipant) => onRenderParticipant(participant))
         : onRenderParticipantsDefault(allParticipants, myUserId, onParticipantRemove, onRenderAvatar)}

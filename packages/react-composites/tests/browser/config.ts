@@ -22,3 +22,11 @@ export const PARTICIPANT_NAMES = [
   'Adrian Leffler',
   'Schuyler Yost'
 ];
+
+export const IDS = {
+  sendboxTextfield: 'sendbox-textfield',
+  participantList: 'participant-list',
+  messageContent: 'message-content',
+  messageTimestamp: 'message-timestamp',
+  typingIndicator: 'typing-indicator'
+};
