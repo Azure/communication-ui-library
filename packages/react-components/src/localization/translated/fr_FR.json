@@ -59,5 +59,8 @@
     "thursday": "Jeudi",
     "friday": "Vendredi",
     "saturday": "Samedi"
+  },
+  "errorBar": {
+    "sendMessageGeneric": "Échec de l'envoi du message"
   }
 }
