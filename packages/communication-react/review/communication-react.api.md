@@ -1051,7 +1051,7 @@ export interface MicrophoneButtonProps extends IButtonProps {
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: boolean, res2: boolean, res3: DeviceManagerState) => {
+}, (res1: boolean, res2: boolean | undefined, res3: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -1172,7 +1172,7 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     myUserId: string;
 }, (res1: string, res2: string | undefined, res3: {
     [keys: string]: RemoteParticipantState;
-} | undefined, res4: boolean, res5: boolean) => {
+} | undefined, res4: boolean | undefined, res5: boolean | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -1277,9 +1277,9 @@ export interface ScreenShareButtonProps extends IButtonProps {
 
 // @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    checked: boolean;
-}, (res: boolean) => {
-    checked: boolean;
+    checked: boolean | undefined;
+}, (res: boolean | undefined) => {
+    checked: boolean | undefined;
 }>;
 
 // @public
@@ -1539,8 +1539,8 @@ screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
 userId: string;
 displayName: string;
-isMuted: boolean;
-isScreenSharingOn: boolean;
+isMuted: boolean | undefined;
+isScreenSharingOn: boolean | undefined;
 videoStream: {
 isAvailable: boolean;
 isMirrored: boolean | undefined;
@@ -1550,13 +1550,13 @@ renderElement: HTMLElement | undefined;
 remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: string | undefined, res2: {
 [keys: string]: RemoteParticipantState;
-} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean, res5: boolean, res6: string | undefined, res7: string) => {
+} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string) => {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
 userId: string;
 displayName: string;
-isMuted: boolean;
-isScreenSharingOn: boolean;
+isMuted: boolean | undefined;
+isScreenSharingOn: boolean | undefined;
 videoStream: {
 isAvailable: boolean;
 isMirrored: boolean | undefined;
