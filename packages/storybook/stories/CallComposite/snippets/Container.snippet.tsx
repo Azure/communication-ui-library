@@ -27,21 +27,20 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       if (!!credential && props.locator && props.displayName) {
-        const definedCredential = credential;
         const callLocator = isTeamsMeetingLink(props.locator)
           ? { meetingLink: props.locator }
           : { groupId: props.locator };
-        const createAdapter = async (): Promise<void> => {
+        const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
           setAdapter(
             await createAzureCommunicationCallAdapter(
               { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
               props.displayName,
-              definedCredential,
+              credential,
               callLocator
             )
           );
         };
-        createAdapter();
+        createAdapter(credential);
       }
     })();
   }, [props, credential]);
