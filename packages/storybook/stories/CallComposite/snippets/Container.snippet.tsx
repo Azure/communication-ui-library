@@ -17,9 +17,17 @@ const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://t
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const [adapter, setAdapter] = useState<CallAdapter>();
 
+  let credential: AzureCommunicationTokenCredential | undefined = undefined;
+  try {
+    credential = new AzureCommunicationTokenCredential(props.token);
+  } catch {
+    console.error('Failed to construct token credential');
+  }
+
   useEffect(() => {
     (async () => {
-      if (props.token && props.locator && props.displayName) {
+      if (!!credential && props.locator && props.displayName) {
+        const definedCredential = credential;
         const callLocator = isTeamsMeetingLink(props.locator)
           ? { meetingLink: props.locator }
           : { groupId: props.locator };
@@ -28,7 +36,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
             await createAzureCommunicationCallAdapter(
               { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
               props.displayName,
-              new AzureCommunicationTokenCredential(props.token),
+              definedCredential,
               callLocator
             )
           );
@@ -36,7 +44,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
         createAdapter();
       }
     })();
-  }, [props]);
+  }, [props, credential]);
 
   useEffect(() => {
     return () => {
@@ -52,11 +60,13 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     };
   }, [adapter]);
 
-  return (
-    <>
-      {adapter && (
-        <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} callInvitationURL={props?.callInvitationURL} />
-      )}
-    </>
-  );
+  if (!!adapter) {
+    return (
+      <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} callInvitationURL={props?.callInvitationURL} />
+    );
+  }
+  if (credential === undefined) {
+    return <>Failed to construct credential. Provided token is malformed.</>;
+  }
+  return <>Initializing...</>;
 };
