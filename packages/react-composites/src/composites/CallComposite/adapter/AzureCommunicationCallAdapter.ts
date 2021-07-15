@@ -44,8 +44,7 @@ import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
-  CommunicationUserKind,
-  getIdentifierKind
+  CommunicationUserKind
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
@@ -470,16 +469,13 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
 };
 
 export const createAzureCommunicationCallAdapter = async (
-  userId: CommunicationUserIdentifier,
+  userId: CommunicationUserKind,
   credential: CommunicationTokenCredential,
   displayName: string,
   locator: TeamsMeetingLinkLocator | GroupCallLocator,
   callClientOptions?: CallClientOptions
 ): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient(
-    { userId: getIdentifierKind(userId) as CommunicationUserKind },
-    { callClientOptions }
-  );
+  const callClient = createStatefulCallClient({ userId }, { callClientOptions });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);

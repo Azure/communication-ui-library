@@ -10,7 +10,7 @@ import {
 import { DefaultChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
 import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationTokenCredential, CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
 import type {
   ChatMessageReceivedEvent,
   ChatThreadPropertiesUpdatedEvent,
@@ -299,7 +299,7 @@ const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage
 
 export const createAzureCommunicationChatAdapter = async (
   endpointUrl: string,
-  userId: CommunicationUserKind,
+  userId: CommunicationIdentifierKind,
   displayName: string,
   credential: CommunicationTokenCredential,
   threadId: string
