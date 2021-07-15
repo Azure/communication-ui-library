@@ -5,7 +5,7 @@ import {
   ChatAdapter,
   createAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
@@ -23,12 +23,14 @@ function App(): JSX.Element {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
   // We can't even initialize the Chat and Call adapters without a well-formed token.
-  let credential: AzureCommunicationTokenCredential | undefined = undefined;
-  try {
-    credential = new AzureCommunicationTokenCredential(token);
-  } catch {
-    console.error('Failed to construct token credential');
-  }
+  const credential = useMemo(() => {
+    try {
+      return new AzureCommunicationTokenCredential(token);
+    } catch {
+      console.error('Failed to construct token credential');
+      return undefined;
+    }
+  }, [token]);
 
   useEffect(() => {
     if (credential !== undefined) {
