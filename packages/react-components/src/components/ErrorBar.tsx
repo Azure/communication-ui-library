@@ -54,7 +54,7 @@ export interface ErrorBarStrings {
    *
    * See also: {@Link ErrorBarStrings.sendMessageNotInThisThread} for a more specific error.
    */
-  notInThisThread: string;
+  userNotInThisThread: string;
 
   /**
    * Sending message failed because user is no longer on the thread.

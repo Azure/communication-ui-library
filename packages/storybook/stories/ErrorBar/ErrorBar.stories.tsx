@@ -68,7 +68,7 @@ export const ErrorTypesExample = (): JSX.Element => {
 const errorOptions: { [key in ErrorType]: ErrorType } = {
   unableToReachChatService: 'unableToReachChatService',
   accessDenied: 'accessDenied',
-  notInThisThread: 'notInThisThread',
+  userNotInThisThread: 'userNotInThisThread',
   sendMessageNotInThisThread: 'sendMessageNotInThisThread',
   sendMessageGeneric: 'sendMessageGeneric'
 };
@@ -76,7 +76,7 @@ const errorOptions: { [key in ErrorType]: ErrorType } = {
 export const MultipleErrorsExample = (): JSX.Element => {
   const theme = useTheme();
 
-  const [activeErrors, setActiveErrors] = useState<ErrorType[]>(['accessDenied', 'notInThisThread']);
+  const [activeErrors, setActiveErrors] = useState<ErrorType[]>(['accessDenied', 'userNotInThisThread']);
   const onClose = (toRemove: ErrorType[]) => {
     const toRemoveSet = new Set(toRemove);
     setActiveErrors(activeErrors.filter((e) => !toRemoveSet.has(e)));
