@@ -745,7 +745,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
-      return DefaultChatMessageRenderer(messageProps, ids);
+      return DefaultChatMessageRenderer(messageProps, { messageTimestamp: ids.messageTimestamp });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [new Date().toDateString()]
