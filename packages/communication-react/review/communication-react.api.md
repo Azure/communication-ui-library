@@ -786,7 +786,7 @@ export type DefaultChatHandlers = {
     onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
-// @public (undocumented)
+// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
@@ -909,14 +909,11 @@ export interface IdentifierProviderProps {
 
 // @public (undocumented)
 export interface Identifiers {
-    // (undocumented)
     messageContent: string;
-    // (undocumented)
     messageTimestamp: string;
-    // (undocumented)
     participantList: string;
-    // (undocumented)
     sendboxTextfield: string;
+    typingIndicator: string;
 }
 
 // @public (undocumented)
