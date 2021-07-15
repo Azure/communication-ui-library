@@ -40,21 +40,21 @@ export const getRemoteParticipants = (
       [keys: string]: RemoteParticipantState;
     } => state.calls[props.callId]?.remoteParticipants;
 
-export const getIsScreenSharingOn = (state: CallClientState, props: CallingBaseSelectorProps): boolean =>
-  state.calls[props.callId]?.isScreenSharingOn ?? false;
+export const getIsScreenSharingOn = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
+  state.calls[props.callId]?.isScreenSharingOn;
 
-export const getIsMuted = (state: CallClientState, props: CallingBaseSelectorProps): boolean =>
-  state.calls[props.callId]?.isMuted ?? true; // default isMuted should be true for privacy purpose
+export const getIsMuted = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
+  state.calls[props.callId]?.isMuted;
 
 export const getLocalVideoStreams = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): LocalVideoStreamState[] | undefined => state.calls[props.callId]?.localVideoStreams ?? undefined;
+): LocalVideoStreamState[] | undefined => state.calls[props.callId]?.localVideoStreams;
 
 export const getScreenShareRemoteParticipant = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string | undefined => state.calls[props.callId]?.screenShareRemoteParticipant ?? undefined;
+): string | undefined => state.calls[props.callId]?.screenShareRemoteParticipant;
 
 export const getDisplayName = (state: CallClientState): string | undefined => state.callAgent?.displayName;
 

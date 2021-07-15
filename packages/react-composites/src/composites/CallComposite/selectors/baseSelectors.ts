@@ -17,7 +17,7 @@ export const getLocalMicrophoneEnabled = (state: CallAdapterState): boolean => s
 export const getDisplayName = (state: CallAdapterState): string | undefined => state.displayName;
 export const getIdentifier = (state: CallAdapterState): string => toFlatCommunicationIdentifier(state.userId);
 export const getLocalVideoStreams = (state: CallAdapterState): LocalVideoStreamState[] | undefined =>
-  state.call?.localVideoStreams ?? undefined;
+  state.call?.localVideoStreams;
 export const getIsTranscriptionActive = (state: CallAdapterState): boolean =>
   !!state.call?.transcription.isTranscriptionActive;
 export const getIsRecordingActive = (state: CallAdapterState): boolean => !!state.call?.recording.isRecordingActive;
