@@ -470,8 +470,8 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
 
 export const createAzureCommunicationCallAdapter = async (
   userId: CommunicationUserKind,
-  credential: CommunicationTokenCredential,
   displayName: string,
+  credential: CommunicationTokenCredential,
   locator: TeamsMeetingLinkLocator | GroupCallLocator,
   callClientOptions?: CallClientOptions
 ): Promise<CallAdapter> => {
