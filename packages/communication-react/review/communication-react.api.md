@@ -1452,6 +1452,9 @@ export type SystemMessagePayload = {
 };
 
 // @public
+export const ThemeContext: React_2.Context<Theme>;
+
+// @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
 
 // @public (undocumented)
@@ -1540,7 +1543,7 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
 
-// @public (undocumented)
+// @public
 export const useLocale: () => Locale;
 
 // @public (undocumented)
@@ -1548,6 +1551,9 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 
 // @public (undocumented)
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+
+// @public
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

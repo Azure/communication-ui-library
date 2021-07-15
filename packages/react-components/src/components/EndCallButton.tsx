@@ -2,11 +2,12 @@
 // Licensed under the MIT license.
 
 import React, { useCallback } from 'react';
-import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles, useTheme } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { CallEnd20Filled } from '@fluentui/react-icons';
 import { controlButtonLabelStyles, endCallControlButtonStyles } from './styles/ControlBar.styles';
 import { lightTheme, darkTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
+import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 
 /**
