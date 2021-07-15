@@ -1,16 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  ContextualMenu,
-  DefaultButton,
-  IDragOptions,
-  Label,
-  Modal,
-  Stack,
-  useTheme,
-  FocusTrapCallout
-} from '@fluentui/react';
+import { ContextualMenu, DefaultButton, FocusTrapCallout, IDragOptions, Label, Modal, Stack } from '@fluentui/react';
 import { ShareScreenStart20Filled, ShareScreenStop20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -19,6 +10,7 @@ import {
   screenSharePopupModalLabelStyles,
   screenSharePopupModalStackStyles
 } from './styles/ScreenSharePopup.styles';
+import { useTheme } from '@internal/react-components';
 
 const STOP_SCREENSHARE_BUTTON_TEXT = 'Stop presenting';
 const STOP_SCREENSHARE_LABEL_TEXT = "You're presenting your screen.";

@@ -5,6 +5,13 @@ import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { ErrorBar } from './ErrorBar';
+import { setIconOptions } from '@fluentui/react';
+
+// Suppress icon warnings for tests. Icons are fetched from CDN which we do not want to perform during tests.
+// More information: https://github.com/microsoft/fluentui/wiki/Using-icons#test-scenarios
+setIconOptions({
+  disableWarnings: true
+});
 
 let container: HTMLDivElement;
 beforeEach(() => {

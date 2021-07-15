@@ -34,6 +34,7 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+import { IMessageBarProps } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -144,7 +145,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    setPage: (page: CallCompositePage) => void;
+    setPage(page: CallCompositePage): void;
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
@@ -436,6 +437,7 @@ export interface CameraButtonStrings {
 
 // @public (undocumented)
 export interface ChatAdapter {
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -536,6 +538,7 @@ export type ChatCompositeProps = {
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
+    identifiers?: Identifiers;
 };
 
 // @public
@@ -593,7 +596,6 @@ export type ChatObjectMethodNames<TName extends string, T> = {
 // @public
 export type ChatOptions = {
     showParticipantPane?: boolean;
-    sendBoxMaxLength?: number;
 };
 
 // @public (undocumented)
@@ -681,6 +683,7 @@ export type CommunicationParticipant = {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
+    errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -780,7 +783,11 @@ export type DefaultChatHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
+
+// @public
+export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
@@ -823,6 +830,31 @@ export interface EndCallButtonStrings {
 }
 
 // @public
+export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
+
+// @public
+export interface ErrorBarProps extends IMessageBarProps {
+    activeErrors: ErrorType[];
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
+    strings?: ErrorBarStrings;
+}
+
+// @public
+export const errorBarSelector: OutputSelector<ChatClientState, {
+activeErrors: ErrorType[];
+}, (res: ChatErrors) => {
+activeErrors: ErrorType[];
+}>;
+
+// @public
+export interface ErrorBarStrings {
+    sendMessageGeneric: string;
+}
+
+// @public
+export type ErrorType = keyof ErrorBarStrings;
+
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -841,7 +873,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -860,6 +892,29 @@ export interface GridLayoutProps {
 
 // @public (undocumented)
 export type GridLayoutType = 'standard';
+
+// @public (undocumented)
+export const IdentifierContext: React_2.Context<Identifiers>;
+
+// @public (undocumented)
+export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface IdentifierProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    identifiers?: Identifiers;
+}
+
+// @public (undocumented)
+export interface Identifiers {
+    messageContent: string;
+    messageTimestamp: string;
+    participantList: string;
+    sendboxTextfield: string;
+    typingIndicator: string;
+}
 
 // @public (undocumented)
 export type IncomingCallListener = (event: {
@@ -951,9 +1006,9 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
+    strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public (undocumented)
@@ -1351,6 +1406,7 @@ export type StatefulCallClientOptions = {
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
+    clearErrors(targets: ChatErrorTargets[]): void;
     // (undocumented)
     getState(): ChatClientState;
     // (undocumented)
@@ -1397,6 +1453,9 @@ export type SystemMessagePayload = {
     content?: string;
     iconName?: string;
 };
+
+// @public
+export const ThemeContext: React_2.Context<Theme>;
 
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
@@ -1485,6 +1544,9 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
+export const useIdentifiers: () => Identifiers;
+
+// @public
 export const useLocale: () => Locale;
 
 // @public (undocumented)
@@ -1492,6 +1554,9 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 
 // @public (undocumented)
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+
+// @public
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

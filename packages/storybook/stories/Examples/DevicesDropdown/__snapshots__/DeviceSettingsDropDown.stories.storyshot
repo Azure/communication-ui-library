@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -23,10 +23,10 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
         className="ms-Stack css-1"
       >
         <div
-          className="css-82 body-0"
+          className="css-61 body-0"
         >
           <div
-            className="css-82"
+            className="css-61"
             data-uses-unhanded-props={true}
             dir="ltr"
           >
@@ -39,7 +39,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 className="ms-Dropdown dropdown-2"
                 data-is-focusable={true}
                 data-ktp-target={true}
-                id="Dropdown0"
+                id="Dropdown2"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onClick={[Function]}
@@ -60,7 +60,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                   aria-invalid={false}
                   aria-live="polite"
                   className="ms-Dropdown-title ms-Dropdown-titleIsPlaceHolder title-3"
-                  id="Dropdown0-option"
+                  id="Dropdown2-option"
                 >
                   Select an option
                 </span>

@@ -1,4 +1,4 @@
-name: Publish npm packages
+name: Release branch - Publish npm package
 
 on:
   workflow_dispatch:
@@ -25,13 +25,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v2
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
       # Install dependencies
       - name: Install rush

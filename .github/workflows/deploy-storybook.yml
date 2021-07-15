@@ -1,4 +1,4 @@
-name: Storybook Deploy
+name: Release branch - Publish Storybook
 
 on:
   # Trigger via 'Actions' on GitHub

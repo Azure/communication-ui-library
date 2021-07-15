@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite Basic Example 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -48,10 +48,10 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Basic Exam
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite Custom Behavior Example 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -94,10 +94,10 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Custom Beh
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite Custom Data Model Example 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -140,10 +140,10 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Custom Dat
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite Join Existing Chat Thread 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -186,10 +186,10 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Join Exist
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite Theme Example 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
