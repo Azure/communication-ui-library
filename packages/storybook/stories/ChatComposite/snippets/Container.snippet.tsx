@@ -21,15 +21,15 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   useEffect(() => {
     if (props) {
       const createAdapter = async (): Promise<void> => {
-        setAdapter(
-          await createAzureCommunicationChatAdapter(
-            props.userId,
-            props.token,
-            props.endpointUrl,
-            props.threadId,
-            props.displayName
-          )
+        const newAdapter = await createAzureCommunicationChatAdapter(
+          props.userId,
+          props.token,
+          props.endpointUrl,
+          props.threadId,
+          props.displayName
         );
+
+        setAdapter(newAdapter);
       };
       createAdapter();
     }
