@@ -596,6 +596,7 @@ export type ChatObjectMethodNames<TName extends string, T> = {
 // @public
 export type ChatOptions = {
     showParticipantPane?: boolean;
+    showTopic?: boolean;
 };
 
 // @public (undocumented)
@@ -848,7 +849,11 @@ activeErrors: ErrorType[];
 
 // @public
 export interface ErrorBarStrings {
+    accessDenied: string;
     sendMessageGeneric: string;
+    sendMessageNotInThisThread: string;
+    unableToReachChatService: string;
+    userNotInThisThread: string;
 }
 
 // @public

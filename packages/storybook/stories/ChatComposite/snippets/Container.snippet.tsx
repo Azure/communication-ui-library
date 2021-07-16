@@ -11,6 +11,7 @@ export type ContainerProps = {
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   showParticipants?: boolean;
+  showTopic?: boolean;
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
@@ -21,15 +22,15 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   useEffect(() => {
     if (props) {
       const createAdapter = async (): Promise<void> => {
-        setAdapter(
-          await createAzureCommunicationChatAdapter(
-            props.userId,
-            props.token,
-            props.endpointUrl,
-            props.threadId,
-            props.displayName
-          )
+        const newAdapter = await createAzureCommunicationChatAdapter(
+          props.userId,
+          props.token,
+          props.endpointUrl,
+          props.threadId,
+          props.displayName
         );
+
+        setAdapter(newAdapter);
       };
       createAdapter();
     }
@@ -41,7 +42,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         <ChatComposite
           adapter={adapter}
           fluentTheme={props.fluentTheme}
-          options={{ showParticipantPane: props.showParticipants }}
+          options={{ showParticipantPane: props.showParticipants, showTopic: props.showTopic }}
         />
       ) : (
         <h3>Loading...</h3>

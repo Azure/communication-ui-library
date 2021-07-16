@@ -65,18 +65,39 @@ export const createDefaultChatHandlers = memoizeOne(
         return isAllChatMessagesLoaded;
       },
       onDismissErrors: (errorTypes: ErrorType[]) => {
-        const targets: ChatErrorTargets[] = [];
+        const targets: Set<ChatErrorTargets> = new Set();
         for (const errorType of errorTypes) {
           switch (errorType) {
+            case 'unableToReachChatService':
+            case 'accessDenied':
+            case 'userNotInThisThread':
+            case 'sendMessageNotInThisThread':
+              addAccessErrorTargets(targets);
+              break;
             case 'sendMessageGeneric':
-              targets.push('ChatThreadClient.sendMessage');
+              targets.add('ChatThreadClient.sendMessage');
+              break;
           }
         }
-        chatClient.clearErrors(targets);
+        chatClient.clearErrors(Array.from(targets.values()));
       }
     };
   }
 );
+
+const accessErrorTargets: ChatErrorTargets[] = [
+  'ChatThreadClient.getProperties',
+  'ChatThreadClient.listMessages',
+  'ChatThreadClient.listParticipants',
+  'ChatThreadClient.sendMessage',
+  'ChatThreadClient.sendTypingNotification'
+];
+
+const addAccessErrorTargets = (targets: Set<ChatErrorTargets>): void => {
+  for (const target of accessErrorTargets) {
+    targets.add(target);
+  }
+};
 
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator =
