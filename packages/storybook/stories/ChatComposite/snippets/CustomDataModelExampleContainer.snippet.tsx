@@ -54,7 +54,11 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
   return (
     <>
       {adapter ? (
-        <ChatComposite adapter={adapter} onRenderAvatar={onRenderAvatar} options={{ showParticipantPane: true }} />
+        <ChatComposite
+          adapter={adapter}
+          onRenderAvatar={onRenderAvatar}
+          options={{ showParticipantPane: true, showTopic: true }}
+        />
       ) : (
         <h3>Loading...</h3>
       )}

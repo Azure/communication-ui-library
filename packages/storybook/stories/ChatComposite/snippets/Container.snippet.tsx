@@ -15,6 +15,7 @@ export type ContainerProps = {
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   showParticipants?: boolean;
+  showTopic?: boolean;
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
