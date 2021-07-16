@@ -44,6 +44,7 @@ const MAX_PARTICIPANTS = 2;
 
 let browser: Browser;
 const pages: Array<Page> = [];
+const urls: Array<string> = [];
 let participants: Array<string>;
 
 test.describe('Chat Composite E2E Tests', () => {
@@ -60,14 +61,15 @@ test.describe('Chat Composite E2E Tests', () => {
     const users = await createUserAndThread(CONNECTION_STRING, TOPIC_NAME, participants);
 
     for (let index = 0; index < MAX_PARTICIPANTS; index++) {
-      const qs = encodeQueryData(users[index]);
+      const url = `${SERVER_URL}?${encodeQueryData(users[index])}`;
       const page = await browser.newPage();
       await page.setViewportSize(PAGE_VIEWPORT);
-      await page.goto(`${SERVER_URL}?${qs}`, { waitUntil: 'networkidle' });
+      await page.goto(url, { waitUntil: 'networkidle' });
       // Important: For ensuring that blinking cursor doesn't get captured in
       // snapshots and cause a diff in subsequent tests.
       page.addStyleTag({ content: `* { caret-color: transparent !important; }` });
       pages.push(page);
+      urls.push(url);
     }
   });
 
@@ -133,5 +135,27 @@ test.describe('Chat Composite E2E Tests', () => {
     const el = await page.$(dataUiId(IDS.typingIndicator));
     expect(await el?.innerHTML()).toBeFalsy();
     expect(await page.screenshot()).toMatchSnapshot('typing-indicator-disappears.png');
+  });
+
+  test('page[1] can rejoin the chat', async () => {
+    const page = pages[1];
+    await page.bringToFront();
+    page.reload({ waitUntil: 'networkidle' });
+    await compositeLoaded(page);
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('receive-message.png');
+  });
+
+  test('page[1] can view custom data model', async () => {
+    const page = pages[1];
+    await page.bringToFront();
+    page.goto(`${urls[1]}&customDataModel=true`, { waitUntil: 'networkidle' });
+    await compositeLoaded(page);
+    await page.waitForSelector('#custom-data-model-typing-indicator');
+    await page.waitForSelector('#custom-data-model-message');
+    await page.waitForSelector('#custom-data-model-avatar');
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
   });
 });

@@ -15,6 +15,7 @@ const token = params.token;
 const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 const userId = params.userId;
+const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
@@ -38,11 +39,34 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <>
-      {chatAdapter && <ChatComposite identifiers={IDS} adapter={chatAdapter} options={{ showParticipantPane: true }} />}
-    </>
-  );
+  if (customDataModel) {
+    return (
+      <>
+        {chatAdapter && (
+          <ChatComposite
+            identifiers={IDS}
+            adapter={chatAdapter}
+            options={{ showParticipantPane: true, showTopic: true }}
+            onRenderTypingIndicator={() => <text id="custom-data-model-typing-indicator">Someone is typing...</text>}
+            onRenderMessage={() => <text id="custom-data-model-message">Custom Message</text>}
+            onRenderAvatar={() => <text id="custom-data-model-avatar">Avatar</text>}
+          />
+        )}
+      </>
+    );
+  } else {
+    return (
+      <>
+        {chatAdapter && (
+          <ChatComposite
+            identifiers={IDS}
+            adapter={chatAdapter}
+            options={{ showParticipantPane: true, showTopic: true }}
+          />
+        )}
+      </>
+    );
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
