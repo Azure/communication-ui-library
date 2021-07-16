@@ -857,7 +857,11 @@ activeErrors: ErrorType[];
 
 // @public
 export interface ErrorBarStrings {
+    accessDenied: string;
     sendMessageGeneric: string;
+    sendMessageNotInThisThread: string;
+    unableToReachChatService: string;
+    userNotInThisThread: string;
 }
 
 // @public
