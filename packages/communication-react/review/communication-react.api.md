@@ -713,10 +713,10 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (userId: CommunicationUserIdentifier, token: string, locator: TeamsMeetingLinkLocator | GroupCallLocator, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: (userId: CommunicationUserKind, displayName: string, credential: CommunicationTokenCredential, locator: TeamsMeetingLinkLocator | GroupCallLocator, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (userId: CommunicationUserIdentifier, token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: (endpointUrl: string, userId: CommunicationIdentifierKind, displayName: string, credential: CommunicationTokenCredential, threadId: string) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
