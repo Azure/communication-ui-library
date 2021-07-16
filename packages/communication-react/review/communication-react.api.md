@@ -797,7 +797,9 @@ export type DefaultChatHandlers = {
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps, ids?: {
+    messageTimestamp?: string;
+}) => JSX.Element;
 
 // @public
 export type DeviceManagerState = {
