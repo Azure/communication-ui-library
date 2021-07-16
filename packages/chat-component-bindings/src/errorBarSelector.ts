@@ -7,7 +7,10 @@ import { createSelector } from 'reselect';
 import { ChatErrors, ChatErrorTargets } from '@internal/chat-stateful-client';
 
 /**
- * Select active errors from the state for the `ErrorBar` component.
+ * Select the first fiew active errors from the state for the `ErrorBar` component.
+ *
+ * In case there are many errors, only a few top errors are returned to avoid
+ * filling up the UI with too many errors.
  *
  * Invariants:
  *   - `ErrorType` is never repeated in the returned errors.
@@ -40,8 +43,13 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   if (!specificSendMessageErrorSeen && latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
     activeErrors.push('sendMessageGeneric');
   }
+
+  // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
+  activeErrors.splice(maxErrorCount);
   return { activeErrors: activeErrors };
 });
+
+const maxErrorCount = 3;
 
 const accessErrorTargets: ChatErrorTargets[] = [
   'ChatThreadClient.getProperties',
