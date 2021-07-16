@@ -61,6 +61,10 @@
     "saturday": "Saturday"
   },
   "errorBar": {
+    "unableToReachChatService": "You are offline",
+    "accessDenied": "Unable to access chat services - please check the user credentials provided",
+    "userNotInThisThread": "You are no longer in this chat thread",
+    "sendMessageNotInThisThread": "Failed to send message because you are no longer in this chat thread",
     "sendMessageGeneric": "Failed to send message"
   }
 }
