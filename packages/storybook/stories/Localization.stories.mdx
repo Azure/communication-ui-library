@@ -12,6 +12,7 @@ import TruncationSnippetText from '!!raw-loader!./snippets/localization/Truncati
 import { TruncationSnippet } from './snippets/localization/Truncation.snippet';
 import SetRTLSnippetText from '!!raw-loader!./snippets/localization/SetRTL.snippet';
 import { SetRTLForCanvasSnippet } from './snippets/localization/SetRTLForCanvas.snippet';
+import LocalizedComposites from '!!raw-loader!./snippets/localization/LocalizedComposites.snippet.tsx';
 
 <Meta id="localization" title="Localization" />
 
@@ -29,15 +30,21 @@ the UI library includes a set of locales usable with the UI components and compo
 
 ### Usage
 
-To use the LocalizationProvider, import it from `@azure/communication-react` and wrap it around ACS UI SDK components,
-For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `fr_FR` from
-`@azure/communication-react`.
+To use the LocalizationProvider, import it from `@azure/communication-react` and wrap it around ACS UI SDK components. Then assign a `Locale` to the `locale` prop.
+For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `fr_FR` from `@azure/communication-react`.
 
 <Source code={LocalizationProviderSnippetText} />
 
 <Canvas withSource="none">
   <LocalizationProviderSnippet />
 </Canvas>
+
+### Composites
+
+If you want to localize your composite, assign a `Locale` to the `locale` prop of the composite. You may import one of our locales like `fr_FR` for French (France)
+in the example below.
+
+<Source code={LocalizedComposites} />
 
 ## Overriding locales
 
