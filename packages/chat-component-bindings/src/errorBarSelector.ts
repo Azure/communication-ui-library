@@ -23,7 +23,7 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   // have timestamps for errors.
   const activeErrors: ErrorType[] = [];
   let specificSendMessageErrorSeen = false;
-  if (hasUnableToReachBackendError(latestErrors)) {
+  if (hasUnableToReachChatServiceError(latestErrors)) {
     activeErrors.push('unableToReachChatService');
   }
   if (hasAccessDeniedError(latestErrors)) {
@@ -34,7 +34,7 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
       activeErrors.push('sendMessageNotInThisThread');
       specificSendMessageErrorSeen = true;
     } else {
-      activeErrors.push('notInThisThread');
+      activeErrors.push('userNotInThisThread');
     }
   }
   if (!specificSendMessageErrorSeen && latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
@@ -56,7 +56,7 @@ const accessErrorTargets: ChatErrorTargets[] = [
   'ChatThreadClient.sendTypingNotification'
 ];
 
-const hasUnableToReachBackendError = (latestErrors: ChatErrors): boolean => {
+const hasUnableToReachChatServiceError = (latestErrors: ChatErrors): boolean => {
   for (const target of accessErrorTargets) {
     const error = latestErrors[target];
     if (error !== undefined && error['code'] === 'REQUEST_SEND_ERROR') {

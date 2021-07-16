@@ -357,7 +357,6 @@ export type ChatErrorListener = (event: {
 // @public
 export type ChatOptions = {
     showParticipantPane?: boolean;
-    sendBoxMaxLength?: number;
 };
 
 // @public (undocumented)

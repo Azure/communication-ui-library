@@ -125,7 +125,7 @@ export type CustomMessagePayload = {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
-// @public (undocumented)
+// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
@@ -159,10 +159,10 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
-    notInThisThread: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
     unableToReachChatService: string;
+    userNotInThisThread: string;
 }
 
 // @public
@@ -208,14 +208,11 @@ export interface IdentifierProviderProps {
 
 // @public (undocumented)
 export interface Identifiers {
-    // (undocumented)
     messageContent: string;
-    // (undocumented)
     messageTimestamp: string;
-    // (undocumented)
     participantList: string;
-    // (undocumented)
     sendboxTextfield: string;
+    typingIndicator: string;
 }
 
 // @public (undocumented)
@@ -266,9 +263,9 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
+    strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public
@@ -528,6 +525,9 @@ export type SystemMessagePayload = {
 };
 
 // @public
+export const ThemeContext: React_2.Context<Theme>;
+
+// @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
@@ -556,8 +556,11 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
 
-// @public (undocumented)
+// @public
 export const useLocale: () => Locale;
+
+// @public
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

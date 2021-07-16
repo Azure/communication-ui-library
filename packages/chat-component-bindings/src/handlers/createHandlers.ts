@@ -70,7 +70,7 @@ export const createDefaultChatHandlers = memoizeOne(
           switch (errorType) {
             case 'unableToReachChatService':
             case 'accessDenied':
-            case 'notInThisThread':
+            case 'userNotInThisThread':
             case 'sendMessageNotInThisThread':
               addAccessErrorTargets(targets);
               break;

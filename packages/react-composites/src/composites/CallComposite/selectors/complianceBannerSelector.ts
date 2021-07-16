@@ -2,11 +2,14 @@
 // Licensed under the MIT license.
 
 import * as reselect from 'reselect';
-import { getCall } from './baseSelectors';
+import { getIsRecordingActive, getIsTranscriptionActive } from './baseSelectors';
 
-export const complianceBannerSelector = reselect.createSelector([getCall], (call) => {
-  return {
-    callTranscribeState: call?.transcription.isTranscriptionActive,
-    callRecordState: call?.recording.isRecordingActive
-  };
-});
+export const complianceBannerSelector = reselect.createSelector(
+  [getIsTranscriptionActive, getIsRecordingActive],
+  (isTranscriptionActive, isRecordingActive) => {
+    return {
+      callTranscribeState: isTranscriptionActive,
+      callRecordState: isRecordingActive
+    };
+  }
+);

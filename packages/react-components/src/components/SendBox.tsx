@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo } from 'react';
-import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets, useTheme } from '@fluentui/react';
+import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets } from '@fluentui/react';
 import { Send20Regular, Send20Filled } from '@fluentui/react-icons';
 import {
   textFieldStyle,
@@ -13,6 +13,7 @@ import {
 } from './styles/SendBox.styles';
 import { BaseCustomStylesProps } from '../types';
 import { isDarkThemed } from '../theming/themeUtils';
+import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 

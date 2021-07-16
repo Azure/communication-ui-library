@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove getCall from selector Use more specific props in the call to target the right update",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

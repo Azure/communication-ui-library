@@ -424,7 +424,7 @@ export interface CameraButtonProps extends IButtonProps {
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: CallState | undefined, res2: DeviceManagerState) => {
+}, (res1: LocalVideoStreamState[] | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -596,7 +596,6 @@ export type ChatObjectMethodNames<TName extends string, T> = {
 // @public
 export type ChatOptions = {
     showParticipantPane?: boolean;
-    sendBoxMaxLength?: number;
 };
 
 // @public (undocumented)
@@ -787,7 +786,7 @@ export type DefaultChatHandlers = {
     onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
-// @public (undocumented)
+// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
@@ -850,10 +849,10 @@ activeErrors: ErrorType[];
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
-    notInThisThread: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
     unableToReachChatService: string;
+    userNotInThisThread: string;
 }
 
 // @public
@@ -914,14 +913,11 @@ export interface IdentifierProviderProps {
 
 // @public (undocumented)
 export interface Identifiers {
-    // (undocumented)
     messageContent: string;
-    // (undocumented)
     messageTimestamp: string;
-    // (undocumented)
     participantList: string;
-    // (undocumented)
     sendboxTextfield: string;
+    typingIndicator: string;
 }
 
 // @public (undocumented)
@@ -1014,9 +1010,9 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
+    strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public (undocumented)
@@ -1114,7 +1110,7 @@ export interface MicrophoneButtonProps extends IButtonProps {
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: CallState | undefined, res2: DeviceManagerState) => {
+}, (res1: boolean, res2: boolean | undefined, res3: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -1144,14 +1140,14 @@ export interface OptionsButtonProps extends IButtonProps {
 }
 
 // @public (undocumented)
-export const optionsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+export const optionsButtonSelector: reselect.OutputSelector<CallClientState, {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: DeviceManagerState, res2: CallState | undefined) => {
+}, (res: DeviceManagerState) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
@@ -1233,7 +1229,9 @@ export type ParticipantListProps = {
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+}, (res1: string, res2: string | undefined, res3: {
+    [keys: string]: RemoteParticipantState;
+} | undefined, res4: boolean | undefined, res5: boolean | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -1263,13 +1261,14 @@ export const participantsButtonSelector: reselect.OutputParametricSelector<CallC
         participants: CallParticipant[];
         myUserId: string;
     };
-    callInvitationURL?: string | undefined;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+}, (res: {
+    participants: CallParticipant[];
+    myUserId: string;
+}) => {
     participantListProps: {
         participants: CallParticipant[];
         myUserId: string;
     };
-    callInvitationURL?: string | undefined;
 }>;
 
 // @public
@@ -1338,7 +1337,7 @@ export interface ScreenShareButtonProps extends IButtonProps {
 // @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
-}, (res: CallState | undefined) => {
+}, (res: boolean | undefined) => {
     checked: boolean | undefined;
 }>;
 
@@ -1460,6 +1459,9 @@ export type SystemMessagePayload = {
 };
 
 // @public
+export const ThemeContext: React_2.Context<Theme>;
+
+// @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
 
 // @public (undocumented)
@@ -1548,7 +1550,7 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
 
-// @public (undocumented)
+// @public
 export const useLocale: () => Locale;
 
 // @public (undocumented)
@@ -1556,6 +1558,9 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 
 // @public (undocumented)
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+
+// @public
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
@@ -1612,7 +1617,9 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: CallState | undefined, res2: string | undefined, res3: string) => {
+}, (res1: string | undefined, res2: {
+[keys: string]: RemoteParticipantState;
+} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string) => {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
 userId: string;

@@ -2,9 +2,17 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallState, RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
+import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { createSelector } from 'reselect';
-import { getCall, getDisplayName, getIdentifier } from './baseSelectors';
+import {
+  getDisplayName,
+  getIdentifier,
+  getIsMuted,
+  getIsScreenSharingOn,
+  getLocalVideoStreams,
+  getRemoteParticipants,
+  getScreenShareRemoteParticipant
+} from './baseSelectors';
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 
@@ -73,10 +81,16 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   }
 );
 
-const videoGalleryRemoteParticipantsFromCall = (call: CallState | undefined): VideoGalleryRemoteParticipant[] => {
-  if (!call || !call.remoteParticipants) return [];
+const videoGalleryRemoteParticipantsMemo = (
+  remoteParticipants:
+    | {
+        [keys: string]: RemoteParticipantState;
+      }
+    | undefined
+): VideoGalleryRemoteParticipant[] => {
+  if (!remoteParticipants) return [];
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
-    return Object.values(call.remoteParticipants).map((participant: RemoteParticipantState) => {
+    return Object.values(remoteParticipants).map((participant: RemoteParticipantState) => {
       return memoizedFn(
         toFlatCommunicationIdentifier(participant.identifier),
         participant.isMuted,
@@ -89,12 +103,29 @@ const videoGalleryRemoteParticipantsFromCall = (call: CallState | undefined): Vi
 };
 
 export const videoGallerySelector = createSelector(
-  [getCall, getDisplayName, getIdentifier],
-  (call: CallState | undefined, displayName: string | undefined, identifier: string) => {
-    const screenShareRemoteParticipant = call?.screenShareRemoteParticipant
-      ? call.remoteParticipants[call.screenShareRemoteParticipant]
-      : undefined;
-    const localVideoStream = call?.localVideoStreams.find((i) => i.mediaStreamType === 'Video');
+  [
+    getScreenShareRemoteParticipant,
+    getRemoteParticipants,
+    getLocalVideoStreams,
+    getIsMuted,
+    getIsScreenSharingOn,
+    getDisplayName,
+    getIdentifier
+  ],
+  (
+    screenShareRemoteParticipantId,
+    remoteParticipants,
+    localVideoStreams,
+    isMuted,
+    isScreenSharingOn,
+    displayName: string | undefined,
+    identifier: string
+  ) => {
+    const screenShareRemoteParticipant =
+      screenShareRemoteParticipantId && remoteParticipants
+        ? remoteParticipants[screenShareRemoteParticipantId]
+        : undefined;
+    const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -108,15 +139,15 @@ export const videoGallerySelector = createSelector(
       localParticipant: {
         userId: identifier,
         displayName: displayName ?? '',
-        isMuted: call?.isMuted,
-        isScreenSharingOn: call?.isScreenSharingOn,
+        isMuted: isMuted,
+        isScreenSharingOn: isScreenSharingOn,
         videoStream: {
           isAvailable: !!localVideoStream,
           isMirrored: localVideoStream?.view?.isMirrored,
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: videoGalleryRemoteParticipantsFromCall(call)
+      remoteParticipants: videoGalleryRemoteParticipantsMemo(remoteParticipants)
     };
   }
 );

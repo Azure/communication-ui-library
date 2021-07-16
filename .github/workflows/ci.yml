@@ -59,9 +59,9 @@ jobs:
           else
             echo "Success, no new api changes found."
           fi
-      # # Tree-shaking check
-      # - name: Treeshaking check
-      #   run: rush build --only @internal/check-treeshaking
+      # Tree-shaking check
+      - name: Treeshaking check
+        run: rush build --only @internal/check-treeshaking
       # Tests
       - name: Test Packages
         run: rush test -t @azure/communication-react
