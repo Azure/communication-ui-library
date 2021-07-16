@@ -360,6 +360,7 @@ export type ChatErrorListener = (event: {
 // @public
 export type ChatOptions = {
     showParticipantPane?: boolean;
+    showTopic?: boolean;
 };
 
 // @public (undocumented)

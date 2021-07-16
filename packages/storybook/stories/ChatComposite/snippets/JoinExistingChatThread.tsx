@@ -33,6 +33,7 @@ export const JoinExistingChatThread: () => JSX.Element = () => {
           token={knobs.current.token}
           displayName={knobs.current.displayName}
           showParticipants={true}
+          showTopic={true}
         />
       ) : (
         <ConfigJoinChatThreadHintBanner />

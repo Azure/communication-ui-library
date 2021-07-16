@@ -601,6 +601,7 @@ export type ChatObjectMethodNames<TName extends string, T> = {
 // @public
 export type ChatOptions = {
     showParticipantPane?: boolean;
+    showTopic?: boolean;
 };
 
 // @public (undocumented)
