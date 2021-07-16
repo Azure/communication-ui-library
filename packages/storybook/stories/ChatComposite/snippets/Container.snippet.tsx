@@ -48,7 +48,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props, credential]);
 
-  if (!!adapter) {
+  if (adapter) {
     return (
       <ChatComposite
         adapter={adapter}

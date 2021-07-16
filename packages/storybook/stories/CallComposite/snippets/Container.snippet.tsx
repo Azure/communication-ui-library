@@ -61,7 +61,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     };
   }, [adapter]);
 
-  if (!!adapter) {
+  if (adapter) {
     return (
       <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} callInvitationURL={props?.callInvitationURL} />
     );
