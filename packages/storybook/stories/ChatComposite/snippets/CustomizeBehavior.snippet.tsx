@@ -39,6 +39,12 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   }, [props]);
 
   return (
-    <>{adapter ? <ChatComposite adapter={adapter} options={{ showParticipantPane: true }} /> : <h3>Loading...</h3>}</>
+    <>
+      {adapter ? (
+        <ChatComposite adapter={adapter} options={{ showParticipantPane: true, showTopic: true }} />
+      ) : (
+        <h3>Loading...</h3>
+      )}
+    </>
   );
 };
