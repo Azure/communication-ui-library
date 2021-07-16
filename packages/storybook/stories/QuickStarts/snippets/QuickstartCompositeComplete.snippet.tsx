@@ -1,3 +1,4 @@
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import {
   CallComposite,
   CallAdapter,
@@ -27,15 +28,20 @@ function App(): JSX.Element {
     const createAdapter = async (): Promise<void> => {
       setChatAdapter(
         await createAzureCommunicationChatAdapter(
-          { communicationUserId: userId },
-          token,
           endpointUrl,
-          threadId,
-          displayName
+          { kind: 'communicationUser', communicationUserId: userId },
+          displayName,
+          new AzureCommunicationTokenCredential(token),
+          threadId
         )
       );
       setCallAdapter(
-        await createAzureCommunicationCallAdapter({ communicationUserId: userId }, token, { groupId }, displayName)
+        await createAzureCommunicationCallAdapter(
+          { kind: 'communicationUser', communicationUserId: userId },
+          displayName,
+          new AzureCommunicationTokenCredential(token),
+          { groupId }
+        )
       );
     };
     createAdapter();

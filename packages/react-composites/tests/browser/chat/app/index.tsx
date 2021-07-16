@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -24,11 +25,11 @@ function App(): JSX.Element {
     const initialize = async (): Promise<void> => {
       setChatAdapter(
         await createAzureCommunicationChatAdapter(
-          { communicationUserId: userId },
-          token,
           endpointUrl,
-          threadId,
-          displayName
+          { kind: 'communicationUser', communicationUserId: userId },
+          displayName,
+          new AzureCommunicationTokenCredential(token),
+          threadId
         )
       );
     };
