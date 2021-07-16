@@ -17,7 +17,6 @@ import { useAdapter } from './adapter/ChatAdapterProvider';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { ThreadStatus, getThreadStatusProps } from './ThreadStatus';
 import {
   chatContainer,
   chatWrapper,
@@ -52,7 +51,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
-  const threadStatusProps = useAdaptedSelector(getThreadStatusProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
   const onRenderMessageAvatar = useMemo(
@@ -72,7 +70,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <ChatHeader {...headerProps} />
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
-          <ThreadStatus {...threadStatusProps} />
           <ErrorBar {...errorBarProps} />
           <MessageThread
             {...messageThreadProps}
