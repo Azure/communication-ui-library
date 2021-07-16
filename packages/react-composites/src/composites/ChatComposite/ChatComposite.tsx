@@ -10,9 +10,11 @@ import {
   CommunicationParticipant,
   DefaultMessageRendererType,
   FluentThemeProvider,
+  LocalizationProvider,
   MessageProps,
   IdentifierProvider,
-  Identifiers
+  Identifiers,
+  Locale
 } from '@internal/react-components';
 
 export type ChatCompositeProps = {
@@ -23,6 +25,12 @@ export type ChatCompositeProps = {
    * Defaults to a light theme if undefined.
    */
   fluentTheme?: PartialTheme | Theme;
+  /**
+   * Locale for the composite.
+   *
+   * Defaults to a English (US) locale if undefined.
+   */
+  locale?: Locale;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -39,10 +47,18 @@ export type ChatOptions = {
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, fluentTheme, options, identifiers, onRenderAvatar, onRenderTypingIndicator, onRenderMessage } =
-    props;
+  const {
+    adapter,
+    fluentTheme,
+    locale,
+    options,
+    identifiers,
+    onRenderAvatar,
+    onRenderTypingIndicator,
+    onRenderMessage
+  } = props;
 
-  return (
+  const chat = (
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <IdentifierProvider identifiers={identifiers}>
         <ChatAdapterProvider adapter={adapter}>
@@ -57,4 +73,6 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
       </IdentifierProvider>
     </FluentThemeProvider>
   );
+
+  return locale ? LocalizationProvider({ locale, children: chat }) : chat;
 };

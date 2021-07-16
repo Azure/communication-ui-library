@@ -11,7 +11,7 @@ import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { PlaceholderProps } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { FluentThemeProvider } from '@internal/react-components';
+import { FluentThemeProvider, LocalizationProvider, Locale } from '@internal/react-components';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
@@ -21,6 +21,12 @@ export type CallCompositeProps = {
    * Defaults to a light theme if undefined.
    */
   fluentTheme?: PartialTheme | Theme;
+  /**
+   * Locale for the composite.
+   *
+   * Defaults to a English (US) locale if undefined.
+   */
+  locale?: Locale;
   callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 };
@@ -72,7 +78,7 @@ const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme } = props;
+  const { adapter, callInvitationURL, fluentTheme, locale } = props;
 
   useEffect(() => {
     (async () => {
@@ -83,11 +89,13 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     })();
   }, [adapter]);
 
-  return (
+  const call = (
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <CallAdapterProvider adapter={adapter}>
         <MainScreen onRenderAvatar={props.onRenderAvatar} callInvitationURL={callInvitationURL} />
       </CallAdapterProvider>
     </FluentThemeProvider>
   );
+
+  return locale ? LocalizationProvider({ locale, children: call }) : call;
 };
