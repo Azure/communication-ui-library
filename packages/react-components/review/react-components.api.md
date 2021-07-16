@@ -19,6 +19,9 @@ import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
+export const ar_SA: Locale;
+
+// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -126,12 +129,18 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
+export const de_DE: Locale;
+
+// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps, ids?: {
     messageTimestamp?: string;
 }) => JSX.Element;
+
+// @public
+export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -160,7 +169,11 @@ export interface ErrorBarProps extends IMessageBarProps {
 
 // @public
 export interface ErrorBarStrings {
+    accessDenied: string;
     sendMessageGeneric: string;
+    sendMessageNotInThisThread: string;
+    unableToReachChatService: string;
+    userNotInThisThread: string;
 }
 
 // @public
@@ -174,6 +187,9 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public
+export const fr_FR: Locale;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -229,13 +245,6 @@ export interface Locale {
 
 // @public
 export const LocaleContext: React_2.Context<Locale>;
-
-// @public (undocumented)
-export const locales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -345,6 +354,13 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
+
+// @public
+export const namedLocales: Record<string, {
+    locale: Locale;
+    englishName: string;
+    displayName: string;
+}>;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
