@@ -143,7 +143,9 @@ export const createChatAdapterWithStubs = async (chatClient: StubChatClient): Pr
     getToken: () => {
       throw new Error('Unimplemented in stub');
     },
-    dispose: () => {}
+    dispose: () => {
+      // Nothing to dispose in the stub.
+    }
   };
   return await createAzureCommunicationChatAdapter(
     'stubEndointUrl',
