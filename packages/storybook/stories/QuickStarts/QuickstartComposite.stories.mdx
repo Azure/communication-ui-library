@@ -3,6 +3,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import { CallComposite, ChatComposite } from '@azure/communication-react';
 import QuickstartCompositeComplete from '!!raw-loader!./snippets/QuickstartCompositeComplete.snippet.tsx';
 import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompositeAdapter.snippet.tsx';
+import LocalizedComposites from '!!raw-loader!./snippets/LocalizedComposites.snippet.tsx';
 
 <Meta id="quickstarts-composites" title="Quickstarts/Get started with Composites" />
 
@@ -118,6 +119,14 @@ npm run start
 If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group.
 Deleting the resource group also deletes any other resources associated with it.
 Learn more about [cleaning up resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#clean-up-resources).
+
+## Localization
+
+If you want to localize your composite, assign a `Locale` to the `locale` prop. You may import one of our locales like `fr_FR` for French (France) in the example below.
+
+<Source code={LocalizedComposites} />
+
+To learn more about locales, go to the [Localization](/?path=/story/localization--page) resource. Information covered there includes the our available locales, customization, and setting RTL.
 
 ## Next Steps
 
