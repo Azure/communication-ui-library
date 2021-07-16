@@ -29,13 +29,14 @@ import {
 
 export type ChatScreenProps = {
   showParticipantPane?: boolean;
+  showTopic?: boolean;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onRenderAvatar, onRenderMessage, onRenderTypingIndicator, showParticipantPane } = props;
+  const { onRenderAvatar, onRenderMessage, onRenderTypingIndicator, showParticipantPane, showTopic } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -67,7 +68,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   return (
     <Stack className={chatContainer} grow>
-      <ChatHeader {...headerProps} />
+      {!!showTopic && <ChatHeader {...headerProps} />}
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
           <ErrorBar {...errorBarProps} />
