@@ -4,5 +4,5 @@
     "baseUrl": "./",
     "rootDir": "../"
   },
-  "include": ["./browser/**/*.test.ts"]
+  "include": ["./browser/**/*.test.ts", "browser/chat/fixture.ts"]
 }

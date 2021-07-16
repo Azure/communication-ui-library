@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import path from 'path';
-import dotenv from 'dotenv';
-import { chromium, Browser, Page } from 'playwright';
-import { PARTICIPANT_NAMES, IDS } from '../config';
-import { dataUiId, createUserAndThread, encodeQueryData } from '../utils';
-import { startServer, stopServer } from './app/server';
-import { test, expect } from '@playwright/test';
-
-dotenv.config({ path: path.join(__dirname, '..', '.env') });
+import { Page } from 'playwright';
+import { IDS } from '../config';
+import { dataUiId } from '../utils';
+import { test } from './fixture';
+import { expect } from '@playwright/test';
 
 const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
 const stubMessageTimestamps = (page: Page): void => {
@@ -30,60 +26,20 @@ const compositeLoaded = async (page: Page): Promise<void> => {
   await page.waitForTimeout(1000);
 };
 
-const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
-const TOPIC_NAME = 'Cowabunga';
-
-const SERVER_URL = 'http://localhost:3000';
-
-const PAGE_VIEWPORT = {
-  width: 1200,
-  height: 768
-};
-
-const MAX_PARTICIPANTS = 2;
-
-let browser: Browser;
-const pages: Array<Page> = [];
-let participants: Array<string>;
-
+// All tests in this suite *must be run sequentially*.
+// The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
+//
+// We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
+// many threads using the same connection string in a short span of time.
 test.describe('Chat Composite E2E Tests', () => {
-  test.beforeAll(async () => {
-    await startServer();
-
-    browser = await chromium.launch({
-      args: ['--start-maximized', '--disable-features=site-per-process'],
-      headless: true
-    });
-
-    participants = PARTICIPANT_NAMES.slice(0, MAX_PARTICIPANTS);
-
-    const users = await createUserAndThread(CONNECTION_STRING, TOPIC_NAME, participants);
-
-    for (let index = 0; index < MAX_PARTICIPANTS; index++) {
-      const qs = encodeQueryData(users[index]);
-      const page = await browser.newPage();
-      await page.setViewportSize(PAGE_VIEWPORT);
-      await page.goto(`${SERVER_URL}?${qs}`, { waitUntil: 'networkidle' });
-      // Important: For ensuring that blinking cursor doesn't get captured in
-      // snapshots and cause a diff in subsequent tests.
-      page.addStyleTag({ content: `* { caret-color: transparent !important; }` });
-      pages.push(page);
-    }
-  });
-
-  test.afterAll(async () => {
-    await stopServer();
-    await browser.close();
-  });
-
-  test('composite pages load completely', async () => {
+  test('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
       await compositeLoaded(pages[idx]);
       expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
     }
   });
 
-  test('page[0] can send message', async () => {
+  test('page[0] can send message', async ({ pages }) => {
     const page = pages[0];
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
@@ -93,7 +49,7 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('send-message.png');
   });
 
-  test('page[1] can receive message', async () => {
+  test('page[1] can receive message', async ({ pages }) => {
     const page = pages[1];
     await page.bringToFront();
     await page.waitForSelector(`[data-ui-status="delivered"]`);
@@ -101,7 +57,7 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('receive-message.png');
   });
 
-  test('page[0] sent message has a viewed status', async () => {
+  test('page[0] sent message has a viewed status', async ({ pages }) => {
     const page = pages[0];
     await page.bringToFront();
     await page.waitForSelector(`[data-ui-status="seen"]`);
@@ -109,7 +65,7 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('read-message-status.png');
   });
 
-  test('page[0] can view typing indicator', async () => {
+  test('page[0] can view typing indicator', async ({ pages, participants }) => {
     const page = pages[1];
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'I am not superstitious. Just a little stitious.');
@@ -120,7 +76,7 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await pages[0].screenshot()).toMatchSnapshot('typing-indicator.png');
   });
 
-  test('typing indicator disappears after 10 seconds on page[0]', async () => {
+  test('typing indicator disappears after 10 seconds on page[0]', async ({ pages }) => {
     const page = pages[0];
     await page.bringToFront();
     // Advance time by 10 seconds to make typingindicator go away
