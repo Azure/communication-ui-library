@@ -59,5 +59,12 @@
     "thursday": "Donnerstag",
     "friday": "Freitag",
     "saturday": "Samstag"
+  },
+  "errorBar": {
+    "unableToReachChatService": "Du bist offline.",
+    "accessDenied": "Kein Zugriff auf Chat-Dienste möglich - bitte überprüfen Sie die bereitgestellten Benutzerdaten.",
+    "userNotInThisThread": "Du bist nicht mehr in diesem Chat-Thread",
+    "sendMessageNotInThisThread": "Nachricht konnte nicht gesendet werden, da Sie sich nicht mehr in diesem Chat-Thread befinden",
+    "sendMessageGeneric": "Fehler beim senden einer nachricht"
   }
 }

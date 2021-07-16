@@ -27,5 +27,6 @@ export const IDS = {
   sendboxTextfield: 'sendbox-textfield',
   participantList: 'participant-list',
   messageContent: 'message-content',
-  messageTimestamp: 'message-timestamp'
+  messageTimestamp: 'message-timestamp',
+  typingIndicator: 'typing-indicator'
 };

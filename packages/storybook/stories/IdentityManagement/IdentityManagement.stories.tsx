@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { useTheme } from '@azure/communication-react';
 import {
   IconButton,
   IIconProps,
@@ -10,8 +11,7 @@ import {
   Stack,
   Text,
   TextField,
-  mergeStyles,
-  useTheme
+  mergeStyles
 } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useState } from 'react';

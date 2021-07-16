@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, useEffect } from 'react';
-import { mergeStyles } from '@fluentui/react';
-import { ThemeProvider, Theme, PartialTheme, getRTL } from '@fluentui/react';
-import { mergeThemes, Provider, teamsTheme, ThemeInput } from '@fluentui/react-northstar';
+import React, { createContext, useContext } from 'react';
+import { ThemeProvider, Theme, PartialTheme, getTheme, getRTL, mergeThemes, mergeStyles } from '@fluentui/react';
+import { mergeThemes as mergeNorthstarThemes, Provider, teamsTheme } from '@fluentui/react-northstar';
 import { lightTheme } from './themes';
 
 /**
@@ -13,7 +12,7 @@ import { lightTheme } from './themes';
 export interface FluentThemeProviderProps {
   /** Children to be themed. */
   children: React.ReactNode;
-  /** Optional theme state for FluentThemeProvider. Defaults to a light theme if not provided. */
+  /** Theme for components. Defaults to a light theme if not provided. */
   fluentTheme?: PartialTheme | Theme;
 }
 
@@ -22,7 +21,12 @@ const wrapper = mergeStyles({
   width: '100%'
 });
 
-const initialFluentNorthstarTheme = mergeThemes(teamsTheme, {
+const defaultTheme = mergeThemes(getTheme(), lightTheme);
+
+/** Theme context for library's react components */
+export const ThemeContext = createContext<Theme>(defaultTheme);
+
+const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
   componentVariables: {
     // suppressing teams theme for chat message links to get better styling from Fluent UI Link
     ChatMessage: {
@@ -41,47 +45,47 @@ const initialFluentNorthstarTheme = mergeThemes(teamsTheme, {
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, children } = props;
   // if fluentTheme is not provided, default to light theme
-  const fluentUITheme = fluentTheme ?? lightTheme;
+  const fluentUITheme: Theme = mergeThemes(defaultTheme, fluentTheme);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [fluentNorthstarTheme, setFluentNorthstarTheme] = useState<ThemeInput<any>>(initialFluentNorthstarTheme);
   const rtl = getRTL();
 
-  useEffect(() => {
-    setFluentNorthstarTheme(
-      mergeThemes(initialFluentNorthstarTheme, {
-        componentVariables: {
-          Chat: {
-            backgroundColor: fluentUITheme?.palette?.white
-          },
-          ChatMessage: {
-            authorColor: fluentUITheme?.palette?.neutralPrimary,
-            contentColor: fluentUITheme?.palette?.neutralPrimary,
-            backgroundColor: fluentUITheme?.palette?.neutralLighter,
-            backgroundColorMine: fluentUITheme?.palette?.themeLight
-          }
+  const fluentNorthstarTheme = mergeNorthstarThemes(initialFluentNorthstarTheme, {
+    componentVariables: {
+      Chat: {
+        backgroundColor: fluentUITheme.palette.white
+      },
+      ChatMessage: {
+        authorColor: fluentUITheme.palette.neutralPrimary,
+        contentColor: fluentUITheme.palette.neutralPrimary,
+        backgroundColor: fluentUITheme.palette.neutralLighter,
+        backgroundColorMine: fluentUITheme.palette.themeLight
+      }
+    },
+    componentStyles: {
+      ChatMessage: {
+        timestamp: {
+          WebkitTextFillColor: fluentUITheme.palette.neutralSecondary
         },
-        componentStyles: {
-          ChatMessage: {
-            timestamp: {
-              WebkitTextFillColor: fluentUITheme?.palette?.neutralSecondary
-            },
-            // This is a bug in fluentui react northstar not reversing left and right margins for the author in message bubbles
-            author: {
-              marginRight: rtl ? '0rem' : '0.75rem',
-              marginLeft: rtl ? '0.75rem' : '0rem'
-            }
-          }
+        // This is a bug in fluentui react northstar not reversing left and right margins for the author in message bubbles
+        author: {
+          marginRight: rtl ? '0rem' : '0.75rem',
+          marginLeft: rtl ? '0.75rem' : '0rem'
         }
-        // add more northstar components to align with Fluent UI theme
-      })
-    );
-  }, [fluentUITheme, rtl]);
+      }
+    }
+    // add more northstar components to align with Fluent UI theme
+  });
 
   return (
-    <ThemeProvider theme={fluentUITheme} className={wrapper}>
-      <Provider theme={fluentNorthstarTheme} className={wrapper} dir={rtl ? 'rtl' : 'ltr'}>
-        {children}
-      </Provider>
-    </ThemeProvider>
+    <ThemeContext.Provider value={fluentUITheme}>
+      <ThemeProvider theme={fluentUITheme} className={wrapper}>
+        <Provider theme={fluentNorthstarTheme} className={wrapper} dir={rtl ? 'rtl' : 'ltr'}>
+          {children}
+        </Provider>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 };
+
+/** React hook to access theme */
+export const useTheme = (): Theme => useContext(ThemeContext);
