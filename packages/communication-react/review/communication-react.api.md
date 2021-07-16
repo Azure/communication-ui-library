@@ -60,6 +60,9 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
+// @public
+export const ar_SA: Locale;
+
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
@@ -757,6 +760,9 @@ export type CustomMessagePayload = {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
+// @public
+export const de_DE: Locale;
+
 // @public (undocumented)
 export type DefaultCallingHandlers = {
     onStartLocalVideo: () => Promise<void>;
@@ -817,6 +823,9 @@ export type DisplayNameChangedListener = (event: {
 export const emptySelector: () => Record<string, never>;
 
 // @public
+export const en_US: Locale;
+
+// @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
@@ -868,6 +877,9 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public
+export const fr_FR: Locale;
 
 // @public (undocumented)
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
@@ -973,13 +985,6 @@ export interface Locale {
 
 // @public
 export const LocaleContext: React_2.Context<Locale>;
-
-// @public (undocumented)
-export const locales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -1122,6 +1127,13 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
+
+// @public
+export const namedLocales: Record<string, {
+    locale: Locale;
+    englishName: string;
+    displayName: string;
+}>;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
