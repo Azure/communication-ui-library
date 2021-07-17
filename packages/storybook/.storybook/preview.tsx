@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FluentThemeProvider, LocalizationProvider, locales } from '@azure/communication-react';
+import { FluentThemeProvider, LocalizationProvider, namedLocales } from '@azure/communication-react';
 import { initializeIcons, loadTheme, setRTL } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
@@ -86,7 +86,7 @@ const withLocalization = (Story: any, context: any) => {
   const localeKey = context.globals.locale as string;
 
   return (
-    <LocalizationProvider locale={locales[localeKey].locale} >
+    <LocalizationProvider locale={namedLocales[localeKey].locale} >
       <Story {...context} />
     </LocalizationProvider>
   );
@@ -129,11 +129,7 @@ export const globalTypes = {
     defaultValue: 'en-US',
     toolbar: {
       icon: 'globe',
-      items: [
-        { value: 'en-US', title: 'English' },
-        { value: 'de', title: 'German' },
-        { value: 'ar', title: 'Arabic' }
-      ],
+      items: Object.keys(namedLocales).map((key) => ({ title: namedLocales[key].englishName, value: key })),
     },
   },
   rtl: {
