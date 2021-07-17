@@ -10,6 +10,9 @@ import { Browser, Page } from '@playwright/test';
 export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 const DATA_UI_ID = 'data-ui-id';
 
+/**
+ * Wait for the ChatComposite on a page to fully load.
+ */
 export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('load');
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
@@ -28,6 +31,17 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
   // By waiting 1 sec before sending a message, page[1] is able to recieve that message.
   await page.waitForTimeout(1000);
 };
+
+/**
+ * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
+ */
+export const stubMessageTimestamps = (page: Page): void => {
+  page.evaluate((messageTimestampId) => {
+    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
+  }, messageTimestampId);
+};
+
+const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
 
 export type IdentityType = {
   userId: string;

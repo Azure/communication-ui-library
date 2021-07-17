@@ -1,17 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Page } from 'playwright';
 import { IDS } from '../config';
-import { dataUiId, waitForCompositeToLoad } from '../utils';
+import { dataUiId, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-
-const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
-const stubMessageTimestamps = (page: Page): void => {
-  page.evaluate((messageTimestampId) => {
-    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
-  }, messageTimestampId);
-};
 
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
