@@ -11,7 +11,7 @@ import { Page, expect } from '@playwright/test';
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe('ErrorBar is shown correctly', async () => {
-  test('with incorrect thread ID', async ({ testBrowser, serverUrl, users }) => {
+  test('with wrong thread ID', async ({ testBrowser, serverUrl, users }) => {
     const user = users[0];
     user.threadId = 'INCORRECT_VALUE';
     const page = await loadPage(testBrowser, serverUrl, user);
@@ -38,6 +38,21 @@ test.describe('ErrorBar is shown correctly', async () => {
     await waitForSendFailure(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
+  });
+
+  test('with wrong endpoint', async ({ testBrowser, serverUrl, users }) => {
+    const user = users[0];
+    // Use a well-formed JWT to simulate an expired / incompatible token.
+    user.endpointUrl = 'https://INCORRECT.VALUE';
+    const page = await loadPage(testBrowser, serverUrl, user);
+    await waitForCompositeToLoad(page);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
+
+    await sendAMessage(page);
+    await waitForSendFailure(page);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
   });
 });
 
