@@ -1,5 +1,5 @@
-import { test, loadPage } from './fixture';
-import { waitForCompositeToLoad } from '../utils';
+import { test } from './fixture';
+import { loadPage, waitForCompositeToLoad } from '../utils';
 import { expect } from '@playwright/test';
 
 test.describe('ErrorBar is shown correctly', async () => {

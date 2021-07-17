@@ -2,7 +2,10 @@
 // Licensed under the MIT license.
 
 import { IDS } from './config';
-import { Page } from '@playwright/test';
+import { ChatClient } from '@azure/communication-chat';
+import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { Browser, Page } from '@playwright/test';
 
 export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 const DATA_UI_ID = 'data-ui-id';
@@ -24,4 +27,66 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
   // Only when page[1] is refreshed is when it will see the message sent by p[1]
   // By waiting 1 sec before sending a message, page[1] is able to recieve that message.
   await page.waitForTimeout(1000);
+};
+
+export type IdentityType = {
+  userId: string;
+  token: string;
+  endpointUrl: string;
+  displayName: string;
+  threadId: string;
+  topic: string;
+};
+
+export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<IdentityType>> => {
+  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
+  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
+  const userAndTokens: CommunicationUserToken[] = [];
+  for (let i = 0; i < displayNames.length; i++) {
+    userAndTokens.push(await tokenClient.createUserAndToken(['chat']));
+  }
+
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
+  const threadId = (await chatClient.createChatThread({ topic: TOPIC_NAME })).chatThread?.id ?? '';
+  await chatClient.getChatThreadClient(threadId).addParticipants({
+    participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
+  });
+
+  return displayNames.map((displayName, i) => ({
+    userId: userAndTokens[i].user.communicationUserId,
+    token: userAndTokens[i].token,
+    endpointUrl,
+    displayName,
+    threadId,
+    topic: TOPIC_NAME
+  }));
+};
+
+export const loadPage = async (browser: Browser, serverUrl: string, user: IdentityType): Promise<Page> => {
+  const qs = encodeQueryData(user);
+  const page = await browser.newPage();
+  await page.setViewportSize(PAGE_VIEWPORT);
+  const url = `${serverUrl}?${qs}`;
+  console.log(`Loading Chat app for ${user.displayName} at ${url}`);
+  await page.goto(url, { waitUntil: 'networkidle' });
+  // Important: For ensuring that blinking cursor doesn't get captured in
+  // snapshots and cause a diff in subsequent tests.
+  page.addStyleTag({ content: `* { caret-color: transparent !important; }` });
+  return page;
+};
+
+const encodeQueryData = (data: IdentityType): string => {
+  const qs: Array<string> = [];
+  for (const d in data) {
+    qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+  }
+  return qs.join('&');
+};
+
+const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
+const TOPIC_NAME = 'Cowabunga';
+
+const PAGE_VIEWPORT = {
+  width: 1200,
+  height: 768
 };
