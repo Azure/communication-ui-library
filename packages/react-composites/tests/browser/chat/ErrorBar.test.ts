@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { test } from './fixture';
 import { loadPage, waitForCompositeToLoad } from '../utils';
 import { expect } from '@playwright/test';
