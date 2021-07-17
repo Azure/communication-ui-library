@@ -65,14 +65,14 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('read-message-status.png');
   });
 
-  test('page[0] can view typing indicator', async ({ pages, participants }) => {
+  test('page[0] can view typing indicator', async ({ pages, users }) => {
     const page = pages[1];
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'I am not superstitious. Just a little stitious.');
     await pages[0].bringToFront();
     await pages[0].waitForSelector(dataUiId(IDS.typingIndicator));
     const el = await pages[0].$(dataUiId(IDS.typingIndicator));
-    expect(await el?.innerHTML()).toContain(participants[1]);
+    expect(await el?.innerHTML()).toContain(users[1].displayName);
     expect(await pages[0].screenshot()).toMatchSnapshot('typing-indicator.png');
   });
 

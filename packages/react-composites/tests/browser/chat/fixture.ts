@@ -15,7 +15,7 @@ dotenv.config({ path: path.join(__dirname, '..', '.env') });
 export interface ChatWorkerFixtures {
   serverUrl: string;
   testBrowser: Browser;
-  participants: string[];
+  users: IdentityType[];
   pages: Array<Page>;
 }
 
@@ -63,13 +63,20 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     { scope: 'worker' }
   ],
   /**
-   * Returns a list of chat thread participants for the test.
+   * Creates a Chat thread and adds users to the thread.
+   *
+   * @returns the created users' identities.
    */
-  participants: [
+  users: [
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
-      await use(PARTICIPANT_NAMES.slice(0, MAX_PARTICIPANTS));
+      const users = await createUserAndThread(
+        CONNECTION_STRING,
+        TOPIC_NAME,
+        PARTICIPANT_NAMES.slice(0, MAX_PARTICIPANTS)
+      );
+      await use(users);
     },
     { scope: 'worker' }
   ],
@@ -79,8 +86,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
    * @returns Array of Page's loaded, one for each participant.
    */
   pages: [
-    async ({ serverUrl, participants, testBrowser }, use) => {
-      const users = await createUserAndThread(CONNECTION_STRING, TOPIC_NAME, participants);
+    async ({ serverUrl, testBrowser, users }, use) => {
       const pages = await Promise.all(
         users.map(async (user) => {
           const qs = encodeQueryData(user);
@@ -99,6 +105,15 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
   ]
 });
 
+export type IdentityType = {
+  userId: string;
+  token: string;
+  endpointUrl: string;
+  displayName: string;
+  threadId: string;
+  topic: string;
+};
+
 const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
 const TOPIC_NAME = 'Cowabunga';
 
@@ -110,15 +125,6 @@ const PAGE_VIEWPORT = {
 };
 
 const MAX_PARTICIPANTS = 2;
-
-type IdentityType = {
-  userId: string;
-  token: string;
-  endpointUrl: string;
-  displayName: string;
-  threadId: string;
-  topic: string;
-};
 
 const createUserAndThread = async (
   resourceConnectionString: string,
