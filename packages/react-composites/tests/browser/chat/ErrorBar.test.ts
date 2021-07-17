@@ -24,6 +24,21 @@ test.describe('ErrorBar is shown correctly', async () => {
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
   });
+
+  test('with expired token', async ({ testBrowser, serverUrl, users }) => {
+    const user = users[0];
+    // Use a well-formed JWT to simulate an expired / incompatible token.
+    user.token = 'INCORRECT_VALUE' + user.token;
+    const page = await loadPage(testBrowser, serverUrl, user);
+    await waitForCompositeToLoad(page);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
+
+    await sendAMessage(page);
+    await waitForSendFailure(page);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
+  });
 });
 
 const sendAMessage = async (page: Page): Promise<void> => {
