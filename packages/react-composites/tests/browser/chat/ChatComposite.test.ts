@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { Page } from 'playwright';
 import { IDS } from '../config';
-import { dataUiId } from '../utils';
+import { dataUiId, waitForCompositeToLoad } from '../utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -13,19 +13,6 @@ const stubMessageTimestamps = (page: Page): void => {
   }, messageTimestampId);
 };
 
-const compositeLoaded = async (page: Page): Promise<void> => {
-  await page.waitForLoadState('load');
-  await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
-  await page.waitForSelector(dataUiId(IDS.participantList));
-  // @TODO
-  // We wait 1 sec here to work around a bug.
-  // If page[0] sends a message to page[1] as soon as the composite is loaded
-  // in the DOM, page[1] doesn't receive the message.
-  // Only when page[1] is refreshed is when it will see the message sent by p[1]
-  // By waiting 1 sec before sending a message, page[1] is able to recieve that message.
-  await page.waitForTimeout(1000);
-};
-
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
 //
@@ -34,7 +21,7 @@ const compositeLoaded = async (page: Page): Promise<void> => {
 test.describe('Chat Composite E2E Tests', () => {
   test('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
-      await compositeLoaded(pages[idx]);
+      await waitForCompositeToLoad(pages[idx]);
       expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
     }
   });

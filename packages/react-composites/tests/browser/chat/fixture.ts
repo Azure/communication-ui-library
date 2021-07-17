@@ -71,11 +71,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
-      const users = await createUserAndThread(
-        CONNECTION_STRING,
-        TOPIC_NAME,
-        PARTICIPANT_NAMES.slice(0, MAX_PARTICIPANTS)
-      );
+      const users = await createChatThreadAndUsers(PARTICIPANT_NAMES.slice(0, MAX_PARTICIPANTS));
       await use(users);
     },
     { scope: 'worker' }
@@ -87,18 +83,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
    */
   pages: [
     async ({ serverUrl, testBrowser, users }, use) => {
-      const pages = await Promise.all(
-        users.map(async (user) => {
-          const qs = encodeQueryData(user);
-          const page = await testBrowser.newPage();
-          await page.setViewportSize(PAGE_VIEWPORT);
-          await page.goto(`${serverUrl}?${qs}`, { waitUntil: 'networkidle' });
-          // Important: For ensuring that blinking cursor doesn't get captured in
-          // snapshots and cause a diff in subsequent tests.
-          page.addStyleTag({ content: `* { caret-color: transparent !important; }` });
-          return page;
-        })
-      );
+      const pages = await Promise.all(users.map(async (user) => loadPage(testBrowser, serverUrl, user)));
       await use(pages);
     },
     { scope: 'worker' }
@@ -126,20 +111,16 @@ const PAGE_VIEWPORT = {
 
 const MAX_PARTICIPANTS = 2;
 
-const createUserAndThread = async (
-  resourceConnectionString: string,
-  topic: string,
-  displayNames: string[]
-): Promise<Array<IdentityType>> => {
-  const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
-  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
+export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<IdentityType>> => {
+  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
+  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
   const userAndTokens: CommunicationUserToken[] = [];
   for (let i = 0; i < displayNames.length; i++) {
     userAndTokens.push(await tokenClient.createUserAndToken(['chat']));
   }
 
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
-  const threadId = (await chatClient.createChatThread({ topic: topic })).chatThread?.id ?? '';
+  const threadId = (await chatClient.createChatThread({ topic: TOPIC_NAME })).chatThread?.id ?? '';
   await chatClient.getChatThreadClient(threadId).addParticipants({
     participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
   });
@@ -150,8 +131,21 @@ const createUserAndThread = async (
     endpointUrl,
     displayName,
     threadId,
-    topic
+    topic: TOPIC_NAME
   }));
+};
+
+export const loadPage = async (browser: Browser, serverUrl: string, user: IdentityType): Promise<Page> => {
+  const qs = encodeQueryData(user);
+  const page = await browser.newPage();
+  await page.setViewportSize(PAGE_VIEWPORT);
+  const url = `${serverUrl}?${qs}`;
+  console.log(`Loading Chat app at ${url}`);
+  await page.goto(url, { waitUntil: 'networkidle' });
+  // Important: For ensuring that blinking cursor doesn't get captured in
+  // snapshots and cause a diff in subsequent tests.
+  page.addStyleTag({ content: `* { caret-color: transparent !important; }` });
+  return page;
 };
 
 const encodeQueryData = (data: IdentityType): string => {
