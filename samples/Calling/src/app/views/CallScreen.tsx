@@ -6,7 +6,7 @@ import { Spinner } from '@fluentui/react';
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { refreshTokenAsync } from '../utils/refreshToken';
+import { createAutoRefreshingCredential } from '../utils/credential';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 
 export interface CallScreenProps {
@@ -27,11 +27,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const adapter = await createAzureCommunicationCallAdapter(
-        userId,
-        token,
-        callLocator,
+        { kind: 'communicationUser', communicationUserId: userId.communicationUserId },
         displayName,
-        refreshTokenAsync(userId.communicationUserId)
+        createAutoRefreshingCredential(userId.communicationUserId, token),
+        callLocator
       );
       adapter.on('callEnded', () => {
         onCallEnded();

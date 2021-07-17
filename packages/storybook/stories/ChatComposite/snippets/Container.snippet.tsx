@@ -1,4 +1,8 @@
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect } from 'react';
@@ -22,15 +26,15 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   useEffect(() => {
     if (props) {
       const createAdapter = async (): Promise<void> => {
-        const newAdapter = await createAzureCommunicationChatAdapter(
-          props.userId,
-          props.token,
-          props.endpointUrl,
-          props.threadId,
-          props.displayName
+        setAdapter(
+          await createAzureCommunicationChatAdapter(
+            props.endpointUrl,
+            getIdentifierKind(props.userId),
+            props.displayName,
+            new AzureCommunicationTokenCredential(props.token),
+            props.threadId
+          )
         );
-
-        setAdapter(newAdapter);
       };
       createAdapter();
     }
