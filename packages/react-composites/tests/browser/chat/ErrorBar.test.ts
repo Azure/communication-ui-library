@@ -27,7 +27,6 @@ test.describe('ErrorBar is shown correctly', async () => {
 
   test('with expired token', async ({ testBrowser, serverUrl, users }) => {
     const user = users[0];
-    // Use a well-formed JWT to simulate an expired / incompatible token.
     user.token = 'INCORRECT_VALUE' + user.token;
     const page = await loadPage(testBrowser, serverUrl, user);
     await waitForCompositeToLoad(page);
@@ -42,7 +41,6 @@ test.describe('ErrorBar is shown correctly', async () => {
 
   test('with wrong endpoint', async ({ testBrowser, serverUrl, users }) => {
     const user = users[0];
-    // Use a well-formed JWT to simulate an expired / incompatible token.
     user.endpointUrl = 'https://INCORRECT.VALUE';
     const page = await loadPage(testBrowser, serverUrl, user);
     await waitForCompositeToLoad(page);
