@@ -69,7 +69,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
-      const users = await createChatThreadAndUsers(PARTICIPANT_NAMES.slice(0, MAX_PARTICIPANTS));
+      const users = await createChatThreadAndUsers(PARTICIPANTS);
       await use(users);
     },
     { scope: 'worker' }
@@ -89,4 +89,4 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
 });
 
 const SERVER_URL = 'http://localhost:3000';
-const MAX_PARTICIPANTS = 2;
+const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
