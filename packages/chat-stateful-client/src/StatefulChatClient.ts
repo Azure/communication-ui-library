@@ -142,6 +142,16 @@ export const createStatefulChatClient = (
 };
 
 /**
+ * A function to modify the state of the StatefulChatClient.
+ *
+ * The function must modify the provided state in place, and return true if any changes were made.
+ * All modifications are ignored unless the function returns true.
+ *
+ * Provided as a callback to the {@Link StatefulChatClient.modifyState} method.
+ */
+export type ChatStateModifier = (state: ChatClientState) => boolean;
+
+/**
  * Internal implementation of {@Link createStatefulChatClient} for dependency injection.
  *
  * Used by tests. Should not be exported out of this package.
@@ -175,6 +185,10 @@ export const createStatefulChatClientWithDeps = (
     configurable: false,
     value: () => context?.getState()
   });
+  Object.defineProperty(proxy, 'modifyState', {
+    configurable: false,
+    value: (modifier: ChatStateModifier) => context?.modifyState(modifier)
+  });
   Object.defineProperty(proxy, 'onStateChange', {
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.onStateChange(handler)
@@ -187,5 +201,6 @@ export const createStatefulChatClientWithDeps = (
     configurable: false,
     value: (targets: ChatErrorTargets[]) => context?.clearError(targets)
   });
+
   return proxy as StatefulChatClient;
 };

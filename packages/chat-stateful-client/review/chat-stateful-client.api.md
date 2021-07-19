@@ -54,6 +54,9 @@ export type ChatObjectMethodNames<TName extends string, T> = {
     [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
 }[keyof T];
 
+// @public
+export type ChatStateModifier = (state: ChatClientState) => boolean;
+
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: {
@@ -73,6 +76,9 @@ export type ChatThreadClientState = {
 export type ChatThreadProperties = {
     topic?: string;
 };
+
+// @public (undocumented)
+export const clearErrors: (targets: ChatErrorTargets[]) => ChatStateModifier;
 
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;

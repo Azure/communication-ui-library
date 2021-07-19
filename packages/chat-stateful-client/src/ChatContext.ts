@@ -18,6 +18,7 @@ import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/commu
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { ChatStateModifier } from './StatefulChatClient';
 
 enableMapSet();
 
@@ -410,6 +411,16 @@ export class ChatContext {
           changed = true;
         }
       }
+    });
+    if (changed) {
+      this.setState(newState);
+    }
+  }
+
+  public modifyState(modifier: ChatStateModifier): void {
+    let changed = false;
+    const newState = produce(this._state, (draft: ChatClientState) => {
+      changed = modifier(draft);
     });
     if (changed) {
       this.setState(newState);
