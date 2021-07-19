@@ -16,6 +16,7 @@ const token = params.token;
 const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 const userId = params.userId;
+const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
@@ -41,7 +42,22 @@ function App(): JSX.Element {
 
   return (
     <>
-      {chatAdapter && <ChatComposite identifiers={IDS} adapter={chatAdapter} options={{ showParticipantPane: true }} />}
+      {chatAdapter && (
+        <ChatComposite
+          identifiers={IDS}
+          adapter={chatAdapter}
+          options={{ showParticipantPane: true, showTopic: true }}
+          onRenderTypingIndicator={
+            customDataModel
+              ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
+              : undefined
+          }
+          onRenderMessage={
+            customDataModel ? () => <text id="custom-data-model-message">Custom Message</text> : undefined
+          }
+          onRenderAvatar={customDataModel ? () => <text id="custom-data-model-avatar">Avatar</text> : undefined}
+        />
+      )}
     </>
   );
 }

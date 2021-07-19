@@ -69,4 +69,26 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await el?.innerHTML()).toBeFalsy();
     expect(await page.screenshot()).toMatchSnapshot('typing-indicator-disappears.png');
   });
+
+  test('page[1] can rejoin the chat', async () => {
+    const page = pages[1];
+    await page.bringToFront();
+    page.reload({ waitUntil: 'networkidle' });
+    await compositeLoaded(page);
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('receive-message.png');
+  });
+
+  test('page[1] can view custom data model', async () => {
+    const page = pages[1];
+    await page.bringToFront();
+    page.goto(`${urls[1]}&customDataModel=true`, { waitUntil: 'networkidle' });
+    await compositeLoaded(page);
+    await page.waitForSelector('#custom-data-model-typing-indicator');
+    await page.waitForSelector('#custom-data-model-message');
+    await page.waitForSelector('#custom-data-model-avatar');
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
+  });
 });
