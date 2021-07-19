@@ -76,8 +76,21 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
   }));
 };
 
-export const loadPage = async (browser: Browser, serverUrl: string, user: IdentityType): Promise<Page> => {
-  const qs = encodeQueryData(user);
+/**
+ * Load a Page with ChatComposite app.
+ * @param browser Browser to create Page in.
+ * @param serverUrl URL to a running test app.
+ * @param user IdentityType for the user to load ChatComposite for.
+ * @param qArgs Extra quary arguments.
+ * @returns
+ */
+export const loadPage = async (
+  browser: Browser,
+  serverUrl: string,
+  user: IdentityType,
+  qArgs?: { [key: string]: string }
+): Promise<Page> => {
+  const qs = encodeQueryData(user, qArgs);
   const page = await browser.newPage();
   await page.setViewportSize(PAGE_VIEWPORT);
   const url = `${serverUrl}?${qs}`;
@@ -89,10 +102,13 @@ export const loadPage = async (browser: Browser, serverUrl: string, user: Identi
   return page;
 };
 
-const encodeQueryData = (data: IdentityType): string => {
+const encodeQueryData = (user: IdentityType, qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
-  for (const d in data) {
-    qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+  for (const d in user) {
+    qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(user[d]));
+  }
+  if (qArgs !== undefined) {
+    Object.entries(qArgs).forEach(([key, value]) => qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value)));
   }
   return qs.join('&');
 };

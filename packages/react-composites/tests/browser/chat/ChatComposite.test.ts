@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IDS } from '../config';
-import { dataUiId, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
+import { dataUiId, loadPage, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -70,21 +70,21 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('typing-indicator-disappears.png');
   });
 
-  test('page[1] can rejoin the chat', async () => {
+  test('page[1] can rejoin the chat', async ({ pages }) => {
     const page = pages[1];
     await page.bringToFront();
     page.reload({ waitUntil: 'networkidle' });
-    await compositeLoaded(page);
+    await waitForCompositeToLoad(page);
     await page.waitForSelector(`[data-ui-status="delivered"]`);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('receive-message.png');
   });
 
-  test('page[1] can view custom data model', async () => {
-    const page = pages[1];
+  test('user[1] can view custom data model', async ({ testBrowser, serverUrl, users }) => {
+    const user = users[1];
+    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
     await page.bringToFront();
-    page.goto(`${urls[1]}&customDataModel=true`, { waitUntil: 'networkidle' });
-    await compositeLoaded(page);
+    await waitForCompositeToLoad(page);
     await page.waitForSelector('#custom-data-model-typing-indicator');
     await page.waitForSelector('#custom-data-model-message');
     await page.waitForSelector('#custom-data-model-avatar');
