@@ -7,7 +7,7 @@ import {
   ChatAdapter,
   createAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
@@ -23,6 +23,16 @@ function App(): JSX.Element {
   //Chat Variables
   const threadId = '<Get thread id from chat service>';
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
+
+  // We can't even initialize the Chat and Call adapters without a well-formed token.
+  const credential = useMemo(() => {
+    try {
+      return new AzureCommunicationTokenCredential(token);
+    } catch {
+      console.error('Failed to construct token credential');
+      return undefined;
+    }
+  }, [token]);
 
   useEffect(() => {
     const createAdapter = async (): Promise<void> => {
@@ -47,12 +57,18 @@ function App(): JSX.Element {
     createAdapter();
   }, []);
 
-  return (
-    <>
-      {chatAdapter && <ChatComposite adapter={chatAdapter} />}
-      {callAdapter && <CallComposite adapter={callAdapter} />}
-    </>
-  );
+  if (!!callAdapter && !!chatAdapter) {
+    return (
+      <>
+        <ChatComposite adapter={chatAdapter} />
+        <CallComposite adapter={callAdapter} />
+      </>
+    );
+  }
+  if (credential === undefined) {
+    return <h3>Failed to construct credential. Provided token is malformed.</h3>;
+  }
+  return <h3>Initializing...</h3>;
 }
 
 export default App;
