@@ -77,17 +77,18 @@ export type ChatThreadProperties = {
     topic?: string;
 };
 
-// @public (undocumented)
-export const clearErrors: (targets: ChatErrorTargets[]) => ChatStateModifier;
-
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+
+// @public (undocumented)
+export const newClearErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateModifier;
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
     clearErrors(targets: ChatErrorTargets[]): void;
     // (undocumented)
     getState(): ChatClientState;
+    modifyState(modifier: ChatStateModifier): void;
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)

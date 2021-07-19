@@ -5,4 +5,4 @@
  * The modifiers package defines common functions for modifying the StatefulChatClient state.
  */
 
-export { newClearErrorsModifier as clearErrors } from './ClearErrors';
+export { newClearErrorsModifier } from './ClearErrors';

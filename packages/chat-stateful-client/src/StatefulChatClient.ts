@@ -17,6 +17,15 @@ export interface StatefulChatClient extends ChatClient {
    * Clear all errors in the state for provided target methods.
    */
   clearErrors(targets: ChatErrorTargets[]): void;
+  /**
+   * Modify the internal state of the StatefulChatClient.
+   *
+   * This is the only way for users of StatefulChatClient to explicitly modify ChatClientState.
+   * If modifier returns true, internal state will be updated.
+   *
+   * @param modifier ChatStateModifier callback. See documentation for {@Link ChatStateModifier}.
+   */
+  modifyState(modifier: ChatStateModifier): void;
 }
 
 export interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
@@ -144,10 +153,14 @@ export const createStatefulChatClient = (
 /**
  * A function to modify the state of the StatefulChatClient.
  *
- * The function must modify the provided state in place, and return true if any changes were made.
- * All modifications are ignored unless the function returns true.
- *
  * Provided as a callback to the {@Link StatefulChatClient.modifyState} method.
+ *
+ * The function must modify the provided state in place as much as possible.
+ * Making large modifications can lead to bad performance by causing spurious rerendering of the UI.
+ *
+ * Modifier function must return true if and only if some modification was made to the state.
+ *
+ * Consider using commonly used modifier functions exported from this package.
  */
 export type ChatStateModifier = (state: ChatClientState) => boolean;
 
