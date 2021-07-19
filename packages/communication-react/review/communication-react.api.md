@@ -620,6 +620,9 @@ export type ChatReturnProps<Component extends (props: any) => JSX.Element> = Get
 export type ChatState = ChatUIState & ChatCompositeClientState;
 
 // @public
+export type ChatStateModifier = (state: ChatClientState) => boolean;
+
+// @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
 
 // @public (undocumented)
@@ -1153,6 +1156,9 @@ export const namedLocales: Record<string, {
     displayName: string;
 }>;
 
+// @public (undocumented)
+export const newClearErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateModifier;
+
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
@@ -1439,9 +1445,9 @@ export type StatefulCallClientOptions = {
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
-    clearErrors(targets: ChatErrorTargets[]): void;
     // (undocumented)
     getState(): ChatClientState;
+    modifyState(modifier: ChatStateModifier): void;
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
