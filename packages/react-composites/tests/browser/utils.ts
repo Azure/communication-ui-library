@@ -7,6 +7,7 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
 
+export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 const DATA_UI_ID = 'data-ui-id';
 const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
 const PAGE_VIEWPORT = {
@@ -14,8 +15,6 @@ const PAGE_VIEWPORT = {
   height: 768
 };
 const TOPIC_NAME = 'Cowabunga';
-
-export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 
 /**
  * Wait for the ChatComposite on a page to fully load.
