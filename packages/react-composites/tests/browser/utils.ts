@@ -7,8 +7,15 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
 
-export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 const DATA_UI_ID = 'data-ui-id';
+const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
+const PAGE_VIEWPORT = {
+  width: 1200,
+  height: 768
+};
+const TOPIC_NAME = 'Cowabunga';
+
+export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 
 /**
  * Wait for the ChatComposite on a page to fully load.
@@ -111,12 +118,4 @@ const encodeQueryData = (user: IdentityType, qArgs?: { [key: string]: string }):
     Object.entries(qArgs).forEach(([key, value]) => qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value)));
   }
   return qs.join('&');
-};
-
-const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
-const TOPIC_NAME = 'Cowabunga';
-
-const PAGE_VIEWPORT = {
-  width: 1200,
-  height: 768
 };
