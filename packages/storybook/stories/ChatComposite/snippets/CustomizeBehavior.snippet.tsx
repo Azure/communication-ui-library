@@ -1,4 +1,8 @@
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
 
@@ -18,11 +22,11 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
 
     const createAdapter = async (): Promise<void> => {
       const chatAdapter = await createAzureCommunicationChatAdapter(
-        props.userId,
-        props.token,
         props.endpointUrl,
-        props.threadId,
-        props.displayName
+        getIdentifierKind(props.userId),
+        props.displayName,
+        new AzureCommunicationTokenCredential(props.token),
+        props.threadId
       );
 
       // Custom behavior: Intercept messages from the local user and convert

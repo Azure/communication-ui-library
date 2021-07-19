@@ -11,12 +11,16 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
+
+// @public
+export const ar_SA: Locale;
 
 // @public
 export interface BaseCustomStylesProps {
@@ -48,10 +52,9 @@ export type CallParticipant = CommunicationParticipant & {
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
-export interface CameraButtonProps extends IButtonProps {
+export interface CameraButtonProps extends ControlBarButtonProps {
     localVideoViewOption?: VideoStreamOptions;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
-    showLabel?: boolean;
     strings?: Partial<CameraButtonStrings>;
 }
 
@@ -103,6 +106,25 @@ export interface ComponentStrings {
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
+// @public
+export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
+
+// @public
+export interface ControlBarButtonProps extends IButtonProps {
+    labelKey?: string;
+    onRenderOffIcon?: IRenderFunction<IButtonProps>;
+    onRenderOnIcon?: IRenderFunction<IButtonProps>;
+    showLabel?: boolean;
+    strings?: ControlBarButtonStrings;
+}
+
+// @public
+export interface ControlBarButtonStrings {
+    label?: string;
+    offLabel?: string;
+    onLabel?: string;
+}
+
 // @public (undocumented)
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
@@ -126,18 +148,25 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
+export const de_DE: Locale;
+
+// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps, ids?: {
+    messageTimestamp?: string;
+}) => JSX.Element;
+
+// @public
+export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
-export interface EndCallButtonProps extends IButtonProps {
+export interface EndCallButtonProps extends ControlBarButtonProps {
     onHangUp?: () => Promise<void>;
-    showLabel?: boolean;
     strings?: EndCallButtonStrings;
 }
 
@@ -176,6 +205,9 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public
+export const fr_FR: Locale;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -231,13 +263,6 @@ export interface Locale {
 
 // @public
 export const LocaleContext: React_2.Context<Locale>;
-
-// @public (undocumented)
-export const locales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -336,9 +361,8 @@ export type MessageTypes = 'chat' | 'system' | 'custom';
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
-export interface MicrophoneButtonProps extends IButtonProps {
+export interface MicrophoneButtonProps extends ControlBarButtonProps {
     onToggleMicrophone?: () => Promise<void>;
-    showLabel?: boolean;
     strings?: Partial<MicrophoneButtonStrings>;
 }
 
@@ -349,10 +373,17 @@ export interface MicrophoneButtonStrings {
 }
 
 // @public
+export const namedLocales: Record<string, {
+    locale: Locale;
+    englishName: string;
+    displayName: string;
+}>;
+
+// @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
-export interface OptionsButtonProps extends IButtonProps {
+export interface OptionsButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
@@ -361,7 +392,6 @@ export interface OptionsButtonProps extends IButtonProps {
     selectedCamera?: OptionsDevice;
     selectedMicrophone?: OptionsDevice;
     selectedSpeaker?: OptionsDevice;
-    showLabel?: boolean;
     speakers?: OptionsDevice[];
     strings?: Partial<OptionsButtonStrings>;
 }
@@ -429,11 +459,10 @@ export type ParticipantListProps = {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends IButtonProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
     callInvitationURL?: string;
     onMuteAll?: () => void;
     participantListProps: ParticipantListProps;
-    showLabel?: boolean;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStylesProps;
 }
@@ -463,9 +492,8 @@ export interface PlaceholderProps {
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
-export interface ScreenShareButtonProps extends IButtonProps {
+export interface ScreenShareButtonProps extends ControlBarButtonProps {
     onToggleScreenShare?: () => Promise<void>;
-    showLabel?: boolean;
     strings?: Partial<ScreenShareButtonStrings>;
 }
 

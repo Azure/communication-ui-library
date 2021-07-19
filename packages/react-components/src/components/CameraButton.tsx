@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, DefaultButton, IButtonProps, Label, mergeStyles } from '@fluentui/react';
 import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
-import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
 const defaultLocalVideoViewOption = {
   scalingMode: 'Crop',
@@ -26,13 +25,7 @@ export interface CameraButtonStrings {
 /**
  * Props for CameraButton component
  */
-export interface CameraButtonProps extends IButtonProps {
-  /**
-   * Whether the label is displayed or not.
-   * @defaultValue `false`
-   */
-  showLabel?: boolean;
-
+export interface CameraButtonProps extends ControlBarButtonProps {
   /**
    * Utility property for using this component with `communication react eventHandlers`.
    * Maps directly to the `onClick` property.
@@ -50,6 +43,11 @@ export interface CameraButtonProps extends IButtonProps {
   strings?: Partial<CameraButtonStrings>;
 }
 
+const onRenderCameraOnIcon = (): JSX.Element => <Video20Filled key={'videoIconKey'} primaryFill="currentColor" />;
+const onRenderCameraOffIcon = (): JSX.Element => (
+  <VideoOff20Filled key={'videoOffIconKey'} primaryFill="currentColor" />
+);
+
 /**
  * `CameraButton` allows you to easily create a component for rendering a camera button.
  * It can be used in your ControlBar component for example.
@@ -57,32 +55,11 @@ export interface CameraButtonProps extends IButtonProps {
  * @param props - of type CameraButtonProps
  */
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
-  const { showLabel = false, styles, onRenderIcon, onRenderText, localVideoViewOption, onToggleCamera } = props;
-  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
+  const { localVideoViewOption, onToggleCamera } = props;
   const [waitForCamera, setWaitForCamera] = useState(false);
 
-  const defaultRenderIcon = (props?: IButtonProps): JSX.Element => {
-    return props?.checked ? (
-      <Video20Filled key={'videoIconKey'} primaryFill="currentColor" />
-    ) : (
-      <VideoOff20Filled key={'videoOffIconKey'} primaryFill="currentColor" />
-    );
-  };
-
   const localeStrings = useLocale().strings.cameraButton;
-  const onLabel = props.strings?.onLabel ?? localeStrings.onLabel;
-  const offLabel = props.strings?.offLabel ?? localeStrings.offLabel;
-
-  const defaultRenderText = useCallback(
-    (props?: IButtonProps): JSX.Element => {
-      return (
-        <Label key={'videoLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {props?.checked ? onLabel : offLabel}
-        </Label>
-      );
-    },
-    [onLabel, offLabel]
-  );
+  const strings = { ...localeStrings, ...props.strings };
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
@@ -94,13 +71,14 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   }, [localVideoViewOption, onToggleCamera]);
 
   return (
-    <DefaultButton
+    <ControlBarButton
       {...props}
       disabled={props.disabled || waitForCamera}
       onClick={onToggleCamera ? onToggleClick : props.onClick}
-      styles={componentStyles}
-      onRenderIcon={onRenderIcon ?? defaultRenderIcon}
-      onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
+      onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
+      onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
+      strings={strings}
+      labelKey={props.labelKey ?? 'cameraButtonLabel'}
     />
   );
 };

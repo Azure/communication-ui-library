@@ -1,4 +1,4 @@
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
   CallAdapter,
@@ -10,7 +10,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
   token: string;
-  groupId: string;
+  locator: string;
   displayName: string;
   avatarInitials: string;
   callInvitationURL?: string;
@@ -20,13 +20,18 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
   const [adapter, setAdapter] = useState<CallAdapter>();
 
   useEffect(() => {
-    if (props.token && props.groupId) {
-      const groupLocator = {
-        groupId: props.groupId
-      };
+    if (props.token && props.locator) {
+      const callLocator = isTeamsMeetingLink(props.locator)
+        ? { meetingLink: props.locator }
+        : { groupId: props.locator };
       const createAdapter = async (): Promise<void> => {
         setAdapter(
-          await createAzureCommunicationCallAdapter(props.userId, props.token, groupLocator, props.displayName)
+          await createAzureCommunicationCallAdapter(
+            { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            props.displayName,
+            new AzureCommunicationTokenCredential(props.token),
+            callLocator
+          )
         );
       };
       createAdapter();
@@ -63,3 +68,5 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
     </>
   );
 };
+
+const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
