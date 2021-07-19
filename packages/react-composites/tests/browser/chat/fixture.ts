@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PARTICIPANT_NAMES } from '../config';
 import { IdentityType, createChatThreadAndUsers, loadPage } from '../utils';
 import { startServer, stopServer } from './app/server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
@@ -9,6 +8,9 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
+
+const SERVER_URL = 'http://localhost:3000';
+const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 
 export interface ChatWorkerFixtures {
   serverUrl: string;
@@ -87,6 +89,3 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     { scope: 'worker' }
   ]
 });
-
-const SERVER_URL = 'http://localhost:3000';
-const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
