@@ -11,6 +11,18 @@ import { Page, expect } from '@playwright/test';
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe('ErrorBar is shown correctly', async () => {
+  test('not shown when nothing is wrong', async ({ testBrowser, serverUrl, users }) => {
+    const page = await loadPage(testBrowser, serverUrl, users[0]);
+    await waitForCompositeToLoad(page);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
+
+    await sendAMessage(page);
+    await waitForSendSuccess(page);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
+  });
+
   test('with wrong thread ID', async ({ testBrowser, serverUrl, users }) => {
     const user = users[0];
     user.threadId = 'INCORRECT_VALUE';
@@ -61,4 +73,8 @@ const sendAMessage = async (page: Page): Promise<void> => {
 
 const waitForSendFailure = async (page: Page): Promise<void> => {
   await page.waitForSelector(`[data-ui-status="failed"]`);
+};
+
+const waitForSendSuccess = async (page: Page): Promise<void> => {
+  await page.waitForSelector(`[data-ui-status="delivered"]`);
 };
