@@ -27,12 +27,6 @@ export interface CameraButtonStrings {
  */
 export interface CameraButtonProps extends ControlBarButtonProps {
   /**
-   * Whether the label is displayed or not.
-   * @defaultValue `false`
-   */
-  showLabel?: boolean;
-
-  /**
    * Utility property for using this component with `communication react eventHandlers`.
    * Maps directly to the `onClick` property.
    */
