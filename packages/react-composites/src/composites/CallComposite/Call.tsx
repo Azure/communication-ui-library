@@ -23,14 +23,37 @@ export type CallCompositeProps = {
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  options?: CallOptions;
+};
+
+/**
+ * Additional customizations for the call composite
+ */
+export type CallOptions = {
+  /**
+   * Choose to hide the whole call control bar
+   * @defaultValue false
+   */
+  hideCallControls?: boolean;
+  /**
+   * Choose to hide the screen share button
+   * @defaultValue false
+   */
+  hideScreenShareControl?: boolean;
+  /**
+   * Choose to hide the participants button
+   * @defaultValue false
+   */
+  hideParticipantsControl?: boolean;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   callInvitationURL?: string;
+  callOptions?: CallOptions;
 };
 
-const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = ({ callInvitationURL, onRenderAvatar, callOptions }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -64,7 +87,9 @@ const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX
             customPage ? adapter.setPage(customPage) : adapter.setPage('error');
           }}
           onRenderAvatar={onRenderAvatar}
-          showParticipants={true}
+          showControlBar={!callOptions?.hideCallControls}
+          showParticipantsButton={!callOptions?.hideParticipantsControl}
+          showScreenShareButton={!callOptions?.hideScreenShareControl}
           callInvitationURL={callInvitationURL}
         />
       );
@@ -72,7 +97,7 @@ const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme } = props;
+  const { adapter } = props;
 
   useEffect(() => {
     (async () => {
@@ -84,9 +109,13 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
   }, [adapter]);
 
   return (
-    <FluentThemeProvider fluentTheme={fluentTheme}>
+    <FluentThemeProvider fluentTheme={props.fluentTheme}>
       <CallAdapterProvider adapter={adapter}>
-        <MainScreen onRenderAvatar={props.onRenderAvatar} callInvitationURL={callInvitationURL} />
+        <MainScreen
+          onRenderAvatar={props.onRenderAvatar}
+          callInvitationURL={props.callInvitationURL}
+          callOptions={props.options}
+        />
       </CallAdapterProvider>
     </FluentThemeProvider>
   );

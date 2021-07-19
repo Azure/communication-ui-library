@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
@@ -13,9 +13,12 @@ export const BasicExample: () => JSX.Element = () => {
   const [containerProps, setContainerProps] = useState();
 
   const knobs = useRef({
-    connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Server Simulator'),
-    displayName: text('Display Name', '', 'Server Simulator'),
-    callInvitationURL: text('Optional URL to invite other participants to the call', '', 'Server Simulator')
+    connectionString: text(COMPOSITE_STRING_CONNECTIONSTRING, '', 'Required Fields'),
+    displayName: text('Display Name', '', 'Required Fields'),
+    callInvitationURL: text('URL to invite other participants to the call', '', 'Customizations'),
+    hideCallControls: boolean('Hide call controls', false, 'Customizations'),
+    hideScreenShareControl: boolean('Hide screen share control', false, 'Customizations'),
+    hideParticipantsControl: boolean('Hide people control', false, 'Customizations')
   });
 
   useEffect(() => {
@@ -35,6 +38,11 @@ export const BasicExample: () => JSX.Element = () => {
           displayName={knobs.current.displayName}
           {...containerProps}
           callInvitationURL={knobs.current.callInvitationURL}
+          options={{
+            hideCallControls: knobs.current.hideCallControls,
+            hideScreenShareControl: knobs.current.hideScreenShareControl,
+            hideParticipantsControl: knobs.current.hideParticipantsControl
+          }}
         />
       ) : (
         <ConfigHintBanner />

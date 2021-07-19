@@ -4,4 +4,4 @@
 export { Call as CallComposite } from './Call';
 export * from './adapter';
 
-export type { CallCompositeProps } from './Call';
+export type { CallCompositeProps, CallOptions } from './Call';

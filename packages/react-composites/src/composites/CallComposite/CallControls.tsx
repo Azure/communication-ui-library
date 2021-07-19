@@ -17,12 +17,13 @@ import { usePropsFor } from './hooks/usePropsFor';
 export type GroupCallControlsProps = {
   onEndCallClick(): void;
   compressedMode?: boolean;
-  showParticipants?: boolean;
+  showParticipantsButton?: boolean;
+  showScreenShareButton?: boolean;
   callInvitationURL?: string;
 };
 
 export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
-  const { callInvitationURL, compressedMode, showParticipants = false, onEndCallClick } = props;
+  const { callInvitationURL, compressedMode, showParticipantsButton, onEndCallClick, showScreenShareButton } = props;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
@@ -39,8 +40,8 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
     <ControlBar layout="dockedBottom">
       <CameraButton {...cameraButtonProps} showLabel={!compressedMode} />
       <MicrophoneButton {...microphoneButtonProps} showLabel={!compressedMode} />
-      <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
-      {showParticipants && (
+      {!!showScreenShareButton && <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />}
+      {!!showParticipantsButton && (
         <ParticipantsButton
           {...participantsButtonProps}
           showLabel={!compressedMode}

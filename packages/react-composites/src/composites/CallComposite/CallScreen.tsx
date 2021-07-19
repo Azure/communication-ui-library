@@ -33,7 +33,9 @@ import { ScreenSharePopup } from './ScreenSharePopup';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
-  showParticipants?: boolean;
+  showControlBar?: boolean;
+  showParticipantsButton?: boolean;
+  showScreenShareButton?: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
@@ -42,7 +44,15 @@ export interface CallScreenProps {
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, showParticipants, endCallHandler, callErrorHandler, onRenderAvatar } = props;
+  const {
+    callInvitationURL,
+    showControlBar,
+    showParticipantsButton,
+    showScreenShareButton,
+    endCallHandler,
+    callErrorHandler,
+    onRenderAvatar
+  } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -148,15 +158,18 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          <Stack.Item styles={callControlsStyles}>
-            <Stack className={callControlsContainer}>
-              <CallControls
-                onEndCallClick={endCallHandler}
-                showParticipants={showParticipants}
-                callInvitationURL={callInvitationURL}
-              />
-            </Stack>
-          </Stack.Item>
+          {!!showControlBar && (
+            <Stack.Item styles={callControlsStyles}>
+              <Stack className={callControlsContainer}>
+                <CallControls
+                  onEndCallClick={endCallHandler}
+                  showParticipantsButton={showParticipantsButton}
+                  showScreenShareButton={showScreenShareButton}
+                  callInvitationURL={callInvitationURL}
+                />
+              </Stack>
+            </Stack.Item>
+          )}
         </>
       ) : (
         <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />
