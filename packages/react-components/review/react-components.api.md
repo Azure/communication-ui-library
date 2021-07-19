@@ -10,13 +10,20 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+<<<<<<< HEAD
 import { IRenderFunction } from '@fluentui/react';
+=======
+import { IMessageBarProps } from '@fluentui/react';
+>>>>>>> origin/main
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
+
+// @public
+export const ar_SA: Locale;
 
 // @public
 export interface BaseCustomStylesProps {
@@ -88,6 +95,7 @@ export type CommunicationParticipant = {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
+    errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -143,11 +151,19 @@ export type CustomMessagePayload = {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
-// @public (undocumented)
+// @public
+export const de_DE: Locale;
+
+// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps, ids?: {
+    messageTimestamp?: string;
+}) => JSX.Element;
+
+// @public
+export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -164,6 +180,28 @@ export interface EndCallButtonStrings {
 }
 
 // @public
+export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
+
+// @public
+export interface ErrorBarProps extends IMessageBarProps {
+    activeErrors: ErrorType[];
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
+    strings?: ErrorBarStrings;
+}
+
+// @public
+export interface ErrorBarStrings {
+    accessDenied: string;
+    sendMessageGeneric: string;
+    sendMessageNotInThisThread: string;
+    unableToReachChatService: string;
+    userNotInThisThread: string;
+}
+
+// @public
+export type ErrorType = keyof ErrorBarStrings;
+
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -171,6 +209,9 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public
+export const fr_FR: Locale;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -203,14 +244,11 @@ export interface IdentifierProviderProps {
 
 // @public (undocumented)
 export interface Identifiers {
-    // (undocumented)
     messageContent: string;
-    // (undocumented)
     messageTimestamp: string;
-    // (undocumented)
     participantList: string;
-    // (undocumented)
     sendboxTextfield: string;
+    typingIndicator: string;
 }
 
 // @public (undocumented)
@@ -229,13 +267,6 @@ export interface Locale {
 
 // @public
 export const LocaleContext: React_2.Context<Locale>;
-
-// @public (undocumented)
-export const locales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -261,9 +292,9 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
+    strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public
@@ -344,6 +375,13 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
+
+// @public
+export const namedLocales: Record<string, {
+    locale: Locale;
+    englishName: string;
+    displayName: string;
+}>;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -519,6 +557,9 @@ export type SystemMessagePayload = {
 };
 
 // @public
+export const ThemeContext: React_2.Context<Theme>;
+
+// @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
@@ -547,8 +588,11 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
 
-// @public (undocumented)
+// @public
 export const useLocale: () => Locale;
+
+// @public
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

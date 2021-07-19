@@ -4,6 +4,9 @@
 export { TypingIndicator } from './TypingIndicator';
 export type { TypingIndicatorProps, TypingIndicatorStrings, TypingIndicatorStylesProps } from './TypingIndicator';
 
+export { ErrorBar } from './ErrorBar';
+export type { ErrorBarProps, ErrorBarStrings, ErrorType } from './ErrorBar';
+
 export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 

@@ -8,9 +8,9 @@ import {
   StatefulChatClient
 } from '@internal/chat-stateful-client';
 import { DefaultChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
+import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
-
-import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
 import type {
   ChatMessageReceivedEvent,
   ChatThreadPropertiesUpdatedEvent,
@@ -20,7 +20,6 @@ import type {
 } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
-import { createAzureCommunicationUserCredential } from '../../../utils';
 import {
   ChatAdapter,
   ChatEvent,
@@ -123,6 +122,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.removeParticipant = this.removeParticipant.bind(this);
     this.setTopic = this.setTopic.bind(this);
     this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
+    this.clearErrors = this.clearErrors.bind(this);
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
   }
@@ -193,6 +193,10 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
     });
+  }
+
+  clearErrors(errorTypes: ErrorType[]): void {
+    this.handlers.onDismissErrors(errorTypes);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
@@ -294,18 +298,17 @@ const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage
 };
 
 export const createAzureCommunicationChatAdapter = async (
-  userId: CommunicationUserIdentifier,
-  token: string,
   endpointUrl: string,
-  threadId: string,
+  userId: CommunicationIdentifierKind,
   displayName: string,
-  refreshTokenCallback?: (() => Promise<string>) | undefined
+  credential: CommunicationTokenCredential,
+  threadId: string
 ): Promise<ChatAdapter> => {
   const chatClient = createStatefulChatClient({
-    userId: getIdentifierKind(userId) as CommunicationUserKind,
+    userId: userId,
     displayName,
     endpoint: endpointUrl,
-    credential: createAzureCommunicationUserCredential(token, refreshTokenCallback)
+    credential: credential
   });
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 

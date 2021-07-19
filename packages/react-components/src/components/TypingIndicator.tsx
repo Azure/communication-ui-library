@@ -8,6 +8,7 @@ import { BaseCustomStylesProps, CommunicationParticipant } from '../types';
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 import { useLocale } from '../localization/LocalizationProvider';
 import { formatSpanElements } from '../localization/localizationUtils';
+import { useIdentifiers } from '../identifiers';
 
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
   /** Styles for each typing user's displayName. */
@@ -191,7 +192,7 @@ const getSpanElements = (
   return formatSpanElements(typingString, variables);
 };
 
-const getIndicatorComponent = (
+const IndicatorComponent = (
   typingUsers: CommunicationParticipant[],
   strings: TypingIndicatorStrings,
   onRenderUser?: (users: CommunicationParticipant) => JSX.Element,
@@ -199,6 +200,7 @@ const getIndicatorComponent = (
 ): JSX.Element => {
   const typingUsersMentioned: CommunicationParticipant[] = [];
   let totalCharacterCount = 0;
+  const ids = useIdentifiers();
 
   for (const typingUser of typingUsers) {
     if (!typingUser.displayName) {
@@ -238,7 +240,12 @@ const getIndicatorComponent = (
   );
 
   return (
-    <Stack horizontal className={mergeStyles(typingIndicatorStringStyle, styles?.typingString)} key="typingStringKey">
+    <Stack
+      horizontal
+      data-ui-id={ids.typingIndicator}
+      className={mergeStyles(typingIndicatorStringStyle, styles?.typingString)}
+      key="typingStringKey"
+    >
       {spanElements}
     </Stack>
   );
@@ -253,7 +260,7 @@ export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
 
   const typingUsersToRender = typingUsers.filter((typingUser) => typingUser.displayName !== undefined);
 
-  const indicatorComponent = getIndicatorComponent(
+  const indicatorComponent = IndicatorComponent(
     typingUsersToRender,
     { ...strings.typingIndicator, ...props.strings },
     onRenderUser,

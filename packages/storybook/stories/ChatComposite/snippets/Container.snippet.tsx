@@ -1,4 +1,8 @@
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect } from 'react';
@@ -11,6 +15,7 @@ export type ContainerProps = {
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   showParticipants?: boolean;
+  showTopic?: boolean;
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
@@ -23,11 +28,11 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
       const createAdapter = async (): Promise<void> => {
         setAdapter(
           await createAzureCommunicationChatAdapter(
-            props.userId,
-            props.token,
             props.endpointUrl,
-            props.threadId,
-            props.displayName
+            getIdentifierKind(props.userId),
+            props.displayName,
+            new AzureCommunicationTokenCredential(props.token),
+            props.threadId
           )
         );
       };
@@ -41,7 +46,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         <ChatComposite
           adapter={adapter}
           fluentTheme={props.fluentTheme}
-          options={{ showParticipantPane: props.showParticipants }}
+          options={{ showParticipantPane: props.showParticipants, showTopic: props.showTopic }}
         />
       ) : (
         <h3>Loading...</h3>

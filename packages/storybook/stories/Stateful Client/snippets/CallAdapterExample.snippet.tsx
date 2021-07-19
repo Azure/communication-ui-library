@@ -1,5 +1,5 @@
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
 
@@ -17,10 +17,10 @@ export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element 
       const createAdapter = async (): Promise<void> => {
         setCallAdapter(
           await createAzureCommunicationCallAdapter(
-            props.userId,
-            props.accessToken,
-            props.callLocator,
-            props.displayName
+            { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            props.displayName,
+            new AzureCommunicationTokenCredential(props.accessToken),
+            props.callLocator
           )
         );
       };
