@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
+import React from 'react';
 import { DefaultButton, IButtonProps, IRenderFunction, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -55,47 +55,37 @@ export interface ControlBarButtonProps extends IButtonProps {
   onRenderOffIcon?: IRenderFunction<IButtonProps>;
 }
 
+const DefaultRenderText = (props?: ControlBarButtonProps): JSX.Element => {
+  const labelText =
+    props?.text ?? props?.strings?.label ?? (props?.checked ? props?.strings?.onLabel : props?.strings?.offLabel);
+  return (
+    <Label key={props?.labelKey} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+      {labelText}
+    </Label>
+  );
+};
+
+const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null => {
+  return props?.checked
+    ? props?.onRenderOnIcon
+      ? props?.onRenderOnIcon()
+      : null
+    : props?.onRenderOffIcon
+    ? props?.onRenderOffIcon()
+    : null;
+};
+
 /**
  * Default button styled for the Control Bar. This can be used to create custom buttons that are styled the same as other buttons provided by the UI Library.
  */
 export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
-  const {
-    showLabel = false,
-    labelKey,
-    styles,
-    onRenderText,
-    onRenderIcon,
-    onRenderOnIcon,
-    onRenderOffIcon,
-    strings
-  } = props;
-
-  const defaultRenderText = useCallback(
-    (props?: IButtonProps): JSX.Element => {
-      const labelText = props?.text ?? strings?.label ?? (props?.checked ? strings?.onLabel : strings?.offLabel);
-      return (
-        <Label key={labelKey} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {labelText}
-        </Label>
-      );
-    },
-    [labelKey, strings?.label, strings?.offLabel, strings?.onLabel]
-  );
-
-  const defaultRenderIcon = useCallback(
-    (props?: IButtonProps): JSX.Element | null => {
-      return props?.checked ? (onRenderOnIcon ? onRenderOnIcon() : null) : onRenderOffIcon ? onRenderOffIcon() : null;
-    },
-    [onRenderOnIcon, onRenderOffIcon]
-  );
-
-  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
+  const componentStyles = concatStyleSets(controlButtonStyles, props.styles ?? {});
   return (
     <DefaultButton
       {...props}
       styles={componentStyles}
-      onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
-      onRenderIcon={onRenderIcon ?? defaultRenderIcon}
+      onRenderText={!!props.showLabel ? props.onRenderText ?? DefaultRenderText : undefined}
+      onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
     />
   );
 };

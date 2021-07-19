@@ -76,7 +76,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       disabled={props.disabled || waitForCamera}
       onClick={onToggleCamera ? onToggleClick : props.onClick}
       onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
-      onRenderOffIcon={props.onRenderOnIcon ?? onRenderCameraOffIcon}
+      onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'cameraButtonLabel'}
     />
