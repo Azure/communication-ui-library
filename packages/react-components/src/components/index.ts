@@ -44,6 +44,9 @@ export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
 export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
 
+export { ControlBarButton } from './ControlBarButton';
+export type { ControlBarButtonProps, ControlBarButtonStrings } from './ControlBarButton';
+
 export { EndCallButton } from './EndCallButton';
 export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 
