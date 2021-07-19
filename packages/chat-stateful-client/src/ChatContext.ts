@@ -19,6 +19,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { ChatStateModifier } from './StatefulChatClient';
+import { newClearErrorsModifier } from './modifiers';
 
 enableMapSet();
 
@@ -50,6 +51,16 @@ export class ChatContext {
 
   public getState(): ChatClientState {
     return this._state;
+  }
+
+  public modifyState(modifier: ChatStateModifier): void {
+    let changed = false;
+    const newState = produce(this._state, (draft: ChatClientState) => {
+      changed = modifier(draft);
+    });
+    if (changed) {
+      this.setState(newState);
+    }
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
@@ -345,13 +356,7 @@ export class ChatContext {
     return async (...args: Args): Promise<R> => {
       try {
         const ret = await f(...args);
-
-        if (clearTargets !== undefined) {
-          this.clearError(clearTargets);
-        } else {
-          this.clearError([target]);
-        }
-
+        this.modifyState(newClearErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);
@@ -379,13 +384,7 @@ export class ChatContext {
     return (...args: Args): R => {
       try {
         const ret = f(...args);
-
-        if (clearTargets !== undefined) {
-          this.clearError(clearTargets);
-        } else {
-          this.clearError([target]);
-        }
-
+        this.modifyState(newClearErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);
@@ -400,31 +399,6 @@ export class ChatContext {
         draft.latestErrors[target] = error;
       })
     );
-  }
-
-  public clearError(targets: ChatErrorTargets[]): void {
-    let changed = false;
-    const newState = produce(this._state, (draft: ChatClientState) => {
-      for (const target of targets) {
-        if (draft.latestErrors[target] !== undefined) {
-          delete draft.latestErrors[target];
-          changed = true;
-        }
-      }
-    });
-    if (changed) {
-      this.setState(newState);
-    }
-  }
-
-  public modifyState(modifier: ChatStateModifier): void {
-    let changed = false;
-    const newState = produce(this._state, (draft: ChatClientState) => {
-      changed = modifier(draft);
-    });
-    if (changed) {
-      this.setState(newState);
-    }
   }
 
   // This is a mutating function, only use it inside of a produce() function

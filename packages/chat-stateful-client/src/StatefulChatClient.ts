@@ -3,7 +3,7 @@
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
 import { ChatContext } from './ChatContext';
-import { ChatClientState, ChatErrorTargets } from './ChatClientState';
+import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
@@ -13,10 +13,6 @@ export interface StatefulChatClient extends ChatClient {
   getState(): ChatClientState;
   onStateChange(handler: (state: ChatClientState) => void): void;
   offStateChange(handler: (state: ChatClientState) => void): void;
-  /**
-   * Clear all errors in the state for provided target methods.
-   */
-  clearErrors(targets: ChatErrorTargets[]): void;
   /**
    * Modify the internal state of the StatefulChatClient.
    *
@@ -209,10 +205,6 @@ export const createStatefulChatClientWithDeps = (
   Object.defineProperty(proxy, 'offStateChange', {
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.offStateChange(handler)
-  });
-  Object.defineProperty(proxy, 'clearErrors', {
-    configurable: false,
-    value: (targets: ChatErrorTargets[]) => context?.clearError(targets)
   });
 
   return proxy as StatefulChatClient;

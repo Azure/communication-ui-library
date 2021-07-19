@@ -85,7 +85,6 @@ export const newClearErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateM
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
-    clearErrors(targets: ChatErrorTargets[]): void;
     // (undocumented)
     getState(): ChatClientState;
     modifyState(modifier: ChatStateModifier): void;
