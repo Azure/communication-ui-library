@@ -39,34 +39,26 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (customDataModel) {
-    return (
-      <>
-        {chatAdapter && (
-          <ChatComposite
-            identifiers={IDS}
-            adapter={chatAdapter}
-            options={{ showParticipantPane: true, showTopic: true }}
-            onRenderTypingIndicator={() => <text id="custom-data-model-typing-indicator">Someone is typing...</text>}
-            onRenderMessage={() => <text id="custom-data-model-message">Custom Message</text>}
-            onRenderAvatar={() => <text id="custom-data-model-avatar">Avatar</text>}
-          />
-        )}
-      </>
-    );
-  } else {
-    return (
-      <>
-        {chatAdapter && (
-          <ChatComposite
-            identifiers={IDS}
-            adapter={chatAdapter}
-            options={{ showParticipantPane: true, showTopic: true }}
-          />
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      {chatAdapter && (
+        <ChatComposite
+          identifiers={IDS}
+          adapter={chatAdapter}
+          options={{ showParticipantPane: true, showTopic: true }}
+          onRenderTypingIndicator={
+            customDataModel
+              ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
+              : undefined
+          }
+          onRenderMessage={
+            customDataModel ? () => <text id="custom-data-model-message">Custom Message</text> : undefined
+          }
+          onRenderAvatar={customDataModel ? () => <text id="custom-data-model-avatar">Avatar</text> : undefined}
+        />
+      )}
+    </>
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
