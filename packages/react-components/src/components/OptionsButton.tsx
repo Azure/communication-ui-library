@@ -1,19 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
+import React from 'react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
-import {
-  DefaultButton,
-  IButtonProps,
-  IContextualMenuItem,
-  Label,
-  concatStyleSets,
-  mergeStyles,
-  ContextualMenuItemType
-} from '@fluentui/react';
+import { IContextualMenuItem, ContextualMenuItemType } from '@fluentui/react';
 import { useLocale } from '../localization';
-import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
 /**
  * Device to represent a camera, microphone, or speaker for component OptionsButton component
@@ -66,12 +58,7 @@ export interface OptionsButtonStrings {
 /**
  * Props for OptionsButton component
  */
-export interface OptionsButtonProps extends IButtonProps {
-  /**
-   * Whether the label is displayed or not.
-   * @defaultValue `false`
-   */
-  showLabel?: boolean;
+export interface OptionsButtonProps extends ControlBarButtonProps {
   /**
    * Available microphones for selection
    */
@@ -217,6 +204,10 @@ const generateDefaultMenuProps = (
   return defaultMenuProps;
 };
 
+const onRenderOptionsIcon = (): JSX.Element => (
+  <MoreHorizontal20Filled primaryFill="currentColor" key={'optionsIconKey'} />
+);
+
 /**
  * `OptionsButton` allows you to easily create a component for rendering an options button. It can be used in your ControlBar component for example.
  * This button should contain dropdown menu items you can define through its property `menuProps`.
@@ -225,38 +216,21 @@ const generateDefaultMenuProps = (
  * @param props - of type OptionsButtonProps
  */
 export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
-  const { showLabel = false, styles, onRenderIcon, onRenderText } = props;
+  const { onRenderIcon } = props;
 
   const localeStrings = useLocale().strings.optionsButton;
   const strings = { ...localeStrings, ...props.strings };
 
   const defaultMenuProps = generateDefaultMenuProps(props, strings);
 
-  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
-
-  const defaultRenderIcon = (): JSX.Element => {
-    return <MoreHorizontal20Filled primaryFill="currentColor" key={'optionsIconKey'} />;
-  };
-
-  const defaultRenderText = useCallback(
-    (props?: IButtonProps): JSX.Element => {
-      return (
-        <Label key={'optionsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {strings.label}
-        </Label>
-      );
-    },
-    [strings.label]
-  );
-
   return (
-    <DefaultButton
+    <ControlBarButton
       {...props}
       menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
-      styles={componentStyles}
-      onRenderIcon={onRenderIcon ?? defaultRenderIcon}
-      onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
+      onRenderIcon={onRenderIcon ?? onRenderOptionsIcon}
+      strings={strings}
+      labelKey={props.labelKey ?? 'optionsButtonLabel'}
     />
   );
 };

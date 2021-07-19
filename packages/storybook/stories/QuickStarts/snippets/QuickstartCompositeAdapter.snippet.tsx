@@ -5,7 +5,7 @@ import {
   ChatAdapter,
   createAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
@@ -22,30 +22,48 @@ function App(): JSX.Element {
   const threadId = '<Get thread id from chat service>';
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
-  useEffect(() => {
-    const createAdapter = async (): Promise<void> => {
-      setChatAdapter(
-        await createAzureCommunicationChatAdapter(
-          endpointUrl,
-          { kind: 'communicationUser', communicationUserId: userId },
-          displayName,
-          new AzureCommunicationTokenCredential(token),
-          threadId
-        )
-      );
-      setCallAdapter(
-        await createAzureCommunicationCallAdapter(
-          { kind: 'communicationUser', communicationUserId: userId },
-          displayName,
-          new AzureCommunicationTokenCredential(token),
-          { groupId }
-        )
-      );
-    };
-    createAdapter();
-  }, []);
+  // We can't even initialize the Chat and Call adapters without a well-formed token.
+  const credential = useMemo(() => {
+    try {
+      return new AzureCommunicationTokenCredential(token);
+    } catch {
+      console.error('Failed to construct token credential');
+      return undefined;
+    }
+  }, [token]);
 
-  return <>{callAdapter && chatAdapter && <h1>Hooray! You set up adapters 🎉🎉🎉</h1>}</>;
+  useEffect(() => {
+    if (credential !== undefined) {
+      const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
+        setChatAdapter(
+          await createAzureCommunicationChatAdapter(
+            endpointUrl,
+            { kind: 'communicationUser', communicationUserId: userId },
+            displayName,
+            credential,
+            threadId
+          )
+        );
+        setCallAdapter(
+          await createAzureCommunicationCallAdapter(
+            { kind: 'communicationUser', communicationUserId: userId },
+            displayName,
+            credential,
+            { groupId }
+          )
+        );
+      };
+      createAdapter(credential);
+    }
+  }, [credential]);
+
+  if (!!callAdapter && !!chatAdapter) {
+    return <h1>Hooray! You set up adapters 🎉🎉🎉</h1>;
+  }
+  if (credential === undefined) {
+    return <h3>Failed to construct credential. Provided token is malformed.</h3>;
+  }
+  return <h3>Initializing...</h3>;
 }
 
 export default App;
