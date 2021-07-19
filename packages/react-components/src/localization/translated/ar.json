@@ -58,6 +58,8 @@
     "wednesday": "الأربعاء",
     "thursday": "يوم الخميس",
     "friday": "جمعة",
-    "saturday": "السبت"
+    "saturday": "السبت",
+    "participantJoined": "انضم إلى الدردشة",
+    "participantLeft": "ترك المحادثة"
   }
 }

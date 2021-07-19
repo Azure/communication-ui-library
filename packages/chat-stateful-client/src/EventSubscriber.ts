@@ -75,6 +75,20 @@ export class EventSubscriber {
       this.chatContext.createThreadIfNotExist(event.threadId);
       this.chatContext.setParticipants(event.threadId, participantsToAdd);
     });
+    this.fetchLastParticipantMessage(event.threadId, 'participantAdded');
+  };
+
+  // This is a hot fix that no participant message is received for onChatMessageReceived event, which should be handled by JS SDK
+  private fetchLastParticipantMessage = async (
+    threadId: string,
+    actionType: 'participantAdded' | 'participantRemoved'
+  ): Promise<void> => {
+    for await (const message of this.chatClient.getChatThreadClient(threadId).listMessages()) {
+      if (message.type === actionType) {
+        this.chatContext.setChatMessage(threadId, { ...message, status: 'delivered' });
+        break;
+      }
+    }
   };
 
   private onParticipantsRemoved = (event: ParticipantsRemovedEvent): void => {
@@ -82,6 +96,7 @@ export class EventSubscriber {
       return participant.id;
     });
     this.chatContext.deleteParticipants(event.threadId, participantIds);
+    this.fetchLastParticipantMessage(event.threadId, 'participantRemoved');
   };
 
   private onReadReceiptReceived = (event: ReadReceiptReceivedEvent): void => {

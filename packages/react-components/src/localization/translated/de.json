@@ -58,6 +58,8 @@
     "wednesday": "Mittwoch",
     "thursday": "Donnerstag",
     "friday": "Freitag",
-    "saturday": "Samstag"
+    "saturday": "Samstag",
+    "participantJoined": "Ist dem Chat beigetreten.",
+    "participantLeft": "verließ den Chat."
   }
 }
