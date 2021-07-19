@@ -5,6 +5,9 @@ import React, { useCallback } from 'react';
 import { DefaultButton, IButtonProps, IRenderFunction, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
+/**
+ * Strings of ControlBarButton that can be overridden
+ */
 export interface ControlBarButtonStrings {
   /**
    * Label of the button. This supersedes onLabel or offLabel if used.

@@ -34,11 +34,8 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
-<<<<<<< HEAD
-import { IRenderFunction } from '@fluentui/react';
-=======
 import { IMessageBarProps } from '@fluentui/react';
->>>>>>> origin/main
+import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -423,7 +420,6 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 export interface CameraButtonProps extends ControlBarButtonProps {
     localVideoViewOption?: VideoStreamOptions;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
-    showLabel?: boolean;
     strings?: Partial<CameraButtonStrings>;
 }
 
@@ -718,7 +714,7 @@ export interface ControlBarButtonProps extends IButtonProps {
     strings?: ControlBarButtonStrings;
 }
 
-// @public (undocumented)
+// @public
 export interface ControlBarButtonStrings {
     label?: string;
     offLabel?: string;
