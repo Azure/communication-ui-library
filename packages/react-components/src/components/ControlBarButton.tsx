@@ -84,7 +84,7 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
     <DefaultButton
       {...props}
       styles={componentStyles}
-      onRenderText={!!props.showLabel ? props.onRenderText ?? DefaultRenderText : undefined}
+      onRenderText={props.showLabel ? props.onRenderText ?? DefaultRenderText : undefined}
       onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
     />
   );
