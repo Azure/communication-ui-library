@@ -4,6 +4,16 @@ Todo: _documentation to follow_
 
 ## Testing
 
+This package contains unit-tests as browser (E2E) tests.
+
+### Unit-tests
+
+We use Jest as our test runner. Run these tests with:
+
+```sh
+rushx test
+```
+
 ### Automated Browser Tests (E2E)
 
 Currently, browser based tests for Chat composite on Chrome, Firefox and Webkit using Playwright are supported.
@@ -27,10 +37,16 @@ Sample `tests/browser/.env` file
 CONNECTION_STRING=<Resource Connection String>
 ```
 
-#### Running the tests
+#### Build the browser tests
 
-We use Jest as our test runner. Browser based tests can also be run using Jest.
+The browser tests require an extra build step. This build step isn't run by default when the package is built.
 
 ```sh
-rushx test
+rushx build:e2e:chat
+```
+
+#### Run the browser tests
+
+```sh
+rushx test:e2e:chat
 ```
