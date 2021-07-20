@@ -14,6 +14,8 @@ const getChatThreadFromTeamsLink = (teamsMeetingLink: string): string => {
   // Extract just the chat guid from the link, stripping away the call locator ID
   threadId = threadId.split(/^(.*?@thread\.v2)/gm)[1];
 
+  if (!threadId || threadId.length === 0) throw 'Could not get chat thread from teams link';
+
   return threadId;
 };
 

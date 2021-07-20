@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
 import { text } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
@@ -28,8 +29,8 @@ export const BasicExample: () => JSX.Element = () => {
   }, [knobs]);
 
   return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={{ root: COMPOSITE_EXPERIENCE_CONTAINER_STYLE }}>
       {meetingProps ? <MeetingExperience {...meetingProps} /> : <ConfigHintBanner />}
-    </div>
+    </Stack>
   );
 };
