@@ -16,7 +16,7 @@
     "build:e2e:chat": "webpack-cli build --config ./tests/browser/chat/app/webpack.config.js --mode=production --env production",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
-    "test:e2e:chat": "playwright test chat",
+    "test:e2e:chat": "playwright test --workers=1 tests.browser.chat",
     "snapshot:update": "npm run test -- --update-snapshot",
     "api-extractor": "tsc && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen",

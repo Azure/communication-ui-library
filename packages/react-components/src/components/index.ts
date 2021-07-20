@@ -4,6 +4,9 @@
 export { TypingIndicator } from './TypingIndicator';
 export type { TypingIndicatorProps, TypingIndicatorStrings, TypingIndicatorStylesProps } from './TypingIndicator';
 
+export { ErrorBar } from './ErrorBar';
+export type { ErrorBarProps, ErrorBarStrings, ErrorType } from './ErrorBar';
+
 export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutType } from './GridLayout';
 
@@ -40,6 +43,9 @@ export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
 
 export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
+
+export { ControlBarButton } from './ControlBarButton';
+export type { ControlBarButtonProps, ControlBarButtonStrings } from './ControlBarButton';
 
 export { EndCallButton } from './EndCallButton';
 export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';

@@ -6,9 +6,10 @@ import {
   GridLayout,
   MicrophoneButton,
   ScreenShareButton,
-  VideoTile
+  VideoTile,
+  useTheme
 } from '@azure/communication-react';
-import { Stack, mergeStyles, useTheme } from '@fluentui/react';
+import { Stack, mergeStyles } from '@fluentui/react';
 import React from 'react';
 
 const teamsTheme = {

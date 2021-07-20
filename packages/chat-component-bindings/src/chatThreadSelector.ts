@@ -98,6 +98,7 @@ export const chatThreadSelector = createSelector(
           (message) =>
             message.type.toLowerCase() === ACSKnownMessageType.text ||
             message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
+            message.type.toLowerCase() === ACSKnownMessageType.html ||
             message.type === ACSKnownMessageType.participantAdded ||
             message.type === ACSKnownMessageType.participantRemoved ||
             message.type === ACSKnownMessageType.topicUpdated ||

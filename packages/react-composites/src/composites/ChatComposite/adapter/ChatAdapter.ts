@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
+import type { ErrorType } from '@internal/react-components';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
 
@@ -48,6 +49,10 @@ export interface ChatAdapter {
   removeParticipant(userId: string): Promise<void>;
   setTopic(topicName: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+  /**
+   * Clear errors for given error types from {@Link ChatAdapter.getState.latestErrors}.
+   */
+  clearErrors(errorTypes: ErrorType[]): void;
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;

@@ -1,4 +1,8 @@
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
 
@@ -18,11 +22,11 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
 
     const createAdapter = async (): Promise<void> => {
       const chatAdapter = await createAzureCommunicationChatAdapter(
-        props.userId,
-        props.token,
         props.endpointUrl,
-        props.threadId,
-        props.displayName
+        getIdentifierKind(props.userId),
+        props.displayName,
+        new AzureCommunicationTokenCredential(props.token),
+        props.threadId
       );
 
       // Custom behavior: Intercept messages from the local user and convert
@@ -38,5 +42,13 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     createAdapter();
   }, [props]);
 
-  return <>{adapter ? <ChatComposite adapter={adapter} /> : <h3>Loading...</h3>}</>;
+  return (
+    <>
+      {adapter ? (
+        <ChatComposite adapter={adapter} options={{ showParticipantPane: true, showTopic: true }} />
+      ) : (
+        <h3>Loading...</h3>
+      )}
+    </>
+  );
 };

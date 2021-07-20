@@ -61,10 +61,12 @@ const MessageStatusIndicatorStory = (): JSX.Element => {
   return (
     <MessageStatusIndicatorComponent
       status={select<MessageStatus>('Message Status', ['delivered', 'sending', 'seen', 'failed'], 'delivered')}
-      deliveredTooltipText={text('Delivered icon tooltip text', 'Sent')}
-      sendingTooltipText={text('Sending icon tooltip text', 'Sending')}
-      seenTooltipText={text('Seen icon tooltip text', 'Seen')}
-      failedToSendTooltipText={text('Failed to send icon tooltip text', 'Failed to send')}
+      strings={{
+        deliveredTooltipText: text('Delivered icon tooltip text', 'Sent'),
+        sendingTooltipText: text('Sending icon tooltip text', 'Sending'),
+        seenTooltipText: text('Seen icon tooltip text', 'Seen'),
+        failedToSendTooltipText: text('Failed to send icon tooltip text', 'Failed to send')
+      }}
     />
   );
 };

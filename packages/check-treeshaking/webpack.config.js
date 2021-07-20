@@ -8,6 +8,7 @@ const entries = Object.keys(forbiddenDependencies);
 
 module.exports = {
   entry: entries,
+  mode: 'production',
   module: {
     rules: [
       {

@@ -55,7 +55,7 @@ export const ThemeExample: () => JSX.Element = () => {
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
       {containerProps ? (
-        <ContosoChatContainer {...containerProps} fluentTheme={getTheme(knobs.current.theme)} />
+        <ContosoChatContainer {...containerProps} fluentTheme={getTheme(knobs.current.theme)} showParticipants={true} />
       ) : (
         <ConfigHintBanner />
       )}

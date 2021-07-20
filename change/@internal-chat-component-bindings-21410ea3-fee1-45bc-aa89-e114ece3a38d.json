@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed MessageThread selector to allow messages of type 'html'.",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

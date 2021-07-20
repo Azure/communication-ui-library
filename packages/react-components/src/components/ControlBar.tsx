@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Stack, useTheme, getRTL } from '@fluentui/react';
+import { IStyle, mergeStyles, Stack, getRTL } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { controlBarStyles } from './styles/ControlBar.styles';
+import { useTheme } from '../theming';
 import { isDarkThemed } from '../theming/themeUtils';
 
 const mainDivStyle: IStyle = { position: 'relative', height: '100%', width: '100%' };

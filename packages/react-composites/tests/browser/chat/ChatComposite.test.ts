@@ -1,82 +1,94 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import path from 'path';
-import dotenv from 'dotenv';
-import { chromium, Browser, Page } from 'playwright';
-import { PARTICIPANT_NAMES } from '../config';
-import { dataUiId, createUserAndThread, encodeQueryData } from '../utils';
-import { startServer, stopServer } from './app/server';
-import { test, expect } from '@playwright/test';
+import { IDS } from '../config';
+import { dataUiId, loadPage, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
+import { test } from './fixture';
+import { expect } from '@playwright/test';
 
-dotenv.config({ path: path.join(__dirname, '..', '.env') });
-
-const stubTimestamps = (page: Page): void => {
-  page.evaluate(() => {
-    Array.from(document.getElementsByClassName('ui-chat__message__timestamp')).forEach(
-      (i) => (i.innerHTML = 'timestamp')
-    );
-  });
-};
-
-const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
-const TOPIC_NAME = 'Cowabunga';
-
-const SERVER_URL = 'http://localhost:3000';
-
-const PAGE_VIEWPORT = {
-  width: 1200,
-  height: 768
-};
-
-const MAX_PARTICIPANTS = 2;
-
-let browser: Browser;
-const pages: Array<Page> = [];
-let participants: Array<string>;
-
+// All tests in this suite *must be run sequentially*.
+// The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
+//
+// We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
+// many threads using the same connection string in a short span of time.
 test.describe('Chat Composite E2E Tests', () => {
-  test.beforeAll(async () => {
-    await startServer();
-
-    browser = await chromium.launch({
-      args: ['--start-maximized', '--disable-features=site-per-process'],
-      headless: true
-    });
-
-    participants = PARTICIPANT_NAMES.slice(0, MAX_PARTICIPANTS);
-
-    const users = await createUserAndThread(CONNECTION_STRING, TOPIC_NAME, participants);
-
-    for (let index = 0; index < MAX_PARTICIPANTS; index++) {
-      const qs = encodeQueryData(users[index]);
-      const page = await browser.newPage();
-      await page.setViewportSize(PAGE_VIEWPORT);
-      await page.goto(`${SERVER_URL}?${qs}`, { waitUntil: 'networkidle' });
-      pages.push(page);
+  test('composite pages load completely', async ({ pages }) => {
+    for (const idx in pages) {
+      await waitForCompositeToLoad(pages[idx]);
+      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
     }
   });
 
-  test.afterAll(async () => {
-    await stopServer();
-    await browser.close();
+  test('page[0] can send message', async ({ pages }) => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page.keyboard.press('Enter');
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('send-message.png');
   });
 
-  test('composite loads correctly with participant list', async () => {
-    await pages[0].bringToFront();
-    await pages[0].waitForSelector(dataUiId('chat-screen'));
-    await pages[0].waitForSelector(dataUiId('sendbox-textfield'));
-    await pages[0].waitForSelector(dataUiId('participant-list'));
-    stubTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot('1-chat-screen.png', { threshold: 1 });
+  test('page[1] can receive message', async ({ pages }) => {
+    const page = pages[1];
+    await page.bringToFront();
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('receive-message.png');
   });
 
-  test('can send message', async () => {
+  test('page[0] sent message has a viewed status', async ({ pages }) => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.waitForSelector(`[data-ui-status="seen"]`);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('read-message-status.png');
+  });
+
+  test('page[0] can view typing indicator', async ({ pages, users }) => {
+    const page = pages[1];
+    await page.bringToFront();
+    await page.type(dataUiId(IDS.sendboxTextfield), 'I am not superstitious. Just a little stitious.');
     await pages[0].bringToFront();
-    await pages[0].waitForSelector(dataUiId('sendbox-textfield'));
-    await pages[0].type(dataUiId('sendbox-textfield'), 'How the turn tables');
-    await pages[0].keyboard.press('Enter');
-    await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
-    stubTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot('2-send-message.png', { threshold: 1 });
+    await pages[0].waitForSelector(dataUiId(IDS.typingIndicator));
+    const el = await pages[0].$(dataUiId(IDS.typingIndicator));
+    expect(await el?.innerHTML()).toContain(users[1].displayName);
+    expect(await pages[0].screenshot()).toMatchSnapshot('typing-indicator.png');
+  });
+
+  test('typing indicator disappears after 10 seconds on page[0]', async ({ pages }) => {
+    const page = pages[0];
+    await page.bringToFront();
+    // Advance time by 10 seconds to make typingindicator go away
+    await page.evaluate(() => {
+      const currentDate = new Date();
+      currentDate.setSeconds(currentDate.getSeconds() + 10);
+      Date.now = () => currentDate.getTime();
+    });
+    await page.waitForTimeout(1000);
+    const el = await page.$(dataUiId(IDS.typingIndicator));
+    expect(await el?.innerHTML()).toBeFalsy();
+    expect(await page.screenshot()).toMatchSnapshot('typing-indicator-disappears.png');
+  });
+
+  test('page[1] can rejoin the chat', async ({ pages }) => {
+    const page = pages[1];
+    await page.bringToFront();
+    page.reload({ waitUntil: 'networkidle' });
+    await waitForCompositeToLoad(page);
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('receive-message.png');
+  });
+
+  test('user[1] can view custom data model', async ({ testBrowser, serverUrl, users }) => {
+    const user = users[1];
+    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
+    await page.bringToFront();
+    await waitForCompositeToLoad(page);
+    await page.waitForSelector('#custom-data-model-typing-indicator');
+    await page.waitForSelector('#custom-data-model-message');
+    await page.waitForSelector('#custom-data-model-avatar');
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
   });
 });
