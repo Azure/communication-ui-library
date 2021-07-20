@@ -599,6 +599,7 @@ export type ChatObjectMethodNames<TName extends string, T> = {
 
 // @public
 export type ChatOptions = {
+    showErrorBar?: boolean;
     showParticipantPane?: boolean;
     showTopic?: boolean;
 };
