@@ -9,7 +9,7 @@ const palette = theme.palette;
 export const sidePaneContainerStyles: IStackItemStyles = {
   root: {
     height: '100%',
-    minWidth: '21.5rem'
+    width: '21.5rem'
   }
 };
 
