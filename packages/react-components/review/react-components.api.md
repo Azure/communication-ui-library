@@ -145,7 +145,7 @@ export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
 export type CustomMessagePayload = {
-    createdOn: string;
+    createdOn: Date;
     messageId: string;
     content?: string;
 };

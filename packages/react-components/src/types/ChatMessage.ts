@@ -46,7 +46,7 @@ export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
 
 export type CustomMessagePayload = {
-  createdOn: string;
+  createdOn: Date;
   messageId: string;
   content?: string;
 };
