@@ -47,7 +47,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
         />
       )}
-      <OptionsButton {...optionsButtonProps} showLabel={!compressedMode} />
+      <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />
       <EndCallButton
         {...hangUpButtonProps}
         onHangUp={onHangUp}
