@@ -4,10 +4,10 @@
 import React, { useCallback, useState } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallCompositeInternal } from '../CallComposite/Call';
+import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
-import { CommunicationParticipant } from '@internal/react-components';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
 
 export type MeetingCompositeProps = {
@@ -26,14 +26,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { callAdapter, fluentTheme } = props;
 
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
-
-  // Future work item: get correct participants
-  const myUserId = callAdapter.getState().userId.communicationUserId;
-  const selfParticipant: CommunicationParticipant = {
-    displayName: callAdapter.getState().displayName,
-    userId: myUserId
-  };
-  const [participants] = useState<CommunicationParticipant[]>([selfParticipant]);
   callAdapter.onStateChange((newState) => {
     setCurrentPage(newState.page);
   });
@@ -71,12 +63,9 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
           <EmbeddedChatPane chatAdapter={props.chatAdapter} fluentTheme={props.fluentTheme} onClose={closePane} />
         )}
         {showPeople && (
-          <EmbeddedPeoplePane
-            inviteLink={props.meetingInvitationURL}
-            myUserId={myUserId}
-            participants={participants}
-            onClose={closePane}
-          />
+          <CallAdapterProvider adapter={props.callAdapter}>
+            <EmbeddedPeoplePane inviteLink={props.meetingInvitationURL} onClose={closePane} />
+          </CallAdapterProvider>
         )}
       </Stack>
       {showPaneControls && (
