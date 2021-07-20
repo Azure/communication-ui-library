@@ -38,6 +38,7 @@ export type ChatOptions = {
    * UNSTABLE: Feature flag to enable ErrorBar.
    *
    * This option will be removed once ErrorBar is stable.
+   * @experimental
    *
    * @defaultValue false
    */
