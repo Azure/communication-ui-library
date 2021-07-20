@@ -1,5 +1,5 @@
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Theme, PartialTheme } from '@fluentui/react';
 import {
   CallAdapter,
@@ -8,7 +8,7 @@ import {
   createAzureCommunicationCallAdapter,
   createAzureCommunicationChatAdapter
 } from '@internal/react-composites';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 export type MeetingExampleProps = {
   userId: CommunicationUserIdentifier;
@@ -22,15 +22,22 @@ export type MeetingExampleProps = {
 };
 
 export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
-  // Creating an adapter is asynchronous.
-  // An update to `config` triggers a new adapter creation, via the useEffect block.
-  // When the adapter becomes ready, the state update triggers a re-render of the ChatComposite.
   const [callAdapter, setCallAdapter] = useState<CallAdapter>();
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
+
+  const credential = useMemo(() => {
+    try {
+      return new AzureCommunicationTokenCredential(props.token);
+    } catch {
+      console.error('Failed to construct token credential');
+      return undefined;
+    }
+  }, [props.token]);
+
   useEffect(() => {
     if (
       props &&
-      props.token &&
+      credential &&
       props.locator &&
       props.displayName &&
       props.threadId &&
@@ -39,30 +46,35 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
     ) {
       const createAdapters = async (): Promise<void> => {
         setCallAdapter(
-          await createAzureCommunicationCallAdapter(props.userId, props.token, props.locator, props.displayName)
+          await createAzureCommunicationCallAdapter(
+            { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            props.displayName,
+            credential,
+            props.locator
+          )
         );
 
         setChatAdapter(
           await createAzureCommunicationChatAdapter(
-            props.userId,
-            props.token,
             props.endpointUrl,
-            props.threadId,
-            props.displayName
+            { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            props.displayName,
+            credential,
+            props.threadId
           )
         );
       };
       createAdapters();
     }
-  }, [props]);
+  }, [credential, props]);
 
-  return (
-    <>
-      {callAdapter && chatAdapter ? (
-        <MeetingComposite callAdapter={callAdapter} chatAdapter={chatAdapter} fluentTheme={props.fluentTheme} />
-      ) : (
-        <h3>Loading...</h3>
-      )}
-    </>
-  );
+  if (callAdapter && chatAdapter) {
+    return <MeetingComposite callAdapter={callAdapter} chatAdapter={chatAdapter} fluentTheme={props.fluentTheme} />;
+  }
+
+  if (credential === undefined) {
+    return <>Failed to construct credential. Provided token is malformed.</>;
+  }
+
+  return <>Initializing...</>;
 };
