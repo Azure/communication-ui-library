@@ -7,6 +7,7 @@ import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
 import { createUserCredentials } from './snippets/Server.snippet';
+import { ConfigHintBanner } from './Utils';
 
 export const BasicExample: () => JSX.Element = () => {
   const [meetingProps, setMeetingProps] = useState<MeetingExampleProps>();
@@ -28,7 +29,7 @@ export const BasicExample: () => JSX.Element = () => {
 
   return (
     <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {meetingProps ? <MeetingExperience {...meetingProps} /> : <>Complete the required fields below.</>}
+      {meetingProps ? <MeetingExperience {...meetingProps} /> : <ConfigHintBanner />}
     </div>
   );
 };
