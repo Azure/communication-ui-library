@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
 import { text } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
 import { createUserCredentials } from './snippets/Server.snippet';
+import { ConfigHintBanner } from './Utils';
 
 export const BasicExample: () => JSX.Element = () => {
   const [meetingProps, setMeetingProps] = useState<MeetingExampleProps>();
@@ -27,8 +29,8 @@ export const BasicExample: () => JSX.Element = () => {
   }, [knobs]);
 
   return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
-      {meetingProps ? <MeetingExperience {...meetingProps} /> : <>Complete the required fields below.</>}
-    </div>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={{ root: COMPOSITE_EXPERIENCE_CONTAINER_STYLE }}>
+      {meetingProps ? <MeetingExperience {...meetingProps} /> : <ConfigHintBanner />}
+    </Stack>
   );
 };
