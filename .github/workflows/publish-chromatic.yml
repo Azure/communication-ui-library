@@ -2,7 +2,6 @@ name: 'Publish Chromatic'
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - packages/storybook/**
       - packages/react-components/**
