@@ -25,7 +25,6 @@ export const JoinExample: () => JSX.Element = () => {
           knobs.current.displayName,
           knobs.current.teamsMeetingLink
         );
-        console.log('Meeting props: ', newProps);
         setMeetingProps(newProps);
       }
     };
