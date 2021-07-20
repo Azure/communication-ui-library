@@ -28,6 +28,7 @@ import {
 } from './styles/Chat.styles';
 
 export type ChatScreenProps = {
+  showErrorBar?: boolean;
   showParticipantPane?: boolean;
   showTopic?: boolean;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
@@ -71,7 +72,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       {!!showTopic && <ChatHeader {...headerProps} />}
       <Stack className={chatArea} horizontal grow>
         <Stack className={chatWrapper} grow>
-          <ErrorBar {...errorBarProps} />
+          {props.showErrorBar ? <ErrorBar {...errorBarProps} /> : <></>}
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderMessageAvatar}
