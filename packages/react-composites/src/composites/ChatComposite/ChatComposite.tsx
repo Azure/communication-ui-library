@@ -35,6 +35,14 @@ export type ChatCompositeProps = {
  */
 export type ChatOptions = {
   /**
+   * UNSTABLE: Feature flag to enable ErrorBar.
+   *
+   * This option will be removed once ErrorBar is stable.
+   *
+   * @defaultValue false
+   */
+  showErrorBar?: boolean;
+  /**
    * Choose to show the participant pane
    * @defaultValue false
    */

@@ -357,6 +357,7 @@ export type ChatErrorListener = (event: {
 
 // @public
 export type ChatOptions = {
+    showErrorBar?: boolean;
     showParticipantPane?: boolean;
     showTopic?: boolean;
 };
