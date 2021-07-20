@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
 import { toFlatCommunicationIdentifier } from '@azure/communication-react';
 import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
+import { compositeExperienceContainerStyle } from '../constants';
 import {
   CustomDataModelExampleContainer,
   CustomDataModelExampleContainerProps
@@ -43,9 +44,9 @@ export const CustomDataModelExample: () => JSX.Element = () => {
   }, [knobs]);
 
   return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? <CustomDataModelExampleContainer {...containerProps} /> : <ConfigHintBanner />}
-    </div>
+    </Stack>
   );
 };
 
