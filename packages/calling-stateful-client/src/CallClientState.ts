@@ -437,9 +437,8 @@ export interface CallClientState {
    * Stores the latest error for each API method.
    *
    * See documentation of {@Link CallErrors} for details.
-   * TODO(Make this required)
    */
-  latestErrors?: CallErrors;
+  latestErrors: CallErrors;
 }
 
 /**
