@@ -9,6 +9,7 @@ import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
 import { CommunicationParticipant } from '@internal/react-components';
+import { CallState } from '@azure/communication-calling';
 
 export type MeetingCompositeProps = {
   callAdapter: CallAdapter;
@@ -25,6 +26,7 @@ export type MeetingCompositeProps = {
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { callAdapter, fluentTheme } = props;
 
+  const [currentCallState, setCurrentCallState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
 
   // Future work item: get correct participants
@@ -36,8 +38,10 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const [participants] = useState<CommunicationParticipant[]>([selfParticipant]);
   callAdapter.onStateChange((newState) => {
     setCurrentPage(newState.page);
+    setCurrentCallState(newState.call?.state);
   });
-  const showPaneControls = currentPage === 'call';
+  const hasJoinedCall =
+    currentPage === 'call' && currentCallState && !['Connecting', 'Ringing', 'InLobby'].includes(currentCallState);
 
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -60,7 +64,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   return (
     <Stack styles={{ root: { width: '100%', height: '100%' } }} horizontal>
       <CallComposite adapter={callAdapter} fluentTheme={fluentTheme} />
-      {showPaneControls && (
+      {hasJoinedCall && (
         <Stack>
           <Stack.Item grow>
             {showChat && (
