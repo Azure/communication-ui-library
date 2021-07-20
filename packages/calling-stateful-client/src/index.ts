@@ -5,9 +5,14 @@ export { createStatefulCallClient } from './StatefulCallClient';
 export type { StatefulCallClient, StatefulCallClientArgs, StatefulCallClientOptions } from './StatefulCallClient';
 export type { StatefulDeviceManager } from './DeviceManagerDeclarative';
 export type {
-  CallState,
   CallAgentState,
   CallClientState,
+  CallError,
+  CallErrors,
+  CallErrorTargets,
+  CallObjectMethodNames,
+  CallMethodName,
+  CallState,
   DeviceManagerState,
   IncomingCallState,
   LocalVideoStreamState,

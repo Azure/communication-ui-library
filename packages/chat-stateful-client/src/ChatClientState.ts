@@ -92,10 +92,10 @@ export class ChatError extends Error {
 /**
  * String literal type for all permissible keys in {@Link ChatErrors}.
  */
-export type ChatErrorTargets = ChatClientErrorTargets | ChatThreadClientErrorTargets;
+export type ChatErrorTargets =
+  | ChatObjectMethodNames<'ChatClient', ChatClient>
+  | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
-type ChatClientErrorTargets = ChatObjectMethodNames<'ChatClient', ChatClient>;
-type ChatThreadClientErrorTargets = ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 /**
  * Helper type to build a string literal type containing methods of an object.
  */

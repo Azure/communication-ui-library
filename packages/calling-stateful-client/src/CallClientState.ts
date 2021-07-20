@@ -26,7 +26,6 @@ import {
   PhoneNumberKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
-import { callAgentDeclaratify } from './CallAgentDeclarative';
 
 /**
  * State only version of {@Link @azure/communication-calling#TransferRequestedEventArgs}. At the time of writing
@@ -438,8 +437,9 @@ export interface CallClientState {
    * Stores the latest error for each API method.
    *
    * See documentation of {@Link CallErrors} for details.
+   * TODO(Make this required)
    */
-  latestErrors: CallErrors;
+  latestErrors?: CallErrors;
 }
 
 /**
@@ -482,11 +482,10 @@ export class CallError extends Error {
 /**
  * String literal type for all permissible keys in {@Link CallErrors}.
  */
-export type CallErrorTargets = CallClientErrorTargets | CallAgentErrorTargets | DeviceManagerErrorTargets;
-
-type CallClientErrorTargets = CallObjectMethodNames<'CallClient', CallClient>;
-type CallAgentErrorTargets = CallObjectMethodNames<'CallAgent', CallAgent>;
-type DeviceManagerErrorTargets = CallObjectMethodNames<'DeviceManager', DeviceManager>;
+export type CallErrorTargets =
+  | CallObjectMethodNames<'CallClient', CallClient>
+  | CallObjectMethodNames<'CallAgent', CallAgent>
+  | CallObjectMethodNames<'DeviceManager', DeviceManager>;
 
 /**
  * Helper type to build a string literal type containing methods of an object.

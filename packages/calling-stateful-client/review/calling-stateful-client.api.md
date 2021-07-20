@@ -5,6 +5,7 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
@@ -45,8 +46,32 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     incomingCallsEnded: IncomingCallState[];
+    latestErrors?: CallErrors;
     userId: CommunicationUserKind;
 }
+
+// @public
+export class CallError extends Error {
+    constructor(target: CallErrorTargets, inner: Error);
+    inner: Error;
+    target: CallErrorTargets;
+}
+
+// @public
+export type CallErrors = {
+    [target in CallErrorTargets]: Error;
+};
+
+// @public
+export type CallErrorTargets = CallObjectMethodNames<'CallClient', CallClient> | CallObjectMethodNames<'CallAgent', CallAgent> | CallObjectMethodNames<'DeviceManager', DeviceManager>;
+
+// @public
+export type CallMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
+
+// @public
+export type CallObjectMethodNames<TName extends string, T> = {
+    [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;
+}[keyof T & string];
 
 // @public
 export interface CallState {
@@ -186,7 +211,6 @@ export interface VideoStreamRendererViewState {
     scalingMode: ScalingMode;
     target: HTMLElement;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

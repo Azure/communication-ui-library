@@ -322,6 +322,7 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     incomingCallsEnded: IncomingCallState[];
+    latestErrors?: CallErrors;
     userId: CommunicationUserKind;
 }
 
@@ -343,6 +344,21 @@ export type CallCompositeProps = {
 export type CallEndedListener = (event: {
     callId: string;
 }) => void;
+
+// @public
+export class CallError extends Error {
+    constructor(target: CallErrorTargets, inner: Error);
+    inner: Error;
+    target: CallErrorTargets;
+}
+
+// @public
+export type CallErrors = {
+    [target in CallErrorTargets]: Error;
+};
+
+// @public
+export type CallErrorTargets = CallObjectMethodNames<'CallClient', CallClient> | CallObjectMethodNames<'CallAgent', CallAgent> | CallObjectMethodNames<'DeviceManager', DeviceManager>;
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
@@ -369,6 +385,14 @@ export interface CallingTheme {
         callRedDarker: string;
     };
 }
+
+// @public
+export type CallMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
+
+// @public
+export type CallObjectMethodNames<TName extends string, T> = {
+    [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;
+}[keyof T & string];
 
 // @public
 export type CallParticipant = CommunicationParticipant & {
@@ -589,12 +613,12 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 };
 
 // @public
-export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+export type ChatMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
 
 // @public
 export type ChatObjectMethodNames<TName extends string, T> = {
-    [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T];
+    [K in keyof T & string]: `${TName}.${ChatMethodName<T, K>}`;
+}[keyof T & string];
 
 // @public
 export type ChatOptions = {
