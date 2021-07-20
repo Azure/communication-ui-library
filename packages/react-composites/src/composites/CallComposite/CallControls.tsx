@@ -47,6 +47,7 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
         />
       )}
+      {/* By setting `persistMenu` to true, we prevent options menu from getting hidden everytime a participant joins or leaves. */}
       <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />
       <EndCallButton
         {...hangUpButtonProps}
