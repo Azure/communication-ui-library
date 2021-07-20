@@ -38,7 +38,11 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <>{callAdapter && <CallComposite identifiers={IDS} adapter={callAdapter} />}</>;
+  return (
+    <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
+      {callAdapter && <CallComposite identifiers={IDS} adapter={callAdapter} />}
+    </div>
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

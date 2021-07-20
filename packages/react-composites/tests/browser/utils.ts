@@ -146,8 +146,10 @@ export const loadCallCompositePage = async (
   user: CallUserType,
   qArgs?: { [key: string]: string }
 ): Promise<Page> => {
+  const context = await browser.newContext({ permissions: ['notifications'] });
+  context.grantPermissions(['camera', 'microphone']);
   const qs = encodeQueryData(user, qArgs);
-  const page = await browser.newPage();
+  const page = await context.newPage();
   await page.setViewportSize(PAGE_VIEWPORT);
   const url = `${serverUrl}?${qs}`;
   await page.goto(url, { waitUntil: 'networkidle' });
