@@ -380,15 +380,15 @@ export interface MicrophoneButtonStrings {
     onLabel: string;
 }
 
-// @public (undocumented)
-export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
-
 // @public
 export const namedLocales: Record<string, {
     locale: Locale;
     englishName: string;
     displayName: string;
 }>;
+
+// @public (undocumented)
+export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;

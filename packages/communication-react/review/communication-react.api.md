@@ -61,13 +61,13 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-// @public
-export const ar_SA: Locale;
-
 // @public (undocumented)
 export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
+
+// @public
+export const ar_SA: Locale;
 
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
@@ -1154,15 +1154,15 @@ export interface MicrophoneButtonStrings {
     onLabel: string;
 }
 
-// @public (undocumented)
-export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
-
 // @public
 export const namedLocales: Record<string, {
     locale: Locale;
     englishName: string;
     displayName: string;
 }>;
+
+// @public (undocumented)
+export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;

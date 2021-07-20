@@ -58,7 +58,9 @@
     "wednesday": "Mercredi",
     "thursday": "Jeudi",
     "friday": "Vendredi",
-    "saturday": "Samedi"
+    "saturday": "Samedi",
+    "participantJoined": "rejoint le chat.",
+    "participantLeft": "a quitté le chat."
   },
   "errorBar": {
     "unableToReachChatService": "Tu es hors ligne",
