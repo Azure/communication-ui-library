@@ -3,11 +3,14 @@
 
 import {
   AudioDeviceInfo,
+  CallAgent,
+  CallClient,
   CallDirection,
   CallEndReason,
   CallerInfo,
   CallState as CallStatus,
   DeviceAccess,
+  DeviceManager,
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
@@ -23,6 +26,7 @@ import {
   PhoneNumberKind,
   UnknownIdentifierKind
 } from '@azure/communication-common';
+import { callAgentDeclaratify } from './CallAgentDeclarative';
 
 /**
  * State only version of {@Link @azure/communication-calling#TransferRequestedEventArgs}. At the time of writing
@@ -430,4 +434,68 @@ export interface CallClientState {
    * Completely controlled by the developer.
    */
   userId: CommunicationUserKind;
+  /**
+   * Stores the latest error for each API method.
+   *
+   * See documentation of {@Link CallErrors} for details.
+   */
+  latestErrors: CallErrors;
 }
+
+/**
+ * Errors teed from API calls to the Calling SDK.
+ *
+ * Each property in the object stores the latest error for a particular SDK API method.
+ *
+ * Errors from this object can be cleared using the TODO(implement me) {@Link newClearErrorsModifier}.
+ * Additionally, errors are automatically cleared when:
+ * - The state is cleared.
+ * - Subsequent calls to related API methods succeed.
+ * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
+ */
+export type CallErrors = {
+  [target in CallErrorTargets]: Error;
+};
+
+/**
+ * Error thrown from failed stateful API methods.
+ */
+export class CallError extends Error {
+  /**
+   * The API method target that failed.
+   */
+  public target: CallErrorTargets;
+  /**
+   * Error thrown by the failed SDK method.
+   */
+  public inner: Error;
+
+  constructor(target: CallErrorTargets, inner: Error) {
+    super();
+    this.target = target;
+    this.inner = inner;
+    this.name = 'CallError';
+    this.message = `${this.target}: ${this.inner.message}`;
+  }
+}
+
+/**
+ * String literal type for all permissible keys in {@Link CallErrors}.
+ */
+export type CallErrorTargets = CallClientErrorTargets | CallAgentErrorTargets | DeviceManagerErrorTargets;
+
+type CallClientErrorTargets = CallObjectMethodNames<'CallClient', CallClient>;
+type CallAgentErrorTargets = CallObjectMethodNames<'CallAgent', CallAgent>;
+type DeviceManagerErrorTargets = CallObjectMethodNames<'DeviceManager', DeviceManager>;
+
+/**
+ * Helper type to build a string literal type containing methods of an object.
+ */
+export type CallObjectMethodNames<TName extends string, T> = {
+  [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;
+}[keyof T & string];
+
+/**
+ * Helper type to build a string literal type containing methods of an object.
+ */
+export type CallMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
