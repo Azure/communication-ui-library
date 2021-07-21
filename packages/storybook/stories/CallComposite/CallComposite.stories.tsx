@@ -64,9 +64,10 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Styling</Heading>
       <Description>
-        CallComposite is designed to fill the space of the parent it is in. If your composite is living outside of any
-        parent container and you wish for it to fill the page, we recommend ensuring your react app is set to fill the
-        screen by adding the following css to your primary css file:
+        CallComposite is designed to fill the space of the parent it is in. By default these examples put the composite
+        in a container of a set height and width. If your composite is living outside of any parent container and you
+        wish for it to fill the page, we recommend ensuring your react app is set to fill the screen by adding the
+        following css to your primary css file:
       </Description>
       <Source code={cssSnippet} />
 
