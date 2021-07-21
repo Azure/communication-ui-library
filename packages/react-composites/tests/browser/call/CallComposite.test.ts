@@ -28,17 +28,18 @@ test.describe('Call Composite E2E Tests', () => {
       await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));
       await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
       await stubLocalCameraName(pages[idx]);
-      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-call-screen.png`, { threshold: 1 });
+      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-call-screen.png`, { threshold: 0.5 });
     }
   });
 
-  test('pages[0] local device settings can toggle camera', async ({ pages }) => {
+  test('pages[0] local device settings can toggle camera & audio', async ({ pages }) => {
     const page = pages[0];
     page.bringToFront();
     await stubLocalCameraName(page);
-    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-disabled.png`, { threshold: 1 });
+    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-disabled.png`, { threshold: 0.5 });
+    await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
     await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
     await page.waitForSelector('video');
-    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-enabled.png`, { threshold: 1 });
+    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-enabled.png`, { threshold: 0.5 });
   });
 });
