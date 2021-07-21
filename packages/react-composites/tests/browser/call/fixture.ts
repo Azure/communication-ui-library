@@ -52,7 +52,13 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
       const browser = await chromium.launch({
-        args: ['--start-maximized', '--disable-features=site-per-process'],
+        executablePath: process.env.CHROME_PATH,
+        args: [
+          '--use-fake-ui-for-media-stream',
+          '--use-fake-device-for-media-stream',
+          '--allow-file-access',
+          `--use-file-for-fake-video-capture=${path.join(__dirname, 'puppy.y4m')}`
+        ],
         headless: false
       });
       try {
