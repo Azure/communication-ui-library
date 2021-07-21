@@ -407,10 +407,10 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @public (undocumented)
+// @public
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type MeetingCompositeProps = {
     callAdapter: CallAdapter;
     chatAdapter: ChatAdapter;
