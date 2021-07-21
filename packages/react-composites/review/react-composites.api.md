@@ -408,6 +408,17 @@ export type IsSpeakingChangedListener = (event: {
 }) => void;
 
 // @public (undocumented)
+export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
+
+// @public (undocumented)
+export type MeetingCompositeProps = {
+    callAdapter: CallAdapter;
+    chatAdapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    meetingInvitationURL?: string;
+};
+
+// @public (undocumented)
 export type MessageReadListener = (event: {
     message: ChatMessage;
     readBy: CommunicationUserKind;

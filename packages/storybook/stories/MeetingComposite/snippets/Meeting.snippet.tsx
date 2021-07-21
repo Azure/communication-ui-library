@@ -1,13 +1,13 @@
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { Theme, PartialTheme } from '@fluentui/react';
 import {
   CallAdapter,
   ChatAdapter,
   MeetingComposite,
   createAzureCommunicationCallAdapter,
   createAzureCommunicationChatAdapter
-} from '@internal/react-composites';
+} from '@azure/communication-react';
+import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
 
 export type MeetingExampleProps = {

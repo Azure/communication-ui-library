@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MeetingComposite } from '@internal/react-composites';
+import { MeetingComposite } from '@azure/communication-react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';

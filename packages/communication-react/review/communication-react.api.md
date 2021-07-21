@@ -1022,6 +1022,17 @@ export interface LocalVideoStreamState {
 }
 
 // @public (undocumented)
+export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
+
+// @public (undocumented)
+export type MeetingCompositeProps = {
+    callAdapter: CallAdapter;
+    chatAdapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    meetingInvitationURL?: string;
+};
+
+// @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
     payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
