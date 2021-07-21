@@ -10,7 +10,8 @@ import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
 const VideoGalleryStyles = {
   root: {
-    height: 'auto'
+    height: '100%',
+    minHeight: '10rem' // space affordance to ensure media gallery is never collapsed
   }
 };
 

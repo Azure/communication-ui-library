@@ -30,9 +30,7 @@ export const callControlsContainer = mergeStyles({
 export const containerStyles: IStackStyles = {
   root: {
     height: '100%',
-    width: '100%',
-    flexDirection: 'column',
-    display: 'flex'
+    width: '100%'
   }
 };
 
@@ -40,17 +38,14 @@ export const subContainerStyles: IStackStyles = {
   root: {
     overflow: 'hidden',
     width: '100%',
-    flexDirection: 'column',
-    display: 'flex',
-    flexBasis: '0'
+    height: '100%',
+    minHeight: '10rem' // space affordance to ensure media gallery has minimum space allocated
   }
 };
 
-export const activeContainerClassName: IStackItemStyles = {
+export const mediaGalleryContainerStyles: IStackItemStyles = {
   root: {
-    display: 'flex',
-    height: '100%',
-    position: 'relative'
+    height: '100%'
   }
 };
 
