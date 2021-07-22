@@ -11,6 +11,9 @@ import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
 
+/**
+ * Props required for the {@link MeetingComposite}
+ */
 export type MeetingCompositeProps = {
   callAdapter: CallAdapter;
   chatAdapter: ChatAdapter;
@@ -23,6 +26,9 @@ export type MeetingCompositeProps = {
   meetingInvitationURL?: string;
 };
 
+/**
+ * Meeting Composite brings together key components to provide a full meeting experience out of the box.
+ */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { callAdapter, fluentTheme } = props;
 

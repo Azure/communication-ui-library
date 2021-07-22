@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MeetingComposite } from '@internal/react-composites';
+import { MeetingComposite } from '@azure/communication-react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs/blocks';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
