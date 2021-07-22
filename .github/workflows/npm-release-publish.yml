@@ -63,19 +63,12 @@ jobs:
           git tag ${{ steps.version.outputs.version }}
           git push --tags
 
-      # Get datetime to name and tag the releases with.
-      - name: Get Release names
-        id: releasenames
-        run: |
-          echo "::set-output name=tagname::$(TZ=":America/Vancouver" date +'%Y-%m-%d-%H%M')"
-          echo "::set-output name=releasename::$(TZ=":America/Vancouver" date +'%Y-%m-%d-%H%M')"
-
       # Upload releases
       - name: Upload Public Preview Release
         uses: softprops/action-gh-release@v1
         with:
-          name: PublicPreview ${{ steps.releasenames.outputs.releasename }}
-          tag_name: Release/${{ steps.releasenames.outputs.tagname }}
+          name: PublicPreview ${{ steps.version.outputs.version }}
+          tag_name: ${{ steps.version.outputs.version }}
           files: |
             ./samples/StaticHtmlComposites/dist/callComposite.js
             ./samples/StaticHtmlComposites/dist/chatComposite.js
