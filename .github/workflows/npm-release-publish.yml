@@ -68,7 +68,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: PublicPreview ${{ steps.version.outputs.version }}
-          tag_name: ${{ steps.version.outputs.version }}
+          tag_name: PublicPreview/${{ steps.version.outputs.version }}
           files: |
             ./samples/StaticHtmlComposites/dist/callComposite.js
             ./samples/StaticHtmlComposites/dist/chatComposite.js
