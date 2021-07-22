@@ -6,8 +6,10 @@ import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack } from '@fl
 import {
   sidePaneCloseButtonStyles,
   sidePaneContainerStyles,
+  sidePaneContainerTokens,
   sidePaneHeaderStyles,
   sidePaneBodyStyles,
+  peoplePaneContainerTokens,
   peopleSubheadingStyle
 } from './styles/SidePane.styles';
 import { ParticipantList } from '@internal/react-components';
@@ -16,7 +18,7 @@ import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
 const SidePane = (props: { headingText: string; children: React.ReactNode; onClose: () => void }): JSX.Element => {
   return (
-    <Stack styles={sidePaneContainerStyles} tokens={{ childrenGap: '0.5rem' }}>
+    <Stack styles={sidePaneContainerStyles} tokens={sidePaneContainerTokens}>
       <Stack.Item>
         <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderStyles}>
           <Stack.Item>{props.headingText}</Stack.Item>
@@ -37,7 +39,7 @@ export const EmbeddedPeoplePane = (props: { inviteLink?: string; onClose: () => 
   const participantListProps = usePropsFor(ParticipantList);
   return (
     <SidePane headingText={'People'} onClose={props.onClose}>
-      <Stack tokens={{ childrenGap: '0.5rem' }}>
+      <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}

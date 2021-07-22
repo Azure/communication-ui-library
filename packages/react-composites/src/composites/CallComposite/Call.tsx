@@ -8,7 +8,7 @@ import { Error } from './Error';
 import { Theme, PartialTheme } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
-import { PlaceholderProps } from '@internal/react-components';
+import { IdentifierProvider, Identifiers, PlaceholderProps } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { FluentThemeProvider } from '@internal/react-components';
@@ -23,6 +23,7 @@ export type CallCompositeProps = {
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  identifiers?: Identifiers;
 };
 
 type MainScreenProps = {
@@ -92,7 +93,7 @@ interface CallInternalProps extends CallCompositeProps {
  * @internal
  */
 export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme } = props;
+  const { adapter, callInvitationURL, fluentTheme, identifiers } = props;
 
   useEffect(() => {
     (async () => {
@@ -105,13 +106,15 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
 
   return (
     <FluentThemeProvider fluentTheme={fluentTheme}>
-      <CallAdapterProvider adapter={adapter}>
-        <MainScreen
-          showCallControls={props.showCallControls}
-          onRenderAvatar={props.onRenderAvatar}
-          callInvitationURL={callInvitationURL}
-        />
-      </CallAdapterProvider>
+      <IdentifierProvider identifiers={identifiers}>
+        <CallAdapterProvider adapter={adapter}>
+          <MainScreen
+            showCallControls={props.showCallControls}
+            onRenderAvatar={props.onRenderAvatar}
+            callInvitationURL={callInvitationURL}
+          />
+        </CallAdapterProvider>
+      </IdentifierProvider>
     </FluentThemeProvider>
   );
 };

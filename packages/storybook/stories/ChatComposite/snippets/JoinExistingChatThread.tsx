@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
 import { text } from '@storybook/addon-knobs';
 import React, { useRef } from 'react';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
+import { compositeExperienceContainerStyle } from '../../constants';
 import { ContosoChatContainer } from './Container.snippet';
 import { ConfigJoinChatThreadHintBanner } from './Utils';
 
@@ -24,7 +25,7 @@ export const JoinExistingChatThread: () => JSX.Element = () => {
     !!knobs.current.displayName;
 
   return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
         <ContosoChatContainer
           endpointUrl={knobs.current.endpointUrl}
@@ -38,6 +39,6 @@ export const JoinExistingChatThread: () => JSX.Element = () => {
       ) : (
         <ConfigJoinChatThreadHintBanner />
       )}
-    </div>
+    </Stack>
   );
 };
