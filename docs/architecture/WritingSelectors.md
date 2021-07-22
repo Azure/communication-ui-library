@@ -77,7 +77,7 @@ The first array parameter of createSelector() defines a parameter array for memo
 Don't:
 ```typescript
 // state = {call:{ callId: UserId, displayname: string, callParticipants: Participants }}
-const getCall = (state) = > state.call;
+const getCall = (state) => state.call;
 const callInfoSelector = createSelector([getCall], (call) => ({id: call.id, name: call.displayname }));
 ```
 
