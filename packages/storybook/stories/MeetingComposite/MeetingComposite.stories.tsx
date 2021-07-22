@@ -61,7 +61,7 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Joining an existing Meeting</Heading>
       <Description>
-        The [join meeting](./?path=/story/composites-meeting--join-meeting) provides an easy playground to join an
+        The [join meeting](./?path=/story/composites-meeting--join-example) provides an easy playground to join an
         existing Azure Communication Services group call and chat thread, or an existing Teams meeting. This is useful
         if you want to explore the composite with multiple users or try out Teams interop scenarios.
       </Description>
