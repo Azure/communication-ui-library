@@ -342,6 +342,7 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    identifiers?: Identifiers;
 };
 
 // @public (undocumented)
@@ -603,6 +604,7 @@ export type ChatObjectMethodNames<TName extends string, T> = {
 
 // @public
 export type ChatOptions = {
+    showErrorBar?: boolean;
     showParticipantPane?: boolean;
     showTopic?: boolean;
 };
@@ -1026,6 +1028,17 @@ export interface LocalVideoStreamState {
     source: VideoDeviceInfo;
     view?: VideoStreamRendererViewState;
 }
+
+// @public
+export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
+
+// @public
+export type MeetingCompositeProps = {
+    callAdapter: CallAdapter;
+    chatAdapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    meetingInvitationURL?: string;
+};
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {

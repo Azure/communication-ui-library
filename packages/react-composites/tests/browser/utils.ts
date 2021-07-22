@@ -39,6 +39,14 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
 };
 
 /**
+ * Wait for the CallComposite on a page to fully load.
+ */
+export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
+  await page.waitForLoadState('load');
+  // @TODO Add more checks to make sure the composite is fully loaded.
+};
+
+/**
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
 export const stubMessageTimestamps = (page: Page): void => {
@@ -82,6 +90,22 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
   }));
 };
 
+export type CallUserType = {
+  userId: string;
+  token: string;
+  displayName?: string;
+  groupId?: string;
+};
+
+export const createCallingUserAndToken = async (): Promise<CallUserType> => {
+  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
+  const user = await tokenClient.createUserAndToken(['voip']);
+  return {
+    userId: user.user.communicationUserId,
+    token: user.token
+  };
+};
+
 /**
  * Load a Page with ChatComposite app.
  * @param browser Browser to create Page in.
@@ -108,7 +132,31 @@ export const loadPage = async (
   return page;
 };
 
-const encodeQueryData = (user: IdentityType, qArgs?: { [key: string]: string }): string => {
+/**
+ * Load a Page with CallComposite app.
+ * @param browser Browser to create Page in.
+ * @param serverUrl URL to a running test app.
+ * @param user CallUserType for the user to load ChatComposite for.
+ * @param qArgs Extra quary arguments.
+ * @returns
+ */
+export const loadCallCompositePage = async (
+  browser: Browser,
+  serverUrl: string,
+  user: CallUserType,
+  qArgs?: { [key: string]: string }
+): Promise<Page> => {
+  const context = await browser.newContext({ permissions: ['notifications'] });
+  context.grantPermissions(['camera', 'microphone']);
+  const qs = encodeQueryData(user, qArgs);
+  const page = await context.newPage();
+  await page.setViewportSize(PAGE_VIEWPORT);
+  const url = `${serverUrl}?${qs}`;
+  await page.goto(url, { waitUntil: 'networkidle' });
+  return page;
+};
+
+const encodeQueryData = (user: IdentityType | CallUserType, qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const d in user) {
     qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(user[d]));
