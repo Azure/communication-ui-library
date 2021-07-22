@@ -22,19 +22,9 @@ exports[`storybook snapshot tests Storyshots Composites/MeetingComposite Basic E
       <div
         className="ms-Stack css-1"
       >
-        <div
-          className="ms-Stack css-2"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
-        </div>
+        <span>
+          Please provide the connection string and display name to use.
+        </span>
       </div>
     </div>
   </div>
@@ -63,19 +53,9 @@ exports[`storybook snapshot tests Storyshots Composites/MeetingComposite Join Ex
       <div
         className="ms-Stack css-1"
       >
-        <div
-          className="ms-Stack css-2"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string, display name and Teams meeting link to use.
-          </span>
-        </div>
+        <span>
+          Please provide the connection string, display name and Teams meeting link to use.
+        </span>
       </div>
     </div>
   </div>
