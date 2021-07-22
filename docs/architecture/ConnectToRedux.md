@@ -4,7 +4,7 @@ Redux is a popular state management framework that provides a centralized app st
 
 ![Connect with redux](../images/stateful-redux-ui.png)
 
-Here is a quick tutorial for how to connect stateful client state to redux store:
+Here is a quick tutorial on connecting stateful client state to redux store:
 ### Install dependencies
 
 ```
@@ -13,7 +13,7 @@ npm install @azure/communication-react redux
 
 ### Create a reducer
 
-This reducer of redux help you update the centralized redux store with our client state.
+This Redux reducer lets you update the centralized redux store with our client state.
 
 Create a new reducer file in your project path:
 
