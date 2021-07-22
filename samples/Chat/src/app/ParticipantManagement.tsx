@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { CommunicationParticipant, ParticipantItem } from '@azure/communication-react';
-import { propagateError } from '@internal/react-composites';
 import { Stack, IContextualMenuItem } from '@fluentui/react';
 
 export type ParticipantManagementProps = {
@@ -26,7 +25,7 @@ export const ParticipantManagement = (props: ParticipantManagementProps): JSX.El
             text: 'Remove',
             onClick: () => {
               removeThreadParticipant?.(participant.userId).catch((error) => {
-                propagateError(error);
+                console.error(error);
               });
             }
           });
