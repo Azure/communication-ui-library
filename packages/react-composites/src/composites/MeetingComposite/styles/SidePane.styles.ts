@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IContextualMenuItemStyles, IStackItemStyles, getTheme } from '@fluentui/react';
+import { IButtonStyles, IContextualMenuItemStyles, IStackItemStyles, IStackTokens, getTheme } from '@fluentui/react';
 
 const theme = getTheme();
 const palette = theme.palette;
@@ -11,6 +11,10 @@ export const sidePaneContainerStyles: IStackItemStyles = {
     height: '100%',
     width: '21.5rem'
   }
+};
+
+export const sidePaneContainerTokens: IStackTokens = {
+  childrenGap: '0.5rem'
 };
 
 export const sidePaneHeaderStyles: IStackItemStyles = {
@@ -39,4 +43,8 @@ export const peopleSubheadingStyle: IStackItemStyles = {
     fontSize: '0.75rem',
     color: palette.neutralSecondary
   }
+};
+
+export const peoplePaneContainerTokens: IStackTokens = {
+  childrenGap: '0.5rem'
 };
