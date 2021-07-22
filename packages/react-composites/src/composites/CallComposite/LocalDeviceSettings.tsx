@@ -88,7 +88,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   // 'microphone'. This needs investigation on how we want to handle this and maybe needs follow up with SDK team.
 
   return (
-    <Stack className={localSettingsContainer} tokens={mainStackTokens}>
+    <Stack data-ui-id="call-composite-device-settings" className={localSettingsContainer} tokens={mainStackTokens}>
       <Dropdown
         label={cameraLabel}
         placeholder={defaultPlaceHolder}

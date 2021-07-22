@@ -25,6 +25,7 @@ const getDocs: () => JSX.Element = () => {
         `ErrorBar` is a wrapper on fluent UI's `MessageBar` with additional features for surfacing Azure Communication
         Services errors on the UI consistently.
       </Description>
+      <Description>Set the `showErrorBar` option for `ChatComposite` to use an `ErrorBar` to show errors.</Description>
       <Subheading>Localization</Subheading>
       <Description>
         Similar to other UI components in this library, `ErrorBarProps` accepts all strings shown on the UI as a
