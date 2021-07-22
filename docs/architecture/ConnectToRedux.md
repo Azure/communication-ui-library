@@ -1,6 +1,6 @@
 ## Connect Stateful Client to Redux
 
-Redux is a popular state management framework, it provides a centralized app state. You can easily integrate redux with all popular UI frameworks(React, Angular, VueJs). Developers can eaily integrate our stateful client with redux, and connect redux to their own exisiting framework. 
+Redux is a popular state management framework that provides a centralized app state. You can easily integrate Redux with all popular UI frameworks (React, Angular, VueJs). Developers can easily integrate our stateful client with Redux, and connect Redux to their own existing framework.
 
 ![Connect with redux](../images/stateful-redux-ui.png)
 
