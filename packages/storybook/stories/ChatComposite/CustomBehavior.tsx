@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
 import { text } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
+import { compositeExperienceContainerStyle } from '../constants';
 import { ContosoChatContainer, ContainerProps } from './CustomBehaviorExampleContainer';
 import { createUserAndThread } from './snippets/Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
@@ -29,9 +30,9 @@ export const CustomBehaviorExample: () => JSX.Element = () => {
   }, [knobs]);
 
   return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? <ContosoChatContainer {...containerProps} /> : <ConfigHintBanner />}
-    </div>
+    </Stack>
   );
 };
 
