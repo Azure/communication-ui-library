@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.3)
+
+Thu, 22 Jul 2021 17:42:41 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.2..@azure/communication-react_v1.0.0-beta.3)
+
+### Changes
+
+- Bump @internal/chat-stateful-client to v1.0.0-beta.3 ([PR #554](https://github.com/azure/communication-ui-library/pull/554) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.2)
 

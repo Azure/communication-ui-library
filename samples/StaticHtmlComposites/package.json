@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.0.0-beta.2",
+    "@azure/communication-react": "1.0.0-beta.3",
     "react": "~16.14.0",
     "react-dom": "16.13.1",
     "uuid": "^8.1.0"
