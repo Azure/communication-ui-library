@@ -56,6 +56,18 @@ jobs:
           git tag ${{ steps.version.outputs.version }}
           git push --tags
 
+      # Upload releases
+      - name: Upload Public Preview Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: PublicPreview ${{ steps.version.outputs.version }}
+          tag_name: PublicPreview/${{ steps.version.outputs.version }}
+          files: |
+            ./samples/StaticHtmlComposites/dist/callComposite.js
+            ./samples/StaticHtmlComposites/dist/chatComposite.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # Publish package
       - name: Package packages for release
         run: npm pack

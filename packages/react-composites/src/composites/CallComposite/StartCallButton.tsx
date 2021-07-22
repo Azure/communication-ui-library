@@ -17,7 +17,12 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
   const { isDisabled, onClickHandler } = props;
 
   return (
-    <PrimaryButton disabled={isDisabled} className={buttonStyle} onClick={onClickHandler}>
+    <PrimaryButton
+      data-ui-id="call-composite-start-call-button"
+      disabled={isDisabled}
+      className={buttonStyle}
+      onClick={onClickHandler}
+    >
       <Video20Filled primaryFill="currentColor" className={videoCameraIconStyle} />
       {buttonText}
     </PrimaryButton>

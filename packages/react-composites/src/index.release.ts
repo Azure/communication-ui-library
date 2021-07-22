@@ -3,3 +3,4 @@
 
 export * from './composites/ChatComposite';
 export * from './composites/CallComposite';
+export * from './composites/MeetingComposite';

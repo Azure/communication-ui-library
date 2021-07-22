@@ -252,6 +252,7 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    identifiers?: Identifiers;
 };
 
 // @public (undocumented)
@@ -407,6 +408,17 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CallIdentifierKinds;
     isSpeaking: boolean;
 }) => void;
+
+// @public
+export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
+
+// @public
+export type MeetingCompositeProps = {
+    callAdapter: CallAdapter;
+    chatAdapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    meetingInvitationURL?: string;
+};
 
 // @public (undocumented)
 export type MessageReadListener = (event: {
