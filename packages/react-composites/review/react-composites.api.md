@@ -252,6 +252,7 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    identifiers?: Identifiers;
 };
 
 // @public (undocumented)
