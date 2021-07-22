@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
 import { text } from '@storybook/addon-knobs';
 import React, { useRef } from 'react';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../../constants';
+import { compositeExperienceContainerStyle } from '../../constants';
 import { ContosoCallContainer } from './Container.snippet';
 import { ConfigJoinCallHintBanner } from './Utils';
 
@@ -19,7 +20,7 @@ export const JoinExistingCall: () => JSX.Element = () => {
   const areAllKnobsSet =
     !!knobs.current.callLocator && !!knobs.current.userId && !!knobs.current.token && !!knobs.current.displayName;
   return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
         <ContosoCallContainer
           locator={knobs.current.callLocator}
@@ -31,6 +32,6 @@ export const JoinExistingCall: () => JSX.Element = () => {
       ) : (
         <ConfigJoinCallHintBanner />
       )}
-    </div>
+    </Stack>
   );
 };

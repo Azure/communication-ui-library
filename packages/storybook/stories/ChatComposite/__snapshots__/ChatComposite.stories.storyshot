@@ -20,26 +20,11 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Basic Exam
       }
     >
       <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
-          }
-        }
+        className="ms-Stack css-1"
       >
-        <div
-          className="ms-Stack css-1"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
-        </div>
+        <span>
+          Please provide the connection string and display name to use.
+        </span>
       </div>
     </div>
   </div>
@@ -66,26 +51,11 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Custom Beh
       }
     >
       <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
-          }
-        }
+        className="ms-Stack css-1"
       >
-        <div
-          className="ms-Stack css-1"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
-        </div>
+        <span>
+          Please provide the connection string and display name to use.
+        </span>
       </div>
     </div>
   </div>
@@ -112,26 +82,11 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Custom Dat
       }
     >
       <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
-          }
-        }
+        className="ms-Stack css-1"
       >
-        <div
-          className="ms-Stack css-1"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
-        </div>
+        <span>
+          Please provide the connection string and display name to use.
+        </span>
       </div>
     </div>
   </div>
@@ -158,26 +113,11 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Join Exist
       }
     >
       <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
-          }
-        }
+        className="ms-Stack css-1"
       >
-        <div
-          className="ms-Stack css-1"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide a token, thread id, endpoint url, and display name to use.
-          </span>
-        </div>
+        <span>
+          Please provide a token, thread id, endpoint url, and display name to use.
+        </span>
       </div>
     </div>
   </div>
@@ -204,26 +144,11 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite Theme Exam
       }
     >
       <div
-        style={
-          Object {
-            "height": "90vh",
-            "width": "90vw",
-          }
-        }
+        className="ms-Stack css-1"
       >
-        <div
-          className="ms-Stack css-1"
-          style={
-            Object {
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        >
-          <span>
-            Please provide the connection string and display name to use.
-          </span>
-        </div>
+        <span>
+          Please provide the connection string and display name to use.
+        </span>
       </div>
     </div>
   </div>
