@@ -12,6 +12,14 @@ import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
+const cssSnippet = `
+html,
+body,
+#root {
+  height: 100%;
+}
+`;
+
 export default {
   id: `${COMPOSITE_FOLDER_PREFIX}-call`,
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite`,
@@ -53,6 +61,15 @@ const getDocs: () => JSX.Element = () => {
         client application that then passes it to the CallComposite.
       </Description>
       <Source code={serverText} />
+
+      <Heading>Styling</Heading>
+      <Description>
+        CallComposite is designed to fill the space of the parent it is in. By default these examples put the composite
+        in a container of a set height and width. If your composite is living outside of any parent container and you
+        wish for it to fill the page, we recommend ensuring your react app is set to fill the screen by adding the
+        following css to your primary css file:
+      </Description>
+      <Source code={cssSnippet} />
 
       <Heading>Theming</Heading>
       <Description>
