@@ -5,9 +5,9 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
-  OptionsButton
+  OptionsButton,
+  useTheme
 } from '@azure/communication-react';
-import { useTheme } from '@fluentui/react';
 import React from 'react';
 import { useVideoStreams } from '../../../utils';
 

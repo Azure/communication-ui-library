@@ -58,6 +58,7 @@ export {
   chatParticipantListSelector,
   sendBoxSelector,
   typingIndicatorSelector,
+  errorBarSelector,
   createDefaultChatHandlers
 } from '../../chat-component-bindings/src';
 

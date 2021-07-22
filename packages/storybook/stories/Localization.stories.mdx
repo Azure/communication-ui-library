@@ -1,4 +1,17 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Source } from '@storybook/addon-docs/blocks';
+
+import LocalizationProviderSnippetText from '!!raw-loader!./snippets/localization/LocalizationProvider.snippet.tsx';
+import { LocalizationProviderSnippet } from './snippets/localization/LocalizationProvider.snippet';
+import CustomLocaleSnippetText from '!!raw-loader!./snippets/localization/CustomLocale.snippet.tsx';
+import { CustomLocaleSnippet } from './snippets/localization/CustomLocale.snippet';
+import StringsPropertySnippetText from '!!raw-loader!./snippets/localization/StringsProperty.snippet.tsx';
+import { StringsPropertySnippet } from './snippets/localization/StringsProperty.snippet';
+import { LongTranslationsSnippet } from './snippets/localization/LongTranslations.snippet';
+import TruncationSnippetText from '!!raw-loader!./snippets/localization/Truncation.snippet.tsx';
+import { TruncationSnippet } from './snippets/localization/Truncation.snippet';
+import SetRTLSnippetText from '!!raw-loader!./snippets/localization/SetRTL.snippet';
+import { SetRTLForCanvasSnippet } from './snippets/localization/SetRTLForCanvas.snippet';
 
 <Meta id="localization" title="Localization" />
 
@@ -7,4 +20,91 @@ import { Meta } from '@storybook/addon-docs/blocks';
 Localization is a key to making products that can be used across the world and by people who who speak different languages.
 UI Library will provide out of the box support for some languages and capabilities such as RTL.
 Developers can provide their own localization files to be used for the UI Library.
-These localization capabilities will be added ahead of General Availability.
+
+## LocalizationProvider
+
+`LocalizationProvider` is a component wrapper that sets all the strings for ACS components using a `Locale`. By default, all
+components use our English (US) locale. If desired, LocalizationProvider can be used to set a different locale. Out of the box,
+the UI library includes a set of locales usable with the UI components and composites
+
+### Usage
+
+To use the LocalizationProvider, import it from `@azure/communication-react` and wrap it around ACS UI SDK components,
+For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `fr_FR` from
+`@azure/communication-react`.
+
+<Source code={LocalizationProviderSnippetText} />
+
+<Canvas withSource="none">
+  <LocalizationProviderSnippet />
+</Canvas>
+
+## Overriding locales
+
+There are two options to customize the locales that we provide. For the examples below, let's say you wish to have a `ControlBar`
+with strings from our English (US) locale but you want to change the label of `CameraButton` to "Start" when its state is off.
+
+### Option 1: Import and customize locales
+
+The first option is to import and customize locales. First, import `en_US` locale from `@azure/communication-react` and then reassign the
+value `strings.cameraButton.offLabel` like shown below.
+
+<Source code={CustomLocaleSnippetText} />
+
+<Canvas withSource="none">
+  <CustomLocaleSnippet />
+</Canvas>
+
+`Locale` stores all strings in the `strings` property as a nested object. The component name is the first identifer and the string key is
+the second identifier such that each string can be accessed in this pattern `strings.<componentName>.<stringKey>`. If you are using typescript and
+have intellisense available in your IDE, it will be easy to discover all the strings.
+
+### Option 2: Override `strings` prop in the UI Component
+
+The second option is to pass custom strings directly through the `strings` prop. Each component in ACS has an optional `strings`
+property that interfaces all strings that can be overriden in that component. There is no need to use `LocalizationProvider` because all components default
+to English (US). Just assign the string directly through `CameraButton` like shown below.
+
+<Source code={StringsPropertySnippetText} />
+
+<Canvas withSource="none">
+  <StringsPropertySnippet />
+</Canvas>
+
+We recommend using option 1 for localization for large applications with many components because all changes to the locale are made in one place. Option 2 is
+an alternative that can be used to override the strings from the locale is certain conditions you may want to use as part of business logic.
+
+## Managing long translations
+
+There are cases when translations can be long and make components overall look awkward like the `ControlBar` below using strings from a German locale.
+
+<Canvas withSource="none">
+  <LongTranslationsSnippet />
+</Canvas>
+
+We suggest the following options to achieve a better looking interface.
+
+1. Trying less literal translations. If there is a shorter text alternative that does not sacrifice clarity, then that would be an easy option.
+2. Using styling to set limits and truncating long translations. The following styling in the example below is passed to each button.
+
+<Source code={TruncationSnippetText} />
+<Canvas withSource="none">
+  <TruncationSnippet />
+</Canvas>
+
+Note: All ACS UI SDK components will have aria labels with the full text as part of our Accessibility promise.
+
+3. Using styling to reduce font size.
+
+## Setting RTL
+
+To set rtl in your web application, first import and call `setRTL` from `@fluentui/react` to set the root element's `dir` property to "rtl".
+All Azure Communication Services UI library components will be "flipped" just like the example `ControlBar` in Arabic below.
+
+<Source code={SetRTLSnippetText} />
+
+<!-- Snippet is not actually using setRTL in this canvas because it would set the entire doc page and all the canvas examples to be RTL -->
+
+<Canvas withSource="none">
+  <SetRTLForCanvasSnippet />
+</Canvas>

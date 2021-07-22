@@ -22,8 +22,10 @@ Before we release a new version or beta version the following checklist should b
   * Ensure the new package is available on npm
   * Ensure the new package has the correct tag (latest, next or dev)
   * Download the package and ensure the bits inside are the same as the ones you intended to publish
+  * Use the npm package in a sample app to smoke test there are no issues installing and ingesting the package off npm
 * ✅ Verify documentation
   * Ensure the documentation on the public storybook site matches the latest release.
+  * Open the storybook site and ensure the console log that lists the npm package version number matches the released package version number.
 * ✅ Post about release on the [internal releases Teams channel](https://teams.microsoft.com/l/channel/19%3ae12aa149c0b44318b245ae8c30365880%40thread.skype/ACS%2520Deployment%2520Announcements?groupId=3e9c1fc3-39df-4486-a26a-456d80e80f82&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
 
 ## Test Plan
@@ -35,6 +37,11 @@ The following manual and automated tests should pass before releases. As our tes
 Automated test infrastructure is currently in development.
 
 ### Manual Tests
+
+| Area | Test |
+| -- | -- |
+| npm package | User can npm install the npm package |
+| npm package | User's app performs treeshaking on the parts of the npm package not used |
 
 | Area | Test |
 | -- | -- |

@@ -10,7 +10,9 @@ import {
   CommunicationParticipant,
   DefaultMessageRendererType,
   FluentThemeProvider,
-  MessageProps
+  MessageProps,
+  IdentifierProvider,
+  Identifiers
 } from '@internal/react-components';
 
 export type ChatCompositeProps = {
@@ -25,33 +27,53 @@ export type ChatCompositeProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   options?: ChatOptions;
+  identifiers?: Identifiers;
 };
 
 /**
  * Additional customizations for the chat composite
  */
 export type ChatOptions = {
-  /** Choose to show the participant pane */
+  /**
+   * UNSTABLE: Feature flag to enable ErrorBar.
+   *
+   * This option will be removed once ErrorBar is stable.
+   * @experimental
+   *
+   * @defaultValue false
+   */
+  showErrorBar?: boolean;
+  /**
+   * Choose to show the participant pane
+   * @defaultValue false
+   */
   showParticipantPane?: boolean;
-  /** Set a max width of the send box */ // TODO: we should remove this.
-  sendBoxMaxLength?: number;
+  /**
+   * Choose to show the topic at the top of the chat
+   * @defaultValue false
+   */
+  showTopic?: boolean;
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, fluentTheme, options, onRenderAvatar, onRenderTypingIndicator, onRenderMessage } = props;
+  const { adapter, fluentTheme, options, identifiers, onRenderAvatar, onRenderTypingIndicator, onRenderMessage } =
+    props;
 
   return (
     <FluentThemeProvider fluentTheme={fluentTheme}>
-      <ChatAdapterProvider adapter={adapter}>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-        <ChatScreen
-          showParticipantPane={options?.showParticipantPane}
-          sendBoxMaxLength={options?.sendBoxMaxLength}
-          onRenderAvatar={onRenderAvatar}
-          onRenderTypingIndicator={onRenderTypingIndicator}
-          onRenderMessage={onRenderMessage}
-        />
-      </ChatAdapterProvider>
+      <IdentifierProvider identifiers={identifiers}>
+        <ChatAdapterProvider adapter={adapter}>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+          <ChatScreen
+            showErrorBar={options?.showErrorBar}
+            showParticipantPane={options?.showParticipantPane}
+            showTopic={options?.showTopic}
+            onRenderAvatar={onRenderAvatar}
+            onRenderTypingIndicator={onRenderTypingIndicator}
+            onRenderMessage={onRenderMessage}
+          />
+        </ChatAdapterProvider>
+      </IdentifierProvider>
     </FluentThemeProvider>
   );
 };

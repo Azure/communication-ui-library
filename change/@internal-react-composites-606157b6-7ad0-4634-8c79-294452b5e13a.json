@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add chat e2e tests",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

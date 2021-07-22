@@ -3,29 +3,22 @@
 
 import {
   ContextualMenuItemType,
-  DefaultButton,
-  IButtonProps,
   IContextualMenuItem,
   IContextualMenuProps,
   IStyle,
-  Label,
   Stack,
-  concatStyleSets,
   mergeStyles
 } from '@fluentui/react';
 import { People20Filled } from '@fluentui/react-icons';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import { ParticipantList, ParticipantListProps } from './ParticipantList';
-import {
-  controlButtonLabelStyles,
-  controlButtonStyles,
-  defaultParticipantListContainerStyle,
-  participantsButtonMenuPropsStyle
-} from './styles/ControlBar.styles';
+import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { formatString } from '../localization/localizationUtils';
 import { ButtonCustomStylesProps } from '../types';
+import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+
 /**
  * Styles Props for ParticipantsButton component
  */
@@ -63,14 +56,7 @@ export interface ParticipantsButtonStrings {
 /**
  * Props for ParticipantsButton component
  */
-export interface ParticipantsButtonProps extends IButtonProps {
-  /**
-   * Whether the label is displayed or not.
-   *
-   * @default false
-   *
-   */
-  showLabel?: boolean;
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
    * Props of ParticipantList component
    */
@@ -97,6 +83,10 @@ export interface ParticipantsButtonProps extends IButtonProps {
   strings?: Partial<ParticipantsButtonStrings>;
 }
 
+const onRenderPeopleIcon = (): JSX.Element => {
+  return <People20Filled key={'participantsIconKey'} primaryFill="currentColor" />;
+};
+
 /**
  * `ParticipantsButton` allows you to easily create a component rendering a participants button. It can be used in your ControlBar component for example.
  * This button contains dropdown menu items defined through its property `menuProps`. By default, it can display the number of remote participants with the full list
@@ -106,15 +96,7 @@ export interface ParticipantsButtonProps extends IButtonProps {
  * @param props - of type ParticipantsButtonProps
  */
 export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
-  const {
-    participantListProps,
-    showLabel = false,
-    callInvitationURL,
-    styles,
-    onMuteAll,
-    onRenderIcon,
-    onRenderText
-  } = props;
+  const { participantListProps, callInvitationURL, styles, onMuteAll, onRenderIcon } = props;
 
   const onMuteAllCallback = useCallback(() => {
     if (onMuteAll) {
@@ -122,7 +104,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
   }, [onMuteAll]);
 
-  const onRenderCallback = useCallback(() => {
+  const onRenderParticipantList = useCallback(() => {
     return (
       <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
         <ParticipantList {...participantListProps} />
@@ -139,14 +121,15 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
   const localeStrings = useLocale().strings.participantsButton;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
+  const participantCount = participantListProps.participants.length;
 
   const generateDefaultParticipantsSubMenuProps = useCallback((): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
-    if (participantListProps.participants.length > 0) {
+    if (participantCount > 0) {
       items.push({
         key: 'participantListMenuItemKey',
-        onRender: onRenderCallback
+        onRender: onRenderParticipantList
       });
 
       items.push({ key: 'participantsDivider1', itemType: ContextualMenuItemType.Divider });
@@ -163,7 +146,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
 
     return items;
-  }, [strings, participantListProps.participants.length, onRenderCallback, onMuteAll, onMuteAllCallback]);
+  }, [strings, participantCount, onRenderParticipantList, onMuteAll, onMuteAllCallback]);
 
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
@@ -172,17 +155,17 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       items: []
     };
 
-    if (participantListProps.participants.length > 0) {
+    if (participantCount > 0) {
       const participantIds = participantListProps.participants.map((p) => p.userId);
 
-      let participantCount = participantIds.length;
+      let participantCountWithoutMe = participantIds.length;
       if (participantListProps.excludeMe) {
-        participantCount -= 1;
+        participantCountWithoutMe -= 1;
       }
 
       menuProps.items.push({
         key: 'participantCountKey',
-        name: formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCount}` }),
+        name: formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
         iconProps: { iconName: 'People' },
         subMenuProps: {
           items: generateDefaultParticipantsSubMenuProps()
@@ -201,40 +184,26 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
 
     return menuProps;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    participantListProps,
-    participantListProps.participants,
-    participantListProps?.myUserId,
+    strings.menuHeader,
+    strings.participantsListButtonLabel,
+    strings.copyInviteLinkButtonLabel,
+    participantCount,
     callInvitationURL,
-    styles?.participantListContainerStyle
+    participantListProps.participants,
+    participantListProps.excludeMe,
+    generateDefaultParticipantsSubMenuProps,
+    onCopyCallback
   ]);
 
-  const componentStyles = concatStyleSets(controlButtonStyles, styles ?? {});
-
-  const defaultRenderIcon = (): JSX.Element => {
-    return <People20Filled key={'participantsIconKey'} primaryFill="currentColor" />;
-  };
-
-  const defaultRenderText = useCallback(
-    (props?: IButtonProps): JSX.Element => {
-      return (
-        <Label key={'participantsLabelKey'} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-          {strings.label}
-        </Label>
-      );
-    },
-    [strings.label]
-  );
-
   return (
-    <DefaultButton
+    <ControlBarButton
       {...props}
       menuProps={props.menuProps ?? defaultMenuProps}
       menuIconProps={{ hidden: true }}
-      styles={componentStyles}
-      onRenderIcon={onRenderIcon ?? defaultRenderIcon}
-      onRenderText={showLabel ? onRenderText ?? defaultRenderText : undefined}
+      onRenderIcon={onRenderIcon ?? onRenderPeopleIcon}
+      strings={strings}
+      labelKey={props.labelKey ?? 'participantsButtonLabel'}
     />
   );
 };

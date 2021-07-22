@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "React hook useTheme added to ACS library.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

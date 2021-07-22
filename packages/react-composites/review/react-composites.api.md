@@ -14,12 +14,15 @@ import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
-import type { CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationTokenCredential } from '@azure/communication-common';
+import { CommunicationUserKind } from '@azure/communication-common';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import type { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
+import { Identifiers } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
@@ -111,7 +114,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    setPage: (page: CallCompositePage) => void;
+    setPage(page: CallCompositePage): void;
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
@@ -249,6 +252,7 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    identifiers?: Identifiers;
 };
 
 // @public (undocumented)
@@ -266,6 +270,7 @@ export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | Micr
 
 // @public (undocumented)
 export interface ChatAdapter {
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -342,6 +347,7 @@ export type ChatCompositeProps = {
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
+    identifiers?: Identifiers;
 };
 
 // @public
@@ -352,8 +358,9 @@ export type ChatErrorListener = (event: {
 
 // @public
 export type ChatOptions = {
+    showErrorBar?: boolean;
     showParticipantPane?: boolean;
-    sendBoxMaxLength?: number;
+    showTopic?: boolean;
 };
 
 // @public (undocumented)
@@ -365,10 +372,10 @@ export type ChatUIState = {
 };
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (userId: CommunicationUserIdentifier, token: string, locator: TeamsMeetingLinkLocator | GroupCallLocator, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: (userId: CommunicationUserKind, displayName: string, credential: CommunicationTokenCredential, locator: TeamsMeetingLinkLocator | GroupCallLocator, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (userId: CommunicationUserIdentifier, token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: (endpointUrl: string, userId: CommunicationIdentifierKind, displayName: string, credential: CommunicationTokenCredential, threadId: string) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {

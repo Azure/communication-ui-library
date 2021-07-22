@@ -22,7 +22,6 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 
 - [API extractor](./infrastructure/api-extractor.md) - Preventing breaking changes
 - [Beachball](./infrastructure/beachball.md) - Package version bumper and changelog generator
-- [Creating a new npm package release](./infrastructure/creating-a-release.md) - Instructions on creating new npm releases
 - [Chromatic](./infrastructure/chromatic.md) - Chromatic visual testing
 - [ESLint and Prettier](./infrastructure/linting.md) - Code style enforcing
 - [GitHub Issue templates](./infrastructure/issue-templates.md) - GitHub bug and feature request templates
@@ -33,6 +32,7 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 
 ## References
 
+- [Creating a new npm package release](./references/creating-a-release.md) - Instructions on creating new npm releases
 - [Release checklist](./references/release-checklist.md)
 - [Tips for writing a change file](./references/tips-for-writing-changelog-entries.md)
 - [Pruning a changelog before release](./references/pruning-a-changelog.md)

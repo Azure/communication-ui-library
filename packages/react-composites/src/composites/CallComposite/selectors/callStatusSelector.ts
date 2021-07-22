@@ -2,10 +2,14 @@
 // Licensed under the MIT license.
 import { getCallStatus, getIsScreenShareOn } from './baseSelectors';
 import { createSelector } from 'reselect';
+import { CallState as SDKCallStatus } from '@azure/communication-calling';
 
-export const callStatusSelector = createSelector([getCallStatus, getIsScreenShareOn], (callStatus, isScreenShareOn) => {
-  return {
-    callStatus,
-    isScreenShareOn
-  };
-});
+export const callStatusSelector = createSelector(
+  [getCallStatus, getIsScreenShareOn],
+  (callStatus: SDKCallStatus, isScreenShareOn) => {
+    return {
+      callStatus,
+      isScreenShareOn
+    };
+  }
+);

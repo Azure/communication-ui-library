@@ -401,7 +401,7 @@ export class ChatContext {
     );
   }
 
-  private clearError(targets: ChatErrorTargets[]): void {
+  public clearError(targets: ChatErrorTargets[]): void {
     let changed = false;
     const newState = produce(this._state, (draft: ChatClientState) => {
       for (const target of targets) {

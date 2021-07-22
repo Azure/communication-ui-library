@@ -4,6 +4,7 @@
 export * from './components';
 export * from './localization';
 export * from './theming';
+export * from './identifiers';
 
 export type {
   BaseCustomStylesProps,

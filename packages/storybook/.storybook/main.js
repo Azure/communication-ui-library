@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 const path = require('path');
+const webpack = require('webpack4');
 
 module.exports = {
   stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(ts|tsx)'],
@@ -54,6 +55,12 @@ module.exports = {
       '@internal/calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
       '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
     };
+
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        __NPM_PACKAGE_VERSION__: JSON.stringify(require(path.resolve(__dirname, '../../communication-react/package.json')).version),
+      })
+    );
 
     return config;
   },

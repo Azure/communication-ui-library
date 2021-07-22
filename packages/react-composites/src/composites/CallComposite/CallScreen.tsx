@@ -16,7 +16,7 @@ import { isInCall } from '../../utils/SDKUtils';
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 import { useAdapter } from './adapter/CallAdapterProvider';
 import { useSelector } from './hooks/useSelector';
-import { getCall } from './selectors/baseSelectors';
+import { getCallId, getEndedCall } from './selectors/baseSelectors';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
@@ -49,10 +49,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
   const { callStatus, isScreenShareOn } = useSelector(callStatusSelector);
-  const call = useSelector(getCall);
+  const callId = useSelector(getCallId);
   const currentCallId = useRef('');
-  if (call) {
-    currentCallId.current = call.id;
+
+  // Remember last available callId
+  if (callId) {
+    currentCallId.current = callId;
   }
 
   const mediaGalleryProps = useSelector(mediaGallerySelector);
@@ -78,9 +80,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     setJoinedCall(true);
   }, [adapter, joinedCall]);
 
+  const endedCall = useSelector(getEndedCall);
+
   // Handle Call Join Errors
   useEffect(() => {
-    const endedCall = adapter.getState().endedCall;
     if (endedCall && currentCallId.current === endedCall?.id) {
       if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason.subCode === 5854) {
         callErrorHandler('errorJoiningTeamsMeeting');
@@ -88,7 +91,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         callErrorHandler('removed');
       }
     }
-  }, [adapter, call, callErrorHandler]);
+  }, [adapter, callErrorHandler, endedCall]);
 
   if ('isTeamsCall' in adapter) {
     const azureAdapter = adapter as AzureCommunicationCallAdapter;
