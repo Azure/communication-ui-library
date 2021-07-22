@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import * as reselect from 'reselect';
-import { getCall } from './baseSelectors';
+import { getLocalVideoStreams } from './baseSelectors';
 
-export const mediaGallerySelector = reselect.createSelector([getCall], (call) => {
+export const mediaGallerySelector = reselect.createSelector([getLocalVideoStreams], (localVideoStreams) => {
   return {
-    isVideoStreamOn: !!call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video')?.view?.target
+    isVideoStreamOn: !!localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video')?.view?.target
   };
 });

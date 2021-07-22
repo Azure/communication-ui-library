@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatClientState, ChatErrors, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { ChatParticipant, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -52,3 +52,5 @@ export const sanitizedMessageContentType = (type: string): MessageContentType =>
     ? lowerCaseType
     : 'unknown';
 };
+
+export const getLatestErrors = (state: ChatClientState): ChatErrors => state.latestErrors;

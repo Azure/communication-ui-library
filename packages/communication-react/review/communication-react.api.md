@@ -34,6 +34,8 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+import { IMessageBarProps } from '@fluentui/react';
+import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -58,6 +60,9 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+
+// @public
+export const ar_SA: Locale;
 
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
@@ -144,7 +149,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     setMicrophone(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
-    setPage: (page: CallCompositePage) => void;
+    setPage(page: CallCompositePage): void;
     // (undocumented)
     setSpeaker(device: AudioDeviceInfo): Promise<void>;
     // (undocumented)
@@ -332,6 +337,7 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    identifiers?: Identifiers;
 };
 
 // @public (undocumented)
@@ -412,10 +418,9 @@ export interface CallState {
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
-export interface CameraButtonProps extends IButtonProps {
+export interface CameraButtonProps extends ControlBarButtonProps {
     localVideoViewOption?: VideoStreamOptions;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
-    showLabel?: boolean;
     strings?: Partial<CameraButtonStrings>;
 }
 
@@ -423,7 +428,7 @@ export interface CameraButtonProps extends IButtonProps {
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: CallState | undefined, res2: DeviceManagerState) => {
+}, (res1: LocalVideoStreamState[] | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -436,6 +441,7 @@ export interface CameraButtonStrings {
 
 // @public (undocumented)
 export interface ChatAdapter {
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     dispose(): void;
     // (undocumented)
@@ -536,6 +542,7 @@ export type ChatCompositeProps = {
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
+    identifiers?: Identifiers;
 };
 
 // @public
@@ -592,8 +599,9 @@ export type ChatObjectMethodNames<TName extends string, T> = {
 
 // @public
 export type ChatOptions = {
+    showErrorBar?: boolean;
     showParticipantPane?: boolean;
-    sendBoxMaxLength?: number;
+    showTopic?: boolean;
 };
 
 // @public (undocumented)
@@ -681,6 +689,7 @@ export type CommunicationParticipant = {
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
+    errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -695,6 +704,25 @@ export interface ComponentStrings {
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
+// @public
+export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
+
+// @public
+export interface ControlBarButtonProps extends IButtonProps {
+    labelKey?: string;
+    onRenderOffIcon?: IRenderFunction<IButtonProps>;
+    onRenderOnIcon?: IRenderFunction<IButtonProps>;
+    showLabel?: boolean;
+    strings?: ControlBarButtonStrings;
+}
+
+// @public
+export interface ControlBarButtonStrings {
+    label?: string;
+    offLabel?: string;
+    onLabel?: string;
+}
+
 // @public (undocumented)
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
@@ -706,10 +734,10 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (userId: CommunicationUserIdentifier, token: string, locator: TeamsMeetingLinkLocator | GroupCallLocator, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: (userId: CommunicationUserKind, displayName: string, credential: CommunicationTokenCredential, locator: TeamsMeetingLinkLocator | GroupCallLocator, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (userId: CommunicationUserIdentifier, token: string, endpointUrl: string, threadId: string, displayName: string, refreshTokenCallback?: (() => Promise<string>) | undefined) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: (endpointUrl: string, userId: CommunicationIdentifierKind, displayName: string, credential: CommunicationTokenCredential, threadId: string) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
@@ -752,6 +780,9 @@ export type CustomMessagePayload = {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
+// @public
+export const de_DE: Locale;
+
 // @public (undocumented)
 export type DefaultCallingHandlers = {
     onStartLocalVideo: () => Promise<void>;
@@ -780,10 +811,16 @@ export type DefaultChatHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
+// @public
+export const defaultIdentifiers: Identifiers;
+
 // @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps) => JSX.Element;
+export type DefaultMessageRendererType = (props: MessageProps, ids?: {
+    messageTimestamp?: string;
+}) => JSX.Element;
 
 // @public
 export type DeviceManagerState = {
@@ -808,12 +845,14 @@ export type DisplayNameChangedListener = (event: {
 export const emptySelector: () => Record<string, never>;
 
 // @public
+export const en_US: Locale;
+
+// @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
-export interface EndCallButtonProps extends IButtonProps {
+export interface EndCallButtonProps extends ControlBarButtonProps {
     onHangUp?: () => Promise<void>;
-    showLabel?: boolean;
     strings?: EndCallButtonStrings;
 }
 
@@ -823,6 +862,35 @@ export interface EndCallButtonStrings {
 }
 
 // @public
+export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
+
+// @public
+export interface ErrorBarProps extends IMessageBarProps {
+    activeErrors: ErrorType[];
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
+    strings?: ErrorBarStrings;
+}
+
+// @public
+export const errorBarSelector: OutputSelector<ChatClientState, {
+activeErrors: ErrorType[];
+}, (res: ChatErrors) => {
+activeErrors: ErrorType[];
+}>;
+
+// @public
+export interface ErrorBarStrings {
+    accessDenied: string;
+    sendMessageGeneric: string;
+    sendMessageNotInThisThread: string;
+    unableToReachChatService: string;
+    userNotInThisThread: string;
+}
+
+// @public
+export type ErrorType = keyof ErrorBarStrings;
+
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -830,6 +898,9 @@ export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
+
+// @public
+export const fr_FR: Locale;
 
 // @public (undocumented)
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
@@ -841,7 +912,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -860,6 +931,29 @@ export interface GridLayoutProps {
 
 // @public (undocumented)
 export type GridLayoutType = 'standard';
+
+// @public (undocumented)
+export const IdentifierContext: React_2.Context<Identifiers>;
+
+// @public (undocumented)
+export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+
+// @public (undocumented)
+export interface IdentifierProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    identifiers?: Identifiers;
+}
+
+// @public (undocumented)
+export interface Identifiers {
+    messageContent: string;
+    messageTimestamp: string;
+    participantList: string;
+    sendboxTextfield: string;
+    typingIndicator: string;
+}
 
 // @public (undocumented)
 export type IncomingCallListener = (event: {
@@ -913,13 +1007,6 @@ export interface Locale {
 // @public
 export const LocaleContext: React_2.Context<Locale>;
 
-// @public (undocumented)
-export const locales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
-
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
@@ -951,9 +1038,9 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 // @public
 export type MessageProps = {
     message: ChatMessage | SystemMessage | CustomMessage;
+    strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    strings?: Partial<MessageThreadStrings>;
 };
 
 // @public (undocumented)
@@ -1041,9 +1128,8 @@ export type MessageTypes = 'chat' | 'system' | 'custom';
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
-export interface MicrophoneButtonProps extends IButtonProps {
+export interface MicrophoneButtonProps extends ControlBarButtonProps {
     onToggleMicrophone?: () => Promise<void>;
-    showLabel?: boolean;
     strings?: Partial<MicrophoneButtonStrings>;
 }
 
@@ -1051,7 +1137,7 @@ export interface MicrophoneButtonProps extends IButtonProps {
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: CallState | undefined, res2: DeviceManagerState) => {
+}, (res1: boolean, res2: boolean | undefined, res3: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -1063,10 +1149,17 @@ export interface MicrophoneButtonStrings {
 }
 
 // @public
+export const namedLocales: Record<string, {
+    locale: Locale;
+    englishName: string;
+    displayName: string;
+}>;
+
+// @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
-export interface OptionsButtonProps extends IButtonProps {
+export interface OptionsButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
@@ -1075,20 +1168,19 @@ export interface OptionsButtonProps extends IButtonProps {
     selectedCamera?: OptionsDevice;
     selectedMicrophone?: OptionsDevice;
     selectedSpeaker?: OptionsDevice;
-    showLabel?: boolean;
     speakers?: OptionsDevice[];
     strings?: Partial<OptionsButtonStrings>;
 }
 
 // @public (undocumented)
-export const optionsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+export const optionsButtonSelector: reselect.OutputSelector<CallClientState, {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: DeviceManagerState, res2: CallState | undefined) => {
+}, (res: DeviceManagerState) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
@@ -1170,7 +1262,9 @@ export type ParticipantListProps = {
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+}, (res1: string, res2: string | undefined, res3: {
+    [keys: string]: RemoteParticipantState;
+} | undefined, res4: boolean | undefined, res5: boolean | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -1185,11 +1279,10 @@ export type ParticipantsAddedListener = (event: {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends IButtonProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
     callInvitationURL?: string;
     onMuteAll?: () => void;
     participantListProps: ParticipantListProps;
-    showLabel?: boolean;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStylesProps;
 }
@@ -1200,13 +1293,14 @@ export const participantsButtonSelector: reselect.OutputParametricSelector<CallC
         participants: CallParticipant[];
         myUserId: string;
     };
-    callInvitationURL?: string | undefined;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+}, (res: {
+    participants: CallParticipant[];
+    myUserId: string;
+}) => {
     participantListProps: {
         participants: CallParticipant[];
         myUserId: string;
     };
-    callInvitationURL?: string | undefined;
 }>;
 
 // @public
@@ -1266,16 +1360,15 @@ export interface RemoteVideoStreamState {
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
-export interface ScreenShareButtonProps extends IButtonProps {
+export interface ScreenShareButtonProps extends ControlBarButtonProps {
     onToggleScreenShare?: () => Promise<void>;
-    showLabel?: boolean;
     strings?: Partial<ScreenShareButtonStrings>;
 }
 
 // @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
-}, (res: CallState | undefined) => {
+}, (res: boolean | undefined) => {
     checked: boolean | undefined;
 }>;
 
@@ -1348,6 +1441,7 @@ export type StatefulCallClientOptions = {
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
+    clearErrors(targets: ChatErrorTargets[]): void;
     // (undocumented)
     getState(): ChatClientState;
     // (undocumented)
@@ -1394,6 +1488,9 @@ export type SystemMessagePayload = {
     content?: string;
     iconName?: string;
 };
+
+// @public
+export const ThemeContext: React_2.Context<Theme>;
 
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
@@ -1482,6 +1579,9 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
+export const useIdentifiers: () => Identifiers;
+
+// @public
 export const useLocale: () => Locale;
 
 // @public (undocumented)
@@ -1489,6 +1589,9 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 
 // @public (undocumented)
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+
+// @public
+export const useTheme: () => Theme;
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
@@ -1545,7 +1648,9 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: CallState | undefined, res2: string | undefined, res3: string) => {
+}, (res1: string | undefined, res2: {
+[keys: string]: RemoteParticipantState;
+} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string) => {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
 userId: string;

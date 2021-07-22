@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bugfix to prevent options menu from getting hidden every time a participant joins or leaves",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

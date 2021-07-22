@@ -1,16 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  ContextualMenu,
-  DefaultButton,
-  FocusTrapCallout,
-  IDragOptions,
-  Label,
-  Modal,
-  Stack,
-  useTheme
-} from '@fluentui/react';
+import { ContextualMenu, DefaultButton, FocusTrapCallout, IDragOptions, Label, Modal, Stack } from '@fluentui/react';
 import { ShareScreenStart20Filled, ShareScreenStop20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -19,6 +10,7 @@ import {
   screenSharePopupModalLabelStyles,
   screenSharePopupModalStackStyles
 } from './styles/ScreenSharePopup.styles';
+import { useTheme } from '@internal/react-components';
 
 const STOP_SCREENSHARE_BUTTON_TEXT = 'Stop presenting';
 const STOP_SCREENSHARE_LABEL_TEXT = "You're presenting your screen.";
@@ -69,7 +61,7 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
   }, [onStopScreenShare]);
 
   // Beware: The FocusTrapCallout is a workaround to allow users to tab-navigate out of the Modal. There is an open
-  // issue here: https://github.com/microsoft/fluentui/issues/16179
+  // issue here: https://github.com/microsoft/fluentui/issues/18924
 
   return (
     <>
@@ -87,7 +79,9 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
             disabled={stoppingInProgress}
           />
         </Stack>
-        <FocusTrapCallout focusTrapProps={{ isClickableOutsideFocusTrap: true }}></FocusTrapCallout>
+        <FocusTrapCallout
+          focusTrapProps={{ isClickableOutsideFocusTrap: true, forceFocusInsideTrap: false }}
+        ></FocusTrapCallout>
       </Modal>
     </>
   );

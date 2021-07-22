@@ -51,12 +51,13 @@
    * This design avoids unnecessary churn in this file.
    */
   "allowedAlternativeVersions": {
-    /**
-     * For example, allow some projects to use an older TypeScript compiler
-     * (in addition to whatever "usual" version is being used by other projects in the repo):
-     */
-    // "typescript": [
-    //   "~2.4.0"
-    // ]
+    "webpack": [
+      // All projects should use this version by default
+      "5.38.1",
+
+      // Check-treeshaking project does not work with webpack5
+      // More information: https://github.com/webpack/webpack/issues/2090#issuecomment-634301000
+      "^4.44.0"
+    ]
   }
 }

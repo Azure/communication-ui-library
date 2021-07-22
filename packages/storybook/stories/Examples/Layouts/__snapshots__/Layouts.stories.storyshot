@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call Layout 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -132,10 +132,10 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layout 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >

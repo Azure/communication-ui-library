@@ -1,3 +1,4 @@
+import { AzureCommunicationTokenCredential, getIdentifierKind } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -22,13 +23,12 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
       const createAdapter = async (): Promise<void> => {
         setAdapter(
           await createAzureCommunicationChatAdapter(
-            props.userId,
-            props.token,
             props.endpointUrl,
-            props.threadId,
-
+            getIdentifierKind(props.userId),
             // Data model injection: The display name for the local user comes from Contoso's data model.
-            props.displayName
+            props.displayName,
+            new AzureCommunicationTokenCredential(props.token),
+            props.threadId
           )
         );
       };
@@ -51,5 +51,17 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
     },
     [props.botUserId, props.botAvatar]
   );
-  return <>{adapter ? <ChatComposite adapter={adapter} onRenderAvatar={onRenderAvatar} /> : <h3>Loading...</h3>}</>;
+  return (
+    <>
+      {adapter ? (
+        <ChatComposite
+          adapter={adapter}
+          onRenderAvatar={onRenderAvatar}
+          options={{ showParticipantPane: true, showTopic: true }}
+        />
+      ) : (
+        <h3>Loading...</h3>
+      )}
+    </>
+  );
 };

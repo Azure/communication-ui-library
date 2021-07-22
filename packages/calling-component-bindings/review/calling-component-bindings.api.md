@@ -19,6 +19,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { EndCallButton } from '@internal/react-components';
 import { IncomingCallState } from '@internal/calling-stateful-client';
+import { LocalVideoStreamState } from '@internal/calling-stateful-client';
 import { MicrophoneButton } from '@internal/react-components';
 import { OptionsButton } from '@internal/react-components';
 import { OutputParametricSelector } from 'reselect';
@@ -27,6 +28,7 @@ import { ParticipantsButton } from '@internal/react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
@@ -105,7 +107,7 @@ export interface CallProviderProps {
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: CallState | undefined, res2: DeviceManagerState) => {
+}, (res1: LocalVideoStreamState[] | undefined, res2: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
@@ -157,7 +159,7 @@ export type DefaultCallingHandlers = {
 export const emptySelector: () => Record<string, never>;
 
 // @public (undocumented)
-export const getCall: (state: CallClientState, props: CallingBaseSelectorProps) => CallState | undefined;
+export const getCallExists: (state: CallClientState, props: CallingBaseSelectorProps) => boolean;
 
 // @public (undocumented)
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : undefined;
@@ -191,23 +193,40 @@ export const getIncomingCalls: (state: CallClientState) => {
 export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];
 
 // @public (undocumented)
+export const getIsMuted: (state: CallClientState, props: CallingBaseSelectorProps) => boolean | undefined;
+
+// @public (undocumented)
+export const getIsScreenSharingOn: (state: CallClientState, props: CallingBaseSelectorProps) => boolean | undefined;
+
+// @public (undocumented)
+export const getLocalVideoStreams: (state: CallClientState, props: CallingBaseSelectorProps) => LocalVideoStreamState[] | undefined;
+
+// @public (undocumented)
+export const getRemoteParticipants: (state: CallClientState, props: CallingBaseSelectorProps) => {
+    [keys: string]: RemoteParticipantState;
+} | undefined;
+
+// @public (undocumented)
+export const getScreenShareRemoteParticipant: (state: CallClientState, props: CallingBaseSelectorProps) => string | undefined;
+
+// @public (undocumented)
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
-}, (res1: CallState | undefined, res2: DeviceManagerState) => {
+}, (res1: boolean, res2: boolean | undefined, res3: DeviceManagerState) => {
     disabled: boolean;
     checked: boolean;
 }>;
 
 // @public (undocumented)
-export const optionsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
+export const optionsButtonSelector: reselect.OutputSelector<CallClientState, {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
     selectedMicrophone: AudioDeviceInfo | undefined;
     selectedSpeaker: AudioDeviceInfo | undefined;
     selectedCamera: VideoDeviceInfo | undefined;
-}, (res1: DeviceManagerState, res2: CallState | undefined) => {
+}, (res: DeviceManagerState) => {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
     cameras: VideoDeviceInfo[];
@@ -220,7 +239,9 @@ export const optionsButtonSelector: reselect.OutputParametricSelector<CallClient
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+}, (res1: string, res2: string | undefined, res3: {
+    [keys: string]: RemoteParticipantState;
+} | undefined, res4: boolean | undefined, res5: boolean | undefined) => {
     participants: CallParticipant[];
     myUserId: string;
 }>;
@@ -231,19 +252,20 @@ export const participantsButtonSelector: reselect.OutputParametricSelector<CallC
         participants: CallParticipant[];
         myUserId: string;
     };
-    callInvitationURL?: string | undefined;
-}, (res1: string, res2: string | undefined, res3: CallState | undefined) => {
+}, (res: {
+    participants: CallParticipant[];
+    myUserId: string;
+}) => {
     participantListProps: {
         participants: CallParticipant[];
         myUserId: string;
     };
-    callInvitationURL?: string | undefined;
 }>;
 
 // @public (undocumented)
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
-}, (res: CallState | undefined) => {
+}, (res: boolean | undefined) => {
     checked: boolean | undefined;
 }>;
 
@@ -283,7 +305,9 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
-}, (res1: CallState | undefined, res2: string | undefined, res3: string) => {
+}, (res1: string | undefined, res2: {
+[keys: string]: RemoteParticipantState;
+} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string) => {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
 userId: string;

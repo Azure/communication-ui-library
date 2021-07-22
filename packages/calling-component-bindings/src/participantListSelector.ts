@@ -4,7 +4,13 @@
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
-import { getCall, getIdentifier, getDisplayName } from './baseSelectors';
+import {
+  getIdentifier,
+  getDisplayName,
+  getRemoteParticipants,
+  getIsScreenSharingOn,
+  getIsMuted
+} from './baseSelectors';
 import { CallParticipant } from '@internal/react-components';
 
 const convertRemoteParticipantsToCommunicationParticipants = (
@@ -27,28 +33,29 @@ const convertRemoteParticipantsToCommunicationParticipants = (
 };
 
 export const participantListSelector = reselect.createSelector(
-  [getIdentifier, getDisplayName, getCall],
+  [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted],
   (
     userId,
     displayName,
-    call
+    remoteParticipants,
+    isScreenSharingOn,
+    isMuted
   ): {
     participants: CallParticipant[];
     myUserId: string;
   } => {
-    const remoteParticipants =
-      call && call?.remoteParticipants
-        ? convertRemoteParticipantsToCommunicationParticipants(Object.values(call?.remoteParticipants))
-        : [];
-    remoteParticipants.push({
+    const participants = remoteParticipants
+      ? convertRemoteParticipantsToCommunicationParticipants(Object.values(remoteParticipants))
+      : [];
+    participants.push({
       userId: userId,
       displayName: displayName,
-      isScreenSharing: call?.isScreenSharingOn,
-      isMuted: call?.isMuted,
+      isScreenSharing: isScreenSharingOn,
+      isMuted: isMuted,
       state: 'Connected'
     });
     return {
-      participants: remoteParticipants,
+      participants: participants,
       myUserId: userId
     };
   }

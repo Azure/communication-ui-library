@@ -2,10 +2,10 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Participant List Participant List 1`] = `
 <div
-  className="css-82 body-0"
+  className="css-61 body-0"
 >
   <div
-    className="css-82"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -172,7 +172,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         >
                           <div
                             className="ms-FocusZone css-52 ms-ContextualMenu is-open root-23"
-                            data-focuszone-id="FocusZone10"
+                            data-focuszone-id="FocusZone11"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}
@@ -366,7 +366,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         >
                           <div
                             className="ms-FocusZone css-52 ms-ContextualMenu is-open root-23"
-                            data-focuszone-id="FocusZone11"
+                            data-focuszone-id="FocusZone12"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}
@@ -560,7 +560,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         >
                           <div
                             className="ms-FocusZone css-52 ms-ContextualMenu is-open root-23"
-                            data-focuszone-id="FocusZone12"
+                            data-focuszone-id="FocusZone13"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}

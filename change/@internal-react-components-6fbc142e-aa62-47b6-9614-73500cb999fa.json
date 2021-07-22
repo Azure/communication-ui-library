@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bugfix - Removed usage of hooks inside useMemo for MessageThread",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

@@ -1,4 +1,5 @@
-import { DefaultButton, useTheme } from '@fluentui/react';
+import { useTheme } from '@azure/communication-react';
+import { DefaultButton } from '@fluentui/react';
 import React from 'react';
 
 export const ThemedButton = (): JSX.Element => {
