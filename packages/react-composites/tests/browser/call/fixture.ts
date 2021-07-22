@@ -61,7 +61,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
           '--use-fake-ui-for-media-stream',
           '--use-fake-device-for-media-stream',
           '--allow-file-access',
-          `--use-file-for-fake-video-capture=${path.join(__dirname, 'puppy.y4m')}`
+          `--use-file-for-fake-video-capture=${path.join(__dirname, 'test.y4m')}`
         ],
         ignoreDefaultArgs: ['--hide-scrollbars'],
         headless: true
