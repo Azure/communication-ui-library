@@ -118,4 +118,4 @@ chatThreadClient.sendMessage({content: 'Hello Redux!'});
 
 ### Connect redux with your own UI framework
 
-Now you have an redux store connected with our stateful client, any state update from stateful client will be dispatched to redux store immediately. You can either use [react-redux](https://react-redux.js.org/) or choose your own [binding library](https://redux.js.org/introduction/ecosystem#library-integration-and-bindings) to connect redux to your own UI.
+Now you have a Redux store connected with our stateful client, any state update from stateful client will be dispatched to redux store immediately. You can either use [react-redux](https://react-redux.js.org/) or choose your own [binding library](https://redux.js.org/introduction/ecosystem#library-integration-and-bindings) to connect redux to your own UI.
