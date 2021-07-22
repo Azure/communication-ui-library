@@ -5,7 +5,7 @@ import { Stack } from '@fluentui/react';
 import { text } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
+import { compositeExperienceContainerStyle } from '../constants';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
 import { createUserCredentials } from './snippets/Server.snippet';
 import { ConfigJoinMeetingHintBanner } from './Utils';
@@ -34,7 +34,7 @@ export const JoinExample: () => JSX.Element = () => {
   }, [knobs]);
 
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={{ root: COMPOSITE_EXPERIENCE_CONTAINER_STYLE }}>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {meetingProps ? <MeetingExperience {...meetingProps} /> : <ConfigJoinMeetingHintBanner />}
     </Stack>
   );
