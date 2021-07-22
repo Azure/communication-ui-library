@@ -81,7 +81,7 @@ const getCall = (state) => state.call;
 const callInfoSelector = createSelector([getCall], (call) => ({id: call.id, name: call.displayname }));
 ```
 
-In this _Don't_ example, the memoize dependencies array includes the whole call object, which will trigger a lot of undesired re-rendering when new participant join(which will update whole call object), and this is causing a perf regression.
+In this _Don't_ example, the memoize dependency array includes the whole call object. This will trigger a lot of undesired re-rendering. For example, every time new participants join this will trigger an undesired re-render as when a participant joins the whole call object is updated.
 
 Do:
 ```typescript
