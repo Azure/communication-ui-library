@@ -10,7 +10,7 @@ const getChatThreadFromTeamsLink = (teamsMeetingLink: string): string => {
   // Get the threadId from the url - this also contains the call locator ID that will be removed in the threadId.split
   let threadId = teamsMeetingLink.replace('https://teams.microsoft.com/l/meetup-join/', '');
   // Decode characters that outlook links encode
-  threadId = threadId.replace('%3a', ':').replace('%40', '@');
+  threadId = threadId.replaceAll('%3a', ':').replace('%40', '@');
   // Extract just the chat guid from the link, stripping away the call locator ID
   threadId = threadId.split(/^(.*?@thread\.v2)/gm)[1];
 
