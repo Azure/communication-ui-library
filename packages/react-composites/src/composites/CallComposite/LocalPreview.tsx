@@ -39,7 +39,7 @@ export const LocalPreview = (): JSX.Element => {
   }, [adapter, isLocalMicrophoneEnabled]);
 
   return (
-    <Stack className={localPreviewContainerStyle}>
+    <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>
       <VideoTile
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
