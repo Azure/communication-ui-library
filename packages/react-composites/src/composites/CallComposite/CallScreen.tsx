@@ -4,7 +4,7 @@
 import { Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  activeContainerClassName,
+  mediaGalleryContainerStyles,
   containerStyles,
   callControlsStyles,
   subContainerStyles,
@@ -132,7 +132,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             {callStatus === 'Connected' && (
               <>
                 <Stack styles={containerStyles} grow>
-                  <Stack.Item grow styles={activeContainerClassName}>
+                  <Stack.Item grow styles={mediaGalleryContainerStyles}>
                     <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
                   </Stack.Item>
                 </Stack>
