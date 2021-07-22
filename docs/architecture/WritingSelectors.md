@@ -72,7 +72,7 @@ A selector is a function built on top of reselect, it takes a list of functions 
 
 ### 1. Parameters for select must be as minimun as possible
 
-The first array parameter of createSelector() defines an parameters array for memoizing the return value of selector. No extra data in parameters should be memoize when designing what parameters to be memoized,
+The first array parameter of createSelector() defines a parameter array for memoizing the return value of the selector. Only include necessary parameters in the array when designing what parameters to use for memoizing.
 
 Don't:
 ```typescript
