@@ -12,8 +12,9 @@ import {
   peoplePaneContainerTokens,
   peopleSubheadingStyle
 } from './styles/SidePane.styles';
-import { ParticipantList, CommunicationParticipant } from '@internal/react-components';
+import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
+import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
 const SidePane = (props: { headingText: string; children: React.ReactNode; onClose: () => void }): JSX.Element => {
   return (
@@ -33,13 +34,9 @@ const SidePane = (props: { headingText: string; children: React.ReactNode; onClo
   );
 };
 
-export const EmbeddedPeoplePane = (props: {
-  participants: CommunicationParticipant[];
-  myUserId: string;
-  inviteLink?: string;
-  onClose: () => void;
-}): JSX.Element => {
+export const EmbeddedPeoplePane = (props: { inviteLink?: string; onClose: () => void }): JSX.Element => {
   const { inviteLink } = props;
+  const participantListProps = usePropsFor(ParticipantList);
   return (
     <SidePane headingText={'People'} onClose={props.onClose}>
       <Stack tokens={peoplePaneContainerTokens}>
@@ -47,7 +44,7 @@ export const EmbeddedPeoplePane = (props: {
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}
         <Stack.Item styles={peopleSubheadingStyle}>In this call</Stack.Item>
-        <ParticipantList myUserId={props.myUserId} participants={props.participants} />
+        <ParticipantList {...participantListProps} />
       </Stack>
     </SidePane>
   );
