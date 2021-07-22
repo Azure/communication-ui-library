@@ -27,11 +27,12 @@ export type CallCompositeProps = {
 };
 
 type MainScreenProps = {
+  showCallControls: boolean;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   callInvitationURL?: string;
 };
 
-const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = ({ showCallControls, callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -58,6 +59,7 @@ const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX
     default:
       return (
         <CallScreen
+          showCallControls={showCallControls}
           endCallHandler={async (): Promise<void> => {
             adapter.setPage('configuration');
           }}
@@ -65,7 +67,6 @@ const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX
             customPage ? adapter.setPage(customPage) : adapter.setPage('error');
           }}
           onRenderAvatar={onRenderAvatar}
-          showParticipants={true}
           callInvitationURL={callInvitationURL}
         />
       );
@@ -73,6 +74,25 @@ const MainScreen = ({ callInvitationURL, onRenderAvatar }: MainScreenProps): JSX
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
+  return <CallCompositeInternal {...props} showCallControls={true} />;
+};
+
+/**
+ * Props for the internal-only call composite export that has extra customizability points that
+ * we are not ready to export publicly.
+ * @internal
+ */
+interface CallInternalProps extends CallCompositeProps {
+  showCallControls: boolean;
+}
+
+/**
+ * An internal-only call composite export.
+ * This is used by the meeting composite and has extra customizability points that we are not ready
+ * to export publicly.
+ * @internal
+ */
+export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
   const { adapter, callInvitationURL, fluentTheme, identifiers } = props;
 
   useEffect(() => {
@@ -88,7 +108,11 @@ export const Call = (props: CallCompositeProps): JSX.Element => {
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <IdentifierProvider identifiers={identifiers}>
         <CallAdapterProvider adapter={adapter}>
-          <MainScreen onRenderAvatar={props.onRenderAvatar} callInvitationURL={callInvitationURL} />
+          <MainScreen
+            showCallControls={props.showCallControls}
+            onRenderAvatar={props.onRenderAvatar}
+            callInvitationURL={callInvitationURL}
+          />
         </CallAdapterProvider>
       </IdentifierProvider>
     </FluentThemeProvider>
