@@ -1023,6 +1023,17 @@ export interface LocalVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
+// @public
+export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
+
+// @public
+export type MeetingCompositeProps = {
+    callAdapter: CallAdapter;
+    chatAdapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    meetingInvitationURL?: string;
+};
+
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
