@@ -70,7 +70,7 @@ Component Selector name: [ComponentName]Selector
 
 A selector is a function built on top of reselect, it takes a list of functions as parameter and memoize their return value to decide if the second function provided in parameter need to be re-calculated, there are several principal we can follow when writing a selector for getting better perf:
 
-### 1. Parameters for select must be as minimun as possible
+### 1. Parameters for selector must be as minimum as possible
 
 The first array parameter of createSelector() defines a parameter array for memoizing the return value of the selector. Only include necessary parameters in the array when designing what parameters to use for memoizing.
 
