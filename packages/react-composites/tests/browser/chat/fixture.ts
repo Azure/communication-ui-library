@@ -51,7 +51,8 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
       const browser = await chromium.launch({
-        args: ['--start-maximized', '--disable-features=site-per-process'],
+        args: ['--window-size=1024,768', '--font-render-hinting=none'],
+        ignoreDefaultArgs: ['--hide-scrollbars'],
         headless: true
       });
       try {

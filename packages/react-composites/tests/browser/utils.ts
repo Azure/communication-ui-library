@@ -11,7 +11,7 @@ export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 const DATA_UI_ID = 'data-ui-id';
 const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
 const PAGE_VIEWPORT = {
-  width: 1200,
+  width: 1024,
   height: 768
 };
 const TOPIC_NAME = 'Cowabunga';
@@ -28,7 +28,7 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
   // Only waiting for the element to be attached to the DOM is enough, especially given
   // that we wait for 1 second after this step. Reconsider this when we remove that 1 second
   // wait.
-  await page.waitForSelector(dataUiId(IDS.participantList), { state: 'attached' });
+  await page.waitForSelector(dataUiId(IDS.participantList));
   // @TODO
   // We wait 1 sec here to work around a bug.
   // If page[0] sends a message to page[1] as soon as the composite is loaded

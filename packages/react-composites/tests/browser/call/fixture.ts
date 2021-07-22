@@ -54,13 +54,16 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
       const browser = await chromium.launch({
         executablePath: process.env.CHROME_PATH,
         args: [
-          '--start-maximized',
+          '--window-size=1024,768',
+          '--font-render-hinting=medium',
+          '--enable-font-antialiasing',
           '--disable-gpu',
           '--use-fake-ui-for-media-stream',
           '--use-fake-device-for-media-stream',
           '--allow-file-access',
           `--use-file-for-fake-video-capture=${path.join(__dirname, 'puppy.y4m')}`
         ],
+        ignoreDefaultArgs: ['--hide-scrollbars'],
         headless: true
       });
       try {
