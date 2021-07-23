@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, getTheme, IModalStyleProps, IModalStyles, IStyleFunctionOrObject } from '@fluentui/react';
+import {
+  mergeStyles,
+  getTheme,
+  IStackStyles,
+  IModalStyleProps,
+  IModalStyles,
+  IStyleFunctionOrObject
+} from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
 
 const theme = getTheme();
@@ -15,6 +22,8 @@ export const gridStyle = mergeStyles(videoBaseStyle, {
   height: '100%'
 });
 
+export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'relative', height: '100%' } };
+
 export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
   root: {
     width: '100%',
@@ -27,7 +36,7 @@ export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStylePro
     boxShadow: theme.effects.elevation8,
     borderRadius: theme.effects.roundedCorner4,
     position: 'absolute',
-    bottom: '5rem',
+    bottom: '1rem',
     right: '1rem'
   }
 };
