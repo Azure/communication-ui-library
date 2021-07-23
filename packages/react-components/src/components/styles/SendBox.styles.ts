@@ -58,13 +58,13 @@ export const sendBoxStyle = mergeStyles({
   ':-moz-placeholder': {
     fontSize: '0.875rem'
   },
-  padding: '0 2rem 0 0.5rem'
+  paddingRight: '1.9rem', // space affordance for the send box icon (icon:right + icon:width)
+  paddingLeft: '0.5rem'
 });
 
 export const sendButtonStyle = mergeStyles({
-  width: '2.25rem',
   color: 'grey',
-  right: '0.125rem',
+  right: '0.9rem',
   cursor: 'pointer',
   display: 'flex',
   justifyContent: 'center',
