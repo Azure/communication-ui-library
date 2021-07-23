@@ -47,8 +47,14 @@ export const LocalPreview = (): JSX.Element => {
         onRenderPlaceholder={onRenderPlaceholder}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} showLabel={true} disabled={!cameraPermissionGranted} />
+          <CameraButton
+            data-ui-id="call-composite-local-device-settings-camera-button"
+            {...cameraButtonProps}
+            showLabel={true}
+            disabled={!cameraPermissionGranted}
+          />
           <MicrophoneButton
+            data-ui-id="call-composite-local-device-settings-microphone-button"
             checked={isLocalMicrophoneEnabled}
             onToggleMicrophone={onToggleMic}
             disabled={!microphonePermissionGranted}
