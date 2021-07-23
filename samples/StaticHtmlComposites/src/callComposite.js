@@ -7,7 +7,12 @@ import { CallComposite, createAzureCommunicationCallAdapter } from '@azure/commu
 
 export const loadCallComposite = async function (args, htmlElement) {
   const { userId, token, groupId, displayName } = args;
-  const adapter = await createAzureCommunicationCallAdapter(userId, token, { groupId }, displayName ?? 'anonymous');
+  const adapter = await createAzureCommunicationCallAdapter({
+    userId,
+    credential: token,
+    locator: { groupId },
+    displayName: displayName ?? 'anonymous'
+  });
   ReactDOM.render(React.createElement(CallComposite, { adapter }, null), htmlElement);
   return adapter;
 };
