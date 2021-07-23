@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adding a bottom offset to the positioning of the PIP in the video gallery",
+  "packageName": "@internal/react-components",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
