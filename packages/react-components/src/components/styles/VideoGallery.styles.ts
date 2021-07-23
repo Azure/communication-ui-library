@@ -27,7 +27,7 @@ export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStylePro
     boxShadow: theme.effects.elevation8,
     borderRadius: theme.effects.roundedCorner4,
     position: 'absolute',
-    bottom: '1rem',
+    bottom: '5rem',
     right: '1rem'
   }
 };
