@@ -147,13 +147,13 @@ export const createChatAdapterWithStubs = async (chatClient: StubChatClient): Pr
       // Nothing to dispose in the stub.
     }
   };
-  return await createAzureCommunicationChatAdapter(
-    'stubEndointUrl',
-    { kind: 'communicationUser', communicationUserId: 'stubUserId' },
-    'stubDisplayName',
-    stubCredential,
-    'stubThreadId'
-  );
+  return await createAzureCommunicationChatAdapter({
+    endpointUrl: 'stubEndointUrl',
+    userId: { kind: 'communicationUser', communicationUserId: 'stubUserId' },
+    displayName: 'stubDisplayName',
+    credential: stubCredential,
+    threadId: 'stubThreadId'
+  });
 };
 
 class StateChangeListener {

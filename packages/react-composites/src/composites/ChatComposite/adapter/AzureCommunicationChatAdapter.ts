@@ -297,13 +297,21 @@ const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage
   };
 };
 
-export const createAzureCommunicationChatAdapter = async (
-  endpointUrl: string,
-  userId: CommunicationIdentifierKind,
-  displayName: string,
-  credential: CommunicationTokenCredential,
-  threadId: string
-): Promise<ChatAdapter> => {
+export type createAzureCommunicationChatAdapterArgs = {
+  endpointUrl: string;
+  userId: CommunicationIdentifierKind;
+  displayName: string;
+  credential: CommunicationTokenCredential;
+  threadId: string;
+};
+
+export const createAzureCommunicationChatAdapter = async ({
+  endpointUrl,
+  userId,
+  displayName,
+  credential,
+  threadId
+}: createAzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
   const chatClient = createStatefulChatClient({
     userId: userId,
     displayName,

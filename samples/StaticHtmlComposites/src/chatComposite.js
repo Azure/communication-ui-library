@@ -8,13 +8,13 @@ import { ChatComposite, createAzureCommunicationChatAdapter } from '@azure/commu
 
 export const loadChatComposite = async function (args, htmlElement) {
   const { userId, token, endpointUrl, threadId, displayName } = args;
-  const adapter = await createAzureCommunicationChatAdapter(
+  const adapter = await createAzureCommunicationChatAdapter({
     endpointUrl,
     userId,
-    displayName ?? 'anonymous',
-    new AzureCommunicationTokenCredential(token),
+    displayName: displayName ?? 'anonymous',
+    credential: new AzureCommunicationTokenCredential(token),
     threadId
-  );
+  });
   ReactDOM.render(React.createElement(ChatComposite, { adapter }, null), htmlElement);
   return adapter;
 };
