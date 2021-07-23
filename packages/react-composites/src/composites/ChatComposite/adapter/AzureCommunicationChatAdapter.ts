@@ -297,7 +297,7 @@ const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage
   };
 };
 
-export type createAzureCommunicationChatAdapterArgs = {
+export type AzureCommunicationChatAdapterArgs = {
   endpointUrl: string;
   userId: CommunicationIdentifierKind;
   displayName: string;
@@ -311,7 +311,7 @@ export const createAzureCommunicationChatAdapter = async ({
   displayName,
   credential,
   threadId
-}: createAzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
+}: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
   const chatClient = createStatefulChatClient({
     userId: userId,
     displayName,

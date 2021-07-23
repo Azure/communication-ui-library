@@ -132,6 +132,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 // @public (undocumented)
+export type AzureCommunicationChatAdapterArgs = {
+    endpointUrl: string;
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    threadId: string;
+};
+
+// @public (undocumented)
 export interface CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
@@ -375,7 +384,7 @@ export type ChatUIState = {
 export const createAzureCommunicationCallAdapter: (userId: CommunicationUserKind, displayName: string, credential: CommunicationTokenCredential, locator: TeamsMeetingLinkLocator | GroupCallLocator, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (endpointUrl: string, userId: CommunicationIdentifierKind, displayName: string, credential: CommunicationTokenCredential, threadId: string) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {

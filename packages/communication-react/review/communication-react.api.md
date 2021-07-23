@@ -166,6 +166,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     unmute(): Promise<void>;
 }
 
+// @public (undocumented)
+export type AzureCommunicationChatAdapterArgs = {
+    endpointUrl: string;
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    threadId: string;
+};
+
 // @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
@@ -737,7 +746,7 @@ export interface ControlBarProps {
 export const createAzureCommunicationCallAdapter: (userId: CommunicationUserKind, displayName: string, credential: CommunicationTokenCredential, locator: TeamsMeetingLinkLocator | GroupCallLocator, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (endpointUrl: string, userId: CommunicationIdentifierKind, displayName: string, credential: CommunicationTokenCredential, threadId: string) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
