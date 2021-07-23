@@ -57,7 +57,8 @@ export const sendBoxStyle = mergeStyles({
   },
   ':-moz-placeholder': {
     fontSize: '0.875rem'
-  }
+  },
+  padding: '0 2rem 0 0.5rem'
 });
 
 export const sendButtonStyle = mergeStyles({
