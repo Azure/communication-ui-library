@@ -90,6 +90,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   return (
     <Stack data-ui-id="call-composite-device-settings" className={localSettingsContainer} tokens={mainStackTokens}>
       <Dropdown
+        data-ui-id="call-composite-local-camera-settings"
         label={cameraLabel}
         placeholder={defaultPlaceHolder}
         options={
