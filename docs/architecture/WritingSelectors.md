@@ -70,6 +70,29 @@ Component Selector name: [ComponentName]Selector
 
 A selector is a function built on top of reselect, it takes a list of functions as parameter and memoize their return value to decide if the second function provided in parameter need to be re-calculated, there are several principal we can follow when writing a selector for getting better perf:
 
+### 1. Parameters for selector must be as minimum as possible
+
+The first array parameter of createSelector() defines a parameter array for memoizing the return value of the selector. Only include necessary parameters in the array when designing what parameters to use for memoizing.
+
+Don't:
+```typescript
+// state = {call:{ callId: UserId, displayname: string, callParticipants: Participants }}
+const getCall = (state) => state.call;
+const callInfoSelector = createSelector([getCall], (call) => ({id: call.id, name: call.displayname }));
+```
+
+In this _Don't_ example, the memoize dependency array includes the whole call object. This will trigger a lot of undesired re-rendering. For example, every time new participants join this will trigger an undesired re-render as when a participant joins the whole call object is updated.
+
+Do:
+```typescript
+// state = {call:{ callId: UserId, displayname: string, callParticipants: Participants }}
+const getCallId = (state) = > state.call.id;
+const getDisplayName = (state) = > state.call.displayname;
+const callInfoSelector = createSelector([getCallId, getDisplayName], (call) => ({id: call.id, name: call.displayname }));
+```
+
+In 'Do' code snippet, the memoize dependencies array only depends on callId and displayname, which will be only triggered by these 2 value changes. 
+
 ### 1. Calculate all props as much as possible, get rid of extra data
 
 Return props object, as a contract between selector and components, must have minimum required data and changes.
@@ -78,7 +101,7 @@ Imagine there is a selector to list item names when item count less than 10:
 Don't:
 ```typescript
 const items = ['book', 'food'];
-const itemSelector = createSelector([getItems], (items) => { items });
+const itemSelector = createSelector([getItems], (items) => items);
 
 const ItemsDisplay = React.memo((items) => {
     const displayStr = items.length > 10 ? 'There are more than 10 items in the page...' : items.join(',');
@@ -99,7 +122,7 @@ const ItemsDisplay = React.memo((displayStr) => {
 });
 ```
 
-In 'better' version, selector generates string inside, which will keep the same when items count grows more than 10. Under this case, perf is not an issue any more.
+In 'Do' version, selector generates string inside, which will keep the same when items count grows more than 10. Under this case, perf is not an issue any more.
 
 ### 2. Returning basic types is preferred 
 
