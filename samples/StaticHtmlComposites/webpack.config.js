@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -20,6 +21,7 @@ module.exports = {
     port: 3000,
     injectClient: false,
     open: true,
+    contentBase: path.join(__dirname, 'dist'),
     proxy: [
       {
         path: '/token',
@@ -38,5 +40,6 @@ module.exports = {
         target: 'http://[::1]:8080'
       }
     ]
-  }
+  },
+  plugins: [new HtmlWebpackPlugin({ template: 'index.html' })]
 };
