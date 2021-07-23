@@ -202,7 +202,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   if (shouldFloatLocalVideo()) {
     const floatingTileHostId = 'UILibaryFloatingTileHost';
     return (
-      <Stack.Item id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
         <Modal
           isOpen={true}
           isModeless={true}
@@ -213,7 +213,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
         <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
-      </Stack.Item>
+      </Stack>
     );
   }
 
