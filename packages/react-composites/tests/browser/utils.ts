@@ -10,11 +10,11 @@ import { Browser, Page } from '@playwright/test';
 export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 const DATA_UI_ID = 'data-ui-id';
 const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
-const PAGE_VIEWPORT = {
+export const PAGE_VIEWPORT = {
   width: 1024,
   height: 768
 };
-const TOPIC_NAME = 'Cowabunga';
+export const TOPIC_NAME = 'Cowabunga';
 
 /**
  * Wait for the ChatComposite on a page to fully load.
