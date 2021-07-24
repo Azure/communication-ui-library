@@ -14,7 +14,7 @@ import {
   scrollableContainer,
   scrollableContainerContents
 } from './styles/SidePane.styles';
-import { CallParticipant, ParticipantList } from '@internal/react-components';
+import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
