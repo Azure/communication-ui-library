@@ -24,7 +24,8 @@ import {
   participantListWrapper,
   listHeader,
   participantListStack,
-  participantListStyle
+  participantListStyle,
+  participantListContainerPadding
 } from './styles/Chat.styles';
 
 export type ChatScreenProps = {
@@ -70,7 +71,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   return (
     <Stack className={chatContainer} grow>
       {!!showTopic && <ChatHeader {...headerProps} />}
-      <Stack className={chatArea} horizontal grow>
+      <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
           {props.showErrorBar ? <ErrorBar {...errorBarProps} /> : <></>}
           <MessageThread

@@ -31,7 +31,6 @@ export const chatArea = mergeStyles({
 export const chatWrapper = mergeStyles({
   height: '100%',
   width: '100%',
-  paddingBottom: '1rem',
   overflow: 'auto'
 });
 
@@ -58,9 +57,11 @@ export const topicNameLabelStyle = mergeStyles({
 export const participantListWrapper = mergeStyles({
   boxShadow: '0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.13)',
   width: '15rem',
-  height: '100%',
-  paddingLeft: '0.5rem'
+  height: '100%'
 });
+
+export const participantListContainerPadding = { childrenGap: '0.5rem' };
+
 export const listHeader = mergeStyles({
   fontSize: '1rem',
   margin: '1rem'
