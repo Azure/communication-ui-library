@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IDS } from '../config';
 import { waitForCallCompositeToLoad, dataUiId } from '../utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -82,5 +81,16 @@ test.describe('Call Composite E2E Tests', () => {
       });
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-camera-toggled.png`);
     }
+  });
+
+  test('pages[0] local device settings can toggle camera & audio', async ({ pages }) => {
+    const page = pages[0];
+    page.bringToFront();
+    await stubLocalCameraName(page);
+    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-disabled.png`);
+    await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
+    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+    await page.waitForSelector('video');
+    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-enabled.png`);
   });
 });
