@@ -12,7 +12,7 @@ import TruncationSnippetText from '!!raw-loader!./snippets/localization/Truncati
 import { TruncationSnippet } from './snippets/localization/Truncation.snippet';
 import SetRTLSnippetText from '!!raw-loader!./snippets/localization/SetRTL.snippet';
 import { SetRTLForCanvasSnippet } from './snippets/localization/SetRTLForCanvas.snippet';
-import LocalizedComposites from '!!raw-loader!./QuickStarts/snippets/LocalizedComposites.snippet.tsx';
+import LocalizedComposites from '!!raw-loader!./snippets/localization/LocalizedComposites.snippet.tsx';
 
 <Meta id="localization" title="Localization" />
 
@@ -68,8 +68,8 @@ typescript and have intellisense available in your IDE, it will be easy to disco
 
 ### Option 2: Override `strings` prop in the UI Component
 
-The second option is to pass custom strings directly through the `strings` prop. Strings that can be overriden for a UI Library
-component have an optional `strings` property that interfaces all. There is no need to use `LocalizationProvider` because all
+The second option is to pass custom strings directly through the `strings` prop. Strings can be overriden for a UI Library
+component through the optional `strings` property. There is no need to use `LocalizationProvider` because all
 components default to English (US). Just assign the string directly through `CameraButton` like shown below.
 
 <Source code={StringsPropertySnippetText} />
