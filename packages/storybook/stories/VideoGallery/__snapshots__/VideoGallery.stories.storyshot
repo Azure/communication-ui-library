@@ -30,6 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       >
         <div
           className="ms-Stack css-79 css-1"
+          data-ui-id="video-gallery"
         >
           <div
             className="ms-Stack css-7"
