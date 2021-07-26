@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add more e2e tests for chat errors",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

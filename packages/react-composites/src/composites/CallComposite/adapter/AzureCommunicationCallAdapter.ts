@@ -38,10 +38,14 @@ import {
   ParticipantJoinedListener,
   ParticipantLeftListener
 } from './CallAdapter';
-import { createAzureCommunicationUserCredential, isInCall } from '../../../utils';
+import { isInCall } from '../../../utils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CommunicationUserIdentifier, CommunicationUserKind, getIdentifierKind } from '@azure/communication-common';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  CommunicationUserKind
+} from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
 // Context of Chat, which is a centralized context for all state updates
@@ -465,23 +469,15 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
 };
 
 export const createAzureCommunicationCallAdapter = async (
-  userId: CommunicationUserIdentifier,
-  token: string,
-  locator: TeamsMeetingLinkLocator | GroupCallLocator,
+  userId: CommunicationUserKind,
   displayName: string,
-  refreshTokenCallback?: (() => Promise<string>) | undefined,
+  credential: CommunicationTokenCredential,
+  locator: TeamsMeetingLinkLocator | GroupCallLocator,
   callClientOptions?: CallClientOptions
 ): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient(
-    { userId: getIdentifierKind(userId) as CommunicationUserKind },
-    { callClientOptions }
-  );
+  const callClient = createStatefulCallClient({ userId }, { callClientOptions });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
-  const callAgent = await callClient.createCallAgent(
-    createAzureCommunicationUserCredential(token, refreshTokenCallback),
-    { displayName }
-  );
-
+  const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
   return adapter;
 };

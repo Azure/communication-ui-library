@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -15,6 +16,7 @@ const token = params.token;
 const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 const userId = params.userId;
+const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
@@ -23,11 +25,11 @@ function App(): JSX.Element {
     const initialize = async (): Promise<void> => {
       setChatAdapter(
         await createAzureCommunicationChatAdapter(
-          { communicationUserId: userId },
-          token,
           endpointUrl,
-          threadId,
-          displayName
+          { kind: 'communicationUser', communicationUserId: userId },
+          displayName,
+          new AzureCommunicationTokenCredential(token),
+          threadId
         )
       );
     };
@@ -40,7 +42,22 @@ function App(): JSX.Element {
 
   return (
     <>
-      {chatAdapter && <ChatComposite identifiers={IDS} adapter={chatAdapter} options={{ showParticipantPane: true }} />}
+      {chatAdapter && (
+        <ChatComposite
+          identifiers={IDS}
+          adapter={chatAdapter}
+          options={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
+          onRenderTypingIndicator={
+            customDataModel
+              ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
+              : undefined
+          }
+          onRenderMessage={
+            customDataModel ? () => <text id="custom-data-model-message">Custom Message</text> : undefined
+          }
+          onRenderAvatar={customDataModel ? () => <text id="custom-data-model-avatar">Avatar</text> : undefined}
+        />
+      )}
     </>
   );
 }

@@ -43,6 +43,15 @@ export type ChatCompositeProps = {
  */
 export type ChatOptions = {
   /**
+   * UNSTABLE: Feature flag to enable ErrorBar.
+   *
+   * This option will be removed once ErrorBar is stable.
+   * @experimental
+   *
+   * @defaultValue false
+   */
+  showErrorBar?: boolean;
+  /**
    * Choose to show the participant pane
    * @defaultValue false
    */
@@ -72,6 +81,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
         <ChatAdapterProvider adapter={adapter}>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
           <ChatScreen
+            showErrorBar={options?.showErrorBar}
             showParticipantPane={options?.showParticipantPane}
             showTopic={options?.showTopic}
             onRenderAvatar={onRenderAvatar}
