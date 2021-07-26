@@ -24,7 +24,7 @@ export type CallCompositeProps = {
   /**
    * Locale for the composite.
    *
-   * Defaults to a English (US) locale if undefined.
+   * Defaults to English (US) locale if undefined.
    */
   locale?: Locale;
   callInvitationURL?: string;
@@ -110,7 +110,7 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
     })();
   }, [adapter]);
 
-  const call = (
+  const callElement = (
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <IdentifierProvider identifiers={identifiers}>
         <CallAdapterProvider adapter={adapter}>
@@ -124,5 +124,5 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
     </FluentThemeProvider>
   );
 
-  return locale ? LocalizationProvider({ locale, children: call }) : call;
+  return locale ? LocalizationProvider({ locale, children: callElement }) : callElement;
 };

@@ -75,7 +75,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onRenderMessage
   } = props;
 
-  const chat = (
+  const chatElement = (
     <FluentThemeProvider fluentTheme={fluentTheme}>
       <IdentifierProvider identifiers={identifiers}>
         <ChatAdapterProvider adapter={adapter}>
@@ -93,5 +93,5 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     </FluentThemeProvider>
   );
 
-  return locale ? LocalizationProvider({ locale, children: chat }) : chat;
+  return locale ? LocalizationProvider({ locale, children: chatElement }) : chatElement;
 };
