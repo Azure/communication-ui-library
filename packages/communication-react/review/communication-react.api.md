@@ -953,6 +953,7 @@ export interface Identifiers {
     participantList: string;
     sendboxTextfield: string;
     typingIndicator: string;
+    videoGallery: string;
 }
 
 // @public (undocumented)

@@ -3,6 +3,7 @@
 
 import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
@@ -116,6 +117,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   } = props;
   const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
 
+  const ids = useIdentifiers();
+
   useEffect(() => {
     setSortedRemoteParticipants(sortParticipants(remoteParticipants));
   }, [remoteParticipants]);
@@ -207,7 +210,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   return (
     <GridLayout styles={styles ?? emptyStyles}>
-      <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
       {defaultOnRenderRemoteParticipants}
