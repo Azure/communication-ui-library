@@ -22,13 +22,13 @@ export type ChatCompositeProps = {
   /**
    * Fluent theme for the composite.
    *
-   * Defaults to a light theme if undefined.
+   * @defaultValue `light theme`
    */
   fluentTheme?: PartialTheme | Theme;
   /**
    * Locale for the composite.
    *
-   * Defaults to a English (US) locale if undefined.
+   * @defaultValue `English (US)`
    */
   locale?: Locale;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
