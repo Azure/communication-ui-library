@@ -3,7 +3,6 @@
 
 import { EndCallButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -69,10 +68,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const EndCallStory = (): JSX.Element => {
-  const showLabels = boolean('Show Labels', false);
-
-  return <EndCallButton showLabel={showLabels} />;
+const EndCallStory = (args): JSX.Element => {
+  return <EndCallButton {...args} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -83,6 +80,12 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-endcall`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/End Call`,
   component: EndCallButton,
+  argTypes: {
+    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+    // Hiding auto-generated controls
+    onHangUp: { control: false, table: { disable: true } },
+    strings: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()

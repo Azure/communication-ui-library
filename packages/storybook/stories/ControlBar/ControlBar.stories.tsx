@@ -12,12 +12,16 @@ import {
   ScreenShareButton
 } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import { OptionsButtonWithKnobs } from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
+import {
+  OptionsButtonWithKnobs,
+  exampleCameras,
+  exampleMicrophones,
+  exampleSpeakers
+} from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
 import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
@@ -161,14 +165,10 @@ const ControlBarStory: (
     globals: { theme }
   }
 ) => JSX.Element = (args, { globals: { theme } }) => {
-  const layout = select('Layout', CONTROL_BAR_LAYOUTS, 'floatingBottom');
-  const toggleButtons = boolean('Toggle Buttons', false);
-  const showLabels = boolean('Show Labels', false);
-
   // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
   let background = '#f8f8f8';
   if (theme === 'Dark') {
-    if (layout.startsWith('floating')) {
+    if (args.layout.startsWith('floating')) {
       background = '#252423';
     } else {
       background = '#161514';
@@ -190,18 +190,18 @@ const ControlBarStory: (
         background: background
       }}
     >
-      <ControlBarComponent layout={layout}>
-        <CameraButton showLabel={showLabels} checked={toggleButtons} />
-        <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
-        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
+      <ControlBarComponent layout={args.layout}>
+        <CameraButton showLabel={args.showLabel} checked={args.checked} />
+        <MicrophoneButton showLabel={args.showLabel} checked={args.checked} />
+        <ScreenShareButton showLabel={args.showLabel} checked={args.checked} />
         <ParticipantsButton
-          showLabel={showLabels}
+          showLabel={args.showLabel}
           participantListProps={mockParticipantsProps}
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />
-        <OptionsButtonWithKnobs showLabel={showLabels} />
-        <EndCallButton showLabel={showLabels} />
+        <OptionsButtonWithKnobs {...args} />
+        <EndCallButton showLabel={args.showLabel} />
       </ControlBarComponent>
     </div>
   );
@@ -213,6 +213,22 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
   component: ControlBarComponent,
+  argTypes: {
+    layout: {
+      control: { type: 'select', options: CONTROL_BAR_LAYOUTS },
+      defaultValue: 'floatingBottom',
+      name: 'Layout'
+    },
+    checked: { control: 'boolean', defaultValue: false, name: 'Toggle Button' },
+    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+    // Initializing and hiding some Options controls
+    cameras: { control: false, defaultValue: exampleCameras, table: { disable: true } },
+    microphones: { control: false, defaultValue: exampleMicrophones, table: { disable: true } },
+    speakers: { control: false, defaultValue: exampleSpeakers, table: { disable: true } },
+    // Hiding auto-generated controls
+    children: { control: false, table: { disable: true } },
+    styles: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()

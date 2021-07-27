@@ -3,7 +3,6 @@
 
 import { CameraButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -70,11 +69,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const CameraStory = (): JSX.Element => {
-  const toggleButtons = boolean('Toggle Buttons', false);
-  const showLabels = boolean('Show Labels', false);
-
-  return <CameraButton showLabel={showLabels} checked={toggleButtons} />;
+const CameraStory = (args): JSX.Element => {
+  return <CameraButton {...args} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -85,6 +81,14 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-camera`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Camera`,
   component: CameraButton,
+  argTypes: {
+    checked: { control: 'boolean', defaultValue: false, name: 'Toggle Button' },
+    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+    // Hiding auto-generated controls
+    onToggleCamera: { control: false, table: { disable: true } },
+    localVideoViewOption: { control: false, table: { disable: true } },
+    strings: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()

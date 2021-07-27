@@ -3,7 +3,6 @@
 
 import { ParticipantsButton, ParticipantListProps } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean, text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -125,15 +124,8 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-const ParticipantsStory = (): JSX.Element => {
-  const showLabels = boolean('Show Labels', false);
-  const isMuteAllAvailable = boolean('User option to mute all participants is availble', false);
-  const callInvitationURL = text('Call URL to copy', 'https://bing.com');
-  const participantsKnob = text(
-    'Participants (comma separated with You being local user)',
-    'You, Hal Jordan, Barry Allen, Bruce Wayne'
-  );
-  const mockParticipants = participantsKnob
+const ParticipantsStory = (args): JSX.Element => {
+  const mockParticipants = args.participantsKnob
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
@@ -157,12 +149,12 @@ const ParticipantsStory = (): JSX.Element => {
   const onMuteAll = () => {
     // your implementation to mute all participants
   };
+
   return (
     <ParticipantsButton
-      showLabel={showLabels}
+      {...args}
       participantListProps={mockParticipantsProps}
-      callInvitationURL={callInvitationURL}
-      onMuteAll={isMuteAllAvailable ? onMuteAll : undefined}
+      onMuteAll={args.isMuteAllAvailable ? onMuteAll : undefined}
     />
   );
 };
@@ -175,6 +167,25 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-participants`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Participants`,
   component: ParticipantsButton,
+  argTypes: {
+    isMuteAllAvailable: {
+      control: 'boolean',
+      defaultValue: false,
+      name: 'User option to mute all participants is availble'
+    },
+    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+    callInvitationURL: { control: 'text', defaultValue: 'https://bing.com', name: 'Call URL to copy' },
+    participantsKnob: {
+      control: 'text',
+      defaultValue: 'You, Hal Jordan, Barry Allen, Bruce Wayne',
+      name: 'Participants (comma separated with You being local user)'
+    },
+    // Hiding auto-generated controls
+    participantListProps: { control: false, table: { disable: true } },
+    styles: { control: false, table: { disable: true } },
+    onMuteAll: { control: false, table: { disable: true } },
+    strings: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()
