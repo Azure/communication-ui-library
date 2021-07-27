@@ -7,10 +7,9 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
-import { ErrorBar, ErrorType } from '@azure/communication-react';
+import { ErrorBar as ErrorBarComponent, ErrorType } from '@azure/communication-react';
 import { mergeStyles, useTheme } from '@fluentui/react';
 import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs/blocks';
-import { radios } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useCallback, useState } from 'react';
 
@@ -38,31 +37,8 @@ const getDocs: () => JSX.Element = () => {
         together.
       </Description>
       <Heading>ErrorBar Props</Heading>
-      <Props of={ErrorBar} />
+      <Props of={ErrorBarComponent} />
     </>
-  );
-};
-
-export const ErrorTypesExample = (): JSX.Element => {
-  const theme = useTheme();
-
-  const errorType = radios<ErrorType>('ErrorType', errorOptions, 'accessDenied');
-  const [enabledState, setEnabledState] = useState<boolean>(true);
-  const onClose = useCallback(() => {
-    setEnabledState(false);
-  }, [setEnabledState]);
-
-  return (
-    <div
-      className={mergeStyles({
-        background: theme.palette.neutralLighterAlt,
-        padding: '2em',
-        width: '75%',
-        height: '50%'
-      })}
-    >
-      {enabledState ? <ErrorBar activeErrors={[errorType]} onDismissErrors={onClose} /> : <></>}
-    </div>
   );
 };
 
@@ -74,14 +50,14 @@ const errorOptions: { [key in ErrorType]: ErrorType } = {
   sendMessageGeneric: 'sendMessageGeneric'
 };
 
-export const MultipleErrorsExample = (): JSX.Element => {
+const ErrorBarStory = (args): JSX.Element => {
   const theme = useTheme();
 
-  const [activeErrors, setActiveErrors] = useState<ErrorType[]>(['accessDenied', 'userNotInThisThread']);
-  const onClose = (toRemove: ErrorType[]) => {
+  const [activeErrors, setActiveErrors] = useState<ErrorType[]>(args.errorTypes);
+  const onClose = useCallback((toRemove: ErrorType[]) => {
     const toRemoveSet = new Set(toRemove);
     setActiveErrors(activeErrors.filter((e) => !toRemoveSet.has(e)));
-  };
+  }, []);
 
   return (
     <div
@@ -92,14 +68,26 @@ export const MultipleErrorsExample = (): JSX.Element => {
         height: '50%'
       })}
     >
-      <ErrorBar activeErrors={activeErrors} onDismissErrors={onClose} />
+      <ErrorBarComponent activeErrors={activeErrors} onDismissErrors={onClose} />
     </div>
   );
 };
+export const ErrorBar = ErrorBarStory.bind({});
 
 export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Error Bar`,
-  component: ErrorBar,
+  component: ErrorBarComponent,
+  argTypes: {
+    errorTypes: {
+      control: { type: 'check', options: errorOptions },
+      defaultValue: ['accessDenied'],
+      name: 'ErrorType'
+    },
+    // Hiding auto-generated controls
+    activeErrors: { control: false, table: { disable: true } },
+    strings: { control: false, table: { disable: true } },
+    onDismissErrors: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()
