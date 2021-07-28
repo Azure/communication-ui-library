@@ -1,1 +1,6 @@
-export const iconStyle = { display: 'flex', alignItems: 'center' };
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { CSSProperties } from 'react';
+
+export const iconStyle: CSSProperties = { display: 'flex', alignItems: 'center' };
