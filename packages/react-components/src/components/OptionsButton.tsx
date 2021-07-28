@@ -7,6 +7,7 @@ import { IContextualMenuItem, ContextualMenuItemType, Theme } from '@fluentui/re
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { iconStyle } from './styles/OptionsButton.styles';
 
 /**
  * Device to represent a camera, microphone, or speaker for component OptionsButton component
@@ -138,9 +139,7 @@ const generateDefaultMenuProps = (
           key: camera.id,
           text: camera.name,
           title: camera.name,
-          onRenderIcon: () => (
-            <Video20Regular style={{ color: theme.palette.themePrimary, display: 'flex', alignItems: 'center' }} />
-          ),
+          onRenderIcon: () => <Video20Regular style={{ ...iconStyle, ...{ color: theme.palette.themePrimary } }} />,
           canCheck: true,
           isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
