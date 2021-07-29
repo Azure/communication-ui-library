@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "enabling localstream pip via composite options",
+  "packageName": "@internal/react-composites",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
