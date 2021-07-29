@@ -131,7 +131,9 @@ export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProvid
 
   return (
     <SwitchableFluentThemeContext.Provider value={state}>
-      <FluentThemeProvider fluentTheme={currentTheme.theme}>{children}</FluentThemeProvider>
+      <FluentThemeProvider fluentTheme={currentTheme.theme} applyTo="body">
+        {children}
+      </FluentThemeProvider>
     </SwitchableFluentThemeContext.Provider>
   );
 };

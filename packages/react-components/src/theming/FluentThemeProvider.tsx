@@ -14,6 +14,15 @@ export interface FluentThemeProviderProps {
   children: React.ReactNode;
   /** Theme for components. Defaults to a light theme if not provided. */
   fluentTheme?: PartialTheme | Theme;
+  /**
+   * Defines where body-related theme is applied to.
+   * Setting to 'element' will apply body styles to the root element of ThemeProvider.
+   * Setting to 'body' will apply body styles to document body.
+   * Setting to 'none' will not apply body styles to either element or body.
+   *
+   * @defaultvalue 'element'
+   */
+  applyTo?: 'element' | 'body' | 'none';
 }
 
 const wrapper = mergeStyles({
@@ -43,7 +52,7 @@ const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
  * This provider handles applying any theme provided to both the underlying Fluent UI controls, as well as the Fluent React Northstar controls.
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
-  const { fluentTheme, children } = props;
+  const { fluentTheme, applyTo, children } = props;
   // if fluentTheme is not provided, default to light theme
   const fluentUITheme: Theme = mergeThemes(defaultTheme, fluentTheme);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,7 +87,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 
   return (
     <ThemeContext.Provider value={fluentUITheme}>
-      <ThemeProvider theme={fluentUITheme} className={wrapper}>
+      <ThemeProvider theme={fluentUITheme} applyTo={applyTo} className={wrapper}>
         <Provider theme={fluentNorthstarTheme} className={wrapper} dir={rtl ? 'rtl' : 'ltr'}>
           {children}
         </Provider>

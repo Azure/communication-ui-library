@@ -202,6 +202,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 
 // @public
 export interface FluentThemeProviderProps {
+    applyTo?: 'element' | 'body' | 'none';
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
 }
