@@ -3,7 +3,6 @@
 
 import { SendBox as SendBoxComponent } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { boolean, text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -66,25 +65,17 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const SendBoxStory = (): JSX.Element => {
+const SendBoxStory = (args): JSX.Element => {
   return (
     <div style={{ width: '31.25rem' }}>
       <SendBoxComponent
-        disabled={boolean('Disable SendBox', false, 'Injected by ACS Context')}
+        disabled={args.disabled}
         onSendMessage={async (message) => alert(`sent message: ${message} `)}
         onTyping={(): Promise<void> => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
         }}
-        systemMessage={
-          boolean('Has warning/information message', false, 'Injected by ACS Context')
-            ? text(
-                'Warning/information message for SendBox',
-                'Please wait 30 seconds to send new messages',
-                'Injected by ACS Context'
-              )
-            : undefined
-        }
+        systemMessage={args.hasWarning ? args.warningMessage : undefined}
       />
     </div>
   );
@@ -98,6 +89,24 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-sendbox`,
   title: `${COMPONENT_FOLDER_PREFIX}/Send Box`,
   component: SendBoxComponent,
+  argTypes: {
+    disabled: { control: 'boolean', defaultValue: false, name: 'Disable SendBox' },
+    hasWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
+    warningMessage: {
+      control: 'text',
+      defaultValue: 'Please wait 30 seconds to send new messages',
+      name: 'Warning/information message for SendBox'
+    },
+    // Hiding auto-generated controls
+    systemMessage: { control: false, table: { disable: true } },
+    onSendMessage: { control: false, table: { disable: true } },
+    onTyping: { control: false, table: { disable: true } },
+    onRenderSystemMessage: { control: false, table: { disable: true } },
+    supportNewline: { control: false, table: { disable: true } },
+    onRenderIcon: { control: false, table: { disable: true } },
+    styles: { control: false, table: { disable: true } },
+    strings: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()
