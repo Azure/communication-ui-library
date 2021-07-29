@@ -45,7 +45,7 @@ export type CallOptions = {
    *
    * @defaultValue "default"
    */
-  showFloatingVideo?: string;
+  showFloatingVideo?: 'floatingLocalVideo' | 'default';
 };
 
 type MainScreenProps = {
@@ -58,6 +58,9 @@ type MainScreenProps = {
 const MainScreen = ({ showCallControls, callInvitationURL, onRenderAvatar, options }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
+  const layoutOptions: 'default' | 'floatingLocalVideo' =
+    options !== undefined && options.showFloatingVideo !== undefined ? options?.showFloatingVideo : 'default';
+
   switch (page) {
     case 'configuration':
       return <ConfigurationScreen startCallHandler={(): void => adapter.setPage('call')} />;
@@ -91,7 +94,7 @@ const MainScreen = ({ showCallControls, callInvitationURL, onRenderAvatar, optio
           }}
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationURL}
-          localStreamLayout={options?.showFloatingVideo}
+          localStreamLayout={layoutOptions}
         />
       );
   }

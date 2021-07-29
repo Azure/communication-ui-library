@@ -338,6 +338,7 @@ export type CallCompositeProps = {
     locale?: Locale;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    options?: CallOptions;
     identifiers?: Identifiers;
 };
 
@@ -371,6 +372,11 @@ export interface CallingTheme {
         callRedDarker: string;
     };
 }
+
+// @public
+export type CallOptions = {
+    showFloatingVideo?: "floatingLocalVideo" | "default";
+};
 
 // @public
 export type CallParticipant = CommunicationParticipant & {

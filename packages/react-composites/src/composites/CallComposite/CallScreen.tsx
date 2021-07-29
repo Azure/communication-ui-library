@@ -37,7 +37,7 @@ export interface CallScreenProps {
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
-  localStreamLayout?: string;
+  localStreamLayout: 'default' | 'floatingLocalVideo';
 }
 
 const spinnerLabel = 'Initializing call client...';

@@ -254,6 +254,7 @@ export type CallCompositeProps = {
     locale?: Locale;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    options?: CallOptions;
     identifiers?: Identifiers;
 };
 
@@ -269,6 +270,11 @@ export type CallIdChangedListener = (event: {
 
 // @public (undocumented)
 export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
+
+// @public
+export type CallOptions = {
+    showFloatingVideo?: "floatingLocalVideo" | "default";
+};
 
 // @public (undocumented)
 export interface ChatAdapter {
