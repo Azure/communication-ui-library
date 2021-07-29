@@ -29,16 +29,33 @@ export type CallCompositeProps = {
   locale?: Locale;
   callInvitationURL?: string;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  options?: CallOptions;
   identifiers?: Identifiers;
+};
+
+/**
+ * Additional customizations for the chat composite
+ */
+export type CallOptions = {
+  /**
+   * UNSTABLE: Feature flag for the local stream to be in a PIP (picture in picture) floating on the bottom right corner.
+   *
+   * This option will be removed once VideoGallery is stable.
+   * @experimental
+   *
+   * @defaultValue "default"
+   */
+  showFloatingVideo?: string;
 };
 
 type MainScreenProps = {
   showCallControls: boolean;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
   callInvitationURL?: string;
+  options?: CallOptions;
 };
 
-const MainScreen = ({ showCallControls, callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = ({ showCallControls, callInvitationURL, onRenderAvatar, options }: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -74,6 +91,7 @@ const MainScreen = ({ showCallControls, callInvitationURL, onRenderAvatar }: Mai
           }}
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationURL}
+          localStreamLayout={options?.showFloatingVideo}
         />
       );
   }
@@ -99,7 +117,7 @@ interface CallInternalProps extends CallCompositeProps {
  * @internal
  */
 export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme, locale, identifiers } = props;
+  const { adapter, callInvitationURL, fluentTheme, locale, identifiers, options } = props;
 
   useEffect(() => {
     (async () => {
@@ -118,6 +136,7 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
             showCallControls={props.showCallControls}
             onRenderAvatar={props.onRenderAvatar}
             callInvitationURL={callInvitationURL}
+            options={options}
           />
         </CallAdapterProvider>
       </IdentifierProvider>

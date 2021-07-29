@@ -37,6 +37,7 @@ export interface CallScreenProps {
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  localStreamLayout?: string;
 }
 
 const spinnerLabel = 'Initializing call client...';
@@ -133,7 +134,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               <>
                 <Stack styles={containerStyles} grow>
                   <Stack.Item grow styles={mediaGalleryContainerStyles}>
-                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
+                    <MediaGallery
+                      {...mediaGalleryProps}
+                      {...mediaGalleryHandlers}
+                      localStreamLayout={props.localStreamLayout}
+                      onRenderAvatar={onRenderAvatar}
+                    />
                   </Stack.Item>
                 </Stack>
                 {isScreenShareOn ? (

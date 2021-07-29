@@ -29,6 +29,7 @@ export interface MediaGalleryProps {
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  localStreamLayout?: string;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
@@ -51,10 +52,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return (
       <VideoGallery
         {...videoGalleryProps}
+        layout={props.localStreamLayout ?? 'default'}
         localVideoViewOption={localVideoViewOption}
         remoteVideoViewOption={remoteVideoViewOption}
         styles={VideoGalleryStyles}
-        layout="floatingLocalVideo"
         onRenderAvatar={props.onRenderAvatar}
       />
     );
