@@ -4,7 +4,7 @@
 import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
-const exampleIncomingCallToast = `
+export const exampleIncomingCallToast = `
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { CallEnd20Filled, Call20Filled } from '@fluentui/react-icons';
 import { getTheme, mergeStyles } from '@fluentui/react';
@@ -103,7 +103,7 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
 };
 `;
 
-const exampleIncomingCallModal = `
+export const exampleIncomingCallModal = `
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
