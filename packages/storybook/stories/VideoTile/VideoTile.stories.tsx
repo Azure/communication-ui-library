@@ -3,7 +3,6 @@
 
 import { StreamMedia, VideoTile as VideoTileComponent } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs/blocks';
-import { text, boolean, number } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -63,29 +62,11 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const VideoTileStory: () => JSX.Element = () => {
-  const displayName = text('Display Name', 'John Krasinski');
-  const showMuteIndicator = boolean('Show Mute Indicator', true);
-  const isVideoReady = boolean('Is Video Ready', false);
-  const isMirrored = boolean('Is Mirrored', false);
-  const isMuted = boolean('Is Muted', false);
-  const width = number('Width', 400, {
-    range: true,
-    min: 400,
-    max: 1200,
-    step: 10
-  });
-  const height = number('Height', 300, {
-    range: true,
-    min: 300,
-    max: 800,
-    step: 10
-  });
-
+const VideoTileStory: (args) => JSX.Element = (args) => {
   const videoTileStyles = {
     root: {
-      height,
-      width
+      height: `${args.height}px`,
+      width: `${args.width}px`
     }
   };
 
@@ -93,15 +74,13 @@ const VideoTileStory: () => JSX.Element = () => {
 
   return (
     <VideoTileComponent
-      isVideoReady={isVideoReady}
+      isVideoReady={args.isVideoReady}
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
-      displayName={displayName}
-      showMuteIndicator={showMuteIndicator}
-      isMirrored={isMirrored}
-      isMuted={isMuted}
-      styles={{
-        root: { videoTileStyles }
-      }}
+      displayName={args.displayName}
+      showMuteIndicator={args.showMuteIndicator}
+      isMirrored={args.isMirrored}
+      isMuted={args.isMuted}
+      styles={videoTileStyles}
     />
   );
 };
@@ -114,6 +93,22 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-videotile`,
   title: `${COMPONENT_FOLDER_PREFIX}/Video Tile`,
   component: VideoTileComponent,
+  argTypes: {
+    displayName: { control: 'text', defaultValue: 'John Krasinski', name: 'Display Name' },
+    showMuteIndicator: { control: 'boolean', defaultValue: true, name: 'Show Mute/UnMute Indicator' },
+    isVideoReady: { control: 'boolean', defaultValue: false, name: 'Is Video Ready' },
+    isMirrored: { control: 'boolean', defaultValue: false, name: 'Is Mirrored' },
+    isMuted: { control: 'boolean', defaultValue: false, name: 'Is Muted' },
+    width: { control: { type: 'range', min: 400, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
+    height: { control: { type: 'range', min: 300, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
+    // Hiding auto-generated controls
+    userId: { control: false, table: { disable: true } },
+    noVideoAvailableAriaLabel: { control: false, table: { disable: true } },
+    children: { control: false, table: { disable: true } },
+    styles: { control: false, table: { disable: true } },
+    renderElement: { control: false, table: { disable: true } },
+    onRenderPlaceholder: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()

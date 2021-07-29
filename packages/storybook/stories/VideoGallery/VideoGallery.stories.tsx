@@ -3,7 +3,6 @@
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { text, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -69,9 +68,8 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-const VideoGalleryStory: () => JSX.Element = () => {
-  const remoteParticipantsKnob = text('Other participants (comma separated)', 'Rick, Daryl, Michonne, Dwight');
-  const remoteParticipants = remoteParticipantsKnob
+const VideoGalleryStory: (args) => JSX.Element = (args) => {
+  const remoteParticipants = args.remoteParticipants
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
@@ -83,11 +81,9 @@ const VideoGalleryStory: () => JSX.Element = () => {
       };
     });
 
-  const layout = select('Layout', VIDEO_GALLERY_LAYOUTS, 'default');
-
   return (
     <VideoGalleryComponent
-      layout={layout}
+      layout={args.layout}
       localParticipant={MockLocalParticipant}
       remoteParticipants={remoteParticipants}
     />
@@ -102,6 +98,27 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-videogallery`,
   title: `${COMPONENT_FOLDER_PREFIX}/Video Gallery`,
   component: VideoGalleryComponent,
+  argTypes: {
+    remoteParticipants: {
+      control: 'text',
+      defaultValue: 'Rick, Daryl, Michonne, Dwight',
+      name: 'Other participants (comma separated)'
+    },
+    layout: { control: { type: 'select', options: VIDEO_GALLERY_LAYOUTS }, defaultValue: 'default', name: 'Layout' },
+    // Hiding auto-generated controls
+    styles: { control: false, table: { disable: true } },
+    localParticipant: { control: false, table: { disable: true } },
+    localVideoViewOption: { control: false, table: { disable: true } },
+    remoteVideoViewOption: { control: false, table: { disable: true } },
+    onCreateLocalStreamView: { control: false, table: { disable: true } },
+    onDisposeLocalStreamView: { control: false, table: { disable: true } },
+    onRenderLocalVideoTile: { control: false, table: { disable: true } },
+    onCreateRemoteStreamView: { control: false, table: { disable: true } },
+    onRenderRemoteVideoTile: { control: false, table: { disable: true } },
+    onDisposeRemoteStreamView: { control: false, table: { disable: true } },
+    onRenderAvatar: { control: false, table: { disable: true } },
+    showMuteIndicator: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()
