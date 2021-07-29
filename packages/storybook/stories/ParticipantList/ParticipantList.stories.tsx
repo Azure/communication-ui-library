@@ -4,7 +4,6 @@
 import { ParticipantList as ParticipantListComponent } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Title, Heading, Description, Canvas, Props } from '@storybook/addon-docs/blocks';
-import { boolean, text, select } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -78,44 +77,23 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const onlyUnique = (value: string, index: number, self: string[]): boolean => {
-  return self.indexOf(value) === index;
-};
+const remoteParticipantsDefault = [
+  { name: 'Rick', status: 'InLobby', isMuted: false, isScreenSharing: false },
+  { name: 'Daryl', status: 'Connecting', isMuted: false, isScreenSharing: false },
+  { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
+];
+const LocalParticipantDefault = [{ name: 'You', status: 'Connected', isMuted: false, isScreenSharing: false }];
 
-const ParticipantListStory: () => JSX.Element = () => {
-  const remoteParticipantsKnob = text('Other participants (comma separated)', 'Rick, Daryl, Michonne');
-  const participantNames = remoteParticipantsKnob
-    .split(',')
-    .map((p) => p.trim())
-    .filter((p) => p)
-    .filter(onlyUnique);
+const ParticipantListStory: (args) => JSX.Element = (args) => {
+  const participantsControls = [...args.remoteParticipants, ...args.localParticipant];
 
-  if (boolean('Include you', true)) {
-    participantNames.push('You');
-  }
-
-  const screenSharer = select('Screensharer', ['None', ...participantNames], 'screensharer');
-  const callStates: string[] = [];
-  const mutedFlags: boolean[] = [];
-
-  participantNames.forEach((p) => {
-    callStates.push(
-      select(
-        'Call status of ' + p,
-        ['Idle', 'Connecting', 'Ringing', 'Connected', 'Hold', 'InLobby', 'EarlyMedia', 'Disconnected'],
-        'Connected'
-      )
-    );
-    mutedFlags.push(boolean('Is ' + p + ' muted', false));
-  });
-
-  const mockParticipants = participantNames.map((p, i) => {
+  const mockParticipants = participantsControls.map((p, i) => {
     return {
       userId: `userId ${i}`,
-      displayName: p,
-      state: callStates[i],
-      isMuted: mutedFlags[i],
-      isScreenSharing: p === screenSharer
+      displayName: p.name,
+      state: p.status,
+      isMuted: p.isMuted,
+      isScreenSharing: p.isScreenSharing
     };
   });
 
@@ -131,6 +109,7 @@ const ParticipantListStory: () => JSX.Element = () => {
       <ParticipantListComponent
         participants={mockParticipants}
         myUserId={myUserId}
+        excludeMe={args.excludeMe}
         onParticipantRemove={onParticipantRemove}
       />
     </Stack>
@@ -143,6 +122,17 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-participantlist`,
   title: `${COMPONENT_FOLDER_PREFIX}/Participant List`,
   component: ParticipantListComponent,
+  argTypes: {
+    excludeMe: { control: 'boolean', defaultValue: false, name: 'Are you excluded from the list' },
+    localParticipant: { control: 'object', defaultValue: LocalParticipantDefault, name: 'Your information' },
+    remoteParticipants: { control: 'object', defaultValue: remoteParticipantsDefault, name: 'Remote participants' },
+    // Hiding auto-generated controls
+    participants: { control: false, table: { disable: true } },
+    myUserId: { control: false, table: { disable: true } },
+    onRenderParticipant: { control: false, table: { disable: true } },
+    onRenderAvatar: { control: false, table: { disable: true } },
+    onParticipantRemove: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()
