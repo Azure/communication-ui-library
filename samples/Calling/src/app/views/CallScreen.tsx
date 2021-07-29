@@ -52,5 +52,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
-  return <CallComposite adapter={adapter} fluentTheme={currentTheme.theme} callInvitationURL={window.location.href} />;
+  return (
+    <CallComposite
+      adapter={adapter}
+      fluentTheme={currentTheme.theme}
+      callInvitationURL={window.location.href}
+      options={{ showFloatingVideo: 'floatingLocalVideo' }}
+    />
+  );
 };
