@@ -18,7 +18,7 @@ module.exports = {
         controls: false
       }
     },
-    '@storybook/addon-knobs'
+    '@storybook/addon-controls'
   ],
   webpackFinal: async (config, { configType }) => {
     // Remove entrypoint size warning (rush build sees warnings as errors). Ideally we should use code splitting to reduce the entry point instead.
