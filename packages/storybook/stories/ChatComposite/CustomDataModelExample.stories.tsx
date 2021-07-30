@@ -15,11 +15,20 @@ import {
 import { createUserAndThread } from './snippets/Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
-const avatars = {
-  Default: '🤖',
-  Cat: '🐱',
-  Fox: '🦊',
-  Koala: '🐨'
+const avatars = ['Default', 'Cat', 'Fox', 'Koala'];
+
+const getAvatarSymbol = (AvatarName: string) => {
+  switch (AvatarName) {
+    case 'Default':
+      return '🤖';
+    case 'Cat':
+      return '🐱';
+    case 'Fox':
+      return '🦊';
+    case 'Koala':
+      return '🐨';
+  }
+  return '🤖';
 };
 
 const messageArray = [
@@ -35,7 +44,7 @@ const CustomDataModelExampleStory: (args) => JSX.Element = (args) => {
   const controls = useRef({
     connectionString: args.connectionString,
     displayName: args.displayName,
-    avatar: args.avatar
+    avatar: getAvatarSymbol(args.avatar)
   });
 
   useEffect(() => {
@@ -77,7 +86,7 @@ export default {
   argTypes: {
     connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
     displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
-    avatar: { control: 'radio', options: avatars, defaultValue: '🤖', name: 'Bot Avatar' },
+    avatar: { control: 'radio', options: avatars, defaultValue: 'Default', name: 'Bot Avatar' },
     // Hiding auto-generated controls
     adapter: { control: false, table: { disable: true } },
     fluentTheme: { control: false, table: { disable: true } },

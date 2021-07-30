@@ -13,12 +13,7 @@ import { ContosoChatContainer, ContainerProps } from './snippets/Container.snipp
 import { createUserAndThread } from './snippets/Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
-const themeChoices = {
-  Default: 'default',
-  Dark: 'dark',
-  Teams: 'teams',
-  Word: 'word'
-};
+const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
 
 const messageArray = [
   'Welcome to the theming example!',
@@ -30,13 +25,13 @@ const messageArray = [
 
 const getTheme = (choice: string): ITheme => {
   switch (choice) {
-    case 'default':
+    case 'Default':
       return DefaultTheme;
-    case 'dark':
+    case 'Dark':
       return DarkTheme;
-    case 'teams':
+    case 'Teams':
       return TeamsTheme;
-    case 'word':
+    case 'Word':
       return WordTheme;
   }
   return DefaultTheme;
@@ -86,7 +81,7 @@ export default {
   argTypes: {
     connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
     displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
-    theme: { control: 'radio', options: themeChoices, defaultValue: 'default', name: 'Theme' },
+    theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
     // Hiding auto-generated controls
     adapter: { control: false, table: { disable: true } },
     fluentTheme: { control: false, table: { disable: true } },

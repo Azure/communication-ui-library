@@ -15,7 +15,7 @@ import { ConfigHintBanner } from './snippets/Utils';
 const BasicExampleStory: (args) => JSX.Element = (args) => {
   const [containerProps, setContainerProps] = useState();
 
-  const knobs = useRef({
+  const controls = useRef({
     connectionString: args.connectionString,
     displayName: args.displayName,
     callInvitationURL: args.callInvitationURL
@@ -23,21 +23,21 @@ const BasicExampleStory: (args) => JSX.Element = (args) => {
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
-      if (knobs.current.connectionString && knobs.current.displayName) {
-        const newProps = await createUserAndGroup(knobs.current.connectionString);
+      if (controls.current.connectionString && controls.current.displayName) {
+        const newProps = await createUserAndGroup(controls.current.connectionString);
         setContainerProps(newProps);
       }
     };
     fetchContainerProps();
-  }, [knobs]);
+  }, [controls]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
         <ContosoCallContainer
-          displayName={knobs.current.displayName}
+          displayName={controls.current.displayName}
           {...containerProps}
-          callInvitationURL={knobs.current.callInvitationURL}
+          callInvitationURL={controls.current.callInvitationURL}
         />
       ) : (
         <ConfigHintBanner />

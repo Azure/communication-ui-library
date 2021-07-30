@@ -87,7 +87,7 @@ export default {
   component: ControlBarButton,
   argTypes: {
     showLabel: { control: 'boolean', defaultValue: true, name: 'Show label' },
-    icons: { control: { type: 'radio', options: ['airplane', 'bus', 'ship'] }, defaultValue: 'airplane', name: 'Icon' },
+    icons: { control: 'radio', options: ['airplane', 'bus', 'ship'], defaultValue: 'airplane', name: 'Icon' },
     // Hiding auto-generated controls
     labelKey: { control: false, table: { disable: true } },
     strings: { control: false, table: { disable: true } },

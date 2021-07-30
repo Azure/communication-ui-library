@@ -15,7 +15,7 @@ import { ConfigHintBanner } from './snippets/Utils';
 const CustomDataModelExampleStory: (args) => JSX.Element = (args) => {
   const [containerProps, setupContainerProps] = useState();
 
-  const knobs = useRef({
+  const controls = useRef({
     connectionString: args.connectionString,
     displayName: args.displayName,
     avatarInitials: args.avatarInitials,
@@ -24,22 +24,22 @@ const CustomDataModelExampleStory: (args) => JSX.Element = (args) => {
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
-      if (knobs.current.connectionString && knobs.current.displayName) {
-        const newProps = await createUserAndGroup(knobs.current.connectionString);
+      if (controls.current.connectionString && controls.current.displayName) {
+        const newProps = await createUserAndGroup(controls.current.connectionString);
         setupContainerProps(newProps);
       }
     };
     fetchContainerProps();
-  }, [knobs]);
+  }, [controls]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
         <CustomDataModelExampleContainer
-          displayName={knobs.current.displayName}
-          avatarInitials={knobs.current.avatarInitials}
+          displayName={controls.current.displayName}
+          avatarInitials={controls.current.avatarInitials}
           {...containerProps}
-          callInvitationURL={knobs.current.callInvitationURL}
+          callInvitationURL={controls.current.callInvitationURL}
         />
       ) : (
         <ConfigHintBanner />

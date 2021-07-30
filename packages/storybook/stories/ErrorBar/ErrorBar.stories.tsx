@@ -42,22 +42,24 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const errorOptions: { [key in ErrorType]: ErrorType } = {
-  unableToReachChatService: 'unableToReachChatService',
-  accessDenied: 'accessDenied',
-  userNotInThisThread: 'userNotInThisThread',
-  sendMessageNotInThisThread: 'sendMessageNotInThisThread',
-  sendMessageGeneric: 'sendMessageGeneric'
-};
+const errorOptions = [
+  'unableToReachChatService',
+  'accessDenied',
+  'userNotInThisThread',
+  'sendMessageNotInThisThread',
+  'sendMessageGeneric'
+];
 
 const ErrorBarStory = (args): JSX.Element => {
   const theme = useTheme();
 
   const [activeErrors, setActiveErrors] = useState<ErrorType[]>(args.errorTypes);
-  const onClose = useCallback((toRemove: ErrorType[]) => {
-    const toRemoveSet = new Set(toRemove);
-    setActiveErrors(activeErrors.filter((e) => !toRemoveSet.has(e)));
-  }, []);
+  const onClose = useCallback(
+    (toRemove: ErrorType[]) => {
+      setActiveErrors(activeErrors.filter((e) => !toRemove.includes(e)));
+    },
+    [activeErrors]
+  );
 
   return (
     <div
@@ -79,7 +81,8 @@ export default {
   component: ErrorBarComponent,
   argTypes: {
     errorTypes: {
-      control: { type: 'check', options: errorOptions },
+      control: 'check',
+      options: errorOptions,
       defaultValue: ['accessDenied'],
       name: 'ErrorType'
     },

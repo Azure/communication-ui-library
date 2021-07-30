@@ -11,7 +11,7 @@ import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigJoinCallHintBanner } from './snippets/Utils';
 
 const JoinExistingCallStory: (args) => JSX.Element = (args) => {
-  const knobs = useRef({
+  const controls = useRef({
     callLocator: args.callLocator,
     userId: args.userId,
     token: args.token,
@@ -20,16 +20,19 @@ const JoinExistingCallStory: (args) => JSX.Element = (args) => {
   });
 
   const areAllKnobsSet =
-    !!knobs.current.callLocator && !!knobs.current.userId && !!knobs.current.token && !!knobs.current.displayName;
+    !!controls.current.callLocator &&
+    !!controls.current.userId &&
+    !!controls.current.token &&
+    !!controls.current.displayName;
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
         <ContosoCallContainer
-          locator={knobs.current.callLocator}
-          userId={{ communicationUserId: knobs.current.userId }}
-          token={knobs.current.token}
-          displayName={knobs.current.displayName}
-          callInvitationURL={knobs.current.callInvitationURL}
+          locator={controls.current.callLocator}
+          userId={{ communicationUserId: controls.current.userId }}
+          token={controls.current.token}
+          displayName={controls.current.displayName}
+          callInvitationURL={controls.current.callInvitationURL}
         />
       ) : (
         <ConfigJoinCallHintBanner />

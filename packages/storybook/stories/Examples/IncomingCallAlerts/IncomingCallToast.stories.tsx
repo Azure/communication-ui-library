@@ -46,7 +46,7 @@ export default {
   argTypes: {
     callerName: { control: 'text', defaultValue: 'John Doe', name: 'Caller Name' },
     alertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
-    images: { control: { type: 'file', accept: '.jpeg, .jpg, .png' }, defaultValue: [], name: 'Avatar' },
+    images: { control: 'file', accept: '.jpeg, .jpg, .png', defaultValue: [], name: 'Avatar' },
     // Hiding auto-generated controls
     avatar: { control: false, table: { disable: true } },
     onClickAccept: { control: false, table: { disable: true } },

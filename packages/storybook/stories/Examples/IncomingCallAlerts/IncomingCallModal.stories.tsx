@@ -56,7 +56,7 @@ export default {
     callerName: { control: 'text', defaultValue: 'Maximus Aurelius', name: 'Caller Name' },
     callerNameAlt: { control: 'text', defaultValue: '1st', name: 'Caller Name Alt' },
     callerTitle: { control: 'text', defaultValue: 'Emperor and Philosopher, Rome', name: 'Caller Title' },
-    images: { control: { type: 'file', accept: '.jpeg, .jpg, .png' }, defaultValue: [], name: 'Avatar' },
+    images: { control: 'file', accept: '.jpeg, .jpg, .png', defaultValue: [], name: 'Avatar' },
     localParticipantDisplayName: { control: 'text', defaultValue: 'John Doe', name: 'Local Participant displayName' },
     localVideoStreamEnabled: { control: 'boolean', defaultValue: true, name: 'Turn Local Video On' },
     showLocalVideo: { control: 'boolean', defaultValue: true, name: 'Show Local Video' },

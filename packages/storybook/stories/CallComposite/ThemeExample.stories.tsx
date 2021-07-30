@@ -13,22 +13,17 @@ import { ContosoCallContainer } from './snippets/Container.snippet';
 import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
-const themeChoices = {
-  Default: 'default',
-  Dark: 'dark',
-  Teams: 'teams',
-  Word: 'word'
-};
+const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
 
 const getTheme = (choice: string): ITheme => {
   switch (choice) {
-    case 'default':
+    case 'Default':
       return DefaultTheme;
-    case 'dark':
+    case 'Dark':
       return DarkTheme;
-    case 'teams':
+    case 'Teams':
       return TeamsTheme;
-    case 'word':
+    case 'Word':
       return WordTheme;
   }
   return DefaultTheme;
@@ -37,7 +32,7 @@ const getTheme = (choice: string): ITheme => {
 const ThemeExampleStory: (args) => JSX.Element = (args) => {
   const [containerProps, setContainerProps] = useState();
 
-  const knobs = useRef({
+  const controls = useRef({
     connectionString: args.connectionString,
     displayName: args.displayName,
     theme: args.theme,
@@ -46,22 +41,22 @@ const ThemeExampleStory: (args) => JSX.Element = (args) => {
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
-      if (knobs.current.connectionString && knobs.current.displayName) {
-        const newProps = await createUserAndGroup(knobs.current.connectionString);
+      if (controls.current.connectionString && controls.current.displayName) {
+        const newProps = await createUserAndGroup(controls.current.connectionString);
         setContainerProps(newProps);
       }
     };
     fetchContainerProps();
-  }, [knobs]);
+  }, [controls]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
         <ContosoCallContainer
-          displayName={knobs.current.displayName}
-          fluentTheme={getTheme(knobs.current.theme)}
+          displayName={controls.current.displayName}
+          fluentTheme={getTheme(controls.current.theme)}
           {...containerProps}
-          callInvitationURL={knobs.current.callInvitationURL}
+          callInvitationURL={controls.current.callInvitationURL}
         />
       ) : (
         <ConfigHintBanner />
@@ -79,7 +74,7 @@ export default {
   argTypes: {
     connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
     displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
-    theme: { control: 'radio', options: themeChoices, defaultValue: 'default', name: 'Theme' },
+    theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
     callInvitationURL: {
       control: 'text',
       defaultValue: '',

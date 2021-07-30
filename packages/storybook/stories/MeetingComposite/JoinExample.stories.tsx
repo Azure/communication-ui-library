@@ -50,7 +50,7 @@ const getDocs: () => JSX.Element = () => {
 const JoinExampleStory: (args) => JSX.Element = (args) => {
   const [meetingProps, setMeetingProps] = useState<MeetingExampleProps>();
 
-  const knobs = useRef({
+  const controls = useRef({
     connectionString: args.connectionString,
     displayName: args.displayName,
     teamsMeetingLink: args.teamsMeetingLink
@@ -58,17 +58,21 @@ const JoinExampleStory: (args) => JSX.Element = (args) => {
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (!!knobs.current.connectionString && !!knobs.current.displayName && !!knobs.current.teamsMeetingLink) {
+      if (
+        !!controls.current.connectionString &&
+        !!controls.current.displayName &&
+        !!controls.current.teamsMeetingLink
+      ) {
         const newProps = await createUserCredentials(
-          knobs.current.connectionString,
-          knobs.current.displayName,
-          knobs.current.teamsMeetingLink
+          controls.current.connectionString,
+          controls.current.displayName,
+          controls.current.teamsMeetingLink
         );
         setMeetingProps(newProps);
       }
     };
     fetchToken();
-  }, [knobs]);
+  }, [controls]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>

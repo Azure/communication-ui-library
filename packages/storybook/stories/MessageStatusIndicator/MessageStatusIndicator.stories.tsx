@@ -80,7 +80,8 @@ export default {
   component: MessageStatusIndicatorComponent,
   argTypes: {
     status: {
-      control: { type: 'select', options: ['delivered', 'sending', 'seen', 'failed'] },
+      control: 'select',
+      options: ['delivered', 'sending', 'seen', 'failed'],
       defaultValue: 'delivered',
       name: 'Message Status'
     },

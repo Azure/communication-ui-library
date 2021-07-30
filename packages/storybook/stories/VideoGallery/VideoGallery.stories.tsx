@@ -104,7 +104,7 @@ export default {
       defaultValue: 'Rick, Daryl, Michonne, Dwight',
       name: 'Other participants (comma separated)'
     },
-    layout: { control: { type: 'select', options: VIDEO_GALLERY_LAYOUTS }, defaultValue: 'default', name: 'Layout' },
+    layout: { control: 'select', options: VIDEO_GALLERY_LAYOUTS, defaultValue: 'default', name: 'Layout' },
     // Hiding auto-generated controls
     styles: { control: false, table: { disable: true } },
     localParticipant: { control: false, table: { disable: true } },

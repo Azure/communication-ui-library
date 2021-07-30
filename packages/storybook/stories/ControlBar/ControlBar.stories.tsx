@@ -215,7 +215,8 @@ export default {
   component: ControlBarComponent,
   argTypes: {
     layout: {
-      control: { type: 'select', options: CONTROL_BAR_LAYOUTS },
+      control: 'select',
+      options: CONTROL_BAR_LAYOUTS,
       defaultValue: 'floatingBottom',
       name: 'Layout'
     },

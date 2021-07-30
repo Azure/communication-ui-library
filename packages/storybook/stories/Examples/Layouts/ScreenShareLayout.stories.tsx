@@ -191,12 +191,14 @@ export default {
       name: 'Height (px)'
     },
     sidePanelWidthRatio: {
-      control: { type: 'select', options: ['30%', '35%', '40%', '45%', '50%'] },
+      control: 'select',
+      options: ['30%', '35%', '40%', '45%', '50%'],
       defaultValue: '30%',
       name: 'Side Panel Width Ratio'
     },
     sidePanelTileAspectRatio: {
-      control: { type: 'select', options: ['16:9', '3:2', '4:3', '5:9', '1:1'] },
+      control: 'select',
+      options: ['16:9', '3:2', '4:3', '5:9', '1:1'],
       defaultValue: '16:9',
       name: 'Side Panel Tile Aspect Ratio (Width:Height)'
     }
