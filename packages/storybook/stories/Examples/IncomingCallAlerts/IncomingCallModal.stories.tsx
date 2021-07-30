@@ -30,7 +30,7 @@ const IncomingCallModalStory: (args) => JSX.Element = (args) => {
   );
 };
 
-export const Modal = IncomingCallModalStory.bind({});
+export const IncomingCallModal = IncomingCallModalStory.bind({});
 
 export default {
   id: `${EXAMPLES_FOLDER_PREFIX}-incomingcallalerts-incomingcallmodal`,

@@ -22,7 +22,7 @@ const IncomingCallToastStory: (args) => JSX.Element = (args) => {
   );
 };
 
-export const Toast = IncomingCallToastStory.bind({});
+export const IncomingCallToast = IncomingCallToastStory.bind({});
 
 export default {
   id: `${EXAMPLES_FOLDER_PREFIX}-incomingcallalerts-incomingcalltoast`,
