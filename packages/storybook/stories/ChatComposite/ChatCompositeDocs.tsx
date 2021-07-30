@@ -1,11 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatComposite } from '@azure/communication-react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs/blocks';
-import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
@@ -13,26 +10,7 @@ const customDataModelExampleContainerText =
 const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
-export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-chat`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite`,
-  component: ChatComposite,
-  parameters: {
-    useMaxHeightParent: true,
-    useMaxWidthParent: true,
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;
-
-export { BasicExample } from './BasicExample';
-export { CustomBehaviorExample } from './CustomBehavior';
-export { CustomDataModelExample } from './CustomDataModelExample';
-export { ThemeExample } from './ThemesExample';
-export { JoinExistingChatThread } from './snippets/JoinExistingChatThread';
-
-const getDocs: () => JSX.Element = () => {
+export const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ChatComposite</Title>
