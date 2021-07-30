@@ -3,25 +3,10 @@
 
 import { Stack } from '@fluentui/react';
 import { IncomingCallToast as IncomingCallToastComponent } from '@internal/react-composites';
-import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { exampleIncomingCallToast } from './IncomingCallAlertsDocs';
+import { getDocs } from './IncomingCallAlertsDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
-
-const getDocs: () => JSX.Element = () => {
-  return (
-    <>
-      <Title>Incoming Call Alerts</Title>
-      <Description>
-        The Incoming Call Alert Components alert about an incoming call. They can render a local video preview, custom
-        avatar image, caller name and incoming call alert text.
-      </Description>
-      <Heading>Incoming Call Toast</Heading>
-      <Source code={exampleIncomingCallToast} />
-    </>
-  );
-};
 
 const IncomingCallToastStory: (args) => JSX.Element = (args) => {
   return (

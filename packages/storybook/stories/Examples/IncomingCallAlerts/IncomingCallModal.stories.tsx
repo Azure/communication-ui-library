@@ -3,25 +3,10 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import { IncomingCallModal as IncomingCallModalComponent } from '@internal/react-composites';
-import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { exampleIncomingCallModal } from './IncomingCallAlertsDocs';
+import { getDocs } from './IncomingCallAlertsDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { useVideoStreams } from '../../utils';
-
-const getDocs: () => JSX.Element = () => {
-  return (
-    <>
-      <Title>Incoming Call Alerts</Title>
-      <Description>
-        The Incoming Call Alert Components alert about an incoming call. They can render a local video preview, custom
-        avatar image, caller name and incoming call alert text.
-      </Description>
-      <Heading>Incoming Call Modal</Heading>
-      <Source code={exampleIncomingCallModal} />
-    </>
-  );
-};
 
 const IncomingCallModalStory: (args) => JSX.Element = (args) => {
   const videoStreamElements = useVideoStreams(args.localVideoStreamEnabled ? 1 : 0);
