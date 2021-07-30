@@ -33,8 +33,8 @@ const IncomingCallModalStory: (args) => JSX.Element = (args) => {
 export const Modal = IncomingCallModalStory.bind({});
 
 export default {
-  id: `${EXAMPLES_FOLDER_PREFIX}-incomingcallalerts-modal`,
-  title: `${EXAMPLES_FOLDER_PREFIX}/Incoming Call Alerts/Modal`,
+  id: `${EXAMPLES_FOLDER_PREFIX}-incomingcallalerts-incomingcallmodal`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Incoming Call Alerts/Incoming Call Modal`,
   component: IncomingCallModalComponent,
   argTypes: {
     alertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },

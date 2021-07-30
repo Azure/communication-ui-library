@@ -25,8 +25,8 @@ const IncomingCallToastStory: (args) => JSX.Element = (args) => {
 export const Toast = IncomingCallToastStory.bind({});
 
 export default {
-  id: `${EXAMPLES_FOLDER_PREFIX}-incomingcallalerts-toast`,
-  title: `${EXAMPLES_FOLDER_PREFIX}/Incoming Call Alerts/Toast`,
+  id: `${EXAMPLES_FOLDER_PREFIX}-incomingcallalerts-incomingcalltoast`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Incoming Call Alerts/Incoming Call Toast`,
   component: IncomingCallToastComponent,
   argTypes: {
     callerName: { control: 'text', defaultValue: 'John Doe', name: 'Caller Name' },
