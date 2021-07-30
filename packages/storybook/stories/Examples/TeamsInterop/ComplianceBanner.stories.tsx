@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { button } from '@storybook/addon-knobs';
+import { PrimaryButton, Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
@@ -9,35 +9,37 @@ import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { ComplianceBanner as Banner } from './snippets/ComplianceBanner.snippet';
 import { getDocs } from './TeamsInteropDocs';
 
-const ComplianceBannerStory: () => JSX.Element = () => {
+const ComplianceBannerStory = (): JSX.Element => {
   const [teamsInterop, setTeamsInterop] = useState({
     recordingEnabled: false,
     transcriptionEnabled: false
   });
 
-  button('Toggle Recording', () => {
+  const toggleRecording = () => {
     setTeamsInterop({
       recordingEnabled: !teamsInterop.recordingEnabled,
       transcriptionEnabled: teamsInterop.transcriptionEnabled
     });
-    // Without an explicit return, the Canvas iframe is re-rendered, and all Components are recreated.
-    // This causes the state in this component to be lost.
-    return false;
-  });
-  button('Toggle Transcription', () => {
+  };
+  const toggleTranscription = () => {
     setTeamsInterop({
       recordingEnabled: teamsInterop.recordingEnabled,
       transcriptionEnabled: !teamsInterop.transcriptionEnabled
     });
-    // Without an explicit return, the Canvas iframe is re-rendered, and all Components are recreated.
-    // This causes the state in this component to be lost.
-    return false;
-  });
+  };
 
   // TODO: Fix dark theming.
   // Once https://github.com/Azure/communication-ui-library/pull/169 lands, same fix should be applied here.
   return (
-    <Banner callRecordState={teamsInterop.recordingEnabled} callTranscribeState={teamsInterop.transcriptionEnabled} />
+    <Stack tokens={{ childrenGap: '1rem' }} style={{ minWidth: '50%', minHeight: '50%' }}>
+      {/* We need to use these two buttons here to toggle recording and transcription.
+    Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
+      <Stack horizontal tokens={{ childrenGap: '1rem' }}>
+        <PrimaryButton text="Toggle Recording" onClick={toggleRecording} />
+        <PrimaryButton text="Toggle Transcription" onClick={toggleTranscription} />
+      </Stack>
+      <Banner callRecordState={teamsInterop.recordingEnabled} callTranscribeState={teamsInterop.transcriptionEnabled} />
+    </Stack>
   );
 };
 
