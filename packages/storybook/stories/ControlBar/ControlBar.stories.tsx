@@ -175,7 +175,7 @@ const ControlBarStory: (
     }
   }
 
-  const onMuteAll = () => {
+  const onMuteAll = (): void => {
     // your implementation to mute all participants
   };
 

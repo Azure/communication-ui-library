@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Meta } from '@storybook/react/types-6-0';
 import { IncomingCallModal as IncomingCallModalComponent } from '@internal/react-composites';
+import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { getDocs } from './IncomingCallAlertsDocs';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { useVideoStreams } from '../../utils';
+import { getDocs } from './IncomingCallAlertsDocs';
 
 const IncomingCallModalStory: (args) => JSX.Element = (args) => {
   const videoStreamElements = useVideoStreams(args.localVideoStreamEnabled ? 1 : 0);

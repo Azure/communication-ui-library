@@ -31,7 +31,7 @@ export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element 
         callAdapter.dispose();
       }
     };
-  }, [props]);
+  }, [props, callAdapter]);
 
   return callAdapter && <CallComposite adapter={callAdapter} />;
 };

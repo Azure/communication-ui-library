@@ -15,13 +15,13 @@ const ComplianceBannerStory = (): JSX.Element => {
     transcriptionEnabled: false
   });
 
-  const toggleRecording = () => {
+  const toggleRecording = (): void => {
     setTeamsInterop({
       recordingEnabled: !teamsInterop.recordingEnabled,
       transcriptionEnabled: teamsInterop.transcriptionEnabled
     });
   };
-  const toggleTranscription = () => {
+  const toggleTranscription = (): void => {
     setTeamsInterop({
       recordingEnabled: teamsInterop.recordingEnabled,
       transcriptionEnabled: !teamsInterop.transcriptionEnabled

@@ -19,7 +19,7 @@ export const exampleSpeakers: { id: string; name: string }[] = [
   { id: 'speaker2', name: 'Macbook Pro Speaker' }
 ];
 
-export const OptionsButtonWithKnobs = (args): JSX.Element => {
+export const OptionsButtonWithKnobs: (args) => JSX.Element = (args) => {
   const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string }>(exampleCameras[0]);
   const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(exampleMicrophones[0]);
   const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string }>(exampleSpeakers[0]);

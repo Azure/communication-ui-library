@@ -146,7 +146,8 @@ const ParticipantsStory = (args): JSX.Element => {
     participants: mockParticipants,
     myUserId: myUserId
   };
-  const onMuteAll = () => {
+
+  const onMuteAll = (): void => {
     // your implementation to mute all participants
   };
 

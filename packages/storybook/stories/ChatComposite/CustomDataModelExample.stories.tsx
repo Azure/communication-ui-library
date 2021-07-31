@@ -17,7 +17,7 @@ import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
 const avatars = ['Default', 'Cat', 'Fox', 'Koala'];
 
-const getAvatarSymbol = (AvatarName: string) => {
+const getAvatarSymbol = (AvatarName: string): any => {
   switch (AvatarName) {
     case 'Default':
       return '🤖';
