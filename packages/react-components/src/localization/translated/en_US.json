@@ -58,7 +58,9 @@
     "wednesday": "Wednesday",
     "thursday": "Thursday",
     "friday": "Friday",
-    "saturday": "Saturday"
+    "saturday": "Saturday",
+    "participantJoined": "joined the chat.",
+    "participantLeft": "left the chat."
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

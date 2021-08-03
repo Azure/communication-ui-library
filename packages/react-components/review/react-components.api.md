@@ -19,6 +19,11 @@ import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
+// @public (undocumented)
+export type AllKeys<T> = {
+    [K in keyof T]: T[K] extends never ? never : K;
+};
+
 // @public
 export const ar_SA: Locale;
 
@@ -140,6 +145,7 @@ export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
 export type CustomMessagePayload = {
+    createdOn: Date;
     messageId: string;
     content?: string;
 };
@@ -276,7 +282,7 @@ export type LocalizationProviderProps = {
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
+    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload<'participantAdded' | 'participantRemoved'> | SystemMessagePayload<'topicUpdated'> | SystemMessagePayload<'content'> : CustomMessagePayload;
 };
 
 // @public (undocumented)
@@ -336,6 +342,8 @@ export type MessageThreadProps = {
 export interface MessageThreadStrings {
     friday: string;
     monday: string;
+    participantJoined: string;
+    participantLeft: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -378,6 +386,9 @@ export const namedLocales: Record<string, {
     englishName: string;
     displayName: string;
 }>;
+
+// @public (undocumented)
+export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -546,11 +557,21 @@ export interface StreamMediaProps {
 export type SystemMessage = Message<'system'>;
 
 // @public (undocumented)
-export type SystemMessagePayload = {
+export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
+
+// @public (undocumented)
+export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
+    type: T;
     messageId: string;
-    content?: string;
-    iconName?: string;
+    createdOn: Date;
+    content: T extends 'content' ? string : never;
+    participants: T extends 'participantAdded' ? CommunicationParticipant[] : T extends 'participantRemoved' ? CommunicationParticipant[] : never;
+    topic: T extends 'topicUpdated' ? string : never;
+    iconName: string;
 };
+
+// @public (undocumented)
+export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
 
 // @public
 export const ThemeContext: React_2.Context<Theme>;
