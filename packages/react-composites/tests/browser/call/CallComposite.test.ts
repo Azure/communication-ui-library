@@ -3,7 +3,22 @@
 // import { IDS } from '../config';
 import { waitForCallCompositeToLoad, dataUiId } from '../utils';
 import { test } from './fixture';
-import { expect } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
+
+/**
+ * Since we are providing a .y4m video to act as a fake video stream, chrome
+ * uses it's file path as the camera name. This file location can differ on
+ * every device causing a diff error in test screenshot comparisons.
+ * To avoid this error, we replace the unique file path with a custom string.
+ */
+const stubLocalCameraName = async (page: Page): Promise<void> => {
+  await page.evaluate(() => {
+    const element = document.querySelector('[data-ui-id="call-composite-local-camera-settings"]');
+    if (element) {
+      element.innerHTML = element.innerHTML.replace(/C:.*?y4m/g, 'Fake Camera');
+    }
+  });
+};
 
 test.describe('Call Composite E2E Tests', () => {
   test('composite pages load completely', async ({ pages }) => {
@@ -12,7 +27,19 @@ test.describe('Call Composite E2E Tests', () => {
       await pages[idx].waitForSelector(dataUiId('call-composite-device-settings'));
       await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));
       await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
+      await stubLocalCameraName(pages[idx]);
       expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-call-screen.png`);
     }
+  });
+
+  test('pages[0] local device settings can toggle camera & audio', async ({ pages }) => {
+    const page = pages[0];
+    page.bringToFront();
+    await stubLocalCameraName(page);
+    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-disabled.png`);
+    await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
+    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+    await page.waitForSelector('video');
+    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-enabled.png`);
   });
 });

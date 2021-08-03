@@ -11,7 +11,12 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { floatingLocalVideoModalStyle, floatingLocalVideoTileStyle, gridStyle } from './styles/VideoGallery.styles';
+import {
+  videoGalleryContainerStyle,
+  floatingLocalVideoModalStyle,
+  floatingLocalVideoTileStyle,
+  gridStyle
+} from './styles/VideoGallery.styles';
 import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
 const emptyStyles = {};
@@ -195,13 +200,20 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   if (shouldFloatLocalVideo()) {
+    const floatingTileHostId = 'UILibaryFloatingTileHost';
     return (
-      <>
-        <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={floatingLocalVideoModalStyle}>
+      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+        <Modal
+          isOpen={true}
+          isModeless={true}
+          dragOptions={DRAG_OPTIONS}
+          styles={floatingLocalVideoModalStyle}
+          layerProps={{ hostId: floatingTileHostId }}
+        >
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
         <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
-      </>
+      </Stack>
     );
   }
 
