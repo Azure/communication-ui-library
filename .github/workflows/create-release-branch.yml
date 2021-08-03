@@ -87,4 +87,4 @@ jobs:
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
             -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"release/${{ steps.version.outputs.version }}", "base":"main", "body":"Release branch for created by the 'Release branch for ${{ steps.version.outputs.version }}. Created by the `Release branch - create` GitHub action. Please review." }'
-            --fail
+            --fail-with-body
