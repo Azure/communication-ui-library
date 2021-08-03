@@ -202,7 +202,8 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
           containerStyle={props?.messageContainerStyle}
         />
       );
-    } else if (payload.type === 'participantAdded') {
+    }
+    if (payload.type === 'participantAdded') {
       return (
         <SystemMessageComponent
           iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
@@ -210,7 +211,8 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
           containerStyle={props?.messageContainerStyle}
         />
       );
-    } else if (payload.type === 'participantRemoved') {
+    }
+    if (payload.type === 'participantRemoved') {
       return (
         <SystemMessageComponent
           iconName={(payload.iconName ?? '') as SystemMessageIconTypes}

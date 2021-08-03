@@ -143,7 +143,6 @@ export const updateMessagesWithAttached = (
      * in this case, we only want to show the read statusToRender of last message of the new messages block)
      */
     let attached: boolean | MessageAttachedStatus = false;
-    const previousMessage = messages[index - 1];
     const nextMessage = messages[index + 1];
     if (index === 0) {
       if (index !== messages.length - 1) {
@@ -153,6 +152,7 @@ export const updateMessagesWithAttached = (
         }
       }
     } else {
+      const previousMessage = messages[index - 1];
       if (previousMessage.type === 'chat' && message.payload.senderId === previousMessage.payload.senderId) {
         //the previous message has the same sender
         if (index !== messages.length - 1 && nextMessage.type === 'chat') {
