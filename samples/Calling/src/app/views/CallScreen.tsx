@@ -26,12 +26,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const adapter = await createAzureCommunicationCallAdapter(
-        { kind: 'communicationUser', communicationUserId: userId.communicationUserId },
-        displayName,
-        createAutoRefreshingCredential(userId.communicationUserId, token),
-        callLocator
-      );
+      const adapter = await createAzureCommunicationCallAdapter({
+        userId: { kind: 'communicationUser', communicationUserId: userId.communicationUserId },
+        displayName: displayName,
+        credential: createAutoRefreshingCredential(userId.communicationUserId, token),
+        locator: callLocator
+      });
       adapter.on('callEnded', () => {
         onCallEnded();
       });

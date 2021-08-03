@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adding padding in sendbox so we don't overlap text with the send message button",
+  "packageName": "@internal/react-components",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -12,6 +12,7 @@ import TruncationSnippetText from '!!raw-loader!./snippets/localization/Truncati
 import { TruncationSnippet } from './snippets/localization/Truncation.snippet';
 import SetRTLSnippetText from '!!raw-loader!./snippets/localization/SetRTL.snippet';
 import { SetRTLForCanvasSnippet } from './snippets/localization/SetRTLForCanvas.snippet';
+import LocalizedComposites from '!!raw-loader!./snippets/localization/LocalizedComposites.snippet.tsx';
 
 <Meta id="localization" title="Localization" />
 
@@ -23,21 +24,27 @@ Developers can provide their own localization files to be used for the UI Librar
 
 ## LocalizationProvider
 
-`LocalizationProvider` is a component wrapper that sets all the strings for ACS components using a `Locale`. By default, all
+`LocalizationProvider` is a component wrapper that sets all the strings for UI Library components using a `Locale`. By default, all
 components use our English (US) locale. If desired, LocalizationProvider can be used to set a different locale. Out of the box,
 the UI library includes a set of locales usable with the UI components and composites
 
 ### Usage
 
-To use the LocalizationProvider, import it from `@azure/communication-react` and wrap it around ACS UI SDK components,
-For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `fr_FR` from
-`@azure/communication-react`.
+To use the LocalizationProvider, import it from `@azure/communication-react` and wrap it around UI Library components. Then assign a `Locale` to the `locale` prop.
+For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `fr_FR` from `@azure/communication-react`.
 
 <Source code={LocalizationProviderSnippetText} />
 
 <Canvas withSource="none">
   <LocalizationProviderSnippet />
 </Canvas>
+
+### Composites
+
+If you want to localize your composite, assign a `Locale` to the `locale` prop of the composite. You may import one of our locales like `fr_FR` for French (France)
+in the example below.
+
+<Source code={LocalizedComposites} />
 
 ## Overriding locales
 
@@ -56,14 +63,14 @@ value `strings.cameraButton.offLabel` like shown below.
 </Canvas>
 
 `Locale` stores all strings in the `strings` property as a nested object. The component name is the first identifer and the string key is
-the second identifier such that each string can be accessed in this pattern `strings.<componentName>.<stringKey>`. If you are using typescript and
-have intellisense available in your IDE, it will be easy to discover all the strings.
+the second identifier such that each string can be accessed in this pattern `strings.<componentName>.<stringKey>`. If you are using
+typescript and have intellisense available in your IDE, it will be easy to discover all the strings.
 
 ### Option 2: Override `strings` prop in the UI Component
 
-The second option is to pass custom strings directly through the `strings` prop. Each component in ACS has an optional `strings`
-property that interfaces all strings that can be overriden in that component. There is no need to use `LocalizationProvider` because all components default
-to English (US). Just assign the string directly through `CameraButton` like shown below.
+The second option is to pass custom strings directly through the `strings` prop. Strings can be overriden for a UI Library
+component through the optional `strings` property. There is no need to use `LocalizationProvider` because all
+components default to English (US). Just assign the string directly through `CameraButton` like shown below.
 
 <Source code={StringsPropertySnippetText} />
 
@@ -92,14 +99,14 @@ We suggest the following options to achieve a better looking interface.
   <TruncationSnippet />
 </Canvas>
 
-Note: All ACS UI SDK components will have aria labels with the full text as part of our Accessibility promise.
+Note: All UI Library components will have aria labels with the full text as part of our Accessibility promise.
 
 3. Using styling to reduce font size.
 
 ## Setting RTL
 
 To set rtl in your web application, first import and call `setRTL` from `@fluentui/react` to set the root element's `dir` property to "rtl".
-All Azure Communication Services UI library components will be "flipped" just like the example `ControlBar` in Arabic below.
+All UI library components will be "flipped" just like the example `ControlBar` in Arabic below.
 
 <Source code={SetRTLSnippetText} />
 

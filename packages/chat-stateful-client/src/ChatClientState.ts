@@ -98,10 +98,14 @@ export type ChatErrorTargets =
 
 /**
  * Helper type to build a string literal type containing methods of an object.
+ * @experimental
  */
-export type ChatObjectMethodNames<TName extends string, T> = {
-  [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T];
+// TODO: this was set to `any` from:
+//  { [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`; }[keyof T];
+// However this notation is only supported in typescript 4.1+ and is blocking some customers.
+// GitHub issue: https://github.com/Azure/communication-ui-library/issues/619
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export declare type ChatObjectMethodNames<TName extends string, T> = any;
 
 /**
  * Helper type to build a string literal type containing methods of an object.
