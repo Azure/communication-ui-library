@@ -23,12 +23,12 @@ function App(): JSX.Element {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       setCallAdapter(
-        await createAzureCommunicationCallAdapter(
-          { kind: 'communicationUser', communicationUserId: userId },
+        await createAzureCommunicationCallAdapter({
+          userId: { kind: 'communicationUser', communicationUserId: userId },
           displayName,
-          new AzureCommunicationTokenCredential(token),
-          { groupId: groupId }
-        )
+          credential: new AzureCommunicationTokenCredential(token),
+          locator: { groupId: groupId }
+        })
       );
     };
 
