@@ -47,12 +47,12 @@ function App(): JSX.Element {
         )
       );
       setCallAdapter(
-        await createAzureCommunicationCallAdapter(
-          { kind: 'communicationUser', communicationUserId: userId },
+        await createAzureCommunicationCallAdapter({
+          userId: { kind: 'communicationUser', communicationUserId: userId },
           displayName,
-          new AzureCommunicationTokenCredential(token),
-          { groupId }
-        )
+          credential: new AzureCommunicationTokenCredential(token),
+          locator: { groupId }
+        })
       );
     };
     createAdapter();
