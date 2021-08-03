@@ -133,6 +133,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 // @public (undocumented)
+export type AzureCommunicationCallAdapterArgs = {
+    userId: CommunicationUserKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    locator: TeamsMeetingLinkLocator | GroupCallLocator;
+    callClientOptions?: CallClientOptions;
+};
+
+// @public (undocumented)
 export type AzureCommunicationChatAdapterArgs = {
     endpointUrl: string;
     userId: CommunicationIdentifierKind;
@@ -384,7 +393,7 @@ export type ChatUIState = {
 };
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (userId: CommunicationUserKind, displayName: string, credential: CommunicationTokenCredential, locator: TeamsMeetingLinkLocator | GroupCallLocator, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, callClientOptions }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
