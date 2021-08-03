@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-// import { IDS } from '../config';
 import { waitForCallCompositeToLoad, dataUiId } from '../utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -28,7 +27,61 @@ test.describe('Call Composite E2E Tests', () => {
       await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));
       await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
       await stubLocalCameraName(pages[idx]);
-      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-call-screen.png`);
+      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-call-screen.png`, { threshold: 0.5 });
+    }
+  });
+
+  test('local device settings can toggle camera & audio', async ({ pages }) => {
+    for (const idx in pages) {
+      const page = pages[idx];
+      page.bringToFront();
+      await stubLocalCameraName(page);
+      await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
+      await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+      await page.waitForSelector('video');
+      await page.waitForTimeout(1000);
+      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-enabled.png`);
+    }
+  });
+
+  test('video gallery renders for all pages', async ({ pages }) => {
+    for (const idx in pages) {
+      const page = pages[idx];
+      page.bringToFront();
+      await page.click(dataUiId('call-composite-start-call-button'));
+    }
+
+    for (const idx in pages) {
+      const page = pages[idx];
+      page.bringToFront();
+      await page.waitForFunction(() => {
+        return document.querySelectorAll('video').length === 2;
+      });
+      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-video-gallery.png`);
+    }
+  });
+
+  test('participant list loads correctly', async ({ pages }) => {
+    for (const idx in pages) {
+      const page = pages[idx];
+      page.bringToFront();
+      await page.click(dataUiId('call-composite-participants-button'));
+      // Clicking on participants icon displays a dropdown menu that has an animation.
+      // We wait 1 second for that animation to complete.
+      await page.waitForTimeout(1000);
+      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-participants.png`);
+    }
+  });
+
+  test('can turn off local video', async ({ pages }) => {
+    for (const idx in pages) {
+      const page = pages[idx];
+      page.bringToFront();
+      await page.click(dataUiId('call-composite-camera-button'));
+      await page.waitForFunction(() => {
+        return document.querySelectorAll('video').length === 1;
+      });
+      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-camera-toggled.png`);
     }
   });
 
