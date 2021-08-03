@@ -11,7 +11,20 @@ Thu, 22 Jul 2021 17:42:41 GMT
 
 ### Changes
 
-- Bump @internal/chat-stateful-client to v1.0.0-beta.3 ([PR #554](https://github.com/azure/communication-ui-library/pull/554) by 2684369+JamesBurnside@users.noreply.github.com)
+* [Breaking change] Call Composite and Chat Composite adapters now take in a `CommunicationTokenCredential` in the constructor instead of the token
+
+* [Breaking change] Call Composite and Chat Composite adapters take in an object containing all of the parameters instead of passing in the parameters individually
+
+* Fixing the sendbox component where the padding would overlap with the icon
+
+* Fixing the local preview overlapping the call control bar
+
+* Setting minHeight on the call composite media gallery
+
+* Adding a small fix for supporting typescript < 4.1
+
+### Storybook page changes
+* Fixing link in "Using Composites in a non-react environment"
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.2)
 
