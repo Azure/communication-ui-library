@@ -36,13 +36,13 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     if (!!credential && props) {
       const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
         setAdapter(
-          await createAzureCommunicationChatAdapter(
-            props.endpointUrl,
-            getIdentifierKind(props.userId),
-            props.displayName,
+          await createAzureCommunicationChatAdapter({
+            endpointUrl: props.endpointUrl,
+            userId: getIdentifierKind(props.userId),
+            displayName: props.displayName,
             credential,
-            props.threadId
-          )
+            threadId: props.threadId
+          })
         );
       };
       createAdapter(credential);

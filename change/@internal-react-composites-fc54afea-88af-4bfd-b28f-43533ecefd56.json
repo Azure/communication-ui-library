@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update createAzureCommunicationChatAdapter constructor to take in a named object instead of seperate args",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
