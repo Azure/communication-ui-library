@@ -66,6 +66,8 @@ test.describe('Call Composite E2E Tests', () => {
       const page = pages[idx];
       page.bringToFront();
       await page.click(dataUiId('call-composite-participants-button'));
+      // Clicking on participants icon displays a dropdown menu that has an animation.
+      // We wait 1 second for that animation to complete.
       await page.waitForTimeout(1000);
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-participants.png`);
     }
