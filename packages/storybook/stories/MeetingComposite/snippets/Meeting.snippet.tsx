@@ -55,13 +55,13 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
         );
 
         setChatAdapter(
-          await createAzureCommunicationChatAdapter(
-            props.endpointUrl,
-            { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
-            props.displayName,
+          await createAzureCommunicationChatAdapter({
+            endpointUrl: props.endpointUrl,
+            userId: { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            displayName: props.displayName,
             credential,
-            props.threadId
-          )
+            threadId: props.threadId
+          })
         );
       };
       createAdapters();
