@@ -8,9 +8,11 @@ import {
   sidePaneContainerStyles,
   sidePaneContainerTokens,
   sidePaneHeaderStyles,
-  sidePaneBodyStyles,
   peoplePaneContainerTokens,
-  peopleSubheadingStyle
+  peopleSubheadingStyle,
+  paneBodyContainer,
+  scrollableContainer,
+  scrollableContainerContents
 } from './styles/SidePane.styles';
 import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
@@ -29,7 +31,13 @@ const SidePane = (props: { headingText: string; children: React.ReactNode; onClo
           />
         </Stack>
       </Stack.Item>
-      <Stack.Item styles={sidePaneBodyStyles}>{props.children}</Stack.Item>
+      <Stack grow styles={paneBodyContainer}>
+        <Stack horizontal styles={scrollableContainer}>
+          <Stack.Item verticalFill styles={scrollableContainerContents}>
+            {props.children}
+          </Stack.Item>
+        </Stack>
+      </Stack>
     </Stack>
   );
 };
