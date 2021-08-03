@@ -600,9 +600,7 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
 
 // @public
-export type ChatObjectMethodNames<TName extends string, T> = {
-    [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T];
+export type ChatObjectMethodNames<TName extends string, T> = any;
 
 // @public
 export type ChatOptions = {
