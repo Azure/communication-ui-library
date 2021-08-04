@@ -6,6 +6,8 @@ const config: PlaywrightTestConfig = {
   use: {
     headless: true
   },
+  // Add an extra retry to mitigate network issues.
+  // This can be removed if we switch to using a mock ACS service.
   retries: 1,
   projects: [
     {
