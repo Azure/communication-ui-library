@@ -1,8 +1,17 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.3)
+
+Thu, 22 Jul 2021 17:42:41 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/calling-stateful-client_v1.0.0-beta.2..@internal/calling-stateful-client_v1.0.0-beta.3)
+
+### Changes
+
+- Bump prettier version and reformat ([PR #535](https://github.com/azure/communication-ui-library/pull/535) by prprabhu@microsoft.com)
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/calling-stateful-client_v1.0.0-beta.2)
 
