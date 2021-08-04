@@ -44,8 +44,7 @@ Thu, 22 Jul 2021 17:42:41 GMT
 
 * Drop duplicate thread status banner
 
-### Storybook page changes
-* Fixing link in "Using Composites in a non-react environment"
+* Fixing link on "Using Composites in a non-react environment" in Storybook
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.2)
 
