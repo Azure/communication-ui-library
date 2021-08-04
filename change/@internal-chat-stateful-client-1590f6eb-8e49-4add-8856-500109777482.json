@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove type blocking usage of the package on older typescript versions",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
