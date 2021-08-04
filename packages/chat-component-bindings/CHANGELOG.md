@@ -1,8 +1,22 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.3)
+
+Thu, 22 Jul 2021 17:42:41 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/chat-component-bindings_v1.0.0-beta.2..@internal/chat-component-bindings_v1.0.0-beta.3)
+
+### Changes
+
+- Support more error types in ErrorBar ([PR #581](https://github.com/azure/communication-ui-library/pull/581) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fixed MessageThread selector to allow messages of type 'html'. ([PR #588](https://github.com/azure/communication-ui-library/pull/588) by miguelgamis@microsoft.com)
+- Fix error handling of failures in `ChatThreadClient.listMessage` ([PR #550](https://github.com/azure/communication-ui-library/pull/550) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Limit the number of errors show in UI ([PR #586](https://github.com/azure/communication-ui-library/pull/586) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add data bindings for ErrorBar ([PR #574](https://github.com/azure/communication-ui-library/pull/574) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump prettier version and reformat ([PR #535](https://github.com/azure/communication-ui-library/pull/535) by prprabhu@microsoft.com)
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/chat-component-bindings_v1.0.0-beta.2)
 
