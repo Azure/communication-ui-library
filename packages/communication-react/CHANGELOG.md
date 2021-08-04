@@ -14,14 +14,35 @@ Thu, 22 Jul 2021 17:42:41 GMT
 * [Breaking change] Call Composite and Chat Composite adapters now take in a `CommunicationTokenCredential` in the constructor instead of the token
 
 * [Breaking change] Call Composite and Chat Composite adapters take in an object containing all of the parameters instead of passing in the parameters individually
+(for the token point above, it is one of the properties of the object)
 
-* Fixing the sendbox component where the padding would overlap with the icon
+* Publishing `js` files to use composites outside of a react app as part of the Github Release
+
+* Fixing the send box component where the padding would overlap with the icon
 
 * Fixing the local preview overlapping the call control bar
 
 * Setting minHeight on the call composite media gallery
 
 * Adding a small fix for supporting typescript < 4.1
+
+* React hook useTheme added to ACS Library
+
+* Fix truncation from MessageThread system message
+
+* Add default call control bar button for creating custom call control buttons
+
+* Fix cursor on control button labels
+
+* Fix MessageThread hook related console errors
+
+* Make participant pane in the chat composite optional. Disabled by default
+
+* Make topic heading in the chat composite optional. Disabled by default
+
+* Bugfix to prevent options menu from getting hidden every time a participant joins or leaves
+
+* Drop duplicate thread status banner
 
 ### Storybook page changes
 * Fixing link in "Using Composites in a non-react environment"
