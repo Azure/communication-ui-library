@@ -10,6 +10,7 @@ import { ChatAdapter } from '../ChatComposite';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
+import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -64,8 +65,8 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   };
 
   return (
-    <Stack styles={{ root: { width: '100%', height: '100%' } }}>
-      <Stack styles={{ root: { width: '100%', height: '100%' } }} horizontal>
+    <Stack grow styles={compositeOuterContainerStyles}>
+      <Stack horizontal grow>
         <Stack.Item grow>
           <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
         </Stack.Item>

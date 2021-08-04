@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatMessage } from '@internal/react-components';
+import { Message } from '@internal/react-components';
 
-export const compareMessages = (firstMessage: ChatMessage, secondMessage: ChatMessage): number => {
+export const compareMessages = (
+  firstMessage: Message<'chat' | 'system' | 'custom'>,
+  secondMessage: Message<'chat' | 'system' | 'custom'>
+): number => {
   if (firstMessage.payload.createdOn === undefined) return 1;
   if (secondMessage.payload.createdOn === undefined) return -1;
   const firstDate = new Date(firstMessage.payload.createdOn).getTime();

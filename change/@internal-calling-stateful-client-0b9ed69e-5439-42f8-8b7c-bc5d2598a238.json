@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "update versions to be consistent across repo",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add system message to MessageThread component Add system message for selector props Link system message to participant received event",
+  "packageName": "@internal/react-components",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

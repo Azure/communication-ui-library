@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient, ChatMessageReadReceipt, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
@@ -93,19 +93,24 @@ export class ChatError extends Error {
  * String literal type for all permissible keys in {@Link ChatErrors}.
  */
 export type ChatErrorTargets =
-  | ChatObjectMethodNames<'ChatClient', ChatClient>
-  | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
-
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-export type ChatObjectMethodNames<TName extends string, T> = {
-  [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T];
-
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-// eslint complains on all uses of `Function`. Using it as a type constraint is legitimate.
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+  | 'ChatClient.createChatThread'
+  | 'ChatClient.deleteChatThread'
+  | 'ChatClient.getChatThreadClient'
+  | 'ChatClient.listChatThreads'
+  | 'ChatClient.off'
+  | 'ChatClient.on'
+  | 'ChatClient.startRealtimeNotifications'
+  | 'ChatClient.stopRealtimeNotifications'
+  | 'ChatThreadClient.addParticipants'
+  | 'ChatThreadClient.deleteMessage'
+  | 'ChatThreadClient.getMessage'
+  | 'ChatThreadClient.getProperties'
+  | 'ChatThreadClient.listMessages'
+  | 'ChatThreadClient.listParticipants'
+  | 'ChatThreadClient.listReadReceipts'
+  | 'ChatThreadClient.removeParticipant'
+  | 'ChatThreadClient.sendMessage'
+  | 'ChatThreadClient.sendReadReceipt'
+  | 'ChatThreadClient.sendTypingNotification'
+  | 'ChatThreadClient.updateMessage'
+  | 'ChatThreadClient.updateTopic';

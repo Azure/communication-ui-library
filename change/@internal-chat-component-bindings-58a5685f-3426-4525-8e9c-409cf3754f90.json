@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix dependencies versions to match",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}
