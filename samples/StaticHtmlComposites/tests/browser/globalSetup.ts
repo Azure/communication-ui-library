@@ -12,7 +12,6 @@ async function globalSetup() {
       file.serve(req, res);
     })
     .listen(8080);
-  // await new Promise(done => server.listen(done));
 
   // Expose port to the tests.
   process.env.SERVER_PORT = String(server.address().toString());

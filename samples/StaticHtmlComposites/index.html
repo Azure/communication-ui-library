@@ -19,7 +19,7 @@
       : { ...(await service.createUserWithToken()) };
     const groupId = await service.createGUID();
     // Call composite sample code starts here
-    const displayName = testParams.displayName ? testParams.displayName : 'Bob';
+    const displayName = testParams.displayName ?? 'Bob';
 
     const callAdapter = await callComposite.loadCallComposite(
       {
@@ -31,9 +31,9 @@
       document.getElementById('video-call-container')
     );
 
-    const threadId = testParams.threadId ? testParams.threadId : await service.createChatThread();
+    const threadId = testParams.threadId ?? (await service.createChatThread());
     testParams.threadId ?? (await service.addChatUser(threadId, user, displayName));
-    const endpointUrl = testParams.endpointUrl ? testParams.endpointUrl : await service.getEndpointUrl();
+    const endpointUrl = testParams.endpointUrl ?? (await service.getEndpointUrl());
 
     // Chat composite sample code starts here
     const chatAdapter = await chatComposite.loadChatComposite(
