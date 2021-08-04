@@ -1,8 +1,35 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.3)
+
+Thu, 22 Jul 2021 17:42:41 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/react-composites_v1.0.0-beta.2..@internal/react-composites_v1.0.0-beta.3)
+
+### Changes
+
+- Make participant pane in the chat composite optional. Disabled by default. ([PR #541](https://github.com/azure/communication-ui-library/pull/541) by 2684369+JamesBurnside@users.noreply.github.com)
+- Use ErrorBar component in ChatComposite ([PR #574](https://github.com/azure/communication-ui-library/pull/574) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Only emit 'error' on errors teed to state ([PR #535](https://github.com/azure/communication-ui-library/pull/535) by prprabhu@microsoft.com)
+- Accept pre-constructed credential in adapter factory functions ([PR #590](https://github.com/azure/communication-ui-library/pull/590) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Trigger 'error' event for failure in chat methods ([PR #549](https://github.com/azure/communication-ui-library/pull/549) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Hide ErrorBar in ChatComposite behind a feature flag ([PR #608](https://github.com/azure/communication-ui-library/pull/608) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bugfix to prevent options menu from getting hidden every time a participant joins or leaves ([PR #609](https://github.com/azure/communication-ui-library/pull/609) by anjulgarg@live.com)
+- Bind all methods of CallAdapter on construction ([PR #558](https://github.com/azure/communication-ui-library/pull/558) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Drop duplicate thread status banner ([PR #582](https://github.com/azure/communication-ui-library/pull/582) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add chat e2e tests ([PR #594](https://github.com/azure/communication-ui-library/pull/594) by anjulgarg@live.com)
+- Bind all methods of ChatAdaptor on construction ([PR #557](https://github.com/azure/communication-ui-library/pull/557) by 82062616+prprabhu-ms@users.noreply.github.com)
+-  Add E2E browser tests for chat composite ([PR #517](https://github.com/azure/communication-ui-library/pull/517) by anjulgarg@live.com)
+- Remove getCall from selector Use more specific props in the call to target the right update ([PR #571](https://github.com/azure/communication-ui-library/pull/571) by jinan@microsoft.com)
+- Remove sendBoxMaxLength option from chat compsite" ([PR #589](https://github.com/azure/communication-ui-library/pull/589) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add E2E Chat Composite tests ([PR #578](https://github.com/azure/communication-ui-library/pull/578) by anjulgarg@live.com)
+- Using new React hook useTheme from react-components. ([PR #572](https://github.com/azure/communication-ui-library/pull/572) by miguelgamis@microsoft.com)
+- Allow chat composite topic to be hidden ([PR #587](https://github.com/azure/communication-ui-library/pull/587) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix error handling of failures in `ChatThreadClient.listMessages` ([PR #550](https://github.com/azure/communication-ui-library/pull/550) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add identifier injection mechanism in components for e2e testing ([PR #556](https://github.com/azure/communication-ui-library/pull/556) by anjulgarg@live.com)
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/react-composites_v1.0.0-beta.2)
 

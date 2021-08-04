@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Tee errors from listChatThreads to state",
+  "comment": "Add explicit string literals for error targets",
   "packageName": "@internal/chat-stateful-client",
   "email": "82062616+prprabhu-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

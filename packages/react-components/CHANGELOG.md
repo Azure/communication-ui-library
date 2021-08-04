@@ -1,8 +1,30 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.3)
+
+Thu, 22 Jul 2021 17:42:41 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/react-components_v1.0.0-beta.2..@internal/react-components_v1.0.0-beta.3)
+
+### Changes
+
+- Fixed RTL responsiveness for MessageThread, ControlBar, and FluentThemeProvider. TypingIndicator set always to LTR. ([PR #530](https://github.com/azure/communication-ui-library/pull/530) by miguelgamis@microsoft.com)
+- Add an ErrorBar component ([PR #574](https://github.com/azure/communication-ui-library/pull/574) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fixed cursor on control button labels. ([PR #567](https://github.com/azure/communication-ui-library/pull/567) by miguelgamis@microsoft.com)
+- Exporting locales separately. ([PR #547](https://github.com/azure/communication-ui-library/pull/547) by miguelgamis@microsoft.com)
+- Bugfix - Removed usage of hooks inside useMemo for MessageThread ([PR #591](https://github.com/azure/communication-ui-library/pull/591) by anjulgarg@live.com)
+- Fix MessageThread hook related console errors. ([PR #566](https://github.com/azure/communication-ui-library/pull/566) by miguelgamis@microsoft.com)
+- Support more errors in ErrorBar ([PR #581](https://github.com/azure/communication-ui-library/pull/581) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Localized strings for SendBox and MessageStatusIndicator ([PR #535](https://github.com/azure/communication-ui-library/pull/535) by miguelgamis@microsoft.com)
+- Add E2E Chat Composite tests ([PR #578](https://github.com/azure/communication-ui-library/pull/578) by anjulgarg@live.com)
+- Add identifier injection mechanism in components for e2e testing ([PR #556](https://github.com/azure/communication-ui-library/pull/556) by anjulgarg@live.com)
+- Add default call control bar button ([PR #585](https://github.com/azure/communication-ui-library/pull/585) by 2684369+JamesBurnside@users.noreply.github.com)
+- React hook useTheme added to ACS library. ([PR #572](https://github.com/azure/communication-ui-library/pull/572) by miguelgamis@microsoft.com)
+- Add E2E browser tests for chat composite ([PR #517](https://github.com/azure/communication-ui-library/pull/517) by anjulgarg@live.com)
+- Removed truncation from MessageThread system message. ([PR #575](https://github.com/azure/communication-ui-library/pull/575) by miguelgamis@microsoft.com)
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/react-components_v1.0.0-beta.2)
 
