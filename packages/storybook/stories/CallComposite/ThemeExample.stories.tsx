@@ -84,7 +84,8 @@ export default {
     adapter: { control: false, table: { disable: true } },
     fluentTheme: { control: false, table: { disable: true } },
     onRenderAvatar: { control: false, table: { disable: true } },
-    identifiers: { control: false, table: { disable: true } }
+    identifiers: { control: false, table: { disable: true } },
+    locale: { control: false, table: { disable: true } }
   },
   parameters: {
     docs: {
