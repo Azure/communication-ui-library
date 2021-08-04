@@ -24,13 +24,13 @@ function App(): JSX.Element {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       setChatAdapter(
-        await createAzureCommunicationChatAdapter(
+        await createAzureCommunicationChatAdapter({
           endpointUrl,
-          { kind: 'communicationUser', communicationUserId: userId },
+          userId: { kind: 'communicationUser', communicationUserId: userId },
           displayName,
-          new AzureCommunicationTokenCredential(token),
+          credential: new AzureCommunicationTokenCredential(token),
           threadId
-        )
+        })
       );
     };
 
