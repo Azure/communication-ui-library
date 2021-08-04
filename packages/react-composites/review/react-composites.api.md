@@ -23,6 +23,7 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import type { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { Identifiers } from '@internal/react-components';
+import { Locale } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
@@ -268,6 +269,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
+    locale?: Locale;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     identifiers?: Identifiers;
@@ -361,6 +363,7 @@ export type ChatCompositeClientState = {
 export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
+    locale?: Locale;
     onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -426,6 +429,17 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CallIdentifierKinds;
     isSpeaking: boolean;
 }) => void;
+
+// @public
+export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
+
+// @public
+export type MeetingCompositeProps = {
+    callAdapter: CallAdapter;
+    chatAdapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    meetingInvitationURL?: string;
+};
 
 // @public (undocumented)
 export type MessageReadListener = (event: {

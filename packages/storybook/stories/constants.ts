@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { IStackStyles } from '@fluentui/react';
+
 export const mediaGalleryTileWidthOptions = {
   range: true,
   min: 200,
@@ -37,9 +39,11 @@ export const mediaGalleryHeightOptions = {
 
 export const mediaGalleryHeightDefault = 500;
 
-export const COMPOSITE_EXPERIENCE_CONTAINER_STYLE = {
-  width: '90vw',
-  height: '90vh'
+export const compositeExperienceContainerStyle: IStackStyles = {
+  root: {
+    width: '90vw',
+    height: '90vh'
+  }
 };
 
 export const COMPONENT_FOLDER_PREFIX = 'UI Components';

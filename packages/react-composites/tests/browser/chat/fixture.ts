@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IdentityType, createChatThreadAndUsers, loadPage } from '../utils';
+import { IdentityType, createChatThreadAndUsers, loadPage, PAGE_VIEWPORT } from '../utils';
 import { startServer, stopServer } from './app/server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
 import dotenv from 'dotenv';
@@ -51,7 +51,15 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
       const browser = await chromium.launch({
-        args: ['--start-maximized', '--disable-features=site-per-process'],
+        args: [
+          `--window-size=${Object.values(PAGE_VIEWPORT).join(',')}`,
+          '--disable-gpu', // Ensures that fonts are rendered consistently.
+          '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
+          '--enable-font-antialiasing' // Ensures that fonts are rendered consistently.
+        ],
+        ignoreDefaultArgs: [
+          '--hide-scrollbars' // Don't hide scrollbars in headless mode.
+        ],
         headless: true
       });
       try {

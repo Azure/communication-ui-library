@@ -1,5 +1,8 @@
-import { AzureCommunicationTokenCredential, getIdentifierKind } from '@azure/communication-common';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect, useCallback } from 'react';
 

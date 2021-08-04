@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Link system message to participant received event",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
