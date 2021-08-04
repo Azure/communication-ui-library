@@ -11,7 +11,40 @@ Thu, 22 Jul 2021 17:42:41 GMT
 
 ### Changes
 
-- Bump @internal/chat-stateful-client to v1.0.0-beta.3 ([PR #554](https://github.com/azure/communication-ui-library/pull/554) by 2684369+JamesBurnside@users.noreply.github.com)
+* [Breaking change] Call Composite and Chat Composite adapters now take in a `CommunicationTokenCredential` in the constructor instead of the token
+
+* [Breaking change] Call Composite and Chat Composite adapters take in an object containing all of the parameters instead of passing in the parameters individually
+(for the token point above, it is one of the properties of the object)
+
+* Publishing `js` files to use composites outside of a react app as part of the Github Release
+
+* Fixing the send box component where the padding would overlap with the icon
+
+* Fixing the local preview overlapping the call control bar
+
+* Setting minHeight on the call composite media gallery
+
+* Adding a small fix for supporting typescript < 4.1
+
+* React hook useTheme added to ACS Library
+
+* Fix truncation from MessageThread system message
+
+* Add default call control bar button for creating custom call control buttons
+
+* Fix cursor on control button labels
+
+* Fix MessageThread hook related console errors
+
+* Make participant pane in the chat composite optional. Disabled by default
+
+* Make topic heading in the chat composite optional. Disabled by default
+
+* Bugfix to prevent options menu from getting hidden every time a participant joins or leaves
+
+* Drop duplicate thread status banner
+
+* Fixing link on "Using Composites in a non-react environment" in Storybook
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.2)
 
