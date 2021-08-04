@@ -468,13 +468,21 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
-export const createAzureCommunicationCallAdapter = async (
-  userId: CommunicationUserKind,
-  displayName: string,
-  credential: CommunicationTokenCredential,
-  locator: TeamsMeetingLinkLocator | GroupCallLocator,
-  callClientOptions?: CallClientOptions
-): Promise<CallAdapter> => {
+export type AzureCommunicationCallAdapterArgs = {
+  userId: CommunicationUserKind;
+  displayName: string;
+  credential: CommunicationTokenCredential;
+  locator: TeamsMeetingLinkLocator | GroupCallLocator;
+  callClientOptions?: CallClientOptions;
+};
+
+export const createAzureCommunicationCallAdapter = async ({
+  userId,
+  displayName,
+  credential,
+  locator,
+  callClientOptions
+}: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({ userId }, { callClientOptions });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(credential, { displayName });

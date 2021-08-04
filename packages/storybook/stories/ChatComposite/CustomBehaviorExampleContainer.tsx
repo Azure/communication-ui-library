@@ -27,13 +27,13 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     }
 
     const createAdapter = async (): Promise<void> => {
-      const newAdapter = await createAzureCommunicationChatAdapter(
-        props.endpointUrl,
-        getIdentifierKind(props.userId),
-        props.displayName,
-        new AzureCommunicationTokenCredential(props.token),
-        props.threadId
-      );
+      const newAdapter = await createAzureCommunicationChatAdapter({
+        endpointUrl: props.endpointUrl,
+        userId: getIdentifierKind(props.userId),
+        displayName: props.displayName,
+        credential: new AzureCommunicationTokenCredential(props.token),
+        threadId: props.threadId
+      });
 
       // Custom behavior: Intercept messages from the local user and convert
       // to uppercase before sending to backend.
