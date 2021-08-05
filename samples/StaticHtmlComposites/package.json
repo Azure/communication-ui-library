@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "build": "webpack --mode=production",
-    "test": "",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
     "start:app": "webpack serve",
     "test": "playwright test tests",
