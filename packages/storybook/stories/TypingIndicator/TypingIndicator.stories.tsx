@@ -3,7 +3,6 @@
 
 import { TypingIndicator as TypingIndicatorComponent } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { object } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -57,18 +56,19 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const TypingIndicatorStory: () => JSX.Element = () => {
-  const typingUsers = object('Typing Users', [
-    {
-      userId: '1',
-      displayName: 'User1'
-    },
-    {
-      userId: '2',
-      displayName: 'User2'
-    }
-  ]);
-  return <TypingIndicatorComponent typingUsers={typingUsers} />;
+const defaultTypingUsers = [
+  {
+    userId: '1',
+    displayName: 'User1'
+  },
+  {
+    userId: '2',
+    displayName: 'User2'
+  }
+];
+
+const TypingIndicatorStory = (args): JSX.Element => {
+  return <TypingIndicatorComponent typingUsers={args.typingUsers} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -79,6 +79,13 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-typingindicator`,
   title: `${COMPONENT_FOLDER_PREFIX}/Typing Indicator`,
   component: TypingIndicatorComponent,
+  argTypes: {
+    typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
+    // Hiding auto-generated controls
+    onRenderUser: { control: false, table: { disable: true } },
+    styles: { control: false, table: { disable: true } },
+    strings: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()
