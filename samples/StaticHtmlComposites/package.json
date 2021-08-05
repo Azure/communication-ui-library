@@ -37,7 +37,7 @@
     "http": "~0.0.1-security",
     "node-static": "~0.7.11",
     "playwright": "~1.12.3",
-    "typescript": "4.1.5",
+    "typescript": "4.3.5",
     "webpack-cli": "4.7.2",
     "webpack": "5.38.1"
   }
