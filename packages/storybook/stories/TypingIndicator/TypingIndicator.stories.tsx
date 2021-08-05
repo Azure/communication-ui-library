@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { TypingIndicator as TypingIndicatorComponent } from '@azure/communication-react';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 

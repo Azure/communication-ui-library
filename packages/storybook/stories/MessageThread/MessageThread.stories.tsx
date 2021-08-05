@@ -11,7 +11,7 @@ import {
 } from '@azure/communication-react';
 import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 

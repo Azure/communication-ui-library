@@ -5,7 +5,7 @@
 import { ParticipantItem as ParticipantItemComponent } from '@azure/communication-react';
 import { Stack, mergeStyles } from '@fluentui/react';
 import { MicOff20Filled, ShareScreenStart20Filled } from '@fluentui/react-icons';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 

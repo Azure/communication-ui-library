@@ -3,7 +3,7 @@
 
 import { MessageStatus, MessageStatusIndicator as MessageStatusIndicatorComponent } from '@azure/communication-react';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 

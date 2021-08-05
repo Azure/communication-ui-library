@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ParticipantsButton, ParticipantListProps } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 

@@ -3,7 +3,7 @@
 
 import { ParticipantList as ParticipantListComponent } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { Title, Heading, Description, Canvas, Props } from '@storybook/addon-docs/blocks';
+import { Title, Heading, Description, Canvas, Props } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 

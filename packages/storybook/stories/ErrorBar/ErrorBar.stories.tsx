@@ -9,7 +9,7 @@
 
 import { ErrorBar as ErrorBarComponent, ErrorType } from '@azure/communication-react';
 import { mergeStyles, useTheme } from '@fluentui/react';
-import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs/blocks';
+import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useCallback, useState } from 'react';
 

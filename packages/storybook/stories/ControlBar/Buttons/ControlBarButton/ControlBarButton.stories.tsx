@@ -3,7 +3,7 @@
 
 import { ControlBarButton } from '@azure/communication-react';
 import { Airplane20Filled, VehicleBus20Filled, VehicleShip20Filled } from '@fluentui/react-icons';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Title, Description, Heading, Source } from '@storybook/addon-docs/blocks';
+import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;

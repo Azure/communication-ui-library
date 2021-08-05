@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { GridLayout as GridLayoutComponent, VideoTile, StreamMedia } from '@azure/communication-react';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useMemo } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Canvas, Description, Heading, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Title } from '@storybook/addon-docs';
 import React from 'react';
 
 import { OneToOneCallLayoutExample } from './snippets/OneToOneCallLayout.snippet';
