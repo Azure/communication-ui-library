@@ -4,7 +4,7 @@
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { getDocs } from './ChatCompositeDocs';
@@ -22,21 +22,18 @@ const messageArray = [
 const CustomBehaviorStory = (args): JSX.Element => {
   const [containerProps, setContainerProps] = useState<ContainerProps>();
 
-  const controls = useRef({
-    connectionString: args.connectionString,
-    displayName: args.displayName
-  });
-
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (controls.current.connectionString && controls.current.displayName) {
-        const newProps = await createUserAndThread(controls.current.connectionString, controls.current.displayName);
-        await addParrotBotToThread(controls.current.connectionString, newProps.token, newProps.threadId, messageArray);
+      if (args.connectionString && args.displayName) {
+        const newProps = await createUserAndThread(args.connectionString, args.displayName);
+        await addParrotBotToThread(args.connectionString, newProps.token, newProps.threadId, messageArray);
         setContainerProps(newProps);
+      } else {
+        setContainerProps(undefined);
       }
     };
     fetchToken();
-  }, [controls]);
+  }, [args.connectionString, args.displayName]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>

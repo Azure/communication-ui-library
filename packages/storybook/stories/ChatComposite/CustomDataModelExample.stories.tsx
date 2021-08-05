@@ -4,7 +4,7 @@
 import { ChatComposite, toFlatCommunicationIdentifier } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { getDocs } from './ChatCompositeDocs';
@@ -41,38 +41,34 @@ const messageArray = [
 const CustomDataModelStory = (args): JSX.Element => {
   const [containerProps, setContainerProps] = useState<CustomDataModelExampleContainerProps>();
 
-  const controls = useRef({
-    connectionString: args.connectionString,
-    displayName: args.displayName,
-    avatar: getAvatarSymbol(args.avatar)
-  });
-
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (controls.current.connectionString && controls.current.displayName) {
-        const newPrerequisites = await createUserAndThread(
-          controls.current.connectionString,
-          controls.current.displayName
-        );
+      if (args.connectionString && args.displayName) {
+        const newPrerequisites = await createUserAndThread(args.connectionString, args.displayName);
         const botUserToken = await addParrotBotToThread(
-          controls.current.connectionString,
+          args.connectionString,
           newPrerequisites.token,
           newPrerequisites.threadId,
           messageArray
         );
         setContainerProps({
           ...newPrerequisites,
-          botUserId: toFlatCommunicationIdentifier(botUserToken.user),
-          botAvatar: controls.current.avatar
+          botUserId: toFlatCommunicationIdentifier(botUserToken.user)
         });
+      } else {
+        setContainerProps(undefined);
       }
     };
     fetchToken();
-  }, [controls]);
+  }, [args.connectionString, args.displayName]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {containerProps ? <CustomDataModelExampleContainer {...containerProps} /> : <ConfigHintBanner />}
+      {containerProps ? (
+        <CustomDataModelExampleContainer {...containerProps} botAvatar={getAvatarSymbol(args.avatar)} />
+      ) : (
+        <ConfigHintBanner />
+      )}
     </Stack>
   );
 };

@@ -4,7 +4,7 @@
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { getDocs } from './CallCompositeDocs';
@@ -13,33 +13,28 @@ import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
 const CustomDataModelStory = (args): JSX.Element => {
-  const [containerProps, setupContainerProps] = useState();
-
-  const controls = useRef({
-    connectionString: args.connectionString,
-    displayName: args.displayName,
-    avatarInitials: args.avatarInitials,
-    callInvitationURL: args.callInvitationURL
-  });
+  const [containerProps, setContainerProps] = useState();
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
-      if (controls.current.connectionString && controls.current.displayName) {
-        const newProps = await createUserAndGroup(controls.current.connectionString);
-        setupContainerProps(newProps);
+      if (args.connectionString && args.displayName) {
+        const newProps = await createUserAndGroup(args.connectionString);
+        setContainerProps(newProps);
+      } else {
+        setContainerProps(undefined);
       }
     };
     fetchContainerProps();
-  }, [controls]);
+  }, [args.connectionString, args.displayName]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
         <CustomDataModelExampleContainer
-          displayName={controls.current.displayName}
-          avatarInitials={controls.current.avatarInitials}
+          displayName={args.displayName}
+          avatarInitials={args.avatarInitials}
           {...containerProps}
-          callInvitationURL={controls.current.callInvitationURL}
+          callInvitationURL={args.callInvitationURL}
         />
       ) : (
         <ConfigHintBanner />

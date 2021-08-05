@@ -4,37 +4,25 @@
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useRef } from 'react';
+import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer } from './snippets/Container.snippet';
 import { ConfigJoinChatThreadHintBanner } from './snippets/Utils';
 
 const JoinExistingChatThreadStory = (args): JSX.Element => {
-  const controls = useRef({
-    endpointUrl: args.endpointUrl,
-    threadId: args.threadId,
-    userId: args.userId,
-    token: args.token,
-    displayName: args.displayName
-  });
-
   const areAllControlsSet =
-    !!controls.current.endpointUrl &&
-    !!controls.current.threadId &&
-    !!controls.current.userId &&
-    !!controls.current.token &&
-    !!controls.current.displayName;
+    !!args.endpointUrl && !!args.threadId && !!args.userId && !!args.token && !!args.displayName;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllControlsSet ? (
         <ContosoChatContainer
-          endpointUrl={controls.current.endpointUrl}
-          threadId={controls.current.threadId}
-          userId={{ communicationUserId: controls.current.userId }}
-          token={controls.current.token}
-          displayName={controls.current.displayName}
+          endpointUrl={args.endpointUrl}
+          threadId={args.threadId}
+          userId={{ communicationUserId: args.userId }}
+          token={args.token}
+          displayName={args.displayName}
           showParticipants={true}
           showTopic={true}
         />

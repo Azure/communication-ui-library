@@ -4,7 +4,7 @@
 import { MeetingComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { getDocs } from './MeetingCompositeDocs';
@@ -15,20 +15,17 @@ import { ConfigHintBanner } from './Utils';
 const BasicStory = (args): JSX.Element => {
   const [meetingProps, setMeetingProps] = useState<MeetingExampleProps>();
 
-  const controls = useRef({
-    connectionString: args.connectionString,
-    displayName: args.displayName
-  });
-
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (controls.current.connectionString && controls.current.displayName) {
-        const newProps = await createUserCredentials(controls.current.connectionString, controls.current.displayName);
+      if (args.connectionString && args.displayName) {
+        const newProps = await createUserCredentials(args.connectionString, args.displayName);
         setMeetingProps(newProps);
+      } else {
+        setMeetingProps(undefined);
       }
     };
     fetchToken();
-  }, [controls]);
+  }, [args.connectionString, args.displayName]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>

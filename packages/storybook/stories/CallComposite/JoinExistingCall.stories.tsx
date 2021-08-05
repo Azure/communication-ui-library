@@ -4,35 +4,24 @@
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useRef } from 'react';
+import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigJoinCallHintBanner } from './snippets/Utils';
 
 const JoinExistingCallStory = (args): JSX.Element => {
-  const controls = useRef({
-    callLocator: args.callLocator,
-    userId: args.userId,
-    token: args.token,
-    displayName: args.displayName,
-    callInvitationURL: args.callInvitationURL
-  });
+  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token && !!args.displayName;
 
-  const areAllKnobsSet =
-    !!controls.current.callLocator &&
-    !!controls.current.userId &&
-    !!controls.current.token &&
-    !!controls.current.displayName;
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
         <ContosoCallContainer
-          locator={controls.current.callLocator}
-          userId={{ communicationUserId: controls.current.userId }}
-          token={controls.current.token}
-          displayName={controls.current.displayName}
-          callInvitationURL={controls.current.callInvitationURL}
+          locator={args.callLocator}
+          userId={{ communicationUserId: args.userId }}
+          token={args.token}
+          displayName={args.displayName}
+          callInvitationURL={args.callInvitationURL}
         />
       ) : (
         <ConfigJoinCallHintBanner />
