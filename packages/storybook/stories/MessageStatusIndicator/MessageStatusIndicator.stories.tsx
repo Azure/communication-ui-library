@@ -4,7 +4,6 @@
 import { MessageStatus, MessageStatusIndicator as MessageStatusIndicatorComponent } from '@azure/communication-react';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { select, text } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -57,15 +56,15 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const MessageStatusIndicatorStory = (): JSX.Element => {
+const MessageStatusIndicatorStory = (args): JSX.Element => {
   return (
     <MessageStatusIndicatorComponent
-      status={select<MessageStatus>('Message Status', ['delivered', 'sending', 'seen', 'failed'], 'delivered')}
+      status={args.status as MessageStatus}
       strings={{
-        deliveredTooltipText: text('Delivered icon tooltip text', 'Sent'),
-        sendingTooltipText: text('Sending icon tooltip text', 'Sending'),
-        seenTooltipText: text('Seen icon tooltip text', 'Seen'),
-        failedToSendTooltipText: text('Failed to send icon tooltip text', 'Failed to send')
+        deliveredTooltipText: args.deliveredTooltipText,
+        sendingTooltipText: args.sendingTooltipText,
+        seenTooltipText: args.seenTooltipText,
+        failedToSendTooltipText: args.failedToSendTooltipText
       }}
     />
   );
@@ -79,6 +78,25 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-messagestatusindicator`,
   title: `${COMPONENT_FOLDER_PREFIX}/Message Status Indicator`,
   component: MessageStatusIndicatorComponent,
+  argTypes: {
+    status: {
+      control: 'select',
+      options: ['delivered', 'sending', 'seen', 'failed'],
+      defaultValue: 'delivered',
+      name: 'Message Status'
+    },
+    deliveredTooltipText: { control: 'text', defaultValue: 'Sent', name: 'Delivered icon tooltip text' },
+    sendingTooltipText: { control: 'text', defaultValue: 'Sending', name: 'Sending icon tooltip text' },
+    seenTooltipText: { control: 'text', defaultValue: 'Seen', name: 'Seen icon tooltip text' },
+    failedToSendTooltipText: {
+      control: 'text',
+      defaultValue: 'Failed to send',
+      name: 'Failed to send icon tooltip text'
+    },
+    // Hiding auto-generated controls
+    styles: { control: false, table: { disable: true } },
+    strings: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()
