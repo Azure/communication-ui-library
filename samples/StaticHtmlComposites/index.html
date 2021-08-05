@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+
 <head>
   <meta charset="utf-8" />
   <title>Basic example for CallComposite and ChatComposite</title>
 </head>
+
 <body>
   <!-- height need to be set for composite to fit the layout -->
   <div id="video-call-container" style="height: 50vh"></div>
@@ -11,10 +13,13 @@
   <script src="./callComposite.js"></script>
   <script src="./service.js"></script>
   <script type="module">
-    const { user, token } = await service.createUserWithToken();
+    const testParams = service.loadConfigFromUrlQuery();
+    const { user, token } = testParams.token
+      ? { token: testParams.token, user: { communicationUserId: testParams.userId } }
+      : { ...(await service.createUserWithToken()) };
     const groupId = await service.createGUID();
     // Call composite sample code starts here
-    const displayName = 'Bob';
+    const displayName = testParams.displayName ?? 'Bob';
 
     const callAdapter = await callComposite.loadCallComposite(
       {
@@ -26,9 +31,9 @@
       document.getElementById('video-call-container')
     );
 
-    const threadId = await service.createChatThread();
-    await service.addChatUser(threadId, user, displayName);
-    const endpointUrl = await service.getEndpointUrl();
+    const threadId = testParams.threadId ?? (await service.createChatThread());
+    testParams.threadId ?? (await service.addChatUser(threadId, user, displayName));
+    const endpointUrl = testParams.endpointUrl ?? (await service.getEndpointUrl());
 
     // Chat composite sample code starts here
     const chatAdapter = await chatComposite.loadChatComposite(
