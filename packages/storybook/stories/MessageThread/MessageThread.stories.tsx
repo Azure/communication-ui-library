@@ -12,7 +12,6 @@ import {
 import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
@@ -154,13 +153,10 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const MessageThreadStory: () => JSX.Element = () => {
+const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
     GenerateMockChatMessages()
   );
-  const showMessageDate = boolean('Enable Message Date', true);
-  const showMessageStatus = boolean('Enable Message Status Indicator', true);
-  const enableJumpToNewMessageButton = boolean('Enable Jump To New Message', true);
 
   const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
@@ -204,9 +200,9 @@ const MessageThreadStory: () => JSX.Element = () => {
         styles={MessageThreadStyles}
         userId={UserOne.senderId}
         messages={chatMessages}
-        showMessageDate={showMessageDate}
-        showMessageStatus={showMessageStatus}
-        disableJumpToNewMessageButton={!enableJumpToNewMessageButton}
+        showMessageDate={args.showMessageDate}
+        showMessageStatus={args.showMessageStatus}
+        disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onRenderAvatar={(userId: string) => {
@@ -222,7 +218,7 @@ const MessageThreadStory: () => JSX.Element = () => {
         }}
       />
       {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
-      Using storybook knobs would trigger the whole story to do a fresh re-render, not just components inside the story. */}
+      Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
         <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
         <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
@@ -241,6 +237,24 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-messagethread`,
   title: `${COMPONENT_FOLDER_PREFIX}/Message Thread`,
   component: MessageThreadComponent,
+  argTypes: {
+    showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
+    showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },
+    enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
+    // Hiding auto-generated controls
+    styles: { control: false, table: { disable: true } },
+    strings: { control: false, table: { disable: true } },
+    userId: { control: false, table: { disable: true } },
+    messages: { control: false, table: { disable: true } },
+    disableJumpToNewMessageButton: { control: false, table: { disable: true } },
+    numberOfChatMessagesToReload: { control: false, table: { disable: true } },
+    onMessageSeen: { control: false, table: { disable: true } },
+    onRenderMessageStatus: { control: false, table: { disable: true } },
+    onRenderAvatar: { control: false, table: { disable: true } },
+    onRenderJumpToNewMessageButton: { control: false, table: { disable: true } },
+    onLoadPreviousChatMessages: { control: false, table: { disable: true } },
+    onRenderMessage: { control: false, table: { disable: true } }
+  },
   parameters: {
     docs: {
       page: () => getDocs()
