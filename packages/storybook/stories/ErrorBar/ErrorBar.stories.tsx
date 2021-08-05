@@ -11,7 +11,7 @@ import { ErrorBar as ErrorBarComponent, ErrorType } from '@azure/communication-r
 import { mergeStyles, useTheme } from '@fluentui/react';
 import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
@@ -53,7 +53,12 @@ const errorOptions = [
 const ErrorBarStory = (args): JSX.Element => {
   const theme = useTheme();
 
-  const [activeErrors, setActiveErrors] = useState<ErrorType[]>(args.errorTypes);
+  const [activeErrors, setActiveErrors] = useState<ErrorType[]>([]);
+
+  useEffect(() => {
+    setActiveErrors(args.errorTypes);
+  }, [args.errorTypes]);
+
   const onClose = useCallback(
     (toRemove: ErrorType[]) => {
       setActiveErrors(activeErrors.filter((e) => !toRemove.includes(e)));
