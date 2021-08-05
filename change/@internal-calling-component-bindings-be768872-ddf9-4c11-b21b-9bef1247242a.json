@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Upgrade to calling sdk v1.2.0-beta.1",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

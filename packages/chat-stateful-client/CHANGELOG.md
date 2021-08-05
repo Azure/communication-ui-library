@@ -1,8 +1,21 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Fri, 09 Jul 2021 20:41:33 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0-beta.3)
+
+Thu, 22 Jul 2021 17:42:41 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/chat-stateful-client_v1.0.0-beta.2..@internal/chat-stateful-client_v1.0.0-beta.3)
+
+### Changes
+
+- When an operation suceeds, clear related errors from state ([PR #535](https://github.com/azure/communication-ui-library/pull/535) by prprabhu@microsoft.com)
+- Store errors from ChatThreadClient in the state ([PR #538](https://github.com/azure/communication-ui-library/pull/538) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Tee errors from listChatThreads to state ([PR #531](https://github.com/azure/communication-ui-library/pull/531) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add method to clear errors ([PR #574](https://github.com/azure/communication-ui-library/pull/574) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add chat thread creation and deletion error handling ([PR #535](https://github.com/azure/communication-ui-library/pull/535) by prprabhu@microsoft.com)
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/chat-stateful-client_v1.0.0-beta.2)
 

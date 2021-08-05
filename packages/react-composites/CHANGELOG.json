@@ -2,6 +2,215 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Thu, 22 Jul 2021 17:42:41 GMT",
+      "tag": "@internal/react-composites_v1.0.0-beta.3",
+      "version": "1.0.0-beta.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make participant pane in the chat composite optional. Disabled by default.",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2d625f8bb0a06aa8f2c916a279c59ef675df7fed",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Use ErrorBar component in ChatComposite",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "3d4ca56a9e629402776acd25022e484eaed57d36",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Only emit 'error' on errors teed to state",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Accept pre-constructed credential in adapter factory functions",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "eb8710c2a534a26d99e9dfcedca79585a64356e4",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Trigger 'error' event for failure in chat methods",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "14ab99109a735a2ddcaf25a7ecebbdfbca1edcc6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Hide ErrorBar in ChatComposite behind a feature flag",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "2cbec06050204f200bda2c5034a02b30f638f6af",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bugfix to prevent options menu from getting hidden every time a participant joins or leaves",
+            "author": "anjulgarg@live.com",
+            "commit": "f8eab8d3d040c12bfe8a24fde7478ae54344ead6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bind all methods of CallAdapter on construction",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "423c52b50a2ff23102f4db1feaf64ec3f7e8804f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Drop duplicate thread status banner",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "492a0a18a2d2158b96a8ec4ea6b403f697e45339",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add chat e2e tests",
+            "author": "anjulgarg@live.com",
+            "commit": "96b9957462a8c577aed9272274308322e8548e30",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bind all methods of ChatAdaptor on construction",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "ee4877349690a14b7244dc9ccc229b2094e183c8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": " Add E2E browser tests for chat composite",
+            "author": "anjulgarg@live.com",
+            "commit": "93ad9624e2fbb67fd0dff3e3b5e46698233d9952",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove getCall from selector Use more specific props in the call to target the right update",
+            "author": "jinan@microsoft.com",
+            "commit": "4037bb1533169ff9c80248dbf3463dd7201e94e4",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove sendBoxMaxLength option from chat compsite\"",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "36a954122aabe6f9095eb20489aa5e3bc2a01179",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add E2E Chat Composite tests",
+            "author": "anjulgarg@live.com",
+            "commit": "68c72d4a5492d840d6067ecec4004ca9648f4a13",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Using new React hook useTheme from react-components.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "ea2b8a92a3b30bad7256ed5a4521bd2c469e3fae",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Allow chat composite topic to be hidden",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "06b591973fda59f4f42b05bbc11e8e2f1c67a499",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix error handling of failures in `ChatThreadClient.listMessages`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "b50fc223bf692c5e9bd48b4f256a60dd68f08c8d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add identifier injection mechanism in components for e2e testing",
+            "author": "anjulgarg@live.com",
+            "commit": "7ecfabab6d4ef3a6e6b2466c07093288c8154253",
+            "package": "@internal/react-composites"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump to 1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2e94c7553cd494ce3d1db33706c1b9d080e3d75a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Clean up browser test (docs)",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "2faaff3df413999d336e4be8ea0f5b06ac53288d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add more e2e tests for chat errors",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "1fe8f23718cb98a847df798da3682fae3d132f9e",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix icon warning in tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "29536d0af6b0677cd0ad66aa347dbcbd2d6db75a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Initial Call Composite e2e test setup",
+            "author": "anjulgarg@live.com",
+            "commit": "c355fefdb251db4bcdd571eeecf42c335d3a8aca",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "remove api extractor fork now new version has import types fix",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add POC test for ErrorBar",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "3e49190cb5ea6021ddbee783e557959d4f6a0436",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Upgrade to calling sdk v1.2.0-beta.1",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/chat-component-bindings to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/chat-stateful-client to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/acs-ui-common to v1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/calling-component-bindings to v1.0.0-beta.3",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/calling-stateful-client to v1.0.0-beta.3",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/react-composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Jul 2021 20:41:33 GMT",
       "tag": "react-composites_v1.0.0-beta.2",
       "version": "1.0.0-beta.2",

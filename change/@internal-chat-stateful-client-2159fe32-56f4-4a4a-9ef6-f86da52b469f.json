@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "When an operation suceeds, clear related errors from state",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

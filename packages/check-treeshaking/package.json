@@ -16,11 +16,11 @@
   },
   "dependencies": {
     "@internal/acs-ui-common": "1.0.0-beta.2",
-    "@internal/react-components": "1.0.0-beta.2",
-    "@internal/chat-stateful-client": "1.0.0-beta.2",
-    "@internal/calling-stateful-client": "1.0.0-beta.2",
-    "@internal/chat-component-bindings": "1.0.0-beta.2",
-    "@internal/calling-component-bindings": "1.0.0-beta.2"
+    "@internal/react-components": "1.0.0-beta.3",
+    "@internal/chat-stateful-client": "1.0.0-beta.3",
+    "@internal/calling-stateful-client": "1.0.0-beta.3",
+    "@internal/chat-component-bindings": "1.0.0-beta.3",
+    "@internal/calling-component-bindings": "1.0.0-beta.3"
   },
   "devDependencies": {
     "eslint": "^7.7.0",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add default call control bar button",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

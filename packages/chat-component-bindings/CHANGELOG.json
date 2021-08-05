@@ -2,6 +2,119 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Thu, 22 Jul 2021 17:42:41 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.3",
+      "version": "1.0.0-beta.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump to 1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2e94c7553cd494ce3d1db33706c1b9d080e3d75a",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "remove api extractor fork now new version has import types fix",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update package to beta.1",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update to use api-extractor fork with bug fix for type imports",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fix dependencies versions to match",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump package for release",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "update versions to be consistent across repo",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "remove private-preview references",
+            "author": "mail@jamesburnside.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/chat-stateful-client to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/acs-ui-common to v1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support more error types in ErrorBar",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "19783e935bfcd18d5e46a9a1117d52e968a658c5",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fixed MessageThread selector to allow messages of type 'html'.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "c25e3551ddbba88349c6a0c8b52d56e0124d3d60",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fix error handling of failures in `ChatThreadClient.listMessage`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "b50fc223bf692c5e9bd48b4f256a60dd68f08c8d",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Limit the number of errors show in UI",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a019433c4df7628204f73234f95147ba8f4d8490",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add data bindings for ErrorBar",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "3d4ca56a9e629402776acd25022e484eaed57d36",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump prettier version and reformat",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Jul 2021 20:41:33 GMT",
       "tag": "chat-component-bindings_v1.0.0-beta.2",
       "version": "1.0.0-beta.2",

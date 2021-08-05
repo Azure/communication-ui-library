@@ -58,10 +58,12 @@
     "wednesday": "Mercredi",
     "thursday": "Jeudi",
     "friday": "Vendredi",
-    "saturday": "Samedi"
+    "saturday": "Samedi",
+    "participantJoined": "a rejoint la conversation.",
+    "participantLeft": "a quitté la conversation."
   },
   "errorBar": {
-    "unableToReachChatService": "Tu es hors ligne",
+    "unableToReachChatService": "Vous êtes hors ligne.",
     "accessDenied": "Impossible d'accéder aux services de chat - veuillez vérifier les informations d'identification de l'utilisateur fournies",
     "userNotInThisThread": "Vous n'êtes plus dans ce fil de discussion",
     "sendMessageNotInThisThread": "Échec de l'envoi du message car vous n'êtes plus dans ce fil de discussion",

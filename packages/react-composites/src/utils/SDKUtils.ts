@@ -3,7 +3,6 @@
 
 import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
 import { CallState as CallStatus } from '@azure/communication-calling';
-import { CommunicationUiErrorFromError, CommunicationUiErrorInfo } from '../types/CommunicationUiError';
 
 export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== 'None' && callStatus !== 'Disconnected');
 
@@ -22,13 +21,5 @@ export const createAzureCommunicationUserCredential = (
     return new AzureCommunicationTokenCredential(options);
   } else {
     return new AzureCommunicationTokenCredential(token);
-  }
-};
-
-export const propagateError = (error: Error, onErrorCallback?: (error: CommunicationUiErrorInfo) => void): void => {
-  if (onErrorCallback) {
-    onErrorCallback(CommunicationUiErrorFromError(error));
-  } else {
-    throw error;
   }
 };

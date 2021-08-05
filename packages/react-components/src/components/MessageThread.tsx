@@ -26,7 +26,7 @@ import {
   CustomMessage,
   SystemMessage,
   ChatMessagePayload,
-  SystemMessagePayload
+  CommunicationParticipant
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -162,6 +162,10 @@ export interface MessageThreadStrings {
   saturday: string;
   /** String for Yesterday */
   yesterday: string;
+  /** String for participants joined */
+  participantJoined: string;
+  /** String for participants left */
+  participantLeft: string;
 }
 
 export interface JumpToNewMessageButtonProps {
@@ -178,18 +182,45 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
   );
 };
 
+const generateParticipantsStr = (participants: CommunicationParticipant[]): string =>
+  participants.reduce(
+    (previous, current): string => (current.displayName ? `${previous}${current.displayName} ` : previous),
+    ''
+  );
+
 export type DefaultMessageRendererType = (props: MessageProps, ids?: { messageTimestamp?: string }) => JSX.Element;
 
 const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  const { strings } = useLocale();
   if (props.message.type === 'system') {
-    const payload: SystemMessagePayload = props.message.payload;
-    return (
-      <SystemMessageComponent
-        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-        content={payload.content ?? ''}
-        containerStyle={props?.messageContainerStyle}
-      />
-    );
+    const payload = props.message.payload;
+    if (payload.type === 'content') {
+      return (
+        <SystemMessageComponent
+          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+          content={payload.content ?? ''}
+          containerStyle={props?.messageContainerStyle}
+        />
+      );
+    }
+    if (payload.type === 'participantAdded') {
+      return (
+        <SystemMessageComponent
+          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+          content={generateParticipantsStr(payload.participants) + strings.messageThread.participantJoined}
+          containerStyle={props?.messageContainerStyle}
+        />
+      );
+    }
+    if (payload.type === 'participantRemoved') {
+      return (
+        <SystemMessageComponent
+          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+          content={generateParticipantsStr(payload.participants) + strings.messageThread.participantLeft}
+          containerStyle={props?.messageContainerStyle}
+        />
+      );
+    }
   }
 
   return <></>;
@@ -354,9 +385,11 @@ const memoizeAllMessages = memoizeFnAll(
       messageProps.messageContainerStyle = styles?.systemMessageContainer;
 
       const systemMessageComponent =
-        onRenderMessage === undefined
-          ? DefaultSystemMessageRenderer(messageProps)
-          : onRenderMessage(messageProps, DefaultSystemMessageRenderer);
+        onRenderMessage === undefined ? (
+          <DefaultSystemMessageRenderer {...messageProps} />
+        ) : (
+          onRenderMessage(messageProps, (props) => <DefaultSystemMessageRenderer {...props} />)
+        );
 
       return {
         children: systemMessageComponent,
