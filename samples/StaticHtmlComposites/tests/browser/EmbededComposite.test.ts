@@ -18,7 +18,7 @@ test.describe('JS Bundle Test', () => {
     await page.goto(url);
   });
 
-  // just need to make sure it is loading correctly, the rest of test will be the response of composite test
+  // only need to make sure it is loading correctly, the rest will be the responsibility of composite tests
   test('Whether html page is loaded right with 2 composites', async ({ page }) => {
     expect(await page.waitForSelector('text=Start call')).toBeTruthy();
     expect(await page.waitForSelector('text=Hello to you')).toBeTruthy();
