@@ -3,7 +3,6 @@
 
 import { Stack } from '@fluentui/react';
 import { Title, Heading, Description, Canvas } from '@storybook/addon-docs/blocks';
-import { array } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -12,18 +11,15 @@ import { DeviceSettingDropdownExample } from './snippets/DeviceSettingsDropdown.
 
 const DevicesDropdownExampleText = require('!!raw-loader!./snippets/DeviceSettingsDropdown.snippet.tsx').default;
 
+const cameraOptions = [
+  'Logitech C920S HD Pro Webcam',
+  'Lenovo Essential FHD Webcam',
+  'Aukey PC-LM1E Full HD Webcam',
+  'AVerMedia PW315',
+  'Razer Kiyo'
+];
+
 const getDocs: () => JSX.Element = () => {
-  const label = 'Cameras';
-
-  const defaultValue = [
-    'Logitech C920S HD Pro Webcam',
-    'Lenovo Essential FHD Webcam',
-    'Aukey PC-LM1E Full HD Webcam',
-    'AVerMedia PW315',
-    'Razer Kiyo'
-  ];
-
-  const cameras = array(label, defaultValue);
   return (
     <>
       <Title>Device Setting</Title>
@@ -39,7 +35,7 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={DevicesDropdownExampleText}>
         <DeviceSettingDropdownExample
-          devices={cameras}
+          devices={cameraOptions}
           onChange={(_, option) => {
             alert(option?.text);
           }}
@@ -50,17 +46,10 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const DeviceSettingsStory: () => JSX.Element = () => {
-  const cameras = [
-    'Logitech C920S HD Pro Webcam',
-    'Lenovo Essential FHD Webcam',
-    'Aukey PC-LM1E Full HD Webcam',
-    'AVerMedia PW315',
-    'Razer Kiyo'
-  ];
   return (
     <Stack>
       <DeviceSettingDropdownExample
-        devices={cameras}
+        devices={cameraOptions}
         onChange={(_, option) => {
           alert(option?.text);
         }}

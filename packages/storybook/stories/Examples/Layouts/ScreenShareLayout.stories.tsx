@@ -3,9 +3,15 @@
 
 import { PlaceholderProps, VideoTile } from '@azure/communication-react';
 import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
-import { number, select } from '@storybook/addon-knobs';
+import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { mediaGalleryWidthOptions, mediaGalleryHeightDefault, mediaGalleryHeightOptions } from '../../constants';
+import {
+  EXAMPLES_FOLDER_PREFIX,
+  mediaGalleryWidthOptions,
+  mediaGalleryHeightDefault,
+  mediaGalleryHeightOptions
+} from '../../constants';
+import { getDocs } from './LayoutsDocs';
 
 const renderPersona = (props: PlaceholderProps): JSX.Element => (
   <Persona
@@ -35,19 +41,28 @@ const renderSharePersonaPlaceholder = (): JSX.Element => (
   />
 );
 
-export const ScreenShareLayout: () => JSX.Element = () => {
-  const width = number('Width (px)', 850, mediaGalleryWidthOptions);
-  const height = number('Height (px)', mediaGalleryHeightDefault, mediaGalleryHeightOptions);
+const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
 
-  const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
+const aspectRatioBoxContentStyle = mergeStyles({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%'
+});
 
-  const sidePanelWidthRatio = select('Side Panel Width Ratio', ['30%', '35%', '40%', '45%', '50%'], '30%');
-  const sidePanelTileAspectRatio = select(
-    'Side Panel Tile Aspect Ratio (Width:Height)',
-    ['16:9', '3:2', '4:3', '5:9', '1:1'],
-    '16:9'
-  );
-  const aspectRatioNumberArray = sidePanelTileAspectRatio.split(':');
+const videoStreamStyle = mergeStyles({
+  border: '1',
+  borderStyle: 'solid',
+  position: 'absolute',
+  bottom: '.25rem',
+  right: '.25rem',
+  height: '20%',
+  width: '30%'
+});
+
+const ScreenShareLayoutStory = (args): JSX.Element => {
+  const aspectRatioNumberArray = args.sidePanelTileAspectRatio.split(':');
   const aspectRatio = (100 * parseInt(aspectRatioNumberArray[1])) / parseInt(aspectRatioNumberArray[0]) + '%';
 
   const aspectRatioBoxStyle = mergeStyles({
@@ -59,27 +74,9 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     paddingTop: aspectRatio
   });
 
-  const aspectRatioBoxContentStyle = mergeStyles({
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%'
-  });
-
-  const videoStreamStyle = mergeStyles({
-    border: '1',
-    borderStyle: 'solid',
-    position: 'absolute',
-    bottom: '.25rem',
-    right: '.25rem',
-    height: '20%',
-    width: '30%'
-  });
-
   const screenShareLayoutStyle = {
-    height: `${height}px`,
-    width: `${width}px`,
+    height: `${args.height}px`,
+    width: `${args.width}px`,
     border: '.063rem'
   };
 
@@ -96,7 +93,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
   return (
     <Stack style={screenShareLayoutStyle} horizontal>
       {/* Side panel component in this layout */}
-      <Stack.Item className={mergeStyles({ height: '100%', width: sidePanelWidthRatio })}>
+      <Stack.Item className={mergeStyles({ height: '100%', width: args.sidePanelWidthRatio })}>
         <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
           {participantsComponents}
         </Stack>
@@ -121,3 +118,49 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     </Stack>
   );
 };
+
+export const ScreenShareLayout = ScreenShareLayoutStory.bind({});
+
+export default {
+  id: `${EXAMPLES_FOLDER_PREFIX}-layouts-screensharelayout`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Layouts/Screen Share Layout`,
+  argTypes: {
+    width: {
+      control: {
+        type: 'range',
+        min: mediaGalleryWidthOptions.min,
+        max: mediaGalleryWidthOptions.max,
+        step: mediaGalleryWidthOptions.step
+      },
+      defaultValue: 850,
+      name: 'Width (px)'
+    },
+    height: {
+      control: {
+        type: 'range',
+        min: mediaGalleryHeightOptions.min,
+        max: mediaGalleryHeightOptions.max,
+        step: mediaGalleryHeightOptions.step
+      },
+      defaultValue: mediaGalleryHeightDefault,
+      name: 'Height (px)'
+    },
+    sidePanelWidthRatio: {
+      control: 'select',
+      options: ['30%', '35%', '40%', '45%', '50%'],
+      defaultValue: '30%',
+      name: 'Side Panel Width Ratio'
+    },
+    sidePanelTileAspectRatio: {
+      control: 'select',
+      options: ['16:9', '3:2', '4:3', '5:9', '1:1'],
+      defaultValue: '16:9',
+      name: 'Side Panel Tile Aspect Ratio (Width:Height)'
+    }
+  },
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
+} as Meta;

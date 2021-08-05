@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { Title, Heading, Description, Canvas } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -38,18 +37,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const LocalPreviewStory: () => JSX.Element = () => {
-  const isVideoAvailable = boolean('Is video available', true);
-  const isCameraEnabled = boolean('Is camera available', true);
-  const isMicrophoneEnabled = boolean('Is microphone available', true);
-
-  return (
-    <LocalPreviewExample
-      isVideoAvailable={isVideoAvailable}
-      isCameraEnabled={isCameraEnabled}
-      isMicrophoneEnabled={isMicrophoneEnabled}
-    />
-  );
+const LocalPreviewStory = (args): JSX.Element => {
+  return <LocalPreviewExample {...args} />;
 };
 
 export const LocalPreview = LocalPreviewStory.bind({});
@@ -58,6 +47,11 @@ export default {
   id: `${EXAMPLES_FOLDER_PREFIX}-localpreview`,
   title: `${EXAMPLES_FOLDER_PREFIX}/Local Preview`,
   component: LocalPreview,
+  argTypes: {
+    isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
+    isCameraEnabled: { control: 'boolean', defaultValue: true, name: 'Is camera available' },
+    isMicrophoneEnabled: { control: 'boolean', defaultValue: true, name: 'Is microphone available' }
+  },
   parameters: {
     docs: {
       page: () => getDocs()

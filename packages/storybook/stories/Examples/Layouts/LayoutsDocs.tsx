@@ -2,17 +2,15 @@
 // Licensed under the MIT license.
 
 import { Canvas, Description, Heading, Title } from '@storybook/addon-docs/blocks';
-import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { OneToOneCallLayoutExample } from './snippets/OneToOneCallLayout.snippet';
 import { ScreenShareLayoutExample } from './snippets/ScreenShareLayout.snippet';
 
 const OneToOneCallLayoutExampleText = require('!!raw-loader!./snippets/OneToOneCallLayout.snippet.tsx').default;
 const ScreenShareLayoutExampleText = require('!!raw-loader!./snippets/ScreenShareLayout.snippet.tsx').default;
 
-const getDocs: () => JSX.Element = () => {
+export const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>Layouts</Title>
@@ -54,16 +52,3 @@ const getDocs: () => JSX.Element = () => {
     </>
   );
 };
-
-export { OneToOneCallLayout } from './OneToOneCallLayout';
-export { ScreenShareLayout } from './ScreenShareLayout';
-
-export default {
-  id: `${EXAMPLES_FOLDER_PREFIX}-layouts`,
-  title: `${EXAMPLES_FOLDER_PREFIX}/Layouts`,
-  parameters: {
-    docs: {
-      page: () => getDocs()
-    }
-  }
-} as Meta;
