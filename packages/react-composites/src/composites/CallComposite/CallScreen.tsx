@@ -115,6 +115,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     }
   }
 
+  const screenShareHostHostId = 'UILibraryMediaGallery';
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       {isInCall(callStatus ?? 'None') ? (
@@ -132,12 +133,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             {callStatus === 'Connected' && (
               <>
                 <Stack styles={containerStyles} grow>
-                  <Stack.Item grow styles={mediaGalleryContainerStyles}>
+                  <Stack.Item id={screenShareHostHostId} grow styles={mediaGalleryContainerStyles}>
                     <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
                   </Stack.Item>
                 </Stack>
                 {isScreenShareOn ? (
                   <ScreenSharePopup
+                    hostId={screenShareHostHostId}
                     onStopScreenShare={() => {
                       return adapter.stopScreenShare();
                     }}
