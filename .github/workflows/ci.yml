@@ -191,6 +191,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue were GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If any update needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -216,7 +221,7 @@ jobs:
       # Commit changes to snapshot files.
       - name: Commit new snapshots
         run: |
-          git diff --exit-code --quiet || git add *.png && git commit -m 'Updating automation snapshots' && git push origin HEAD:${{ github.head_ref }}
+          git diff --exit-code --quiet || (git add *.png && git commit -m 'Updating automation snapshots' && git push origin HEAD:${{ github.head_ref }})
 
   check_failure:
     runs-on: ubuntu-latest
