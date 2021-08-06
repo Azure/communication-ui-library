@@ -14,15 +14,15 @@ import {
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 import { usePropsFor } from './hooks/usePropsFor';
 
-export type GroupCallControlsProps = {
+export type CallControlsProps = {
+  showParticipantsControl: boolean;
   onEndCallClick(): void;
   compressedMode?: boolean;
-  showParticipants?: boolean;
   callInvitationURL?: string;
 };
 
-export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
-  const { callInvitationURL, compressedMode, showParticipants = false, onEndCallClick } = props;
+export const CallControls = (props: CallControlsProps): JSX.Element => {
+  const { callInvitationURL, compressedMode, onEndCallClick } = props;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
@@ -37,18 +37,25 @@ export const CallControls = (props: GroupCallControlsProps): JSX.Element => {
 
   return (
     <ControlBar layout="dockedBottom">
-      <CameraButton {...cameraButtonProps} showLabel={!compressedMode} />
-      <MicrophoneButton {...microphoneButtonProps} showLabel={!compressedMode} />
+      <CameraButton data-ui-id="call-composite-camera-button" {...cameraButtonProps} showLabel={!compressedMode} />
+      <MicrophoneButton
+        data-ui-id="call-composite-microphone-button"
+        {...microphoneButtonProps}
+        showLabel={!compressedMode}
+      />
       <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
-      {showParticipants && (
+      {props.showParticipantsControl && (
         <ParticipantsButton
+          data-ui-id="call-composite-participants-button"
           {...participantsButtonProps}
           showLabel={!compressedMode}
           callInvitationURL={callInvitationURL}
         />
       )}
-      <OptionsButton {...optionsButtonProps} showLabel={!compressedMode} />
+      {/* By setting `persistMenu` to true, we prevent options menu from getting hidden everytime a participant joins or leaves. */}
+      <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />
       <EndCallButton
+        data-ui-id="call-composite-hangup-button"
         {...hangUpButtonProps}
         onHangUp={onHangUp}
         styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}

@@ -39,7 +39,7 @@ export const LocalPreview = (): JSX.Element => {
   }, [adapter, isLocalMicrophoneEnabled]);
 
   return (
-    <Stack className={localPreviewContainerStyle}>
+    <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>
       <VideoTile
         styles={localPreviewTileStyle}
         isVideoReady={!!localPreviewProps.videoStreamElement}
@@ -47,8 +47,14 @@ export const LocalPreview = (): JSX.Element => {
         onRenderPlaceholder={onRenderPlaceholder}
       >
         <ControlBar layout="floatingBottom">
-          <CameraButton {...cameraButtonProps} showLabel={true} disabled={!cameraPermissionGranted} />
+          <CameraButton
+            data-ui-id="call-composite-local-device-settings-camera-button"
+            {...cameraButtonProps}
+            showLabel={true}
+            disabled={!cameraPermissionGranted}
+          />
           <MicrophoneButton
+            data-ui-id="call-composite-local-device-settings-microphone-button"
             checked={isLocalMicrophoneEnabled}
             onToggleMicrophone={onToggleMic}
             disabled={!microphonePermissionGranted}

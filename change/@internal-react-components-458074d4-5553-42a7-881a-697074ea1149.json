@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed cursor on control button labels.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

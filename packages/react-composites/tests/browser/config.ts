@@ -6,5 +6,6 @@ export const IDS = {
   participantList: 'participant-list',
   messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',
-  typingIndicator: 'typing-indicator'
+  typingIndicator: 'typing-indicator',
+  videoGallery: 'video-gallery'
 };

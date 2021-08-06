@@ -2,6 +2,53 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Thu, 22 Jul 2021 17:42:41 GMT",
+      "tag": "@azure/communication-react_v1.0.0-beta.3",
+      "version": "1.0.0-beta.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump @internal/chat-component-bindings to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@azure/communication-react"
+          },
+          {
+            "comment": "Bump @internal/react-composites to v1.0.0-beta.3",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@azure/communication-react"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@azure/communication-react"
+          },
+          {
+            "comment": "Bump @internal/calling-component-bindings to v1.0.0-beta.3",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@azure/communication-react"
+          },
+          {
+            "comment": "Bump @internal/calling-stateful-client to v1.0.0-beta.3",
+            "author": "prprabhu@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@azure/communication-react"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @internal/chat-stateful-client to v1.0.0-beta.3",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@azure/communication-react"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Jul 2021 20:41:33 GMT",
       "tag": "@azure/communication-react_v1.0.0-beta.2",
       "version": "1.0.0-beta.2",

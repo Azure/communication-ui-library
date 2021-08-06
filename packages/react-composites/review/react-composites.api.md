@@ -23,6 +23,7 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import type { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { Identifiers } from '@internal/react-components';
+import { Locale } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
@@ -54,7 +55,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     isTeamsCall(): boolean;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
     leaveCall(): Promise<void>;
     // (undocumented)
@@ -132,6 +133,24 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 }
 
 // @public (undocumented)
+export type AzureCommunicationCallAdapterArgs = {
+    userId: CommunicationUserKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    locator: TeamsMeetingLinkLocator | GroupCallLocator;
+    callClientOptions?: CallClientOptions;
+};
+
+// @public (undocumented)
+export type AzureCommunicationChatAdapterArgs = {
+    endpointUrl: string;
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    threadId: string;
+};
+
+// @public (undocumented)
 export interface CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
@@ -144,7 +163,7 @@ export interface CallAdapter {
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
     // (undocumented)
@@ -250,8 +269,10 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
+    locale?: Locale;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    identifiers?: Identifiers;
 };
 
 // @public (undocumented)
@@ -342,6 +363,7 @@ export type ChatCompositeClientState = {
 export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
+    locale?: Locale;
     onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -357,6 +379,7 @@ export type ChatErrorListener = (event: {
 
 // @public
 export type ChatOptions = {
+    showErrorBar?: boolean;
     showParticipantPane?: boolean;
     showTopic?: boolean;
 };
@@ -370,10 +393,10 @@ export type ChatUIState = {
 };
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (userId: CommunicationUserKind, displayName: string, credential: CommunicationTokenCredential, locator: TeamsMeetingLinkLocator | GroupCallLocator, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, callClientOptions }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (endpointUrl: string, userId: CommunicationIdentifierKind, displayName: string, credential: CommunicationTokenCredential, threadId: string) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {
@@ -406,6 +429,17 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CallIdentifierKinds;
     isSpeaking: boolean;
 }) => void;
+
+// @public
+export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
+
+// @public
+export type MeetingCompositeProps = {
+    callAdapter: CallAdapter;
+    chatAdapter: ChatAdapter;
+    fluentTheme?: PartialTheme | Theme;
+    meetingInvitationURL?: string;
+};
 
 // @public (undocumented)
 export type MessageReadListener = (event: {

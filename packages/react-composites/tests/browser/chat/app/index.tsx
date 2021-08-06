@@ -24,13 +24,13 @@ function App(): JSX.Element {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       setChatAdapter(
-        await createAzureCommunicationChatAdapter(
+        await createAzureCommunicationChatAdapter({
           endpointUrl,
-          { kind: 'communicationUser', communicationUserId: userId },
+          userId: { kind: 'communicationUser', communicationUserId: userId },
           displayName,
-          new AzureCommunicationTokenCredential(token),
+          credential: new AzureCommunicationTokenCredential(token),
           threadId
-        )
+        })
       );
     };
 
@@ -46,7 +46,7 @@ function App(): JSX.Element {
         <ChatComposite
           identifiers={IDS}
           adapter={chatAdapter}
-          options={{ showParticipantPane: true, showTopic: true }}
+          options={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
           onRenderTypingIndicator={
             customDataModel
               ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>

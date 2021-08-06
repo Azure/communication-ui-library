@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix dependencies versions to match",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

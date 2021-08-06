@@ -14,6 +14,8 @@ export interface Identifiers {
   messageTimestamp: string;
   /** `data-ui-id` value for `TypingIndicator` Component */
   typingIndicator: string;
+  /** `data-ui-id` value for `VideoGallery` Component */
+  videoGallery: string;
 }
 
 /**
@@ -26,7 +28,8 @@ export const defaultIdentifiers: Identifiers = {
   participantList: 'participant-list',
   messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',
-  typingIndicator: 'typing-indicator'
+  typingIndicator: 'typing-indicator',
+  videoGallery: 'video-gallery'
 };
 
 export const IdentifierContext = createContext<Identifiers>(defaultIdentifiers);

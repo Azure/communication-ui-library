@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Use higher order functions in internal implementation",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

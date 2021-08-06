@@ -215,7 +215,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     await this.deviceManager.askDevicePermission(constrain);
   }
 
-  public async joinCall(microphoneOn?: boolean): Promise<void> {
+  public joinCall(microphoneOn?: boolean): Call | undefined {
     if (isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     } else {
@@ -242,6 +242,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       this.context.updateClientState(this.callClient.getState());
       this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
       this.subscribeCallEvents();
+      return this.call;
     }
   }
 
@@ -468,13 +469,21 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
-export const createAzureCommunicationCallAdapter = async (
-  userId: CommunicationUserKind,
-  displayName: string,
-  credential: CommunicationTokenCredential,
-  locator: TeamsMeetingLinkLocator | GroupCallLocator,
-  callClientOptions?: CallClientOptions
-): Promise<CallAdapter> => {
+export type AzureCommunicationCallAdapterArgs = {
+  userId: CommunicationUserKind;
+  displayName: string;
+  credential: CommunicationTokenCredential;
+  locator: TeamsMeetingLinkLocator | GroupCallLocator;
+  callClientOptions?: CallClientOptions;
+};
+
+export const createAzureCommunicationCallAdapter = async ({
+  userId,
+  displayName,
+  credential,
+  locator,
+  callClientOptions
+}: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({ userId }, { callClientOptions });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(credential, { displayName });

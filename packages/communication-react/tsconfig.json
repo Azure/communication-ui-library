@@ -10,7 +10,7 @@
       "@internal/calling-stateful-client": ["../../calling-stateful-client/src"],
       "@internal/chat-stateful-client": ["../../chat-stateful-client/src"],
       "@internal/react-components": ["../../react-components/src"],
-      "@internal/react-composites": ["../../react-composites/src/index.release"]
+      "@internal/react-composites": ["../../react-composites/src"]
     },
     "plugins": [
       {

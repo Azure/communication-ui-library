@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix meeting pane overlapping the call control bar",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

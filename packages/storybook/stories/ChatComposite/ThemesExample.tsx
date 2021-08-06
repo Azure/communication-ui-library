@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ITheme } from '@fluentui/react';
+import { ITheme, Stack } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import { text, radios } from '@storybook/addon-knobs';
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
-import { COMPOSITE_EXPERIENCE_CONTAINER_STYLE } from '../constants';
+import { compositeExperienceContainerStyle } from '../constants';
 import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
 import { createUserAndThread } from './snippets/Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
@@ -53,13 +53,13 @@ export const ThemeExample: () => JSX.Element = () => {
   }, [knobs]);
 
   return (
-    <div style={COMPOSITE_EXPERIENCE_CONTAINER_STYLE}>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
         <ContosoChatContainer {...containerProps} fluentTheme={getTheme(knobs.current.theme)} showParticipants={true} />
       ) : (
         <ConfigHintBanner />
       )}
-    </div>
+    </Stack>
   );
 };
 

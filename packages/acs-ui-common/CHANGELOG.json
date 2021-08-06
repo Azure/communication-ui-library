@@ -2,6 +2,27 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Thu, 22 Jul 2021 17:42:41 GMT",
+      "tag": "@internal/acs-ui-common_v1.0.0-beta.2",
+      "version": "1.0.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "remove api extractor fork now new version has import types fix",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Bump to 1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2e94c7553cd494ce3d1db33706c1b9d080e3d75a",
+            "package": "@internal/acs-ui-common"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Jul 2021 20:41:33 GMT",
       "tag": "acs-ui-common_v1.0.0-beta.2",
       "version": "1.0.0-beta.2",

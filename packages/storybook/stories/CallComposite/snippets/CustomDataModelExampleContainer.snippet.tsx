@@ -26,12 +26,12 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
         : { groupId: props.locator };
       const createAdapter = async (): Promise<void> => {
         setAdapter(
-          await createAzureCommunicationCallAdapter(
-            { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
-            props.displayName,
-            new AzureCommunicationTokenCredential(props.token),
-            callLocator
-          )
+          await createAzureCommunicationCallAdapter({
+            userId: { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            displayName: props.displayName,
+            credential: new AzureCommunicationTokenCredential(props.token),
+            locator: callLocator
+          })
         );
       };
       createAdapter();

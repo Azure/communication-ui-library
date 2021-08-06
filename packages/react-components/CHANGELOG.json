@@ -2,6 +2,125 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Thu, 22 Jul 2021 17:42:41 GMT",
+      "tag": "@internal/react-components_v1.0.0-beta.3",
+      "version": "1.0.0-beta.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed RTL responsiveness for MessageThread, ControlBar, and FluentThemeProvider. TypingIndicator set always to LTR.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "30a7172da5c3f93035a124a4b3de8b4d9d726aca",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add an ErrorBar component",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "3d4ca56a9e629402776acd25022e484eaed57d36",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fixed cursor on control button labels.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "7617b928b45581cb4a7a8c89e0b91821fd7abdac",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Exporting locales separately.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "1a8ded732a69d39218872dc5b896208acd42d4c4",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bugfix - Removed usage of hooks inside useMemo for MessageThread",
+            "author": "anjulgarg@live.com",
+            "commit": "5a8c7ac6b5134ee98b71b4794b27544d9208fab7",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix MessageThread hook related console errors.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "2a18c7886c6a0147e0e9ec65a539a378127b84e9",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Support more errors in ErrorBar",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "19783e935bfcd18d5e46a9a1117d52e968a658c5",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Localized strings for SendBox and MessageStatusIndicator",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "542d307497dc3610b66c006cc7419c7abbcb56c8",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add E2E Chat Composite tests",
+            "author": "anjulgarg@live.com",
+            "commit": "68c72d4a5492d840d6067ecec4004ca9648f4a13",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add identifier injection mechanism in components for e2e testing",
+            "author": "anjulgarg@live.com",
+            "commit": "7ecfabab6d4ef3a6e6b2466c07093288c8154253",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add default call control bar button",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "257cdb091b08becea7c2e571964418e5a2374fc3",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "React hook useTheme added to ACS library.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "ea2b8a92a3b30bad7256ed5a4521bd2c469e3fae",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add E2E browser tests for chat composite",
+            "author": "anjulgarg@live.com",
+            "commit": "93ad9624e2fbb67fd0dff3e3b5e46698233d9952",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Removed truncation from MessageThread system message.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "7eb7581310fcd67bc3444e2bbaf1e961e49c0e14",
+            "package": "@internal/react-components"
+          }
+        ],
+        "none": [
+          {
+            "comment": "remove api extractor fork now new version has import types fix",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix icon warning in tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "29536d0af6b0677cd0ad66aa347dbcbd2d6db75a",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump to 1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2e94c7553cd494ce3d1db33706c1b9d080e3d75a",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump @internal/acs-ui-common to v1.0.0-beta.2",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b11cb6f206e9357ca5768fa6a3b23d8d35af12da",
+            "package": "@internal/react-components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Jul 2021 20:41:33 GMT",
       "tag": "react-components_v1.0.0-beta.2",
       "version": "1.0.0-beta.2",

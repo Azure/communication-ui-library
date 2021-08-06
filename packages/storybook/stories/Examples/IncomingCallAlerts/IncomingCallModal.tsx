@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IncomingCallModal as IncomingCallModalComponent } from '@internal/react-composites';
 import { text, files, boolean } from '@storybook/addon-knobs';
 import React from 'react';
 import { useVideoStreams } from '../../utils';
+import { IncomingCallModal as IncomingCallModalComponent } from './components';
 
 export const IncomingCallModal: () => JSX.Element = () => {
   const alertText = text('Alert Text', 'Incoming Video Call');

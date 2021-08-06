@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove private-preview references",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

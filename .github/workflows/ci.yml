@@ -159,6 +159,10 @@ jobs:
         run: rush install
       - name: Build
         run: rush build -t sample-static-html-composites
+      - name: Tests
+        run: rush test -o sample-static-html-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
 
   check_failure:
     runs-on: ubuntu-latest
