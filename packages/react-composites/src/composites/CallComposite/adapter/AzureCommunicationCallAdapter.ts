@@ -215,7 +215,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     await this.deviceManager.askDevicePermission(constrain);
   }
 
-  public async joinCall(microphoneOn?: boolean): Promise<void> {
+  public joinCall(microphoneOn?: boolean): Call | undefined {
     if (isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     } else {
@@ -242,6 +242,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       this.context.updateClientState(this.callClient.getState());
       this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
       this.subscribeCallEvents();
+      return this.call;
     }
   }
 
