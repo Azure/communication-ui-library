@@ -39,7 +39,7 @@ jobs:
       - name: Update snapshot
         run: |
           cd samples/StaticHtmlComposites
-          rushx run update:snapshot
+          rushx update:snapshot
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       # Setup bot information for pushing new changes
