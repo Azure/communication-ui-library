@@ -16,12 +16,15 @@ import {
   VideoStreamRendererView
 } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CallContext } from './CallContext';
 import { convertSdkRemoteStreamToDeclarativeRemoteStream } from './Converter';
-import { createStatefulCallClient, StatefulCallClient } from './StatefulCallClient';
+import { InternalCallContext } from './InternalCallContext';
+import { createStatefulCallClient, createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
 import {
   addMockEmitter,
   createMockApiFeatures,
   createMockCall,
+  createMockCallClient,
   createMockRemoteParticipant,
   createMockRemoteVideoStream,
   MockCall,
@@ -41,16 +44,8 @@ const mockParticipantCommunicationUserId = 'c';
 const mockDisplayName = 'd';
 const mockUserId = 'e';
 
-let mockCallAgent: MockCallAgent;
 jest.mock('@azure/communication-calling', () => {
   return {
-    CallClient: jest.fn().mockImplementation(() => {
-      return {
-        createCallAgent: () => {
-          return Promise.resolve(mockCallAgent);
-        }
-      };
-    }),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     VideoStreamRenderer: jest.fn().mockImplementation((videoStream: LocalVideoStream | RemoteVideoStream) => {
       return {
@@ -85,7 +80,7 @@ interface TestData {
 }
 
 function createClientAndAgentMocks(testData: TestData): void {
-  mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
+  const mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
   addMockEmitter(mockCallAgent);
   testData.mockCallAgent = mockCallAgent;
   testData.mockStatefulCallClient = createStatefulCallClient({
@@ -162,11 +157,13 @@ async function createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(
 }
 
 describe('Stateful call client', () => {
-  test('should allow developer to specify userId and provide access to it in state', async () => {
-    const StatefulCallClient = createStatefulCallClient({
-      userId: { kind: 'communicationUser', communicationUserId: mockUserId }
-    });
-    expect(StatefulCallClient.getState().userId.communicationUserId).toBe(mockUserId);
+  test('[xkcd] should allow developer to specify userId and provide access to it in state', async () => {
+    const client = createStatefulCallClientWithDeps(
+      createMockCallClient(),
+      new CallContext({ kind: 'communicationUser', communicationUserId: mockUserId }),
+      new InternalCallContext()
+    );
+    expect(client.getState().userId.communicationUserId).toBe(mockUserId);
   });
 
   test('should update callAgent state and have displayName when callAgent is created', async () => {

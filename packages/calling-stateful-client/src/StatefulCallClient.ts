@@ -234,10 +234,23 @@ export const createStatefulCallClient = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
-  const callClient = new CallClient(options?.callClientOptions);
-  const context: CallContext = new CallContext(args.userId, options?.maxStateChangeListeners);
-  const internalContext: InternalCallContext = new InternalCallContext();
+  return createStatefulCallClientWithDeps(
+    new CallClient(options?.callClientOptions),
+    new CallContext(args.userId, options?.maxStateChangeListeners),
+    new InternalCallContext()
+  );
+};
 
+/**
+ * Package-internal version of createStatefulCallClient that allows dependency injection.
+ *
+ * This function should not be exported from the package.
+ */
+export const createStatefulCallClientWithDeps = (
+  callClient: CallClient,
+  context: CallContext,
+  internalContext: InternalCallContext
+): StatefulCallClient => {
   Object.defineProperty(callClient, 'getState', {
     configurable: false,
     value: () => context.getState()

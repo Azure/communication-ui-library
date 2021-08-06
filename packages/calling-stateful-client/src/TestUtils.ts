@@ -5,7 +5,9 @@ import {
   Call,
   CallAgent,
   CallApiFeature,
+  CallClient,
   CallFeatureFactoryType,
+  DeviceManager,
   IncomingCall,
   LocalVideoStream,
   PropertyChangedEvent,
@@ -196,3 +198,20 @@ export async function waitWithBreakCondition(breakCondition: () => boolean): Pro
     }
   }
 }
+
+export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: DeviceManager): CallClient => {
+  return {
+    getDeviceManager: (): Promise<DeviceManager> => {
+      if (!deviceManager) {
+        throw new Error('deviceManager not set');
+      }
+      return Promise.resolve(deviceManager);
+    },
+    createCallAgent: (): Promise<CallAgent> => {
+      if (!callAgent) {
+        throw new Error('callAgent not set');
+      }
+      return Promise.resolve(callAgent);
+    }
+  } as unknown as CallClient;
+};
