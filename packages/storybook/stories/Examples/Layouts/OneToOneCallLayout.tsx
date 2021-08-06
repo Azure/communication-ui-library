@@ -41,7 +41,6 @@ export const OneToOneCallLayout: () => JSX.Element = () => {
     <Stack style={{ height: `${height}px`, width: `${width}px`, border: '1px' }} horizontal>
       {/* Video component for the other person's video stream */}
       <VideoTile
-        isVideoReady={false}
         styles={{
           overlayContainer: videoStreamStyle
         }}
@@ -49,7 +48,6 @@ export const OneToOneCallLayout: () => JSX.Element = () => {
       >
         {/* Video component for my video stream stream */}
         <VideoTile
-          isVideoReady={false}
           // A render placeholder function for my video stream
           onRenderPlaceholder={renderPersona}
         />

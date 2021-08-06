@@ -30,20 +30,13 @@ export type ScreenShareProps = {
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (
-    userId: string,
-    isAvailable?: boolean,
-    isMuted?: boolean,
-    renderElement?: HTMLElement,
-    displayName?: string
-  ): JSX.Element => {
+  (userId: string, isMuted?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
     return (
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             styles={stackContainerParticipantVideoStyles}
             userId={userId}
-            isVideoReady={isAvailable}
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
             displayName={displayName}
             isMuted={isMuted}
@@ -71,7 +64,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   } = props;
 
   const localVideoStream = localParticipant?.videoStream;
-  const isLocalVideoReady = localVideoStream?.renderElement !== undefined;
   const isScreenShareAvailable =
     screenShareParticipant &&
     screenShareParticipant.screenShareStream &&
@@ -93,7 +85,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     return (
       <VideoTile
         displayName={screenShareParticipant?.displayName}
-        isVideoReady={screenShareStream?.isAvailable}
         isMuted={screenShareParticipant?.isMuted}
         renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
         onRenderPlaceholder={onRenderPlaceholder}
@@ -104,10 +95,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         {videoStream && videoStream.isAvailable && videoStream.renderElement && (
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
             <Stack className={aspectRatioBoxContentStyle}>
-              <VideoTile
-                isVideoReady={videoStream.isAvailable}
-                renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />}
-              />
+              <VideoTile renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />} />
             </Stack>
           </Stack>
         )}
@@ -123,13 +111,12 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     return (
       <VideoTile
         styles={stackContainerParticipantVideoStyles}
-        isVideoReady={isLocalVideoReady}
         isMuted={localParticipant?.isMuted}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
       />
     );
-  }, [isLocalVideoReady, localParticipant, localVideoStream, onCreateLocalStreamView]);
+  }, [localParticipant, localVideoStream, onCreateLocalStreamView]);
 
   const sidePanelRemoteParticipants = useMemo(() => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
@@ -147,7 +134,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
               return memoizedRemoteParticipantFn(
                 participant.userId,
-                remoteVideoStream?.isAvailable,
                 participant.isMuted,
                 remoteVideoStream?.renderElement,
                 participant.displayName

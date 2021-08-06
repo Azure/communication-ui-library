@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Stop using deleted prop VideoTile.isVideoReady",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
