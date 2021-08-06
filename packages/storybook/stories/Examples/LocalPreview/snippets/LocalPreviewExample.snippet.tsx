@@ -65,7 +65,8 @@ export const LocalPreviewExample = ({
     [cameraOffLabelStyle]
   );
 
-  const videoStreamElement = isVideoAvailable ? useVideoStreams(1)[0] : null;
+  const videoStreams = useVideoStreams(1);
+  const videoStreamElement = isVideoAvailable ? videoStreams[0] : null;
 
   return (
     <FluentThemeProvider fluentTheme={theme}>

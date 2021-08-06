@@ -89,7 +89,8 @@ const VideoTileStory: () => JSX.Element = () => {
     }
   };
 
-  const videoStreamElement = isVideoReady ? useVideoStreams(1)[0] : null;
+  const videoStreams = useVideoStreams(1);
+  const videoStreamElement = isVideoReady ? videoStreams[0] : null;
 
   return (
     <VideoTileComponent
