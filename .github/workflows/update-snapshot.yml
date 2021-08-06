@@ -34,9 +34,6 @@ jobs:
         run: rush install
       - name: Build Packages
         run: rush build -t @azure/communication-react
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Build
         run: rush build -t sample-static-html-composites
       - name: Update snapshot
