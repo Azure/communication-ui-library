@@ -55,8 +55,5 @@ jobs:
           git config user.name "github-actions[bot]"
       # Commit changes to snapshot files.
       - name: Commit new snapshots
-        run: >
-          git diff -- samples/StaticHtmlComposites/tests --exit-code --quiet || 
-          (git add samples/StaticHtmlComposites/tests && 
-          git commit -m 'Updating automation snapshots' && 
-          git push origin HEAD:${{ github.head_ref }})
+        run: |
+          git diff -- samples/StaticHtmlComposites/tests --exit-code --quiet || (git add samples/StaticHtmlComposites/tests && git commit -m 'Updating automation snapshots' && git push origin HEAD:${{ github.head_ref }})
