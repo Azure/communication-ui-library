@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "updated Typescript version to 4.3.5",
+  "packageName": "@internal/chat-stateful-client",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

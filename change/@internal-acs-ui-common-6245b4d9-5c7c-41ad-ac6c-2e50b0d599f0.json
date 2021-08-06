@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove api extractor fork now new version has import types fix",
-  "packageName": "@internal/acs-ui-common",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

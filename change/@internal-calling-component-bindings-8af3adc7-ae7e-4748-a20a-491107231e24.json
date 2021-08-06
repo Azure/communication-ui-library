@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove private-preview references",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}

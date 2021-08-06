@@ -1,0 +1,10 @@
+{
+  "extends": "../../../common/config/tsc/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "../"
+  },
+  "typeRoots": ["../node_modules/@types"],
+  "exclude": ["dist", "node_modules"],
+  "include": ["./browser/**/*.test.ts", "browser/fixture.ts"]
+}

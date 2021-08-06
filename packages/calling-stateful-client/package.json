@@ -1,6 +1,6 @@
 {
   "name": "@internal/calling-stateful-client",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "Stateful proxy over the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -43,7 +43,7 @@
     "rollup": "~2.42.4",
     "prettier": "2.3.1",
     "ts-jest": "^26.4.4",
-    "typescript": "4.1.5",
+    "typescript": "4.3.5",
     "@types/react": "^16.9.49"
   },
   "beachball": {
