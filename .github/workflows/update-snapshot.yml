@@ -53,4 +53,4 @@ jobs:
         run: |
           git add *.png
           git commit -m 'Updating automation snapshots'
-          git push
+          git push origin HEAD:${{ github.head_ref }}
