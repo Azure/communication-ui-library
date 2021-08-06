@@ -143,7 +143,8 @@ jobs:
         run: rush test -o chat
 
   build_static_html_composites_sample:
-    name: Build Static HTML Composites Sample
+    if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+    name: Build And Test Static HTML Composites Sample
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -163,6 +164,59 @@ jobs:
         run: rush test -o sample-static-html-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: samples/StaticHtmlComposites/test-results/ # or path/to/artifact
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && failure()
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+            })
+
+  update_snapshot_static_html_composites_sample:
+    if: ${{ github.event_name == 'pull_request' && contains( github.event.pull_request.labels.*.name, 'ui change') }}
+    name: Build And Update Snapshot of Static HTML Composites Sample
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Build
+        run: rush build -t sample-static-html-composites
+      - name: Update snapshot
+        run: |
+          cd samples/StaticHtmlComposites
+          rushx update:snapshot
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      # Setup bot information for pushing new changes
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      - name: Setup bot git information
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      # Commit changes to snapshot files.
+      - name: Commit new snapshots
+        run: |
+          git diff --exit-code --quiet || git add *.png && git commit -m 'Updating automation snapshots' && git push origin HEAD:${{ github.head_ref }}
 
   check_failure:
     runs-on: ubuntu-latest
