@@ -2,10 +2,12 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { MoreHorizontal20Filled } from '@fluentui/react-icons';
-import { IContextualMenuItem, ContextualMenuItemType } from '@fluentui/react';
+import { MoreHorizontal20Filled, Video20Regular } from '@fluentui/react-icons';
+import { IContextualMenuItem, ContextualMenuItemType, Theme } from '@fluentui/react';
+import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { iconStyle } from './styles/OptionsButton.styles';
 
 /**
  * Device to represent a camera, microphone, or speaker for component OptionsButton component
@@ -109,7 +111,8 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
  */
 const generateDefaultMenuProps = (
   props: OptionsButtonProps,
-  strings: OptionsButtonStrings
+  strings: OptionsButtonStrings,
+  theme: Theme
 ): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
@@ -136,7 +139,7 @@ const generateDefaultMenuProps = (
           key: camera.id,
           text: camera.name,
           title: camera.name,
-          iconProps: { iconName: 'Camera' },
+          onRenderIcon: () => <Video20Regular style={{ ...iconStyle, ...{ color: theme.palette.themePrimary } }} />,
           canCheck: true,
           isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
@@ -218,10 +221,11 @@ const onRenderOptionsIcon = (): JSX.Element => (
 export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const { onRenderIcon } = props;
 
+  const theme = useTheme();
   const localeStrings = useLocale().strings.optionsButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  const defaultMenuProps = generateDefaultMenuProps(props, strings);
+  const defaultMenuProps = generateDefaultMenuProps(props, strings, theme);
 
   return (
     <ControlBarButton
