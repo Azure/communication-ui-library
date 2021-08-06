@@ -19206,6 +19206,7 @@ packages:
     dependencies:
       '@azure/communication-calling': 1.2.0-beta.1
       '@azure/communication-common': 1.0.0
+      '@azure/core-auth': 1.3.2
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.4
       '@types/jest': 26.0.24
@@ -19228,7 +19229,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-ino2b6OxZb6RE8WbdbU3ZiTM6uMs6TDg2UlJ/EXBG9ATCfyFyK5kQT+z5/R7TuKBGFYeC+FgPlb3/cpBIQyeww==
+      integrity: sha512-Bf4HWFQBCzaOK1ZFUwbHe/mkt4AaQR4mhavv5UHlAFuNuahs81TODTK7TLjK3inSL7KceRjcRchskNfWuFwChg==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:

@@ -21,6 +21,9 @@ import {
   TransferToParticipant,
   TransferToParticipantOptions
 } from '@azure/communication-calling';
+import { CommunicationTokenCredential } from '@azure/communication-common';
+import { AccessToken } from '@azure/core-auth';
+
 import EventEmitter from 'events';
 
 let backupFreezeFunction;
@@ -39,8 +42,11 @@ export function mockoutObjectFreeze(): void {
 }
 
 export interface MockEmitter {
+  // [xkcd]: Remove
   emitter: EventEmitter;
+  // [xkcd]: Remove
   on(event: any, listener: any);
+  // [xkcd]: Remove
   off(event: any, listener: any);
   emit(event: any, data?: any);
 }
@@ -49,17 +55,40 @@ type Mutable<T> = {
   -readonly [k in keyof T]: T[k];
 };
 export type MockCall = Mutable<Call> & MockEmitter;
-export type MockCallAgent = Mutable<CallAgent> & MockEmitter;
+
+// [xkcd] drop Mutable?
+export interface MockCallAgent extends Mutable<CallAgent> {
+  // [xkcd] drop
+  emit(event: any, data?: any);
+
+  /**
+   * Add given call to calls and trigger an event to notify clients.
+   */
+  testHelperAddCall(call: Call): Promise<void>;
+}
+
 export type MockRemoteParticipant = Mutable<RemoteParticipant> & MockEmitter;
 export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
 export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
 
+// [xkcd]: Delete
 export class MockCommunicationUserCredential {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public getToken(): any {}
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public dispose(): void {}
 }
+
+export const stubCommunicationTokenCredential = (): CommunicationTokenCredential => {
+  return {
+    getToken: (): Promise<AccessToken> => {
+      throw new Error('Not implemented');
+    },
+    dispose: (): void => {
+      /* Nothing to dispose */
+    }
+  };
+};
 
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public name = 'Recording';
@@ -115,7 +144,7 @@ export function addMockEmitter(object: any): any {
   return object;
 }
 
-export function createMockCall(mockCallId: string): MockCall {
+export function createMockCall(mockCallId: string = 'defaultCallID'): MockCall {
   const mockCall = {
     id: mockCallId,
     remoteParticipants: [] as ReadonlyArray<RemoteParticipant>,
@@ -214,4 +243,19 @@ export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: Devi
       return Promise.resolve(callAgent);
     }
   } as unknown as CallClient;
+};
+
+export const createMockCallAgent = (displayName: string): MockCallAgent => {
+  return addMockEmitter({
+    calls: [] as Call[],
+    displayName: displayName,
+    testHelperAddCall(call: Call): Promise<void> {
+      this.calls.push(call);
+      this.emit('callsUpdated', {
+        added: [call],
+        removed: []
+      });
+      return Promise.resolve();
+    }
+  }) as MockCallAgent;
 };

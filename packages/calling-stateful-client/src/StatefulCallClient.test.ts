@@ -24,6 +24,7 @@ import {
   addMockEmitter,
   createMockApiFeatures,
   createMockCall,
+  createMockCallAgent,
   createMockCallClient,
   createMockRemoteParticipant,
   createMockRemoteVideoStream,
@@ -35,6 +36,7 @@ import {
   MockRemoteVideoStream,
   MockTranscriptionCallFeatureImpl,
   MockTransferCallFeatureImpl,
+  stubCommunicationTokenCredential,
   waitWithBreakCondition
 } from './TestUtils';
 
@@ -157,7 +159,7 @@ async function createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(
 }
 
 describe('Stateful call client', () => {
-  test('[xkcd] should allow developer to specify userId and provide access to it in state', async () => {
+  test('should allow developer to specify userId and provide access to it in state', async () => {
     const client = createStatefulCallClientWithDeps(
       createMockCallClient(),
       new CallContext({ kind: 'communicationUser', communicationUserId: mockUserId }),
@@ -166,13 +168,23 @@ describe('Stateful call client', () => {
     expect(client.getState().userId.communicationUserId).toBe(mockUserId);
   });
 
-  test('should update callAgent state and have displayName when callAgent is created', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
+  test('[xkcd] should update callAgent state and have displayName when callAgent is created', async () => {
+    const displayName = 'booyaa';
+    const agent = createMockCallAgent(displayName);
+    const client = createStatefulCallClientWithDeps(
+      createMockCallClient(agent),
+      new CallContext({ kind: 'communicationUser', communicationUserId: mockUserId }),
+      new InternalCallContext()
+    );
 
-    expect(testData.mockStatefulCallClient.getState().callAgent).toBeDefined();
-    expect(testData.mockStatefulCallClient.getState().callAgent?.displayName).toBe(mockDisplayName);
+    await client.createCallAgent(stubCommunicationTokenCredential());
+
+    /*
+    agent.testHelperAddCall(createMockCall());
+    await waitWithBreakCondition(() => Object.keys(client.getState().calls).length !== 0);
+*/
+    expect(client.getState().callAgent).toBeDefined();
+    expect(client.getState().callAgent?.displayName).toBe(displayName);
   });
 
   test('should update state when call added in `callUpdated` event and subscribe to call', async () => {
