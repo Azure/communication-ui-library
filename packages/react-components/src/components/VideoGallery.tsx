@@ -137,7 +137,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    */
   const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
-    const isLocalVideoReady = localVideoStream?.isAvailable;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
@@ -152,7 +151,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return (
       <VideoTile
         userId={localParticipant.userId}
-        isVideoReady={isLocalVideoReady}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={localVideoTileStyles}
@@ -298,7 +296,6 @@ const RemoteVideoTile = React.memo(
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
           userId={userId}
-          isVideoReady={isAvailable}
           renderElement={renderVideoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}

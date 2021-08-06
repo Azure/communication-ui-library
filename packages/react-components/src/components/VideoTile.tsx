@@ -39,8 +39,6 @@ export interface VideoTileProps extends PlaceholderProps {
    * ```
    */
   styles?: VideoTileStylesProps;
-  /** Determines if the static image or video stream should be rendered. */
-  isVideoReady?: boolean;
   /** Component with the video stream. */
   renderElement?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
@@ -92,7 +90,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     displayName,
     isMirrored,
     isMuted,
-    isVideoReady,
     onRenderPlaceholder,
     renderElement,
     showMuteIndicator = true,
@@ -104,9 +101,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const placeHolderProps = { userId, displayName, noVideoAvailableAriaLabel };
   const theme = useTheme();
 
+  const isVideoRendered = !!renderElement;
+
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
-      {isVideoReady && renderElement ? (
+      {isVideoRendered ? (
         <Stack
           className={mergeStyles(
             videoContainerStyles,
@@ -131,9 +130,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       <Stack
         horizontal
         className={mergeStyles(
-          isVideoReady ? videoHint : disabledVideoHint,
-          // when video is on, the displayName has a grey-ish background, so no use of theme
-          { color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary },
+          isVideoRendered ? videoHint : disabledVideoHint,
+          // when video is being rendered, the displayName has a grey-ish background, so no use of theme
+          { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
           styles?.displayNameContainer
         )}
       >
@@ -141,7 +140,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           {displayName && (
             <Text
               className={mergeStyles(displayNameStyle, {
-                color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary
+                color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
               })}
             >
               {displayName}

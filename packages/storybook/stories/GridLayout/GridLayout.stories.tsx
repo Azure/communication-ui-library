@@ -93,7 +93,6 @@ const GridLayoutStory: () => JSX.Element = () => {
       }
       return (
         <VideoTile
-          isVideoReady={participant.isVideoReady}
           renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
           displayName={participant.displayName}
           key={index}

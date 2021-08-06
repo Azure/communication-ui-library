@@ -21,7 +21,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Typing Indicator Typi
     >
       <div
         className="ms-Stack css-53 css-1"
-        dir="ltr"
       >
         <div
           className="ms-Stack css-54 css-2"

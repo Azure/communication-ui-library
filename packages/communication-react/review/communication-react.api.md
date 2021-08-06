@@ -94,7 +94,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     isTeamsCall(): boolean;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
     leaveCall(): Promise<void>;
     // (undocumented)
@@ -210,7 +210,7 @@ export interface CallAdapter {
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
     // (undocumented)
@@ -769,7 +769,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
@@ -1740,7 +1740,6 @@ export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
     isMuted?: boolean;
-    isVideoReady?: boolean;
     onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
     showMuteIndicator?: boolean;
