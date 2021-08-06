@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Using new React hook useTheme from react-components.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

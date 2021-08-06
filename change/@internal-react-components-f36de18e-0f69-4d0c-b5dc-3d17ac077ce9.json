@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add E2E browser tests for chat composite",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

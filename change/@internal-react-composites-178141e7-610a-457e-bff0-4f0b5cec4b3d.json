@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Only emit 'error' on errors teed to state",
-  "packageName": "@internal/react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

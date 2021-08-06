@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -97,7 +97,7 @@
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
     "type-fest": "~1.2.1",
-    "typescript": "4.1.5",
+    "typescript": "4.3.5",
     "uuid": "^8.1.0",
     "webpack": "5.38.1"
   },
