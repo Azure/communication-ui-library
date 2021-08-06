@@ -8,7 +8,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
-import { CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
+import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CommunicationUserKind } from '@azure/communication-common';
 
 // This function highly depends on chatClient.onChange event
@@ -84,7 +84,9 @@ const memoizeState = memoizeOne(
     callsEnded: [],
     deviceManager,
     callAgent: { displayName },
-    calls
+    calls,
+    // TODO: FIXME
+    latestErrors: {} as CallErrors
   })
 );
 

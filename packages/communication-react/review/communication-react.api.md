@@ -345,6 +345,7 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     incomingCallsEnded: IncomingCallState[];
+    latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
 
@@ -382,7 +383,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTargets = CallObjectMethodNames<'CallClient', CallClient> | CallObjectMethodNames<'CallAgent', CallAgent> | CallObjectMethodNames<'DeviceManager', DeviceManager>;
+export type CallErrorTargets = 'CallAgent.dispose' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
@@ -409,14 +410,6 @@ export interface CallingTheme {
         callRedDarker: string;
     };
 }
-
-// @public
-export type CallMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
-
-// @public
-export type CallObjectMethodNames<TName extends string, T> = {
-    [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;
-}[keyof T & string];
 
 // @public
 export type CallParticipant = CommunicationParticipant & {
