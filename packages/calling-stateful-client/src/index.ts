@@ -10,8 +10,6 @@ export type {
   CallError,
   CallErrors,
   CallErrorTargets,
-  CallObjectMethodNames,
-  CallMethodName,
   CallState,
   DeviceManagerState,
   IncomingCallState,

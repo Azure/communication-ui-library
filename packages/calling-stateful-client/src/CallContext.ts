@@ -27,8 +27,8 @@ import {
   VideoStreamRendererViewState,
   CallAgentState,
   TransferRequest,
-  Transfer
-  // CallErrors
+  Transfer,
+  CallErrors
 } from './CallClientState';
 
 enableMapSet();
@@ -56,8 +56,8 @@ export class CallContext {
         unparentedViews: []
       },
       callAgent: undefined,
-      userId: userId
-      // latestErrors: {} as CallErrors
+      userId: userId,
+      latestErrors: {} as CallErrors
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);

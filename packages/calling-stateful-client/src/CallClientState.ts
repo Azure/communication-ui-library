@@ -3,14 +3,11 @@
 
 import {
   AudioDeviceInfo,
-  CallAgent,
-  CallClient,
   CallDirection,
   CallEndReason,
   CallerInfo,
   CallState as CallStatus,
   DeviceAccess,
-  DeviceManager,
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
@@ -438,7 +435,7 @@ export interface CallClientState {
    *
    * See documentation of {@Link CallErrors} for details.
    */
-  // latestErrors: CallErrors;
+  latestErrors: CallErrors;
 }
 
 /**
@@ -482,18 +479,18 @@ export class CallError extends Error {
  * String literal type for all permissible keys in {@Link CallErrors}.
  */
 export type CallErrorTargets =
-  | CallObjectMethodNames<'CallClient', CallClient>
-  | CallObjectMethodNames<'CallAgent', CallAgent>
-  | CallObjectMethodNames<'DeviceManager', DeviceManager>;
-
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-export type CallObjectMethodNames<TName extends string, T> = {
-  [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;
-}[keyof T & string];
-
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-export type CallMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
+  | 'CallAgent.dispose'
+  | 'CallAgent.join'
+  | 'CallAgent.off'
+  | 'CallAgent.on'
+  | 'CallAgent.startCall'
+  | 'CallClient.createCallAgent'
+  | 'CallClient.getDeviceManager'
+  | 'DeviceManager.askDevicePermission'
+  | 'DeviceManager.getCameras'
+  | 'DeviceManager.getMicrophones'
+  | 'DeviceManager.getSpeakers'
+  | 'DeviceManager.off'
+  | 'DeviceManager.on'
+  | 'DeviceManager.selectMicrophone'
+  | 'DeviceManager.selectSpeaker';

@@ -23,14 +23,8 @@ type InferredChatErrorTargets =
   | ChatObjectMethodNames<'ChatClient', ChatClient>
   | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-export type ChatObjectMethodNames<TName extends string, T> = {
+type ChatObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${ChatMethodName<T, K>}`;
 }[keyof T & string];
 
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-export type ChatMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
+type ChatMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
