@@ -438,7 +438,7 @@ export interface CallClientState {
    *
    * See documentation of {@Link CallErrors} for details.
    */
-  latestErrors: CallErrors;
+  // latestErrors: CallErrors;
 }
 
 /**

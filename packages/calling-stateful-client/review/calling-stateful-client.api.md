@@ -46,7 +46,6 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     incomingCallsEnded: IncomingCallState[];
-    latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
 

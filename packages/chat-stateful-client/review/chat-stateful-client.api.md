@@ -45,17 +45,6 @@ export type ChatMessageWithStatus = ChatMessage & {
     status: MessageStatus;
 };
 
-<<<<<<< HEAD
-// @public
-export type ChatMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
-
-// @public
-export type ChatObjectMethodNames<TName extends string, T> = {
-    [K in keyof T & string]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T & string];
-
-=======
->>>>>>> origin/main
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: {

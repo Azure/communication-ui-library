@@ -345,7 +345,6 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     incomingCallsEnded: IncomingCallState[];
-    latestErrors?: CallErrors;
     userId: CommunicationUserKind;
 }
 
@@ -639,17 +638,6 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 };
 
 // @public
-<<<<<<< HEAD
-export type ChatMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
-
-// @public
-export type ChatObjectMethodNames<TName extends string, T> = {
-    [K in keyof T & string]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T & string];
-
-// @public
-=======
->>>>>>> origin/main
 export type ChatOptions = {
     showErrorBar?: boolean;
     showParticipantPane?: boolean;
