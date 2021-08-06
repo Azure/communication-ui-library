@@ -89,11 +89,10 @@ const VideoTileStory: () => JSX.Element = () => {
     }
   };
 
-  const videoStreamElement = useVideoStreams(1)[0];
+  const videoStreamElement = isVideoReady ? useVideoStreams(1)[0] : null;
 
   return (
     <VideoTileComponent
-      isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
       displayName={displayName}
       showMuteIndicator={showMuteIndicator}

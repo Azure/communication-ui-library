@@ -87,7 +87,7 @@ export const ScreenShareLayout: () => JSX.Element = () => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
         <Stack className={aspectRatioBoxContentStyle}>
-          <VideoTile isVideoReady={false} displayName={participantDisplayName} onRenderPlaceholder={renderPersona} />
+          <VideoTile displayName={participantDisplayName} onRenderPlaceholder={renderPersona} />
         </Stack>
       </Stack>
     );
@@ -105,7 +105,6 @@ export const ScreenShareLayout: () => JSX.Element = () => {
       <Stack.Item grow className={mergeStyles({ height: '100%' })}>
         {/* The screen share component that will display the screen share stream and sharer's video */}
         <VideoTile
-          isVideoReady={false}
           styles={{
             overlayContainer: videoStreamStyle
           }}
@@ -114,7 +113,6 @@ export const ScreenShareLayout: () => JSX.Element = () => {
         >
           {/* Video component for screen sharer's stream */}
           <VideoTile
-            isVideoReady={false}
             // A placeholder element for screen sharer's video stream
             onRenderPlaceholder={renderSharePersonaPlaceholder}
           />

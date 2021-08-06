@@ -73,8 +73,6 @@ export interface IncomingCallModalProps extends IncomingCallToastProps {
   localParticipantDisplayName?: string;
   /** If set to `true`, mirrors the local video preview of the receiver */
   localVideoInverted?: boolean;
-  /** Toggle local video preview on or off */
-  showLocalVideo?: boolean;
   /** Local Video Stream Element. An HTML Element containing a video stream. */
   localVideoStreamElement: HTMLElement | null;
   /** Provide a function that handles the call behavior when Video Toggle Button is clicked */
@@ -93,17 +91,16 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
     onClickAccept,
     onClickReject,
     onClickVideoToggle,
-    showLocalVideo,
     localVideoStreamElement
   } = props;
   const theme = useTheme();
   const palette = theme.palette;
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(false);
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
+  const showLocalVideo = !!localVideoStreamElement;
 
   const mediaGalleryLocalParticipant: JSX.Element = (
     <VideoTile
-      isVideoReady={showLocalVideo}
       renderElement={<StreamMedia videoStreamElement={localVideoStreamElement} />}
       displayName={localParticipantDisplayName}
       isMirrored={localVideoInverted}

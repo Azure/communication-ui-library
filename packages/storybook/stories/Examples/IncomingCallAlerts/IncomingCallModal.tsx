@@ -14,7 +14,6 @@ export const IncomingCallModal: () => JSX.Element = () => {
   const images = files('Avatar', '.jpeg, .jpg, .png', []);
   const localParticipantDisplayName = text('Local Participant displayName', 'John Doe');
   const localVideoStreamEnabled = boolean('Turn Local Video On', true);
-  const showLocalVideo = boolean('Show Local Video', true);
   const localVideoInverted = boolean('Invert Local Video', true);
 
   const videoStreamElements = useVideoStreams(localVideoStreamEnabled ? 1 : 0);
@@ -32,7 +31,6 @@ export const IncomingCallModal: () => JSX.Element = () => {
       onClickReject={() => null}
       localParticipantDisplayName={localParticipantDisplayName}
       localVideoInverted={localVideoInverted}
-      showLocalVideo={showLocalVideo}
       localVideoStreamElement={videoStreamElement}
     />
   );
