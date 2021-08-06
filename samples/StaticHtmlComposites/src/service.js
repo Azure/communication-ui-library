@@ -2,6 +2,23 @@
 // Licensed under the MIT license.
 export { v4 as createGUID } from 'uuid';
 
+// In your real app, your authenticated service should create users and issue tokens.
+// For more info, see https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript
+
+export const loadConfigFromUrlQuery = () => {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
+
+  return {
+    displayName: params.displayName,
+    token: params.token,
+    endpointUrl: params.endpointUrl,
+    threadId: params.threadId,
+    userId: params.userId,
+    customDataModel: params.customDataModel
+  };
+};
+
 export const createUserWithToken = async () => {
   // Calling the samples/Server. In your real app, your authenticated service should create users and issue tokens.
   // For more info, see https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript
