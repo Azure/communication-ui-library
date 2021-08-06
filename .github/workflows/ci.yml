@@ -221,7 +221,7 @@ jobs:
       # Commit changes to snapshot files.
       - name: Commit new snapshots
         run: |
-          git diff --exit-code --quiet || (git add *.png && git commit -m 'Updating automation snapshots' && git push origin HEAD:${{ github.head_ref }})
+          git diff --exit-code --quiet || (git commit -am 'Updating automation snapshots' && git push origin HEAD:${{ github.head_ref }})
 
   check_failure:
     runs-on: ubuntu-latest
