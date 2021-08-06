@@ -18,7 +18,8 @@ export interface FluentThemeProviderProps {
 
 const wrapper = mergeStyles({
   height: '100%',
-  width: '100%'
+  width: '100%',
+  overflow: 'auto'
 });
 
 const defaultTheme = mergeThemes(getTheme(), lightTheme);

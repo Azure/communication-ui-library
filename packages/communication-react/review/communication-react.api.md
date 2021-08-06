@@ -94,7 +94,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     isTeamsCall(): boolean;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
     leaveCall(): Promise<void>;
     // (undocumented)
@@ -210,7 +210,7 @@ export interface CallAdapter {
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
     // (undocumented)
