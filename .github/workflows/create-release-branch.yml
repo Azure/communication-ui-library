@@ -21,10 +21,11 @@ jobs:
           fetch-depth: 0
 
       # Setup bot information for creating pull request
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
         run: |
-          git config user.email "github-action-bot@service.microsoft.com"
-          git config user.name "github-action-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
 
       # Check out onto desired branch or tag to create release from
       - name: Checkout tag/branch
@@ -85,5 +86,5 @@ jobs:
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} release branch merge", "head":"release/${{ steps.version.outputs.version }}", "base":"main", "body":"PR created by the 'Release branch - Create' GitHub action. Please review." }'
-            --fail
+            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"release/${{ steps.version.outputs.version }}", "base":"main", "body":"Release branch for ${{ steps.version.outputs.version }}. Created by the `Release branch - create` GitHub action. Please review." }'
+            --fail-with-body
