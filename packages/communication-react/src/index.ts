@@ -65,5 +65,5 @@ export {
 export * from '../../calling-stateful-client/src';
 export * from '../../chat-stateful-client/src';
 export * from '../../react-components/src';
-export * from '../../react-composites/src/index.release';
+export * from '../../react-composites/src';
 export * from './mergedHooks';

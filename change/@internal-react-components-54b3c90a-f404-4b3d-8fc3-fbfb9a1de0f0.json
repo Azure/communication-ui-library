@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Exporting locales separately.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

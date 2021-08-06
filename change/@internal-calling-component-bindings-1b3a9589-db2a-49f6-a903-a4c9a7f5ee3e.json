@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update package to beta.1",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "mail@jamesburnside.com",
-  "dependentChangeType": "none"
-}
