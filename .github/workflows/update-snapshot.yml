@@ -52,5 +52,5 @@ jobs:
       - name: Commit new snapshots
         run: |
           git add *.png
-          git commit -m 'Updating jest snapshots'
+          git commit -m 'Updating automation snapshots'
           git push
