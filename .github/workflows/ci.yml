@@ -194,7 +194,7 @@ jobs:
           # Use a machine account when checking out. This is to workaround the issue were GitHub
           # actions, when using the default account, cannot trigger other actions.
           # This machine account is only for this PAT, pwd was created and thrown away
-          # If any update needed, create a new account, add access to the repo and generate a new PAT
+          # If any update needed, create a new account, add access to the repo and generate a new PAT.
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
