@@ -9,7 +9,6 @@ import {
   useTheme
 } from '@azure/communication-react';
 import React from 'react';
-import { useVideoStreams } from '../../../utils';
 
 export interface LobbyProps {
   isVideoReady: boolean;
@@ -30,15 +29,22 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
     root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' }
   };
 
-  const videoStreams = useVideoStreams(1);
-  const videoStreamElement = props.isVideoReady ? videoStreams[0] : null;
-
   return (
     <VideoTile
       styles={videoTileStyles}
       isMirrored={true}
       onRenderPlaceholder={() => <></>}
-      renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
+      renderElement={
+        <StreamMedia
+          videoStreamElement={
+            props.isVideoReady
+              ? ({
+                  // Replace with your video stream element.
+                } as any)
+              : null
+          }
+        />
+      }
     >
       <div
         style={{
