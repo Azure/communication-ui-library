@@ -197,7 +197,10 @@ export const createDefaultCallingHandlers = memoizeOne(
       return callClient.createView(call.id, undefined, localStream, options);
     };
 
-    const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
+    const onCreateRemoteStreamView = async (
+      userId: string,
+      options = { scalingMode: 'Crop' } as VideoStreamOptions
+    ): Promise<void> => {
       if (!call) return;
       const callState = callClient.getState().calls[call.id];
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
@@ -220,7 +223,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.view) {
-        callClient.createView(call.id, participant.identifier, screenShareStream, options);
+        callClient.createView(call.id, participant.identifier, screenShareStream, { scalingMode: 'Fit' });
       }
     };
 

@@ -18,8 +18,6 @@ export const videoContainerStyles: IStyle = {
   left: '0',
   width: '100%',
   height: '100%',
-  minWidth: '100%',
-  minHeight: '100%',
   objectPosition: 'center',
   objectFit: 'cover',
   zIndex: 0

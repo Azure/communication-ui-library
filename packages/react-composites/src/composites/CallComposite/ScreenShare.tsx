@@ -16,7 +16,8 @@ import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,
   screenShareContainerStyle,
-  stackContainerStyle
+  stackContainerStyle,
+  stackContainerParticipantVideoStyles
 } from './styles/MediaGallery.styles';
 import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
 
@@ -40,6 +41,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
+            styles={stackContainerParticipantVideoStyles}
             userId={userId}
             isVideoReady={isAvailable}
             renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
@@ -82,11 +84,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     const screenShareStream = screenShareParticipant?.screenShareStream;
     const videoStream = screenShareParticipant?.videoStream;
     if (screenShareStream?.isAvailable && !screenShareStream?.renderElement) {
-      screenShareParticipant &&
-        onCreateRemoteStreamView &&
-        onCreateRemoteStreamView(screenShareParticipant.userId, {
-          scalingMode: 'Fit'
-        });
+      screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
     }
     if (videoStream?.isAvailable && !videoStream?.renderElement) {
       screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
@@ -117,13 +115,14 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     );
   }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant]);
 
-  const layoutLocalParticipant = useMemo(() => {
+  const sidePanelLocalParticipant = useMemo(() => {
     if (localVideoStream && !localVideoStream?.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView();
     }
 
     return (
       <VideoTile
+        styles={stackContainerParticipantVideoStyles}
         isVideoReady={isLocalVideoReady}
         isMuted={localParticipant?.isMuted}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
@@ -163,7 +162,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       <div className={stackContainerStyle}>
         <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
-            <Stack className={aspectRatioBoxContentStyle}>{layoutLocalParticipant}</Stack>
+            <Stack className={aspectRatioBoxContentStyle}>{sidePanelLocalParticipant}</Stack>
           </Stack>
           {sidePanelRemoteParticipants}
         </Stack>
