@@ -223,6 +223,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.view) {
+        // Hardcoded `scalingMode` since it is highly unlikely that CONTOSO would ever want to use a different scaling mode for screenshare.
+        // Using `Crop` would crop the contents of screenshare and `Stretch` would warp it.
+        // `Fit` is the only mode that maintains the integrity of the screen being shared.
         callClient.createView(call.id, participant.identifier, screenShareStream, { scalingMode: 'Fit' });
       }
     };
