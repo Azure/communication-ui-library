@@ -1,0 +1,56 @@
+name: Update snapshots
+
+on:
+  # Run any time when a new label added to the PR
+  pull_request:
+    types: [labeled]
+
+jobs:
+  update_snapshot:
+    name: Update snapshot by label
+    # This job will only run if the comment was on a pull requests and matches the label
+    if: ${{ github.event.label.name == 'ui change' }}
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
+      - name: Build
+        run: rush build -t sample-static-html-composites
+      - name: Update snapshot
+        run: |
+          cd samples/StaticHtmlComposites
+          rushx update:snapshot
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      # Setup bot information for pushing new changes
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      - name: Setup bot git information
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      # Commit changes to snapshot files.
+      - name: Commit new snapshots
+        run: |
+          git add *.png
+          git commit -m 'Updating automation snapshots'
+          git push origin HEAD:${{ github.head_ref }}
