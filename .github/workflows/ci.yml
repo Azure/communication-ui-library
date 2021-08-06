@@ -164,8 +164,14 @@ jobs:
         run: rush test -o sample-static-html-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: samples/StaticHtmlComposites/test-results/ # or path/to/artifact
       - name: Comment on PR
-        if:
+        if: github.event_name == 'pull_request' && failure()
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -174,7 +180,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
             })
 
   update_snapshot_static_html_composites_sample:
@@ -210,9 +216,7 @@ jobs:
       # Commit changes to snapshot files.
       - name: Commit new snapshots
         run: |
-          git add *.png
-          git commit -m 'Updating automation snapshots'
-          git push origin HEAD:${{ github.head_ref }}
+          git diff --exit-code --quiet || git add *.png && git commit -m 'Updating automation snapshots' && git push origin HEAD:${{ github.head_ref }}
 
   check_failure:
     runs-on: ubuntu-latest
