@@ -769,7 +769,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
