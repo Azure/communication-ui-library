@@ -143,7 +143,7 @@ jobs:
         run: rush test -o chat
 
   build_static_html_composites_sample:
-    if: ${{ !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+    if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
     name: Build And Test Static HTML Composites Sample
     runs-on: ubuntu-latest
     steps:
@@ -164,9 +164,21 @@ jobs:
         run: rush test -o sample-static-html-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Comment on PR
+        if:
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
 
   update_snapshot_static_html_composites_sample:
-    if: ${{ contains( github.event.pull_request.labels.*.name, 'ui change') }}
+    if: ${{ github.event_name == 'pull_request' && contains( github.event.pull_request.labels.*.name, 'ui change') }}
     name: Build And Update Snapshot of Static HTML Composites Sample
     runs-on: ubuntu-latest
     steps:
