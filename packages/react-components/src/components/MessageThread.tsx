@@ -182,14 +182,40 @@ export type DefaultMessageRendererType = (props: MessageProps, ids?: { messageTi
 
 const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   if (props.message.type === 'system') {
-    const payload: SystemMessagePayload = props.message.payload;
-    return (
-      <SystemMessageComponent
-        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-        content={payload.content ?? ''}
-        containerStyle={props?.messageContainerStyle}
-      />
-    );
+    const payload = props.message.payload;
+    if (payload.type === 'content') {
+      return (
+        <SystemMessageComponent
+          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+          content={payload.content ?? ''}
+          containerStyle={props?.messageContainerStyle}
+        />
+      );
+    }
+    if (payload.type === 'participantAdded') {
+      const participantsStr = generateParticipantsStr(payload.participants);
+      if (participantsStr !== '') {
+        return (
+          <SystemMessageComponent
+            iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+            content={participantsStr + strings.messageThread.participantJoined}
+            containerStyle={props?.messageContainerStyle}
+          />
+        );
+      }
+    }
+    if (payload.type === 'participantRemoved') {
+      const participantsStr = generateParticipantsStr(payload.participants);
+      if (participantsStr !== '') {
+        return (
+          <SystemMessageComponent
+            iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+            content={participantsStr + strings.messageThread.participantLeft}
+            containerStyle={props?.messageContainerStyle}
+          />
+        );
+      }
+    }
   }
 
   return <></>;
