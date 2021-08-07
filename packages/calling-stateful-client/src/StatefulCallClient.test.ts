@@ -180,36 +180,29 @@ describe('Stateful call client', () => {
     expect(client.getState().callAgent?.displayName).toBe(displayName);
   });
 
-  test('should update call in state when new call is added', async () => {
+  test('should update call in state when new call is added and removed', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
     await client.createCallAgent(stubCommunicationTokenCredential());
 
-    const listener = new StateChangeListener(client);
-    agent.testHelperPushCall(createMockCall());
-    expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
-    expect(listener.onChangeCalledCount).toBe(1);
-  });
-
-  test('should update call in state when a call is removed', async () => {
-    const agent = createMockCallAgent();
-    const client = createStatefulCallClientWithAgent(agent);
-
-    await client.createCallAgent(stubCommunicationTokenCredential());
-
-    agent.testHelperPushCall(createMockCall());
-    expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
-
-    const listener = new StateChangeListener(client);
-    agent.testHelperPopCall();
-    expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 0)).toBe(true);
-    expect(listener.onChangeCalledCount).toBe(1);
+    {
+      const listener = new StateChangeListener(client);
+      agent.testHelperPushCall(createMockCall());
+      expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    {
+      const listener = new StateChangeListener(client);
+      agent.testHelperPopCall();
+      expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 0)).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
 
     // [xkcd] Make sure that some other test verifies that further changes to the popped call are not reflected in the state.
   });
 
-  test('should update state when call changes state', async () => {
+  test('[xkcd] should update state when simple call information changes', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -219,34 +212,26 @@ describe('Stateful call client', () => {
     agent.testHelperPushCall(call);
     await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1);
 
-    const listener = new StateChangeListener(client);
-    call.state = 'InLobby';
-    call.emit('stateChanged');
-    expect(await waitWithBreakCondition(() => client.getState().calls['myVeryFirstCall']?.state === 'InLobby')).toBe(
-      true
-    );
-    expect(listener.onChangeCalledCount).toBe(1);
+    {
+      const listener = new StateChangeListener(client);
+      call.state = 'InLobby';
+      call.emit('stateChanged');
+      expect(await waitWithBreakCondition(() => client.getState().calls['myVeryFirstCall']?.state === 'InLobby')).toBe(
+        true
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    {
+      const listener = new StateChangeListener(client);
+      call.id = 'aNewId';
+      call.emit('idChanged');
+      expect(await waitWithBreakCondition(() => !!client.getState().calls['aNewId'])).toBe(true);
+      expect(client.getState().calls['myVeryFirstCall']).toBeUndefined();
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
   });
 
-  test('should update state when call changes id', async () => {
-    const agent = createMockCallAgent();
-    const client = createStatefulCallClientWithAgent(agent);
-
-    await client.createCallAgent(stubCommunicationTokenCredential());
-
-    const call = createMockCall('myVeryFirstCall');
-    agent.testHelperPushCall(call);
-    await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1);
-
-    const listener = new StateChangeListener(client);
-    call.id = 'aNewId';
-    call.emit('idChanged');
-    expect(await waitWithBreakCondition(() => !!client.getState().calls['aNewId'])).toBe(true);
-    expect(client.getState().calls['myVeryFirstCall']).toBeUndefined();
-    expect(listener.onChangeCalledCount).toBe(1);
-  });
-
-  test('[xkcd] should update state when new remote participant is added', async () => {
+  test('should update state when new remote participant is added', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
