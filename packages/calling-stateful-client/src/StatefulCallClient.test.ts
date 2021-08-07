@@ -443,36 +443,6 @@ describe('Stateful call client', () => {
     }
   });
 
-  test('should update state when remote video stream emits `isAvailableChanged`', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
-
-    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(
-          testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]
-            ?.videoStreams ?? {}
-        ).length !== 0
-    );
-
-    testData.mockRemoteVideoStream.isAvailable = true;
-    testData.mockRemoteVideoStream.emit('isAvailableChanged');
-
-    await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]
-          ?.videoStreams[1]?.isAvailable === true
-    );
-    expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]?.videoStreams[1]
-        ?.isAvailable
-    ).toBe(true);
-  });
-
   test('should move participant to ended when participant is removed', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
