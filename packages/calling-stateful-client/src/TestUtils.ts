@@ -212,13 +212,14 @@ function waitMilliseconds(duration: number): Promise<void> {
  *
  * @param breakCondition
  */
-export async function waitWithBreakCondition(breakCondition: () => boolean): Promise<void> {
+export async function waitWithBreakCondition(breakCondition: () => boolean): Promise<boolean> {
   for (let i = 0; i < 40; i++) {
     await waitMilliseconds(100);
     if (breakCondition()) {
-      break;
+      return true;
     }
   }
+  return false;
 }
 
 export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: DeviceManager): CallClient => {
