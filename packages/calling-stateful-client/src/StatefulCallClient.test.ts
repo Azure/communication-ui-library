@@ -43,7 +43,6 @@ import {
 } from './TestUtils';
 
 const mockCallId = 'a';
-const mockCallId2 = 'b';
 const mockParticipantCommunicationUserId = 'c';
 const mockDisplayName = 'd';
 const mockUserId = 'e';
@@ -202,7 +201,7 @@ describe('Stateful call client', () => {
     // [xkcd] Make sure that some other test verifies that further changes to the popped call are not reflected in the state.
   });
 
-  test('[xkcd] should update state when simple call information changes', async () => {
+  test('should update state when simple call information changes', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -252,35 +251,36 @@ describe('Stateful call client', () => {
     expect(listener.onChangeCalledCount).toBe(2);
   });
 
-  test('should update state when remote participant display name changes', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
+  test('[xkcd] should update state when remote participant simple information changes', async () => {
+    const agent = createMockCallAgent();
+    const client = createStatefulCallClientWithAgent(agent);
 
-    testData.mockCall.id = mockCallId2;
-    testData.mockCall.emit('idChanged');
+    await client.createCallAgent(stubCommunicationTokenCredential());
 
-    await waitWithBreakCondition(() => {
-      return testData.mockStatefulCallClient.getState().calls[mockCallId2] !== undefined;
-    });
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId]).toBe(undefined);
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId2]).not.toBe(undefined);
+    const call = createMockCall('myVeryFirstCall');
+    agent.testHelperPushCall(call);
+    expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
 
-    testData.mockRemoteParticipant.displayName = 'a';
-    testData.mockRemoteParticipant.emit('displayNameChanged');
-
-    await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls[mockCallId2]?.remoteParticipants[
-          toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-        ]?.displayName !== undefined
-    );
+    const participant = createMockRemoteParticipant();
+    call.testHelperPushRemoteParticipant(participant);
     expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId2]?.remoteParticipants[
-        toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-      ]?.displayName
-    ).toBe('a');
+      await waitWithBreakCondition(
+        () => Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipants ?? {}).length !== 0
+      )
+    ).toBe(true);
+
+    const listener = new StateChangeListener(client);
+    participant.displayName = 'aVeryNewName';
+    participant.emit('displayNameChanged');
+    expect(
+      await waitWithBreakCondition(
+        () =>
+          client.getState().calls['myVeryFirstCall']?.remoteParticipants[
+            toFlatCommunicationIdentifier(participant.identifier)
+          ]?.displayName === 'aVeryNewName'
+      )
+    ).toBe(true);
+    expect(listener.onChangeCalledCount).toBe(1);
   });
 
   test('should update state when call `isScreenSharingOnChanged` event', async () => {
