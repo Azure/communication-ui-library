@@ -137,10 +137,9 @@ async function createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(
   id: number,
   testData: TestData
 ): Promise<void> {
-  const mockRemoteVideoStream = createMockRemoteVideoStream(isAvailable);
+  const mockRemoteVideoStream = createMockRemoteVideoStream(id);
   mockRemoteVideoStream.mediaStreamType = type;
   mockRemoteVideoStream.isAvailable = isAvailable;
-  mockRemoteVideoStream.id = id;
   testData.mockRemoteVideoStream = mockRemoteVideoStream;
   testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
   testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
@@ -364,11 +363,7 @@ describe('Stateful call client', () => {
 
     {
       const listener = new StateChangeListener(client);
-      call.localVideoStreams = [{} as LocalVideoStream];
-      call.emit('localVideoStreamsUpdated', {
-        added: [{} as LocalVideoStream],
-        removed: []
-      });
+      call.testHelperPushLocalVideoStream({} as LocalVideoStream);
       expect(
         await waitWithBreakCondition(() => client.getState().calls['myVeryFirstCall']?.localVideoStreams.length !== 0)
       ).toBe(true);
@@ -376,11 +371,7 @@ describe('Stateful call client', () => {
     }
     {
       const listener = new StateChangeListener(client);
-      call.localVideoStreams = [];
-      call.emit('localVideoStreamsUpdated', {
-        added: [],
-        removed: [{} as LocalVideoStream]
-      });
+      call.testHelperPopLocalVideoStream();
       expect(
         await waitWithBreakCondition(() => client.getState().calls['myVeryFirstCall']?.localVideoStreams.length === 0)
       ).toBe(true);
@@ -389,7 +380,7 @@ describe('Stateful call client', () => {
     }
   });
 
-  test('[xkcd] should update state when remote stream is added and removed for participant', async () => {
+  test('should update state when remote stream is updated for participant', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -407,21 +398,17 @@ describe('Stateful call client', () => {
       )
     ).toBe(true);
 
-    const stream = createMockRemoteVideoStream();
+    const streamId = 7;
+    const stream = createMockRemoteVideoStream(streamId);
+    const participantKey = toFlatCommunicationIdentifier(participant.identifier);
     {
       const listener = new StateChangeListener(client);
-      participant.videoStreams = [stream];
-      participant.emit('videoStreamsUpdated', {
-        added: [stream],
-        removed: []
-      });
+      participant.testHelperPushVideoStream(stream);
       expect(
         await waitWithBreakCondition(
           () =>
             Object.keys(
-              client.getState().calls['myVeryFirstCall']?.remoteParticipants[
-                toFlatCommunicationIdentifier(participant.identifier)
-              ]?.videoStreams ?? {}
+              client.getState().calls['myVeryFirstCall']?.remoteParticipants[participantKey]?.videoStreams ?? {}
             ).length !== 0
         )
       ).toBe(true);
@@ -429,18 +416,25 @@ describe('Stateful call client', () => {
     }
     {
       const listener = new StateChangeListener(client);
-      participant.videoStreams = [];
-      participant.emit('videoStreamsUpdated', {
-        added: [],
-        removed: [stream]
-      });
+      stream.isAvailable = true;
+      stream.emit('isAvailableChanged');
+      expect(
+        await waitWithBreakCondition(
+          () =>
+            client.getState().calls['myVeryFirstCall']?.remoteParticipants[participantKey]?.videoStreams[streamId]
+              ?.isAvailable === true
+        )
+      ).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    {
+      const listener = new StateChangeListener(client);
+      participant.testHelperPopVideoStream();
       expect(
         await waitWithBreakCondition(
           () =>
             Object.keys(
-              client.getState().calls['myVeryFirstCall']?.remoteParticipants[
-                toFlatCommunicationIdentifier(participant.identifier)
-              ]?.videoStreams ?? {}
+              client.getState().calls['myVeryFirstCall']?.remoteParticipants[participantKey]?.videoStreams ?? {}
             ).length === 0
         )
       ).toBe(true);
@@ -1028,10 +1022,9 @@ describe('Stateful call client', () => {
     );
 
     // Add a second inactive screenshare and ensure it doesn't overwrite the first one
-    const mockRemoteVideoStream2 = createMockRemoteVideoStream(false);
+    const mockRemoteVideoStream2 = createMockRemoteVideoStream(1);
     mockRemoteVideoStream2.mediaStreamType = 'ScreenSharing';
     mockRemoteVideoStream2.isAvailable = false;
-    mockRemoteVideoStream2.id = 1;
     participant2.videoStreams = [mockRemoteVideoStream2];
     participant2.emit('videoStreamsUpdated', {
       added: [mockRemoteVideoStream2],
@@ -1060,8 +1053,7 @@ describe('Stateful call client', () => {
     await createMockParticipantAndEmitParticipantUpdated(testData);
 
     // Participant with stream id 1
-    const mockRemoteVideoStream = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream.id = 1;
+    const mockRemoteVideoStream = createMockRemoteVideoStream(1);
     testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
     testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
       added: [mockRemoteVideoStream],
@@ -1090,8 +1082,7 @@ describe('Stateful call client', () => {
         Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length !== 0
     );
 
-    const mockRemoteVideoStream2 = createMockRemoteVideoStream(false);
-    mockRemoteVideoStream2.id = 1;
+    const mockRemoteVideoStream2 = createMockRemoteVideoStream(1);
     mockRemoteParticipant2.videoStreams = [mockRemoteVideoStream2];
     mockRemoteParticipant2.emit('videoStreamsUpdated', {
       added: [mockRemoteVideoStream2],

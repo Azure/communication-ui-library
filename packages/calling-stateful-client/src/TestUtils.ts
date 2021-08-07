@@ -59,7 +59,6 @@ type Mutable<T> = {
   -readonly [k in keyof T]: T[k];
 };
 
-export type MockRemoteParticipant = Mutable<RemoteParticipant> & MockEmitter;
 export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
 export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
 
@@ -140,6 +139,8 @@ export interface MockCall extends Mutable<Call> {
   emit(event: string, data?: any);
   testHelperPushRemoteParticipant(participant: RemoteParticipant);
   testHelperPopRemoteParticipant(): RemoteParticipant;
+  testHelperPushLocalVideoStream(stream: LocalVideoStream): void;
+  testHelperPopLocalVideoStream(): LocalVideoStream;
 }
 
 export function createMockCall(mockCallId: string = 'defaultCallID'): MockCall {
@@ -158,18 +159,45 @@ export function createMockCall(mockCallId: string = 'defaultCallID'): MockCall {
       const participant = this.remoteParticipants.pop();
       this.emit('remoteParticipantsUpdated', { added: [], removed: [participant] });
       return participant;
+    },
+
+    testHelperPushLocalVideoStream(stream: LocalVideoStream): void {
+      this.localVideoStreams = [stream];
+      this.emit('localVideoStreamsUpdated', { added: [stream], removed: [] });
+    },
+
+    testHelperPopLocalVideoStream(): LocalVideoStream {
+      const stream = this.localVideoStreams.pop();
+      this.emit('localVideoStreamsUpdated', { added: [], removed: [stream] });
+      return stream;
     }
   }) as MockCall;
+}
+
+export interface MockRemoteParticipant extends Mutable<RemoteParticipant> {
+  emit(event: string, data?: any);
+  testHelperPushVideoStream(stream: RemoteVideoStream): void;
+  testHelperPopVideoStream(): RemoteVideoStream;
 }
 
 export function createMockRemoteParticipant(
   mockCommunicationUserId: string = 'defaulRemoteParticipantId'
 ): MockRemoteParticipant {
-  const mockRemoteParticipant = {
+  return addMockEmitter({
     identifier: { kind: 'communicationUser', communicationUserId: mockCommunicationUserId },
-    videoStreams: [] as ReadonlyArray<RemoteVideoStream>
-  } as MockRemoteParticipant;
-  return addMockEmitter(mockRemoteParticipant);
+    videoStreams: [] as ReadonlyArray<RemoteVideoStream>,
+
+    testHelperPushVideoStream(stream: RemoteVideoStream): void {
+      this.videoStreams.push(stream);
+      this.emit('videoStreamsUpdated', { added: [stream], removed: [] });
+    },
+
+    testHelperPopVideoStream(): RemoteVideoStream {
+      const stream = this.videoStreams.pop();
+      this.emit('videoStreamsUpdated', { added: [], removed: [stream] });
+      return stream;
+    }
+  }) as MockRemoteParticipant;
 }
 
 export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
@@ -177,9 +205,8 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   return addMockEmitter(mockIncomingCall);
 }
 
-export function createMockRemoteVideoStream(mockIsAvailable: boolean = false): MockRemoteVideoStream {
-  const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
-  return addMockEmitter(mockRemoteVideoStream);
+export function createMockRemoteVideoStream(id: number): MockRemoteVideoStream {
+  return addMockEmitter({ id }) as MockRemoteVideoStream;
 }
 
 /**
