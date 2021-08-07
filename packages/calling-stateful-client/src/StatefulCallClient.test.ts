@@ -228,6 +228,24 @@ describe('Stateful call client', () => {
     expect(listener.onChangeCalledCount).toBe(1);
   });
 
+  test('[xkcd] should update state when call changes id', async () => {
+    const agent = createMockCallAgent();
+    const client = createStatefulCallClientWithAgent(agent);
+
+    await client.createCallAgent(stubCommunicationTokenCredential());
+
+    const call = createMockCall('myVeryFirstCall');
+    agent.testHelperPushCall(call);
+    await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1);
+
+    const listener = new StateChangeListener(client);
+    call.id = 'aNewId';
+    call.emit('idChanged');
+    expect(await waitWithBreakCondition(() => !!client.getState().calls['aNewId'])).toBe(true);
+    expect(client.getState().calls['myVeryFirstCall']).toBeUndefined();
+    expect(listener.onChangeCalledCount).toBe(1);
+  });
+
   test('should update state when call `idChanged` event and update participantListeners', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
