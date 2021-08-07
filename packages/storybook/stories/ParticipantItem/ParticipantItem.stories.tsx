@@ -10,6 +10,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomAvatarExample } from './snippets/CustomAvatar.snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
 import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
@@ -113,18 +114,18 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Participant Item`,
   component: ParticipantItemComponent,
   argTypes: {
-    displayName: { control: 'text', defaultValue: 'Jim', name: 'Name' },
-    isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
-    isMuted: { control: 'boolean', defaultValue: false, name: 'Is muted' },
-    me: { control: 'boolean', defaultValue: false, name: 'Is You' },
-    menuItemsStr: { control: 'text', defaultValue: 'Mute, Remove', name: 'Menu items (comma separated)' },
+    displayName: controlsToAdd.displayName,
+    isScreenSharing: controlsToAdd.isScreenSharing,
+    isMuted: controlsToAdd.isMuted,
+    me: controlsToAdd.isMe,
+    menuItemsStr: controlsToAdd.participantItemMenuItemsStr,
     // Hiding auto-generated controls
-    onRenderAvatar: { control: false, table: { disable: true } },
-    menuItems: { control: false, table: { disable: true } },
-    onRenderIcon: { control: false, table: { disable: true } },
-    presence: { control: false, table: { disable: true } },
-    styles: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    onRenderAvatar: hiddenControl,
+    menuItems: hiddenControl,
+    onRenderIcon: hiddenControl,
+    presence: hiddenControl,
+    styles: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

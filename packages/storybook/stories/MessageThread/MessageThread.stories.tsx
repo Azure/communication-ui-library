@@ -16,6 +16,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import {
   GenerateMockNewChatMessage,
   UserOne,
@@ -238,22 +239,22 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Message Thread`,
   component: MessageThreadComponent,
   argTypes: {
-    showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
-    showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },
-    enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
+    showMessageDate: controlsToAdd.showMessageDate,
+    showMessageStatus: controlsToAdd.showMessageStatus,
+    enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
     // Hiding auto-generated controls
-    styles: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } },
-    userId: { control: false, table: { disable: true } },
-    messages: { control: false, table: { disable: true } },
-    disableJumpToNewMessageButton: { control: false, table: { disable: true } },
-    numberOfChatMessagesToReload: { control: false, table: { disable: true } },
-    onMessageSeen: { control: false, table: { disable: true } },
-    onRenderMessageStatus: { control: false, table: { disable: true } },
-    onRenderAvatar: { control: false, table: { disable: true } },
-    onRenderJumpToNewMessageButton: { control: false, table: { disable: true } },
-    onLoadPreviousChatMessages: { control: false, table: { disable: true } },
-    onRenderMessage: { control: false, table: { disable: true } }
+    styles: hiddenControl,
+    strings: hiddenControl,
+    userId: hiddenControl,
+    messages: hiddenControl,
+    disableJumpToNewMessageButton: hiddenControl,
+    numberOfChatMessagesToReload: hiddenControl,
+    onMessageSeen: hiddenControl,
+    onRenderMessageStatus: hiddenControl,
+    onRenderAvatar: hiddenControl,
+    onRenderJumpToNewMessageButton: hiddenControl,
+    onLoadPreviousChatMessages: hiddenControl,
+    onRenderMessage: hiddenControl
   },
   parameters: {
     docs: {

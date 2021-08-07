@@ -6,6 +6,7 @@ import React from 'react';
 import { useVideoStreams } from '../../utils';
 import { IncomingCallModal as IncomingCallModalComponent } from './components';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { getDocs } from './IncomingCallAlertsDocs';
 
 const IncomingCallModalStory = (args): JSX.Element => {
@@ -36,20 +37,20 @@ export default {
   title: `${EXAMPLES_FOLDER_PREFIX}/Incoming Call Alerts/Incoming Call Modal`,
   component: IncomingCallModalComponent,
   argTypes: {
-    alertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
-    callerName: { control: 'text', defaultValue: 'Maximus Aurelius', name: 'Caller Name' },
-    callerNameAlt: { control: 'text', defaultValue: '1st', name: 'Caller Name Alt' },
-    callerTitle: { control: 'text', defaultValue: 'Emperor and Philosopher, Rome', name: 'Caller Title' },
-    images: { control: 'file', accept: '.jpeg, .jpg, .png', defaultValue: [], name: 'Avatar' },
-    localParticipantDisplayName: { control: 'text', defaultValue: 'John Doe', name: 'Local Participant displayName' },
-    localVideoStreamEnabled: { control: 'boolean', defaultValue: true, name: 'Turn Local Video On' },
-    localVideoInverted: { control: 'boolean', defaultValue: true, name: 'Invert Local Video' },
+    alertText: controlsToAdd.callModalAlertText,
+    callerName: controlsToAdd.callerName,
+    callerNameAlt: controlsToAdd.callerNameAlt,
+    callerTitle: controlsToAdd.callerTitle,
+    images: controlsToAdd.callerImages,
+    localParticipantDisplayName: controlsToAdd.localParticipantDisplayName,
+    localVideoStreamEnabled: controlsToAdd.localVideoStreamEnabled,
+    localVideoInverted: controlsToAdd.localVideoInverted,
     // Hiding auto-generated controls
-    avatar: { control: false, table: { disable: true } },
-    onClickAccept: { control: false, table: { disable: true } },
-    onClickReject: { control: false, table: { disable: true } },
-    localVideoStreamElement: { control: false, table: { disable: true } },
-    onClickVideoToggle: { control: false, table: { disable: true } }
+    avatar: hiddenControl,
+    onClickAccept: hiddenControl,
+    onClickReject: hiddenControl,
+    localVideoStreamElement: hiddenControl,
+    onClickVideoToggle: hiddenControl
   },
   parameters: {
     docs: {

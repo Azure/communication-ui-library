@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { EndCallButtonCustomExample } from './snippets/Custom.snippet';
 import { EndCallButtonDefaultExample } from './snippets/Default.snippet';
 import { EndCallButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -81,10 +82,10 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/End Call`,
   component: EndCallButton,
   argTypes: {
-    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+    showLabel: controlsToAdd.showLabel,
     // Hiding auto-generated controls
-    onHangUp: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    onHangUp: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

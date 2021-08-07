@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';
 import { CameraButtonExample } from './snippets/Default.snippet';
 import { CameraButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -82,12 +83,12 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Camera`,
   component: CameraButton,
   argTypes: {
-    checked: { control: 'boolean', defaultValue: false, name: 'Is checked' },
-    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+    checked: controlsToAdd.checked,
+    showLabel: controlsToAdd.showLabel,
     // Hiding auto-generated controls
-    onToggleCamera: { control: false, table: { disable: true } },
-    localVideoViewOption: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    onToggleCamera: hiddenControl,
+    localVideoViewOption: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

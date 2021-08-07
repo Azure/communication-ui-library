@@ -8,6 +8,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { CustomControlBarButtonExample } from './snippets/Custom.snippet';
 import { ControlBarButtonExample } from './snippets/Default.snippet';
 import { ControlBarButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -86,13 +87,13 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Default`,
   component: ControlBarButton,
   argTypes: {
-    showLabel: { control: 'boolean', defaultValue: true, name: 'Show label' },
-    icons: { control: 'radio', options: ['airplane', 'bus', 'ship'], defaultValue: 'airplane', name: 'Icon' },
+    showLabel: controlsToAdd.showLabel,
+    icons: controlsToAdd.controlBarDefaultIcons,
     // Hiding auto-generated controls
-    labelKey: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } },
-    onRenderOnIcon: { control: false, table: { disable: true } },
-    onRenderOffIcon: { control: false, table: { disable: true } }
+    labelKey: hiddenControl,
+    strings: hiddenControl,
+    onRenderOnIcon: hiddenControl,
+    onRenderOffIcon: hiddenControl
   },
   parameters: {
     docs: {

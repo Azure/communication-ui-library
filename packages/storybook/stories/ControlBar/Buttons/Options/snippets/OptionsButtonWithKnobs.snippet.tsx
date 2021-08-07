@@ -3,26 +3,14 @@
 
 import { OptionsButton, OptionsButtonProps } from '@azure/communication-react';
 import React, { useState } from 'react';
-
-export const exampleCameras: { id: string; name: string }[] = [
-  { id: 'camera1', name: 'Full HD Webcam' },
-  { id: 'camera2', name: 'Macbook Pro Webcam' }
-];
-
-export const exampleMicrophones: { id: string; name: string }[] = [
-  { id: 'mic1', name: 'Realtek HD Audio' },
-  { id: 'mic2', name: 'Macbook Pro Mic' }
-];
-
-export const exampleSpeakers: { id: string; name: string }[] = [
-  { id: 'speaker1', name: 'Realtek HD Audio' },
-  { id: 'speaker2', name: 'Macbook Pro Speaker' }
-];
+import { defaultControlsCameras, defaultControlsMicrophones, defaultControlsSpeakers } from '../../../../controlsUtils';
 
 export const OptionsButtonWithKnobs = (args): JSX.Element => {
-  const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string }>(exampleCameras[0]);
-  const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(exampleMicrophones[0]);
-  const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string }>(exampleSpeakers[0]);
+  const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string }>(defaultControlsCameras[0]);
+  const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(
+    defaultControlsMicrophones[0]
+  );
+  const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string }>(defaultControlsSpeakers[0]);
 
   const exampleOptionProps: OptionsButtonProps = {
     selectedCamera: selectedCamera,

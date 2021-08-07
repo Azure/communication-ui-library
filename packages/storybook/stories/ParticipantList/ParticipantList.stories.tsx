@@ -8,6 +8,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { DefaultCallParticipantListExample } from './snippets/DefaultCall.snippet';
 import { DefaultChatParticipantListExample } from './snippets/DefaultChat.snippet';
 import { InteractiveCallParticipantListExample } from './snippets/InteractiveCall.snippet';
@@ -77,13 +78,6 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const remoteParticipantsDefault = [
-  { name: 'Rick', status: 'InLobby', isMuted: false, isScreenSharing: false },
-  { name: 'Daryl', status: 'Connecting', isMuted: false, isScreenSharing: false },
-  { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
-];
-const LocalParticipantDefault = [{ name: 'You', status: 'Connected', isMuted: false, isScreenSharing: false }];
-
 const ParticipantListStory: (args) => JSX.Element = (args) => {
   const participantsControls = [...args.remoteParticipants, ...args.localParticipant];
 
@@ -123,15 +117,15 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Participant List`,
   component: ParticipantListComponent,
   argTypes: {
-    excludeMe: { control: 'boolean', defaultValue: false, name: 'Are you excluded from the list' },
-    localParticipant: { control: 'object', defaultValue: LocalParticipantDefault, name: 'Your information' },
-    remoteParticipants: { control: 'object', defaultValue: remoteParticipantsDefault, name: 'Remote participants' },
+    excludeMe: controlsToAdd.excludeMeFromList,
+    localParticipant: controlsToAdd.localParticipant,
+    remoteParticipants: controlsToAdd.remoteParticipants,
     // Hiding auto-generated controls
-    participants: { control: false, table: { disable: true } },
-    myUserId: { control: false, table: { disable: true } },
-    onRenderParticipant: { control: false, table: { disable: true } },
-    onRenderAvatar: { control: false, table: { disable: true } },
-    onParticipantRemove: { control: false, table: { disable: true } }
+    participants: hiddenControl,
+    myUserId: hiddenControl,
+    onRenderParticipant: hiddenControl,
+    onRenderAvatar: hiddenControl,
+    onParticipantRemove: hiddenControl
   },
   parameters: {
     docs: {

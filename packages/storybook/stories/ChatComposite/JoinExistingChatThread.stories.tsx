@@ -6,6 +6,7 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer } from './snippets/Container.snippet';
 import { ConfigJoinChatThreadHintBanner } from './snippets/Utils';
@@ -40,20 +41,13 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Join Existing Chat Thread`,
   component: ChatComposite,
   argTypes: {
-    endpointUrl: { control: 'text', defaultValue: '', name: 'Azure Communication Services endpoint URL' },
-    threadId: { control: 'text', defaultValue: '', name: 'Existing thread' },
-    userId: { control: 'text', defaultValue: '', name: 'User identifier for user' },
-    token: { control: 'text', defaultValue: '', name: 'Valid token for user' },
-    displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
+    endpointUrl: controlsToAdd.endpointUrl,
+    threadId: controlsToAdd.chatThreadId,
+    userId: controlsToAdd.userId,
+    token: controlsToAdd.token,
+    displayName: controlsToAdd.displayName,
     // Hiding auto-generated controls
-    adapter: { control: false, table: { disable: true } },
-    fluentTheme: { control: false, table: { disable: true } },
-    onRenderAvatar: { control: false, table: { disable: true } },
-    onRenderMessage: { control: false, table: { disable: true } },
-    onRenderTypingIndicator: { control: false, table: { disable: true } },
-    options: { control: false, table: { disable: true } },
-    identifiers: { control: false, table: { disable: true } },
-    locale: { control: false, table: { disable: true } }
+    ...defaultChatCompositeHiddenControls
   },
   parameters: {
     useMaxHeightParent: true,

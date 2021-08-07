@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
 import { CustomStylingExample } from './snippets/CustomStyling.snippet';
 import { SendBoxExample } from './snippets/SendBox.snippet';
@@ -90,22 +91,18 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Send Box`,
   component: SendBoxComponent,
   argTypes: {
-    disabled: { control: 'boolean', defaultValue: false, name: 'Disable SendBox' },
-    hasWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
-    warningMessage: {
-      control: 'text',
-      defaultValue: 'Please wait 30 seconds to send new messages',
-      name: 'Warning/information message for SendBox'
-    },
+    disabled: controlsToAdd.disabled,
+    hasWarning: controlsToAdd.isSendBoxWithWarning,
+    warningMessage: controlsToAdd.sendBoxWarningMessage,
     // Hiding auto-generated controls
-    systemMessage: { control: false, table: { disable: true } },
-    onSendMessage: { control: false, table: { disable: true } },
-    onTyping: { control: false, table: { disable: true } },
-    onRenderSystemMessage: { control: false, table: { disable: true } },
-    supportNewline: { control: false, table: { disable: true } },
-    onRenderIcon: { control: false, table: { disable: true } },
-    styles: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    systemMessage: hiddenControl,
+    onSendMessage: hiddenControl,
+    onTyping: hiddenControl,
+    onRenderSystemMessage: hiddenControl,
+    supportNewline: hiddenControl,
+    onRenderIcon: hiddenControl,
+    styles: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

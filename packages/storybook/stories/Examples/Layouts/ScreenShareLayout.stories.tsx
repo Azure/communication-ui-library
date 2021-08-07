@@ -5,12 +5,8 @@ import { PlaceholderProps, VideoTile } from '@azure/communication-react';
 import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import {
-  EXAMPLES_FOLDER_PREFIX,
-  mediaGalleryWidthOptions,
-  mediaGalleryHeightDefault,
-  mediaGalleryHeightOptions
-} from '../../constants';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { controlsToAdd } from '../../controlsUtils';
 import { getDocs } from './LayoutsDocs';
 
 const renderPersona = (props: PlaceholderProps): JSX.Element => (
@@ -125,38 +121,10 @@ export default {
   id: `${EXAMPLES_FOLDER_PREFIX}-layouts-screensharelayout`,
   title: `${EXAMPLES_FOLDER_PREFIX}/Layouts/Screen Share Layout`,
   argTypes: {
-    width: {
-      control: {
-        type: 'range',
-        min: mediaGalleryWidthOptions.min,
-        max: mediaGalleryWidthOptions.max,
-        step: mediaGalleryWidthOptions.step
-      },
-      defaultValue: 850,
-      name: 'Width (px)'
-    },
-    height: {
-      control: {
-        type: 'range',
-        min: mediaGalleryHeightOptions.min,
-        max: mediaGalleryHeightOptions.max,
-        step: mediaGalleryHeightOptions.step
-      },
-      defaultValue: mediaGalleryHeightDefault,
-      name: 'Height (px)'
-    },
-    sidePanelWidthRatio: {
-      control: 'select',
-      options: ['30%', '35%', '40%', '45%', '50%'],
-      defaultValue: '30%',
-      name: 'Side Panel Width Ratio'
-    },
-    sidePanelTileAspectRatio: {
-      control: 'select',
-      options: ['16:9', '3:2', '4:3', '5:9', '1:1'],
-      defaultValue: '16:9',
-      name: 'Side Panel Tile Aspect Ratio (Width:Height)'
-    }
+    width: controlsToAdd.screenShareLayoutWidth,
+    height: controlsToAdd.layoutHeight,
+    sidePanelWidthRatio: controlsToAdd.screenShareSidePanelWidthRatio,
+    sidePanelTileAspectRatio: controlsToAdd.screenShareSidePanelTileAspectRatio
   },
   parameters: {
     docs: {

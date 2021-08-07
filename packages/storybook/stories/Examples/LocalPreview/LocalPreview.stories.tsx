@@ -6,6 +6,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { controlsToAdd } from '../../controlsUtils';
 import { LocalPreviewExample } from './snippets/LocalPreviewExample.snippet';
 
 const LocalPreviewExampleText = require('!!raw-loader!./snippets/LocalPreviewExample.snippet.tsx').default;
@@ -48,9 +49,9 @@ export default {
   title: `${EXAMPLES_FOLDER_PREFIX}/Local Preview`,
   component: LocalPreview,
   argTypes: {
-    isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
-    isCameraEnabled: { control: 'boolean', defaultValue: true, name: 'Is camera available' },
-    isMicrophoneEnabled: { control: 'boolean', defaultValue: true, name: 'Is microphone available' }
+    isVideoAvailable: controlsToAdd.isVideoAvailable,
+    isCameraEnabled: controlsToAdd.isCameraEnabled,
+    isMicrophoneEnabled: controlsToAdd.isMicrophoneEnabled
   },
   parameters: {
     docs: {

@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { CustomScreenShareButtonExample } from './snippets/Custom.snippet';
 import { ScreenShareButtonExample } from './snippets/Default.snippet';
 import { ScreenShareButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -82,11 +83,11 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Screen Share`,
   component: ScreenShareButton,
   argTypes: {
-    checked: { control: 'boolean', defaultValue: false, name: 'Is checked' },
-    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+    checked: controlsToAdd.checked,
+    showLabel: controlsToAdd.showLabel,
     // Hiding auto-generated controls
-    onToggleScreenShare: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    onToggleScreenShare: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

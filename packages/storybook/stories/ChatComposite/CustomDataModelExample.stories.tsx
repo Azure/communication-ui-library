@@ -5,8 +5,8 @@ import { ChatComposite, toFlatCommunicationIdentifier } from '@azure/communicati
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { defaultChatCompositeHiddenControls, controlsToAdd, getControlledBotAvatarSymbol } from '../controlsUtils';
 import { getDocs } from './ChatCompositeDocs';
 import {
   CustomDataModelExampleContainer,
@@ -14,22 +14,6 @@ import {
 } from './snippets/CustomDataModelExampleContainer.snippet';
 import { createUserAndThread } from './snippets/Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
-
-const avatars = ['Default', 'Cat', 'Fox', 'Koala'];
-
-const getAvatarSymbol = (AvatarName: string): string => {
-  switch (AvatarName) {
-    case 'Default':
-      return '🤖';
-    case 'Cat':
-      return '🐱';
-    case 'Fox':
-      return '🦊';
-    case 'Koala':
-      return '🐨';
-  }
-  return '🤖';
-};
 
 const messageArray = [
   'Welcome to the custom data model example!',
@@ -65,7 +49,7 @@ const CustomDataModelStory = (args): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
-        <CustomDataModelExampleContainer {...containerProps} botAvatar={getAvatarSymbol(args.avatar)} />
+        <CustomDataModelExampleContainer {...containerProps} botAvatar={getControlledBotAvatarSymbol(args.avatar)} />
       ) : (
         <ConfigHintBanner />
       )}
@@ -80,18 +64,11 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Custom Data Model Example`,
   component: ChatComposite,
   argTypes: {
-    connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
-    displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
-    avatar: { control: 'radio', options: avatars, defaultValue: 'Default', name: 'Bot Avatar' },
+    connectionString: controlsToAdd.connectionString,
+    displayName: controlsToAdd.displayName,
+    avatar: controlsToAdd.botAvatar,
     // Hiding auto-generated controls
-    adapter: { control: false, table: { disable: true } },
-    fluentTheme: { control: false, table: { disable: true } },
-    onRenderAvatar: { control: false, table: { disable: true } },
-    onRenderMessage: { control: false, table: { disable: true } },
-    onRenderTypingIndicator: { control: false, table: { disable: true } },
-    options: { control: false, table: { disable: true } },
-    identifiers: { control: false, table: { disable: true } },
-    locale: { control: false, table: { disable: true } }
+    ...defaultChatCompositeHiddenControls
   },
   parameters: {
     useMaxHeightParent: true,

@@ -7,14 +7,10 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
 import { OptionsButtonDefaultExample } from './snippets/Default.snippet';
-import {
-  OptionsButtonWithKnobs,
-  exampleCameras,
-  exampleMicrophones,
-  exampleSpeakers
-} from './snippets/OptionsButtonWithKnobs.snippet';
+import { OptionsButtonWithKnobs } from './snippets/OptionsButtonWithKnobs.snippet';
 import { OptionsButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
 const OptionsButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
@@ -87,18 +83,18 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Options`,
   component: OptionsButton,
   argTypes: {
-    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
-    cameras: { control: 'object', defaultValue: exampleCameras, name: 'Cameras' },
-    microphones: { control: 'object', defaultValue: exampleMicrophones, name: 'Microphones' },
-    speakers: { control: 'object', defaultValue: exampleSpeakers, name: 'Speakers' },
+    showLabel: controlsToAdd.showLabel,
+    cameras: controlsToAdd.cameras,
+    microphones: controlsToAdd.microphones,
+    speakers: controlsToAdd.speakers,
     // Hiding auto-generated controls
-    selectedMicrophone: { control: false, table: { disable: true } },
-    selectedSpeaker: { control: false, table: { disable: true } },
-    selectedCamera: { control: false, table: { disable: true } },
-    onSelectCamera: { control: false, table: { disable: true } },
-    onSelectMicrophone: { control: false, table: { disable: true } },
-    onSelectSpeaker: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    selectedMicrophone: hiddenControl,
+    selectedSpeaker: hiddenControl,
+    selectedCamera: hiddenControl,
+    onSelectCamera: hiddenControl,
+    onSelectMicrophone: hiddenControl,
+    onSelectSpeaker: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

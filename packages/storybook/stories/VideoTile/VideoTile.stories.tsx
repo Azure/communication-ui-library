@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
 import { useVideoStreams } from '../utils';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
@@ -94,20 +95,20 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Video Tile`,
   component: VideoTileComponent,
   argTypes: {
-    displayName: { control: 'text', defaultValue: 'John Krasinski', name: 'Display Name' },
-    showMuteIndicator: { control: 'boolean', defaultValue: true, name: 'Show Mute/UnMute Indicator' },
-    isVideoReady: { control: 'boolean', defaultValue: false, name: 'Is Video Ready' },
-    isMirrored: { control: 'boolean', defaultValue: false, name: 'Is Mirrored' },
-    isMuted: { control: 'boolean', defaultValue: false, name: 'Is Muted' },
-    width: { control: { type: 'range', min: 400, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
-    height: { control: { type: 'range', min: 300, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
+    displayName: controlsToAdd.displayName,
+    showMuteIndicator: controlsToAdd.showMuteIndicator,
+    isVideoReady: controlsToAdd.isVideoReady,
+    isMirrored: controlsToAdd.isVideoMirrored,
+    isMuted: controlsToAdd.isMuted,
+    width: controlsToAdd.videoTileWidth,
+    height: controlsToAdd.videoTileHeight,
     // Hiding auto-generated controls
-    userId: { control: false, table: { disable: true } },
-    noVideoAvailableAriaLabel: { control: false, table: { disable: true } },
-    children: { control: false, table: { disable: true } },
-    styles: { control: false, table: { disable: true } },
-    renderElement: { control: false, table: { disable: true } },
-    onRenderPlaceholder: { control: false, table: { disable: true } }
+    userId: hiddenControl,
+    noVideoAvailableAriaLabel: hiddenControl,
+    children: hiddenControl,
+    styles: hiddenControl,
+    renderElement: hiddenControl,
+    onRenderPlaceholder: hiddenControl
   },
   parameters: {
     docs: {

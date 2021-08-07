@@ -5,8 +5,8 @@ import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { createUserAndGroup } from './snippets/Server.snippet';
@@ -49,19 +49,11 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Basic Example`,
   component: CallComposite,
   argTypes: {
-    connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
-    displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
-    callInvitationURL: {
-      control: 'text',
-      defaultValue: '',
-      name: 'Optional URL to invite other participants to the call'
-    },
+    connectionString: controlsToAdd.connectionString,
+    displayName: controlsToAdd.displayName,
+    callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls
-    adapter: { control: false, table: { disable: true } },
-    fluentTheme: { control: false, table: { disable: true } },
-    onRenderAvatar: { control: false, table: { disable: true } },
-    identifiers: { control: false, table: { disable: true } },
-    locale: { control: false, table: { disable: true } }
+    ...defaultCallCompositeHiddenControls
   },
   parameters: {
     docs: {

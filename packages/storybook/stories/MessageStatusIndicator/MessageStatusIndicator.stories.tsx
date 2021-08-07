@@ -8,6 +8,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 
 const DefaultMessageStatusIndicatorsExampleText =
   require('!!raw-loader!./snippets/AllDefaultIndicators.snippet.tsx').default;
@@ -79,23 +80,14 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Message Status Indicator`,
   component: MessageStatusIndicatorComponent,
   argTypes: {
-    status: {
-      control: 'select',
-      options: ['delivered', 'sending', 'seen', 'failed'],
-      defaultValue: 'delivered',
-      name: 'Message Status'
-    },
-    deliveredTooltipText: { control: 'text', defaultValue: 'Sent', name: 'Delivered icon tooltip text' },
-    sendingTooltipText: { control: 'text', defaultValue: 'Sending', name: 'Sending icon tooltip text' },
-    seenTooltipText: { control: 'text', defaultValue: 'Seen', name: 'Seen icon tooltip text' },
-    failedToSendTooltipText: {
-      control: 'text',
-      defaultValue: 'Failed to send',
-      name: 'Failed to send icon tooltip text'
-    },
+    status: controlsToAdd.messageStatus,
+    deliveredTooltipText: controlsToAdd.messageDeliveredTooltipText,
+    sendingTooltipText: controlsToAdd.messageSendingTooltipText,
+    seenTooltipText: controlsToAdd.messageSeenTooltipText,
+    failedToSendTooltipText: controlsToAdd.messageFailedToSendTooltipText,
     // Hiding auto-generated controls
-    styles: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    styles: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

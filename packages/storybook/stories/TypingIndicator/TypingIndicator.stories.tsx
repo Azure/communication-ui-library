@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomStylingSnippet } from './snippets/CustomStyling.snippet';
 import { CustomUserRenderSnippet } from './snippets/CustomUserRender.snippet';
 import { TypingIndicatorSnippet } from './snippets/TypingIndicator.snippet';
@@ -56,17 +57,6 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const defaultTypingUsers = [
-  {
-    userId: '1',
-    displayName: 'User1'
-  },
-  {
-    userId: '2',
-    displayName: 'User2'
-  }
-];
-
 const TypingIndicatorStory = (args): JSX.Element => {
   return <TypingIndicatorComponent typingUsers={args.typingUsers} />;
 };
@@ -80,11 +70,11 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Typing Indicator`,
   component: TypingIndicatorComponent,
   argTypes: {
-    typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
+    typingUsers: controlsToAdd.typingUsers,
     // Hiding auto-generated controls
-    onRenderUser: { control: false, table: { disable: true } },
-    styles: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    onRenderUser: hiddenControl,
+    styles: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

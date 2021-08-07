@@ -5,8 +5,8 @@ import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
 import { createUserAndThread } from './snippets/Server.snippet';
@@ -54,19 +54,12 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Basic Example`,
   component: ChatComposite,
   argTypes: {
-    connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
-    displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
-    showParticipants: { control: 'boolean', defaultValue: true, name: 'Show Participants Pane' },
-    showTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
+    connectionString: controlsToAdd.connectionString,
+    displayName: controlsToAdd.displayName,
+    showParticipants: controlsToAdd.showChatParticipants,
+    showTopic: controlsToAdd.showChatTopic,
     // Hiding auto-generated controls
-    adapter: { control: false, table: { disable: true } },
-    fluentTheme: { control: false, table: { disable: true } },
-    onRenderAvatar: { control: false, table: { disable: true } },
-    onRenderMessage: { control: false, table: { disable: true } },
-    onRenderTypingIndicator: { control: false, table: { disable: true } },
-    options: { control: false, table: { disable: true } },
-    identifiers: { control: false, table: { disable: true } },
-    locale: { control: false, table: { disable: true } }
+    ...defaultChatCompositeHiddenControls
   },
   parameters: {
     useMaxHeightParent: true,

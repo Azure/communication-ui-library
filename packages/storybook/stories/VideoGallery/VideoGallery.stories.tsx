@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet';
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
@@ -16,8 +17,6 @@ const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/Cust
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 
 const importStatement = `import { VideoGallery } from '@azure/communication-react';`;
-
-const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -99,25 +98,21 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Video Gallery`,
   component: VideoGalleryComponent,
   argTypes: {
-    remoteParticipants: {
-      control: 'text',
-      defaultValue: 'Rick, Daryl, Michonne, Dwight',
-      name: 'Other participants (comma separated)'
-    },
-    layout: { control: 'select', options: VIDEO_GALLERY_LAYOUTS, defaultValue: 'default', name: 'Layout' },
+    remoteParticipants: controlsToAdd.remoteParticipantNames,
+    layout: controlsToAdd.videoGallerylayout,
     // Hiding auto-generated controls
-    styles: { control: false, table: { disable: true } },
-    localParticipant: { control: false, table: { disable: true } },
-    localVideoViewOption: { control: false, table: { disable: true } },
-    remoteVideoViewOption: { control: false, table: { disable: true } },
-    onCreateLocalStreamView: { control: false, table: { disable: true } },
-    onDisposeLocalStreamView: { control: false, table: { disable: true } },
-    onRenderLocalVideoTile: { control: false, table: { disable: true } },
-    onCreateRemoteStreamView: { control: false, table: { disable: true } },
-    onRenderRemoteVideoTile: { control: false, table: { disable: true } },
-    onDisposeRemoteStreamView: { control: false, table: { disable: true } },
-    onRenderAvatar: { control: false, table: { disable: true } },
-    showMuteIndicator: { control: false, table: { disable: true } }
+    styles: hiddenControl,
+    localParticipant: hiddenControl,
+    localVideoViewOption: hiddenControl,
+    remoteVideoViewOption: hiddenControl,
+    onCreateLocalStreamView: hiddenControl,
+    onDisposeLocalStreamView: hiddenControl,
+    onRenderLocalVideoTile: hiddenControl,
+    onCreateRemoteStreamView: hiddenControl,
+    onRenderRemoteVideoTile: hiddenControl,
+    onDisposeRemoteStreamView: hiddenControl,
+    onRenderAvatar: hiddenControl,
+    showMuteIndicator: hiddenControl
   },
   parameters: {
     docs: {

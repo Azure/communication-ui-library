@@ -16,12 +16,8 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import {
-  OptionsButtonWithKnobs,
-  exampleCameras,
-  exampleMicrophones,
-  exampleSpeakers
-} from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
+import { OptionsButtonWithKnobs } from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
 import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
@@ -33,19 +29,6 @@ const ControlBarLayoutExampleText = require('!!raw-loader!./snippets/ControlBarL
 const CustomButtonsExampleText = require('!!raw-loader!./snippets/CustomButtons.snippet.tsx').default;
 const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/CustomControlBarStyles.snippet.tsx').default;
 const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
-
-const CONTROL_BAR_LAYOUTS = [
-  'horizontal',
-  'vertical',
-  'dockedTop',
-  'dockedBottom',
-  'dockedLeft',
-  'dockedRight',
-  'floatingTop',
-  'floatingBottom',
-  'floatingLeft',
-  'floatingRight'
-] as const;
 
 const mockParticipants: CallParticipant[] = [
   {
@@ -214,21 +197,16 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
   component: ControlBarComponent,
   argTypes: {
-    layout: {
-      control: 'select',
-      options: CONTROL_BAR_LAYOUTS,
-      defaultValue: 'floatingBottom',
-      name: 'Layout'
-    },
-    checked: { control: 'boolean', defaultValue: false, name: 'Is checked' },
-    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+    layout: controlsToAdd.controlBarLayout,
+    checked: controlsToAdd.checked,
+    showLabel: controlsToAdd.showLabel,
     // Initializing and hiding some Options controls
-    cameras: { control: false, defaultValue: exampleCameras, table: { disable: true } },
-    microphones: { control: false, defaultValue: exampleMicrophones, table: { disable: true } },
-    speakers: { control: false, defaultValue: exampleSpeakers, table: { disable: true } },
+    cameras: controlsToAdd.cameras,
+    microphones: controlsToAdd.microphones,
+    speakers: controlsToAdd.speakers,
     // Hiding auto-generated controls
-    children: { control: false, table: { disable: true } },
-    styles: { control: false, table: { disable: true } }
+    children: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {

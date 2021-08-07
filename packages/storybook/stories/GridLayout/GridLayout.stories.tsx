@@ -7,13 +7,8 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useMemo } from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
-import {
-  mediaGalleryWidthDefault,
-  mediaGalleryWidthOptions,
-  mediaGalleryHeightDefault,
-  mediaGalleryHeightOptions,
-  COMPONENT_FOLDER_PREFIX
-} from '../constants';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { useVideoStreams } from '../utils';
 import { GridLayoutExample } from './snippets/GridLayout.snippet';
 
@@ -50,25 +45,6 @@ const getDocs: () => JSX.Element = () => {
     </>
   );
 };
-
-const defaultParticipants = [
-  {
-    displayName: 'Michael',
-    isVideoReady: false
-  },
-  {
-    displayName: 'Jim',
-    isVideoReady: false
-  },
-  {
-    displayName: 'Pam',
-    isVideoReady: false
-  },
-  {
-    displayName: 'Dwight',
-    isVideoReady: false
-  }
-];
 
 const GridLayoutStory = (args): JSX.Element => {
   const videoStreamElements = useVideoStreams(
@@ -116,31 +92,13 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Grid Layout`,
   component: GridLayoutComponent,
   argTypes: {
-    width: {
-      control: {
-        type: 'range',
-        min: mediaGalleryWidthOptions.min,
-        max: mediaGalleryWidthOptions.max,
-        step: mediaGalleryWidthOptions.step
-      },
-      defaultValue: mediaGalleryWidthDefault,
-      name: 'Width (px)'
-    },
-    height: {
-      control: {
-        type: 'range',
-        min: mediaGalleryHeightOptions.min,
-        max: mediaGalleryHeightOptions.max,
-        step: mediaGalleryHeightOptions.step
-      },
-      defaultValue: mediaGalleryHeightDefault,
-      name: 'Height (px)'
-    },
-    participants: { control: 'object', defaultValue: defaultParticipants, name: 'Participants' },
+    width: controlsToAdd.layoutWidth,
+    height: controlsToAdd.layoutHeight,
+    participants: controlsToAdd.gridParticipants,
     // Hiding auto-generated controls
-    children: { control: false, table: { disable: true } },
-    layout: { control: false, table: { disable: true } },
-    styles: { control: false, table: { disable: true } }
+    children: hiddenControl,
+    layout: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {

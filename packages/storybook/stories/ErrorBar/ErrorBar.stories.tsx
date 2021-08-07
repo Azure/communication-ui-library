@@ -14,6 +14,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
@@ -41,14 +42,6 @@ const getDocs: () => JSX.Element = () => {
     </>
   );
 };
-
-const errorOptions = [
-  'unableToReachChatService',
-  'accessDenied',
-  'userNotInThisThread',
-  'sendMessageNotInThisThread',
-  'sendMessageGeneric'
-];
 
 const ErrorBarStory = (args): JSX.Element => {
   const theme = useTheme();
@@ -86,16 +79,11 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Error Bar`,
   component: ErrorBarComponent,
   argTypes: {
-    errorTypes: {
-      control: 'check',
-      options: errorOptions,
-      defaultValue: ['accessDenied'],
-      name: 'ErrorType'
-    },
+    errorTypes: controlsToAdd.errorTypes,
     // Hiding auto-generated controls
-    activeErrors: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } },
-    onDismissErrors: { control: false, table: { disable: true } }
+    activeErrors: hiddenControl,
+    strings: hiddenControl,
+    onDismissErrors: hiddenControl
   },
   parameters: {
     docs: {

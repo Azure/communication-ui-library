@@ -2,32 +2,15 @@
 // Licensed under the MIT license.
 
 import { ChatComposite } from '@azure/communication-react';
-import { ITheme, Stack } from '@fluentui/react';
-import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
+import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from '../CompositeStringUtils';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { defaultChatCompositeHiddenControls, controlsToAdd, getControlledTheme } from '../controlsUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
 import { createUserAndThread } from './snippets/Server.snippet';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
-
-const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
-
-const getTheme = (choice: string): ITheme => {
-  switch (choice) {
-    case 'Default':
-      return DefaultTheme;
-    case 'Dark':
-      return DarkTheme;
-    case 'Teams':
-      return TeamsTheme;
-    case 'Word':
-      return WordTheme;
-  }
-  return DefaultTheme;
-};
 
 const messageArray = [
   'Welcome to the theming example!',
@@ -56,7 +39,11 @@ const ThemeStory = (args): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
-        <ContosoChatContainer {...containerProps} fluentTheme={getTheme(args.theme)} showParticipants={true} />
+        <ContosoChatContainer
+          {...containerProps}
+          fluentTheme={getControlledTheme(args.theme)}
+          showParticipants={true}
+        />
       ) : (
         <ConfigHintBanner />
       )}
@@ -71,18 +58,11 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Theme Example`,
   component: ChatComposite,
   argTypes: {
-    connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
-    displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
-    theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
+    connectionString: controlsToAdd.connectionString,
+    displayName: controlsToAdd.displayName,
+    theme: controlsToAdd.theme,
     // Hiding auto-generated controls
-    adapter: { control: false, table: { disable: true } },
-    fluentTheme: { control: false, table: { disable: true } },
-    onRenderAvatar: { control: false, table: { disable: true } },
-    onRenderMessage: { control: false, table: { disable: true } },
-    onRenderTypingIndicator: { control: false, table: { disable: true } },
-    options: { control: false, table: { disable: true } },
-    identifiers: { control: false, table: { disable: true } },
-    locale: { control: false, table: { disable: true } }
+    ...defaultChatCompositeHiddenControls
   },
   parameters: {
     useMaxHeightParent: true,

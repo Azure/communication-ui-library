@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { ParticipantsButtonDefaultExample } from './snippets/Default.snippet';
 import { ParticipantsButtonWithCallLinkExample } from './snippets/WithCallLink.snippet';
 import { ParticipantsButtonWithCustomRenderExample } from './snippets/WithCustomRender.snippet';
@@ -125,7 +126,7 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
 };
 
 const ParticipantsStory = (args): JSX.Element => {
-  const mockParticipants = args.participantsKnob
+  const mockParticipants = args.participants
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
@@ -167,23 +168,15 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Participants`,
   component: ParticipantsButton,
   argTypes: {
-    isMuteAllAvailable: {
-      control: 'boolean',
-      defaultValue: false,
-      name: 'User option to mute all participants is availble'
-    },
-    showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
-    callInvitationURL: { control: 'text', defaultValue: 'https://bing.com', name: 'Call URL to copy' },
-    participantsKnob: {
-      control: 'text',
-      defaultValue: 'You, Hal Jordan, Barry Allen, Bruce Wayne',
-      name: 'Participants (comma separated with You being local user)'
-    },
+    isMuteAllAvailable: controlsToAdd.isMuteAllAvailable,
+    showLabel: controlsToAdd.showLabel,
+    callInvitationURL: controlsToAdd.callInvitationURL,
+    participants: controlsToAdd.participantNames,
     // Hiding auto-generated controls
-    participantListProps: { control: false, table: { disable: true } },
-    styles: { control: false, table: { disable: true } },
-    onMuteAll: { control: false, table: { disable: true } },
-    strings: { control: false, table: { disable: true } }
+    participantListProps: hiddenControl,
+    styles: hiddenControl,
+    onMuteAll: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

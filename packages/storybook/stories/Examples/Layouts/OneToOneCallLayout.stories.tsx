@@ -6,13 +6,8 @@ import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import {
-  EXAMPLES_FOLDER_PREFIX,
-  mediaGalleryWidthDefault,
-  mediaGalleryWidthOptions,
-  mediaGalleryHeightDefault,
-  mediaGalleryHeightOptions
-} from '../../constants';
+import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { controlsToAdd } from '../../controlsUtils';
 import { getDocs } from './LayoutsDocs';
 
 const renderPersona = (): JSX.Element => (
@@ -61,26 +56,8 @@ export default {
   id: `${EXAMPLES_FOLDER_PREFIX}-layouts-onetoonecalllayout`,
   title: `${EXAMPLES_FOLDER_PREFIX}/Layouts/One To One Call Layout`,
   argTypes: {
-    width: {
-      control: {
-        type: 'range',
-        min: mediaGalleryWidthOptions.min,
-        max: mediaGalleryWidthOptions.max,
-        step: mediaGalleryWidthOptions.step
-      },
-      defaultValue: mediaGalleryWidthDefault,
-      name: 'Width (px)'
-    },
-    height: {
-      control: {
-        type: 'range',
-        min: mediaGalleryHeightOptions.min,
-        max: mediaGalleryHeightOptions.max,
-        step: mediaGalleryHeightOptions.step
-      },
-      defaultValue: mediaGalleryHeightDefault,
-      name: 'Height (px)'
-    }
+    width: controlsToAdd.layoutWidth,
+    height: controlsToAdd.layoutHeight
   },
   parameters: {
     docs: {
