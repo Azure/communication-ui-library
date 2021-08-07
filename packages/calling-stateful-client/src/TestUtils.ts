@@ -25,6 +25,8 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
 
 import EventEmitter from 'events';
+import { CallClientState } from './CallClientState';
+import { StatefulCallClient } from './StatefulCallClient';
 
 let backupFreezeFunction;
 
@@ -245,7 +247,7 @@ export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: Devi
   } as unknown as CallClient;
 };
 
-export const createMockCallAgent = (displayName: string): MockCallAgent => {
+export const createMockCallAgent = (displayName: string = 'defaultDisplayName'): MockCallAgent => {
   return addMockEmitter({
     calls: [] as Call[],
     displayName: displayName,
@@ -259,3 +261,18 @@ export const createMockCallAgent = (displayName: string): MockCallAgent => {
     }
   }) as MockCallAgent;
 };
+
+export class StateChangeListener {
+  state: CallClientState;
+  onChangeCalledCount = 0;
+
+  constructor(client: StatefulCallClient) {
+    this.state = client.getState();
+    client.onStateChange(this.onChange.bind(this));
+  }
+
+  private onChange(newState: CallClientState): void {
+    this.onChangeCalledCount++;
+    this.state = newState;
+  }
+}

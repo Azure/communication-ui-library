@@ -36,6 +36,7 @@ import {
   MockRemoteVideoStream,
   MockTranscriptionCallFeatureImpl,
   MockTransferCallFeatureImpl,
+  StateChangeListener,
   stubCommunicationTokenCredential,
   waitWithBreakCondition
 } from './TestUtils';
@@ -168,7 +169,7 @@ describe('Stateful call client', () => {
     expect(client.getState().userId.communicationUserId).toBe(mockUserId);
   });
 
-  test('[xkcd] should update callAgent state and have displayName when callAgent is created', async () => {
+  test('should update callAgent state and have displayName when callAgent is created', async () => {
     const displayName = 'booyaa';
     const agent = createMockCallAgent(displayName);
     const client = createStatefulCallClientWithDeps(
@@ -187,13 +188,22 @@ describe('Stateful call client', () => {
     expect(client.getState().callAgent?.displayName).toBe(displayName);
   });
 
-  test('should update state when call added in `callUpdated` event and subscribe to call', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    expect(Object.keys(testData.mockStatefulCallClient.getState().calls).length).toBe(0);
-    await createMockCallAndEmitCallsUpdated(testData);
-    expect(Object.keys(testData.mockStatefulCallClient.getState().calls).length).toBe(1);
-    expect(testData.mockCall.emitter.eventNames().length).not.toBe(0);
+  test('[xkcd] should update call in state when new call is added', async () => {
+    const agent = createMockCallAgent();
+    const client = createStatefulCallClientWithDeps(
+      createMockCallClient(agent),
+      new CallContext({ kind: 'communicationUser', communicationUserId: mockUserId }),
+      new InternalCallContext()
+    );
+
+    await client.createCallAgent(stubCommunicationTokenCredential());
+
+    const listener = new StateChangeListener(client);
+    agent.testHelperAddCall(createMockCall());
+    await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1);
+    expect(listener.onChangeCalledCount).toBe(1);
+
+    // [xkcd] Make sure some other test verifies that we subscribe to the calls' events.
   });
 
   test('should update state when call removed in `callUpdated` event and unsubscribe to call', async () => {
