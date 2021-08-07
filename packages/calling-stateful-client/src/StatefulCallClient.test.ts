@@ -274,7 +274,7 @@ describe('Stateful call client', () => {
     }
   });
 
-  test('[xkcd] should update state when remote participant simple information changes', async () => {
+  test('should update state when remote participant simple information changes', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -389,64 +389,64 @@ describe('Stateful call client', () => {
     }
   });
 
-  test('should update state when participant added remote video `videoStreamsUpdated`', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
+  test('[xkcd] should update state when remote stream is added and removed for participant', async () => {
+    const agent = createMockCallAgent();
+    const client = createStatefulCallClientWithAgent(agent);
 
-    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(
-          testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]
-            ?.videoStreams ?? {}
-        ).length !== 0
-    );
+    await client.createCallAgent(stubCommunicationTokenCredential());
+
+    const call = createMockCall('myVeryFirstCall');
+    agent.testHelperPushCall(call);
+    expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
+
+    const participant = createMockRemoteParticipant();
+    call.testHelperPushRemoteParticipant(participant);
     expect(
-      Object.keys(
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]
-          ?.videoStreams ?? {}
-      ).length
-    ).toBe(1);
-  });
+      await waitWithBreakCondition(
+        () => Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipants ?? {}).length !== 0
+      )
+    ).toBe(true);
 
-  test('should update state when participant removed remote video `videoStreamsUpdated`', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
-
-    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(
-          testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]
-            ?.videoStreams ?? {}
-        ).length !== 0
-    );
-
-    testData.mockRemoteParticipant.videoStreams = [];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [],
-      removed: [testData.mockRemoteVideoStream]
-    });
-
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(
-          testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]
-            ?.videoStreams ?? {}
-        ).length === 0
-    );
-    expect(
-      Object.keys(
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]
-          ?.videoStreams ?? {}
-      ).length
-    ).toBe(0);
+    const stream = createMockRemoteVideoStream();
+    {
+      const listener = new StateChangeListener(client);
+      participant.videoStreams = [stream];
+      participant.emit('videoStreamsUpdated', {
+        added: [stream],
+        removed: []
+      });
+      expect(
+        await waitWithBreakCondition(
+          () =>
+            Object.keys(
+              client.getState().calls['myVeryFirstCall']?.remoteParticipants[
+                toFlatCommunicationIdentifier(participant.identifier)
+              ]?.videoStreams ?? {}
+            ).length !== 0
+        )
+      ).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    {
+      const listener = new StateChangeListener(client);
+      participant.videoStreams = [];
+      participant.emit('videoStreamsUpdated', {
+        added: [],
+        removed: [stream]
+      });
+      expect(
+        await waitWithBreakCondition(
+          () =>
+            Object.keys(
+              client.getState().calls['myVeryFirstCall']?.remoteParticipants[
+                toFlatCommunicationIdentifier(participant.identifier)
+              ]?.videoStreams ?? {}
+            ).length === 0
+        )
+      ).toBe(true);
+      // FIXME: This should generate only one event.
+      expect(listener.onChangeCalledCount).toBe(2);
+    }
   });
 
   test('should update state when remote video stream emits `isAvailableChanged`', async () => {

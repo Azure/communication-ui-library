@@ -177,7 +177,7 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   return addMockEmitter(mockIncomingCall);
 }
 
-export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemoteVideoStream {
+export function createMockRemoteVideoStream(mockIsAvailable: boolean = false): MockRemoteVideoStream {
   const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
   return addMockEmitter(mockRemoteVideoStream);
 }
