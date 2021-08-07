@@ -3,6 +3,7 @@
 
 import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
   VideoGalleryLocalParticipant,
@@ -11,7 +12,12 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
-import { floatingLocalVideoModalStyle, floatingLocalVideoTileStyle, gridStyle } from './styles/VideoGallery.styles';
+import {
+  videoGalleryContainerStyle,
+  floatingLocalVideoModalStyle,
+  floatingLocalVideoTileStyle,
+  gridStyle
+} from './styles/VideoGallery.styles';
 import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
 
 const emptyStyles = {};
@@ -116,6 +122,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   } = props;
   const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
 
+  const ids = useIdentifiers();
+
   useEffect(() => {
     setSortedRemoteParticipants(sortParticipants(remoteParticipants));
   }, [remoteParticipants]);
@@ -129,7 +137,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    */
   const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
-    const isLocalVideoReady = localVideoStream?.isAvailable;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
@@ -144,7 +151,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return (
       <VideoTile
         userId={localParticipant.userId}
-        isVideoReady={isLocalVideoReady}
         renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
         displayName={localParticipant?.displayName}
         styles={localVideoTileStyles}
@@ -195,19 +201,26 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   if (shouldFloatLocalVideo()) {
+    const floatingTileHostId = 'UILibaryFloatingTileHost';
     return (
-      <>
-        <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={floatingLocalVideoModalStyle}>
+      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+        <Modal
+          isOpen={true}
+          isModeless={true}
+          dragOptions={DRAG_OPTIONS}
+          styles={floatingLocalVideoModalStyle}
+          layerProps={{ hostId: floatingTileHostId }}
+        >
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
         <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
-      </>
+      </Stack>
     );
   }
 
   return (
     <GridLayout styles={styles ?? emptyStyles}>
-      <Stack horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
       {defaultOnRenderRemoteParticipants}
@@ -283,7 +296,6 @@ const RemoteVideoTile = React.memo(
       <Stack className={gridStyle} key={userId} grow>
         <VideoTile
           userId={userId}
-          isVideoReady={isAvailable}
           renderElement={renderVideoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}

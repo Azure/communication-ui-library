@@ -70,7 +70,7 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
     return (
       <Stack className={aspectRatioBoxStyle} key={index}>
         <Stack className={aspectRatioBoxContentStyle}>
-          <VideoTile isVideoReady={false} displayName={participantDisplayName} onRenderPlaceholder={renderPersona} />
+          <VideoTile displayName={participantDisplayName} onRenderPlaceholder={renderPersona} />
         </Stack>
       </Stack>
     );
@@ -88,7 +88,6 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
       <Stack.Item grow className={mergeStyles({ height: '100\u0025' })}>
         {/* The screen share component that will display the screen share stream and sharer's video */}
         <VideoTile
-          isVideoReady={false}
           styles={{
             overlayContainer: videoStreamStyle
           }}
@@ -97,7 +96,6 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
         >
           {/* We want to render another overlay videoTile inside the parent videoTile for screen sharer's video */}
           <VideoTile
-            isVideoReady={false}
             // A placeholder element for screen sharer's video stream
             onRenderPlaceholder={renderSharePersonaPlaceholder}
           >

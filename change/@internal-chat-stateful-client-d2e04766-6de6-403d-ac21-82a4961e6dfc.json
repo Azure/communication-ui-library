@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add chat thread creation and deletion error handling",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

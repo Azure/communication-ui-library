@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { MessageStatus } from '@internal/acs-ui-common';
+import { CommunicationParticipant } from './CommunicationParticipant';
 
 export type MessageAttachedStatus = 'bottom' | 'top';
 
@@ -21,22 +22,49 @@ export type ChatMessagePayload = {
   type: MessageContentType;
 };
 
-export type SystemMessagePayload = {
+export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
+  type: T;
   messageId: string;
-  content?: string;
-  iconName?: string;
+  createdOn: Date;
+  content: T extends 'content' ? string : never;
+  participants: T extends 'participantAdded'
+    ? CommunicationParticipant[]
+    : T extends 'participantRemoved'
+    ? CommunicationParticipant[]
+    : never;
+  topic: T extends 'topicUpdated' ? string : never;
+  iconName: string;
 };
+
+export type AllKeys<T> = {
+  [K in keyof T]: T[K] extends never ? never : K;
+};
+
+export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
+
+// System Message payload only contains non-never properties
+export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
 
 export type CustomMessagePayload = {
+  createdOn: Date;
   messageId: string;
   content?: string;
 };
 
-export type MessageTypes = 'chat' | 'system' | 'custom';
+export type MessageType = 'chat' | 'system' | 'custom';
 
-export type Message<T extends MessageTypes> = {
+export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
+
+export type Message<T extends MessageType> = {
   type: T;
-  payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
+  payload: T extends 'chat'
+    ? ChatMessagePayload
+    : T extends 'system'
+    ?
+        | SystemMessagePayload<'participantAdded' | 'participantRemoved'>
+        | SystemMessagePayload<'topicUpdated'>
+        | SystemMessagePayload<'content'>
+    : CustomMessagePayload;
 };
 
 export type ChatMessage = Message<'chat'>;

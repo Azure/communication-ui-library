@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add identifier injection mechanism in components for e2e testing",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

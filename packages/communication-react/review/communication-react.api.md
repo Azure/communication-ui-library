@@ -61,6 +61,11 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
+// @public (undocumented)
+export type AllKeys<T> = {
+    [K in keyof T]: T[K] extends never ? never : K;
+};
+
 // @public
 export const ar_SA: Locale;
 
@@ -89,7 +94,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     isTeamsCall(): boolean;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
     leaveCall(): Promise<void>;
     // (undocumented)
@@ -166,6 +171,24 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     unmute(): Promise<void>;
 }
 
+// @public (undocumented)
+export type AzureCommunicationCallAdapterArgs = {
+    userId: CommunicationUserKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    locator: TeamsMeetingLinkLocator | GroupCallLocator;
+    callClientOptions?: CallClientOptions;
+};
+
+// @public (undocumented)
+export type AzureCommunicationChatAdapterArgs = {
+    endpointUrl: string;
+    userId: CommunicationIdentifierKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    threadId: string;
+};
+
 // @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
@@ -187,7 +210,7 @@ export interface CallAdapter {
     // (undocumented)
     getState(): CallAdapterState;
     // (undocumented)
-    joinCall(microphoneOn?: boolean): Promise<void>;
+    joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
     // (undocumented)
@@ -335,6 +358,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
+    locale?: Locale;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     identifiers?: Identifiers;
@@ -538,6 +562,7 @@ export type ChatCompositeClientState = {
 export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
+    locale?: Locale;
     onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -564,7 +589,7 @@ export type ChatErrors = {
 };
 
 // @public
-export type ChatErrorTargets = ChatObjectMethodNames<'ChatClient', ChatClient> | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
+export type ChatErrorTargets = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -588,14 +613,6 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
 };
-
-// @public
-export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
-
-// @public
-export type ChatObjectMethodNames<TName extends string, T> = {
-    [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T];
 
 // @public
 export type ChatOptions = {
@@ -654,13 +671,13 @@ export type ChatThreadProperties = {
 export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
 userId: string;
 showMessageStatus: boolean;
-messages: Message<"chat">[];
+messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
 }, (res1: string, res2: {
 [key: string]: ChatMessageWithStatus;
 }, res3: Date, res4: boolean) => {
 userId: string;
 showMessageStatus: boolean;
-messages: Message<"chat">[];
+messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
 }>;
 
 // @public (undocumented)
@@ -734,10 +751,10 @@ export interface ControlBarProps {
 }
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: (userId: CommunicationUserKind, displayName: string, credential: CommunicationTokenCredential, locator: TeamsMeetingLinkLocator | GroupCallLocator, callClientOptions?: CallClientOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, callClientOptions }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public (undocumented)
-export const createAzureCommunicationChatAdapter: (endpointUrl: string, userId: CommunicationIdentifierKind, displayName: string, credential: CommunicationTokenCredential, threadId: string) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
@@ -752,7 +769,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onToggleMicrophone: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions | undefined) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onParticipantRemove: (userId: string) => void;
     onStartLocalVideo: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
@@ -773,6 +790,7 @@ export type CustomMessage = Message<'custom'>;
 
 // @public (undocumented)
 export type CustomMessagePayload = {
+    createdOn: Date;
     messageId: string;
     content?: string;
 };
@@ -953,6 +971,7 @@ export interface Identifiers {
     participantList: string;
     sendboxTextfield: string;
     typingIndicator: string;
+    videoGallery: string;
 }
 
 // @public (undocumented)
@@ -1037,7 +1056,7 @@ export type MeetingCompositeProps = {
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
     type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload : CustomMessagePayload;
+    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload<'participantAdded' | 'participantRemoved'> | SystemMessagePayload<'topicUpdated'> | SystemMessagePayload<'content'> : CustomMessagePayload;
 };
 
 // @public (undocumented)
@@ -1114,6 +1133,8 @@ export type MessageThreadProps = {
 export interface MessageThreadStrings {
     friday: string;
     monday: string;
+    participantJoined: string;
+    participantLeft: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -1165,6 +1186,9 @@ export const namedLocales: Record<string, {
     englishName: string;
     displayName: string;
 }>;
+
+// @public (undocumented)
+export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -1494,11 +1518,21 @@ export interface StreamMediaProps {
 export type SystemMessage = Message<'system'>;
 
 // @public (undocumented)
-export type SystemMessagePayload = {
+export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
+
+// @public (undocumented)
+export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
+    type: T;
     messageId: string;
-    content?: string;
-    iconName?: string;
+    createdOn: Date;
+    content: T extends 'content' ? string : never;
+    participants: T extends 'participantAdded' ? CommunicationParticipant[] : T extends 'participantRemoved' ? CommunicationParticipant[] : never;
+    topic: T extends 'topicUpdated' ? string : never;
+    iconName: string;
 };
+
+// @public (undocumented)
+export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
 
 // @public
 export const ThemeContext: React_2.Context<Theme>;
@@ -1706,7 +1740,6 @@ export interface VideoTileProps extends PlaceholderProps {
     children?: React_2.ReactNode;
     isMirrored?: boolean;
     isMuted?: boolean;
-    isVideoReady?: boolean;
     onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
     renderElement?: JSX.Element | null;
     showMuteIndicator?: boolean;

@@ -16,13 +16,12 @@ let allDependencies = new Set();
 let allPeerDependencies = new Set();
 
 for (const packlet of Object.keys(downstreamPacklets)) {
-  // special case while react-composites points to src/index.release and not src/index
-  const relativePath = packlet === '@internal/react-composites' ? '../../' : '../';
+  const packageJsonRelativePath = '../';
 
   const packletPackageData = require(path.resolve(
     __dirname,
     downstreamPacklets[packlet][0],
-    relativePath,
+    packageJsonRelativePath,
     'package.json'
   ));
   allDependencies = new Set([...allDependencies, ...Object.keys(packletPackageData['dependencies'] || [])]);

@@ -62,7 +62,6 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
   return (
     <VideoTile
       styles={videoTileStyles}
-      isVideoReady={isVideoReady}
       renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
       onRenderPlaceholder={onRenderEmptyPlaceholder}
     >

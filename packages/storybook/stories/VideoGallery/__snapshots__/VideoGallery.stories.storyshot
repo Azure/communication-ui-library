@@ -30,6 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       >
         <div
           className="ms-Stack css-79 css-1"
+          data-ui-id="video-gallery"
         >
           <div
             className="ms-Stack css-7"
@@ -38,47 +39,23 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-10"
-              >
-                <div
-                  aria-label=""
-                  className="ms-Persona ms-Persona--size100 root-11"
-                >
-                  <div
-                    className="ms-Persona-coin ms-Persona--size100 coin-18"
-                    role="presentation"
-                  >
-                    <div
-                      className="ms-Persona-imageArea imageArea-20"
-                      role="presentation"
-                    >
-                      <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials initials-23"
-                      >
-                        <span>
-                          Y
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                className="css-71"
+              />
             </div>
             <div
-              className="ms-Stack css-80 css-26"
+              className="ms-Stack css-81 css-9"
             >
               <div
-                className="ms-Stack css-27"
+                className="ms-Stack css-10"
               >
                 <span
-                  className="css-28"
+                  className="css-11"
                 >
                   You
                 </span>
               </div>
               <div
-                className="ms-Stack css-29"
+                className="ms-Stack css-12"
               >
                 <span
                   aria-hidden={true}

@@ -1,0 +1,90 @@
+# Bump package version numbers and create a release branch
+name: Release branch - Create
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch or tag to create release from'
+        required: true
+        default: 'main'
+
+jobs:
+  release:
+    name: Bump versions and create changelog PR
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Setup bot information for creating pull request
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      - name: Setup bot git information
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+      # Check out onto desired branch or tag to create release from
+      - name: Checkout tag/branch
+        run: git checkout ${{ github.event.inputs.branch }}
+
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+
+      # Bump package versions
+      - name: Bump package versions
+        run: node common/config/node_modules/beachball/bin/beachball bump
+
+      # Retrieve new version to create branch with
+      - name: Retrieve new version from package.json
+        id: version
+        run: |
+          ver=$(jq -r .version packages/communication-react/package.json)
+          echo version: $ver
+          echo "::set-output name=version::$ver"
+
+      # Commit changes
+      - name: Hop into new branch
+        run: git checkout -b release/${{ steps.version.outputs.version }}
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Version bump"
+
+      # Create beachball change files
+      - name: Create change files
+        run: node common/config/node_modules/beachball/bin/beachball change --message 'Bump package version to ${{ steps.version.outputs.version }}' --type 'none'
+
+      # Push changes
+      - name: Push branch
+        run: git push --set-upstream origin release/${{ steps.version.outputs.version }}
+
+      # Create a PR from the changes
+      - name: Create PR
+        run: |
+          curl \
+            -X POST \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            https://api.github.com/repos/Azure/communication-ui-library/pulls \
+            -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"release/${{ steps.version.outputs.version }}", "base":"main", "body":"Release branch for ${{ steps.version.outputs.version }}. Created by the `Release branch - create` GitHub action. Please review." }'
+            --fail-with-body

@@ -9,7 +9,6 @@ import { ChatClientOptions } from '@azure/communication-chat';
 import { ChatMessage } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
-import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { MessageStatus } from '@internal/acs-ui-common';
@@ -38,21 +37,13 @@ export type ChatErrors = {
 };
 
 // @public
-export type ChatErrorTargets = ChatObjectMethodNames<'ChatClient', ChatClient> | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
+export type ChatErrorTargets = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
 
 // @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: MessageStatus;
 };
-
-// @public
-export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
-
-// @public
-export type ChatObjectMethodNames<TName extends string, T> = {
-    [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T];
 
 // @public (undocumented)
 export type ChatThreadClientState = {
