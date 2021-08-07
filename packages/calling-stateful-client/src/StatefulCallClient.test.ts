@@ -261,6 +261,7 @@ describe('Stateful call client', () => {
       expect(listener.onChangeCalledCount).toBe(2);
     }
     {
+      expect(Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipantsEnded ?? {}).length).toBe(0);
       const listener = new StateChangeListener(client);
       call.testHelperPopRemoteParticipant();
       expect(
@@ -268,6 +269,7 @@ describe('Stateful call client', () => {
           () => Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipants ?? {}).length === 0
         )
       ).toBe(true);
+      expect(Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipantsEnded ?? {}).length).toBe(1);
       // FIXME: There should be only one event triggered here.
       expect(listener.onChangeCalledCount).toBe(2);
     }
@@ -441,43 +443,6 @@ describe('Stateful call client', () => {
       // FIXME: This should generate only one event.
       expect(listener.onChangeCalledCount).toBe(2);
     }
-  });
-
-  test('should move participant to ended when participant is removed', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length !== 0
-    );
-
-    expect(
-      Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length
-    ).toBe(1);
-
-    testData.mockCall.remoteParticipants = [];
-    testData.mockRemoteParticipant.callEndReason = { code: 1 };
-    testData.mockCall.emit('remoteParticipantsUpdated', { added: [], removed: [testData.mockRemoteParticipant] });
-
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length === 0
-    );
-
-    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
-    expect(
-      Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length
-    ).toBe(0);
-    expect(
-      Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipantsEnded ?? {}).length
-    ).toBe(1);
-    expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipantsEnded[participantKey]
-        ?.callEndReason?.code
-    ).toBe(1);
   });
 
   test('should render the stream and add to state when createView is called', async () => {
