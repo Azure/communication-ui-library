@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Join Existing Chat Thread Join Existing Chat Thread 1`] = `
 <div
   className="css-61 body-0"
 >
@@ -20,8 +20,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
       }
     >
       <div
-        className="css-1"
-      />
+        className="ms-Stack css-1"
+      >
+        <span>
+          Please provide a token, thread id, endpoint url, and display name to use.
+        </span>
+      </div>
     </div>
   </div>
 </div>
