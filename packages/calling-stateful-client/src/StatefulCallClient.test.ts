@@ -200,7 +200,7 @@ describe('Stateful call client', () => {
     // [xkcd] Make sure that some other test verifies that further changes to the popped call are not reflected in the state.
   });
 
-  test('[xkcd] should update state when simple call information changes', async () => {
+  test('should update state when simple call information changes', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -274,7 +274,7 @@ describe('Stateful call client', () => {
     }
   });
 
-  test('should update state when remote participant simple information changes', async () => {
+  test('[xkcd] should update state when remote participant simple information changes', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -292,18 +292,64 @@ describe('Stateful call client', () => {
       )
     ).toBe(true);
 
-    const listener = new StateChangeListener(client);
-    participant.displayName = 'aVeryNewName';
-    participant.emit('displayNameChanged');
-    expect(
-      await waitWithBreakCondition(
-        () =>
-          client.getState().calls['myVeryFirstCall']?.remoteParticipants[
-            toFlatCommunicationIdentifier(participant.identifier)
-          ]?.displayName === 'aVeryNewName'
-      )
-    ).toBe(true);
-    expect(listener.onChangeCalledCount).toBe(1);
+    {
+      const listener = new StateChangeListener(client);
+      participant.displayName = 'aVeryNewName';
+      participant.emit('displayNameChanged');
+      expect(
+        await waitWithBreakCondition(
+          () =>
+            client.getState().calls['myVeryFirstCall']?.remoteParticipants[
+              toFlatCommunicationIdentifier(participant.identifier)
+            ]?.displayName === 'aVeryNewName'
+        )
+      ).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    {
+      const listener = new StateChangeListener(client);
+      participant.state = 'Idle';
+      participant.emit('stateChanged');
+      expect(
+        await waitWithBreakCondition(
+          () =>
+            client.getState().calls['myVeryFirstCall']?.remoteParticipants[
+              toFlatCommunicationIdentifier(participant.identifier)
+            ]?.state === 'Idle'
+        )
+      ).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    {
+      const newValue = !participant.isMuted;
+      const listener = new StateChangeListener(client);
+      participant.isMuted = newValue;
+      participant.emit('isMutedChanged');
+      expect(
+        await waitWithBreakCondition(
+          () =>
+            client.getState().calls['myVeryFirstCall']?.remoteParticipants[
+              toFlatCommunicationIdentifier(participant.identifier)
+            ]?.isMuted === newValue
+        )
+      ).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    {
+      const newValue = !participant.isSpeaking;
+      const listener = new StateChangeListener(client);
+      participant.isSpeaking = newValue;
+      participant.emit('isSpeakingChanged');
+      expect(
+        await waitWithBreakCondition(
+          () =>
+            client.getState().calls['myVeryFirstCall']?.remoteParticipants[
+              toFlatCommunicationIdentifier(participant.identifier)
+            ]?.isSpeaking === newValue
+        )
+      ).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
   });
 
   test('should update state when local video stream is added and removed', async () => {
@@ -341,88 +387,6 @@ describe('Stateful call client', () => {
       // FIXME: Should generate only one event.
       expect(listener.onChangeCalledCount).toBe(2);
     }
-  });
-
-  test('should update state when participant `stateChanged`', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    testData.mockRemoteParticipant.state = 'Idle';
-    testData.mockRemoteParticipant.emit('stateChanged');
-
-    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
-    await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]?.state ===
-        'Idle'
-    );
-    expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]?.state
-    ).toBe('Idle');
-  });
-
-  test('should update state when participant `isMutedChanged`', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const oldIsMuted = testData.mockRemoteParticipant.isMuted;
-    testData.mockRemoteParticipant.isMuted = !oldIsMuted;
-    testData.mockRemoteParticipant.emit('isMutedChanged');
-
-    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
-    await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]?.isMuted ===
-        !oldIsMuted
-    );
-    expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]?.isMuted
-    ).toBe(!oldIsMuted);
-  });
-
-  test('should update state when participant `displayNameChanged`', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    testData.mockRemoteParticipant.displayName = 'z';
-    testData.mockRemoteParticipant.emit('displayNameChanged');
-
-    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
-    await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]
-          ?.displayName === 'z'
-    );
-    expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]?.displayName
-    ).toBe('z');
-  });
-
-  test('should update state when participant `isSpeakingChanged`', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    const oldIsSpeaking = testData.mockRemoteParticipant.isSpeaking;
-    testData.mockRemoteParticipant.isSpeaking = !oldIsSpeaking;
-    testData.mockRemoteParticipant.emit('isSpeakingChanged');
-
-    const participantKey = toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier);
-    await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]?.isSpeaking ===
-        !oldIsSpeaking
-    );
-    expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[participantKey]?.isSpeaking
-    ).toBe(!oldIsSpeaking);
   });
 
   test('should update state when participant added remote video `videoStreamsUpdated`', async () => {
