@@ -28,6 +28,7 @@ import {
   createMockCallClient,
   createMockRemoteParticipant,
   createMockRemoteVideoStream,
+  createStatefulCallClientWithAgent,
   MockCall,
   MockCallAgent,
   MockCommunicationUserCredential,
@@ -172,29 +173,16 @@ describe('Stateful call client', () => {
   test('should update callAgent state and have displayName when callAgent is created', async () => {
     const displayName = 'booyaa';
     const agent = createMockCallAgent(displayName);
-    const client = createStatefulCallClientWithDeps(
-      createMockCallClient(agent),
-      new CallContext({ kind: 'communicationUser', communicationUserId: mockUserId }),
-      new InternalCallContext()
-    );
+    const client = createStatefulCallClientWithAgent(agent);
 
     await client.createCallAgent(stubCommunicationTokenCredential());
-
-    /*
-    agent.testHelperAddCall(createMockCall());
-    await waitWithBreakCondition(() => Object.keys(client.getState().calls).length !== 0);
-*/
     expect(client.getState().callAgent).toBeDefined();
     expect(client.getState().callAgent?.displayName).toBe(displayName);
   });
 
   test('[xkcd] should update call in state when new call is added', async () => {
     const agent = createMockCallAgent();
-    const client = createStatefulCallClientWithDeps(
-      createMockCallClient(agent),
-      new CallContext({ kind: 'communicationUser', communicationUserId: mockUserId }),
-      new InternalCallContext()
-    );
+    const client = createStatefulCallClientWithAgent(agent);
 
     await client.createCallAgent(stubCommunicationTokenCredential());
 

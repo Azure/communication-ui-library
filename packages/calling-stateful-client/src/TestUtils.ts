@@ -26,7 +26,9 @@ import { AccessToken } from '@azure/core-auth';
 
 import EventEmitter from 'events';
 import { CallClientState } from './CallClientState';
-import { StatefulCallClient } from './StatefulCallClient';
+import { CallContext } from './CallContext';
+import { InternalCallContext } from './InternalCallContext';
+import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
 
 let backupFreezeFunction;
 
@@ -276,3 +278,11 @@ export class StateChangeListener {
     this.state = newState;
   }
 }
+
+export const createStatefulCallClientWithAgent = (agent: CallAgent): StatefulCallClient => {
+  return createStatefulCallClientWithDeps(
+    createMockCallClient(agent),
+    new CallContext({ kind: 'communicationUser', communicationUserId: 'defaultUserId' }),
+    new InternalCallContext()
+  );
+};
