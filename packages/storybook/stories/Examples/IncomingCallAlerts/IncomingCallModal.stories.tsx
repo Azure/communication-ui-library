@@ -3,10 +3,10 @@
 
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { useVideoStreams } from '../../utils';
 import { IncomingCallModal as IncomingCallModalComponent } from './components';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { useVideoStreams } from '../../utils';
 import { getDocs } from './IncomingCallAlertsDocs';
 
 const IncomingCallModalStory = (args): JSX.Element => {

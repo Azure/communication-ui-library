@@ -4,9 +4,9 @@
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { IncomingCallToast as IncomingCallToastComponent } from './components';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { IncomingCallToast as IncomingCallToastComponent } from './components';
 import { getDocs } from './IncomingCallAlertsDocs';
 
 const IncomingCallToastStory: (args) => JSX.Element = (args) => {
