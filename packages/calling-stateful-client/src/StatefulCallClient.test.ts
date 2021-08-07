@@ -201,7 +201,7 @@ describe('Stateful call client', () => {
     // [xkcd] Make sure that some other test verifies that further changes to the popped call are not reflected in the state.
   });
 
-  test('should update state when simple call information changes', async () => {
+  test('[xkcd] should update state when simple call information changes', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -221,6 +221,17 @@ describe('Stateful call client', () => {
       expect(listener.onChangeCalledCount).toBe(1);
     }
     {
+      const newValue = !call.isScreenSharingOn;
+      const listener = new StateChangeListener(client);
+      call.isScreenSharingOn = newValue;
+      call.emit('isScreenSharingOnChanged');
+      expect(
+        await waitWithBreakCondition(() => client.getState().calls['myVeryFirstCall']?.isScreenSharingOn === newValue)
+      ).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    // Keep this test last because it messes with the call ID.
+    {
       const listener = new StateChangeListener(client);
       call.id = 'aNewId';
       call.emit('idChanged');
@@ -230,7 +241,7 @@ describe('Stateful call client', () => {
     }
   });
 
-  test('should update state when new remote participant is added', async () => {
+  test('should update state when new remote participant is added and removed', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -240,18 +251,31 @@ describe('Stateful call client', () => {
     agent.testHelperPushCall(call);
     expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
 
-    const listener = new StateChangeListener(client);
-    call.testHelperPushRemoteParticipant(createMockRemoteParticipant());
-    expect(
-      await waitWithBreakCondition(
-        () => Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipants ?? {}).length !== 0
-      )
-    ).toBe(true);
-    // FIXME: There should be only one event triggered here.
-    expect(listener.onChangeCalledCount).toBe(2);
+    {
+      const listener = new StateChangeListener(client);
+      call.testHelperPushRemoteParticipant(createMockRemoteParticipant());
+      expect(
+        await waitWithBreakCondition(
+          () => Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipants ?? {}).length !== 0
+        )
+      ).toBe(true);
+      // FIXME: There should be only one event triggered here.
+      expect(listener.onChangeCalledCount).toBe(2);
+    }
+    {
+      const listener = new StateChangeListener(client);
+      call.testHelperPopRemoteParticipant();
+      expect(
+        await waitWithBreakCondition(
+          () => Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipants ?? {}).length === 0
+        )
+      ).toBe(true);
+      // FIXME: There should be only one event triggered here.
+      expect(listener.onChangeCalledCount).toBe(2);
+    }
   });
 
-  test('[xkcd] should update state when remote participant simple information changes', async () => {
+  test('should update state when remote participant simple information changes', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -281,21 +305,6 @@ describe('Stateful call client', () => {
       )
     ).toBe(true);
     expect(listener.onChangeCalledCount).toBe(1);
-  });
-
-  test('should update state when call `isScreenSharingOnChanged` event', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-
-    const oldIsScreenSharingOn = testData.mockCall.isScreenSharingOn;
-    testData.mockCall.isScreenSharingOn = !oldIsScreenSharingOn;
-    testData.mockCall.emit('isScreenSharingOnChanged');
-
-    await waitWithBreakCondition(
-      () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.isScreenSharingOn === !oldIsScreenSharingOn
-    );
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.isScreenSharingOn).toBe(!oldIsScreenSharingOn);
   });
 
   test('should update state when call added local video `localVideoStreamsUpdated` event', async () => {
@@ -338,28 +347,6 @@ describe('Stateful call client', () => {
       removed: [{ source: {} as VideoDeviceInfo, mediaStreamType: 'Video' } as LocalVideoStream]
     });
     expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length).toBe(0);
-  });
-
-  test('should update state when participant removed in `remoteParticipantsUpdated` and unsubscribe toit', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-
-    testData.mockCall.remoteParticipants = [];
-    testData.mockCall.emit('remoteParticipantsUpdated', {
-      added: [],
-      removed: [testData.mockRemoteParticipant]
-    });
-
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length === 0
-    );
-    expect(
-      Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length
-    ).toBe(0);
-    expect(testData.mockRemoteParticipant.emitter.eventNames().length).toBe(0);
   });
 
   test('should update state when participant `stateChanged`', async () => {
