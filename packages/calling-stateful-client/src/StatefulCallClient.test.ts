@@ -228,7 +228,7 @@ describe('Stateful call client', () => {
     expect(listener.onChangeCalledCount).toBe(1);
   });
 
-  test('[xkcd] should update state when call changes id', async () => {
+  test('should update state when call changes id', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
@@ -246,7 +246,28 @@ describe('Stateful call client', () => {
     expect(listener.onChangeCalledCount).toBe(1);
   });
 
-  test('should update state when call `idChanged` event and update participantListeners', async () => {
+  test('[xkcd] should update state when new remote participant is added', async () => {
+    const agent = createMockCallAgent();
+    const client = createStatefulCallClientWithAgent(agent);
+
+    await client.createCallAgent(stubCommunicationTokenCredential());
+
+    const call = createMockCall('myVeryFirstCall');
+    agent.testHelperPushCall(call);
+    expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
+
+    const listener = new StateChangeListener(client);
+    call.testHelperPushRemoteParticipant(createMockRemoteParticipant());
+    expect(
+      await waitWithBreakCondition(
+        () => Object.keys(client.getState().calls['myVeryFirstCall']?.remoteParticipants ?? {}).length !== 0
+      )
+    ).toBe(true);
+    // FIXME: There should be only one event triggered here.
+    expect(listener.onChangeCalledCount).toBe(2);
+  });
+
+  test('should update state when remote participant display name changes', async () => {
     const testData = {} as TestData;
     createClientAndAgentMocks(testData);
     await createMockCallAndEmitCallsUpdated(testData);
@@ -332,17 +353,6 @@ describe('Stateful call client', () => {
       removed: [{ source: {} as VideoDeviceInfo, mediaStreamType: 'Video' } as LocalVideoStream]
     });
     expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length).toBe(0);
-  });
-
-  test('should update state when participant added in `remoteParticipantsUpdated` and subscribe to it', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-    expect(
-      Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length
-    ).toBe(1);
-    expect(testData.mockRemoteParticipant.emitter.eventNames().length).not.toBe(0);
   });
 
   test('should update state when participant removed in `remoteParticipantsUpdated` and unsubscribe toit', async () => {
