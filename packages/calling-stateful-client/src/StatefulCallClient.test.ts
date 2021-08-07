@@ -12,7 +12,6 @@ import {
   RemoteVideoStream,
   TranscriptionCallFeature,
   TransferCallFeature,
-  VideoDeviceInfo,
   VideoStreamRendererView
 } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -307,46 +306,41 @@ describe('Stateful call client', () => {
     expect(listener.onChangeCalledCount).toBe(1);
   });
 
-  test('should update state when call added local video `localVideoStreamsUpdated` event', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
+  test('should update state when local video stream is added and removed', async () => {
+    const agent = createMockCallAgent();
+    const client = createStatefulCallClientWithAgent(agent);
 
-    testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
-    testData.mockCall.emit('localVideoStreamsUpdated', {
-      added: [{} as LocalVideoStream],
-      removed: []
-    });
+    await client.createCallAgent(stubCommunicationTokenCredential());
 
-    await waitWithBreakCondition(
-      () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length !== 0
-    );
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length).toBe(1);
-  });
+    const call = createMockCall('myVeryFirstCall');
+    agent.testHelperPushCall(call);
+    expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
 
-  test('should update state when call remove local video `localVideoStreamsUpdated` event', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-
-    testData.mockCall.localVideoStreams = [
-      { source: {} as VideoDeviceInfo, mediaStreamType: 'Video' } as LocalVideoStream
-    ];
-    testData.mockCall.emit('localVideoStreamsUpdated', {
-      added: [{ source: {} as VideoDeviceInfo, mediaStreamType: 'Video' } as LocalVideoStream],
-      removed: []
-    });
-
-    await waitWithBreakCondition(
-      () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length !== 0
-    );
-
-    testData.mockCall.localVideoStreams = [];
-    testData.mockCall.emit('localVideoStreamsUpdated', {
-      added: [],
-      removed: [{ source: {} as VideoDeviceInfo, mediaStreamType: 'Video' } as LocalVideoStream]
-    });
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length).toBe(0);
+    {
+      const listener = new StateChangeListener(client);
+      call.localVideoStreams = [{} as LocalVideoStream];
+      call.emit('localVideoStreamsUpdated', {
+        added: [{} as LocalVideoStream],
+        removed: []
+      });
+      expect(
+        await waitWithBreakCondition(() => client.getState().calls['myVeryFirstCall']?.localVideoStreams.length !== 0)
+      ).toBe(true);
+      expect(listener.onChangeCalledCount).toBe(1);
+    }
+    {
+      const listener = new StateChangeListener(client);
+      call.localVideoStreams = [];
+      call.emit('localVideoStreamsUpdated', {
+        added: [],
+        removed: [{} as LocalVideoStream]
+      });
+      expect(
+        await waitWithBreakCondition(() => client.getState().calls['myVeryFirstCall']?.localVideoStreams.length === 0)
+      ).toBe(true);
+      // FIXME: Should generate only one event.
+      expect(listener.onChangeCalledCount).toBe(2);
+    }
   });
 
   test('should update state when participant `stateChanged`', async () => {
