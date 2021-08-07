@@ -180,33 +180,35 @@ describe('Stateful call client', () => {
     expect(client.getState().callAgent?.displayName).toBe(displayName);
   });
 
-  test('[xkcd] should update call in state when new call is added', async () => {
+  test('should update call in state when new call is added', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
 
     await client.createCallAgent(stubCommunicationTokenCredential());
 
     const listener = new StateChangeListener(client);
-    agent.testHelperAddCall(createMockCall());
+    agent.testHelperPushCall(createMockCall());
     await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1);
     expect(listener.onChangeCalledCount).toBe(1);
 
-    // [xkcd] Make sure some other test verifies that we subscribe to the calls' events.
+    // [xkcd] Make sure some other test verifies that future changes to the pushed call are reflected in the state.
   });
 
-  test('should update state when call removed in `callUpdated` event and unsubscribe to call', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
+  test('[xkcd] should update state when call removed in `callUpdated` event and unsubscribe to call', async () => {
+    const agent = createMockCallAgent();
+    const client = createStatefulCallClientWithAgent(agent);
 
-    testData.mockCallAgent.calls = [];
-    testData.mockCallAgent.emit('callsUpdated', {
-      added: [],
-      removed: [testData.mockCall]
-    });
+    await client.createCallAgent(stubCommunicationTokenCredential());
 
-    await waitWithBreakCondition(() => Object.keys(testData.mockStatefulCallClient.getState().calls).length === 0);
-    expect(testData.mockCall.emitter.eventNames().length).toBe(0);
+    agent.testHelperPushCall(createMockCall());
+    await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1);
+
+    const listener = new StateChangeListener(client);
+    agent.testHelperPopCall();
+    await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 0);
+    expect(listener.onChangeCalledCount).toBe(1);
+
+    // [xkcd] Make sure that some other test verifies that further changes to the popped call are not reflected in the state.
   });
 
   test('should update state when call `stateChanged` event', async () => {

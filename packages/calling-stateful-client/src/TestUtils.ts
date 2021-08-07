@@ -60,17 +60,6 @@ type Mutable<T> = {
 };
 export type MockCall = Mutable<Call> & MockEmitter;
 
-// [xkcd] drop Mutable?
-export interface MockCallAgent extends Mutable<CallAgent> {
-  // [xkcd] drop
-  emit(event: any, data?: any);
-
-  /**
-   * Add given call to calls and trigger an event to notify clients.
-   */
-  testHelperAddCall(call: Call): Promise<void>;
-}
-
 export type MockRemoteParticipant = Mutable<RemoteParticipant> & MockEmitter;
 export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
 export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
@@ -249,17 +238,35 @@ export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: Devi
   } as unknown as CallClient;
 };
 
+// [xkcd] drop Mutable?
+export interface MockCallAgent extends Mutable<CallAgent> {
+  // [xkcd] drop
+  emit(event: any, data?: any);
+
+  /**
+   * Add given call to calls and trigger an event to notify clients.
+   */
+  testHelperPushCall(call: Call): void;
+  testHelperPopCall(): void;
+}
+
 export const createMockCallAgent = (displayName: string = 'defaultDisplayName'): MockCallAgent => {
   return addMockEmitter({
     calls: [] as Call[],
     displayName: displayName,
-    testHelperAddCall(call: Call): Promise<void> {
+    testHelperPushCall(call: Call): void {
       this.calls.push(call);
       this.emit('callsUpdated', {
         added: [call],
         removed: []
       });
-      return Promise.resolve();
+    },
+    testHelperPopCall(): void {
+      const call = this.calls.pop();
+      this.emit('callsUpdated', {
+        added: [],
+        removed: [call]
+      });
     }
   }) as MockCallAgent;
 };
