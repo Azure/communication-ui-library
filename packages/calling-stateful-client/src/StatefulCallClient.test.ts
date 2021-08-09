@@ -15,7 +15,6 @@ import {
 } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallContext } from './CallContext';
-import { convertSdkRemoteStreamToDeclarativeRemoteStream } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
 import { createStatefulCallClient, createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
 import {
@@ -42,7 +41,6 @@ import {
 } from './TestUtils';
 
 const mockCallId = 'a';
-const mockParticipantCommunicationUserId = 'c';
 const mockDisplayName = 'd';
 const mockUserId = 'e';
 
@@ -108,26 +106,6 @@ async function createMockCallAndEmitCallsUpdated(
   });
   await waitWithBreakCondition(
     waitCondition ? waitCondition : () => Object.keys(testData.mockStatefulCallClient.getState().calls).length !== 0
-  );
-}
-
-async function createMockParticipantAndEmitParticipantUpdated(
-  testData: TestData,
-  waitCondition?: () => boolean
-): Promise<void> {
-  testData.mockRemoteParticipant = createMockRemoteParticipant(mockParticipantCommunicationUserId);
-  testData.mockCall.remoteParticipants = [testData.mockRemoteParticipant];
-  testData.mockCall.emit('remoteParticipantsUpdated', {
-    added: [testData.mockRemoteParticipant],
-    removed: []
-  });
-
-  await waitWithBreakCondition(
-    waitCondition
-      ? waitCondition
-      : () =>
-          Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length !==
-          0
   );
 }
 
@@ -453,11 +431,11 @@ describe('Stateful call client', () => {
     ).toBe(true);
   });
 
-  test('[xkcd] should not delete existing active screenshare screen when another stream is set unavailable', async () => {
+  test('should not delete existing active screenshare screen when another stream is set unavailable', async () => {
     const { client, callId, call, participant: participant1 } = await prepareCallWithRemoteParticipant();
 
     // First participant has an active screenshare.
-    const stream1 = createMockRemoteScreenshareStream(101);
+    const stream1 = createMockRemoteScreenshareStream(1);
     stream1.isAvailable = true;
     participant1.testHelperPushVideoStream(stream1);
     expect(
@@ -483,7 +461,7 @@ describe('Stateful call client', () => {
     ).toBe(true);
 
     // Second participant adds an _inactive_ screenshare.
-    const stream2 = createMockRemoteScreenshareStream(101);
+    const stream2 = createMockRemoteScreenshareStream(2);
     stream1.isAvailable = false;
     participant2.testHelperPushVideoStream(stream2);
     expect(
@@ -504,90 +482,62 @@ describe('Stateful call client', () => {
   });
 
   test('should not overwrite another stream of another participant if the stream ids are the same', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
+    const {
+      client,
+      callId,
+      call,
+      participant: participant1,
+      streamId,
+      stream: stream1
+    } = await prepareCallWithRemoteVideoStream();
 
-    // Participant with stream id 1
-    const mockRemoteVideoStream = createMockRemoteVideoStream(1);
-    testData.mockRemoteParticipant.videoStreams = [mockRemoteVideoStream];
-    testData.mockRemoteParticipant.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream],
-      removed: []
-    });
+    // Second participant joins.
+    const participant2 = createMockRemoteParticipant('flakyPartner');
+    call.testHelperPushRemoteParticipant(participant2);
+    expect(
+      await waitWithBreakCondition(
+        () => Object.keys(client.getState().calls[callId]?.remoteParticipants ?? {}).length === 2
+      )
+    ).toBe(true);
 
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(
-          testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-            toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-          ]?.videoStreams ?? {}
-        ).length !== 0
-    );
+    // Second participant adds video stream with the same streamId as the first participant.
+    const stream2 = createMockRemoteVideoStream(streamId);
+    participant2.testHelperPushVideoStream(stream2);
+    expect(
+      await waitWithBreakCondition(
+        () =>
+          Object.keys(
+            client.getState().calls[callId]?.remoteParticipants[toFlatCommunicationIdentifier(participant2.identifier)]
+              ?.videoStreams ?? {}
+          ).length !== 0
+      )
+    ).toBe(true);
 
-    // Second participant with stream id 1
-    const mockRemoteParticipant2 = createMockRemoteParticipant('aaaaaaaaaaaa');
-    testData.mockCall.remoteParticipants = [testData.mockRemoteParticipant, mockRemoteParticipant2];
-    testData.mockCall.emit('remoteParticipantsUpdated', {
-      added: [mockRemoteParticipant2],
-      removed: []
-    });
-
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants ?? {}).length !== 0
-    );
-
-    const mockRemoteVideoStream2 = createMockRemoteVideoStream(1);
-    mockRemoteParticipant2.videoStreams = [mockRemoteVideoStream2];
-    mockRemoteParticipant2.emit('videoStreamsUpdated', {
-      added: [mockRemoteVideoStream2],
-      removed: []
-    });
-
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(
-          testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-            toFlatCommunicationIdentifier(mockRemoteParticipant2.identifier)
-          ]?.videoStreams ?? {}
-        ).length !== 0
-    );
-
-    // Remove second participant's stream with id 1, this should not affect participant 1
-    mockRemoteParticipant2.videoStreams = [];
-    mockRemoteParticipant2.emit('videoStreamsUpdated', {
+    // Second participant removes their video stream.
+    participant2.videoStreams = [];
+    participant2.emit('videoStreamsUpdated', {
       added: [],
-      removed: [mockRemoteVideoStream2]
+      removed: [stream2]
     });
-
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(
-          testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-            toFlatCommunicationIdentifier(mockRemoteParticipant2.identifier)
-          ]?.videoStreams ?? {}
-        ).length === 0
-    );
-
-    // Participant 1 should still be able to start video as their stream was not removed
-    await testData.mockStatefulCallClient.createView(
-      mockCallId,
-      { kind: 'communicationUser', communicationUserId: mockParticipantCommunicationUserId },
-      convertSdkRemoteStreamToDeclarativeRemoteStream(mockRemoteVideoStream)
-    );
-
     expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-        toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-      ]?.videoStreams[1]
-    ).toBeDefined();
+      await waitWithBreakCondition(
+        () =>
+          Object.keys(
+            client.getState().calls[callId]?.remoteParticipants[toFlatCommunicationIdentifier(participant2.identifier)]
+              ?.videoStreams ?? {}
+          ).length === 0
+      )
+    ).toBe(true);
+
+    // Expect first participant to still be able to render video because their stream is untouched.
+    await client.createView(callId, participant1.identifier, stream1);
     expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-        toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-      ]?.videoStreams[1]?.view
-    ).toBeDefined();
+      await waitWithBreakCondition(
+        () =>
+          client.getState().calls[callId]?.remoteParticipants[toFlatCommunicationIdentifier(participant1.identifier)]
+            ?.videoStreams[streamId]?.view !== undefined
+      )
+    ).toBe(true);
   });
 
   test('should detect if call already has recording active', async () => {
@@ -845,6 +795,7 @@ const prepareCallWithRemoteParticipant = async (): Promise<PreparedCallWithRemot
 
 interface PreparedCallWithRemoteVideoStream extends PreparedCallWithRemoteParticipant {
   streamId: number;
+  stream: MockRemoteVideoStream;
 }
 
 const prepareCallWithRemoteVideoStream = async (): Promise<PreparedCallWithRemoteVideoStream> => {
@@ -863,5 +814,5 @@ const prepareCallWithRemoteVideoStream = async (): Promise<PreparedCallWithRemot
     )
   ).toBe(true);
 
-  return { ...prepared, streamId };
+  return { ...prepared, streamId, stream };
 };
