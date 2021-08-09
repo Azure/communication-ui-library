@@ -205,8 +205,12 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   return addMockEmitter(mockIncomingCall);
 }
 
-export function createMockRemoteVideoStream(id: number): MockRemoteVideoStream {
-  return addMockEmitter({ id }) as MockRemoteVideoStream;
+export function createMockRemoteVideoStream(id: number = 42): MockRemoteVideoStream {
+  return addMockEmitter({ id, mediaStreamType: 'Video' }) as MockRemoteVideoStream;
+}
+
+export function createMockRemoteScreenshareStream(id: number = 42): MockRemoteVideoStream {
+  return addMockEmitter({ id, mediaStreamType: 'ScreenSharing' }) as MockRemoteVideoStream;
 }
 
 /**
