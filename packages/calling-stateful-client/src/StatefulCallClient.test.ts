@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import {
-  Call,
   CallApiFeature,
   CallFeatureFactoryType,
   CreateViewOptions,
@@ -17,7 +16,7 @@ import {
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
-import { createStatefulCallClient, createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
+import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
 import {
   addMockEmitter,
   createMockApiFeatures,
@@ -30,7 +29,6 @@ import {
   createStatefulCallClientWithAgent,
   MockCall,
   MockCallAgent,
-  MockCommunicationUserCredential,
   MockRecordingCallFeatureImpl,
   MockRemoteParticipant,
   MockRemoteVideoStream,
@@ -40,10 +38,6 @@ import {
   stubCommunicationTokenCredential,
   waitWithBreakCondition
 } from './TestUtils';
-
-const mockCallId = 'a';
-const mockDisplayName = 'd';
-const mockUserId = 'e';
 
 jest.mock('@azure/communication-calling', () => {
   return {
@@ -72,52 +66,14 @@ jest.mock('@azure/communication-calling', () => {
   };
 });
 
-interface TestData {
-  mockCallAgent: MockCallAgent;
-  mockCall: MockCall;
-  mockRemoteParticipant: MockRemoteParticipant;
-  mockStatefulCallClient: StatefulCallClient;
-  mockRemoteVideoStream: MockRemoteVideoStream;
-}
-
-function createClientAndAgentMocks(testData: TestData): void {
-  const mockCallAgent = { calls: [] as ReadonlyArray<Call>, displayName: mockDisplayName } as MockCallAgent;
-  addMockEmitter(mockCallAgent);
-  testData.mockCallAgent = mockCallAgent;
-  testData.mockStatefulCallClient = createStatefulCallClient({
-    userId: { kind: 'communicationUser', communicationUserId: mockUserId }
-  });
-}
-
-async function createMockCallAndEmitCallsUpdated(
-  testData: TestData,
-  waitCondition?: () => boolean,
-  mockCall?: MockCall
-): Promise<void> {
-  await testData.mockStatefulCallClient.createCallAgent(new MockCommunicationUserCredential());
-  if (mockCall) {
-    testData.mockCall = mockCall;
-  } else {
-    testData.mockCall = createMockCall(mockCallId);
-  }
-  testData.mockCallAgent.calls = [testData.mockCall];
-  testData.mockCallAgent.emit('callsUpdated', {
-    added: [testData.mockCall],
-    removed: []
-  });
-  await waitWithBreakCondition(
-    waitCondition ? waitCondition : () => Object.keys(testData.mockStatefulCallClient.getState().calls).length !== 0
-  );
-}
-
 describe('Stateful call client', () => {
   test('should allow developer to specify userId and provide access to it in state', async () => {
     const client = createStatefulCallClientWithDeps(
       createMockCallClient(),
-      new CallContext({ kind: 'communicationUser', communicationUserId: mockUserId }),
+      new CallContext({ kind: 'communicationUser', communicationUserId: 'someUser' }),
       new InternalCallContext()
     );
-    expect(client.getState().userId.communicationUserId).toBe(mockUserId);
+    expect(client.getState().userId.communicationUserId).toBe('someUser');
   });
 
   test('should update callAgent state and have displayName when callAgent is created', async () => {
@@ -140,16 +96,16 @@ describe('Stateful call client', () => {
       const listener = new StateChangeListener(client);
       agent.testHelperPushCall(createMockCall());
       expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
+      expect(await waitWithBreakCondition(() => client.getState().callsEnded.length === 0)).toBe(true);
       expect(listener.onChangeCalledCount).toBe(1);
     }
     {
       const listener = new StateChangeListener(client);
       agent.testHelperPopCall();
       expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 0)).toBe(true);
+      expect(await waitWithBreakCondition(() => client.getState().callsEnded.length === 1)).toBe(true);
       expect(listener.onChangeCalledCount).toBe(1);
     }
-
-    // [xkcd] Make sure that some other test verifies that further changes to the popped call are not reflected in the state.
   });
 
   test('should update state when simple call information changes', async () => {
@@ -384,12 +340,7 @@ describe('Stateful call client', () => {
       true
     );
 
-    // End call.
-    agent.calls = [];
-    agent.emit('callsUpdated', {
-      added: [],
-      removed: [call]
-    });
+    agent.testHelperPopCall();
 
     // Expect all views to be removed.
     expect(
@@ -556,7 +507,7 @@ describe('Stateful call client', () => {
     );
   });
 
-  test('[xkcd] should detect transcription state of call', async () => {
+  test('should detect transcription state of call', async () => {
     const transcription = addMockEmitter({ name: 'Default', isTranscriptionActive: true });
     const { client, callId } = await prepareCallWithFeatures(
       createMockApiFeatures(new Map([[Features.Transcription, transcription]]))
@@ -572,107 +523,48 @@ describe('Stateful call client', () => {
     ).toBe(true);
   });
 
-  test('should unsubscribe to recording changes when call ended', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    const mockCall = createMockCall(mockCallId);
-    const featureCache = new Map<any, any>();
-    featureCache.set(Features.Recording, addMockEmitter({ name: 'Default', isRecordingActive: true }));
-    mockCall.api = createMockApiFeatures(featureCache);
-    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
-
-    await waitWithBreakCondition(
-      () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.recording.isRecordingActive === true
-    );
-
-    expect(() => testData.mockStatefulCallClient.getState().calls[mockCallId]?.recording.isRecordingActive === true);
-
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.recording.isRecordingActive).toBe(true);
-
-    testData.mockCallAgent.calls = [];
-    testData.mockCallAgent.emit('callsUpdated', {
-      added: [],
-      removed: [testData.mockCall]
-    });
-
-    await waitWithBreakCondition(() => Object.keys(testData.mockStatefulCallClient.getState().calls).length === 0);
-
-    const recording = featureCache.get(Features.Recording);
-    expect(recording.emitter.eventNames().length).toBe(0);
-  });
-
-  test('should unsubscribe to transcription changes when call ended', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    const mockCall = createMockCall(mockCallId);
-    const featureCache = new Map<any, any>();
-    featureCache.set(Features.Transcription, addMockEmitter({ name: 'Default', isTranscriptionActive: true }));
-    mockCall.api = createMockApiFeatures(featureCache);
-    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
-
-    await waitWithBreakCondition(
-      () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.transcription.isTranscriptionActive === true
-    );
-
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.transcription.isTranscriptionActive).toBe(
-      true
-    );
-
-    testData.mockCallAgent.calls = [];
-    testData.mockCallAgent.emit('callsUpdated', {
-      added: [],
-      removed: [testData.mockCall]
-    });
-
-    await waitWithBreakCondition(() => Object.keys(testData.mockStatefulCallClient.getState().calls).length === 0);
-
-    const transcription = featureCache.get(Features.Transcription);
-    expect(transcription.emitter.eventNames().length).toBe(0);
-  });
-
   test('should detect transfer requests in call', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    const mockCall = createMockCall(mockCallId);
     const transfer = addMockEmitter({ name: 'Default' });
-    const featureCache = new Map<any, any>();
-    featureCache.set(Features.Transfer, transfer);
-    mockCall.api = createMockApiFeatures(featureCache);
-    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
-
-    await waitWithBreakCondition(() => testData.mockStatefulCallClient.getState().calls[mockCallId] !== undefined);
+    const { client, callId } = await prepareCallWithFeatures(
+      createMockApiFeatures(new Map([[Features.Transfer, transfer]]))
+    );
 
     transfer.emit('transferRequested', { targetParticipant: { communicationUserId: 'a', kind: 'communicationUser' } });
-    await waitWithBreakCondition(
-      () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.transfer.receivedTransferRequests.length !== 0
-    );
-
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.transfer.receivedTransferRequests.length).toBe(
-      1
-    );
+    expect(client.getState().calls[callId]?.transfer.receivedTransferRequests.length).toBe(1);
   });
 
-  test('should unsubscribe to transfer requests when call ended', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    const mockCall = createMockCall(mockCallId);
-    const featureCache = new Map<any, any>();
-    featureCache.set(Features.Transfer, addMockEmitter({ name: 'Default' }));
-    mockCall.api = createMockApiFeatures(featureCache);
-    await createMockCallAndEmitCallsUpdated(testData, undefined, mockCall);
+  test('should not update state for an ended call', async () => {
+    const recording = addMockEmitter({ name: 'Default', isRecordingActive: true });
+    const transcription = addMockEmitter({ name: 'Default', isTranscriptionActive: true });
+    const transfer = addMockEmitter({ name: 'Default' });
+    const { client, agent, callId } = await prepareCallWithFeatures(
+      createMockApiFeatures(
+        new Map<any, any>([
+          [Features.Recording, recording],
+          [Features.Transcription, transcription],
+          [Features.Transfer, transfer]
+        ])
+      )
+    );
+    expect(client.getState().calls[callId]?.recording.isRecordingActive).toBe(true);
+    expect(client.getState().calls[callId]?.transcription.isTranscriptionActive).toBe(true);
+    expect(client.getState().calls[callId]?.transfer.receivedTransferRequests.length).toBe(0);
 
-    await waitWithBreakCondition(() => testData.mockStatefulCallClient.getState().calls[mockCallId] !== undefined);
+    agent.testHelperPopCall();
+    expect(await waitWithBreakCondition(() => client.getState().callsEnded.length === 1)).toBe(true);
+    const callEnded = client.getState().callsEnded[0];
 
-    testData.mockCallAgent.calls = [];
-    testData.mockCallAgent.emit('callsUpdated', {
-      added: [],
-      removed: [testData.mockCall]
-    });
+    // Once the call ends, expect that call state is no longer updated.
+    recording.isRecordingActive = false;
+    recording.emitter.emit('isRecordingActiveChanged');
+    expect(callEnded.recording.isRecordingActive).toBe(true);
 
-    await waitWithBreakCondition(() => Object.keys(testData.mockStatefulCallClient.getState().calls).length === 0);
+    transcription.isTranscriptionActive = false;
+    transcription.emitter.emit('isTranscriptionActiveChanged');
+    expect(callEnded.transcription.isTranscriptionActive).toBe(true);
 
-    const transfer = featureCache.get(Features.Transfer);
-    expect(transfer.emitter.eventNames().length).toBe(0);
+    transfer.emit('transferRequested', { targetParticipant: { communicationUserId: 'a', kind: 'communicationUser' } });
+    expect(callEnded.transfer.receivedTransferRequests.length).toBe(0);
   });
 });
 
