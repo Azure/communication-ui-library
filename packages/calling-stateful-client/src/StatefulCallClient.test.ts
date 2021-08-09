@@ -377,74 +377,35 @@ describe('Stateful call client', () => {
     }
   });
 
-  test('should render the stream and add to state when createView is called', async () => {
-    const testData = {} as TestData;
-    createClientAndAgentMocks(testData);
-    await createMockCallAndEmitCallsUpdated(testData);
-    await createMockParticipantAndEmitParticipantUpdated(testData);
-    await createMockRemoteVideoStreamAndEmitVideoStreamsUpdated(false, 'Video', 1, testData);
+  test('should render local stream when createView is called', async () => {
+    const { client, callId } = await prepareCallWithLocalVideoStream();
 
-    testData.mockCall.localVideoStreams = [{} as LocalVideoStream];
-    testData.mockCall.emit('localVideoStreamsUpdated', {
-      added: [{} as LocalVideoStream],
-      removed: []
-    });
+    const localVideoStream = client.getState().calls[callId]?.localVideoStreams[0];
+    expect(localVideoStream).toBeDefined();
 
-    await waitWithBreakCondition(
-      () =>
-        Object.keys(
-          testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-            toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-          ]?.videoStreams ?? {}
-        ).length !== 0
-    );
+    await client.createView(callId, undefined, localVideoStream);
+    expect(
+      await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams[0].view !== undefined)
+    ).toBe(true);
+  });
 
-    await waitWithBreakCondition(
-      () => testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams.length !== 0
-    );
+  test('should render remote stream when createView is called', async () => {
+    const { client, callId, participant, streamId } = await prepareCallWithRemoteVideoStream();
+    const participantKey = toFlatCommunicationIdentifier(participant.identifier);
 
     const remoteVideoStream =
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-        toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-      ]?.videoStreams[1];
-    if (!remoteVideoStream) {
-      expect(remoteVideoStream).toBeDefined();
-    } else {
-      testData.mockStatefulCallClient.createView(
-        mockCallId,
-        { kind: 'communicationUser', communicationUserId: mockParticipantCommunicationUserId },
-        remoteVideoStream
-      );
-    }
+      client.getState().calls[callId]?.remoteParticipants[participantKey]?.videoStreams[streamId];
+    expect(remoteVideoStream).toBeDefined();
 
-    const localVideoStream = testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams[0];
-    if (!localVideoStream) {
-      expect(localVideoStream).toBeDefined();
-    } else {
-      testData.mockStatefulCallClient.createView(mockCallId, undefined, localVideoStream);
-    }
-
-    await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-          toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-        ]?.videoStreams[1]?.view !== undefined
-    );
-
-    await waitWithBreakCondition(
-      () =>
-        testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-          toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-        ]?.videoStreams[1]?.view !== undefined
-    );
+    await client.createView(callId, participant.identifier, remoteVideoStream);
 
     expect(
-      testData.mockStatefulCallClient.getState().calls[mockCallId]?.remoteParticipants[
-        toFlatCommunicationIdentifier(testData.mockRemoteParticipant.identifier)
-      ]?.videoStreams[1]?.view
-    ).toBeDefined();
-
-    expect(testData.mockStatefulCallClient.getState().calls[mockCallId]?.localVideoStreams[0].view).toBeDefined();
+      await waitWithBreakCondition(
+        () =>
+          client.getState().calls[callId]?.remoteParticipants[participantKey]?.videoStreams[streamId]?.view !==
+          undefined
+      )
+    ).toBe(true);
   });
 
   test('should stop rendering the stream and remove from state when disposeView is called', async () => {
@@ -1001,34 +962,6 @@ describe('Stateful call client', () => {
   });
 });
 
-interface PreparedCallWithRemoteParticipant {
-  client: StatefulCallClient;
-  agent: MockCallAgent;
-  callId: string;
-  call: MockCall;
-  participant: MockRemoteParticipant;
-}
-
-const prepareCallWithRemoteParticipant = async (): Promise<PreparedCallWithRemoteParticipant> => {
-  const { agent, client, callId, call } = await prepareCall();
-
-  const participant = createMockRemoteParticipant();
-  call.testHelperPushRemoteParticipant(participant);
-  expect(
-    await waitWithBreakCondition(
-      () => Object.keys(client.getState().calls[callId]?.remoteParticipants ?? {}).length !== 0
-    )
-  ).toBe(true);
-
-  return {
-    client,
-    agent,
-    callId,
-    call,
-    participant
-  };
-};
-
 interface PreparedCall {
   client: StatefulCallClient;
   agent: MockCallAgent;
@@ -1052,4 +985,61 @@ const prepareCall = async (): Promise<PreparedCall> => {
     callId,
     call
   };
+};
+
+const prepareCallWithLocalVideoStream = async (): Promise<PreparedCall> => {
+  const prepared = await prepareCall();
+  const { client, callId, call } = prepared;
+  call.testHelperPushLocalVideoStream({} as LocalVideoStream);
+  expect(await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams.length !== 0)).toBe(
+    true
+  );
+  return prepared;
+};
+
+interface PreparedCallWithRemoteParticipant extends PreparedCall {
+  participant: MockRemoteParticipant;
+}
+
+const prepareCallWithRemoteParticipant = async (): Promise<PreparedCallWithRemoteParticipant> => {
+  const { agent, client, callId, call } = await prepareCall();
+
+  const participant = createMockRemoteParticipant();
+  call.testHelperPushRemoteParticipant(participant);
+  expect(
+    await waitWithBreakCondition(
+      () => Object.keys(client.getState().calls[callId]?.remoteParticipants ?? {}).length !== 0
+    )
+  ).toBe(true);
+
+  return {
+    client,
+    agent,
+    callId,
+    call,
+    participant
+  };
+};
+
+interface PreparedCallWithRemoteVideoStream extends PreparedCallWithRemoteParticipant {
+  streamId: number;
+}
+
+const prepareCallWithRemoteVideoStream = async (): Promise<PreparedCallWithRemoteVideoStream> => {
+  const prepared = await prepareCallWithRemoteParticipant();
+  const { client, participant, callId } = prepared;
+  const participantKey = toFlatCommunicationIdentifier(participant.identifier);
+
+  const streamId = 7;
+  const stream = createMockRemoteVideoStream(streamId);
+  participant.testHelperPushVideoStream(stream);
+  expect(
+    await waitWithBreakCondition(
+      () =>
+        Object.keys(client.getState().calls[callId]?.remoteParticipants[participantKey]?.videoStreams ?? {}).length !==
+        0
+    )
+  ).toBe(true);
+
+  return { ...prepared, streamId };
 };
