@@ -72,13 +72,17 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   const { displayName, noVideoAvailableAriaLabel } = props;
   const personaRef = useRef<HTMLElement>(null);
   const [coinSize, setCoinSize] = useState(100);
-  const personaStyles = { root: { margin: 'auto', maxHeight: '50%' } };
+  const personaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
 
   useLayoutEffect(() => {
-    if (personaRef.current) {
-      setCoinSize(personaRef.current.clientHeight);
+    if (personaRef.current && personaRef.current.parentElement) {
+      const minSize = Math.min(
+        personaRef.current.parentElement.clientHeight,
+        personaRef.current.parentElement.clientWidth
+      );
+      setCoinSize(minSize / 2);
     }
-  }, [props]);
+  }, [personaRef.current?.parentElement?.clientHeight, personaRef.current?.parentElement?.clientWidth]);
 
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
