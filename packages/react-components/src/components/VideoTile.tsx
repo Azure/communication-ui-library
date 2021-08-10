@@ -70,18 +70,19 @@ export interface PlaceholderProps {
 
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   const { displayName, noVideoAvailableAriaLabel } = props;
-  const personaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
-  const videoTileStackRef = useRef<HTMLElement>(null);
+  const personaRef = useRef<HTMLElement>(null);
   const [coinSize, setCoinSize] = useState(100);
+  const personaStyles = { root: { margin: 'auto', maxHeight: '50%' } };
 
   useLayoutEffect(() => {
-    if (videoTileStackRef.current) {
-      setCoinSize(videoTileStackRef.current.clientHeight);
+    if (personaRef.current) {
+      setCoinSize(personaRef.current.clientHeight);
     }
   }, [props]);
+
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-      <Ref innerRef={videoTileStackRef}>
+      <Ref innerRef={personaRef}>
         <Persona
           styles={personaStyles}
           coinSize={coinSize}
