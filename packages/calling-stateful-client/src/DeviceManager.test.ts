@@ -114,7 +114,6 @@ describe('device manager', () => {
   test('should detect audioDevicesUpdated update microphones/speakers in state using deviceManager', async () => {
     const manager = createMockDeviceManagerWithSpeakers(
       [speakerWithName('secondSpeaker')],
-      undefined,
       createMockDeviceManagerWithMicrophones([microphoneWithName('firstMicrophone')])
     );
     const client = createStatefulCallClientWithDeviceManager(manager);
@@ -171,12 +170,9 @@ const createMockDeviceManagerWithCameras = (cameras: VideoDeviceInfo[]): MockDev
   }) as MockDeviceManager;
 };
 
-const createMockDeviceManagerWithMicrophones = (
-  microphones: AudioDeviceInfo[],
-  selected?: AudioDeviceInfo
-): MockDeviceManager => {
+const createMockDeviceManagerWithMicrophones = (microphones: AudioDeviceInfo[]): MockDeviceManager => {
   return addMockEmitter({
-    selectedMicrophone: selected,
+    selectedMicrophone: undefined,
 
     async getMicrophones(): Promise<AudioDeviceInfo[]> {
       return [...microphones];
@@ -189,11 +185,10 @@ const createMockDeviceManagerWithMicrophones = (
 
 const createMockDeviceManagerWithSpeakers = (
   speakers: AudioDeviceInfo[],
-  selected?: AudioDeviceInfo,
   base?: MockDeviceManager
 ): MockDeviceManager => {
   const mixin = addMockEmitter({
-    selectedSpeaker: selected,
+    selectedSpeaker: undefined,
 
     async getSpeakers(): Promise<AudioDeviceInfo[]> {
       return [...speakers];
