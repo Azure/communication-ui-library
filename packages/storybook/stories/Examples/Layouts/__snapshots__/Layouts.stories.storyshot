@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call Layout 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -133,6 +134,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts One To One Call La
 exports[`storybook snapshot tests Storyshots Examples/Layouts Screen Share Layout 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"

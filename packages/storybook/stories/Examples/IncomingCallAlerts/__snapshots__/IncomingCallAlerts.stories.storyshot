@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incoming Call Modal 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -396,6 +397,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incom
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts Incoming Call Toast 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"

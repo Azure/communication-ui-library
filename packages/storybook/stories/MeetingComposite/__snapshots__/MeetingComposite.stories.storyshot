@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots Composites/MeetingComposite Basic Example 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -34,6 +35,7 @@ exports[`storybook snapshot tests Storyshots Composites/MeetingComposite Basic E
 exports[`storybook snapshot tests Storyshots Composites/MeetingComposite Join Example 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
