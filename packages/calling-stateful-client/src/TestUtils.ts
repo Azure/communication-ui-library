@@ -253,7 +253,7 @@ export async function waitWithBreakCondition(breakCondition: () => boolean): Pro
     if (breakCondition()) {
       return true;
     }
-    await waitMilliseconds(100);
+    await waitMilliseconds(10);
   }
   return false;
 }
