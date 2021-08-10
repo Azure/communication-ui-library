@@ -46,12 +46,7 @@ export function mockoutObjectFreeze(): void {
 }
 
 export interface MockEmitter {
-  // [xkcd]: Remove
   emitter: EventEmitter;
-  // [xkcd]: Remove
-  on(event: any, listener: any);
-  // [xkcd]: Remove
-  off(event: any, listener: any);
   emit(event: any, data?: any);
 }
 
@@ -61,14 +56,6 @@ type Mutable<T> = {
 
 export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
 export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
-
-// [xkcd]: Delete
-export class MockCommunicationUserCredential {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public getToken(): any {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public dispose(): void {}
-}
 
 export const stubCommunicationTokenCredential = (): CommunicationTokenCredential => {
   return {
@@ -135,8 +122,7 @@ export function addMockEmitter(object: any): any {
   return object;
 }
 
-export interface MockCall extends Mutable<Call> {
-  emit(event: string, data?: any);
+export interface MockCall extends Mutable<Call>, MockEmitter {
   testHelperPushRemoteParticipant(participant: RemoteParticipant);
   testHelperPopRemoteParticipant(): RemoteParticipant;
   testHelperPushLocalVideoStream(stream: LocalVideoStream): void;
@@ -253,6 +239,7 @@ function waitMilliseconds(duration: number): Promise<void> {
   });
 }
 
+const BREAK_CONDITION_TIMEOUT_MILLESEC = 4000;
 /**
  * This will wait for up to 4 seconds and break when the given breakCondition is true. The reason for four seconds is
  * that by default the jest timeout for waiting for test is 5 seconds so ideally we want to break this and fail then
@@ -261,11 +248,12 @@ function waitMilliseconds(duration: number): Promise<void> {
  * @param breakCondition
  */
 export async function waitWithBreakCondition(breakCondition: () => boolean): Promise<boolean> {
-  for (let i = 0; i < 40; i++) {
-    await waitMilliseconds(100);
+  const start = new Date();
+  for (let now = new Date(); +now - +start < BREAK_CONDITION_TIMEOUT_MILLESEC; now = new Date()) {
     if (breakCondition()) {
       return true;
     }
+    await waitMilliseconds(100);
   }
   return false;
 }
@@ -287,11 +275,7 @@ export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: Devi
   } as unknown as CallClient;
 };
 
-// [xkcd] drop Mutable?
-export interface MockCallAgent extends Mutable<CallAgent> {
-  // [xkcd] drop
-  emit(event: any, data?: any);
-
+export interface MockCallAgent extends Mutable<CallAgent>, MockEmitter {
   /**
    * Add given call to calls and trigger an event to notify clients.
    */

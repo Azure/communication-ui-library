@@ -79,6 +79,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
   };
 
   private selectedMicrophoneChanged = (): void => {
+    throw new Error('hia there');
     this._context.setDeviceManagerSelectedMicrophone(this._deviceManager.selectedMicrophone);
   };
 

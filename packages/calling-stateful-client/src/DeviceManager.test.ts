@@ -65,7 +65,7 @@ describe('device manager', () => {
     expect(client.getState().deviceManager.selectedMicrophone?.name).toBe('microphone');
   });
 
-  test('should detect selectedMicrophoneChanged update selectedMicrophone in state using deviceManager', async () => {
+  test('[xkcd] should detect selectedMicrophoneChanged update selectedMicrophone in state using deviceManager', async () => {
     const manager = createMockDeviceManagerWithMicrophones([microphoneWithName('firstMicrophone')]);
     const client = createStatefulCallClientWithDeviceManager(manager);
     // FIXME? Device manager is only created on request, so state is not updated unless device manager is created.
@@ -73,7 +73,9 @@ describe('device manager', () => {
 
     expect(client.getState().deviceManager.selectedMicrophone).not.toBeDefined();
     manager.emit('selectedMicrophoneChanged', {});
-    await waitWithBreakCondition(() => client.getState().deviceManager.selectedMicrophone?.name === 'firstMicrophone');
+    expect(
+      await waitWithBreakCondition(() => client.getState().deviceManager.selectedMicrophone?.name === 'firstMicrophone')
+    ).toBe(true);
   });
 
   test('should proxy getSpeakers and update speakers in state', async () => {
@@ -108,7 +110,9 @@ describe('device manager', () => {
 
     expect(client.getState().deviceManager.selectedSpeaker).not.toBeDefined();
     manager.emit('selectedSpeakerChanged', {});
-    await waitWithBreakCondition(() => client.getState().deviceManager.selectedSpeaker?.name === 'speaker');
+    expect(
+      await waitWithBreakCondition(() => client.getState().deviceManager.selectedSpeaker?.name === 'speaker')
+    ).toBe(true);
   });
 
   test('should detect audioDevicesUpdated update microphones/speakers in state using deviceManager', async () => {
