@@ -62,8 +62,8 @@ export const createDecoratedIterator = <ItemType, OptionsType>(
  *
  * @param iteratorCreator Function that creates the base iteartor
  * @param context The ChatContext that stores all internal state.
- * @param target See {@Link ChatContext.asyncTeeErrorToState}.
- * @param clearTargets See {@Link ChatContext.asyncTeeErrorToState}.
+ * @param target See {@link ChatContext.asyncTeeErrorToState}.
+ * @param clearTargets See {@link ChatContext.asyncTeeErrorToState}.
  * @returns A function to create an iterator that handles errors when iterting over the iterator from `iteratorCreator`.
  */
 export const createErrorHandlingIterator = <ItemType, OptionsType>(
