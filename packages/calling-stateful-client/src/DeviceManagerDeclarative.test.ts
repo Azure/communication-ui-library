@@ -127,10 +127,10 @@ function createDeclarativeDeviceManager(): {
   };
 }
 
-describe('declarative device manager', () => {
+describe('device manager', () => {
   test('should proxy getCameras and update cameras in state', async () => {
     const client = createStatefulCallClientWithDeviceManager(
-      createMockDeviceManagerWithCameras([{ name: 'camera', id: '3', deviceType: 'UsbCamera' as VideoDeviceType }])
+      createMockDeviceManagerWithCameras([cameraWithName('camera')])
     );
 
     const cameras = await (await client.getDeviceManager()).getCameras();
@@ -142,23 +142,19 @@ describe('declarative device manager', () => {
   });
 
   test('should detect videoDevicesUpdated and update cameras in state using deviceManager', async () => {
-    const { mockDeviceManager, callContext } = createDeclarativeDeviceManager();
-    mockDeviceManager.emit('videoDevicesUpdated', {});
-    await waitWithBreakCondition(() => callContext.getState().deviceManager.cameras.length !== 0);
-    expect(callContext.getState().deviceManager.cameras.length).toBe(1);
-    expect(callContext.getState().deviceManager.cameras[0].name).toBe('camera');
+    const manager = createMockDeviceManagerWithCameras([cameraWithName('camera')]);
+    const client = createStatefulCallClientWithDeviceManager(manager);
+    // FIXME? Device manager is only created on request, so state is not updated unless device manager is created.
+    await client.getDeviceManager();
+
+    manager.emit('videoDevicesUpdated', {});
+    expect(await waitWithBreakCondition(() => client.getState().deviceManager.cameras.length === 1)).toBe(true);
+    expect(client.getState().deviceManager.cameras[0].name).toBe('camera');
   });
 
   test('should proxy getMicrophones and update microphones in state', async () => {
     const client = createStatefulCallClientWithDeviceManager(
-      createMockDeviceManagerWithMicrophones([
-        {
-          name: 'microphone',
-          id: '4',
-          isSystemDefault: false,
-          deviceType: 'Microphone' as AudioDeviceType
-        }
-      ])
+      createMockDeviceManagerWithMicrophones([microphoneWithName('microphone')])
     );
 
     const microphones = await (await client.getDeviceManager()).getMicrophones();
@@ -167,68 +163,6 @@ describe('declarative device manager', () => {
 
     expect(client.getState().deviceManager.microphones.length).toBe(1);
     expect(client.getState().deviceManager.microphones[0].name).toBe('microphone');
-  });
-
-  test('should proxy selectMicrophone and update selectedMicrophone in state', async () => {
-    const microphone = {
-      name: 'microphone',
-      id: '4',
-      isSystemDefault: false,
-      deviceType: 'Microphone' as AudioDeviceType
-    };
-    const client = createStatefulCallClientWithDeviceManager(createMockDeviceManagerWithMicrophones([microphone]));
-
-    expect(client.getState().deviceManager.selectedMicrophone).not.toBeDefined();
-
-    await (await client.getDeviceManager()).selectMicrophone(microphone);
-    expect(client.getState().deviceManager.selectedMicrophone).toBeDefined();
-    expect(client.getState().deviceManager.selectedMicrophone?.name).toBe('microphone');
-  });
-
-  test('should proxy getSpeakers and update speakers in state', async () => {
-    const client = createStatefulCallClientWithDeviceManager(
-      createMockDeviceManagerWithSpeakers([
-        {
-          name: 'speaker',
-          id: '5',
-          isSystemDefault: false,
-          deviceType: 'Speaker' as AudioDeviceType
-        }
-      ])
-    );
-
-    const speakers = await (await client.getDeviceManager()).getSpeakers();
-    expect(speakers.length).toBe(1);
-    expect(speakers[0].name).toBe('speaker');
-
-    expect(client.getState().deviceManager.speakers.length).toBe(1);
-    expect(client.getState().deviceManager.speakers[0].name).toBe('speaker');
-  });
-
-  test('should proxy selectSpeaker and update selectedSpeaker in state', async () => {
-    const speaker = {
-      name: 'speaker',
-      id: '5',
-      isSystemDefault: false,
-      deviceType: 'Speaker' as AudioDeviceType
-    };
-    const client = createStatefulCallClientWithDeviceManager(createMockDeviceManagerWithSpeakers([speaker]));
-
-    expect(client.getState().deviceManager.selectedSpeaker).not.toBeDefined();
-
-    await (await client.getDeviceManager()).selectSpeaker(speaker);
-    expect(client.getState().deviceManager.selectedSpeaker).toBeDefined();
-    expect(client.getState().deviceManager.selectedSpeaker?.name).toBe('speaker');
-  });
-
-  test('should proxy askDevicePermission and update deviceAccess in state', async () => {
-    const { declarativeDeviceManager, callContext } = createDeclarativeDeviceManager();
-    const deviceAccess = await declarativeDeviceManager.askDevicePermission({ audio: false, video: false });
-    expect(deviceAccess.audio).toBe(true);
-    expect(deviceAccess.video).toBe(true);
-    expect(callContext.getState().deviceManager.deviceAccess).toBeDefined();
-    expect(callContext.getState().deviceManager.deviceAccess?.audio).toBe(true);
-    expect(callContext.getState().deviceManager.deviceAccess?.video).toBe(true);
   });
 
   test('should detect audioDevicesUpdated update microphones/speakers in state using deviceManager', async () => {
@@ -251,6 +185,51 @@ describe('declarative device manager', () => {
     await waitWithBreakCondition(() => callContext.getState().deviceManager.selectedMicrophone !== undefined);
     expect(callContext.getState().deviceManager.selectedMicrophone).toBeDefined();
     expect(callContext.getState().deviceManager.selectedMicrophone?.name).toBe('selected_microphone');
+  });
+
+  test('should proxy selectMicrophone and update selectedMicrophone in state', async () => {
+    const microphone = microphoneWithName('microphone');
+    const client = createStatefulCallClientWithDeviceManager(createMockDeviceManagerWithMicrophones([microphone]));
+
+    expect(client.getState().deviceManager.selectedMicrophone).not.toBeDefined();
+
+    await (await client.getDeviceManager()).selectMicrophone(microphone);
+    expect(client.getState().deviceManager.selectedMicrophone).toBeDefined();
+    expect(client.getState().deviceManager.selectedMicrophone?.name).toBe('microphone');
+  });
+
+  test('should proxy getSpeakers and update speakers in state', async () => {
+    const client = createStatefulCallClientWithDeviceManager(
+      createMockDeviceManagerWithSpeakers([speakerWithName('speaker')])
+    );
+
+    const speakers = await (await client.getDeviceManager()).getSpeakers();
+    expect(speakers.length).toBe(1);
+    expect(speakers[0].name).toBe('speaker');
+
+    expect(client.getState().deviceManager.speakers.length).toBe(1);
+    expect(client.getState().deviceManager.speakers[0].name).toBe('speaker');
+  });
+
+  test('should proxy selectSpeaker and update selectedSpeaker in state', async () => {
+    const speaker = speakerWithName('speaker');
+    const client = createStatefulCallClientWithDeviceManager(createMockDeviceManagerWithSpeakers([speaker]));
+
+    expect(client.getState().deviceManager.selectedSpeaker).not.toBeDefined();
+
+    await (await client.getDeviceManager()).selectSpeaker(speaker);
+    expect(client.getState().deviceManager.selectedSpeaker).toBeDefined();
+    expect(client.getState().deviceManager.selectedSpeaker?.name).toBe('speaker');
+  });
+
+  test('should proxy askDevicePermission and update deviceAccess in state', async () => {
+    const { declarativeDeviceManager, callContext } = createDeclarativeDeviceManager();
+    const deviceAccess = await declarativeDeviceManager.askDevicePermission({ audio: false, video: false });
+    expect(deviceAccess.audio).toBe(true);
+    expect(deviceAccess.video).toBe(true);
+    expect(callContext.getState().deviceManager.deviceAccess).toBeDefined();
+    expect(callContext.getState().deviceManager.deviceAccess?.audio).toBe(true);
+    expect(callContext.getState().deviceManager.deviceAccess?.video).toBe(true);
   });
 
   test('should detect selectedSpeakerChanged update selectedSpeaker in state using deviceManager', async () => {
@@ -314,3 +293,23 @@ const createMockDeviceManagerWithSpeakers = (
     }
   }) as MockDeviceManager;
 };
+
+const cameraWithName = (name: string): VideoDeviceInfo => ({
+  name,
+  id: '3',
+  deviceType: 'UsbCamera' as VideoDeviceType
+});
+
+const microphoneWithName = (name: string): AudioDeviceInfo => ({
+  name,
+  id: '4',
+  isSystemDefault: false,
+  deviceType: 'Microphone' as AudioDeviceType
+});
+
+const speakerWithName = (name: string): AudioDeviceInfo => ({
+  name,
+  id: '5',
+  isSystemDefault: false,
+  deviceType: 'Speaker' as AudioDeviceType
+});
