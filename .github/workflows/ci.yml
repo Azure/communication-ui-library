@@ -143,7 +143,6 @@ jobs:
         run: rush test -o chat
 
   build_static_html_composites_sample:
-    if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'pull_request' }}
     name: Build And Test Static HTML Composites Sample
     runs-on: ubuntu-latest
     steps:
