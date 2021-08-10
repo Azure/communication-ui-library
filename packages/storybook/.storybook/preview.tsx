@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider, LocalizationProvider, namedLocales } from '@azure/communication-react';
 import { initializeIcons, loadTheme, setRTL } from '@fluentui/react';
-import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
+import { Anchor, DocsContainer } from '@storybook/addon-docs';
 import { TOC } from './TOC';
 import {
   COMPONENT_FOLDER_PREFIX,
@@ -110,7 +109,7 @@ const withRTL = (Story: any, context: any) => {
   return <Story {...context} />;
 };
 
-export const decorators = [withKnobs, withCenterStory, withThemeProvider, withLocalization, withRTL];
+export const decorators = [withCenterStory, withThemeProvider, withLocalization, withRTL];
 
 export const globalTypes = {
   theme: {

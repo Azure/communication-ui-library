@@ -39,7 +39,7 @@ const mockParticipants: CallParticipant[] = [
   }
 ];
 
-const customOnRenderAvatar = (participant: CommunicationParticipant) => {
+const customOnRenderAvatar = (participant: CommunicationParticipant): JSX.Element => {
   if (participant.userId === 'user2') {
     return (
       <img
@@ -70,7 +70,7 @@ const mockParticipantsProps: ParticipantListProps = {
 
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
 
-const onMuteAll = () => {
+const onMuteAll = (): void => {
   // your implementation to mute all participants
 };
 

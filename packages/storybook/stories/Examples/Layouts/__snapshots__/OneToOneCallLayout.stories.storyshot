@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call Layout One To One Call Layout 1`] = `
+<div
+  className="css-61 body-0"
+>
+  <div
+    className="css-61"
+    data-uses-unhanded-props={true}
+    dir="ltr"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <div
+        className="ms-Stack css-2"
+        style={
+          Object {
+            "border": "1px",
+            "height": "500px",
+            "width": "600px",
+          }
+        }
+      >
+        <div
+          className="ms-Stack css-9"
+        >
+          <div
+            className="ms-Stack css-10"
+          >
+            <div
+              className="ms-Stack css-12"
+            >
+              <div
+                aria-label=""
+                className="ms-Persona ms-Persona--size100 root-13"
+              >
+                <div
+                  className="ms-Persona-coin ms-Persona--size100 coin-20"
+                  role="presentation"
+                >
+                  <div
+                    className="ms-Persona-imageArea imageArea-22"
+                    role="presentation"
+                  >
+                    <div
+                      aria-hidden="true"
+                      className="ms-Persona-initials initials-25"
+                    >
+                      <span>
+                        H
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="ms-Stack css-80 css-28"
+          >
+            <div
+              className="ms-Stack css-29"
+            >
+              <span
+                className="css-30"
+              >
+                Holly
+              </span>
+            </div>
+            <div
+              className="ms-Stack css-31"
+            />
+          </div>
+          <div
+            className="ms-Stack css-32"
+          >
+            <div
+              className="ms-Stack css-9"
+            >
+              <div
+                className="ms-Stack css-10"
+              >
+                <div
+                  className="ms-Persona ms-Persona--size56 root-33"
+                >
+                  <div
+                    className="ms-Persona-coin ms-Persona--size56 coin-20"
+                    role="presentation"
+                  >
+                    <div
+                      className="ms-Persona-imageArea imageArea-36"
+                      role="presentation"
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="ms-Persona-initials initials-39"
+                      >
+                        <span>
+                          T
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="ms-Stack css-80 css-28"
+              >
+                <div
+                  className="ms-Stack css-29"
+                />
+                <div
+                  className="ms-Stack css-31"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

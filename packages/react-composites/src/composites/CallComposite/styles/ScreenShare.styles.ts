@@ -7,7 +7,7 @@ export const videoStreamStyle = mergeStyles({
   position: 'absolute',
   bottom: '.25rem',
   right: '.25rem',
-  height: '20%',
+  height: 'auto',
   width: '25%'
 });
 
