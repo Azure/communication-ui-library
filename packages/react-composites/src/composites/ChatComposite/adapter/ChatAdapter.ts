@@ -50,7 +50,7 @@ export interface ChatAdapter {
   setTopic(topicName: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /**
-   * Clear errors for given error types from {@Link ChatAdapter.getState.latestErrors}.
+   * Clear errors for given error types from {@link ChatAdapter.getState.latestErrors}.
    */
   clearErrors(errorTypes: ErrorType[]): void;
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -84,8 +84,8 @@ export type ParticipantsRemovedListener = (event: {
 /**
  * Listener for error events.
  *
- * Each failed operation in the {@Link ChatAdapter} triggers an 'error' event.
- * `operation` is a {@Link ChatAdapter} defined string for each unique operation performed
+ * Each failed operation in the {@link ChatAdapter} triggers an 'error' event.
+ * `operation` is a {@link ChatAdapter} defined string for each unique operation performed
  * by the adapter.
  */
 export type ChatErrorListener = (event: { operation: string; error: Error }) => void;

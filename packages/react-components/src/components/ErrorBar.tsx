@@ -6,10 +6,10 @@ import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/r
 import { useLocale } from '../localization';
 
 /**
- * {@Link ErrorBar} properties.
+ * {@link ErrorBar} properties.
  *
- * In addition to the following, {@Link ErrorBar} forwards all
- * {@Link @fluentui/react#IMessageBarProps} to the underlying {@Link @fluentui/react#MessageBar}.
+ * In addition to the following, {@link ErrorBar} forwards all
+ * {@link @fluentui/react#IMessageBarProps} to the underlying {@link @fluentui/react#MessageBar}.
  */
 export interface ErrorBarProps extends IMessageBarProps {
   /**
@@ -20,18 +20,18 @@ export interface ErrorBarProps extends IMessageBarProps {
   /**
    * Currently active errors.
    *
-   * When the error is cleared, the {@Link ErrorBar} must be removed instead of clearing {@Link ErrorBarProps.activeError}.
+   * When the error is cleared, the {@link ErrorBar} must be removed instead of clearing {@link ErrorBarProps.activeError}.
    */
   activeErrors: ErrorType[];
 
   /**
-   * Callback trigerred when the {@Link MessageBar} for an active error is dismissed.
+   * Callback trigerred when the {@link MessageBar} for an active error is dismissed.
    */
   onDismissErrors: (errorTypes: ErrorType[]) => void;
 }
 
 /**
- * All strings that may be shown on the UI in the {@Link ErrorBar}.
+ * All strings that may be shown on the UI in the {@link ErrorBar}.
  */
 export interface ErrorBarStrings {
   /**
@@ -52,7 +52,7 @@ export interface ErrorBarStrings {
   /**
    * User is no longer on the thread.
    *
-   * See also: {@Link ErrorBarStrings.sendMessageNotInThisThread} for a more specific error.
+   * See also: {@link ErrorBarStrings.sendMessageNotInThisThread} for a more specific error.
    */
   userNotInThisThread: string;
 
@@ -69,16 +69,16 @@ export interface ErrorBarStrings {
 }
 
 /**
- * All errors that can be shown in the {@Link ErrorBar}.
+ * All errors that can be shown in the {@link ErrorBar}.
  */
 export type ErrorType = keyof ErrorBarStrings;
 
 /**
  * A component to show error messages on the UI.
- * All strings that can be shown are accepted as the {@Link ErrorBarProps.strings} so that they can be localized.
- * Active errors are selected by {@Link ErrorBarProps.activeErrors}.
+ * All strings that can be shown are accepted as the {@link ErrorBarProps.strings} so that they can be localized.
+ * Active errors are selected by {@link ErrorBarProps.activeErrors}.
  *
- * Uses {@Link @fluentui/react#MessageBar} UI element.
+ * Uses {@link @fluentui/react#MessageBar} UI element.
  */
 export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const localeStrings = useLocale().strings.errorBar;

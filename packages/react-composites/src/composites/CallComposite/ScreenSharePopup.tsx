@@ -27,10 +27,19 @@ const DRAG_OPTIONS: IDragOptions = {
 
 export interface ScreenSharePopupProps {
   onStopScreenShare: () => Promise<void>;
+
+  /**
+   * ID of the react element to host the screenshare modal window in.
+   * If this is not supplied the modal dialog is hosted in a fixed
+   * position element rendered at the end of the document.
+   *
+   * {@link https://docs.microsoft.com/en-us/javascript/api/react-internal/ilayerprops?view=office-ui-fabric-react-latest#hostId}
+   */
+  hostId?: string;
 }
 
 export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
-  const { onStopScreenShare } = props;
+  const { hostId, onStopScreenShare } = props;
   const [stoppingInProgress, setStoppingInProgress] = useState(false);
 
   const theme = useTheme();
@@ -60,29 +69,34 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
     }
   }, [onStopScreenShare]);
 
-  // Beware: The FocusTrapCallout is a workaround to allow users to tab-navigate out of the Modal. There is an open
-  // issue here: https://github.com/microsoft/fluentui/issues/18924
-
   return (
-    <>
-      <Modal isOpen={true} isModeless={true} dragOptions={DRAG_OPTIONS} styles={screenSharePopupModalStylesThemed}>
-        <Stack style={screenSharePopupModalStackStyles} horizontalAlign={'center'}>
-          <Stack verticalFill={true} verticalAlign={'center'} horizontalAlign={'center'}>
-            <ShareScreenStart20Filled primaryFill="disabled" />
-            <Label style={screenSharePopupModalLabelStyles}>{STOP_SCREENSHARE_LABEL_TEXT}</Label>
-          </Stack>
-          <DefaultButton
-            styles={screenSharePopupModalButtonStylesThemed}
-            onRenderIcon={onRenderStopScreenShareIcon}
-            onClick={onStopScreenShareClicked}
-            text={STOP_SCREENSHARE_BUTTON_TEXT}
-            disabled={stoppingInProgress}
-          />
+    <Modal
+      layerProps={hostId ? { hostId } : undefined}
+      isOpen={true}
+      isModeless={true}
+      dragOptions={DRAG_OPTIONS}
+      styles={screenSharePopupModalStylesThemed}
+    >
+      <Stack style={screenSharePopupModalStackStyles} horizontalAlign={'center'}>
+        <Stack verticalFill={true} verticalAlign={'center'} horizontalAlign={'center'}>
+          <ShareScreenStart20Filled primaryFill="disabled" />
+          <Label style={screenSharePopupModalLabelStyles}>{STOP_SCREENSHARE_LABEL_TEXT}</Label>
         </Stack>
-        <FocusTrapCallout
-          focusTrapProps={{ isClickableOutsideFocusTrap: true, forceFocusInsideTrap: false }}
-        ></FocusTrapCallout>
-      </Modal>
-    </>
+        <DefaultButton
+          styles={screenSharePopupModalButtonStylesThemed}
+          onRenderIcon={onRenderStopScreenShareIcon}
+          onClick={onStopScreenShareClicked}
+          text={STOP_SCREENSHARE_BUTTON_TEXT}
+          disabled={stoppingInProgress}
+        />
+      </Stack>
+      {/*
+        The FocusTrapCallout is a workaround to allow users to tab-navigate out of the Modal. There is an open
+        issue here: https://github.com/microsoft/fluentui/issues/18924
+      */}
+      <FocusTrapCallout
+        focusTrapProps={{ isClickableOutsideFocusTrap: true, forceFocusInsideTrap: false }}
+      ></FocusTrapCallout>
+    </Modal>
   );
 };

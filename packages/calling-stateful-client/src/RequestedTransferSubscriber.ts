@@ -5,7 +5,7 @@ import { Call, Transfer } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 
 /**
- * Subscribe to 'stateChanged' events in {@Link @azure/communication-calling#Transfer}. These are outgoing or sent
+ * Subscribe to 'stateChanged' events in {@link @azure/communication-calling#Transfer}. These are outgoing or sent
  * requests.
  */
 export class RequestedTransferSubscriber {
