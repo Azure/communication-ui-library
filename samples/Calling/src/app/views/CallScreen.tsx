@@ -22,7 +22,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, callLocator, displayName, onCallEnded, onCallError } = props;
   const [adapter, setAdapter] = useState<CallAdapter>();
   const adapterRef = useRef<CallAdapter>();
-  const { currentTheme } = useSwitchableFluentTheme();
+  const { currentTheme, currentRtl } = useSwitchableFluentTheme();
 
   useEffect(() => {
     (async () => {
@@ -52,5 +52,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
-  return <CallComposite adapter={adapter} fluentTheme={currentTheme.theme} callInvitationURL={window.location.href} />;
+  return (
+    <CallComposite
+      adapter={adapter}
+      fluentTheme={currentTheme.theme}
+      rtl={currentRtl}
+      callInvitationURL={window.location.href}
+    />
+  );
 };
