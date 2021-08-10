@@ -143,7 +143,7 @@ export interface MockCall extends Mutable<Call> {
   testHelperPopLocalVideoStream(): LocalVideoStream;
 }
 
-export function createMockCall(mockCallId: string = 'defaultCallID'): MockCall {
+export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
   return addMockEmitter({
     id: mockCallId,
     remoteParticipants: [] as RemoteParticipant[],
@@ -181,7 +181,7 @@ export interface MockRemoteParticipant extends Mutable<RemoteParticipant> {
 }
 
 export function createMockRemoteParticipant(
-  mockCommunicationUserId: string = 'defaulRemoteParticipantId'
+  mockCommunicationUserId = 'defaulRemoteParticipantId'
 ): MockRemoteParticipant {
   return addMockEmitter({
     identifier: { kind: 'communicationUser', communicationUserId: mockCommunicationUserId },
@@ -205,11 +205,11 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   return addMockEmitter(mockIncomingCall);
 }
 
-export function createMockRemoteVideoStream(id: number = 42): MockRemoteVideoStream {
+export function createMockRemoteVideoStream(id = 42): MockRemoteVideoStream {
   return addMockEmitter({ id, mediaStreamType: 'Video' }) as MockRemoteVideoStream;
 }
 
-export function createMockRemoteScreenshareStream(id: number = 42): MockRemoteVideoStream {
+export function createMockRemoteScreenshareStream(id = 42): MockRemoteVideoStream {
   return addMockEmitter({ id, mediaStreamType: 'ScreenSharing' }) as MockRemoteVideoStream;
 }
 
@@ -299,7 +299,7 @@ export interface MockCallAgent extends Mutable<CallAgent> {
   testHelperPopCall(): void;
 }
 
-export const createMockCallAgent = (displayName: string = 'defaultDisplayName'): MockCallAgent => {
+export const createMockCallAgent = (displayName = 'defaultDisplayName'): MockCallAgent => {
   return addMockEmitter({
     calls: [] as Call[],
     displayName: displayName,

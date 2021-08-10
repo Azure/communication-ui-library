@@ -4,11 +4,9 @@
 import {
   CallApiFeature,
   CallFeatureFactoryType,
-  CreateViewOptions,
   Features,
   LocalVideoStream,
   RecordingCallFeature,
-  RemoteVideoStream,
   TranscriptionCallFeature,
   TransferCallFeature,
   VideoStreamRendererView
@@ -41,15 +39,14 @@ import {
 
 jest.mock('@azure/communication-calling', () => {
   return {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    VideoStreamRenderer: jest.fn().mockImplementation((videoStream: LocalVideoStream | RemoteVideoStream) => {
+    VideoStreamRenderer: jest.fn().mockImplementation(() => {
       return {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        createView: (options?: CreateViewOptions) => {
+        createView: () => {
           return Promise.resolve<VideoStreamRendererView>({} as VideoStreamRendererView);
         },
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        dispose: () => {}
+        dispose: () => {
+          // Nothing to dipose is fake implementation.
+        }
       };
     }),
     Features: {
