@@ -144,16 +144,16 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   }, [remoteParticipants, onCreateRemoteStreamView, screenShareParticipant]);
 
   return (
-    <>
-      <div className={stackContainerStyle}>
+    <Stack horizontal verticalFill>
+      <Stack.Item className={stackContainerStyle}>
         <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
             <Stack className={aspectRatioBoxContentStyle}>{sidePanelLocalParticipant}</Stack>
           </Stack>
           {sidePanelRemoteParticipants}
         </Stack>
-      </div>
-      <div className={screenShareContainerStyle}>{screenShareStreamComponent}</div>
-    </>
+      </Stack.Item>
+      <Stack.Item className={screenShareContainerStyle}>{screenShareStreamComponent}</Stack.Item>
+    </Stack>
   );
 };
