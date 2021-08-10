@@ -171,7 +171,7 @@ jobs:
           name: snapshots
           path: samples/StaticHtmlComposites/test-results/ # or path/to/artifact
       - name: Comment on PR
-        if: github.event_name == 'pull_request' && failure()
+        if: ${{ github.event_name == 'pull_request' && failure() && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
