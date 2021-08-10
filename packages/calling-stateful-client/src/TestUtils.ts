@@ -50,7 +50,7 @@ export interface MockEmitter {
   emit(event: any, data?: any);
 }
 
-type Mutable<T> = {
+export type Mutable<T> = {
   -readonly [k in keyof T]: T[k];
 };
 

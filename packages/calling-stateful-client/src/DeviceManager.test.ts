@@ -10,7 +10,13 @@ import {
   VideoDeviceType
 } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
-import { addMockEmitter, createMockCallAgent, createMockCallClient, waitWithBreakCondition } from './TestUtils';
+import {
+  Mutable,
+  addMockEmitter,
+  createMockCallAgent,
+  createMockCallClient,
+  waitWithBreakCondition
+} from './TestUtils';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
 import { InternalCallContext } from './InternalCallContext';
 
@@ -65,13 +71,14 @@ describe('device manager', () => {
     expect(client.getState().deviceManager.selectedMicrophone?.name).toBe('microphone');
   });
 
-  test('[xkcd] should detect selectedMicrophoneChanged update selectedMicrophone in state using deviceManager', async () => {
+  test('should detect selectedMicrophoneChanged update selectedMicrophone in state using deviceManager', async () => {
     const manager = createMockDeviceManagerWithMicrophones([microphoneWithName('firstMicrophone')]);
     const client = createStatefulCallClientWithDeviceManager(manager);
     // FIXME? Device manager is only created on request, so state is not updated unless device manager is created.
     await client.getDeviceManager();
 
     expect(client.getState().deviceManager.selectedMicrophone).not.toBeDefined();
+    manager.selectedMicrophone = microphoneWithName('firstMicrophone');
     manager.emit('selectedMicrophoneChanged', {});
     expect(
       await waitWithBreakCondition(() => client.getState().deviceManager.selectedMicrophone?.name === 'firstMicrophone')
@@ -109,6 +116,7 @@ describe('device manager', () => {
     await client.getDeviceManager();
 
     expect(client.getState().deviceManager.selectedSpeaker).not.toBeDefined();
+    manager.selectedSpeaker = speakerWithName('speaker');
     manager.emit('selectedSpeakerChanged', {});
     expect(
       await waitWithBreakCondition(() => client.getState().deviceManager.selectedSpeaker?.name === 'speaker')
@@ -162,7 +170,7 @@ const createStatefulCallClientWithDeviceManager = (deviceManager: MockDeviceMana
   );
 };
 
-interface MockDeviceManager extends DeviceManager {
+interface MockDeviceManager extends Mutable<DeviceManager> {
   emit(event: any, data?: any);
 }
 
