@@ -308,7 +308,7 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
  * @param callClient - StatefulCallClient returned from
- *   {@link @internal/calling-stateful-client#createStatefulCallClient}.
+ *   {@link @azure/communication-react#createStatefulCallClient}.
  * @param callAgent - Instance of {@link @azure/communication-calling#CallClient}.
  * @param deviceManager - Instance of {@link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@link @azure/communication-calling#Call}.
