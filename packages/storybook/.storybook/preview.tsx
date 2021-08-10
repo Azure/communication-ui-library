@@ -4,7 +4,7 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider, LocalizationProvider, namedLocales } from '@azure/communication-react';
-import { initializeIcons, loadTheme, setRTL } from '@fluentui/react';
+import { initializeIcons, loadTheme } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
 import {
@@ -75,8 +75,10 @@ const withThemeProvider = (Story: any, context: any) => {
     }
   }
 
+  const rtl = context.globals.rtl as string === 'rtl';
+
   return (
-    <FluentThemeProvider fluentTheme={theme}>
+    <FluentThemeProvider fluentTheme={theme} rtl={rtl}>
       <Story {...context} />
     </FluentThemeProvider>
   );
@@ -105,12 +107,7 @@ const withCenterStory = (Story: any) => {
   );
 };
 
-const withRTL = (Story: any, context: any) => {
-  setRTL(context.globals.rtl === 'rtl');
-  return <Story {...context} />;
-};
-
-export const decorators = [withKnobs, withCenterStory, withThemeProvider, withLocalization, withRTL];
+export const decorators = [withKnobs, withCenterStory, withThemeProvider, withLocalization];
 
 export const globalTypes = {
   theme: {

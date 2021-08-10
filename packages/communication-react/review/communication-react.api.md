@@ -358,6 +358,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
+    rtl?: boolean;
     locale?: Locale;
     callInvitationURL?: string;
     onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
@@ -562,6 +563,7 @@ export type ChatCompositeClientState = {
 export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
+    rtl?: boolean;
     locale?: Locale;
     onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
@@ -915,6 +917,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
+    rtl?: boolean;
 }
 
 // @public
