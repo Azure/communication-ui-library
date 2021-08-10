@@ -2,35 +2,17 @@
 // Licensed under the MIT license.
 
 import { OptionsButton, OptionsButtonProps } from '@azure/communication-react';
-import { boolean, object } from '@storybook/addon-knobs';
 import React, { useState } from 'react';
+import { defaultControlsCameras, defaultControlsMicrophones, defaultControlsSpeakers } from '../../../../controlsUtils';
 
-export const OptionsButtonWithKnobs = (props: { showLabel?: boolean }): JSX.Element => {
-  const showLabel = props.showLabel ?? boolean('Show Label', false);
-
-  const exampleCameras: { id: string; name: string }[] = object('Cameras', [
-    { id: 'camera1', name: 'Full HD Webcam' },
-    { id: 'camera2', name: 'Macbook Pro Webcam' }
-  ]);
-
-  const exampleMicrophones: { id: string; name: string }[] = object('Microphones', [
-    { id: 'mic1', name: 'Realtek HD Audio' },
-    { id: 'mic2', name: 'Macbook Pro Mic' }
-  ]);
-
-  const exampleSpeakers: { id: string; name: string }[] = object('Speakers', [
-    { id: 'speaker1', name: 'Realtek HD Audio' },
-    { id: 'speaker2', name: 'Macbook Pro Speaker' }
-  ]);
-
-  const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string }>(exampleCameras[0]);
-  const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(exampleMicrophones[0]);
-  const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string }>(exampleSpeakers[0]);
+export const OptionsButtonWithKnobs = (args: any): JSX.Element => {
+  const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string }>(defaultControlsCameras[0]);
+  const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(
+    defaultControlsMicrophones[0]
+  );
+  const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string }>(defaultControlsSpeakers[0]);
 
   const exampleOptionProps: OptionsButtonProps = {
-    cameras: exampleCameras,
-    microphones: exampleMicrophones,
-    speakers: exampleSpeakers,
     selectedCamera: selectedCamera,
     selectedMicrophone: selectedMicrophone,
     selectedSpeaker: selectedSpeaker,
@@ -45,5 +27,5 @@ export const OptionsButtonWithKnobs = (props: { showLabel?: boolean }): JSX.Elem
     }
   };
 
-  return <OptionsButton showLabel={showLabel} {...exampleOptionProps} />;
+  return <OptionsButton {...args} {...exampleOptionProps} />;
 };

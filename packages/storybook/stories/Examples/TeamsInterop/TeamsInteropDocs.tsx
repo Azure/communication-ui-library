@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Description, Heading, Subheading, Source, Title } from '@storybook/addon-docs/blocks';
+import { Description, Heading, Subheading, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;
 const ComplianceBannerText = require('!!raw-loader!./snippets/ComplianceBanner.snippet.tsx').default;

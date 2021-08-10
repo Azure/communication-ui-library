@@ -20,29 +20,25 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
       }
     >
       <div
-        className="ms-Stack css-6"
+        className="ms-Stack css-5"
       >
         <div
-          className="ms-Stack css-7"
+          className="ms-Stack css-6"
         >
           <div
             className="css-71"
           />
         </div>
         <div
-          className="ms-Stack css-81 css-8"
+          className="ms-Stack css-81 css-7"
         >
           <div
-            className="ms-Stack css-9"
+            className="ms-Stack css-8"
           >
-            <span
-              className="css-10"
-            >
-              John Krasinski
-            </span>
+            
           </div>
           <div
-            className="ms-Stack css-11"
+            className="ms-Stack css-9"
           >
             <span
               aria-hidden={true}

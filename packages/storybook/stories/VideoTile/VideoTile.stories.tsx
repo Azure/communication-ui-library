@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import { StreamMedia, VideoTile as VideoTileComponent } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs/blocks';
-import { text, boolean, number } from '@storybook/addon-knobs';
+import { Canvas, Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
 import { useVideoStreams } from '../utils';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
@@ -63,45 +63,25 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const VideoTileStory: () => JSX.Element = () => {
-  const displayName = text('Display Name', 'John Krasinski');
-  const showMuteIndicator = boolean('Show Mute Indicator', true);
-  const isVideoReady = boolean('Is Video Ready', false);
-  const isMirrored = boolean('Is Mirrored', false);
-  const isMuted = boolean('Is Muted', false);
-  const width = number('Width', 400, {
-    range: true,
-    min: 400,
-    max: 1200,
-    step: 10
-  });
-  const height = number('Height', 300, {
-    range: true,
-    min: 300,
-    max: 800,
-    step: 10
-  });
-
+const VideoTileStory = (args): JSX.Element => {
   const videoTileStyles = {
     root: {
-      height,
-      width
+      height: `${args.height}px`,
+      width: `${args.width}px`
     }
   };
 
   const videoStreams = useVideoStreams(1);
-  const videoStreamElement = isVideoReady ? videoStreams[0] : null;
+  const videoStreamElement = args.isVideoReady ? videoStreams[0] : null;
 
   return (
     <VideoTileComponent
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
-      displayName={displayName}
-      showMuteIndicator={showMuteIndicator}
-      isMirrored={isMirrored}
-      isMuted={isMuted}
-      styles={{
-        root: { videoTileStyles }
-      }}
+      displayName={args.displayName}
+      showMuteIndicator={args.showMuteIndicator}
+      isMirrored={args.isMirrored}
+      isMuted={args.isMuted}
+      styles={videoTileStyles}
     />
   );
 };
@@ -114,6 +94,22 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-videotile`,
   title: `${COMPONENT_FOLDER_PREFIX}/Video Tile`,
   component: VideoTileComponent,
+  argTypes: {
+    displayName: controlsToAdd.displayName,
+    showMuteIndicator: controlsToAdd.showMuteIndicator,
+    isVideoReady: controlsToAdd.isVideoReady,
+    isMirrored: controlsToAdd.isVideoMirrored,
+    isMuted: controlsToAdd.isMuted,
+    width: controlsToAdd.videoTileWidth,
+    height: controlsToAdd.videoTileHeight,
+    // Hiding auto-generated controls
+    userId: hiddenControl,
+    noVideoAvailableAriaLabel: hiddenControl,
+    children: hiddenControl,
+    styles: hiddenControl,
+    renderElement: hiddenControl,
+    onRenderPlaceholder: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

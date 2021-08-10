@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import { ScreenShareButton } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { CustomScreenShareButtonExample } from './snippets/Custom.snippet';
 import { ScreenShareButtonExample } from './snippets/Default.snippet';
 import { ScreenShareButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -70,11 +70,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const ScreenShareStory = (): JSX.Element => {
-  const toggleButtons = boolean('Toggle Buttons', false);
-  const showLabels = boolean('Show Labels', false);
-
-  return <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />;
+const ScreenShareStory = (args): JSX.Element => {
+  return <ScreenShareButton {...args} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -85,6 +82,13 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-screenshare`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Screen Share`,
   component: ScreenShareButton,
+  argTypes: {
+    checked: controlsToAdd.checked,
+    showLabel: controlsToAdd.showLabel,
+    // Hiding auto-generated controls
+    onToggleScreenShare: hiddenControl,
+    strings: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()
