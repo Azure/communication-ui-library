@@ -71,7 +71,7 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
 
   return (
     <Modal
-      layerProps={hostId}
+      layerProps={hostId ? { hostId } : undefined}
       isOpen={true}
       isModeless={true}
       dragOptions={DRAG_OPTIONS}
