@@ -68,6 +68,9 @@ export interface PlaceholderProps {
   noVideoAvailableAriaLabel?: string;
 }
 
+// Coin max size is set to 100px (PersonaSize.size100)
+const personaMaxSize = 200;
+
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   const { displayName, noVideoAvailableAriaLabel } = props;
   const personaRef = useRef<HTMLElement>(null);
@@ -78,7 +81,8 @@ const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
     if (personaRef.current && personaRef.current.parentElement) {
       const minSize = Math.min(
         personaRef.current.parentElement.clientHeight,
-        personaRef.current.parentElement.clientWidth
+        personaRef.current.parentElement.clientWidth,
+        personaMaxSize
       );
       setCoinSize(minSize / 2);
     }
