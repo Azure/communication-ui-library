@@ -201,7 +201,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   if (shouldFloatLocalVideo()) {
-    const floatingTileHostId = 'UILibaryFloatingTileHost';
+    const floatingTileHostId = 'UILibraryFloatingTileHost';
     return (
       <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
         <Modal
