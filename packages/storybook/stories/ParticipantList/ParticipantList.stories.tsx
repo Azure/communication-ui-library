@@ -3,12 +3,12 @@
 
 import { ParticipantList as ParticipantListComponent } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { Title, Heading, Description, Canvas, Props } from '@storybook/addon-docs/blocks';
-import { boolean, text, select } from '@storybook/addon-knobs';
+import { Title, Heading, Description, Canvas, Props } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { DefaultCallParticipantListExample } from './snippets/DefaultCall.snippet';
 import { DefaultChatParticipantListExample } from './snippets/DefaultChat.snippet';
 import { InteractiveCallParticipantListExample } from './snippets/InteractiveCall.snippet';
@@ -78,44 +78,16 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const onlyUnique = (value: string, index: number, self: string[]): boolean => {
-  return self.indexOf(value) === index;
-};
+const ParticipantListStory: (args) => JSX.Element = (args) => {
+  const participantsControls = [...args.remoteParticipants, ...args.localParticipant];
 
-const ParticipantListStory: () => JSX.Element = () => {
-  const remoteParticipantsKnob = text('Other participants (comma separated)', 'Rick, Daryl, Michonne');
-  const participantNames = remoteParticipantsKnob
-    .split(',')
-    .map((p) => p.trim())
-    .filter((p) => p)
-    .filter(onlyUnique);
-
-  if (boolean('Include you', true)) {
-    participantNames.push('You');
-  }
-
-  const screenSharer = select('Screensharer', ['None', ...participantNames], 'screensharer');
-  const callStates: string[] = [];
-  const mutedFlags: boolean[] = [];
-
-  participantNames.forEach((p) => {
-    callStates.push(
-      select(
-        'Call status of ' + p,
-        ['Idle', 'Connecting', 'Ringing', 'Connected', 'Hold', 'InLobby', 'EarlyMedia', 'Disconnected'],
-        'Connected'
-      )
-    );
-    mutedFlags.push(boolean('Is ' + p + ' muted', false));
-  });
-
-  const mockParticipants = participantNames.map((p, i) => {
+  const mockParticipants = participantsControls.map((p, i) => {
     return {
       userId: `userId ${i}`,
-      displayName: p,
-      state: callStates[i],
-      isMuted: mutedFlags[i],
-      isScreenSharing: p === screenSharer
+      displayName: p.name,
+      state: p.status,
+      isMuted: p.isMuted,
+      isScreenSharing: p.isScreenSharing
     };
   });
 
@@ -131,6 +103,7 @@ const ParticipantListStory: () => JSX.Element = () => {
       <ParticipantListComponent
         participants={mockParticipants}
         myUserId={myUserId}
+        excludeMe={args.excludeMe}
         onParticipantRemove={onParticipantRemove}
       />
     </Stack>
@@ -143,6 +116,17 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-participantlist`,
   title: `${COMPONENT_FOLDER_PREFIX}/Participant List`,
   component: ParticipantListComponent,
+  argTypes: {
+    excludeMe: controlsToAdd.excludeMeFromList,
+    localParticipant: controlsToAdd.localParticipant,
+    remoteParticipants: controlsToAdd.remoteParticipants,
+    // Hiding auto-generated controls
+    participants: hiddenControl,
+    myUserId: hiddenControl,
+    onRenderParticipant: hiddenControl,
+    onRenderAvatar: hiddenControl,
+    onParticipantRemove: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

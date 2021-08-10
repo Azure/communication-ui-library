@@ -3,12 +3,12 @@
 
 import { MessageStatus, MessageStatusIndicator as MessageStatusIndicatorComponent } from '@azure/communication-react';
 import { Provider, teamsTheme } from '@fluentui/react-northstar';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { select, text } from '@storybook/addon-knobs';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 
 const DefaultMessageStatusIndicatorsExampleText =
   require('!!raw-loader!./snippets/AllDefaultIndicators.snippet.tsx').default;
@@ -57,15 +57,15 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const MessageStatusIndicatorStory = (): JSX.Element => {
+const MessageStatusIndicatorStory = (args): JSX.Element => {
   return (
     <MessageStatusIndicatorComponent
-      status={select<MessageStatus>('Message Status', ['delivered', 'sending', 'seen', 'failed'], 'delivered')}
+      status={args.status as MessageStatus}
       strings={{
-        deliveredTooltipText: text('Delivered icon tooltip text', 'Sent'),
-        sendingTooltipText: text('Sending icon tooltip text', 'Sending'),
-        seenTooltipText: text('Seen icon tooltip text', 'Seen'),
-        failedToSendTooltipText: text('Failed to send icon tooltip text', 'Failed to send')
+        deliveredTooltipText: args.deliveredTooltipText,
+        sendingTooltipText: args.sendingTooltipText,
+        seenTooltipText: args.seenTooltipText,
+        failedToSendTooltipText: args.failedToSendTooltipText
       }}
     />
   );
@@ -79,6 +79,16 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-messagestatusindicator`,
   title: `${COMPONENT_FOLDER_PREFIX}/Message Status Indicator`,
   component: MessageStatusIndicatorComponent,
+  argTypes: {
+    status: controlsToAdd.messageStatus,
+    deliveredTooltipText: controlsToAdd.messageDeliveredTooltipText,
+    sendingTooltipText: controlsToAdd.messageSendingTooltipText,
+    seenTooltipText: controlsToAdd.messageSeenTooltipText,
+    failedToSendTooltipText: controlsToAdd.messageFailedToSendTooltipText,
+    // Hiding auto-generated controls
+    styles: hiddenControl,
+    strings: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()
