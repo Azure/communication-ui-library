@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import { ParticipantsButton, ParticipantListProps } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean, text } from '@storybook/addon-knobs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { ParticipantsButtonDefaultExample } from './snippets/Default.snippet';
 import { ParticipantsButtonWithCallLinkExample } from './snippets/WithCallLink.snippet';
 import { ParticipantsButtonWithCustomRenderExample } from './snippets/WithCustomRender.snippet';
@@ -125,15 +125,8 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-const ParticipantsStory = (): JSX.Element => {
-  const showLabels = boolean('Show Labels', false);
-  const isMuteAllAvailable = boolean('User option to mute all participants is availble', false);
-  const callInvitationURL = text('Call URL to copy', 'https://bing.com');
-  const participantsKnob = text(
-    'Participants (comma separated with You being local user)',
-    'You, Hal Jordan, Barry Allen, Bruce Wayne'
-  );
-  const mockParticipants = participantsKnob
+const ParticipantsStory = (args): JSX.Element => {
+  const mockParticipants = args.participants
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
@@ -154,15 +147,14 @@ const ParticipantsStory = (): JSX.Element => {
     participants: mockParticipants,
     myUserId: myUserId
   };
-  const onMuteAll = () => {
+  const onMuteAll = (): void => {
     // your implementation to mute all participants
   };
   return (
     <ParticipantsButton
-      showLabel={showLabels}
+      {...args}
       participantListProps={mockParticipantsProps}
-      callInvitationURL={callInvitationURL}
-      onMuteAll={isMuteAllAvailable ? onMuteAll : undefined}
+      onMuteAll={args.isMuteAllAvailable ? onMuteAll : undefined}
     />
   );
 };
@@ -175,6 +167,17 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-participants`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Participants`,
   component: ParticipantsButton,
+  argTypes: {
+    isMuteAllAvailable: controlsToAdd.isMuteAllAvailable,
+    showLabel: controlsToAdd.showLabel,
+    callInvitationURL: controlsToAdd.callInvitationURL,
+    participants: controlsToAdd.participantNames,
+    // Hiding auto-generated controls
+    participantListProps: hiddenControl,
+    styles: hiddenControl,
+    onMuteAll: hiddenControl,
+    strings: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

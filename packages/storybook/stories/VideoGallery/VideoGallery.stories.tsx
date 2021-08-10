@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { text, select } from '@storybook/addon-knobs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet';
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
@@ -17,8 +17,6 @@ const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/Cust
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 
 const importStatement = `import { VideoGallery } from '@azure/communication-react';`;
-
-const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -69,9 +67,8 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-const VideoGalleryStory: () => JSX.Element = () => {
-  const remoteParticipantsKnob = text('Other participants (comma separated)', 'Rick, Daryl, Michonne, Dwight');
-  const remoteParticipants = remoteParticipantsKnob
+const VideoGalleryStory = (args): JSX.Element => {
+  const remoteParticipants = args.remoteParticipants
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
@@ -83,11 +80,9 @@ const VideoGalleryStory: () => JSX.Element = () => {
       };
     });
 
-  const layout = select('Layout', VIDEO_GALLERY_LAYOUTS, 'default');
-
   return (
     <VideoGalleryComponent
-      layout={layout}
+      layout={args.layout}
       localParticipant={MockLocalParticipant}
       remoteParticipants={remoteParticipants}
     />
@@ -102,6 +97,23 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-videogallery`,
   title: `${COMPONENT_FOLDER_PREFIX}/Video Gallery`,
   component: VideoGalleryComponent,
+  argTypes: {
+    remoteParticipants: controlsToAdd.remoteParticipantNames,
+    layout: controlsToAdd.videoGallerylayout,
+    // Hiding auto-generated controls
+    styles: hiddenControl,
+    localParticipant: hiddenControl,
+    localVideoViewOption: hiddenControl,
+    remoteVideoViewOption: hiddenControl,
+    onCreateLocalStreamView: hiddenControl,
+    onDisposeLocalStreamView: hiddenControl,
+    onRenderLocalVideoTile: hiddenControl,
+    onCreateRemoteStreamView: hiddenControl,
+    onRenderRemoteVideoTile: hiddenControl,
+    onDisposeRemoteStreamView: hiddenControl,
+    onRenderAvatar: hiddenControl,
+    showMuteIndicator: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()
