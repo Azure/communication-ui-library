@@ -22,7 +22,7 @@ const messageArray = [
   'Have fun!'
 ];
 
-const CustomDataModelStory = (args): JSX.Element => {
+const CustomDataModelStory = (args, context): JSX.Element => {
   const [containerProps, setContainerProps] = useState<CustomDataModelExampleContainerProps>();
 
   useEffect(() => {
@@ -49,7 +49,11 @@ const CustomDataModelStory = (args): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
-        <CustomDataModelExampleContainer {...containerProps} botAvatar={getControlledBotAvatarSymbol(args.avatar)} />
+        <CustomDataModelExampleContainer
+          fluentTheme={context.theme}
+          {...containerProps}
+          botAvatar={getControlledBotAvatarSymbol(args.avatar)}
+        />
       ) : (
         <ConfigHintBanner />
       )}

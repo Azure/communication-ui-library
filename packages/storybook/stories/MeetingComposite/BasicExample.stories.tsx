@@ -12,7 +12,7 @@ import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snipp
 import { createUserCredentials } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './Utils';
 
-const BasicStory = (args): JSX.Element => {
+const BasicStory = (args, context): JSX.Element => {
   const [meetingProps, setMeetingProps] = useState<MeetingExampleProps>();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const BasicStory = (args): JSX.Element => {
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {meetingProps ? <MeetingExperience {...meetingProps} /> : <ConfigHintBanner />}
+      {meetingProps ? <MeetingExperience fluentTheme={context.theme} {...meetingProps} /> : <ConfigHintBanner />}
     </Stack>
   );
 };
