@@ -21,15 +21,6 @@ html,
   justify-content: center;
 }
 
-/*
-  This is a quick fix for: https://github.com/microsoft/fluentui/issues/18835.
-  WARNING: this is being applied to the sample, customers using the composite will
-  still hit this.
-*/
-.ms-Callout {
-  max-width: 100%;
-}
-
 .ui-provider {
   height: 0;
 }

@@ -30,8 +30,8 @@ const SidePane = (props: {
   // typed but not sent should not be lost if the side panel is closed and then reopened.
   const sidePaneStyles = props.hidden ? sidePaneContainerHiddenStyles : sidePaneContainerStyles;
   return (
-    <Stack styles={sidePaneStyles} tokens={sidePaneContainerTokens}>
-      <Stack.Item>
+    <Stack.Item disableShrink verticalFill styles={sidePaneStyles} tokens={sidePaneContainerTokens}>
+      <Stack verticalFill>
         <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderStyles}>
           <Stack.Item>{props.headingText}</Stack.Item>
           <CommandBarButton
@@ -40,15 +40,15 @@ const SidePane = (props: {
             onClick={props.onClose}
           />
         </Stack>
-      </Stack.Item>
-      <Stack grow styles={paneBodyContainer}>
-        <Stack horizontal styles={scrollableContainer}>
-          <Stack.Item verticalFill styles={scrollableContainerContents}>
-            {props.children}
-          </Stack.Item>
-        </Stack>
+        <Stack.Item verticalFill grow styles={paneBodyContainer}>
+          <Stack horizontal styles={scrollableContainer}>
+            <Stack.Item verticalFill styles={scrollableContainerContents}>
+              {props.children}
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
       </Stack>
-    </Stack>
+    </Stack.Item>
   );
 };
 
