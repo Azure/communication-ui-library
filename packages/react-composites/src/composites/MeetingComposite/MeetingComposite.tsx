@@ -32,7 +32,7 @@ export type MeetingCompositeProps = {
  * Meeting Composite brings together key components to provide a full meeting experience out of the box.
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
-  const { callAdapter, fluentTheme } = props;
+  const { callAdapter, chatAdapter, fluentTheme } = props;
 
   const [currentCallState, setCurrentCallState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
@@ -72,12 +72,17 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
           <Stack.Item grow>
             <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
           </Stack.Item>
-          {showChat && (
-            <EmbeddedChatPane chatAdapter={props.chatAdapter} fluentTheme={props.fluentTheme} onClose={closePane} />
+          {chatAdapter && (
+            <EmbeddedChatPane
+              hidden={!showChat}
+              chatAdapter={chatAdapter}
+              fluentTheme={props.fluentTheme}
+              onClose={closePane}
+            />
           )}
-          {showPeople && (
-            <CallAdapterProvider adapter={props.callAdapter}>
-              <EmbeddedPeoplePane inviteLink={props.meetingInvitationURL} onClose={closePane} />
+          {callAdapter && (
+            <CallAdapterProvider adapter={callAdapter}>
+              <EmbeddedPeoplePane hidden={!showPeople} inviteLink={props.meetingInvitationURL} onClose={closePane} />
             </CallAdapterProvider>
           )}
         </Stack>

@@ -151,7 +151,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return (
       <VideoTile
         userId={localParticipant.userId}
-        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
+        renderElement={
+          localVideoStream?.renderElement ? (
+            <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+          ) : undefined
+        }
         displayName={localParticipant?.displayName}
         styles={localVideoTileStyles}
         onRenderPlaceholder={onRenderAvatar}
