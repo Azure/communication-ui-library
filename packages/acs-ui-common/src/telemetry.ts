@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { version } from '../package.json';
+// TODO: Find a way to import version from ../package.json
+// This package is rooted at acs-ui-common/src so acs-ui-common/package.json is not accessible.
+const version = '0.0.0-alpha';
 
 export const sanitize = (version: string): string => {
   const alphaIndex = version.search(/alpha/);
