@@ -32,6 +32,7 @@ export const overlayContainerStyles: IStyle = {
 };
 
 export const disabledVideoHint = mergeStyles({
+  backgroundColor: 'inherit',
   bottom: '0.46875rem',
   boxShadow: 'none',
   textAlign: 'left',
