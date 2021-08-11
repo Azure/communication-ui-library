@@ -15,6 +15,13 @@ export const sidePaneContainerStyles: IStackItemStyles = {
   }
 };
 
+export const sidePaneContainerHiddenStyles: IStackItemStyles = {
+  root: {
+    ...sidePaneContainerStyles,
+    display: 'none'
+  }
+};
+
 export const sidePaneContainerTokens: IStackTokens = {
   childrenGap: '0.5rem'
 };
