@@ -40,19 +40,37 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
             >
               <div
                 aria-label=""
-                className="ms-Persona ms-Persona--size100 root-13"
+                className="ms-Persona ms-Persona--size48 root-13"
+                style={
+                  Object {
+                    "height": 100,
+                    "minWidth": 100,
+                  }
+                }
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size100 coin-20"
+                  className="ms-Persona-coin ms-Persona--size48 coin-20"
                   role="presentation"
                 >
                   <div
                     className="ms-Persona-imageArea imageArea-22"
                     role="presentation"
+                    style={
+                      Object {
+                        "height": 100,
+                        "width": 100,
+                      }
+                    }
                   >
                     <div
                       aria-hidden="true"
                       className="ms-Persona-initials initials-25"
+                      style={
+                        Object {
+                          "height": 100,
+                          "width": 100,
+                        }
+                      }
                     >
                       <span>
                         H
@@ -96,12 +114,12 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-36"
+                      className="ms-Persona-imageArea imageArea-37"
                       role="presentation"
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-39"
+                        className="ms-Persona-initials initials-40"
                       >
                         <span>
                           T

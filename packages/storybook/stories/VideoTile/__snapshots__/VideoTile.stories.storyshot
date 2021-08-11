@@ -26,19 +26,65 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
           className="ms-Stack css-6"
         >
           <div
-            className="css-71"
-          />
+            className="ms-Stack css-8"
+          >
+            <div
+              aria-label=""
+              className="ms-Persona ms-Persona--size48 root-9"
+              style={
+                Object {
+                  "height": 100,
+                  "minWidth": 100,
+                }
+              }
+            >
+              <div
+                className="ms-Persona-coin ms-Persona--size48 coin-16"
+                role="presentation"
+              >
+                <div
+                  className="ms-Persona-imageArea imageArea-18"
+                  role="presentation"
+                  style={
+                    Object {
+                      "height": 100,
+                      "width": 100,
+                    }
+                  }
+                >
+                  <div
+                    aria-hidden="true"
+                    className="ms-Persona-initials initials-21"
+                    style={
+                      Object {
+                        "height": 100,
+                        "width": 100,
+                      }
+                    }
+                  >
+                    <i
+                      aria-hidden={true}
+                      className="root-37 root-23"
+                      data-icon-name="Contact"
+                    >
+                      
+                    </i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div
-          className="ms-Stack css-81 css-7"
+          className="ms-Stack css-80 css-26"
         >
           <div
-            className="ms-Stack css-8"
+            className="ms-Stack css-27"
           >
             
           </div>
           <div
-            className="ms-Stack css-9"
+            className="ms-Stack css-28"
           >
             <span
               aria-hidden={true}
