@@ -11,6 +11,7 @@ import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
 import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
+import { FluentThemeProvider } from '@internal/react-components';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -65,30 +66,32 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   };
 
   return (
-    <Stack grow styles={compositeOuterContainerStyles}>
-      <Stack horizontal grow>
-        <Stack.Item grow>
-          <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
-        </Stack.Item>
-        {showChat && (
-          <EmbeddedChatPane chatAdapter={props.chatAdapter} fluentTheme={props.fluentTheme} onClose={closePane} />
-        )}
-        {showPeople && (
-          <CallAdapterProvider adapter={props.callAdapter}>
-            <EmbeddedPeoplePane inviteLink={props.meetingInvitationURL} onClose={closePane} />
-          </CallAdapterProvider>
+    <FluentThemeProvider fluentTheme={props.fluentTheme}>
+      <Stack grow styles={compositeOuterContainerStyles}>
+        <Stack horizontal grow>
+          <Stack.Item grow>
+            <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
+          </Stack.Item>
+          {showChat && (
+            <EmbeddedChatPane chatAdapter={props.chatAdapter} fluentTheme={props.fluentTheme} onClose={closePane} />
+          )}
+          {showPeople && (
+            <CallAdapterProvider adapter={props.callAdapter}>
+              <EmbeddedPeoplePane inviteLink={props.meetingInvitationURL} onClose={closePane} />
+            </CallAdapterProvider>
+          )}
+        </Stack>
+        {hasJoinedCall && (
+          <MeetingCallControlBar
+            callAdapter={callAdapter}
+            chatButtonChecked={showChat}
+            onChatButtonClicked={toggleChat}
+            peopleButtonChecked={showPeople}
+            onPeopleButtonClicked={togglePeople}
+            onEndCallClick={endCallClick}
+          />
         )}
       </Stack>
-      {hasJoinedCall && (
-        <MeetingCallControlBar
-          callAdapter={callAdapter}
-          chatButtonChecked={showChat}
-          onChatButtonClicked={toggleChat}
-          peopleButtonChecked={showPeople}
-          onPeopleButtonClicked={togglePeople}
-          onEndCallClick={endCallClick}
-        />
-      )}
-    </Stack>
+    </FluentThemeProvider>
   );
 };
