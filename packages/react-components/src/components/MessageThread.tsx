@@ -704,7 +704,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     if (!chatScrollDivRef.current) return;
     if (previousTopRef.current === 0) {
       const currentHeight = chatScrollDivRef.current.scrollHeight;
-      chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollTop + currentHeight - previousHeightRef.current;
+      chatScrollDivRef.current.scrollTop =
+        chatScrollDivRef.current.scrollTop + currentHeight - previousHeightRef.current;
     }
   }, [messages]);
 
