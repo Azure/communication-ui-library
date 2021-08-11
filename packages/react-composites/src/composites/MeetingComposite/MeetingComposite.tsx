@@ -67,7 +67,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
 
   return (
     <FluentThemeProvider fluentTheme={props.fluentTheme}>
-      <Stack grow styles={compositeOuterContainerStyles}>
+      <Stack verticalFill grow styles={compositeOuterContainerStyles}>
         <Stack horizontal grow>
           <Stack.Item grow>
             <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
