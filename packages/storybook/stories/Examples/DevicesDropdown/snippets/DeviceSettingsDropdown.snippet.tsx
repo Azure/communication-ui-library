@@ -13,7 +13,7 @@ export const DeviceSettingDropdownExample = ({ devices, onChange }: DeviceSettin
   return (
     <FluentThemeProvider fluentTheme={theme}>
       <Dropdown
-        style={{ width: '15rem' }}
+        style={{ width: '15rem', overflow: 'hidden' }}
         placeholder="Select an option"
         onChange={onChange}
         options={devices.map((device) => {

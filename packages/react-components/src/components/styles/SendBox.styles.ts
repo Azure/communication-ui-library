@@ -41,7 +41,7 @@ export const suppressIconStyle = {
 };
 
 export const sendBoxStyle = mergeStyles({
-  minHeight: '0',
+  minHeight: '2.25rem', // prevents the input text box from being sized to 0px when the meeting composite chat pane is closed.
   maxHeight: '8.25rem',
   outline: 'red 5px',
   fontWeight: 400,

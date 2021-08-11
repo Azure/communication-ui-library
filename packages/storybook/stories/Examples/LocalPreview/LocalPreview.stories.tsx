@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Title, Heading, Description, Canvas } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
+import { Title, Heading, Description, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { controlsToAdd } from '../../controlsUtils';
 import { LocalPreviewExample } from './snippets/LocalPreviewExample.snippet';
 
 const LocalPreviewExampleText = require('!!raw-loader!./snippets/LocalPreviewExample.snippet.tsx').default;
@@ -38,18 +38,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const LocalPreviewStory: () => JSX.Element = () => {
-  const isVideoAvailable = boolean('Is video available', true);
-  const isCameraEnabled = boolean('Is camera available', true);
-  const isMicrophoneEnabled = boolean('Is microphone available', true);
-
-  return (
-    <LocalPreviewExample
-      isVideoAvailable={isVideoAvailable}
-      isCameraEnabled={isCameraEnabled}
-      isMicrophoneEnabled={isMicrophoneEnabled}
-    />
-  );
+const LocalPreviewStory = (args): JSX.Element => {
+  return <LocalPreviewExample {...args} />;
 };
 
 export const LocalPreview = LocalPreviewStory.bind({});
@@ -58,6 +48,11 @@ export default {
   id: `${EXAMPLES_FOLDER_PREFIX}-localpreview`,
   title: `${EXAMPLES_FOLDER_PREFIX}/Local Preview`,
   component: LocalPreview,
+  argTypes: {
+    isVideoAvailable: controlsToAdd.isVideoAvailable,
+    isCameraEnabled: controlsToAdd.isCameraEnabled,
+    isMicrophoneEnabled: controlsToAdd.isMicrophoneEnabled
+  },
   parameters: {
     docs: {
       page: () => getDocs()

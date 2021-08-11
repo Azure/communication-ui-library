@@ -19,7 +19,76 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Compliance B
           "justifyContent": "center",
         }
       }
-    />
+    >
+      <div
+        className="ms-Stack css-1"
+        style={
+          Object {
+            "minHeight": "50%",
+            "minWidth": "50%",
+          }
+        }
+      >
+        <div
+          className="ms-Stack css-2"
+        >
+          <button
+            className="ms-Button ms-Button--primary root-3"
+            data-is-focusable={true}
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            type="button"
+          >
+            <span
+              className="ms-Button-flexContainer flexContainer-4"
+              data-automationid="splitbuttonprimary"
+            >
+              <span
+                className="ms-Button-textContainer textContainer-5"
+              >
+                <span
+                  className="ms-Button-label label-7"
+                  id="id__1"
+                >
+                  Toggle Recording
+                </span>
+              </span>
+            </span>
+          </button>
+          <button
+            className="ms-Button ms-Button--primary root-3"
+            data-is-focusable={true}
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            type="button"
+          >
+            <span
+              className="ms-Button-flexContainer flexContainer-4"
+              data-automationid="splitbuttonprimary"
+            >
+              <span
+                className="ms-Button-textContainer textContainer-5"
+              >
+                <span
+                  className="ms-Button-label label-7"
+                  id="id__4"
+                >
+                  Toggle Transcription
+                </span>
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

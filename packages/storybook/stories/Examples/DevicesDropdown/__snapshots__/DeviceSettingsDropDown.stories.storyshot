@@ -51,6 +51,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 role="combobox"
                 style={
                   Object {
+                    "overflow": "hidden",
                     "width": "15rem",
                   }
                 }

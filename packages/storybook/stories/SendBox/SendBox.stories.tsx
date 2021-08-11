@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import { SendBox as SendBoxComponent } from '@azure/communication-react';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { boolean, text } from '@storybook/addon-knobs';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
 import { CustomStylingExample } from './snippets/CustomStyling.snippet';
 import { SendBoxExample } from './snippets/SendBox.snippet';
@@ -66,25 +66,17 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const SendBoxStory = (): JSX.Element => {
+const SendBoxStory = (args): JSX.Element => {
   return (
     <div style={{ width: '31.25rem' }}>
       <SendBoxComponent
-        disabled={boolean('Disable SendBox', false, 'Injected by ACS Context')}
+        disabled={args.disabled}
         onSendMessage={async (message) => alert(`sent message: ${message} `)}
         onTyping={(): Promise<void> => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
         }}
-        systemMessage={
-          boolean('Has warning/information message', false, 'Injected by ACS Context')
-            ? text(
-                'Warning/information message for SendBox',
-                'Please wait 30 seconds to send new messages',
-                'Injected by ACS Context'
-              )
-            : undefined
-        }
+        systemMessage={args.hasWarning ? args.warningMessage : undefined}
       />
     </div>
   );
@@ -98,6 +90,20 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-sendbox`,
   title: `${COMPONENT_FOLDER_PREFIX}/Send Box`,
   component: SendBoxComponent,
+  argTypes: {
+    disabled: controlsToAdd.disabled,
+    hasWarning: controlsToAdd.isSendBoxWithWarning,
+    warningMessage: controlsToAdd.sendBoxWarningMessage,
+    // Hiding auto-generated controls
+    systemMessage: hiddenControl,
+    onSendMessage: hiddenControl,
+    onTyping: hiddenControl,
+    onRenderSystemMessage: hiddenControl,
+    supportNewline: hiddenControl,
+    onRenderIcon: hiddenControl,
+    styles: hiddenControl,
+    strings: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

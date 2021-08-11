@@ -245,19 +245,37 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     >
                       <div
                         aria-label=""
-                        className="ms-Persona ms-Persona--size100 root-28"
+                        className="ms-Persona ms-Persona--size48 root-28"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size100 coin-35"
+                          className="ms-Persona-coin ms-Persona--size48 coin-35"
                           role="presentation"
                         >
                           <div
                             className="ms-Persona-imageArea imageArea-37"
                             role="presentation"
+                            style={
+                              Object {
+                                "height": 100,
+                                "width": 100,
+                              }
+                            }
                           >
                             <div
                               aria-hidden="true"
                               className="ms-Persona-initials initials-40"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
                             >
                               <span>
                                 M

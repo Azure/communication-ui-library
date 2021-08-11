@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { MoreHorizontal20Filled, Video20Regular } from '@fluentui/react-icons';
-import { IContextualMenuItem, ContextualMenuItemType, Theme } from '@fluentui/react';
+import { IContextualMenuItem, IContextualMenuProps, ContextualMenuItemType, Theme } from '@fluentui/react';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
@@ -126,7 +126,13 @@ const generateDefaultMenuProps = (
     onSelectSpeaker
   } = props;
 
-  const defaultMenuProps: { items: IContextualMenuItem[] } = { items: [] };
+  const defaultMenuProps: IContextualMenuProps = {
+    items: [],
+
+    // Confine the menu to the parents bounds.
+    // More info: https://github.com/microsoft/fluentui/issues/18835
+    calloutProps: { styles: { root: { maxWidth: '100%' } } }
+  };
 
   if (cameras && selectedCamera && onSelectCamera) {
     defaultMenuProps.items.push({

@@ -168,7 +168,11 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         name: formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
         iconProps: { iconName: 'People' },
         subMenuProps: {
-          items: generateDefaultParticipantsSubMenuProps()
+          items: generateDefaultParticipantsSubMenuProps(),
+
+          // Confine the menu to the parents bounds.
+          // More info: https://github.com/microsoft/fluentui/issues/18835
+          calloutProps: { styles: { root: { maxWidth: '100%' } } }
         }
       });
     }

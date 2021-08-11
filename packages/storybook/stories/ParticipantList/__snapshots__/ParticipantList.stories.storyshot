@@ -33,7 +33,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Persona ms-Persona--size32 ms-Persona--online root-6"
+              className="ms-Persona ms-Persona--size32 root-6"
             >
               <div
                 className="ms-Persona-coin ms-Persona--size32 coin-13"
@@ -51,10 +51,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       R
                     </span>
                   </div>
-                  <div
-                    className="ms-Persona-presence presence-19"
-                    role="presentation"
-                  />
                 </div>
               </div>
               <div
@@ -96,7 +92,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                 className="ms-layer"
               >
                 <div
-                  className="ms-Fabric ms-Layer-content content-49"
+                  className="ms-Fabric ms-Layer-content content-52"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
@@ -129,7 +125,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   onTouchStart={[Function]}
                 >
                   <div
-                    className="ms-Callout-container container-51"
+                    className="ms-Callout-container container-54"
                     style={
                       Object {
                         "visibility": "hidden",
@@ -137,7 +133,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     }
                   >
                     <div
-                      className="ms-Callout ms-ContextualMenu-Callout root-52"
+                      className="ms-Callout ms-ContextualMenu-Callout root-55"
                       hidden={true}
                       onScroll={[Function]}
                       style={
@@ -150,7 +146,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       tabIndex={-1}
                     >
                       <div
-                        className="ms-Callout-main calloutMain-55"
+                        className="ms-Callout-main calloutMain-58"
                         onKeyDown={[Function]}
                         onMouseDown={[Function]}
                         onMouseUp={[Function]}
@@ -172,7 +168,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                           tabIndex={-1}
                         >
                           <div
-                            className="ms-FocusZone css-52 ms-ContextualMenu is-open root-23"
+                            className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
                             data-focuszone-id="FocusZone11"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
@@ -227,7 +223,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Persona ms-Persona--size32 ms-Persona--online root-6"
+              className="ms-Persona ms-Persona--size32 root-6"
             >
               <div
                 className="ms-Persona-coin ms-Persona--size32 coin-13"
@@ -245,10 +241,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       D
                     </span>
                   </div>
-                  <div
-                    className="ms-Persona-presence presence-19"
-                    role="presentation"
-                  />
                 </div>
               </div>
               <div
@@ -290,7 +282,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                 className="ms-layer"
               >
                 <div
-                  className="ms-Fabric ms-Layer-content content-49"
+                  className="ms-Fabric ms-Layer-content content-52"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
@@ -323,7 +315,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   onTouchStart={[Function]}
                 >
                   <div
-                    className="ms-Callout-container container-51"
+                    className="ms-Callout-container container-54"
                     style={
                       Object {
                         "visibility": "hidden",
@@ -331,7 +323,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     }
                   >
                     <div
-                      className="ms-Callout ms-ContextualMenu-Callout root-52"
+                      className="ms-Callout ms-ContextualMenu-Callout root-55"
                       hidden={true}
                       onScroll={[Function]}
                       style={
@@ -344,7 +336,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       tabIndex={-1}
                     >
                       <div
-                        className="ms-Callout-main calloutMain-55"
+                        className="ms-Callout-main calloutMain-58"
                         onKeyDown={[Function]}
                         onMouseDown={[Function]}
                         onMouseUp={[Function]}
@@ -366,7 +358,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                           tabIndex={-1}
                         >
                           <div
-                            className="ms-FocusZone css-52 ms-ContextualMenu is-open root-23"
+                            className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
                             data-focuszone-id="FocusZone12"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
@@ -421,7 +413,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Persona ms-Persona--size32 ms-Persona--online root-6"
+              className="ms-Persona ms-Persona--size32 ms-Persona--away root-6"
             >
               <div
                 className="ms-Persona-coin ms-Persona--size32 coin-13"
@@ -440,7 +432,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     </span>
                   </div>
                   <div
-                    className="ms-Persona-presence presence-19"
+                    className="ms-Persona-presence presence-48"
                     role="presentation"
                   />
                 </div>
@@ -484,7 +476,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                 className="ms-layer"
               >
                 <div
-                  className="ms-Fabric ms-Layer-content content-49"
+                  className="ms-Fabric ms-Layer-content content-52"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
@@ -517,7 +509,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   onTouchStart={[Function]}
                 >
                   <div
-                    className="ms-Callout-container container-51"
+                    className="ms-Callout-container container-54"
                     style={
                       Object {
                         "visibility": "hidden",
@@ -525,7 +517,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     }
                   >
                     <div
-                      className="ms-Callout ms-ContextualMenu-Callout root-52"
+                      className="ms-Callout ms-ContextualMenu-Callout root-55"
                       hidden={true}
                       onScroll={[Function]}
                       style={
@@ -538,7 +530,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       tabIndex={-1}
                     >
                       <div
-                        className="ms-Callout-main calloutMain-55"
+                        className="ms-Callout-main calloutMain-58"
                         onKeyDown={[Function]}
                         onMouseDown={[Function]}
                         onMouseUp={[Function]}
@@ -560,7 +552,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                           tabIndex={-1}
                         >
                           <div
-                            className="ms-FocusZone css-52 ms-ContextualMenu is-open root-23"
+                            className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
                             data-focuszone-id="FocusZone13"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
@@ -634,7 +626,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     </span>
                   </div>
                   <div
-                    className="ms-Persona-presence presence-19"
+                    className="ms-Persona-presence presence-50"
                     role="presentation"
                   />
                 </div>
@@ -672,7 +664,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
               </div>
             </div>
             <div
-              className="ms-Stack css-48"
+              className="ms-Stack css-51"
             >
               (you)
             </div>

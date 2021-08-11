@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Description, Heading, Source, Title } from '@storybook/addon-docs/blocks';
+import { Description, Heading, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';

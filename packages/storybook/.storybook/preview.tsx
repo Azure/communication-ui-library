@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { FluentThemeProvider, LocalizationProvider, namedLocales } from '@azure/communication-react';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
@@ -107,7 +106,7 @@ const withCenterStory = (Story: any) => {
   );
 };
 
-export const decorators = [withKnobs, withCenterStory, withThemeProvider, withLocalization];
+export const decorators = [withCenterStory, withThemeProvider, withLocalization];
 
 export const globalTypes = {
   theme: {

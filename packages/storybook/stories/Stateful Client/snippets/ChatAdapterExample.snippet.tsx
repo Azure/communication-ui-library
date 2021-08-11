@@ -36,7 +36,7 @@ export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element 
         chatAdapter.dispose();
       }
     };
-  }, [props]);
+  }, [props, chatAdapter]);
 
   return chatAdapter && <ChatComposite adapter={chatAdapter} />;
 };

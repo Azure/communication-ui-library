@@ -5,12 +5,12 @@
 import { ParticipantItem as ParticipantItemComponent } from '@azure/communication-react';
 import { Stack, mergeStyles } from '@fluentui/react';
 import { MicOff20Filled, ShareScreenStart20Filled } from '@fluentui/react-icons';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs/blocks';
-import { boolean, text } from '@storybook/addon-knobs';
+import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomAvatarExample } from './snippets/CustomAvatar.snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
 import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
@@ -68,14 +68,8 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
   return self.indexOf(value) === index;
 };
 
-const ParticipantItemStory: () => JSX.Element = () => {
-  const displayName = text('Name', 'Jim');
-  const isScreenSharing = boolean('Is screen sharing', false);
-  const isMuted = boolean('Is muted', false);
-  const me = boolean('Is You', false);
-  const menuItemsStr = text('Menu items (comma separated)', 'Mute, Remove');
-
-  const menuItems = menuItemsStr
+const ParticipantItemStory: (args) => JSX.Element = (args) => {
+  const menuItems = args.menuItemsStr
     .split(',')
     .map((menuItem) => menuItem.trim())
     .filter(onlyUnique)
@@ -93,15 +87,17 @@ const ParticipantItemStory: () => JSX.Element = () => {
   return (
     <div style={containerStyle}>
       <ParticipantItemComponent
-        displayName={displayName}
-        me={me}
+        displayName={args.displayName}
+        me={args.me}
         menuItems={menuItems}
         onRenderIcon={() => (
           <Stack horizontal={true} tokens={tokenProps}>
-            {isScreenSharing && (
+            {args.isScreenSharing && (
               <ShareScreenStart20Filled primaryFill="currentColor" className={mergeStyles({ height: '0.875rem' })} />
             )}
-            {isMuted && <MicOff20Filled primaryFill="currentColor" className={mergeStyles({ height: '0.875rem' })} />}
+            {args.isMuted && (
+              <MicOff20Filled primaryFill="currentColor" className={mergeStyles({ height: '0.875rem' })} />
+            )}
           </Stack>
         )}
       />
@@ -117,6 +113,20 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-participantitem`,
   title: `${COMPONENT_FOLDER_PREFIX}/Participant Item`,
   component: ParticipantItemComponent,
+  argTypes: {
+    displayName: controlsToAdd.displayName,
+    isScreenSharing: controlsToAdd.isScreenSharing,
+    isMuted: controlsToAdd.isMuted,
+    me: controlsToAdd.isMe,
+    menuItemsStr: controlsToAdd.participantItemMenuItemsStr,
+    // Hiding auto-generated controls
+    onRenderAvatar: hiddenControl,
+    menuItems: hiddenControl,
+    onRenderIcon: hiddenControl,
+    presence: hiddenControl,
+    styles: hiddenControl,
+    strings: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()
