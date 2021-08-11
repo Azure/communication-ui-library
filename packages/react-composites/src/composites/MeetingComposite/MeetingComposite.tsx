@@ -11,6 +11,7 @@ import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
 import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
+import { FluentThemeProvider } from '@internal/react-components';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -31,7 +32,7 @@ export type MeetingCompositeProps = {
  * Meeting Composite brings together key components to provide a full meeting experience out of the box.
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
-  const { callAdapter, fluentTheme } = props;
+  const { callAdapter, chatAdapter, fluentTheme } = props;
 
   const [currentCallState, setCurrentCallState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
@@ -65,30 +66,37 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   };
 
   return (
-    <Stack grow styles={compositeOuterContainerStyles}>
-      <Stack horizontal grow>
-        <Stack.Item grow>
-          <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
-        </Stack.Item>
-        {showChat && (
-          <EmbeddedChatPane chatAdapter={props.chatAdapter} fluentTheme={props.fluentTheme} onClose={closePane} />
-        )}
-        {showPeople && (
-          <CallAdapterProvider adapter={props.callAdapter}>
-            <EmbeddedPeoplePane inviteLink={props.meetingInvitationURL} onClose={closePane} />
-          </CallAdapterProvider>
+    <FluentThemeProvider fluentTheme={props.fluentTheme}>
+      <Stack verticalFill grow styles={compositeOuterContainerStyles}>
+        <Stack horizontal grow>
+          <Stack.Item grow>
+            <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
+          </Stack.Item>
+          {chatAdapter && (
+            <EmbeddedChatPane
+              hidden={!showChat}
+              chatAdapter={chatAdapter}
+              fluentTheme={props.fluentTheme}
+              onClose={closePane}
+            />
+          )}
+          {callAdapter && (
+            <CallAdapterProvider adapter={callAdapter}>
+              <EmbeddedPeoplePane hidden={!showPeople} inviteLink={props.meetingInvitationURL} onClose={closePane} />
+            </CallAdapterProvider>
+          )}
+        </Stack>
+        {hasJoinedCall && (
+          <MeetingCallControlBar
+            callAdapter={callAdapter}
+            chatButtonChecked={showChat}
+            onChatButtonClicked={toggleChat}
+            peopleButtonChecked={showPeople}
+            onPeopleButtonClicked={togglePeople}
+            onEndCallClick={endCallClick}
+          />
         )}
       </Stack>
-      {hasJoinedCall && (
-        <MeetingCallControlBar
-          callAdapter={callAdapter}
-          chatButtonChecked={showChat}
-          onChatButtonClicked={toggleChat}
-          peopleButtonChecked={showPeople}
-          onPeopleButtonClicked={togglePeople}
-          onEndCallClick={endCallClick}
-        />
-      )}
-    </Stack>
+    </FluentThemeProvider>
   );
 };
