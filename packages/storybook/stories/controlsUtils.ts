@@ -266,8 +266,8 @@ export const controlsToAdd = {
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
   userId: { control: 'text', defaultValue: '', name: 'User identifier for user' },
   videoGallerylayout: { control: 'select', options: VIDEO_GALLERY_LAYOUTS, defaultValue: 'default', name: 'Layout' },
-  videoTileHeight: { control: { type: 'range', min: 300, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
-  videoTileWidth: { control: { type: 'range', min: 400, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' }
+  videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
+  videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };
