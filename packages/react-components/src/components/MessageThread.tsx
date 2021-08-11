@@ -577,8 +577,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   const isAllChatMessagesLoadedRef = useRef(false);
 
-  const previousTop = useRef<number>(-1);
-  const previousHeight = useRef<number>(-1);
+  const previousTopRef = useRef<number>(-1);
+  const previousHeightRef = useRef<number>(-1);
 
   const messageIdSeenByMeRef = useRef<string>('');
 
@@ -696,15 +696,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // Execute order [newMessage useEffect] => get previousTop => dom update => [messages useEffect]
   useEffect(() => {
     if (!chatScrollDivRef.current) return;
-    previousTop.current = chatScrollDivRef.current.scrollTop;
-    previousHeight.current = chatScrollDivRef.current.scrollHeight;
+    previousTopRef.current = chatScrollDivRef.current.scrollTop;
+    previousHeightRef.current = chatScrollDivRef.current.scrollHeight;
   }, [newMessages]);
 
   useEffect(() => {
     if (!chatScrollDivRef.current) return;
-    if (previousTop.current === 0) {
+    if (previousTopRef.current === 0) {
       const currentHeight = chatScrollDivRef.current.scrollHeight;
-      chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollTop + currentHeight - previousHeight.current;
+      chatScrollDivRef.current.scrollTop = chatScrollDivRef.current.scrollTop + currentHeight - previousHeightRef.current;
     }
   }, [messages]);
 
