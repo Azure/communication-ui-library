@@ -135,10 +135,17 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
+  const tweakedOptions = {
+    ...options,
+    chatClientOptions: {
+      ...options?.chatClientOptions,
+      userAgentOptions: { userAgentPrefix: getApplicationId() }
+    }
+  };
   return createStatefulChatClientWithDeps(
-    new ChatClient(args.endpoint, args.credential, addApplicationId(options?.chatClientOptions)),
+    new ChatClient(args.endpoint, args.credential, tweakedOptions.chatClientOptions),
     args,
-    options
+    tweakedOptions
   );
 };
 
@@ -189,11 +196,4 @@ export const createStatefulChatClientWithDeps = (
     value: (targets: ChatErrorTargets[]) => context?.clearError(targets)
   });
   return proxy as StatefulChatClient;
-};
-
-const addApplicationId = (options: ChatClientOptions = {}): ChatClientOptions => {
-  return {
-    ...options,
-    userAgentOptions: { userAgentPrefix: getApplicationId() }
-  };
 };
