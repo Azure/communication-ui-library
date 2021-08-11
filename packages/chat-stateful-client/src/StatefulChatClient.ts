@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
+import { getApplicationId } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
 import { ChatClientState, ChatErrorTargets } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
@@ -135,7 +136,7 @@ export const createStatefulChatClient = (
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
   return createStatefulChatClientWithDeps(
-    new ChatClient(args.endpoint, args.credential, options?.chatClientOptions),
+    new ChatClient(args.endpoint, args.credential, addApplicationId(options?.chatClientOptions)),
     args,
     options
   );
@@ -188,4 +189,11 @@ export const createStatefulChatClientWithDeps = (
     value: (targets: ChatErrorTargets[]) => context?.clearError(targets)
   });
   return proxy as StatefulChatClient;
+};
+
+const addApplicationId = (options: ChatClientOptions = {}): ChatClientOptions => {
+  return {
+    ...options,
+    userAgentOptions: { userAgentPrefix: getApplicationId() }
+  };
 };
