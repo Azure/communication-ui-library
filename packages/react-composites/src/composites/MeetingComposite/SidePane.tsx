@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import { ChatComposite, ChatAdapter } from '../ChatComposite';
-import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack, mergeStyles } from '@fluentui/react';
+import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack } from '@fluentui/react';
 import {
   sidePaneCloseButtonStyles,
   sidePaneContainerHiddenStyles,
