@@ -8,7 +8,16 @@ export const permissionsBannerContainerStyle = {
 };
 
 export const permissionsBannerMessageBarStyle: IStyleFunctionOrObject<IMessageBarStyleProps, IMessageBarStyles> = {
-  content: { alignItems: 'center', justifyContent: 'center', position: 'relative' },
-  text: { flexGrow: '0' },
-  actions: { position: 'absolute', right: '0px' }
+  root: {
+    // Constrain permission banner height if there is a long error message in a narrow space.
+    maxHeight: '5rem'
+  },
+  text: {
+    // Ensure the dismiss action button is aligned to the right hand side by allowing text to grow to available space
+    flexGrow: '1',
+
+    // Allow errors to be multi-line. We use this property instead of `isMultiline={true}` to ensure the action button
+    // does not take a new line and is instead placed to the right hand side of the error message.
+    span: { whiteSpace: 'normal' }
+  }
 };
