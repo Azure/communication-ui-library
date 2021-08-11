@@ -5,6 +5,7 @@ import { ChatComposite, ChatAdapter } from '../ChatComposite';
 import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack } from '@fluentui/react';
 import {
   sidePaneCloseButtonStyles,
+  sidePaneContainerHiddenStyles,
   sidePaneContainerStyles,
   sidePaneContainerTokens,
   sidePaneHeaderStyles,
@@ -18,9 +19,18 @@ import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
-const SidePane = (props: { headingText: string; children: React.ReactNode; onClose: () => void }): JSX.Element => {
+const SidePane = (props: {
+  headingText: string;
+  children: React.ReactNode;
+  onClose: () => void;
+  hidden: boolean;
+}): JSX.Element => {
+  // We hide the side pane instead of not rendering the entire pane to persist certain elements
+  // between renders. An example of this is composing a chat message - a chat message that has been
+  // typed but not sent should not be lost if the side panel is closed and then reopened.
+  const sidePaneStyles = props.hidden ? sidePaneContainerHiddenStyles : sidePaneContainerStyles;
   return (
-    <Stack.Item disableShrink verticalFill styles={sidePaneContainerStyles} tokens={sidePaneContainerTokens}>
+    <Stack.Item disableShrink verticalFill styles={sidePaneStyles} tokens={sidePaneContainerTokens}>
       <Stack verticalFill>
         <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderStyles}>
           <Stack.Item>{props.headingText}</Stack.Item>
@@ -42,11 +52,15 @@ const SidePane = (props: { headingText: string; children: React.ReactNode; onClo
   );
 };
 
-export const EmbeddedPeoplePane = (props: { inviteLink?: string; onClose: () => void }): JSX.Element => {
+export const EmbeddedPeoplePane = (props: {
+  inviteLink?: string;
+  onClose: () => void;
+  hidden: boolean;
+}): JSX.Element => {
   const { inviteLink } = props;
   const participantListProps = usePropsFor(ParticipantList);
   return (
-    <SidePane headingText={'People'} onClose={props.onClose}>
+    <SidePane hidden={props.hidden} headingText={'People'} onClose={props.onClose}>
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
@@ -61,10 +75,11 @@ export const EmbeddedPeoplePane = (props: { inviteLink?: string; onClose: () => 
 export const EmbeddedChatPane = (props: {
   chatAdapter: ChatAdapter;
   fluentTheme?: PartialTheme | Theme;
+  hidden: boolean;
   onClose: () => void;
 }): JSX.Element => {
   return (
-    <SidePane headingText={'Chat'} onClose={props.onClose}>
+    <SidePane hidden={props.hidden} headingText={'Chat'} onClose={props.onClose}>
       <ChatComposite adapter={props.chatAdapter} fluentTheme={props.fluentTheme} />
     </SidePane>
   );
