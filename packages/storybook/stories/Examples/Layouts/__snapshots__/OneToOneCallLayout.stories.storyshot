@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call Layout One To One Call Layout 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"

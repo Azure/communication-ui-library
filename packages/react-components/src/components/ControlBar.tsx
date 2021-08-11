@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Stack, getRTL } from '@fluentui/react';
+import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { controlBarStyles } from './styles/ControlBar.styles';
@@ -55,7 +55,6 @@ export interface ControlBarProps {
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;
   const theme = useTheme();
-  const rtl = getRTL();
   const controlBarClassName = useMemo(() => {
     const controlBarStyle = controlBarStyles[layout ?? 'horizontal'];
     // if theme is dark and layout is floating then use palette.neutralQuaternaryAlt as background, otherwise use palette.white
@@ -66,9 +65,9 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
     // if rtl is true and layout is either floatingTop or floatingBottom then we need to override the transform-style property
     // to translate 50% to right instead of the left
     const transformOverrideStyle =
-      rtl && (layout === 'floatingTop' || layout === 'floatingBottom') ? { transform: 'translateX(50%)' } : {};
+      theme.rtl && (layout === 'floatingTop' || layout === 'floatingBottom') ? { transform: 'translateX(50%)' } : {};
     return mergeStyles(controlBarStyle, backgroundStyle, transformOverrideStyle, styles?.root);
-  }, [layout, styles?.root, theme, rtl]);
+  }, [layout, styles?.root, theme]);
   return (
     <div className={mergeStyles(mainDivStyle)}>
       <Stack className={controlBarClassName}>{props.children}</Stack>

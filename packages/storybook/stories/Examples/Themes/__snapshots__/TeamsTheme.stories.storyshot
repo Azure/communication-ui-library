@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -31,11 +32,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
       >
         <div
           className="css-61 body-1"
+          dir="ltr"
         >
           <div
             className="css-61"
             data-uses-unhanded-props={true}
-            dir="ltr"
           >
             <div
               className="ms-Stack css-3"
