@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
+import { getApplicationId } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
 import { ChatClientState, ChatErrorTargets } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
@@ -134,10 +135,17 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
+  const tweakedOptions = {
+    ...options,
+    chatClientOptions: {
+      ...options?.chatClientOptions,
+      userAgentOptions: { userAgentPrefix: getApplicationId() }
+    }
+  };
   return createStatefulChatClientWithDeps(
-    new ChatClient(args.endpoint, args.credential, options?.chatClientOptions),
+    new ChatClient(args.endpoint, args.credential, tweakedOptions.chatClientOptions),
     args,
-    options
+    tweakedOptions
   );
 };
 
