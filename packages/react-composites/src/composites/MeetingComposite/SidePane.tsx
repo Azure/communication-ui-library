@@ -20,8 +20,8 @@ import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
 const SidePane = (props: { headingText: string; children: React.ReactNode; onClose: () => void }): JSX.Element => {
   return (
-    <Stack styles={sidePaneContainerStyles} tokens={sidePaneContainerTokens}>
-      <Stack.Item>
+    <Stack.Item disableShrink verticalFill styles={sidePaneContainerStyles} tokens={sidePaneContainerTokens}>
+      <Stack verticalFill>
         <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderStyles}>
           <Stack.Item>{props.headingText}</Stack.Item>
           <CommandBarButton
@@ -30,15 +30,15 @@ const SidePane = (props: { headingText: string; children: React.ReactNode; onClo
             onClick={props.onClose}
           />
         </Stack>
-      </Stack.Item>
-      <Stack grow styles={paneBodyContainer}>
-        <Stack horizontal styles={scrollableContainer}>
-          <Stack.Item verticalFill styles={scrollableContainerContents}>
-            {props.children}
-          </Stack.Item>
-        </Stack>
+        <Stack.Item verticalFill grow styles={paneBodyContainer}>
+          <Stack horizontal styles={scrollableContainer}>
+            <Stack.Item verticalFill styles={scrollableContainerContents}>
+              {props.children}
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
       </Stack>
-    </Stack>
+    </Stack.Item>
   );
 };
 
