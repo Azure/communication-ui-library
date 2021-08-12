@@ -40,7 +40,7 @@ export const CallingComponents = (): JSX.Element => {
       {/* GridLayout Component relies on the parent's height and width, so it's required to set the height and width on its parent. */}
       <div style={{ height: '30rem', width: '30rem', border: '1px solid' }}>
         <GridLayout>
-          <VideoTile renderElement={null} displayName={'Michael'} />
+          <VideoTile displayName={'Michael'} />
         </GridLayout>
       </div>
 
