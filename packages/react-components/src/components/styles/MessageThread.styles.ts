@@ -28,7 +28,7 @@ export const messageThreadContainerStyle = mergeStyles({
 });
 
 export const noMessageStatusStyle = mergeStyles({
-  width: '1rem'
+  width: '1.25rem'
 });
 
 export const chatStyle: ComponentSlotStyle = {
