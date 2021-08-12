@@ -158,12 +158,10 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build
-        run: this will fail
+        run: rush build -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
-        run: |
-          cd samples/StaticHtmlComposites
-          rushx test:e2e
+        run: this run will fail but should comment on PR
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
