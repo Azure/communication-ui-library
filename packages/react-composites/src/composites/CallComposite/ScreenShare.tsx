@@ -37,7 +37,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
           <VideoTile
             styles={stackContainerParticipantVideoStyles}
             userId={userId}
-            renderElement={<StreamMedia videoStreamElement={renderElement ?? null} />}
+            renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
             displayName={displayName}
             isMuted={isMuted}
           />
@@ -86,7 +86,11 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       <VideoTile
         displayName={screenShareParticipant?.displayName}
         isMuted={screenShareParticipant?.isMuted}
-        renderElement={<StreamMedia videoStreamElement={screenShareStream?.renderElement ?? null} />}
+        renderElement={
+          screenShareStream?.renderElement ? (
+            <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
+          ) : undefined
+        }
         onRenderPlaceholder={onRenderPlaceholder}
         styles={{
           overlayContainer: videoStreamStyle
@@ -112,7 +116,11 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       <VideoTile
         styles={stackContainerParticipantVideoStyles}
         isMuted={localParticipant?.isMuted}
-        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
+        renderElement={
+          localVideoStream?.renderElement ? (
+            <StreamMedia videoStreamElement={localVideoStream?.renderElement} />
+          ) : undefined
+        }
         displayName={localParticipant?.displayName}
       />
     );
