@@ -77,7 +77,7 @@ const withThemeProvider = (Story: any, context: any) => {
   const rtl = context.globals.rtl as string === 'rtl';
 
   return (
-    <FluentThemeProvider fluentTheme={theme}>
+    <FluentThemeProvider fluentTheme={theme} rtl={rtl}>
       <Story {...context} theme={theme} />
     </FluentThemeProvider>
   );
