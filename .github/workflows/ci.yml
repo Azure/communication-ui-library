@@ -169,7 +169,7 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
-        if: ${{ failure() && steps.visualregressiontests.outcome != 'success' }}
+        if: ${{ steps.visualregressiontests.outcome != 'success' }}
         uses: actions/upload-artifact@v2
         with:
           name: snapshots
