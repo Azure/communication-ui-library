@@ -161,7 +161,7 @@ jobs:
           true
       - name: Build
         run: |
-          false
+          true
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
