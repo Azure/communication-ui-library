@@ -641,7 +641,7 @@ export type ChatReturnProps<Component extends (props: any) => JSX.Element> = Get
 export type ChatState = ChatUIState & ChatCompositeClientState;
 
 // @public
-export type ChatStateModifier = (state: ChatClientState) => boolean;
+export type ChatStateModifier = (state: ChatClientState) => void;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;

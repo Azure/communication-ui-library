@@ -46,7 +46,7 @@ export type ChatMessageWithStatus = ChatMessage & {
 };
 
 // @public
-export type ChatStateModifier = (state: ChatClientState) => boolean;
+export type ChatStateModifier = (state: ChatClientState) => void;
 
 // @public (undocumented)
 export type ChatThreadClientState = {
