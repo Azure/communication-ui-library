@@ -153,7 +153,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
-        return async (...args: Parameters<CallClient['createCallAgent']>) => {
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<CallClient['createCallAgent']>) => {
           // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
           // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
           // callAgent if the createCallAgent succeeds.
@@ -161,7 +161,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
           this._context.setCallAgent({ displayName: this._callAgent.displayName });
           return this._callAgent;
-        };
+        }, 'CallClient.createCallAgent');
       }
       case 'getDeviceManager': {
         return async () => {

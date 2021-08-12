@@ -12,6 +12,7 @@ import {
   VideoStreamRendererView
 } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CallError } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
@@ -25,6 +26,7 @@ import {
   createMockRemoteScreenshareStream,
   createMockRemoteVideoStream,
   createStatefulCallClientWithAgent,
+  createStatefulCallClientWithBaseClient,
   MockCall,
   MockCallAgent,
   MockRecordingCallFeatureImpl,
@@ -562,6 +564,24 @@ describe('Stateful call client', () => {
 
     transfer.emit('transferRequested', { targetParticipant: { communicationUserId: 'a', kind: 'communicationUser' } });
     expect(callEnded.transfer.receivedTransferRequests.length).toBe(0);
+  });
+});
+
+describe('errors should be reported correctly when', () => {
+  test('[xkcd] callAgent creation fails', async () => {
+    const baseClient = createMockCallClient();
+    baseClient.createCallAgent = (): Promise<MockCallAgent> => {
+      throw new Error('injected error');
+    };
+
+    const client = createStatefulCallClientWithBaseClient(baseClient);
+    const listener = new StateChangeListener(client);
+
+    await expect(client.createCallAgent(stubCommunicationTokenCredential())).rejects.toThrow(
+      new CallError('CallClient.createCallAgent', new Error('injected error'))
+    );
+    expect(listener.onChangeCalledCount).toBe(1);
+    expect(client.getState().latestErrors['CallClient.createCallAgent']).toBeDefined();
   });
 });
 
