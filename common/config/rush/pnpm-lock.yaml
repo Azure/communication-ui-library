@@ -19760,6 +19760,7 @@ packages:
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
       json-stringify-safe: 5.0.1
+      memoize-one: 5.2.1
       nan: 2.14.2
       node-forge: 0.10.0
       prettier: 2.3.1
@@ -19783,7 +19784,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-8J7drOqhxP4ovlDuGPc9y40r6GveihYTMmbOUG5/Qxi/9aocgu/q4MJEweeyBMFIXRz82xMoWH+BgEVyFU19mw==
+      integrity: sha512-ddPpWn/k6AHlV+reCFwnyxmLHEDU36DKsKsXb499OGrK9wxGQ6aUXKG95CavjhakTeApeF7APM6bjx2r4jLSQg==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -20023,6 +20024,8 @@ packages:
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
       json-stringify-safe: 5.0.1
+      lodash: 4.17.21
+      memoize-one: 5.2.1
       nan: 2.14.2
       node-forge: 0.10.0
       preact: 10.5.14
@@ -20048,7 +20051,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-xilzQ6g5eNJIjjpRGYofGAmLulxo63j9RcQqRMYj9TLCka814yOVnJxtSykIy26BJ5h0SO5yXtLh2AQukVw61g==
+      integrity: sha512-RmMw7B9bBsK0Ni7tZ7PAYatRujfPrnTCVhUY/Ac4TN0dH1Gih3//16cIMT+VTH+0RyANst1Z1JmUVlgAI+6zPw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

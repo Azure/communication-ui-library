@@ -38,7 +38,8 @@
     "history": "~5.0.0",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
-    "@fluentui/theme-samples": "8.1.5"
+    "@fluentui/theme-samples": "8.1.5",
+    "lodash": "~4.17.21"
   },
   "devDependencies": {
     "@babel/core": "7.13.10",
