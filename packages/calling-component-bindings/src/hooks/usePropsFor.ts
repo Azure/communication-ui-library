@@ -35,6 +35,7 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   const props = useSelector(selector);
   const handlers = useHandlers<Parameters<Component>[0]>(component);
   if (props !== undefined) {
+    // WARNING: This would need updated to a MERGE OBJECTS to support sub property handlers
     return { ...props, ...handlers } as any;
   }
   return undefined as any;
