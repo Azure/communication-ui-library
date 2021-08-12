@@ -78,6 +78,13 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public (undocumented)
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
+// @public
+export type AvatarData = {
+    name?: string;
+    imageUrl?: string;
+    personaColor?: string;
+};
+
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, locator: TeamsMeetingLinkLocator | GroupCallLocator, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
@@ -563,6 +570,7 @@ export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     locale?: Locale;
+    customAvatarDataProvider?: (userId: any) => Promise<AvatarData>;
     onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -1122,6 +1130,7 @@ export type MessageThreadProps = {
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
+    customAvatarDataProvider?: (userId: string) => Promise<AvatarData>;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;

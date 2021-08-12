@@ -476,6 +476,10 @@ export type MessageThreadProps = {
    */
   onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
   /**
+   * A callback function that can be used to provide custom data to an Avatar.
+   */
+  customAvatarDataProvider?: (userId: string) => Promise<AvatarData>;
+  /**
    * Optional callback to override render of the avatar.
    *
    * @param userId - user Id
@@ -531,6 +535,15 @@ export type MessageProps = {
    * @defaultValue `false`
    */
   showDate?: boolean;
+};
+
+/**
+ * Custom Data for the avatar.
+ */
+export type AvatarData = {
+  name?: string;
+  imageUrl?: string;
+  personaColor?: string;
 };
 
 /**

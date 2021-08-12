@@ -28,6 +28,13 @@ export type AllKeys<T> = {
 export const ar_SA: Locale;
 
 // @public
+export type AvatarData = {
+    name?: string;
+    imageUrl?: string;
+    personaColor?: string;
+};
+
+// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -332,6 +339,7 @@ export type MessageThreadProps = {
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
+    customAvatarDataProvider?: (userId: string) => Promise<AvatarData>;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;

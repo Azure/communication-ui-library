@@ -18,6 +18,7 @@ export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from 
 
 export { MessageThread } from './MessageThread';
 export type {
+  AvatarData,
   MessageProps,
   MessageThreadProps,
   MessageThreadStrings,
