@@ -156,8 +156,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
   );
   const mergedSendButtonStyle = useMemo(
-    () => mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer),
-    [styles?.sendMessageIconContainer]
+    () =>
+      mergeStyles(
+        sendButtonStyle,
+        theme.rtl ? { left: '0.9rem' } : { right: '0.9rem' },
+        styles?.sendMessageIconContainer
+      ),
+    [styles?.sendMessageIconContainer, theme.rtl]
   );
   const hasText = !!textValue;
   const mergedSendIconStyle = useMemo(

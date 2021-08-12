@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added rtl property to composites",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

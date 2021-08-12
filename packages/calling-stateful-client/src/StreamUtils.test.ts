@@ -129,8 +129,8 @@ function addSdkRemoteStream(
   identifier: CommunicationUserKind,
   streamId: number
 ): void {
-  const sdkRemoteVideoStream = createMockRemoteVideoStream(true);
-  sdkRemoteVideoStream.id = streamId;
+  const sdkRemoteVideoStream = createMockRemoteVideoStream(streamId);
+  sdkRemoteVideoStream.isAvailable = true;
   internalContext.setRemoteRenderInfo(
     callId,
     toFlatCommunicationIdentifier(identifier),

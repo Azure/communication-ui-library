@@ -76,7 +76,7 @@ const VideoTileStory = (args): JSX.Element => {
 
   return (
     <VideoTileComponent
-      renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
+      renderElement={args.isVideoReady ? <StreamMedia videoStreamElement={videoStreamElement} /> : undefined}
       displayName={args.displayName}
       showMuteIndicator={args.showMuteIndicator}
       isMirrored={args.isMirrored}

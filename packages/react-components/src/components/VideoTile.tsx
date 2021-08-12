@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
+import { DefaultPalette as palette, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Ref } from '@fluentui/react-northstar';
 import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
-import React from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -67,19 +68,38 @@ export interface PlaceholderProps {
   noVideoAvailableAriaLabel?: string;
 }
 
+// Coin max size is set to 100px (PersonaSize.size100)
+const personaMaxSize = 200;
+
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   const { displayName, noVideoAvailableAriaLabel } = props;
-  const personaStyles = { root: { margin: 'auto' } };
+  const personaRef = useRef<HTMLElement>(null);
+  const [coinSize, setCoinSize] = useState(100);
+  const personaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
+
+  useLayoutEffect(() => {
+    if (personaRef.current && personaRef.current.parentElement) {
+      const minSize = Math.min(
+        personaRef.current.parentElement.clientHeight,
+        personaRef.current.parentElement.clientWidth,
+        personaMaxSize
+      );
+      setCoinSize(minSize / 2);
+    }
+  }, [personaRef.current?.parentElement?.clientHeight, personaRef.current?.parentElement?.clientWidth]);
+
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-      <Persona
-        styles={personaStyles}
-        size={PersonaSize.size100}
-        hidePersonaDetails={true}
-        text={displayName ?? ''}
-        initialsTextColor="white"
-        aria-label={noVideoAvailableAriaLabel ?? ''}
-      />
+      <Ref innerRef={personaRef}>
+        <Persona
+          styles={personaStyles}
+          coinSize={coinSize}
+          hidePersonaDetails={true}
+          text={displayName ?? ''}
+          initialsTextColor="white"
+          aria-label={noVideoAvailableAriaLabel ?? ''}
+        />
+      </Ref>
     </Stack>
   );
 };
