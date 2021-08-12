@@ -4,7 +4,7 @@
 import { Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  activeContainerClassName,
+  mediaGalleryContainerStyles,
   containerStyles,
   callControlsStyles,
   subContainerStyles,
@@ -33,7 +33,7 @@ import { ScreenSharePopup } from './ScreenSharePopup';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
-  showParticipants?: boolean;
+  showCallControls: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
@@ -42,7 +42,7 @@ export interface CallScreenProps {
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, showParticipants, endCallHandler, callErrorHandler, onRenderAvatar } = props;
+  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -115,6 +115,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     }
   }
 
+  const screenShareModalHostId = 'UILibraryMediaGallery';
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       {isInCall(callStatus ?? 'None') ? (
@@ -132,12 +133,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             {callStatus === 'Connected' && (
               <>
                 <Stack styles={containerStyles} grow>
-                  <Stack.Item grow styles={activeContainerClassName}>
+                  <Stack.Item id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
                     <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
                   </Stack.Item>
                 </Stack>
                 {isScreenShareOn ? (
                   <ScreenSharePopup
+                    hostId={screenShareModalHostId}
                     onStopScreenShare={() => {
                       return adapter.stopScreenShare();
                     }}
@@ -148,15 +150,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          <Stack.Item styles={callControlsStyles}>
-            <Stack className={callControlsContainer}>
-              <CallControls
-                onEndCallClick={endCallHandler}
-                showParticipants={showParticipants}
-                callInvitationURL={callInvitationURL}
-              />
-            </Stack>
-          </Stack.Item>
+          {props.showCallControls && (
+            <Stack.Item styles={callControlsStyles}>
+              <Stack className={callControlsContainer}>
+                <CallControls
+                  showParticipantsControl={true}
+                  onEndCallClick={endCallHandler}
+                  callInvitationURL={callInvitationURL}
+                />
+              </Stack>
+            </Stack.Item>
+          )}
         </>
       ) : (
         <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />

@@ -86,6 +86,8 @@ export const GenerateMockSystemMessage = (): SystemMessage => {
   return {
     type: 'system',
     payload: {
+      type: 'content',
+      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
       messageId: Math.random().toString(),
       iconName: 'PeopleAdd',
       content: 'Elliot Woodward added Carole Poland to the chat and shared all chat history.'
@@ -99,6 +101,7 @@ export const GenerateMockCustomMessage = (): CustomMessage => {
     // Custom message's payload can be any shape, this is just an example.
     // Whatever is defined in the custom message's payload needs to be handled in onRenderCustomMessage in MessageThread.
     payload: {
+      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
       messageId: Math.random().toString(),
       content: 'Today'
     }

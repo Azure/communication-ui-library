@@ -15,7 +15,7 @@ import {
   messageStatusContainerStyle,
   noMessageStatusStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link, getRTL } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
@@ -26,7 +26,7 @@ import {
   CustomMessage,
   SystemMessage,
   ChatMessagePayload,
-  SystemMessagePayload
+  CommunicationParticipant
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -162,6 +162,10 @@ export interface MessageThreadStrings {
   saturday: string;
   /** String for Yesterday */
   yesterday: string;
+  /** String for participants joined */
+  participantJoined: string;
+  /** String for participants left */
+  participantLeft: string;
 }
 
 export interface JumpToNewMessageButtonProps {
@@ -178,18 +182,45 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
   );
 };
 
+const generateParticipantsStr = (participants: CommunicationParticipant[]): string =>
+  participants.reduce(
+    (previous, current): string => (current.displayName ? `${previous}${current.displayName} ` : previous),
+    ''
+  );
+
 export type DefaultMessageRendererType = (props: MessageProps, ids?: { messageTimestamp?: string }) => JSX.Element;
 
 const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+  const { strings } = useLocale();
   if (props.message.type === 'system') {
-    const payload: SystemMessagePayload = props.message.payload;
-    return (
-      <SystemMessageComponent
-        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-        content={payload.content ?? ''}
-        containerStyle={props?.messageContainerStyle}
-      />
-    );
+    const payload = props.message.payload;
+    if (payload.type === 'content') {
+      return (
+        <SystemMessageComponent
+          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+          content={payload.content ?? ''}
+          containerStyle={props?.messageContainerStyle}
+        />
+      );
+    }
+    if (payload.type === 'participantAdded') {
+      return (
+        <SystemMessageComponent
+          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+          content={generateParticipantsStr(payload.participants) + strings.messageThread.participantJoined}
+          containerStyle={props?.messageContainerStyle}
+        />
+      );
+    }
+    if (payload.type === 'participantRemoved') {
+      return (
+        <SystemMessageComponent
+          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+          content={generateParticipantsStr(payload.participants) + strings.messageThread.participantLeft}
+          containerStyle={props?.messageContainerStyle}
+        />
+      );
+    }
   }
 
   return <></>;
@@ -272,15 +303,6 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
               : undefined}
           </text>
         }
-        // This is a bug in fluentui react northstar not reversing left and right margins for the message bubbles of
-        // the user
-        style={
-          getRTL()
-            ? payload.mine
-              ? { marginLeft: '0rem', marginRight: '6.25rem' }
-              : { marginLeft: '6.25rem', marginRight: '0rem' }
-            : {}
-        }
       />
     );
   }
@@ -325,7 +347,7 @@ const memoizeAllMessages = memoizeFnAll(
         ) : (
           <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
         ),
-        contentPosition: (getRTL() ? !payload.mine : payload.mine) ? 'end' : 'start',
+        contentPosition: payload.mine ? 'end' : 'start',
         message: (
           <Flex vAlign="end">
             {chatMessageComponent}
@@ -354,9 +376,11 @@ const memoizeAllMessages = memoizeFnAll(
       messageProps.messageContainerStyle = styles?.systemMessageContainer;
 
       const systemMessageComponent =
-        onRenderMessage === undefined
-          ? DefaultSystemMessageRenderer(messageProps)
-          : onRenderMessage(messageProps, DefaultSystemMessageRenderer);
+        onRenderMessage === undefined ? (
+          <DefaultSystemMessageRenderer {...messageProps} />
+        ) : (
+          onRenderMessage(messageProps, (props) => <DefaultSystemMessageRenderer {...props} />)
+        );
 
       return {
         children: systemMessageComponent,
@@ -531,22 +555,23 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
-  const [isAtTopOfScroll, setIsAtTopOfScroll] = useState<boolean>(false);
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   // Used to decide if should auto scroll to bottom or show "new message" button
   const [latestPreviousChatMessage, setLatestPreviousChatMessage] = useState<ChatMessagePayload | undefined>(undefined);
   const [latestCurrentChatMessage, setLatestCurrentChatMessage] = useState<ChatMessagePayload | undefined>(undefined);
-  const [chatMessageIdJustSeen, setChatMessageIdJustSeen] = useState<string | undefined>(undefined);
   const [existsNewChatMessage, setExistsNewChatMessage] = useState<boolean>(false);
 
   const [lastSeenChatMessage, setLastSeenChatMessage] = useState<string | undefined>(undefined);
   const [lastDeliveredChatMessage, setLastDeliveredChatMessage] = useState<string | undefined>(undefined);
   const [lastSendingChatMessage, setLastSendingChatMessage] = useState<string | undefined>(undefined);
 
-  const [isAllChatMessagesLoaded, setIsAllChatMessagesLoaded] = useState<boolean>(false);
-  const isAllChatMessagesLoadedRef = useRef(isAllChatMessagesLoaded);
-  isAllChatMessagesLoadedRef.current = isAllChatMessagesLoaded;
+  const isAllChatMessagesLoadedRef = useRef(false);
+
+  const previousTopRef = useRef<number>(-1);
+  const previousHeightRef = useRef<number>(-1);
+
+  const messageIdSeenByMeRef = useRef<string>('');
 
   const chatScrollDivRef = useRef<HTMLElement>(null);
   const chatThreadRef = useRef<HTMLElement>(null);
@@ -564,12 +589,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const setIsAtBottomOfScrollRef = (isAtBottomOfScrollValue: boolean): void => {
     isAtBottomOfScrollRef.current = isAtBottomOfScrollValue;
     setIsAtBottomOfScroll(isAtBottomOfScrollValue);
-  };
-
-  const isAtTopOfScrollRef = useRef(isAtTopOfScroll);
-  const setIsAtTopOfScrollRef = (isAtTopOfScrollValue: boolean): void => {
-    isAtTopOfScrollRef.current = isAtTopOfScrollValue;
-    setIsAtTopOfScroll(isAtTopOfScrollValue);
   };
 
   const chatMessagesInitializedRef = useRef(chatMessagesInitialized);
@@ -602,15 +621,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         onMessageSeen &&
         lastMessage &&
         lastMessage.payload.messageId &&
-        lastMessage.payload.messageId !== chatMessageIdJustSeen
+        lastMessage.payload.messageId !== messageIdSeenByMeRef.current
       ) {
         await onMessageSeen(lastMessage.payload.messageId);
-        setChatMessageIdJustSeen(lastMessage.payload.messageId);
+        messageIdSeenByMeRef.current = lastMessage.payload.messageId;
       }
     } catch (e) {
       console.log('onMessageSeen Error', lastMessage, e);
     }
-  }, [showMessageStatus, onMessageSeen, chatMessageIdJustSeen]);
+  }, [showMessageStatus, onMessageSeen]);
 
   const scrollToBottom = useCallback((): void => {
     if (chatScrollDivRef.current) {
@@ -621,7 +640,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     sendMessageStatusIfAtBottom();
   }, [sendMessageStatusIfAtBottom]);
 
-  const handleScroll = (): void => {
+  const handleScrollToTheBottom = useCallback((): void => {
     if (!chatScrollDivRef.current) {
       return;
     }
@@ -629,7 +648,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     const atBottom =
       Math.floor(chatScrollDivRef.current.scrollTop) >=
       chatScrollDivRef.current.scrollHeight - chatScrollDivRef.current.clientHeight;
-    const atTop = chatScrollDivRef.current.scrollTop === 0;
     if (atBottom) {
       sendMessageStatusIfAtBottom();
       if (!isAtBottomOfScrollRef.current) {
@@ -637,45 +655,79 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       }
     }
     setIsAtBottomOfScrollRef(atBottom);
-    setIsAtTopOfScrollRef(atTop);
+  }, [scrollToBottom, sendMessageStatusIfAtBottom]);
 
-    // Make sure we do not stuck at the top if more messages are being fetched.
-    if (chatScrollDivRef.current.scrollTop === 0 && !isAllChatMessagesLoadedRef.current) {
-      chatScrollDivRef.current.scrollTop = 5;
+  // Infinite scrolling + threadInitialize function
+  const fetchNewMessageWhenAtTop = useCallback(async () => {
+    if (chatScrollDivRef.current && !isLoadingChatMessagesRef.current) {
+      if (onLoadPreviousChatMessages) {
+        isLoadingChatMessagesRef.current = true;
+        // Fetch message until scrollTop reach the threshold for fetching new message
+        while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 500) {
+          isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
+          // Release CPU resources for 200 milliseconds between each loop.
+          await delay(200);
+        }
+        isLoadingChatMessagesRef.current = false;
+      }
+    }
+  }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
+
+  const handleInfiniteScroll = useCallback((): void => {
+    if (!chatScrollDivRef.current) {
+      return;
     }
 
-    (async () => {
-      if (
-        chatScrollDivRef.current &&
-        chatScrollDivRef.current.scrollTop <= 200 &&
-        !isAllChatMessagesLoadedRef.current &&
-        !isLoadingChatMessagesRef.current
-      ) {
-        if (onLoadPreviousChatMessages) {
-          isLoadingChatMessagesRef.current = true;
-          setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
-          isLoadingChatMessagesRef.current = false;
-        }
-      }
-    })();
-  };
+    fetchNewMessageWhenAtTop();
+  }, [fetchNewMessageWhenAtTop]);
+
+  // The below 2 of useEffects are design for fixing infinite scrolling problem
+  // Scrolling element will behave differently when scrollTop = 0(it sticks at the top)
+  // we need to get previousTop before it prepend contents
+  // Execute order [newMessage useEffect] => get previousTop => dom update => [messages useEffect]
+  useEffect(() => {
+    if (!chatScrollDivRef.current) return;
+    previousTopRef.current = chatScrollDivRef.current.scrollTop;
+    previousHeightRef.current = chatScrollDivRef.current.scrollHeight;
+  }, [newMessages]);
+
+  useEffect(() => {
+    if (!chatScrollDivRef.current) return;
+    if (previousTopRef.current === 0) {
+      const currentHeight = chatScrollDivRef.current.scrollHeight;
+      chatScrollDivRef.current.scrollTop =
+        chatScrollDivRef.current.scrollTop + currentHeight - previousHeightRef.current;
+    }
+  }, [messages]);
+
+  // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
+  useEffect(() => {
+    fetchNewMessageWhenAtTop();
+  }, [fetchNewMessageWhenAtTop]);
 
   /**
-   * One time run useEffect. Sets up listeners when component is mounted and tears down listeners when component
-   * unmounts.
+   * One time run useEffects. Sets up listeners when component is mounted and tears down listeners when component
+   * unmounts unless these function changed
    */
   useEffect(() => {
     window && window.addEventListener('click', sendMessageStatusIfAtBottom);
     window && window.addEventListener('focus', sendMessageStatusIfAtBottom);
-    chatScrollDivRef.current?.addEventListener('scroll', handleScroll);
-    const chatScrollDiv = chatScrollDivRef.current;
     return () => {
       window && window.removeEventListener('click', sendMessageStatusIfAtBottom);
       window && window.removeEventListener('focus', sendMessageStatusIfAtBottom);
-      chatScrollDiv?.removeEventListener('scroll', handleScroll);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [sendMessageStatusIfAtBottom]);
+
+  useEffect(() => {
+    const chatScrollDiv = chatScrollDivRef.current;
+    chatScrollDiv?.addEventListener('scroll', handleScrollToTheBottom);
+    chatScrollDiv?.addEventListener('scroll', handleInfiniteScroll);
+
+    return () => {
+      chatScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
+      chatScrollDiv?.removeEventListener('scroll', handleInfiniteScroll);
+    };
+  }, [handleInfiniteScroll, handleScrollToTheBottom]);
 
   /**
    * ClientHeight controls the number of messages to render. However ClientHeight will not be initialized after the
@@ -724,23 +776,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
-
-  // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
-  useEffect(() => {
-    (async () => {
-      if (onLoadPreviousChatMessages) {
-        while (
-          chatScrollDivRef.current &&
-          chatScrollDivRef.current.scrollTop <= 200 &&
-          !isAllChatMessagesLoadedRef.current
-        ) {
-          setIsAllChatMessagesLoaded(await onLoadPreviousChatMessages(numberOfChatMessagesToReload));
-          // Release CPU resources for 200 milliseconds between each loop.
-          await delay(200);
-        }
-      }
-    })();
-  }, [onLoadPreviousChatMessages, numberOfChatMessagesToReload]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(

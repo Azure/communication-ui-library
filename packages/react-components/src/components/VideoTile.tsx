@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
+import { DefaultPalette as palette, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Ref } from '@fluentui/react-northstar';
 import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
-import React from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -39,8 +40,6 @@ export interface VideoTileProps extends PlaceholderProps {
    * ```
    */
   styles?: VideoTileStylesProps;
-  /** Determines if the static image or video stream should be rendered. */
-  isVideoReady?: boolean;
   /** Component with the video stream. */
   renderElement?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
@@ -69,19 +68,38 @@ export interface PlaceholderProps {
   noVideoAvailableAriaLabel?: string;
 }
 
+// Coin max size is set to 100px (PersonaSize.size100)
+const personaMaxSize = 200;
+
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
   const { displayName, noVideoAvailableAriaLabel } = props;
-  const personaStyles = { root: { margin: 'auto' } };
+  const personaRef = useRef<HTMLElement>(null);
+  const [coinSize, setCoinSize] = useState(100);
+  const personaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
+
+  useLayoutEffect(() => {
+    if (personaRef.current && personaRef.current.parentElement) {
+      const minSize = Math.min(
+        personaRef.current.parentElement.clientHeight,
+        personaRef.current.parentElement.clientWidth,
+        personaMaxSize
+      );
+      setCoinSize(minSize / 2);
+    }
+  }, [personaRef.current?.parentElement?.clientHeight, personaRef.current?.parentElement?.clientWidth]);
+
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-      <Persona
-        styles={personaStyles}
-        size={PersonaSize.size100}
-        hidePersonaDetails={true}
-        text={displayName ?? ''}
-        initialsTextColor="white"
-        aria-label={noVideoAvailableAriaLabel ?? ''}
-      />
+      <Ref innerRef={personaRef}>
+        <Persona
+          styles={personaStyles}
+          coinSize={coinSize}
+          hidePersonaDetails={true}
+          text={displayName ?? ''}
+          initialsTextColor="white"
+          aria-label={noVideoAvailableAriaLabel ?? ''}
+        />
+      </Ref>
     </Stack>
   );
 };
@@ -92,7 +110,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     displayName,
     isMirrored,
     isMuted,
-    isVideoReady,
     onRenderPlaceholder,
     renderElement,
     showMuteIndicator = true,
@@ -104,9 +121,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const placeHolderProps = { userId, displayName, noVideoAvailableAriaLabel };
   const theme = useTheme();
 
+  const isVideoRendered = !!renderElement;
+
   return (
     <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
-      {isVideoReady && renderElement ? (
+      {isVideoRendered ? (
         <Stack
           className={mergeStyles(
             videoContainerStyles,
@@ -131,9 +150,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       <Stack
         horizontal
         className={mergeStyles(
-          isVideoReady ? videoHint : disabledVideoHint,
-          // when video is on, the displayName has a grey-ish background, so no use of theme
-          { color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary },
+          isVideoRendered ? videoHint : disabledVideoHint,
+          // when video is being rendered, the displayName has a grey-ish background, so no use of theme
+          { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
           styles?.displayNameContainer
         )}
       >
@@ -141,7 +160,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           {displayName && (
             <Text
               className={mergeStyles(displayNameStyle, {
-                color: isVideoReady ? palette.neutralPrimary : theme.palette.neutralPrimary
+                color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
               })}
             >
               {displayName}

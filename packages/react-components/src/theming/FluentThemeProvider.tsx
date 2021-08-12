@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
-import { ThemeProvider, Theme, PartialTheme, getTheme, getRTL, mergeThemes, mergeStyles } from '@fluentui/react';
+import { ThemeProvider, Theme, PartialTheme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
 import { mergeThemes as mergeNorthstarThemes, Provider, teamsTheme } from '@fluentui/react-northstar';
 import { lightTheme } from './themes';
 
@@ -14,11 +14,17 @@ export interface FluentThemeProviderProps {
   children: React.ReactNode;
   /** Theme for components. Defaults to a light theme if not provided. */
   fluentTheme?: PartialTheme | Theme;
+  /**
+   * Whether components are displayed right-to-left
+   * @defaultValue `false`
+   */
+  rtl?: boolean;
 }
 
 const wrapper = mergeStyles({
   height: '100%',
-  width: '100%'
+  width: '100%',
+  overflow: 'auto'
 });
 
 const defaultTheme = mergeThemes(getTheme(), lightTheme);
@@ -43,11 +49,11 @@ const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
  * This provider handles applying any theme provided to both the underlying Fluent UI controls, as well as the Fluent React Northstar controls.
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
-  const { fluentTheme, children } = props;
-  // if fluentTheme is not provided, default to light theme
-  const fluentUITheme: Theme = mergeThemes(defaultTheme, fluentTheme);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rtl = getRTL();
+  const { fluentTheme, rtl, children } = props;
+
+  let fluentUITheme: Theme = mergeThemes(defaultTheme, fluentTheme);
+  // merge in rtl from FluentThemeProviderProps
+  fluentUITheme = mergeThemes(fluentUITheme, { rtl });
 
   const fluentNorthstarTheme = mergeNorthstarThemes(initialFluentNorthstarTheme, {
     componentVariables: {
@@ -65,11 +71,6 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
       ChatMessage: {
         timestamp: {
           WebkitTextFillColor: fluentUITheme.palette.neutralSecondary
-        },
-        // This is a bug in fluentui react northstar not reversing left and right margins for the author in message bubbles
-        author: {
-          marginRight: rtl ? '0rem' : '0.75rem',
-          marginLeft: rtl ? '0.75rem' : '0rem'
         }
       }
     }
@@ -79,7 +80,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   return (
     <ThemeContext.Provider value={fluentUITheme}>
       <ThemeProvider theme={fluentUITheme} className={wrapper}>
-        <Provider theme={fluentNorthstarTheme} className={wrapper} dir={rtl ? 'rtl' : 'ltr'}>
+        <Provider theme={fluentNorthstarTheme} className={wrapper} rtl={rtl}>
           {children}
         </Provider>
       </ThemeProvider>

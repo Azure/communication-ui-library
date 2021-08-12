@@ -87,7 +87,7 @@ export interface CallAdapter {
 
   dispose(): void;
 
-  joinCall(microphoneOn?: boolean): Promise<void>;
+  joinCall(microphoneOn?: boolean): Call | undefined;
 
   leaveCall(forEveryone?: boolean): Promise<void>;
 

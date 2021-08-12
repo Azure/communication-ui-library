@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient, ChatMessageReadReceipt, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
@@ -11,13 +11,13 @@ export type ChatClientState = {
   displayName: string;
   /**
    * Chat threads joined by the current user.
-   * Object with {@Link ChatThreadClientState} fields, keyed by {@Link ChatThreadClientState.threadId}.
+   * Object with {@link ChatThreadClientState} fields, keyed by {@link ChatThreadClientState.threadId}.
    */
   threads: { [key: string]: ChatThreadClientState };
   /**
    * Stores the latest error for each API method.
    *
-   * See documentation of {@Link ChatErrors} for details.
+   * See documentation of {@link ChatErrors} for details.
    */
   latestErrors: ChatErrors;
 };
@@ -25,16 +25,16 @@ export type ChatClientState = {
 export type ChatThreadClientState = {
   /**
    * Messages in this thread.
-   * Object with {@Link ChatMessageWithStatus} entries
-   * Local messages are keyed by keyed by {@Link ChatMessageWithStatus.clientMessageId}.
-   * Remote messages are keyed by {@Link @azure/communication-chat#ChatMessage.id}.
+   * Object with {@link ChatMessageWithStatus} entries
+   * Local messages are keyed by keyed by {@link ChatMessageWithStatus.clientMessageId}.
+   * Remote messages are keyed by {@link @azure/communication-chat#ChatMessage.id}.
    */
   chatMessages: { [key: string]: ChatMessageWithStatus };
   /**
    * Participants of this chat thread.
    *
-   * Object with {@Link @azure/communication-chat#ChatParticipant} fields,
-   * keyed by {@Link @azure/communication-chat#ChatParticipant.id}.
+   * Object with {@link @azure/communication-chat#ChatParticipant} fields,
+   * keyed by {@link @azure/communication-chat#ChatParticipant.id}.
    */
   participants: { [key: string]: ChatParticipant };
   threadId: string;
@@ -57,7 +57,7 @@ export type ChatThreadProperties = {
  *
  * Each property in the object stores the latest error for a particular SDK API method.
  *
- * Errors from this object can be cleared by calling the TODO(implement me) {@Link clearError} method.
+ * Errors from this object can be cleared by calling the TODO(implement me) {@link clearError} method.
  * Additionally, errors are automatically cleared when:
  * - The state is cleared.
  * - Subsequent calls to related API methods succeed.
@@ -90,22 +90,27 @@ export class ChatError extends Error {
 }
 
 /**
- * String literal type for all permissible keys in {@Link ChatErrors}.
+ * String literal type for all permissible keys in {@link ChatErrors}.
  */
 export type ChatErrorTargets =
-  | ChatObjectMethodNames<'ChatClient', ChatClient>
-  | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
-
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-export type ChatObjectMethodNames<TName extends string, T> = {
-  [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T];
-
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-// eslint complains on all uses of `Function`. Using it as a type constraint is legitimate.
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+  | 'ChatClient.createChatThread'
+  | 'ChatClient.deleteChatThread'
+  | 'ChatClient.getChatThreadClient'
+  | 'ChatClient.listChatThreads'
+  | 'ChatClient.off'
+  | 'ChatClient.on'
+  | 'ChatClient.startRealtimeNotifications'
+  | 'ChatClient.stopRealtimeNotifications'
+  | 'ChatThreadClient.addParticipants'
+  | 'ChatThreadClient.deleteMessage'
+  | 'ChatThreadClient.getMessage'
+  | 'ChatThreadClient.getProperties'
+  | 'ChatThreadClient.listMessages'
+  | 'ChatThreadClient.listParticipants'
+  | 'ChatThreadClient.listReadReceipts'
+  | 'ChatThreadClient.removeParticipant'
+  | 'ChatThreadClient.sendMessage'
+  | 'ChatThreadClient.sendReadReceipt'
+  | 'ChatThreadClient.sendTypingNotification'
+  | 'ChatThreadClient.updateMessage'
+  | 'ChatThreadClient.updateTopic';

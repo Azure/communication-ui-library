@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed truncation from MessageThread system message.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

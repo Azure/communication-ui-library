@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
+import { getApplicationId } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
@@ -106,7 +107,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
 };
 
 /**
- * Required arguments to construct the {@Link StatefulChatClient}.
+ * Required arguments to construct the {@link StatefulChatClient}.
  */
 export type StatefulChatClientArgs = {
   userId: CommunicationIdentifierKind;
@@ -116,11 +117,11 @@ export type StatefulChatClientArgs = {
 };
 
 /**
- * Options to construct the {@Link StatefulChatClient} with.
+ * Options to construct the {@link StatefulChatClient} with.
  */
 export type StatefulChatClientOptions = {
   /**
-   * Options to construct the {@Link @azure/communication-chat#ChatClient} with.
+   * Options to construct the {@link @azure/communication-chat#ChatClient} with.
    */
   chatClientOptions: ChatClientOptions;
   /**
@@ -131,25 +132,32 @@ export type StatefulChatClientOptions = {
 };
 
 /**
- * Creates a stateful ChatClient {@Link StatefulChatClient} by proxying ChatClient
- * {@Link @azure/communication-chat#ChatClient} with ProxyChatClient {@Link ProxyChatClient} which then allows access
+ * Creates a stateful ChatClient {@link StatefulChatClient} by proxying ChatClient
+ * {@link @azure/communication-chat#ChatClient} with ProxyChatClient {@link ProxyChatClient} which then allows access
  * to state in a declarative way.
  */
 export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
+  const tweakedOptions = {
+    ...options,
+    chatClientOptions: {
+      ...options?.chatClientOptions,
+      userAgentOptions: { userAgentPrefix: getApplicationId() }
+    }
+  };
   return createStatefulChatClientWithDeps(
-    new ChatClient(args.endpoint, args.credential, options?.chatClientOptions),
+    new ChatClient(args.endpoint, args.credential, tweakedOptions.chatClientOptions),
     args,
-    options
+    tweakedOptions
   );
 };
 
 /**
  * A function to modify the state of the StatefulChatClient.
  *
- * Provided as a callback to the {@Link StatefulChatClient.modifyState} method.
+ * Provided as a callback to the {@link StatefulChatClient.modifyState} method.
  *
  * The function must modify the provided state in place as much as possible.
  * Making large modifications can lead to bad performance by causing spurious rerendering of the UI.
@@ -161,7 +169,7 @@ export const createStatefulChatClient = (
 export type ChatStateModifier = (state: ChatClientState) => boolean;
 
 /**
- * Internal implementation of {@Link createStatefulChatClient} for dependency injection.
+ * Internal implementation of {@link createStatefulChatClient} for dependency injection.
  *
  * Used by tests. Should not be exported out of this package.
  */

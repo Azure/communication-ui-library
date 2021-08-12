@@ -16,12 +16,12 @@ export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element 
     if (props) {
       const createAdapter = async (): Promise<void> => {
         setCallAdapter(
-          await createAzureCommunicationCallAdapter(
-            { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
-            props.displayName,
-            new AzureCommunicationTokenCredential(props.accessToken),
-            props.callLocator
-          )
+          await createAzureCommunicationCallAdapter({
+            userId: { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            displayName: props.displayName,
+            credential: new AzureCommunicationTokenCredential(props.accessToken),
+            locator: props.callLocator
+          })
         );
       };
       createAdapter();
@@ -31,7 +31,7 @@ export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element 
         callAdapter.dispose();
       }
     };
-  }, [props]);
+  }, [props, callAdapter]);
 
   return callAdapter && <CallComposite adapter={callAdapter} />;
 };

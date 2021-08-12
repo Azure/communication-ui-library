@@ -29,11 +29,16 @@ export const aspectRatioBoxContentStyle = mergeStyles({
 
 export const stackContainerStyle = mergeStyles({
   height: '100%',
-  width: '25%'
+  width: '15%'
 });
 
 export const screenShareContainerStyle = mergeStyles({
   height: '100%',
-  width: '75%',
+  width: '85%',
   position: 'relative'
 });
+
+export const stackContainerParticipantVideoStyles = {
+  root: { borderRadius: 0 },
+  videoContainer: { borderRadius: 0, '& video': { borderRadius: 0 } }
+};

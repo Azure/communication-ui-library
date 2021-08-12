@@ -6,6 +6,7 @@ import {
   getIdentifierKind
 } from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useState, useEffect } from 'react';
 
 export type ContainerProps = {
@@ -14,6 +15,7 @@ export type ContainerProps = {
   displayName: string;
   endpointUrl: string;
   threadId: string;
+  fluentTheme?: PartialTheme | Theme;
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
@@ -27,13 +29,13 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     }
 
     const createAdapter = async (): Promise<void> => {
-      const newAdapter = await createAzureCommunicationChatAdapter(
-        props.endpointUrl,
-        getIdentifierKind(props.userId),
-        props.displayName,
-        new AzureCommunicationTokenCredential(props.token),
-        props.threadId
-      );
+      const newAdapter = await createAzureCommunicationChatAdapter({
+        endpointUrl: props.endpointUrl,
+        userId: getIdentifierKind(props.userId),
+        displayName: props.displayName,
+        credential: new AzureCommunicationTokenCredential(props.token),
+        threadId: props.threadId
+      });
 
       // Custom behavior: Intercept messages from the local user and convert
       // to uppercase before sending to backend.
@@ -48,5 +50,5 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     createAdapter();
   }, [props]);
 
-  return <>{adapter ? <ChatComposite adapter={adapter} /> : <h3>Loading...</h3>}</>;
+  return <>{adapter ? <ChatComposite fluentTheme={props.fluentTheme} adapter={adapter} /> : <h3>Loading...</h3>}</>;
 };

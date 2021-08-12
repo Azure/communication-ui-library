@@ -5,6 +5,7 @@ import {
   createAzureCommunicationCallAdapter,
   PlaceholderProps
 } from '@azure/communication-react';
+import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useCallback, useState, useEffect } from 'react';
 
 export type ContainerProps = {
@@ -14,6 +15,7 @@ export type ContainerProps = {
   displayName: string;
   avatarInitials: string;
   callInvitationURL?: string;
+  fluentTheme?: PartialTheme | Theme;
 };
 
 export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Element => {
@@ -26,12 +28,12 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
         : { groupId: props.locator };
       const createAdapter = async (): Promise<void> => {
         setAdapter(
-          await createAzureCommunicationCallAdapter(
-            { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
-            props.displayName,
-            new AzureCommunicationTokenCredential(props.token),
-            callLocator
-          )
+          await createAzureCommunicationCallAdapter({
+            userId: { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            displayName: props.displayName,
+            credential: new AzureCommunicationTokenCredential(props.token),
+            locator: callLocator
+          })
         );
       };
       createAdapter();
@@ -63,7 +65,12 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
   return (
     <>
       {adapter && (
-        <CallComposite adapter={adapter} onRenderAvatar={onRenderAvatar} callInvitationURL={props?.callInvitationURL} />
+        <CallComposite
+          fluentTheme={props.fluentTheme}
+          adapter={adapter}
+          onRenderAvatar={onRenderAvatar}
+          callInvitationURL={props?.callInvitationURL}
+        />
       )}
     </>
   );

@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import { CameraButton } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean } from '@storybook/addon-knobs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';
 import { CameraButtonExample } from './snippets/Default.snippet';
 import { CameraButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -70,11 +70,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const CameraStory = (): JSX.Element => {
-  const toggleButtons = boolean('Toggle Buttons', false);
-  const showLabels = boolean('Show Labels', false);
-
-  return <CameraButton showLabel={showLabels} checked={toggleButtons} />;
+const CameraStory = (args): JSX.Element => {
+  return <CameraButton {...args} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -85,6 +82,14 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-camera`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Camera`,
   component: CameraButton,
+  argTypes: {
+    checked: controlsToAdd.checked,
+    showLabel: controlsToAdd.showLabel,
+    // Hiding auto-generated controls
+    onToggleCamera: hiddenControl,
+    localVideoViewOption: hiddenControl,
+    strings: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

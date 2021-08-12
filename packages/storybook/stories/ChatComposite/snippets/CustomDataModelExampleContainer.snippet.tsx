@@ -1,6 +1,10 @@
-import { AzureCommunicationTokenCredential, getIdentifierKind } from '@azure/communication-common';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useState, useEffect, useCallback } from 'react';
 
 export interface CustomDataModelExampleContainerProps {
@@ -11,6 +15,7 @@ export interface CustomDataModelExampleContainerProps {
   threadId: string;
   botUserId: string;
   botAvatar: string;
+  fluentTheme?: PartialTheme | Theme;
 }
 
 export const CustomDataModelExampleContainer = (props: CustomDataModelExampleContainerProps): JSX.Element => {
@@ -22,14 +27,14 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
     if (props) {
       const createAdapter = async (): Promise<void> => {
         setAdapter(
-          await createAzureCommunicationChatAdapter(
-            props.endpointUrl,
-            getIdentifierKind(props.userId),
+          await createAzureCommunicationChatAdapter({
+            endpointUrl: props.endpointUrl,
+            userId: getIdentifierKind(props.userId),
             // Data model injection: The display name for the local user comes from Contoso's data model.
-            props.displayName,
-            new AzureCommunicationTokenCredential(props.token),
-            props.threadId
-          )
+            displayName: props.displayName,
+            credential: new AzureCommunicationTokenCredential(props.token),
+            threadId: props.threadId
+          })
         );
       };
       createAdapter();
@@ -55,6 +60,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
     <>
       {adapter ? (
         <ChatComposite
+          fluentTheme={props.fluentTheme}
           adapter={adapter}
           onRenderAvatar={onRenderAvatar}
           options={{ showParticipantPane: true, showTopic: true }}

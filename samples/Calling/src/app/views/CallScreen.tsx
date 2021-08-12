@@ -22,16 +22,16 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, callLocator, displayName, onCallEnded, onCallError } = props;
   const [adapter, setAdapter] = useState<CallAdapter>();
   const adapterRef = useRef<CallAdapter>();
-  const { currentTheme } = useSwitchableFluentTheme();
+  const { currentTheme, currentRtl } = useSwitchableFluentTheme();
 
   useEffect(() => {
     (async () => {
-      const adapter = await createAzureCommunicationCallAdapter(
-        { kind: 'communicationUser', communicationUserId: userId.communicationUserId },
-        displayName,
-        createAutoRefreshingCredential(userId.communicationUserId, token),
-        callLocator
-      );
+      const adapter = await createAzureCommunicationCallAdapter({
+        userId: { kind: 'communicationUser', communicationUserId: userId.communicationUserId },
+        displayName: displayName,
+        credential: createAutoRefreshingCredential(userId.communicationUserId, token),
+        locator: callLocator
+      });
       adapter.on('callEnded', () => {
         onCallEnded();
       });
@@ -52,5 +52,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
-  return <CallComposite adapter={adapter} fluentTheme={currentTheme.theme} callInvitationURL={window.location.href} />;
+  return (
+    <CallComposite
+      adapter={adapter}
+      fluentTheme={currentTheme.theme}
+      rtl={currentRtl}
+      callInvitationURL={window.location.href}
+    />
+  );
 };

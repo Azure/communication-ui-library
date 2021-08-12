@@ -20,13 +20,13 @@ export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element 
     if (props) {
       const createAdapter = async (): Promise<void> => {
         setChatAdapter(
-          await createAzureCommunicationChatAdapter(
-            props.endpointUrl,
-            getIdentifierKind(props.userId),
-            props.displayName,
-            new AzureCommunicationTokenCredential(props.accessToken),
-            props.threadId
-          )
+          await createAzureCommunicationChatAdapter({
+            endpointUrl: props.endpointUrl,
+            userId: getIdentifierKind(props.userId),
+            displayName: props.displayName,
+            credential: new AzureCommunicationTokenCredential(props.accessToken),
+            threadId: props.threadId
+          })
         );
       };
       createAdapter();
@@ -36,7 +36,7 @@ export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element 
         chatAdapter.dispose();
       }
     };
-  }, [props]);
+  }, [props, chatAdapter]);
 
   return chatAdapter && <ChatComposite adapter={chatAdapter} />;
 };
