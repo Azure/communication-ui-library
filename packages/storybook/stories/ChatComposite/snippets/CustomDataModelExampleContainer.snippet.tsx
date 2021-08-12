@@ -4,6 +4,7 @@ import {
   getIdentifierKind
 } from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useState, useEffect, useCallback } from 'react';
 
 export interface CustomDataModelExampleContainerProps {
@@ -14,6 +15,7 @@ export interface CustomDataModelExampleContainerProps {
   threadId: string;
   botUserId: string;
   botAvatar: string;
+  fluentTheme?: PartialTheme | Theme;
 }
 
 export const CustomDataModelExampleContainer = (props: CustomDataModelExampleContainerProps): JSX.Element => {
@@ -58,6 +60,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
     <>
       {adapter ? (
         <ChatComposite
+          fluentTheme={props.fluentTheme}
           adapter={adapter}
           onRenderAvatar={onRenderAvatar}
           options={{ showParticipantPane: true, showTopic: true }}
