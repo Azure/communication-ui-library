@@ -11,13 +11,14 @@ import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigJoinCallHintBanner } from './snippets/Utils';
 
-const JoinExistingCallStory = (args): JSX.Element => {
+const JoinExistingCallStory = (args, context): JSX.Element => {
   const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token && !!args.displayName;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
         <ContosoCallContainer
+          fluentTheme={context.theme}
           locator={args.callLocator}
           userId={{ communicationUserId: args.userId }}
           token={args.token}
