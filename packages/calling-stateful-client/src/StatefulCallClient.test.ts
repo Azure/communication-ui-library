@@ -2,8 +2,10 @@
 // Licensed under the MIT license.
 
 import {
+  CallAgent,
   CallApiFeature,
   CallFeatureFactoryType,
+  DeviceManager,
   Features,
   LocalVideoStream,
   RecordingCallFeature,
@@ -568,9 +570,9 @@ describe('Stateful call client', () => {
 });
 
 describe('errors should be reported correctly when', () => {
-  test('[xkcd] callAgent creation fails', async () => {
+  test('createCallAgent fails', async () => {
     const baseClient = createMockCallClient();
-    baseClient.createCallAgent = (): Promise<MockCallAgent> => {
+    baseClient.createCallAgent = (): Promise<CallAgent> => {
       throw new Error('injected error');
     };
 
@@ -582,6 +584,22 @@ describe('errors should be reported correctly when', () => {
     );
     expect(listener.onChangeCalledCount).toBe(1);
     expect(client.getState().latestErrors['CallClient.createCallAgent']).toBeDefined();
+  });
+
+  test('xkcd getDeviceManager fails', async () => {
+    const baseClient = createMockCallClient();
+    baseClient.getDeviceManager = (): Promise<DeviceManager> => {
+      throw new Error('injected error');
+    };
+
+    const client = createStatefulCallClientWithBaseClient(baseClient);
+    const listener = new StateChangeListener(client);
+
+    await expect(client.getDeviceManager()).rejects.toThrow(
+      new CallError('CallClient.getDeviceManager', new Error('injected error'))
+    );
+    expect(listener.onChangeCalledCount).toBe(1);
+    expect(client.getState().latestErrors['CallClient.getDeviceManager']).toBeDefined();
   });
 });
 
