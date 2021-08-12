@@ -161,11 +161,11 @@ jobs:
           true
       - name: Build
         run: |
-          true
+          false
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
-          false
+          true
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
