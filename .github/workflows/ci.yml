@@ -161,7 +161,8 @@ jobs:
         run: rush build -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
-        run: this run will fail but should comment on PR
+        run: |
+          false
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
