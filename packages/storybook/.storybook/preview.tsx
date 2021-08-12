@@ -78,7 +78,7 @@ const withThemeProvider = (Story: any, context: any) => {
 
   return (
     <FluentThemeProvider fluentTheme={theme} rtl={rtl}>
-      <Story {...context} />
+      <Story {...context} theme={theme} />
     </FluentThemeProvider>
   );
 };

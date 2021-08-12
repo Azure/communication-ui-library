@@ -12,7 +12,7 @@ import { CustomDataModelExampleContainer } from './snippets/CustomDataModelExamp
 import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
-const CustomDataModelStory = (args): JSX.Element => {
+const CustomDataModelStory = (args, context): JSX.Element => {
   const [containerProps, setContainerProps] = useState();
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const CustomDataModelStory = (args): JSX.Element => {
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
         <CustomDataModelExampleContainer
+          fluentTheme={context.theme}
           displayName={args.displayName}
           avatarInitials={args.avatarInitials}
           {...containerProps}
