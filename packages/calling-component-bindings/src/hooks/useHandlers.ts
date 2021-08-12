@@ -3,7 +3,10 @@
 
 import { ReactElement, useContext } from 'react';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
-import { createDefaultCallingHandlersForComponent } from '../handlers/createHandlers';
+import {
+  createDefaultCallingHandlersForComponent,
+  createDefaultCallingHandlersForParticipantButton
+} from '../handlers/createHandlers';
 import { CallClientContext, useCall, useCallAgent, useDeviceManager } from '../providers';
 import { ParticipantsButton, ParticipantsButtonProps } from '@internal/react-components';
 
@@ -17,16 +20,7 @@ export const useHandlers = <PropsT>(component: (props: PropsT | ParticipantsButt
 
   switch (component) {
     case ParticipantsButton:
-      return {
-        ...createDefaultCallingHandlersForComponent(callClient, callAgent, deviceManager, call, component),
-        participantListProps: createDefaultCallingHandlersForComponent(
-          callClient,
-          callAgent,
-          deviceManager,
-          call,
-          component
-        )
-      };
+      return createDefaultCallingHandlersForParticipantButton(callClient, callAgent, deviceManager, call, component);
     default:
       return createDefaultCallingHandlersForComponent(callClient, callAgent, deviceManager, call, component);
   }
