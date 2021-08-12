@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "bugfix: Show avatar when video is off",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
