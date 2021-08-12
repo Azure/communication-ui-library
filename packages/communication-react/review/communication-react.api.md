@@ -35,6 +35,7 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IPersonaProps } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -43,6 +44,7 @@ import { OutputParametricSelector } from 'reselect';
 import { OutputSelector } from 'reselect';
 import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
+import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
@@ -79,11 +81,27 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public
-export type AvatarData = {
-    name?: string;
+export const AvatarPersona: (props: AvatarPersonaProps) => JSX.Element;
+
+// @public
+export type AvatarPersonaData = {
+    text?: string;
     imageUrl?: string;
-    personaColor?: string;
+    imageInitials?: string;
+    initialsColor?: PersonaInitialsColor | string;
+    initialsTextColor?: string;
 };
+
+// @public
+export type AvatarPersonaDataProvider = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
+
+// @public (undocumented)
+export interface AvatarPersonaProps extends IPersonaProps {
+    // (undocumented)
+    dataProvider?: AvatarPersonaDataProvider;
+    // (undocumented)
+    userId?: string;
+}
 
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
@@ -570,7 +588,7 @@ export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     locale?: Locale;
-    customAvatarDataProvider?: (userId: any) => Promise<AvatarData>;
+    avatarPersonaDataProvider?: AvatarPersonaDataProvider;
     onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -1130,7 +1148,7 @@ export type MessageThreadProps = {
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
-    customAvatarDataProvider?: (userId: string) => Promise<AvatarData>;
+    avatarPersonaDataProvider?: AvatarPersonaDataProvider;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;

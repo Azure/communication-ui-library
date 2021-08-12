@@ -3,9 +3,26 @@ import {
   CommunicationUserIdentifier,
   getIdentifierKind
 } from '@azure/communication-common';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import {
+  ChatAdapter,
+  ChatComposite,
+  createAzureCommunicationChatAdapter,
+  AvatarPersonaDataProvider,
+  AvatarPersonaData
+} from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
+
+// Sample usage of Custom Data Provider for AvatarPersona
+const avatarPersonaDataProvider: AvatarPersonaDataProvider = (userId?: string): Promise<AvatarPersonaData> =>
+  new Promise((resolve) => {
+    console.log('Inside avatarPersonaDataProvider userId: ', userId);
+    return resolve({
+      text: 'Custom Name',
+      initialsColor: 'firebrick',
+      initialsTextColor: 'black'
+    });
+  });
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -52,6 +69,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   if (adapter) {
     return (
       <ChatComposite
+        avatarPersonaDataProvider={avatarPersonaDataProvider}
         adapter={adapter}
         fluentTheme={props.fluentTheme}
         options={{ showParticipantPane: props.showParticipants }}

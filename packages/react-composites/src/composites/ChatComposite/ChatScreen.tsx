@@ -7,7 +7,7 @@ import {
   CommunicationParticipant,
   DefaultMessageRendererType,
   ErrorBar,
-  AvatarData,
+  AvatarPersonaDataProvider,
   MessageProps,
   MessageThread,
   ParticipantList,
@@ -33,7 +33,7 @@ export type ChatScreenProps = {
   showErrorBar?: boolean;
   showParticipantPane?: boolean;
   showTopic?: boolean;
-  customAvatarDataProvider?: (userId) => Promise<AvatarData>;
+  avatarPersonaDataProvider?: AvatarPersonaDataProvider;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -41,7 +41,7 @@ export type ChatScreenProps = {
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const {
-    customAvatarDataProvider,
+    avatarPersonaDataProvider,
     onRenderAvatar,
     onRenderMessage,
     onRenderTypingIndicator,
@@ -85,7 +85,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           {props.showErrorBar ? <ErrorBar {...errorBarProps} /> : <></>}
           <MessageThread
             {...messageThreadProps}
-            customAvatarDataProvider={customAvatarDataProvider}
+            avatarPersonaDataProvider={avatarPersonaDataProvider}
             onRenderAvatar={onRenderMessageAvatar}
             onRenderMessage={onRenderMessage}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}

@@ -11,10 +11,12 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IPersonaProps } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
+import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
@@ -28,11 +30,25 @@ export type AllKeys<T> = {
 export const ar_SA: Locale;
 
 // @public
-export type AvatarData = {
-    name?: string;
+export const AvatarPersona: (props: AvatarPersonaProps) => JSX.Element;
+
+// @public
+export type AvatarPersonaData = {
+    text?: string;
     imageUrl?: string;
-    personaColor?: string;
+    imageInitials?: string;
+    initialsColor?: PersonaInitialsColor | string;
+    initialsTextColor?: string;
 };
+
+// @public
+export type AvatarPersonaDataProvider = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
+
+// @public (undocumented)
+export interface AvatarPersonaProps extends IPersonaProps {
+    dataProvider?: AvatarPersonaDataProvider;
+    userId?: string;
+}
 
 // @public
 export interface BaseCustomStylesProps {
@@ -339,7 +355,7 @@ export type MessageThreadProps = {
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
-    customAvatarDataProvider?: (userId: string) => Promise<AvatarData>;
+    avatarPersonaDataProvider?: AvatarPersonaDataProvider;
     onRenderAvatar?: (userId: string) => JSX.Element;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
