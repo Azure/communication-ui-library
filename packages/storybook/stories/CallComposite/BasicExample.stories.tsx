@@ -12,7 +12,7 @@ import { ContosoCallContainer } from './snippets/Container.snippet';
 import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
-const BasicStory = (args): JSX.Element => {
+const BasicStory = (args, context): JSX.Element => {
   const [containerProps, setContainerProps] = useState();
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const BasicStory = (args): JSX.Element => {
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
         <ContosoCallContainer
+          fluentTheme={context.theme}
           displayName={args.displayName}
           {...containerProps}
           callInvitationURL={args.callInvitationURL}

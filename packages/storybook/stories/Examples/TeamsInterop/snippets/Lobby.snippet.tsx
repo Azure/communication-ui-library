@@ -34,14 +34,15 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
 
   // Helper code to make the storybook work. Replace with your own code for video stream element.
   const videoStreams = useVideoStreams(1);
-  const videoStreamElement = props.isVideoReady ? videoStreams[0] : null;
+  const videoStreamElement = props.isVideoReady ? videoStreams[0] : undefined;
+  const videoRenderElement = videoStreamElement ? <StreamMedia videoStreamElement={videoStreamElement} /> : undefined;
 
   return (
     <VideoTile
       styles={videoTileStyles}
       isMirrored={true}
       onRenderPlaceholder={() => <></>}
-      renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
+      renderElement={videoRenderElement}
     >
       <div
         style={{

@@ -119,7 +119,7 @@ export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProvid
   const themeFromStorage = getThemeFromLocalStorage(scopeId);
   const initialTheme = themeStore[themeFromStorage || defaultTheme.name] ?? defaultTheme;
   const [currentTheme, _setCurrentTheme] = useState<NamedTheme>(initialTheme);
-  const [currentRtl, _setCurrentRtl] = useState<boolean>(true);
+  const [currentRtl, _setCurrentRtl] = useState<boolean>(false);
 
   const state = useMemo<SwitchableFluentThemeContext>(
     () => ({
