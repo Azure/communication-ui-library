@@ -20,7 +20,7 @@ const messageArray = [
   'Have fun!'
 ];
 
-const BasicStory = (args): JSX.Element => {
+const BasicStory = (args, context): JSX.Element => {
   const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   useEffect(() => {
@@ -39,7 +39,12 @@ const BasicStory = (args): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
-        <ContosoChatContainer {...containerProps} showParticipants={args.showParticipants} showTopic={args.showTopic} />
+        <ContosoChatContainer
+          fluentTheme={context.theme}
+          {...containerProps}
+          showParticipants={args.showParticipants}
+          showTopic={args.showTopic}
+        />
       ) : (
         <ConfigHintBanner />
       )}
