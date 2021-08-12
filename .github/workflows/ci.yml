@@ -154,11 +154,14 @@ jobs:
         with:
           node-version: '14.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: |
+          true
       - name: Install dependencies
-        run: rush install
+        run: |
+          true
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: |
+          true
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
