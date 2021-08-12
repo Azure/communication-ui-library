@@ -35,6 +35,9 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
 // @public
+export const getApplicationId: () => string;
+
+// @public
 export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: unknown, args2: unknown) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public (undocumented)

@@ -1,7 +1,7 @@
 name: Update snapshots
 
 on:
-  # Run any time when a new label added to the PR 
+  # Run any time when a new label added to the PR
   pull_request:
     types: [labeled]
 

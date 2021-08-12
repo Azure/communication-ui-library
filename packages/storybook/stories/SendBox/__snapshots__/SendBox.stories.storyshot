@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -27,7 +28,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
         }
       >
         <div
-          className="ms-Stack css-57 css-2"
+          className="ms-Stack css-57 css-3"
         >
           <div
             style={
@@ -38,18 +39,18 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
             }
           >
             <div
-              className="ms-TextField ms-TextField--multiline root-4"
+              className="ms-TextField ms-TextField--multiline root-5"
             >
               <div
-                className="ms-TextField-wrapper wrapper-5"
+                className="ms-TextField-wrapper wrapper-6"
               >
                 <div
-                  className="ms-TextField-fieldGroup fieldGroup-6"
+                  className="ms-TextField-fieldGroup fieldGroup-7"
                 >
                   <textarea
                     aria-invalid={false}
                     aria-label="Type"
-                    className="ms-TextField-field ms-TextField--unresizable css-58 field-7"
+                    className="ms-TextField-field ms-TextField--unresizable css-58 field-8"
                     data-ui-id="sendbox-textfield"
                     disabled={false}
                     id="sendbox"
@@ -65,7 +66,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               </div>
             </div>
             <div
-              className="css-59"
+              className="css-59 css-1"
               id="sendIconWrapper"
               onClick={[Function]}
               onMouseEnter={[Function]}
@@ -73,7 +74,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
             >
               <span
                 aria-hidden={true}
-                className="root-span css-60 css-1"
+                className="root-span css-60 css-2"
                 primaryFill="currentColor"
               >
                 <svg

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fixing Persona size when resizing VideoTile",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

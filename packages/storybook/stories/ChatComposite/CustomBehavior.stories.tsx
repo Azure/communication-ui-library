@@ -19,7 +19,7 @@ const messageArray = [
   'Have fun!'
 ];
 
-const CustomBehaviorStory = (args): JSX.Element => {
+const CustomBehaviorStory = (args, context): JSX.Element => {
   const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const CustomBehaviorStory = (args): JSX.Element => {
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {containerProps ? <ContosoChatContainer {...containerProps} /> : <ConfigHintBanner />}
+      {containerProps ? <ContosoChatContainer fluentTheme={context.theme} {...containerProps} /> : <ConfigHintBanner />}
     </Stack>
   );
 };
