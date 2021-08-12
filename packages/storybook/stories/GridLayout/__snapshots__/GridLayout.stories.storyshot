@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layout 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -43,23 +44,65 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               className="ms-Stack css-7"
             >
               <div
-                className="css-71"
-              />
-            </div>
-            <div
-              className="ms-Stack css-81 css-8"
-            >
-              <div
                 className="ms-Stack css-9"
               >
+                <div
+                  aria-label=""
+                  className="ms-Persona ms-Persona--size48 root-10"
+                  style={
+                    Object {
+                      "height": 100,
+                      "minWidth": 100,
+                    }
+                  }
+                >
+                  <div
+                    className="ms-Persona-coin ms-Persona--size48 coin-17"
+                    role="presentation"
+                  >
+                    <div
+                      className="ms-Persona-imageArea imageArea-19"
+                      role="presentation"
+                      style={
+                        Object {
+                          "height": 100,
+                          "width": 100,
+                        }
+                      }
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="ms-Persona-initials initials-22"
+                        style={
+                          Object {
+                            "height": 100,
+                            "width": 100,
+                          }
+                        }
+                      >
+                        <span>
+                          M
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-80 css-25"
+            >
+              <div
+                className="ms-Stack css-26"
+              >
                 <span
-                  className="css-10"
+                  className="css-27"
                 >
                   Michael
                 </span>
               </div>
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack css-28"
               />
             </div>
           </div>
@@ -70,23 +113,65 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               className="ms-Stack css-7"
             >
               <div
-                className="css-71"
-              />
-            </div>
-            <div
-              className="ms-Stack css-81 css-8"
-            >
-              <div
                 className="ms-Stack css-9"
               >
+                <div
+                  aria-label=""
+                  className="ms-Persona ms-Persona--size48 root-10"
+                  style={
+                    Object {
+                      "height": 100,
+                      "minWidth": 100,
+                    }
+                  }
+                >
+                  <div
+                    className="ms-Persona-coin ms-Persona--size48 coin-17"
+                    role="presentation"
+                  >
+                    <div
+                      className="ms-Persona-imageArea imageArea-19"
+                      role="presentation"
+                      style={
+                        Object {
+                          "height": 100,
+                          "width": 100,
+                        }
+                      }
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="ms-Persona-initials initials-29"
+                        style={
+                          Object {
+                            "height": 100,
+                            "width": 100,
+                          }
+                        }
+                      >
+                        <span>
+                          J
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-80 css-25"
+            >
+              <div
+                className="ms-Stack css-26"
+              >
                 <span
-                  className="css-10"
+                  className="css-27"
                 >
                   Jim
                 </span>
               </div>
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack css-28"
               />
             </div>
           </div>
@@ -97,23 +182,65 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               className="ms-Stack css-7"
             >
               <div
-                className="css-71"
-              />
-            </div>
-            <div
-              className="ms-Stack css-81 css-8"
-            >
-              <div
                 className="ms-Stack css-9"
               >
+                <div
+                  aria-label=""
+                  className="ms-Persona ms-Persona--size48 root-10"
+                  style={
+                    Object {
+                      "height": 100,
+                      "minWidth": 100,
+                    }
+                  }
+                >
+                  <div
+                    className="ms-Persona-coin ms-Persona--size48 coin-17"
+                    role="presentation"
+                  >
+                    <div
+                      className="ms-Persona-imageArea imageArea-19"
+                      role="presentation"
+                      style={
+                        Object {
+                          "height": 100,
+                          "width": 100,
+                        }
+                      }
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="ms-Persona-initials initials-30"
+                        style={
+                          Object {
+                            "height": 100,
+                            "width": 100,
+                          }
+                        }
+                      >
+                        <span>
+                          P
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-80 css-25"
+            >
+              <div
+                className="ms-Stack css-26"
+              >
                 <span
-                  className="css-10"
+                  className="css-27"
                 >
                   Pam
                 </span>
               </div>
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack css-28"
               />
             </div>
           </div>
@@ -124,23 +251,65 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               className="ms-Stack css-7"
             >
               <div
-                className="css-71"
-              />
-            </div>
-            <div
-              className="ms-Stack css-81 css-8"
-            >
-              <div
                 className="ms-Stack css-9"
               >
+                <div
+                  aria-label=""
+                  className="ms-Persona ms-Persona--size48 root-10"
+                  style={
+                    Object {
+                      "height": 100,
+                      "minWidth": 100,
+                    }
+                  }
+                >
+                  <div
+                    className="ms-Persona-coin ms-Persona--size48 coin-17"
+                    role="presentation"
+                  >
+                    <div
+                      className="ms-Persona-imageArea imageArea-19"
+                      role="presentation"
+                      style={
+                        Object {
+                          "height": 100,
+                          "width": 100,
+                        }
+                      }
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="ms-Persona-initials initials-31"
+                        style={
+                          Object {
+                            "height": 100,
+                            "width": 100,
+                          }
+                        }
+                      >
+                        <span>
+                          D
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-80 css-25"
+            >
+              <div
+                className="ms-Stack css-26"
+              >
                 <span
-                  className="css-10"
+                  className="css-27"
                 >
                   Dwight
                 </span>
               </div>
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack css-28"
               />
             </div>
           </div>
