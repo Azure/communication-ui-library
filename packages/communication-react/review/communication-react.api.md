@@ -1194,11 +1194,10 @@ export const namedLocales: Record<string, {
 }>;
 
 // @public (undocumented)
-<<<<<<< HEAD
 export const newClearErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateModifier;
-=======
+
+// @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
->>>>>>> origin/main
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
