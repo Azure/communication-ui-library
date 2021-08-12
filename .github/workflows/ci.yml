@@ -158,7 +158,7 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: this will fail
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
