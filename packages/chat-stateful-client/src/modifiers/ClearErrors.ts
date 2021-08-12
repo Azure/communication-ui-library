@@ -5,14 +5,11 @@ import { ChatClientState, ChatErrorTargets } from '../ChatClientState';
 import { ChatStateModifier } from '../StatefulChatClient';
 
 export const newClearErrorsModifier = (targets: ChatErrorTargets[]): ChatStateModifier => {
-  return (draft: ChatClientState): boolean => {
-    let changed = false;
+  return (draft: ChatClientState): void => {
     for (const target of targets) {
       if (draft.latestErrors[target] !== undefined) {
         delete draft.latestErrors[target];
-        changed = true;
       }
     }
-    return changed;
   };
 };

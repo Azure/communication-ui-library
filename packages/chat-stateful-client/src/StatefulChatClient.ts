@@ -18,7 +18,6 @@ export interface StatefulChatClient extends ChatClient {
    * Modify the internal state of the StatefulChatClient.
    *
    * This is the only way for users of StatefulChatClient to explicitly modify ChatClientState.
-   * If modifier returns true, internal state will be updated.
    *
    * @param modifier - ChatStateModifier callback. See documentation for {@Link ChatStateModifier}.
    */
@@ -162,11 +161,9 @@ export const createStatefulChatClient = (
  * The function must modify the provided state in place as much as possible.
  * Making large modifications can lead to bad performance by causing spurious rerendering of the UI.
  *
- * Modifier function must return true if and only if some modification was made to the state.
- *
  * Consider using commonly used modifier functions exported from this package.
  */
-export type ChatStateModifier = (state: ChatClientState) => boolean;
+export type ChatStateModifier = (state: ChatClientState) => void;
 
 /**
  * Internal implementation of {@link createStatefulChatClient} for dependency injection.

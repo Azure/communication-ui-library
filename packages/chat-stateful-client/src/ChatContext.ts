@@ -54,13 +54,13 @@ export class ChatContext {
   }
 
   public modifyState(modifier: ChatStateModifier): void {
-    let changed = false;
-    const newState = produce(this._state, (draft: ChatClientState) => {
-      changed = modifier(draft);
+    this.batch(() => {
+      this.setState(
+        produce(this._state, (draft: ChatClientState) => {
+          modifier(draft);
+        })
+      );
     });
-    if (changed) {
-      this.setState(newState);
-    }
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
@@ -414,26 +414,32 @@ export class ChatContext {
     }
   }
 
-  // Batch mode for multiple updates in one action(to trigger just on event), similar to redux batch() function
-  private startBatch(): void {
+  /**
+   * Batch updates to minimize `stateChanged` events across related operations.
+   *
+   * - A maximum of one `stateChanged` event is emitted, at the end of the operations.
+   * - No `stateChanged` event is emitted if the state did not change through the operations.
+   * - In case of an exception, state is reset to the prior value and no `stateChanged` event is emitted.
+   *
+   * All operations finished in this batch should be synchronous.
+   * This function is not reentrant -- do not call batch() from within another batch().
+   */
+  public batch(operations: () => void): void {
+    if (this._batchMode) {
+      throw new Error('batch() called from within another batch()');
+    }
+
     this._batchMode = true;
-  }
-
-  private endBatch(): void {
-    this._batchMode = false;
-    this._emitter.emit('stateChanged', this._state);
-  }
-
-  // All operations finished in this batch should be sync call(only context related)
-  public batch(batchFunc: () => void): void {
-    this.startBatch();
-    const backupState = this._state;
+    const priorState = this._state;
     try {
-      batchFunc();
+      operations();
+      if (this._state !== priorState) {
+        this._emitter.emit('stateChanged', this._state);
+      }
     } catch (e) {
-      this._state = backupState;
+      this._state = priorState;
     } finally {
-      this.endBatch();
+      this._batchMode = false;
     }
   }
 
