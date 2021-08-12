@@ -3,8 +3,8 @@
 
 import React from 'react';
 import { FluentThemeProvider, LocalizationProvider, namedLocales } from '@azure/communication-react';
-import { initializeIcons, loadTheme, setRTL } from '@fluentui/react';
-import { Anchor, DocsContainer } from '@storybook/addon-docs';
+import { initializeIcons, loadTheme } from '@fluentui/react';
+import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
 import {
   COMPONENT_FOLDER_PREFIX,
@@ -74,6 +74,8 @@ const withThemeProvider = (Story: any, context: any) => {
     }
   }
 
+  const rtl = context.globals.rtl as string === 'rtl';
+
   return (
     <FluentThemeProvider fluentTheme={theme}>
       <Story {...context} theme={theme} />
@@ -104,12 +106,7 @@ const withCenterStory = (Story: any) => {
   );
 };
 
-const withRTL = (Story: any, context: any) => {
-  setRTL(context.globals.rtl === 'rtl');
-  return <Story {...context} />;
-};
-
-export const decorators = [withCenterStory, withThemeProvider, withLocalization, withRTL];
+export const decorators = [withCenterStory, withThemeProvider, withLocalization];
 
 export const globalTypes = {
   theme: {

@@ -28,6 +28,7 @@
     "immer": "~8.0.1"
   },
   "devDependencies": {
+    "@azure/core-auth": "1.3.2",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.18.0",
     "@types/jest": "~26.0.22",

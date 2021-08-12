@@ -5,7 +5,9 @@ import {
   Call,
   CallAgent,
   CallApiFeature,
+  CallClient,
   CallFeatureFactoryType,
+  DeviceManager,
   IncomingCall,
   LocalVideoStream,
   PropertyChangedEvent,
@@ -19,7 +21,14 @@ import {
   TransferToParticipant,
   TransferToParticipantOptions
 } from '@azure/communication-calling';
+import { CommunicationTokenCredential } from '@azure/communication-common';
+import { AccessToken } from '@azure/core-auth';
+
 import EventEmitter from 'events';
+import { CallClientState } from './CallClientState';
+import { CallContext } from './CallContext';
+import { InternalCallContext } from './InternalCallContext';
+import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
 
 let backupFreezeFunction;
 
@@ -38,26 +47,26 @@ export function mockoutObjectFreeze(): void {
 
 export interface MockEmitter {
   emitter: EventEmitter;
-  on(event: any, listener: any);
-  off(event: any, listener: any);
   emit(event: any, data?: any);
 }
 
-type Mutable<T> = {
+export type Mutable<T> = {
   -readonly [k in keyof T]: T[k];
 };
-export type MockCall = Mutable<Call> & MockEmitter;
-export type MockCallAgent = Mutable<CallAgent> & MockEmitter;
-export type MockRemoteParticipant = Mutable<RemoteParticipant> & MockEmitter;
+
 export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
 export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
 
-export class MockCommunicationUserCredential {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public getToken(): any {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public dispose(): void {}
-}
+export const stubCommunicationTokenCredential = (): CommunicationTokenCredential => {
+  return {
+    getToken: (): Promise<AccessToken> => {
+      throw new Error('Not implemented');
+    },
+    dispose: (): void => {
+      /* Nothing to dispose */
+    }
+  };
+};
 
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public name = 'Recording';
@@ -113,22 +122,68 @@ export function addMockEmitter(object: any): any {
   return object;
 }
 
-export function createMockCall(mockCallId: string): MockCall {
-  const mockCall = {
-    id: mockCallId,
-    remoteParticipants: [] as ReadonlyArray<RemoteParticipant>,
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    api: createMockApiFeatures(new Map())
-  } as MockCall;
-  return addMockEmitter(mockCall);
+export interface MockCall extends Mutable<Call>, MockEmitter {
+  testHelperPushRemoteParticipant(participant: RemoteParticipant);
+  testHelperPopRemoteParticipant(): RemoteParticipant;
+  testHelperPushLocalVideoStream(stream: LocalVideoStream): void;
+  testHelperPopLocalVideoStream(): LocalVideoStream;
 }
 
-export function createMockRemoteParticipant(mockCommunicationUserId: string): MockRemoteParticipant {
-  const mockRemoteParticipant = {
+export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
+  return addMockEmitter({
+    id: mockCallId,
+    remoteParticipants: [] as RemoteParticipant[],
+    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
+    api: createMockApiFeatures(new Map()),
+
+    testHelperPushRemoteParticipant(participant: RemoteParticipant): void {
+      this.remoteParticipants.push(participant);
+      this.emit('remoteParticipantsUpdated', { added: [participant], removed: [] });
+    },
+
+    testHelperPopRemoteParticipant(): RemoteParticipant {
+      const participant = this.remoteParticipants.pop();
+      this.emit('remoteParticipantsUpdated', { added: [], removed: [participant] });
+      return participant;
+    },
+
+    testHelperPushLocalVideoStream(stream: LocalVideoStream): void {
+      this.localVideoStreams = [stream];
+      this.emit('localVideoStreamsUpdated', { added: [stream], removed: [] });
+    },
+
+    testHelperPopLocalVideoStream(): LocalVideoStream {
+      const stream = this.localVideoStreams.pop();
+      this.emit('localVideoStreamsUpdated', { added: [], removed: [stream] });
+      return stream;
+    }
+  }) as MockCall;
+}
+
+export interface MockRemoteParticipant extends Mutable<RemoteParticipant> {
+  emit(event: string, data?: any);
+  testHelperPushVideoStream(stream: RemoteVideoStream): void;
+  testHelperPopVideoStream(): RemoteVideoStream;
+}
+
+export function createMockRemoteParticipant(
+  mockCommunicationUserId = 'defaulRemoteParticipantId'
+): MockRemoteParticipant {
+  return addMockEmitter({
     identifier: { kind: 'communicationUser', communicationUserId: mockCommunicationUserId },
-    videoStreams: [] as ReadonlyArray<RemoteVideoStream>
-  } as MockRemoteParticipant;
-  return addMockEmitter(mockRemoteParticipant);
+    videoStreams: [] as ReadonlyArray<RemoteVideoStream>,
+
+    testHelperPushVideoStream(stream: RemoteVideoStream): void {
+      this.videoStreams.push(stream);
+      this.emit('videoStreamsUpdated', { added: [stream], removed: [] });
+    },
+
+    testHelperPopVideoStream(): RemoteVideoStream {
+      const stream = this.videoStreams.pop();
+      this.emit('videoStreamsUpdated', { added: [], removed: [stream] });
+      return stream;
+    }
+  }) as MockRemoteParticipant;
 }
 
 export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
@@ -136,9 +191,12 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   return addMockEmitter(mockIncomingCall);
 }
 
-export function createMockRemoteVideoStream(mockIsAvailable: boolean): MockRemoteVideoStream {
-  const mockRemoteVideoStream = { isAvailable: mockIsAvailable } as MockRemoteVideoStream;
-  return addMockEmitter(mockRemoteVideoStream);
+export function createMockRemoteVideoStream(id = 42): MockRemoteVideoStream {
+  return addMockEmitter({ id, mediaStreamType: 'Video' }) as MockRemoteVideoStream;
+}
+
+export function createMockRemoteScreenshareStream(id = 42): MockRemoteVideoStream {
+  return addMockEmitter({ id, mediaStreamType: 'ScreenSharing' }) as MockRemoteVideoStream;
 }
 
 /**
@@ -181,6 +239,7 @@ function waitMilliseconds(duration: number): Promise<void> {
   });
 }
 
+const BREAK_CONDITION_TIMEOUT_MILLESEC = 4000;
 /**
  * This will wait for up to 4 seconds and break when the given breakCondition is true. The reason for four seconds is
  * that by default the jest timeout for waiting for test is 5 seconds so ideally we want to break this and fail then
@@ -188,11 +247,84 @@ function waitMilliseconds(duration: number): Promise<void> {
  *
  * @param breakCondition
  */
-export async function waitWithBreakCondition(breakCondition: () => boolean): Promise<void> {
-  for (let i = 0; i < 40; i++) {
-    await waitMilliseconds(100);
+export async function waitWithBreakCondition(breakCondition: () => boolean): Promise<boolean> {
+  const start = new Date();
+  for (let now = new Date(); +now - +start < BREAK_CONDITION_TIMEOUT_MILLESEC; now = new Date()) {
     if (breakCondition()) {
-      break;
+      return true;
     }
+    await waitMilliseconds(10);
+  }
+  return false;
+}
+
+export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: DeviceManager): CallClient => {
+  return {
+    getDeviceManager: (): Promise<DeviceManager> => {
+      if (!deviceManager) {
+        throw new Error('deviceManager not set');
+      }
+      return Promise.resolve(deviceManager);
+    },
+    createCallAgent: (): Promise<CallAgent> => {
+      if (!callAgent) {
+        throw new Error('callAgent not set');
+      }
+      return Promise.resolve(callAgent);
+    }
+  } as unknown as CallClient;
+};
+
+export interface MockCallAgent extends Mutable<CallAgent>, MockEmitter {
+  /**
+   * Add given call to calls and trigger an event to notify clients.
+   */
+  testHelperPushCall(call: Call): void;
+  testHelperPopCall(): void;
+}
+
+export const createMockCallAgent = (displayName = 'defaultDisplayName'): MockCallAgent => {
+  return addMockEmitter({
+    calls: [] as Call[],
+    displayName: displayName,
+
+    testHelperPushCall(call: Call): void {
+      this.calls.push(call);
+      this.emit('callsUpdated', {
+        added: [call],
+        removed: []
+      });
+    },
+
+    testHelperPopCall(): void {
+      const call = this.calls.pop();
+      this.emit('callsUpdated', {
+        added: [],
+        removed: [call]
+      });
+    }
+  }) as MockCallAgent;
+};
+
+export class StateChangeListener {
+  state: CallClientState;
+  onChangeCalledCount = 0;
+
+  constructor(client: StatefulCallClient) {
+    this.state = client.getState();
+    client.onStateChange(this.onChange.bind(this));
+  }
+
+  private onChange(newState: CallClientState): void {
+    this.onChangeCalledCount++;
+    this.state = newState;
   }
 }
+
+export const createStatefulCallClientWithAgent = (agent: CallAgent): StatefulCallClient => {
+  return createStatefulCallClientWithDeps(
+    createMockCallClient(agent),
+    new CallContext({ kind: 'communicationUser', communicationUserId: 'defaultUserId' }),
+    new InternalCallContext()
+  );
+};

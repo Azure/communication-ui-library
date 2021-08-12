@@ -41,11 +41,20 @@ interface SwitchableFluentThemeContext {
    */
   currentTheme: NamedTheme;
   /**
+   * Whether to display components right-to-left
+   * @defaultValue false
+   */
+  currentRtl: boolean;
+  /**
    * Setter for the current theme.
    * If this the doesn't already exist in the theme context this will
    * add that theme to the store.
    */
   setCurrentTheme: (namedTheme: NamedTheme) => void;
+  /**
+   * Setter for the current rtl.
+   */
+  setCurrentRtl: (rtl: boolean) => void;
   /**
    * All stored themes within the context
    * @defaultValue defaultThemes
@@ -74,8 +83,11 @@ const defaultTheme: NamedTheme = defaultThemes.Light;
  */
 const SwitchableFluentThemeContext = createContext<SwitchableFluentThemeContext>({
   currentTheme: defaultTheme,
+  currentRtl: false,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
   setCurrentTheme: (theme: NamedTheme) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  setCurrentRtl: (rtl: boolean) => {},
   themeStore: defaultThemes
 });
 
@@ -107,6 +119,7 @@ export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProvid
   const themeFromStorage = getThemeFromLocalStorage(scopeId);
   const initialTheme = themeStore[themeFromStorage || defaultTheme.name] ?? defaultTheme;
   const [currentTheme, _setCurrentTheme] = useState<NamedTheme>(initialTheme);
+  const [currentRtl, _setCurrentRtl] = useState<boolean>(false);
 
   const state = useMemo<SwitchableFluentThemeContext>(
     () => ({
@@ -124,14 +137,20 @@ export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProvid
           saveThemeToLocalStorage(namedTheme.name, scopeId);
         }
       },
+      currentRtl,
+      setCurrentRtl: (rtl: boolean): void => {
+        _setCurrentRtl(rtl);
+      },
       themeStore
     }),
-    [currentTheme, scopeId, themeStore]
+    [currentTheme, currentRtl, scopeId, themeStore]
   );
 
   return (
     <SwitchableFluentThemeContext.Provider value={state}>
-      <FluentThemeProvider fluentTheme={currentTheme.theme}>{children}</FluentThemeProvider>
+      <FluentThemeProvider fluentTheme={currentTheme.theme} rtl={currentRtl}>
+        {children}
+      </FluentThemeProvider>
     </SwitchableFluentThemeContext.Provider>
   );
 };
