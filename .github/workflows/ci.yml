@@ -154,18 +154,16 @@ jobs:
         with:
           node-version: '14.x'
       - name: Install rush
-        run: |
-          true
+        run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: |
-          true
+        run: rush install
       - name: Build
-        run: |
-          true
+        run: rush build -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
-          true
+          cd samples/StaticHtmlComposites
+          rushx test:e2e
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
