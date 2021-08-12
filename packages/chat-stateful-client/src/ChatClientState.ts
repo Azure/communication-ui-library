@@ -11,13 +11,13 @@ export type ChatClientState = {
   displayName: string;
   /**
    * Chat threads joined by the current user.
-   * Object with {@Link ChatThreadClientState} fields, keyed by {@Link ChatThreadClientState.threadId}.
+   * Object with {@link ChatThreadClientState} fields, keyed by {@link ChatThreadClientState.threadId}.
    */
   threads: { [key: string]: ChatThreadClientState };
   /**
    * Stores the latest error for each API method.
    *
-   * See documentation of {@Link ChatErrors} for details.
+   * See documentation of {@link ChatErrors} for details.
    */
   latestErrors: ChatErrors;
 };
@@ -25,16 +25,16 @@ export type ChatClientState = {
 export type ChatThreadClientState = {
   /**
    * Messages in this thread.
-   * Object with {@Link ChatMessageWithStatus} entries
-   * Local messages are keyed by keyed by {@Link ChatMessageWithStatus.clientMessageId}.
-   * Remote messages are keyed by {@Link @azure/communication-chat#ChatMessage.id}.
+   * Object with {@link ChatMessageWithStatus} entries
+   * Local messages are keyed by keyed by {@link ChatMessageWithStatus.clientMessageId}.
+   * Remote messages are keyed by {@link @azure/communication-chat#ChatMessage.id}.
    */
   chatMessages: { [key: string]: ChatMessageWithStatus };
   /**
    * Participants of this chat thread.
    *
-   * Object with {@Link @azure/communication-chat#ChatParticipant} fields,
-   * keyed by {@Link @azure/communication-chat#ChatParticipant.id}.
+   * Object with {@link @azure/communication-chat#ChatParticipant} fields,
+   * keyed by {@link @azure/communication-chat#ChatParticipant.id}.
    */
   participants: { [key: string]: ChatParticipant };
   threadId: string;
@@ -57,7 +57,7 @@ export type ChatThreadProperties = {
  *
  * Each property in the object stores the latest error for a particular SDK API method.
  *
- * Errors from this object can be cleared by calling the TODO(implement me) {@Link clearError} method.
+ * Errors from this object can be cleared by calling the TODO(implement me) {@link clearError} method.
  * Additionally, errors are automatically cleared when:
  * - The state is cleared.
  * - Subsequent calls to related API methods succeed.
@@ -90,7 +90,7 @@ export class ChatError extends Error {
 }
 
 /**
- * String literal type for all permissible keys in {@Link ChatErrors}.
+ * String literal type for all permissible keys in {@link ChatErrors}.
  */
 export type ChatErrorTargets =
   | 'ChatClient.createChatThread'

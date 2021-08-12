@@ -140,7 +140,7 @@ const App: () => JSX.Element = () => {
         </Stack.Item>
       </Stack>
       <GridLayout>
-        <VideoTile isVideoReady={false} renderElement={null} displayName={'Michael'} styles={videoTileStyle} />
+        <VideoTile renderElement={null} displayName={'Michael'} styles={videoTileStyle} />
       </GridLayout>
     </Stack>
   );

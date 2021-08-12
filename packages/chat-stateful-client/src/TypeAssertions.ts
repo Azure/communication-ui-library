@@ -5,19 +5,19 @@ import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { ChatErrorTargets } from './ChatClientState';
 
 /**
- * Internal type-assertion that explicitly listed {@Link ChatErrorTargets} correspond to the underlying base SDK API.
+ * Internal type-assertion that explicitly listed {@link ChatErrorTargets} correspond to the underlying base SDK API.
  */
 export const ensureChatErrorTargetsContainsOnlyValidValues = (target: ChatErrorTargets): InferredChatErrorTargets =>
   target;
 
 /**
- * Internal type-assertion that explicitly listed {@Link ChatErrorTargets} correspond to the underlying base SDK API.
+ * Internal type-assertion that explicitly listed {@link ChatErrorTargets} correspond to the underlying base SDK API.
  */
 export const ensureChatErrorTargetsContainsAllValidValues = (target: InferredChatErrorTargets): ChatErrorTargets =>
   target;
 
 /**
- * String literal type for all permissible keys in {@Link ChatErrors}.
+ * String literal type for all permissible keys in {@link ChatErrors}.
  */
 type InferredChatErrorTargets =
   | ChatObjectMethodNames<'ChatClient', ChatClient>

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix infinite scroll jumpy behavior",
+  "packageName": "@internal/react-components",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

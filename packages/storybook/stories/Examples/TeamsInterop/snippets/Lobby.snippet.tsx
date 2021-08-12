@@ -9,6 +9,8 @@ import {
   useTheme
 } from '@azure/communication-react';
 import React from 'react';
+
+// Don't import this. It's just a helper for the story.
 import { useVideoStreams } from '../../../utils';
 
 export interface LobbyProps {
@@ -30,12 +32,14 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
     root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' }
   };
 
-  const videoStreamElement = useVideoStreams(1)[0];
+  // Helper code to make the storybook work. Replace with your own code for video stream element.
+  const videoStreams = useVideoStreams(1);
+  const videoStreamElement = props.isVideoReady ? videoStreams[0] : null;
+
   return (
     <VideoTile
       styles={videoTileStyles}
       isMirrored={true}
-      isVideoReady={props.isVideoReady}
       onRenderPlaceholder={() => <></>}
       renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
     >

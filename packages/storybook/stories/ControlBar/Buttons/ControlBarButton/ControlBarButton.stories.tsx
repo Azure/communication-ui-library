@@ -3,12 +3,12 @@
 
 import { ControlBarButton } from '@azure/communication-react';
 import { Airplane20Filled, VehicleBus20Filled, VehicleShip20Filled } from '@fluentui/react-icons';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean, radios } from '@storybook/addon-knobs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { CustomControlBarButtonExample } from './snippets/Custom.snippet';
 import { ControlBarButtonExample } from './snippets/Default.snippet';
 import { ControlBarButtonWithLabelExample } from './snippets/WithLabel.snippet';
@@ -72,27 +72,10 @@ const iconDict = {
   ship: <VehicleShip20Filled key={'shipIconKey'} primaryFill="currentColor" />
 };
 
-const ControlBarButtonStory = (): JSX.Element => {
-  const label = 'Icon';
-  const options = {
-    airplane: 'airplane',
-    bus: 'bus',
-    ship: 'ship'
-  };
-  const defaultValue = 'airplane';
+const ControlBarButtonStory = (args): JSX.Element => {
+  const icon = iconDict[args.icons];
 
-  const iconChoice = radios(label, options, defaultValue);
-  const icon = iconDict[iconChoice];
-  const showLabels = boolean('Show Labels', true);
-
-  return (
-    <ControlBarButton
-      onRenderIcon={() => icon}
-      strings={{ label: iconChoice }}
-      showLabel={showLabels}
-      labelKey={iconChoice}
-    />
-  );
+  return <ControlBarButton {...args} onRenderIcon={() => icon} strings={{ label: args.icons }} labelKey={args.icons} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -103,6 +86,15 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-base`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Default`,
   component: ControlBarButton,
+  argTypes: {
+    showLabel: controlsToAdd.showLabel,
+    icons: controlsToAdd.controlBarDefaultIcons,
+    // Hiding auto-generated controls
+    labelKey: hiddenControl,
+    strings: hiddenControl,
+    onRenderOnIcon: hiddenControl,
+    onRenderOffIcon: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

@@ -2,11 +2,12 @@
 // Licensed under the MIT license.
 
 import { OptionsButton } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
 import { OptionsButtonDefaultExample } from './snippets/Default.snippet';
 import { OptionsButtonWithKnobs } from './snippets/OptionsButtonWithKnobs.snippet';
@@ -69,8 +70,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const OptionsStory = (): JSX.Element => {
-  return <OptionsButtonWithKnobs />;
+const OptionsStory = (args): JSX.Element => {
+  return <OptionsButtonWithKnobs {...args} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -81,6 +82,20 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-options`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Options`,
   component: OptionsButton,
+  argTypes: {
+    showLabel: controlsToAdd.showLabel,
+    cameras: controlsToAdd.cameras,
+    microphones: controlsToAdd.microphones,
+    speakers: controlsToAdd.speakers,
+    // Hiding auto-generated controls
+    selectedMicrophone: hiddenControl,
+    selectedSpeaker: hiddenControl,
+    selectedCamera: hiddenControl,
+    onSelectCamera: hiddenControl,
+    onSelectMicrophone: hiddenControl,
+    onSelectSpeaker: hiddenControl,
+    strings: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

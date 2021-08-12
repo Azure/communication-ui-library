@@ -197,7 +197,10 @@ export const createDefaultCallingHandlers = memoizeOne(
       return callClient.createView(call.id, undefined, localStream, options);
     };
 
-    const onCreateRemoteStreamView = async (userId: string, options?: VideoStreamOptions): Promise<void> => {
+    const onCreateRemoteStreamView = async (
+      userId: string,
+      options = { scalingMode: 'Crop' } as VideoStreamOptions
+    ): Promise<void> => {
       if (!call) return;
       const callState = callClient.getState().calls[call.id];
       if (!callState) throw new Error(`Call Not Found: ${call.id}`);
@@ -220,7 +223,10 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
 
       if (screenShareStream && screenShareStream.isAvailable && !screenShareStream.view) {
-        callClient.createView(call.id, participant.identifier, screenShareStream, options);
+        // Hardcoded `scalingMode` since it is highly unlikely that CONTOSO would ever want to use a different scaling mode for screenshare.
+        // Using `Crop` would crop the contents of screenshare and `Stretch` would warp it.
+        // `Fit` is the only mode that maintains the integrity of the screen being shared.
+        callClient.createView(call.id, participant.identifier, screenShareStream, { scalingMode: 'Fit' });
       }
     };
 
@@ -302,10 +308,10 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
  * @param callClient - StatefulCallClient returned from
- *   {@Link @internal/calling-stateful-client#createStatefulCallClient}.
- * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
- * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
- * @param call - Instance of {@Link @azure/communication-calling#Call}.
+ *   {@link @azure/communication-react#createStatefulCallClient}.
+ * @param callAgent - Instance of {@link @azure/communication-calling#CallClient}.
+ * @param deviceManager - Instance of {@link @azure/communication-calling#DeviceManager}.
+ * @param call - Instance of {@link @azure/communication-calling#Call}.
  * @param _ - React component that you want to generate handlers for.
  * @returns
  */

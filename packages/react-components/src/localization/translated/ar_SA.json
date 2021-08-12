@@ -4,11 +4,11 @@
     "menuTitle": "المزيد من الخيارات"
   },
   "typingIndicator": {
-    "singleUser": "... يكتب {user}",
-    "multipleUsers": "... يكتبون  {users}",
-    "multipleUsersAbbreviateOne": "... و شخص آخر يكتبون {users}",
-    "multipleUsersAbbreviateMany": "... وآخرون يكتبون {users}",
-    "delimiter": "و "
+    "singleUser": "{user} يكتب ...",
+    "multipleUsers": "{users} يكتبون ...",
+    "multipleUsersAbbreviateOne": "{users} ، شخص آخر يكتب ...",
+    "multipleUsersAbbreviateMany": "{users} ، آخرون يكتبون ...",
+    "delimiter": " ، "
   },
   "sendBox": {
     "placeholderText": "أدخل رسالة"

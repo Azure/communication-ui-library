@@ -1,5 +1,5 @@
-import { Meta } from '@storybook/addon-docs/blocks';
-import { Canvas, Source } from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/addon-docs';
+import { Canvas, Source } from '@storybook/addon-docs';
 
 import LocalizationProviderSnippetText from '!!raw-loader!./snippets/localization/LocalizationProvider.snippet.tsx';
 import { LocalizationProviderSnippet } from './snippets/localization/LocalizationProvider.snippet';
@@ -11,7 +11,7 @@ import { LongTranslationsSnippet } from './snippets/localization/LongTranslation
 import TruncationSnippetText from '!!raw-loader!./snippets/localization/Truncation.snippet.tsx';
 import { TruncationSnippet } from './snippets/localization/Truncation.snippet';
 import SetRTLSnippetText from '!!raw-loader!./snippets/localization/SetRTL.snippet';
-import { SetRTLForCanvasSnippet } from './snippets/localization/SetRTLForCanvas.snippet';
+import { SetRTLSnippet } from './snippets/localization/SetRTL.snippet';
 import LocalizedComposites from '!!raw-loader!./snippets/localization/LocalizedComposites.snippet.tsx';
 
 <Meta id="localization" title="Localization" />
@@ -99,19 +99,17 @@ We suggest the following options to achieve a better looking interface.
   <TruncationSnippet />
 </Canvas>
 
-Note: All UI Library components will have aria labels with the full text as part of our Accessibility promise.
+Note: All ACS UI Library components will have aria labels with the full text as part of our Accessibility promise.
 
 3. Using styling to reduce font size.
 
-## Setting RTL
+## Setting rtl
 
-To set rtl in your web application, first import and call `setRTL` from `@fluentui/react` to set the root element's `dir` property to "rtl".
-All UI library components will be "flipped" just like the example `ControlBar` in Arabic below.
+To set rtl of ACS UI Library components for rtl languages, use the `FluentThemeProvider` and set the `rtl` prop to true like in
+the example below localized in Arabic.
 
 <Source code={SetRTLSnippetText} />
 
-<!-- Snippet is not actually using setRTL in this canvas because it would set the entire doc page and all the canvas examples to be RTL -->
-
 <Canvas withSource="none">
-  <SetRTLForCanvasSnippet />
+  <SetRTLSnippet />
 </Canvas>

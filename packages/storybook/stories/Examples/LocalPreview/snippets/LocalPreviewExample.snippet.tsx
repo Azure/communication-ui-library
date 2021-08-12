@@ -23,8 +23,8 @@ export const LocalPreviewExample = ({
   isCameraEnabled,
   isMicrophoneEnabled
 }: LocalPreviewProps): JSX.Element => {
-  const [microphone, setMicrophone] = useState(false);
-  const [camera, setCamera] = useState(false);
+  const [microphone, setMicrophone] = useState(true);
+  const [camera, setCamera] = useState(true);
   const theme = useTheme();
   const palette = theme.palette;
 
@@ -65,7 +65,8 @@ export const LocalPreviewExample = ({
     [cameraOffLabelStyle]
   );
 
-  const videoStreamElement = useVideoStreams(1)[0];
+  const videoStreams = useVideoStreams(1);
+  const videoStreamElement = isVideoAvailable ? videoStreams[0] : null;
 
   return (
     <FluentThemeProvider fluentTheme={theme}>
@@ -74,17 +75,24 @@ export const LocalPreviewExample = ({
           <Stack className={localPreviewContainerStyle}>
             <VideoTile
               styles={videoTileStyle}
-              isVideoReady={isVideoAvailable}
               // Here this storybook example isn't connected with Azure Communication Services
               // We would suggest you replace this videoStreamElement below with a rendered video stream from the calling SDK
-              renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
+              renderElement={
+                isVideoAvailable && isCameraEnabled && camera ? (
+                  <StreamMedia videoStreamElement={videoStreamElement} />
+                ) : undefined
+              }
               onRenderPlaceholder={renderCameraOffPlaceholder}
             >
               <ControlBar layout="floatingBottom">
-                <CameraButton disabled={!isCameraEnabled} checked={camera} onClick={() => setCamera(!camera)} />
+                <CameraButton
+                  disabled={!isCameraEnabled}
+                  checked={isCameraEnabled ? camera : false}
+                  onClick={() => setCamera(!camera)}
+                />
                 <MicrophoneButton
                   disabled={!isMicrophoneEnabled}
-                  checked={microphone}
+                  checked={isMicrophoneEnabled ? microphone : false}
                   onClick={() => setMicrophone(!microphone)}
                 />
               </ControlBar>

@@ -26,6 +26,9 @@ module.exports = {
     'calling-stateful-client': '<rootDir>/../calling-stateful-client/src/index.ts',
     'calling-component-bindings': '<rootDir>/../calling-component-bindings/src/index.ts',
     'acs-ui-common': '<rootDir>/../acs-ui-common/src/index.ts',
+    // TOC in storybook still import from '@storybook/addon-docs/blocks'
+    // This ends up with an import issue, so temporarily fixing it here
+    '@storybook/addon-docs/blocks': '@storybook/addon-docs',
     // Jest is unable to perform the raw load of snippet files, instead stub out these imports.
     // More information: https://stackoverflow.com/questions/63226101/handle-webpack-loader-syntax-with-jest-testing-exclamation-raw-loader
     '^!!raw-loader!.*': '<rootDir>/jest/snippetStub.txt'

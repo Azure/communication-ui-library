@@ -22,13 +22,19 @@ export type ChatCompositeProps = {
   /**
    * Fluent theme for the composite.
    *
-   * @defaultValue `light theme`
+   * @defaultValue light theme
    */
   fluentTheme?: PartialTheme | Theme;
   /**
+   * Whether composite is displayed right-to-left.
+   *
+   * @defaultValue false
+   */
+  rtl?: boolean;
+  /**
    * Locale for the composite.
    *
-   * @defaultValue `English (US)`
+   * @defaultValue English (US)
    */
   locale?: Locale;
   onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
@@ -67,6 +73,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   const {
     adapter,
     fluentTheme,
+    rtl,
     locale,
     options,
     identifiers,
@@ -76,7 +83,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   } = props;
 
   const chatElement = (
-    <FluentThemeProvider fluentTheme={fluentTheme}>
+    <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
       <IdentifierProvider identifiers={identifiers}>
         <ChatAdapterProvider adapter={adapter}>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />

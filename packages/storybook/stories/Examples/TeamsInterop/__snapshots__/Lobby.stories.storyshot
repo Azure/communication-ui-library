@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -24,9 +25,13 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
       >
         <div
           className="ms-Stack css-7"
-        />
+        >
+          <div
+            className="css-71"
+          />
+        </div>
         <div
-          className="ms-Stack css-80 css-8"
+          className="ms-Stack css-81 css-8"
         >
           <div
             className="ms-Stack css-9"

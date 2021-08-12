@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Theme Example Theme Example 1`] = `
+<div
+  className="css-61 body-0"
+  dir="ltr"
+>
+  <div
+    className="css-61"
+    data-uses-unhanded-props={true}
+    dir="ltr"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "height": "100vh",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <div
+        className="ms-Stack css-1"
+      >
+        <span>
+          Please provide the connection string and display name to use.
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

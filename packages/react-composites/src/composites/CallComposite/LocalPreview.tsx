@@ -42,8 +42,11 @@ export const LocalPreview = (): JSX.Element => {
     <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>
       <VideoTile
         styles={localPreviewTileStyle}
-        isVideoReady={!!localPreviewProps.videoStreamElement}
-        renderElement={<StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />}
+        renderElement={
+          localPreviewProps?.videoStreamElement ? (
+            <StreamMedia videoStreamElement={localPreviewProps.videoStreamElement} />
+          ) : undefined
+        }
         onRenderPlaceholder={onRenderPlaceholder}
       >
         <ControlBar layout="floatingBottom">
