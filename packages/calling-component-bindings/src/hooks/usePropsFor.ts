@@ -6,6 +6,7 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
+  ParticipantsButton,
   ParticipantList,
   ScreenShareButton,
   VideoGallery
@@ -24,7 +25,6 @@ import { useSelector } from './useSelector';
 import { Common } from '@internal/acs-ui-common';
 import { AreEqual } from '@internal/acs-ui-common';
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
-import { ParticipantsButton } from '@internal/react-components';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
