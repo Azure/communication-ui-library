@@ -169,13 +169,13 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
-        if: ${{ steps.visualregressiontests.outcome != 'success' }}
+        if: ${{ always() && steps.visualregressiontests.outcome != 'success' }}
         uses: actions/upload-artifact@v2
         with:
           name: snapshots
           path: samples/StaticHtmlComposites/test-results/ # or path/to/artifact
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && steps.visualregressiontests.outcome != 'success' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome != 'success' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
