@@ -324,23 +324,3 @@ export const createDefaultCallingHandlersForComponent = <Props>(
 ): Common<DefaultCallingHandlers, Props> => {
   return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
 };
-
-export const createDefaultCallingHandlersForParticipantButton = <Props>(
-  callClient: StatefulCallClient,
-  callAgent: CallAgent | undefined,
-  deviceManager: StatefulDeviceManager | undefined,
-  call: Call | undefined,
-  component: (props: Props) => ReactElement | null
-): Common<DefaultCallingHandlers, Props> => {
-  // This seems not nice...
-  return {
-    ...createDefaultCallingHandlersForComponent(callClient, callAgent, deviceManager, call, component),
-    participantListProps: createDefaultCallingHandlersForComponent(
-      callClient,
-      callAgent,
-      deviceManager,
-      call,
-      component
-    )
-  };
-};

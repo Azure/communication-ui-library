@@ -8,7 +8,6 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
-  ParticipantList,
   ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
@@ -29,6 +28,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
+  console.log(participantsButtonProps);
   const optionsButtonProps = usePropsFor(OptionsButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
   const onHangUp = useCallback(async () => {
