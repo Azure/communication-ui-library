@@ -720,6 +720,9 @@ export interface ComponentStrings {
     typingIndicator: TypingIndicatorStrings;
 }
 
+// @public (undocumented)
+export type ConflictingProps = 'getState' | 'onStateChange' | 'offStateChange' | 'on' | 'off';
+
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
@@ -1045,6 +1048,64 @@ export interface LocalVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
+// @public (undocumented)
+export interface MeetingAdapter extends Omit<ChatAdapter, ConflictingProps>, Omit<CallAdapter, ConflictingProps> {
+    // (undocumented)
+    getState(): MeetingState;
+    // (undocumented)
+    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    off(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    off(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
+    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+    // (undocumented)
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+    // (undocumented)
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    off(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    off(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    offStateChange(handler: (state: MeetingState) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    on(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    on(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
+    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+    // (undocumented)
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+    // (undocumented)
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    on(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    on(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    onStateChange(handler: (state: MeetingState) => void): void;
+}
+
 // @public
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
@@ -1055,6 +1116,12 @@ export type MeetingCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
 };
+
+// @public (undocumented)
+export type MeetingEvent = 'meetingEnded' | 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
+
+// @public
+export type MeetingState = unknown;
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
