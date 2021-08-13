@@ -7,13 +7,13 @@ import { CallErrorTargets } from './CallClientState';
 /**
  * Internal type-assertion that explicitly listed {@Link CallErrorTargets} correspond to the underlying base SDK API.
  */
-export const ensureChatErrorTargetsContainsOnlyValidValues = (target: CallErrorTargets): InferredCallErrorTargets =>
+export const ensureCallErrorTargetsContainsOnlyValidValues = (target: CallErrorTargets): InferredCallErrorTargets =>
   target;
 
 /**
  * Internal type-assertion that explicitly listed {@Link CallErrorTargets} correspond to the underlying base SDK API.
  */
-export const ensureChatErrorTargetsContainsAllValidValues = (target: InferredCallErrorTargets): CallErrorTargets =>
+export const ensureCallErrorTargetsContainsAllValidValues = (target: InferredCallErrorTargets): CallErrorTargets =>
   target;
 
 /**
