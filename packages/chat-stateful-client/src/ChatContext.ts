@@ -18,6 +18,8 @@ import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/commu
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
+import { ChatStateModifier } from './StatefulChatClient';
+import { newClearErrorsModifier } from './modifiers';
 
 enableMapSet();
 
@@ -49,6 +51,16 @@ export class ChatContext {
 
   public getState(): ChatClientState {
     return this._state;
+  }
+
+  public modifyState(modifier: ChatStateModifier): void {
+    this.batch(() => {
+      this.setState(
+        produce(this._state, (draft: ChatClientState) => {
+          modifier(draft);
+        })
+      );
+    });
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
@@ -344,13 +356,7 @@ export class ChatContext {
     return async (...args: Args): Promise<R> => {
       try {
         const ret = await f(...args);
-
-        if (clearTargets !== undefined) {
-          this.clearError(clearTargets);
-        } else {
-          this.clearError([target]);
-        }
-
+        this.modifyState(newClearErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);
@@ -378,13 +384,7 @@ export class ChatContext {
     return (...args: Args): R => {
       try {
         const ret = f(...args);
-
-        if (clearTargets !== undefined) {
-          this.clearError(clearTargets);
-        } else {
-          this.clearError([target]);
-        }
-
+        this.modifyState(newClearErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);
@@ -401,21 +401,6 @@ export class ChatContext {
     );
   }
 
-  public clearError(targets: ChatErrorTargets[]): void {
-    let changed = false;
-    const newState = produce(this._state, (draft: ChatClientState) => {
-      for (const target of targets) {
-        if (draft.latestErrors[target] !== undefined) {
-          delete draft.latestErrors[target];
-          changed = true;
-        }
-      }
-    });
-    if (changed) {
-      this.setState(newState);
-    }
-  }
-
   // This is a mutating function, only use it inside of a produce() function
   private filterTypingIndicatorForUser(thread: ChatThreadClientState, userId?: CommunicationIdentifierKind): void {
     if (!userId) return;
@@ -429,26 +414,32 @@ export class ChatContext {
     }
   }
 
-  // Batch mode for multiple updates in one action(to trigger just on event), similar to redux batch() function
-  private startBatch(): void {
+  /**
+   * Batch updates to minimize `stateChanged` events across related operations.
+   *
+   * - A maximum of one `stateChanged` event is emitted, at the end of the operations.
+   * - No `stateChanged` event is emitted if the state did not change through the operations.
+   * - In case of an exception, state is reset to the prior value and no `stateChanged` event is emitted.
+   *
+   * All operations finished in this batch should be synchronous.
+   * This function is not reentrant -- do not call batch() from within another batch().
+   */
+  public batch(operations: () => void): void {
+    if (this._batchMode) {
+      throw new Error('batch() called from within another batch()');
+    }
+
     this._batchMode = true;
-  }
-
-  private endBatch(): void {
-    this._batchMode = false;
-    this._emitter.emit('stateChanged', this._state);
-  }
-
-  // All operations finished in this batch should be sync call(only context related)
-  public batch(batchFunc: () => void): void {
-    this.startBatch();
-    const backupState = this._state;
+    const priorState = this._state;
     try {
-      batchFunc();
+      operations();
+      if (this._state !== priorState) {
+        this._emitter.emit('stateChanged', this._state);
+      }
     } catch (e) {
-      this._state = backupState;
+      this._state = priorState;
     } finally {
-      this.endBatch();
+      this._batchMode = false;
     }
   }
 
