@@ -246,6 +246,12 @@ export type CallAdapterClientState = {
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
+    latestErrors: CallAdapterErrors;
+};
+
+// @public
+export type CallAdapterErrors = {
+    [operation: string]: Error;
 };
 
 // @public (undocumented)
