@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
+import { Call, CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
 import { CallErrorTargets } from './CallClientState';
 
 /**
@@ -22,7 +22,8 @@ export const ensureChatErrorTargetsContainsAllValidValues = (target: InferredCal
 type InferredCallErrorTargets =
   | CallObjectMethodNames<'CallClient', CallClient>
   | CallObjectMethodNames<'CallAgent', CallAgent>
-  | CallObjectMethodNames<'DeviceManager', DeviceManager>;
+  | CallObjectMethodNames<'DeviceManager', DeviceManager>
+  | CallObjectMethodNames<'Call', Call>;
 
 type CallObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;
