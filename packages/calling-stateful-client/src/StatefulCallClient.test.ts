@@ -603,18 +603,47 @@ describe('errors should be reported correctly from StatefulCallClient when', () 
   });
 });
 
+describe('errors should be reported correctly from Call when', () => {
+  test('mute or unmute fails', async () => {
+    const { client, call: baseCall, statefulCallAgent: agent } = await prepareCall();
+    baseCall.mute = async (): Promise<void> => {
+      throw new Error('mute: injected error');
+    };
+    baseCall.unmute = async (): Promise<void> => {
+      throw new Error('unmute: injected error');
+    };
+
+    const call = agent.calls[0];
+    expect(call).toBeDefined();
+
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.mute()).rejects.toThrow(new CallError('Call.mute', new Error('mute: injected error')));
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.mute']).toBeDefined();
+    }
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.unmute()).rejects.toThrow(new CallError('Call.unmute', new Error('unmute: injected error')));
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.unmute']).toBeDefined();
+    }
+  });
+});
+
 interface PreparedCall {
   client: StatefulCallClient;
   agent: MockCallAgent;
   callId: string;
   call: MockCall;
+  statefulCallAgent: CallAgent;
 }
 
 const prepareCall = async (): Promise<PreparedCall> => {
   const agent = createMockCallAgent();
   const client = createStatefulCallClientWithAgent(agent);
 
-  await client.createCallAgent(stubCommunicationTokenCredential());
+  const statefulCallAgent = await client.createCallAgent(stubCommunicationTokenCredential());
 
   const callId = 'preparedCallId';
   const call = createMockCall(callId);
@@ -624,7 +653,8 @@ const prepareCall = async (): Promise<PreparedCall> => {
     client,
     agent,
     callId,
-    call
+    call,
+    statefulCallAgent
   };
 };
 
@@ -643,7 +673,8 @@ interface PreparedCallWithRemoteParticipant extends PreparedCall {
 }
 
 const prepareCallWithRemoteParticipant = async (): Promise<PreparedCallWithRemoteParticipant> => {
-  const { agent, client, callId, call } = await prepareCall();
+  const preparedCall = await prepareCall();
+  const { client, callId, call } = preparedCall;
 
   const participant = createMockRemoteParticipant();
   call.testHelperPushRemoteParticipant(participant);
@@ -653,13 +684,7 @@ const prepareCallWithRemoteParticipant = async (): Promise<PreparedCallWithRemot
     )
   ).toBe(true);
 
-  return {
-    client,
-    agent,
-    callId,
-    call,
-    participant
-  };
+  return { ...preparedCall, participant };
 };
 
 interface PreparedCallWithRemoteVideoStream extends PreparedCallWithRemoteParticipant {
@@ -692,7 +717,7 @@ const prepareCallWithFeatures = async (
   const agent = createMockCallAgent();
   const client = createStatefulCallClientWithAgent(agent);
 
-  await client.createCallAgent(stubCommunicationTokenCredential());
+  const statefulCallAgent = await client.createCallAgent(stubCommunicationTokenCredential());
 
   const callId = 'preparedCallId';
   const call = createMockCall(callId);
@@ -703,6 +728,7 @@ const prepareCallWithFeatures = async (
     client,
     agent,
     callId,
-    call
+    call,
+    statefulCallAgent
   };
 };

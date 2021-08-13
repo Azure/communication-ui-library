@@ -48,6 +48,16 @@ class ProxyCall implements ProxyHandler<Call> {
           }
         };
       }
+      case 'mute': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['mute']>) {
+          await target.mute();
+        }, 'Call.mute');
+      }
+      case 'unmute': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['unmute']>) {
+          await target.unmute();
+        }, 'Call.unmute');
+      }
       default:
         return Reflect.get(target, prop);
     }
