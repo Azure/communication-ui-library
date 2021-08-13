@@ -569,7 +569,7 @@ describe('Stateful call client', () => {
   });
 });
 
-describe('errors should be reported correctly when', () => {
+describe('errors should be reported correctly from StatefulCallClient when', () => {
   test('createCallAgent fails', async () => {
     const baseClient = createMockCallClient();
     baseClient.createCallAgent = (): Promise<CallAgent> => {
@@ -586,7 +586,7 @@ describe('errors should be reported correctly when', () => {
     expect(client.getState().latestErrors['CallClient.createCallAgent']).toBeDefined();
   });
 
-  test('xkcd getDeviceManager fails', async () => {
+  test('getDeviceManager fails', async () => {
     const baseClient = createMockCallClient();
     baseClient.getDeviceManager = (): Promise<DeviceManager> => {
       throw new Error('injected error');
