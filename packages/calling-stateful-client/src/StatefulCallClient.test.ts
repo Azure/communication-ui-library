@@ -629,6 +629,66 @@ describe('errors should be reported correctly from Call when', () => {
       expect(client.getState().latestErrors['Call.unmute']).toBeDefined();
     }
   });
+
+  test('startVideo or stopVideo fails', async () => {
+    const { client, call: baseCall, statefulCallAgent: agent } = await prepareCall();
+    baseCall.startVideo = async (): Promise<void> => {
+      throw new Error('startVideo: injected error');
+    };
+    baseCall.stopVideo = async (): Promise<void> => {
+      throw new Error('stopVideo: injected error');
+    };
+
+    const call = agent.calls[0];
+    expect(call).toBeDefined();
+
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.startVideo({} as LocalVideoStream)).rejects.toThrow(
+        new CallError('Call.startVideo', new Error('startVideo: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.startVideo']).toBeDefined();
+    }
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.stopVideo({} as LocalVideoStream)).rejects.toThrow(
+        new CallError('Call.stopVideo', new Error('stopVideo: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.stopVideo']).toBeDefined();
+    }
+  });
+
+  test('startScreenSharing or stopScreenSharing fails', async () => {
+    const { client, call: baseCall, statefulCallAgent: agent } = await prepareCall();
+    baseCall.startScreenSharing = async (): Promise<void> => {
+      throw new Error('startScreenSharing: injected error');
+    };
+    baseCall.stopScreenSharing = async (): Promise<void> => {
+      throw new Error('stopScreenSharing: injected error');
+    };
+
+    const call = agent.calls[0];
+    expect(call).toBeDefined();
+
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.startScreenSharing()).rejects.toThrow(
+        new CallError('Call.startScreenSharing', new Error('startScreenSharing: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.startScreenSharing']).toBeDefined();
+    }
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.stopScreenSharing()).rejects.toThrow(
+        new CallError('Call.stopScreenSharing', new Error('stopScreenSharing: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.stopScreenSharing']).toBeDefined();
+    }
+  });
 });
 
 interface PreparedCall {
