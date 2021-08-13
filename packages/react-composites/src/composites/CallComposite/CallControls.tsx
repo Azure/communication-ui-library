@@ -8,7 +8,6 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
-  ParticipantList,
   ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
