@@ -443,7 +443,7 @@ export type IsSpeakingChangedListener = (event: {
 // @public (undocumented)
 export interface MeetingAdapter extends Omit<ChatAdapter, ConflictingProps>, Omit<CallAdapter, ConflictingProps> {
     // (undocumented)
-    getState(): MeetingClientState;
+    getState(): MeetingAdapterState;
     // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -469,7 +469,7 @@ export interface MeetingAdapter extends Omit<ChatAdapter, ConflictingProps>, Omi
     // (undocumented)
     off(event: 'messageRead', listener: MessageReadListener): void;
     // (undocumented)
-    offStateChange(handler: (state: MeetingClientState) => void): void;
+    offStateChange(handler: (state: MeetingAdapterState) => void): void;
     // (undocumented)
     on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -495,11 +495,11 @@ export interface MeetingAdapter extends Omit<ChatAdapter, ConflictingProps>, Omi
     // (undocumented)
     on(event: 'messageRead', listener: MessageReadListener): void;
     // (undocumented)
-    onStateChange(handler: (state: MeetingClientState) => void): void;
+    onStateChange(handler: (state: MeetingAdapterState) => void): void;
 }
 
 // @public
-export interface MeetingClientState extends Omit<CallClientState, NonApplicableClientState>, Omit<ChatClientState, NonApplicableClientState> {
+export interface MeetingAdapterState extends Omit<CallClientState, NonApplicableClientState>, Omit<ChatClientState, NonApplicableClientState> {
     // (undocumented)
     meetings: {
         [key: string]: MeetingState;

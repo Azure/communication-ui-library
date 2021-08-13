@@ -20,7 +20,7 @@ export type NonApplicableClientState =
  * Stateful items like Participants that apply to both calling and chat are intelligently
  * combined into one to suit the purpose of a Meeting.
  */
-export interface MeetingClientState
+export interface MeetingAdapterState
   extends Omit<CallClientState, NonApplicableClientState>,
     Omit<ChatClientState, NonApplicableClientState> {
   meetings: { [key: string]: MeetingState };
