@@ -4,4 +4,12 @@
 export * from './MeetingComposite';
 
 export type { MeetingAdapter, MeetingEvent, ConflictingProps } from './adapter/MeetingAdapter';
-export type { MeetingState } from './state/MeetingState';
+export type {
+  NonApplicableClientState,
+  MeetingClientState,
+  MeetingEndReason,
+  NonApplicableParticipantProps,
+  MeetingParticipant,
+  NonApplicableState,
+  MeetingState
+} from './state/MeetingState';

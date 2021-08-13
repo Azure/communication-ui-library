@@ -1051,7 +1051,7 @@ export interface LocalVideoStreamState {
 // @public (undocumented)
 export interface MeetingAdapter extends Omit<ChatAdapter, ConflictingProps>, Omit<CallAdapter, ConflictingProps> {
     // (undocumented)
-    getState(): MeetingState;
+    getState(): MeetingClientState;
     // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -1077,7 +1077,7 @@ export interface MeetingAdapter extends Omit<ChatAdapter, ConflictingProps>, Omi
     // (undocumented)
     off(event: 'messageRead', listener: MessageReadListener): void;
     // (undocumented)
-    offStateChange(handler: (state: MeetingState) => void): void;
+    offStateChange(handler: (state: MeetingClientState) => void): void;
     // (undocumented)
     on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -1103,7 +1103,17 @@ export interface MeetingAdapter extends Omit<ChatAdapter, ConflictingProps>, Omi
     // (undocumented)
     on(event: 'messageRead', listener: MessageReadListener): void;
     // (undocumented)
-    onStateChange(handler: (state: MeetingState) => void): void;
+    onStateChange(handler: (state: MeetingClientState) => void): void;
+}
+
+// @public
+export interface MeetingClientState extends Omit<CallClientState, NonApplicableClientState>, Omit<ChatClientState, NonApplicableClientState> {
+    // (undocumented)
+    meetings: {
+        [key: string]: MeetingState;
+    };
+    // (undocumented)
+    meetingsEnded: MeetingState[];
 }
 
 // @public
@@ -1118,10 +1128,34 @@ export type MeetingCompositeProps = {
 };
 
 // @public (undocumented)
+export type MeetingEndReason = CallEndReason;
+
+// @public (undocumented)
 export type MeetingEvent = 'meetingEnded' | 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
 
-// @public
-export type MeetingState = unknown;
+// @public (undocumented)
+export interface MeetingParticipant extends Omit<ChatParticipant, NonApplicableParticipantProps>, Omit<RemoteParticipantState, NonApplicableParticipantProps> {
+    // (undocumented)
+    id: CommunicationIdentifier;
+    // (undocumented)
+    meetingEndReason: MeetingEndReason;
+}
+
+// @public (undocumented)
+export interface MeetingState extends Omit<CallState, NonApplicableState>, Omit<ChatThreadClientState, NonApplicableState> {
+    // (undocumented)
+    meetingEndReason: MeetingEndReason;
+    // (undocumented)
+    participants: {
+        [key: string]: MeetingParticipant;
+    };
+    // (undocumented)
+    participantsEnded: {
+        [keys: string]: MeetingParticipant;
+    };
+    // (undocumented)
+    userId: CommunicationIdentifier;
+}
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
@@ -1256,6 +1290,15 @@ export const namedLocales: Record<string, {
     englishName: string;
     displayName: string;
 }>;
+
+// @public (undocumented)
+export type NonApplicableClientState = 'participants' | 'userId' | 'calls' | 'callsEnded' | 'incomingCalls' | 'incomingCallsEnded';
+
+// @public (undocumented)
+export type NonApplicableParticipantProps = 'identifier' | 'id' | 'callEndReason';
+
+// @public (undocumented)
+export type NonApplicableState = 'id' | 'userId' | 'participants' | 'remoteParticipants' | 'remoteParticipantsEnded' | 'callEndReason' | 'direction';
 
 // @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;

@@ -14,15 +14,15 @@ import {
   ParticipantLeftListener
 } from '../../CallComposite';
 import { ChatAdapter, MessageReadListener, MessageReceivedListener, MessageSentListener } from '../../ChatComposite';
-import { MeetingState } from '../state/MeetingState';
+import { MeetingClientState } from '../state/MeetingState';
 
 export type ConflictingProps = 'getState' | 'onStateChange' | 'offStateChange' | 'on' | 'off';
 
 export interface MeetingAdapter extends Omit<ChatAdapter, ConflictingProps>, Omit<CallAdapter, ConflictingProps> {
   // Meeting-specific interfaces
-  getState(): MeetingState;
-  onStateChange(handler: (state: MeetingState) => void): void;
-  offStateChange(handler: (state: MeetingState) => void): void;
+  getState(): MeetingClientState;
+  onStateChange(handler: (state: MeetingClientState) => void): void;
+  offStateChange(handler: (state: MeetingClientState) => void): void;
 
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
