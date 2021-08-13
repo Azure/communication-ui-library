@@ -80,9 +80,15 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               onClose={closePane}
             />
           )}
-          {callAdapter && (
+          {callAdapter && chatAdapter && (
             <CallAdapterProvider adapter={callAdapter}>
-              <EmbeddedPeoplePane hidden={!showPeople} inviteLink={props.meetingInvitationURL} onClose={closePane} />
+              <EmbeddedPeoplePane
+                hidden={!showPeople}
+                inviteLink={props.meetingInvitationURL}
+                onClose={closePane}
+                chatAdapter={chatAdapter}
+                callAdapter={callAdapter}
+              />
             </CallAdapterProvider>
           )}
         </Stack>

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ChatComposite, ChatAdapter } from '../ChatComposite';
 import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack } from '@fluentui/react';
 import {
@@ -18,6 +18,7 @@ import {
 import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
+import { CallAdapter } from '../CallComposite';
 
 const SidePane = (props: {
   headingText: string;
@@ -52,13 +53,38 @@ const SidePane = (props: {
   );
 };
 
+/**
+ * In a Meeting when a participant is removed, we must remove them from both
+ * the call and the chat thread.
+ */
+const removeParticipantFromMeeting = async (
+  callAdapter: CallAdapter,
+  chatAdapter: ChatAdapter,
+  participantId: string
+): Promise<void> => {
+  await callAdapter.removeParticipant(participantId);
+  await chatAdapter.removeParticipant(participantId);
+};
+
 export const EmbeddedPeoplePane = (props: {
   inviteLink?: string;
   onClose: () => void;
   hidden: boolean;
+  callAdapter: CallAdapter;
+  chatAdapter: ChatAdapter;
 }): JSX.Element => {
-  const { inviteLink } = props;
-  const participantListProps = usePropsFor(ParticipantList);
+  const { callAdapter, chatAdapter, inviteLink } = props;
+  const participantListDefaultProps = usePropsFor(ParticipantList);
+
+  const participantListProps = useMemo(() => {
+    const onParticipantRemove = async (participantId: string): Promise<void> =>
+      removeParticipantFromMeeting(callAdapter, chatAdapter, participantId);
+    return {
+      ...participantListDefaultProps,
+      onParticipantRemove
+    };
+  }, [participantListDefaultProps, callAdapter, chatAdapter]);
+
   return (
     <SidePane hidden={props.hidden} headingText={'People'} onClose={props.onClose}>
       <Stack tokens={peoplePaneContainerTokens}>
