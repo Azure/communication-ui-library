@@ -443,7 +443,7 @@ export interface CallClientState {
  *
  * Each property in the object stores the latest error for a particular SDK API method.
  *
- * Errors from this object can be cleared using the TODO(implement me) {@Link newClearErrorsModifier}.
+ * Errors from this object can be cleared using the {@link newClearCallErrorsModifier}.
  * Additionally, errors are automatically cleared when:
  * - The state is cleared.
  * - Subsequent calls to related API methods succeed.

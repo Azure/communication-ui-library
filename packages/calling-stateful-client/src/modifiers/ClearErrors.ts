@@ -11,7 +11,7 @@ import { CallStateModifier } from '../StatefulCallClient';
  *
  * @param targets CallErrorTarget[] to clear the errors for.
  */
-export const newClearErrorsModifier = (targets: CallErrorTargets[]): CallStateModifier => {
+export const newClearCallErrorsModifier = (targets: CallErrorTargets[]): CallStateModifier => {
   return (draft: CallClientState): void => {
     for (const target of targets) {
       if (draft.latestErrors[target] !== undefined) {

@@ -33,6 +33,7 @@ import {
   CallError
 } from './CallClientState';
 import { CallStateModifier } from './StatefulCallClient';
+import { newClearCallErrorsModifier } from './modifiers';
 
 enableMapSet();
 
@@ -708,13 +709,7 @@ export class CallContext {
     return async (...args: Args): Promise<R> => {
       try {
         const ret = await f(...args);
-
-        if (clearTargets !== undefined) {
-          this.clearError(clearTargets);
-        } else {
-          this.clearError([target]);
-        }
-
+        this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);
@@ -742,13 +737,7 @@ export class CallContext {
     return (...args: Args): R => {
       try {
         const ret = f(...args);
-
-        if (clearTargets !== undefined) {
-          this.clearError(clearTargets);
-        } else {
-          this.clearError([target]);
-        }
-
+        this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);
@@ -763,20 +752,5 @@ export class CallContext {
         draft.latestErrors[target] = error;
       })
     );
-  }
-
-  public clearError(targets: CallErrorTargets[]): void {
-    let changed = false;
-    const newState = produce(this._state, (draft: CallClientState) => {
-      for (const target of targets) {
-        if (draft.latestErrors[target] !== undefined) {
-          delete draft.latestErrors[target];
-          changed = true;
-        }
-      }
-    });
-    if (changed) {
-      this.setState(newState);
-    }
   }
 }

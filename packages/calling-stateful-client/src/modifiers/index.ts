@@ -5,4 +5,4 @@
  * The modifiers package defines common functions for modifying the StatefulCallClient state.
  */
 
-export { newClearErrorsModifier } from './ClearErrors';
+export { newClearCallErrorsModifier } from './ClearErrors';
