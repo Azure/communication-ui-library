@@ -56,6 +56,14 @@ export interface StatefulCallClient extends CallClient {
    */
   getState(): CallClientState;
   /**
+   * Modify the internal state of the StatefulCallClient.
+   *
+   * This is the only way for users of StatefulCallClient to explicitly modify CallClientState.
+   *
+   * @param modifier - CallStateModifier callback. See documentation for {@Link CallStateModifier}.
+   */
+  modifyState(modifier: CallStateModifier): void;
+  /**
    * Allows a handler to be registered for 'stateChanged' events.
    *
    * @param handler - Callback to receive the state.
