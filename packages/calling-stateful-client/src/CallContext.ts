@@ -32,6 +32,7 @@ import {
   CallErrorTargets,
   CallError
 } from './CallClientState';
+import { CallStateModifier } from './StatefulCallClient';
 
 enableMapSet();
 
@@ -43,6 +44,7 @@ export class CallContext {
   private _state: CallClientState;
   private _emitter: EventEmitter;
   private _atomicId: number;
+  private _batchMode: boolean;
 
   constructor(userId: CommunicationUserKind, maxListeners = 50) {
     this._state = {
@@ -63,17 +65,58 @@ export class CallContext {
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
-
+    this._batchMode = false;
     this._atomicId = 0;
-  }
-
-  public setState(state: CallClientState): void {
-    this._state = state;
-    this._emitter.emit('stateChanged', this._state);
   }
 
   public getState(): CallClientState {
     return this._state;
+  }
+
+  public setState(state: CallClientState): void {
+    this._state = state;
+    if (!this._batchMode) {
+      this._emitter.emit('stateChanged', this._state);
+    }
+  }
+
+  public modifyState(modifier: CallStateModifier): void {
+    this.batch(() => {
+      this.setState(
+        produce(this._state, (draft: CallClientState) => {
+          modifier(draft);
+        })
+      );
+    });
+  }
+
+  /**
+   * Batch updates to minimize `stateChanged` events across related operations.
+   *
+   * - A maximum of one `stateChanged` event is emitted, at the end of the operations.
+   * - No `stateChanged` event is emitted if the state did not change through the operations.
+   * - In case of an exception, state is reset to the prior value and no `stateChanged` event is emitted.
+   *
+   * All operations finished in this batch should be synchronous.
+   * This function is not reentrant -- do not call batch() from within another batch().
+   */
+  public batch(operations: () => void): void {
+    if (this._batchMode) {
+      throw new Error('batch() called from within another batch()');
+    }
+
+    this._batchMode = true;
+    const priorState = this._state;
+    try {
+      operations();
+      if (this._state !== priorState) {
+        this._emitter.emit('stateChanged', this._state);
+      }
+    } catch (e) {
+      this._state = priorState;
+    } finally {
+      this._batchMode = false;
+    }
   }
 
   public onStateChange(handler: (state: CallClientState) => void): void {

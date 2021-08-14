@@ -134,6 +134,18 @@ export interface StatefulCallClient extends CallClient {
 }
 
 /**
+ * A function to modify the state of the StatefulCallClient.
+ *
+ * Provided as a callback to the {@link StatefulCallClient.modifyState} method.
+ *
+ * The function must modify the provided state in place as much as possible.
+ * Making large modifications can lead to bad performance by causing spurious rerendering of the UI.
+ *
+ * Consider using commonly used modifier functions exported from this package.
+ */
+export type CallStateModifier = (state: CallClientState) => void;
+
+/**
  * ProxyCallClient proxies CallClient {@link @azure/communication-calling#CallClient} and subscribes to all events that
  * affect state. ProxyCallClient keeps its own copy of the call state and when state is updated, ProxyCallClient emits
  * the event 'stateChanged'.
@@ -254,6 +266,10 @@ export const createStatefulCallClientWithDeps = (
   Object.defineProperty(callClient, 'getState', {
     configurable: false,
     value: () => context.getState()
+  });
+  Object.defineProperty(callClient, 'modifyState', {
+    configurable: false,
+    value: (modifier: CallStateModifier) => context?.modifyState(modifier)
   });
   Object.defineProperty(callClient, 'onStateChange', {
     configurable: false,
