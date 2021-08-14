@@ -56,18 +56,13 @@ const GridLayoutStory = (args): JSX.Element => {
   const participantsComponents = useMemo(() => {
     let videoStreamElementIndex = 0;
     return args.participants.map((participant, index) => {
-      let videoStreamElement: HTMLElement | null = null;
+      let videoRenderElement: JSX.Element | undefined = undefined;
       if (participant.isVideoReady) {
-        videoStreamElement = videoStreamElements[videoStreamElementIndex];
+        const videoStreamElement = videoStreamElements[videoStreamElementIndex];
         videoStreamElementIndex++;
+        videoRenderElement = <StreamMedia videoStreamElement={videoStreamElement} />;
       }
-      return (
-        <VideoTile
-          renderElement={<StreamMedia videoStreamElement={videoStreamElement} />}
-          displayName={participant.displayName}
-          key={index}
-        />
-      );
+      return <VideoTile renderElement={videoRenderElement} displayName={participant.displayName} key={index} />;
     });
   }, [args.participants, videoStreamElements]);
 
