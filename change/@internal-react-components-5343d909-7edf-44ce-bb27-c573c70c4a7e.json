@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update to align chat bubble with/without receipt",
+  "packageName": "@internal/react-components",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
