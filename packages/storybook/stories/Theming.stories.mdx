@@ -115,3 +115,21 @@ If you wish to override the mapping, we advise that you use the `useTheme` hook.
 Should you override your own mappings, please note that ACS SDK UI components abide by the general Fluent UI
 mappings. Foreground colors are used for text, icons, and outlines while background colors for component
 backgrounds. Primary colors are also used for component backgrounds or icons.
+
+## Custom Fonts
+
+Custom Fonts can be applied to UI Components or Composites using the existing theming mechansim.
+Along with the ability to change colors, a JSON object containing the theme palette also allows users to specify custom fonts.
+As long as the fonts have been loaded in the application, a custom font name can be specified as shown in the example below.
+
+```tsx
+export const lightTheme = {
+  defaultFontStyle: { fontFamily: 'Monaco, Menlo, Consolas', fontWeight: 'regular' },
+  palette: {
+    themePrimary: '#0078d4',
+    themeLighterAlt: '#f3f9fd'
+  }
+};
+```
+
+If you wish to apply the same font to all the font weights, simply remove the `fontWeight` property from the `defaultFontStyle` object.

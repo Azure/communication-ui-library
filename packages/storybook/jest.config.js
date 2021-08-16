@@ -40,6 +40,9 @@ module.exports = {
   // A list of paths to directories that Jest should use to search for files in
   roots: ['stories', '.storybook'],
 
+  // Setup code to run after the environment has been setup. This runs before each test file in the suite.
+  setupFilesAfterEnv: ['../../common/config/jest/jestSetup.js'],
+
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(ts)x?$': 'ts-jest',
