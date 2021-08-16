@@ -67,7 +67,6 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       return (
         <TooltipHost content={strings.failedToSendTooltipText}>
           <ErrorCircle20Regular
-            primaryFill="currentColor"
             className={mergeStyles(
               MessageStatusIndicatorErrorIconStyle,
               { color: theme.palette.redDark },
