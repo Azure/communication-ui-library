@@ -2921,10 +2921,10 @@ packages:
       react-dom: ^16.8.0
     resolution:
       integrity: sha512-9p0DQcGng+CA/sTnjxxaGWC8CH/OhwZCIEwp3srMeIkPaeWG7jKIOCTjRh87l5XhaeaYds6b88zET7axAHoXvw==
-  /@fluentui/react-icons/1.1.135:
+  /@fluentui/react-icons/1.1.137:
     dev: false
     resolution:
-      integrity: sha512-Gs1GeUjK05WMvhLjBTM5mk/9Mo5yQ706/EYhwGPzGdXbKiEvQ/JwJEYmCRsJoo4062w5ksDiUpUCGW3LSpm5oA==
+      integrity: sha512-IPT2aOIPRN3BT+qaTUUpd1p3dUxdgAkaxmOaX2gFVeHT2A0fGYoPiu3VJ/YSNTpqtxFWtxOZLPltMdjbHEitjw==
   /@fluentui/react-northstar-fela-renderer/0.51.7_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@babel/runtime': 7.14.8
@@ -9307,6 +9307,7 @@ packages:
       mime: 1.6.0
       minimist: 1.2.5
       url-join: 2.0.5
+    deprecated: This package is unmaintained and deprecated. See the GH Issue 259.
     dev: false
     hasBin: true
     resolution:
@@ -9319,6 +9320,7 @@ packages:
       minimist: 1.2.5
       on-finished: 2.3.0
       url-join: 4.0.1
+    deprecated: This package is unmaintained and deprecated. See the GH Issue 259.
     dev: false
     hasBin: true
     resolution:
@@ -19445,7 +19447,7 @@ packages:
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@babel/preset-react': 7.14.5_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_ab7a3a40ae1570509bc3553567e361ed
-      '@fluentui/react-icons': 1.1.135
+      '@fluentui/react-icons': 1.1.137
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.24
       '@types/node': 14.17.5
@@ -19499,7 +19501,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-319kQptDZfz1tAX+FAx+9spnnm3s0c3mLVB7y8y5w2IRxtfslRv9ZKbQQnh75q+XpgothdEOkJYDhAQouoaNvA==
+      integrity: sha512-ekjYeoKvWI/QEziBT+YeCGIluKVHyxNPoFrrwBSSfmyv3Tg9PbhzCNZ1LzYcLfhicXGQA9DREMhPY9rDNq/jhg==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19571,7 +19573,7 @@ packages:
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-http': 1.2.4
       '@fluentui/react': 8.17.4_ab7a3a40ae1570509bc3553567e361ed
-      '@fluentui/react-icons': 1.1.135
+      '@fluentui/react-icons': 1.1.137
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.24
@@ -19620,7 +19622,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-NDKeWJ8cNLh1FT3WDhfNeTGsen3ZiY5ibKeXVVJTEdnqOWppxKScWGqAC1vpZ2ebdt7i81C+K8qCJ+o05Np6xg==
+      integrity: sha512-XRo8saYe07dHh9taaAQ4cL79heyk8z8q5TNQqoSugDbSZDasAwW+LV23sU8OPH+v9gCwa/JFzwgDZoIpKB7jQw==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19648,7 +19650,7 @@ packages:
       '@azure/core-http': 1.2.4
       '@azure/core-paging': 1.1.3
       '@fluentui/react': 8.17.4_ab7a3a40ae1570509bc3553567e361ed
-      '@fluentui/react-icons': 1.1.135
+      '@fluentui/react-icons': 1.1.137
       '@fluentui/react-northstar': 0.51.7_ab7a3a40ae1570509bc3553567e361ed
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.4
@@ -19709,7 +19711,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-g4S8GgR71OT49VnXtuLQ4Vw/lHinQO21jV+9uUszag6AZQyJAPtpi2ZRbfVcEFee1WnbYu3Nd37FddtiGJXfgw==
+      integrity: sha512-xwryyDKOMDonxVbiOJqe75k644xzNu1/sqyyrvqb8RBYrlxinTsvEdnpyWqtH5mtOtDKevAX7OIMegfkqiXznw==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -19717,7 +19719,7 @@ packages:
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_ab7a3a40ae1570509bc3553567e361ed
-      '@fluentui/react-icons': 1.1.135
+      '@fluentui/react-icons': 1.1.137
       '@fluentui/react-northstar': 0.51.7_ab7a3a40ae1570509bc3553567e361ed
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
@@ -19783,7 +19785,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-8J7drOqhxP4ovlDuGPc9y40r6GveihYTMmbOUG5/Qxi/9aocgu/q4MJEweeyBMFIXRz82xMoWH+BgEVyFU19mw==
+      integrity: sha512-sC0ahyGGGHjELwbvToIxPJsJpCRlCPuWuwtMRvURmI9Haq2WSBEhciMFO+s8iOR163yL0NI39JQJ9X2dDoQaGQ==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19798,7 +19800,7 @@ packages:
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_ab7a3a40ae1570509bc3553567e361ed
-      '@fluentui/react-icons': 1.1.135
+      '@fluentui/react-icons': 1.1.137
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.4
@@ -19871,7 +19873,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-pLxsk6PViXApo0Yd1INJ9WswTP1epnDMXf2vMp6OLdhD4SQ20CxJfGpH3EtHfCwkDSWlq3Xi8wu4zC/bSNw0vw==
+      integrity: sha512-u0CFyvmbTkT6S8jndjVW5+oVSS5zleTC103HRa0ESbC7wijKROfjRVZOuJnHrAdLf4rQWpPNuGaEMNeOZoxCMA==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -19964,7 +19966,7 @@ packages:
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_ab7a3a40ae1570509bc3553567e361ed
-      '@fluentui/react-icons': 1.1.135
+      '@fluentui/react-icons': 1.1.137
       '@fluentui/react-northstar': 0.51.7_ab7a3a40ae1570509bc3553567e361ed
       '@fluentui/theme-samples': 8.1.5_ab7a3a40ae1570509bc3553567e361ed
       '@mdx-js/react': 1.6.22_react@16.14.0
@@ -20048,7 +20050,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-xilzQ6g5eNJIjjpRGYofGAmLulxo63j9RcQqRMYj9TLCka814yOVnJxtSykIy26BJ5h0SO5yXtLh2AQukVw61g==
+      integrity: sha512-A5Yx089sAFhr4IOJ7tulm33ojyFvMkROD8VhPTu/91s0whXSbfG2op9xv2KgVwMhaEQMSLJUQ/7pk/LztLq+Jg==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
