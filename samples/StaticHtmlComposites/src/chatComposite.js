@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 
-export const loadChatComposite = async function (args, htmlElement) {
+export const loadChatComposite = async function (args, htmlElement, props) {
   const { userId, token, endpointUrl, threadId, displayName } = args;
   const adapter = await createAzureCommunicationChatAdapter({
     endpointUrl,
@@ -15,6 +15,6 @@ export const loadChatComposite = async function (args, htmlElement) {
     credential: new AzureCommunicationTokenCredential(token),
     threadId
   });
-  ReactDOM.render(React.createElement(ChatComposite, { adapter }, null), htmlElement);
+  ReactDOM.render(React.createElement(ChatComposite, { ...props, adapter }, null), htmlElement);
   return adapter;
 };
