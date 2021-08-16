@@ -58,6 +58,15 @@ export const getDocs: () => JSX.Element = () => {
         example](./?path=/docs/theming--page) to see how theming works for all the components in this UI library.
       </Description>
 
+      <Heading>Fonts</Heading>
+      <Description>
+        Custom fonts can be applied to the CallComposite using the in built theming mechanism. Look at the
+        [CallComposite themes canvas](./?path=/story/composites-call-themeexample--theme-example) to see custom fonts in
+        action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
+        components in this UI library. Read more about fonts in [Fluent UI
+        Typography](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
+      </Description>
+
       <Heading>Joining an existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call--join-existing-call) provides an easy playground to join
