@@ -75,7 +75,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               <span
                 aria-hidden={true}
                 className="root-span css-60 css-2"
-                primaryFill="currentColor"
               >
                 <svg
                   className="svg"

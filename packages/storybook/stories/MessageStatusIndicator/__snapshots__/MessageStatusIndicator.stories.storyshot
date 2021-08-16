@@ -31,7 +31,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
         <span
           aria-hidden={true}
           className="root-span css-63"
-          primaryFill="currentColor"
         >
           <svg
             className="svg"
