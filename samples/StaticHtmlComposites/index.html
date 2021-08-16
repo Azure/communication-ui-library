@@ -47,7 +47,7 @@
         token: token
       },
       document.getElementById('chat-container'),
-      { showParticipantPane: true, showTopic: true }
+      { options: { showParticipantPane: true, showTopic: true } }
     );
 
     await chatAdapter.sendMessage('Hello to you! 👋');
