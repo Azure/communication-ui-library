@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { MessageStatus, MessageStatusIndicator as MessageStatusIndicatorComponent } from '@azure/communication-react';
-import { Provider, teamsTheme } from '@fluentui/react-northstar';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -10,27 +9,11 @@ import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
 
+import { DefaultMessageStatusIndicatorsExample } from './snippets/AllDefaultIndicators.snippet';
 const DefaultMessageStatusIndicatorsExampleText =
   require('!!raw-loader!./snippets/AllDefaultIndicators.snippet.tsx').default;
 
 const importStatement = `import { MessageStatus, MessageStatusIndicator } from '@azure/communication-react';`;
-
-const MessageStatusIndicatorsExample: () => JSX.Element = () => (
-  <>
-    <span style={{ margin: '0 5px' }}>
-      <MessageStatusIndicatorComponent status={'delivered'} />
-    </span>
-    <span style={{ margin: '0 5px' }}>
-      <MessageStatusIndicatorComponent status={'seen'} />
-    </span>
-    <span style={{ margin: '0 5px' }}>
-      <MessageStatusIndicatorComponent status={'sending'} />
-    </span>
-    <span style={{ margin: '0 5px' }}>
-      <MessageStatusIndicatorComponent status={'failed'} />
-    </span>
-  </>
-);
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -46,9 +29,7 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Example</Heading>
       <Canvas mdxSource={DefaultMessageStatusIndicatorsExampleText}>
-        <Provider theme={teamsTheme}>
-          <MessageStatusIndicatorsExample />
-        </Provider>
+        <DefaultMessageStatusIndicatorsExample />
       </Canvas>
 
       <Heading>Props</Heading>
