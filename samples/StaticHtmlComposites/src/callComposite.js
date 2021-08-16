@@ -14,6 +14,6 @@ export const loadCallComposite = async function (args, htmlElement, props) {
     credential: new AzureCommunicationTokenCredential(token),
     locator: { groupId }
   });
-  ReactDOM.render(React.createElement(CallComposite, { adapter, ...props }, null), htmlElement);
+  ReactDOM.render(React.createElement(CallComposite, { ...props, adapter }, null), htmlElement);
   return adapter;
 };
