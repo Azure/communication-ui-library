@@ -11,7 +11,7 @@ import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer } from './snippets/Container.snippet';
 import { ConfigJoinChatThreadHintBanner } from './snippets/Utils';
 
-const JoinExistingChatThreadStory = (args): JSX.Element => {
+const JoinExistingChatThreadStory = (args, context): JSX.Element => {
   const areAllControlsSet =
     !!args.endpointUrl && !!args.threadId && !!args.userId && !!args.token && !!args.displayName;
 
@@ -19,6 +19,7 @@ const JoinExistingChatThreadStory = (args): JSX.Element => {
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllControlsSet ? (
         <ContosoChatContainer
+          fluentTheme={context.theme}
           endpointUrl={args.endpointUrl}
           threadId={args.threadId}
           userId={{ communicationUserId: args.userId }}

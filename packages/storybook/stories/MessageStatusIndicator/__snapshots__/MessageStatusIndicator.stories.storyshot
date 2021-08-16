@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots UI Components/Message Status Indicator Message Status Indicator 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"

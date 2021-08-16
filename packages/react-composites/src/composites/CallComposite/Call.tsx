@@ -18,13 +18,19 @@ export type CallCompositeProps = {
   /**
    * Fluent theme for the composite.
    *
-   * @defaultValue `light theme`
+   * @defaultValue light theme
    */
   fluentTheme?: PartialTheme | Theme;
   /**
+   * Whether composite is displayed right-to-left.
+   *
+   * @defaultValue false
+   */
+  rtl?: boolean;
+  /**
    * Locale for the composite.
    *
-   * @defaultValue `English (US)`
+   * @defaultValue English (US)
    */
   locale?: Locale;
   callInvitationURL?: string;
@@ -99,7 +105,7 @@ interface CallInternalProps extends CallCompositeProps {
  * @internal
  */
 export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme, locale, identifiers } = props;
+  const { adapter, callInvitationURL, fluentTheme, rtl, locale, identifiers } = props;
 
   useEffect(() => {
     (async () => {
@@ -111,7 +117,7 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
   }, [adapter]);
 
   const callElement = (
-    <FluentThemeProvider fluentTheme={fluentTheme}>
+    <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
       <IdentifierProvider identifiers={identifiers}>
         <CallAdapterProvider adapter={adapter}>
           <MainScreen

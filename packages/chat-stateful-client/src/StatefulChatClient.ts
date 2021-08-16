@@ -4,7 +4,7 @@
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
 import { getApplicationId } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
-import { ChatClientState, ChatErrorTargets } from './ChatClientState';
+import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
@@ -15,9 +15,13 @@ export interface StatefulChatClient extends ChatClient {
   onStateChange(handler: (state: ChatClientState) => void): void;
   offStateChange(handler: (state: ChatClientState) => void): void;
   /**
-   * Clear all errors in the state for provided target methods.
+   * Modify the internal state of the StatefulChatClient.
+   *
+   * This is the only way for users of StatefulChatClient to explicitly modify ChatClientState.
+   *
+   * @param modifier - ChatStateModifier callback. See documentation for {@Link ChatStateModifier}.
    */
-  clearErrors(targets: ChatErrorTargets[]): void;
+  modifyState(modifier: ChatStateModifier): void;
 }
 
 export interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
@@ -150,6 +154,18 @@ export const createStatefulChatClient = (
 };
 
 /**
+ * A function to modify the state of the StatefulChatClient.
+ *
+ * Provided as a callback to the {@link StatefulChatClient.modifyState} method.
+ *
+ * The function must modify the provided state in place as much as possible.
+ * Making large modifications can lead to bad performance by causing spurious rerendering of the UI.
+ *
+ * Consider using commonly used modifier functions exported from this package.
+ */
+export type ChatStateModifier = (state: ChatClientState) => void;
+
+/**
  * Internal implementation of {@link createStatefulChatClient} for dependency injection.
  *
  * Used by tests. Should not be exported out of this package.
@@ -183,6 +199,10 @@ export const createStatefulChatClientWithDeps = (
     configurable: false,
     value: () => context?.getState()
   });
+  Object.defineProperty(proxy, 'modifyState', {
+    configurable: false,
+    value: (modifier: ChatStateModifier) => context?.modifyState(modifier)
+  });
   Object.defineProperty(proxy, 'onStateChange', {
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.onStateChange(handler)
@@ -191,9 +211,6 @@ export const createStatefulChatClientWithDeps = (
     configurable: false,
     value: (handler: (state: ChatClientState) => void) => context?.offStateChange(handler)
   });
-  Object.defineProperty(proxy, 'clearErrors', {
-    configurable: false,
-    value: (targets: ChatErrorTargets[]) => context?.clearError(targets)
-  });
+
   return proxy as StatefulChatClient;
 };
