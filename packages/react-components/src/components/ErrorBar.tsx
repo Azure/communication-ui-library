@@ -66,6 +66,11 @@ export interface ErrorBarStrings {
    * Prefer more specific error strings when possible.
    */
   sendMessageGeneric: string;
+
+  /**
+   * A generic message when starting video fails.
+   */
+  startVideoGeneric: string;
 }
 
 /**

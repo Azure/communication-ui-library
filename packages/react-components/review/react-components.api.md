@@ -196,6 +196,7 @@ export interface ErrorBarStrings {
     accessDenied: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
+    startVideoGeneric: string;
     unableToReachChatService: string;
     userNotInThisThread: string;
 }

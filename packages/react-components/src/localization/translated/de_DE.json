@@ -67,6 +67,7 @@
     "accessDenied": "Kein Zugriff auf Chat-Dienste möglich - bitte überprüfen Sie die bereitgestellten Benutzerdaten.",
     "userNotInThisThread": "Du bist nicht mehr in diesem Chat-Thread",
     "sendMessageNotInThisThread": "Nachricht konnte nicht gesendet werden, da Sie sich nicht mehr in diesem Chat-Thread befinden",
-    "sendMessageGeneric": "Fehler beim senden einer nachricht"
+    "sendMessageGeneric": "Fehler beim senden einer nachricht",
+    "startVideoGeneric": "Video konnte nicht gestartet werden"
   }
 }
