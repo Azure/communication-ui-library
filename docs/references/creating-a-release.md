@@ -24,7 +24,7 @@ A release branch is created for each new version and beta release we do (alpha v
 1. Create the `@azure/communication-react` changelog in the PR. This will involve grabbing changes from the packlet changelogs and pruning the changelog lines as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
 1. Ensure the "Before Release" steps of the [release checklist](../references/release-checklist.md) are completed.
 1. Run the "Publish npm packages" GitHub action _off the release branch_.
-    * Enter the tag also, normally if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`. However while our package is in beta we use `latest` for the tag and not `next` so for beta releases be sure to use the tag `latest`.
+    * Enter the tag also, normally if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`. However while our package has no major version and is in beta only, we use `latest` for the tag and not `next`. So for current beta releases be sure to use the tag `latest`.
 1. Ensure the action completes successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
 1. Complete the post-release verification steps in [Release Checklist](../release-checklist.md).
 1. (If this is a latest release) Complete the PR to merge the release branch back into `main`.
