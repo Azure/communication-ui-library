@@ -90,7 +90,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'seen':
       return (
         <TooltipHost content={strings.seenTooltipText}>
-          <EyeShow20Filled style={{ color: theme.palette.black }} className={mergeStyles(styles?.root)} />
+          <EyeShow20Filled className={mergeStyles({ color: theme.palette.black }, styles?.root)} />
         </TooltipHost>
       );
     case 'delivered':
