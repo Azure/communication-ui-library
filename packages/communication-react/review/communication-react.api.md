@@ -378,7 +378,6 @@ export type CallCompositeProps = {
     rtl?: boolean;
     locale?: Locale;
     callInvitationURL?: string;
-    onRenderAvatar?: OnRenderAvatarType;
     identifiers?: Identifiers;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };

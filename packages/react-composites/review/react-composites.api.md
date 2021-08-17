@@ -26,7 +26,6 @@ import { Identifiers } from '@internal/react-components';
 import { Locale } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
-import { OnRenderAvatarType } from '@internal/react-components';
 import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -285,7 +284,6 @@ export type CallCompositeProps = {
     rtl?: boolean;
     locale?: Locale;
     callInvitationURL?: string;
-    onRenderAvatar?: OnRenderAvatarType;
     identifiers?: Identifiers;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };

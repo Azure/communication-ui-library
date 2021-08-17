@@ -1,6 +1,5 @@
 import {
   CallParticipant,
-  CommunicationParticipant,
   FluentThemeProvider,
   ParticipantsButton,
   ParticipantListProps
@@ -39,11 +38,11 @@ const mockParticipants: CallParticipant[] = [
   }
 ];
 
-const customOnRenderAvatar = (participant: CommunicationParticipant): JSX.Element => {
-  if (participant.userId === 'user2') {
+const customOnRenderAvatar = (userId?: string, options?): JSX.Element => {
+  if (userId === 'user2') {
     return (
       <img
-        key={`avatar${participant.userId}`}
+        key={`avatar${userId}`}
         src="https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif"
         style={{
           borderRadius: '32px',
@@ -59,13 +58,13 @@ const customOnRenderAvatar = (participant: CommunicationParticipant): JSX.Elemen
     );
   }
 
-  return <Persona text={participant.displayName} hidePersonaDetails={true} size={PersonaSize.size32} />;
+  return <Persona text={options.displayName} hidePersonaDetails={true} size={PersonaSize.size32} />;
 };
 
 const mockParticipantsProps: ParticipantListProps = {
   participants: mockParticipants,
   myUserId: 'user1',
-  onRenderAvatar: (participant: CommunicationParticipant) => customOnRenderAvatar(participant)
+  onRenderAvatar: (userId?: string, options?) => customOnRenderAvatar(userId, options)
 };
 
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
