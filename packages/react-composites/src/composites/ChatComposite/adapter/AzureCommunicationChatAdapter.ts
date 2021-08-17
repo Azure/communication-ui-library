@@ -110,7 +110,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.subscribeAllEvents();
   }
 
-  private bindAllPublicMethods() {
+  private bindAllPublicMethods(): void {
     this.onStateChange = this.onStateChange.bind(this);
     this.offStateChange = this.offStateChange.bind(this);
     this.getState = this.getState.bind(this);
