@@ -4,7 +4,7 @@
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatErrorTargets, StatefulChatClient } from '@internal/chat-stateful-client';
+import { ChatErrorTargets, newClearErrorsModifier, StatefulChatClient } from '@internal/chat-stateful-client';
 import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
@@ -79,7 +79,7 @@ export const createDefaultChatHandlers = memoizeOne(
               break;
           }
         }
-        chatClient.clearErrors(Array.from(targets.values()));
+        chatClient.modifyState(newClearErrorsModifier(Array.from(targets.values())));
       }
     };
   }

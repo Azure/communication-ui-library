@@ -296,13 +296,13 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
         author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
         mine={payload.mine}
         timestamp={
-          <text data-ui-id={ids?.messageTimestamp}>
+          <Text data-ui-id={ids?.messageTimestamp}>
             {payload.createdOn
               ? props.showDate
                 ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.strings)
                 : formatTimeForChatMessage(payload.createdOn)
               : undefined}
-          </text>
+          </Text>
         }
       />
     );

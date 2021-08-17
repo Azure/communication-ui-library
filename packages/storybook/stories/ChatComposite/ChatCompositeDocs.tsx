@@ -39,8 +39,18 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Theming</Heading>
       <Description>
         ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
-        themes canvas](./?path=/story/composites-chat--theme-example) to see theming in action or the [overall theming
-        example](./?path=/story/theming--page) to see how theming works for all the components in this UI library.
+        themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see theming in action or the
+        [overall theming example](./?path=/story/theming--page) to see how theming works for all the components in this
+        UI library.
+      </Description>
+
+      <Heading>Fonts</Heading>
+      <Description>
+        Custom fonts can be applied to the ChatComposite using the in built theming mechanism. Look at the
+        [ChatComposite themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see custom fonts in
+        action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
+        components in this UI library. Read more about fonts in [Fluent UI Typography
+        here](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
       </Description>
 
       <Heading>Custom Data Model</Heading>
