@@ -2,11 +2,13 @@
 // Licensed under the MIT license.
 
 import React, { useMemo, useState, useEffect } from 'react';
-import { VideoGallery, PlaceholderProps, VideoStreamOptions } from '@internal/react-components';
+import { VideoGallery, VideoStreamOptions, OnRenderAvatarType } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { mergeStyles, Stack } from '@fluentui/react';
 
 const VideoGalleryStyles = {
   root: {
@@ -28,7 +30,8 @@ export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
-  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarType;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
@@ -55,10 +58,14 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoViewOption={remoteVideoViewOption}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
-        onRenderAvatar={props.onRenderAvatar}
+        onRenderAvatar={(userId, options) => (
+          <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
+            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+          </Stack>
+        )}
       />
     );
-  }, [props.onRenderAvatar, videoGalleryProps]);
+  }, [props.onFetchAvatarPersonaData, videoGalleryProps]);
 
   return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
 };

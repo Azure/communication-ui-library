@@ -35,7 +35,7 @@ export type AvatarPersonaData = {
 /**
  * Callback function used to provide custom data to the AvatarPersona component.
  */
-export type AvatarPersonaDataProvider = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
+export type AvatarPersonaDataCallback = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
 
 export interface AvatarPersonaProps extends IPersonaProps {
   /**
@@ -45,7 +45,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
   /**
    * A function that returns a Promise that resolves to the data to be displayed.
    */
-  dataProvider?: AvatarPersonaDataProvider;
+  dataProvider?: AvatarPersonaDataCallback;
 }
 
 /**
@@ -74,7 +74,6 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       imageInitials={data?.imageInitials ?? props.imageInitials}
       initialsColor={data?.initialsColor ?? props.initialsColor}
       initialsTextColor={data?.initialsTextColor ?? props.initialsTextColor}
-      hidePersonaDetails={true}
     />
   );
 };

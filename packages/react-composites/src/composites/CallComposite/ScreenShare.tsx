@@ -5,7 +5,7 @@ import { memoizeFnAll } from '@internal/acs-ui-common';
 import { mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
-  PlaceholderProps,
+  OnRenderAvatarType,
   StreamMedia,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -48,9 +48,9 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 );
 
 // A non-undefined display name is needed for this render, and that is coming from VideoTile props below
-const onRenderPlaceholder = (props: PlaceholderProps): JSX.Element => (
+const onRenderPlaceholder: OnRenderAvatarType = (userId, options): JSX.Element => (
   <div className={loadingStyle}>
-    <Spinner label={`Loading ${props.displayName}'s screen`} size={SpinnerSize.xSmall} />
+    <Spinner label={`Loading ${options?.text}'s screen`} size={SpinnerSize.xSmall} />
   </div>
 );
 

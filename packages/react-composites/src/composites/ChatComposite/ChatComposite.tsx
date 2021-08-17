@@ -7,7 +7,6 @@ import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { Theme, PartialTheme } from '@fluentui/react';
 import {
-  AvatarPersonaDataProvider,
   CommunicationParticipant,
   DefaultMessageRendererType,
   FluentThemeProvider,
@@ -17,6 +16,7 @@ import {
   Identifiers,
   Locale
 } from '@internal/react-components';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 export type ChatCompositeProps = {
   adapter: ChatAdapter;
@@ -41,8 +41,7 @@ export type ChatCompositeProps = {
   /**
    * A callback function that can be used to provide custom data to an Avatar.
    */
-  avatarPersonaDataProvider?: AvatarPersonaDataProvider;
-  onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   options?: ChatOptions;
@@ -82,8 +81,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     locale,
     options,
     identifiers,
-    avatarPersonaDataProvider,
-    onRenderAvatar,
+    onFetchAvatarPersonaData,
     onRenderTypingIndicator,
     onRenderMessage
   } = props;
@@ -97,8 +95,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             showErrorBar={options?.showErrorBar}
             showParticipantPane={options?.showParticipantPane}
             showTopic={options?.showTopic}
-            avatarPersonaDataProvider={avatarPersonaDataProvider}
-            onRenderAvatar={onRenderAvatar}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
           />

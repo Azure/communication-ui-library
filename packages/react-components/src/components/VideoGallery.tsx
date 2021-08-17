@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
+  OnRenderAvatarType,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions
@@ -18,7 +19,7 @@ import {
   floatingLocalVideoTileStyle,
   gridStyle
 } from './styles/VideoGallery.styles';
-import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
+import { VideoTile, VideoTileStylesProps } from './VideoTile';
 
 const emptyStyles = {};
 
@@ -58,7 +59,7 @@ export interface VideoGalleryProps {
 
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
-  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarType;
 
   /**
    * Whether to display a mute icon beside the user's display name.
@@ -243,10 +244,7 @@ const RemoteVideoTile = React.memo(
     renderElement?: HTMLElement;
     displayName?: string;
     remoteVideoViewOption?: VideoStreamOptions;
-    onRenderAvatar?: (
-      props: PlaceholderProps,
-      defaultOnRender: (props: PlaceholderProps) => JSX.Element
-    ) => JSX.Element;
+    onRenderAvatar?: OnRenderAvatarType;
     showMuteIndicator?: boolean;
   }) => {
     const {

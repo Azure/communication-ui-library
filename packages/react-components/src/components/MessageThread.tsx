@@ -15,8 +15,7 @@ import {
   messageStatusContainerStyle,
   noMessageStatusStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
-import { AvatarPersona, AvatarPersonaDataProvider } from './AvatarPersona';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
@@ -27,7 +26,8 @@ import {
   CustomMessage,
   SystemMessage,
   ChatMessagePayload,
-  CommunicationParticipant
+  CommunicationParticipant,
+  OnRenderAvatarType
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -317,8 +317,7 @@ const memoizeAllMessages = memoizeFnAll(
     message: ChatMessage | SystemMessage | CustomMessage,
     showMessageDate: boolean,
     showMessageStatus: boolean,
-    avatarPersonaDataProvider: AvatarPersonaDataProvider,
-    onRenderAvatar: ((userId: string) => JSX.Element) | undefined,
+    onRenderAvatar: OnRenderAvatarType | undefined,
     styles: MessageThreadStylesProps | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
@@ -341,19 +340,19 @@ const memoizeAllMessages = memoizeFnAll(
           ? defaultChatMessageRenderer(messageProps)
           : onRenderMessage(messageProps, DefaultChatMessageRenderer);
 
+      const personaOptions: IPersona = {
+        text: payload.senderDisplayName,
+        hidePersonalDetails: true,
+        size: PersonaSize.size32
+      };
+
       return {
         gutter: payload.mine ? (
           ''
         ) : onRenderAvatar ? (
-          onRenderAvatar(payload.senderId ?? '')
+          onRenderAvatar(payload.senderId ?? '', personaOptions)
         ) : (
-          <AvatarPersona
-            userId={payload.senderId}
-            dataProvider={avatarPersonaDataProvider}
-            text={payload.senderDisplayName}
-            hidePersonaDetails={true}
-            size={PersonaSize.size32}
-          />
+          <Persona {...personaOptions} />
         ),
         contentPosition: payload.mine ? 'end' : 'start',
         message: (
@@ -475,15 +474,11 @@ export type MessageThreadProps = {
    */
   onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
   /**
-   * A callback function that can be used to provide custom data to an Avatar.
-   */
-  avatarPersonaDataProvider?: AvatarPersonaDataProvider;
-  /**
    * Optional callback to override render of the avatar.
    *
    * @param userId - user Id
    */
-  onRenderAvatar?: (userId: string) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarType;
   /**
    * Optional callback to override render of the button for jumping to the new message.
    *
@@ -554,7 +549,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     showMessageDate = false,
     showMessageStatus = false,
     numberOfChatMessagesToReload = 0,
-    avatarPersonaDataProvider,
     onMessageSeen,
     onRenderMessageStatus,
     onRenderAvatar,
@@ -843,7 +837,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               message,
               showMessageDate,
               showMessageStatus,
-              avatarPersonaDataProvider,
               onRenderAvatar,
               styles,
               onRenderMessageStatus,
@@ -863,7 +856,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       messages,
       showMessageDate,
       showMessageStatus,
-      avatarPersonaDataProvider,
       onRenderAvatar,
       styles,
       onRenderMessageStatus,

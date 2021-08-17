@@ -1,7 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import {
+  DefaultPalette as palette,
+  IPersonaStyleProps,
+  IPersonaStyles,
+  IStyle,
+  IStyleFunctionOrObject,
+  mergeStyles,
+  Persona,
+  Stack,
+  Text
+} from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
 import React, { useLayoutEffect, useRef, useState } from 'react';
@@ -14,7 +24,7 @@ import {
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStylesProps, OnRenderAvatarType } from '../types';
 import { useTheme } from '../theming';
 
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
@@ -45,10 +55,7 @@ export interface VideoTileProps extends PlaceholderProps {
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
-  onRenderPlaceholder?: (
-    props: PlaceholderProps,
-    defaultOnRender: (props: PlaceholderProps) => JSX.Element
-  ) => JSX.Element | null;
+  onRenderPlaceholder?: OnRenderAvatarType;
   /**
    * Whether to display a mute icon beside the user's display name.
    */
@@ -57,52 +64,45 @@ export interface VideoTileProps extends PlaceholderProps {
    * Whether the video is muted or not.
    */
   isMuted?: boolean;
+  /**
+   * Display Name of the Participant
+   */
+  displayName?: string;
 }
 
 export interface PlaceholderProps {
   /** user id for the VideoTile placeholder. */
   userId?: string;
   /** Optional participant display name for the VideoTile default placeholder. */
-  displayName?: string;
+  text?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
+  coinSize?: number;
+  styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
+  hidePersonaDetails?: boolean;
 }
 
 // Coin max size is set to 100px (PersonaSize.size100)
 const personaMaxSize = 200;
 
 const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
-  const { displayName, noVideoAvailableAriaLabel } = props;
-  const personaRef = useRef<HTMLElement>(null);
-  const [coinSize, setCoinSize] = useState(100);
-  const personaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
-
-  useLayoutEffect(() => {
-    if (personaRef.current && personaRef.current.parentElement) {
-      const minSize = Math.min(
-        personaRef.current.parentElement.clientHeight,
-        personaRef.current.parentElement.clientWidth,
-        personaMaxSize
-      );
-      setCoinSize(minSize / 2);
-    }
-  }, [personaRef.current?.parentElement?.clientHeight, personaRef.current?.parentElement?.clientWidth]);
+  const { text, noVideoAvailableAriaLabel, coinSize, styles, hidePersonaDetails } = props;
 
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-      <Ref innerRef={personaRef}>
-        <Persona
-          styles={personaStyles}
-          coinSize={coinSize}
-          hidePersonaDetails={true}
-          text={displayName ?? ''}
-          initialsTextColor="white"
-          aria-label={noVideoAvailableAriaLabel ?? ''}
-        />
-      </Ref>
+      <Persona
+        styles={styles}
+        coinSize={coinSize}
+        hidePersonaDetails={hidePersonaDetails}
+        text={text ?? ''}
+        initialsTextColor="white"
+        aria-label={noVideoAvailableAriaLabel ?? ''}
+      />
     </Stack>
   );
 };
+
+const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
 
 export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const {
@@ -118,67 +118,89 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     noVideoAvailableAriaLabel
   } = props;
 
-  const placeHolderProps = { userId, displayName, noVideoAvailableAriaLabel };
+  const [personaSize, setPersonaSize] = useState(100);
+  const videoTileRef = useRef<HTMLElement>(null);
+
   const theme = useTheme();
 
   const isVideoRendered = !!renderElement;
 
+  useLayoutEffect(() => {
+    if (videoTileRef.current && videoTileRef.current) {
+      const minSize = Math.min(videoTileRef.current.clientHeight, videoTileRef.current.clientWidth, personaMaxSize);
+      setPersonaSize(minSize / 2);
+    }
+  }, [videoTileRef.current?.parentElement?.clientHeight, videoTileRef.current?.parentElement?.clientWidth]);
+
+  const placeholderOptions = {
+    userId,
+    text: displayName,
+    noVideoAvailableAriaLabel,
+    coinSize: personaSize,
+    styles: defaultPersonaStyles,
+    hidePersonaDetails: true
+  };
+
   return (
-    <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
-      {isVideoRendered ? (
+    <Ref innerRef={videoTileRef}>
+      <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
+        {isVideoRendered ? (
+          <Stack
+            className={mergeStyles(
+              videoContainerStyles,
+              isMirrored && {
+                transform: 'scaleX(-1)'
+              },
+              styles?.videoContainer
+            )}
+          >
+            {renderElement}
+          </Stack>
+        ) : (
+          <Stack className={mergeStyles(videoContainerStyles)}>
+            {onRenderPlaceholder ? (
+              onRenderPlaceholder(userId ?? '', placeholderOptions)
+            ) : (
+              <DefaultPlaceholder {...placeholderOptions} />
+            )}
+          </Stack>
+        )}
+
         <Stack
+          horizontal
           className={mergeStyles(
-            videoContainerStyles,
-            isMirrored && {
-              transform: 'scaleX(-1)'
-            },
-            styles?.videoContainer
+            isVideoRendered ? videoHint : disabledVideoHint,
+            // when video is being rendered, the displayName has a grey-ish background, so no use of theme
+            { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
+            styles?.displayNameContainer
           )}
         >
-          {renderElement}
+          <Stack>
+            {displayName && (
+              <Text
+                className={mergeStyles(displayNameStyle, {
+                  color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
+                })}
+              >
+                {displayName}
+              </Text>
+            )}
+          </Stack>
+          <Stack className={mergeStyles(iconContainerStyle)}>
+            {showMuteIndicator &&
+              isMuted !== undefined &&
+              (isMuted ? (
+                <MicOff16Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
+              ) : (
+                <MicOn16Filled primaryFill="currentColor" key={'microphoneIconKey'} />
+              ))}
+          </Stack>
         </Stack>
-      ) : (
-        <Stack className={mergeStyles(videoContainerStyles)}>
-          {onRenderPlaceholder ? (
-            onRenderPlaceholder(placeHolderProps, DefaultPlaceholder)
-          ) : (
-            <DefaultPlaceholder {...placeHolderProps} />
-          )}
-        </Stack>
-      )}
 
-      <Stack
-        horizontal
-        className={mergeStyles(
-          isVideoRendered ? videoHint : disabledVideoHint,
-          // when video is being rendered, the displayName has a grey-ish background, so no use of theme
-          { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
-          styles?.displayNameContainer
+        {children && (
+          <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
-      >
-        <Stack>
-          {displayName && (
-            <Text
-              className={mergeStyles(displayNameStyle, {
-                color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
-              })}
-            >
-              {displayName}
-            </Text>
-          )}
-        </Stack>
-        <Stack className={mergeStyles(iconContainerStyle)}>
-          {showMuteIndicator &&
-            isMuted !== undefined &&
-            (isMuted ? (
-              <MicOff16Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
-            ) : (
-              <MicOn16Filled primaryFill="currentColor" key={'microphoneIconKey'} />
-            ))}
-        </Stack>
       </Stack>
-
-      {children && <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>}
-    </Stack>
+    </Ref>
   );
 };

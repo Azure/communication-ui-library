@@ -29,5 +29,6 @@ export type {
   VideoGalleryParticipant,
   VideoGalleryStream,
   VideoGalleryLocalParticipant,
-  VideoGalleryRemoteParticipant
+  VideoGalleryRemoteParticipant,
+  OnRenderAvatarType
 } from './types';

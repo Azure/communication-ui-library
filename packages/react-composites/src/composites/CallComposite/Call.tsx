@@ -8,10 +8,11 @@ import { Error } from './Error';
 import { Theme, PartialTheme } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
-import { IdentifierProvider, Identifiers, PlaceholderProps } from '@internal/react-components';
+import { IdentifierProvider, Identifiers, OnRenderAvatarType } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { FluentThemeProvider, LocalizationProvider, Locale } from '@internal/react-components';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
@@ -34,17 +35,23 @@ export type CallCompositeProps = {
    */
   locale?: Locale;
   callInvitationURL?: string;
-  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarType;
   identifiers?: Identifiers;
+  /**
+   * A callback function that can be used to provide custom data to an Avatar.
+   */
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
 type MainScreenProps = {
   showCallControls: boolean;
-  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarType;
   callInvitationURL?: string;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
-const MainScreen = ({ showCallControls, callInvitationURL, onRenderAvatar }: MainScreenProps): JSX.Element => {
+const MainScreen = (props: MainScreenProps): JSX.Element => {
+  const { showCallControls, callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData } = props;
   const page = useSelector(getPage);
   const adapter = useAdapter();
   switch (page) {
@@ -80,6 +87,7 @@ const MainScreen = ({ showCallControls, callInvitationURL, onRenderAvatar }: Mai
           }}
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationURL}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
         />
       );
   }
@@ -105,7 +113,7 @@ interface CallInternalProps extends CallCompositeProps {
  * @internal
  */
 export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme, rtl, locale, identifiers } = props;
+  const { adapter, callInvitationURL, fluentTheme, rtl, locale, identifiers, onFetchAvatarPersonaData } = props;
 
   useEffect(() => {
     (async () => {
@@ -124,6 +132,7 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
             showCallControls={props.showCallControls}
             onRenderAvatar={props.onRenderAvatar}
             callInvitationURL={callInvitationURL}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
         </CallAdapterProvider>
       </IdentifierProvider>
