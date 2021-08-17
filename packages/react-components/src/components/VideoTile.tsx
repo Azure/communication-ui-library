@@ -81,8 +81,11 @@ export interface PlaceholderProps {
   text?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
+  /** Custom persona coin size in pixels  */
   coinSize?: number;
+  /** Custom Styles `IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>`  */
   styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
+  /** Will only show the Persona coin and initials inside if set to `true`  */
   hidePersonaDetails?: boolean;
 }
 
