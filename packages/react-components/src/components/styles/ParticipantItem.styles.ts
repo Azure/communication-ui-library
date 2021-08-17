@@ -7,7 +7,7 @@ export const participantItemContainerStyle = mergeStyles({
   paddingTop: '0.25rem',
   paddingBottom: '0.25rem',
   display: 'flex',
-  position: 'relative',
+  flexFlow: 'row-reverse',
   maxWidth: '20rem',
   minWidth: '12rem',
   cursor: 'pointer',
@@ -31,7 +31,6 @@ export const participantItemMeStyle = mergeStyles({
 });
 
 export const iconContainerStyle = mergeStyles({
-  position: 'absolute',
   display: 'flex',
   right: '1rem',
   alignItems: 'center'

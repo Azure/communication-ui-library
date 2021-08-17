@@ -86,7 +86,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const isMeText = props.strings?.isMeText ?? strings.participantItem.isMeText;
   const menuTitle = props.strings?.menuTitle ?? strings.participantItem.menuTitle;
 
-  const avatarToUse = (
+  const persona = (
     <Persona
       text={displayName}
       size={PersonaSize.size32}
@@ -113,40 +113,48 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
     >
-      {avatarToUse}
-      {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
-      {onRenderIcon && (
-        <Stack horizontal={true} className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>
-          {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden) ? (
-            <div
-              onMouseEnter={() => setMenuButtonHovered(true)}
-              onMouseLeave={() => setMenuButtonHovered(false)}
-              title={menuTitle}
-              className={menuButtonContainerStyle}
-              onClick={() => setMenuHidden(false)}
-            >
-              {!menuButtonHovered ? (
-                <MoreHorizontal20Regular primaryFill="currentColor" />
-              ) : (
-                <MoreHorizontal20Filled primaryFill="currentColor" />
-              )}
-            </div>
-          ) : (
-            onRenderIcon(props)
-          )}
-          {menuItems && menuItems.length > 0 && (
-            <ContextualMenu
-              items={menuItems}
-              hidden={menuHidden}
-              target={containerRef}
-              onItemClick={() => setMenuHidden(true)}
-              onDismiss={() => setMenuHidden(true)}
-              directionalHint={DirectionalHint.bottomRightEdge}
-              className={contextualMenuStyle}
-            />
-          )}
+      <Stack
+        horizontal
+        reversed
+        className={mergeStyles({ display: 'flex', flexFlow: 'row-reverse', alignItems: 'center' })}
+      >
+        {onRenderIcon && (
+          <Stack horizontal={true} className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>
+            {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden) ? (
+              <div
+                onMouseEnter={() => setMenuButtonHovered(true)}
+                onMouseLeave={() => setMenuButtonHovered(false)}
+                title={menuTitle}
+                className={menuButtonContainerStyle}
+                onClick={() => setMenuHidden(false)}
+              >
+                {!menuButtonHovered ? (
+                  <MoreHorizontal20Regular primaryFill="currentColor" />
+                ) : (
+                  <MoreHorizontal20Filled primaryFill="currentColor" />
+                )}
+              </div>
+            ) : (
+              onRenderIcon(props)
+            )}
+            {menuItems && menuItems.length > 0 && (
+              <ContextualMenu
+                items={menuItems}
+                hidden={menuHidden}
+                target={containerRef}
+                onItemClick={() => setMenuHidden(true)}
+                onDismiss={() => setMenuHidden(true)}
+                directionalHint={DirectionalHint.bottomRightEdge}
+                className={contextualMenuStyle}
+              />
+            )}
+          </Stack>
+        )}
+        <Stack horizontal className={mergeStyles({ alignItems: 'center' })}>
+          {persona}
+          {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
         </Stack>
-      )}
+      </Stack>
     </div>
   );
 };
