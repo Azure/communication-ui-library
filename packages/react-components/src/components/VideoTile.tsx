@@ -39,7 +39,7 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
 /**
  * Props for VideoTile component
  */
-export interface VideoTileProps extends PlaceholderProps {
+export interface VideoTileProps {
   /** React Child components. Child Components will show as overlay component in the VideoTile. */
   children?: React.ReactNode;
   /**
@@ -50,6 +50,8 @@ export interface VideoTileProps extends PlaceholderProps {
    * ```
    */
   styles?: VideoTileStylesProps;
+  /** user id for the VideoTile placeholder. */
+  userId?: string;
   /** Component with the video stream. */
   renderElement?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
@@ -68,6 +70,8 @@ export interface VideoTileProps extends PlaceholderProps {
    * Display Name of the Participant
    */
   displayName?: string;
+  /** Optional property to set the aria label of the video tile if there is no available stream. */
+  noVideoAvailableAriaLabel?: string;
 }
 
 export interface PlaceholderProps {
@@ -130,7 +134,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       const minSize = Math.min(videoTileRef.current.clientHeight, videoTileRef.current.clientWidth, personaMaxSize);
       setPersonaSize(minSize / 2);
     }
-  }, [videoTileRef.current?.parentElement?.clientHeight, videoTileRef.current?.parentElement?.clientWidth]);
+  }, [videoTileRef.current?.clientHeight, videoTileRef.current?.clientWidth]);
 
   const placeholderOptions = {
     userId,
@@ -159,7 +163,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         ) : (
           <Stack className={mergeStyles(videoContainerStyles)}>
             {onRenderPlaceholder ? (
-              onRenderPlaceholder(userId ?? '', placeholderOptions)
+              onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
             ) : (
               <DefaultPlaceholder {...placeholderOptions} />
             )}

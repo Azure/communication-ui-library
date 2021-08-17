@@ -48,6 +48,7 @@ import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
+import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
@@ -1215,11 +1216,12 @@ export type OnRenderAvatarType = (userId?: string, options?: {
     hidePersonaDetails?: boolean;
     initialsTextColor?: string;
     presence?: PersonaPresence;
-    size?: number;
+    size?: PersonaSize;
     coinSize?: number;
     text?: string;
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
-}) => JSX.Element;
+},
+defaultOnRender?: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -1774,15 +1776,17 @@ export interface VideoStreamRendererViewState {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps extends PlaceholderProps {
+export interface VideoTileProps {
     children?: React_2.ReactNode;
     displayName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarType;
     renderElement?: JSX.Element | null;
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
+    userId?: string;
 }
 
 // @public (undocumented)

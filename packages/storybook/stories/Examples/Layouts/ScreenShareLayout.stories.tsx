@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PlaceholderProps, VideoTile } from '@azure/communication-react';
+import { VideoTile } from '@azure/communication-react';
 import { Stack, mergeStyles, PersonaSize, Persona } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -9,12 +9,12 @@ import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd } from '../../controlsUtils';
 import { getDocs } from './LayoutsDocs';
 
-const renderPersona = (props: PlaceholderProps): JSX.Element => (
+const renderPersona = (userId, options): JSX.Element => (
   <Persona
     styles={{ root: { margin: 'auto' } }}
     size={PersonaSize.size56}
     hidePersonaDetails={true}
-    text={props.displayName}
+    text={options.text}
     initialsTextColor="white"
   />
 );

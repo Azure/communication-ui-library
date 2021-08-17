@@ -277,7 +277,8 @@ export const defaultCallCompositeHiddenControls = {
   fluentTheme: hiddenControl,
   onRenderAvatar: hiddenControl,
   identifiers: hiddenControl,
-  locale: hiddenControl
+  locale: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {

@@ -1,13 +1,13 @@
-import { PlaceholderProps, VideoTile } from '@azure/communication-react';
+import { VideoTile } from '@azure/communication-react';
 import { mergeStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
 import React from 'react';
 
-const renderPersona = (props: PlaceholderProps): JSX.Element => (
+const renderPersona = (userId, options): JSX.Element => (
   <Persona
     styles={{ root: { margin: 'auto' } }}
     size={PersonaSize.size56}
     hidePersonaDetails={true}
-    text={props.displayName}
+    text={options.displayName}
     initialsTextColor="white"
   />
 );

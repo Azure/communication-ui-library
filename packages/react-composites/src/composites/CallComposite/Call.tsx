@@ -35,7 +35,6 @@ export type CallCompositeProps = {
    */
   locale?: Locale;
   callInvitationURL?: string;
-  onRenderAvatar?: OnRenderAvatarType;
   identifiers?: Identifiers;
   /**
    * A callback function that can be used to provide custom data to an Avatar.
@@ -130,7 +129,6 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
         <CallAdapterProvider adapter={adapter}>
           <MainScreen
             showCallControls={props.showCallControls}
-            onRenderAvatar={props.onRenderAvatar}
             callInvitationURL={callInvitationURL}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />

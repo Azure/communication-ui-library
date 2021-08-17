@@ -3,30 +3,9 @@ import {
   CommunicationUserIdentifier,
   getIdentifierKind
 } from '@azure/communication-common';
-import {
-  ChatAdapter,
-  ChatComposite,
-  createAzureCommunicationChatAdapter,
-  AvatarPersonaDataProvider,
-  AvatarPersonaData
-} from '@azure/communication-react';
-import { Theme, PartialTheme } from '@fluentui/react';
-import _ from 'lodash';
-import React, { useState, useEffect, useMemo } from 'react';
-
-// Sample usage of Custom Data Provider for AvatarPersona with Memoization.
-// Contoso is responsible for memoizing the provider function.
-const avatarPersonaDataProvider: AvatarPersonaDataProvider = (userId?: string): Promise<AvatarPersonaData> =>
-  new Promise((resolve) => {
-    console.log('Inside avatarPersonaDataProvider userId: ', userId);
-    return resolve({
-      text: 'Custom Name',
-      initialsColor: 'firebrick',
-      initialsTextColor: 'black'
-    });
-  });
-
-const memoizedAvatarDataProvider = _.memoize(avatarPersonaDataProvider);
+import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import { PartialTheme, Theme } from '@fluentui/react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -73,7 +52,6 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   if (adapter) {
     return (
       <ChatComposite
-        avatarPersonaDataProvider={memoizedAvatarDataProvider}
         adapter={adapter}
         fluentTheme={props.fluentTheme}
         options={{ showParticipantPane: props.showParticipants }}

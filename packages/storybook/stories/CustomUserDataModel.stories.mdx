@@ -34,9 +34,9 @@ For Composites, user data model can be customized at a composite level.
 As turn-key experience, developers can provide a single data model mapping to the composite and the composite takes care of rendering the correct information for a user.
 Composites support user data model injection for display name and avatar across both chat and calling composites.
 
-| Composite                                                     | Display Name                                                                 | Avatar                                                                          |
-| ------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [CallComposite](/?path=/story/composites-call--basic-example) | displayName                                                                  | onRenderAvatar                                                                  |
-| [ChatComposite](/?path=/story/composites-chat--basic-example) | [displayName](/?path=/docs/composites-chat--basic-example#custom-data-model) | [onRenderAvatar](/?path=/docs/composites-chat--basic-example#custom-data-model) |
+| Composite                                                     | Display Name                                                              | Avatar                                                                                                      |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [CallComposite](/?path=/story/composites-call--basic-example) | [displayName](./?path=/story/composites-call-basicexample--basic-example) | [onFetchAvatarPersonaData](./?path=/docs/composites-call-customdatamodelexample--custom-data-model-example) |
+| [ChatComposite](/?path=/story/composites-chat--basic-example) | [displayName](./?path=/story/composites-chat-basicexample--basic-example) | [onFetchAvatarPersonaData](./?path=/docs/composites-chat-customdatamodelexample--custom-data-model-example) |
 
 For additional examples on how this user data model injection pattern works, visit the individual composite pages.
