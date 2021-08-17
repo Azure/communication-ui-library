@@ -513,12 +513,9 @@ export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
 
 // @public (undocumented)
 export interface PlaceholderProps {
-    // (undocumented)
     coinSize?: number;
-    // (undocumented)
     hidePersonaDetails?: boolean;
     noVideoAvailableAriaLabel?: string;
-    // (undocumented)
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
     userId?: string;
