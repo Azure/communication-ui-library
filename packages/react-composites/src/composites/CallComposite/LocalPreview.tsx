@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { VideoOff20Filled } from '@fluentui/react-icons';
-import { Stack, Text } from '@fluentui/react';
+import { Stack, Text, mergeStyles } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 import {
@@ -35,12 +35,14 @@ export const LocalPreview = (): JSX.Element => {
   const theme = useTheme();
   const onRenderPlaceholder = useCallback((): JSX.Element => {
     return (
-      <Stack style={{ width: '100%', height: '100%', color: theme.palette.black }} verticalAlign="center">
+      <Stack className={mergeStyles({ width: '100%', height: '100%' })} verticalAlign="center">
         <Stack.Item align="center">
-          <VideoOff20Filled primaryFill="currentColor" />
+          <VideoOff20Filled className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralTertiary })} />
         </Stack.Item>
         <Stack.Item align="center">
-          <Text className={cameraOffLabelStyle}>Your camera is turned off.</Text>
+          <Text className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralSecondary })}>
+            Your camera is turned off.
+          </Text>
         </Stack.Item>
       </Stack>
     );
