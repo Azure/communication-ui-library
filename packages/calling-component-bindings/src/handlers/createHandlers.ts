@@ -11,10 +11,16 @@ import {
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+import {
+  CallErrorTargets,
+  DeviceManagerState,
+  newClearCallErrorsModifier,
+  StatefulCallClient,
+  StatefulDeviceManager
+} from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { VideoStreamOptions } from '@internal/react-components';
+import { ErrorType, VideoStreamOptions } from '@internal/react-components';
 
 export type DefaultCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
@@ -36,6 +42,7 @@ export type DefaultCallingHandlers = {
   onParticipantRemove: (userId: string) => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
+  onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
@@ -274,6 +281,18 @@ export const createDefaultCallingHandlers = memoizeOne(
       await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
+    const onDismissErrors = (errorTypes: ErrorType[]) => {
+      const targets: Set<CallErrorTargets> = new Set();
+      for (const errorType of errorTypes) {
+        switch (errorType) {
+          case 'startVideoGeneric':
+            targets.add('Call.startVideo');
+            break;
+        }
+      }
+      callClient.modifyState(newClearCallErrorsModifier(Array.from(targets.values())));
+    };
+
     return {
       onHangUp,
       onSelectCamera,
@@ -290,7 +309,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       onParticipantRemove,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
-      onDisposeLocalStreamView
+      onDisposeLocalStreamView,
+      onDismissErrors
     };
   }
 );

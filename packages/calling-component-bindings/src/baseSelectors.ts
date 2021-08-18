@@ -8,7 +8,8 @@ import {
   DeviceManagerState,
   IncomingCallState,
   RemoteParticipantState,
-  LocalVideoStreamState
+  LocalVideoStreamState,
+  CallErrors
 } from '@internal/calling-stateful-client';
 
 /**
@@ -59,3 +60,5 @@ export const getScreenShareRemoteParticipant = (
 export const getDisplayName = (state: CallClientState): string | undefined => state.callAgent?.displayName;
 
 export const getIdentifier = (state: CallClientState): string => toFlatCommunicationIdentifier(state.userId);
+
+export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;

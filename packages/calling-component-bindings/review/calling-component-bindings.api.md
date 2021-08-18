@@ -11,6 +11,7 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
+import { CallErrors } from '@internal/calling-stateful-client';
 import { CallParticipant } from '@internal/react-components';
 import { CallState } from '@internal/calling-stateful-client';
 import { CameraButton } from '@internal/react-components';
@@ -18,6 +19,7 @@ import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { EndCallButton } from '@internal/react-components';
+import { ErrorType } from '@internal/react-components';
 import { IncomingCallState } from '@internal/calling-stateful-client';
 import { LocalVideoStreamState } from '@internal/calling-stateful-client';
 import { MicrophoneButton } from '@internal/react-components';
@@ -130,6 +132,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onStartLocalVideo: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public
@@ -153,6 +156,7 @@ export type DefaultCallingHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public (undocumented)
@@ -197,6 +201,9 @@ export const getIsMuted: (state: CallClientState, props: CallingBaseSelectorProp
 
 // @public (undocumented)
 export const getIsScreenSharingOn: (state: CallClientState, props: CallingBaseSelectorProps) => boolean | undefined;
+
+// @public (undocumented)
+export const getLatestErrors: (state: CallClientState) => CallErrors;
 
 // @public (undocumented)
 export const getLocalVideoStreams: (state: CallClientState, props: CallingBaseSelectorProps) => LocalVideoStreamState[] | undefined;
