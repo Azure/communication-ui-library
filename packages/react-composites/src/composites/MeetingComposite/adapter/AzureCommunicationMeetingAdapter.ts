@@ -1,13 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  AudioDeviceInfo,
-  VideoDeviceInfo,
-  PermissionConstraints,
-  GroupCallLocator,
-  TeamsMeetingLinkLocator
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, VideoDeviceInfo, PermissionConstraints } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
   ParticipantJoinedListener,
