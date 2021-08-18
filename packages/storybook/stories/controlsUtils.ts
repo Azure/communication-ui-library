@@ -278,7 +278,8 @@ export const defaultCallCompositeHiddenControls = {
   fluentTheme: hiddenControl,
   onRenderAvatar: hiddenControl,
   identifiers: hiddenControl,
-  locale: hiddenControl
+  locale: hiddenControl,
+  rtl: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
@@ -289,12 +290,14 @@ export const defaultChatCompositeHiddenControls = {
   onRenderTypingIndicator: hiddenControl,
   options: hiddenControl,
   identifiers: hiddenControl,
-  locale: hiddenControl
+  locale: hiddenControl,
+  rtl: hiddenControl
 };
 
 export const defaultMeetingCompositeHiddenControls = {
   callAdapter: hiddenControl,
   chatAdapter: hiddenControl,
   fluentTheme: hiddenControl,
-  meetingInvitationURL: hiddenControl
+  meetingInvitationURL: hiddenControl,
+  rtl: hiddenControl
 };
