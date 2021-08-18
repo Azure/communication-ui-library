@@ -24,8 +24,26 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
   // have timestamps for errors.
   const activeErrors: ErrorType[] = [];
+
+  // Prefer to show errors with privacy implications.
+  if (latestErrors['Call.stopVideo'] !== undefined) {
+    activeErrors.push('stopVideoGeneric');
+  }
+  if (latestErrors['Call.mute'] !== undefined) {
+    activeErrors.push('muteGeneric');
+  }
+  if (latestErrors['Call.stopScreenSharing'] !== undefined) {
+    activeErrors.push('stopScreenShareGeneric');
+  }
+
   if (latestErrors['Call.startVideo'] !== undefined) {
     activeErrors.push('startVideoGeneric');
+  }
+  if (latestErrors['Call.unmute'] !== undefined) {
+    activeErrors.push('unmuteGeneric');
+  }
+  if (latestErrors['Call.startScreenSharing'] !== undefined) {
+    activeErrors.push('startScreenShareGeneric');
   }
 
   // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.

@@ -284,10 +284,9 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onDismissErrors = (errorTypes: ErrorType[]) => {
       const targets: Set<CallErrorTargets> = new Set();
       for (const errorType of errorTypes) {
-        switch (errorType) {
-          case 'startVideoGeneric':
-            targets.add('Call.startVideo');
-            break;
+        const target = statefulErrors[errorType];
+        if (target !== undefined) {
+          targets.add(target);
         }
       }
       callClient.modifyState(newClearCallErrorsModifier(Array.from(targets.values())));
@@ -314,6 +313,22 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
   }
 );
+
+const statefulErrors: { [key in ErrorType]: CallErrorTargets | undefined } = {
+  muteGeneric: 'Call.mute',
+  startScreenShareGeneric: 'Call.startScreenSharing',
+  startVideoGeneric: 'Call.startVideo',
+  stopScreenShareGeneric: 'Call.stopScreenSharing',
+  stopVideoGeneric: 'Call.stopVideo',
+  unmuteGeneric: 'Call.unmute',
+
+  // Non-calling errors.
+  accessDenied: undefined,
+  sendMessageGeneric: undefined,
+  sendMessageNotInThisThread: undefined,
+  unableToReachChatService: undefined,
+  userNotInThisThread: undefined
+};
 
 // TODO: extract into an util.
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
