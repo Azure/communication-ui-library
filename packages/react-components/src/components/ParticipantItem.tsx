@@ -18,7 +18,7 @@ import {
   ContextualMenu,
   DirectionalHint
 } from '@fluentui/react';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, CSSProperties } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -104,7 +104,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const meTextStyle = mergeStyles({ color: theme.palette.neutralTertiary }, styles?.me);
   const contextualMenuStyle = mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu);
-  const iconsContainerWidth = '3.5rem';
+  const iconsContainerWidth = (styles?.iconContainer as CSSProperties)?.width ?? '3.5rem';
 
   return (
     <div
@@ -122,31 +122,32 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         horizontal
         className={mergeStyles(iconContainerStyle, { width: iconsContainerWidth }, styles?.iconContainer)}
       >
-        {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden) ? (
-          <Stack
-            horizontalAlign="end"
-            onMouseEnter={() => setMenuButtonHovered(true)}
-            onMouseLeave={() => setMenuButtonHovered(false)}
-            title={menuTitle}
-            className={menuButtonContainerStyle}
-            onClick={() => setMenuHidden(false)}
-          >
-            {!menuButtonHovered ? (
-              <MoreHorizontal20Regular className={iconStyles} primaryFill="currentColor" />
-            ) : (
-              <MoreHorizontal20Filled className={iconStyles} primaryFill="currentColor" />
+        {itemHovered || !menuHidden
+          ? menuItems &&
+            menuItems.length > 0 && (
+              <Stack
+                horizontalAlign="end"
+                onMouseEnter={() => setMenuButtonHovered(true)}
+                onMouseLeave={() => setMenuButtonHovered(false)}
+                title={menuTitle}
+                className={menuButtonContainerStyle}
+                onClick={() => setMenuHidden(false)}
+              >
+                {!menuButtonHovered ? (
+                  <MoreHorizontal20Regular className={iconStyles} primaryFill="currentColor" />
+                ) : (
+                  <MoreHorizontal20Filled className={iconStyles} primaryFill="currentColor" />
+                )}
+              </Stack>
+            )
+          : onRenderIcon && (
+              <Stack
+                horizontalAlign="end"
+                className={mergeStyles({ width: iconsContainerWidth, height: '100%', overflow: 'hidden' })}
+              >
+                {onRenderIcon(props)}
+              </Stack>
             )}
-          </Stack>
-        ) : (
-          onRenderIcon && (
-            <Stack
-              horizontalAlign="end"
-              className={mergeStyles({ width: iconsContainerWidth, height: '100%', overflow: 'hidden' })}
-            >
-              {onRenderIcon(props)}
-            </Stack>
-          )
-        )}
         {menuItems && menuItems.length > 0 && (
           <ContextualMenu
             items={menuItems}
