@@ -60,17 +60,16 @@ const onRenderParticipantsDefault = (
       });
     }
 
-    const onRenderIcon =
-      callingParticipant?.isScreenSharing || callingParticipant?.isMuted
-        ? () => (
-            <Stack horizontal tokens={{ childrenGap: '0.5rem' }}>
-              {callingParticipant.isScreenSharing && (
-                <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />
-              )}
-              {callingParticipant.isMuted && <MicOff20Filled className={iconStyles} primaryFill="currentColor" />}
-            </Stack>
-          )
-        : () => <></>;
+    const onRenderIcon = (): JSX.Element => {
+      return (
+        <Stack horizontal tokens={{ childrenGap: '0.5rem' }}>
+          {callingParticipant.isScreenSharing && (
+            <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />
+          )}
+          {callingParticipant.isMuted && <MicOff20Filled className={iconStyles} primaryFill="currentColor" />}
+        </Stack>
+      );
+    };
 
     const renderAvatar = onRenderAvatar
       ? () => {
