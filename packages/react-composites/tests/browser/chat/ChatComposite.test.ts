@@ -53,6 +53,12 @@ test.describe('Chat Composite E2E Tests', () => {
     await page1.bringToFront();
     await page1.waitForSelector(`[data-ui-status="delivered"]`);
     stubMessageTimestamps(page1);
+
+    // It could be too slow to get typing indicator here, which makes the test flacky
+    // so wait for typing indicator disappearing
+    const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
+    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
+
     expect(await page1.screenshot()).toMatchSnapshot('receive-message.png');
 
     await page0.bringToFront();
