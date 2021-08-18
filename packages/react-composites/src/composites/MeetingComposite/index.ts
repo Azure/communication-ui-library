@@ -3,5 +3,10 @@
 
 export * from './MeetingComposite';
 
-export type { MeetingAdapter, MeetingEvent, ConflictingProps } from './adapter/MeetingAdapter';
+export type {
+  MeetingAdapter,
+  MeetingEvent,
+  MeetingAdapterHandlers,
+  MeetingAdapterSubscriptions
+} from './adapter/MeetingAdapter';
 export type { MeetingState } from './state/MeetingState';
