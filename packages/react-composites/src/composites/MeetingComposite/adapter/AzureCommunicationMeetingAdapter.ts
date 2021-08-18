@@ -67,13 +67,14 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
 
   public joinMeeting(microphoneOn?: boolean): void {
-    throw new Error('Method not implemented.');
+    this.callAdapter.joinCall(microphoneOn);
   }
-  public async leaveMeeting(forEveryone?: boolean): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async leaveMeeting(): Promise<void> {
+    await this.chatAdapter.removeParticipant(this.chatAdapter.getState().userId);
+    await this.callAdapter.leaveCall();
   }
   public startMeeting(participants: string[]): void {
-    throw new Error('Method not implemented.');
+    this.callAdapter.startCall(participants);
   }
   public onStateChange(handler: (state: MeetingAdapterState) => void): void {
     throw new Error('Method not implemented.');
@@ -85,52 +86,70 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     throw new Error('Method not implemented.');
   }
   public dispose(): void {
-    throw new Error('Method not implemented.');
+    this.unsubscribeMeetingEvents();
+    this.callAdapter.dispose();
+    this.chatAdapter.dispose();
   }
   public setPage(page: MeetingCompositePage): void {
-    throw new Error('Method not implemented.');
+    switch (page) {
+      case 'configuration':
+        this.callAdapter.setPage('configuration');
+        break;
+      case 'meeting':
+        this.callAdapter.setPage('call');
+        break;
+      case 'error':
+        this.callAdapter.setPage('error');
+        break;
+      case 'errorJoiningTeamsMeeting':
+        this.callAdapter.setPage('errorJoiningTeamsMeeting');
+        break;
+      case 'removed':
+        this.callAdapter.setPage('removed');
+        break;
+      default:
+        throw `Page (${page}) not implemented`;
+    }
   }
   public async removeParticipant(userId: string): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-  public async leaveCall(forEveryone?: boolean): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.removeParticipant(userId);
+    await this.callAdapter.removeParticipant(userId);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.setCamera(device, options);
   }
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.setMicrophone(device);
   }
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.setSpeaker(device);
   }
-  public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async askDevicePermission(constraints: PermissionConstraints): Promise<void> {
+    await this.callAdapter.askDevicePermission(constraints);
   }
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
-    throw new Error('Method not implemented.');
+    return await this.callAdapter.queryCameras();
   }
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
-    throw new Error('Method not implemented.');
+    return await this.callAdapter.queryMicrophones();
   }
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
-    throw new Error('Method not implemented.');
+    return await this.callAdapter.querySpeakers();
   }
   public async startCamera(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.startCamera();
   }
   public async stopCamera(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.stopCamera();
   }
   public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.onToggleCamera(options);
   }
   public async mute(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.mute();
   }
   public async unmute(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.unmute();
   }
   public async startScreenShare(): Promise<void> {
     throw new Error('Method not implemented.');
