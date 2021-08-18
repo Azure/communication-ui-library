@@ -69,8 +69,6 @@ export interface MeetingAdapter
     MeetingAdapterHandlers,
     Pick<
       CallAdapterHandlers,
-      | 'joinCall'
-      | 'leaveCall'
       | 'setCamera'
       | 'setMicrophone'
       | 'setSpeaker'
@@ -83,7 +81,6 @@ export interface MeetingAdapter
       | 'onToggleCamera'
       | 'mute'
       | 'unmute'
-      | 'startCall'
       | 'startScreenShare'
       | 'stopScreenShare'
       | 'createStreamView'
@@ -93,7 +90,11 @@ export interface MeetingAdapter
       ChatAdapterHandlers,
       'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
     >,
-    MeetingAdapterSubscriptions {}
+    MeetingAdapterSubscriptions {
+  joinMeeting(microphoneOn?: boolean): void;
+  leaveMeeting(forEveryone?: boolean): Promise<void>;
+  startMeeting(participants: string[]): void;
+}
 
 export type MeetingEvent =
   | 'meetingEnded'
