@@ -153,14 +153,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       >
         {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden)
           ? menuButton
-          : onRenderIcon && (
-              <Stack
-                horizontalAlign="end"
-                className={mergeStyles({ width: iconsContainerWidth, height: '100%', overflow: 'hidden' })}
-              >
-                {onRenderIcon(props)}
-              </Stack>
-            )}
+          : onRenderIcon && onRenderIcon(props)}
         {menuItems && menuItems.length > 0 && (
           <ContextualMenu
             items={menuItems}
