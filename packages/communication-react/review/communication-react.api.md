@@ -216,6 +216,17 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
+// @public (undocumented)
+export type AzureCommunicationMeetingAdapterArgs = {
+    endpointUrl: string;
+    userId: CommunicationUserKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    chatThreadId: string;
+    callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+    callClientOptions?: CallClientOptions;
+};
+
 // @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
@@ -782,6 +793,9 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public (undocumented)
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator, callClientOptions }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+
+// @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
     onHangUp: () => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions | undefined) => Promise<void>;
@@ -1164,8 +1178,7 @@ export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'erro
 
 // @public
 export type MeetingCompositeProps = {
-    callAdapter: CallAdapter;
-    chatAdapter: ChatAdapter;
+    meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
 };

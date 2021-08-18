@@ -181,6 +181,17 @@ export type AzureCommunicationChatAdapterArgs = {
 };
 
 // @public (undocumented)
+export type AzureCommunicationMeetingAdapterArgs = {
+    endpointUrl: string;
+    userId: CommunicationUserKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    chatThreadId: string;
+    callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+    callClientOptions?: CallClientOptions;
+};
+
+// @public (undocumented)
 export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterHandlers {
     // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
@@ -424,6 +435,9 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public (undocumented)
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator, callClientOptions }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+
+// @public (undocumented)
 export type DisplayNameChangedListener = (event: {
     participantId: CallIdentifierKinds;
     displayName: string;
@@ -551,8 +565,7 @@ export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'erro
 
 // @public
 export type MeetingCompositeProps = {
-    callAdapter: CallAdapter;
-    chatAdapter: ChatAdapter;
+    meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
 };

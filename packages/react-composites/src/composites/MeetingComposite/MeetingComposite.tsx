@@ -1,24 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallCompositeInternal } from '../CallComposite/Call';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallAdapter, CallCompositePage } from '../CallComposite';
-import { ChatAdapter } from '../ChatComposite';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
 import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
 import { FluentThemeProvider } from '@internal/react-components';
+import { MeetingAdapter, MeetingBackedCallAdapter, MeetingBackedChatAdapter } from './adapter/MeetingAdapter';
+import { MeetingCompositePage } from './state/MeetingCompositePage';
+import { CallAdapter } from '../CallComposite';
+import { ChatAdapter } from '../ChatComposite';
 
 /**
  * Props required for the {@link MeetingComposite}
  */
 export type MeetingCompositeProps = {
-  callAdapter: CallAdapter;
-  chatAdapter: ChatAdapter;
+  meetingAdapter: MeetingAdapter;
   /**
    * Fluent theme for the composite.
    *
@@ -32,16 +33,30 @@ export type MeetingCompositeProps = {
  * Meeting Composite brings together key components to provide a full meeting experience out of the box.
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
-  const { callAdapter, chatAdapter, fluentTheme } = props;
+  const { meetingAdapter, fluentTheme } = props;
 
-  const [currentCallState, setCurrentCallState] = useState<CallState>();
-  const [currentPage, setCurrentPage] = useState<CallCompositePage>();
-  callAdapter.onStateChange((newState) => {
+  if (!meetingAdapter) {
+    throw 'Meeting adapter is undefined';
+  }
+
+  const [callAdapter, setCallAdapter] = useState<CallAdapter>(new MeetingBackedCallAdapter(meetingAdapter));
+  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>(new MeetingBackedChatAdapter(meetingAdapter));
+
+  useEffect(() => {
+    setCallAdapter(new MeetingBackedCallAdapter(meetingAdapter));
+    setChatAdapter(new MeetingBackedChatAdapter(meetingAdapter));
+  }, [meetingAdapter]);
+
+  const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
+  const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
+  meetingAdapter.onStateChange((newState) => {
     setCurrentPage(newState.page);
-    setCurrentCallState(newState.call?.state);
+    setCurrentMeetingState(newState.meeting?.state);
   });
   const hasJoinedCall =
-    currentPage === 'call' && currentCallState && !['Connecting', 'Ringing', 'InLobby'].includes(currentCallState);
+    currentPage === 'meeting' &&
+    currentMeetingState &&
+    !['Connecting', 'Ringing', 'InLobby'].includes(currentMeetingState);
 
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -62,7 +77,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   }, [showPeople]);
 
   const endCallClick = (): void => {
-    callAdapter.setPage('configuration');
+    meetingAdapter.setPage('configuration');
   };
 
   return (

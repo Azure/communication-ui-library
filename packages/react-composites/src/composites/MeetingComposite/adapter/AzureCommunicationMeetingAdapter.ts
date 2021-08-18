@@ -4,7 +4,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-import { AudioDeviceInfo, VideoDeviceInfo, PermissionConstraints } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  VideoDeviceInfo,
+  PermissionConstraints,
+  CallClientOptions,
+  GroupCallLocator,
+  TeamsMeetingLinkLocator
+} from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
   ParticipantJoinedListener,
@@ -14,9 +21,9 @@ import {
   IsScreenSharingOnChangedListener,
   DisplayNameChangedListener,
   IsSpeakingChangedListener,
-  AzureCommunicationCallAdapter,
   CallAdapter,
-  CallAdapterState
+  CallAdapterState,
+  createAzureCommunicationCallAdapter
 } from '../../CallComposite';
 import { MessageReceivedListener, MessageReadListener, ChatAdapter, ChatState } from '../../ChatComposite';
 import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
@@ -27,9 +34,10 @@ import {
   mergeCallAdapterStateIntoMeetingAdapterState,
   mergeChatAdapterStateIntoMeetingAdapterState
 } from '../state/MeetingAdapterState';
-import { AzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
+import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { MeetingCompositePage, meetingPageToCallPage } from '../state/MeetingCompositePage';
 import { EventEmitter } from 'events';
+import { CommunicationTokenCredential, CommunicationUserKind } from '@azure/communication-common';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -94,7 +102,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private onChatStateChange: (newChatAdapterState: ChatState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
-  constructor(callAdapter: AzureCommunicationCallAdapter, chatAdapter: AzureCommunicationChatAdapter) {
+  constructor(callAdapter: CallAdapter, chatAdapter: ChatAdapter) {
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
     this.chatAdapter = chatAdapter;
@@ -291,3 +299,41 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     throw new Error('Method not implemented.');
   }
 }
+
+export type AzureCommunicationMeetingAdapterArgs = {
+  endpointUrl: string;
+  userId: CommunicationUserKind;
+  displayName: string;
+  credential: CommunicationTokenCredential;
+  chatThreadId: string;
+  callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+  callClientOptions?: CallClientOptions;
+};
+
+export const createAzureCommunicationMeetingAdapter = async ({
+  userId,
+  displayName,
+  credential,
+  endpointUrl,
+  chatThreadId,
+  callLocator,
+  callClientOptions
+}: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
+  const callAdapter = await createAzureCommunicationCallAdapter({
+    userId,
+    displayName,
+    credential,
+    locator: callLocator,
+    callClientOptions
+  });
+
+  const chatAdapter = await createAzureCommunicationChatAdapter({
+    endpointUrl,
+    userId,
+    displayName,
+    credential,
+    threadId: chatThreadId
+  });
+
+  return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
+};

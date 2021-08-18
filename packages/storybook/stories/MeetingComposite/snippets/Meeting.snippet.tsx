@@ -1,12 +1,6 @@
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import {
-  CallAdapter,
-  ChatAdapter,
-  MeetingComposite,
-  createAzureCommunicationCallAdapter,
-  createAzureCommunicationChatAdapter
-} from '@azure/communication-react';
+import { MeetingAdapter, MeetingComposite, createAzureCommunicationMeetingAdapter } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
 
@@ -22,8 +16,7 @@ export type MeetingExampleProps = {
 };
 
 export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
-  const [callAdapter, setCallAdapter] = useState<CallAdapter>();
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
+  const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter>();
 
   const credential = useMemo(() => {
     try {
@@ -45,22 +38,14 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
       props.endpointUrl
     ) {
       const createAdapters = async (): Promise<void> => {
-        setCallAdapter(
-          await createAzureCommunicationCallAdapter({
+        setMeetingAdapter(
+          await createAzureCommunicationMeetingAdapter({
             userId: { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
             displayName: props.displayName,
             credential,
-            locator: props.locator
-          })
-        );
-
-        setChatAdapter(
-          await createAzureCommunicationChatAdapter({
+            callLocator: props.locator,
             endpointUrl: props.endpointUrl,
-            userId: { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
-            displayName: props.displayName,
-            credential,
-            threadId: props.threadId
+            chatThreadId: props.threadId
           })
         );
       };
@@ -68,8 +53,8 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
     }
   }, [credential, props]);
 
-  if (callAdapter && chatAdapter) {
-    return <MeetingComposite callAdapter={callAdapter} chatAdapter={chatAdapter} fluentTheme={props.fluentTheme} />;
+  if (meetingAdapter) {
+    return <MeetingComposite meetingAdapter={meetingAdapter} fluentTheme={props.fluentTheme} />;
   }
 
   if (credential === undefined) {
