@@ -5,9 +5,18 @@ export * from './MeetingComposite';
 
 export type {
   MeetingAdapter,
-  MeetingCompositePage,
   MeetingEvent,
   MeetingAdapterHandlers,
   MeetingAdapterSubscriptions
 } from './adapter/MeetingAdapter';
-export type { MeetingAdapterState, MeetingState } from './state/MeetingAdapterState';
+
+export type {
+  MeetingAdapterClientState,
+  MeetingAdapterUiState,
+  MeetingAdapterState,
+  MeetingCompositePage,
+  MeetingEndReason,
+  MeetingErrors,
+  MeetingParticipant,
+  MeetingState
+} from './state/MeetingAdapterState';
