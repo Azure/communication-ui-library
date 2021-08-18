@@ -151,8 +151,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         horizontal
         className={mergeStyles(iconContainerStyle, { width: iconsContainerWidth }, styles?.iconContainer)}
       >
-        {itemHovered || !menuHidden
-          ? menuItems && menuItems.length > 0 && menuButton
+        {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden)
+          ? menuButton
           : onRenderIcon && (
               <Stack
                 horizontalAlign="end"
