@@ -11,7 +11,51 @@ Mon, 16 Aug 2021 21:18:19 GMT
 
 ### Changes
 
-- Bump @internal/calling-component-bindings to v1.0.0-beta.4 ([PR #645](https://github.com/azure/communication-ui-library/pull/645) by alcail@microsoft.com)
+* Add remove participant button to the Meeting Composite and Call Composite
+
+* Add applicationID to chat user agent
+
+* Added rtl property to FluentThemeProvider
+
+* Remove redundant prop VideoTile.isVideoReady
+
+* Bump Typescript version to 4.3.5
+
+* Update Call composite adapter joinCall return type to be the same as startCall
+
+* Add explicit string literals for error targets in Chat Stateful client
+
+* Update createAzureCommunicationChatAdapter and createAzureCommunicationCallAdapter constructors to take in a named object instead of seperate args
+
+* Add meeting composite
+
+* Add system message for selector props
+
+* Replace StatefulChatClient.clearErrors() with modifier pattern
+
+* Exposed locale prop to localize composites
+
+* bugfix:
+  * Fix item alignment and 'Leave' button color in Dark Mode for Chat sample header
+  * Show avatar when video is off (remote and local)
+  * Fix alignment of Chat bubble with/without receipt
+  * Fix button menu flyouts exceeding screen width
+  * Fix fluent theme provider not being applied to the meeting composite
+  * Fix permission banner styling - allow multiline
+  * Fix partially composed chat messages being lost when closing and reopening the chat pane in the meeting composite
+  * Fix tsdoc comments - rename @Link -> @link
+  * Fix Chat infinite scroll jumpy behavior
+  * Fix screenshare not displaying for call attendees
+  * Fix screenshare dialog eating user input across the whole web page
+  * Fix video gallery styling issues during (participant pane too large) and after (messed up format) screenshare
+  * Fix sample app dark theme on IPhoneSE
+  * Fix RTL responsiveness of TypingIndicator
+  * Fix video device icons in ControlBar Options button 
+  * Fix meeting pane overlapping the call control bar
+  * Remove type blocking usage of the package on older typescript versions
+  * Fix SendBox padding so we don't overlap text with the send message button
+  * Fix video gallery local preview position to be relative to the parent
+  * Ensure call composite media gallery has a minimum height
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.3)
 
