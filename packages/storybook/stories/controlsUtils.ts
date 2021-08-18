@@ -97,7 +97,12 @@ const errorOptions = [
   'userNotInThisThread',
   'sendMessageNotInThisThread',
   'sendMessageGeneric',
-  'startVideoGeneric'
+  'startVideoGeneric',
+  'stopVideoGeneric',
+  'muteGeneric',
+  'unmuteGeneric',
+  'startScreenShareGeneric',
+  'stopScreenShareGeneric'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];

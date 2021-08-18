@@ -68,6 +68,11 @@
     "userNotInThisThread": "Vous n'êtes plus dans ce fil de discussion",
     "sendMessageNotInThisThread": "Échec de l'envoi du message car vous n'êtes plus dans ce fil de discussion",
     "sendMessageGeneric": "Échec de l'envoi du message",
-    "startVideoGeneric": "Échec du démarrage de la vidéo"
+    "startVideoGeneric": "Échec du démarrage de la vidéo",
+    "stopVideoGeneric": "Impossible d'arrêter la vidéo",
+    "muteGeneric": "Échec de la mise en sourdine du microphone",
+    "unmuteGeneric": "Impossible de réactiver le microphone",
+    "startScreenShareGeneric": "Échec du démarrage du partage d'écran",
+    "stopScreenShareGeneric": "Échec de l'arrêt du partage d'écran"
   }
 }

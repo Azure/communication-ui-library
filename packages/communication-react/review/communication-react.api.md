@@ -941,10 +941,15 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
+    startScreenShareGeneric: string;
     startVideoGeneric: string;
+    stopScreenShareGeneric: string;
+    stopVideoGeneric: string;
     unableToReachChatService: string;
+    unmuteGeneric: string;
     userNotInThisThread: string;
 }
 

@@ -68,6 +68,11 @@
     "userNotInThisThread": "Du bist nicht mehr in diesem Chat-Thread",
     "sendMessageNotInThisThread": "Nachricht konnte nicht gesendet werden, da Sie sich nicht mehr in diesem Chat-Thread befinden",
     "sendMessageGeneric": "Fehler beim senden einer nachricht",
-    "startVideoGeneric": "Video konnte nicht gestartet werden"
+    "startVideoGeneric": "Video konnte nicht gestartet werden",
+    "stopVideoGeneric": "Video konnte nicht gestoppt werden",
+    "muteGeneric": "Mikrofon konnte nicht stumm geschaltet werden",
+    "unmuteGeneric": "Die Stummschaltung des Mikrofons konnte nicht aufgehoben werden",
+    "startScreenShareGeneric": "Fehler beim Starten der Bildschirmfreigabe",
+    "stopScreenShareGeneric": "Fehler beim Beenden der Bildschirmfreigabe"
   }
 }
