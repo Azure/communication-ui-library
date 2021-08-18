@@ -7,6 +7,7 @@ export { createDefaultCallingHandlersForComponent, createDefaultCallingHandlers 
 export { participantListSelector } from './participantListSelector';
 export { participantsButtonSelector } from './participantsButtonSelector';
 export { videoGallerySelector } from './videoGallerySelector';
+export { errorBarSelector } from './errorBarSelector';
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export type { DefaultCallingHandlers } from './handlers/createHandlers';
