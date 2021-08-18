@@ -29,9 +29,18 @@ export const participantItemMeStyle = mergeStyles({
   marginTop: '0.3125rem'
 });
 
+export const menuButtonContainerStyle = mergeStyles({
+  root: {
+    '&:hover': { background: 'none' },
+    '&:active': { background: 'none' }
+  }
+});
+
 export const iconContainerStyle = mergeStyles({
   display: 'flex',
-  right: '1rem',
   alignItems: 'center',
-  height: '100%'
+  height: '100%',
+  width: '3.5rem'
 });
+
+export const iconStyles = mergeStyles({ display: 'flex', margin: 'auto' });

@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { participantItemContainerStyle, iconContainerStyle } from './styles/ParticipantItem.styles';
+import {
+  participantItemContainerStyle,
+  iconContainerStyle,
+  iconStyles,
+  menuButtonContainerStyle
+} from './styles/ParticipantItem.styles';
 import {
   IContextualMenuItem,
   Persona,
@@ -99,13 +104,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const meTextStyle = mergeStyles({ color: theme.palette.neutralTertiary }, styles?.me);
   const contextualMenuStyle = mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu);
-  const menuButtonContainerStyle = mergeStyles({
-    root: {
-      marginRight: '0rem',
-      '&:hover': { background: 'none' },
-      '&:active': { background: 'none' }
-    }
-  });
 
   return (
     <div
@@ -114,17 +112,15 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
     >
-      <Stack
-        horizontal
-        className={mergeStyles({ width: 'calc(100% - 50px)', alignItems: 'center', marginRight: '5px' })}
-      >
+      <Stack horizontal className={mergeStyles({ width: 'calc(100% - 3.5rem)', alignItems: 'center' })}>
         {persona}
         {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
       </Stack>
       {onRenderIcon && (
-        <Stack horizontal={true} className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>
+        <Stack horizontalAlign="end" horizontal className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>
           {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden) ? (
-            <div
+            <Stack
+              horizontalAlign="end"
               onMouseEnter={() => setMenuButtonHovered(true)}
               onMouseLeave={() => setMenuButtonHovered(false)}
               title={menuTitle}
@@ -132,13 +128,18 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
               onClick={() => setMenuHidden(false)}
             >
               {!menuButtonHovered ? (
-                <MoreHorizontal20Regular primaryFill="currentColor" />
+                <MoreHorizontal20Regular className={iconStyles} primaryFill="currentColor" />
               ) : (
-                <MoreHorizontal20Filled primaryFill="currentColor" />
+                <MoreHorizontal20Filled className={iconStyles} primaryFill="currentColor" />
               )}
-            </div>
+            </Stack>
           ) : (
-            onRenderIcon(props)
+            <Stack
+              horizontalAlign="end"
+              className={mergeStyles({ width: '3.5rem', height: '100%', overflow: 'hidden' })}
+            >
+              {onRenderIcon(props)}
+            </Stack>
           )}
           {menuItems && menuItems.length > 0 && (
             <ContextualMenu
