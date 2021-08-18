@@ -97,11 +97,13 @@ jobs:
       - name: Build Test
         run: |
           cd packages/react-composites
+          rushx build:e2e:chat
           rushx build:e2e:call
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
           cd packages/react-composites
+          rushx test:e2e:chat
           rushx test:e2e:call
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
