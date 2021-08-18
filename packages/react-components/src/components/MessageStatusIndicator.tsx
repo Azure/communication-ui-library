@@ -16,6 +16,7 @@ import {
 } from '@fluentui/react-icons';
 import { BaseCustomStylesProps } from '../types';
 import { useLocale } from '../localization';
+import { useTheme } from '../theming';
 
 /**
  * Strings of MessageStatusIndicator that can be overridden
@@ -59,14 +60,18 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
 
   const localeStrings = useLocale().strings.messageStatusIndicator;
   const strings = { ...localeStrings, ...props.strings };
+  const theme = useTheme();
 
   switch (status) {
     case 'failed':
       return (
         <TooltipHost content={strings.failedToSendTooltipText}>
           <ErrorCircle20Regular
-            primaryFill="currentColor"
-            className={mergeStyles(MessageStatusIndicatorErrorIconStyle, styles?.root)}
+            className={mergeStyles(
+              MessageStatusIndicatorErrorIconStyle,
+              { color: theme.palette.redDark },
+              styles?.root
+            )}
           />
         </TooltipHost>
       );
@@ -74,23 +79,29 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       return (
         <TooltipHost content={strings.sendingTooltipText}>
           <Circle20Regular
-            primaryFill="currentColor"
-            className={mergeStyles(MessageStatusIndicatorIconStyle, styles?.root)}
+            className={mergeStyles(
+              MessageStatusIndicatorIconStyle,
+              { color: theme.palette.themePrimary },
+              styles?.root
+            )}
           />
         </TooltipHost>
       );
     case 'seen':
       return (
         <TooltipHost content={strings.seenTooltipText}>
-          <EyeShow20Filled primaryFill="currentColor" className={mergeStyles(styles?.root)} />
+          <EyeShow20Filled className={mergeStyles({ color: theme.palette.black }, styles?.root)} />
         </TooltipHost>
       );
     case 'delivered':
       return (
         <TooltipHost content={strings.deliveredTooltipText}>
           <CheckmarkCircle20Regular
-            primaryFill="currentColor"
-            className={mergeStyles(MessageStatusIndicatorIconStyle, styles?.root)}
+            className={mergeStyles(
+              MessageStatusIndicatorIconStyle,
+              { color: theme.palette.themePrimary },
+              styles?.root
+            )}
           />
         </TooltipHost>
       );
