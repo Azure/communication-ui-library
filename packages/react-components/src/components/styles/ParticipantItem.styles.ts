@@ -39,8 +39,7 @@ export const menuButtonContainerStyle = mergeStyles({
 export const iconContainerStyle = mergeStyles({
   display: 'flex',
   alignItems: 'center',
-  height: '100%',
-  width: '3.5rem'
+  height: '100%'
 });
 
 export const iconStyles = mergeStyles({ display: 'flex', margin: 'auto' });
