@@ -123,7 +123,6 @@ export const loadPage = async (
   const page = await browser.newPage();
   await page.setViewportSize(PAGE_VIEWPORT);
   const url = `${serverUrl}?${qs}`;
-  console.log(`Loading Chat app for ${user.displayName} at ${url}`);
   await page.goto(url, { waitUntil: 'networkidle' });
   // Important: For ensuring that blinking cursor doesn't get captured in
   // snapshots and cause a diff in subsequent tests.
@@ -148,7 +147,6 @@ export const gotoPage = async (
   const qs = encodeQueryData(user, qArgs);
   await page.setViewportSize(PAGE_VIEWPORT);
   const url = `${serverUrl}?${qs}`;
-  console.log(`Loading Chat app for ${user.displayName} at ${url}`);
   await page.goto(url, { waitUntil: 'networkidle' });
   // Important: For ensuring that blinking cursor doesn't get captured in
   // snapshots and cause a diff in subsequent tests.
