@@ -17,6 +17,7 @@ test.describe('Chat Composite E2E Tests', () => {
       const user = users[idx];
       await gotoPage(page, serverUrl, user);
       await waitForCompositeToLoad(page);
+      stubMessageTimestamps(pages[idx]);
     }
   });
 
