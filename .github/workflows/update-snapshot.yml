@@ -93,7 +93,7 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build Packages
-        run: rush build -t @azure/communication-composite
+        run: rush build -t @internal/react-composites
       - name: Build Test
         run: |
           cd packages/react-composites
