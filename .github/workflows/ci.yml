@@ -92,7 +92,7 @@ jobs:
         run: rush install
       # Builds
       - name: Build Packages
-        run: rush build -t @azure/communication-composites
+        run: rush build -t @internal/react-composites
       # Tests
       - name: Build Test
         run: |
