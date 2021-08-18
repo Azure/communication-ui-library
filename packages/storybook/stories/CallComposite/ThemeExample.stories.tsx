@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallComposite } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
+import { PartialTheme, Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
@@ -27,12 +27,20 @@ const ThemeExampleStory = (args): JSX.Element => {
     fetchContainerProps();
   }, [args.connectionString, args.displayName]);
 
+  const theme: PartialTheme = {
+    ...getControlledTheme(args.theme),
+    // The default themes exported by fluent samples, enforce Segoe UI using the `fonts` attribute in theme object.
+    // To override it, we need to set the `fonts` attribute to `undefined` in the theme object.
+    fonts: {},
+    defaultFontStyle: { fontFamily: args.font ?? 'Segoe UI' }
+  };
+
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
         <ContosoCallContainer
           displayName={args.displayName}
-          fluentTheme={getControlledTheme(args.theme)}
+          fluentTheme={theme}
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
         />
@@ -53,6 +61,7 @@ export default {
     connectionString: controlsToAdd.connectionString,
     displayName: controlsToAdd.displayName,
     theme: controlsToAdd.theme,
+    font: controlsToAdd.font,
     callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls

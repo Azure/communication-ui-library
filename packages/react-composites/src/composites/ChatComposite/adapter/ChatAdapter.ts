@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import type { ErrorType } from '@internal/react-components';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
+import type { AdapterState, AdapterDisposal, AdapterErrorHandlers } from '../../common/adapters';
 
 export type ChatUIState = {
   // FIXME(Delete?)
@@ -32,11 +32,7 @@ export type ChatAdapterErrors = { [operation: string]: Error };
 
 export type ChatState = ChatUIState & ChatCompositeClientState;
 
-export interface ChatAdapter {
-  onStateChange(handler: (state: ChatState) => void): void;
-  offStateChange(handler: (state: ChatState) => void): void;
-  getState(): ChatState;
-  dispose(): void;
+export interface ChatAdapterHandlers {
   /*
    * Fetch initial state for the Chat adapter.
    *
@@ -49,10 +45,9 @@ export interface ChatAdapter {
   removeParticipant(userId: string): Promise<void>;
   setTopic(topicName: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  /**
-   * Clear errors for given error types from {@link ChatAdapter.getState.latestErrors}.
-   */
-  clearErrors(errorTypes: ErrorType[]): void;
+}
+
+export interface ChatAdapterSubscribers {
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
@@ -69,6 +64,13 @@ export interface ChatAdapter {
   off(event: 'topicChanged', listener: TopicChangedListener): void;
   off(event: 'error', listener: ChatErrorListener): void;
 }
+
+export interface ChatAdapter
+  extends ChatAdapterHandlers,
+    AdapterState<ChatState>,
+    AdapterDisposal,
+    AdapterErrorHandlers,
+    ChatAdapterSubscribers {}
 
 export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
 export type MessageSentListener = MessageReceivedListener;

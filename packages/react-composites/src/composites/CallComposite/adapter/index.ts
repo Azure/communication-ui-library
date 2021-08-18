@@ -8,6 +8,7 @@ export type {
   CallAdapterClientState,
   CallAdapterState,
   CallAdapterUiState,
+  CallAdapterHandlers,
   CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ITheme } from '@fluentui/react';
+import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from './CompositeStringUtils';
 import {
@@ -100,7 +100,7 @@ const errorOptions = [
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
-export const getControlledTheme = (choice: string): ITheme => {
+export const getControlledTheme = (choice: string): PartialTheme => {
   switch (choice) {
     case 'Default':
       return DefaultTheme;
@@ -160,6 +160,7 @@ export const controlsToAdd = {
     name: 'ErrorType'
   },
   excludeMeFromList: { control: 'boolean', defaultValue: false, name: 'Are you excluded from the list' },
+  font: { control: 'text', defaultValue: 'Monaco, Menlo, Consolas', name: 'Font' },
   gridParticipants: { control: 'object', defaultValue: defaultControlsGridParticipants, name: 'Participants' },
   isCameraEnabled: { control: 'boolean', defaultValue: true, name: 'Is camera available' },
   isMe: { control: 'boolean', defaultValue: false, name: 'Is You' },

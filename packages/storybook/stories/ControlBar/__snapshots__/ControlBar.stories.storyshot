@@ -56,7 +56,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                 <span
                   aria-hidden={true}
                   className="root-span"
-                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
@@ -97,7 +96,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                 <span
                   aria-hidden={true}
                   className="root-span"
-                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
@@ -138,7 +136,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                 <span
                   aria-hidden={true}
                   className="root-span"
-                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
@@ -176,7 +173,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                 <span
                   aria-hidden={true}
                   className="root-span"
-                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
@@ -227,7 +223,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                 <span
                   aria-hidden={true}
                   className="root-span"
-                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
@@ -281,7 +276,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar Control Ba
                 <span
                   aria-hidden={true}
                   className="root-span"
-                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
