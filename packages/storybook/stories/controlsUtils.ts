@@ -96,7 +96,8 @@ const errorOptions = [
   'accessDenied',
   'userNotInThisThread',
   'sendMessageNotInThisThread',
-  'sendMessageGeneric'
+  'sendMessageGeneric',
+  'startVideoGeneric'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
