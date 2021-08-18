@@ -1,9 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IDS } from '../config';
-import { dataUiId, gotoPage, loadPage, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
+import {
+  createChatThreadAndUsers,
+  dataUiId,
+  gotoPage,
+  loadPage,
+  stubMessageTimestamps,
+  waitForCompositeToLoad
+} from '../utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
+
+const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
@@ -11,14 +20,17 @@ import { expect } from '@playwright/test';
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe('Chat Composite E2E Tests', () => {
-  test.beforeEach(async ({ pages, serverUrl, users }) => {
+  test.beforeEach(async ({ pages, serverUrl }) => {
+    const users = await createChatThreadAndUsers(PARTICIPANTS);
+    const pageLoadPromises: Promise<unknown>[] = [];
     for (const idx in pages) {
       const page = pages[idx];
       const user = users[idx];
       await gotoPage(page, serverUrl, user);
-      await waitForCompositeToLoad(page);
+      pageLoadPromises.push(waitForCompositeToLoad(page));
       stubMessageTimestamps(pages[idx]);
     }
+    await Promise.all(pageLoadPromises);
   });
 
   test('composite pages load completely', async ({ pages }) => {
@@ -78,29 +90,37 @@ test.describe('Chat Composite E2E Tests', () => {
   test('page[1] can rejoin the chat', async ({ pages }) => {
     const page = pages[1];
     await page.bringToFront();
+    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page.keyboard.press('Enter');
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
     page.reload({ waitUntil: 'networkidle' });
     await waitForCompositeToLoad(page);
     await page.waitForSelector(`[data-ui-status="delivered"]`);
     stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('receive-message.png');
-  });
-
-  test('user[1] can view custom data model', async ({ users, testBrowser, serverUrl }) => {
-    const user = users[1];
-    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
-    await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
-    await page.keyboard.press('Enter');
-    await page.waitForSelector('#custom-data-model-typing-indicator');
-    await page.waitForSelector('#custom-data-model-message');
-    await page.waitForSelector('#custom-data-model-avatar');
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
+    expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 
   test.afterAll(async ({ pages }) => {
     for (const page of pages) {
       page.close();
     }
+  });
+});
+
+test.describe('Chat Composite custom data model', () => {
+  test('can be viewed by user[1]', async ({ testBrowser, serverUrl }) => {
+    const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
+    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
+    await page.bringToFront();
+    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page.keyboard.press('Enter');
+    await page.waitForSelector(`[data-ui-status="delivered"]`);
+
+    await page.waitForSelector('#custom-data-model-typing-indicator');
+    await page.waitForSelector('#custom-data-model-message');
+    await page.waitForSelector('#custom-data-model-avatar');
+    stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
+    page.close();
   });
 });

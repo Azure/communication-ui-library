@@ -62,7 +62,8 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
           '--allow-file-access',
           '--use-fake-ui-for-media-stream',
           '--use-fake-device-for-media-stream',
-          `--use-file-for-fake-video-capture=${path.join(__dirname, 'test.y4m')}`
+          `--use-file-for-fake-video-capture=${path.join(__dirname, 'test.y4m')}`,
+          '--lang=en-US'
         ],
         ignoreDefaultArgs: [
           '--hide-scrollbars' // Don't hide scrollbars in headless mode.

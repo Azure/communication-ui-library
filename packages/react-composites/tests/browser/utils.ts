@@ -20,7 +20,7 @@ export const TOPIC_NAME = 'Cowabunga';
  * Wait for the ChatComposite on a page to fully load.
  */
 export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
-  await page.waitForLoadState('load');
+  await page.waitForLoadState('networkidle');
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
 
   // @TODO
@@ -29,7 +29,7 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
   // in the DOM, page[1] doesn't receive the message.
   // Only when page[1] is refreshed is when it will see the message sent by p[1]
   // By waiting 1 sec before sending a message, page[1] is able to recieve that message.
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(3000);
 };
 
 /**
@@ -69,10 +69,15 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
   }
 
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
-  const threadId = (await chatClient.createChatThread({ topic: TOPIC_NAME })).chatThread?.id ?? '';
-  await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
-  });
+  const threadId =
+    (
+      await chatClient.createChatThread(
+        { topic: TOPIC_NAME },
+        {
+          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
+        }
+      )
+    ).chatThread?.id ?? '';
 
   return displayNames.map((displayName, i) => ({
     userId: userAndTokens[i].user.communicationUserId,
