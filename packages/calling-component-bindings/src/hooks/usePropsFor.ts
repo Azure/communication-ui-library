@@ -92,6 +92,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return participantsButtonSelector;
     case EndCallButton:
       return emptySelector;
+    case ErrorBar:
+      return errorBarSelector;
   }
   return undefined;
 };
