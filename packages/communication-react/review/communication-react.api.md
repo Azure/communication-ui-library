@@ -1066,7 +1066,7 @@ export interface LocalVideoStreamState {
 }
 
 // @public (undocumented)
-export interface MeetingAdapter extends AdapterState<MeetingState>, AdapterDisposal, MeetingAdapterHandlers, Pick<CallAdapterHandlers, 'joinCall' | 'leaveCall' | 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers' | 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startCall' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<ChatAdapterHandlers, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends AdapterState<MeetingState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterHandlers, Pick<CallAdapterHandlers, 'joinCall' | 'leaveCall' | 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers' | 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startCall' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<ChatAdapterHandlers, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'>, MeetingAdapterSubscriptions {
 }
 
 // @public (undocumented)
@@ -1129,6 +1129,9 @@ export interface MeetingAdapterSubscriptions {
 
 // @public
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
+
+// @public (undocumented)
+export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public
 export type MeetingCompositeProps = {

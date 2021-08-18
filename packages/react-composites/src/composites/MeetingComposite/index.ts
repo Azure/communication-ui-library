@@ -5,6 +5,7 @@ export * from './MeetingComposite';
 
 export type {
   MeetingAdapter,
+  MeetingCompositePage,
   MeetingEvent,
   MeetingAdapterHandlers,
   MeetingAdapterSubscriptions

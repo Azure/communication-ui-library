@@ -21,7 +21,7 @@ import {
 } from '../../ChatComposite';
 import { MeetingState } from '../state/MeetingState';
 
-import type { AdapterState, AdapterDisposal } from '../../common/adapters';
+import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
 
 export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
