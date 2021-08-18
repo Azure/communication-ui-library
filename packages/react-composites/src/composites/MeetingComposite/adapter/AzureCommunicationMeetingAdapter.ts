@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import { AudioDeviceInfo, VideoDeviceInfo, PermissionConstraints } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
@@ -12,21 +15,103 @@ import {
   DisplayNameChangedListener,
   IsSpeakingChangedListener,
   AzureCommunicationCallAdapter,
-  CallAdapter
+  CallAdapter,
+  CallAdapterState
 } from '../../CallComposite';
-import { MessageReceivedListener, MessageReadListener, ChatAdapter } from '../../ChatComposite';
+import { MessageReceivedListener, MessageReadListener, ChatAdapter, ChatState } from '../../ChatComposite';
 import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
-import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapterState';
+import {
+  generateMeetingAdapterState,
+  MeetingAdapterClientState,
+  MeetingAdapterState,
+  mergeCallAdapterStateIntoMeetingAdapterState,
+  mergeChatAdapterStateIntoMeetingAdapterState
+} from '../state/MeetingAdapterState';
 import { AzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
+import { MeetingCompositePage, meetingPageToCallPage } from '../state/MeetingCompositePage';
+import { EventEmitter } from 'events';
+
+type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
+
+class MeetingContext {
+  private emitter = new EventEmitter();
+  private state: MeetingAdapterState;
+  // TODO: private meetingId: string | undefined;
+
+  constructor(clientState: MeetingAdapterClientState) {
+    this.state = {
+      userId: clientState.userId,
+      displayName: clientState.displayName,
+      devices: clientState.devices,
+      meeting: undefined,
+      page: 'configuration'
+    };
+  }
+
+  public onStateChange(handler: MeetingAdapterStateChangedHandler): void {
+    this.emitter.on('stateChanged', handler);
+  }
+
+  public offStateChange(handler: MeetingAdapterStateChangedHandler): void {
+    this.emitter.off('stateChanged', handler);
+  }
+
+  public setState(state: MeetingAdapterState): void {
+    this.state = state;
+    this.emitter.emit('stateChanged', this.state);
+  }
+
+  public getState(): MeetingAdapterState {
+    return this.state;
+  }
+
+  public updateClientState(clientState: MeetingAdapterClientState): void {
+    this.setState({
+      userId: clientState.userId,
+      displayName: clientState.displayName,
+      meeting: clientState.meeting,
+      devices: clientState.devices,
+      page: this.state.page
+    });
+  }
+
+  public updateClientStateWithChatState(chatAdapterState: ChatState): void {
+    if (!this.state) {
+      console.warn('Cannot update chat state with meeting state - no meeting state exists');
+    }
+    this.updateClientState(mergeChatAdapterStateIntoMeetingAdapterState(chatAdapterState, this.state));
+  }
+
+  public updateClientStateWithCallState(callAdapterState: CallAdapterState): void {
+    this.updateClientState(mergeCallAdapterStateIntoMeetingAdapterState(callAdapterState, this.state));
+  }
+}
 
 export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
+  private context: MeetingContext;
+  private onChatStateChange: (newChatAdapterState: ChatState) => void;
+  private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
   constructor(callAdapter: AzureCommunicationCallAdapter, chatAdapter: AzureCommunicationChatAdapter) {
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
     this.chatAdapter = chatAdapter;
+    this.context = new MeetingContext(generateMeetingAdapterState(callAdapter, chatAdapter));
+
+    const onChatStateChange = (newChatAdapterState: ChatState): void => {
+      this.context.updateClientStateWithChatState(newChatAdapterState);
+    };
+    this.chatAdapter.onStateChange(onChatStateChange);
+    this.onChatStateChange = onChatStateChange;
+
+    const onCallStateChange = (newCallAdapterState: CallAdapterState): void => {
+      this.context.updateClientStateWithCallState(newCallAdapterState);
+    };
+    this.callAdapter.onStateChange(onCallStateChange);
+    this.onCallStateChange = onCallStateChange;
+
     this.subscribeMeetingEvents();
   }
 
@@ -38,7 +123,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.offStateChange.bind(this);
     this.getState.bind(this);
     this.dispose.bind(this);
-    this.leaveCall.bind(this);
     this.setCamera.bind(this);
     this.setMicrophone.bind(this);
     this.setSpeaker.bind(this);
@@ -76,40 +160,26 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public startMeeting(participants: string[]): void {
     this.callAdapter.startCall(participants);
   }
-  public onStateChange(handler: (state: MeetingAdapterState) => void): void {
+  public onStateChange(handler: MeetingAdapterStateChangedHandler): void {
     throw new Error('Method not implemented.');
   }
-  public offStateChange(handler: (state: MeetingAdapterState) => void): void {
+  public offStateChange(handler: MeetingAdapterStateChangedHandler): void {
     throw new Error('Method not implemented.');
   }
   public getState(): MeetingAdapterState {
-    throw new Error('Method not implemented.');
+    return this.context.getState();
   }
   public dispose(): void {
     this.unsubscribeMeetingEvents();
-    this.callAdapter.dispose();
+
+    this.chatAdapter.offStateChange(this.onChatStateChange);
+    this.callAdapter.offStateChange(this.onCallStateChange);
+
     this.chatAdapter.dispose();
+    this.callAdapter.dispose();
   }
   public setPage(page: MeetingCompositePage): void {
-    switch (page) {
-      case 'configuration':
-        this.callAdapter.setPage('configuration');
-        break;
-      case 'meeting':
-        this.callAdapter.setPage('call');
-        break;
-      case 'error':
-        this.callAdapter.setPage('error');
-        break;
-      case 'errorJoiningTeamsMeeting':
-        this.callAdapter.setPage('errorJoiningTeamsMeeting');
-        break;
-      case 'removed':
-        this.callAdapter.setPage('removed');
-        break;
-      default:
-        throw `Page (${page}) not implemented`;
-    }
+    this.callAdapter.setPage(meetingPageToCallPage(page));
   }
   public async removeParticipant(userId: string): Promise<void> {
     await this.chatAdapter.removeParticipant(userId);
@@ -152,31 +222,31 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     await this.callAdapter.unmute();
   }
   public async startScreenShare(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.startScreenShare();
   }
   public async stopScreenShare(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.stopScreenShare();
   }
   public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.createStreamView(remoteUserId, options);
   }
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.disposeStreamView(remoteUserId, options);
   }
   public async fetchInitialData(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.fetchInitialData();
   }
   public async sendMessage(content: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.sendMessage(content);
   }
   public async sendReadReceipt(chatMessageId: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.sendReadReceipt(chatMessageId);
   }
   public async sendTypingIndicator(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.sendTypingIndicator();
   }
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
   }
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;

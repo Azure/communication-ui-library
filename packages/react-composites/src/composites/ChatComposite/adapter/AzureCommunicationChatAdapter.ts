@@ -32,7 +32,7 @@ import {
   TopicChangedListener
 } from './ChatAdapter';
 
-// Context of Chat, which is a centralized context for all state updates
+/** Context of Chat, which is a centralized context for all state updates */
 class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatState;

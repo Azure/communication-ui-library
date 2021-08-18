@@ -48,7 +48,7 @@ import {
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 
-// Context of Chat, which is a centralized context for all state updates
+/** Context of Chat, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallAdapterState;
@@ -160,7 +160,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.callClient.onStateChange(onStateChange);
   }
 
-  private bindPublicMethods() {
+  private bindPublicMethods(): void {
     this.onStateChange.bind(this);
     this.offStateChange.bind(this);
     this.getState.bind(this);

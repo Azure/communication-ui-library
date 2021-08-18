@@ -1,51 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import { ChatParticipant } from '@azure/communication-chat';
-import { CallEndReason } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
-import { CallAdapterClientState } from '../../CallComposite';
-
-export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
-
-export type MeetingEndReason = CallEndReason;
-
-export type MeetingErrors = unknown;
-
-export interface MeetingParticipant
-  extends Pick<ChatParticipant, 'shareHistoryTime'>,
-    Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
-  id: CommunicationIdentifier;
-  meetingEndReason: MeetingEndReason;
-}
-
-export interface MeetingState
-  extends Pick<
-      CallState,
-      | 'callerInfo'
-      | 'state'
-      | 'isMuted'
-      | 'isScreenSharingOn'
-      | 'localVideoStreams'
-      | 'transcription'
-      | 'recording'
-      | 'transfer'
-      | 'screenShareRemoteParticipant'
-      | 'startTime'
-      | 'endTime'
-    >,
-    Pick<
-      ChatThreadClientState,
-      'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'
-    > {
-  userId: CommunicationIdentifier;
-  displayName: string;
-  participants: { [key: string]: MeetingParticipant };
-  participantsEnded: { [keys: string]: MeetingParticipant };
-  meetingEndReason: MeetingEndReason;
-}
+import { CallAdapter, CallAdapterClientState, CallAdapterState } from '../../CallComposite';
+import { ChatAdapter, ChatState } from '../../ChatComposite';
+import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
+import {
+  generateMeetingState,
+  MeetingState,
+  mergeCallStateIntoMeetingState,
+  mergeChatStateIntoMeetingState
+} from './MeetingState';
 
 /**
  * Purely UI related adapter state.
@@ -59,9 +24,8 @@ export interface MeetingAdapterUiState {
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
   userId: CommunicationIdentifier;
-  displayName: string;
-  latestErrors: MeetingErrors;
-  meeting: MeetingState;
+  displayName: string | undefined;
+  meeting: MeetingState | undefined;
 }
 
 /**
@@ -71,3 +35,58 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
  * combined into one to suit the purpose of a Meeting.
  */
 export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {}
+
+export function generateMeetingAdapterState(callAdapter: CallAdapter, chatAdapter: ChatAdapter): MeetingAdapterState {
+  const callAdapterState = callAdapter.getState();
+  const chatAdapterState = chatAdapter.getState();
+
+  const { call, displayName, userId, devices, page } = callAdapterState;
+  const meeting = call ? generateMeetingState(call, chatAdapterState.thread) : undefined;
+
+  return {
+    meeting,
+    userId,
+    page: callPageToMeetingPage(page),
+    displayName,
+    devices
+  };
+}
+
+export function mergeChatAdapterStateIntoMeetingAdapterState(
+  chatAdapterState: ChatState,
+  meetingAdapterState: MeetingAdapterState
+): MeetingAdapterState {
+  const newMeetingState = meetingAdapterState.meeting
+    ? mergeChatStateIntoMeetingState(chatAdapterState.thread, meetingAdapterState.meeting)
+    : undefined;
+
+  const { userId, page, displayName, devices } = meetingAdapterState;
+
+  return {
+    userId,
+    page,
+    displayName,
+    devices,
+    meeting: newMeetingState
+  };
+}
+
+export function mergeCallAdapterStateIntoMeetingAdapterState(
+  callAdapterState: CallAdapterState,
+  meetingAdapterState: MeetingAdapterState
+): MeetingAdapterState {
+  const newMeetingState =
+    meetingAdapterState.meeting && callAdapterState.call
+      ? mergeCallStateIntoMeetingState(callAdapterState.call, meetingAdapterState.meeting)
+      : undefined;
+
+  const { userId, page, displayName, devices } = callAdapterState;
+
+  return {
+    userId,
+    page: callPageToMeetingPage(page),
+    displayName,
+    devices,
+    meeting: newMeetingState
+  };
+}

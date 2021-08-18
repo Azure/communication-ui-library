@@ -19,9 +19,10 @@ import {
   MessageReceivedListener,
   MessageSentListener
 } from '../../ChatComposite';
-import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapterState';
+import { MeetingAdapterState } from '../state/MeetingAdapterState';
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
+import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
 export interface MeetingAdapterHandlers {
   removeParticipant(userId: string): Promise<void>;
