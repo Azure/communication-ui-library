@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -31,11 +32,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
       >
         <div
           className="css-61 body-1"
+          dir="ltr"
         >
           <div
             className="css-61"
             data-uses-unhanded-props={true}
-            dir="ltr"
           >
             <div
               className="ms-Stack css-3"
@@ -77,7 +78,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             aria-hidden={true}
                             className="root-span"
-                            primaryFill="currentColor"
                           >
                             <svg
                               className="svg"
@@ -118,7 +118,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             aria-hidden={true}
                             className="root-span"
-                            primaryFill="currentColor"
                           >
                             <svg
                               className="svg"
@@ -159,7 +158,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             aria-hidden={true}
                             className="root-span"
-                            primaryFill="currentColor"
                           >
                             <svg
                               className="svg"
@@ -194,7 +192,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             aria-hidden={true}
                             className="root-span"
-                            primaryFill="currentColor"
                           >
                             <svg
                               className="svg"
@@ -244,19 +241,37 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     >
                       <div
                         aria-label=""
-                        className="ms-Persona ms-Persona--size100 root-28"
+                        className="ms-Persona ms-Persona--size48 root-28"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size100 coin-35"
+                          className="ms-Persona-coin ms-Persona--size48 coin-35"
                           role="presentation"
                         >
                           <div
                             className="ms-Persona-imageArea imageArea-37"
                             role="presentation"
+                            style={
+                              Object {
+                                "height": 100,
+                                "width": 100,
+                              }
+                            }
                           >
                             <div
                               aria-hidden="true"
                               className="ms-Persona-initials initials-40"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
                             >
                               <span>
                                 M

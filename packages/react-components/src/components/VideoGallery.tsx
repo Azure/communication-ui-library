@@ -151,7 +151,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return (
       <VideoTile
         userId={localParticipant.userId}
-        renderElement={<StreamMedia videoStreamElement={localVideoStream?.renderElement ?? null} />}
+        renderElement={
+          localVideoStream?.renderElement ? (
+            <StreamMedia videoStreamElement={localVideoStream.renderElement} />
+          ) : undefined
+        }
         displayName={localParticipant?.displayName}
         styles={localVideoTileStyles}
         onRenderPlaceholder={onRenderAvatar}
@@ -201,7 +205,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   if (shouldFloatLocalVideo()) {
-    const floatingTileHostId = 'UILibaryFloatingTileHost';
+    const floatingTileHostId = 'UILibraryFloatingTileHost';
     return (
       <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
         <Modal

@@ -33,7 +33,7 @@ export type DefaultCallingHandlers = {
   onHangUp: () => Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-  onParticipantRemove: (userId: string) => void;
+  onParticipantRemove: (userId: string) => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -270,8 +270,8 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
-    const onParticipantRemove = (userId: string): void => {
-      call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
+    const onParticipantRemove = async (userId: string): Promise<void> => {
+      await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
     return {
@@ -308,10 +308,10 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
  * @param callClient - StatefulCallClient returned from
- *   {@Link @internal/calling-stateful-client#createStatefulCallClient}.
- * @param callAgent - Instance of {@Link @azure/communication-calling#CallClient}.
- * @param deviceManager - Instance of {@Link @azure/communication-calling#DeviceManager}.
- * @param call - Instance of {@Link @azure/communication-calling#Call}.
+ *   {@link @azure/communication-react#createStatefulCallClient}.
+ * @param callAgent - Instance of {@link @azure/communication-calling#CallClient}.
+ * @param deviceManager - Instance of {@link @azure/communication-calling#DeviceManager}.
+ * @param call - Instance of {@link @azure/communication-calling#Call}.
  * @param _ - React component that you want to generate handlers for.
  * @returns
  */

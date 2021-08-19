@@ -61,7 +61,7 @@ export const getPermissionsBannerMessage = (
  * assumed to not happen by this component. If the banner was dismissed, it will be dismissed for the current state of
  * the props and stay dismissed even if permission change after dismissal.
  *
- * @param props {@Link PermissionsBannerProps}
+ * @param props {@link PermissionsBannerProps}
  */
 export const PermissionsBanner = (props: PermissionsBannerProps): JSX.Element => {
   const { cameraPermissionGranted, microphonePermissionGranted } = props;

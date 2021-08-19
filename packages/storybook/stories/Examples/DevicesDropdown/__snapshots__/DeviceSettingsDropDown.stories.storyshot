@@ -3,6 +3,7 @@
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
 <div
   className="css-61 body-0"
+  dir="ltr"
 >
   <div
     className="css-61"
@@ -24,11 +25,11 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
       >
         <div
           className="css-61 body-0"
+          dir="ltr"
         >
           <div
             className="css-61"
             data-uses-unhanded-props={true}
-            dir="ltr"
           >
             <div
               className="ms-Dropdown-container"
@@ -50,6 +51,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 role="combobox"
                 style={
                   Object {
+                    "overflow": "hidden",
                     "width": "15rem",
                   }
                 }

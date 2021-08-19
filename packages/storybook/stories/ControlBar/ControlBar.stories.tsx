@@ -11,12 +11,12 @@ import {
   ParticipantListProps,
   ScreenShareButton
 } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs/blocks';
-import { boolean, select } from '@storybook/addon-knobs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { OptionsButtonWithKnobs } from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
@@ -29,19 +29,6 @@ const ControlBarLayoutExampleText = require('!!raw-loader!./snippets/ControlBarL
 const CustomButtonsExampleText = require('!!raw-loader!./snippets/CustomButtons.snippet.tsx').default;
 const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/CustomControlBarStyles.snippet.tsx').default;
 const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
-
-const CONTROL_BAR_LAYOUTS = [
-  'horizontal',
-  'vertical',
-  'dockedTop',
-  'dockedBottom',
-  'dockedLeft',
-  'dockedRight',
-  'floatingTop',
-  'floatingBottom',
-  'floatingLeft',
-  'floatingRight'
-] as const;
 
 const mockParticipants: CallParticipant[] = [
   {
@@ -161,21 +148,17 @@ const ControlBarStory: (
     globals: { theme }
   }
 ) => JSX.Element = (args, { globals: { theme } }) => {
-  const layout = select('Layout', CONTROL_BAR_LAYOUTS, 'floatingBottom');
-  const toggleButtons = boolean('Toggle Buttons', false);
-  const showLabels = boolean('Show Labels', false);
-
   // This is code to set the color of the background div to show contrast to the control bar based on the theme like shown in the Figma design.
   let background = '#f8f8f8';
   if (theme === 'Dark') {
-    if (layout.startsWith('floating')) {
+    if (args.layout.startsWith('floating')) {
       background = '#252423';
     } else {
       background = '#161514';
     }
   }
 
-  const onMuteAll = () => {
+  const onMuteAll = (): void => {
     // your implementation to mute all participants
   };
 
@@ -190,18 +173,18 @@ const ControlBarStory: (
         background: background
       }}
     >
-      <ControlBarComponent layout={layout}>
-        <CameraButton showLabel={showLabels} checked={toggleButtons} />
-        <MicrophoneButton showLabel={showLabels} checked={toggleButtons} />
-        <ScreenShareButton showLabel={showLabels} checked={toggleButtons} />
+      <ControlBarComponent layout={args.layout}>
+        <CameraButton showLabel={args.showLabel} checked={args.checked} />
+        <MicrophoneButton showLabel={args.showLabel} checked={args.checked} />
+        <ScreenShareButton showLabel={args.showLabel} checked={args.checked} />
         <ParticipantsButton
-          showLabel={showLabels}
+          showLabel={args.showLabels}
           participantListProps={mockParticipantsProps}
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />
-        <OptionsButtonWithKnobs showLabel={showLabels} />
-        <EndCallButton showLabel={showLabels} />
+        <OptionsButtonWithKnobs {...args} />
+        <EndCallButton showLabel={args.showLabel} />
       </ControlBarComponent>
     </div>
   );
@@ -213,6 +196,18 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar`,
   title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
   component: ControlBarComponent,
+  argTypes: {
+    layout: controlsToAdd.controlBarLayout,
+    checked: controlsToAdd.checked,
+    showLabel: controlsToAdd.showLabel,
+    // Initializing and hiding some Options controls
+    cameras: controlsToAdd.cameras,
+    microphones: controlsToAdd.microphones,
+    speakers: controlsToAdd.speakers,
+    // Hiding auto-generated controls
+    children: hiddenControl,
+    styles: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

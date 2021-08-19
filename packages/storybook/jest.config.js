@@ -26,6 +26,9 @@ module.exports = {
     'calling-stateful-client': '<rootDir>/../calling-stateful-client/src/index.ts',
     'calling-component-bindings': '<rootDir>/../calling-component-bindings/src/index.ts',
     'acs-ui-common': '<rootDir>/../acs-ui-common/src/index.ts',
+    // TOC in storybook still import from '@storybook/addon-docs/blocks'
+    // This ends up with an import issue, so temporarily fixing it here
+    '@storybook/addon-docs/blocks': '@storybook/addon-docs',
     // Jest is unable to perform the raw load of snippet files, instead stub out these imports.
     // More information: https://stackoverflow.com/questions/63226101/handle-webpack-loader-syntax-with-jest-testing-exclamation-raw-loader
     '^!!raw-loader!.*': '<rootDir>/jest/snippetStub.txt'
@@ -36,6 +39,9 @@ module.exports = {
 
   // A list of paths to directories that Jest should use to search for files in
   roots: ['stories', '.storybook'],
+
+  // Setup code to run after the environment has been setup. This runs before each test file in the suite.
+  setupFilesAfterEnv: ['../../common/config/jest/jestSetup.js'],
 
   // A map from regular expressions to paths to transformers
   transform: {
