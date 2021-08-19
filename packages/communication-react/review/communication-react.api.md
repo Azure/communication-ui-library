@@ -1323,28 +1323,24 @@ export type ParticipantsAddedListener = (event: {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends ControlBarButtonProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
     callInvitationURL?: string;
     onMuteAll?: () => void;
-    participantListProps: ParticipantListProps;
+    onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStylesProps;
 }
 
 // @public (undocumented)
 export const participantsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    participantListProps: {
-        participants: CallParticipant[];
-        myUserId: string;
-    };
+    participants: CallParticipant[];
+    myUserId: string;
 }, (res: {
     participants: CallParticipant[];
     myUserId: string;
 }) => {
-    participantListProps: {
-        participants: CallParticipant[];
-        myUserId: string;
-    };
+    participants: CallParticipant[];
+    myUserId: string;
 }>;
 
 // @public

@@ -2,8 +2,7 @@ import {
   CallParticipant,
   CommunicationParticipant,
   FluentThemeProvider,
-  ParticipantsButton,
-  ParticipantListProps
+  ParticipantsButton
 } from '@azure/communication-react';
 import { Icon, Label, Persona, PersonaSize } from '@fluentui/react';
 import React from 'react';
@@ -62,12 +61,6 @@ const customOnRenderAvatar = (participant: CommunicationParticipant): JSX.Elemen
   return <Persona text={participant.displayName} hidePersonaDetails={true} size={PersonaSize.size32} />;
 };
 
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants,
-  myUserId: 'user1',
-  onRenderAvatar: (participant: CommunicationParticipant) => customOnRenderAvatar(participant)
-};
-
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
 
 const onMuteAll = (): void => {
@@ -90,11 +83,13 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
     <FluentThemeProvider>
       <ParticipantsButton
         showLabel={true}
-        participantListProps={mockParticipantsProps}
+        participants={mockParticipants}
+        myUserId={'user1'}
         callInvitationURL={mockCallLink}
         onMuteAll={onMuteAll}
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
+        onRenderAvatar={(participant: CommunicationParticipant) => customOnRenderAvatar(participant)}
       />
     </FluentThemeProvider>
   );
