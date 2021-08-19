@@ -15,10 +15,11 @@ import {
   Stack,
   mergeStyles,
   IStyle,
+  IRawStyle,
   ContextualMenu,
   DirectionalHint
 } from '@fluentui/react';
-import React, { useRef, useState, useMemo, CSSProperties } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -110,10 +111,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     () => mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu),
     [theme.palette.neutralLighterAlt, styles?.menu]
   );
-  const iconsContainerWidth = useMemo(
-    () => (styles?.iconContainer as CSSProperties)?.width ?? '3.5rem',
-    [styles?.iconContainer]
-  );
+  const iconsContainerWidth = (styles?.iconContainer as IRawStyle)?.width ?? '3.5rem';
 
   const menuButton = useMemo(
     () => (
@@ -147,8 +145,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
       </Stack>
       <Stack
-        horizontalAlign="end"
         horizontal
+        horizontalAlign="end"
         className={mergeStyles(iconContainerStyle, { width: iconsContainerWidth }, styles?.iconContainer)}
       >
         {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden)
