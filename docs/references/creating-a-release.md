@@ -45,7 +45,7 @@ You are now ready to publish the package!
 
     ![Screenshot highlighting reuired approval before publishing npm package](../images/npm-publish-required-approval.png)
 
-1. Ensure the action completes successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
+1. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
 1. Complete the post-release verification steps in [Release Checklist](../release-checklist.md).
 1. (If this is a latest release) Complete the PR to merge the release branch back into `main`.
 1. (If this is a latest release) Deploy the new version of storybook using the "Release branch - Publish Storybook" GitHub action.
