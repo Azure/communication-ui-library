@@ -63,6 +63,8 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): Message<'syst
         createdOn: message.createdOn,
         participants:
           message.content?.participants
+            // TODO: In our moderator logic, we use undefined name as our displayName for moderator, which should be filtered out
+            // Once we have a better solution to identify the moderator, remove this line
             ?.filter((participant) => participant.displayName && participant.displayName !== '')
             .map(
               (participant): CommunicationParticipant => ({
