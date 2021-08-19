@@ -18,12 +18,15 @@ A release branch is created for each new version and beta release we do (alpha v
 
 1. Trigger the "Release branch - Create" GitHub action
     Enter the branch or tag you are looking to create a release off. This will usually be an alpha tag or the main branch.
+
+    https://user-images.githubusercontent.com/2684369/130101098-b356b16d-47a7-416b-af84-a27f7e4dc891.mp4
+
 1. The triggered GitHub action will bump the package versions, generate the packlet changelogs and put up a PR up into main.
 1. Double check the package versions are as expected.
 1. The PR will auto create a Storybook deployment that can be used for verifications.
 1. Craft the [`@azure/communication-react` changelog](https://github.com/Azure/communication-ui-library/blob/main/packages/communication-react/CHANGELOG.md).
     * This should be done as a Pull Request into the release branch.
-    * To create the changelist grab changes from the packlets' changelogs and prune the changelog lines as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
+    * To create the changelist grab changes from the packlets' changelogs and prune the changelog lines as necessary; ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
     * Example changelog PR: <https://github.com/Azure/communication-ui-library/pull/701>
 1. Ensure the "Before Release" steps of the [release checklist](../references/release-checklist.md) are completed.
 1. Run the "Publish npm packages" GitHub action _off the release branch_.
