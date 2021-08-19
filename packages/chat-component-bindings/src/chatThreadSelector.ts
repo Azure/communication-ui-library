@@ -62,12 +62,14 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): Message<'syst
       payload: {
         createdOn: message.createdOn,
         participants:
-          message.content?.participants?.map(
-            (participant): CommunicationParticipant => ({
-              userId: toFlatCommunicationIdentifier(participant.id),
-              displayName: participant.displayName
-            })
-          ) ?? [],
+          message.content?.participants
+            ?.filter((participant) => participant.displayName && participant.displayName !== '')
+            .map(
+              (participant): CommunicationParticipant => ({
+                userId: toFlatCommunicationIdentifier(participant.id),
+                displayName: participant.displayName
+              })
+            ) ?? [],
         type: systemMessageType,
         messageId: message.id,
         iconName: systemMessageType === 'participantAdded' ? 'PeopleAdd' : 'PeopleBlock'
