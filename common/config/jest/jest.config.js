@@ -28,6 +28,9 @@ module.exports = {
   // The root directory that Jest should scan for tests and modules within
   rootDir: './src',
 
+  // Setup code to run after the environment has been setup. This runs before each test file in the suite.
+  setupFilesAfterEnv: ['../../../common/config/jest/jestSetup.js'],
+
   // The test environment that will be used for testing
   testEnvironment: 'jsdom',
 

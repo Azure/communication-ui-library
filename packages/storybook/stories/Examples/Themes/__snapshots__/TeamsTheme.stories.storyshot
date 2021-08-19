@@ -78,7 +78,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             aria-hidden={true}
                             className="root-span"
-                            primaryFill="currentColor"
                           >
                             <svg
                               className="svg"
@@ -119,7 +118,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             aria-hidden={true}
                             className="root-span"
-                            primaryFill="currentColor"
                           >
                             <svg
                               className="svg"
@@ -160,7 +158,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             aria-hidden={true}
                             className="root-span"
-                            primaryFill="currentColor"
                           >
                             <svg
                               className="svg"
@@ -195,7 +192,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             aria-hidden={true}
                             className="root-span"
-                            primaryFill="currentColor"
                           >
                             <svg
                               className="svg"

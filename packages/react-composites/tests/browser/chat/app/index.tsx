@@ -53,7 +53,16 @@ function App(): JSX.Element {
               : undefined
           }
           onRenderMessage={
-            customDataModel ? () => <text id="custom-data-model-message">Custom Message</text> : undefined
+            customDataModel
+              ? (messageProps) => (
+                  <text
+                    data-ui-status={messageProps.message.type === 'chat' ? messageProps.message.payload.status : ''}
+                    id="custom-data-model-message"
+                  >
+                    Custom Message
+                  </text>
+                )
+              : undefined
           }
           onRenderAvatar={customDataModel ? () => <text id="custom-data-model-avatar">Avatar</text> : undefined}
         />

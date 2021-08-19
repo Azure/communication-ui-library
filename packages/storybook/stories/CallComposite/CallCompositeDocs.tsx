@@ -54,15 +54,25 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Theming</Heading>
       <Description>
         CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
-        theme example](./?path=/story/composites-call--theme-example) to see theming in action or the [overall theming
-        example](./?path=/docs/theming--page) to see how theming works for all the components in this UI library.
+        theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
+        [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
+        UI library.
+      </Description>
+
+      <Heading>Fonts</Heading>
+      <Description>
+        Custom fonts can be applied to the CallComposite using the in built theming mechanism. Look at the
+        [CallComposite themes canvas](./?path=/story/composites-call-themeexample--theme-example) to see custom fonts in
+        action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
+        components in this UI library. Read more about fonts in [Fluent UI
+        Typography](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
       </Description>
 
       <Heading>Joining an existing Call</Heading>
       <Description>
-        The [join existing call](./?path=/story/composites-call--join-existing-call) provides an easy playground to join
-        an existing Azure Communication Services group call or an existing Teams meeting. This is useful if you want to
-        explore the composite with multiple users.
+        The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
+        playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
+        useful if you want to explore the composite with multiple users.
       </Description>
     </>
   );
