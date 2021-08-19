@@ -430,4 +430,82 @@ export interface CallClientState {
    * Completely controlled by the developer.
    */
   userId: CommunicationUserKind;
+  /**
+   * Stores the latest error for each API method.
+   *
+   * See documentation of {@Link CallErrors} for details.
+   */
+  latestErrors: CallErrors;
 }
+
+/**
+ * Errors teed from API calls to the Calling SDK.
+ *
+ * Each property in the object stores the latest error for a particular SDK API method.
+ *
+ * Errors from this object can be cleared using the TODO(implement me) {@Link newClearErrorsModifier}.
+ * Additionally, errors are automatically cleared when:
+ * - The state is cleared.
+ * - Subsequent calls to related API methods succeed.
+ * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
+ */
+export type CallErrors = {
+  [target in CallErrorTarget]: Error;
+};
+
+/**
+ * Error thrown from failed stateful API methods.
+ */
+export class CallError extends Error {
+  /**
+   * The API method target that failed.
+   */
+  public target: CallErrorTarget;
+  /**
+   * Error thrown by the failed SDK method.
+   */
+  public inner: Error;
+
+  constructor(target: CallErrorTarget, inner: Error) {
+    super();
+    this.target = target;
+    this.inner = inner;
+    this.name = 'CallError';
+    this.message = `${this.target}: ${this.inner.message}`;
+  }
+}
+
+/**
+ * String literal type for all permissible keys in {@Link CallErrors}.
+ */
+export type CallErrorTarget =
+  | 'Call.addParticipant'
+  | 'Call.api'
+  | 'Call.hangUp'
+  | 'Call.hold'
+  | 'Call.mute'
+  | 'Call.off'
+  | 'Call.on'
+  | 'Call.removeParticipant'
+  | 'Call.resume'
+  | 'Call.sendDtmf'
+  | 'Call.startScreenSharing'
+  | 'Call.startVideo'
+  | 'Call.stopScreenSharing'
+  | 'Call.stopVideo'
+  | 'Call.unmute'
+  | 'CallAgent.dispose'
+  | 'CallAgent.join'
+  | 'CallAgent.off'
+  | 'CallAgent.on'
+  | 'CallAgent.startCall'
+  | 'CallClient.createCallAgent'
+  | 'CallClient.getDeviceManager'
+  | 'DeviceManager.askDevicePermission'
+  | 'DeviceManager.getCameras'
+  | 'DeviceManager.getMicrophones'
+  | 'DeviceManager.getSpeakers'
+  | 'DeviceManager.off'
+  | 'DeviceManager.on'
+  | 'DeviceManager.selectMicrophone'
+  | 'DeviceManager.selectSpeaker';

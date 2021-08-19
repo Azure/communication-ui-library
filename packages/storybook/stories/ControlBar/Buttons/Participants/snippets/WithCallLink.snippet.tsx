@@ -1,9 +1,4 @@
-import {
-  CallParticipant,
-  FluentThemeProvider,
-  ParticipantsButton,
-  ParticipantListProps
-} from '@azure/communication-react';
+import { CallParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
 import React from 'react';
 
 const mockParticipants: CallParticipant[] = [
@@ -37,17 +32,12 @@ const mockParticipants: CallParticipant[] = [
   }
 ];
 
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants,
-  myUserId: 'user1'
-};
-
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
 
 export const ParticipantsButtonWithCallLinkExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton participantListProps={mockParticipantsProps} callInvitationURL={mockCallLink} />
+      <ParticipantsButton participants={mockParticipants} myUserId={'user1'} callInvitationURL={mockCallLink} />
     </FluentThemeProvider>
   );
 };

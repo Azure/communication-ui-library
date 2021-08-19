@@ -1,9 +1,4 @@
-import {
-  CallParticipant,
-  FluentThemeProvider,
-  ParticipantsButton,
-  ParticipantListProps
-} from '@azure/communication-react';
+import { CallParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
 import { Icon, Label, Persona, PersonaSize } from '@fluentui/react';
 import React from 'react';
 
@@ -61,12 +56,6 @@ const customOnRenderAvatar = (userId?: string, options?): JSX.Element => {
   return <Persona text={options.displayName} hidePersonaDetails={true} size={PersonaSize.size32} />;
 };
 
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants,
-  myUserId: 'user1',
-  onRenderAvatar: (userId?: string, options?) => customOnRenderAvatar(userId, options)
-};
-
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
 
 const onMuteAll = (): void => {
@@ -89,11 +78,13 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
     <FluentThemeProvider>
       <ParticipantsButton
         showLabel={true}
-        participantListProps={mockParticipantsProps}
+        participants={mockParticipants}
+        myUserId={'user1'}
         callInvitationURL={mockCallLink}
         onMuteAll={onMuteAll}
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
+        onRenderAvatar={(userId?, options?) => customOnRenderAvatar(userId, options)}
       />
     </FluentThemeProvider>
   );
