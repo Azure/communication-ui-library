@@ -39,7 +39,7 @@ You are now ready to publish the package!
 1. Run the "Publish npm packages" GitHub action _off the release branch_.
     * Enter the tag also, normally if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`. However while our package has no major version and is in beta only, we use `latest` for the tag and not `next`. So for current beta releases be sure to use the tag `latest`.
 
-    <https://user-images.githubusercontent.com/2684369/130102770-21da0fff-ffe3-42fb-8e80-d8a8761b8067.mp4>
+        <https://user-images.githubusercontent.com/2684369/130102770-21da0fff-ffe3-42fb-8e80-d8a8761b8067.mp4>
 
 1. This deployment must then be approved by one of the repo administrators:
 
