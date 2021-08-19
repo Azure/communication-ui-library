@@ -98,10 +98,15 @@ test.describe('Chat Composite E2E Tests', () => {
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    // Read the message to generate stable result
+    await pages[0].bringToFront();
+    await page.waitForTimeout(500);
+
+    await page.bringToFront();
+    await page.waitForSelector(`[data-ui-status="seen"]`);
     page.reload({ waitUntil: 'networkidle' });
     await waitForCompositeToLoad(page);
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
+    await page.waitForSelector(`[data-ui-status="seen"]`);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
