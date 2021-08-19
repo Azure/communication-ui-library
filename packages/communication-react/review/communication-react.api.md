@@ -1245,7 +1245,8 @@ export const newClearErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateM
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
-export type OnRenderAvatarCallback = (userId?: string, options?: CustomAvatarOptions,
+export type OnRenderAvatarCallback = (
+userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @public
