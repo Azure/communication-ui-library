@@ -20,7 +20,7 @@ import { getCallId, getEndedCall } from './selectors/baseSelectors';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
-import { PlaceholderProps, VideoStreamOptions } from '@internal/react-components';
+import { OnRenderAvatarCallback, VideoStreamOptions } from '@internal/react-components';
 import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
@@ -30,19 +30,21 @@ import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
   showCallControls: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
-  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarCallback;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar } = props;
+  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar, onFetchAvatarPersonaData } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -134,7 +136,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               <>
                 <Stack styles={containerStyles} grow>
                   <Stack.Item id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
-                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
+                    <MediaGallery
+                      {...mediaGalleryProps}
+                      {...mediaGalleryHandlers}
+                      onRenderAvatar={onRenderAvatar}
+                      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+                    />
                   </Stack.Item>
                 </Stack>
                 {isScreenShareOn ? (

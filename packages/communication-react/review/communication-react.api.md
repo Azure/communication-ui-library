@@ -35,15 +35,20 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IPersonaStyleProps } from '@fluentui/react';
+import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
+import { IStyleFunctionOrObject } from '@fluentui/react';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { OutputParametricSelector } from 'reselect';
 import { OutputSelector } from 'reselect';
 import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
+import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
+import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { default as React_2 } from 'react';
@@ -77,6 +82,18 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 
 // @public (undocumented)
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
+
+// @public
+export type AvatarPersonaData = {
+    text?: string;
+    imageUrl?: string;
+    imageInitials?: string;
+    initialsColor?: PersonaInitialsColor | string;
+    initialsTextColor?: string;
+};
+
+// @public
+export type AvatarPersonaDataCallback = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
 
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
@@ -362,8 +379,8 @@ export type CallCompositeProps = {
     rtl?: boolean;
     locale?: Locale;
     callInvitationURL?: string;
-    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     identifiers?: Identifiers;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
 // @public (undocumented)
@@ -581,7 +598,7 @@ export type ChatCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
     locale?: Locale;
-    onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
@@ -805,6 +822,18 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+
+// @public
+export type CustomAvatarOptions = {
+    coinSize?: number;
+    hidePersonaDetails?: boolean;
+    initialsTextColor?: string;
+    noVideoAvailableAriaLabel?: string;
+    presence?: PersonaPresence;
+    size?: PersonaSize;
+    styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
+    text?: string;
+};
 
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
@@ -1144,7 +1173,7 @@ export type MessageThreadProps = {
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
-    onRenderAvatar?: (userId: string) => JSX.Element;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
@@ -1216,6 +1245,11 @@ export const newClearErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateM
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
+export type OnRenderAvatarCallback = (
+userId?: string, options?: CustomAvatarOptions,
+defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
+
+// @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
@@ -1274,11 +1308,12 @@ export interface ParticipantItemProps {
     displayName: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
-    onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
     strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStylesProps;
+    userId?: string;
 }
 
 // @public
@@ -1314,7 +1349,7 @@ export type ParticipantListProps = {
     myUserId?: string;
     excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
-    onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
 };
 
@@ -1378,13 +1413,6 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
-
-// @public (undocumented)
-export interface PlaceholderProps {
-    displayName?: string;
-    noVideoAvailableAriaLabel?: string;
-    userId?: string;
-}
 
 // @public
 export interface RecordingCallFeature {
@@ -1684,7 +1712,7 @@ export interface VideoGalleryProps {
     onDisposeLocalStreamView?: () => void;
     // (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
@@ -1757,14 +1785,17 @@ export interface VideoStreamRendererViewState {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps extends PlaceholderProps {
+export interface VideoTileProps {
     children?: React_2.ReactNode;
+    displayName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
-    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
+    noVideoAvailableAriaLabel?: string;
+    onRenderPlaceholder?: OnRenderAvatarCallback;
     renderElement?: JSX.Element | null;
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
+    userId?: string;
 }
 
 // @public (undocumented)

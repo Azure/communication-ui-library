@@ -279,6 +279,7 @@ export const defaultCallCompositeHiddenControls = {
   onRenderAvatar: hiddenControl,
   identifiers: hiddenControl,
   locale: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl
 };
 
