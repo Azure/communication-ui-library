@@ -34,10 +34,11 @@ export type CustomAvatarOptions = {
 
 /**
  * A custom rendered callback that allows users to customize the rendering of a Persona Component.
- * @param {string} userId - The Azure Communication Services ID of the user whose Persona is being rendered.
- * @param {object} options - Default Persona options such as `size`.
  */
 export type OnRenderAvatarCallback = (
+  /**
+   * An Communication user ID.
+   */
   userId?: string,
   options?: CustomAvatarOptions,
   /**
