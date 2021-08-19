@@ -89,51 +89,60 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
   public get<P extends keyof DeviceManager>(target: DeviceManager, prop: P): any {
     switch (prop) {
       case 'getCameras': {
-        return (): Promise<VideoDeviceInfo[]> => {
+        return this._context.withAsyncErrorTeedToState((): Promise<VideoDeviceInfo[]> => {
           return target.getCameras().then((cameras: VideoDeviceInfo[]) => {
             this._context.setDeviceManagerCameras(dedupeById(cameras));
             return cameras;
           });
-        };
+        }, 'DeviceManager.getCameras');
       }
       case 'getMicrophones': {
-        return (): Promise<AudioDeviceInfo[]> => {
+        return this._context.withAsyncErrorTeedToState((): Promise<AudioDeviceInfo[]> => {
           return target.getMicrophones().then((microphones: AudioDeviceInfo[]) => {
             this._context.setDeviceManagerMicrophones(dedupeById(microphones));
             return microphones;
           });
-        };
+        }, 'DeviceManager.getMicrophones');
       }
       case 'getSpeakers': {
-        return (): Promise<AudioDeviceInfo[]> => {
+        return this._context.withAsyncErrorTeedToState((): Promise<AudioDeviceInfo[]> => {
           return target.getSpeakers().then((speakers: AudioDeviceInfo[]) => {
             this._context.setDeviceManagerSpeakers(dedupeById(speakers));
             return speakers;
           });
-        };
+        }, 'DeviceManager.getSpeakers');
       }
       case 'selectMicrophone': {
-        return (...args: Parameters<DeviceManager['selectMicrophone']>): Promise<void> => {
-          return target.selectMicrophone(...args).then(() => {
-            this._context.setDeviceManagerSelectedMicrophone(target.selectedMicrophone);
-          });
-        };
+        return this._context.withAsyncErrorTeedToState(
+          (...args: Parameters<DeviceManager['selectMicrophone']>): Promise<void> => {
+            return target.selectMicrophone(...args).then(() => {
+              this._context.setDeviceManagerSelectedMicrophone(target.selectedMicrophone);
+            });
+          },
+          'DeviceManager.selectMicrophone'
+        );
       }
       case 'selectSpeaker': {
-        return (...args: Parameters<DeviceManager['selectSpeaker']>): Promise<void> => {
-          return target.selectSpeaker(...args).then(() => {
-            this._context.setDeviceManagerSelectedSpeaker(target.selectedSpeaker);
-          });
-        };
+        return this._context.withAsyncErrorTeedToState(
+          (...args: Parameters<DeviceManager['selectSpeaker']>): Promise<void> => {
+            return target.selectSpeaker(...args).then(() => {
+              this._context.setDeviceManagerSelectedSpeaker(target.selectedSpeaker);
+            });
+          },
+          'DeviceManager.selectSpeaker'
+        );
       }
       case 'askDevicePermission': {
-        return (...args: Parameters<DeviceManager['askDevicePermission']>): Promise<DeviceAccess> => {
-          return target.askDevicePermission(...args).then((deviceAccess: DeviceAccess) => {
-            this._context.setDeviceManagerDeviceAccess(deviceAccess);
-            this.setDeviceManager();
-            return deviceAccess;
-          });
-        };
+        return this._context.withAsyncErrorTeedToState(
+          (...args: Parameters<DeviceManager['askDevicePermission']>): Promise<DeviceAccess> => {
+            return target.askDevicePermission(...args).then((deviceAccess: DeviceAccess) => {
+              this._context.setDeviceManagerDeviceAccess(deviceAccess);
+              this.setDeviceManager();
+              return deviceAccess;
+            });
+          },
+          'DeviceManager.askDevicePermission'
+        );
       }
       default:
         return Reflect.get(target, prop);

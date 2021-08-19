@@ -322,8 +322,12 @@ export class StateChangeListener {
 }
 
 export const createStatefulCallClientWithAgent = (agent: CallAgent): StatefulCallClient => {
+  return createStatefulCallClientWithBaseClient(createMockCallClient(agent));
+};
+
+export const createStatefulCallClientWithBaseClient = (client: CallClient): StatefulCallClient => {
   return createStatefulCallClientWithDeps(
-    createMockCallClient(agent),
+    client,
     new CallContext({ kind: 'communicationUser', communicationUserId: 'defaultUserId' }),
     new InternalCallContext()
   );

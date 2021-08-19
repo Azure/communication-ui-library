@@ -6,6 +6,7 @@ import {
   AudioDeviceType,
   DeviceAccess,
   DeviceManager,
+  PermissionConstraints,
   VideoDeviceInfo,
   VideoDeviceType
 } from '@azure/communication-calling';
@@ -15,10 +16,12 @@ import {
   addMockEmitter,
   createMockCallAgent,
   createMockCallClient,
-  waitWithBreakCondition
+  waitWithBreakCondition,
+  StateChangeListener
 } from './TestUtils';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
 import { InternalCallContext } from './InternalCallContext';
+import { CallError } from './CallClientState';
 
 jest.mock('@azure/communication-calling');
 
@@ -158,6 +161,108 @@ describe('device manager', () => {
     expect(client.getState().deviceManager.deviceAccess).toBeDefined();
     expect(client.getState().deviceManager.deviceAccess?.audio).toBe(true);
     expect(client.getState().deviceManager.deviceAccess?.video).toBe(true);
+  });
+});
+
+describe('errors should be reported correctly from DeviceManger when', () => {
+  test('askDevicePermission fails', async () => {
+    const client = createStatefulCallClientWithDeviceManager(
+      addMockEmitter({
+        async askDevicePermission(): Promise<DeviceAccess> {
+          throw new Error('injected error');
+        }
+      }) as MockDeviceManager
+    );
+
+    const manager = await client.getDeviceManager();
+
+    const listener = new StateChangeListener(client);
+    await expect(manager.askDevicePermission({} as PermissionConstraints)).rejects.toThrowError(
+      new CallError('DeviceManager.askDevicePermission', new Error('injected error'))
+    );
+    expect(listener.onChangeCalledCount).toBe(1);
+    expect(client.getState().latestErrors['DeviceManager.askDevicePermission']).toBeDefined();
+  });
+
+  test('camera related methods fail', async () => {
+    const client = createStatefulCallClientWithDeviceManager(
+      addMockEmitter({
+        async getCameras(): Promise<VideoDeviceInfo[]> {
+          throw new Error('injected error');
+        }
+      }) as MockDeviceManager
+    );
+
+    const manager = await client.getDeviceManager();
+
+    const listener = new StateChangeListener(client);
+    await expect(manager.getCameras()).rejects.toThrowError(
+      new CallError('DeviceManager.getCameras', new Error('injected error'))
+    );
+    expect(listener.onChangeCalledCount).toBe(1);
+    expect(client.getState().latestErrors['DeviceManager.getCameras']).toBeDefined();
+  });
+
+  test('microphone related methods fail', async () => {
+    const client = createStatefulCallClientWithDeviceManager(
+      addMockEmitter({
+        async getMicrophones(): Promise<AudioDeviceInfo[]> {
+          throw new Error('get: injected error');
+        },
+        async selectMicrophone(): Promise<void> {
+          throw new Error('select: injected error');
+        }
+      }) as MockDeviceManager
+    );
+
+    const manager = await client.getDeviceManager();
+    {
+      const listener = new StateChangeListener(client);
+      await expect(manager.getMicrophones()).rejects.toThrowError(
+        new CallError('DeviceManager.getMicrophones', new Error('get: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['DeviceManager.getMicrophones']).toBeDefined();
+    }
+    {
+      const listener = new StateChangeListener(client);
+      await expect(manager.selectMicrophone(microphoneWithName('classic'))).rejects.toThrowError(
+        new CallError('DeviceManager.selectMicrophone', new Error('select: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['DeviceManager.selectMicrophone']).toBeDefined();
+    }
+  });
+
+  test('speaker related methods fail', async () => {
+    const client = createStatefulCallClientWithDeviceManager(
+      addMockEmitter({
+        async getSpeakers(): Promise<AudioDeviceInfo[]> {
+          throw new Error('get: injected error');
+        },
+        async selectSpeaker(): Promise<void> {
+          throw new Error('select: injected error');
+        }
+      }) as MockDeviceManager
+    );
+
+    const manager = await client.getDeviceManager();
+    {
+      const listener = new StateChangeListener(client);
+      await expect(manager.getSpeakers()).rejects.toThrowError(
+        new CallError('DeviceManager.getSpeakers', new Error('get: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['DeviceManager.getSpeakers']).toBeDefined();
+    }
+    {
+      const listener = new StateChangeListener(client);
+      await expect(manager.selectSpeaker(speakerWithName('classic'))).rejects.toThrowError(
+        new CallError('DeviceManager.selectSpeaker', new Error('select: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['DeviceManager.selectSpeaker']).toBeDefined();
+    }
   });
 });
 

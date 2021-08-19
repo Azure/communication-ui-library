@@ -23,16 +23,8 @@ type InferredChatErrorTargets =
   | ChatObjectMethodNames<'ChatClient', ChatClient>
   | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-export type ChatObjectMethodNames<TName extends string, T> = {
-  [K in keyof T]: `${TName}.${ChatMethodName<T, K>}`;
-}[keyof T];
+type ChatObjectMethodNames<TName extends string, T> = {
+  [K in keyof T & string]: `${TName}.${ChatMethodName<T, K>}`;
+}[keyof T & string];
 
-/**
- * Helper type to build a string literal type containing methods of an object.
- */
-// eslint complains on all uses of `Function`. Using it as a type constraint is legitimate.
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type ChatMethodName<T, K extends keyof T> = T[K] extends Function ? (K extends string ? K : never) : never;
+type ChatMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;

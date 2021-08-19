@@ -345,6 +345,7 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     incomingCallsEnded: IncomingCallState[];
+    latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
 
@@ -369,6 +370,21 @@ export type CallCompositeProps = {
 export type CallEndedListener = (event: {
     callId: string;
 }) => void;
+
+// @public
+export class CallError extends Error {
+    constructor(target: CallErrorTarget, inner: Error);
+    inner: Error;
+    target: CallErrorTarget;
+}
+
+// @public
+export type CallErrors = {
+    [target in CallErrorTarget]: Error;
+};
+
+// @public
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
