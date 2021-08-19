@@ -142,18 +142,18 @@ class ProxyCallAgent implements ProxyHandler<CallAgent> {
   public get<P extends keyof CallAgent>(target: CallAgent, prop: P): any {
     switch (prop) {
       case 'startCall': {
-        return (...args: Parameters<CallAgent['startCall']>): Call => {
+        return this._context.withErrorTeedToState((...args: Parameters<CallAgent['startCall']>): Call => {
           const call = target.startCall(...args);
           this.addCall(call);
           return this.getOrCreateDeclarativeCall(call);
-        };
+        }, 'CallAgent.startCall');
       }
       case 'join': {
-        return (...args: Parameters<CallAgent['join']>): Call => {
+        return this._context.withErrorTeedToState((...args: Parameters<CallAgent['join']>): Call => {
           const call = target.join(...args);
           this.addCall(call);
           return this.getOrCreateDeclarativeCall(call);
-        };
+        }, 'CallAgent.join');
       }
       case 'calls': {
         return Array.from(this._declarativeCalls.values());

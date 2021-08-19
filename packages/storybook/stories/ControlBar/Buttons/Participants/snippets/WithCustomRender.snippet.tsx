@@ -1,10 +1,4 @@
-import {
-  CallParticipant,
-  CommunicationParticipant,
-  FluentThemeProvider,
-  ParticipantsButton,
-  ParticipantListProps
-} from '@azure/communication-react';
+import { CallParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
 import { Icon, Label, Persona, PersonaSize } from '@fluentui/react';
 import React from 'react';
 
@@ -39,11 +33,11 @@ const mockParticipants: CallParticipant[] = [
   }
 ];
 
-const customOnRenderAvatar = (participant: CommunicationParticipant): JSX.Element => {
-  if (participant.userId === 'user2') {
+const customOnRenderAvatar = (userId?: string, options?): JSX.Element => {
+  if (userId === 'user2') {
     return (
       <img
-        key={`avatar${participant.userId}`}
+        key={`avatar${userId}`}
         src="https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif"
         style={{
           borderRadius: '32px',
@@ -59,13 +53,7 @@ const customOnRenderAvatar = (participant: CommunicationParticipant): JSX.Elemen
     );
   }
 
-  return <Persona text={participant.displayName} hidePersonaDetails={true} size={PersonaSize.size32} />;
-};
-
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants,
-  myUserId: 'user1',
-  onRenderAvatar: (participant: CommunicationParticipant) => customOnRenderAvatar(participant)
+  return <Persona text={options.displayName} hidePersonaDetails={true} size={PersonaSize.size32} />;
 };
 
 const mockCallLink = 'URL to invite new participants to the current call (https://...)';
@@ -90,11 +78,13 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
     <FluentThemeProvider>
       <ParticipantsButton
         showLabel={true}
-        participantListProps={mockParticipantsProps}
+        participants={mockParticipants}
+        myUserId={'user1'}
         callInvitationURL={mockCallLink}
         onMuteAll={onMuteAll}
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
+        onRenderAvatar={(userId?, options?) => customOnRenderAvatar(userId, options)}
       />
     </FluentThemeProvider>
   );

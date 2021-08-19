@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Title, Description, Heading, Source } from '@storybook/addon-docs';
+import { Description, Heading, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
+const customDataModelExampleContainerText =
+  require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 const cssSnippet = `
@@ -54,8 +56,23 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Theming</Heading>
       <Description>
         CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
-        theme example](./?path=/story/composites-call--theme-example) to see theming in action or the [overall theming
-        example](./?path=/docs/theming--page) to see how theming works for all the components in this UI library.
+        theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
+        [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
+        UI library.
+      </Description>
+
+      <Heading>Custom Data Model</Heading>
+      <Description>
+        It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
+        then use the Azure Communication Services identity service to create corresponding authentication tokens for
+        their users. The ChatComposite allows developers to easily inject custom data associated with these user
+        identities. Look at the [example canvas](./?path=/story/composites-calling--custom-data-model-example) to see
+        how the initials displayed for users can be provided by Contoso.
+      </Description>
+      <Source code={customDataModelExampleContainerText} />
+      <Description>
+        See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
+        custom data model can be injected for all the components in this UI library.
       </Description>
 
       <Heading>Fonts</Heading>
@@ -69,9 +86,9 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Joining an existing Call</Heading>
       <Description>
-        The [join existing call](./?path=/story/composites-call--join-existing-call) provides an easy playground to join
-        an existing Azure Communication Services group call or an existing Teams meeting. This is useful if you want to
-        explore the composite with multiple users.
+        The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
+        playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
+        useful if you want to explore the composite with multiple users.
       </Description>
     </>
   );

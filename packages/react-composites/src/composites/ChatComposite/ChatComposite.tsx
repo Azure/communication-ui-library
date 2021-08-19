@@ -16,6 +16,7 @@ import {
   Identifiers,
   Locale
 } from '@internal/react-components';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 export type ChatCompositeProps = {
   adapter: ChatAdapter;
@@ -37,7 +38,10 @@ export type ChatCompositeProps = {
    * @defaultValue English (US)
    */
   locale?: Locale;
-  onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
+  /**
+   * A callback function that can be used to provide custom data to an Avatar.
+   */
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   options?: ChatOptions;
@@ -77,7 +81,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     locale,
     options,
     identifiers,
-    onRenderAvatar,
+    onFetchAvatarPersonaData,
     onRenderTypingIndicator,
     onRenderMessage
   } = props;
@@ -91,7 +95,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             showErrorBar={options?.showErrorBar}
             showParticipantPane={options?.showParticipantPane}
             showTopic={options?.showTopic}
-            onRenderAvatar={onRenderAvatar}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
           />

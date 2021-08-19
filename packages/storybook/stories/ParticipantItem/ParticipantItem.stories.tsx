@@ -121,7 +121,8 @@ export default {
     onRenderIcon: hiddenControl,
     presence: hiddenControl,
     styles: hiddenControl,
-    strings: hiddenControl
+    strings: hiddenControl,
+    userId: hiddenControl
   },
   parameters: {
     docs: {

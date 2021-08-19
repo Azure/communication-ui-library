@@ -1,9 +1,4 @@
-import {
-  CallParticipant,
-  FluentThemeProvider,
-  ParticipantsButton,
-  ParticipantListProps
-} from '@azure/communication-react';
+import { CallParticipant, FluentThemeProvider, ParticipantsButton } from '@azure/communication-react';
 import React from 'react';
 
 const mockParticipants: CallParticipant[] = [
@@ -37,14 +32,10 @@ const mockParticipants: CallParticipant[] = [
   }
 ];
 
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants
-};
-
 export const ParticipantsButtonWithLabelExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton showLabel={true} participantListProps={mockParticipantsProps} />
+      <ParticipantsButton showLabel={true} participants={mockParticipants} />
     </FluentThemeProvider>
   );
 };

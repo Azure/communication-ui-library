@@ -20,7 +20,7 @@ import {
   DirectionalHint
 } from '@fluentui/react';
 import React, { useRef, useState, useMemo } from 'react';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStylesProps, OnRenderAvatarCallback } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { MoreHorizontal20Filled, MoreHorizontal20Regular } from '@fluentui/react-icons';
@@ -50,12 +50,14 @@ export interface ParticipantItemStrings {
  * Props for ParticipantItem component
  */
 export interface ParticipantItemProps {
+  /** Unique User ID of the participant. This `userId` is available in the `onRenderAvatar` callback function */
+  userId?: string;
   /** Name of participant. */
   displayName: string;
   /** Optional indicator to show participant is the user. */
   me?: boolean;
   /** Optional callback returning a JSX element to override avatar. */
-  onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
+  onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional array of IContextualMenuItem for contextual menu. */
   menuItems?: IContextualMenuItem[];
   /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem. Intended for adding icons. */
@@ -81,7 +83,7 @@ export interface ParticipantItemProps {
  * displayName and status as well as optional icons and context menu.
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me } = props;
+  const { userId, displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuButtonHovered, setMenuButtonHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
@@ -92,15 +94,17 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const isMeText = props.strings?.isMeText ?? localeStrings.isMeText;
   const menuTitle = props.strings?.menuTitle ?? localeStrings.menuTitle;
 
-  const persona = (
-    <Persona
-      text={displayName}
-      size={PersonaSize.size32}
-      presence={presence}
-      onRenderPersonaCoin={onRenderAvatar ? () => onRenderAvatar(props) : undefined}
-      className={mergeStyles(styles?.avatar)}
-      initialsTextColor="white"
-    />
+  const avatarOptions = {
+    text: displayName,
+    size: PersonaSize.size32,
+    presence: presence,
+    initialsTextColor: 'white'
+  };
+
+  const avatar = onRenderAvatar ? (
+    onRenderAvatar(userId ?? '', avatarOptions)
+  ) : (
+    <Persona className={mergeStyles(styles?.avatar)} {...avatarOptions} />
   );
 
   const meTextStyle = useMemo(
@@ -141,7 +145,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseLeave={() => setItemHovered(false)}
     >
       <Stack horizontal className={mergeStyles({ width: `calc(100% - ${iconsContainerWidth})`, alignItems: 'center' })}>
-        {persona}
+        {avatar}
         {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
       </Stack>
       <Stack
