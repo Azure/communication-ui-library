@@ -27,7 +27,7 @@ import {
   SystemMessage,
   ChatMessagePayload,
   CommunicationParticipant,
-  OnRenderAvatarType
+  OnRenderAvatarCallback
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -317,7 +317,7 @@ const memoizeAllMessages = memoizeFnAll(
     message: ChatMessage | SystemMessage | CustomMessage,
     showMessageDate: boolean,
     showMessageStatus: boolean,
-    onRenderAvatar: OnRenderAvatarType | undefined,
+    onRenderAvatar: OnRenderAvatarCallback | undefined,
     styles: MessageThreadStylesProps | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
@@ -478,7 +478,7 @@ export type MessageThreadProps = {
    *
    * @param userId - user Id
    */
-  onRenderAvatar?: OnRenderAvatarType;
+  onRenderAvatar?: OnRenderAvatarCallback;
   /**
    * Optional callback to override render of the button for jumping to the new message.
    *

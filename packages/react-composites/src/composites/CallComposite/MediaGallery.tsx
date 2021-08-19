@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useMemo, useState, useEffect } from 'react';
-import { VideoGallery, VideoStreamOptions, OnRenderAvatarType } from '@internal/react-components';
+import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
@@ -30,7 +30,7 @@ export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
-  onRenderAvatar?: OnRenderAvatarType;
+  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 

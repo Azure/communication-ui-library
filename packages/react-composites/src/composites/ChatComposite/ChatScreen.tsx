@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   CommunicationParticipant,
   DefaultMessageRendererType,
@@ -34,7 +34,6 @@ export type ChatScreenProps = {
   showParticipantPane?: boolean;
   showTopic?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
@@ -58,6 +57,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
+  const onRenderAvatarCallback = useCallback(
+    (userId, options) => {
+      return <AvatarPersona userId={userId} {...options} dataProvider={onFetchAvatarPersonaData} />;
+    },
+    [onFetchAvatarPersonaData]
+  );
+
   return (
     <Stack className={chatContainer} grow>
       {!!showTopic && <ChatHeader {...headerProps} />}
@@ -66,9 +72,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           {props.showErrorBar ? <ErrorBar {...errorBarProps} /> : <></>}
           <MessageThread
             {...messageThreadProps}
-            onRenderAvatar={(userId, options) => (
-              <AvatarPersona userId={userId} {...options} dataProvider={onFetchAvatarPersonaData} />
-            )}
+            onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
           />

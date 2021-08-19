@@ -1,13 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { usePropsFor, SendBox, TypingIndicator, MessageThread, OnRenderAvatarType } from '@azure/communication-react';
+import {
+  usePropsFor,
+  SendBox,
+  TypingIndicator,
+  MessageThread,
+  OnRenderAvatarCallback
+} from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { chatAreaContainerStyle, sendBoxParentStyle } from './styles/ChatArea.styles';
 
 export interface ChatAreaProps {
-  onRenderAvatar?: OnRenderAvatarType;
+  onRenderAvatar?: OnRenderAvatarCallback;
 }
 
 export const ChatArea = (props: ChatAreaProps): JSX.Element => {

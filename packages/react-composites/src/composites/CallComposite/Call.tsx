@@ -8,7 +8,7 @@ import { Error } from './Error';
 import { Theme, PartialTheme } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
-import { IdentifierProvider, Identifiers, OnRenderAvatarType } from '@internal/react-components';
+import { IdentifierProvider, Identifiers, OnRenderAvatarCallback } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { FluentThemeProvider, LocalizationProvider, Locale } from '@internal/react-components';
@@ -44,7 +44,7 @@ export type CallCompositeProps = {
 
 type MainScreenProps = {
   showCallControls: boolean;
-  onRenderAvatar?: OnRenderAvatarType;
+  onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };

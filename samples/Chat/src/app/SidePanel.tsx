@@ -9,7 +9,7 @@ import {
   useChatThreadClient,
   usePropsFor,
   ParticipantList,
-  OnRenderAvatarType
+  OnRenderAvatarCallback
 } from '@azure/communication-react';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
 
@@ -22,7 +22,7 @@ export enum SidePanelTypes {
 export interface SelectedPaneProps {
   selectedPane: string;
   setSelectedPane: Dispatch<SidePanelTypes>;
-  onRenderAvatar?: OnRenderAvatarType;
+  onRenderAvatar?: OnRenderAvatarCallback;
 }
 
 export const SidePanel = (props: SelectedPaneProps): JSX.Element => {

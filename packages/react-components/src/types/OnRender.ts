@@ -8,33 +8,41 @@ import {
   PersonaPresence,
   PersonaSize
 } from '@fluentui/react';
-import { PlaceholderProps } from '../components/VideoTile';
+
+/**
+ * Options that can be injected into the `onRender` function for customizing an
+ * Avatar (`Persona`) component.
+ */
+export type CustomAvatarOptions = {
+  /** Persona coin size in pixels  */
+  coinSize?: number;
+  /** Only show Coin and Initials  */
+  hidePersonaDetails?: boolean;
+  /** Text color of initials inside the coin  */
+  initialsTextColor?: string;
+  /** Optional property to set the aria label of the video tile if there is no available stream. */
+  noVideoAvailableAriaLabel?: string;
+  /** User status  */
+  presence?: PersonaPresence;
+  /** Preset Persona Size number  */
+  size?: PersonaSize;
+  /** Custom style for the Avatar  */
+  styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
+  /** Display name to be used in Persona  */
+  text?: string;
+};
 
 /**
  * A custom rendered callback that allows users to customize the rendering of a Persona Component.
  * @param {string} userId - The Azure Communication Services ID of the user whose Persona is being rendered.
  * @param {object} options - Default Persona options such as `size`.
  */
-export type OnRenderAvatarType = (
+export type OnRenderAvatarCallback = (
   userId?: string,
-  options?: {
-    /** Only show Coin and Initials  */
-    hidePersonaDetails?: boolean;
-    /** Text color of initials inside the coin  */
-    initialsTextColor?: string;
-    /** User status  */
-    presence?: PersonaPresence;
-    /** Preset Persona Size number  */
-    size?: PersonaSize;
-    /** Persona coin size in pixels  */
-    coinSize?: number;
-    /** Display name to be used in Persona  */
-    text?: string;
-    styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
-  },
+  options?: CustomAvatarOptions,
   /**
    * A default `onRender` component that can be used to render the default avatar.
    * Pass the `options` to the `onRender` component for default rendering.
    */
-  defaultOnRender?: (props: PlaceholderProps) => JSX.Element
+  defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
 ) => JSX.Element;

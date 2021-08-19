@@ -30,5 +30,6 @@ export type {
   VideoGalleryStream,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
-  OnRenderAvatarType
+  OnRenderAvatarCallback,
+  CustomAvatarOptions
 } from './types';

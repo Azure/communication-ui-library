@@ -144,6 +144,18 @@ export interface ControlBarProps {
     styles?: BaseCustomStylesProps;
 }
 
+// @public
+export type CustomAvatarOptions = {
+    coinSize?: number;
+    hidePersonaDetails?: boolean;
+    initialsTextColor?: string;
+    noVideoAvailableAriaLabel?: string;
+    presence?: PersonaPresence;
+    size?: PersonaSize;
+    styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
+    text?: string;
+};
+
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
@@ -337,7 +349,7 @@ export type MessageThreadProps = {
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
-    onRenderAvatar?: OnRenderAvatarType;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
@@ -397,16 +409,8 @@ export const namedLocales: Record<string, {
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
-export type OnRenderAvatarType = (userId?: string, options?: {
-    hidePersonaDetails?: boolean;
-    initialsTextColor?: string;
-    presence?: PersonaPresence;
-    size?: PersonaSize;
-    coinSize?: number;
-    text?: string;
-    styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
-},
-defaultOnRender?: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+export type OnRenderAvatarCallback = (userId?: string, options?: CustomAvatarOptions,
+defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -450,7 +454,7 @@ export interface ParticipantItemProps {
     displayName: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
-    onRenderAvatar?: OnRenderAvatarType;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
     strings?: Partial<ParticipantItemStrings>;
@@ -481,7 +485,7 @@ export type ParticipantListProps = {
     myUserId?: string;
     excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
-    onRenderAvatar?: OnRenderAvatarType;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
 };
 
@@ -509,16 +513,6 @@ export interface ParticipantsButtonStrings {
 // @public
 export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
     participantListContainerStyle?: IStyle;
-}
-
-// @public (undocumented)
-export interface PlaceholderProps {
-    coinSize?: number;
-    hidePersonaDetails?: boolean;
-    noVideoAvailableAriaLabel?: string;
-    styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
-    text?: string;
-    userId?: string;
 }
 
 // @public
@@ -658,7 +652,7 @@ export interface VideoGalleryProps {
     onDisposeLocalStreamView?: () => void;
     // (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    onRenderAvatar?: OnRenderAvatarType;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
@@ -697,7 +691,7 @@ export interface VideoTileProps {
     isMirrored?: boolean;
     isMuted?: boolean;
     noVideoAvailableAriaLabel?: string;
-    onRenderPlaceholder?: OnRenderAvatarType;
+    onRenderPlaceholder?: OnRenderAvatarCallback;
     renderElement?: JSX.Element | null;
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;

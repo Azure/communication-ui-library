@@ -14,7 +14,7 @@ import {
   DirectionalHint
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
-import { BaseCustomStylesProps, OnRenderAvatarType } from '../types';
+import { BaseCustomStylesProps, OnRenderAvatarCallback } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { MoreHorizontal20Filled, MoreHorizontal20Regular } from '@fluentui/react-icons';
@@ -51,7 +51,7 @@ export interface ParticipantItemProps {
   /** Optional indicator to show participant is the user. */
   me?: boolean;
   /** Optional callback returning a JSX element to override avatar. */
-  onRenderAvatar?: OnRenderAvatarType;
+  onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional array of IContextualMenuItem for contextual menu. */
   menuItems?: IContextualMenuItem[];
   /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem. Intended for adding icons. */
@@ -95,7 +95,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     initialsTextColor: 'white'
   };
 
-  const Avatar = onRenderAvatar ? (
+  const avatar = onRenderAvatar ? (
     onRenderAvatar(userId ?? '', avatarOptions)
   ) : (
     <Persona className={mergeStyles(styles?.avatar)} {...avatarOptions} />
@@ -117,7 +117,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
     >
-      {Avatar}
+      {avatar}
       {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
       {onRenderIcon && (
         <Stack horizontal={true} className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>

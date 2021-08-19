@@ -1,20 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  DefaultPalette as palette,
-  IPersonaStyleProps,
-  IPersonaStyles,
-  IStyle,
-  IStyleFunctionOrObject,
-  mergeStyles,
-  Persona,
-  Stack,
-  Text
-} from '@fluentui/react';
+import { DefaultPalette as palette, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { MicOff16Filled, MicOn16Filled } from '@fluentui/react-icons';
 import { Ref } from '@fluentui/react-northstar';
-import { MicOn16Filled, MicOff16Filled } from '@fluentui/react-icons';
 import React, { useLayoutEffect, useRef, useState } from 'react';
+import { useTheme } from '../theming';
+import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -24,8 +16,6 @@ import {
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
-import { BaseCustomStylesProps, OnRenderAvatarType } from '../types';
-import { useTheme } from '../theming';
 
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
   /** Styles for video container. */
@@ -57,7 +47,7 @@ export interface VideoTileProps {
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
-  onRenderPlaceholder?: OnRenderAvatarType;
+  onRenderPlaceholder?: OnRenderAvatarCallback;
   /**
    * Whether to display a mute icon beside the user's display name.
    */
@@ -74,25 +64,10 @@ export interface VideoTileProps {
   noVideoAvailableAriaLabel?: string;
 }
 
-export interface PlaceholderProps {
-  /** user id for the VideoTile placeholder. */
-  userId?: string;
-  /** Optional participant display name for the VideoTile default placeholder. */
-  text?: string;
-  /** Optional property to set the aria label of the video tile if there is no available stream. */
-  noVideoAvailableAriaLabel?: string;
-  /** Custom persona coin size in pixels  */
-  coinSize?: number;
-  /** Custom Styles `IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>`  */
-  styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
-  /** Will only show the Persona coin and initials inside if set to `true`  */
-  hidePersonaDetails?: boolean;
-}
-
 // Coin max size is set to 100px (PersonaSize.size100)
 const personaMaxSize = 200;
 
-const DefaultPlaceholder = (props: PlaceholderProps): JSX.Element => {
+const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   const { text, noVideoAvailableAriaLabel, coinSize, styles, hidePersonaDetails } = props;
 
   return (

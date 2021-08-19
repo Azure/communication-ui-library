@@ -20,7 +20,7 @@ import { getCallId, getEndedCall } from './selectors/baseSelectors';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
-import { OnRenderAvatarType, VideoStreamOptions } from '@internal/react-components';
+import { OnRenderAvatarCallback, VideoStreamOptions } from '@internal/react-components';
 import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
@@ -37,7 +37,7 @@ export interface CallScreenProps {
   showCallControls: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
-  onRenderAvatar?: OnRenderAvatarType;
+  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 
