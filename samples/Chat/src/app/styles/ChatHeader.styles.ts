@@ -28,6 +28,7 @@ export const topicNameLabelStyle = mergeStyles({
   fontSize: '1rem', // 16px
   fontWeight: 600,
   marginRight: '0.125rem',
+  minWidth: '12.5rem',
   textOverflow: 'ellipsis',
   overflowY: 'hidden'
 });
@@ -47,7 +48,6 @@ export const leaveButtonStyle = mergeStyles({
 });
 
 export const greyIconButtonStyle = mergeStyles({
-  color: '#323130',
   marginRight: '0.5rem'
 });
 
@@ -78,7 +78,7 @@ export const pivotItemStyles: Partial<IPivotStyles> = {
     height: 60,
     marginRight: '0.5rem',
     display: 'inline-block',
-    verticalAlign: 'top'
+    verticalAlign: 'middle'
   }
 };
 

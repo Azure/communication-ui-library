@@ -38,7 +38,6 @@ exports[`storybook snapshot tests Storyshots UI Components/ControlBar/Buttons/De
           <span
             aria-hidden={true}
             className="root-span"
-            primaryFill="currentColor"
           >
             <svg
               className="svg"

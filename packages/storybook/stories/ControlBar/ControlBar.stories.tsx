@@ -8,7 +8,6 @@ import {
   EndCallButton,
   MicrophoneButton,
   ParticipantsButton,
-  ParticipantListProps,
   ScreenShareButton
 } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
@@ -60,11 +59,6 @@ const mockParticipants: CallParticipant[] = [
     isScreenSharing: false
   }
 ];
-
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants,
-  myUserId: 'user1'
-};
 
 const importStatement = `
 import { FluentThemeProvider, ControlBar } from '@azure/communication-react';
@@ -179,7 +173,8 @@ const ControlBarStory: (
         <ScreenShareButton showLabel={args.showLabel} checked={args.checked} />
         <ParticipantsButton
           showLabel={args.showLabels}
-          participantListProps={mockParticipantsProps}
+          participants={mockParticipants}
+          myUserId={'user1'}
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />
