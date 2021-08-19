@@ -85,7 +85,7 @@ const memoizeState = memoizeOne(
     deviceManager,
     callAgent: { displayName },
     calls,
-    // TODO: FIXME
+    // TODO: FIXME (should be errors pulled from underlying state (future PR)). Set empty for now so it compiles ;)
     latestErrors: {} as CallErrors
   })
 );
