@@ -2,18 +2,18 @@
 // Licensed under the MIT license.
 
 import { Call, CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
-import { CallErrorTargets } from './CallClientState';
+import { CallErrorTarget } from './CallClientState';
 
 /**
- * Internal type-assertion that explicitly listed {@Link CallErrorTargets} correspond to the underlying base SDK API.
+ * Internal type-assertion that explicitly listed {@link CallErrorTarget} correspond to the underlying base SDK API.
  */
-export const ensureCallErrorTargetsContainsOnlyValidValues = (target: CallErrorTargets): InferredCallErrorTargets =>
+export const ensureCallErrorTargetsContainsOnlyValidValues = (target: CallErrorTarget): InferredCallErrorTargets =>
   target;
 
 /**
- * Internal type-assertion that explicitly listed {@Link CallErrorTargets} correspond to the underlying base SDK API.
+ * Internal type-assertion that explicitly listed {@link CallErrorTarget} correspond to the underlying base SDK API.
  */
-export const ensureCallErrorTargetsContainsAllValidValues = (target: InferredCallErrorTargets): CallErrorTargets =>
+export const ensureCallErrorTargetsContainsAllValidValues = (target: InferredCallErrorTargets): CallErrorTarget =>
   target;
 
 /**

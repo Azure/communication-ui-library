@@ -29,7 +29,7 @@ import {
   TransferRequest,
   Transfer,
   CallErrors,
-  CallErrorTargets,
+  CallErrorTarget,
   CallError
 } from './CallClientState';
 
@@ -658,8 +658,8 @@ export class CallContext {
    */
   public withAsyncErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => Promise<R>,
-    target: CallErrorTargets,
-    clearTargets?: CallErrorTargets[]
+    target: CallErrorTarget,
+    clearTargets?: CallErrorTarget[]
   ): (...args: Args) => Promise<R> {
     return async (...args: Args): Promise<R> => {
       try {
@@ -692,8 +692,8 @@ export class CallContext {
    */
   public withErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => R,
-    target: CallErrorTargets,
-    clearTargets?: CallErrorTargets[]
+    target: CallErrorTarget,
+    clearTargets?: CallErrorTarget[]
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
@@ -713,7 +713,7 @@ export class CallContext {
     };
   }
 
-  private setLatestError(target: CallErrorTargets, error: Error): void {
+  private setLatestError(target: CallErrorTarget, error: Error): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.latestErrors[target] = error;
@@ -721,7 +721,7 @@ export class CallContext {
     );
   }
 
-  public clearError(targets: CallErrorTargets[]): void {
+  public clearError(targets: CallErrorTarget[]): void {
     let changed = false;
     const newState = produce(this._state, (draft: CallClientState) => {
       for (const target of targets) {
