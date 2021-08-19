@@ -29,7 +29,7 @@ import {
   TransferRequest,
   Transfer,
   CallErrors,
-  CallErrorTargets,
+  CallErrorTarget,
   CallError
 } from './CallClientState';
 
@@ -650,20 +650,20 @@ export class CallContext {
    *
    * If the function succeeds, clears associated errors from the state.
    *
-   * @param f Async function to execute.
+   * @param action Async function to execute.
    * @param target The error target to tee error to.
    * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws CallError. Exceptions thrown from `f` are tagged with the failed `target.
    */
   public withAsyncErrorTeedToState<Args extends unknown[], R>(
-    f: (...args: Args) => Promise<R>,
-    target: CallErrorTargets,
-    clearTargets?: CallErrorTargets[]
+    action: (...args: Args) => Promise<R>,
+    target: CallErrorTarget,
+    clearTargets?: CallErrorTarget[]
   ): (...args: Args) => Promise<R> {
     return async (...args: Args): Promise<R> => {
       try {
-        const ret = await f(...args);
+        const response = await action(...args);
 
         if (clearTargets !== undefined) {
           this.clearError(clearTargets);
@@ -671,7 +671,7 @@ export class CallContext {
           this.clearError([target]);
         }
 
-        return ret;
+        return response;
       } catch (error) {
         this.setLatestError(target, error);
         throw new CallError(target, error);
@@ -684,20 +684,20 @@ export class CallContext {
    *
    * If the function succeeds, clears associated errors from the state.
    *
-   * @param f Function to execute.
+   * @param action Function to execute.
    * @param target The error target to tee error to.
    * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws CallError. Exceptions thrown from `f` are tagged with the failed `target.
    */
   public withErrorTeedToState<Args extends unknown[], R>(
-    f: (...args: Args) => R,
-    target: CallErrorTargets,
-    clearTargets?: CallErrorTargets[]
+    action: (...args: Args) => R,
+    target: CallErrorTarget,
+    clearTargets?: CallErrorTarget[]
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
-        const ret = f(...args);
+        const ret = action(...args);
 
         if (clearTargets !== undefined) {
           this.clearError(clearTargets);
@@ -713,7 +713,7 @@ export class CallContext {
     };
   }
 
-  private setLatestError(target: CallErrorTargets, error: Error): void {
+  private setLatestError(target: CallErrorTarget, error: Error): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.latestErrors[target] = error;
@@ -721,7 +721,7 @@ export class CallContext {
     );
   }
 
-  public clearError(targets: CallErrorTargets[]): void {
+  public clearError(targets: CallErrorTarget[]): void {
     let changed = false;
     const newState = produce(this._state, (draft: CallClientState) => {
       for (const target of targets) {

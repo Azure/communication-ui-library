@@ -103,7 +103,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 <span
                   aria-hidden={true}
                   className="root-span"
-                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
