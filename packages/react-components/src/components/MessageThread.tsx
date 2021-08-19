@@ -26,7 +26,8 @@ import {
   CustomMessage,
   SystemMessage,
   ChatMessagePayload,
-  CommunicationParticipant
+  CommunicationParticipant,
+  SystemMessagePayload
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -183,15 +184,42 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
 };
 
 const generateParticipantsStr = (participants: CommunicationParticipant[]): string =>
-  participants.reduce(
-    (previous, current): string => (current.displayName ? `${previous}${current.displayName} ` : previous),
-    ''
-  );
+  participants
+    .map(
+      (participant) =>
+        `${!participant.displayName || participant.displayName === '' ? 'No name' : participant.displayName}`
+    )
+    .join(', ');
 
 export type DefaultMessageRendererType = (props: MessageProps, ids?: { messageTimestamp?: string }) => JSX.Element;
 
-const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+const ParticipantSystemMessageComponent = ({
+  payload,
+  style
+}: {
+  payload: SystemMessagePayload<'participantAdded' | 'participantRemoved'>;
+  style?: ComponentSlotStyle;
+}): JSX.Element => {
   const { strings } = useLocale();
+  const participantsStr = generateParticipantsStr(payload.participants);
+  const messageSuffix =
+    payload.type === 'participantAdded'
+      ? strings.messageThread.participantJoined
+      : strings.messageThread.participantLeft;
+
+  if (participantsStr !== '') {
+    return (
+      <SystemMessageComponent
+        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+        content={`${participantsStr} ${messageSuffix}`}
+        containerStyle={style}
+      />
+    );
+  }
+  return <></>;
+};
+
+const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   if (props.message.type === 'system') {
     const payload = props.message.payload;
     if (payload.type === 'content') {
@@ -203,26 +231,10 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
         />
       );
     }
-    if (payload.type === 'participantAdded') {
-      return (
-        <SystemMessageComponent
-          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-          content={generateParticipantsStr(payload.participants) + strings.messageThread.participantJoined}
-          containerStyle={props?.messageContainerStyle}
-        />
-      );
-    }
-    if (payload.type === 'participantRemoved') {
-      return (
-        <SystemMessageComponent
-          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-          content={generateParticipantsStr(payload.participants) + strings.messageThread.participantLeft}
-          containerStyle={props?.messageContainerStyle}
-        />
-      );
+    if (payload.type === 'participantAdded' || payload.type === 'participantRemoved') {
+      return <ParticipantSystemMessageComponent payload={payload} style={props.messageContainerStyle} />;
     }
   }
-
   return <></>;
 };
 
@@ -295,13 +307,13 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
         author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
         mine={payload.mine}
         timestamp={
-          <text data-ui-id={ids?.messageTimestamp}>
+          <Text data-ui-id={ids?.messageTimestamp}>
             {payload.createdOn
               ? props.showDate
                 ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.strings)
                 : formatTimeForChatMessage(payload.createdOn)
               : undefined}
-          </text>
+          </Text>
         }
       />
     );
