@@ -24,11 +24,11 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
 
   // @TODO
-  // We wait 1 sec here to work around a bug.
+  // We wait 3 sec here to work around a bug.
   // If page[0] sends a message to page[1] as soon as the composite is loaded
   // in the DOM, page[1] doesn't receive the message.
   // Only when page[1] is refreshed is when it will see the message sent by p[1]
-  // By waiting 1 sec before sending a message, page[1] is able to recieve that message.
+  // By waiting 3 sec before sending a message, page[1] is able to recieve that message.
   await page.waitForTimeout(3000);
 };
 
