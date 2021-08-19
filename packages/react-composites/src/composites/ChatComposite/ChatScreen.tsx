@@ -30,7 +30,6 @@ import {
 import { AvatarPersonaDataCallback, AvatarPersona } from '../common/AvatarPersona';
 
 export type ChatScreenProps = {
-  showErrorBar?: boolean;
   showParticipantPane?: boolean;
   showTopic?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -69,7 +68,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       {!!showTopic && <ChatHeader {...headerProps} />}
       <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
-          {props.showErrorBar ? <ErrorBar {...errorBarProps} /> : <></>}
+          <ErrorBar {...errorBarProps} />
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}

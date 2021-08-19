@@ -651,7 +651,6 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 
 // @public
 export type ChatOptions = {
-    showErrorBar?: boolean;
     showParticipantPane?: boolean;
     showTopic?: boolean;
 };
