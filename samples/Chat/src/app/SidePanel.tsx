@@ -9,7 +9,7 @@ import {
   useChatThreadClient,
   usePropsFor,
   ParticipantList,
-  CommunicationParticipant
+  OnRenderAvatarCallback
 } from '@azure/communication-react';
 import { chatSettingsSelector } from './selectors/chatSettingsSelector';
 
@@ -22,7 +22,7 @@ export enum SidePanelTypes {
 export interface SelectedPaneProps {
   selectedPane: string;
   setSelectedPane: Dispatch<SidePanelTypes>;
-  onRenderAvatar?: (userId: string) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarCallback;
 }
 
 export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
@@ -65,12 +65,7 @@ export const SidePanel = (props: SelectedPaneProps): JSX.Element => {
         onRenderFooter={() => <InviteFooter />}
         onClose={() => setSelectedPane(SidePanelTypes.None)}
       >
-        <ParticipantList
-          {...chatParticipantProps}
-          onRenderAvatar={
-            onRenderAvatar ? (participant: CommunicationParticipant) => onRenderAvatar(participant.userId) : undefined
-          }
-        />
+        <ParticipantList {...chatParticipantProps} onRenderAvatar={onRenderAvatar} />
       </SlideOutPanelComponent>
       <SettingsManagementComponent
         {...chatSettingsProps}

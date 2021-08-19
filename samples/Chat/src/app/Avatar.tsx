@@ -37,6 +37,6 @@ const Avatar = (props: AvatarProps): JSX.Element => {
   return <div className={messageAvatarContainerStyle(getBackgroundColor(emoji)?.backgroundColor)}>{emoji}</div>;
 };
 
-export const onRenderAvatar = (userId: string): JSX.Element => {
-  return <Avatar userId={userId} />;
+export const onRenderAvatar = (userId?: string): JSX.Element => {
+  return <Avatar userId={userId ?? ''} />;
 };

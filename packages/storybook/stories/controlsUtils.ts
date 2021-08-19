@@ -168,7 +168,7 @@ export const controlsToAdd = {
   isMuteAllAvailable: {
     control: 'boolean',
     defaultValue: false,
-    name: 'User option to mute all participants is availble'
+    name: 'Mute all participants option'
   },
   isMuted: { control: 'boolean', defaultValue: false, name: 'Is muted' },
   isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
@@ -279,6 +279,7 @@ export const defaultCallCompositeHiddenControls = {
   onRenderAvatar: hiddenControl,
   identifiers: hiddenControl,
   locale: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl
 };
 
