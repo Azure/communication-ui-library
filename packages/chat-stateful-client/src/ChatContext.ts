@@ -438,6 +438,7 @@ export class ChatContext {
       }
     } catch (e) {
       this._state = priorState;
+      throw e;
     } finally {
       this._batchMode = false;
     }
