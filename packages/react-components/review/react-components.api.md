@@ -472,10 +472,10 @@ export type ParticipantListProps = {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends ControlBarButtonProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
     callInvitationURL?: string;
     onMuteAll?: () => void;
-    participantListProps: ParticipantListProps;
+    onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStylesProps;
 }
