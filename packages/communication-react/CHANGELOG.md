@@ -11,6 +11,8 @@ Mon, 16 Aug 2021 21:18:19 GMT
 
 ### Changes
 
+* Add Localization to Composites. Learn more: https://azure.github.io/communication-ui-library/?path=/story/localization--page
+
 * Add remove participant button to the Meeting Composite and Call Composite
 
 * Add applicationID to chat user agent
@@ -33,9 +35,7 @@ Mon, 16 Aug 2021 21:18:19 GMT
 
 * Replace StatefulChatClient.clearErrors() with modifier pattern
 
-* Exposed locale prop to localize composites
-
-* bugfix:
+#### Bug Fixes
   * Fix item alignment and 'Leave' button color in Dark Mode for Chat sample header
   * Show avatar when video is off (remote and local)
   * Fix alignment of Chat bubble with/without receipt
