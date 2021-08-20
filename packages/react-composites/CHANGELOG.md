@@ -1,8 +1,37 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.4)
+
+Mon, 16 Aug 2021 21:18:19 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.0.0-beta.3..@internal/react-composites_v1.0.0-beta.4)
+
+### Changes
+
+- Fix screenshare dialog eating user input across the whole web page ([PR #651](https://github.com/azure/communication-ui-library/pull/651) by 2684369+JamesBurnside@users.noreply.github.com)
+- updated Typescript version to 4.3.5 ([PR #645](https://github.com/azure/communication-ui-library/pull/645) by alcail@microsoft.com)
+- Add remove participant button to the Meeting Composite ([PR #673](https://github.com/azure/communication-ui-library/pull/673) by 2684369+JamesBurnside@users.noreply.github.com)
+- undefined ([PR #599](https://github.com/azure/communication-ui-library/pull/599) by 2684369+JamesBurnside@users.noreply.github.com)
+- Return call from `CallComposite.joinCall` ([PR #644](https://github.com/azure/communication-ui-library/pull/644) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix screenshare not displaying for call attendees ([PR #655](https://github.com/azure/communication-ui-library/pull/655) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix fluent theme provider not being applied to the meeting composite ([PR #666](https://github.com/azure/communication-ui-library/pull/666) by 2684369+JamesBurnside@users.noreply.github.com)
+- Ensure call composite media gallery has a minimum height ([PR #616](https://github.com/azure/communication-ui-library/pull/616) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add meeting composite ([PR #614](https://github.com/azure/communication-ui-library/pull/614) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add remove participant button to Call Composite ([PR #671](https://github.com/azure/communication-ui-library/pull/671) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update createAzureCommunicationCallAdapter constructor to take in a named object instead of seperate args ([PR #625](https://github.com/azure/communication-ui-library/pull/625) by 2684369+JamesBurnside@users.noreply.github.com)
+- Added rtl property to composites ([PR #658](https://github.com/azure/communication-ui-library/pull/658) by miguelgamis@microsoft.com)
+- fix meeting pane overlapping the call control bar ([PR #627](https://github.com/azure/communication-ui-library/pull/627) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix partially composed chat messages being lost when closing and reopening the chat pane in the meeting composite ([PR #662](https://github.com/azure/communication-ui-library/pull/662) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix permission banner styling - allow multiline ([PR #665](https://github.com/azure/communication-ui-library/pull/665) by 2684369+JamesBurnside@users.noreply.github.com)
+- Stop using deleted prop VideoTile.isVideoReady ([PR #646](https://github.com/azure/communication-ui-library/pull/646) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix local video icon + avatar not showing ([PR #664](https://github.com/azure/communication-ui-library/pull/664) by jinan@microsoft.com)
+- Fixing video gallery styling issues during and after screenshare ([PR #649](https://github.com/azure/communication-ui-library/pull/649) by anjulgarg@live.com)
+- bugfix: Show avatar when video is off ([PR #676](https://github.com/azure/communication-ui-library/pull/676) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Exposed locale prop to localize composites. ([PR #595](https://github.com/azure/communication-ui-library/pull/595) by miguelgamis@microsoft.com)
+- Update createAzureCommunicationChatAdapter constructor to take in a named object instead of seperate args ([PR #626](https://github.com/azure/communication-ui-library/pull/626) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.3)
 
