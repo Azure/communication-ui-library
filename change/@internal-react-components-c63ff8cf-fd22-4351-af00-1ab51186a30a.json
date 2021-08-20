@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix button menu flyouts exceeding screen width",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,53 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.4",
+      "version": "1.0.0-beta.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update onParticipantRemove signature to be async",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a7ba52570f82492cde2e3fcf6ba5013057a86889",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix tsdoc comments - rename @Link -> @link",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "fdd49d7dc69ebb9c47cd285c8fdbc5be49080fad",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.3",
+            "author": "github-action-bot@service.microsoft.com",
+            "commit": "e1c16a5e74b8c5f780d29ec88844d515a4c6ea91",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/calling-stateful-client to v1.0.0-beta.4",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "updated Typescript to version 4.3.5",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fixing video gallery styling issues during and after screenshare",
+            "author": "anjulgarg@live.com",
+            "commit": "815ed360449e1d19c2f22cabf34b66266851a39f",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "@internal/calling-component-bindings_v1.0.0-beta.3",
       "version": "1.0.0-beta.3",
