@@ -72,11 +72,7 @@ export type ChatThreadProperties = {
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
-<<<<<<< HEAD
-export const newClearChatErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateModifier;
-=======
-export const newClearErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
->>>>>>> origin/main
+export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {

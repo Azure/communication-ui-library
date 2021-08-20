@@ -703,8 +703,8 @@ export class CallContext {
    */
   public withAsyncErrorTeedToState<Args extends unknown[], R>(
     action: (...args: Args) => Promise<R>,
-    target: CallErrorTargets,
-    clearTargets?: CallErrorTargets[]
+    target: CallErrorTarget,
+    clearTargets?: CallErrorTarget[]
   ): (...args: Args) => Promise<R> {
     return async (...args: Args): Promise<R> => {
       try {
@@ -731,8 +731,8 @@ export class CallContext {
    */
   public withErrorTeedToState<Args extends unknown[], R>(
     action: (...args: Args) => R,
-    target: CallErrorTargets,
-    clearTargets?: CallErrorTargets[]
+    target: CallErrorTarget,
+    clearTargets?: CallErrorTarget[]
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {

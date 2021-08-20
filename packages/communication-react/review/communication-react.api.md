@@ -396,32 +396,18 @@ export type CallEndedListener = (event: {
 
 // @public
 export class CallError extends Error {
-<<<<<<< HEAD
-    constructor(target: CallErrorTargets, inner: Error);
-    inner: Error;
-    target: CallErrorTargets;
-=======
     constructor(target: CallErrorTarget, inner: Error);
     inner: Error;
     target: CallErrorTarget;
->>>>>>> origin/main
 }
 
 // @public
 export type CallErrors = {
-<<<<<<< HEAD
-    [target in CallErrorTargets]: Error;
-};
-
-// @public
-export type CallErrorTargets = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
-=======
     [target in CallErrorTarget]: Error;
 };
 
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
->>>>>>> origin/main
 
 // @public (undocumented)
 export type CallIdChangedListener = (event: {
@@ -1262,14 +1248,10 @@ export const namedLocales: Record<string, {
 }>;
 
 // @public
-export const newClearCallErrorsModifier: (targets: CallErrorTargets[]) => CallStateModifier;
+export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
 
 // @public (undocumented)
-<<<<<<< HEAD
-export const newClearChatErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateModifier;
-=======
-export const newClearErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
->>>>>>> origin/main
+export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
 
 // @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;

@@ -4,7 +4,7 @@
 import { ChatClientState, ChatErrorTarget } from '../ChatClientState';
 import { ChatStateModifier } from '../StatefulChatClient';
 
-export const newClearErrorsModifier = (targets: ChatErrorTarget[]): ChatStateModifier => {
+export const newClearChatErrorsModifier = (targets: ChatErrorTarget[]): ChatStateModifier => {
   return (draft: ChatClientState): void => {
     for (const target of targets) {
       if (draft.latestErrors[target] !== undefined) {
