@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update onParticipantRemove signature to be async",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

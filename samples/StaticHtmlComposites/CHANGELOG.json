@@ -2,6 +2,21 @@
   "name": "sample-static-html-composites",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "sample-static-html-composites_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @azure/communication-react to v1.0.0-beta.4",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a00102ab49a88899db51e26a2b96879c891a9a37",
+            "package": "sample-static-html-composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "sample-static-html-composites_v1.0.0",
       "version": "1.0.0",
