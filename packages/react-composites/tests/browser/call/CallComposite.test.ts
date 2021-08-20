@@ -84,7 +84,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       await page.click(dataUiId('call-composite-participants-button'));
       const buttonCallOut = await page.waitForSelector('.ms-Callout');
       // This will ensure no animation is happening for the callout
-      buttonCallOut.waitForElementState('stable');
+      await buttonCallOut.waitForElementState('stable');
 
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-participants.png`);
     }
