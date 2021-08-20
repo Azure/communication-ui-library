@@ -4,7 +4,7 @@
 import { ListPageSettings } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
-import { ChatErrorTargets } from '../ChatClientState';
+import { ChatErrorTarget } from '../ChatClientState';
 
 type IteratorCreatorFn<T, OptionsType, PageT = T[]> = (options?: OptionsType) => PagedAsyncIterableIterator<T, PageT>;
 
@@ -69,8 +69,8 @@ export const createDecoratedIterator = <ItemType, OptionsType>(
 export const createErrorHandlingIterator = <ItemType, OptionsType>(
   iteratorCreator: IteratorCreatorFn<ItemType, OptionsType>,
   context: ChatContext,
-  target: ChatErrorTargets,
-  clearTargets?: ChatErrorTargets[]
+  target: ChatErrorTarget,
+  clearTargets?: ChatErrorTarget[]
 ): IteratorCreatorFn<ItemType, OptionsType> => {
   return (...args: Parameters<IteratorCreatorFn<ItemType, OptionsType>>): PagedAsyncIterableIterator<ItemType> => {
     const innerIter = iteratorCreator(...args);

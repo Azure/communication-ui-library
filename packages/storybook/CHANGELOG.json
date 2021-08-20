@@ -2,6 +2,35 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/storybook_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @azure/communication-react to v1.0.0-beta.4",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a00102ab49a88899db51e26a2b96879c891a9a37",
+            "package": "@internal/storybook"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump @internal/react-composites to v1.0.0-beta.4",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a00102ab49a88899db51e26a2b96879c891a9a37",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bump @internal/chat-component-bindings to v1.0.0-beta.4",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/storybook"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "@internal/storybook_v0.1.0",
       "version": "0.1.0",

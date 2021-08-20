@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updated Typescript to version 4.3.5",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}
