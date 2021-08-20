@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Video device icon updated in OptionsButton",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

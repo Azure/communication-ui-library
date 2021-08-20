@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix partially composed chat messages being lost when closing and reopening the chat pane in the meeting composite",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
