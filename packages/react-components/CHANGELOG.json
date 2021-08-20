@@ -2,6 +2,143 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/react-components_v1.0.0-beta.4",
+      "version": "1.0.0-beta.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "update to @fluent/react-icons 1.1.137 that has fix for setting primaryFill prop",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "7adf3a37c381b42f0e13664b6a550d45992addc3",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.3",
+            "author": "github-action-bot@service.microsoft.com",
+            "commit": "e1c16a5e74b8c5f780d29ec88844d515a4c6ea91",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Call Automation Tests",
+            "author": "anjulgarg@live.com",
+            "commit": "5c9969858d6480bffcdcf494e7d328511de7f2b2",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix tsdoc comments - rename @Link -> @link",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "fdd49d7dc69ebb9c47cd285c8fdbc5be49080fad",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix DOM property text -> Text",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "54520a6831aedaea4de9ec8648fa2fc54720863e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "fixing Persona size when resizing VideoTile",
+            "author": "alcail@microsoft.com",
+            "commit": "2b03f471ef3db2bccc99f2f1ad527c893dcc5c6e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "fix typo",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a00102ab49a88899db51e26a2b96879c891a9a37",
+            "package": "@internal/react-components"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Fix partially composed chat messages being lost when closing and reopening the chat pane in the meeting composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0ea619719ff20dff41aadce978f5869d0c70cf00",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update to align chat bubble with/without receipt",
+            "author": "jinan@microsoft.com",
+            "commit": "42f9b004548c7ee728a0912c5689d8a30fb02b5c",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Video device icon updated in OptionsButton",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "64d7184d7c8970da615a40f6e6f20694384211fa",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix video gallery local preview position to be relative to the parent",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "6c427b26af88200bb806526b9d7d935a38b80c0b",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix infinite scroll jumpy behavior",
+            "author": "jinan@microsoft.com",
+            "commit": "401b5598eba827f5f2de9ca5ad8ae7880a48658e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "updated Typescript version to 4.3.5",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "FluentThemeProvider style prop overflow set to 'auto'.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "216701bf3497fa089799d78d1d349569c0afeee9",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix button menu flyouts exceeding screen width",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "53a5fb0f0024a92cf902bda79b1552908d60444a",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Delete redundant prop VideoTile.isVideoReady",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27c0ba5c8203cc49ed854e8fc6c7d70abaa9f26c",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix local video icon + avatar not showing",
+            "author": "jinan@microsoft.com",
+            "commit": "ad61949d2a255d7f6a341b388b9438694c712fd4",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "adding padding in sendbox so we don't overlap text with the send message button",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "2649d1b682e8b901986000c10f892544f1c8038d",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Added rtl property to FluentThemeProvider",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a4ce0e53ec681acfbc93229a4676d4777b96c373",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add system message to MessageThread component Add system message for selector props Link system message to participant received event",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fixed RTL responsiveness of TypingIndicator.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "2028094198173953e4479ee5b9a2846c25531821",
+            "package": "@internal/react-components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "@internal/react-components_v1.0.0-beta.3",
       "version": "1.0.0-beta.3",

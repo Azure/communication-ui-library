@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Exposed locale prop to localize composites.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
