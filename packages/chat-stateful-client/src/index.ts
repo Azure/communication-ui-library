@@ -16,6 +16,6 @@ export type {
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,
-  ChatErrorTargets
+  ChatErrorTarget
 } from './ChatClientState';
 export * from './modifiers';
