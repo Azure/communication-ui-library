@@ -2,6 +2,53 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.4",
+      "version": "1.0.0-beta.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Replace StatefulChatClient.clearErrors() with modifier pattern",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "6d2eee00112b2bb935c6d7427fb70983f4614087",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Workaround before we get sequenceId from signal",
+            "author": "jinan@microsoft.com",
+            "commit": "47cba93be33c8862d0383f3b448ea37f32bfd150",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add system message for selector props",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "updated Typescript version to 4.3.5",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.3",
+            "author": "github-action-bot@service.microsoft.com",
+            "commit": "e1c16a5e74b8c5f780d29ec88844d515a4c6ea91",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/chat-stateful-client to v1.0.0-beta.4",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "@internal/chat-component-bindings_v1.0.0-beta.3",
       "version": "1.0.0-beta.3",
