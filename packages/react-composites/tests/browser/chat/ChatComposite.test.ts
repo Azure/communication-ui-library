@@ -127,10 +127,11 @@ test.describe('Chat Composite custom data model', () => {
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
-
+    // Now that we are using a promise based custom avatar data injection, we
+    // need to wait for the avatar to load before we can take a screenshot.
+    await page.waitForTimeout(1000);
     await page.waitForSelector('#custom-data-model-typing-indicator');
     await page.waitForSelector('#custom-data-model-message');
-    await page.waitForSelector('#custom-data-model-avatar');
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
     page.close();
