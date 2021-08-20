@@ -6,6 +6,7 @@ export * from './AzureCommunicationCallAdapter';
 export type {
   CallAdapter,
   CallAdapterClientState,
+  CallAdapterErrors,
   CallAdapterState,
   CallAdapterUiState,
   CallCompositePage,
