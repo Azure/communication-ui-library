@@ -14,7 +14,7 @@ export type {
   CallClientState,
   CallError,
   CallErrors,
-  CallErrorTargets,
+  CallErrorTarget,
   CallState,
   DeviceManagerState,
   IncomingCallState,

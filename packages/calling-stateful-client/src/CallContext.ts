@@ -29,7 +29,7 @@ import {
   TransferRequest,
   Transfer,
   CallErrors,
-  CallErrorTargets,
+  CallErrorTarget,
   CallError
 } from './CallClientState';
 import { CallStateModifier } from './StatefulCallClient';
@@ -695,20 +695,20 @@ export class CallContext {
    *
    * If the function succeeds, clears associated errors from the state.
    *
-   * @param f Async function to execute.
+   * @param action Async function to execute.
    * @param target The error target to tee error to.
    * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws CallError. Exceptions thrown from `f` are tagged with the failed `target.
    */
   public withAsyncErrorTeedToState<Args extends unknown[], R>(
-    f: (...args: Args) => Promise<R>,
+    action: (...args: Args) => Promise<R>,
     target: CallErrorTargets,
     clearTargets?: CallErrorTargets[]
   ): (...args: Args) => Promise<R> {
     return async (...args: Args): Promise<R> => {
       try {
-        const ret = await f(...args);
+        const ret = await action(...args);
         this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
@@ -723,20 +723,20 @@ export class CallContext {
    *
    * If the function succeeds, clears associated errors from the state.
    *
-   * @param f Function to execute.
+   * @param action Function to execute.
    * @param target The error target to tee error to.
    * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws CallError. Exceptions thrown from `f` are tagged with the failed `target.
    */
   public withErrorTeedToState<Args extends unknown[], R>(
-    f: (...args: Args) => R,
+    action: (...args: Args) => R,
     target: CallErrorTargets,
     clearTargets?: CallErrorTargets[]
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
-        const ret = f(...args);
+        const ret = action(...args);
         this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
@@ -746,7 +746,7 @@ export class CallContext {
     };
   }
 
-  private setLatestError(target: CallErrorTargets, error: Error): void {
+  private setLatestError(target: CallErrorTarget, error: Error): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.latestErrors[target] = error;

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatComposite } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
+import { PartialTheme, Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
@@ -36,14 +36,18 @@ const ThemeStory = (args): JSX.Element => {
     fetchToken();
   }, [args.connectionString, args.displayName]);
 
+  const theme: PartialTheme = {
+    ...getControlledTheme(args.theme),
+    // The default themes exported by fluent samples, enforce Segoe UI using the `fonts` attribute in theme object.
+    // To override it, we need to set the `fonts` attribute to `undefined` in the theme object.
+    fonts: {},
+    defaultFontStyle: { fontFamily: args.font ?? 'Segoe UI' }
+  };
+
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
-        <ContosoChatContainer
-          {...containerProps}
-          fluentTheme={getControlledTheme(args.theme)}
-          showParticipants={true}
-        />
+        <ContosoChatContainer {...containerProps} fluentTheme={theme} showParticipants={true} />
       ) : (
         <ConfigHintBanner />
       )}
@@ -61,6 +65,7 @@ export default {
     connectionString: controlsToAdd.connectionString,
     displayName: controlsToAdd.displayName,
     theme: controlsToAdd.theme,
+    font: controlsToAdd.font,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
   },

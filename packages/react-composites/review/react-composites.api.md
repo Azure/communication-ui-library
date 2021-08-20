@@ -28,8 +28,8 @@ import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
+import { PersonaInitialsColor } from '@fluentui/react';
 import type { PhoneNumberKind } from '@azure/communication-common';
-import { PlaceholderProps } from '@internal/react-components';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -38,6 +38,18 @@ import { Theme } from '@fluentui/react';
 import type { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
+
+// @public
+export type AvatarPersonaData = {
+    text?: string;
+    imageUrl?: string;
+    imageInitials?: string;
+    initialsColor?: PersonaInitialsColor | string;
+    initialsTextColor?: string;
+};
+
+// @public
+export type AvatarPersonaDataCallback = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
 
 // @public (undocumented)
 export class AzureCommunicationCallAdapter implements CallAdapter {
@@ -278,8 +290,8 @@ export type CallCompositeProps = {
     rtl?: boolean;
     locale?: Locale;
     callInvitationURL?: string;
-    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
     identifiers?: Identifiers;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
 // @public (undocumented)
@@ -372,7 +384,7 @@ export type ChatCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
     locale?: Locale;
-    onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;

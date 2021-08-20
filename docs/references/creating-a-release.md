@@ -16,16 +16,36 @@ A release branch is created for each new version and beta release we do (alpha v
 
 ## Creating a release through GitHub actions (Preferred)
 
+### Getting Ready for release
+
 1. Trigger the "Release branch - Create" GitHub action
     Enter the branch or tag you are looking to create a release off. This will usually be an alpha tag or the main branch.
+
+    <https://user-images.githubusercontent.com/2684369/130101098-b356b16d-47a7-416b-af84-a27f7e4dc891.mp4>
+
 1. The triggered GitHub action will bump the package versions, generate the packlet changelogs and put up a PR up into main.
 1. Double check the package versions are as expected.
 1. The PR will auto create a Storybook deployment that can be used for verifications.
-1. Create the `@azure/communication-react` changelog in the PR. This will involve grabbing changes from the packlet changelogs and pruning the changelog lines as necessary -- ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
+1. Craft the [`@azure/communication-react` changelog](https://github.com/Azure/communication-ui-library/blob/main/packages/communication-react/CHANGELOG.md).
+    * This should be done as a Pull Request into the release branch.
+    * To create the changelist grab changes from the packlets' changelogs and prune the changelog lines as necessary; ensure the changelog looks good and changelog lines that equate to small PRs for the same feature are combined. For more information see: [Pruning a Changelog](../references/pruning-a-changelog.md).
+    * Example changelog PR: <https://github.com/Azure/communication-ui-library/pull/701>
 1. Ensure the "Before Release" steps of the [release checklist](../references/release-checklist.md) are completed.
+
+### Publishing the package
+
+You are now ready to publish the package!
+
 1. Run the "Publish npm packages" GitHub action _off the release branch_.
-    * Enter the tag also, if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`.
-1. Ensure the action completes successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
+    * Enter the tag also, normally if releasing a new public version the tag name will be `latest`. A beta release would be `next` and an alpha release would be `dev`. However while our package has no major version and is in beta only, we use `latest` for the tag and not `next`. So for current beta releases be sure to use the tag `latest`.
+
+        <https://user-images.githubusercontent.com/2684369/130102770-21da0fff-ffe3-42fb-8e80-d8a8761b8067.mp4>
+
+1. This deployment must then be approved by one of the repo administrators:
+
+    ![Screenshot highlighting reuired approval before publishing npm package](../images/npm-publish-required-approval.png)
+
+1. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
 1. Complete the post-release verification steps in [Release Checklist](../release-checklist.md).
 1. (If this is a latest release) Complete the PR to merge the release branch back into `main`.
 1. (If this is a latest release) Deploy the new version of storybook using the "Release branch - Publish Storybook" GitHub action.

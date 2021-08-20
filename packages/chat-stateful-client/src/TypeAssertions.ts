@@ -2,18 +2,18 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
-import { ChatErrorTargets } from './ChatClientState';
+import { ChatErrorTarget } from './ChatClientState';
 
 /**
- * Internal type-assertion that explicitly listed {@link ChatErrorTargets} correspond to the underlying base SDK API.
+ * Internal type-assertion that explicitly listed {@link ChatErrorTarget} correspond to the underlying base SDK API.
  */
-export const ensureChatErrorTargetsContainsOnlyValidValues = (target: ChatErrorTargets): InferredChatErrorTargets =>
+export const ensureChatErrorTargetsContainsOnlyValidValues = (target: ChatErrorTarget): InferredChatErrorTargets =>
   target;
 
 /**
- * Internal type-assertion that explicitly listed {@link ChatErrorTargets} correspond to the underlying base SDK API.
+ * Internal type-assertion that explicitly listed {@link ChatErrorTarget} correspond to the underlying base SDK API.
  */
-export const ensureChatErrorTargetsContainsAllValidValues = (target: InferredChatErrorTargets): ChatErrorTargets =>
+export const ensureChatErrorTargetsContainsAllValidValues = (target: InferredChatErrorTargets): ChatErrorTarget =>
   target;
 
 /**

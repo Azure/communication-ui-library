@@ -450,7 +450,7 @@ export interface CallClientState {
  * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
  */
 export type CallErrors = {
-  [target in CallErrorTargets]: Error;
+  [target in CallErrorTarget]: Error;
 };
 
 /**
@@ -460,13 +460,13 @@ export class CallError extends Error {
   /**
    * The API method target that failed.
    */
-  public target: CallErrorTargets;
+  public target: CallErrorTarget;
   /**
    * Error thrown by the failed SDK method.
    */
   public inner: Error;
 
-  constructor(target: CallErrorTargets, inner: Error) {
+  constructor(target: CallErrorTarget, inner: Error) {
     super();
     this.target = target;
     this.inner = inner;
@@ -478,7 +478,7 @@ export class CallError extends Error {
 /**
  * String literal type for all permissible keys in {@Link CallErrors}.
  */
-export type CallErrorTargets =
+export type CallErrorTarget =
   | 'Call.addParticipant'
   | 'Call.api'
   | 'Call.hangUp'

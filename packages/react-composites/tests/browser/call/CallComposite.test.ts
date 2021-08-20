@@ -34,8 +34,10 @@ test.describe('Call Composite E2E Tests', () => {
   test('local device settings can toggle camera & audio', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
-      page.bringToFront();
       await stubLocalCameraName(page);
+      await pages[idx].waitForSelector(dataUiId('call-composite-device-settings'));
+      await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));
+      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-disabled.png`);
       await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
       await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
       await page.waitForSelector('video');
@@ -43,20 +45,33 @@ test.describe('Call Composite E2E Tests', () => {
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-enabled.png`);
     }
   });
+});
 
+test.describe('Call Composite E2E CallScreen Tests', () => {
+  // Make sure tests can still run well after retries
+  test.beforeEach(async ({ pages }) => {
+    // In case it is retry logic
+    for (const page of pages) {
+      page.reload();
+      page.bringToFront();
+      await waitForCallCompositeToLoad(page);
+
+      await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+      await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+      await page.click(dataUiId('call-composite-start-call-button'));
+    }
+
+    for (const page of pages) {
+      await page.waitForFunction(() => {
+        return document.querySelectorAll('video').length === 2;
+      });
+    }
+  });
   test('video gallery renders for all pages', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
       page.bringToFront();
-      await page.click(dataUiId('call-composite-start-call-button'));
-    }
 
-    for (const idx in pages) {
-      const page = pages[idx];
-      page.bringToFront();
-      await page.waitForFunction(() => {
-        return document.querySelectorAll('video').length === 2;
-      });
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-video-gallery.png`);
     }
   });
@@ -65,6 +80,7 @@ test.describe('Call Composite E2E Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       page.bringToFront();
+
       await page.click(dataUiId('call-composite-participants-button'));
       // Clicking on participants icon displays a dropdown menu that has an animation.
       // We wait 1 second for that animation to complete.
@@ -74,25 +90,13 @@ test.describe('Call Composite E2E Tests', () => {
   });
 
   test('can turn off local video', async ({ pages }) => {
-    for (const idx in pages) {
-      const page = pages[idx];
-      page.bringToFront();
-      await page.click(dataUiId('call-composite-camera-button'));
-      await page.waitForFunction(() => {
-        return document.querySelectorAll('video').length === 1;
-      });
-      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-camera-toggled.png`);
-    }
-  });
-
-  test('pages[0] local device settings can toggle camera & audio', async ({ pages }) => {
     const page = pages[0];
+
     page.bringToFront();
-    await stubLocalCameraName(page);
-    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-disabled.png`);
-    await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
-    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
-    await page.waitForSelector('video');
-    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-enabled.png`);
+    await page.click(dataUiId('call-composite-camera-button'));
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('video').length === 1;
+    });
+    expect(await page.screenshot()).toMatchSnapshot(`camera-toggled.png`);
   });
 });

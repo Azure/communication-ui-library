@@ -15,7 +15,7 @@ import {
   messageStatusContainerStyle,
   noMessageStatusStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
@@ -26,7 +26,9 @@ import {
   CustomMessage,
   SystemMessage,
   ChatMessagePayload,
-  CommunicationParticipant
+  CommunicationParticipant,
+  OnRenderAvatarCallback,
+  SystemMessagePayload
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -183,15 +185,42 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
 };
 
 const generateParticipantsStr = (participants: CommunicationParticipant[]): string =>
-  participants.reduce(
-    (previous, current): string => (current.displayName ? `${previous}${current.displayName} ` : previous),
-    ''
-  );
+  participants
+    .map(
+      (participant) =>
+        `${!participant.displayName || participant.displayName === '' ? 'No name' : participant.displayName}`
+    )
+    .join(', ');
 
 export type DefaultMessageRendererType = (props: MessageProps, ids?: { messageTimestamp?: string }) => JSX.Element;
 
-const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+const ParticipantSystemMessageComponent = ({
+  payload,
+  style
+}: {
+  payload: SystemMessagePayload<'participantAdded' | 'participantRemoved'>;
+  style?: ComponentSlotStyle;
+}): JSX.Element => {
   const { strings } = useLocale();
+  const participantsStr = generateParticipantsStr(payload.participants);
+  const messageSuffix =
+    payload.type === 'participantAdded'
+      ? strings.messageThread.participantJoined
+      : strings.messageThread.participantLeft;
+
+  if (participantsStr !== '') {
+    return (
+      <SystemMessageComponent
+        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+        content={`${participantsStr} ${messageSuffix}`}
+        containerStyle={style}
+      />
+    );
+  }
+  return <></>;
+};
+
+const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
   if (props.message.type === 'system') {
     const payload = props.message.payload;
     if (payload.type === 'content') {
@@ -203,26 +232,10 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
         />
       );
     }
-    if (payload.type === 'participantAdded') {
-      return (
-        <SystemMessageComponent
-          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-          content={generateParticipantsStr(payload.participants) + strings.messageThread.participantJoined}
-          containerStyle={props?.messageContainerStyle}
-        />
-      );
-    }
-    if (payload.type === 'participantRemoved') {
-      return (
-        <SystemMessageComponent
-          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-          content={generateParticipantsStr(payload.participants) + strings.messageThread.participantLeft}
-          containerStyle={props?.messageContainerStyle}
-        />
-      );
+    if (payload.type === 'participantAdded' || payload.type === 'participantRemoved') {
+      return <ParticipantSystemMessageComponent payload={payload} style={props.messageContainerStyle} />;
     }
   }
-
   return <></>;
 };
 
@@ -295,13 +308,13 @@ const DefaultChatMessageRenderer: DefaultMessageRendererType = (
         author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
         mine={payload.mine}
         timestamp={
-          <text data-ui-id={ids?.messageTimestamp}>
+          <Text data-ui-id={ids?.messageTimestamp}>
             {payload.createdOn
               ? props.showDate
                 ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.strings)
                 : formatTimeForChatMessage(payload.createdOn)
               : undefined}
-          </text>
+          </Text>
         }
       />
     );
@@ -316,7 +329,7 @@ const memoizeAllMessages = memoizeFnAll(
     message: ChatMessage | SystemMessage | CustomMessage,
     showMessageDate: boolean,
     showMessageStatus: boolean,
-    onRenderAvatar: ((userId: string) => JSX.Element) | undefined,
+    onRenderAvatar: OnRenderAvatarCallback | undefined,
     styles: MessageThreadStylesProps | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
@@ -339,13 +352,19 @@ const memoizeAllMessages = memoizeFnAll(
           ? defaultChatMessageRenderer(messageProps)
           : onRenderMessage(messageProps, DefaultChatMessageRenderer);
 
+      const personaOptions: IPersona = {
+        text: payload.senderDisplayName,
+        hidePersonalDetails: true,
+        size: PersonaSize.size32
+      };
+
       return {
         gutter: payload.mine ? (
           ''
         ) : onRenderAvatar ? (
-          onRenderAvatar(payload.senderId ?? '')
+          onRenderAvatar(payload.senderId ?? '', personaOptions)
         ) : (
-          <Persona text={payload.senderDisplayName} hidePersonaDetails={true} size={PersonaSize.size32} />
+          <Persona {...personaOptions} />
         ),
         contentPosition: payload.mine ? 'end' : 'start',
         message: (
@@ -471,7 +490,7 @@ export type MessageThreadProps = {
    *
    * @param userId - user Id
    */
-  onRenderAvatar?: (userId: string) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarCallback;
   /**
    * Optional callback to override render of the button for jumping to the new message.
    *

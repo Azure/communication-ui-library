@@ -8,7 +8,7 @@ import {
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,
-  ChatErrorTargets,
+  ChatErrorTarget,
   ChatError
 } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
@@ -350,8 +350,8 @@ export class ChatContext {
    */
   public withAsyncErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => Promise<R>,
-    target: ChatErrorTargets,
-    clearTargets?: ChatErrorTargets[]
+    target: ChatErrorTarget,
+    clearTargets?: ChatErrorTarget[]
   ): (...args: Args) => Promise<R> {
     return async (...args: Args): Promise<R> => {
       try {
@@ -378,8 +378,8 @@ export class ChatContext {
    */
   public withErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => R,
-    target: ChatErrorTargets,
-    clearTargets?: ChatErrorTargets[]
+    target: ChatErrorTarget,
+    clearTargets?: ChatErrorTarget[]
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
@@ -393,7 +393,7 @@ export class ChatContext {
     };
   }
 
-  private setLatestError(target: ChatErrorTargets, error: Error): void {
+  private setLatestError(target: ChatErrorTarget, error: Error): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.latestErrors[target] = error;
@@ -438,6 +438,7 @@ export class ChatContext {
       }
     } catch (e) {
       this._state = priorState;
+      throw e;
     } finally {
       this._batchMode = false;
     }
