@@ -10,6 +10,7 @@ import {
   ParticipantsButton,
   ScreenShareButton
 } from '@azure/communication-react';
+import { registerIcons } from '@fluentui/react/lib/Styling';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -135,6 +136,13 @@ const getDocs: () => JSX.Element = () => {
     </>
   );
 };
+
+registerIcons({
+  icons: {
+    Video20Filled: <text>Video On</text>,
+    VideoOff20Filled: <text>Video Off</text>
+  }
+});
 
 const ControlBarStory: (
   args: any,

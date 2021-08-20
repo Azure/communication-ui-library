@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Icon } from '@fluentui/react';
 import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
@@ -43,10 +44,8 @@ export interface CameraButtonProps extends ControlBarButtonProps {
   strings?: Partial<CameraButtonStrings>;
 }
 
-const onRenderCameraOnIcon = (): JSX.Element => <Video20Filled key={'videoIconKey'} primaryFill="currentColor" />;
-const onRenderCameraOffIcon = (): JSX.Element => (
-  <VideoOff20Filled key={'videoOffIconKey'} primaryFill="currentColor" />
-);
+const onRenderCameraOnIcon = (): JSX.Element => <Icon iconName="Video20Filled" />;
+const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="VideoOff20Filled" />;
 
 /**
  * `CameraButton` allows you to easily create a component for rendering a camera button.
