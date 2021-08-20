@@ -35,8 +35,8 @@ test.describe('Call Composite E2E Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       await stubLocalCameraName(page);
-      await pages[idx].waitForSelector(dataUiId('call-composite-device-settings'));
-      await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));
+      await page.waitForSelector(dataUiId('call-composite-device-settings'));
+      await page.waitForSelector(dataUiId('call-composite-local-preview'));
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-disabled.png`);
       await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
       await page.click(dataUiId('call-composite-local-device-settings-camera-button'));

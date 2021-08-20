@@ -127,9 +127,9 @@ test.describe('Chat Composite custom data model', () => {
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
-    // Now that we are using a promise based custom avatar data injection, we
-    // need to wait for the avatar to load before we can take a screenshot.
-    await page.waitForTimeout(1000);
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length >= 2;
+    });
     await page.waitForSelector('#custom-data-model-typing-indicator');
     await page.waitForSelector('#custom-data-model-message');
     stubMessageTimestamps(page);
