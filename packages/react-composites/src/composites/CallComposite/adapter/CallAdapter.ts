@@ -38,9 +38,20 @@ export type CallAdapterClientState = {
   displayName?: string;
   call?: CallState;
   devices: DeviceManagerState;
+  /**
+   * Latest error encountered for each operation performed via the adapter.
+   */
+  latestErrors: CallAdapterErrors;
 };
 
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
+
+/**
+ * CallAdapter stores the latest error for each operation in the state.
+ *
+ * `operation` is a CallAdapter defined string for each unique operation performed by the adapter.
+ */
+export type CallAdapterErrors = { [operation: string]: Error };
 
 export type IncomingCallListener = (event: {
   callId: string;
