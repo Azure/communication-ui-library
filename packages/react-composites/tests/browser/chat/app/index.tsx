@@ -64,7 +64,17 @@ function App(): JSX.Element {
                 )
               : undefined
           }
-          onRenderAvatar={customDataModel ? () => <text id="custom-data-model-avatar">Avatar</text> : undefined}
+          onFetchAvatarPersonaData={
+            customDataModel
+              ? (userId) =>
+                  new Promise((resolve) =>
+                    resolve({
+                      imageInitials: 'CI',
+                      text: 'Custom Name'
+                    })
+                  )
+              : undefined
+          }
         />
       )}
     </>
