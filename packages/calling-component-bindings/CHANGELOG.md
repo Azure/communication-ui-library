@@ -1,8 +1,18 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.4)
+
+Mon, 16 Aug 2021 21:18:19 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.0.0-beta.3..@internal/calling-component-bindings_v1.0.0-beta.4)
+
+### Changes
+
+- updated Typescript to version 4.3.5 ([PR #645](https://github.com/azure/communication-ui-library/pull/645) by alcail@microsoft.com)
+- Fixing video gallery styling issues during and after screenshare ([PR #649](https://github.com/azure/communication-ui-library/pull/649) by anjulgarg@live.com)
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.3)
 
