@@ -42,6 +42,7 @@ export {
   videoGallerySelector,
   optionsButtonSelector,
   emptySelector,
+  errorBarSelector as callErrorBarSelector,
   participantListSelector,
   microphoneButtonSelector,
   participantsButtonSelector,
@@ -58,7 +59,7 @@ export {
   chatParticipantListSelector,
   sendBoxSelector,
   typingIndicatorSelector,
-  errorBarSelector,
+  errorBarSelector as chatErrorBarSelector,
   createDefaultChatHandlers
 } from '../../chat-component-bindings/src';
 
