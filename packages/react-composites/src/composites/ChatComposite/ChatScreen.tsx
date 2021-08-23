@@ -95,7 +95,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <ParticipantList
                   {...participantListProps}
                   onRenderAvatar={(userId, options) => (
-                    <AvatarPersona userId={userId} {...options} dataProvider={onFetchAvatarPersonaData} />
+                    <AvatarPersona
+                      data-ui-id="chat-composite-participant-custom-avatar"
+                      userId={userId}
+                      {...options}
+                      dataProvider={onFetchAvatarPersonaData}
+                    />
                   )}
                 />
               </Stack.Item>
