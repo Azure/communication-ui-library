@@ -6,7 +6,8 @@ import {
   ChatComposite,
   ChatAdapter,
   createAzureCommunicationChatAdapter,
-  fr_FR
+  fr_FR,
+  COMPOSITE_LOCALE_FR_FR
 } from '@azure/communication-react';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -62,7 +63,7 @@ function App(): JSX.Element {
     return (
       <>
         {chatAdapter && <ChatComposite adapter={chatAdapter} locale={fr_FR} />}
-        {callAdapter && <CallComposite adapter={callAdapter} locale={fr_FR} />}
+        {callAdapter && <CallComposite adapter={callAdapter} locale={COMPOSITE_LOCALE_FR_FR} />}
       </>
     );
   }

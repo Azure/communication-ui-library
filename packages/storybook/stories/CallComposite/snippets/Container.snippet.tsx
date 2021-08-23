@@ -1,5 +1,10 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
+import {
+  CallAdapter,
+  CallComposite,
+  createAzureCommunicationCallAdapter,
+  COMPOSITE_LOCALE_DE_DE
+} from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -61,10 +66,16 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     };
   }, [adapter]);
 
+  // [xkcd] Remove the hard-coded COMPOSITE_LOCALE_DE_DE -- added for local debugging only.
   if (adapter) {
     return (
       <div style={{ height: '90vh', width: '90vw' }}>
-        <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} callInvitationURL={props?.callInvitationURL} />
+        <CallComposite
+          adapter={adapter}
+          fluentTheme={props.fluentTheme}
+          callInvitationURL={props?.callInvitationURL}
+          locale={COMPOSITE_LOCALE_DE_DE}
+        />
       </div>
     );
   }
