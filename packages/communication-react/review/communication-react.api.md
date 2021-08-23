@@ -310,6 +310,12 @@ export type CallAdapterClientState = {
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
+    latestErrors: CallAdapterErrors;
+};
+
+// @public
+export type CallAdapterErrors = {
+    [operation: string]: Error;
 };
 
 // @public (undocumented)
@@ -607,9 +613,9 @@ export type ChatCompositeProps = {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTargets, inner: Error);
+    constructor(target: ChatErrorTarget, inner: Error);
     inner: Error;
-    target: ChatErrorTargets;
+    target: ChatErrorTarget;
 }
 
 // @public
@@ -620,11 +626,11 @@ export type ChatErrorListener = (event: {
 
 // @public
 export type ChatErrors = {
-    [target in ChatErrorTargets]: Error;
+    [target in ChatErrorTarget]: Error;
 };
 
 // @public
-export type ChatErrorTargets = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
+export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
 
 // @public (undocumented)
 export type ChatMessage = Message<'chat'>;
@@ -1239,7 +1245,7 @@ export const namedLocales: Record<string, {
 }>;
 
 // @public (undocumented)
-export const newClearErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateModifier;
+export const newClearErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
 
 // @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;

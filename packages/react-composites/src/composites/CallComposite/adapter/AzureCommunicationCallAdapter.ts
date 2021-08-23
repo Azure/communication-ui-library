@@ -8,7 +8,8 @@ import {
   StatefulCallClient,
   createStatefulCallClient,
   DeviceManagerState,
-  CallState
+  CallState,
+  CallError
 } from '@internal/calling-stateful-client';
 import {
   AudioOptions,
@@ -61,7 +62,8 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
       call: undefined,
-      page: 'configuration'
+      page: 'configuration',
+      latestErrors: clientState.latestErrors
     };
   }
 
@@ -110,7 +112,8 @@ class CallContext {
       endedCall: endedCall,
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
-        call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted
+        call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
+      latestErrors: clientState.latestErrors
     });
   }
 
@@ -199,20 +202,28 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     return 'meetingLink' in this.locator;
   }
 
-  public queryCameras(): Promise<VideoDeviceInfo[]> {
-    return this.deviceManager.getCameras();
+  public async queryCameras(): Promise<VideoDeviceInfo[]> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return this.deviceManager.getCameras();
+    });
   }
 
-  public queryMicrophones(): Promise<AudioDeviceInfo[]> {
-    return this.deviceManager.getMicrophones();
+  public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return this.deviceManager.getMicrophones();
+    });
   }
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
-    return this.deviceManager.getSpeakers();
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return this.deviceManager.getSpeakers();
+    });
   }
 
   public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
-    await this.deviceManager.askDevicePermission(constrain);
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.deviceManager.askDevicePermission(constrain);
+    });
   }
 
   public joinCall(microphoneOn?: boolean): Call | undefined {
@@ -277,28 +288,40 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
-    await this.handlers.onSelectCamera(device, options);
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onSelectCamera(device, options);
+    });
   }
 
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
-    await this.handlers.onSelectMicrophone(device);
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onSelectMicrophone(device);
+    });
   }
 
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
-    await this.handlers.onSelectSpeaker(device);
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onSelectSpeaker(device);
+    });
   }
 
   public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
-    await this.handlers.onToggleCamera(options);
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onToggleCamera(options);
+    });
   }
 
   //TODO: seperate onToggleCamera logic in Handler
   public async startCamera(): Promise<void> {
-    if (!this.isCameraOn()) await this.handlers.onToggleCamera();
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      if (!this.isCameraOn()) await this.handlers.onToggleCamera();
+    });
   }
 
   public async stopCamera(): Promise<void> {
-    if (this.isCameraOn()) await this.handlers.onToggleCamera();
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      if (this.isCameraOn()) await this.handlers.onToggleCamera();
+    });
   }
 
   private isCameraOn(): boolean {
@@ -315,25 +338,33 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async mute(): Promise<void> {
-    if (!this.call) {
-      this.context.setIsLocalMicrophoneEnabled(false);
-    }
-    await this.call?.mute();
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      if (!this.call) {
+        this.context.setIsLocalMicrophoneEnabled(false);
+      }
+      await this.call?.mute();
+    });
   }
 
   public async unmute(): Promise<void> {
-    if (!this.call) {
-      this.context.setIsLocalMicrophoneEnabled(true);
-    }
-    await this.call?.unmute();
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      if (!this.call) {
+        this.context.setIsLocalMicrophoneEnabled(true);
+      }
+      await this.call?.unmute();
+    });
   }
 
   public async startScreenShare(): Promise<void> {
-    if (!this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      if (!this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    });
   }
 
   public async stopScreenShare(): Promise<void> {
-    if (this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      if (this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+    });
   }
 
   //TODO: a better way to expose option parameter
@@ -461,6 +492,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public off(event: CallEvent, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
   }
+
+  private async asyncTeeErrorToEventEmitter<T>(f: () => Promise<T>): Promise<T> {
+    try {
+      return await f();
+    } catch (error) {
+      if (isCallError(error)) {
+        this.emitter.emit('error', { operation: error.target, error: error.inner });
+      }
+      throw error;
+    }
+  }
 }
 
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
@@ -489,4 +531,8 @@ export const createAzureCommunicationCallAdapter = async ({
   const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
   return adapter;
+};
+
+const isCallError = (e: Error): e is CallError => {
+  return e['target'] !== undefined && e['inner'] !== undefined;
 };

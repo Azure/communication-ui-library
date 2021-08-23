@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Exposed locale prop to localize composites.",
+  "comment": "Expose errors in CallAdapter",
   "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
 }

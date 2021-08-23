@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Replace StatefulChatClient.clearErrors() with modifier pattern",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
