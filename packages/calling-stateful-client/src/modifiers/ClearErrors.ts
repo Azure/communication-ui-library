@@ -9,7 +9,7 @@ import { CallStateModifier } from '../StatefulCallClient';
  *
  * Intended to be used with {@link StatefulCallClient.modifyState}.
  *
- * @param targets CallErrorTarget[] to clear the errors for.
+ * @param targets - CallErrorTarget[] to clear the errors for.
  */
 export const newClearCallErrorsModifier = (targets: CallErrorTarget[]): CallStateModifier => {
   return (draft: CallClientState): void => {
