@@ -6,9 +6,9 @@ import { ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
 
 /**
- * Select the first fiew active errors from the state for the `ErrorBar` component.
+ * Select the first 3 active errors from the state for the `ErrorBar` component.
  *
- * In case there are many errors, only a few top errors are returned to avoid
+ * In case there are many errors, only the first three errors are returned to avoid
  * filling up the UI with too many errors.
  *
  * Invariants:
