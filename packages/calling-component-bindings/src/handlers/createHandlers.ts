@@ -12,7 +12,7 @@ import {
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
-  CallErrorTargets,
+  CallErrorTarget,
   DeviceManagerState,
   newClearCallErrorsModifier,
   StatefulCallClient,
@@ -282,7 +282,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onDismissErrors = (errorTypes: ErrorType[]) => {
-      const targets: Set<CallErrorTargets> = new Set();
+      const targets: Set<CallErrorTarget> = new Set();
       for (const errorType of errorTypes) {
         const target = statefulErrors[errorType];
         if (target !== undefined) {
@@ -314,7 +314,7 @@ export const createDefaultCallingHandlers = memoizeOne(
   }
 );
 
-const statefulErrors: { [key in ErrorType]: CallErrorTargets | undefined } = {
+const statefulErrors: { [key in ErrorType]: CallErrorTarget | undefined } = {
   muteGeneric: 'Call.mute',
   startScreenShareGeneric: 'Call.startScreenSharing',
   startVideoGeneric: 'Call.startVideo',

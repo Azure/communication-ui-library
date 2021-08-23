@@ -20,7 +20,7 @@ import { getCallId, getEndedCall } from './selectors/baseSelectors';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
-import { OnRenderAvatarCallback, VideoStreamOptions } from '@internal/react-components';
+import { ErrorBar, OnRenderAvatarCallback, VideoStreamOptions } from '@internal/react-components';
 import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
@@ -31,6 +31,7 @@ import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBan
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { usePropsFor } from './hooks/usePropsFor';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
