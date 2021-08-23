@@ -386,11 +386,17 @@ export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
-    locale?: Locale;
+    locale?: CompositeLocale;
     callInvitationURL?: string;
     identifiers?: Identifiers;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
+
+// @public (undocumented)
+export interface CallCompositeStrings {
+    // (undocumented)
+    localDeviceSettings: LocalDeviceSettingsStrings;
+}
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
@@ -783,6 +789,30 @@ export interface ComponentStrings {
 }
 
 // @public
+export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public
+export interface CompositeLocale {
+    component: Locale;
+    strings: CompositeStrings;
+}
+
+// @public
+export interface CompositeStrings {
+    // (undocumented)
+    call: CallCompositeStrings;
+}
+
+// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public
@@ -1095,6 +1125,12 @@ export interface JumpToNewMessageButtonProps {
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
+
+// @public (undocumented)
+export interface LocalDeviceSettingsStrings {
+    // (undocumented)
+    cameraPermissionDenied: string;
+}
 
 // @public
 export interface Locale {
