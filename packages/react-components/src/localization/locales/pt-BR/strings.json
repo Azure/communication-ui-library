@@ -1,0 +1,72 @@
+{
+  "participantItem": {
+    "isMeText": "(você)",
+    "menuTitle": "Mais opções"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} está digitando ...",
+    "multipleUsers": "{users} estão digitando ...",
+    "multipleUsersAbbreviateOne": "{users} e 1 outro estão digitando...",
+    "multipleUsersAbbreviateMany": "{users} e {numOthers} outros estão digitando ...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Inserir uma mensagem"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Enviado",
+    "seenTooltipText": "Visto",
+    "sendingTooltipText": "Enviando",
+    "failedToSendTooltipText": "Falha ao enviar"
+  },
+  "endCallButton": {
+    "label": "Sair"
+  },
+  "cameraButton": {
+    "onLabel": "Desabilitar",
+    "offLabel": "Habilitar"
+  },
+  "microphoneButton": {
+    "onLabel": "Mudo",
+    "offLabel": "Desativar Mudo"
+  },
+  "optionsButton": {
+    "label": "Opções",
+    "cameraMenuTitle": "Câmera",
+    "cameraMenuTooltip": "Escolher Câmera",
+    "microphoneMenuTitle": "Microfone",
+    "microphoneMenuTooltip": "Escolher Microfone",
+    "speakerMenuTitle": "Alto-falante",
+    "speakerMenuTooltip": "Escolher Alto-falante"
+  },
+  "participantsButton": {
+    "label": "Pessoas",
+    "menuHeader": "Nesta chamada",
+    "participantsListButtonLabel": "{numParticipants} pessoas",
+    "muteAllButtonLabel": "Silenciar todos",
+    "copyInviteLinkButtonLabel": "Copiar o link de convite"
+  },
+  "screenShareButton": {
+    "onLabel": "Parar",
+    "offLabel": "Compartilhar"
+  },
+  "messageThread": {
+    "yesterday": "Ontem",
+    "sunday": "Domingo",
+    "monday": "Segunda",
+    "tuesday": "Terça-feira",
+    "wednesday": "Quarta-feira",
+    "thursday": "quinta-feira",
+    "friday": "Sexta-feira",
+    "saturday": "Sábado",
+    "participantJoined": "ingressou no chat.",
+    "participantLeft": "saiu do chat."
+  },
+  "errorBar": {
+    "unableToReachChatService": "Você está offline",
+    "accessDenied": "Não é possível acessar os serviços de chat - verifique as credenciais do usuário fornecidas",
+    "userNotInThisThread": "Você não está mais neste tópico de chat",
+    "sendMessageNotInThisThread": "Falha ao enviar mensagem porque você não está mais neste thread de chat",
+    "sendMessageGeneric": "Falha ao enviar mensagem"
+  }
+}

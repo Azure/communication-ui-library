@@ -1,0 +1,72 @@
+{
+  "participantItem": {
+    "isMeText": "(我)",
+    "menuTitle": "更多选项"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} 正在键入...",
+    "multipleUsers": "{users} 正在键入...",
+    "multipleUsersAbbreviateOne": "{users} 和另外 1 人正在键入...",
+    "multipleUsersAbbreviateMany": "{users} 和其他 {numOthers} 人正在键入...",
+    "delimiter": "、 "
+  },
+  "sendBox": {
+    "placeholderText": "输入消息"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "已发送",
+    "seenTooltipText": "已查看",
+    "sendingTooltipText": "正在发送",
+    "failedToSendTooltipText": "发送失败"
+  },
+  "endCallButton": {
+    "label": "退出"
+  },
+  "cameraButton": {
+    "onLabel": "关闭",
+    "offLabel": "打开"
+  },
+  "microphoneButton": {
+    "onLabel": "静音",
+    "offLabel": "取消静音"
+  },
+  "optionsButton": {
+    "label": "选项",
+    "cameraMenuTitle": "相机",
+    "cameraMenuTooltip": "选择“相机”",
+    "microphoneMenuTitle": "麦克风",
+    "microphoneMenuTooltip": "选择麦克风",
+    "speakerMenuTitle": "免提",
+    "speakerMenuTooltip": "选择扬声器"
+  },
+  "participantsButton": {
+    "label": "人员",
+    "menuHeader": "在此通话中",
+    "participantsListButtonLabel": "{numParticipants} 人",
+    "muteAllButtonLabel": "全部静音",
+    "copyInviteLinkButtonLabel": "复制邀请链接"
+  },
+  "screenShareButton": {
+    "onLabel": "停止",
+    "offLabel": "共享"
+  },
+  "messageThread": {
+    "yesterday": "昨天",
+    "sunday": "星期日",
+    "monday": "星期一",
+    "tuesday": "星期二",
+    "wednesday": "星期三",
+    "thursday": "星期四",
+    "friday": "星期五",
+    "saturday": "星期六",
+    "participantJoined": "已加入聊天。",
+    "participantLeft": "已退出聊天。"
+  },
+  "errorBar": {
+    "unableToReachChatService": "你已脱机",
+    "accessDenied": "无法访问聊天服务 - 请检查提供的用户凭据",
+    "userNotInThisThread": "你不再处于此聊天会话中",
+    "sendMessageNotInThisThread": "无法发送消息，因为你不再在此聊天会话中",
+    "sendMessageGeneric": "未能发送消息"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "participantItem": {
+    "isMeText": "(나)",
+    "menuTitle": "추가 옵션"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} 님이 입력 중...",
+    "multipleUsers": "{users} 님이 입력하는 중...",
+    "multipleUsersAbbreviateOne": "{users} 님 외 1명이 입력 중...",
+    "multipleUsersAbbreviateMany": "{users} 님 외 {numOthers} 님이 입력하는 중...",
+    "delimiter": "닫는 렌즈형 흰색 괄호"
+  },
+  "sendBox": {
+    "placeholderText": "메시지를 입력하세요"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "보냄",
+    "seenTooltipText": "표시됨",
+    "sendingTooltipText": "보내는 중",
+    "failedToSendTooltipText": "보내기 실패"
+  },
+  "endCallButton": {
+    "label": "휴가"
+  },
+  "cameraButton": {
+    "onLabel": "끄기",
+    "offLabel": "켜기"
+  },
+  "microphoneButton": {
+    "onLabel": "음소거",
+    "offLabel": "음소거 해제"
+  },
+  "optionsButton": {
+    "label": "옵션",
+    "cameraMenuTitle": "카메라",
+    "cameraMenuTooltip": "카메라 선택",
+    "microphoneMenuTitle": "마이크",
+    "microphoneMenuTooltip": "마이크 선택",
+    "speakerMenuTitle": "발언자",
+    "speakerMenuTooltip": "스피커 선택"
+  },
+  "participantsButton": {
+    "label": "사용자",
+    "menuHeader": "이 통화에서",
+    "participantsListButtonLabel": "{numParticipants}명",
+    "muteAllButtonLabel": "모두 음소거",
+    "copyInviteLinkButtonLabel": "초대 링크 복사"
+  },
+  "screenShareButton": {
+    "onLabel": "중지",
+    "offLabel": "공유"
+  },
+  "messageThread": {
+    "yesterday": "어제",
+    "sunday": "일요일",
+    "monday": "월요일",
+    "tuesday": "화요일",
+    "wednesday": "수요일",
+    "thursday": "목요일",
+    "friday": "금요일",
+    "saturday": "토요일",
+    "participantJoined": "채팅에 참여했습니다.",
+    "participantLeft": "이 채팅을 나갔습니다."
+  },
+  "errorBar": {
+    "unableToReachChatService": "오프라인 상태입니다.",
+    "accessDenied": "채팅 서비스에 액세스할 수 없습니다. 제공된 사용자 자격 증명을 확인하세요.",
+    "userNotInThisThread": "이 채팅 스레드에 더 이상 없습니다.",
+    "sendMessageNotInThisThread": "이 채팅 스레드에 더 이상 존재하지 않으므로 메시지를 보내지 못했습니다.",
+    "sendMessageGeneric": "메시지를 보내지 못했습니다"
+  }
+}

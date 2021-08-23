@@ -1,0 +1,72 @@
+{
+  "participantItem": {
+    "isMeText": "(Вы)",
+    "menuTitle": "Дополнительные параметры"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} вводит текст...",
+    "multipleUsers": "{users} вводят текст...",
+    "multipleUsersAbbreviateOne": "{users} и еще 1 вводят текст...",
+    "multipleUsersAbbreviateMany": "{users} и еще {numOthers} вводят текст...",
+    "delimiter": "; "
+  },
+  "sendBox": {
+    "placeholderText": "Введите сообщение"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Отправлено",
+    "seenTooltipText": "Просмотрено",
+    "sendingTooltipText": "Отправка",
+    "failedToSendTooltipText": "Не удалось отправить"
+  },
+  "endCallButton": {
+    "label": "Выйти"
+  },
+  "cameraButton": {
+    "onLabel": "Отключить",
+    "offLabel": "Включить"
+  },
+  "microphoneButton": {
+    "onLabel": "Отключить звук",
+    "offLabel": "Включить звук"
+  },
+  "optionsButton": {
+    "label": "Параметры",
+    "cameraMenuTitle": "Камера",
+    "cameraMenuTooltip": "Выбрать камеру",
+    "microphoneMenuTitle": "Микрофон",
+    "microphoneMenuTooltip": "Выбрать микрофон",
+    "speakerMenuTitle": "Динамик",
+    "speakerMenuTooltip": "Выбрать динамик"
+  },
+  "participantsButton": {
+    "label": "Люди",
+    "menuHeader": "В этом звонке",
+    "participantsListButtonLabel": "Пользователей: {numParticipants}",
+    "muteAllButtonLabel": "Отключить все микрофоны",
+    "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением"
+  },
+  "screenShareButton": {
+    "onLabel": "Остановить",
+    "offLabel": "Поделиться"
+  },
+  "messageThread": {
+    "yesterday": "Вчера",
+    "sunday": "Воскресенье",
+    "monday": "Понедельник",
+    "tuesday": "Вторник",
+    "wednesday": "Среда",
+    "thursday": "Четверг",
+    "friday": "Пятница",
+    "saturday": "Суббота",
+    "participantJoined": "присоединился к чату.",
+    "participantLeft": "покинул чат."
+  },
+  "errorBar": {
+    "unableToReachChatService": "Вы не в сети",
+    "accessDenied": "Не удалось получить доступ к службам чата. Проверьте предоставленные учетные данные пользователя",
+    "userNotInThisThread": "Вы больше не находитесь в цепочке этого чата",
+    "sendMessageNotInThisThread": "Не удалось отправить сообщение, так как вы больше не находитесь в цепочке этого чата",
+    "sendMessageGeneric": "Не удалось отправить сообщение"
+  }
+}

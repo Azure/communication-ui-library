@@ -1,0 +1,72 @@
+{
+  "participantItem": {
+    "isMeText": "(您)",
+    "menuTitle": "更多選項"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} 正在輸入...",
+    "multipleUsers": "{users} 正在輸入...",
+    "multipleUsersAbbreviateOne": "{users} 和其他 1 人正在輸入...",
+    "multipleUsersAbbreviateMany": "{users} 和其他 {numOthers} 人正在輸入...",
+    "delimiter": "， "
+  },
+  "sendBox": {
+    "placeholderText": "輸入訊息"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "已傳送",
+    "seenTooltipText": "已讀",
+    "sendingTooltipText": "正在傳送",
+    "failedToSendTooltipText": "無法傳送"
+  },
+  "endCallButton": {
+    "label": "離開"
+  },
+  "cameraButton": {
+    "onLabel": "關閉",
+    "offLabel": "開啟"
+  },
+  "microphoneButton": {
+    "onLabel": "靜音",
+    "offLabel": "取消靜音"
+  },
+  "optionsButton": {
+    "label": "選項",
+    "cameraMenuTitle": "攝影機",
+    "cameraMenuTooltip": "選擇攝影機",
+    "microphoneMenuTitle": "麥克風",
+    "microphoneMenuTooltip": "選擇麥克風",
+    "speakerMenuTitle": "演講者",
+    "speakerMenuTooltip": "選擇講者"
+  },
+  "participantsButton": {
+    "label": "人員",
+    "menuHeader": "在此通話中",
+    "participantsListButtonLabel": "{numParticipants} 人員",
+    "muteAllButtonLabel": "將所有人設為靜音",
+    "copyInviteLinkButtonLabel": "複製邀請連結"
+  },
+  "screenShareButton": {
+    "onLabel": "停止",
+    "offLabel": "分享"
+  },
+  "messageThread": {
+    "yesterday": "昨天",
+    "sunday": "星期日",
+    "monday": "星期一",
+    "tuesday": "星期二",
+    "wednesday": "星期三",
+    "thursday": "星期四",
+    "friday": "星期五",
+    "saturday": "星期六",
+    "participantJoined": "已加入聊天。",
+    "participantLeft": "已離開聊天。"
+  },
+  "errorBar": {
+    "unableToReachChatService": "您處於離線狀態",
+    "accessDenied": "無法存取聊天服務 - 請檢查提供的使用者認證",
+    "userNotInThisThread": "您已不在此聊天對話中",
+    "sendMessageNotInThisThread": "無法傳送訊息，因為您已不在此聊天對話中",
+    "sendMessageGeneric": "無法傳送訊息"
+  }
+}

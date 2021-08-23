@@ -1,0 +1,72 @@
+{
+  "participantItem": {
+    "isMeText": "(Sie)",
+    "menuTitle": "Weitere Optionen"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} schreibt ...",
+    "multipleUsers": "{users} schreiben ...",
+    "multipleUsersAbbreviateOne": "{users} und 1 andere Person schreiben ...",
+    "multipleUsersAbbreviateMany": "{users} und {numOthers} andere schreiben ...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Nachricht eingeben"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Gesendet",
+    "seenTooltipText": "Gesehen",
+    "sendingTooltipText": "Wird gesendet",
+    "failedToSendTooltipText": "Fehler beim Senden"
+  },
+  "endCallButton": {
+    "label": "Verlassen"
+  },
+  "cameraButton": {
+    "onLabel": "Deaktivieren",
+    "offLabel": "Aktivieren"
+  },
+  "microphoneButton": {
+    "onLabel": "Stumm schalten",
+    "offLabel": "Stummschaltung aufheben"
+  },
+  "optionsButton": {
+    "label": "Optionen",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Kamera auswählen",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Mikrofon auswählen",
+    "speakerMenuTitle": "Lautsprecher",
+    "speakerMenuTooltip": "Lautsprecher auswählen"
+  },
+  "participantsButton": {
+    "label": "Personen",
+    "menuHeader": "In diesem Anruf",
+    "participantsListButtonLabel": "{numParticipants} Personen",
+    "muteAllButtonLabel": "Alle stumm schalten",
+    "copyInviteLinkButtonLabel": "Einladungslink kopieren"
+  },
+  "screenShareButton": {
+    "onLabel": "Beenden",
+    "offLabel": "Teilen"
+  },
+  "messageThread": {
+    "yesterday": "Gestern",
+    "sunday": "Sonntag",
+    "monday": "Montag",
+    "tuesday": "Dienstag",
+    "wednesday": "Mittwoch",
+    "thursday": "Donnerstag",
+    "friday": "Freitag",
+    "saturday": "Samstag",
+    "participantJoined": "ist dem Chat beigetreten.",
+    "participantLeft": "hat den Chat verlassen."
+  },
+  "errorBar": {
+    "unableToReachChatService": "Sie sind offline.",
+    "accessDenied": "Auf die Chatdienste kann nicht zugegriffen werden. Überprüfen Sie die angegebenen Benutzeranmeldeinformationen.",
+    "userNotInThisThread": "Sie sind nicht mehr in diesem Chatthread vertreten.",
+    "sendMessageNotInThisThread": "Fehler beim Senden der Nachricht, weil Sie sich nicht mehr in diesem Chatthread befinden.",
+    "sendMessageGeneric": "Fehler beim Senden der Nachricht"
+  }
+}
