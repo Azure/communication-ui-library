@@ -479,6 +479,9 @@ export interface CallState {
 }
 
 // @public
+export type CallStateModifier = (state: CallClientState) => void;
+
+// @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
@@ -1244,8 +1247,11 @@ export const namedLocales: Record<string, {
     displayName: string;
 }>;
 
+// @public
+export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
+
 // @public (undocumented)
-export const newClearErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
+export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
 
 // @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
@@ -1514,6 +1520,7 @@ export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
+    modifyState(modifier: CallStateModifier): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
