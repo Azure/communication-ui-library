@@ -298,6 +298,12 @@ export type CallCompositeProps = {
 };
 
 // @public (undocumented)
+export interface CallCompositeStrings {
+    // (undocumented)
+    localDeviceSettings: LocalDeviceSettingsStrings;
+}
+
+// @public (undocumented)
 export type CallEndedListener = (event: {
     callId: string;
 }) => void;
@@ -415,6 +421,21 @@ export type ChatUIState = {
     error?: Error;
 };
 
+// @public
+export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
+
+// @public
+export interface CompositeLocale {
+    component: Locale;
+    strings: CompositeStrings;
+}
+
+// @public
+export interface CompositeStrings {
+    // (undocumented)
+    call: CallCompositeStrings;
+}
+
 // @public (undocumented)
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, callClientOptions }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
@@ -452,6 +473,12 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CallIdentifierKinds;
     isSpeaking: boolean;
 }) => void;
+
+// @public (undocumented)
+export interface LocalDeviceSettingsStrings {
+    // (undocumented)
+    cameraPermissionDenied: string;
+}
 
 // @public
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;

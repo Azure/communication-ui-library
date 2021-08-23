@@ -1,0 +1,7 @@
+{
+  "call": {
+    "localDeviceSettings": {
+      "cameraPermissionDenied": "Your browser is blocking access to your camera"
+    }
+  }
+}
