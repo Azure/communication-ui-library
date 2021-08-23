@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { MicOn20Filled, MicOff20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { Icon } from '@fluentui/react';
 
 /**
  * Strings of MicrophoneButton that can be overridden
@@ -32,10 +32,8 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
   strings?: Partial<MicrophoneButtonStrings>;
 }
 
-const onRenderMicOnIcon = (): JSX.Element => <MicOn20Filled primaryFill="currentColor" key={'microphoneIconKey'} />;
-const onRenderMicOffIcon = (): JSX.Element => (
-  <MicOff20Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
-);
+const onRenderMicOnIcon = (): JSX.Element => <Icon iconName="MicrophoneOn" />;
+const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="MicrophoneOff" />;
 
 /**
  * `MicrophoneButton` allows you to easily create a component for rendering an audio button. It can be used in your ControlBar component for example.

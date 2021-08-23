@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { concatStyleSets, Icon } from '@fluentui/react';
 import React from 'react';
-import { concatStyleSets } from '@fluentui/react';
-import { CallEnd20Filled } from '@fluentui/react-icons';
-import { endCallControlButtonStyles } from './styles/ControlBar.styles';
-import { lightTheme, darkTheme } from '../theming/themes';
-import { isDarkThemed } from '../theming/themeUtils';
-import { useTheme } from '../theming';
 import { useLocale } from '../localization';
+import { useTheme } from '../theming';
+import { darkTheme, lightTheme } from '../theming/themes';
+import { isDarkThemed } from '../theming/themeUtils';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { endCallControlButtonStyles } from './styles/ControlBar.styles';
 
 /**
  * Strings of EndCallButton that can be overridden
@@ -37,7 +36,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   strings?: EndCallButtonStrings;
 }
 
-const onRenderEndCallIcon = (): JSX.Element => <CallEnd20Filled primaryFill="currentColor" key={'callEndIconKey'} />;
+const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="EndCall" />;
 
 /**
  * `EndCallButton` allows you to easily create a component for rendering a end call button. It can be used in your ControlBar component for example.

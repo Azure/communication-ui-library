@@ -1,22 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { mergeStyles, TooltipHost } from '@fluentui/react';
+import { Icon, mergeStyles, TooltipHost } from '@fluentui/react';
+import { ErrorCircle20Regular } from '@fluentui/react-icons';
 import { MessageStatus } from '@internal/acs-ui-common';
+import React from 'react';
+import { useLocale } from '../localization';
+import { useTheme } from '../theming';
+import { BaseCustomStylesProps } from '../types';
 import {
   MessageStatusIndicatorErrorIconStyle,
   MessageStatusIndicatorIconStyle
 } from './styles/MessageStatusIndicator.styles';
-import {
-  Circle20Regular,
-  CheckmarkCircle20Regular,
-  ErrorCircle20Regular,
-  EyeShow20Filled
-} from '@fluentui/react-icons';
-import { BaseCustomStylesProps } from '../types';
-import { useLocale } from '../localization';
-import { useTheme } from '../theming';
 
 /**
  * Strings of MessageStatusIndicator that can be overridden
@@ -78,7 +73,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'sending':
       return (
         <TooltipHost content={strings.sendingTooltipText}>
-          <Circle20Regular
+          <Icon
+            iconName="Circle"
             className={mergeStyles(
               MessageStatusIndicatorIconStyle,
               { color: theme.palette.themePrimary },
@@ -90,13 +86,14 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'seen':
       return (
         <TooltipHost content={strings.seenTooltipText}>
-          <EyeShow20Filled className={mergeStyles({ color: theme.palette.black }, styles?.root)} />
+          <Icon iconName="EyeShow" className={mergeStyles({ color: theme.palette.black }, styles?.root)} />
         </TooltipHost>
       );
     case 'delivered':
       return (
         <TooltipHost content={strings.deliveredTooltipText}>
-          <CheckmarkCircle20Regular
+          <Icon
+            iconName="CheckMark"
             className={mergeStyles(
               MessageStatusIndicatorIconStyle,
               { color: theme.palette.themePrimary },
