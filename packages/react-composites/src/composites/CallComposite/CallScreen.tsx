@@ -20,7 +20,7 @@ import { getCallId, getEndedCall } from './selectors/baseSelectors';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
-import { OnRenderAvatarCallback, VideoStreamOptions } from '@internal/react-components';
+import { ErrorBar, OnRenderAvatarCallback, VideoStreamOptions } from '@internal/react-components';
 import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
@@ -31,6 +31,7 @@ import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBan
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { usePropsFor } from './hooks/usePropsFor';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
@@ -62,6 +63,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
   const complianceBannerProps = useSelector(complianceBannerSelector);
+  const errorBarProps = usePropsFor(ErrorBar);
 
   const lobbyProps = useSelector(lobbySelector);
   const lobbyHandlers = useHandlers(Lobby);
@@ -130,6 +132,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               microphonePermissionGranted={devicePermissions.audio}
               cameraPermissionGranted={devicePermissions.video}
             />
+          </Stack.Item>
+          <Stack.Item style={{ width: '100%' }}>
+            <ErrorBar {...errorBarProps} />
           </Stack.Item>
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (

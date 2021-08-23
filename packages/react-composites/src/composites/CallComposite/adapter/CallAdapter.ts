@@ -10,7 +10,7 @@ import type {
   RemoteParticipant
 } from '@azure/communication-calling';
 
-import { VideoStreamOptions } from '@internal/react-components';
+import { ErrorType, VideoStreamOptions } from '@internal/react-components';
 import type {
   CommunicationUserKind,
   PhoneNumberKind,
@@ -139,6 +139,11 @@ export interface CallAdapter {
   createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
 
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+
+  /**
+   * Clear errors for given error types from {@link CallAdapter.getState.latestErrors}.
+   */
+  clearErrors(errorTypes: ErrorType[]): void;
 
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
