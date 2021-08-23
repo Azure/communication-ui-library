@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   CommunicationParticipant,
   DefaultMessageRendererType,
@@ -27,18 +27,19 @@ import {
   participantListStyle,
   participantListContainerPadding
 } from './styles/Chat.styles';
+import { AvatarPersonaDataCallback, AvatarPersona } from '../common/AvatarPersona';
 
 export type ChatScreenProps = {
   showErrorBar?: boolean;
   showParticipantPane?: boolean;
   showTopic?: boolean;
-  onRenderAvatar?: (userId: string, avatarType?: 'chatThread' | 'participantList') => JSX.Element;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onRenderAvatar, onRenderMessage, onRenderTypingIndicator, showParticipantPane, showTopic } = props;
+  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, showParticipantPane, showTopic } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -56,16 +57,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
-  const onRenderMessageAvatar = useMemo(
-    () => onRenderAvatar && ((userId: string) => onRenderAvatar(userId, 'chatThread')),
-    [onRenderAvatar]
-  );
-
-  const onRenderParticipantAvatar = useMemo(
-    () =>
-      onRenderAvatar &&
-      ((participant: CommunicationParticipant) => onRenderAvatar(participant.userId, 'participantList')),
-    [onRenderAvatar]
+  const onRenderAvatarCallback = useCallback(
+    (userId, options) => {
+      return <AvatarPersona userId={userId} {...options} dataProvider={onFetchAvatarPersonaData} />;
+    },
+    [onFetchAvatarPersonaData]
   );
 
   return (
@@ -76,7 +72,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           {props.showErrorBar ? <ErrorBar {...errorBarProps} /> : <></>}
           <MessageThread
             {...messageThreadProps}
-            onRenderAvatar={onRenderMessageAvatar}
+            onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
           />
@@ -96,7 +92,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>In this chat</Stack.Item>
               <Stack.Item className={participantListStyle}>
-                <ParticipantList {...participantListProps} onRenderAvatar={onRenderParticipantAvatar} />
+                <ParticipantList
+                  {...participantListProps}
+                  onRenderAvatar={(userId, options) => (
+                    <AvatarPersona
+                      data-ui-id="chat-composite-participant-custom-avatar"
+                      userId={userId}
+                      {...options}
+                      dataProvider={onFetchAvatarPersonaData}
+                    />
+                  )}
+                />
               </Stack.Item>
             </Stack>
           </Stack.Item>

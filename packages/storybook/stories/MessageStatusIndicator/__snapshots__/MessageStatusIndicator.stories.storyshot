@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
       }
     >
       <div
-        className="ms-TooltipHost root-1"
+        className="ms-TooltipHost root-2"
         onBlurCapture={[Function]}
         onFocusCapture={[Function]}
         onKeyDown={[Function]}
@@ -30,8 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
       >
         <span
           aria-hidden={true}
-          className="root-span css-63"
-          primaryFill="currentColor"
+          className="root-span css-63 css-1"
         >
           <svg
             className="svg"

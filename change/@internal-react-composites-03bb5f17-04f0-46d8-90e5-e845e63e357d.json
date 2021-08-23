@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix screenshare dialog eating user input across the whole web page",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

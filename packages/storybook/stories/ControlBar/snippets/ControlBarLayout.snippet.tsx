@@ -5,7 +5,6 @@ import {
   FluentThemeProvider,
   MicrophoneButton,
   OptionsButton,
-  ParticipantListProps,
   ParticipantsButton,
   ScreenShareButton
 } from '@azure/communication-react';
@@ -19,10 +18,6 @@ const componentMainDivStyle = {
   justifyContent: 'center'
 };
 
-const mockParticipantsProps: ParticipantListProps = {
-  participants: []
-};
-
 export const ControlBarLayoutExample: () => JSX.Element = () => {
   return (
     <div style={componentMainDivStyle}>
@@ -31,7 +26,7 @@ export const ControlBarLayoutExample: () => JSX.Element = () => {
           <CameraButton />
           <MicrophoneButton />
           <ScreenShareButton />
-          <ParticipantsButton participantListProps={mockParticipantsProps} />
+          <ParticipantsButton participants={[]} />
           <OptionsButton />
           <EndCallButton />
         </ControlBar>

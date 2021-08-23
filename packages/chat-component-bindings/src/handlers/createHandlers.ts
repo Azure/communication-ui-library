@@ -4,7 +4,7 @@
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatErrorTargets, newClearChatErrorsModifier, StatefulChatClient } from '@internal/chat-stateful-client';
+import { ChatErrorTarget, newClearChatErrorsModifier, StatefulChatClient } from '@internal/chat-stateful-client';
 import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
@@ -65,7 +65,7 @@ export const createDefaultChatHandlers = memoizeOne(
         return isAllChatMessagesLoaded;
       },
       onDismissErrors: (errorTypes: ErrorType[]) => {
-        const targets: Set<ChatErrorTargets> = new Set();
+        const targets: Set<ChatErrorTarget> = new Set();
         for (const errorType of errorTypes) {
           switch (errorType) {
             case 'unableToReachChatService':
@@ -85,7 +85,7 @@ export const createDefaultChatHandlers = memoizeOne(
   }
 );
 
-const accessErrorTargets: ChatErrorTargets[] = [
+const accessErrorTargets: ChatErrorTarget[] = [
   'ChatThreadClient.getProperties',
   'ChatThreadClient.listMessages',
   'ChatThreadClient.listParticipants',
@@ -93,7 +93,7 @@ const accessErrorTargets: ChatErrorTargets[] = [
   'ChatThreadClient.sendTypingNotification'
 ];
 
-const addAccessErrorTargets = (targets: Set<ChatErrorTargets>): void => {
+const addAccessErrorTargets = (targets: Set<ChatErrorTarget>): void => {
   for (const target of accessErrorTargets) {
     targets.add(target);
   }

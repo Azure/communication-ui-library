@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Workaround before we get sequenceId from signal",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

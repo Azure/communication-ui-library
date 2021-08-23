@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallClientState, CallErrorTargets } from '../CallClientState';
+import { CallClientState, CallErrorTarget } from '../CallClientState';
 import { CallStateModifier } from '../StatefulCallClient';
 
 /**
@@ -11,7 +11,7 @@ import { CallStateModifier } from '../StatefulCallClient';
  *
  * @param targets - CallErrorTarget[] to clear the errors for.
  */
-export const newClearCallErrorsModifier = (targets: CallErrorTargets[]): CallStateModifier => {
+export const newClearCallErrorsModifier = (targets: CallErrorTarget[]): CallStateModifier => {
   return (draft: CallClientState): void => {
     for (const target of targets) {
       if (draft.latestErrors[target] !== undefined) {

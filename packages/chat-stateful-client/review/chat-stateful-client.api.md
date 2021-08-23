@@ -26,18 +26,18 @@ export type ChatClientState = {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTargets, inner: Error);
+    constructor(target: ChatErrorTarget, inner: Error);
     inner: Error;
-    target: ChatErrorTargets;
+    target: ChatErrorTarget;
 }
 
 // @public
 export type ChatErrors = {
-    [target in ChatErrorTargets]: Error;
+    [target in ChatErrorTarget]: Error;
 };
 
 // @public
-export type ChatErrorTargets = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
+export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
 
 // @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage & {
@@ -72,7 +72,11 @@ export type ChatThreadProperties = {
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
+<<<<<<< HEAD
 export const newClearChatErrorsModifier: (targets: ChatErrorTargets[]) => ChatStateModifier;
+=======
+export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
+>>>>>>> origin/main
 
 // @public (undocumented)
 export interface StatefulChatClient extends ChatClient {

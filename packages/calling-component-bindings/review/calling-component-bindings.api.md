@@ -264,18 +264,14 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 
 // @public (undocumented)
 export const participantsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-    participantListProps: {
-        participants: CallParticipant[];
-        myUserId: string;
-    };
+    participants: CallParticipant[];
+    myUserId: string;
 }, (res: {
     participants: CallParticipant[];
     myUserId: string;
 }) => {
-    participantListProps: {
-        participants: CallParticipant[];
-        myUserId: string;
-    };
+    participants: CallParticipant[];
+    myUserId: string;
 }>;
 
 // @public (undocumented)
