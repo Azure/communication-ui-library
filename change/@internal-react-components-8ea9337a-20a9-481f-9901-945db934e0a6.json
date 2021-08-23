@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated available locales and translations.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
