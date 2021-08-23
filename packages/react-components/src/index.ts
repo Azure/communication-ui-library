@@ -3,6 +3,7 @@
 
 export * from './components';
 export * from './localization';
+export * from './locales';
 export * from './theming';
 export * from './identifiers';
 
