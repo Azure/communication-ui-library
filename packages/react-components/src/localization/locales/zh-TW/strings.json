@@ -67,6 +67,12 @@
     "accessDenied": "無法存取聊天服務 - 請檢查提供的使用者認證",
     "userNotInThisThread": "您已不在此聊天對話中",
     "sendMessageNotInThisThread": "無法傳送訊息，因為您已不在此聊天對話中",
-    "sendMessageGeneric": "無法傳送訊息"
+    "sendMessageGeneric": "無法傳送訊息",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
   }
 }

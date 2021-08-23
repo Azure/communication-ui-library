@@ -67,6 +67,12 @@
     "accessDenied": "채팅 서비스에 액세스할 수 없습니다. 제공된 사용자 자격 증명을 확인하세요.",
     "userNotInThisThread": "이 채팅 스레드에 더 이상 없습니다.",
     "sendMessageNotInThisThread": "이 채팅 스레드에 더 이상 존재하지 않으므로 메시지를 보내지 못했습니다.",
-    "sendMessageGeneric": "메시지를 보내지 못했습니다"
+    "sendMessageGeneric": "메시지를 보내지 못했습니다",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
   }
 }

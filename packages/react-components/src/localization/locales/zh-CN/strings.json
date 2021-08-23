@@ -67,6 +67,12 @@
     "accessDenied": "无法访问聊天服务 - 请检查提供的用户凭据",
     "userNotInThisThread": "你不再处于此聊天会话中",
     "sendMessageNotInThisThread": "无法发送消息，因为你不再在此聊天会话中",
-    "sendMessageGeneric": "未能发送消息"
+    "sendMessageGeneric": "未能发送消息",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
   }
 }

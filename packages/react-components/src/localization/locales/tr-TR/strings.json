@@ -67,6 +67,12 @@
     "accessDenied": "Sohbet hizmetlerine erişilemedi. Lütfen sağlanan kullanıcı kimlik bilgilerini denetleyin",
     "userNotInThisThread": "Artık bu sohbet yazışması içinde değilsiniz",
     "sendMessageNotInThisThread": "Artık bu sohbet yazışması içinde olmadığınız için ileti gönderilemedi",
-    "sendMessageGeneric": "İleti gönderilemedi"
+    "sendMessageGeneric": "İleti gönderilemedi",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
   }
 }

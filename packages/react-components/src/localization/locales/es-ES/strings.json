@@ -67,6 +67,12 @@
     "accessDenied": "No se puede acceder a los servicios de chat. Compruebe las credenciales de usuario proporcionadas.",
     "userNotInThisThread": "Ya no está en este hilo de chat",
     "sendMessageNotInThisThread": "No se pudo enviar el mensaje porque ya no está en este hilo de chat",
-    "sendMessageGeneric": "Error al enviar el mensaje"
+    "sendMessageGeneric": "Error al enviar el mensaje",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
   }
 }

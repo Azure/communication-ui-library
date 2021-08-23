@@ -67,6 +67,12 @@
     "accessDenied": "Impossible d’accéder aux services de conversation. Vérifiez les informations d’identification de l’utilisateur fournies",
     "userNotInThisThread": "Vous n’est plus dans ce thread de conversation",
     "sendMessageNotInThisThread": "Échec de l’envoi du message car vous n’êtes plus dans ce thread de conversation",
-    "sendMessageGeneric": "Échec de l’envoi du message"
+    "sendMessageGeneric": "Échec de l’envoi du message",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
   }
 }

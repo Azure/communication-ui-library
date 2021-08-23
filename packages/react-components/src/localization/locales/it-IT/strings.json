@@ -67,6 +67,12 @@
     "accessDenied": "Non è possibile accedere ai servizi di chat. Controllare le credenziali utente specificate",
     "userNotInThisThread": "Non fai più parte di questo thread di chat",
     "sendMessageNotInThisThread": "Non è stato possibile inviare il messaggio perché non sei più in questo thread di chat",
-    "sendMessageGeneric": "Impossibile inviare il messaggio"
+    "sendMessageGeneric": "Impossibile inviare il messaggio",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
   }
 }

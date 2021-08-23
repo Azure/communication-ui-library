@@ -67,6 +67,12 @@
     "accessDenied": "チャット サービスにアクセスできません- 指定されたユーザー資格情報をご確認ください",
     "userNotInThisThread": "このチャット スレッドにはもう参加していません",
     "sendMessageNotInThisThread": "このチャット スレッドに参加していないため、メッセージを送信できませんでした",
-    "sendMessageGeneric": "メッセージを送信できませんでした。"
+    "sendMessageGeneric": "メッセージを送信できませんでした。",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
   }
 }
