@@ -1084,9 +1084,6 @@ export interface Locale {
 }
 
 // @public
-export const LocaleContext: React_2.Context<Locale>;
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
@@ -1239,13 +1236,6 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
-
-// @public
-export const namedLocales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public
 export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
@@ -1687,9 +1677,6 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
-
-// @public
-export const useLocale: () => Locale;
 
 // @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;

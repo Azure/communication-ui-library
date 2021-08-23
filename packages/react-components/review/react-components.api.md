@@ -286,9 +286,6 @@ export interface Locale {
 }
 
 // @public
-export const LocaleContext: React_2.Context<Locale>;
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
@@ -614,9 +611,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
-
-// @public
-export const useLocale: () => Locale;
 
 // @public
 export const useTheme: () => Theme;
