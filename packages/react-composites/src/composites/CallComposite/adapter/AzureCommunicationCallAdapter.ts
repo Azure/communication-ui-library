@@ -40,7 +40,7 @@ import {
   ParticipantLeftListener
 } from './CallAdapter';
 import { isInCall } from '../../../utils';
-import { VideoStreamOptions } from '@internal/react-components';
+import { ErrorType, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
@@ -189,6 +189,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.setPage.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    this.clearErrors.bind(this);
     this.on.bind(this);
     this.off.bind(this);
   }
@@ -393,6 +394,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public offStateChange(handler: (state: CallAdapterState) => void): void {
     this.context.offStateChange(handler);
+  }
+
+  public clearErrors(errorTypes: ErrorType[]): void {
+    this.handlers.onDismissErrors(errorTypes);
   }
 
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
