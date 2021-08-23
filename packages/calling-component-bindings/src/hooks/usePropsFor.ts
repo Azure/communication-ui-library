@@ -4,6 +4,7 @@
 import {
   CameraButton,
   EndCallButton,
+  ErrorBar,
   MicrophoneButton,
   OptionsButton,
   ParticipantList,
@@ -25,6 +26,7 @@ import { Common } from '@internal/acs-ui-common';
 import { AreEqual } from '@internal/acs-ui-common';
 import { DefaultCallingHandlers } from '../handlers/createHandlers';
 import { ParticipantsButton } from '@internal/react-components';
+import { errorBarSelector } from '../errorBarSelector';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
@@ -61,6 +63,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? typeof participantsButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
   ? typeof emptySelector
+  : AreEqual<Component, typeof ErrorBar> extends true
+  ? typeof errorBarSelector
   : undefined;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -88,6 +92,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return participantsButtonSelector;
     case EndCallButton:
       return emptySelector;
+    case ErrorBar:
+      return errorBarSelector;
   }
   return undefined;
 };

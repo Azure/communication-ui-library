@@ -104,7 +104,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can change the render of the `ParticipantsButton` as you would do for any Button (onRenderIcon,
         onRenderText, etc... ) with the addition of customizing the render of the participant list (see
-        [ParticipantList](/?path=/docs/ui-components-participantlist--participant-list) component).
+        [ParticipantList](./?path=/docs/ui-components-participantlist--participant-list) component).
       </Description>
       <Canvas mdxSource={ParticipantsButtonWithCustomRenderExampleText}>
         <ParticipantsButtonWithCustomRenderExample />
