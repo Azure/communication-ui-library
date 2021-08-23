@@ -2,11 +2,18 @@
 // Licensed under the MIT license.
 
 import { CommunicationUserIdentifier, CommunicationUserKind } from '@azure/communication-common';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import {
+  AvatarPersonaData,
+  ChatAdapter,
+  ChatComposite,
+  createAzureCommunicationChatAdapter
+} from '@azure/communication-react';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { createAutoRefreshingCredential } from './utils/credential';
+import { fetchEmojiForUser } from './utils/emojiCache';
+import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
 // import { onRenderAvatar } from './Avatar';
 
@@ -62,6 +69,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [displayName, endpointUrl, threadId, token, userId, errorHandler, endChatHandler]);
 
   if (adapter) {
+    const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
+      fetchEmojiForUser(userId).then(
+        (emoji) =>
+          new Promise((resolve, reject) => {
+            return resolve({
+              imageInitials: emoji,
+              initialsColor: getBackgroundColor(emoji)?.backgroundColor
+            });
+          })
+      );
+
     return (
       <Stack style={{ height: '100%', width: '100%' }}>
         <PrimaryButton
@@ -77,6 +95,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           adapter={adapter}
           fluentTheme={currentTheme.theme}
           options={{ showParticipantPane: true, showTopic: true }}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
         />
       </Stack>
     );
