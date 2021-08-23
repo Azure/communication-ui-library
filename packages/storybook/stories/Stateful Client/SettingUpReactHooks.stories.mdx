@@ -8,7 +8,7 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 [React Hooks](https://reactjs.org/docs/hooks-intro.html) allows developers to use state and other react features without writing a class component.
 
 While you can choose any state management library such as Redux, we also provide a simple way to power react components with our Stateful SDK.
-We provide two [custom hooks](https://reactjs.org/docs/hooks-custom.html) in our library, [usePropsFor()](/?path=/docs/statefulclient-reacthooks-usepropsfor--page) and [useSelector()](/?path=/docs/statefulclient-reacthooks-useselector--page), that allow you to subscribe to changes in the SDK state and bind to our UI components.
+We provide two [custom hooks](https://reactjs.org/docs/hooks-custom.html) in our library, [usePropsFor()](./?path=/docs/statefulclient-reacthooks-usepropsfor--page) and [useSelector()](./?path=/docs/statefulclient-reacthooks-useselector--page), that allow you to subscribe to changes in the SDK state and bind to our UI components.
 After binding with the custom hooks a SDK state change will trigger a re-render of the UI component, and events on the component will call into the SDK clients.
 
 ## Before you Start
@@ -21,7 +21,7 @@ There are different Providers for building apps with varying functionality:
 
 For your Chat app, use the `ChatClientProvider` and `ChatThreadClientProvider` to give hooks access to the `ChatClient` and `ChatThreadClient`.
 `statefulChatClient` and `chatThreadClient` instances need to be passed to the Provider when you wrap your app.
-For more information on creating them, see [Overview](/?path=/docs/statefulclient-overview--page)
+For more information on creating them, see [Overview](./?path=/docs/statefulclient-overview--page)
 
 ```tsx
 ReactDOM.render(
@@ -38,7 +38,7 @@ ReactDOM.render(
 
 For your Chat app, use the `CallClientProvider`, `CallAgentProvider` and `CallProvider` to give hooks access to the `CallClient`, `CallAgentClient` and `Call`.
 `statefulCallClient`, `callAgent` and `call` instances need to be passed to the Provider when you wrap your app.
-For more information on creating them, see [Overview](/?path=/docs/statefulclient-overview--page)
+For more information on creating them, see [Overview](./?path=/docs/statefulclient-overview--page)
 
 ```tsx
 ReactDOM.render(
@@ -57,4 +57,4 @@ ReactDOM.render(
 
 Once you have wrapped your entire app with providers, you are now can use the usePropsFor() method inside of your app to connect your components to the state.
 
-To see a full end-to-end example using providers, see [Getting Started with StatefulClient](/?path=/docs/quickstarts-statefulclient--page)
+To see a full end-to-end example using providers, see [Getting Started with StatefulClient](./?path=/docs/quickstarts-statefulclient--page)
