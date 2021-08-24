@@ -83,7 +83,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       page.bringToFront();
 
       // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
-      // this is for disable transition/animation for the participant list
+      // this is for disable transition/animation of participant list
       await disableAnimation(page);
 
       await page.click(dataUiId('call-composite-participants-button'));
