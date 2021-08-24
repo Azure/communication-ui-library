@@ -12,8 +12,7 @@ export const chatHeaderContainerStyle = mergeStyles({
   '@media (max-width: 65rem)': {
     paddingLeft: '5%',
     paddingRight: '5%'
-  },
-  borderBottom: '0.063rem solid #DDDDDD'
+  }
 });
 
 export const topicNameContainerStyle = mergeStyles({
