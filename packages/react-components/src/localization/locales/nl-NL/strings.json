@@ -68,11 +68,11 @@
     "userNotInThisThread": "U bent niet meer aanwezig in deze chatthread",
     "sendMessageNotInThisThread": "Verzenden van bericht is mislukt omdat u zich niet meer in deze chatthread bevindt",
     "sendMessageGeneric": "Kan bericht niet verzenden",
-    "startVideoGeneric": "Failed to start video",
-    "stopVideoGeneric": "Failed to stop video",
-    "muteGeneric": "Failed to mute microphone",
-    "unmuteGeneric": "Failed to unmute microphone",
-    "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing"
+    "startVideoGeneric": "Kan video niet starten",
+    "stopVideoGeneric": "Kan video niet stoppen",
+    "muteGeneric": "Kan microfoon niet dempen",
+    "unmuteGeneric": "Kan dempen van microfoon niet opheffen",
+    "startScreenShareGeneric": "Kan scherm delen niet starten",
+    "stopScreenShareGeneric": "Kan scherm delen niet stoppen"
   }
 }

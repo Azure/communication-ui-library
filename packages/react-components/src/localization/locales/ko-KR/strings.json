@@ -68,11 +68,11 @@
     "userNotInThisThread": "이 채팅 스레드에 더 이상 없습니다.",
     "sendMessageNotInThisThread": "이 채팅 스레드에 더 이상 존재하지 않으므로 메시지를 보내지 못했습니다.",
     "sendMessageGeneric": "메시지를 보내지 못했습니다",
-    "startVideoGeneric": "Failed to start video",
-    "stopVideoGeneric": "Failed to stop video",
-    "muteGeneric": "Failed to mute microphone",
-    "unmuteGeneric": "Failed to unmute microphone",
-    "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing"
+    "startVideoGeneric": "비디오를 시작하지 못함",
+    "stopVideoGeneric": "비디오를 중지하지 못함",
+    "muteGeneric": "마이크를 음소거하지 못함",
+    "unmuteGeneric": "마이크 음소거를 해제하지 못함",
+    "startScreenShareGeneric": "화면 공유를 시작하지 못함",
+    "stopScreenShareGeneric": "화면 공유를 중지하지 못함"
   }
 }

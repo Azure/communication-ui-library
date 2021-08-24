@@ -27,8 +27,8 @@
     "offLabel": "Habilitar"
   },
   "microphoneButton": {
-    "onLabel": "Mudo",
-    "offLabel": "Desativar Mudo"
+    "onLabel": "Mute",
+    "offLabel": "Unmute"
   },
   "optionsButton": {
     "label": "Opções",
@@ -68,11 +68,11 @@
     "userNotInThisThread": "Você não está mais neste tópico de chat",
     "sendMessageNotInThisThread": "Falha ao enviar mensagem porque você não está mais neste thread de chat",
     "sendMessageGeneric": "Falha ao enviar mensagem",
-    "startVideoGeneric": "Failed to start video",
-    "stopVideoGeneric": "Failed to stop video",
-    "muteGeneric": "Failed to mute microphone",
-    "unmuteGeneric": "Failed to unmute microphone",
-    "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing"
+    "startVideoGeneric": "Falha ao iniciar o vídeo",
+    "stopVideoGeneric": "Falha ao interromper o vídeo",
+    "muteGeneric": "Falha ao ativar mudo do microfone",
+    "unmuteGeneric": "Falha ao desativar mudo do microfone",
+    "startScreenShareGeneric": "Falha ao iniciar o compartilhamento de tela",
+    "stopScreenShareGeneric": "Falha ao interromper o compartilhamento de tela"
   }
 }

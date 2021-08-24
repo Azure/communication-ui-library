@@ -68,11 +68,11 @@
     "userNotInThisThread": "Sie sind nicht mehr in diesem Chatthread vertreten.",
     "sendMessageNotInThisThread": "Fehler beim Senden der Nachricht, weil Sie sich nicht mehr in diesem Chatthread befinden.",
     "sendMessageGeneric": "Fehler beim Senden der Nachricht",
-    "startVideoGeneric": "Failed to start video",
-    "stopVideoGeneric": "Failed to stop video",
-    "muteGeneric": "Failed to mute microphone",
-    "unmuteGeneric": "Failed to unmute microphone",
-    "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing"
+    "startVideoGeneric": "Video konnte nicht gestartet werden",
+    "stopVideoGeneric": "Video konnte nicht beendet werden",
+    "muteGeneric": "Mikrofon konnte nicht stummgeschaltet werden",
+    "unmuteGeneric": "Stummschaltung des Mikrofons konnte nicht beendet werden",
+    "startScreenShareGeneric": "Bildschirmfreigabe konnte nicht gestartet werden",
+    "stopScreenShareGeneric": "Bildschirmfreigabe konnte nicht beendet werden"
   }
 }
