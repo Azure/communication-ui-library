@@ -34,8 +34,9 @@ test.describe('Call Composite E2E Tests', () => {
   test('local device settings can toggle camera & audio', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
-      page.bringToFront();
       await stubLocalCameraName(page);
+      await page.waitForSelector(dataUiId('call-composite-device-settings'));
+      await page.waitForSelector(dataUiId('call-composite-local-preview'));
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-disabled.png`);
       await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
       await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
@@ -81,9 +82,10 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       page.bringToFront();
 
       await page.click(dataUiId('call-composite-participants-button'));
-      // Clicking on participants icon displays a dropdown menu that has an animation.
-      // We wait 1 second for that animation to complete.
-      await page.waitForTimeout(1000);
+      const buttonCallOut = await page.waitForSelector('.ms-Callout');
+      // This will ensure no animation is happening for the callout
+      await buttonCallOut.waitForElementState('stable');
+
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-participants.png`);
     }
   });

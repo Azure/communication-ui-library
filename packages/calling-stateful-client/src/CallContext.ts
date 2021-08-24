@@ -32,6 +32,8 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
+import { CallStateModifier } from './StatefulCallClient';
+import { newClearCallErrorsModifier } from './modifiers';
 
 enableMapSet();
 
@@ -43,6 +45,7 @@ export class CallContext {
   private _state: CallClientState;
   private _emitter: EventEmitter;
   private _atomicId: number;
+  private _batchMode: boolean;
 
   constructor(userId: CommunicationUserKind, maxListeners = 50) {
     this._state = {
@@ -63,17 +66,59 @@ export class CallContext {
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
-
+    this._batchMode = false;
     this._atomicId = 0;
-  }
-
-  public setState(state: CallClientState): void {
-    this._state = state;
-    this._emitter.emit('stateChanged', this._state);
   }
 
   public getState(): CallClientState {
     return this._state;
+  }
+
+  public setState(state: CallClientState): void {
+    this._state = state;
+    if (!this._batchMode) {
+      this._emitter.emit('stateChanged', this._state);
+    }
+  }
+
+  public modifyState(modifier: CallStateModifier): void {
+    this.batch(() => {
+      this.setState(
+        produce(this._state, (draft: CallClientState) => {
+          modifier(draft);
+        })
+      );
+    });
+  }
+
+  /**
+   * Batch updates to minimize `stateChanged` events across related operations.
+   *
+   * - A maximum of one `stateChanged` event is emitted, at the end of the operations.
+   * - No `stateChanged` event is emitted if the state did not change through the operations.
+   * - In case of an exception, state is reset to the prior value and no `stateChanged` event is emitted.
+   *
+   * All operations finished in this batch should be synchronous.
+   * This function is not reentrant -- do not call batch() from within another batch().
+   */
+  public batch(operations: () => void): void {
+    if (this._batchMode) {
+      throw new Error('batch() called from within another batch()');
+    }
+
+    this._batchMode = true;
+    const priorState = this._state;
+    try {
+      operations();
+      if (this._state !== priorState) {
+        this._emitter.emit('stateChanged', this._state);
+      }
+    } catch (e) {
+      this._state = priorState;
+      throw e;
+    } finally {
+      this._batchMode = false;
+    }
   }
 
   public onStateChange(handler: (state: CallClientState) => void): void {
@@ -663,15 +708,9 @@ export class CallContext {
   ): (...args: Args) => Promise<R> {
     return async (...args: Args): Promise<R> => {
       try {
-        const response = await action(...args);
-
-        if (clearTargets !== undefined) {
-          this.clearError(clearTargets);
-        } else {
-          this.clearError([target]);
-        }
-
-        return response;
+        const ret = await action(...args);
+        this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
+        return ret;
       } catch (error) {
         this.setLatestError(target, error);
         throw new CallError(target, error);
@@ -698,13 +737,7 @@ export class CallContext {
     return (...args: Args): R => {
       try {
         const ret = action(...args);
-
-        if (clearTargets !== undefined) {
-          this.clearError(clearTargets);
-        } else {
-          this.clearError([target]);
-        }
-
+        this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);
@@ -719,20 +752,5 @@ export class CallContext {
         draft.latestErrors[target] = error;
       })
     );
-  }
-
-  public clearError(targets: CallErrorTarget[]): void {
-    let changed = false;
-    const newState = produce(this._state, (draft: CallClientState) => {
-      for (const target of targets) {
-        if (draft.latestErrors[target] !== undefined) {
-          delete draft.latestErrors[target];
-          changed = true;
-        }
-      }
-    });
-    if (changed) {
-      this.setState(newState);
-    }
   }
 }

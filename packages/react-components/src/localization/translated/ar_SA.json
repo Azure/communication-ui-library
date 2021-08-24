@@ -67,6 +67,12 @@
     "accessDenied": "يتعذر الوصول إلى خدمات الدردشة - يرجى التحقق من بيانات اعتماد المستخدم المقدمة",
     "userNotInThisThread": "لم تعد في موضوع الدردشة هذا",
     "sendMessageNotInThisThread": "فشل إرسال الرسالة لأنك لم تعد في سلسلة المحادثة هذه",
-    "sendMessageGeneric": "فشل إرسال رسالة"
+    "sendMessageGeneric": "فشل إرسال رسالة",
+    "startVideoGeneric": "فشل بدء الفيديو",
+    "stopVideoGeneric": "فشل في إيقاف الفيديو",
+    "muteGeneric": "فشل كتم صوت الميكروفون",
+    "unmuteGeneric": "فشل إعادة صوت الميكروفون",
+    "startScreenShareGeneric": "فشل بدء مشاركة الشاشة",
+    "stopScreenShareGeneric": "فشل في إيقاف مشاركة الشاشة"
   }
 }

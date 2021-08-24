@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix tsdoc comments - rename @Link -> @link",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

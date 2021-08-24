@@ -20,7 +20,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
-import type { ErrorType } from '@internal/react-components';
+import { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { Identifiers } from '@internal/react-components';
 import { Locale } from '@internal/react-components';
@@ -56,6 +56,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, locator: TeamsMeetingLinkLocator | GroupCallLocator, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // (undocumented)
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
@@ -166,6 +168,7 @@ export type AzureCommunicationChatAdapterArgs = {
 export interface CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
@@ -258,6 +261,12 @@ export type CallAdapterClientState = {
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
+    latestErrors: CallAdapterErrors;
+};
+
+// @public
+export type CallAdapterErrors = {
+    [operation: string]: Error;
 };
 
 // @public (undocumented)

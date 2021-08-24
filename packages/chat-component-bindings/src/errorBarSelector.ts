@@ -4,7 +4,7 @@
 import { getLatestErrors } from './baseSelectors';
 import { ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
-import { ChatErrors, ChatErrorTargets } from '@internal/chat-stateful-client';
+import { ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
 
 /**
  * Select the first fiew active errors from the state for the `ErrorBar` component.
@@ -51,7 +51,7 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
 
 const maxErrorCount = 3;
 
-const accessErrorTargets: ChatErrorTargets[] = [
+const accessErrorTargets: ChatErrorTarget[] = [
   'ChatThreadClient.getProperties',
   'ChatThreadClient.listMessages',
   'ChatThreadClient.listParticipants',
