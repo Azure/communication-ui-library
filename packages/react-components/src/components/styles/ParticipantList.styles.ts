@@ -8,3 +8,5 @@ export const participantListStyle = mergeStyles({
   paddingLeft: '1.125rem',
   paddingRight: '1.125rem'
 });
+
+export const iconStyles = mergeStyles({ height: '100%', margin: 'auto' });
