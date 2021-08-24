@@ -49,6 +49,19 @@ export const stubMessageTimestamps = (page: Page): void => {
   }, messageTimestampId);
 };
 
+export const disableAnimation = async (page: Page): Promise<void> => {
+  await page.addStyleTag({
+    content: `
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    `
+  });
+};
+
 const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
 
 export type IdentityType = {
