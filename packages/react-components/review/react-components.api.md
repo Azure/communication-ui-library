@@ -29,9 +29,6 @@ export type AllKeys<T> = {
 };
 
 // @public
-export const ar_SA: Locale;
-
-// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -226,6 +223,9 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @public
+export const es_ES: Locale;
+
+// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -277,11 +277,20 @@ export interface Identifiers {
     videoGallery: string;
 }
 
+// @public
+export const it_IT: Locale;
+
+// @public
+export const ja_JP: Locale;
+
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
     // (undocumented)
     onClick: () => void;
 }
+
+// @public
+export const ko_KR: Locale;
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
@@ -405,11 +414,7 @@ export interface MicrophoneButtonStrings {
 }
 
 // @public
-export const namedLocales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
+export const nl_NL: Locale;
 
 // @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
@@ -523,6 +528,12 @@ export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
 }
 
 // @public
+export const pt_BR: Locale;
+
+// @public
+export const ru_RU: Locale;
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -598,6 +609,9 @@ export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participa
 
 // @public
 export const ThemeContext: React_2.Context<Theme>;
+
+// @public
+export const tr_TR: Locale;
 
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
@@ -711,6 +725,12 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// @public
+export const zh_CN: Locale;
+
+// @public
+export const zh_TW: Locale;
 
 // (No @packageDocumentation comment for this package)
 
