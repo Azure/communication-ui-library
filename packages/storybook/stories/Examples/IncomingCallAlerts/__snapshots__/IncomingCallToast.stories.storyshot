@@ -108,6 +108,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                 <span
                   aria-hidden={true}
                   className="root-span"
+                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
@@ -142,6 +143,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                 <span
                   aria-hidden={true}
                   className="root-span"
+                  primaryFill="currentColor"
                 >
                   <svg
                     className="svg"
