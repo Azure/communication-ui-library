@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Locale } from './LocalizationProvider';
-import _en_US from '../../../../Resources/strings.json';
+import _en_US from './locales/en-US/strings.json';
 import _de_DE from './locales/de-DE/strings.json';
 import _es_ES from './locales/es-ES/strings.json';
 import _fr_FR from './locales/fr-FR/strings.json';
