@@ -99,23 +99,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         />
       </Stack>
     );
-    //   <Stack className={chatScreenContainerStyle}>
-    //     <ChatHeader
-    //       {...chatHeaderProps}
-    //       {...chatParticipantProps}
-    //       updateThreadTopicName={updateThreadTopicName}
-    //       endChatHandler={endChatHandler}
-    //       selectedPane={selectedPane}
-    //       setSelectedPane={setSelectedPane}
-    //     />
-    //     <Stack className={chatScreenBottomContainerStyle} horizontal={true}>
-    //       <ChatArea onRenderAvatar={onRenderAvatar} />
-    //       <Stack.Item grow disableShrink>
-    //         <SidePanel setSelectedPane={setSelectedPane} selectedPane={selectedPane} onRenderAvatar={onRenderAvatar} />
-    //       </Stack.Item>
-    //     </Stack>
-    //   </Stack>
-    // );
   }
   return <>Initializing...</>;
 };
