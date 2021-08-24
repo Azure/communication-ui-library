@@ -47,9 +47,9 @@ export type LocalizationProviderProps = {
 };
 
 /**
- * @description Provider to provide localized strings for this library's react components.
- * @remarks Components will be provided localized strings in English (US) by default if this
- * provider is not used
+ * Provider to provide localized strings for this library's composites.
+ *
+ * This provider is internal. Do not export in public API.
  */
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
   const { locale, children } = props;

@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { createUserAndGroup } from './snippets/Server.snippet';
@@ -14,6 +15,9 @@ import { ConfigHintBanner } from './snippets/Utils';
 
 const BasicStory = (args, context): JSX.Element => {
   const [containerProps, setContainerProps] = useState();
+  const {
+    globals: { locale }
+  } = context;
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
@@ -35,6 +39,7 @@ const BasicStory = (args, context): JSX.Element => {
           displayName={args.displayName}
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
+          locale={compositeLocale(locale)}
         />
       ) : (
         <ConfigHintBanner />

@@ -3,6 +3,7 @@ import {
   AvatarPersonaData,
   CallAdapter,
   CallComposite,
+  CompositeLocale,
   createAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
@@ -16,6 +17,7 @@ export type ContainerProps = {
   avatarInitials: string;
   callInvitationURL?: string;
   fluentTheme?: PartialTheme | Theme;
+  locale?: CompositeLocale;
 };
 
 export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Element => {
@@ -75,6 +77,7 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           callInvitationURL={props?.callInvitationURL}
+          locale={props?.locale}
         />
       )}
     </>
