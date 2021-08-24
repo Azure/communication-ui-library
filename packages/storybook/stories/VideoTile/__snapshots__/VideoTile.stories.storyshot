@@ -90,6 +90,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
             <span
               aria-hidden={true}
               className="root-span"
+              primaryFill="currentColor"
             >
               <svg
                 className="svg"
