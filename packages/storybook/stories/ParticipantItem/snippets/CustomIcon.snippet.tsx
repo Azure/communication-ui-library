@@ -1,19 +1,21 @@
 import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
-import { PersonaPresence, Icon, Stack } from '@fluentui/react';
+import { PersonaPresence, Icon, Stack, mergeStyles } from '@fluentui/react';
 import React from 'react';
 
 export const CustomIconExample: () => JSX.Element = () => {
   const onRenderIcon = (props?: ParticipantItemProps): JSX.Element | null => {
     if (props?.displayName === 'Patrick') {
-      return <Icon iconName="FavoriteStar" />;
+      return <Icon iconName="FavoriteStar" style={{ cursor: 'inherit' }} />;
     } else if (props?.me) {
       return null;
     }
     return <Icon iconName="AddFriend" />;
   };
 
+  const containerStyle = mergeStyles({ width: '15rem' });
+
   return (
-    <Stack>
+    <Stack className={containerStyle}>
       <ParticipantItem
         displayName="Spongebob"
         presence={PersonaPresence.online}
