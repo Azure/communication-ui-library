@@ -11,9 +11,9 @@ import {
   largeButtonContainerStyle,
   leaveButtonStyle,
   leaveIcon,
-  pivotItemStyle
+  leaveIconStyle,
+  panelButtonStyle
 } from './styles/ChatHeader.styles';
-import { copyIconStyle } from './styles/InviteFooter.styles';
 import { useTheme } from '@azure/communication-react';
 
 export type ChatHeaderProps = {
@@ -32,12 +32,12 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
       <Stack horizontal={true} verticalAlign={'baseline'}>
         {props.isParticipantsDisplayed ? (
           <People20Filled
-            className={pivotItemStyle}
+            className={panelButtonStyle}
             onClick={() => props.setShowParticipants(!props.isParticipantsDisplayed)}
           />
         ) : (
           <People20Regular
-            className={pivotItemStyle}
+            className={panelButtonStyle}
             onClick={() => props.setShowParticipants(!props.isParticipantsDisplayed)}
           />
         )}
@@ -53,7 +53,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
             className={mergeStyles(leaveButtonStyle, { color: theme.palette.neutralPrimaryAlt })}
             onClick={() => props.onEndChat()}
           >
-            <Icon iconName="Leave" className={copyIconStyle} />
+            <Icon iconName={leaveIcon.iconName} className={leaveIconStyle} />
             {leaveString}
           </DefaultButton>
         </div>
