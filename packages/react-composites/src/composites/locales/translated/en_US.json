@@ -1,7 +1,7 @@
 {
   "call": {
-    "localDeviceSettings": {
-      "cameraPermissionDenied": "Your browser is blocking access to your camera"
-    }
+    "cameraPermissionDenied": "Your browser is blocking access to your camera",
+    "cameraTurnedOff": "Your camera is turned off",
+    "microphonePermissionDenied": "Your browser is blocking access to your microphone"
   }
 }

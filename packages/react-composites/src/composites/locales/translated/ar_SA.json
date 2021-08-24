@@ -1,7 +1,7 @@
 {
   "call": {
-    "localDeviceSettings": {
-      "cameraPermissionDenied": "المستعرض الخاص بك يحظر الوصول إلى الكاميرا الخاصة بك"
-    }
+    "cameraPermissionDenied": "المستعرض الخاص بك يحظر الوصول إلى الكاميرا الخاصة بك",
+    "cameraTurnedOff": "تم إيقاف تشغيل الكاميرا",
+    "microphonePermissionDenied": "متصفحك يحظر الوصول إلى الميكروفون الخاص بك"
   }
 }
