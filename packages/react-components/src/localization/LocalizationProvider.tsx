@@ -16,7 +16,7 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings
 } from '../components';
-import en_US from '../localization/locales/en-US/strings.json';
+import { en_US } from './locales';
 
 /**
  * Data structure for localization
@@ -59,7 +59,7 @@ export interface ComponentStrings {
 /**
  * Context for providing localized strings to components
  */
-export const LocaleContext = createContext<Locale>({ strings: en_US });
+export const LocaleContext = createContext<Locale>(en_US);
 
 /**
  * Props to LocalizationProvider

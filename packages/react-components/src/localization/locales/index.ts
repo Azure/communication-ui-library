@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Locale } from './LocalizationProvider';
-import _en_US from './locales/en-US/strings.json';
-import _de_DE from './locales/de-DE/strings.json';
-import _es_ES from './locales/es-ES/strings.json';
-import _fr_FR from './locales/fr-FR/strings.json';
-import _it_IT from './locales/it-IT/strings.json';
-import _ja_JP from './locales/ja-JP/strings.json';
-import _ko_KR from './locales/ko-KR/strings.json';
-import _nl_NL from './locales/nl-NL/strings.json';
-import _pt_BR from './locales/pt-BR/strings.json';
-import _ru_RU from './locales/ru-RU/strings.json';
-import _tr_TR from './locales/tr-TR/strings.json';
-import _zh_CN from './locales/zh-CN/strings.json';
-import _zh_TW from './locales/zh-TW/strings.json';
+import { Locale } from '..';
+import _en_US from './en-US/strings.json';
+import _de_DE from './de-DE/strings.json';
+import _es_ES from './es-ES/strings.json';
+import _fr_FR from './fr-FR/strings.json';
+import _it_IT from './it-IT/strings.json';
+import _ja_JP from './ja-JP/strings.json';
+import _ko_KR from './ko-KR/strings.json';
+import _nl_NL from './nl-NL/strings.json';
+import _pt_BR from './pt-BR/strings.json';
+import _ru_RU from './ru-RU/strings.json';
+import _tr_TR from './tr-TR/strings.json';
+import _zh_CN from './zh-CN/strings.json';
+import _zh_TW from './zh-TW/strings.json';
 
 /** Locale for English (US) */
 export const en_US: Locale = { strings: _en_US };

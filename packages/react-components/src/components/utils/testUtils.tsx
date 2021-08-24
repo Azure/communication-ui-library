@@ -4,8 +4,8 @@
 import React from 'react';
 import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
 import { LocalizationProvider, Locale, ComponentStrings } from '../../localization/LocalizationProvider';
-import en_US from '../../localization/locales/en-US/strings.json';
 import { PartialDeep } from 'type-fest';
+import { en_US } from '../../localization/locales';
 
 export const mountWithLocalization = (node: React.ReactElement, locale: Locale): ReactWrapper => {
   return mount(node, {
@@ -22,7 +22,7 @@ export const shallowWithLocalization = (node: React.ReactElement, locale: Locale
 };
 
 export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Locale => {
-  const strings: ComponentStrings = en_US;
+  const strings: ComponentStrings = en_US.strings;
   Object.keys(testStrings).forEach((key: string) => {
     strings[key] = { ...strings[key], ...testStrings[key] };
   });
