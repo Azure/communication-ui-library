@@ -14,10 +14,10 @@ import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
 const BasicStory = (args, context): JSX.Element => {
-  const [containerProps, setContainerProps] = useState();
   const {
     globals: { locale }
   } = context;
+  const [containerProps, setContainerProps] = useState();
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {

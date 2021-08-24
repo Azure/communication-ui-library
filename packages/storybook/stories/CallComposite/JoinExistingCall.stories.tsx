@@ -13,10 +13,10 @@ import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigJoinCallHintBanner } from './snippets/Utils';
 
 const JoinExistingCallStory = (args, context): JSX.Element => {
-  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token && !!args.displayName;
   const {
     globals: { locale }
   } = context;
+  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token && !!args.displayName;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>

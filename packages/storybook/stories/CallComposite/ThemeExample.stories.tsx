@@ -13,11 +13,11 @@ import { ContosoCallContainer } from './snippets/Container.snippet';
 import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
-const ThemeExampleStory = (args): JSX.Element => {
-  const [containerProps, setContainerProps] = useState();
+const ThemeExampleStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
+  const [containerProps, setContainerProps] = useState();
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
