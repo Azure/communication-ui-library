@@ -16,7 +16,7 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings
 } from '../components';
-import en_US from './translated/en_US.json';
+import en_US from '../../../../Resources/strings.json';
 
 /**
  * Data structure for localization
