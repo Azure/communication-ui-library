@@ -66,6 +66,36 @@ export interface ErrorBarStrings {
    * Prefer more specific error strings when possible.
    */
   sendMessageGeneric: string;
+
+  /**
+   * A generic message when starting video fails.
+   */
+  startVideoGeneric: string;
+
+  /**
+   * A generic message when starting video fails.
+   */
+  stopVideoGeneric: string;
+
+  /**
+   * A generic message when muting microphone fails.
+   */
+  muteGeneric: string;
+
+  /**
+   * A generic message when unmuting microphone fails.
+   */
+  unmuteGeneric: string;
+
+  /**
+   * A generic message when starting screenshare fails.
+   */
+  startScreenShareGeneric: string;
+
+  /**
+   * A generic message when stopping screenshare fails.
+   */
+  stopScreenShareGeneric: string;
 }
 
 /**

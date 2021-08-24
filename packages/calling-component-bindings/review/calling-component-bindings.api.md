@@ -11,6 +11,7 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
+import { CallErrors } from '@internal/calling-stateful-client';
 import { CallParticipant } from '@internal/react-components';
 import { CallState } from '@internal/calling-stateful-client';
 import { CameraButton } from '@internal/react-components';
@@ -18,11 +19,14 @@ import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { EndCallButton } from '@internal/react-components';
+import { ErrorBar } from '@internal/react-components';
+import { ErrorType } from '@internal/react-components';
 import { IncomingCallState } from '@internal/calling-stateful-client';
 import { LocalVideoStreamState } from '@internal/calling-stateful-client';
 import { MicrophoneButton } from '@internal/react-components';
 import { OptionsButton } from '@internal/react-components';
 import { OutputParametricSelector } from 'reselect';
+import { OutputSelector } from 'reselect';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -130,6 +134,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onStartLocalVideo: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public
@@ -153,16 +158,24 @@ export type DefaultCallingHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public (undocumented)
 export const emptySelector: () => Record<string, never>;
 
+// @public
+export const errorBarSelector: OutputSelector<CallClientState, {
+activeErrors: ErrorType[];
+}, (res: CallErrors) => {
+activeErrors: ErrorType[];
+}>;
+
 // @public (undocumented)
 export const getCallExists: (state: CallClientState, props: CallingBaseSelectorProps) => boolean;
 
 // @public (undocumented)
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
 // @public (undocumented)
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -197,6 +210,9 @@ export const getIsMuted: (state: CallClientState, props: CallingBaseSelectorProp
 
 // @public (undocumented)
 export const getIsScreenSharingOn: (state: CallClientState, props: CallingBaseSelectorProps) => boolean | undefined;
+
+// @public (undocumented)
+export const getLatestErrors: (state: CallClientState) => CallErrors;
 
 // @public (undocumented)
 export const getLocalVideoStreams: (state: CallClientState, props: CallingBaseSelectorProps) => LocalVideoStreamState[] | undefined;
