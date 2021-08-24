@@ -3,7 +3,10 @@
 
 import React, { createContext, useContext } from 'react';
 
-import { Locale as ComponentLocale } from '@internal/react-components';
+import {
+  Locale as ComponentLocale,
+  LocalizationProvider as ComponentLocalizationProvider
+} from '@internal/react-components';
 
 import { COMPOSITE_LOCALE_EN_US } from '../locales';
 import { CallCompositeStrings } from '../CallComposite';
@@ -50,7 +53,11 @@ export type LocalizationProviderProps = {
  */
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
   const { locale, children } = props;
-  return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
+  return (
+    <LocaleContext.Provider value={locale}>
+      <ComponentLocalizationProvider locale={locale.component}>{children}</ComponentLocalizationProvider>
+    </LocaleContext.Provider>
+  );
 };
 
 /** React hook to access locale */
