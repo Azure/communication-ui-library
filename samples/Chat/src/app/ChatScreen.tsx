@@ -8,9 +8,11 @@ import {
   ChatComposite,
   createAzureCommunicationChatAdapter
 } from '@azure/communication-react';
-import { PrimaryButton, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
+import { ChatHeader } from './ChatHeader';
+import { chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
@@ -33,6 +35,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapterRef = useRef<ChatAdapter>();
   const [adapter, setAdapter] = useState<ChatAdapter>();
+  const [showParticipants, setShowParticipants] = useState<boolean>(true);
   const { currentTheme } = useSwitchableFluentTheme();
 
   useEffect(() => {
@@ -55,6 +58,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           endChatHandler();
         }
       });
+      adapter.setTopic('Your Chat sample');
       adapter.on('error', (e) => {
         console.error(e);
         errorHandler();
@@ -81,24 +85,37 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       );
 
     return (
-      <Stack style={{ height: '100%', width: '100%' }}>
-        <PrimaryButton
-          id="endChat"
-          text="Leave Chat"
-          aria-label="Leave chat"
-          onClick={() => {
-            adapter.removeParticipant(userId);
-          }}
-          style={{ maxWidth: 'fit-content', alignSelf: 'flex-end' }}
+      <Stack className={chatScreenContainerStyle}>
+        <ChatHeader
+          isParticipantsDisplayed={showParticipants}
+          onEndChat={() => adapter.removeParticipant(userId)}
+          setShowParticipants={setShowParticipants}
         />
         <ChatComposite
           adapter={adapter}
           fluentTheme={currentTheme.theme}
-          options={{ showParticipantPane: true, showTopic: true }}
+          options={{ showParticipantPane: showParticipants, showTopic: true }}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
         />
       </Stack>
     );
+    //   <Stack className={chatScreenContainerStyle}>
+    //     <ChatHeader
+    //       {...chatHeaderProps}
+    //       {...chatParticipantProps}
+    //       updateThreadTopicName={updateThreadTopicName}
+    //       endChatHandler={endChatHandler}
+    //       selectedPane={selectedPane}
+    //       setSelectedPane={setSelectedPane}
+    //     />
+    //     <Stack className={chatScreenBottomContainerStyle} horizontal={true}>
+    //       <ChatArea onRenderAvatar={onRenderAvatar} />
+    //       <Stack.Item grow disableShrink>
+    //         <SidePanel setSelectedPane={setSelectedPane} selectedPane={selectedPane} onRenderAvatar={onRenderAvatar} />
+    //       </Stack.Item>
+    //     </Stack>
+    //   </Stack>
+    // );
   }
   return <>Initializing...</>;
 };
