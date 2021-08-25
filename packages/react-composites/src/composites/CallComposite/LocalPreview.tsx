@@ -11,6 +11,7 @@ import {
   VideoTile
 } from '@internal/react-components';
 import React, { useCallback } from 'react';
+import { useLocale } from '../localization';
 import { useAdapter } from './adapter/CallAdapterProvider';
 import { usePropsFor } from './hooks/usePropsFor';
 import { useSelector } from './hooks/useSelector';
@@ -20,6 +21,7 @@ import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { cameraOffLabelStyle, localPreviewContainerStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 
 export const LocalPreview = (): JSX.Element => {
+  const locale = useLocale();
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
   const { audio: microphonePermissionGranted, video: cameraPermissionGranted } = useSelector(devicePermissionSelector);
@@ -43,12 +45,12 @@ export const LocalPreview = (): JSX.Element => {
         </Stack.Item>
         <Stack.Item align="center">
           <Text className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralSecondary })}>
-            Your camera is turned off.
+            {locale.strings.call.cameraTurnedOff}
           </Text>
         </Stack.Item>
       </Stack>
     );
-  }, [theme]);
+  }, [theme, locale.strings.call.cameraTurnedOff]);
 
   return (
     <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>

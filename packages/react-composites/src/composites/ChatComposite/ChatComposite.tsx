@@ -1,23 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { ChatScreen } from './ChatScreen';
-import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
-import { ChatAdapter } from './adapter/ChatAdapter';
-import { Theme, PartialTheme, registerIcons } from '@fluentui/react';
+import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import {
   CommunicationParticipant,
   DefaultMessageRendererType,
   FluentThemeProvider,
-  LocalizationProvider,
-  MessageProps,
   IdentifierProvider,
   Identifiers,
-  Locale
+  MessageProps
 } from '@internal/react-components';
+import React from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { defaultCompositeIcons, DefaultCompositeIcons } from '../common/icons';
+import { CompositeLocale, LocalizationProvider } from '../localization';
+import { ChatAdapter } from './adapter/ChatAdapter';
+import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
+import { ChatScreen } from './ChatScreen';
 
 export type ChatCompositeProps = {
   adapter: ChatAdapter;
@@ -43,7 +42,7 @@ export type ChatCompositeProps = {
    *
    * @defaultValue English (US)
    */
-  locale?: Locale;
+  locale?: CompositeLocale;
   /**
    * A callback function that can be used to provide custom data to an Avatar.
    */

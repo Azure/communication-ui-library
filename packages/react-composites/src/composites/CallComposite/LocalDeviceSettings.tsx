@@ -5,6 +5,7 @@ import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, Icon, IDropdownOption, Stack } from '@fluentui/react';
 import { useTheme, VideoStreamOptions } from '@internal/react-components';
 import React from 'react';
+import { useLocale } from '../localization';
 import {
   dropDownStyles,
   dropDownTitleIconStyles,
@@ -13,8 +14,6 @@ import {
   optionIconStyles
 } from './styles/LocalDeviceSettings.styles';
 
-const cameraPermissionDeniedText = 'Your browser is blocking access to your camera.';
-const microphonePermissionDeniedText = 'Your browser is blocking access to your microphone.';
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
 const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropdownOption[] => {
@@ -78,6 +77,7 @@ export interface LocalDeviceSettingsType {
 
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
+  const locale = useLocale();
   const defaultPlaceHolder = 'Select an option';
   const cameraLabel = 'Camera';
   const soundLabel = 'Sound';
@@ -100,7 +100,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         errorMessage={
           props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
             ? undefined
-            : cameraPermissionDeniedText
+            : locale.strings.call.cameraPermissionDenied
         }
         defaultSelectedKey={
           props.cameraPermissionGranted
@@ -124,7 +124,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         errorMessage={
           props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
             ? undefined
-            : microphonePermissionDeniedText
+            : locale.strings.call.microphonePermissionDenied
         }
         options={
           props.microphonePermissionGranted

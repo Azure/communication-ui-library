@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { waitForCallCompositeToLoad, dataUiId } from '../utils';
+import { waitForCallCompositeToLoad, dataUiId, disableAnimation } from '../utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 
@@ -67,6 +67,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       });
     }
   });
+
   test('video gallery renders for all pages', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
@@ -80,6 +81,10 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       page.bringToFront();
+
+      // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+      // this is for disable transition/animation of participant list
+      await disableAnimation(page);
 
       await page.click(dataUiId('call-composite-participants-button'));
       const buttonCallOut = await page.waitForSelector('.ms-Callout');

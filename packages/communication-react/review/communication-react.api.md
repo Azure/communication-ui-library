@@ -387,11 +387,21 @@ export type CallCompositeProps = {
     fluentTheme?: PartialTheme | Theme;
     icons?: DefaultCompositeIcons;
     rtl?: boolean;
-    locale?: Locale;
+    locale?: CompositeLocale;
     callInvitationURL?: string;
     identifiers?: Identifiers;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
+
+// @public
+export interface CallCompositeStrings {
+    cameraPermissionDenied: string;
+    cameraTurnedOff: string;
+    microphonePermissionDenied: string;
+    teamsMeetingFailReasonAccessDenied: string;
+    teamsMeetingFailReasonParticipantRemoved: string;
+    teamsMeetingFailToJoin: string;
+}
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
@@ -617,7 +627,7 @@ export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
-    locale?: Locale;
+    locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -781,6 +791,29 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+}
+
+// @public
+export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public
+export interface CompositeLocale {
+    component: Locale;
+    strings: CompositeStrings;
+}
+
+// @public
+export interface CompositeStrings {
+    call: CallCompositeStrings;
 }
 
 // @public
@@ -1171,9 +1204,6 @@ export interface Locale {
 }
 
 // @public
-export const LocaleContext: React_2.Context<Locale>;
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
@@ -1326,13 +1356,6 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
-
-// @public
-export const namedLocales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public
 export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
@@ -1774,9 +1797,6 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
-
-// @public
-export const useLocale: () => Locale;
 
 // @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;

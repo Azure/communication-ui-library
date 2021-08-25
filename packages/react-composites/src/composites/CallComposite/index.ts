@@ -5,3 +5,4 @@ export { Call as CallComposite } from './Call';
 export * from './adapter';
 
 export type { CallCompositeProps } from './Call';
+export * from './Strings';

@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { FluentThemeProvider, LocalizationProvider, namedLocales, defaultIcons } from '@azure/communication-react';
+import { ar_SA, defaultIcons, de_DE, en_US, FluentThemeProvider, fr_FR, Locale, LocalizationProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
-import { TOC } from './TOC';
+import React from 'react';
 import {
   COMPONENT_FOLDER_PREFIX,
   COMPOSITE_FOLDER_PREFIX,
@@ -14,11 +13,31 @@ import {
   STATEFUL_CLIENT_PREFIX
 } from '../stories/constants';
 import { THEMES } from '../stories/themes';
+import { TOC } from './TOC';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
 registerIcons({ icons: defaultIcons });
+
+const namedLocales: Record<string, {  name: string; locale: Locale;}> = {
+  'en-US': {
+    locale: en_US,
+    name: 'English (US)',
+  },
+  'fr-FR': {
+    locale: fr_FR,
+    name: 'French (France)',
+  },
+  'de-DE': {
+    locale: de_DE,
+    name: 'German (Germany)',
+  },
+  'ar-SA': {
+    locale: ar_SA,
+    name: 'Arabic (Saudi Arabia)',
+  }
+};
 
 export const parameters = {
   layout: 'fullscreen',
@@ -126,7 +145,7 @@ export const globalTypes = {
     defaultValue: 'en-US',
     toolbar: {
       icon: 'globe',
-      items: Object.keys(namedLocales).map((key) => ({ title: namedLocales[key].englishName, value: key })),
+      items: Object.keys(namedLocales).map((key) => ({ title: namedLocales[key].name, value: key })),
     },
   },
   rtl: {

@@ -6,13 +6,13 @@ import {
   FluentThemeProvider,
   IdentifierProvider,
   Identifiers,
-  Locale,
   LocalizationProvider,
   OnRenderAvatarCallback
 } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { DefaultCompositeIcons, defaultCompositeIcons } from '../common/icons';
+import { CompositeLocale, useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallScreen } from './CallScreen';
@@ -45,7 +45,7 @@ export type CallCompositeProps = {
    *
    * @defaultValue English (US)
    */
-  locale?: Locale;
+  locale?: CompositeLocale;
   callInvitationURL?: string;
   identifiers?: Identifiers;
   /**
@@ -65,6 +65,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { showCallControls, callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData } = props;
   const page = useSelector(getPage);
   const adapter = useAdapter();
+  const locale = useLocale();
   switch (page) {
     case 'configuration':
       return <ConfigurationScreen startCallHandler={(): void => adapter.setPage('call')} />;
@@ -74,16 +75,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       return (
         <Error
           rejoinHandler={() => adapter.setPage('configuration')}
-          title="Error joining Teams Meeting"
-          reason="Access to the Teams meeting was denied."
+          title={locale.strings.call.teamsMeetingFailToJoin}
+          reason={locale.strings.call.teamsMeetingFailReasonAccessDenied}
         />
       );
     case 'removed':
       return (
         <Error
           rejoinHandler={() => adapter.setPage('configuration')}
-          title="Oops! You are no longer a participant of the call."
-          reason="Access to the meeting has been stopped"
+          title={locale.strings.call.teamsMeetingFailToJoin}
+          reason={locale.strings.call.teamsMeetingFailReasonParticipantRemoved}
         />
       );
     default:
