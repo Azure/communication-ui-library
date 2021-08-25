@@ -53,6 +53,12 @@ export const getDocs: () => JSX.Element = () => {
         here](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
       </Description>
 
+      <Heading>Icons</Heading>
+      <Description>
+        Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
+        accepts an object where you can provide a custom JSX element against an icon name key.
+      </Description>
+
       <Heading>Custom Data Model</Heading>
       <Description>
         It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers

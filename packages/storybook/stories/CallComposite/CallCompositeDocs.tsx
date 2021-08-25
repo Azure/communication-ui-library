@@ -84,6 +84,12 @@ export const getDocs: () => JSX.Element = () => {
         Typography](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
       </Description>
 
+      <Heading>Icons</Heading>
+      <Description>
+        Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
+        accepts an object where you can provide a custom JSX element against an icon name key.
+      </Description>
+
       <Heading>Joining an existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
