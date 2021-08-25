@@ -2,23 +2,19 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Linkify from 'react-linkify';
-import { Chat, ChatItemProps, Flex, Ref, ShorthandValue, Text } from '@fluentui/react-northstar';
+import { Chat, ChatItemProps, Flex, Ref, ShorthandValue } from '@fluentui/react-northstar';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
-  chatMessageDateStyle,
-  chatMessageStyle,
   chatStyle,
   newMessageButtonStyle,
   messageStatusContainerStyle,
   noMessageStatusStyle
 } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, Link, IPersona } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
-import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
+import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
   BaseCustomStylesProps,
@@ -33,9 +29,8 @@ import {
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
-import { Parser } from 'html-to-react';
-import { useLocale } from '../localization';
-import { useIdentifiers } from '../identifiers';
+import { ChatMessageComponent } from './ChatMessege';
+import { useLocale } from '../localization/LocalizationProvider';
 
 const NEW_MESSAGES = 'New Messages';
 
@@ -239,90 +234,6 @@ const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: Message
   return <></>;
 };
 
-// https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-function extractContent(s: string): string {
-  const span = document.createElement('span');
-  span.innerHTML = s;
-  return span.textContent || span.innerText;
-}
-
-const GenerateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.Element => {
-  const htmlToReactParser = new Parser();
-  const liveAuthor = `${payload.senderDisplayName} says `;
-  return (
-    <div data-ui-status={payload.status}>
-      <LiveMessage
-        message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content || '')}`}
-        aria-live="polite"
-      />
-      {htmlToReactParser.parse(payload.content)}
-    </div>
-  );
-};
-
-const GenerateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
-  const liveAuthor = `${payload.senderDisplayName} says `;
-  return (
-    <div data-ui-status={payload.status}>
-      <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
-      <Linkify
-        componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
-          return (
-            <Link href={decoratedHref} key={key}>
-              {decoratedText}
-            </Link>
-          );
-        }}
-      >
-        {payload.content}
-      </Linkify>
-    </div>
-  );
-};
-
-const GenerateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
-  switch (payload.type) {
-    case 'text':
-      return GenerateTextMessageContent(payload);
-    case 'html':
-      return GenerateRichTextHTMLMessageContent(payload);
-    case 'richtext/html':
-      return GenerateRichTextHTMLMessageContent(payload);
-    default:
-      console.warn('unknown message content type');
-      return <></>;
-  }
-};
-
-const DefaultChatMessageRenderer: DefaultMessageRendererType = (
-  props: MessageProps,
-  ids?: { messageTimestamp?: string }
-) => {
-  if (props.message.type === 'chat') {
-    const payload: ChatMessagePayload = props.message.payload;
-    const messageContentItem = GenerateMessageContent(payload);
-    return (
-      <Chat.Message
-        className={mergeStyles(chatMessageStyle as IStyle, props.messageContainerStyle as IStyle)}
-        content={messageContentItem}
-        author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
-        mine={payload.mine}
-        timestamp={
-          <Text data-ui-id={ids?.messageTimestamp}>
-            {payload.createdOn
-              ? props.showDate
-                ? formatTimestampForChatMessage(payload.createdOn, new Date(), props.strings)
-                : formatTimeForChatMessage(payload.createdOn)
-              : undefined}
-          </Text>
-        }
-      />
-    );
-  }
-
-  return <></>;
-};
-
 const memoizeAllMessages = memoizeFnAll(
   (
     _messageKey: string,
@@ -350,7 +261,7 @@ const memoizeAllMessages = memoizeFnAll(
       const chatMessageComponent =
         onRenderMessage === undefined
           ? defaultChatMessageRenderer(messageProps)
-          : onRenderMessage(messageProps, DefaultChatMessageRenderer);
+          : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
       const personaOptions: IPersona = {
         text: payload.senderDisplayName,
@@ -596,8 +507,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const chatThreadRef = useRef<HTMLElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
-  const ids = useIdentifiers();
-
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
     messagesRef.current = messagesWithAttachedValue;
@@ -799,7 +708,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
-      return DefaultChatMessageRenderer(messageProps, { messageTimestamp: ids.messageTimestamp });
+      if (messageProps.message.type === 'chat') {
+        return <ChatMessageComponent {...messageProps} message={messageProps.message} />;
+      }
+      return <></>;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [new Date().toDateString()]
