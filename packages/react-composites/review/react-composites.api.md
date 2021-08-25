@@ -283,6 +283,11 @@ export type CallAdapterUiState = {
 // @public (undocumented)
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
+// @public
+export type CallCompositeFeatureFlags = {
+    showErrorBar?: boolean;
+};
+
 // @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -293,8 +298,9 @@ export type CallCompositeProps = {
     rtl?: boolean;
     locale?: CompositeLocale;
     callInvitationURL?: string;
-    identifiers?: Identifiers;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    featureFlags?: CallCompositeFeatureFlags;
+    identifiers?: Identifiers;
 };
 
 // @public

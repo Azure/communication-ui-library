@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 export { Call as CallComposite } from './Call';
-export * from './adapter';
+export type { CallCompositeFeatureFlags, CallCompositeProps } from './Call';
 
-export type { CallCompositeProps } from './Call';
+export * from './adapter';
 export * from './Strings';
