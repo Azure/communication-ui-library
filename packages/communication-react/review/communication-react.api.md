@@ -209,6 +209,21 @@ export type AzureCommunicationChatAdapterArgs = {
 };
 
 // @public
+export const BaseComposite: (props: BaseCompositeProps) => JSX.Element;
+
+// @public (undocumented)
+export interface BaseCompositeProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    fluentTheme?: PartialTheme | Theme;
+    icons?: DefaultCompositeIcons;
+    identifiers?: Identifiers;
+    locale?: CompositeLocale;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    rtl?: boolean;
+}
+
+// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -382,16 +397,11 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public (undocumented)
-export type CallCompositeProps = {
+export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    icons?: DefaultCompositeIcons;
-    rtl?: boolean;
-    locale?: CompositeLocale;
+    // (undocumented)
     callInvitationURL?: string;
-    identifiers?: Identifiers;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-};
+}
 
 // @public
 export interface CallCompositeStrings {
@@ -623,17 +633,15 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatCompositeProps = {
+export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    rtl?: boolean;
-    locale?: CompositeLocale;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    // (undocumented)
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    // (undocumented)
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+    // (undocumented)
     options?: ChatOptions;
-    identifiers?: Identifiers;
-};
+}
 
 // @public
 export class ChatError extends Error {

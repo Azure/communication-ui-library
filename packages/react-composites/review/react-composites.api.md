@@ -30,6 +30,7 @@ import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import type { PhoneNumberKind } from '@azure/communication-common';
+import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -164,6 +165,21 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
+// @public
+export const BaseComposite: (props: BaseCompositeProps) => JSX.Element;
+
+// @public (undocumented)
+export interface BaseCompositeProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    fluentTheme?: PartialTheme | Theme;
+    icons?: DefaultCompositeIcons;
+    identifiers?: Identifiers;
+    locale?: CompositeLocale;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    rtl?: boolean;
+}
+
 // @public (undocumented)
 export interface CallAdapter {
     // (undocumented)
@@ -287,16 +303,11 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public (undocumented)
-export type CallCompositeProps = {
+export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    icons?: DefaultCompositeIcons;
-    rtl?: boolean;
-    locale?: CompositeLocale;
+    // (undocumented)
     callInvitationURL?: string;
-    identifiers?: Identifiers;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-};
+}
 
 // @public
 export interface CallCompositeStrings {
@@ -393,17 +404,15 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatCompositeProps = {
+export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    rtl?: boolean;
-    locale?: CompositeLocale;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    // (undocumented)
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    // (undocumented)
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+    // (undocumented)
     options?: ChatOptions;
-    identifiers?: Identifiers;
-};
+}
 
 // @public
 export type ChatErrorListener = (event: {
