@@ -43,6 +43,9 @@ export type ChatCompositeProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+  /**
+   * Flags to control optional features of ChatComposite.
+   */
   featureFlags?: ChatCompositeFeatureFlags;
   identifiers?: Identifiers;
 };
