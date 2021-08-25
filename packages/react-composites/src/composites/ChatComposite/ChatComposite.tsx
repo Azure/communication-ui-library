@@ -5,7 +5,7 @@ import React from 'react';
 import { ChatScreen } from './ChatScreen';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatAdapter } from './adapter/ChatAdapter';
-import { Theme, PartialTheme } from '@fluentui/react';
+import { Theme, PartialTheme, registerIcons } from '@fluentui/react';
 import {
   CommunicationParticipant,
   DefaultMessageRendererType,
@@ -17,6 +17,7 @@ import {
   Locale
 } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { defaultCompositeIcons, DefaultCompositeIcons } from '../common/icons';
 
 export type ChatCompositeProps = {
   adapter: ChatAdapter;
@@ -26,6 +27,11 @@ export type ChatCompositeProps = {
    * @defaultValue light theme
    */
   fluentTheme?: PartialTheme | Theme;
+  /**
+   * Custom Icon override for the composite.
+   * A JSX element can be provided to override the default icon.
+   */
+  icons?: DefaultCompositeIcons;
   /**
    * Whether composite is displayed right-to-left.
    *
@@ -85,6 +91,11 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onRenderTypingIndicator,
     onRenderMessage
   } = props;
+
+  /**
+   * We register the defaul icon mappings to ensure all icons render.
+   */
+  registerIcons(props.icons ? { icons: props.icons } : { icons: defaultCompositeIcons });
 
   const chatElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>

@@ -290,6 +290,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
+    icons?: DefaultCompositeIcons;
     rtl?: boolean;
     locale?: Locale;
     callInvitationURL?: string;
@@ -420,6 +421,43 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+
+// @public (undocumented)
+export type DefaultCompositeIcons = Record<keyof typeof defaultCompositeIcons, JSX.Element>;
+
+// @public (undocumented)
+export const defaultCompositeIcons: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
+};
 
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {

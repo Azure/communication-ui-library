@@ -32,8 +32,8 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
   strings?: Partial<MicrophoneButtonStrings>;
 }
 
-const onRenderMicOnIcon = (): JSX.Element => <Icon iconName="MicrophoneOn" />;
-const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="MicrophoneOff" />;
+const onRenderMicOnIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOn" />;
+const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOff" />;
 
 /**
  * `MicrophoneButton` allows you to easily create a component for rendering an audio button. It can be used in your ControlBar component for example.

@@ -1,23 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { participantItemContainerStyle, iconContainerStyle } from './styles/ParticipantItem.styles';
 import {
-  IContextualMenuItem,
-  Persona,
-  PersonaSize,
-  PersonaPresence,
-  Stack,
-  mergeStyles,
-  IStyle,
   ContextualMenu,
-  DirectionalHint
+  DirectionalHint,
+  Icon,
+  IContextualMenuItem,
+  IStyle,
+  mergeStyles,
+  Persona,
+  PersonaPresence,
+  PersonaSize,
+  Stack
 } from '@fluentui/react';
 import React, { useRef, useState } from 'react';
-import { BaseCustomStylesProps, OnRenderAvatarCallback } from '../types';
-import { useTheme } from '../theming';
 import { useLocale } from '../localization';
-import { MoreHorizontal20Filled, MoreHorizontal20Regular } from '@fluentui/react-icons';
+import { useTheme } from '../theming';
+import { BaseCustomStylesProps, OnRenderAvatarCallback } from '../types';
+import { iconContainerStyle, participantItemContainerStyle } from './styles/ParticipantItem.styles';
 
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   /** Styles for the avatar. */
@@ -129,11 +129,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
               className={menuButtonContainerStyle}
               onClick={() => setMenuHidden(false)}
             >
-              {!menuButtonHovered ? (
-                <MoreHorizontal20Regular primaryFill="currentColor" />
-              ) : (
-                <MoreHorizontal20Filled primaryFill="currentColor" />
-              )}
+              <Icon iconName={menuButtonHovered ? 'ParticipantItemOptionsHovered' : 'ParticipantItemOptions'} />
             </div>
           ) : (
             onRenderIcon(props)

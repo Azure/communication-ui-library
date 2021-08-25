@@ -43,8 +43,8 @@ export interface CameraButtonProps extends ControlBarButtonProps {
   strings?: Partial<CameraButtonStrings>;
 }
 
-const onRenderCameraOnIcon = (): JSX.Element => <Icon iconName="VideoOn" />;
-const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="VideoOff" />;
+const onRenderCameraOnIcon = (): JSX.Element => <Icon iconName="ControlButtonCameraOn" />;
+const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="ControlButtonCameraOff" />;
 
 /**
  * `CameraButton` allows you to easily create a component for rendering a camera button.

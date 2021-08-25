@@ -36,7 +36,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   strings?: EndCallButtonStrings;
 }
 
-const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="EndCall" />;
+const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="ControlButtonEndCall" />;
 
 /**
  * `EndCallButton` allows you to easily create a component for rendering a end call button. It can be used in your ControlBar component for example.

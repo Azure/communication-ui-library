@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconSubset } from '@fluentui/react';
 import {
   CallEnd20Filled,
   CheckmarkCircle20Regular,
@@ -15,24 +14,43 @@ import {
   MicOn20Regular,
   VideoOff20Filled,
   Speaker220Regular,
-  MoreHorizontal20Filled
+  MoreHorizontal20Filled,
+  MoreHorizontal20Regular,
+  People20Filled,
+  ShareScreenStart20Filled,
+  ShareScreenStop20Filled,
+  Send20Filled,
+  Send20Regular,
+  MicOn16Filled,
+  MicOff16Filled
 } from '@fluentui/react-icons';
 import React from 'react';
 
-export const defaultIcons: IIconSubset = {
-  icons: {
-    Checkmark: <CheckmarkCircle20Regular />,
-    Circle: <Circle20Regular />,
-    EndCall: <CallEnd20Filled />,
-    ErrorCircle: <ErrorCircle20Regular />,
-    EyeShow: <EyeShow20Filled />,
-    VideoOff: <VideoOff20Filled />,
-    VideoOn: <Video20Filled />,
-    MicrophoneOn: <MicOn20Filled />,
-    MicrophoneOff: <MicOff20Filled />,
-    Video: <Video20Regular />,
-    Microphone: <MicOn20Regular />,
-    Speaker: <Speaker220Regular />,
-    More: <MoreHorizontal20Filled />
-  }
+export type DefaultIcons = Record<keyof typeof defaultIcons, JSX.Element>;
+
+export const defaultIcons = {
+  ControlButtonCameraOff: <VideoOff20Filled />,
+  ControlButtonCameraOn: <Video20Filled />,
+  ControlButtonEndCall: <CallEnd20Filled />,
+  ControlButtonMicOff: <MicOff20Filled />,
+  ControlButtonMicOn: <MicOn20Filled />,
+  ControlButtonOptions: <MoreHorizontal20Filled />,
+  ControlButtonParticipants: <People20Filled />,
+  ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
+  ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
+  MessageDelivered: <CheckmarkCircle20Regular />,
+  MessageFailed: <ErrorCircle20Regular />,
+  MessageSeen: <EyeShow20Filled />,
+  MessageSending: <Circle20Regular />,
+  OptionsCamera: <Video20Regular />,
+  OptionsMic: <MicOn20Regular />,
+  OptionsSpeaker: <Speaker220Regular />,
+  ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
+  ParticipantItemMicOff: <MicOff16Filled />,
+  ParticipantItemOptions: <MoreHorizontal20Regular />,
+  ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
+  SendBoxSend: <Send20Regular />,
+  SendBoxSendHovered: <Send20Filled />,
+  VideoTileMicOff: <MicOff16Filled />,
+  VideoTileMicOn: <MicOn16Filled />
 };

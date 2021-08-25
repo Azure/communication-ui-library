@@ -141,7 +141,7 @@ const generateDefaultMenuProps = (
           key: camera.id,
           text: camera.name,
           title: camera.name,
-          iconProps: { iconName: 'Video' },
+          iconProps: { iconName: 'OptionsCamera', styles: { root: { lineHeight: 0 } } },
           canCheck: true,
           isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
@@ -165,7 +165,7 @@ const generateDefaultMenuProps = (
           key: microphone.id,
           text: microphone.name,
           title: microphone.name,
-          iconProps: { iconName: 'Microphone' },
+          iconProps: { iconName: 'OptionsMic', styles: { root: { lineHeight: 0 } } },
           canCheck: true,
           isChecked: microphone.id === selectedMicrophone?.id,
           onClick: () => {
@@ -189,7 +189,7 @@ const generateDefaultMenuProps = (
           key: speaker.id,
           text: speaker.name,
           title: speaker.name,
-          iconProps: { iconName: 'Speaker' },
+          iconProps: { iconName: 'OptionsSpeaker', styles: { root: { lineHeight: 0 } } },
           canCheck: true,
           isChecked: speaker.id === selectedSpeaker?.id,
           onClick: () => {
@@ -209,7 +209,7 @@ const generateDefaultMenuProps = (
   return defaultMenuProps;
 };
 
-const onRenderOptionsIcon = (): JSX.Element => <Icon iconName="More" />;
+const onRenderOptionsIcon = (): JSX.Element => <Icon iconName="ControlButtonOptions" />;
 
 /**
  * `OptionsButton` allows you to easily create a component for rendering an options button. It can be used in your ControlBar component for example.

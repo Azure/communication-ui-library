@@ -1,18 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
+import {
+  FluentThemeProvider,
+  IdentifierProvider,
+  Identifiers,
+  Locale,
+  LocalizationProvider,
+  OnRenderAvatarCallback
+} from '@internal/react-components';
 import React, { useEffect } from 'react';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { DefaultCompositeIcons, defaultCompositeIcons } from '../common/icons';
+import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
+import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
-import { Theme, PartialTheme } from '@fluentui/react';
-import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
-import { IdentifierProvider, Identifiers, OnRenderAvatarCallback } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { FluentThemeProvider, LocalizationProvider, Locale } from '@internal/react-components';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 export type CallCompositeProps = {
   adapter: CallAdapter;
@@ -22,6 +29,11 @@ export type CallCompositeProps = {
    * @defaultValue light theme
    */
   fluentTheme?: PartialTheme | Theme;
+  /**
+   * Custom Icon override for the composite.
+   * A JSX element can be provided to override the default icon.
+   */
+  icons?: DefaultCompositeIcons;
   /**
    * Whether composite is displayed right-to-left.
    *
@@ -93,6 +105,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
+  /**
+   * We register the defaul icon mappings to ensure all icons render.
+   */
+  registerIcons(props.icons ? { icons: props.icons } : { icons: defaultCompositeIcons });
   return <CallCompositeInternal {...props} showCallControls={true} />;
 };
 

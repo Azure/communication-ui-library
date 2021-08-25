@@ -3,7 +3,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { createAzureCommunicationUserCredential, getBuildTime, getChatSDKVersion } from './utils/utils';
-import { initializeIcons, Spinner } from '@fluentui/react';
+import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
+import { defaultIcons } from '@azure/communication-react';
 
 import { ChatScreen } from './ChatScreen';
 import { EndScreen } from './EndScreen';
@@ -25,6 +26,7 @@ console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKV
 console.info(`Build Date : ${getBuildTime()}`);
 
 initializeIcons();
+registerIcons({ icons: defaultIcons });
 
 export default (): JSX.Element => {
   const [page, setPage] = useState('home');

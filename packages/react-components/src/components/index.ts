@@ -1,11 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { registerIcons } from '@fluentui/react';
-import { defaultIcons } from '../theming';
-
-registerIcons(defaultIcons);
-
 export { TypingIndicator } from './TypingIndicator';
 export type { TypingIndicatorProps, TypingIndicatorStrings, TypingIndicatorStylesProps } from './TypingIndicator';
 

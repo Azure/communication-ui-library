@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { FluentThemeProvider, LocalizationProvider, namedLocales } from '@azure/communication-react';
-import { initializeIcons, loadTheme } from '@fluentui/react';
+import { FluentThemeProvider, LocalizationProvider, namedLocales, defaultIcons } from '@azure/communication-react';
+import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
 import {
@@ -18,6 +18,7 @@ import { THEMES } from '../stories/themes';
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
+registerIcons({ icons: defaultIcons });
 
 export const parameters = {
   layout: 'fullscreen',

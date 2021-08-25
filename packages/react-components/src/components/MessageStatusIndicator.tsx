@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { Icon, mergeStyles, TooltipHost } from '@fluentui/react';
-import { ErrorCircle20Regular } from '@fluentui/react-icons';
 import { MessageStatus } from '@internal/acs-ui-common';
 import React from 'react';
 import { useLocale } from '../localization';
@@ -61,7 +60,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'failed':
       return (
         <TooltipHost content={strings.failedToSendTooltipText}>
-          <ErrorCircle20Regular
+          <Icon
+            iconName="MessageFailed"
             className={mergeStyles(
               MessageStatusIndicatorErrorIconStyle,
               { color: theme.palette.redDark },
@@ -74,7 +74,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       return (
         <TooltipHost content={strings.sendingTooltipText}>
           <Icon
-            iconName="Circle"
+            iconName="MessageSending"
             className={mergeStyles(
               MessageStatusIndicatorIconStyle,
               { color: theme.palette.themePrimary },
@@ -86,14 +86,14 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'seen':
       return (
         <TooltipHost content={strings.seenTooltipText}>
-          <Icon iconName="EyeShow" className={mergeStyles({ color: theme.palette.black }, styles?.root)} />
+          <Icon iconName="MessageSeen" className={mergeStyles({ color: theme.palette.black }, styles?.root)} />
         </TooltipHost>
       );
     case 'delivered':
       return (
         <TooltipHost content={strings.deliveredTooltipText}>
           <Icon
-            iconName="CheckMark"
+            iconName="MessageDelivered"
             className={mergeStyles(
               MessageStatusIndicatorIconStyle,
               { color: theme.palette.themePrimary },
