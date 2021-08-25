@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect } from 'react';
 import {
   CommunicationParticipant,
@@ -25,8 +25,7 @@ import {
   listHeader,
   participantListStack,
   participantListStyle,
-  participantListContainerPadding,
-  sendBoxParentStyle
+  participantListContainerPadding
 } from './styles/Chat.styles';
 import { AvatarPersonaDataCallback, AvatarPersona } from '../common/AvatarPersona';
 
@@ -43,6 +42,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, showParticipantPane, showTopic } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
+  const sendBoxParentStyle = mergeStyles({ width: '100%' });
 
   const adapter = useAdapter();
 
@@ -76,7 +76,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
           />
-          <Stack verticalAlign="center" className={sendBoxParentStyle}>
+          <Stack.Item align="center" className={sendBoxParentStyle}>
             <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
               {onRenderTypingIndicator ? (
                 onRenderTypingIndicator(typingIndicatorProps.typingUsers)
@@ -85,7 +85,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
             </div>
             <SendBox {...sendBoxProps} />
-          </Stack>
+          </Stack.Item>
         </Stack>
         {showParticipantPane && (
           <Stack.Item className={participantListWrapper}>
