@@ -136,15 +136,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               cameraPermissionGranted={devicePermissions.video}
             />
           </Stack.Item>
-
-          {props.featureFlags.showErrorBar ? (
+          {props.featureFlags.showErrorBar && (
             <Stack.Item style={{ width: '100%' }}>
               <ErrorBar {...errorBarProps} />
             </Stack.Item>
-          ) : (
-            <></>
           )}
-
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
