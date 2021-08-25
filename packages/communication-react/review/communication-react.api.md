@@ -71,9 +71,6 @@ export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
 
-// @public
-export const ar_SA: ComponentLocale;
-
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
@@ -782,6 +779,18 @@ export interface ComponentLocale {
 }
 
 // @public
+export const COMPONENTS_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENTS_LOCALE_DE_DE: ComponentLocale;
+
+// @public
+export const COMPONENTS_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export const COMPONENTS_LOCALE_FR_FR: ComponentLocale;
+
+// @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
@@ -913,9 +922,6 @@ export type CustomMessagePayload = {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
-// @public
-export const de_DE: ComponentLocale;
-
 // @public (undocumented)
 export type DefaultCallingHandlers = {
     onStartLocalVideo: () => Promise<void>;
@@ -979,9 +985,6 @@ export type DisplayNameChangedListener = (event: {
 export const emptySelector: () => Record<string, never>;
 
 // @public
-export const en_US: ComponentLocale;
-
-// @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
@@ -1032,9 +1035,6 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
-
-// @public
-export const fr_FR: ComponentLocale;
 
 // @public (undocumented)
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;

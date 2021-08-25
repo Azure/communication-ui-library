@@ -12,7 +12,7 @@ import React from 'react';
 
 export const SetRTLSnippet = (): JSX.Element => {
   return (
-    <LocalizationProvider locale={ar_SA}>
+    <LocalizationProvider locale={COMPONENTS_LOCALE_AR_SA}>
       <FluentThemeProvider rtl={true}>
         <ControlBar>
           <CameraButton showLabel={true} />

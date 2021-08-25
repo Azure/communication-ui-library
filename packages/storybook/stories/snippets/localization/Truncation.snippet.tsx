@@ -22,7 +22,7 @@ export const TruncationSnippet = (): JSX.Element => {
     } as IStyle
   };
   return (
-    <LocalizationProvider locale={de_DE}>
+    <LocalizationProvider locale={COMPONENTS_LOCALE_DE_DE}>
       <ControlBar>
         <CameraButton showLabel={true} styles={buttonStyle} />
         <MicrophoneButton showLabel={true} styles={buttonStyle} />

@@ -29,9 +29,6 @@ export type AllKeys<T> = {
 };
 
 // @public
-export const ar_SA: ComponentLocale;
-
-// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -100,6 +97,18 @@ export type CommunicationParticipant = {
 export interface ComponentLocale {
     strings: ComponentStrings;
 }
+
+// @public
+export const COMPONENTS_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENTS_LOCALE_DE_DE: ComponentLocale;
+
+// @public
+export const COMPONENTS_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export const COMPONENTS_LOCALE_FR_FR: ComponentLocale;
 
 // @public
 export interface ComponentStrings {
@@ -175,18 +184,12 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de_DE: ComponentLocale;
-
-// @public
 export const defaultIdentifiers: Identifiers;
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps, ids?: {
     messageTimestamp?: string;
 }) => JSX.Element;
-
-// @public
-export const en_US: ComponentLocale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -239,9 +242,6 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
-
-// @public
-export const fr_FR: ComponentLocale;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;

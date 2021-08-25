@@ -31,7 +31,7 @@ the UI library includes a set of locales usable with the UI components and compo
 ### Usage
 
 To use the LocalizationProvider, import it from `@azure/communication-react` and wrap it around UI Library components. Then assign a `ComponentLocale` to the `locale` prop.
-For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `fr_FR` from `@azure/communication-react`.
+For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `COMPONENTS_LOCALE_FR_FR` from `@azure/communication-react`.
 
 <Source code={LocalizationProviderSnippetText} />
 
@@ -41,7 +41,7 @@ For the example below, we will localize buttons in a `ControlBar` in French (Fra
 
 ### Composites
 
-If you want to localize your composite, assign a `ComponentLocale` to the `locale` prop of the composite. You may import one of our locales like `fr_FR` for French (France)
+If you want to localize your composite, assign a `ComponentLocale` to the `locale` prop of the composite. You may import one of our locales like `COMPONENTS_LOCALE_FR_FR` for French (France)
 in the example below.
 
 <Source code={LocalizedComposites} />
@@ -53,7 +53,7 @@ with strings from our English (US) locale but you want to change the label of `C
 
 ### Option 1: Import and customize locales
 
-The first option is to import and customize locales. First, import `en_US` locale from `@azure/communication-react` and then reassign the
+The first option is to import and customize locales. First, import `COMPONENTS_LOCALE_EN_US` locale from `@azure/communication-react` and then reassign the
 value `strings.cameraButton.offLabel` like shown below.
 
 <Source code={CustomLocaleSnippetText} />
