@@ -72,7 +72,7 @@ export type AllKeys<T> = {
 };
 
 // @public
-export const ar_SA: Locale;
+export const ar_SA: ComponentLocale;
 
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
@@ -777,6 +777,11 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export interface ComponentLocale {
+    strings: ComponentStrings;
+}
+
+// @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
@@ -806,7 +811,7 @@ export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
 
 // @public
 export interface CompositeLocale {
-    component: Locale;
+    component: ComponentLocale;
     strings: CompositeStrings;
 }
 
@@ -909,7 +914,7 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de_DE: Locale;
+export const de_DE: ComponentLocale;
 
 // @public (undocumented)
 export type DefaultCallingHandlers = {
@@ -974,7 +979,7 @@ export type DisplayNameChangedListener = (event: {
 export const emptySelector: () => Record<string, never>;
 
 // @public
-export const en_US: Locale;
+export const en_US: ComponentLocale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -1029,7 +1034,7 @@ export interface FluentThemeProviderProps {
 }
 
 // @public
-export const fr_FR: Locale;
+export const fr_FR: ComponentLocale;
 
 // @public (undocumented)
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
@@ -1130,16 +1135,11 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface Locale {
-    strings: ComponentStrings;
-}
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
 export type LocalizationProviderProps = {
-    locale: Locale;
+    locale: ComponentLocale;
     children: React_2.ReactNode;
 };
 

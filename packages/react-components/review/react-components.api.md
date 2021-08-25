@@ -29,7 +29,7 @@ export type AllKeys<T> = {
 };
 
 // @public
-export const ar_SA: Locale;
+export const ar_SA: ComponentLocale;
 
 // @public
 export interface BaseCustomStylesProps {
@@ -95,6 +95,11 @@ export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
 };
+
+// @public
+export interface ComponentLocale {
+    strings: ComponentStrings;
+}
 
 // @public
 export interface ComponentStrings {
@@ -170,7 +175,7 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de_DE: Locale;
+export const de_DE: ComponentLocale;
 
 // @public
 export const defaultIdentifiers: Identifiers;
@@ -181,7 +186,7 @@ export type DefaultMessageRendererType = (props: MessageProps, ids?: {
 }) => JSX.Element;
 
 // @public
-export const en_US: Locale;
+export const en_US: ComponentLocale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -236,7 +241,7 @@ export interface FluentThemeProviderProps {
 }
 
 // @public
-export const fr_FR: Locale;
+export const fr_FR: ComponentLocale;
 
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -287,16 +292,11 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface Locale {
-    strings: ComponentStrings;
-}
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
 export type LocalizationProviderProps = {
-    locale: Locale;
+    locale: ComponentLocale;
     children: React_2.ReactNode;
 };
 
