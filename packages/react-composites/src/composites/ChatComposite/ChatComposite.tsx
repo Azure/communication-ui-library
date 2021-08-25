@@ -5,16 +5,15 @@ import React from 'react';
 import { ChatScreen } from './ChatScreen';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatAdapter } from './adapter/ChatAdapter';
+import { CompositeLocale, LocalizationProvider } from '../localization';
 import { Theme, PartialTheme } from '@fluentui/react';
 import {
   CommunicationParticipant,
   DefaultMessageRendererType,
   FluentThemeProvider,
-  LocalizationProvider,
   MessageProps,
   IdentifierProvider,
-  Identifiers,
-  Locale
+  Identifiers
 } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
@@ -37,7 +36,7 @@ export type ChatCompositeProps = {
    *
    * @defaultValue English (US)
    */
-  locale?: Locale;
+  locale?: CompositeLocale;
   /**
    * A callback function that can be used to provide custom data to an Avatar.
    */
