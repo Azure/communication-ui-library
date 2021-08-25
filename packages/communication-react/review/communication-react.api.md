@@ -774,21 +774,21 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
+// @public
 export interface ComponentLocale {
     strings: ComponentStrings;
 }
-
-// @public
-export const COMPONENTS_LOCALE_AR_SA: ComponentLocale;
-
-// @public
-export const COMPONENTS_LOCALE_DE_DE: ComponentLocale;
-
-// @public
-export const COMPONENTS_LOCALE_EN_US: ComponentLocale;
-
-// @public
-export const COMPONENTS_LOCALE_FR_FR: ComponentLocale;
 
 // @public
 export interface ComponentStrings {
