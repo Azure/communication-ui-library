@@ -5,13 +5,13 @@ import {
   LocalizationProvider,
   MicrophoneButton,
   ScreenShareButton,
-  COMPONENTS_LOCALE_DE_DE
+  COMPONENT_LOCALE_DE_DE
 } from '@azure/communication-react';
 import React from 'react';
 
 export const LongTranslationsSnippet = (): JSX.Element => {
   return (
-    <LocalizationProvider locale={COMPONENTS_LOCALE_DE_DE}>
+    <LocalizationProvider locale={COMPONENT_LOCALE_DE_DE}>
       <ControlBar>
         <CameraButton showLabel={true} />
         <MicrophoneButton showLabel={true} />

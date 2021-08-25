@@ -5,7 +5,7 @@ import {
   LocalizationProvider,
   MicrophoneButton,
   ScreenShareButton,
-  COMPONENTS_LOCALE_DE_DE
+  COMPONENT_LOCALE_DE_DE
 } from '@azure/communication-react';
 import { IStyle } from '@fluentui/react';
 import React from 'react';
@@ -22,7 +22,7 @@ export const TruncationSnippet = (): JSX.Element => {
     } as IStyle
   };
   return (
-    <LocalizationProvider locale={COMPONENTS_LOCALE_DE_DE}>
+    <LocalizationProvider locale={COMPONENT_LOCALE_DE_DE}>
       <ControlBar>
         <CameraButton showLabel={true} styles={buttonStyle} />
         <MicrophoneButton showLabel={true} styles={buttonStyle} />

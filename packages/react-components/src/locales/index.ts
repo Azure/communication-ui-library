@@ -8,10 +8,10 @@ import _ar_SA from './translated/ar_SA.json';
 import _fr_FR from './translated/fr_FR.json';
 
 /** Locale for English (US) */
-export const COMPONENTS_LOCALE_EN_US: ComponentLocale = { strings: _en_US };
+export const COMPONENT_LOCALE_EN_US: ComponentLocale = { strings: _en_US };
 /** Locale for German (Germany) */
-export const COMPONENTS_LOCALE_DE_DE: ComponentLocale = { strings: _de_DE };
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale = { strings: _de_DE };
 /** Locale for French (France) */
-export const COMPONENTS_LOCALE_FR_FR: ComponentLocale = { strings: _fr_FR };
+export const COMPONENT_LOCALE_FR_FR: ComponentLocale = { strings: _fr_FR };
 /** Locale for Arabic (Saudi Arabia) */
-export const COMPONENTS_LOCALE_AR_SA: ComponentLocale = { strings: _ar_SA };
+export const COMPONENT_LOCALE_AR_SA: ComponentLocale = { strings: _ar_SA };

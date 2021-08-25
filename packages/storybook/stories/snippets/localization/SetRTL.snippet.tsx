@@ -6,13 +6,13 @@ import {
   EndCallButton,
   MicrophoneButton,
   ScreenShareButton,
-  COMPONENTS_LOCALE_AR_SA
+  COMPONENT_LOCALE_AR_SA
 } from '@azure/communication-react';
 import React from 'react';
 
 export const SetRTLSnippet = (): JSX.Element => {
   return (
-    <LocalizationProvider locale={COMPONENTS_LOCALE_AR_SA}>
+    <LocalizationProvider locale={COMPONENT_LOCALE_AR_SA}>
       <FluentThemeProvider rtl={true}>
         <ControlBar>
           <CameraButton showLabel={true} />

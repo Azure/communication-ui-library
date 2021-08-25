@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { formatDateForChatMessage, formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
-import { COMPONENTS_LOCALE_EN_US } from '../../locales';
+import { COMPONENT_LOCALE_EN_US } from '../../locales';
 
 const createMockDate = (datetime: {
   year?: number;
@@ -63,7 +63,7 @@ describe('datetime tests', () => {
       formatTimestampForChatMessage(
         createMockDate({ year: 2000, month: 10, day: 1, hour: 4, min: 0 }),
         createMockDate({ year: 2000, month: 10, day: 1, hour: 5, min: 0 }),
-        COMPONENTS_LOCALE_EN_US.strings.messageThread
+        COMPONENT_LOCALE_EN_US.strings.messageThread
       )
     ).toEqual('4:00 a.m.');
   });
@@ -73,7 +73,7 @@ describe('datetime tests', () => {
       formatTimestampForChatMessage(
         createMockDate({ year: 2000, month: 10, day: 9, hour: 4, min: 0 }),
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
-        COMPONENTS_LOCALE_EN_US.strings.messageThread
+        COMPONENT_LOCALE_EN_US.strings.messageThread
       )
     ).toEqual('Yesterday 4:00 a.m.');
   });
@@ -83,7 +83,7 @@ describe('datetime tests', () => {
       formatTimestampForChatMessage(
         createMockDate({ year: 2000, month: 10, day: 8, hour: 4, min: 0 }),
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
-        COMPONENTS_LOCALE_EN_US.strings.messageThread
+        COMPONENT_LOCALE_EN_US.strings.messageThread
       )
     ).toEqual('Wednesday 4:00 a.m.');
   });
@@ -93,7 +93,7 @@ describe('datetime tests', () => {
       formatTimestampForChatMessage(
         createMockDate({ year: 1999, month: 10, day: 8, hour: 4, min: 0 }),
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
-        COMPONENTS_LOCALE_EN_US.strings.messageThread
+        COMPONENT_LOCALE_EN_US.strings.messageThread
       )
     ).toEqual('1999-11-08 4:00 a.m.');
   });
