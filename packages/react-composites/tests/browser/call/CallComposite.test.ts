@@ -116,6 +116,7 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
     page.click(dataUiId('call-composite-camera-button'));
   }
   for (const page of pages) {
+    page.bringToFront();
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 0;
     });
