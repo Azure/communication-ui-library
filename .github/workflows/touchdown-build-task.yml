@@ -39,7 +39,7 @@ steps:
       authKey: $(AUTH_KEY)
       isPreview: false
       resourceFilePath: 'packages/react-composites/src/composites/localization/locales/en-US/strings.json'
-      outputDirectoryRoot: 'packages/react-composites/src/compositeslocalization/locales'
+      outputDirectoryRoot: 'packages/react-composites/src/composites/localization/locales'
       cultureMappingType: 'None'
       gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for react-composites'
