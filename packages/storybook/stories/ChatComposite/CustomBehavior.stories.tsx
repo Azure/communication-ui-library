@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './CustomBehaviorExampleContainer';
 import { createUserAndThread } from './snippets/Server.snippet';
@@ -20,6 +21,9 @@ const messageArray = [
 ];
 
 const CustomBehaviorStory = (args, context): JSX.Element => {
+  const {
+    globals: { locale }
+  } = context;
   const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   useEffect(() => {
@@ -37,7 +41,11 @@ const CustomBehaviorStory = (args, context): JSX.Element => {
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {containerProps ? <ContosoChatContainer fluentTheme={context.theme} {...containerProps} /> : <ConfigHintBanner />}
+      {containerProps ? (
+        <ContosoChatContainer fluentTheme={context.theme} locale={compositeLocale(locale)} {...containerProps} />
+      ) : (
+        <ConfigHintBanner />
+      )}
     </Stack>
   );
 };
