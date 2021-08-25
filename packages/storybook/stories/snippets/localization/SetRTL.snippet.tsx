@@ -6,7 +6,7 @@ import {
   EndCallButton,
   MicrophoneButton,
   ScreenShareButton,
-  ar_SA
+  COMPONENTS_LOCALE_AR_SA
 } from '@azure/communication-react';
 import React from 'react';
 

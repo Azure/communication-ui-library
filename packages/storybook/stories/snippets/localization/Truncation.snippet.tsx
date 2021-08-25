@@ -5,7 +5,7 @@ import {
   LocalizationProvider,
   MicrophoneButton,
   ScreenShareButton,
-  de_DE
+  COMPONENTS_LOCALE_DE_DE
 } from '@azure/communication-react';
 import { IStyle } from '@fluentui/react';
 import React from 'react';

@@ -5,7 +5,7 @@ import {
   LocalizationProvider,
   MicrophoneButton,
   ScreenShareButton,
-  en_US
+  COMPONENTS_LOCALE_EN_US
 } from '@azure/communication-react';
 import React from 'react';
 
