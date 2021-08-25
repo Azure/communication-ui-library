@@ -78,6 +78,10 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
   });
 
   test('participant list loads correctly', async ({ pages }) => {
+    // TODO: Remove this function when we fix unstable contextual menu bug
+    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
+    await turnOffAllVideos(pages);
+
     for (const idx in pages) {
       const page = pages[idx];
       page.bringToFront();
@@ -106,3 +110,15 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot(`camera-toggled.png`);
   });
 });
+
+const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
+  for (const page of pages) {
+    page.click(dataUiId('call-composite-camera-button'));
+  }
+  for (const page of pages) {
+    page.bringToFront();
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('video').length === 0;
+    });
+  }
+};
