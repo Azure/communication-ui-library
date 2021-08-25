@@ -299,8 +299,12 @@ export type CallCompositeProps = {
 
 // @public (undocumented)
 export interface CallCompositeStrings {
-    // (undocumented)
-    localDeviceSettings: LocalDeviceSettingsStrings;
+    cameraPermissionDenied: string;
+    cameraTurnedOff: string;
+    microphonePermissionDenied: string;
+    teamsMeetingFailReasonAccessDenied: string;
+    teamsMeetingFailReasonParticipantRemoved: string;
+    teamsMeetingFailToJoin: string;
 }
 
 // @public (undocumented)
@@ -392,7 +396,7 @@ export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
-    locale?: Locale;
+    locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -441,7 +445,6 @@ export interface CompositeLocale {
 
 // @public
 export interface CompositeStrings {
-    // (undocumented)
     call: CallCompositeStrings;
 }
 
@@ -482,12 +485,6 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CallIdentifierKinds;
     isSpeaking: boolean;
 }) => void;
-
-// @public (undocumented)
-export interface LocalDeviceSettingsStrings {
-    // (undocumented)
-    cameraPermissionDenied: string;
-}
 
 // @public
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;

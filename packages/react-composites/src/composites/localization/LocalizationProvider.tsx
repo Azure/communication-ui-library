@@ -15,7 +15,10 @@ import { CallCompositeStrings } from '../CallComposite';
  * Data structure for localization
  */
 export interface CompositeLocale {
-  /** Strings for components */
+  /** Strings used in composites directly
+   *
+   * Contrast with {@link CompositeLocale.component}, which contains strings used via the component library.
+   */
   strings: CompositeStrings;
 
   /** Locale information for the pure Components used by Composites. See {@link communication-react#Locale}. */
@@ -28,6 +31,9 @@ export interface CompositeLocale {
  * These strings are used by the composites directly, instead of by the contained components.
  */
 export interface CompositeStrings {
+  /**
+   * Strings used by {@link CallComposite}.
+   */
   call: CallCompositeStrings;
 }
 
