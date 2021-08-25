@@ -621,6 +621,13 @@ export type ChatCompositeClientState = {
     latestErrors: ChatAdapterErrors;
 };
 
+// @public
+export type ChatCompositeFeatureFlags = {
+    showErrorBar?: boolean;
+    showParticipantPane?: boolean;
+    showTopic?: boolean;
+};
+
 // @public (undocumented)
 export type ChatCompositeProps = {
     adapter: ChatAdapter;
@@ -630,7 +637,7 @@ export type ChatCompositeProps = {
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    options?: ChatOptions;
+    featureFlags?: ChatCompositeFeatureFlags;
     identifiers?: Identifiers;
 };
 
@@ -683,13 +690,6 @@ export type ChatMessagePayload = {
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
-};
-
-// @public
-export type ChatOptions = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
 };
 
 // @public (undocumented)

@@ -43,14 +43,14 @@ export type ChatCompositeProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-  options?: ChatOptions;
+  featureFlags?: ChatCompositeFeatureFlags;
   identifiers?: Identifiers;
 };
 
 /**
- * Additional customizations for the chat composite
+ * Optional features of the {@linnk ChatComposite}
  */
-export type ChatOptions = {
+export type ChatCompositeFeatureFlags = {
   /**
    * UNSTABLE: Feature flag to enable ErrorBar.
    *
@@ -78,7 +78,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     fluentTheme,
     rtl,
     locale,
-    options,
+    featureFlags,
     identifiers,
     onFetchAvatarPersonaData,
     onRenderTypingIndicator,
@@ -91,9 +91,9 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
         <ChatAdapterProvider adapter={adapter}>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
           <ChatScreen
-            showErrorBar={options?.showErrorBar}
-            showParticipantPane={options?.showParticipantPane}
-            showTopic={options?.showTopic}
+            showErrorBar={featureFlags?.showErrorBar}
+            showParticipantPane={featureFlags?.showParticipantPane}
+            showTopic={featureFlags?.showTopic}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
