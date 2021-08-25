@@ -30,6 +30,7 @@ const JoinExistingChatThreadStory = (args, context): JSX.Element => {
           token={args.token}
           displayName={args.displayName}
           locale={compositeLocale(locale)}
+          showErrorBar={true}
           showParticipants={true}
           showTopic={true}
         />

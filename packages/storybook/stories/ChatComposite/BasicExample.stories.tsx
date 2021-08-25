@@ -47,6 +47,7 @@ const BasicStory = (args, context): JSX.Element => {
           fluentTheme={context.theme}
           {...containerProps}
           locale={compositeLocale(locale)}
+          showErrorBar={true}
           showParticipants={args.showParticipants}
           showTopic={args.showTopic}
         />
