@@ -8,3 +8,4 @@ export type { AvatarPersonaData, AvatarPersonaDataCallback } from './common/Avat
 export * from './common/icons';
 export * from './locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
+export * from './common/Composite';

@@ -1,18 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
-import {
-  FluentThemeProvider,
-  IdentifierProvider,
-  Identifiers,
-  LocalizationProvider,
-  OnRenderAvatarCallback
-} from '@internal/react-components';
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { DefaultCompositeIcons, defaultCompositeIcons } from '../common/icons';
-import { CompositeLocale, useLocale } from '../localization';
+import { BaseComposite, BaseCompositeProps } from '../common/Composite';
+import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallScreen } from './CallScreen';
@@ -21,38 +14,14 @@ import { Error } from './Error';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 
-export type CallCompositeProps = {
+export interface CallCompositeProps extends BaseCompositeProps {
+  /**
+   * An adapter provides logic and data to the composite.
+   * Composite can also be controlled using the adapter.
+   */
   adapter: CallAdapter;
-  /**
-   * Fluent theme for the composite.
-   *
-   * @defaultValue light theme
-   */
-  fluentTheme?: PartialTheme | Theme;
-  /**
-   * Custom Icon override for the composite.
-   * A JSX element can be provided to override the default icon.
-   */
-  icons?: DefaultCompositeIcons;
-  /**
-   * Whether composite is displayed right-to-left.
-   *
-   * @defaultValue false
-   */
-  rtl?: boolean;
-  /**
-   * Locale for the composite.
-   *
-   * @defaultValue English (US)
-   */
-  locale?: CompositeLocale;
   callInvitationURL?: string;
-  identifiers?: Identifiers;
-  /**
-   * A callback function that can be used to provide custom data to an Avatar.
-   */
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-};
+}
 
 type MainScreenProps = {
   showCallControls: boolean;
@@ -106,11 +75,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
-  /**
-   * We register the defaul icon mappings to ensure all icons render.
-   */
-  registerIcons(props.icons ? { icons: props.icons } : { icons: defaultCompositeIcons });
-  return <CallCompositeInternal {...props} showCallControls={true} />;
+  return (
+    <BaseComposite {...props}>
+      <CallCompositeInternal {...props} showCallControls={true} />
+    </BaseComposite>
+  );
 };
 
 /**
@@ -129,7 +98,7 @@ interface CallInternalProps extends CallCompositeProps {
  * @internal
  */
 export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme, rtl, locale, identifiers, onFetchAvatarPersonaData } = props;
+  const { adapter, callInvitationURL, onFetchAvatarPersonaData } = props;
 
   useEffect(() => {
     (async () => {
@@ -140,19 +109,13 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
     })();
   }, [adapter]);
 
-  const callElement = (
-    <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <IdentifierProvider identifiers={identifiers}>
-        <CallAdapterProvider adapter={adapter}>
-          <MainScreen
-            showCallControls={props.showCallControls}
-            callInvitationURL={callInvitationURL}
-            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          />
-        </CallAdapterProvider>
-      </IdentifierProvider>
-    </FluentThemeProvider>
+  return (
+    <CallAdapterProvider adapter={adapter}>
+      <MainScreen
+        showCallControls={props.showCallControls}
+        callInvitationURL={callInvitationURL}
+        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+      />
+    </CallAdapterProvider>
   );
-
-  return locale ? LocalizationProvider({ locale, children: callElement }) : callElement;
 };

@@ -1,0 +1,69 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import React from 'react';
+import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
+import { FluentThemeProvider, IdentifierProvider, Identifiers } from '@internal/react-components';
+import { CompositeLocale, LocalizationProvider } from '../localization';
+import { AvatarPersonaDataCallback } from './AvatarPersona';
+import { defaultCompositeIcons, DefaultCompositeIcons } from './icons';
+
+export interface BaseCompositeProps {
+  children?: React.ReactNode;
+  /**
+   * Fluent theme for the composite.
+   *
+   * @defaultValue light theme
+   */
+  fluentTheme?: PartialTheme | Theme;
+  /**
+   * Custom Icon override for the composite.
+   * A JSX element can be provided to override the default icon.
+   */
+  icons?: DefaultCompositeIcons;
+  /**
+   * Custom identifiers for ui components used inside composites.
+   */
+  identifiers?: Identifiers;
+  /**
+   * Locale for the composite.
+   *
+   * @defaultValue English (US)
+   */
+  locale?: CompositeLocale;
+  /**
+   * Whether composite is displayed right-to-left.
+   *
+   * @defaultValue false
+   */
+  rtl?: boolean;
+  /**
+   * A callback function that can be used to provide custom data to Avatars rendered
+   * in Composite.
+   */
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+}
+
+/**
+ * A base class for composites.
+ * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
+ */
+export const BaseComposite = (props: BaseCompositeProps): JSX.Element => {
+  const { fluentTheme, rtl, locale, identifiers } = props;
+
+  /**
+   * We register the default icon mappings merged with custom icons provided through props
+   * to ensure all icons render correctly.
+   */
+  registerIcons({ icons: { ...defaultCompositeIcons, ...props.icons } });
+
+  const CompositeElement = (
+    <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
+      <IdentifierProvider identifiers={identifiers}>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        {props.children}
+      </IdentifierProvider>
+    </FluentThemeProvider>
+  );
+  return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+};
