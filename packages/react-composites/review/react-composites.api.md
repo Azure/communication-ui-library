@@ -297,7 +297,7 @@ export type CallCompositeProps = {
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
-// @public (undocumented)
+// @public
 export interface CallCompositeStrings {
     cameraPermissionDenied: string;
     cameraTurnedOff: string;

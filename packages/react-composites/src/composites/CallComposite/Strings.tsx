@@ -1,3 +1,11 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+/**
+ * Strings used by the {@link CallComposite} directly.
+ *
+ * This strings are in addition to those used by the components from the component library.
+ */
 export interface CallCompositeStrings {
   /**
    * Error shown when camera access is blocked by the browser.

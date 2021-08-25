@@ -48,7 +48,7 @@ export const LocalPreview = (): JSX.Element => {
         </Stack.Item>
       </Stack>
     );
-  }, [theme]);
+  }, [theme, locale.strings.call.cameraTurnedOff]);
 
   return (
     <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>
