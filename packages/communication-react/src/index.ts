@@ -17,14 +17,14 @@ export type {
   CallAgentProviderProps,
   CallProviderProps,
   GetCallingSelector,
-  DefaultCallingHandlers,
+  CallingHandlers,
   CallingBaseSelectorProps
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
   GetChatSelector,
-  DefaultChatHandlers,
+  ChatHandlers,
   ChatBaseSelectorProps
 } from '../../chat-component-bindings/src';
 

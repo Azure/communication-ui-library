@@ -19,5 +19,5 @@ export { errorBarSelector } from './errorBarSelector';
 export type { ChatClientProviderProps } from './providers/ChatClientProvider';
 export type { ChatThreadClientProviderProps } from './providers/ChatThreadClientProvider';
 export type { ChatBaseSelectorProps } from './baseSelectors';
-export type { ChatHandlers as DefaultChatHandlers } from './handlers/createHandlers';
+export type { ChatHandlers } from './handlers/createHandlers';
 export type { GetSelector as GetChatSelector } from './hooks/usePropsFor';

@@ -7,7 +7,7 @@ import {
   ChatError,
   StatefulChatClient
 } from '@internal/chat-stateful-client';
-import { DefaultChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
+import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
 import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
@@ -87,7 +87,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
-  private handlers: DefaultChatHandlers;
+  private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
   constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {

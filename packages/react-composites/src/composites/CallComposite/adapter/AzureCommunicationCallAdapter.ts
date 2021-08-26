@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
+import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
   StatefulDeviceManager,
@@ -125,7 +125,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private locator: TeamsMeetingLinkLocator | GroupCallLocator;
   private call: Call | undefined;
   private context: CallContext;
-  private handlers: DefaultCallingHandlers;
+  private handlers: CallingHandlers;
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;

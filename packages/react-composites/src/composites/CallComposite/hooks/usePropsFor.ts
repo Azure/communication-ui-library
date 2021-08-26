@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Common } from '@internal/acs-ui-common';
-import { DefaultCallingHandlers, getCallingSelector, GetCallingSelector } from '@internal/calling-component-bindings';
+import { CallingHandlers, getCallingSelector, GetCallingSelector } from '@internal/calling-component-bindings';
 import { useAdaptedSelector } from './useAdaptedSelector';
 import { useHandlers } from './useHandlers';
 
@@ -14,7 +14,7 @@ type Selector = (state: any, props: any) => any;
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetCallingSelector<Component> extends Selector
-  ? ReturnType<GetCallingSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]>
   : Record<string, never> => {
   const selector = getCallingSelector(component);
   if (!selector) {

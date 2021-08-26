@@ -32,7 +32,7 @@ export type CallAdapterClientState = {
   displayName?: string;
   call?: CallState;
   devices: DeviceManagerState;
-  endedCall?: CallState | undefined;
+  endedCall?: CallState;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */

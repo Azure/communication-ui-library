@@ -160,7 +160,7 @@ export type CallAdapterClientState = {
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
-    endedCall?: CallState | undefined;
+    endedCall?: CallState;
     latestErrors: CallAdapterErrors;
 };
 
