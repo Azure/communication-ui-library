@@ -5,6 +5,7 @@
     "microphonePermissionDenied": "Uw browser blokkeert de toegang tot uw microfoon",
     "teamsMeetingFailReasonAccessDenied": "Toegang tot de vergadering is geweigerd",
     "teamsMeetingFailReasonParticipantRemoved": "U bent verwijderd uit de vergadering",
-    "teamsMeetingFailToJoin": "Fout bij deelnemen aan Teams-vergadering"
+    "teamsMeetingFailToJoin": "Fout bij deelnemen aan Teams-vergadering",
+    "cameraLabel": "Camera"
   }
 }

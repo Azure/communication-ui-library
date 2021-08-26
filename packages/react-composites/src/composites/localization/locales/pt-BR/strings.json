@@ -5,6 +5,7 @@
     "microphonePermissionDenied": "Seu navegador está bloqueando o acesso ao microfone",
     "teamsMeetingFailReasonAccessDenied": "O acesso à reunião foi negado",
     "teamsMeetingFailReasonParticipantRemoved": "Você foi removido da reunião",
-    "teamsMeetingFailToJoin": "Erro ao ingressar na Reunião de Equipe"
+    "teamsMeetingFailToJoin": "Erro ao ingressar na Reunião de Equipe",
+    "cameraLabel": "Camera"
   }
 }
