@@ -79,7 +79,7 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
-  const defaultPlaceHolder = 'Select an option';
+  const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const soundLabel = 'Sound';
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its

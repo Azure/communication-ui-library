@@ -8,6 +8,10 @@
  */
 export interface CallCompositeStrings {
   /**
+   * Default placeholder text in camera dropdown
+   */
+  defaultPlaceHolder: string;
+  /**
    * Label for camera dropdown
    */
   cameraLabel: string;
