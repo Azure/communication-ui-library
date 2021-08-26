@@ -6,10 +6,9 @@ import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider, IdentifierProvider, Identifiers } from '@internal/react-components';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
-import { defaultCompositeIcons, DefaultCompositeIcons } from './icons';
+import { DEFAULT_COMPOSITE_ICONS, CompositeIcons } from './icons';
 
 export interface BaseCompositeProps {
-  children?: React.ReactNode;
   /**
    * Fluent theme for the composite.
    *
@@ -20,7 +19,7 @@ export interface BaseCompositeProps {
    * Custom Icon override for the composite.
    * A JSX element can be provided to override the default icon.
    */
-  icons?: DefaultCompositeIcons;
+  icons?: CompositeIcons;
   /**
    * Custom identifiers for ui components used inside composites.
    */
@@ -48,14 +47,14 @@ export interface BaseCompositeProps {
  * A base class for composites.
  * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
  */
-export const BaseComposite = (props: BaseCompositeProps): JSX.Element => {
+export const BaseComposite = (props: BaseCompositeProps & { children: React.ReactNode }): JSX.Element => {
   const { fluentTheme, rtl, locale, identifiers } = props;
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
    * to ensure all icons render correctly.
    */
-  registerIcons({ icons: { ...defaultCompositeIcons, ...props.icons } });
+  registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS, ...props.icons } });
 
   const CompositeElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>

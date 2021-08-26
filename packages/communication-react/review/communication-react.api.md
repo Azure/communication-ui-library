@@ -208,15 +208,10 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @public
-export const BaseComposite: (props: BaseCompositeProps) => JSX.Element;
-
 // @public (undocumented)
 export interface BaseCompositeProps {
-    // (undocumented)
-    children?: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
-    icons?: DefaultCompositeIcons;
+    icons?: CompositeIcons;
     identifiers?: Identifiers;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -785,6 +780,9 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
+// @public (undocumented)
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
 // @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
@@ -812,6 +810,19 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public (undocumented)
+export const COMPOSITE_ONLY_ICONS: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+};
+
+// @public (undocumented)
+export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
 
 // @public
 export interface CompositeLocale {
@@ -920,43 +931,36 @@ export const darkTheme: PartialTheme & CallingTheme;
 // @public
 export const de_DE: Locale;
 
-// @public (undocumented)
-export type DefaultCallingHandlers = {
-    onStartLocalVideo: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onHangUp: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
+// @public
+export const DEFAULT_COMPONENT_ICONS: {
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
 };
 
-// @public (undocumented)
-export type DefaultChatHandlers = {
-    onSendMessage: (content: string) => Promise<void>;
-    onMessageSeen: (chatMessageId: string) => Promise<void>;
-    onTyping: () => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
-    updateThreadTopicName: (topicName: string) => Promise<void>;
-    onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
-};
-
-// @public (undocumented)
-export type DefaultCompositeIcons = Record<keyof typeof defaultCompositeIcons, JSX.Element>;
-
-// @public (undocumented)
-export const defaultCompositeIcons: {
+// @public
+export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsCamera: JSX.Element;
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
@@ -990,34 +994,35 @@ export const defaultCompositeIcons: {
 };
 
 // @public (undocumented)
-export type DefaultIcons = Record<keyof typeof defaultIcons, JSX.Element>;
+export type DefaultCallingHandlers = {
+    onStartLocalVideo: () => Promise<void>;
+    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
+    onToggleMicrophone: () => Promise<void>;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
+    onHangUp: () => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    onDisposeLocalStreamView: () => Promise<void>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
+};
 
 // @public (undocumented)
-export const defaultIcons: {
-    ControlButtonCameraOff: JSX.Element;
-    ControlButtonCameraOn: JSX.Element;
-    ControlButtonEndCall: JSX.Element;
-    ControlButtonMicOff: JSX.Element;
-    ControlButtonMicOn: JSX.Element;
-    ControlButtonOptions: JSX.Element;
-    ControlButtonParticipants: JSX.Element;
-    ControlButtonScreenShareStart: JSX.Element;
-    ControlButtonScreenShareStop: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
-    OptionsCamera: JSX.Element;
-    OptionsMic: JSX.Element;
-    OptionsSpeaker: JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element;
-    ParticipantItemMicOff: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
-    VideoTileMicOff: JSX.Element;
-    VideoTileMicOn: JSX.Element;
+export type DefaultChatHandlers = {
+    onSendMessage: (content: string) => Promise<void>;
+    onMessageSeen: (chatMessageId: string) => Promise<void>;
+    onTyping: () => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
+    updateThreadTopicName: (topicName: string) => Promise<void>;
+    onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public

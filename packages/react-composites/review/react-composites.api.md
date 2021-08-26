@@ -18,6 +18,7 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
+import { ComponentIcons } from '@internal/react-components';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { ErrorType } from '@internal/react-components';
@@ -30,7 +31,6 @@ import { PartialTheme } from '@fluentui/react';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import type { PhoneNumberKind } from '@azure/communication-common';
-import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -165,15 +165,10 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @public
-export const BaseComposite: (props: BaseCompositeProps) => JSX.Element;
-
 // @public (undocumented)
 export interface BaseCompositeProps {
-    // (undocumented)
-    children?: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
-    icons?: DefaultCompositeIcons;
+    icons?: CompositeIcons;
     identifiers?: Identifiers;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -447,6 +442,19 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 // @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
 
+// @public (undocumented)
+export const COMPOSITE_ONLY_ICONS: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+};
+
+// @public (undocumented)
+export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
+
 // @public
 export interface CompositeLocale {
     component: Locale;
@@ -464,11 +472,8 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
-// @public (undocumented)
-export type DefaultCompositeIcons = Record<keyof typeof defaultCompositeIcons, JSX.Element>;
-
-// @public (undocumented)
-export const defaultCompositeIcons: {
+// @public
+export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsCamera: JSX.Element;
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;

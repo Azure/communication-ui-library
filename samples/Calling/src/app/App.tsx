@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { defaultIcons } from '@azure/communication-react';
+import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
 
 import {
   fetchTokenResponse,
@@ -31,7 +31,7 @@ console.log(
 );
 
 initializeIcons();
-registerIcons({ icons: defaultIcons });
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 type AppPages = 'home' | 'call' | 'endCall' | 'callError' | 'teamsMeetingDenied' | 'removed';
 

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ar_SA, defaultIcons, de_DE, en_US, FluentThemeProvider, fr_FR, Locale, LocalizationProvider } from '@azure/communication-react';
+import { ar_SA, DEFAULT_COMPONENT_ICONS, de_DE, en_US, FluentThemeProvider, fr_FR, Locale, LocalizationProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import React from 'react';
@@ -18,7 +18,7 @@ import { TOC } from './TOC';
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
-registerIcons({ icons: defaultIcons });
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 const namedLocales: Record<string, {  name: string; locale: Locale;}> = {
   'en-US': {

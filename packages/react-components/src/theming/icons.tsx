@@ -26,9 +26,12 @@ import {
 } from '@fluentui/react-icons';
 import React from 'react';
 
-export type DefaultIcons = Record<keyof typeof defaultIcons, JSX.Element>;
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
 
-export const defaultIcons = {
+/**
+ * The default set of icons that are available to use in the UI components.
+ */
+export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonCameraOff: <VideoOff20Filled />,
   ControlButtonCameraOn: <Video20Filled />,
   ControlButtonEndCall: <CallEnd20Filled />,
