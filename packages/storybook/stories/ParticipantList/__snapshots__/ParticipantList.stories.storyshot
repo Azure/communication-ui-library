@@ -33,66 +33,73 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Persona ms-Persona--size32 root-6"
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size32 coin-13"
-                role="presentation"
+                className="ms-Persona ms-Persona--size32 root-7"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-15"
+                  className="ms-Persona-coin ms-Persona--size32 coin-14"
                   role="presentation"
                 >
                   <div
-                    aria-hidden="true"
-                    className="ms-Persona-initials initials-18"
+                    className="ms-Persona-imageArea imageArea-16"
+                    role="presentation"
                   >
-                    <span>
-                      R
-                    </span>
+                    <div
+                      aria-hidden="true"
+                      className="ms-Persona-initials initials-19"
+                    >
+                      <span>
+                        R
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="ms-Persona-details details-7"
-              >
                 <div
-                  className="ms-Persona-primaryText primaryText-8"
-                  dir="auto"
+                  className="ms-Persona-details details-8"
                 >
                   <div
-                    className="ms-TooltipHost root-21"
-                    onBlurCapture={[Function]}
-                    onFocusCapture={[Function]}
-                    onKeyDown={[Function]}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
+                    className="ms-Persona-primaryText primaryText-9"
+                    dir="auto"
                   >
-                    Rick
+                    <div
+                      className="ms-TooltipHost root-22"
+                      onBlurCapture={[Function]}
+                      onFocusCapture={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                    >
+                      Rick
+                    </div>
                   </div>
+                  <div
+                    className="ms-Persona-secondaryText secondaryText-10"
+                    dir="auto"
+                  />
+                  <div
+                    className="ms-Persona-tertiaryText tertiaryText-11"
+                    dir="auto"
+                  />
+                  <div
+                    className="ms-Persona-optionalText optionalText-12"
+                    dir="auto"
+                  />
                 </div>
-                <div
-                  className="ms-Persona-secondaryText secondaryText-9"
-                  dir="auto"
-                />
-                <div
-                  className="ms-Persona-tertiaryText tertiaryText-10"
-                  dir="auto"
-                />
-                <div
-                  className="ms-Persona-optionalText optionalText-11"
-                  dir="auto"
-                />
               </div>
             </div>
             <div
-              className="ms-Stack css-76 css-22"
+              className="ms-Stack css-75 css-23"
             >
+              <div
+                className="ms-Stack css-24"
+              />
               <span
                 className="ms-layer"
               >
                 <div
-                  className="ms-Fabric ms-Layer-content content-52"
+                  className="ms-Fabric ms-Layer-content content-54"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
@@ -125,7 +132,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   onTouchStart={[Function]}
                 >
                   <div
-                    className="ms-Callout-container container-54"
+                    className="ms-Callout-container container-56"
                     style={
                       Object {
                         "visibility": "hidden",
@@ -133,7 +140,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     }
                   >
                     <div
-                      className="ms-Callout ms-ContextualMenu-Callout root-55"
+                      className="ms-Callout ms-ContextualMenu-Callout root-57"
                       hidden={true}
                       onScroll={[Function]}
                       style={
@@ -146,7 +153,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       tabIndex={-1}
                     >
                       <div
-                        className="ms-Callout-main calloutMain-58"
+                        className="ms-Callout-main calloutMain-60"
                         onKeyDown={[Function]}
                         onMouseDown={[Function]}
                         onMouseUp={[Function]}
@@ -160,7 +167,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         }
                       >
                         <div
-                          className="ms-ContextualMenu-container container-24"
+                          className="ms-ContextualMenu-container container-26"
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
                           onKeyUp={[Function]}
@@ -168,27 +175,27 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                           tabIndex={-1}
                         >
                           <div
-                            className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
+                            className="ms-FocusZone css-56 ms-ContextualMenu is-open root-25"
                             data-focuszone-id="FocusZone11"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}
                           >
                             <ul
-                              className="ms-ContextualMenu-list is-open list-25"
+                              className="ms-ContextualMenu-list is-open list-27"
                               onKeyDown={[Function]}
                               onKeyUp={[Function]}
                               role="presentation"
                             >
                               <li
-                                className="ms-ContextualMenu-item item-28"
+                                className="ms-ContextualMenu-item item-30"
                                 role="presentation"
                               >
                                 <button
                                   aria-disabled={false}
                                   aria-posinset={1}
                                   aria-setsize={1}
-                                  className="ms-ContextualMenu-link root-30"
+                                  className="ms-ContextualMenu-link root-32"
                                   onClick={[Function]}
                                   onMouseDown={[Function]}
                                   onMouseEnter={[Function]}
@@ -197,10 +204,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                                   role="menuitem"
                                 >
                                   <div
-                                    className="ms-ContextualMenu-linkContent linkContent-34"
+                                    className="ms-ContextualMenu-linkContent linkContent-36"
                                   >
                                     <span
-                                      className="ms-ContextualMenu-itemText label-40"
+                                      className="ms-ContextualMenu-itemText label-42"
                                     >
                                       Remove
                                     </span>
@@ -223,66 +230,73 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Persona ms-Persona--size32 root-6"
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size32 coin-13"
-                role="presentation"
+                className="ms-Persona ms-Persona--size32 root-7"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-15"
+                  className="ms-Persona-coin ms-Persona--size32 coin-14"
                   role="presentation"
                 >
                   <div
-                    aria-hidden="true"
-                    className="ms-Persona-initials initials-46"
+                    className="ms-Persona-imageArea imageArea-16"
+                    role="presentation"
                   >
-                    <span>
-                      D
-                    </span>
+                    <div
+                      aria-hidden="true"
+                      className="ms-Persona-initials initials-48"
+                    >
+                      <span>
+                        D
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="ms-Persona-details details-7"
-              >
                 <div
-                  className="ms-Persona-primaryText primaryText-8"
-                  dir="auto"
+                  className="ms-Persona-details details-8"
                 >
                   <div
-                    className="ms-TooltipHost root-21"
-                    onBlurCapture={[Function]}
-                    onFocusCapture={[Function]}
-                    onKeyDown={[Function]}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
+                    className="ms-Persona-primaryText primaryText-9"
+                    dir="auto"
                   >
-                    Daryl
+                    <div
+                      className="ms-TooltipHost root-22"
+                      onBlurCapture={[Function]}
+                      onFocusCapture={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                    >
+                      Daryl
+                    </div>
                   </div>
+                  <div
+                    className="ms-Persona-secondaryText secondaryText-10"
+                    dir="auto"
+                  />
+                  <div
+                    className="ms-Persona-tertiaryText tertiaryText-11"
+                    dir="auto"
+                  />
+                  <div
+                    className="ms-Persona-optionalText optionalText-12"
+                    dir="auto"
+                  />
                 </div>
-                <div
-                  className="ms-Persona-secondaryText secondaryText-9"
-                  dir="auto"
-                />
-                <div
-                  className="ms-Persona-tertiaryText tertiaryText-10"
-                  dir="auto"
-                />
-                <div
-                  className="ms-Persona-optionalText optionalText-11"
-                  dir="auto"
-                />
               </div>
             </div>
             <div
-              className="ms-Stack css-76 css-22"
+              className="ms-Stack css-75 css-23"
             >
+              <div
+                className="ms-Stack css-24"
+              />
               <span
                 className="ms-layer"
               >
                 <div
-                  className="ms-Fabric ms-Layer-content content-52"
+                  className="ms-Fabric ms-Layer-content content-54"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
@@ -315,7 +329,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   onTouchStart={[Function]}
                 >
                   <div
-                    className="ms-Callout-container container-54"
+                    className="ms-Callout-container container-56"
                     style={
                       Object {
                         "visibility": "hidden",
@@ -323,7 +337,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     }
                   >
                     <div
-                      className="ms-Callout ms-ContextualMenu-Callout root-55"
+                      className="ms-Callout ms-ContextualMenu-Callout root-57"
                       hidden={true}
                       onScroll={[Function]}
                       style={
@@ -336,7 +350,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       tabIndex={-1}
                     >
                       <div
-                        className="ms-Callout-main calloutMain-58"
+                        className="ms-Callout-main calloutMain-60"
                         onKeyDown={[Function]}
                         onMouseDown={[Function]}
                         onMouseUp={[Function]}
@@ -350,7 +364,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         }
                       >
                         <div
-                          className="ms-ContextualMenu-container container-24"
+                          className="ms-ContextualMenu-container container-26"
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
                           onKeyUp={[Function]}
@@ -358,27 +372,27 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                           tabIndex={-1}
                         >
                           <div
-                            className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
+                            className="ms-FocusZone css-56 ms-ContextualMenu is-open root-25"
                             data-focuszone-id="FocusZone12"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}
                           >
                             <ul
-                              className="ms-ContextualMenu-list is-open list-25"
+                              className="ms-ContextualMenu-list is-open list-27"
                               onKeyDown={[Function]}
                               onKeyUp={[Function]}
                               role="presentation"
                             >
                               <li
-                                className="ms-ContextualMenu-item item-28"
+                                className="ms-ContextualMenu-item item-30"
                                 role="presentation"
                               >
                                 <button
                                   aria-disabled={false}
                                   aria-posinset={1}
                                   aria-setsize={1}
-                                  className="ms-ContextualMenu-link root-30"
+                                  className="ms-ContextualMenu-link root-32"
                                   onClick={[Function]}
                                   onMouseDown={[Function]}
                                   onMouseEnter={[Function]}
@@ -387,10 +401,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                                   role="menuitem"
                                 >
                                   <div
-                                    className="ms-ContextualMenu-linkContent linkContent-34"
+                                    className="ms-ContextualMenu-linkContent linkContent-36"
                                   >
                                     <span
-                                      className="ms-ContextualMenu-itemText label-40"
+                                      className="ms-ContextualMenu-itemText label-42"
                                     >
                                       Remove
                                     </span>
@@ -413,70 +427,77 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Persona ms-Persona--size32 ms-Persona--away root-6"
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size32 coin-13"
-                role="presentation"
+                className="ms-Persona ms-Persona--size32 ms-Persona--away root-7"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-15"
+                  className="ms-Persona-coin ms-Persona--size32 coin-14"
                   role="presentation"
                 >
                   <div
-                    aria-hidden="true"
-                    className="ms-Persona-initials initials-47"
+                    className="ms-Persona-imageArea imageArea-16"
+                    role="presentation"
                   >
-                    <span>
-                      M
-                    </span>
+                    <div
+                      aria-hidden="true"
+                      className="ms-Persona-initials initials-49"
+                    >
+                      <span>
+                        M
+                      </span>
+                    </div>
+                    <div
+                      className="ms-Persona-presence presence-50"
+                      role="presentation"
+                    />
+                  </div>
+                </div>
+                <div
+                  className="ms-Persona-details details-8"
+                >
+                  <div
+                    className="ms-Persona-primaryText primaryText-9"
+                    dir="auto"
+                  >
+                    <div
+                      className="ms-TooltipHost root-22"
+                      onBlurCapture={[Function]}
+                      onFocusCapture={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                    >
+                      Michonne
+                    </div>
                   </div>
                   <div
-                    className="ms-Persona-presence presence-48"
-                    role="presentation"
+                    className="ms-Persona-secondaryText secondaryText-10"
+                    dir="auto"
+                  />
+                  <div
+                    className="ms-Persona-tertiaryText tertiaryText-11"
+                    dir="auto"
+                  />
+                  <div
+                    className="ms-Persona-optionalText optionalText-12"
+                    dir="auto"
                   />
                 </div>
               </div>
-              <div
-                className="ms-Persona-details details-7"
-              >
-                <div
-                  className="ms-Persona-primaryText primaryText-8"
-                  dir="auto"
-                >
-                  <div
-                    className="ms-TooltipHost root-21"
-                    onBlurCapture={[Function]}
-                    onFocusCapture={[Function]}
-                    onKeyDown={[Function]}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
-                  >
-                    Michonne
-                  </div>
-                </div>
-                <div
-                  className="ms-Persona-secondaryText secondaryText-9"
-                  dir="auto"
-                />
-                <div
-                  className="ms-Persona-tertiaryText tertiaryText-10"
-                  dir="auto"
-                />
-                <div
-                  className="ms-Persona-optionalText optionalText-11"
-                  dir="auto"
-                />
-              </div>
             </div>
             <div
-              className="ms-Stack css-76 css-22"
+              className="ms-Stack css-75 css-23"
             >
+              <div
+                className="ms-Stack css-24"
+              />
               <span
                 className="ms-layer"
               >
                 <div
-                  className="ms-Fabric ms-Layer-content content-52"
+                  className="ms-Fabric ms-Layer-content content-54"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
@@ -509,7 +530,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   onTouchStart={[Function]}
                 >
                   <div
-                    className="ms-Callout-container container-54"
+                    className="ms-Callout-container container-56"
                     style={
                       Object {
                         "visibility": "hidden",
@@ -517,7 +538,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     }
                   >
                     <div
-                      className="ms-Callout ms-ContextualMenu-Callout root-55"
+                      className="ms-Callout ms-ContextualMenu-Callout root-57"
                       hidden={true}
                       onScroll={[Function]}
                       style={
@@ -530,7 +551,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                       tabIndex={-1}
                     >
                       <div
-                        className="ms-Callout-main calloutMain-58"
+                        className="ms-Callout-main calloutMain-60"
                         onKeyDown={[Function]}
                         onMouseDown={[Function]}
                         onMouseUp={[Function]}
@@ -544,7 +565,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         }
                       >
                         <div
-                          className="ms-ContextualMenu-container container-24"
+                          className="ms-ContextualMenu-container container-26"
                           onFocusCapture={[Function]}
                           onKeyDown={[Function]}
                           onKeyUp={[Function]}
@@ -552,27 +573,27 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                           tabIndex={-1}
                         >
                           <div
-                            className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
+                            className="ms-FocusZone css-56 ms-ContextualMenu is-open root-25"
                             data-focuszone-id="FocusZone13"
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             onMouseDownCapture={[Function]}
                           >
                             <ul
-                              className="ms-ContextualMenu-list is-open list-25"
+                              className="ms-ContextualMenu-list is-open list-27"
                               onKeyDown={[Function]}
                               onKeyUp={[Function]}
                               role="presentation"
                             >
                               <li
-                                className="ms-ContextualMenu-item item-28"
+                                className="ms-ContextualMenu-item item-30"
                                 role="presentation"
                               >
                                 <button
                                   aria-disabled={false}
                                   aria-posinset={1}
                                   aria-setsize={1}
-                                  className="ms-ContextualMenu-link root-30"
+                                  className="ms-ContextualMenu-link root-32"
                                   onClick={[Function]}
                                   onMouseDown={[Function]}
                                   onMouseEnter={[Function]}
@@ -581,10 +602,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                                   role="menuitem"
                                 >
                                   <div
-                                    className="ms-ContextualMenu-linkContent linkContent-34"
+                                    className="ms-ContextualMenu-linkContent linkContent-36"
                                   >
                                     <span
-                                      className="ms-ContextualMenu-itemText label-40"
+                                      className="ms-ContextualMenu-itemText label-42"
                                     >
                                       Remove
                                     </span>
@@ -607,70 +628,78 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Persona ms-Persona--size32 ms-Persona--online root-6"
+              className="ms-Stack css-6"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size32 coin-13"
-                role="presentation"
+                className="ms-Persona ms-Persona--size32 ms-Persona--online root-7"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-15"
+                  className="ms-Persona-coin ms-Persona--size32 coin-14"
                   role="presentation"
                 >
                   <div
-                    aria-hidden="true"
-                    className="ms-Persona-initials initials-18"
+                    className="ms-Persona-imageArea imageArea-16"
+                    role="presentation"
                   >
-                    <span>
-                      Y
-                    </span>
+                    <div
+                      aria-hidden="true"
+                      className="ms-Persona-initials initials-19"
+                    >
+                      <span>
+                        Y
+                      </span>
+                    </div>
+                    <div
+                      className="ms-Persona-presence presence-52"
+                      role="presentation"
+                    />
+                  </div>
+                </div>
+                <div
+                  className="ms-Persona-details details-8"
+                >
+                  <div
+                    className="ms-Persona-primaryText primaryText-9"
+                    dir="auto"
+                  >
+                    <div
+                      className="ms-TooltipHost root-22"
+                      onBlurCapture={[Function]}
+                      onFocusCapture={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                    >
+                      You
+                    </div>
                   </div>
                   <div
-                    className="ms-Persona-presence presence-50"
-                    role="presentation"
+                    className="ms-Persona-secondaryText secondaryText-10"
+                    dir="auto"
+                  />
+                  <div
+                    className="ms-Persona-tertiaryText tertiaryText-11"
+                    dir="auto"
+                  />
+                  <div
+                    className="ms-Persona-optionalText optionalText-12"
+                    dir="auto"
                   />
                 </div>
               </div>
               <div
-                className="ms-Persona-details details-7"
+                className="ms-Stack css-53"
               >
-                <div
-                  className="ms-Persona-primaryText primaryText-8"
-                  dir="auto"
-                >
-                  <div
-                    className="ms-TooltipHost root-21"
-                    onBlurCapture={[Function]}
-                    onFocusCapture={[Function]}
-                    onKeyDown={[Function]}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
-                  >
-                    You
-                  </div>
-                </div>
-                <div
-                  className="ms-Persona-secondaryText secondaryText-9"
-                  dir="auto"
-                />
-                <div
-                  className="ms-Persona-tertiaryText tertiaryText-10"
-                  dir="auto"
-                />
-                <div
-                  className="ms-Persona-optionalText optionalText-11"
-                  dir="auto"
-                />
+                (you)
               </div>
             </div>
             <div
-              className="ms-Stack css-51"
+              className="ms-Stack css-75 css-23"
             >
-              (you)
+              <div
+                className="ms-Stack css-24"
+              />
             </div>
-            <div
-              className="ms-Stack css-76 css-22"
-            />
           </div>
         </div>
       </div>
