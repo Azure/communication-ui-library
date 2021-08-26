@@ -28,8 +28,8 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   const leaveString = 'Leave';
 
   return (
-    <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="end" verticalAlign={'baseline'}>
-      <Stack horizontal={true} verticalAlign={'baseline'}>
+    <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="end">
+      <Stack horizontal={true} verticalAlign={'center'}>
         {props.isParticipantsDisplayed ? (
           <People20Filled
             className={panelButtonStyle}

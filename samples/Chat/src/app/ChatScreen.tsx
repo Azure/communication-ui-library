@@ -12,7 +12,11 @@ import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ChatHeader } from './ChatHeader';
-import { chatScreenContainerStyle } from './styles/ChatScreen.styles';
+import {
+  chatCompositeContainerStyle,
+  chatHeaderContainerStyle,
+  chatScreenContainerStyle
+} from './styles/ChatScreen.styles';
 import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
@@ -86,17 +90,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
     return (
       <Stack className={chatScreenContainerStyle}>
-        <ChatHeader
-          isParticipantsDisplayed={showParticipants}
-          onEndChat={() => adapter.removeParticipant(userId)}
-          setShowParticipants={setShowParticipants}
-        />
-        <ChatComposite
-          adapter={adapter}
-          fluentTheme={currentTheme.theme}
-          options={{ showParticipantPane: showParticipants, showTopic: true }}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        />
+        <Stack.Item className={chatHeaderContainerStyle}>
+          <ChatHeader
+            isParticipantsDisplayed={showParticipants}
+            onEndChat={() => adapter.removeParticipant(userId)}
+            setShowParticipants={setShowParticipants}
+          />
+        </Stack.Item>
+        <Stack.Item className={chatCompositeContainerStyle}>
+          <ChatComposite
+            adapter={adapter}
+            fluentTheme={currentTheme.theme}
+            options={{ showParticipantPane: showParticipants, showTopic: true }}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          />
+        </Stack.Item>
       </Stack>
     );
   }
