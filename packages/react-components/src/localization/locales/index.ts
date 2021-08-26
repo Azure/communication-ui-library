@@ -18,7 +18,7 @@ import _zh_TW from './zh-TW/strings.json';
 import _ from 'lodash';
 
 const createComponentStrings = (c: Record<string, unknown>): ComponentStrings => {
-  return _.merge(_en_US, c);
+  return _.merge({}, _en_US, c);
 };
 
 /** Locale for English (US) */
