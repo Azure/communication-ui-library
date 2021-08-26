@@ -1,8 +1,8 @@
 {
   "call": {
-    "cameraPermissionDenied": "Your browser is blocking access to your camera",
+    "cameraPermissionDenied": "브라우저에서 카메라에 대한 액세스를 차단하고 있습니다.",
     "cameraTurnedOff": "Your camera is turned off",
-    "microphonePermissionDenied": "Your browser is blocking access to your microphone",
+    "microphonePermissionDenied": "브라우저에서 마이크에 대한 액세스를 차단하고 있습니다.",
     "teamsMeetingFailReasonAccessDenied": "Access to the meeting was denied",
     "teamsMeetingFailReasonParticipantRemoved": "You were removed from the meeting",
     "teamsMeetingFailToJoin": "Error joining Teams Meeting"

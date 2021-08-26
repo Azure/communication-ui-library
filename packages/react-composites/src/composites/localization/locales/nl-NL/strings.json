@@ -1,10 +1,10 @@
 {
   "call": {
-    "cameraPermissionDenied": "Your browser is blocking access to your camera",
-    "cameraTurnedOff": "Your camera is turned off",
-    "microphonePermissionDenied": "Your browser is blocking access to your microphone",
-    "teamsMeetingFailReasonAccessDenied": "Access to the meeting was denied",
-    "teamsMeetingFailReasonParticipantRemoved": "You were removed from the meeting",
-    "teamsMeetingFailToJoin": "Error joining Teams Meeting"
+    "cameraPermissionDenied": "Uw browser blokkeert de toegang tot uw camera",
+    "cameraTurnedOff": "Camera is uitgeschakeld",
+    "microphonePermissionDenied": "Uw browser blokkeert de toegang tot uw microfoon",
+    "teamsMeetingFailReasonAccessDenied": "Toegang tot de vergadering is geweigerd",
+    "teamsMeetingFailReasonParticipantRemoved": "U bent verwijderd uit de vergadering",
+    "teamsMeetingFailToJoin": "Fout bij deelnemen aan Teams-vergadering"
   }
 }
