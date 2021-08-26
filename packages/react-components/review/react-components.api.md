@@ -96,6 +96,9 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
+// @public (undocumented)
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
 // @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
@@ -172,11 +175,8 @@ export const darkTheme: PartialTheme & CallingTheme;
 // @public
 export const de_DE: Locale;
 
-// @public (undocumented)
-export type DefaultIcons = Record<keyof typeof defaultIcons, JSX.Element>;
-
-// @public (undocumented)
-export const defaultIcons: {
+// @public
+export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
