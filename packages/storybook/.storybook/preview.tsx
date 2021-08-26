@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { FluentThemeProvider, LocalizationProvider, namedLocales } from '@azure/communication-react';
+import { FluentThemeProvider, Locale, LocalizationProvider, en_US, fr_FR, ar_SA, de_DE } from '@azure/communication-react';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
@@ -18,6 +18,25 @@ import { THEMES } from '../stories/themes';
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
+
+const namedLocales: Record<string, {  name: string; locale: Locale;}> = {
+  'en-US': {
+    locale: en_US,
+    name: 'English (US)',
+  },
+  'fr-FR': {
+    locale: fr_FR,
+    name: 'French (France)',
+  },
+  'de-DE': {
+    locale: de_DE,
+    name: 'German (Germany)',
+  },
+  'ar-SA': {
+    locale: ar_SA,
+    name: 'Arabic (Saudi Arabia)',
+  }
+};
 
 export const parameters = {
   layout: 'fullscreen',
@@ -125,7 +144,7 @@ export const globalTypes = {
     defaultValue: 'en-US',
     toolbar: {
       icon: 'globe',
-      items: Object.keys(namedLocales).map((key) => ({ title: namedLocales[key].englishName, value: key })),
+      items: Object.keys(namedLocales).map((key) => ({ title: namedLocales[key].name, value: key })),
     },
   },
   rtl: {

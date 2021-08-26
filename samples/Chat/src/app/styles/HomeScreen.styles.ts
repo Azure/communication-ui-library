@@ -3,7 +3,7 @@
 
 import { IStackTokens, getTheme, mergeStyles } from '@fluentui/react';
 
-export const palette = getTheme().palette;
+const palette = getTheme().palette;
 
 export const imgStyle = mergeStyles({
   width: '26.813rem',

@@ -292,9 +292,6 @@ export interface Locale {
 }
 
 // @public
-export const LocaleContext: React_2.Context<Locale>;
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
@@ -403,13 +400,6 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
-
-// @public
-export const namedLocales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
@@ -627,9 +617,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
-
-// @public
-export const useLocale: () => Locale;
 
 // @public
 export const useTheme: () => Theme;
