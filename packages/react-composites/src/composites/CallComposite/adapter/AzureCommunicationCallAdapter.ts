@@ -8,7 +8,6 @@ import {
   StatefulCallClient,
   createStatefulCallClient,
   DeviceManagerState,
-  CallState,
   CallError
 } from '@internal/calling-stateful-client';
 import {
@@ -116,10 +115,6 @@ class CallContext {
       latestErrors: clientState.latestErrors
     });
   }
-
-  public setEndedCall(call: CallState): void {
-    this.setState({ ...this.state, endedCall: call });
-  }
 }
 
 export class AzureCommunicationCallAdapter implements CallAdapter {
@@ -163,7 +158,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.callClient.onStateChange(onStateChange);
   }
 
-  private bindPublicMethods() {
+  private bindPublicMethods(): void {
     this.onStateChange.bind(this);
     this.offStateChange.bind(this);
     this.getState.bind(this);

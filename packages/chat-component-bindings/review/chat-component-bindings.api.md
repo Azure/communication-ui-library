@@ -64,19 +64,6 @@ export type ChatThreadClientProviderProps = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
-userId: string;
-showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
-}, (res1: string, res2: {
-[key: string]: ChatMessageWithStatus;
-}, res3: Date, res4: boolean) => {
-userId: string;
-showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
-}>;
-
-// @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
 
 // @public (undocumented)
@@ -101,10 +88,23 @@ activeErrors: ErrorType[];
 }>;
 
 // @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof messageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+
+// @public (undocumented)
+export const messageThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+userId: string;
+showMessageStatus: boolean;
+messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+}, (res1: string, res2: {
+[key: string]: ChatMessageWithStatus;
+}, res3: Date, res4: boolean) => {
+userId: string;
+showMessageStatus: boolean;
+messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+}>;
 
 // @public (undocumented)
 export const sendBoxSelector: OutputSelector<ChatClientState, {

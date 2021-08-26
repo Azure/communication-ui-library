@@ -55,7 +55,7 @@ export {
   useChatClient,
   useChatThreadClient,
   getChatSelector,
-  chatThreadSelector,
+  messageThreadSelector,
   chatParticipantListSelector,
   sendBoxSelector,
   typingIndicatorSelector,

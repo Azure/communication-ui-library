@@ -45,7 +45,7 @@ import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { OutputParametricSelector } from 'reselect';
 import { OutputSelector } from 'reselect';
 import { PartialTheme } from '@fluentui/react';
-import { PermissionConstraints } from '@azure/communication-calling';
+import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
@@ -66,7 +66,7 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-// @public (undocumented)
+// @public
 export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
@@ -74,13 +74,13 @@ export type AllKeys<T> = {
 // @public
 export const ar_SA: Locale;
 
-// @public (undocumented)
+// @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
-// @public (undocumented)
+// @public
 export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = AreTypeEqual<Required<Parameters<A>[0]>, Required<Parameters<B>[0]>>;
 
-// @public (undocumented)
+// @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public
@@ -93,102 +93,7 @@ export type AvatarPersonaData = {
 };
 
 // @public
-export type AvatarPersonaDataCallback = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
-
-// @public (undocumented)
-export class AzureCommunicationCallAdapter implements CallAdapter {
-    constructor(callClient: StatefulCallClient, locator: TeamsMeetingLinkLocator | GroupCallLocator, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
-    // (undocumented)
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // (undocumented)
-    clearErrors(errorTypes: ErrorType[]): void;
-    // (undocumented)
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    dispose(): void;
-    // (undocumented)
-    disposeStreamView(remoteUserId?: string): Promise<void>;
-    // (undocumented)
-    getState(): CallAdapterState;
-    // (undocumented)
-    isTeamsCall(): boolean;
-    // (undocumented)
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    // (undocumented)
-    leaveCall(): Promise<void>;
-    // (undocumented)
-    mute(): Promise<void>;
-    // (undocumented)
-    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    off(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    offStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    onToggleCamera(options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
-    queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    setMicrophone(device: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
-    setPage(page: CallCompositePage): void;
-    // (undocumented)
-    setSpeaker(device: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
-    startCall(participants: string[]): Call | undefined;
-    // (undocumented)
-    startCamera(): Promise<void>;
-    // (undocumented)
-    startScreenShare(): Promise<void>;
-    // (undocumented)
-    stopCamera(): Promise<void>;
-    // (undocumented)
-    stopScreenShare(): Promise<void>;
-    // (undocumented)
-    unmute(): Promise<void>;
-}
+export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 // @public (undocumented)
 export type AzureCommunicationCallAdapterArgs = {
@@ -313,6 +218,7 @@ export type CallAdapterClientState = {
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
+    endedCall?: CallState | undefined;
     latestErrors: CallAdapterErrors;
 };
 
@@ -329,7 +235,6 @@ export type CallAdapterUiState = {
     error?: Error;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
-    endedCall?: CallState | undefined;
 };
 
 // @public (undocumented)
@@ -361,7 +266,7 @@ export interface CallClientProviderProps {
 
 // @public
 export interface CallClientState {
-    callAgent: CallAgentState | undefined;
+    callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
     };
@@ -433,9 +338,6 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp'
 export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
-
-// @public (undocumented)
-export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
 
 // @public
 export type CallingBaseSelectorProps = {
@@ -587,6 +489,11 @@ export type ChatAdapterErrors = {
 };
 
 // @public (undocumented)
+export type ChatAdapterUiState = {
+    error?: Error;
+};
+
+// @public (undocumented)
 export type ChatBaseSelectorProps = {
     threadId: string;
 };
@@ -707,7 +614,7 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]> : never;
 
 // @public (undocumented)
-export type ChatState = ChatUIState & ChatCompositeClientState;
+export type ChatState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public
 export type ChatStateModifier = (state: ChatClientState) => void;
@@ -742,30 +649,12 @@ export type ChatThreadProperties = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
-userId: string;
-showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
-}, (res1: string, res2: {
-[key: string]: ChatMessageWithStatus;
-}, res3: Date, res4: boolean) => {
-userId: string;
-showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
-}>;
-
-// @public (undocumented)
-export type ChatUIState = {
-    error?: Error;
-};
-
-// @public (undocumented)
 export type ClientState = CallClientState & ChatClientState;
 
-// @public (undocumented)
+// @public
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
-// @public (undocumented)
+// @public
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
@@ -966,7 +855,7 @@ export type DeviceManagerState = {
 
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {
-    participantId: CallIdentifierKinds;
+    participantId: CommunicationIdentifierKind;
     displayName: string;
 }) => void;
 
@@ -1041,7 +930,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof chatErrorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof messageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof chatErrorBarSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -1105,7 +994,7 @@ export interface IncomingCallState {
 
 // @public (undocumented)
 export type IsMuteChangedListener = (event: {
-    identifier: CallIdentifierKinds;
+    identifier: CommunicationIdentifierKind;
     isMuted: boolean;
 }) => void;
 
@@ -1116,7 +1005,7 @@ export type IsScreenSharingOnChangedListener = (event: {
 
 // @public (undocumented)
 export type IsSpeakingChangedListener = (event: {
-    identifier: CallIdentifierKinds;
+    identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
 
@@ -1237,6 +1126,19 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
 };
 
+// @public (undocumented)
+export const messageThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+userId: string;
+showMessageStatus: boolean;
+messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+}, (res1: string, res2: {
+[key: string]: ChatMessageWithStatus;
+}, res3: Date, res4: boolean) => {
+userId: string;
+showMessageStatus: boolean;
+messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+}>;
+
 // @public
 export interface MessageThreadStrings {
     friday: string;
@@ -1294,7 +1196,7 @@ export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallSta
 // @public (undocumented)
 export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
 
-// @public (undocumented)
+// @public
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public

@@ -6,7 +6,7 @@ import type { ErrorType } from '@internal/react-components';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
 
-export type ChatUIState = {
+export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
@@ -30,7 +30,7 @@ export type ChatCompositeClientState = {
  */
 export type ChatAdapterErrors = { [operation: string]: Error };
 
-export type ChatState = ChatUIState & ChatCompositeClientState;
+export type ChatState = ChatAdapterUiState & ChatCompositeClientState;
 
 export interface ChatAdapter {
   onStateChange(handler: (state: ChatState) => void): void;

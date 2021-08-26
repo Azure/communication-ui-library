@@ -423,7 +423,7 @@ export interface CallClientState {
   /**
    * Proxy of {@link @azure/communication-calling#CallAgent}. Please review {@link CallAgentState}.
    */
-  callAgent: CallAgentState | undefined;
+  callAgent?: CallAgentState;
   /**
    * Stores a userId. This is not used by the {@link StatefulCallClient} and is provided here as a convenience for the
    * developer for easier access to userId. Must be passed in at initialization of the {@link StatefulCallClient}.

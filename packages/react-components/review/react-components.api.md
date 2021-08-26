@@ -23,7 +23,7 @@ import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
-// @public (undocumented)
+// @public
 export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
@@ -401,7 +401,7 @@ export interface MicrophoneButtonStrings {
     onLabel: string;
 }
 
-// @public (undocumented)
+// @public
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
