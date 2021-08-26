@@ -99,7 +99,8 @@
     "type-fest": "~1.2.1",
     "typescript": "4.3.5",
     "uuid": "^8.1.0",
-    "webpack": "5.38.1"
+    "webpack": "5.38.1",
+    "lodash": "~4.17.21"
   },
   "beachball": {
     "tag": "next",

@@ -391,6 +391,7 @@ export type CallCompositeProps = {
 
 // @public
 export interface CallCompositeStrings {
+    cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
     microphonePermissionDenied: string;
