@@ -10,8 +10,7 @@ export default (packageJson) => ({
   context: 'window',
   external: [
     ...(packageJson.dependencies ? Object.keys(packageJson.dependencies) : []),
-    ...(packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : []),
-    'lodash'
+    ...(packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : [])
   ],
   input: './dist/dist-esm/index.js',
   output: {
