@@ -1,4 +1,6 @@
-#!/bin/env node
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 "use strict";
 
 const fs = require('fs');
