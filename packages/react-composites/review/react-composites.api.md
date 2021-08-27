@@ -24,7 +24,6 @@ import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
-import { Identifiers } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
@@ -169,7 +168,6 @@ export type AzureCommunicationChatAdapterArgs = {
 export interface BaseCompositeProps {
     fluentTheme?: PartialTheme | Theme;
     icons?: CompositeIcons;
-    identifiers?: Identifiers;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;

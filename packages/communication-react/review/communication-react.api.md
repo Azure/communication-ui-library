@@ -209,7 +209,6 @@ export type AzureCommunicationChatAdapterArgs = {
 export interface BaseCompositeProps {
     fluentTheme?: PartialTheme | Theme;
     icons?: CompositeIcons;
-    identifiers?: Identifiers;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;
@@ -1033,9 +1032,6 @@ export type DefaultChatHandlers = {
     onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
-// @public
-export const defaultIdentifiers: Identifiers;
-
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps, ids?: {
     messageTimestamp?: string;
@@ -1145,13 +1141,10 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public (undocumented)
-export const IdentifierContext: React_2.Context<Identifiers>;
-
-// @public (undocumented)
+// @public
 export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -1159,7 +1152,7 @@ export interface IdentifierProviderProps {
     identifiers?: Identifiers;
 }
 
-// @public (undocumented)
+// @public
 export interface Identifiers {
     messageContent: string;
     messageTimestamp: string;
@@ -1804,9 +1797,6 @@ export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
-
-// @public (undocumented)
-export const useIdentifiers: () => Identifiers;
 
 // @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
