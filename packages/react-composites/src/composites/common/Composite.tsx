@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
-import { FluentThemeProvider, IdentifierProvider, Identifiers } from '@internal/react-components';
+import { FluentThemeProvider } from '@internal/react-components';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { DEFAULT_COMPOSITE_ICONS, CompositeIcons } from './icons';
@@ -20,10 +20,6 @@ export interface BaseCompositeProps {
    * A JSX element can be provided to override the default icon.
    */
   icons?: CompositeIcons;
-  /**
-   * Custom identifiers for ui components used inside composites.
-   */
-  identifiers?: Identifiers;
   /**
    * Locale for the composite.
    *
@@ -48,7 +44,7 @@ export interface BaseCompositeProps {
  * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
  */
 export const BaseComposite = (props: BaseCompositeProps & { children: React.ReactNode }): JSX.Element => {
-  const { fluentTheme, rtl, locale, identifiers } = props;
+  const { fluentTheme, rtl, locale } = props;
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
@@ -58,10 +54,8 @@ export const BaseComposite = (props: BaseCompositeProps & { children: React.Reac
 
   const CompositeElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <IdentifierProvider identifiers={identifiers}>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-        {props.children}
-      </IdentifierProvider>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+      {props.children}
     </FluentThemeProvider>
   );
   return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;

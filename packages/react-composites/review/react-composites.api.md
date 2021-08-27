@@ -24,11 +24,6 @@ import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
-<<<<<<< HEAD
-import { Locale } from '@internal/react-components';
-=======
-import { Identifiers } from '@internal/react-components';
->>>>>>> origin/main
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
@@ -173,7 +168,6 @@ export type AzureCommunicationChatAdapterArgs = {
 export interface BaseCompositeProps {
     fluentTheme?: PartialTheme | Theme;
     icons?: CompositeIcons;
-    identifiers?: Identifiers;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;
@@ -306,12 +300,7 @@ export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
-<<<<<<< HEAD
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-};
-=======
 }
->>>>>>> origin/main
 
 // @public
 export interface CallCompositeStrings {
@@ -413,11 +402,7 @@ export interface ChatCompositeProps extends BaseCompositeProps {
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
-<<<<<<< HEAD
-};
-=======
 }
->>>>>>> origin/main
 
 // @public
 export type ChatErrorListener = (event: {

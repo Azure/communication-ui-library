@@ -209,7 +209,6 @@ export type AzureCommunicationChatAdapterArgs = {
 export interface BaseCompositeProps {
     fluentTheme?: PartialTheme | Theme;
     icons?: CompositeIcons;
-    identifiers?: Identifiers;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;
@@ -393,12 +392,7 @@ export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
-<<<<<<< HEAD
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-};
-=======
 }
->>>>>>> origin/main
 
 // @public
 export interface CallCompositeStrings {
@@ -635,11 +629,7 @@ export interface ChatCompositeProps extends BaseCompositeProps {
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
-<<<<<<< HEAD
-};
-=======
 }
->>>>>>> origin/main
 
 // @public
 export class ChatError extends Error {
