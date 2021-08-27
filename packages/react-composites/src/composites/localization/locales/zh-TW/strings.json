@@ -6,6 +6,7 @@
     "teamsMeetingFailReasonAccessDenied": "被拒絕存取會議",
     "teamsMeetingFailReasonParticipantRemoved": "已從會議中將您移除",
     "teamsMeetingFailToJoin": "加入 Teams 會議時發生錯誤",
-    "cameraLabel": "Camera"
+    "cameraLabel": "Camera",
+    "defaultPlaceHolder": "Select an option"
   }
 }
