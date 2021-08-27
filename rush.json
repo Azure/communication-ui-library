@@ -83,7 +83,7 @@
       "reviewCategory": "tools"
     },
     {
-      "packageName": "build-tools",
+      "packageName": "@internal-tools/config",
       "projectFolder": "common/config",
       "reviewCategory": "tools"
     },
