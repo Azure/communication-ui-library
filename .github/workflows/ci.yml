@@ -61,7 +61,7 @@ jobs:
           fi
       # Tree-shaking check
       - name: Treeshaking check
-        run: rush build --only @internal/check-treeshaking
+        run: rush build --only @internal-tools/check-treeshaking
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
       # Tests
