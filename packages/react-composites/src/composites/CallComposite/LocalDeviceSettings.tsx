@@ -80,7 +80,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const theme = useTheme();
   const locale = useLocale();
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
-  const soundLabel = 'Sound';
+  const soundLabel = locale.strings.call.soundLabel;
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for

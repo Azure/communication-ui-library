@@ -16,6 +16,10 @@ export interface CallCompositeStrings {
    */
   cameraLabel: string;
   /**
+   * Label for sound dropdown
+   */
+  soundLabel: string;
+  /**
    * Error shown when camera access is blocked by the browser.
    */
   cameraPermissionDenied: string;

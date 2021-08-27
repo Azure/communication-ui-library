@@ -396,6 +396,7 @@ export interface CallCompositeStrings {
     cameraTurnedOff: string;
     defaultPlaceHolder: string;
     microphonePermissionDenied: string;
+    soundLabel: string;
     teamsMeetingFailReasonAccessDenied: string;
     teamsMeetingFailReasonParticipantRemoved: string;
     teamsMeetingFailToJoin: string;
