@@ -88,8 +88,8 @@
       "reviewCategory": "tools"
     },
     {
-      "packageName": "@internal/check-treeshaking",
-      "projectFolder": "packages/check-treeshaking",
+      "packageName": "@internal-tools/check-treeshaking",
+      "projectFolder": "tools/check-treeshaking",
       "reviewCategory": "tools"
     }
   ]
