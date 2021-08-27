@@ -51,7 +51,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
 /**
  * An Avatar component made using the `Persona` component.
  * It allows you to specify a `userId` and a `dataProvider` to retrieve the `AvatarPersonaData`.
- * Read more about `Persona` component at https://developer.microsoft.com/en-us/fluentui#/controls/web/persona
+ * Read more about `Persona` component at https://developer.microsoft.com/fluentui#/controls/web/persona
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   const { userId, dataProvider } = props;

@@ -265,7 +265,7 @@ const CopyableResponse = (props: { response: unknown | undefined }): JSX.Element
     return (
       <Text>
         Connection string can be{' '}
-        <Link href="https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#access-your-connection-strings-and-service-endpoints">
+        <Link href="https://docs.microsoft.com//azure/communication-services/quickstarts/identity/quick-create-identity">
           generated on azure portal
         </Link>
         .

@@ -113,8 +113,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>ParticipantsButton Props</Heading>
       <Description>
         `ParticipantsButton` features all props a [FluentUI
-        Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) offers, with the following
-        additional properties.
+        Button](https://developer.microsoft.com//fluentui#/controls/web/button) offers, with the following additional
+        properties.
       </Description>
       <Props of={ParticipantsButton} />
     </>

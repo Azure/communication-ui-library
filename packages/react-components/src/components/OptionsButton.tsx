@@ -220,7 +220,7 @@ const onRenderOptionsIcon = (): JSX.Element => (
 /**
  * `OptionsButton` allows you to easily create a component for rendering an options button. It can be used in your ControlBar component for example.
  * This button should contain dropdown menu items you can define through its property `menuProps`.
- * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
+ * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com//fluentui#/controls/web/contextualmenu#IContextualMenuProps).
  *
  * @param props - of type OptionsButtonProps
  */
