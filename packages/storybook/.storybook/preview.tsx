@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { FluentThemeProvider, Locale, LocalizationProvider, en_US, fr_FR, ar_SA, de_DE } from '@azure/communication-react';
+import { FluentThemeProvider, ComponentLocale, LocalizationProvider, COMPONENT_LOCALE_EN_US, COMPONENT_LOCALE_FR_FR, COMPONENT_LOCALE_AR_SA, COMPONENT_LOCALE_DE_DE } from '@azure/communication-react';
 import { initializeIcons, loadTheme } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import { TOC } from './TOC';
@@ -19,21 +19,21 @@ import { THEMES } from '../stories/themes';
 loadTheme({});
 initializeIcons();
 
-const namedLocales: Record<string, {  name: string; locale: Locale;}> = {
+const namedLocales: Record<string, {  name: string; locale: ComponentLocale;}> = {
   'en-US': {
-    locale: en_US,
+    locale: COMPONENT_LOCALE_EN_US,
     name: 'English (US)',
   },
   'fr-FR': {
-    locale: fr_FR,
+    locale: COMPONENT_LOCALE_FR_FR,
     name: 'French (France)',
   },
   'de-DE': {
-    locale: de_DE,
+    locale: COMPONENT_LOCALE_DE_DE,
     name: 'German (Germany)',
   },
   'ar-SA': {
-    locale: ar_SA,
+    locale: COMPONENT_LOCALE_AR_SA,
     name: 'Arabic (Saudi Arabia)',
   }
 };

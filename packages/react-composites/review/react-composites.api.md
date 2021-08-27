@@ -18,12 +18,12 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
+import { ComponentLocale } from '@internal/react-components';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { Identifiers } from '@internal/react-components';
-import { Locale } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
@@ -439,7 +439,7 @@ export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
 
 // @public
 export interface CompositeLocale {
-    component: Locale;
+    component: ComponentLocale;
     strings: CompositeStrings;
 }
 
