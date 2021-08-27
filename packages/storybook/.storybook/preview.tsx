@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { FluentThemeProvider, ComponentLocale, LocalizationProvider, COMPONENT_LOCALE_EN_US, COMPONENT_LOCALE_FR_FR, COMPONENT_LOCALE_AR_SA, COMPONENT_LOCALE_DE_DE } from '@azure/communication-react';
-import { initializeIcons, loadTheme } from '@fluentui/react';
+import { ComponentLocale, COMPONENT_LOCALE_AR_SA, COMPONENT_LOCALE_DE_DE, COMPONENT_LOCALE_EN_US, COMPONENT_LOCALE_FR_FR, DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
+import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
-import { TOC } from './TOC';
+import React from 'react';
 import {
   COMPONENT_FOLDER_PREFIX,
   COMPOSITE_FOLDER_PREFIX,
@@ -14,10 +13,12 @@ import {
   STATEFUL_CLIENT_PREFIX
 } from '../stories/constants';
 import { THEMES } from '../stories/themes';
+import { TOC } from './TOC';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 const namedLocales: Record<string, {  name: string; locale: ComponentLocale;}> = {
   'en-US': {

@@ -205,6 +205,16 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
+// @public (undocumented)
+export interface BaseCompositeProps {
+    fluentTheme?: PartialTheme | Theme;
+    icons?: CompositeIcons;
+    identifiers?: Identifiers;
+    locale?: CompositeLocale;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    rtl?: boolean;
+}
+
 // @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
@@ -379,15 +389,11 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public (undocumented)
-export type CallCompositeProps = {
+export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    rtl?: boolean;
-    locale?: CompositeLocale;
+    // (undocumented)
     callInvitationURL?: string;
-    identifiers?: Identifiers;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-};
+}
 
 // @public
 export interface CallCompositeStrings {
@@ -619,17 +625,12 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatCompositeProps = {
+export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    rtl?: boolean;
-    locale?: CompositeLocale;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
-    identifiers?: Identifiers;
-};
+}
 
 // @public
 export class ChatError extends Error {
@@ -785,6 +786,9 @@ export const COMPONENT_LOCALE_EN_US: ComponentLocale;
 // @public
 export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
 
+// @public (undocumented)
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
 // @public
 export interface ComponentLocale {
     strings: ComponentStrings;
@@ -817,6 +821,19 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public (undocumented)
+export const COMPOSITE_ONLY_ICONS: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+};
+
+// @public (undocumented)
+export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
 
 // @public
 export interface CompositeLocale {
@@ -921,6 +938,68 @@ export type CustomMessagePayload = {
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
+
+// @public
+export const DEFAULT_COMPONENT_ICONS: {
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
+};
+
+// @public
+export const DEFAULT_COMPOSITE_ICONS: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
+};
 
 // @public (undocumented)
 export type DefaultCallingHandlers = {

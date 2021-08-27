@@ -105,6 +105,9 @@ export const COMPONENT_LOCALE_EN_US: ComponentLocale;
 // @public
 export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
 
+// @public (undocumented)
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
 // @public
 export interface ComponentLocale {
     strings: ComponentStrings;
@@ -182,6 +185,34 @@ export type CustomMessagePayload = {
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
+
+// @public
+export const DEFAULT_COMPONENT_ICONS: {
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
+};
 
 // @public
 export const defaultIdentifiers: Identifiers;

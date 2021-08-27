@@ -1,21 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
+import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
-import { getBuildTime, getChatSDKVersion } from './utils/utils';
-import { initializeIcons, Spinner } from '@fluentui/react';
-
 import { ChatScreen } from './ChatScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { EndScreen } from './EndScreen';
 import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
 import { getThreadId } from './utils/getThreadId';
+import { getBuildTime, getChatSDKVersion } from './utils/utils';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
 
 initializeIcons();
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 export default (): JSX.Element => {
   const [page, setPage] = useState('home');
