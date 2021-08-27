@@ -2,10 +2,11 @@
 // Licensed under the MIT license.
 
 export * from './components';
-export * from './identifiers';
+export { IdentifierProvider } from './identifiers';
+export type { Identifiers, IdentifierProviderProps } from './identifiers';
 export * from './locales';
 export { LocalizationProvider } from './localization';
-export type { ComponentStrings, Locale, LocalizationProviderProps } from './localization';
+export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
 
 export type {

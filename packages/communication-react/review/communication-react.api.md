@@ -71,9 +71,6 @@ export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
 
-// @public
-export const ar_SA: Locale;
-
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
@@ -207,6 +204,15 @@ export type AzureCommunicationChatAdapterArgs = {
     credential: CommunicationTokenCredential;
     threadId: string;
 };
+
+// @public (undocumented)
+export interface BaseCompositeProps {
+    fluentTheme?: PartialTheme | Theme;
+    icons?: CompositeIcons;
+    locale?: CompositeLocale;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    rtl?: boolean;
+}
 
 // @public
 export interface BaseCustomStylesProps {
@@ -382,15 +388,11 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public (undocumented)
-export type CallCompositeProps = {
+export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    rtl?: boolean;
-    locale?: CompositeLocale;
+    // (undocumented)
     callInvitationURL?: string;
-    identifiers?: Identifiers;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-};
+}
 
 // @public
 export interface CallCompositeStrings {
@@ -629,17 +631,13 @@ export type ChatCompositeFeatureFlags = {
 };
 
 // @public (undocumented)
-export type ChatCompositeProps = {
+export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    rtl?: boolean;
-    locale?: CompositeLocale;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    // (undocumented)
+    featureFlags?: ChatCompositeFeatureFlags;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    featureFlags?: ChatCompositeFeatureFlags;
-    identifiers?: Identifiers;
-};
+}
 
 // @public
 export class ChatError extends Error {
@@ -777,6 +775,26 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
+// @public (undocumented)
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
+// @public
+export interface ComponentLocale {
+    strings: ComponentStrings;
+}
+
+// @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
@@ -804,9 +822,22 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 // @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
 
+// @public (undocumented)
+export const COMPOSITE_ONLY_ICONS: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+};
+
+// @public (undocumented)
+export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
+
 // @public
 export interface CompositeLocale {
-    component: Locale;
+    component: ComponentLocale;
     strings: CompositeStrings;
 }
 
@@ -909,7 +940,66 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de_DE: Locale;
+export const DEFAULT_COMPONENT_ICONS: {
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
+};
+
+// @public
+export const DEFAULT_COMPOSITE_ICONS: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
+};
 
 // @public (undocumented)
 export type DefaultCallingHandlers = {
@@ -943,9 +1033,6 @@ export type DefaultChatHandlers = {
     onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
-// @public
-export const defaultIdentifiers: Identifiers;
-
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps, ids?: {
     messageTimestamp?: string;
@@ -972,9 +1059,6 @@ export type DisplayNameChangedListener = (event: {
 
 // @public (undocumented)
 export const emptySelector: () => Record<string, never>;
-
-// @public
-export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -1028,9 +1112,6 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public
-export const fr_FR: Locale;
-
 // @public (undocumented)
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
@@ -1061,13 +1142,10 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public (undocumented)
-export const IdentifierContext: React_2.Context<Identifiers>;
-
-// @public (undocumented)
+// @public
 export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -1075,7 +1153,7 @@ export interface IdentifierProviderProps {
     identifiers?: Identifiers;
 }
 
-// @public (undocumented)
+// @public
 export interface Identifiers {
     messageContent: string;
     messageTimestamp: string;
@@ -1130,16 +1208,11 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface Locale {
-    strings: ComponentStrings;
-}
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
 export type LocalizationProviderProps = {
-    locale: Locale;
+    locale: ComponentLocale;
     children: React_2.ReactNode;
 };
 
@@ -1725,9 +1798,6 @@ export const useChatThreadClient: () => ChatThreadClient;
 
 // @public (undocumented)
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
-
-// @public (undocumented)
-export const useIdentifiers: () => Identifiers;
 
 // @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;

@@ -7,9 +7,9 @@ import {
   IContextualMenuProps,
   IStyle,
   Stack,
-  mergeStyles
+  mergeStyles,
+  Icon
 } from '@fluentui/react';
-import { People20Filled } from '@fluentui/react-icons';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import { ParticipantList, ParticipantListProps } from './ParticipantList';
@@ -84,7 +84,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps, Particip
 }
 
 const onRenderPeopleIcon = (): JSX.Element => {
-  return <People20Filled key={'participantsIconKey'} primaryFill="currentColor" />;
+  return <Icon iconName="ControlButtonParticipants" />;
 };
 
 /**
