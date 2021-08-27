@@ -14,8 +14,19 @@ export interface ChatCompositeProps extends BaseCompositeProps {
    * Composite can also be controlled using the adapter.
    */
   adapter: ChatAdapter;
+  /**
+   * `(messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element`
+   * A callback for customizing the message renderer.
+   */
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  /**
+   * `(typingUsers: CommunicationParticipant[]) => JSX.Element`
+   * A callback for customizing the typing indicator renderer.
+   */
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+  /**
+   * Additional customizations for the chat composite
+   */
   options?: ChatOptions;
 }
 
