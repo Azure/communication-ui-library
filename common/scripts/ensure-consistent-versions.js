@@ -47,6 +47,7 @@ function _main(){
         }
         throw new Error('Error: found mismatched versions!');
     }
+    console.log('All good!')
 }
 
 _main()
