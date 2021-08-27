@@ -44,9 +44,10 @@ export const IdentifierContext = createContext<Identifiers>(defaultIdentifiers);
 /**
  * Arguments to Context Provider for {@link Identifiers}.
  *
- * @experimental.
+ * @experimental
  *
  * See documentation for {@link Identifiers}.
+ *
  */
 export interface IdentifierProviderProps {
   identifiers?: Identifiers;
