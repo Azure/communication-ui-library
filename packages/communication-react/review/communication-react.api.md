@@ -630,11 +630,8 @@ export type ChatCompositeClientState = {
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
-    // (undocumented)
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
-    // (undocumented)
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    // (undocumented)
     options?: ChatOptions;
 }
 
