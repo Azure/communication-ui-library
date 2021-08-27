@@ -1,4 +1,4 @@
-# Touchdown build pipeline for composites
+# Touchdown build pipeline for components
 
 trigger:
   - main
@@ -29,15 +29,6 @@ steps:
       cultureMappingType: 'None'
       gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for components'
-
-  - checkout: self
-    persistCredentials: true
-
-  # Setup bot information for pushing new changes
-  # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-  - script: |
-      git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      git config user.name "github-actions[bot]"
 
   - task: TouchdownBuildTask@1
     inputs:
