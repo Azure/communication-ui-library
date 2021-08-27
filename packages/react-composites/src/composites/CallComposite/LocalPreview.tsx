@@ -19,8 +19,10 @@ import { useSelector } from './hooks/useSelector';
 import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
 import { useAdapter } from './adapter/CallAdapterProvider';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { useLocale } from '../localization';
 
 export const LocalPreview = (): JSX.Element => {
+  const locale = useLocale();
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
   const { audio: microphonePermissionGranted, video: cameraPermissionGranted } = useSelector(devicePermissionSelector);
@@ -41,12 +43,12 @@ export const LocalPreview = (): JSX.Element => {
         </Stack.Item>
         <Stack.Item align="center">
           <Text className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralSecondary })}>
-            Your camera is turned off.
+            {locale.strings.call.cameraTurnedOff}
           </Text>
         </Stack.Item>
       </Stack>
     );
-  }, [theme]);
+  }, [theme, locale.strings.call.cameraTurnedOff]);
 
   return (
     <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>
