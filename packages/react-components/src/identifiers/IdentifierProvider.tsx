@@ -3,6 +3,18 @@
 
 import React, { createContext, useContext } from 'react';
 
+/**
+ * Identifiers that can be used to target specific components in a composite.
+ *
+ * @experimental
+ *
+ * These identifiers are assigned as `data-ui-id` HTML attribute of the root element of the targeted component.
+ *
+ * This API is intended for end to end test automation. As such, they are not covered by the API
+ * guarantee of the public API. This will remain perenially experimental and compatibility breaking changes
+ * may be made at any point.
+ *
+ */
 export interface Identifiers {
   /** `data-ui-id` value for `SendBox` Component */
   sendboxTextfield: string;
@@ -18,12 +30,7 @@ export interface Identifiers {
   videoGallery: string;
 }
 
-/**
- * Default `data-ui-id` values for components.
- * These values are assigned to the root element of a component through a
- * custom html attribute `data-ui-id`
- */
-export const defaultIdentifiers: Identifiers = {
+const defaultIdentifiers: Identifiers = {
   sendboxTextfield: 'sendbox-textfield',
   participantList: 'participant-list',
   messageContent: 'message-content',
@@ -34,11 +41,25 @@ export const defaultIdentifiers: Identifiers = {
 
 export const IdentifierContext = createContext<Identifiers>(defaultIdentifiers);
 
+/**
+ * Arguments to Context Provider for {@link Identifiers}.
+ *
+ * @experimental.
+ *
+ * See documentation for {@link Identifiers}.
+ */
 export interface IdentifierProviderProps {
   identifiers?: Identifiers;
   children: React.ReactNode;
 }
 
+/**
+ * React Context provider for {@link Identifiers}.
+ *
+ * @experimental
+ *
+ * See documentation for {@link Identifiers}.
+ */
 export const IdentifierProvider = (props: IdentifierProviderProps): JSX.Element => {
   const { identifiers, children } = props;
   return <IdentifierContext.Provider value={identifiers ?? defaultIdentifiers}>{children}</IdentifierContext.Provider>;

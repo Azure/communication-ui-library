@@ -22,7 +22,6 @@ import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
-import { Identifiers } from '@internal/react-components';
 import { Locale } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
 import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -293,7 +292,6 @@ export type CallCompositeProps = {
     rtl?: boolean;
     locale?: CompositeLocale;
     callInvitationURL?: string;
-    identifiers?: Identifiers;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
 
@@ -401,7 +399,6 @@ export type ChatCompositeProps = {
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
-    identifiers?: Identifiers;
 };
 
 // @public

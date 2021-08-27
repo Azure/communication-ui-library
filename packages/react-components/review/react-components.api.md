@@ -172,9 +172,6 @@ export const darkTheme: PartialTheme & CallingTheme;
 // @public
 export const de_DE: Locale;
 
-// @public
-export const defaultIdentifiers: Identifiers;
-
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps, ids?: {
     messageTimestamp?: string;
@@ -253,13 +250,10 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public (undocumented)
-export const IdentifierContext: React_2.Context<Identifiers>;
-
-// @public (undocumented)
+// @public
 export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -267,7 +261,7 @@ export interface IdentifierProviderProps {
     identifiers?: Identifiers;
 }
 
-// @public (undocumented)
+// @public
 export interface Identifiers {
     messageContent: string;
     messageTimestamp: string;
@@ -614,9 +608,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
-
-// @public (undocumented)
-export const useIdentifiers: () => Identifiers;
 
 // @public
 export const useTheme: () => Theme;
