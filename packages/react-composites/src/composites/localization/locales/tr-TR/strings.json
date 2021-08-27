@@ -7,7 +7,6 @@
     "teamsMeetingFailReasonParticipantRemoved": "Toplantıdan çıkarıldınız",
     "teamsMeetingFailToJoin": "Teams Toplantısına katılma hatası",
     "cameraLabel": "Camera",
-    "defaultPlaceHolder": "Bir seçenek belirleyin",
-    "soundLabel": "Sound"
+    "defaultPlaceHolder": "Select an option"
   }
 }

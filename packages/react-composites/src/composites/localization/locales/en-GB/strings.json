@@ -7,7 +7,6 @@
     "teamsMeetingFailReasonParticipantRemoved": "You were removed from the meeting",
     "teamsMeetingFailToJoin": "Error joining Teams Meeting",
     "cameraLabel": "Camera",
-    "defaultPlaceHolder": "Select an option",
-    "soundLabel": "Sound"
+    "defaultPlaceHolder": "Select an option"
   }
 }

@@ -7,7 +7,6 @@
     "teamsMeetingFailReasonParticipantRemoved": "모임에서 제외됨",
     "teamsMeetingFailToJoin": "Teams 모임에 참가하는 중 오류 발생",
     "cameraLabel": "카메라",
-    "defaultPlaceHolder": "옵션 선택",
-    "soundLabel": "소리"
+    "defaultPlaceHolder": "Select an option"
   }
 }

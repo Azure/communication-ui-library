@@ -7,7 +7,6 @@
     "teamsMeetingFailReasonParticipantRemoved": "Sie wurden aus der Besprechung entfernt.",
     "teamsMeetingFailToJoin": "Fehler beim Beitritt zur Teams-Besprechung",
     "cameraLabel": "Kamera",
-    "defaultPlaceHolder": "Option auswählen",
-    "soundLabel": "Sound"
+    "defaultPlaceHolder": "Select an option"
   }
 }

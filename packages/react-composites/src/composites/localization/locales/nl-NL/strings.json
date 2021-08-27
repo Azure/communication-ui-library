@@ -7,7 +7,6 @@
     "teamsMeetingFailReasonParticipantRemoved": "U bent verwijderd uit de vergadering",
     "teamsMeetingFailToJoin": "Fout bij deelnemen aan Teams-vergadering",
     "cameraLabel": "Camera",
-    "defaultPlaceHolder": "Select an option",
-    "soundLabel": "Geluid"
+    "defaultPlaceHolder": "Select an option"
   }
 }
