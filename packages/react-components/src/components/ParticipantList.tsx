@@ -3,10 +3,10 @@
 
 import React, { useMemo } from 'react';
 
-import { IContextualMenuItem, Stack, PersonaPresence, mergeStyles } from '@fluentui/react';
+import { IContextualMenuItem, Stack, PersonaPresence } from '@fluentui/react';
 import { ParticipantItem } from './ParticipantItem';
 import { MicOff20Filled, ShareScreenStart20Filled } from '@fluentui/react-icons';
-import { participantListStyle } from './styles/ParticipantList.styles';
+import { participantListStyle, iconStyles } from './styles/ParticipantList.styles';
 import { CommunicationParticipant, CallParticipant, OnRenderAvatarCallback } from '../types';
 import { useIdentifiers } from '../identifiers';
 
@@ -60,18 +60,16 @@ const onRenderParticipantsDefault = (
       });
     }
 
-    const iconStyles = mergeStyles({ height: '0.875rem' });
-    const onRenderIcon =
-      callingParticipant?.isScreenSharing || callingParticipant?.isMuted
-        ? () => (
-            <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-              {callingParticipant.isScreenSharing && (
-                <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />
-              )}
-              {callingParticipant.isMuted && <MicOff20Filled className={iconStyles} primaryFill="currentColor" />}
-            </Stack>
-          )
-        : () => <></>;
+    const onRenderIcon = (): JSX.Element => {
+      return (
+        <Stack horizontal tokens={{ childrenGap: '0.5rem' }}>
+          {callingParticipant.isScreenSharing && (
+            <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />
+          )}
+          {callingParticipant.isMuted && <MicOff20Filled className={iconStyles} primaryFill="currentColor" />}
+        </Stack>
+      );
+    };
 
     if (participant.displayName) {
       return (
