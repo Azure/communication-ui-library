@@ -6,7 +6,8 @@
     "teamsMeetingFailReasonAccessDenied": "会議へのアクセスが拒否されました",
     "teamsMeetingFailReasonParticipantRemoved": "会議から削除されました",
     "teamsMeetingFailToJoin": "Teams 会議への参加中にエラーが発生しました",
-    "cameraLabel": "Camera",
-    "defaultPlaceHolder": "Select an option"
+    "cameraLabel": "カメラ",
+    "defaultPlaceHolder": "オプションを選択する",
+    "soundLabel": "音声"
   }
 }

@@ -7,6 +7,7 @@
     "teamsMeetingFailReasonParticipantRemoved": "Vous avez été supprimé de la réunion",
     "teamsMeetingFailToJoin": "Erreur lors de la connexion à la réunion Teams",
     "cameraLabel": "Camera",
-    "defaultPlaceHolder": "Select an option"
+    "defaultPlaceHolder": "Sélectionnez une option",
+    "soundLabel": "Son"
   }
 }
