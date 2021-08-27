@@ -8,7 +8,7 @@ import { Error } from './Error';
 import { Theme, PartialTheme } from '@fluentui/react';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
-import { IdentifierProvider, Identifiers, OnRenderAvatarCallback } from '@internal/react-components';
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { FluentThemeProvider } from '@internal/react-components';
@@ -36,7 +36,6 @@ export type CallCompositeProps = {
    */
   locale?: CompositeLocale;
   callInvitationURL?: string;
-  identifiers?: Identifiers;
   /**
    * A callback function that can be used to provide custom data to an Avatar.
    */
@@ -114,7 +113,7 @@ interface CallInternalProps extends CallCompositeProps {
  * @internal
  */
 export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme, rtl, locale, identifiers, onFetchAvatarPersonaData } = props;
+  const { adapter, callInvitationURL, fluentTheme, rtl, locale, onFetchAvatarPersonaData } = props;
 
   useEffect(() => {
     (async () => {
@@ -127,15 +126,13 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
 
   const callElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <IdentifierProvider identifiers={identifiers}>
-        <CallAdapterProvider adapter={adapter}>
-          <MainScreen
-            showCallControls={props.showCallControls}
-            callInvitationURL={callInvitationURL}
-            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          />
-        </CallAdapterProvider>
-      </IdentifierProvider>
+      <CallAdapterProvider adapter={adapter}>
+        <MainScreen
+          showCallControls={props.showCallControls}
+          callInvitationURL={callInvitationURL}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        />
+      </CallAdapterProvider>
     </FluentThemeProvider>
   );
 

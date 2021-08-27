@@ -11,9 +11,7 @@ import {
   CommunicationParticipant,
   DefaultMessageRendererType,
   FluentThemeProvider,
-  MessageProps,
-  IdentifierProvider,
-  Identifiers
+  MessageProps
 } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
@@ -44,7 +42,6 @@ export type ChatCompositeProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   options?: ChatOptions;
-  identifiers?: Identifiers;
 };
 
 /**
@@ -79,7 +76,6 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     rtl,
     locale,
     options,
-    identifiers,
     onFetchAvatarPersonaData,
     onRenderTypingIndicator,
     onRenderMessage
@@ -87,19 +83,17 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
 
   const chatElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <IdentifierProvider identifiers={identifiers}>
-        <ChatAdapterProvider adapter={adapter}>
-          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-          <ChatScreen
-            showErrorBar={options?.showErrorBar}
-            showParticipantPane={options?.showParticipantPane}
-            showTopic={options?.showTopic}
-            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-            onRenderTypingIndicator={onRenderTypingIndicator}
-            onRenderMessage={onRenderMessage}
-          />
-        </ChatAdapterProvider>
-      </IdentifierProvider>
+      <ChatAdapterProvider adapter={adapter}>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <ChatScreen
+          showErrorBar={options?.showErrorBar}
+          showParticipantPane={options?.showParticipantPane}
+          showTopic={options?.showTopic}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          onRenderTypingIndicator={onRenderTypingIndicator}
+          onRenderMessage={onRenderMessage}
+        />
+      </ChatAdapterProvider>
     </FluentThemeProvider>
   );
 
