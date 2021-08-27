@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Title, Description, Heading, Source } from '@storybook/addon-docs';
+import { ChatComposite } from '@azure/communication-react';
+import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
 import React from 'react';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
@@ -84,6 +85,9 @@ export const getDocs: () => JSX.Element = () => {
         playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
         the composite with multiple users.
       </Description>
+
+      <Heading>Chat Composite Props</Heading>
+      <Props of={ChatComposite} />
     </>
   );
 };
