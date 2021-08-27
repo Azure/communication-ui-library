@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Rename component locale types to match composites",
+  "packageName": "@internal/react-components",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

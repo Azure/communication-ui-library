@@ -1,48 +1,34 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CommunicationParticipant, DefaultMessageRendererType, MessageProps } from '@internal/react-components';
 import React from 'react';
-import { ChatScreen } from './ChatScreen';
-import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
+import { BaseComposite, BaseCompositeProps } from '../common/Composite';
 import { ChatAdapter } from './adapter/ChatAdapter';
-import { CompositeLocale, LocalizationProvider } from '../localization';
-import { Theme, PartialTheme } from '@fluentui/react';
-import {
-  CommunicationParticipant,
-  DefaultMessageRendererType,
-  FluentThemeProvider,
-  MessageProps
-} from '@internal/react-components';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
+import { ChatScreen } from './ChatScreen';
 
-export type ChatCompositeProps = {
+export interface ChatCompositeProps extends BaseCompositeProps {
+  /**
+   * An adapter provides logic and data to the composite.
+   * Composite can also be controlled using the adapter.
+   */
   adapter: ChatAdapter;
   /**
-   * Fluent theme for the composite.
-   *
-   * @defaultValue light theme
+   * `(messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element`
+   * A callback for customizing the message renderer.
    */
-  fluentTheme?: PartialTheme | Theme;
-  /**
-   * Whether composite is displayed right-to-left.
-   *
-   * @defaultValue false
-   */
-  rtl?: boolean;
-  /**
-   * Locale for the composite.
-   *
-   * @defaultValue English (US)
-   */
-  locale?: CompositeLocale;
-  /**
-   * A callback function that can be used to provide custom data to an Avatar.
-   */
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  /**
+   * `(typingUsers: CommunicationParticipant[]) => JSX.Element`
+   * A callback for customizing the typing indicator renderer.
+   */
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+  /**
+   * Additional customizations for the chat composite
+   */
   options?: ChatOptions;
-};
+}
 
 /**
  * Additional customizations for the chat composite
@@ -70,21 +56,11 @@ export type ChatOptions = {
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const {
-    adapter,
-    fluentTheme,
-    rtl,
-    locale,
-    options,
-    onFetchAvatarPersonaData,
-    onRenderTypingIndicator,
-    onRenderMessage
-  } = props;
+  const { adapter, options, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
 
-  const chatElement = (
-    <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
+  return (
+    <BaseComposite {...props}>
       <ChatAdapterProvider adapter={adapter}>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <ChatScreen
           showErrorBar={options?.showErrorBar}
           showParticipantPane={options?.showParticipantPane}
@@ -94,8 +70,6 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
           onRenderMessage={onRenderMessage}
         />
       </ChatAdapterProvider>
-    </FluentThemeProvider>
+    </BaseComposite>
   );
-
-  return locale ? LocalizationProvider({ locale, children: chatElement }) : chatElement;
 };
