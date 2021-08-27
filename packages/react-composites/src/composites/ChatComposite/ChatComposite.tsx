@@ -41,8 +41,19 @@ export type ChatCompositeProps = {
    * A callback function that can be used to provide custom data to an Avatar.
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /**
+   * `(messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element`
+   * A callback for customizing the message renderer.
+   */
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  /**
+   * `(typingUsers: CommunicationParticipant[]) => JSX.Element`
+   * A callback for customizing the typing indicator renderer.
+   */
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+  /**
+   * Additional customizations for the chat composite
+   */
   options?: ChatOptions;
   identifiers?: Identifiers;
 };

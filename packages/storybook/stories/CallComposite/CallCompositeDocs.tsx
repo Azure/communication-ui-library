@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Description, Heading, Source, Title } from '@storybook/addon-docs';
+import { CallComposite } from '@azure/communication-react';
+import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
@@ -90,6 +91,9 @@ export const getDocs: () => JSX.Element = () => {
         playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
         useful if you want to explore the composite with multiple users.
       </Description>
+
+      <Heading>Call Composite Props</Heading>
+      <Props of={CallComposite} />
     </>
   );
 };
