@@ -5,14 +5,14 @@ import {
   LocalizationProvider,
   MicrophoneButton,
   ScreenShareButton,
-  en_US
+  COMPONENT_LOCALE_EN_US
 } from '@azure/communication-react';
 import React from 'react';
 
 export const CustomLocaleSnippet = (): JSX.Element => {
-  en_US.strings.cameraButton.offLabel = 'Start';
+  COMPONENT_LOCALE_EN_US.strings.cameraButton.offLabel = 'Start';
   return (
-    <LocalizationProvider locale={en_US}>
+    <LocalizationProvider locale={COMPONENT_LOCALE_EN_US}>
       <ControlBar>
         <CameraButton showLabel={true} />
         <MicrophoneButton showLabel={true} />

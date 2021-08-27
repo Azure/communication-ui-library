@@ -71,9 +71,6 @@ export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
 
-// @public
-export const ar_SA: Locale;
-
 // @public (undocumented)
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
@@ -777,8 +774,25 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
+// @public
+export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
 // @public (undocumented)
 export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
+// @public
+export interface ComponentLocale {
+    strings: ComponentStrings;
+}
 
 // @public
 export interface ComponentStrings {
@@ -823,7 +837,7 @@ export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY
 
 // @public
 export interface CompositeLocale {
-    component: Locale;
+    component: ComponentLocale;
     strings: CompositeStrings;
 }
 
@@ -924,9 +938,6 @@ export type CustomMessagePayload = {
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
-
-// @public
-export const de_DE: Locale;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -1053,9 +1064,6 @@ export type DisplayNameChangedListener = (event: {
 export const emptySelector: () => Record<string, never>;
 
 // @public
-export const en_US: Locale;
-
-// @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
@@ -1106,9 +1114,6 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
-
-// @public
-export const fr_FR: Locale;
 
 // @public (undocumented)
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
@@ -1209,16 +1214,11 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface Locale {
-    strings: ComponentStrings;
-}
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
 export type LocalizationProviderProps = {
-    locale: Locale;
+    locale: ComponentLocale;
     children: React_2.ReactNode;
 };
 

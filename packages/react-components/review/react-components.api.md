@@ -29,9 +29,6 @@ export type AllKeys<T> = {
 };
 
 // @public
-export const ar_SA: Locale;
-
-// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -96,8 +93,25 @@ export type CommunicationParticipant = {
     displayName?: string;
 };
 
+// @public
+export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
 // @public (undocumented)
 export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
+// @public
+export interface ComponentLocale {
+    strings: ComponentStrings;
+}
 
 // @public
 export interface ComponentStrings {
@@ -173,9 +187,6 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de_DE: Locale;
-
-// @public
 export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
@@ -210,9 +221,6 @@ export const defaultIdentifiers: Identifiers;
 export type DefaultMessageRendererType = (props: MessageProps, ids?: {
     messageTimestamp?: string;
 }) => JSX.Element;
-
-// @public
-export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -266,9 +274,6 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public
-export const fr_FR: Locale;
-
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
@@ -318,16 +323,11 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface Locale {
-    strings: ComponentStrings;
-}
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
 export type LocalizationProviderProps = {
-    locale: Locale;
+    locale: ComponentLocale;
     children: React_2.ReactNode;
 };
 

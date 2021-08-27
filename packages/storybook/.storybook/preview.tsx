@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ar_SA, DEFAULT_COMPONENT_ICONS, de_DE, en_US, FluentThemeProvider, fr_FR, Locale, LocalizationProvider } from '@azure/communication-react';
+import { ComponentLocale, COMPONENT_LOCALE_AR_SA, COMPONENT_LOCALE_DE_DE, COMPONENT_LOCALE_EN_US, COMPONENT_LOCALE_FR_FR, DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import React from 'react';
@@ -20,21 +20,21 @@ loadTheme({});
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
-const namedLocales: Record<string, {  name: string; locale: Locale;}> = {
+const namedLocales: Record<string, {  name: string; locale: ComponentLocale;}> = {
   'en-US': {
-    locale: en_US,
+    locale: COMPONENT_LOCALE_EN_US,
     name: 'English (US)',
   },
   'fr-FR': {
-    locale: fr_FR,
+    locale: COMPONENT_LOCALE_FR_FR,
     name: 'French (France)',
   },
   'de-DE': {
-    locale: de_DE,
+    locale: COMPONENT_LOCALE_DE_DE,
     name: 'German (Germany)',
   },
   'ar-SA': {
-    locale: ar_SA,
+    locale: COMPONENT_LOCALE_AR_SA,
     name: 'Arabic (Saudi Arabia)',
   }
 };
