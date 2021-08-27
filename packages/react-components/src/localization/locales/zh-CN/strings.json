@@ -68,11 +68,11 @@
     "userNotInThisThread": "你不再处于此聊天会话中",
     "sendMessageNotInThisThread": "无法发送消息，因为你不再在此聊天会话中",
     "sendMessageGeneric": "未能发送消息",
-    "startVideoGeneric": "Failed to start video",
-    "stopVideoGeneric": "Failed to stop video",
-    "muteGeneric": "Failed to mute microphone",
-    "unmuteGeneric": "Failed to unmute microphone",
-    "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing"
+    "startVideoGeneric": "无法启动视频",
+    "stopVideoGeneric": "无法停止视频",
+    "muteGeneric": "无法静音麦克风",
+    "unmuteGeneric": "无法取消麦克风静音",
+    "startScreenShareGeneric": "无法启动屏幕共享",
+    "stopScreenShareGeneric": "无法停止屏幕共享"
   }
 }
