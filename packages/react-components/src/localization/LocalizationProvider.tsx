@@ -16,12 +16,12 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings
 } from '../components';
-import { en_US } from './locales';
+import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
  * Data structure for localization
  */
-export interface Locale {
+export interface ComponentLocale {
   /** Strings for components */
   strings: ComponentStrings;
 }
@@ -59,14 +59,14 @@ export interface ComponentStrings {
 /**
  * Context for providing localized strings to components
  */
-export const LocaleContext = createContext<Locale>(en_US);
+export const LocaleContext = createContext<ComponentLocale>(COMPONENT_LOCALE_EN_US);
 
 /**
  * Props to LocalizationProvider
  */
 export type LocalizationProviderProps = {
   /** Locale context to provide components */
-  locale: Locale;
+  locale: ComponentLocale;
   /** Children to provide locale context. */
   children: React.ReactNode;
 };
@@ -82,4 +82,4 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
 };
 
 /** React hook to access locale */
-export const useLocale = (): Locale => useContext(LocaleContext);
+export const useLocale = (): ComponentLocale => useContext(LocaleContext);

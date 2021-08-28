@@ -3,26 +3,26 @@
 
 import React from 'react';
 import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
-import { LocalizationProvider, Locale, ComponentStrings } from '../../localization/LocalizationProvider';
+import { LocalizationProvider, ComponentLocale, ComponentStrings } from '../../localization/LocalizationProvider';
+import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 import { PartialDeep } from 'type-fest';
-import { en_US } from '../../localization/locales';
 
-export const mountWithLocalization = (node: React.ReactElement, locale: Locale): ReactWrapper => {
+export const mountWithLocalization = (node: React.ReactElement, locale: ComponentLocale): ReactWrapper => {
   return mount(node, {
     wrappingComponent: LocalizationProvider,
     wrappingComponentProps: { locale }
   });
 };
 
-export const shallowWithLocalization = (node: React.ReactElement, locale: Locale): ShallowWrapper => {
+export const shallowWithLocalization = (node: React.ReactElement, locale: ComponentLocale): ShallowWrapper => {
   return shallow(node, {
     wrappingComponent: LocalizationProvider,
     wrappingComponentProps: { locale }
   });
 };
 
-export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Locale => {
-  const strings: ComponentStrings = en_US.strings;
+export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): ComponentLocale => {
+  const strings: ComponentStrings = COMPONENT_LOCALE_EN_US.strings;
   Object.keys(testStrings).forEach((key: string) => {
     strings[key] = { ...strings[key], ...testStrings[key] };
   });

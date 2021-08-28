@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Locale } from '..';
+import { ComponentLocale } from '..';
 import _en_US from './en-US/strings.json';
+import _en_GB from './en-GB/strings.json';
 import _de_DE from './de-DE/strings.json';
 import _es_ES from './es-ES/strings.json';
 import _fr_FR from './fr-FR/strings.json';
@@ -17,28 +18,30 @@ import _zh_CN from './zh-CN/strings.json';
 import _zh_TW from './zh-TW/strings.json';
 
 /** Locale for English (US) */
-export const en_US: Locale = { strings: _en_US };
+export const COMPONENT_LOCALE_EN_US: ComponentLocale = { strings: _en_US };
+/** Locale for English (US) */
+export const COMPONENT_LOCALE_EN_GB: ComponentLocale = { strings: _en_GB };
 /** Locale for German (Germany) */
-export const de_DE: Locale = { strings: _de_DE };
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale = { strings: _de_DE };
 /** Locale for Spanish (Spain) */
-export const es_ES: Locale = { strings: _es_ES };
+export const COMPONENT_LOCALE_ES_ES: ComponentLocale = { strings: _es_ES };
 /** Locale for French (France) */
-export const fr_FR: Locale = { strings: _fr_FR };
+export const COMPONENT_LOCALE_FR_FR: ComponentLocale = { strings: _fr_FR };
 /** Locale for Italian (Italy) */
-export const it_IT: Locale = { strings: _it_IT };
+export const COMPONENT_LOCALE_IT_IT: ComponentLocale = { strings: _it_IT };
 /** Locale for Japanese (Japan) */
-export const ja_JP: Locale = { strings: _ja_JP };
+export const COMPONENT_LOCALE_JA_JP: ComponentLocale = { strings: _ja_JP };
 /** Locale for Korean (South Korea) */
-export const ko_KR: Locale = { strings: _ko_KR };
+export const COMPONENT_LOCALE_KO_KR: ComponentLocale = { strings: _ko_KR };
 /** Locale for Dutch (Netherlands) */
-export const nl_NL: Locale = { strings: _nl_NL };
+export const COMPONENT_LOCALE_NL_NL: ComponentLocale = { strings: _nl_NL };
 /** Locale for Portuguese (Brazil) */
-export const pt_BR: Locale = { strings: _pt_BR };
+export const COMPONENT_LOCALE_PT_BR: ComponentLocale = { strings: _pt_BR };
 /** Locale for Russian (Russia) */
-export const ru_RU: Locale = { strings: _ru_RU };
+export const COMPONENT_LOCALE_RU_RU: ComponentLocale = { strings: _ru_RU };
 /** Locale for Turkish (Turkey) */
-export const tr_TR: Locale = { strings: _tr_TR };
+export const COMPONENT_LOCALE_TR_TR: ComponentLocale = { strings: _tr_TR };
 /** Locale for Chinese (Mainland China) */
-export const zh_CN: Locale = { strings: _zh_CN };
+export const COMPONENT_LOCALE_ZH_CN: ComponentLocale = { strings: _zh_CN };
 /** Locale for Chinese (Taiwan) */
-export const zh_TW: Locale = { strings: _zh_TW };
+export const COMPONENT_LOCALE_ZH_TW: ComponentLocale = { strings: _zh_TW };

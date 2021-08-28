@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import { Dropdown, Icon, IDropdownOption, Stack } from '@fluentui/react';
+import { useTheme, VideoStreamOptions } from '@internal/react-components';
 import React from 'react';
-import { IDropdownOption, Dropdown, Stack } from '@fluentui/react';
+import { useLocale } from '../localization';
 import {
   dropDownStyles,
   dropDownTitleIconStyles,
@@ -10,10 +13,6 @@ import {
   mainStackTokens,
   optionIconStyles
 } from './styles/LocalDeviceSettings.styles';
-import { useLocale } from '../localization';
-import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
-import { Video20Filled, MicOn20Filled, Speaker220Filled } from '@fluentui/react-icons';
-import { VideoStreamOptions, useTheme } from '@internal/react-components';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -35,11 +34,11 @@ const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropd
 
 const getOptionIcon = (type: iconType): JSX.Element | undefined => {
   if (type === 'Camera') {
-    return <Video20Filled primaryFill="currentColor" className={optionIconStyles} key={'videoIconKey'} />;
+    return <Icon iconName="LocalDeviceSettingsCamera" className={optionIconStyles} />;
   } else if (type === 'Microphone') {
-    return <MicOn20Filled primaryFill="currentColor" className={optionIconStyles} key={'microphoneIconKey'} />;
+    return <Icon iconName="LocalDeviceSettingsMic" className={optionIconStyles} />;
   } else if (type === 'Speaker') {
-    return <Speaker220Filled primaryFill="currentColor" className={optionIconStyles} key={'speakerIconKey'} />;
+    return <Icon iconName="LocalDeviceSettingsSpeaker" className={optionIconStyles} />;
   } else {
     return undefined;
   }

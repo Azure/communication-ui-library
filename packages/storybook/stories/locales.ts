@@ -2,74 +2,79 @@
 // Licensed under the MIT license.
 
 import {
-  Locale,
-  en_US,
-  fr_FR,
-  de_DE,
-  es_ES,
-  it_IT,
-  ja_JP,
-  ko_KR,
-  nl_NL,
-  pt_BR,
-  ru_RU,
-  tr_TR,
-  zh_CN,
-  zh_TW
+  ComponentLocale,
+  COMPONENT_LOCALE_EN_US,
+  COMPONENT_LOCALE_EN_GB,
+  COMPONENT_LOCALE_DE_DE,
+  COMPONENT_LOCALE_ES_ES,
+  COMPONENT_LOCALE_FR_FR,
+  COMPONENT_LOCALE_IT_IT,
+  COMPONENT_LOCALE_JA_JP,
+  COMPONENT_LOCALE_KO_KR,
+  COMPONENT_LOCALE_NL_NL,
+  COMPONENT_LOCALE_PT_BR,
+  COMPONENT_LOCALE_RU_RU,
+  COMPONENT_LOCALE_TR_TR,
+  COMPONENT_LOCALE_ZH_CN,
+  COMPONENT_LOCALE_ZH_TW
 } from '@azure/communication-react';
 
 /** Named locale collection */
-export const LOCALES: Record<string, { locale: Locale; englishName: string }> = {
+export const LOCALES: Record<string, { locale: ComponentLocale; englishName: string }> = {
   en_US: {
-    locale: en_US,
+    locale: COMPONENT_LOCALE_EN_US,
     englishName: 'English (US)'
   },
+  en_GB: {
+    locale: COMPONENT_LOCALE_EN_GB,
+    englishName: 'English (British)'
+  },
   de_DE: {
-    locale: de_DE,
+    locale: COMPONENT_LOCALE_DE_DE,
     englishName: 'German (Germany)'
   },
   es_ES: {
-    locale: es_ES,
+    locale: COMPONENT_LOCALE_ES_ES,
     englishName: 'Spanish (Spain)'
   },
   fr_FR: {
-    locale: fr_FR,
+    locale: COMPONENT_LOCALE_FR_FR,
     englishName: 'French (France)'
   },
   it_IT: {
-    locale: it_IT,
+    locale: COMPONENT_LOCALE_IT_IT,
     englishName: 'Italian (Italy)'
   },
   ja_JP: {
-    locale: ja_JP,
+    locale: COMPONENT_LOCALE_JA_JP,
     englishName: 'Japanese (Japan)'
   },
   ko_KR: {
-    locale: ko_KR,
+    locale: COMPONENT_LOCALE_KO_KR,
     englishName: 'Korean (South Korea)'
   },
   nl_NL: {
-    locale: nl_NL,
+    locale: COMPONENT_LOCALE_NL_NL,
     englishName: 'Dutch (Netherlands)'
   },
   pt_BR: {
-    locale: pt_BR,
+    locale: COMPONENT_LOCALE_PT_BR,
     englishName: 'Portuguese (Brazil)'
   },
   ru_RU: {
-    locale: ru_RU,
+    locale: COMPONENT_LOCALE_RU_RU,
     englishName: 'Russian (Russia)'
   },
   tr_TR: {
-    locale: tr_TR,
+    locale: COMPONENT_LOCALE_TR_TR,
     englishName: 'Turkish (Turkey)'
   },
   zh_CN: {
-    locale: zh_CN,
+    locale: COMPONENT_LOCALE_ZH_CN,
     englishName: 'Chinese (Mainland China)'
   },
   zh_TW: {
-    locale: zh_TW,
+    locale: COMPONENT_LOCALE_ZH_TW,
     englishName: 'Chinese (Taiwan)'
   }
 };

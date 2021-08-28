@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
-import { initializeIcons, loadTheme } from '@fluentui/react';
+import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
+import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
-import { TOC } from './TOC';
+import React from 'react';
 import {
   COMPONENT_FOLDER_PREFIX,
   COMPOSITE_FOLDER_PREFIX,
@@ -15,10 +14,12 @@ import {
 } from '../stories/constants';
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
+import { TOC } from './TOC';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 export const parameters = {
   layout: 'fullscreen',
