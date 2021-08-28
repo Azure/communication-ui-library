@@ -19,6 +19,7 @@ import {
 } from '@internal/react-components';
 import { CompositeLocale } from '../LocalizationProvider';
 import _en_US from './en-US/strings.json';
+import _en_GB from './en-GB/strings.json';
 import _de_DE from './de-DE/strings.json';
 import _es_ES from './es-ES/strings.json';
 import _fr_FR from './fr-FR/strings.json';
@@ -40,7 +41,7 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale = {
 /** Locale for English (British) */
 export const COMPOSITE_LOCALE_EN_GB: CompositeLocale = {
   component: COMPONENT_LOCALE_EN_US,
-  strings: _en_US
+  strings: _en_GB
 };
 /** Locale for German (Germany) */
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale = {
