@@ -272,6 +272,14 @@ export interface Identifiers {
 }
 
 // @public (undocumented)
+export type InputBoxButtonProps = {
+    onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+    onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    className?: string;
+    id?: string;
+};
+
+// @public (undocumented)
 export interface JumpToNewMessageButtonProps {
     // (undocumented)
     onClick: () => void;
@@ -315,6 +323,9 @@ export type MessageProps = {
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
+    editDisabled?: boolean;
+    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage?: (messageId: string) => Promise<void>;
 };
 
 // @public
@@ -353,6 +364,9 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage?: (messageId: string) => Promise<void>;
+    editDisabled?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
 
@@ -537,7 +551,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
+    onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;

@@ -1,21 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, useMemo } from 'react';
-import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets } from '@fluentui/react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { IStyle, ITextField, mergeStyles, concatStyleSets } from '@fluentui/react';
 import { Send20Regular, Send20Filled } from '@fluentui/react-icons';
-import {
-  textFieldStyle,
-  sendBoxStyle,
-  sendBoxWrapperStyle,
-  sendButtonStyle,
-  sendIconStyle
-} from './styles/SendBox.styles';
+import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
 import { BaseCustomStylesProps } from '../types';
-import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
+import { InputBoxButton, InputBoxButtonProps, InputBoxComponent } from './InputBoxComponent';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -77,7 +71,7 @@ export interface SendBoxProps {
    * Optional callback to render send button icon to the right of the SendBox.
    * @defaultValue SendIcon
    */
-  onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
+  onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -114,7 +108,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
-  const [isMouseOverSendIcon, setIsMouseOverSendIcon] = useState(false);
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
@@ -147,93 +140,70 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
-  const mergedRootStyle = mergeStyles(sendBoxWrapperStyle, styles?.root);
-  const mergedTextFieldStyle = concatStyleSets(
-    textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
-    {
-      fieldGroup: styles?.textField,
-      errorMessage: styles?.systemMessage
-    }
-  );
   const mergedSendButtonStyle = useMemo(
-    () =>
-      mergeStyles(
-        sendButtonStyle,
-        theme.rtl ? { left: '0.9rem' } : { right: '0.9rem' },
-        styles?.sendMessageIconContainer
-      ),
-    [styles?.sendMessageIconContainer, theme.rtl]
+    () => mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer),
+    [styles?.sendMessageIconContainer]
   );
+
+  const mergedStyles = useMemo(() => concatStyleSets(sendBoxStyleSet, styles), [styles]);
+
   const hasText = !!textValue;
   const mergedSendIconStyle = useMemo(
     () =>
       mergeStyles(
         sendIconStyle,
         {
-          color:
-            !!errorMessage || !(hasText || isMouseOverSendIcon)
-              ? theme.palette.neutralTertiary
-              : theme.palette.themePrimary
+          color: !!errorMessage || !hasText ? theme.palette.neutralTertiary : theme.palette.themePrimary
         },
         styles?.sendMessageIcon
       ),
-    [errorMessage, isMouseOverSendIcon, hasText, theme, styles?.sendMessageIcon]
+    [errorMessage, hasText, theme, styles?.sendMessageIcon]
+  );
+
+  const onRenderSendIcon = useCallback(
+    (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) =>
+      onRenderIcon ? (
+        onRenderIcon(props, isMouseOverSendIcon)
+      ) : isMouseOverSendIcon ? (
+        <Send20Filled className={mergedSendIconStyle} primaryFill="currentColor" />
+      ) : (
+        <Send20Regular className={mergedSendIconStyle} primaryFill="currentColor" />
+      ),
+    [mergedSendIconStyle, onRenderIcon]
   );
 
   return (
-    <Stack className={mergedRootStyle}>
-      <div style={{ position: 'relative', padding: '0.1875rem' }}>
-        <TextField
-          data-ui-id={ids.sendboxTextfield}
-          multiline
-          autoAdjustHeight
-          multiple={false}
-          resizable={false}
-          componentRef={sendTextFieldRef}
-          id="sendbox"
-          ariaLabel={'Type'}
-          inputClassName={sendBoxStyle}
-          placeholder={strings.placeholderText}
-          value={textValue}
-          onChange={setText}
-          autoComplete="off"
-          onKeyDown={(ev) => {
-            if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline) && !textValueOverflow) {
-              ev.preventDefault();
-              sendMessageOnClick();
-            }
-            onTyping && onTyping();
-          }}
-          styles={mergedTextFieldStyle}
-          disabled={disabled}
-          errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
-        />
-
-        <div
-          className={mergedSendButtonStyle}
-          onClick={(e) => {
-            if (!textValueOverflow) {
-              sendMessageOnClick();
-            }
-            e.stopPropagation();
-          }}
-          id={'sendIconWrapper'}
-          onMouseEnter={() => {
-            setIsMouseOverSendIcon(true);
-          }}
-          onMouseLeave={() => {
-            setIsMouseOverSendIcon(false);
-          }}
-        >
-          {onRenderIcon ? (
-            onRenderIcon(props, isMouseOverSendIcon)
-          ) : isMouseOverSendIcon ? (
-            <Send20Filled className={mergedSendIconStyle} primaryFill="currentColor" />
-          ) : (
-            <Send20Regular className={mergedSendIconStyle} primaryFill="currentColor" />
-          )}
-        </div>
-      </div>
-    </Stack>
+    <InputBoxComponent
+      data-ui-id={ids.sendboxTextfield}
+      disabled={disabled}
+      errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
+      textFieldRef={sendTextFieldRef}
+      id="sendbox"
+      inputClassName={sendBoxStyle}
+      placeholderText={strings.placeholderText}
+      textValue={textValue}
+      onChange={setText}
+      onKeyDown={() => {
+        onTyping && onTyping();
+      }}
+      onEnterKeyDown={() => {
+        sendMessageOnClick();
+      }}
+      styles={mergedStyles}
+      supportNewline={supportNewline}
+      maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+    >
+      <InputBoxButton
+        onRenderIcon={onRenderSendIcon}
+        onClick={(e) => {
+          if (!textValueOverflow) {
+            sendMessageOnClick();
+          }
+          e.stopPropagation();
+        }}
+        id={'sendIconWrapper'}
+        className={mergedSendButtonStyle}
+      />
+    </InputBoxComponent>
   );
 };

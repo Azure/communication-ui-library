@@ -250,9 +250,17 @@ const memoizeAllMessages = memoizeFnAll(
     strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
-    onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element
+    onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element,
+    onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
+    onDeleteMessage?: (messageId: string) => Promise<void>
   ): ShorthandValue<ChatItemProps> => {
-    const messageProps: MessageProps = { message, strings, showDate: showMessageDate };
+    const messageProps: MessageProps = {
+      message,
+      strings,
+      showDate: showMessageDate,
+      onUpdateMessage,
+      onDeleteMessage
+    };
 
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
@@ -278,27 +286,30 @@ const memoizeAllMessages = memoizeFnAll(
           <Persona {...personaOptions} />
         ),
         contentPosition: payload.mine ? 'end' : 'start',
-        message: (
-          <Flex vAlign="end">
-            {chatMessageComponent}
-            <div
-              className={mergeStyles(
-                messageStatusContainerStyle(payload.mine ?? false),
-                styles?.messageStatusContainer ? styles.messageStatusContainer(payload.mine ?? false) : ''
-              )}
-            >
-              {showMessageStatus && statusToRender ? (
-                onRenderMessageStatus ? (
-                  onRenderMessageStatus({ status: statusToRender })
+        message: {
+          className: mergeStyles({ width: 'calc(100% - 6.25rem)' }),
+          content: (
+            <Flex hAlign={payload.mine ? 'end' : undefined} vAlign="end">
+              {chatMessageComponent}
+              <div
+                className={mergeStyles(
+                  messageStatusContainerStyle(payload.mine ?? false),
+                  styles?.messageStatusContainer ? styles.messageStatusContainer(payload.mine ?? false) : ''
+                )}
+              >
+                {showMessageStatus && statusToRender ? (
+                  onRenderMessageStatus ? (
+                    onRenderMessageStatus({ status: statusToRender })
+                  ) : (
+                    defaultStatusRenderer(statusToRender)
+                  )
                 ) : (
-                  defaultStatusRenderer(statusToRender)
-                )
-              ) : (
-                <div className={mergeStyles(noMessageStatusStyle)} />
-              )}
-            </div>
-          </Flex>
-        ),
+                  <div className={mergeStyles(noMessageStatusStyle)} />
+                )}
+              </div>
+            </Flex>
+          )
+        },
         attached: payload.attached,
         key: _messageKey
       };
@@ -424,6 +435,29 @@ export type MessageThreadProps = {
    * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+
+  /**
+   * Optional callback to edit a message.
+   *
+   * @param messageId - message id from chatClient
+   * @param content - new content of the message
+   *
+   */
+  onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+
+  /**
+   * Optional callback to delete a message.
+   *
+   * @param messageId - message id from chatClient
+   *
+   */
+  onDeleteMessage?: (messageId: string) => Promise<void>;
+
+  /**
+   * Whether disable the editing feature, false by default
+   */
+  editDisabled?: boolean;
+
   /**
    * Optional strings to override in component
    */
@@ -452,6 +486,26 @@ export type MessageProps = {
    * @defaultValue `false`
    */
   showDate?: boolean;
+  /**
+   * Whether edit feature is disabled or not
+   */
+  editDisabled?: boolean;
+  /**
+   * Optional callback to edit a message.
+   *
+   * @param messageId - message id from chatClient
+   * @param content - new content of the message
+   *
+   */
+  onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+
+  /**
+   * Optional callback to delete a message.
+   *
+   * @param messageId - message id from chatClient
+   *
+   */
+  onDeleteMessage?: (messageId: string) => Promise<void>;
 };
 
 /**
@@ -477,7 +531,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
-    onRenderMessage
+    onRenderMessage,
+    onUpdateMessage,
+    onDeleteMessage
   } = props;
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -756,6 +812,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               if (message.payload.mine && message.payload.status === 'failed') statusToRender = 'failed';
             }
 
+            console.log('function: ' + onUpdateMessage);
+
             return memoizedMessageFn(
               key ?? 'id_' + index,
               message,
@@ -771,7 +829,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               // The proper fix should be in selector.
               message.type === 'chat' ? message.payload.attached : undefined,
               statusToRender,
-              onRenderMessage
+              onRenderMessage,
+              onUpdateMessage,
+              onDeleteMessage
             );
           }
         );
@@ -789,6 +849,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       lastSendingChatMessage,
       lastDeliveredChatMessage,
       onRenderMessage,
+      onUpdateMessage,
+      onDeleteMessage,
       strings
     ]
   );

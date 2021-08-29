@@ -311,6 +311,8 @@ export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | Micr
 export interface ChatAdapter {
     clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
+    deleteMessage(messageId: string): Promise<void>;
+    // (undocumented)
     dispose(): void;
     // (undocumented)
     fetchInitialData(): Promise<void>;
@@ -360,6 +362,8 @@ export interface ChatAdapter {
     sendTypingIndicator(): Promise<void>;
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateMessage(messageId: string, content: string): Promise<void>;
 }
 
 // @public

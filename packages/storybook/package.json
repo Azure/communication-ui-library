@@ -27,7 +27,7 @@
     "@azure/core-http": "1.2.4",
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.137",
-    "@fluentui/react-northstar": "^0.51.2",
+    "@fluentui/react-northstar": "^0.57.0",
     "@internal/chat-component-bindings": "1.0.0-beta.4",
     "@internal/react-composites": "1.0.0-beta.4",
     "@microsoft/applicationinsights-react-js": "~3.0.5",

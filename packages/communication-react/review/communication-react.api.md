@@ -507,6 +507,8 @@ export interface CameraButtonStrings {
 export interface ChatAdapter {
     clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
+    deleteMessage(messageId: string): Promise<void>;
+    // (undocumented)
     dispose(): void;
     // (undocumented)
     fetchInitialData(): Promise<void>;
@@ -556,6 +558,8 @@ export interface ChatAdapter {
     sendTypingIndicator(): Promise<void>;
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateMessage(messageId: string, content: string): Promise<void>;
 }
 
 // @public
@@ -886,6 +890,8 @@ export type DefaultChatHandlers = {
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onDismissErrors: (errorTypes: ErrorType[]) => void;
+    onUpdateMessage: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
 // @public
@@ -1050,6 +1056,14 @@ export interface IncomingCallState {
 }
 
 // @public (undocumented)
+export type InputBoxButtonProps = {
+    onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+    onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    className?: string;
+    id?: string;
+};
+
+// @public (undocumented)
 export type IsMuteChangedListener = (event: {
     identifier: CallIdentifierKinds;
     isMuted: boolean;
@@ -1128,6 +1142,9 @@ export type MessageProps = {
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
+    editDisabled?: boolean;
+    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage?: (messageId: string) => Promise<void>;
 };
 
 // @public (undocumented)
@@ -1183,6 +1200,9 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage?: (messageId: string) => Promise<void>;
+    editDisabled?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
 
@@ -1477,7 +1497,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
+    onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
