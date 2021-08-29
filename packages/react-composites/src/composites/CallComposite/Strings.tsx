@@ -12,6 +12,10 @@ export interface CallCompositeStrings {
    */
   cameraLabel: string;
   /**
+   * Placeholder text for dropdown
+   */
+  defaultPlaceholder: string;
+  /**
    * Error shown when camera access is blocked by the browser.
    */
   cameraPermissionDenied: string;
