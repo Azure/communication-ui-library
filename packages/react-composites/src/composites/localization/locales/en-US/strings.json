@@ -6,6 +6,7 @@
     "teamsMeetingFailReasonAccessDenied": "Access to the meeting was denied",
     "teamsMeetingFailReasonParticipantRemoved": "You were removed from the meeting",
     "teamsMeetingFailToJoin": "Error joining Teams Meeting",
-    "cameraLabel": "Camera"
+    "cameraLabel": "Camera",
+    "defaultPlaceholder": "Select an option"
   }
 }
