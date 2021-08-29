@@ -3,7 +3,6 @@
 
 import { mergeStyles, IStyle } from '@fluentui/react';
 import { CSSProperties } from 'react';
-import { InputBoxStylesProps } from '../InputBoxComponent';
 
 export const chatMessageStyle = mergeStyles({
   fontWeight: '600'
@@ -80,3 +79,5 @@ export const inputBoxIcon = mergeStyles({
     stroke: 'currentColor'
   }
 });
+
+export const menuIconStyleSet = { root: { height: 28, width: 20 } };

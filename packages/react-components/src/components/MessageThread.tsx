@@ -29,7 +29,7 @@ import {
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
-import { ChatMessageComponent } from './ChatMessege';
+import { ChatMessageComponent } from './ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 
 const NEW_MESSAGES = 'New Messages';

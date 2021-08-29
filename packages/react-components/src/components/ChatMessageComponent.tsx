@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useMemo, useRef, useCallback, useState } from 'react';
-import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint } from '@fluentui/react';
-import { Dismiss20Regular, Checkmark20Regular } from '@fluentui/react-icons';
+import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, Icon, IContextualMenuItem } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/react-northstar';
 import { ChatMessage, ChatMessagePayload } from '../types';
 import { LiveMessage } from 'react-aria-live';
@@ -17,8 +16,9 @@ import {
   editBoxStyle,
   inputBoxIcon,
   editingButtonStyle,
-  editBoxStyleSet
-} from './styles/ChatMessage.styles';
+  editBoxStyleSet,
+  menuIconStyleSet
+} from './styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { Parser } from 'html-to-react';
@@ -177,12 +177,20 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
 
 const onRenderCancelIcon = (color: string): JSX.Element => {
   const className = mergeStyles(inputBoxIcon, { color });
-  return <Dismiss20Regular className={className} />;
+  return <Icon iconName={'EditBoxCancel'} className={className} />;
 };
 
 const onRenderSubmitIcon = (color: string): JSX.Element => {
   const className = mergeStyles(inputBoxIcon, { color });
-  return <Checkmark20Regular className={className} />;
+  return <Icon iconName={'EditBoxSubmit'} className={className} />;
+};
+
+const onRenderEditIcon = (): JSX.Element => {
+  return <Icon iconName={'MessageEdit'} />;
+};
+
+const onRenderRemoveIcon = (): JSX.Element => {
+  return <Icon iconName={'MessageRemove'} />;
 };
 
 type EditBoxProps = {
@@ -270,19 +278,20 @@ const MoreMenu = ({
   const [menuHidden, setMenuHidden] = useState(true);
 
   const menuItems = useMemo(
-    () => [
+    (): IContextualMenuItem[] => [
       {
         key: 'Edit',
         text: 'Edit',
-        iconProps: { iconName: 'Edit' },
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
         onClick: onEditClick
       },
       {
         key: 'Remove',
         text: 'Remove',
-        iconProps: { iconName: 'Delete' },
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        iconProps: {
+          iconName: 'MessageRemove',
+          styles: menuIconStyleSet
+        },
         onClick: onRemoveClick
       }
     ],
