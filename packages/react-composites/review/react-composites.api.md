@@ -20,7 +20,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
-import type { ErrorType } from '@internal/react-components';
+import { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { Identifiers } from '@internal/react-components';
 import { Locale } from '@internal/react-components';
@@ -56,6 +56,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     constructor(callClient: StatefulCallClient, locator: TeamsMeetingLinkLocator | GroupCallLocator, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // (undocumented)
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
@@ -166,6 +168,7 @@ export type AzureCommunicationChatAdapterArgs = {
 export interface CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
@@ -288,11 +291,21 @@ export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
-    locale?: Locale;
+    locale?: CompositeLocale;
     callInvitationURL?: string;
     identifiers?: Identifiers;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
+
+// @public
+export interface CallCompositeStrings {
+    cameraPermissionDenied: string;
+    cameraTurnedOff: string;
+    microphonePermissionDenied: string;
+    teamsMeetingFailReasonAccessDenied: string;
+    teamsMeetingFailReasonParticipantRemoved: string;
+    teamsMeetingFailToJoin: string;
+}
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
@@ -387,7 +400,7 @@ export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
-    locale?: Locale;
+    locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -415,6 +428,29 @@ export type ChatState = ChatUIState & ChatCompositeClientState;
 export type ChatUIState = {
     error?: Error;
 };
+
+// @public
+export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public
+export interface CompositeLocale {
+    component: Locale;
+    strings: CompositeStrings;
+}
+
+// @public
+export interface CompositeStrings {
+    call: CallCompositeStrings;
+}
 
 // @public (undocumented)
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, callClientOptions }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;

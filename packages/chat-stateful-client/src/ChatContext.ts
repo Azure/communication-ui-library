@@ -19,7 +19,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { ChatStateModifier } from './StatefulChatClient';
-import { newClearErrorsModifier } from './modifiers';
+import { newClearChatErrorsModifier } from './modifiers';
 
 enableMapSet();
 
@@ -356,7 +356,7 @@ export class ChatContext {
     return async (...args: Args): Promise<R> => {
       try {
         const ret = await f(...args);
-        this.modifyState(newClearErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
+        this.modifyState(newClearChatErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);
@@ -384,7 +384,7 @@ export class ChatContext {
     return (...args: Args): R => {
       try {
         const ret = f(...args);
-        this.modifyState(newClearErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
+        this.modifyState(newClearChatErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
         this.setLatestError(target, error);

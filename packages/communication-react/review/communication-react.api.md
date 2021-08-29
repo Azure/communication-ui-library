@@ -101,6 +101,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // (undocumented)
+    clearErrors(errorTypes: ErrorType[]): void;
+    // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     dispose(): void;
@@ -218,6 +220,7 @@ export type ButtonCustomStylesProps = IButtonStyles;
 export interface CallAdapter {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
@@ -383,11 +386,21 @@ export type CallCompositeProps = {
     adapter: CallAdapter;
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
-    locale?: Locale;
+    locale?: CompositeLocale;
     callInvitationURL?: string;
     identifiers?: Identifiers;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 };
+
+// @public
+export interface CallCompositeStrings {
+    cameraPermissionDenied: string;
+    cameraTurnedOff: string;
+    microphonePermissionDenied: string;
+    teamsMeetingFailReasonAccessDenied: string;
+    teamsMeetingFailReasonParticipantRemoved: string;
+    teamsMeetingFailToJoin: string;
+}
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
@@ -400,6 +413,13 @@ export class CallError extends Error {
     inner: Error;
     target: CallErrorTarget;
 }
+
+// @public
+export const callErrorBarSelector: OutputSelector<CallClientState, {
+activeErrors: ErrorType[];
+}, (res: CallErrors) => {
+activeErrors: ErrorType[];
+}>;
 
 // @public
 export type CallErrors = {
@@ -477,6 +497,9 @@ export interface CallState {
     transcription: TranscriptionCallFeature;
     transfer: TransferCallFeature;
 }
+
+// @public
+export type CallStateModifier = (state: CallClientState) => void;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -607,7 +630,7 @@ export type ChatCompositeProps = {
     adapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
-    locale?: Locale;
+    locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -621,6 +644,13 @@ export class ChatError extends Error {
     inner: Error;
     target: ChatErrorTarget;
 }
+
+// @public
+export const chatErrorBarSelector: OutputSelector<ChatClientState, {
+activeErrors: ErrorType[];
+}, (res: ChatErrors) => {
+activeErrors: ErrorType[];
+}>;
 
 // @public
 export type ChatErrorListener = (event: {
@@ -767,6 +797,29 @@ export interface ComponentStrings {
 }
 
 // @public
+export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public
+export interface CompositeLocale {
+    component: Locale;
+    strings: CompositeStrings;
+}
+
+// @public
+export interface CompositeStrings {
+    call: CallCompositeStrings;
+}
+
+// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public
@@ -822,6 +875,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onStartLocalVideo: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public (undocumented)
@@ -879,6 +933,7 @@ export type DefaultCallingHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public (undocumented)
@@ -952,18 +1007,17 @@ export interface ErrorBarProps extends IMessageBarProps {
 }
 
 // @public
-export const errorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ErrorType[];
-}, (res: ChatErrors) => {
-activeErrors: ErrorType[];
-}>;
-
-// @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
+    startScreenShareGeneric: string;
+    startVideoGeneric: string;
+    stopScreenShareGeneric: string;
+    stopVideoGeneric: string;
     unableToReachChatService: string;
+    unmuteGeneric: string;
     userNotInThisThread: string;
 }
 
@@ -987,13 +1041,13 @@ export const fr_FR: Locale;
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof callErrorBarSelector : undefined;
 
 // @public (undocumented)
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof chatErrorBarSelector : undefined;
 
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -1093,9 +1147,6 @@ export const lightTheme: PartialTheme & CallingTheme;
 export interface Locale {
     strings: ComponentStrings;
 }
-
-// @public
-export const LocaleContext: React_2.Context<Locale>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -1258,14 +1309,10 @@ export interface MicrophoneButtonStrings {
 }
 
 // @public
-export const namedLocales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
+export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
 
 // @public (undocumented)
-export const newClearErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
+export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
 
 // @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
@@ -1534,6 +1581,7 @@ export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
+    modifyState(modifier: CallStateModifier): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
@@ -1700,9 +1748,6 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
-
-// @public
-export const useLocale: () => Locale;
 
 // @public (undocumented)
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;

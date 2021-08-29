@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, getControlledBotAvatarSymbol } from '../controlsUtils';
+import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import {
   CustomDataModelExampleContainer,
@@ -23,6 +24,9 @@ const messageArray = [
 ];
 
 const CustomDataModelStory = (args, context): JSX.Element => {
+  const {
+    globals: { locale }
+  } = context;
   const [containerProps, setContainerProps] = useState<CustomDataModelExampleContainerProps>();
 
   useEffect(() => {
@@ -51,6 +55,7 @@ const CustomDataModelStory = (args, context): JSX.Element => {
       {containerProps ? (
         <CustomDataModelExampleContainer
           fluentTheme={context.theme}
+          locale={compositeLocale(locale)}
           {...containerProps}
           botAvatar={getControlledBotAvatarSymbol(args.avatar)}
         />

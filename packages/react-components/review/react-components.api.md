@@ -210,9 +210,15 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
+    startScreenShareGeneric: string;
+    startVideoGeneric: string;
+    stopScreenShareGeneric: string;
+    stopVideoGeneric: string;
     unableToReachChatService: string;
+    unmuteGeneric: string;
     userNotInThisThread: string;
 }
 
@@ -292,9 +298,6 @@ export const lightTheme: PartialTheme & CallingTheme;
 export interface Locale {
     strings: ComponentStrings;
 }
-
-// @public
-export const LocaleContext: React_2.Context<Locale>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -411,13 +414,6 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
-
-// @public
-export const namedLocales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
 
 // @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
@@ -635,9 +631,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 
 // @public (undocumented)
 export const useIdentifiers: () => Identifiers;
-
-// @public
-export const useLocale: () => Locale;
 
 // @public
 export const useTheme: () => Theme;

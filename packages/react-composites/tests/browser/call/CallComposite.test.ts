@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { waitForCallCompositeToLoad, dataUiId } from '../utils';
+import { waitForCallCompositeToLoad, dataUiId, disableAnimation } from '../utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 
@@ -67,6 +67,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       });
     }
   });
+
   test('video gallery renders for all pages', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
@@ -77,9 +78,17 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
   });
 
   test('participant list loads correctly', async ({ pages }) => {
+    // TODO: Remove this function when we fix unstable contextual menu bug
+    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
+    await turnOffAllVideos(pages);
+
     for (const idx in pages) {
       const page = pages[idx];
       page.bringToFront();
+
+      // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+      // this is for disable transition/animation of participant list
+      await disableAnimation(page);
 
       await page.click(dataUiId('call-composite-participants-button'));
       const buttonCallOut = await page.waitForSelector('.ms-Callout');
@@ -101,3 +110,15 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot(`camera-toggled.png`);
   });
 });
+
+const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
+  for (const page of pages) {
+    page.click(dataUiId('call-composite-camera-button'));
+  }
+  for (const page of pages) {
+    page.bringToFront();
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('video').length === 0;
+    });
+  }
+};
