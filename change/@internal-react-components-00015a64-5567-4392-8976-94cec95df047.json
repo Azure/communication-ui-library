@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Custom Icons injection in components and composites.",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

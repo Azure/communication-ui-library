@@ -1,14 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Icon, IContextualMenuItem, mergeStyles, PersonaPresence, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-
-import { IContextualMenuItem, Stack, PersonaPresence, mergeStyles } from '@fluentui/react';
-import { ParticipantItem } from './ParticipantItem';
-import { MicOff20Filled, ShareScreenStart20Filled } from '@fluentui/react-icons';
-import { participantListStyle } from './styles/ParticipantList.styles';
-import { CommunicationParticipant, CallParticipant, OnRenderAvatarCallback } from '../types';
 import { useIdentifiers } from '../identifiers';
+import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
+import { ParticipantItem } from './ParticipantItem';
+import { participantListStyle } from './styles/ParticipantList.styles';
 
 /**
  * Props for component `ParticipantList`
@@ -60,15 +58,15 @@ const onRenderParticipantsDefault = (
       });
     }
 
-    const iconStyles = mergeStyles({ height: '0.875rem' });
+    const iconStyles = mergeStyles({ lineHeight: 0 });
     const onRenderIcon =
       callingParticipant?.isScreenSharing || callingParticipant?.isMuted
         ? () => (
             <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
               {callingParticipant.isScreenSharing && (
-                <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />
+                <Icon iconName="ParticipantItemScreenShareStart" className={iconStyles} />
               )}
-              {callingParticipant.isMuted && <MicOff20Filled className={iconStyles} primaryFill="currentColor" />}
+              {callingParticipant.isMuted && <Icon iconName="ParticipantItemMicOff" className={iconStyles} />}
             </Stack>
           )
         : () => <></>;

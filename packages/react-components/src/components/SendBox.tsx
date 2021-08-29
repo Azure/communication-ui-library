@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { IStyle, ITextField, mergeStyles, concatStyleSets } from '@fluentui/react';
-import { Send20Regular, Send20Filled } from '@fluentui/react-icons';
+import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
 import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
 import { BaseCustomStylesProps } from '../types';
 import { useTheme } from '../theming';
@@ -164,10 +163,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) =>
       onRenderIcon ? (
         onRenderIcon(props, isMouseOverSendIcon)
-      ) : isMouseOverSendIcon ? (
-        <Send20Filled className={mergedSendIconStyle} primaryFill="currentColor" />
       ) : (
-        <Send20Regular className={mergedSendIconStyle} primaryFill="currentColor" />
+        <Icon iconName={isMouseOverSendIcon ? 'SendBoxSendHovered' : 'SendBoxSend'} className={mergedSendIconStyle} />
       ),
     [mergedSendIconStyle, onRenderIcon]
   );

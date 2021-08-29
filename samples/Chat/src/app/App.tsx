@@ -1,30 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
-import { createAzureCommunicationUserCredential, getBuildTime, getChatSDKVersion } from './utils/utils';
-import { initializeIcons, Spinner } from '@fluentui/react';
-
+import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
+import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
+import React, { useState } from 'react';
 import { ChatScreen } from './ChatScreen';
+import ConfigurationScreen from './ConfigurationScreen';
 import { EndScreen } from './EndScreen';
 import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
-import ConfigurationScreen from './ConfigurationScreen';
 import { getThreadId } from './utils/getThreadId';
-import { refreshTokenAsync } from './utils/refreshToken';
-import {
-  createStatefulChatClient,
-  StatefulChatClient,
-  ChatClientProvider,
-  ChatThreadClientProvider
-} from '@azure/communication-react';
-import { ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationUserKind } from '@azure/communication-common';
+import { getBuildTime, getChatSDKVersion } from './utils/utils';
 
 console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()}`);
 console.info(`Build Date : ${getBuildTime()}`);
 
 initializeIcons();
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 export default (): JSX.Element => {
   const [page, setPage] = useState('home');
@@ -33,88 +25,72 @@ export default (): JSX.Element => {
   const [displayName, setDisplayName] = useState('');
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
-  const [chatClient, setChatClient] = useState<StatefulChatClient>();
-  const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient>();
-
-  useEffect(() => {
-    if (token && userId && displayName && threadId && endpointUrl) {
-      const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
-      const createClient = async (): Promise<void> => {
-        const chatClient = createStatefulChatClient({
-          userId: userIdKind,
-          displayName,
-          endpoint: endpointUrl,
-          credential: createAzureCommunicationUserCredential(token, refreshTokenAsync(userId))
-        });
-
-        setChatClient(chatClient);
-        setChatThreadClient(await chatClient.getChatThreadClient(threadId));
-
-        chatClient.startRealtimeNotifications();
-      };
-      createClient();
-    }
-  }, [displayName, endpointUrl, threadId, token, userId]);
 
   const getComponent = (): JSX.Element => {
-    if (page === 'home') {
-      return <HomeScreen />;
-    } else if (page === 'configuration') {
-      return (
-        <ConfigurationScreen
-          joinChatHandler={() => {
-            setPage('chat');
-          }}
-          setToken={setToken}
-          setUserId={setUserId}
-          setDisplayName={setDisplayName}
-          setThreadId={setThreadId}
-          setEndpointUrl={setEndpointUrl}
-        />
-      );
-    } else if (page === 'chat') {
-      return chatClient && chatThreadClient ? (
-        <ChatClientProvider chatClient={chatClient}>
-          <ChatThreadClientProvider chatThreadClient={chatThreadClient}>
+    switch (page) {
+      case 'home': {
+        return <HomeScreen />;
+      }
+      case 'configuration': {
+        return (
+          <ConfigurationScreen
+            joinChatHandler={() => {
+              setPage('chat');
+            }}
+            setToken={setToken}
+            setUserId={setUserId}
+            setDisplayName={setDisplayName}
+            setThreadId={setThreadId}
+            setEndpointUrl={setEndpointUrl}
+          />
+        );
+      }
+      case 'chat': {
+        if (token && userId && displayName && threadId && endpointUrl) {
+          return (
             <ChatScreen
+              token={token}
+              userId={userId}
+              displayName={displayName}
+              endpointUrl={endpointUrl}
+              threadId={threadId}
               endChatHandler={() => {
-                chatThreadClient.removeParticipant({ communicationUserId: userId });
                 setPage('end');
-                // Send up signal that the user wants to leave the chat
-                // Move to to next screen on success
               }}
               errorHandler={() => {
                 setPage('error');
               }}
             />
-          </ChatThreadClientProvider>
-        </ChatClientProvider>
-      ) : (
-        <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />
-      );
-    } else if (page === 'end') {
-      return (
-        <EndScreen
-          rejoinHandler={() => {
-            setPage('configuration'); // use store information to attempt to rejoin the chat thread
-          }}
-          homeHandler={() => {
-            window.location.href = window.location.origin;
-          }}
-          userId={userId}
-          displayName={displayName}
-        />
-      );
-    } else if (page === 'error') {
-      return (
-        <ErrorScreen
-          homeHandler={() => {
-            window.location.href = window.location.origin;
-          }}
-        />
-      );
-    } else {
-      throw new Error('Page type not recognized');
+          );
+        }
+
+        return <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />;
+      }
+      case 'end': {
+        return (
+          <EndScreen
+            rejoinHandler={() => {
+              setPage('configuration'); // use store information to attempt to rejoin the chat thread
+            }}
+            homeHandler={() => {
+              window.location.href = window.location.origin;
+            }}
+            userId={userId}
+            displayName={displayName}
+          />
+        );
+      }
+      case 'error': {
+        return (
+          <ErrorScreen
+            homeHandler={() => {
+              window.location.href = window.location.origin;
+            }}
+          />
+        );
+      }
+      default:
+        throw new Error('Page type not recognized');
     }
   };
 
