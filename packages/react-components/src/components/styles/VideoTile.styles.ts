@@ -12,6 +12,10 @@ export const rootStyles: IStyle = {
   borderRadius: theme.effects.roundedCorner4
 };
 
+export const isSpeakingStyles: IStyle = {
+  border: '4px solid #0078D4'
+};
+
 export const videoContainerStyles: IStyle = {
   position: 'absolute',
   top: '0',

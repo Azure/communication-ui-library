@@ -81,6 +81,7 @@ const VideoTileStory = (args): JSX.Element => {
       showMuteIndicator={args.showMuteIndicator}
       isMirrored={args.isMirrored}
       isMuted={args.isMuted}
+      isSpeaking={args.isSpeaking}
       styles={videoTileStyles}
     />
   );
@@ -100,6 +101,7 @@ export default {
     isVideoReady: controlsToAdd.isVideoReady,
     isMirrored: controlsToAdd.isVideoMirrored,
     isMuted: controlsToAdd.isMuted,
+    isSpeaking: controlsToAdd.isSpeaking,
     width: controlsToAdd.videoTileWidth,
     height: controlsToAdd.videoTileHeight,
     // Hiding auto-generated controls
