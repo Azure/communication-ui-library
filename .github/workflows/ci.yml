@@ -61,7 +61,7 @@ jobs:
           fi
       # Tree-shaking check
       - name: Treeshaking check
-        run: rush build --only @internal-tools/check-treeshaking
+        run: rush build --only @internal/check-treeshaking
       # Tests
       - name: Test Packages
         run: rush test -t @azure/communication-react
