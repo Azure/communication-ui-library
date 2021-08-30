@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { ShareScreenStart20Filled, ShareScreenStop20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { Icon } from '@fluentui/react';
 
 /**
  * Strings of ScreenShareButton that can be overridden
@@ -32,12 +32,8 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
   strings?: Partial<ScreenShareButtonStrings>;
 }
 
-const onRenderScreenShareOnIcon = (): JSX.Element => (
-  <ShareScreenStop20Filled key={'screenShareIconKey'} primaryFill="currentColor" />
-);
-const onRenderScreenShareOffIcon = (): JSX.Element => (
-  <ShareScreenStart20Filled key={'screenShareBorderedIconKey'} primaryFill="currentColor" />
-);
+const onRenderScreenShareOnIcon = (): JSX.Element => <Icon iconName="ControlButtonScreenShareStop" />;
+const onRenderScreenShareOffIcon = (): JSX.Element => <Icon iconName="ControlButtonScreenShareStart" />;
 
 /**
  * `ScreenShareButton` allows you to easily create a component for rendering a screen-share button.
