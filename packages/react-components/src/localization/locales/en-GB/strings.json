@@ -1,0 +1,78 @@
+{
+  "participantItem": {
+    "isMeText": "(you)",
+    "menuTitle": "More Options"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} is typing ...",
+    "multipleUsers": "{users} are typing ...",
+    "multipleUsersAbbreviateOne": "{users} and 1 other are typing ...",
+    "multipleUsersAbbreviateMany": "{users} and {numOthers} others are typing ...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Enter a message"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Sent",
+    "seenTooltipText": "Seen",
+    "sendingTooltipText": "Sending",
+    "failedToSendTooltipText": "Failed to send"
+  },
+  "endCallButton": {
+    "label": "Leave"
+  },
+  "cameraButton": {
+    "onLabel": "Turn off",
+    "offLabel": "Turn on"
+  },
+  "microphoneButton": {
+    "onLabel": "Mute",
+    "offLabel": "Unmute"
+  },
+  "optionsButton": {
+    "label": "Options",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Choose Camera",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choose Microphone",
+    "speakerMenuTitle": "Speaker",
+    "speakerMenuTooltip": "Choose Speaker"
+  },
+  "participantsButton": {
+    "label": "People",
+    "menuHeader": "In this call",
+    "participantsListButtonLabel": "{numParticipants} people",
+    "muteAllButtonLabel": "Mute all",
+    "copyInviteLinkButtonLabel": "Copy invite link"
+  },
+  "screenShareButton": {
+    "onLabel": "Stop",
+    "offLabel": "Share"
+  },
+  "messageThread": {
+    "yesterday": "Yesterday",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "participantJoined": "joined the chat.",
+    "participantLeft": "left the chat."
+  },
+  "errorBar": {
+    "unableToReachChatService": "You are offline",
+    "accessDenied": "Unable to access chat services - please check the user credentials provided",
+    "userNotInThisThread": "You are no longer in this chat thread",
+    "sendMessageNotInThisThread": "Failed to send message because you are no longer in this chat thread",
+    "sendMessageGeneric": "Failed to send message",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "startScreenShareGeneric": "Failed to start screen sharing",
+    "stopScreenShareGeneric": "Failed to stop screen sharing"
+  }
+}
