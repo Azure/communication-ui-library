@@ -1,6 +1,7 @@
 # Touchdown build pipeline for composites
 
-trigger: [main]
+trigger:
+  - main
 
 pool:
   vmImage: ubuntu-latest
