@@ -37,6 +37,7 @@ export interface ChatAdapter {
   offStateChange(handler: (state: ChatState) => void): void;
   getState(): ChatState;
   dispose(): void;
+  deleteMessage(messageId: string): Promise<void>;
   /*
    * Fetch initial state for the Chat adapter.
    *
@@ -48,6 +49,7 @@ export interface ChatAdapter {
   sendTypingIndicator(): Promise<void>;
   removeParticipant(userId: string): Promise<void>;
   setTopic(topicName: string): Promise<void>;
+  updateMessage(messageId: string, content: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /**
    * Clear errors for given error types from {@link ChatAdapter.getState.latestErrors}.
