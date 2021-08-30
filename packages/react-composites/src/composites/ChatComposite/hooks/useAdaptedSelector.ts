@@ -5,7 +5,7 @@
 
 import { ChatClientState, ChatErrors, ChatThreadClientState } from '@internal/chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { ChatState } from '../adapter/ChatAdapter';
+import { ChatAdapterState } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 import memoizeOne from 'memoize-one';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -21,7 +21,7 @@ export const useAdaptedSelector = <SelectorT extends (state: ChatClientState, pr
 
 export const useSelectorWithAdaptation = <
   SelectorT extends (state: ReturnType<AdaptFuncT>, props: any) => any,
-  AdaptFuncT extends (state: ChatState) => any
+  AdaptFuncT extends (state: ChatAdapterState) => any
 >(
   selector: SelectorT,
   adaptState: AdaptFuncT,
@@ -53,7 +53,7 @@ export const useSelectorWithAdaptation = <
   propRef.current = props;
 
   useEffect(() => {
-    const onStateChange = (state: ChatState): void => {
+    const onStateChange = (state: ChatAdapterState): void => {
       if (!mounted.current) {
         return;
       }
@@ -86,7 +86,7 @@ const memoizeState = memoizeOne(
 
 const memoizeThreads = memoizeOne((thread: ChatThreadClientState) => ({ [thread.threadId]: thread }));
 
-const adaptCompositeState = (compositeState: ChatState): ChatClientState => {
+const adaptCompositeState = (compositeState: ChatAdapterState): ChatClientState => {
   return memoizeState(
     { kind: 'communicationUser', communicationUserId: compositeState.userId },
     compositeState.displayName,

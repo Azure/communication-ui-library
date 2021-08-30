@@ -30,12 +30,12 @@ export type ChatCompositeClientState = {
  */
 export type ChatAdapterErrors = { [operation: string]: Error };
 
-export type ChatState = ChatAdapterUiState & ChatCompositeClientState;
+export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 export interface ChatAdapter {
-  onStateChange(handler: (state: ChatState) => void): void;
-  offStateChange(handler: (state: ChatState) => void): void;
-  getState(): ChatState;
+  onStateChange(handler: (state: ChatAdapterState) => void): void;
+  offStateChange(handler: (state: ChatAdapterState) => void): void;
+  getState(): ChatAdapterState;
   dispose(): void;
   /*
    * Fetch initial state for the Chat adapter.

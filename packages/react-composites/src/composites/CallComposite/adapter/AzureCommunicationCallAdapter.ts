@@ -87,10 +87,6 @@ class CallContext {
     this.setState({ ...this.state, page });
   }
 
-  public setError(error: Error): void {
-    this.setState({ ...this.state, error });
-  }
-
   public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
     this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
   }

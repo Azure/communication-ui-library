@@ -232,7 +232,6 @@ export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
 // @public
 export type CallAdapterUiState = {
-    error?: Error;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
 };
@@ -457,7 +456,7 @@ export interface ChatAdapter {
     // (undocumented)
     fetchInitialData(): Promise<void>;
     // (undocumented)
-    getState(): ChatState;
+    getState(): ChatAdapterState;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
@@ -475,7 +474,7 @@ export interface ChatAdapter {
     // (undocumented)
     off(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
-    offStateChange(handler: (state: ChatState) => void): void;
+    offStateChange(handler: (state: ChatAdapterState) => void): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -491,7 +490,7 @@ export interface ChatAdapter {
     // (undocumented)
     on(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
-    onStateChange(handler: (state: ChatState) => void): void;
+    onStateChange(handler: (state: ChatAdapterState) => void): void;
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -508,6 +507,9 @@ export interface ChatAdapter {
 export type ChatAdapterErrors = {
     [operation: string]: Error;
 };
+
+// @public (undocumented)
+export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public (undocumented)
 export type ChatAdapterUiState = {
@@ -644,9 +646,6 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 
 // @public (undocumented)
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
-
-// @public (undocumented)
-export type ChatState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public
 export type ChatStateModifier = (state: ChatClientState) => void;

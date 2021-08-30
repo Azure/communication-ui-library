@@ -11,7 +11,7 @@ export type {
   ChatAdapter,
   ChatAdapterErrors,
   ChatCompositeClientState,
-  ChatState,
+  ChatAdapterState,
   ChatAdapterUiState,
   ChatErrorListener,
   MessageReadListener,

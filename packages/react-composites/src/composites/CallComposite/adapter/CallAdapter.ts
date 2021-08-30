@@ -19,7 +19,6 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
  * Purely UI related adapter state.
  */
 export type CallAdapterUiState = {
-  error?: Error;
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
 };

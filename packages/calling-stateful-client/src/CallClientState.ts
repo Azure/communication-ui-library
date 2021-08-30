@@ -35,6 +35,7 @@ export interface TransferRequest {
 /**
  * State only version of {@link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is
  * experimental. Not tested and not ready for consumption.
+ * @experimental
  */
 export interface Transfer {
   /**
