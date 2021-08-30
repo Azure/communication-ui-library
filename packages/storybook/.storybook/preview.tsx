@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ComponentLocale, COMPONENT_LOCALE_AR_SA, COMPONENT_LOCALE_DE_DE, COMPONENT_LOCALE_EN_US, COMPONENT_LOCALE_FR_FR, DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
+import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import React from 'react';
@@ -13,31 +13,13 @@ import {
   STATEFUL_CLIENT_PREFIX
 } from '../stories/constants';
 import { THEMES } from '../stories/themes';
+import { LOCALES } from '../stories/locales'
 import { TOC } from './TOC';
 
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
-
-const namedLocales: Record<string, {  name: string; locale: ComponentLocale;}> = {
-  'en-US': {
-    locale: COMPONENT_LOCALE_EN_US,
-    name: 'English (US)',
-  },
-  'fr-FR': {
-    locale: COMPONENT_LOCALE_FR_FR,
-    name: 'French (France)',
-  },
-  'de-DE': {
-    locale: COMPONENT_LOCALE_DE_DE,
-    name: 'German (Germany)',
-  },
-  'ar-SA': {
-    locale: COMPONENT_LOCALE_AR_SA,
-    name: 'Arabic (Saudi Arabia)',
-  }
-};
 
 export const parameters = {
   layout: 'fullscreen',
@@ -107,7 +89,7 @@ const withLocalization = (Story: any, context: any) => {
   const localeKey = context.globals.locale as string;
 
   return (
-    <LocalizationProvider locale={namedLocales[localeKey].locale} >
+    <LocalizationProvider locale={LOCALES[localeKey].locale} >
       <Story {...context} />
     </LocalizationProvider>
   );
@@ -142,10 +124,10 @@ export const globalTypes = {
   locale: {
     name: 'Locale',
     description: 'Locale for components',
-    defaultValue: 'en-US',
+    defaultValue: 'en_US',
     toolbar: {
       icon: 'globe',
-      items: Object.keys(namedLocales).map((key) => ({ title: namedLocales[key].name, value: key })),
+      items: Object.keys(LOCALES).map((key) => ({ title: LOCALES[key].englishName, value: key })),
     },
   },
   rtl: {

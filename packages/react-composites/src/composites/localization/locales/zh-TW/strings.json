@@ -1,0 +1,11 @@
+{
+  "call": {
+    "cameraPermissionDenied": "您的瀏覽器禁止存取您的相機",
+    "cameraTurnedOff": "您的相機已關閉",
+    "microphonePermissionDenied": "您的瀏覽器禁止存取您的麥克風",
+    "teamsMeetingFailReasonAccessDenied": "被拒絕存取會議",
+    "teamsMeetingFailReasonParticipantRemoved": "已從會議中將您移除",
+    "teamsMeetingFailToJoin": "加入 Teams 會議時發生錯誤",
+    "cameraLabel": "Camera"
+  }
+}

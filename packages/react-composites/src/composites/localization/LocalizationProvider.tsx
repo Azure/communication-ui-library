@@ -5,7 +5,7 @@ import React, { createContext, useContext } from 'react';
 
 import { ComponentLocale, LocalizationProvider as ComponentLocalizationProvider } from '@internal/react-components';
 
-import { COMPOSITE_LOCALE_EN_US } from '../locales';
+import { COMPOSITE_LOCALE_EN_US } from './locales';
 import { CallCompositeStrings } from '../CallComposite';
 
 /**

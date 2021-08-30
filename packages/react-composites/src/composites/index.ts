@@ -6,6 +6,6 @@ export * from './CallComposite';
 export * from './MeetingComposite';
 export type { AvatarPersonaData, AvatarPersonaDataCallback } from './common/AvatarPersona';
 export * from './common/icons';
-export * from './locales';
+export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
 export type { BaseCompositeProps } from './common/Composite';
