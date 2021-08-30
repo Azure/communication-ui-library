@@ -94,16 +94,46 @@ export type CommunicationParticipant = {
 };
 
 // @public
-export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
-export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
+export const COMPONENT_LOCALE_EN_GB: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_EN_US: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_ES_ES: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_IT_IT: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_JA_JP: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_KO_KR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_NL_NL: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_PT_BR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_RU_RU: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_TR_TR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_ZH_CN: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_ZH_TW: ComponentLocale;
 
 // @public (undocumented)
 export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;

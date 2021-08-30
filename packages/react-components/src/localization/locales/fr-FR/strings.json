@@ -1,0 +1,78 @@
+{
+  "participantItem": {
+    "isMeText": "(vous)",
+    "menuTitle": "Plus d’options"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} en train d’écrire...",
+    "multipleUsers": "{users} sont en train d'écrire...",
+    "multipleUsersAbbreviateOne": "{users} et 1 autre en train d'écrire...",
+    "multipleUsersAbbreviateMany": "{users} et {numOthers} autres en train d’écrire...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Saisir un message"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Envoyé",
+    "seenTooltipText": "Vu",
+    "sendingTooltipText": "Envoi",
+    "failedToSendTooltipText": "Échec de l'envoi"
+  },
+  "endCallButton": {
+    "label": "Quitter"
+  },
+  "cameraButton": {
+    "onLabel": "Désactiver",
+    "offLabel": "Activer"
+  },
+  "microphoneButton": {
+    "onLabel": "Désactiver le son",
+    "offLabel": "Réactiver le son"
+  },
+  "optionsButton": {
+    "label": "Options",
+    "cameraMenuTitle": "Appareil photo",
+    "cameraMenuTooltip": "Choisir une caméra",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choisir le micro",
+    "speakerMenuTitle": "Haut-parleur",
+    "speakerMenuTooltip": "Choisir une enceinte"
+  },
+  "participantsButton": {
+    "label": "Personnes",
+    "menuHeader": "Pendant cet appel",
+    "participantsListButtonLabel": "{numParticipants} contacts",
+    "muteAllButtonLabel": "Désactiver tous les micros",
+    "copyInviteLinkButtonLabel": "Copier le lien d'invitation"
+  },
+  "screenShareButton": {
+    "onLabel": "Arrêter",
+    "offLabel": "Partager"
+  },
+  "messageThread": {
+    "yesterday": "Hier",
+    "sunday": "Dimanche",
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi",
+    "participantJoined": "a rejoint la conversation.",
+    "participantLeft": "a quitté le conversation."
+  },
+  "errorBar": {
+    "unableToReachChatService": "Vous êtes hors connexion",
+    "accessDenied": "Impossible d’accéder aux services de conversation. Vérifiez les informations d’identification de l’utilisateur fournies",
+    "userNotInThisThread": "Vous n’est plus dans ce thread de conversation",
+    "sendMessageNotInThisThread": "Échec de l’envoi du message car vous n’êtes plus dans ce thread de conversation",
+    "sendMessageGeneric": "Échec de l’envoi du message",
+    "startVideoGeneric": "Échec du démarrage de la vidéo",
+    "stopVideoGeneric": "Échec de l’arrêt de la vidéo",
+    "muteGeneric": "Échec de la désactivation du son du microphone",
+    "unmuteGeneric": "Échec de l’activation du son du microphone",
+    "startScreenShareGeneric": "Échec du démarrage du partage d’écran",
+    "stopScreenShareGeneric": "Échec de l’arrêt du partage d’écran"
+  }
+}

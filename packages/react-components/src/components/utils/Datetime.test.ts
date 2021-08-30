@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { formatDateForChatMessage, formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
-import { COMPONENT_LOCALE_EN_US } from '../../locales';
+import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 
 const createMockDate = (datetime: {
   year?: number;
