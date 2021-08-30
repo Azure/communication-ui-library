@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
-import { MicOff16Filled, MicOn16Filled } from '@fluentui/react-icons';
+import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useTheme } from '../theming';
@@ -171,11 +170,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack className={mergeStyles(iconContainerStyle)}>
             {showMuteIndicator &&
               isMuted !== undefined &&
-              (isMuted ? (
-                <MicOff16Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
-              ) : (
-                <MicOn16Filled primaryFill="currentColor" key={'microphoneIconKey'} />
-              ))}
+              (isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />)}
           </Stack>
         </Stack>
 

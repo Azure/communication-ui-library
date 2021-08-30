@@ -35,7 +35,7 @@ export type AvatarPersonaData = {
 /**
  * Callback function used to provide custom data to the AvatarPersona component.
  */
-export type AvatarPersonaDataCallback = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
+export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 export interface AvatarPersonaProps extends IPersonaProps {
   /**

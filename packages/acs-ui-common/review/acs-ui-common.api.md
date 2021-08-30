@@ -8,22 +8,22 @@
 
 import { CommunicationIdentifier } from '@azure/communication-common';
 
-// @public (undocumented)
+// @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
-// @public (undocumented)
+// @public
 export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = AreTypeEqual<Required<Parameters<A>[0]>, Required<Parameters<B>[0]>>;
 
-// @public (undocumented)
+// @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public (undocumented)
 export type CallbackType<KeyT, ArgsT extends unknown[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
-// @public (undocumented)
+// @public
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
-// @public (undocumented)
+// @public
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];

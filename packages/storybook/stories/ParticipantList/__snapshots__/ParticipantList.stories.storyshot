@@ -33,22 +33,22 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Stack css-6"
+              className="ms-Stack css-7"
             >
               <div
-                className="ms-Persona ms-Persona--size32 root-7"
+                className="ms-Persona ms-Persona--size32 root-8"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size32 coin-14"
+                  className="ms-Persona-coin ms-Persona--size32 coin-15"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-16"
+                    className="ms-Persona-imageArea imageArea-17"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-19"
+                      className="ms-Persona-initials initials-20"
                     >
                       <span>
                         R
@@ -57,14 +57,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   </div>
                 </div>
                 <div
-                  className="ms-Persona-details details-8"
+                  className="ms-Persona-details details-9"
                 >
                   <div
-                    className="ms-Persona-primaryText primaryText-9"
+                    className="ms-Persona-primaryText primaryText-10"
                     dir="auto"
                   >
                     <div
-                      className="ms-TooltipHost root-22"
+                      className="ms-TooltipHost root-23"
                       onBlurCapture={[Function]}
                       onFocusCapture={[Function]}
                       onKeyDown={[Function]}
@@ -75,26 +75,23 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     </div>
                   </div>
                   <div
-                    className="ms-Persona-secondaryText secondaryText-10"
+                    className="ms-Persona-secondaryText secondaryText-11"
                     dir="auto"
                   />
                   <div
-                    className="ms-Persona-tertiaryText tertiaryText-11"
+                    className="ms-Persona-tertiaryText tertiaryText-12"
                     dir="auto"
                   />
                   <div
-                    className="ms-Persona-optionalText optionalText-12"
+                    className="ms-Persona-optionalText optionalText-13"
                     dir="auto"
                   />
                 </div>
               </div>
             </div>
             <div
-              className="ms-Stack css-75 css-23"
+              className="ms-Stack css-75 css-24"
             >
-              <div
-                className="ms-Stack css-24"
-              />
               <span
                 className="ms-layer"
               >
@@ -230,17 +227,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Stack css-6"
+              className="ms-Stack css-7"
             >
               <div
-                className="ms-Persona ms-Persona--size32 root-7"
+                className="ms-Persona ms-Persona--size32 root-8"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size32 coin-14"
+                  className="ms-Persona-coin ms-Persona--size32 coin-15"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-16"
+                    className="ms-Persona-imageArea imageArea-17"
                     role="presentation"
                   >
                     <div
@@ -254,14 +251,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   </div>
                 </div>
                 <div
-                  className="ms-Persona-details details-8"
+                  className="ms-Persona-details details-9"
                 >
                   <div
-                    className="ms-Persona-primaryText primaryText-9"
+                    className="ms-Persona-primaryText primaryText-10"
                     dir="auto"
                   >
                     <div
-                      className="ms-TooltipHost root-22"
+                      className="ms-TooltipHost root-23"
                       onBlurCapture={[Function]}
                       onFocusCapture={[Function]}
                       onKeyDown={[Function]}
@@ -272,26 +269,23 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     </div>
                   </div>
                   <div
-                    className="ms-Persona-secondaryText secondaryText-10"
+                    className="ms-Persona-secondaryText secondaryText-11"
                     dir="auto"
                   />
                   <div
-                    className="ms-Persona-tertiaryText tertiaryText-11"
+                    className="ms-Persona-tertiaryText tertiaryText-12"
                     dir="auto"
                   />
                   <div
-                    className="ms-Persona-optionalText optionalText-12"
+                    className="ms-Persona-optionalText optionalText-13"
                     dir="auto"
                   />
                 </div>
               </div>
             </div>
             <div
-              className="ms-Stack css-75 css-23"
+              className="ms-Stack css-75 css-24"
             >
-              <div
-                className="ms-Stack css-24"
-              />
               <span
                 className="ms-layer"
               >
@@ -427,17 +421,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Stack css-6"
+              className="ms-Stack css-7"
             >
               <div
-                className="ms-Persona ms-Persona--size32 ms-Persona--away root-7"
+                className="ms-Persona ms-Persona--size32 ms-Persona--away root-8"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size32 coin-14"
+                  className="ms-Persona-coin ms-Persona--size32 coin-15"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-16"
+                    className="ms-Persona-imageArea imageArea-17"
                     role="presentation"
                   >
                     <div
@@ -455,14 +449,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   </div>
                 </div>
                 <div
-                  className="ms-Persona-details details-8"
+                  className="ms-Persona-details details-9"
                 >
                   <div
-                    className="ms-Persona-primaryText primaryText-9"
+                    className="ms-Persona-primaryText primaryText-10"
                     dir="auto"
                   >
                     <div
-                      className="ms-TooltipHost root-22"
+                      className="ms-TooltipHost root-23"
                       onBlurCapture={[Function]}
                       onFocusCapture={[Function]}
                       onKeyDown={[Function]}
@@ -473,26 +467,23 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     </div>
                   </div>
                   <div
-                    className="ms-Persona-secondaryText secondaryText-10"
+                    className="ms-Persona-secondaryText secondaryText-11"
                     dir="auto"
                   />
                   <div
-                    className="ms-Persona-tertiaryText tertiaryText-11"
+                    className="ms-Persona-tertiaryText tertiaryText-12"
                     dir="auto"
                   />
                   <div
-                    className="ms-Persona-optionalText optionalText-12"
+                    className="ms-Persona-optionalText optionalText-13"
                     dir="auto"
                   />
                 </div>
               </div>
             </div>
             <div
-              className="ms-Stack css-75 css-23"
+              className="ms-Stack css-75 css-24"
             >
-              <div
-                className="ms-Stack css-24"
-              />
               <span
                 className="ms-layer"
               >
@@ -628,22 +619,22 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             onMouseLeave={[Function]}
           >
             <div
-              className="ms-Stack css-6"
+              className="ms-Stack css-7"
             >
               <div
-                className="ms-Persona ms-Persona--size32 ms-Persona--online root-7"
+                className="ms-Persona ms-Persona--size32 ms-Persona--online root-8"
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size32 coin-14"
+                  className="ms-Persona-coin ms-Persona--size32 coin-15"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-16"
+                    className="ms-Persona-imageArea imageArea-17"
                     role="presentation"
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-19"
+                      className="ms-Persona-initials initials-20"
                     >
                       <span>
                         Y
@@ -656,14 +647,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                   </div>
                 </div>
                 <div
-                  className="ms-Persona-details details-8"
+                  className="ms-Persona-details details-9"
                 >
                   <div
-                    className="ms-Persona-primaryText primaryText-9"
+                    className="ms-Persona-primaryText primaryText-10"
                     dir="auto"
                   >
                     <div
-                      className="ms-TooltipHost root-22"
+                      className="ms-TooltipHost root-23"
                       onBlurCapture={[Function]}
                       onFocusCapture={[Function]}
                       onKeyDown={[Function]}
@@ -674,15 +665,15 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                     </div>
                   </div>
                   <div
-                    className="ms-Persona-secondaryText secondaryText-10"
+                    className="ms-Persona-secondaryText secondaryText-11"
                     dir="auto"
                   />
                   <div
-                    className="ms-Persona-tertiaryText tertiaryText-11"
+                    className="ms-Persona-tertiaryText tertiaryText-12"
                     dir="auto"
                   />
                   <div
-                    className="ms-Persona-optionalText optionalText-12"
+                    className="ms-Persona-optionalText optionalText-13"
                     dir="auto"
                   />
                 </div>
@@ -694,12 +685,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
               </div>
             </div>
             <div
-              className="ms-Stack css-75 css-23"
-            >
-              <div
-                className="ms-Stack css-24"
-              />
-            </div>
+              className="ms-Stack css-75 css-24"
+            />
           </div>
         </div>
       </div>

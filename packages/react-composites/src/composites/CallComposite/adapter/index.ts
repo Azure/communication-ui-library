@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from './AzureCommunicationCallAdapter';
+export { createAzureCommunicationCallAdapter } from './AzureCommunicationCallAdapter';
+export type { AzureCommunicationCallAdapterArgs } from './AzureCommunicationCallAdapter';
 
 export type {
   CallAdapter,
@@ -12,7 +13,6 @@ export type {
   CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,
-  CallIdentifierKinds,
   DisplayNameChangedListener,
   IncomingCallListener,
   IsMuteChangedListener,

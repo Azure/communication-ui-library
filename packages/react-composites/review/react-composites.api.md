@@ -6,9 +6,8 @@
 
 /// <reference types="react" />
 
-import { AudioDeviceInfo } from '@azure/communication-calling';
-import { Call } from '@azure/communication-calling';
-import { CallAgent } from '@azure/communication-calling';
+import type { AudioDeviceInfo } from '@azure/communication-calling';
+import type { Call } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
@@ -18,25 +17,20 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
+import { ComponentIcons } from '@internal/react-components';
+import { ComponentLocale } from '@internal/react-components';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
-import { Identifiers } from '@internal/react-components';
-import { Locale } from '@internal/react-components';
 import { MessageProps } from '@internal/react-components';
-import type { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
-import { PermissionConstraints } from '@azure/communication-calling';
+import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
-import type { PhoneNumberKind } from '@azure/communication-common';
 import type { RemoteParticipant } from '@azure/communication-calling';
-import { StatefulCallClient } from '@internal/calling-stateful-client';
-import { StatefulDeviceManager } from '@internal/calling-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import type { UnknownIdentifierKind } from '@azure/communication-common';
-import { VideoDeviceInfo } from '@azure/communication-calling';
+import type { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
 // @public
@@ -49,102 +43,7 @@ export type AvatarPersonaData = {
 };
 
 // @public
-export type AvatarPersonaDataCallback = ((userId: string) => Promise<AvatarPersonaData>) | undefined;
-
-// @public (undocumented)
-export class AzureCommunicationCallAdapter implements CallAdapter {
-    constructor(callClient: StatefulCallClient, locator: TeamsMeetingLinkLocator | GroupCallLocator, callAgent: CallAgent, deviceManager: StatefulDeviceManager);
-    // (undocumented)
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // (undocumented)
-    clearErrors(errorTypes: ErrorType[]): void;
-    // (undocumented)
-    createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    dispose(): void;
-    // (undocumented)
-    disposeStreamView(remoteUserId?: string): Promise<void>;
-    // (undocumented)
-    getState(): CallAdapterState;
-    // (undocumented)
-    isTeamsCall(): boolean;
-    // (undocumented)
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    // (undocumented)
-    leaveCall(): Promise<void>;
-    // (undocumented)
-    mute(): Promise<void>;
-    // (undocumented)
-    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    off(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    offStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    on(event: 'error', errorHandler: (e: Error) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    onToggleCamera(options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
-    queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    setMicrophone(device: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
-    setPage(page: CallCompositePage): void;
-    // (undocumented)
-    setSpeaker(device: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
-    startCall(participants: string[]): Call | undefined;
-    // (undocumented)
-    startCamera(): Promise<void>;
-    // (undocumented)
-    startScreenShare(): Promise<void>;
-    // (undocumented)
-    stopCamera(): Promise<void>;
-    // (undocumented)
-    stopScreenShare(): Promise<void>;
-    // (undocumented)
-    unmute(): Promise<void>;
-}
+export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 // @public (undocumented)
 export type AzureCommunicationCallAdapterArgs = {
@@ -163,6 +62,15 @@ export type AzureCommunicationChatAdapterArgs = {
     credential: CommunicationTokenCredential;
     threadId: string;
 };
+
+// @public (undocumented)
+export interface BaseCompositeProps {
+    fluentTheme?: PartialTheme | Theme;
+    icons?: CompositeIcons;
+    locale?: CompositeLocale;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    rtl?: boolean;
+}
 
 // @public (undocumented)
 export interface CallAdapter {
@@ -261,6 +169,7 @@ export type CallAdapterClientState = {
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
+    endedCall?: CallState;
     latestErrors: CallAdapterErrors;
 };
 
@@ -274,10 +183,8 @@ export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
 // @public
 export type CallAdapterUiState = {
-    error?: Error;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
-    endedCall?: CallState | undefined;
 };
 
 // @public (undocumented)
@@ -287,18 +194,15 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public (undocumented)
-export type CallCompositeProps = {
+export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    rtl?: boolean;
-    locale?: CompositeLocale;
+    // (undocumented)
     callInvitationURL?: string;
-    identifiers?: Identifiers;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-};
+}
 
 // @public
 export interface CallCompositeStrings {
+    cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
     microphonePermissionDenied: string;
@@ -318,9 +222,6 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public (undocumented)
-export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
-
-// @public (undocumented)
 export interface ChatAdapter {
     clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
@@ -328,7 +229,7 @@ export interface ChatAdapter {
     // (undocumented)
     fetchInitialData(): Promise<void>;
     // (undocumented)
-    getState(): ChatState;
+    getState(): ChatAdapterState;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
@@ -346,7 +247,7 @@ export interface ChatAdapter {
     // (undocumented)
     off(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
-    offStateChange(handler: (state: ChatState) => void): void;
+    offStateChange(handler: (state: ChatAdapterState) => void): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -362,7 +263,7 @@ export interface ChatAdapter {
     // (undocumented)
     on(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
-    onStateChange(handler: (state: ChatState) => void): void;
+    onStateChange(handler: (state: ChatAdapterState) => void): void;
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -381,6 +282,14 @@ export type ChatAdapterErrors = {
 };
 
 // @public (undocumented)
+export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
+
+// @public (undocumented)
+export type ChatAdapterUiState = {
+    error?: Error;
+};
+
+// @public (undocumented)
 export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public (undocumented)
@@ -392,17 +301,12 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export type ChatCompositeProps = {
+export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    rtl?: boolean;
-    locale?: CompositeLocale;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatOptions;
-    identifiers?: Identifiers;
-};
+}
 
 // @public
 export type ChatErrorListener = (event: {
@@ -417,29 +321,64 @@ export type ChatOptions = {
     showTopic?: boolean;
 };
 
-// @public (undocumented)
-export type ChatState = ChatUIState & ChatCompositeClientState;
-
-// @public (undocumented)
-export type ChatUIState = {
-    error?: Error;
-};
-
-// @public
-export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
-
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_EN_GB: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_ES_ES: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_IT_IT: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_JA_JP: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_KO_KR: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_NL_NL: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_PT_BR: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_RU_RU: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_TR_TR: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_ZH_CN: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
+
+// @public (undocumented)
+export const COMPOSITE_ONLY_ICONS: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+};
+
+// @public (undocumented)
+export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
+
+// @public
 export interface CompositeLocale {
-    component: Locale;
+    component: ComponentLocale;
     strings: CompositeStrings;
 }
 
@@ -454,9 +393,43 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
+// @public
+export const DEFAULT_COMPOSITE_ICONS: {
+    LocalDeviceSettingsCamera: JSX.Element;
+    LocalDeviceSettingsMic: JSX.Element;
+    LocalDeviceSettingsSpeaker: JSX.Element;
+    LocalPreviewPlaceholder: JSX.Element;
+    ScreenSharePopupPresenting: JSX.Element;
+    ScreenSharePopupStopPresenting: JSX.Element;
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
+};
+
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {
-    participantId: CallIdentifierKinds;
+    participantId: CommunicationIdentifierKind;
     displayName: string;
 }) => void;
 
@@ -471,7 +444,7 @@ export type IncomingCallListener = (event: {
 
 // @public (undocumented)
 export type IsMuteChangedListener = (event: {
-    identifier: CallIdentifierKinds;
+    identifier: CommunicationIdentifierKind;
     isMuted: boolean;
 }) => void;
 
@@ -482,7 +455,7 @@ export type IsScreenSharingOnChangedListener = (event: {
 
 // @public (undocumented)
 export type IsSpeakingChangedListener = (event: {
-    identifier: CallIdentifierKinds;
+    identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
 

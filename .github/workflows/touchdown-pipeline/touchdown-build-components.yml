@@ -1,0 +1,30 @@
+# Touchdown build pipeline for components
+
+trigger: [main]
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+    persistCredentials: true
+
+  # Setup bot information for pushing new changes
+  # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+  - script: |
+      git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      git config user.name "github-actions[bot]"
+
+  - task: TouchdownBuildTask@1
+    inputs:
+      environment: 'PRODEXT'
+      teamId: '35669'
+      authType: 'OAuth'
+      authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
+      authKey: $(AUTH_KEY)
+      isPreview: false
+      resourceFilePath: 'packages/react-components/src/localization/locales/en-US/strings.json'
+      outputDirectoryRoot: 'packages/react-components/src/localization/locales'
+      cultureMappingType: 'None'
+      gitAction: 'COMMIT'
+    displayName: 'Call Touchdown build task for components'

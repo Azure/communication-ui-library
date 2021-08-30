@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, useMemo } from 'react';
-import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets } from '@fluentui/react';
-import { Send20Regular, Send20Filled } from '@fluentui/react-icons';
+import { IStyle, ITextField, mergeStyles, Stack, TextField, concatStyleSets, Icon } from '@fluentui/react';
 import {
   textFieldStyle,
   sendBoxStyle,
@@ -227,10 +226,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         >
           {onRenderIcon ? (
             onRenderIcon(props, isMouseOverSendIcon)
-          ) : isMouseOverSendIcon ? (
-            <Send20Filled className={mergedSendIconStyle} primaryFill="currentColor" />
           ) : (
-            <Send20Regular className={mergedSendIconStyle} primaryFill="currentColor" />
+            <Icon
+              iconName={isMouseOverSendIcon ? 'SendBoxSendHovered' : 'SendBoxSend'}
+              className={mergedSendIconStyle}
+            />
           )}
         </div>
       </div>

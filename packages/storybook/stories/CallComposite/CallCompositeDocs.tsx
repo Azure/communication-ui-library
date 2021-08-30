@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Description, Heading, Source, Title } from '@storybook/addon-docs';
+import { CallComposite } from '@azure/communication-react';
+import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
@@ -84,12 +85,21 @@ export const getDocs: () => JSX.Element = () => {
         Typography](https://developer.microsoft.com/fluentui#/styles/web/typography).
       </Description>
 
+      <Heading>Icons</Heading>
+      <Description>
+        Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
+        accepts an object where you can provide a custom JSX element against an icon name key.
+      </Description>
+
       <Heading>Joining an existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
         playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
         useful if you want to explore the composite with multiple users.
       </Description>
+
+      <Heading>Call Composite Props</Heading>
+      <Props of={CallComposite} />
     </>
   );
 };

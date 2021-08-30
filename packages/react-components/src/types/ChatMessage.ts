@@ -36,10 +36,16 @@ export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMes
   iconName: string;
 };
 
+/**
+ * Generate A type contains all keys as \{key: '[key-name]' | never\}, value is never when the property type is never
+ */
 export type AllKeys<T> = {
   [K in keyof T]: T[K] extends never ? never : K;
 };
 
+/**
+ * Omit never-typed properties from a type
+ */
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // System Message payload only contains non-never properties
