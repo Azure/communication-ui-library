@@ -27,8 +27,8 @@
     "offLabel": "Habilitar"
   },
   "microphoneButton": {
-    "onLabel": "Mute",
-    "offLabel": "Unmute"
+    "onLabel": "Mudo",
+    "offLabel": "Desativar mudo"
   },
   "optionsButton": {
     "label": "Opções",

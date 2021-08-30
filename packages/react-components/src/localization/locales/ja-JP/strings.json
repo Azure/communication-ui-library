@@ -68,11 +68,11 @@
     "userNotInThisThread": "このチャット スレッドにはもう参加していません",
     "sendMessageNotInThisThread": "このチャット スレッドに参加していないため、メッセージを送信できませんでした",
     "sendMessageGeneric": "メッセージを送信できませんでした。",
-    "startVideoGeneric": "Failed to start video",
-    "stopVideoGeneric": "Failed to stop video",
-    "muteGeneric": "Failed to mute microphone",
-    "unmuteGeneric": "Failed to unmute microphone",
-    "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing"
+    "startVideoGeneric": "ビデオを開始できませんでした",
+    "stopVideoGeneric": "ビデオを停止できませんでした",
+    "muteGeneric": "マイクをミュートできませんでした",
+    "unmuteGeneric": "マイクのミュートを解除できませんでした",
+    "startScreenShareGeneric": "画面の共有を開始できませんでした",
+    "stopScreenShareGeneric": "画面の共有を停止できませんでした"
   }
 }
