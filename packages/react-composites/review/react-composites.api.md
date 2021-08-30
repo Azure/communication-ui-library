@@ -330,6 +330,8 @@ export type CallIdentifierKinds = CommunicationUserKind | PhoneNumberKind | Micr
 export interface ChatAdapter {
     clearErrors(errorTypes: ErrorType[]): void;
     // (undocumented)
+    deleteMessage(messageId: string): Promise<void>;
+    // (undocumented)
     dispose(): void;
     // (undocumented)
     fetchInitialData(): Promise<void>;
@@ -379,6 +381,8 @@ export interface ChatAdapter {
     sendTypingIndicator(): Promise<void>;
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateMessage(messageId: string, content: string): Promise<void>;
 }
 
 // @public
@@ -530,6 +534,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     VideoTileMicOn: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageRemove: JSX.Element;
 };
 
 // @public (undocumented)

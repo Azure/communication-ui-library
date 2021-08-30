@@ -17,6 +17,8 @@ export type DefaultChatHandlers = {
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
   onDismissErrors: (errorTypes: ErrorType[]) => void;
+  onUpdateMessage: (messageId: string, content: string) => Promise<void>;
+  onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
@@ -30,6 +32,12 @@ export const createDefaultChatHandlers = memoizeOne(
           senderDisplayName: chatClient.getState().displayName
         };
         await chatThreadClient.sendMessage(sendMessageRequest);
+      },
+      onUpdateMessage: async (messageId: string, content: string) => {
+        await chatThreadClient.updateMessage(messageId, { content });
+      },
+      onDeleteMessage: async (messageId: string) => {
+        await chatThreadClient.deleteMessage(messageId);
       },
       // This handler is designed for chatThread to consume
       onMessageSeen: async (chatMessageId: string) => {

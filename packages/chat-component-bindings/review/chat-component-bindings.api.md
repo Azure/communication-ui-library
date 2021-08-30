@@ -91,6 +91,8 @@ export type DefaultChatHandlers = {
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onDismissErrors: (errorTypes: ErrorType[]) => void;
+    onUpdateMessage: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
 // @public

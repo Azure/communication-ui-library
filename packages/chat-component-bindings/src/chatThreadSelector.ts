@@ -108,6 +108,7 @@ export const chatThreadSelector = createSelector(
             message.type === ACSKnownMessageType.topicUpdated ||
             message.clientMessageId !== undefined
         )
+        .filter((message) => message.content && message.content.message !== '') // TODO: deal with deleted message and remove
         .map((message) =>
           memoizedFn(
             message.id ?? message.clientMessageId,
