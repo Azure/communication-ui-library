@@ -503,6 +503,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     VideoTileMicOn: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageRemove: JSX.Element;
 };
 
 // @public (undocumented)
