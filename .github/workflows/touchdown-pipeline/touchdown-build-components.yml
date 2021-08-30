@@ -30,5 +30,5 @@ steps:
       resourceFilePath: 'packages/react-components/src/localization/locales/en-US/strings.json'
       outputDirectoryRoot: 'packages/react-components/src/localization/locales'
       cultureMappingType: 'None'
-      gitAction: 'NONE'
+      gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for components'
