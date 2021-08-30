@@ -6,6 +6,7 @@
     "teamsMeetingFailReasonAccessDenied": "O acesso à reunião foi negado",
     "teamsMeetingFailReasonParticipantRemoved": "Você foi removido da reunião",
     "teamsMeetingFailToJoin": "Erro ao ingressar na Reunião de Equipe",
-    "cameraLabel": "Camera"
+    "cameraLabel": "Câmera",
+    "defaultPlaceholder": "Select an option"
   }
 }

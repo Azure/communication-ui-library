@@ -1,11 +1,12 @@
 {
   "call": {
-    "cameraPermissionDenied": "Your browser is blocking access to your camera",
-    "cameraTurnedOff": "Your camera is turned off",
-    "microphonePermissionDenied": "Your browser is blocking access to your microphone",
-    "teamsMeetingFailReasonAccessDenied": "Access to the meeting was denied",
-    "teamsMeetingFailReasonParticipantRemoved": "You were removed from the meeting",
-    "teamsMeetingFailToJoin": "Error joining Teams Meeting",
-    "cameraLabel": "Camera"
+    "cameraPermissionDenied": "你的浏览器正在阻止对相机的访问",
+    "cameraTurnedOff": "你的相机已关闭",
+    "microphonePermissionDenied": "你的浏览器正在阻止对麦克风的访问",
+    "teamsMeetingFailReasonAccessDenied": "会议访问被拒绝",
+    "teamsMeetingFailReasonParticipantRemoved": "已将你从会议中删除",
+    "teamsMeetingFailToJoin": "加入 Teams 会议时出错",
+    "cameraLabel": "照相机",
+    "defaultPlaceholder": "Select an option"
   }
 }

@@ -1,11 +1,12 @@
 {
   "call": {
-    "cameraPermissionDenied": "Your browser is blocking access to your camera",
-    "cameraTurnedOff": "Your camera is turned off",
-    "microphonePermissionDenied": "Your browser is blocking access to your microphone",
-    "teamsMeetingFailReasonAccessDenied": "Access to the meeting was denied",
-    "teamsMeetingFailReasonParticipantRemoved": "You were removed from the meeting",
-    "teamsMeetingFailToJoin": "Error joining Teams Meeting",
-    "cameraLabel": "Camera"
+    "cameraPermissionDenied": "Браузер блокирует доступ к вашей камере",
+    "cameraTurnedOff": "Камера выключена",
+    "microphonePermissionDenied": "Браузер блокирует доступ к вашему микрофону",
+    "teamsMeetingFailReasonAccessDenied": "Отказано в доступе к собранию",
+    "teamsMeetingFailReasonParticipantRemoved": "Вы были удалены из собрания",
+    "teamsMeetingFailToJoin": "Ошибка при присоединении к собранию Teams",
+    "cameraLabel": "Камера",
+    "defaultPlaceholder": "Select an option"
   }
 }
