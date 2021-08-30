@@ -35,7 +35,7 @@ export interface CallAgentState {
 
 // @public
 export interface CallClientState {
-    callAgent: CallAgentState | undefined;
+    callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
     };
