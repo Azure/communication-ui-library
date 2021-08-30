@@ -79,7 +79,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const theme = useTheme();
   const locale = useLocale();
   const defaultPlaceHolder = 'Select an option';
-  const cameraLabel = 'Camera';
   const soundLabel = 'Sound';
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
@@ -90,7 +89,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     <Stack data-ui-id="call-composite-device-settings" className={localSettingsContainer} tokens={mainStackTokens}>
       <Dropdown
         data-ui-id="call-composite-local-camera-settings"
-        label={cameraLabel}
+        label={locale.strings.call.cameraLabel}
         placeholder={defaultPlaceHolder}
         options={
           props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]

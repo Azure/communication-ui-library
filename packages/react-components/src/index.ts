@@ -4,7 +4,7 @@
 export * from './components';
 export { IdentifierProvider } from './identifiers';
 export type { Identifiers, IdentifierProviderProps } from './identifiers';
-export * from './locales';
+export * from './localization/locales';
 export { LocalizationProvider } from './localization';
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
