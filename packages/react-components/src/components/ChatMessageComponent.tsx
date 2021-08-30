@@ -185,14 +185,6 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
   return <Icon iconName={'EditBoxSubmit'} className={className} />;
 };
 
-const onRenderEditIcon = (): JSX.Element => {
-  return <Icon iconName={'MessageEdit'} />;
-};
-
-const onRenderRemoveIcon = (): JSX.Element => {
-  return <Icon iconName={'MessageRemove'} />;
-};
-
 type EditBoxProps = {
   onCancel?: () => void;
   onSubmit: (text: string) => void;
