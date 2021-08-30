@@ -24,14 +24,14 @@ import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { Common } from '@internal/acs-ui-common';
 import { AreEqual } from '@internal/acs-ui-common';
-import { DefaultCallingHandlers } from '../handlers/createHandlers';
+import { CallingHandlers } from '../handlers/createHandlers';
 import { ParticipantsButton } from '@internal/react-components';
 import { errorBarSelector } from '../errorBarSelector';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
-  ? ReturnType<GetSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]>
   : undefined => {
   const selector = getSelector(component);
   const props = useSelector(selector);
