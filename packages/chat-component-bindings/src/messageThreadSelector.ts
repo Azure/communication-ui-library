@@ -92,7 +92,7 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): Message<'syst
   }
 };
 
-export const chatThreadSelector = createSelector(
+export const messageThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
   (userId, chatMessages, latestReadTime, isLargeGroup) => {
     // A function takes parameter above and generate return value
