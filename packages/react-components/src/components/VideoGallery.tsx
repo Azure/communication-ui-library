@@ -187,6 +187,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onDisposeRemoteStreamView={onDisposeRemoteStreamView}
           isAvailable={remoteVideoStream?.isAvailable}
           isMuted={participant.isMuted}
+          isSpeaking={participant.isSpeaking}
           renderElement={remoteVideoStream?.renderElement}
           displayName={participant.displayName}
           remoteVideoViewOption={remoteVideoViewOption}
@@ -241,6 +242,7 @@ const RemoteVideoTile = React.memo(
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isMuted?: boolean;
+    isSpeaking?: boolean;
     renderElement?: HTMLElement;
     displayName?: string;
     remoteVideoViewOption?: VideoStreamOptions;
@@ -250,6 +252,7 @@ const RemoteVideoTile = React.memo(
     const {
       isAvailable,
       isMuted,
+      isSpeaking,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOption,
@@ -302,6 +305,7 @@ const RemoteVideoTile = React.memo(
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={isMuted}
+          isSpeaking={isSpeaking}
           showMuteIndicator={showMuteIndicator}
         />
       </Stack>
