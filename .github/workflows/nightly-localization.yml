@@ -1,4 +1,4 @@
-name: Nightly CI/CD
+name: Nightly Localization
 
 on:
   # Postsubmit CI on main.
