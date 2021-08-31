@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layout 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -90,7 +90,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-81 css-25"
+              className="ms-Stack css-90 css-25"
             >
               <div
                 className="ms-Stack css-26"
@@ -159,7 +159,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-81 css-25"
+              className="ms-Stack css-90 css-25"
             >
               <div
                 className="ms-Stack css-26"
@@ -228,7 +228,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-81 css-25"
+              className="ms-Stack css-90 css-25"
             >
               <div
                 className="ms-Stack css-26"
@@ -297,7 +297,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-81 css-25"
+              className="ms-Stack css-90 css-25"
             >
               <div
                 className="ms-Stack css-26"
