@@ -1,6 +1,5 @@
 dependencies:
   '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz
-  '@rush-temp/build-tools': file:projects/build-tools.tgz
   '@rush-temp/calling': file:projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:projects/calling-component-bindings.tgz
   '@rush-temp/calling-stateful-client': file:projects/calling-stateful-client.tgz
@@ -9,6 +8,7 @@ dependencies:
   '@rush-temp/chat-stateful-client': file:projects/chat-stateful-client.tgz
   '@rush-temp/check-treeshaking': file:projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:projects/communication-react.tgz
+  '@rush-temp/config': file:projects/config.tgz
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
   '@rush-temp/sample-static-html-composites': file:projects/sample-static-html-composites.tgz
@@ -19045,23 +19045,6 @@ packages:
       integrity: sha512-uNfubXOvCAPnaykFFn1GobhLqi3NAf82NrHR5S1FIhM5O4kpw82DSpDYdiHPBw8z7xmlkS84BJPTRiH0dvHPxA==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
-  file:projects/build-tools.tgz:
-    dependencies:
-      '@octokit/rest': 18.0.15
-      '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
-      '@types/node': 14.17.9
-      beachball: 1.53.2
-      rollup: 2.42.4
-      rollup-plugin-sourcemaps: 0.6.3_4b45aa15ce9ce9948f319a2d6455c252
-      rollup-plugin-svg: 2.0.0
-      ts-node: 9.1.1_typescript@4.3.5
-      typescript: 4.3.5
-    dev: false
-    name: '@rush-temp/build-tools'
-    resolution:
-      integrity: sha512-eS2W625c3nEQHYn8B1vV/3TgLmrCqKSLvjYzQcdxywQSpGf3zmKbO8pvVkNSSDX6iGtntkl7EE/aeuHme+AU9Q==
-      tarball: file:projects/build-tools.tgz
-    version: 0.0.0
   file:projects/calling-component-bindings.tgz:
     dependencies:
       '@azure/communication-calling': 1.2.0-beta.1
@@ -19399,6 +19382,23 @@ packages:
       integrity: sha512-JiIKiD+u0k8rYw27IHdsuxIYDAdpLfC8wPfCmlWXeYRWb0CQEvuVToz/wcUJDMNehVFBkmtCuFGYSgttqLLiFA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
+  file:projects/config.tgz:
+    dependencies:
+      '@octokit/rest': 18.0.15
+      '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
+      '@types/node': 14.17.9
+      beachball: 1.53.2
+      rollup: 2.42.4
+      rollup-plugin-sourcemaps: 0.6.3_4b45aa15ce9ce9948f319a2d6455c252
+      rollup-plugin-svg: 2.0.0
+      ts-node: 9.1.1_typescript@4.3.5
+      typescript: 4.3.5
+    dev: false
+    name: '@rush-temp/config'
+    resolution:
+      integrity: sha512-aW+U6rABx4RdzDv9h48Yokz179n0E6n/61rZ/CuWTHY4IgIRWSl77rIC/d8ZTEuM57IyAgCcnnKVUs7x5ek42w==
+      tarball: file:projects/config.tgz
+    version: 0.0.0
   file:projects/react-components.tgz:
     dependencies:
       '@babel/core': 7.13.10
@@ -19447,7 +19447,6 @@ packages:
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
       json-stringify-safe: 5.0.1
-      lodash: 4.17.21
       nan: 2.15.0
       node-forge: 0.10.0
       prettier: 2.3.1
@@ -19530,7 +19529,6 @@ packages:
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
       json-stringify-safe: 5.0.1
-      lodash: 4.17.21
       memoize-one: 5.2.1
       nan: 2.15.0
       node-forge: 0.10.0
@@ -19743,7 +19741,6 @@ packages:
     version: 0.0.0
 specifiers:
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
-  '@rush-temp/build-tools': file:./projects/build-tools.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:./projects/calling-component-bindings.tgz
   '@rush-temp/calling-stateful-client': file:./projects/calling-stateful-client.tgz
@@ -19752,6 +19749,7 @@ specifiers:
   '@rush-temp/chat-stateful-client': file:./projects/chat-stateful-client.tgz
   '@rush-temp/check-treeshaking': file:./projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:./projects/communication-react.tgz
+  '@rush-temp/config': file:./projects/config.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
   '@rush-temp/sample-static-html-composites': file:./projects/sample-static-html-composites.tgz
