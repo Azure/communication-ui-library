@@ -72,7 +72,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
           fluentTheme={props.fluentTheme}
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          featureFlags={{ showParticipantPane: true, showTopic: true }}
+          visualElements={{ showParticipantPane: true, showTopic: true }}
           locale={props.locale}
         />
       ) : (

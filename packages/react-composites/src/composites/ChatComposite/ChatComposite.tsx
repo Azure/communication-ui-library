@@ -25,7 +25,10 @@ export interface ChatCompositeProps extends BaseCompositeProps {
    */
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 
-  featureFlags?: ChatCompositeVisualElements;
+  /**
+   * Flags to enable/disable visual elements of the {@link ChatComposite}.
+   */
+  visualElements?: ChatCompositeVisualElements;
 }
 
 /**
@@ -54,15 +57,15 @@ export type ChatCompositeVisualElements = {
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, featureFlags, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
+  const { adapter, visualElements, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
 
   return (
     <BaseComposite {...props}>
       <ChatAdapterProvider adapter={adapter}>
         <ChatScreen
-          showErrorBar={featureFlags?.showErrorBar}
-          showParticipantPane={featureFlags?.showParticipantPane}
-          showTopic={featureFlags?.showTopic}
+          showErrorBar={visualElements?.showErrorBar}
+          showParticipantPane={visualElements?.showParticipantPane}
+          showTopic={visualElements?.showTopic}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}

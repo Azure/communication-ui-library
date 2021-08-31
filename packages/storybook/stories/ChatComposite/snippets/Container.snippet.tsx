@@ -60,7 +60,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
       <ChatComposite
         adapter={adapter}
         fluentTheme={props.fluentTheme}
-        featureFlags={{ showParticipantPane: props.showParticipants, showTopic: props.showTopic }}
+        visualElements={{ showParticipantPane: props.showParticipants, showTopic: props.showTopic }}
         locale={props.locale}
       />
     );

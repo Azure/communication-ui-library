@@ -557,10 +557,9 @@ export type ChatCompositeClientState = {
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
-    // (undocumented)
-    featureFlags?: ChatCompositeVisualElements;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+    visualElements?: ChatCompositeVisualElements;
 }
 
 // @public
