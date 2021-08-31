@@ -42,7 +42,7 @@ export type CallCompositeVisualElements = {
    *
    * @defaultValue false
    */
-  showErrorBar?: boolean;
+  errorBar?: boolean;
 };
 
 type MainScreenProps = {
@@ -51,7 +51,7 @@ type MainScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   visualElements: {
     showCallControls: boolean;
-    showErrorBar: boolean;
+    errorBar: boolean;
   };
 };
 
@@ -141,7 +141,7 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
         visualElements={{
           showCallControls: props.showCallControls,
-          showErrorBar: props.visualElements?.showErrorBar ?? false
+          errorBar: props.visualElements?.errorBar ?? false
         }}
       />
     </CallAdapterProvider>

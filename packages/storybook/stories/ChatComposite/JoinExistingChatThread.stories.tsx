@@ -30,9 +30,9 @@ const JoinExistingChatThreadStory = (args, context): JSX.Element => {
           token={args.token}
           displayName={args.displayName}
           locale={compositeLocale(locale)}
-          showErrorBar={true}
+          errorBar={true}
           showParticipants={true}
-          showTopic={true}
+          topic={true}
         />
       ) : (
         <ConfigJoinChatThreadHintBanner />

@@ -30,16 +30,16 @@ import {
 import { AvatarPersonaDataCallback, AvatarPersona } from '../common/AvatarPersona';
 
 export type ChatScreenProps = {
-  showErrorBar?: boolean;
-  showParticipantPane?: boolean;
-  showTopic?: boolean;
+  errorBar?: boolean;
+  participantPane?: boolean;
+  topic?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, showParticipantPane, showTopic } = props;
+  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, participantPane, topic } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -66,10 +66,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   return (
     <Stack className={chatContainer} grow>
-      {!!showTopic && <ChatHeader {...headerProps} />}
+      {!!topic && <ChatHeader {...headerProps} />}
       <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
-          {props.showErrorBar ? <ErrorBar {...errorBarProps} /> : <></>}
+          {props.errorBar ? <ErrorBar {...errorBarProps} /> : <></>}
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
@@ -87,7 +87,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} />
           </Stack.Item>
         </Stack>
-        {showParticipantPane && (
+        {participantPane && (
           <Stack.Item className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>In this chat</Stack.Item>

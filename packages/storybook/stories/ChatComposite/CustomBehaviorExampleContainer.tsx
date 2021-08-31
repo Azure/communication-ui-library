@@ -63,7 +63,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
           fluentTheme={props.fluentTheme}
           locale={props.locale}
           adapter={adapter}
-          visualElements={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
+          visualElements={{ errorBar: true, participantPane: true, topic: true }}
         />
       ) : (
         <h3>Loading...</h3>

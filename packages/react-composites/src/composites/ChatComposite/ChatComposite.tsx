@@ -40,17 +40,17 @@ export type ChatCompositeVisualElements = {
    *
    * @defaultValue false
    */
-  showErrorBar?: boolean;
+  errorBar?: boolean;
   /**
    * Choose to show the participant pane
    * @defaultValue false
    */
-  showParticipantPane?: boolean;
+  participantPane?: boolean;
   /**
    * Choose to show the topic at the top of the chat
    * @defaultValue false
    */
-  showTopic?: boolean;
+  topic?: boolean;
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
@@ -60,9 +60,9 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     <BaseComposite {...props}>
       <ChatAdapterProvider adapter={adapter}>
         <ChatScreen
-          showErrorBar={visualElements?.showErrorBar}
-          showParticipantPane={visualElements?.showParticipantPane}
-          showTopic={visualElements?.showTopic}
+          errorBar={visualElements?.errorBar}
+          participantPane={visualElements?.participantPane}
+          topic={visualElements?.topic}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}

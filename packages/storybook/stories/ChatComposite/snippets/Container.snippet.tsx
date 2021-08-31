@@ -19,9 +19,9 @@ export type ContainerProps = {
   endpointUrl: string;
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
-  showErrorBar?: boolean;
+  errorBar?: boolean;
   showParticipants?: boolean;
-  showTopic?: boolean;
+  topic?: boolean;
   locale?: CompositeLocale;
 };
 
@@ -62,9 +62,9 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         adapter={adapter}
         fluentTheme={props.fluentTheme}
         visualElements={{
-          showErrorBar: props.showErrorBar,
-          showParticipantPane: props.showParticipants,
-          showTopic: props.showTopic
+          errorBar: props.errorBar,
+          participantPane: props.showParticipants,
+          topic: props.topic
         }}
         locale={props.locale}
       />

@@ -263,7 +263,7 @@ export const controlsToAdd = {
   },
   showChatParticipants: { control: 'boolean', defaultValue: true, name: 'Show Participants Pane' },
   showChatTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
-  showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
+  errorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
   showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
   showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
   showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },

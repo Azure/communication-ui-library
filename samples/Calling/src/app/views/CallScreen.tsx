@@ -58,7 +58,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       callInvitationURL={window.location.href}
-      visualElements={{ showErrorBar: true }}
+      visualElements={{ errorBar: true }}
     />
   );
 };

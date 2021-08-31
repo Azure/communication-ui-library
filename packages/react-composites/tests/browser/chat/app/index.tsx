@@ -46,7 +46,7 @@ function App(): JSX.Element {
       {chatAdapter && (
         <ChatComposite
           adapter={chatAdapter}
-          visualElements={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
+          visualElements={{ errorBar: true, participantPane: true, topic: true }}
           onRenderTypingIndicator={
             customDataModel
               ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>

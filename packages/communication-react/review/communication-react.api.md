@@ -313,7 +313,7 @@ export interface CallCompositeStrings {
 
 // @public
 export type CallCompositeVisualElements = {
-    showErrorBar?: boolean;
+    errorBar?: boolean;
 };
 
 // @public (undocumented)
@@ -571,9 +571,9 @@ export interface ChatCompositeProps extends BaseCompositeProps {
 
 // @public
 export type ChatCompositeVisualElements = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
+    errorBar?: boolean;
+    participantPane?: boolean;
+    topic?: boolean;
 };
 
 // @public

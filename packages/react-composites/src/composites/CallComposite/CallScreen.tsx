@@ -42,7 +42,7 @@ export interface CallScreenProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   visualElements: {
     showCallControls: boolean;
-    showErrorBar: boolean;
+    errorBar: boolean;
   };
 }
 
@@ -137,7 +137,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               cameraPermissionGranted={devicePermissions.video}
             />
           </Stack.Item>
-          {props.visualElements.showErrorBar && (
+          {props.visualElements.errorBar && (
             <Stack.Item style={{ width: '100%' }}>
               <ErrorBar {...errorBarProps} />
             </Stack.Item>
