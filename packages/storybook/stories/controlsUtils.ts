@@ -299,6 +299,7 @@ export const defaultChatCompositeHiddenControls = {
   options: hiddenControl,
   identifiers: hiddenControl,
   locale: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl
 };
 

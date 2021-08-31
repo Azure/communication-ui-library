@@ -54,7 +54,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         <ChatComposite
           adapter={adapter}
           locale={props.locale}
-          featureFlags={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
+          visualElements={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
         />
       ) : (
         <h3>Loading...</h3>

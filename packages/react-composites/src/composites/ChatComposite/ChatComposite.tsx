@@ -1,59 +1,40 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CommunicationParticipant, DefaultMessageRendererType, MessageProps } from '@internal/react-components';
 import React from 'react';
-import { ChatScreen } from './ChatScreen';
-import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
+import { BaseComposite, BaseCompositeProps } from '../common/Composite';
 import { ChatAdapter } from './adapter/ChatAdapter';
-import { CompositeLocale, LocalizationProvider } from '../localization';
-import { Theme, PartialTheme } from '@fluentui/react';
-import {
-  CommunicationParticipant,
-  DefaultMessageRendererType,
-  FluentThemeProvider,
-  MessageProps,
-  IdentifierProvider,
-  Identifiers
-} from '@internal/react-components';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
+import { ChatScreen } from './ChatScreen';
 
-export type ChatCompositeProps = {
+export interface ChatCompositeProps extends BaseCompositeProps {
+  /**
+   * An adapter provides logic and data to the composite.
+   * Composite can also be controlled using the adapter.
+   */
   adapter: ChatAdapter;
   /**
-   * Fluent theme for the composite.
-   *
-   * @defaultValue light theme
+   * `(messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element`
+   * A callback for customizing the message renderer.
    */
-  fluentTheme?: PartialTheme | Theme;
-  /**
-   * Whether composite is displayed right-to-left.
-   *
-   * @defaultValue false
-   */
-  rtl?: boolean;
-  /**
-   * Locale for the composite.
-   *
-   * @defaultValue English (US)
-   */
-  locale?: CompositeLocale;
-  /**
-   * A callback function that can be used to provide custom data to an Avatar.
-   */
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
-  onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   /**
-   * Flags to control optional features of ChatComposite.
+   * `(typingUsers: CommunicationParticipant[]) => JSX.Element`
+   * A callback for customizing the typing indicator renderer.
    */
-  featureFlags?: ChatCompositeFeatureFlags;
-  identifiers?: Identifiers;
-};
+  onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+
+  /**
+   * Flags to enable/disable visual elements of the {@link ChatComposite}.
+   */
+  visualElements?: ChatCompositeVisualElements;
+}
 
 /**
  * Optional features of the {@linnk ChatComposite}
  */
-export type ChatCompositeFeatureFlags = {
+export type ChatCompositeVisualElements = {
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    *
@@ -73,35 +54,20 @@ export type ChatCompositeFeatureFlags = {
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const {
-    adapter,
-    fluentTheme,
-    rtl,
-    locale,
-    featureFlags,
-    identifiers,
-    onFetchAvatarPersonaData,
-    onRenderTypingIndicator,
-    onRenderMessage
-  } = props;
+  const { adapter, visualElements, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
 
-  const chatElement = (
-    <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <IdentifierProvider identifiers={identifiers}>
-        <ChatAdapterProvider adapter={adapter}>
-          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-          <ChatScreen
-            showErrorBar={featureFlags?.showErrorBar}
-            showParticipantPane={featureFlags?.showParticipantPane}
-            showTopic={featureFlags?.showTopic}
-            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-            onRenderTypingIndicator={onRenderTypingIndicator}
-            onRenderMessage={onRenderMessage}
-          />
-        </ChatAdapterProvider>
-      </IdentifierProvider>
-    </FluentThemeProvider>
+  return (
+    <BaseComposite {...props}>
+      <ChatAdapterProvider adapter={adapter}>
+        <ChatScreen
+          showErrorBar={visualElements?.showErrorBar}
+          showParticipantPane={visualElements?.showParticipantPane}
+          showTopic={visualElements?.showTopic}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          onRenderTypingIndicator={onRenderTypingIndicator}
+          onRenderMessage={onRenderMessage}
+        />
+      </ChatAdapterProvider>
+    </BaseComposite>
   );
-
-  return locale ? LocalizationProvider({ locale, children: chatElement }) : chatElement;
 };
