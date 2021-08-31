@@ -13,7 +13,7 @@ export const rootStyles: IStyle = {
 };
 
 export const isSpeakingStyles: IStyle = {
-  border: '4px solid #0078D4'
+  border: `0.25rem solid ${theme.palette.themePrimary}`
 };
 
 export const videoContainerStyles: IStyle = {
