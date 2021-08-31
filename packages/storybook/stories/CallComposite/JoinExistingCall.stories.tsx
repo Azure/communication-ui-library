@@ -29,7 +29,7 @@ const JoinExistingCallStory = (args, context): JSX.Element => {
           displayName={args.displayName}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          featureFlags={{ showErrorBar: true }}
+          visualElements={{ showErrorBar: true }}
         />
       ) : (
         <ConfigJoinCallHintBanner />

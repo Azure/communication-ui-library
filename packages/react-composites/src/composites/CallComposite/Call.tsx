@@ -28,15 +28,15 @@ export interface CallCompositeProps extends BaseCompositeProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 
   /**
-   * Flags to control optional features of CallComposite.
+   * Flags to enable/disable visual elements of the {@link CallComposite}.
    */
-  featureFlags?: CallCompositeFeatureFlags;
+  visualElements?: CallCompositeVisualElements;
 }
 
 /**
  * Optional features of the {@linnk CallComposite}
  */
-export type CallCompositeFeatureFlags = {
+export type CallCompositeVisualElements = {
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    *
@@ -49,7 +49,7 @@ type MainScreenProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  featureFlags: {
+  visualElements: {
     showCallControls: boolean;
     showErrorBar: boolean;
   };
@@ -93,7 +93,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationURL}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          featureFlags={props.featureFlags}
+          visualElements={props.visualElements}
         />
       );
   }
@@ -139,9 +139,9 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
       <MainScreen
         callInvitationURL={callInvitationURL}
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        featureFlags={{
+        visualElements={{
           showCallControls: props.showCallControls,
-          showErrorBar: props.featureFlags?.showErrorBar ?? false
+          showErrorBar: props.visualElements?.showErrorBar ?? false
         }}
       />
     </CallAdapterProvider>

@@ -288,11 +288,6 @@ export interface CallClientState {
 // @public (undocumented)
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
-// @public
-export type CallCompositeFeatureFlags = {
-    showErrorBar?: boolean;
-};
-
 // @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -301,8 +296,8 @@ export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
-    featureFlags?: CallCompositeFeatureFlags;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    visualElements?: CallCompositeVisualElements;
 }
 
 // @public
@@ -315,6 +310,11 @@ export interface CallCompositeStrings {
     teamsMeetingFailReasonParticipantRemoved: string;
     teamsMeetingFailToJoin: string;
 }
+
+// @public
+export type CallCompositeVisualElements = {
+    showErrorBar?: boolean;
+};
 
 // @public (undocumented)
 export type CallEndedListener = (event: {

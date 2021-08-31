@@ -40,7 +40,7 @@ export interface CallScreenProps {
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  featureFlags: {
+  visualElements: {
     showCallControls: boolean;
     showErrorBar: boolean;
   };
@@ -137,7 +137,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               cameraPermissionGranted={devicePermissions.video}
             />
           </Stack.Item>
-          {props.featureFlags.showErrorBar && (
+          {props.visualElements.showErrorBar && (
             <Stack.Item style={{ width: '100%' }}>
               <ErrorBar {...errorBarProps} />
             </Stack.Item>
@@ -168,7 +168,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          {props.featureFlags.showCallControls && (
+          {props.visualElements.showCallControls && (
             <Stack.Item styles={callControlsStyles}>
               <Stack className={callControlsContainer}>
                 <CallControls
