@@ -23,7 +23,7 @@
   "dependencies": {
     "@azure/communication-common": "1.0.0",
     "@azure/communication-calling": "1.2.0-beta.1",
-    "@internal/acs-ui-common": "1.0.0-beta.3",
+    "@internal/acs-ui-common": "1.0.0-beta.4",
     "@internal/calling-stateful-client": "1.0.0-beta.4",
     "@internal/react-components": "1.0.0-beta.4",
     "reselect": "~4.0.0",

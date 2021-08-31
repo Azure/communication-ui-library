@@ -10,5 +10,12 @@ export const config: BeachballConfig = {
       renderEntry
     }
   },
-  changehint: 'Run "rush changelog" to create required change files'
+  changehint: 'Run "rush changelog" to create required change files',
+  groups: [
+    {
+      name: "@azure/communication-react and its packlets",
+      include: "packages/",
+      disallowedChangeTypes: ['major']
+    }
+  ]
 };

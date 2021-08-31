@@ -52,6 +52,10 @@ jobs:
       - name: Test @azure/communication-react package
         run: rush test -t @azure/communication-react
 
+      # Important to check version consistency again after bumping versions.
+      - name: Ensure all package versions are consistent
+        run: rush ensure-consistent-versions
+
       # Retrieve new version to tag and publish release with
       - name: Retrieve new version from package.json
         id: version
