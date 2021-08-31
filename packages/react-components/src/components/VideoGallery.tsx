@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
+  DominantSpeakers,
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -46,6 +47,8 @@ export interface VideoGalleryProps {
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */
   remoteVideoViewOption?: VideoStreamOptions;
+  /** A list of speakers ordered by most active to least active in a call. */
+  dominantSpeakers?: DominantSpeakers;
   /** Callback to create the local video stream view */
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose of the local video stream view */
@@ -75,26 +78,39 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
+// Sort participants in the following order.
+// 1. Video participants should always render before non-video participants.
+// 2. Video Tiles should be further sorted based on their ordering in dominant speakers list.
 const sortParticipants = (
-  participants: VideoGalleryRemoteParticipant[] | undefined
+  participants?: VideoGalleryRemoteParticipant[],
+  dominantSpeakers?: DominantSpeakers
 ): VideoGalleryRemoteParticipant[] => {
-  if (!participants) {
-    return [];
+  if (!participants) return [];
+
+  const participantsWithVideo: VideoGalleryRemoteParticipant[] = [];
+  const participantsWithoutVideo: VideoGalleryRemoteParticipant[] = [];
+
+  participants.forEach((p) => {
+    if (p.videoStream?.renderElement?.childElementCount) participantsWithVideo.push(p);
+    else participantsWithoutVideo.push(p);
+  });
+
+  // If dominantSpeakers are available, we sort the video tiles basis on dominant speakers.
+  if (dominantSpeakers) {
+    participantsWithVideo.sort((a, b) => {
+      const idxA = dominantSpeakers.speakersList.indexOf(a.userId);
+      const idxB = dominantSpeakers.speakersList.indexOf(b.userId);
+      if (idxA === idxB) return 0; // Both a and b don't exist in dominant speakers.
+      if (idxA === -1 && idxB > -1) return 1; // b exists in dominant speakers.
+      if (idxB === -1 && idxA > -1) return -1; // a exists in dominant speakers.
+      // a exists before b in dominant speakers.
+      if (idxA < idxB) return -1;
+      // b exists before a in dominant speakers.
+      else return 1;
+    });
   }
 
-  return participants.sort((p1, p2) => {
-    if (!p1?.videoStream?.renderElement?.childElementCount && !p2?.videoStream?.renderElement?.childElementCount) {
-      return 0;
-    }
-    if (!p1?.videoStream?.renderElement?.childElementCount) {
-      return 1;
-    }
-    if (!p2?.videoStream?.renderElement?.childElementCount) {
-      return -1;
-    }
-
-    return 0;
-  });
+  return participantsWithVideo.concat(participantsWithoutVideo);
 };
 
 /**
@@ -119,15 +135,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
-    showMuteIndicator
+    showMuteIndicator,
+    dominantSpeakers
   } = props;
   const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
 
   const ids = useIdentifiers();
 
   useEffect(() => {
-    setSortedRemoteParticipants(sortParticipants(remoteParticipants));
-  }, [remoteParticipants]);
+    setSortedRemoteParticipants(sortParticipants(remoteParticipants, dominantSpeakers));
+  }, [remoteParticipants, dominantSpeakers]);
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);

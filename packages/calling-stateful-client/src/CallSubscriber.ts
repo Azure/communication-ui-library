@@ -66,6 +66,7 @@ export class CallSubscriber {
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.on('isMutedChanged', this.isMuteChanged);
+    this._call.api(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
 
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (this._call.localVideoStreams.length > 0) {
@@ -210,5 +211,10 @@ export class CallSubscriber {
       this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
     }
+  };
+
+  private dominantSpeakersChanged = (): void => {
+    const dominantSpeakers = this._call.api(Features.DominantSpeakers).dominantSpeakers;
+    this._context.setCallDominantSpeakers(this._callIdRef.callId, dominantSpeakers);
   };
 }

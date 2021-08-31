@@ -5,6 +5,7 @@ import { CommunicationUserKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
   DeviceAccess,
+  DominantSpeakersInfo,
   TransferErrorCode,
   TransferState,
   VideoDeviceInfo
@@ -290,6 +291,17 @@ export class CallContext {
         const call = draft.calls[callId];
         if (call) {
           call.isMuted = isMicrophoneMuted;
+        }
+      })
+    );
+  }
+
+  public setCallDominantSpeakers(callId: string, dominantSpeakers: DominantSpeakersInfo): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls[callId];
+        if (call) {
+          call.dominantSpeakers = dominantSpeakers;
         }
       })
     );

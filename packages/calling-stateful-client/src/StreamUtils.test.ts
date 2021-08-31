@@ -85,7 +85,8 @@ function createMockCall(mockCallId: string): CallState {
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
-    endTime: undefined
+    endTime: undefined,
+    dominantSpeakers: undefined
   };
   return call;
 }
