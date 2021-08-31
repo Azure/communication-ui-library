@@ -25,13 +25,13 @@ export interface ChatCompositeProps extends BaseCompositeProps {
    */
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 
-  featureFlags?: ChatCompositeFeatureFlags;
+  featureFlags?: ChatCompositeVisualElements;
 }
 
 /**
  * Optional features of the {@linnk ChatComposite}
  */
-export type ChatCompositeFeatureFlags = {
+export type ChatCompositeVisualElements = {
   /**
    * UNSTABLE: Feature flag to enable ErrorBar.
    *

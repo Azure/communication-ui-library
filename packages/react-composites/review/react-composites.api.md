@@ -397,21 +397,21 @@ export type ChatCompositeClientState = {
     latestErrors: ChatAdapterErrors;
 };
 
-// @public
-export type ChatCompositeFeatureFlags = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
-};
-
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
     // (undocumented)
-    featureFlags?: ChatCompositeFeatureFlags;
+    featureFlags?: ChatCompositeVisualElements;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 }
+
+// @public
+export type ChatCompositeVisualElements = {
+    showErrorBar?: boolean;
+    showParticipantPane?: boolean;
+    showTopic?: boolean;
+};
 
 // @public
 export type ChatErrorListener = (event: {
