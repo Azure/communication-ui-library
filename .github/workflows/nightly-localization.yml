@@ -11,8 +11,14 @@ on:
 
 jobs:
   checkForChanges:
-    - name: Trigger touchdown build pipeline
-      uses: ./.github/workflows/azure-pipeline-action-fork
-      with:
-        azure-devops-project-url: 'https://skype.visualstudio.com/SCC/_build'
-        azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
+    name: Check for new changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hop into new branch
+        run: git checkout -b localization/$(date +'%Y%m%d.%H%M')
+
+      - name: Trigger touchdown build pipeline
+        uses: ./.github/workflows/azure-pipeline-action-fork
+        with:
+          azure-devops-project-url: 'https://skype.visualstudio.com/SCC/_build'
+          azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
