@@ -51,8 +51,8 @@ function _commitWithChangeFiles(filePath) {
     }
 
     execSync('git add ' + filePath);
-    execSync('git commit -m "Update package version reported to telemetry"');
-    execSync(BEACHBALL + ' change --type "none" --message "Update package version reported to telemetry');
+    // Next command also commits the changes staged above.
+    execSync('node ' + BEACHBALL + ' change --type "none" --message "Update package version reported to telemetry"');
     return true;
 }
 
