@@ -1879,6 +1879,7 @@ export interface VideoTileProps {
     displayName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     renderElement?: JSX.Element | null;

@@ -10,6 +10,7 @@ import {
   disabledVideoHint,
   displayNameStyle,
   iconContainerStyle,
+  isSpeakingStyles,
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
@@ -61,6 +62,8 @@ export interface VideoTileProps {
   displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
+  /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
+  isSpeaking?: boolean;
 }
 
 // Coin max size is set to 100px (PersonaSize.size100)
@@ -96,7 +99,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     showMuteIndicator = true,
     styles,
     userId,
-    noVideoAvailableAriaLabel
+    noVideoAvailableAriaLabel,
+    isSpeaking
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -124,14 +128,19 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   return (
     <Ref innerRef={videoTileRef}>
-      <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
+      <Stack
+        className={mergeStyles(
+          rootStyles,
+          isSpeaking ? isSpeakingStyles : {},
+          { background: theme.palette.neutralLighter },
+          styles?.root
+        )}
+      >
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
               videoContainerStyles,
-              isMirrored && {
-                transform: 'scaleX(-1)'
-              },
+              isMirrored && { transform: 'scaleX(-1)' },
               styles?.videoContainer
             )}
           >
