@@ -83,12 +83,12 @@
       "reviewCategory": "tools"
     },
     {
-      "packageName": "@internal-tools/config",
+      "packageName": "@internal/config",
       "projectFolder": "common/config",
       "reviewCategory": "tools"
     },
     {
-      "packageName": "@internal-tools/check-treeshaking",
+      "packageName": "@internal/check-treeshaking",
       "projectFolder": "tools/check-treeshaking",
       "reviewCategory": "tools"
     }

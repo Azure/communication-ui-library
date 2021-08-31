@@ -1,5 +1,5 @@
 {
-  "name": "@internal-tools/config",
+  "name": "@internal/config",
   "version": "1.0.0",
   "private": true,
   "scripts": {

@@ -23,13 +23,10 @@ import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
-// @public (undocumented)
+// @public
 export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
-
-// @public
-export const ar_SA: Locale;
 
 // @public
 export interface BaseCustomStylesProps {
@@ -95,6 +92,56 @@ export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
 };
+
+// @public
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_EN_GB: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_ES_ES: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_IT_IT: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_JA_JP: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_KO_KR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_NL_NL: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_PT_BR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_RU_RU: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_TR_TR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_ZH_CN: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_ZH_TW: ComponentLocale;
+
+// @public (undocumented)
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
+// @public
+export interface ComponentLocale {
+    strings: ComponentStrings;
+}
 
 // @public
 export interface ComponentStrings {
@@ -170,18 +217,37 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de_DE: Locale;
-
-// @public
-export const defaultIdentifiers: Identifiers;
+export const DEFAULT_COMPONENT_ICONS: {
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    VideoTileMicOn: JSX.Element;
+};
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps, ids?: {
     messageTimestamp?: string;
 }) => JSX.Element;
-
-// @public
-export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -235,9 +301,6 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public
-export const fr_FR: Locale;
-
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
@@ -253,13 +316,10 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public (undocumented)
-export const IdentifierContext: React_2.Context<Identifiers>;
-
-// @public (undocumented)
+// @public
 export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -267,7 +327,7 @@ export interface IdentifierProviderProps {
     identifiers?: Identifiers;
 }
 
-// @public (undocumented)
+// @public
 export interface Identifiers {
     messageContent: string;
     messageTimestamp: string;
@@ -287,16 +347,11 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface Locale {
-    strings: ComponentStrings;
-}
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
 export type LocalizationProviderProps = {
-    locale: Locale;
+    locale: ComponentLocale;
     children: React_2.ReactNode;
 };
 
@@ -401,7 +456,7 @@ export interface MicrophoneButtonStrings {
     onLabel: string;
 }
 
-// @public (undocumented)
+// @public
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
@@ -615,9 +670,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
-export const useIdentifiers: () => Identifiers;
-
 // @public
 export const useTheme: () => Theme;
 
@@ -684,6 +736,7 @@ export interface VideoTileProps {
     displayName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     renderElement?: JSX.Element | null;

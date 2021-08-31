@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
-import { MicOff16Filled, MicOn16Filled } from '@fluentui/react-icons';
+import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useTheme } from '../theming';
@@ -11,6 +10,7 @@ import {
   disabledVideoHint,
   displayNameStyle,
   iconContainerStyle,
+  isSpeakingStyles,
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
@@ -62,6 +62,8 @@ export interface VideoTileProps {
   displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
+  /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
+  isSpeaking?: boolean;
 }
 
 // Coin max size is set to 100px (PersonaSize.size100)
@@ -97,7 +99,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     showMuteIndicator = true,
     styles,
     userId,
-    noVideoAvailableAriaLabel
+    noVideoAvailableAriaLabel,
+    isSpeaking
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -125,14 +128,19 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   return (
     <Ref innerRef={videoTileRef}>
-      <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
+      <Stack
+        className={mergeStyles(
+          rootStyles,
+          isSpeaking ? isSpeakingStyles : {},
+          { background: theme.palette.neutralLighter },
+          styles?.root
+        )}
+      >
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
               videoContainerStyles,
-              isMirrored && {
-                transform: 'scaleX(-1)'
-              },
+              isMirrored && { transform: 'scaleX(-1)' },
               styles?.videoContainer
             )}
           >
@@ -171,11 +179,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack className={mergeStyles(iconContainerStyle)}>
             {showMuteIndicator &&
               isMuted !== undefined &&
-              (isMuted ? (
-                <MicOff16Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
-              ) : (
-                <MicOn16Filled primaryFill="currentColor" key={'microphoneIconKey'} />
-              ))}
+              (isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />)}
           </Stack>
         </Stack>
 
