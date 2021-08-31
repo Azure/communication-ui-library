@@ -559,8 +559,15 @@ export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    options?: ChatOptions;
+    visualElements?: ChatCompositeVisualElements;
 }
+
+// @public
+export type ChatCompositeVisualElements = {
+    showErrorBar?: boolean;
+    showParticipantPane?: boolean;
+    showTopic?: boolean;
+};
 
 // @public
 export class ChatError extends Error {
@@ -622,13 +629,6 @@ export type ChatMessagePayload = {
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
-};
-
-// @public
-export type ChatOptions = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
 };
 
 // @public (undocumented)

@@ -24,16 +24,17 @@ export interface ChatCompositeProps extends BaseCompositeProps {
    * A callback for customizing the typing indicator renderer.
    */
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+
   /**
-   * Additional customizations for the chat composite
+   * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
-  options?: ChatOptions;
+  visualElements?: ChatCompositeVisualElements;
 }
 
 /**
- * Additional customizations for the chat composite
+ * Optional features of the {@linnk ChatComposite}
  */
-export type ChatOptions = {
+export type ChatCompositeVisualElements = {
   /**
    * UNSTABLE: Feature flag to enable ErrorBar.
    *
@@ -56,15 +57,15 @@ export type ChatOptions = {
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, options, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
+  const { adapter, visualElements, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
 
   return (
     <BaseComposite {...props}>
       <ChatAdapterProvider adapter={adapter}>
         <ChatScreen
-          showErrorBar={options?.showErrorBar}
-          showParticipantPane={options?.showParticipantPane}
-          showTopic={options?.showTopic}
+          showErrorBar={visualElements?.showErrorBar}
+          showParticipantPane={visualElements?.showParticipantPane}
+          showTopic={visualElements?.showTopic}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}
