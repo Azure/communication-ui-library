@@ -108,6 +108,18 @@ const sortParticipants = (
       // b exists before a in dominant speakers.
       else return 1;
     });
+
+    participantsWithoutVideo.sort((a, b) => {
+      const idxA = dominantSpeakers.speakersList.indexOf(a.userId);
+      const idxB = dominantSpeakers.speakersList.indexOf(b.userId);
+      if (idxA === idxB) return 0; // Both a and b don't exist in dominant speakers.
+      if (idxA === -1 && idxB > -1) return 1; // b exists in dominant speakers.
+      if (idxB === -1 && idxA > -1) return -1; // a exists in dominant speakers.
+      // a exists before b in dominant speakers.
+      if (idxA < idxB) return -1;
+      // b exists before a in dominant speakers.
+      else return 1;
+    });
   }
 
   return participantsWithVideo.concat(participantsWithoutVideo);
