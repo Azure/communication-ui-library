@@ -1,6 +1,5 @@
 {
   "name": "@internal/storybook",
-  "private": true,
   "version": "1.0.0-beta.4",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
