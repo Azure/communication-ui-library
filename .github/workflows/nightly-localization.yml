@@ -1,0 +1,18 @@
+name: Nightly CI/CD
+
+on:
+  # Postsubmit CI on main.
+  push:
+    branches: [mgamis/test-pipeline]
+  # Presubmit CI on PRs to all branches.
+  pull_request:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  checkForChanges:
+    - name: Trigger touchdown build pipeline
+      uses: ./.github/workflows/azure-pipeline-action-fork
+      with:
+        azure-devops-project-url: 'https://skype.visualstudio.com/SCC/_build'
+        azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'

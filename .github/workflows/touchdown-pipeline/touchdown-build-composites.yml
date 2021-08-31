@@ -1,7 +1,6 @@
 # Touchdown build pipeline for composites
 
-trigger:
-  - main
+trigger: none
 
 pool:
   vmImage: ubuntu-latest
@@ -15,9 +14,6 @@ steps:
   - script: |
       git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       git config user.name "github-actions[bot]"
-
-  - script: |
-      git checkout -b localization/$(date +'%Y%m%d.%H%M')
 
   - task: TouchdownBuildTask@1
     inputs:
