@@ -305,21 +305,21 @@ export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    options?: ChatOptions;
+    visualElements?: ChatCompositeVisualElements;
 }
+
+// @public
+export type ChatCompositeVisualElements = {
+    showErrorBar?: boolean;
+    showParticipantPane?: boolean;
+    showTopic?: boolean;
+};
 
 // @public
 export type ChatErrorListener = (event: {
     operation: string;
     error: Error;
 }) => void;
-
-// @public
-export type ChatOptions = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
-};
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;

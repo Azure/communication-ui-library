@@ -25,7 +25,7 @@
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.137",
-    "@internal/acs-ui-common": "1.0.0-beta.3",
+    "@internal/acs-ui-common": "1.0.0-beta.4",
     "@internal/calling-component-bindings": "1.0.0-beta.4",
     "@internal/calling-stateful-client": "1.0.0-beta.4",
     "@internal/react-components": "1.0.0-beta.4",
