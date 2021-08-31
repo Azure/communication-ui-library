@@ -5,17 +5,17 @@ import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } fr
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { sendBoxSelector } from '../sendBoxSelector';
-import { chatThreadSelector } from '../chatThreadSelector';
+import { messageThreadSelector } from '../messageThreadSelector';
 import { typingIndicatorSelector } from '../typingIndicatorSelector';
 import { Common, AreEqual } from '@internal/acs-ui-common';
-import { DefaultChatHandlers } from '../handlers/createHandlers';
+import { ChatHandlers } from '../handlers/createHandlers';
 import { chatParticipantListSelector } from '../chatParticipantListSelector';
 import { errorBarSelector } from '../errorBarSelector';
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
-  ? ReturnType<GetSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>
   : undefined => {
   const selector = getSelector(component);
   const props = useSelector(selector);
@@ -32,7 +32,7 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 > extends true
   ? typeof sendBoxSelector
   : AreEqual<Component, typeof MessageThread> extends true
-  ? typeof chatThreadSelector
+  ? typeof messageThreadSelector
   : AreEqual<Component, typeof TypingIndicator> extends true
   ? typeof typingIndicatorSelector
   : AreEqual<Component, typeof ParticipantList> extends true
@@ -52,7 +52,7 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     case SendBox:
       return sendBoxSelector;
     case MessageThread:
-      return chatThreadSelector;
+      return messageThreadSelector;
     case TypingIndicator:
       return typingIndicatorSelector;
     case ParticipantList:

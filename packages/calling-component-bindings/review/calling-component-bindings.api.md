@@ -97,6 +97,27 @@ export type CallingBaseSelectorProps = {
 };
 
 // @public (undocumented)
+export type CallingHandlers = {
+    onStartLocalVideo: () => Promise<void>;
+    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
+    onToggleMicrophone: () => Promise<void>;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
+    onHangUp: () => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    onDisposeLocalStreamView: () => Promise<void>;
+    onDismissErrors: (errorTypes: ErrorType[]) => void;
+};
+
+// @public (undocumented)
 export const CallProvider: (props: CallProviderProps) => JSX.Element;
 
 // @public (undocumented)
@@ -138,28 +159,7 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
 };
 
 // @public
-export const createDefaultCallingHandlersForComponent: <Props>(callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Common<DefaultCallingHandlers, Props>;
-
-// @public (undocumented)
-export type DefaultCallingHandlers = {
-    onStartLocalVideo: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onHangUp: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
-};
+export const createDefaultCallingHandlersForComponent: <Props>(callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Common<CallingHandlers, Props>;
 
 // @public (undocumented)
 export const emptySelector: () => Record<string, never>;
@@ -291,10 +291,10 @@ export const useCallAgent: () => CallAgent | undefined;
 export const useCallClient: () => StatefulCallClient;
 
 // @public (undocumented)
-export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<DefaultCallingHandlers, PropsT> | undefined;
+export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<CallingHandlers, PropsT> | undefined;
 
 // @public (undocumented)
-export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]> : undefined;
+export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : undefined;
 
 // @public (undocumented)
 export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;

@@ -11,12 +11,7 @@ import type {
 } from '@azure/communication-calling';
 
 import { ErrorType, VideoStreamOptions } from '@internal/react-components';
-import type {
-  CommunicationUserKind,
-  PhoneNumberKind,
-  MicrosoftTeamsUserKind,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
+import type { CommunicationUserKind, CommunicationIdentifierKind } from '@azure/communication-common';
 
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -24,10 +19,8 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
  * Purely UI related adapter state.
  */
 export type CallAdapterUiState = {
-  error?: Error;
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
-  endedCall?: CallState | undefined;
 };
 
 /**
@@ -38,6 +31,7 @@ export type CallAdapterClientState = {
   displayName?: string;
   call?: CallState;
   devices: DeviceManagerState;
+  endedCall?: CallState;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
@@ -67,25 +61,25 @@ export type IncomingCallListener = (event: {
   reject: () => Promise<void>;
 }) => Promise<void>;
 
-export type CallIdentifierKinds =
-  | CommunicationUserKind
-  | PhoneNumberKind
-  | MicrosoftTeamsUserKind
-  | UnknownIdentifierKind;
-
 export type ParticipantJoinedListener = (event: { joined: RemoteParticipant[] }) => void;
 
 export type ParticipantLeftListener = (event: { removed: RemoteParticipant[] }) => void;
 
-export type IsMuteChangedListener = (event: { identifier: CallIdentifierKinds; isMuted: boolean }) => void;
+export type IsMuteChangedListener = (event: { identifier: CommunicationIdentifierKind; isMuted: boolean }) => void;
 
 export type CallIdChangedListener = (event: { callId: string }) => void;
 
 export type IsScreenSharingOnChangedListener = (event: { isScreenSharingOn: boolean }) => void;
 
-export type IsSpeakingChangedListener = (event: { identifier: CallIdentifierKinds; isSpeaking: boolean }) => void;
+export type IsSpeakingChangedListener = (event: {
+  identifier: CommunicationIdentifierKind;
+  isSpeaking: boolean;
+}) => void;
 
-export type DisplayNameChangedListener = (event: { participantId: CallIdentifierKinds; displayName: string }) => void;
+export type DisplayNameChangedListener = (event: {
+  participantId: CommunicationIdentifierKind;
+  displayName: string;
+}) => void;
 
 export type CallEndedListener = (event: { callId: string }) => void;
 
