@@ -48,20 +48,24 @@ function _commitWithChangeFiles(filePath) {
     const diff = execSync('git diff -- ' + filePath).toString();
     if (diff === '') {
         console.log('No changes to commit');
-        return;
+        return false;
     }
 
     execSync('git add ' + filePath);
     execSync('git commit -m "Update package version reported to telemetry"');
     execSync(BEACHBALL + ' change --type "none" --message "Update package version reported to telemetry');
+    return true;
 }
 
 function _main() {
     _ensureNoUncommittedChanges();
     const version = _readPackageVersion(PACKAGE_JSON);
     _generateTelemetryVersionFile(GENERATED_FILE, version);
-    _commitWithChangeFiles(GENERATED_FILE);
-    console.log('Wrote version ' + version + ' to ' + GENERATED_FILE);
+    if (_commitWithChangeFiles(GENERATED_FILE)) {
+        console.log('Wrote version ' + version + ' to ' + GENERATED_FILE);
+    } else {
+        console.log('Telemetry package version is already up to date.')
+    }
 }
 
 _main();
