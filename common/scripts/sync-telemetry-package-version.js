@@ -47,7 +47,6 @@ function _ensureNoUncommittedChanges() {
 function _commitWithChangeFiles(filePath) {
     const diff = execSync('git diff -- ' + filePath).toString();
     if (diff === '') {
-        console.log('No changes to commit');
         return false;
     }
 
