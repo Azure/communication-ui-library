@@ -36,7 +36,7 @@ jobs:
         run: git checkout -b localization/${{ steps.datetime.outputs.datetime }}
 
       - name: Trigger touchdown build pipeline
-        uses: ./.github/workflows/azure-pipeline-action-fork
+        uses: Azure/pipelines@v1
         with:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC/_build'
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
