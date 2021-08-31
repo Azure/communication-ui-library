@@ -3,7 +3,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { getChatSelector, DefaultChatHandlers, GetChatSelector } from '@internal/chat-component-bindings';
+import { getChatSelector, ChatHandlers, GetChatSelector } from '@internal/chat-component-bindings';
 
 import { useHandlers } from './useHandlers';
 import { useAdaptedSelector } from './useAdaptedSelector';
@@ -14,7 +14,7 @@ type Selector = (state: any, props: any) => any;
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetChatSelector<Component> extends Selector
-  ? ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>
   : Record<string, never> => {
   const selector = getChatSelector(component);
   if (!selector) {
