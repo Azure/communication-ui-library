@@ -14,6 +14,18 @@ jobs:
     name: Check for new changes
     runs-on: ubuntu-latest
     steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Setup bot information for creating pull request
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      - name: Setup bot git information
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
       # Get datetime
       - name: Get datetime for alpha release name
         id: datetime
