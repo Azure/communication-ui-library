@@ -35,7 +35,7 @@ export interface CallAgentState {
 
 // @public
 export interface CallClientState {
-    callAgent: CallAgentState | undefined;
+    callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
     };
@@ -45,8 +45,24 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     incomingCallsEnded: IncomingCallState[];
+    latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
+
+// @public
+export class CallError extends Error {
+    constructor(target: CallErrorTarget, inner: Error);
+    inner: Error;
+    target: CallErrorTarget;
+}
+
+// @public
+export type CallErrors = {
+    [target in CallErrorTarget]: Error;
+};
+
+// @public
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
 
 // @public
 export interface CallState {
@@ -71,6 +87,9 @@ export interface CallState {
     transcription: TranscriptionCallFeature;
     transfer: TransferCallFeature;
 }
+
+// @public
+export type CallStateModifier = (state: CallClientState) => void;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
@@ -105,6 +124,9 @@ export interface LocalVideoStreamState {
 }
 
 // @public
+export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
+
+// @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
 }
@@ -135,6 +157,7 @@ export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
+    modifyState(modifier: CallStateModifier): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
@@ -186,7 +209,6 @@ export interface VideoStreamRendererViewState {
     scalingMode: ScalingMode;
     target: HTMLElement;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

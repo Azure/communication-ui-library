@@ -7,12 +7,16 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
 const BasicStory = (args, context): JSX.Element => {
+  const {
+    globals: { locale }
+  } = context;
   const [containerProps, setContainerProps] = useState();
 
   useEffect(() => {
@@ -35,6 +39,8 @@ const BasicStory = (args, context): JSX.Element => {
           displayName={args.displayName}
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
+          locale={compositeLocale(locale)}
+          visualElements={{ showErrorBar: args.showErrorBar }}
         />
       ) : (
         <ConfigHintBanner />
@@ -53,6 +59,7 @@ export default {
     connectionString: controlsToAdd.connectionString,
     displayName: controlsToAdd.displayName,
     callInvitationURL: controlsToAdd.callInvitationURL,
+    showErrorBar: controlsToAdd.showErrorBar,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls
   },

@@ -11,19 +11,17 @@ import {
   IsScreenSharingOnChangedListener,
   DisplayNameChangedListener,
   IsSpeakingChangedListener,
-  AzureCommunicationCallAdapter,
   CallAdapter
 } from '../../CallComposite';
 import { MessageReceivedListener, MessageReadListener, ChatAdapter } from '../../ChatComposite';
 import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
 import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapterState';
-import { AzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 
 export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
 
-  constructor(callAdapter: AzureCommunicationCallAdapter, chatAdapter: AzureCommunicationChatAdapter) {
+  constructor(callAdapter: CallAdapter, chatAdapter: ChatAdapter) {
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
     this.chatAdapter = chatAdapter;

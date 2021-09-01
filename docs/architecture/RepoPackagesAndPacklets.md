@@ -69,4 +69,4 @@ This tool correctly rewrites the import lines to ensure they have the correct re
 
 ## Treeshaking
 
-To ensure packlets are not referencing unintended modules or other packlets, we use a [check-treeshaking](https://github.com/Azure/communication-ui-library/tree/main/packages/check-treeshaking) tool.
+To ensure packlets are not referencing unintended modules or other packlets, we use a [check-treeshaking](https://github.com/Azure/communication-ui-library/tree/main/tools/check-treeshaking) tool.

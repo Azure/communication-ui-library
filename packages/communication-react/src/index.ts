@@ -17,14 +17,14 @@ export type {
   CallAgentProviderProps,
   CallProviderProps,
   GetCallingSelector,
-  DefaultCallingHandlers,
+  CallingHandlers,
   CallingBaseSelectorProps
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
   GetChatSelector,
-  DefaultChatHandlers,
+  ChatHandlers,
   ChatBaseSelectorProps
 } from '../../chat-component-bindings/src';
 
@@ -42,6 +42,7 @@ export {
   videoGallerySelector,
   optionsButtonSelector,
   emptySelector,
+  errorBarSelector as callErrorBarSelector,
   participantListSelector,
   microphoneButtonSelector,
   participantsButtonSelector,
@@ -54,11 +55,11 @@ export {
   useChatClient,
   useChatThreadClient,
   getChatSelector,
-  chatThreadSelector,
+  messageThreadSelector,
   chatParticipantListSelector,
   sendBoxSelector,
   typingIndicatorSelector,
-  errorBarSelector,
+  errorBarSelector as chatErrorBarSelector,
   createDefaultChatHandlers
 } from '../../chat-component-bindings/src';
 

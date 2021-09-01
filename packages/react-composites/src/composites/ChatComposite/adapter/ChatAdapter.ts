@@ -6,7 +6,7 @@ import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import type { AdapterState, AdapterDisposal, AdapterErrorHandlers } from '../../common/adapters';
 
-export type ChatUIState = {
+export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
@@ -30,9 +30,12 @@ export type ChatCompositeClientState = {
  */
 export type ChatAdapterErrors = { [operation: string]: Error };
 
-export type ChatState = ChatUIState & ChatCompositeClientState;
+export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
-export interface ChatAdapterHandlers {
+/**
+ * Functionality for managing the current chat thread.
+ */
+export interface ChatAdapterThreadManagement {
   /*
    * Fetch initial state for the Chat adapter.
    *
@@ -47,6 +50,9 @@ export interface ChatAdapterHandlers {
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
 }
 
+/**
+ * Chat composite events that can be subscribed to.
+ */
 export interface ChatAdapterSubscribers {
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
@@ -65,9 +71,12 @@ export interface ChatAdapterSubscribers {
   off(event: 'error', listener: ChatErrorListener): void;
 }
 
+/**
+ * Chat Composite Adapter interface.
+ */
 export interface ChatAdapter
-  extends ChatAdapterHandlers,
-    AdapterState<ChatState>,
+  extends ChatAdapterThreadManagement,
+    AdapterState<ChatAdapterState>,
     AdapterDisposal,
     AdapterErrorHandlers,
     ChatAdapterSubscribers {}

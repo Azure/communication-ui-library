@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers } from '@internal/calling-component-bindings';
+import { ErrorType } from '@internal/react-components';
+import { CallingHandlers } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -12,12 +13,12 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
-): Pick<DefaultCallingHandlers, CommonProperties<DefaultCallingHandlers, PropsT>> => {
+): Pick<CallingHandlers, CommonProperties<CallingHandlers, PropsT>> => {
   return createCompositeHandlers(useAdapter());
 };
 
 const createCompositeHandlers = memoizeOne(
-  (adapter: CallAdapter): DefaultCallingHandlers => ({
+  (adapter: CallAdapter): CallingHandlers => ({
     onCreateLocalStreamView: async (options) => {
       await adapter.createStreamView(undefined, options);
     },
@@ -70,6 +71,9 @@ const createCompositeHandlers = memoizeOne(
     },
     onDisposeRemoteStreamView: async (userId) => {
       return adapter.disposeStreamView(userId);
+    },
+    onDismissErrors: (errorTypes: ErrorType[]) => {
+      return adapter.clearErrors(errorTypes);
     }
   })
 );
