@@ -35,6 +35,10 @@ jobs:
       - name: Hop into new branch
         run: git checkout -b localization/${{ steps.datetime.outputs.datetime }}
 
+      - name: Install github actions dependencies
+        run: npm ci
+        working-directory: ./.github/workflows/azure-pipeline-action-fork
+
       - name: Trigger touchdown build pipeline
         uses: ./.github/workflows/azure-pipeline-action-fork
         with:
