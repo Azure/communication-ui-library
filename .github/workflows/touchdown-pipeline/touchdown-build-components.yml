@@ -28,3 +28,11 @@ steps:
       cultureMappingType: 'None'
       gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for components'
+
+  - script: |
+      curl \
+        -X POST \
+        -H 'Accept: application/vnd.github.v3+json' \
+        -H 'authorization: Bearer $(bot_token)' \
+        https://api.github.com/repos/Azure/communication-ui-library/pulls \
+        -d '{ "title":"Localization updates", "head":"$(branch)", "base":"main", "body":"Created by the `Nightly localization` GitHub action. Please review." }'

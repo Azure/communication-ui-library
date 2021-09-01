@@ -45,13 +45,4 @@ jobs:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
           azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
-
-      # Create a PR from the changes
-      - name: Create PR
-        run: |
-          curl \
-            -X POST \
-            -H 'Accept: application/vnd.github.v3+json' \
-            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"Localization updates on ${{ steps.datetime.outputs.datetime }}", "head":"localization/${{ steps.datetime.outputs.datetime }}", "base":"main", "body":"Created by the `Nightly localization` GitHub action. Please review." }'
+          azure-pipeline-variables: '{"bot_token": ${{ secrets.BOT_TOKEN }} "branch": "localization/${{ steps.datetime.outputs.datetime }}"}'
