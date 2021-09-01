@@ -40,7 +40,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.offStateChange.bind(this);
     this.getState.bind(this);
     this.dispose.bind(this);
-    this.leaveCall.bind(this);
     this.setCamera.bind(this);
     this.setMicrophone.bind(this);
     this.setSpeaker.bind(this);
