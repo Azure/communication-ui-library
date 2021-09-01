@@ -1296,7 +1296,7 @@ export type MeetingCompositeProps = {
 // @alpha
 export type MeetingEndReason = CallEndReason;
 
-// @public (undocumented)
+// @alpha (undocumented)
 export type MeetingErrors = unknown;
 
 // @alpha
@@ -1310,7 +1310,7 @@ export interface MeetingParticipant extends Pick<ChatParticipant, 'shareHistoryT
 
 // @alpha
 export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
-    displayName: string;
+    id: string;
     meetingEndReason: MeetingEndReason;
     participants: {
         [key: string]: MeetingParticipant;
@@ -1318,7 +1318,6 @@ export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | '
     participantsEnded: {
         [keys: string]: MeetingParticipant;
     };
-    userId: CommunicationIdentifier;
 }
 
 // @public (undocumented)

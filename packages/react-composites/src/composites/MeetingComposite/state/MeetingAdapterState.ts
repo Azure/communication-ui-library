@@ -20,6 +20,9 @@ export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'erro
  */
 export type MeetingEndReason = CallEndReason;
 
+/**
+ * @alpha
+ */
 export type MeetingErrors = unknown;
 
 /**
@@ -58,10 +61,8 @@ export interface MeetingState
       ChatThreadClientState,
       'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'
     > {
-  /** ID of the meeting participant using this Meeting Adapter. */
-  userId: CommunicationIdentifier;
-  /** Display name of the meeting participant using this Meeting Adapter. */
-  displayName: string;
+  /** Current Meeting ID. */
+  id: string;
   /** Active participants in the current meeting. */
   participants: { [key: string]: MeetingParticipant };
   /** Participants who have left the current meeting. */
