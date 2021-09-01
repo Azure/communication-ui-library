@@ -156,32 +156,34 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        <Stack
-          horizontal
-          className={mergeStyles(
-            isVideoRendered ? videoHint : disabledVideoHint,
-            // when video is being rendered, the displayName has a grey-ish background, so no use of theme
-            { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
-            styles?.displayNameContainer
-          )}
-        >
-          <Stack>
-            {displayName && (
-              <Text
-                className={mergeStyles(displayNameStyle, {
-                  color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
-                })}
-              >
-                {displayName}
-              </Text>
+        {(displayName || showMuteIndicator) && (
+          <Stack
+            horizontal
+            className={mergeStyles(
+              isVideoRendered ? videoHint : disabledVideoHint,
+              // when video is being rendered, the displayName has a grey-ish background, so no use of theme
+              { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
+              styles?.displayNameContainer
             )}
+          >
+            <Stack>
+              {displayName && (
+                <Text
+                  className={mergeStyles(displayNameStyle, {
+                    color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
+                  })}
+                >
+                  {displayName}
+                </Text>
+              )}
+            </Stack>
+            <Stack className={mergeStyles(iconContainerStyle)}>
+              {showMuteIndicator &&
+                isMuted !== undefined &&
+                (isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />)}
+            </Stack>
           </Stack>
-          <Stack className={mergeStyles(iconContainerStyle)}>
-            {showMuteIndicator &&
-              isMuted !== undefined &&
-              (isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />)}
-          </Stack>
-        </Stack>
+        )}
 
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
