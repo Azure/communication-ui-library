@@ -11,10 +11,10 @@ const ROOT = path.join(__dirname, '..', '..')
 const PACKAGES_DIR = path.join(ROOT, 'packages');
 const ACS_UI_COMMMON = path.join(PACKAGES_DIR, 'acs-ui-common');
 const PACKAGE_JSON = path.join(ACS_UI_COMMMON, 'package.json');
-const GENERATED_FILE = path.join(ACS_UI_COMMMON, 'src', 'telemetryVersion.ts')
+const GENERATED_FILE = path.join(ACS_UI_COMMMON, 'src', 'telemetryVersion.js')
 const BEACHBALL = path.join(ROOT, 'common', 'config', 'node_modules', 'beachball', 'bin', 'beachball');
 
-function _readPackageVersion(packageJSON) {
+function readPackageVersion(packageJSON) {
     const parsed = JSON.parse(fs.readFileSync(packageJSON));
     const version = parsed['version'];
     if (!version) {
@@ -31,14 +31,14 @@ function _generateTelemetryVersionFile(filePath, packageVersion) {
         '\n' +
         '// GENERATED FILE. DO NOT EDIT MANUALLY.\n' +
         '\n' +
-        'export const telemetryVersion = \''+ packageVersion +'\';\n'
+        'module.exports = \''+ packageVersion +'\';\n'
     )
 }
 
-function _main() {
-    const version = _readPackageVersion(PACKAGE_JSON);
+function main() {
+    const version = readPackageVersion(PACKAGE_JSON);
     _generateTelemetryVersionFile(GENERATED_FILE, version);
     console.log('Wrote version ' + version + ' to ' + GENERATED_FILE);
 }
 
-_main();
+main();
