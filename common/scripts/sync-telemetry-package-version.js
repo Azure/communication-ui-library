@@ -35,32 +35,18 @@ function _generateTelemetryVersionFile(filePath, packageVersion) {
     )
 }
 
-function _ensureNoUncommittedChanges() {
-    try{
-        execSync('git diff --quiet');
-        execSync('git diff --cached --quiet');
-    } catch(e) {
-        throw new Error('Found uncommitted changes: ' + e.message);
-    }
-}
-
-function _commitWithChangeFiles(filePath) {
+function _telemetryVersionUpdated(filePath) {
     const diff = execSync('git diff -- ' + filePath).toString();
+    return diff !== '';
     if (diff === '') {
         return false;
     }
-
-    execSync('git add ' + filePath);
-    // Next command also commits the changes staged above.
-    execSync('node ' + BEACHBALL + ' change --type "none" --message "Update package version reported to telemetry"');
-    return true;
 }
 
 function _main() {
-    _ensureNoUncommittedChanges();
     const version = _readPackageVersion(PACKAGE_JSON);
     _generateTelemetryVersionFile(GENERATED_FILE, version);
-    if (_commitWithChangeFiles(GENERATED_FILE)) {
+    if (_telemetryVersionUpdated(GENERATED_FILE)) {
         console.log('Wrote version ' + version + ' to ' + GENERATED_FILE);
     } else {
         console.log('Telemetry package version is already up to date.')
