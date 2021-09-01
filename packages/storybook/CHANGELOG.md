@@ -1,8 +1,17 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [0.1.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v0.1.0)
+
+Mon, 16 Aug 2021 21:18:19 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v0.1.0..@internal/storybook_v0.1.0)
+
+### Changes
+
+- Bump @azure/communication-react to v1.0.0-beta.4 ([PR #651](https://github.com/azure/communication-ui-library/pull/651) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [0.1.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v0.1.0)
 

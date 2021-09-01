@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix video gallery local preview position to be relative to the parent",
-  "packageName": "@internal/react-components",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

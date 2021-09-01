@@ -2,9 +2,12 @@
 // Licensed under the MIT license.
 
 export * from './components';
-export * from './localization';
+export { IdentifierProvider } from './identifiers';
+export type { Identifiers, IdentifierProviderProps } from './identifiers';
+export * from './localization/locales';
+export { LocalizationProvider } from './localization';
+export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
-export * from './identifiers';
 
 export type {
   BaseCustomStylesProps,
@@ -29,5 +32,7 @@ export type {
   VideoGalleryParticipant,
   VideoGalleryStream,
   VideoGalleryLocalParticipant,
-  VideoGalleryRemoteParticipant
+  VideoGalleryRemoteParticipant,
+  OnRenderAvatarCallback,
+  CustomAvatarOptions
 } from './types';

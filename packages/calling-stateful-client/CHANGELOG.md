@@ -1,8 +1,18 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.4)
+
+Mon, 16 Aug 2021 21:18:19 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.0-beta.3..@internal/calling-stateful-client_v1.0.0-beta.4)
+
+### Changes
+
+- updated Typescript to version 4.3.5 ([PR #645](https://github.com/azure/communication-ui-library/pull/645) by alcail@microsoft.com)
+- Fix tsdoc comments - rename @Link -> @link ([PR #660](https://github.com/azure/communication-ui-library/pull/660) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.3)
 

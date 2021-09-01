@@ -1,8 +1,30 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.4)
+
+Mon, 16 Aug 2021 21:18:19 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.0-beta.3..@internal/react-components_v1.0.0-beta.4)
+
+### Changes
+
+- Fix partially composed chat messages being lost when closing and reopening the chat pane in the meeting composite ([PR #662](https://github.com/azure/communication-ui-library/pull/662) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update to align chat bubble with/without receipt ([PR #670](https://github.com/azure/communication-ui-library/pull/670) by jinan@microsoft.com)
+- Video device icon updated in OptionsButton ([PR #629](https://github.com/azure/communication-ui-library/pull/629) by miguelgamis@microsoft.com)
+- Fix video gallery local preview position to be relative to the parent ([PR #620](https://github.com/azure/communication-ui-library/pull/620) by 79329532+alkwa-msft@users.noreply.github.com)
+- Fix infinite scroll jumpy behavior ([PR #657](https://github.com/azure/communication-ui-library/pull/657) by jinan@microsoft.com)
+- updated Typescript version to 4.3.5 ([PR #645](https://github.com/azure/communication-ui-library/pull/645) by alcail@microsoft.com)
+- FluentThemeProvider style prop overflow set to 'auto'. ([PR #641](https://github.com/azure/communication-ui-library/pull/641) by miguelgamis@microsoft.com)
+- Fix button menu flyouts exceeding screen width ([PR #667](https://github.com/azure/communication-ui-library/pull/667) by 2684369+JamesBurnside@users.noreply.github.com)
+- Delete redundant prop VideoTile.isVideoReady ([PR #646](https://github.com/azure/communication-ui-library/pull/646) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix local video icon + avatar not showing ([PR #664](https://github.com/azure/communication-ui-library/pull/664) by jinan@microsoft.com)
+- adding padding in sendbox so we don't overlap text with the send message button ([PR #621](https://github.com/azure/communication-ui-library/pull/621) by 79329532+alkwa-msft@users.noreply.github.com)
+- Added rtl property to FluentThemeProvider ([PR #658](https://github.com/azure/communication-ui-library/pull/658) by miguelgamis@microsoft.com)
+- Add system message to MessageThread component Add system message for selector props Link system message to participant received event ([PR #603](https://github.com/azure/communication-ui-library/pull/603) by jinan@microsoft.com)
+- Fixed RTL responsiveness of TypingIndicator. ([PR #631](https://github.com/azure/communication-ui-library/pull/631) by miguelgamis@microsoft.com)
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.3)
 

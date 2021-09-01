@@ -20,29 +20,33 @@ import { getCallId, getEndedCall } from './selectors/baseSelectors';
 import { callStatusSelector } from './selectors/callStatusSelector';
 import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import { useHandlers } from './hooks/useHandlers';
-import { PlaceholderProps, VideoStreamOptions } from '@internal/react-components';
+import { ErrorBar, OnRenderAvatarCallback, VideoStreamOptions } from '@internal/react-components';
 import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
 import { Lobby } from './Lobby';
-import { AzureCommunicationCallAdapter, CallCompositePage } from './adapter';
+import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
+import { CallCompositePage } from './adapter/CallAdapter';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { usePropsFor } from './hooks/usePropsFor';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
   showCallControls: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
-  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarCallback;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar } = props;
+  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar, onFetchAvatarPersonaData } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -60,6 +64,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
   const complianceBannerProps = useSelector(complianceBannerSelector);
+  const errorBarProps = usePropsFor(ErrorBar);
 
   const lobbyProps = useSelector(lobbySelector);
   const lobbyHandlers = useHandlers(Lobby);
@@ -129,12 +134,20 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               cameraPermissionGranted={devicePermissions.video}
             />
           </Stack.Item>
+          <Stack.Item style={{ width: '100%' }}>
+            <ErrorBar {...errorBarProps} />
+          </Stack.Item>
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
                 <Stack styles={containerStyles} grow>
                   <Stack.Item id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
-                    <MediaGallery {...mediaGalleryProps} {...mediaGalleryHandlers} onRenderAvatar={onRenderAvatar} />
+                    <MediaGallery
+                      {...mediaGalleryProps}
+                      {...mediaGalleryHandlers}
+                      onRenderAvatar={onRenderAvatar}
+                      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+                    />
                   </Stack.Item>
                 </Stack>
                 {isScreenShareOn ? (

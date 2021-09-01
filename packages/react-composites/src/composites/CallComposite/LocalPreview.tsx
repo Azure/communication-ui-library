@@ -1,26 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoOff20Filled } from '@fluentui/react-icons';
-import { Stack, Text, mergeStyles } from '@fluentui/react';
-import React, { useCallback } from 'react';
-import { localPreviewContainerStyle, cameraOffLabelStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
+import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
 import {
-  StreamMedia,
-  VideoTile,
-  MicrophoneButton,
-  ControlBar,
   CameraButton,
-  useTheme
+  ControlBar,
+  MicrophoneButton,
+  StreamMedia,
+  useTheme,
+  VideoTile
 } from '@internal/react-components';
+import React, { useCallback } from 'react';
+import { useLocale } from '../localization';
+import { useAdapter } from './adapter/CallAdapterProvider';
 import { usePropsFor } from './hooks/usePropsFor';
-import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { useSelector } from './hooks/useSelector';
 import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
-import { useAdapter } from './adapter/CallAdapterProvider';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { localPreviewSelector } from './selectors/localPreviewSelector';
+import { cameraOffLabelStyle, localPreviewContainerStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 
 export const LocalPreview = (): JSX.Element => {
+  const locale = useLocale();
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
   const { audio: microphonePermissionGranted, video: cameraPermissionGranted } = useSelector(devicePermissionSelector);
@@ -37,16 +38,19 @@ export const LocalPreview = (): JSX.Element => {
     return (
       <Stack className={mergeStyles({ width: '100%', height: '100%' })} verticalAlign="center">
         <Stack.Item align="center">
-          <VideoOff20Filled className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralTertiary })} />
+          <Icon
+            iconName="LocalPreviewPlaceholder"
+            className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralTertiary })}
+          />
         </Stack.Item>
         <Stack.Item align="center">
           <Text className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralSecondary })}>
-            Your camera is turned off.
+            {locale.strings.call.cameraTurnedOff}
           </Text>
         </Stack.Item>
       </Stack>
     );
-  }, [theme]);
+  }, [theme, locale.strings.call.cameraTurnedOff]);
 
   return (
     <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>

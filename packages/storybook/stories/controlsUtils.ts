@@ -96,7 +96,13 @@ const errorOptions = [
   'accessDenied',
   'userNotInThisThread',
   'sendMessageNotInThisThread',
-  'sendMessageGeneric'
+  'sendMessageGeneric',
+  'startVideoGeneric',
+  'stopVideoGeneric',
+  'muteGeneric',
+  'unmuteGeneric',
+  'startScreenShareGeneric',
+  'stopScreenShareGeneric'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
@@ -168,9 +174,10 @@ export const controlsToAdd = {
   isMuteAllAvailable: {
     control: 'boolean',
     defaultValue: false,
-    name: 'User option to mute all participants is availble'
+    name: 'Mute all participants option'
   },
   isMuted: { control: 'boolean', defaultValue: false, name: 'Is muted' },
+  isSpeaking: { control: 'boolean', defaultValue: false, name: 'Is Speaking' },
   isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
   isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
   isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
@@ -278,7 +285,9 @@ export const defaultCallCompositeHiddenControls = {
   fluentTheme: hiddenControl,
   onRenderAvatar: hiddenControl,
   identifiers: hiddenControl,
-  locale: hiddenControl
+  locale: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
+  rtl: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
@@ -289,12 +298,15 @@ export const defaultChatCompositeHiddenControls = {
   onRenderTypingIndicator: hiddenControl,
   options: hiddenControl,
   identifiers: hiddenControl,
-  locale: hiddenControl
+  locale: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
+  rtl: hiddenControl
 };
 
 export const defaultMeetingCompositeHiddenControls = {
   callAdapter: hiddenControl,
   chatAdapter: hiddenControl,
   fluentTheme: hiddenControl,
-  meetingInvitationURL: hiddenControl
+  meetingInvitationURL: hiddenControl,
+  rtl: hiddenControl
 };

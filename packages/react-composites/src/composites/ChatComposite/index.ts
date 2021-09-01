@@ -5,7 +5,7 @@ export { createAzureCommunicationChatAdapter } from './adapter/AzureCommunicatio
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
 
 export { ChatComposite } from './ChatComposite';
-export type { ChatCompositeProps, ChatOptions } from './ChatComposite';
+export type { ChatCompositeProps, ChatCompositeVisualElements } from './ChatComposite';
 
 export type {
   ChatAdapter,
@@ -13,8 +13,8 @@ export type {
   ChatAdapterHandlers,
   ChatAdapterSubscribers,
   ChatCompositeClientState,
-  ChatState,
-  ChatUIState,
+  ChatAdapterState,
+  ChatAdapterUiState,
   ChatErrorListener,
   MessageReadListener,
   MessageReceivedListener,

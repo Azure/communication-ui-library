@@ -1,14 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Icon, IContextualMenuItem, mergeStyles, PersonaPresence, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-
-import { IContextualMenuItem, Stack, PersonaPresence, mergeStyles } from '@fluentui/react';
-import { ParticipantItem } from './ParticipantItem';
-import { MicOff20Filled, ShareScreenStart20Filled } from '@fluentui/react-icons';
-import { participantListStyle } from './styles/ParticipantList.styles';
-import { CommunicationParticipant, CallParticipant } from '../types';
 import { useIdentifiers } from '../identifiers';
+import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
+import { ParticipantItem } from './ParticipantItem';
+import { participantListStyle } from './styles/ParticipantList.styles';
 
 /**
  * Props for component `ParticipantList`
@@ -27,7 +25,7 @@ export type ParticipantListProps = {
   /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
   onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
-  onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
+  onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
   onParticipantRemove?: (userId: string) => void;
 };
@@ -36,7 +34,7 @@ const onRenderParticipantsDefault = (
   participants: CommunicationParticipant[],
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
-  onRenderAvatar?: (remoteParticipant: CommunicationParticipant) => JSX.Element | null
+  onRenderAvatar?: OnRenderAvatarCallback
 ): (JSX.Element | null)[] => {
   return participants.map((participant: CommunicationParticipant) => {
     // Try to consider CommunicationParticipant as CallParticipant
@@ -60,35 +58,30 @@ const onRenderParticipantsDefault = (
       });
     }
 
-    const iconStyles = mergeStyles({ height: '0.875rem' });
+    const iconStyles = mergeStyles({ lineHeight: 0 });
     const onRenderIcon =
       callingParticipant?.isScreenSharing || callingParticipant?.isMuted
         ? () => (
             <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
               {callingParticipant.isScreenSharing && (
-                <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />
+                <Icon iconName="ParticipantItemScreenShareStart" className={iconStyles} />
               )}
-              {callingParticipant.isMuted && <MicOff20Filled className={iconStyles} primaryFill="currentColor" />}
+              {callingParticipant.isMuted && <Icon iconName="ParticipantItemMicOff" className={iconStyles} />}
             </Stack>
           )
         : () => <></>;
-
-    const renderAvatar = onRenderAvatar
-      ? () => {
-          return onRenderAvatar(participant);
-        }
-      : undefined;
 
     if (participant.displayName) {
       return (
         <ParticipantItem
           key={participant.userId}
+          userId={participant.userId}
           displayName={participant.displayName}
           me={myUserId ? participant.userId === myUserId : false}
           menuItems={menuItems}
           presence={presence}
           onRenderIcon={onRenderIcon}
-          onRenderAvatar={renderAvatar}
+          onRenderAvatar={onRenderAvatar}
         />
       );
     }

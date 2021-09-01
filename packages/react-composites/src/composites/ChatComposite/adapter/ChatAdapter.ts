@@ -6,7 +6,7 @@ import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import type { AdapterState, AdapterDisposal, AdapterErrorHandlers } from '../../common/adapters';
 
-export type ChatUIState = {
+export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
@@ -30,7 +30,7 @@ export type ChatCompositeClientState = {
  */
 export type ChatAdapterErrors = { [operation: string]: Error };
 
-export type ChatState = ChatUIState & ChatCompositeClientState;
+export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 export interface ChatAdapterHandlers {
   /*
@@ -67,7 +67,7 @@ export interface ChatAdapterSubscribers {
 
 export interface ChatAdapter
   extends ChatAdapterHandlers,
-    AdapterState<ChatState>,
+    AdapterState<ChatAdapterState>,
     AdapterDisposal,
     AdapterErrorHandlers,
     ChatAdapterSubscribers {}

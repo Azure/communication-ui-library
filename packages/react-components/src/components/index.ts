@@ -67,4 +67,4 @@ export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
-export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
