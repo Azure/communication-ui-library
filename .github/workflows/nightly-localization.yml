@@ -41,6 +41,7 @@ jobs:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC/_build'
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
           azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
+          value: 'test'
 
       # Create a PR from the changes
       - name: Create PR
