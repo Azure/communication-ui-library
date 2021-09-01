@@ -48,6 +48,7 @@ const ThemeExampleStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
+          visualElements={{ showErrorBar: true }}
         />
       ) : (
         <ConfigHintBanner />
