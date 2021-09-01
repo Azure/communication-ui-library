@@ -15,6 +15,7 @@ import { FluentThemeProvider } from '@internal/react-components';
 
 /**
  * Props required for the {@link MeetingComposite}
+ * @alpha
  */
 export type MeetingCompositeProps = {
   callAdapter: CallAdapter;
@@ -30,6 +31,7 @@ export type MeetingCompositeProps = {
 
 /**
  * Meeting Composite brings together key components to provide a full meeting experience out of the box.
+ * @alpha
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { callAdapter, chatAdapter, fluentTheme } = props;
