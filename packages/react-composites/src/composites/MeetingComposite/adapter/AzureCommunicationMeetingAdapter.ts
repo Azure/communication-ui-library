@@ -106,25 +106,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Set the page of the Meeting Composite. */
   public setPage(page: MeetingCompositePage): void {
-    switch (page) {
-      case 'configuration':
-        this.callAdapter.setPage('configuration');
-        break;
-      case 'meeting':
-        this.callAdapter.setPage('call');
-        break;
-      case 'error':
-        this.callAdapter.setPage('error');
-        break;
-      case 'errorJoiningTeamsMeeting':
-        this.callAdapter.setPage('errorJoiningTeamsMeeting');
-        break;
-      case 'removed':
-        this.callAdapter.setPage('removed');
-        break;
-      default:
-        throw `Page (${page}) not implemented`;
-    }
+    this.callAdapter.setPage(page === 'meeting' ? 'call' : page);
   }
   /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
