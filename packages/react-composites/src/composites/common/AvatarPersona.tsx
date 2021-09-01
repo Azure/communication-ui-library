@@ -28,6 +28,7 @@ export type AvatarPersonaData = {
   initialsColor?: PersonaInitialsColor | string;
   /**
    * The text color when the user's initials are displayed
+   * @defaultvalue `white`
    */
   initialsTextColor?: string;
 };
