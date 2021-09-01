@@ -256,7 +256,7 @@ export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
 
-// @public (undocumented)
+// @public
 export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, AdapterErrorHandlers, ChatAdapterSubscribers {
 }
 
@@ -268,7 +268,7 @@ export type ChatAdapterErrors = {
 // @public (undocumented)
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
-// @public (undocumented)
+// @public
 export interface ChatAdapterSubscribers {
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -300,7 +300,7 @@ export interface ChatAdapterSubscribers {
     on(event: 'error', listener: ChatErrorListener): void;
 }
 
-// @public (undocumented)
+// @public
 export interface ChatAdapterThreadManagement {
     // (undocumented)
     fetchInitialData(): Promise<void>;

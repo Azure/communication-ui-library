@@ -32,6 +32,9 @@ export type ChatAdapterErrors = { [operation: string]: Error };
 
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
+/**
+ * Functionality for managing the current chat thread.
+ */
 export interface ChatAdapterThreadManagement {
   /*
    * Fetch initial state for the Chat adapter.
@@ -47,6 +50,9 @@ export interface ChatAdapterThreadManagement {
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
 }
 
+/**
+ * Chat composite events that can be subscribed to.
+ */
 export interface ChatAdapterSubscribers {
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
@@ -65,6 +71,9 @@ export interface ChatAdapterSubscribers {
   off(event: 'error', listener: ChatErrorListener): void;
 }
 
+/**
+ * Chat Composite Adapter interface.
+ */
 export interface ChatAdapter
   extends ChatAdapterThreadManagement,
     AdapterState<ChatAdapterState>,
