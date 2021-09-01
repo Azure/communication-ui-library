@@ -69,7 +69,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public joinMeeting(microphoneOn?: boolean): void {
     throw new Error('Method not implemented.');
   }
-  public async leaveMeeting(forEveryone?: boolean): Promise<void> {
+  public async leaveMeeting(): Promise<void> {
     throw new Error('Method not implemented.');
   }
   public startMeeting(participants: string[]): void {

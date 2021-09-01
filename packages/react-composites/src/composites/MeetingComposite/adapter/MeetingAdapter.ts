@@ -92,7 +92,7 @@ export interface MeetingAdapter
     >,
     MeetingAdapterSubscriptions {
   joinMeeting(microphoneOn?: boolean): void;
-  leaveMeeting(forEveryone?: boolean): Promise<void>;
+  leaveMeeting(): Promise<void>;
   startMeeting(participants: string[]): void;
 }
 
