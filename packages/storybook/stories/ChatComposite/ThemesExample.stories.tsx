@@ -55,7 +55,9 @@ const ThemeStory = (args, context): JSX.Element => {
           {...containerProps}
           fluentTheme={theme}
           locale={compositeLocale(locale)}
+          showErrorBar={true}
           showParticipants={true}
+          showTopic={true}
         />
       ) : (
         <ConfigHintBanner />
