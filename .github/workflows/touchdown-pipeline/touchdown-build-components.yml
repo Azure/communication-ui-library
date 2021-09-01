@@ -1,6 +1,7 @@
 # Touchdown build pipeline for components
 
-trigger: [main]
+trigger: none
+pr: none
 
 pool:
   vmImage: ubuntu-latest
