@@ -1017,7 +1017,6 @@ export type DisplayNameChangedListener = (event: {
 // @public
 export interface DominantSpeakers {
     speakersList: ReadonlyArray<string>;
-    timestamp: Date;
 }
 
 // @public (undocumented)

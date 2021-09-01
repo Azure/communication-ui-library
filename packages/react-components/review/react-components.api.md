@@ -252,7 +252,6 @@ export type DefaultMessageRendererType = (props: MessageProps, ids?: {
 // @public
 export interface DominantSpeakers {
     speakersList: ReadonlyArray<string>;
-    timestamp: Date;
 }
 
 // @public

@@ -106,7 +106,6 @@ const videoGalleryRemoteParticipantsMemo = (
 const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | DominantSpeakers => {
   if (!dominantSpeakers) return undefined;
   return {
-    timestamp: dominantSpeakers.timestamp,
     speakersList: dominantSpeakers.speakersList.map(toFlatCommunicationIdentifier)
   };
 };
