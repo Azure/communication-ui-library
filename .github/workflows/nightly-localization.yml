@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  checkForChanges:
-    name: Check for new changes
+  createLocalizationBranch:
+    name: Create localization branch
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
@@ -42,11 +42,3 @@ jobs:
       - name: Install github actions dependencies
         run: npm ci
         working-directory: ./.github/workflows/azure-pipeline-action-fork
-
-      - name: Trigger touchdown build pipeline
-        uses: ./.github/workflows/azure-pipeline-action-fork
-        with:
-          azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
-          azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
-          azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
-          azure-pipeline-variables: '{"bot_token": "${{ secrets.GITHUB_TOKEN }}", "branch": "localization/${{ steps.datetime.outputs.datetime }}"}'
