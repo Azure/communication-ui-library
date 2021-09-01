@@ -54,6 +54,9 @@ jobs:
       - name: Bump package versions
         run: node common/config/node_modules/beachball/bin/beachball bump
 
+      - name: Synchronize package version reported to telemetry
+        run: node common/scripts/sync-telemetry-package-version
+
       # Important to check version consistency again after bumping versions.
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
