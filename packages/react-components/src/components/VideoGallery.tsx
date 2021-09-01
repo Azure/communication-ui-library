@@ -154,7 +154,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  useEffect(() => {
+  useMemo(() => {
     setSortedRemoteParticipants(sortParticipants(remoteParticipants, dominantSpeakers));
   }, [remoteParticipants, dominantSpeakers]);
 
