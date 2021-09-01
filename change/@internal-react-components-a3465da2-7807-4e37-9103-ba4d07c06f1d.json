@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix DOM property text -> Text",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

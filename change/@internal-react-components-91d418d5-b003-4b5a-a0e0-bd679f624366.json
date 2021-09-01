@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updated Typescript version to 4.3.5",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}

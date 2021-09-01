@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixing video gallery styling issues during and after screenshare",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

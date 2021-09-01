@@ -4,12 +4,12 @@
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatErrorTargets, newClearErrorsModifier, StatefulChatClient } from '@internal/chat-stateful-client';
+import { ChatErrorTarget, newClearChatErrorsModifier, StatefulChatClient } from '@internal/chat-stateful-client';
 import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
-export type DefaultChatHandlers = {
+export type ChatHandlers = {
   onSendMessage: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
@@ -21,7 +21,7 @@ export type DefaultChatHandlers = {
 
 // Keep all these handlers the same instance(unless client changed) to avoid re-render
 export const createDefaultChatHandlers = memoizeOne(
-  (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): DefaultChatHandlers => {
+  (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): ChatHandlers => {
     let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
     return {
       onSendMessage: async (content: string) => {
@@ -65,7 +65,7 @@ export const createDefaultChatHandlers = memoizeOne(
         return isAllChatMessagesLoaded;
       },
       onDismissErrors: (errorTypes: ErrorType[]) => {
-        const targets: Set<ChatErrorTargets> = new Set();
+        const targets: Set<ChatErrorTarget> = new Set();
         for (const errorType of errorTypes) {
           switch (errorType) {
             case 'unableToReachChatService':
@@ -79,13 +79,13 @@ export const createDefaultChatHandlers = memoizeOne(
               break;
           }
         }
-        chatClient.modifyState(newClearErrorsModifier(Array.from(targets.values())));
+        chatClient.modifyState(newClearChatErrorsModifier(Array.from(targets.values())));
       }
     };
   }
 );
 
-const accessErrorTargets: ChatErrorTargets[] = [
+const accessErrorTargets: ChatErrorTarget[] = [
   'ChatThreadClient.getProperties',
   'ChatThreadClient.listMessages',
   'ChatThreadClient.listParticipants',
@@ -93,7 +93,7 @@ const accessErrorTargets: ChatErrorTargets[] = [
   'ChatThreadClient.sendTypingNotification'
 ];
 
-const addAccessErrorTargets = (targets: Set<ChatErrorTargets>): void => {
+const addAccessErrorTargets = (targets: Set<ChatErrorTarget>): void => {
   for (const target of accessErrorTargets) {
     targets.add(target);
   }
@@ -102,7 +102,7 @@ const addAccessErrorTargets = (targets: Set<ChatErrorTargets>): void => {
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator =
   (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) =>
-  <Props>(_: (props: Props) => ReactElement | null): Common<DefaultChatHandlers, Props> => {
+  <Props>(_: (props: Props) => ReactElement | null): Common<ChatHandlers, Props> => {
     return createDefaultChatHandlers(chatClient, chatThreadClient);
   };
 
@@ -110,6 +110,6 @@ export const createDefaultChatHandlersForComponent = <Props>(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
   _: (props: Props) => ReactElement | null
-): Common<DefaultChatHandlers, Props> => {
+): Common<ChatHandlers, Props> => {
   return createDefaultChatHandlers(chatClient, chatThreadClient);
 };

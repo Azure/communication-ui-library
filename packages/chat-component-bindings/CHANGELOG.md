@@ -1,8 +1,20 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Thu, 22 Jul 2021 17:42:41 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.4)
+
+Mon, 16 Aug 2021 21:18:19 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.0.0-beta.3..@internal/chat-component-bindings_v1.0.0-beta.4)
+
+### Changes
+
+- Replace StatefulChatClient.clearErrors() with modifier pattern ([PR #601](https://github.com/azure/communication-ui-library/pull/601) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Workaround before we get sequenceId from signal ([PR #653](https://github.com/azure/communication-ui-library/pull/653) by jinan@microsoft.com)
+- Add system message for selector props ([PR #603](https://github.com/azure/communication-ui-library/pull/603) by jinan@microsoft.com)
+- updated Typescript version to 4.3.5 ([PR #645](https://github.com/azure/communication-ui-library/pull/645) by alcail@microsoft.com)
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.3)
 

@@ -8,7 +8,6 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
-  ParticipantList,
   ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
@@ -29,14 +28,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
-
-  // TODO: Here we grab the participant list props and add them to the
-  // participant button manually. Ideally this should be done by the
-  // usePropsFor but currently the usePropsFor is not populating the
-  // handlers of the ParticipantList.
-  const participantsListProps = usePropsFor(ParticipantList);
-  participantsButtonProps.participantListProps = participantsListProps;
-
   const optionsButtonProps = usePropsFor(OptionsButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
   const onHangUp = useCallback(async () => {
@@ -61,7 +52,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
         />
       )}
-      {/* By setting `persistMenu` to true, we prevent options menu from getting hidden everytime a participant joins or leaves. */}
+      {/* By setting `persistMenu` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */}
       <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />
       <EndCallButton
         data-ui-id="call-composite-hangup-button"

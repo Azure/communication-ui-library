@@ -1,0 +1,78 @@
+{
+  "participantItem": {
+    "isMeText": "(siz)",
+    "menuTitle": "Diğer Seçenekler"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} yazıyor...",
+    "multipleUsers": "{users} yazıyor ...",
+    "multipleUsersAbbreviateOne": "{users} ve 1 kişi daha yazıyor...",
+    "multipleUsersAbbreviateMany": "{users} ve {numOthers} kişi daha yazıyor...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Bir mesaj girin"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Gönderilen",
+    "seenTooltipText": "Görüldü",
+    "sendingTooltipText": "Gönderiliyor",
+    "failedToSendTooltipText": "Gönderilemedi"
+  },
+  "endCallButton": {
+    "label": "Ayrıl"
+  },
+  "cameraButton": {
+    "onLabel": "Kapat",
+    "offLabel": "Aç"
+  },
+  "microphoneButton": {
+    "onLabel": "Sesi kapat",
+    "offLabel": "Sesi aç"
+  },
+  "optionsButton": {
+    "label": "Seçenekler",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Kamera Seç",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Mikrofon Seç",
+    "speakerMenuTitle": "Hoparlör",
+    "speakerMenuTooltip": "Hoparlör Seç"
+  },
+  "participantsButton": {
+    "label": "Kişiler",
+    "menuHeader": "Bu aramada",
+    "participantsListButtonLabel": "{numParticipants} kişiler",
+    "muteAllButtonLabel": "Tümünün sesini kapat",
+    "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala"
+  },
+  "screenShareButton": {
+    "onLabel": "Durdur",
+    "offLabel": "Paylaş"
+  },
+  "messageThread": {
+    "yesterday": "Dün",
+    "sunday": "Pazar",
+    "monday": "Pazartesi",
+    "tuesday": "Salı",
+    "wednesday": "Çarşamba",
+    "thursday": "Perşembe",
+    "friday": "Cuma",
+    "saturday": "Cumartesi",
+    "participantJoined": "sohbete katıldı.",
+    "participantLeft": "sohbetten ayrıldı."
+  },
+  "errorBar": {
+    "unableToReachChatService": "Çevrimdışısınız",
+    "accessDenied": "Sohbet hizmetlerine erişilemedi. Lütfen sağlanan kullanıcı kimlik bilgilerini denetleyin",
+    "userNotInThisThread": "Artık bu sohbet yazışması içinde değilsiniz",
+    "sendMessageNotInThisThread": "Artık bu sohbet yazışması içinde olmadığınız için ileti gönderilemedi",
+    "sendMessageGeneric": "İleti gönderilemedi",
+    "startVideoGeneric": "Video başlatılamadı",
+    "stopVideoGeneric": "Video durdurulamadı",
+    "muteGeneric": "Mikrofonun sesi kapatılamadı",
+    "unmuteGeneric": "Mikrofonun sesi açılamadı",
+    "startScreenShareGeneric": "Ekran paylaşımı başlatılamadı",
+    "stopScreenShareGeneric": "Ekran paylaşımı durdurulamadı"
+  }
+}

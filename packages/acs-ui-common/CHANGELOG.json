@@ -2,6 +2,27 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/acs-ui-common_v1.0.0-beta.3",
+      "version": "1.0.0-beta.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "updated Typescript to version 4.3.5",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Add applicationID to chat user agent",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "d5160965655354180d5a1e07a2aa963372c09b44",
+            "package": "@internal/acs-ui-common"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "@internal/acs-ui-common_v1.0.0-beta.2",
       "version": "1.0.0-beta.2",

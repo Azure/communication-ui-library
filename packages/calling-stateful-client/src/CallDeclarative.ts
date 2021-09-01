@@ -48,6 +48,39 @@ class ProxyCall implements ProxyHandler<Call> {
           }
         };
       }
+      case 'mute': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['mute']>) {
+          return await target.mute(...args);
+        }, 'Call.mute');
+      }
+      case 'unmute': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['unmute']>) {
+          return await target.unmute(...args);
+        }, 'Call.unmute');
+      }
+      case 'startVideo': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['startVideo']>) {
+          return await target.startVideo(...args);
+        }, 'Call.startVideo');
+      }
+      case 'stopVideo': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['stopVideo']>) {
+          return await target.stopVideo(...args);
+        }, 'Call.stopVideo');
+      }
+      case 'startScreenSharing': {
+        return this._context.withAsyncErrorTeedToState(async function (
+          ...args: Parameters<Call['startScreenSharing']>
+        ) {
+          return await target.startScreenSharing(...args);
+        },
+        'Call.startScreenSharing');
+      }
+      case 'stopScreenSharing': {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['stopScreenSharing']>) {
+          return await target.stopScreenSharing(...args);
+        }, 'Call.stopScreenSharing');
+      }
       default:
         return Reflect.get(target, prop);
     }

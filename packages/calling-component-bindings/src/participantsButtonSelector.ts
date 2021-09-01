@@ -10,11 +10,9 @@ export const participantsButtonSelector = reselect.createSelector(
   (
     participantListProps
   ): {
-    participantListProps: {
-      participants: CallParticipant[];
-      myUserId: string;
-    };
+    participants: CallParticipant[];
+    myUserId: string;
   } => {
-    return { participantListProps };
+    return participantListProps;
   }
 );

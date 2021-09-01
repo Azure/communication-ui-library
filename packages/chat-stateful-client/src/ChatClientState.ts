@@ -64,7 +64,7 @@ export type ChatThreadProperties = {
  * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
  */
 export type ChatErrors = {
-  [target in ChatErrorTargets]: Error;
+  [target in ChatErrorTarget]: Error;
 };
 
 /**
@@ -74,13 +74,13 @@ export class ChatError extends Error {
   /**
    * The API method target that failed.
    */
-  public target: ChatErrorTargets;
+  public target: ChatErrorTarget;
   /**
    * Error thrown by the failed SDK method.
    */
   public inner: Error;
 
-  constructor(target: ChatErrorTargets, inner: Error) {
+  constructor(target: ChatErrorTarget, inner: Error) {
     super();
     this.target = target;
     this.inner = inner;
@@ -92,7 +92,7 @@ export class ChatError extends Error {
 /**
  * String literal type for all permissible keys in {@link ChatErrors}.
  */
-export type ChatErrorTargets =
+export type ChatErrorTarget =
   | 'ChatClient.createChatThread'
   | 'ChatClient.deleteChatThread'
   | 'ChatClient.getChatThreadClient'
