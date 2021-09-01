@@ -194,7 +194,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView, onRenderLocalVideoTile, onRenderAvatar]);
+  }, [
+    localParticipant,
+    localParticipant.videoStream,
+    onCreateLocalStreamView,
+    onRenderLocalVideoTile,
+    onRenderAvatar,
+    shouldFloatLocalVideo
+  ]);
 
   /**
    * Utility function for memoized rendering of RemoteParticipants.
