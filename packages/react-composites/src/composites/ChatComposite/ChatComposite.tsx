@@ -36,10 +36,7 @@ export interface ChatCompositeProps extends BaseCompositeProps {
  */
 export type ChatCompositeVisualElements = {
   /**
-   * UNSTABLE: Feature flag to enable ErrorBar.
-   *
-   * This option will be removed once ErrorBar is stable.
-   * @experimental
+   * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    *
    * @defaultValue false
    */

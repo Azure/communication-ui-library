@@ -198,6 +198,8 @@ export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    visualElements?: CallCompositeVisualElements;
 }
 
 // @public
@@ -210,6 +212,11 @@ export interface CallCompositeStrings {
     teamsMeetingFailReasonParticipantRemoved: string;
     teamsMeetingFailToJoin: string;
 }
+
+// @public
+export type CallCompositeVisualElements = {
+    showErrorBar?: boolean;
+};
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
