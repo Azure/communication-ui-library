@@ -31,7 +31,7 @@ steps:
     displayName: 'Call Touchdown build task for components'
 
   - script: |
-      git push --set-upstream origin $(branch)
+      git push --set-upstream origin "$(branch)"
 
   - script: |
       curl \
