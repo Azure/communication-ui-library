@@ -84,6 +84,9 @@ export type DisplayNameChangedListener = (event: {
 
 export type CallEndedListener = (event: { callId: string }) => void;
 
+/**
+ * Functionality for managing the current call.
+ */
 export interface CallAdapterCallManagement {
   joinCall(microphoneOn?: boolean): Call | undefined;
   leaveCall(forEveryone?: boolean): Promise<void>;
@@ -100,6 +103,9 @@ export interface CallAdapterCallManagement {
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
 }
 
+/**
+ * Functionality for managing devices within a call.
+ */
 export interface CallAdapterDeviceManagement {
   askDevicePermission(constrain: PermissionConstraints): Promise<void>;
   queryCameras(): Promise<VideoDeviceInfo[]>;
@@ -110,13 +116,10 @@ export interface CallAdapterDeviceManagement {
   setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
 }
 
-export interface CallAdapter
-  extends AdapterState<CallAdapterState>,
-    AdapterDisposal,
-    AdapterErrorHandlers,
-    AdapterPages<CallCompositePage>,
-    CallAdapterCallManagement,
-    CallAdapterDeviceManagement {
+/**
+ * Call composite events that can be subscribed to.
+ */
+export interface CallAdapterSubscribers {
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
@@ -137,6 +140,18 @@ export interface CallAdapter
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
 }
+
+/**
+ * Call Composite Adapter interface.
+ */
+export interface CallAdapter
+  extends AdapterState<CallAdapterState>,
+    AdapterDisposal,
+    AdapterErrorHandlers,
+    AdapterPages<CallCompositePage>,
+    CallAdapterCallManagement,
+    CallAdapterDeviceManagement,
+    CallAdapterSubscribers {}
 
 export type CallEvent =
   | 'participantsJoined'

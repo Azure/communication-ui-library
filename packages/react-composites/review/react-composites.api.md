@@ -99,47 +99,11 @@ export interface BaseCompositeProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
-export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterErrorHandlers, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement {
-    // (undocumented)
-    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+// @public
+export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterErrorHandlers, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
-// @public (undocumented)
+// @public
 export interface CallAdapterCallManagement {
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
@@ -179,7 +143,7 @@ export type CallAdapterClientState = {
     latestErrors: CallAdapterErrors;
 };
 
-// @public (undocumented)
+// @public
 export interface CallAdapterDeviceManagement {
     // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
@@ -204,6 +168,46 @@ export type CallAdapterErrors = {
 
 // @public (undocumented)
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
+
+// @public
+export interface CallAdapterSubscribers {
+    // (undocumented)
+    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+    // (undocumented)
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+    // (undocumented)
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    off(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    off(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+    // (undocumented)
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+    // (undocumented)
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    on(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    on(event: 'error', listener: (e: Error) => void): void;
+}
 
 // @public
 export type CallAdapterUiState = {

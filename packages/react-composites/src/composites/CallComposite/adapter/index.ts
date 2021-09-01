@@ -12,6 +12,7 @@ export type {
   CallAdapterUiState,
   CallAdapterCallManagement,
   CallAdapterDeviceManagement,
+  CallAdapterSubscribers,
   CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,
