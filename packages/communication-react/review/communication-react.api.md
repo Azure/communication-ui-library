@@ -30,6 +30,7 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
+import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -439,6 +440,7 @@ export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     direction: CallDirection;
+    dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
     id: string;
     isMuted: boolean;
@@ -1038,6 +1040,11 @@ export type DisplayNameChangedListener = (event: {
     participantId: CommunicationIdentifierKind;
     displayName: string;
 }) => void;
+
+// @public
+export interface DominantSpeakers {
+    speakersList: ReadonlyArray<string>;
+}
 
 // @public (undocumented)
 export const emptySelector: () => Record<string, never>;
@@ -1891,6 +1898,7 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    dominantSpeakers?: DominantSpeakers;
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
@@ -1929,9 +1937,10 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: DominantSpeakers | undefined;
 }, (res1: string | undefined, res2: {
 [keys: string]: RemoteParticipantState;
-} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string) => {
+} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string, res8: DominantSpeakersInfo | undefined) => {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
 userId: string;
@@ -1945,6 +1954,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: DominantSpeakers | undefined;
 }>;
 
 // @public

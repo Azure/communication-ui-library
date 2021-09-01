@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -31,6 +31,11 @@ export const getDeviceManager = (state: CallClientState): DeviceManagerState => 
 
 export const getCallExists = (state: CallClientState, props: CallingBaseSelectorProps): boolean =>
   !!state.calls[props.callId];
+
+export const getDominantSpeakers = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): undefined | DominantSpeakersInfo => state.calls[props.callId]?.dominantSpeakers;
 
 export const getRemoteParticipants = (
   state: CallClientState,
