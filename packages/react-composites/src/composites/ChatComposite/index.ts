@@ -10,6 +10,8 @@ export type { ChatCompositeProps, ChatCompositeVisualElements } from './ChatComp
 export type {
   ChatAdapter,
   ChatAdapterErrors,
+  ChatAdapterSubscribers,
+  ChatAdapterThreadManagement,
   ChatCompositeClientState,
   ChatAdapterState,
   ChatAdapterUiState,
