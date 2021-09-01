@@ -6,7 +6,6 @@ import {
   FluentThemeProvider,
   MicrophoneButton,
   OptionsButton,
-  ParticipantListProps,
   ParticipantsButton,
   ScreenShareButton
 } from '@azure/communication-react';
@@ -44,11 +43,6 @@ const mockParticipants: CallParticipant[] = [
   }
 ];
 
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants,
-  myUserId: 'user1'
-};
-
 export const AllButtonsControlBarExample: () => JSX.Element = () => {
   const exampleOptionsMenuProps: IContextualMenuProps = {
     items: [
@@ -83,7 +77,8 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
           }}
         />
         <ParticipantsButton
-          participantListProps={mockParticipantsProps}
+          participants={mockParticipants}
+          myUserId={'user1'}
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />

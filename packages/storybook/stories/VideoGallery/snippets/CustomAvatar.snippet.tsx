@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PlaceholderProps, VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
+import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -41,11 +41,8 @@ const MockRemoteParticipants = [
 ];
 
 export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
-  const onRenderAvatar = (
-    placeholderProps: PlaceholderProps,
-    defaultOnRender: (props: PlaceholderProps) => JSX.Element
-  ): JSX.Element => {
-    switch (placeholderProps.displayName) {
+  const onRenderAvatar = (userId, options, defaultOnRender): JSX.Element => {
+    switch (options.displayName) {
       case 'You':
         return (
           <Stack>
@@ -82,7 +79,7 @@ export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
           </Stack>
         );
       default:
-        return defaultOnRender(placeholderProps);
+        return defaultOnRender(options);
     }
   };
 

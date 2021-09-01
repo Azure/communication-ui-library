@@ -7,12 +7,16 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { CustomDataModelExampleContainer } from './snippets/CustomDataModelExampleContainer.snippet';
 import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
 const CustomDataModelStory = (args, context): JSX.Element => {
+  const {
+    globals: { locale }
+  } = context;
   const [containerProps, setContainerProps] = useState();
 
   useEffect(() => {
@@ -36,6 +40,7 @@ const CustomDataModelStory = (args, context): JSX.Element => {
           avatarInitials={args.avatarInitials}
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
+          locale={compositeLocale(locale)}
         />
       ) : (
         <ConfigHintBanner />

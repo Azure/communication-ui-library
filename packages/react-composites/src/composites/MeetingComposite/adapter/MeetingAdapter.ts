@@ -4,7 +4,8 @@
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 
 import {
-  CallAdapterHandlers,
+  CallAdapterCallManagement,
+  CallAdapterDeviceManagement,
   CallIdChangedListener,
   DisplayNameChangedListener,
   IsMuteChangedListener,
@@ -14,7 +15,7 @@ import {
   ParticipantLeftListener
 } from '../../CallComposite';
 import {
-  ChatAdapterHandlers,
+  ChatAdapterThreadManagement,
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener
@@ -23,10 +24,47 @@ import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapt
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
 
-export interface MeetingAdapterHandlers {
+/**
+ * Functionality for managing the current meeting.
+ * @alpha
+ */
+export interface MeetingAdapterMeetingManagement
+  extends Pick<
+      CallAdapterCallManagement,
+      | 'joinCall'
+      | 'leaveCall'
+      | 'startCamera'
+      | 'stopCamera'
+      | 'onToggleCamera'
+      | 'mute'
+      | 'unmute'
+      | 'startCall'
+      | 'startScreenShare'
+      | 'stopScreenShare'
+      | 'createStreamView'
+      | 'disposeStreamView'
+    >,
+    Pick<
+      CallAdapterDeviceManagement,
+      | 'setCamera'
+      | 'setMicrophone'
+      | 'setSpeaker'
+      | 'askDevicePermission'
+      | 'queryCameras'
+      | 'queryMicrophones'
+      | 'querySpeakers'
+    >,
+    Pick<
+      ChatAdapterThreadManagement,
+      'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
+    > {
   removeParticipant(userId: string): Promise<void>;
 }
 
+/**
+ * Meeting events that can be subscribed to.
+ * @alpha
+ */
 export interface MeetingAdapterSubscriptions {
   // Meeting specific subscriptions
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
@@ -62,39 +100,20 @@ export interface MeetingAdapterSubscriptions {
   off(event: 'messageRead', listener: MessageReadListener): void;
 }
 
+/**
+ * Meeting Composite Adapter interface.
+ * @alpha
+ */
 export interface MeetingAdapter
   extends AdapterState<MeetingAdapterState>,
     AdapterDisposal,
     AdapterPages<MeetingCompositePage>,
-    MeetingAdapterHandlers,
-    Pick<
-      CallAdapterHandlers,
-      | 'joinCall'
-      | 'leaveCall'
-      | 'setCamera'
-      | 'setMicrophone'
-      | 'setSpeaker'
-      | 'askDevicePermission'
-      | 'queryCameras'
-      | 'queryMicrophones'
-      | 'querySpeakers'
-      | 'startCamera'
-      | 'stopCamera'
-      | 'onToggleCamera'
-      | 'mute'
-      | 'unmute'
-      | 'startCall'
-      | 'startScreenShare'
-      | 'stopScreenShare'
-      | 'createStreamView'
-      | 'disposeStreamView'
-    >,
-    Pick<
-      ChatAdapterHandlers,
-      'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
-    >,
     MeetingAdapterSubscriptions {}
 
+/**
+ * Events fired off by the Meeting Adapter
+ * @alpha
+ */
 export type MeetingEvent =
   | 'meetingEnded'
   | 'participantsJoined'

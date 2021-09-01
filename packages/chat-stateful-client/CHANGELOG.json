@@ -2,6 +2,65 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/chat-stateful-client_v1.0.0-beta.4",
+      "version": "1.0.0-beta.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Link system message to participant received event",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Remove type blocking usage of the package on older typescript versions",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2f442fdf5dc7102442e09e63b3ac41b7d5c581b4",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Replace StatefulChatClient.clearErrors() with modifier pattern",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "6d2eee00112b2bb935c6d7427fb70983f4614087",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Add explicit string literals for error targets",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "3329ea72724c9bbcca77a79b45feead53a91eb65",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Add applicationID to chat user agent",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "d5160965655354180d5a1e07a2aa963372c09b44",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "updated Typescript version to 4.3.5",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/chat-stateful-client"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.3",
+            "author": "github-action-bot@service.microsoft.com",
+            "commit": "e1c16a5e74b8c5f780d29ec88844d515a4c6ea91",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Fix tsdoc comments - rename @Link -> @link",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "fdd49d7dc69ebb9c47cd285c8fdbc5be49080fad",
+            "package": "@internal/chat-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "@internal/chat-stateful-client_v1.0.0-beta.3",
       "version": "1.0.0-beta.3",

@@ -5,7 +5,7 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatMessage } from '@azure/communication-chat';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
-import { ChatAdapter, ChatState } from './ChatAdapter';
+import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
 
 jest.useFakeTimers();
@@ -157,7 +157,7 @@ export const createChatAdapterWithStubs = async (chatClient: StubChatClient): Pr
 };
 
 class StateChangeListener {
-  state: ChatState;
+  state: ChatAdapterState;
   onChangeCalledCount = 0;
 
   constructor(client: ChatAdapter) {
@@ -165,7 +165,7 @@ class StateChangeListener {
     client.onStateChange(this.onChange.bind(this));
   }
 
-  private onChange(newState: ChatState): void {
+  private onChange(newState: ChatAdapterState): void {
     this.onChangeCalledCount++;
     this.state = newState;
   }

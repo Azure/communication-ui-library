@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
+  OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions
@@ -18,7 +19,7 @@ import {
   floatingLocalVideoTileStyle,
   gridStyle
 } from './styles/VideoGallery.styles';
-import { VideoTile, PlaceholderProps, VideoTileStylesProps } from './VideoTile';
+import { VideoTile, VideoTileStylesProps } from './VideoTile';
 
 const emptyStyles = {};
 
@@ -58,7 +59,7 @@ export interface VideoGalleryProps {
 
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
-  onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+  onRenderAvatar?: OnRenderAvatarCallback;
 
   /**
    * Whether to display a mute icon beside the user's display name.
@@ -186,6 +187,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onDisposeRemoteStreamView={onDisposeRemoteStreamView}
           isAvailable={remoteVideoStream?.isAvailable}
           isMuted={participant.isMuted}
+          isSpeaking={participant.isSpeaking}
           renderElement={remoteVideoStream?.renderElement}
           displayName={participant.displayName}
           remoteVideoViewOption={remoteVideoViewOption}
@@ -240,18 +242,17 @@ const RemoteVideoTile = React.memo(
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isMuted?: boolean;
+    isSpeaking?: boolean;
     renderElement?: HTMLElement;
     displayName?: string;
     remoteVideoViewOption?: VideoStreamOptions;
-    onRenderAvatar?: (
-      props: PlaceholderProps,
-      defaultOnRender: (props: PlaceholderProps) => JSX.Element
-    ) => JSX.Element;
+    onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
   }) => {
     const {
       isAvailable,
       isMuted,
+      isSpeaking,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOption,
@@ -304,6 +305,7 @@ const RemoteVideoTile = React.memo(
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={isMuted}
+          isSpeaking={isSpeaking}
           showMuteIndicator={showMuteIndicator}
         />
       </Stack>

@@ -2,8 +2,10 @@
 // Licensed under the MIT license.
 
 import {
+  CallAgent,
   CallApiFeature,
   CallFeatureFactoryType,
+  DeviceManager,
   Features,
   LocalVideoStream,
   RecordingCallFeature,
@@ -12,6 +14,7 @@ import {
   VideoStreamRendererView
 } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CallError } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
@@ -25,6 +28,7 @@ import {
   createMockRemoteScreenshareStream,
   createMockRemoteVideoStream,
   createStatefulCallClientWithAgent,
+  createStatefulCallClientWithBaseClient,
   MockCall,
   MockCallAgent,
   MockRecordingCallFeatureImpl,
@@ -565,18 +569,141 @@ describe('Stateful call client', () => {
   });
 });
 
+describe('errors should be reported correctly from StatefulCallClient when', () => {
+  test('createCallAgent fails', async () => {
+    const baseClient = createMockCallClient();
+    baseClient.createCallAgent = (): Promise<CallAgent> => {
+      throw new Error('injected error');
+    };
+
+    const client = createStatefulCallClientWithBaseClient(baseClient);
+    const listener = new StateChangeListener(client);
+
+    await expect(client.createCallAgent(stubCommunicationTokenCredential())).rejects.toThrow(
+      new CallError('CallClient.createCallAgent', new Error('injected error'))
+    );
+    expect(listener.onChangeCalledCount).toBe(1);
+    expect(client.getState().latestErrors['CallClient.createCallAgent']).toBeDefined();
+  });
+
+  test('getDeviceManager fails', async () => {
+    const baseClient = createMockCallClient();
+    baseClient.getDeviceManager = (): Promise<DeviceManager> => {
+      throw new Error('injected error');
+    };
+
+    const client = createStatefulCallClientWithBaseClient(baseClient);
+    const listener = new StateChangeListener(client);
+
+    await expect(client.getDeviceManager()).rejects.toThrow(
+      new CallError('CallClient.getDeviceManager', new Error('injected error'))
+    );
+    expect(listener.onChangeCalledCount).toBe(1);
+    expect(client.getState().latestErrors['CallClient.getDeviceManager']).toBeDefined();
+  });
+});
+
+describe('errors should be reported correctly from Call when', () => {
+  test('mute or unmute fails', async () => {
+    const { client, call: baseCall, statefulCallAgent: agent } = await prepareCall();
+    baseCall.mute = async (): Promise<void> => {
+      throw new Error('mute: injected error');
+    };
+    baseCall.unmute = async (): Promise<void> => {
+      throw new Error('unmute: injected error');
+    };
+
+    const call = agent.calls[0];
+    expect(call).toBeDefined();
+
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.mute()).rejects.toThrow(new CallError('Call.mute', new Error('mute: injected error')));
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.mute']).toBeDefined();
+    }
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.unmute()).rejects.toThrow(new CallError('Call.unmute', new Error('unmute: injected error')));
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.unmute']).toBeDefined();
+    }
+  });
+
+  test('startVideo or stopVideo fails', async () => {
+    const { client, call: baseCall, statefulCallAgent: agent } = await prepareCall();
+    baseCall.startVideo = async (): Promise<void> => {
+      throw new Error('startVideo: injected error');
+    };
+    baseCall.stopVideo = async (): Promise<void> => {
+      throw new Error('stopVideo: injected error');
+    };
+
+    const call = agent.calls[0];
+    expect(call).toBeDefined();
+
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.startVideo({} as LocalVideoStream)).rejects.toThrow(
+        new CallError('Call.startVideo', new Error('startVideo: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.startVideo']).toBeDefined();
+    }
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.stopVideo({} as LocalVideoStream)).rejects.toThrow(
+        new CallError('Call.stopVideo', new Error('stopVideo: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.stopVideo']).toBeDefined();
+    }
+  });
+
+  test('startScreenSharing or stopScreenSharing fails', async () => {
+    const { client, call: baseCall, statefulCallAgent: agent } = await prepareCall();
+    baseCall.startScreenSharing = async (): Promise<void> => {
+      throw new Error('startScreenSharing: injected error');
+    };
+    baseCall.stopScreenSharing = async (): Promise<void> => {
+      throw new Error('stopScreenSharing: injected error');
+    };
+
+    const call = agent.calls[0];
+    expect(call).toBeDefined();
+
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.startScreenSharing()).rejects.toThrow(
+        new CallError('Call.startScreenSharing', new Error('startScreenSharing: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.startScreenSharing']).toBeDefined();
+    }
+    {
+      const listener = new StateChangeListener(client);
+      await expect(call.stopScreenSharing()).rejects.toThrow(
+        new CallError('Call.stopScreenSharing', new Error('stopScreenSharing: injected error'))
+      );
+      expect(listener.onChangeCalledCount).toBe(1);
+      expect(client.getState().latestErrors['Call.stopScreenSharing']).toBeDefined();
+    }
+  });
+});
+
 interface PreparedCall {
   client: StatefulCallClient;
   agent: MockCallAgent;
   callId: string;
   call: MockCall;
+  statefulCallAgent: CallAgent;
 }
 
 const prepareCall = async (): Promise<PreparedCall> => {
   const agent = createMockCallAgent();
   const client = createStatefulCallClientWithAgent(agent);
 
-  await client.createCallAgent(stubCommunicationTokenCredential());
+  const statefulCallAgent = await client.createCallAgent(stubCommunicationTokenCredential());
 
   const callId = 'preparedCallId';
   const call = createMockCall(callId);
@@ -586,7 +713,8 @@ const prepareCall = async (): Promise<PreparedCall> => {
     client,
     agent,
     callId,
-    call
+    call,
+    statefulCallAgent
   };
 };
 
@@ -605,7 +733,8 @@ interface PreparedCallWithRemoteParticipant extends PreparedCall {
 }
 
 const prepareCallWithRemoteParticipant = async (): Promise<PreparedCallWithRemoteParticipant> => {
-  const { agent, client, callId, call } = await prepareCall();
+  const preparedCall = await prepareCall();
+  const { client, callId, call } = preparedCall;
 
   const participant = createMockRemoteParticipant();
   call.testHelperPushRemoteParticipant(participant);
@@ -615,13 +744,7 @@ const prepareCallWithRemoteParticipant = async (): Promise<PreparedCallWithRemot
     )
   ).toBe(true);
 
-  return {
-    client,
-    agent,
-    callId,
-    call,
-    participant
-  };
+  return { ...preparedCall, participant };
 };
 
 interface PreparedCallWithRemoteVideoStream extends PreparedCallWithRemoteParticipant {
@@ -654,7 +777,7 @@ const prepareCallWithFeatures = async (
   const agent = createMockCallAgent();
   const client = createStatefulCallClientWithAgent(agent);
 
-  await client.createCallAgent(stubCommunicationTokenCredential());
+  const statefulCallAgent = await client.createCallAgent(stubCommunicationTokenCredential());
 
   const callId = 'preparedCallId';
   const call = createMockCall(callId);
@@ -665,6 +788,7 @@ const prepareCallWithFeatures = async (
     client,
     agent,
     callId,
-    call
+    call,
+    statefulCallAgent
   };
 };

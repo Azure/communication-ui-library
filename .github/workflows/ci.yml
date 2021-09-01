@@ -62,9 +62,71 @@ jobs:
       # Tree-shaking check
       - name: Treeshaking check
         run: rush build --only @internal/check-treeshaking
+      - name: Ensure all package versions are consistent
+        run: rush ensure-consistent-versions
       # Tests
       - name: Test Packages
         run: rush test -t @azure/communication-react
+
+  composite_automation_test:
+    name: Composite automation test
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      # Builds
+      - name: Build Packages
+        run: rush build -t @internal/react-composites
+      # Tests
+      - name: Build Test
+        run: |
+          cd packages/react-composites
+          rushx build:e2e:chat
+          rushx build:e2e:call
+      - name: Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd packages/react-composites
+          rushx test:e2e:chat
+          rushx test:e2e:call
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+            })
 
   build_storybook:
     name: Build Storybook
@@ -184,49 +246,6 @@ jobs:
               repo: context.repo.repo,
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
             })
-
-  update_snapshot_static_html_composites_sample:
-    if: ${{ github.event_name == 'pull_request' && contains( github.event.pull_request.labels.*.name, 'ui change') }}
-    name: Build And Update Snapshot of Static HTML Composites Sample
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          # Use a machine account when checking out. This is to workaround the issue were GitHub
-          # actions, when using the default account, cannot trigger other actions.
-          # This machine account is only for this PAT, pwd was created and thrown away
-          # If any update needed, create a new account, add access to the repo and generate a new PAT.
-          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-      - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
-      - name: Install dependencies
-        run: rush install
-      - name: Build
-        run: rush build -t sample-static-html-composites
-      - name: Update snapshot
-        run: |
-          cd samples/StaticHtmlComposites
-          rushx update:snapshot
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-      - name: Setup bot git information
-        run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-      # Commit changes to snapshot files.
-      - name: Commit new snapshots
-        run: >
-          git diff --exit-code --quiet -- samples/StaticHtmlComposites/tests || 
-          (git add samples/StaticHtmlComposites/tests && 
-          git commit -m 'Updating automation snapshots' && 
-          git push origin HEAD:${{ github.head_ref }})
 
   check_failure:
     runs-on: ubuntu-latest

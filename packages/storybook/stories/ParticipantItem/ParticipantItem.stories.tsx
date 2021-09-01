@@ -80,8 +80,8 @@ const ParticipantItemStory: (args) => JSX.Element = (args) => {
       };
     });
 
-  const containerStyle = { width: '12rem' };
-
+  const containerStyle = { width: '15rem' };
+  const iconStyles = mergeStyles({ display: 'flex', alignItems: 'center' });
   const tokenProps = { childrenGap: '0.5rem' };
 
   return (
@@ -91,13 +91,9 @@ const ParticipantItemStory: (args) => JSX.Element = (args) => {
         me={args.me}
         menuItems={menuItems}
         onRenderIcon={() => (
-          <Stack horizontal={true} tokens={tokenProps}>
-            {args.isScreenSharing && (
-              <ShareScreenStart20Filled primaryFill="currentColor" className={mergeStyles({ height: '0.875rem' })} />
-            )}
-            {args.isMuted && (
-              <MicOff20Filled primaryFill="currentColor" className={mergeStyles({ height: '0.875rem' })} />
-            )}
+          <Stack horizontal tokens={tokenProps}>
+            {args.isScreenSharing && <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />}
+            {args.isMuted && <MicOff20Filled className={iconStyles} primaryFill="currentColor" />}
           </Stack>
         )}
       />
@@ -125,7 +121,8 @@ export default {
     onRenderIcon: hiddenControl,
     presence: hiddenControl,
     styles: hiddenControl,
-    strings: hiddenControl
+    strings: hiddenControl,
+    userId: hiddenControl
   },
   parameters: {
     docs: {

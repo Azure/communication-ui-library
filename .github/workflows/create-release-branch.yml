@@ -54,6 +54,10 @@ jobs:
       - name: Bump package versions
         run: node common/config/node_modules/beachball/bin/beachball bump
 
+      # Important to check version consistency again after bumping versions.
+      - name: Ensure all package versions are consistent
+        run: rush ensure-consistent-versions
+
       # Retrieve new version to create branch with
       - name: Retrieve new version from package.json
         id: version
@@ -87,4 +91,3 @@ jobs:
             -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             https://api.github.com/repos/Azure/communication-ui-library/pulls \
             -d '{ "title":"${{ steps.version.outputs.version }} release branch", "head":"release/${{ steps.version.outputs.version }}", "base":"main", "body":"Release branch for ${{ steps.version.outputs.version }}. Created by the `Release branch - create` GitHub action. Please review." }'
-            --fail-with-body

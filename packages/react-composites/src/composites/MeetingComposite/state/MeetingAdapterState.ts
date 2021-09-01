@@ -8,12 +8,24 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CallAdapterClientState } from '../../CallComposite';
 
+/**
+ * Page state the Meeting composite could be in.
+ * @alpha
+ */
 export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
+/**
+ * Reason meeting was ended.
+ * @alpha
+ */
 export type MeetingEndReason = CallEndReason;
 
 export type MeetingErrors = unknown;
 
+/**
+ * Participants of a Meeting.
+ * @alpha
+ */
 export interface MeetingParticipant
   extends Pick<ChatParticipant, 'shareHistoryTime'>,
     Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
@@ -21,6 +33,10 @@ export interface MeetingParticipant
   meetingEndReason: MeetingEndReason;
 }
 
+/**
+ * State of a single Meeting.
+ * @alpha
+ */
 export interface MeetingState
   extends Pick<
       CallState,
@@ -48,14 +64,16 @@ export interface MeetingState
 }
 
 /**
- * Purely UI related adapter state.
+ * UI state pertaining to the Meeting Composite.
+ * @alpha
  */
 export interface MeetingAdapterUiState {
   page: MeetingCompositePage;
 }
 
 /**
- * State from the backend ACS services.
+ * State from the backend services that drives Meeting Composite.
+ * @alpha
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
   userId: CommunicationIdentifier;
@@ -69,5 +87,7 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
  * state specific to meetings only.
  * Stateful items like Participants that apply to both calling and chat are intelligently
  * combined into one to suit the purpose of a Meeting.
+ *
+ * @alpha
  */
 export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {}
