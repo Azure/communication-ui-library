@@ -44,6 +44,9 @@ jobs:
       - name: Bump alpha package versions
         run: node common/config/node_modules/beachball/bin/beachball canary --canary-name alpha-${{ steps.datetime.outputs.datetime }} --tag dev --no-publish
 
+      - name: Synchronize package version reported to telemetry
+        run: node common/scripts/sync-telemetry-package-version
+
       # Build packages
       - name: Build @azure/communication-react package
         run: rush build -t @azure/communication-react
