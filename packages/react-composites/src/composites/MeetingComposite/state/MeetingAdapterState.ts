@@ -15,7 +15,7 @@ import { CallAdapterClientState } from '../../CallComposite';
 export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 /**
- * Reason meeting was ended.
+ * Describes the reason the meeting ended.
  * @alpha
  */
 export type MeetingEndReason = CallEndReason;
@@ -29,7 +29,9 @@ export type MeetingErrors = unknown;
 export interface MeetingParticipant
   extends Pick<ChatParticipant, 'shareHistoryTime'>,
     Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
+  /** ID of the meeting participant. */
   id: CommunicationIdentifier;
+  /** Describes the reason the meeting ended for this participant. */
   meetingEndReason: MeetingEndReason;
 }
 
@@ -56,10 +58,15 @@ export interface MeetingState
       ChatThreadClientState,
       'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'
     > {
+  /** ID of the meeting participant using this Meeting Adapter. */
   userId: CommunicationIdentifier;
+  /** Display name of the meeting participant using this Meeting Adapter. */
   displayName: string;
+  /** Active participants in the current meeting. */
   participants: { [key: string]: MeetingParticipant };
+  /** Participants who have left the current meeting. */
   participantsEnded: { [keys: string]: MeetingParticipant };
+  /** Reason the current meeting has ended. */
   meetingEndReason: MeetingEndReason;
 }
 
@@ -68,6 +75,7 @@ export interface MeetingState
  * @alpha
  */
 export interface MeetingAdapterUiState {
+  /** Current page in the meeting composite. */
   page: MeetingCompositePage;
 }
 
@@ -76,9 +84,13 @@ export interface MeetingAdapterUiState {
  * @alpha
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+  /** ID of the meeting participant using this Meeting Adapter. */
   userId: CommunicationIdentifier;
+  /** Display name of the meeting participant using this Meeting Adapter. */
   displayName: string;
+  /** Latest Errors that have occurred. */
   latestErrors: MeetingErrors;
+  /** State of the current Meeting. */
   meeting: MeetingState;
 }
 

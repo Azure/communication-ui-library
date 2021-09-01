@@ -38,7 +38,6 @@ import { VideoStreamOptions } from '@internal/react-components';
 
 // @public
 export interface AdapterDisposal {
-    // (undocumented)
     dispose(): void;
 }
 
@@ -49,17 +48,13 @@ export interface AdapterErrorHandlers {
 
 // @public
 export interface AdapterPages<TPage> {
-    // (undocumented)
     setPage(page: TPage): void;
 }
 
 // @public
 export interface AdapterState<TState> {
-    // (undocumented)
     getState(): TState;
-    // (undocumented)
     offStateChange(handler: (state: TState) => void): void;
-    // (undocumented)
     onStateChange(handler: (state: TState) => void): void;
 }
 
@@ -502,13 +497,9 @@ export interface MeetingAdapter extends AdapterState<MeetingAdapterState>, Adapt
 
 // @alpha
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
-    // (undocumented)
     displayName: string;
-    // (undocumented)
     latestErrors: MeetingErrors;
-    // (undocumented)
     meeting: MeetingState;
-    // (undocumented)
     userId: CommunicationIdentifier;
 }
 
@@ -576,7 +567,6 @@ export interface MeetingAdapterSubscriptions {
 
 // @alpha
 export interface MeetingAdapterUiState {
-    // (undocumented)
     page: MeetingCompositePage;
 }
 
@@ -605,27 +595,20 @@ export type MeetingEvent = 'meetingEnded' | 'participantsJoined' | 'participants
 
 // @alpha
 export interface MeetingParticipant extends Pick<ChatParticipant, 'shareHistoryTime'>, Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
-    // (undocumented)
     id: CommunicationIdentifier;
-    // (undocumented)
     meetingEndReason: MeetingEndReason;
 }
 
 // @alpha
 export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
-    // (undocumented)
     displayName: string;
-    // (undocumented)
     meetingEndReason: MeetingEndReason;
-    // (undocumented)
     participants: {
         [key: string]: MeetingParticipant;
     };
-    // (undocumented)
     participantsEnded: {
         [keys: string]: MeetingParticipant;
     };
-    // (undocumented)
     userId: CommunicationIdentifier;
 }
 
