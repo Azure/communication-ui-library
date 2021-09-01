@@ -12,8 +12,4 @@ export interface DominantSpeakers {
    * The second dominant at 1 and so on.
    * */
   speakersList: ReadonlyArray<string>;
-  /**
-   * Timestamp of when this object was created.
-   */
-  timestamp: Date;
 }
