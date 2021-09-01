@@ -116,8 +116,6 @@ export interface MeetingAdapter
  */
 export type MeetingEvent =
   | 'meetingEnded'
-  | 'participantsJoined'
-  | 'participantsLeft'
   | 'isMutedChanged'
   | 'callIdChanged'
   | 'isLocalScreenSharingActiveChanged'
