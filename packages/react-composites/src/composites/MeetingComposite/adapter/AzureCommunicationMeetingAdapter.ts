@@ -17,6 +17,10 @@ import { MessageReceivedListener, MessageReadListener, ChatAdapter } from '../..
 import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
 import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapterState';
 
+/**
+ * Meeting adapter backed by Azure Communication Services.
+ * Created for easy use with the Meeting Composite.
+ */
 export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
