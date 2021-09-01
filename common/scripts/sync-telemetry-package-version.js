@@ -35,22 +35,10 @@ function _generateTelemetryVersionFile(filePath, packageVersion) {
     )
 }
 
-function _telemetryVersionUpdated(filePath) {
-    const diff = execSync('git diff -- ' + filePath).toString();
-    return diff !== '';
-    if (diff === '') {
-        return false;
-    }
-}
-
 function _main() {
     const version = _readPackageVersion(PACKAGE_JSON);
     _generateTelemetryVersionFile(GENERATED_FILE, version);
-    if (_telemetryVersionUpdated(GENERATED_FILE)) {
-        console.log('Wrote version ' + version + ' to ' + GENERATED_FILE);
-    } else {
-        console.log('Telemetry package version is already up to date.')
-    }
+    console.log('Wrote version ' + version + ' to ' + GENERATED_FILE);
 }
 
 _main();
