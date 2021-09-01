@@ -32,7 +32,7 @@ export type ChatAdapterErrors = { [operation: string]: Error };
 
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
-export interface ChatAdapterHandlers {
+export interface ChatAdapterThreadManagement {
   /*
    * Fetch initial state for the Chat adapter.
    *
@@ -66,7 +66,7 @@ export interface ChatAdapterSubscribers {
 }
 
 export interface ChatAdapter
-  extends ChatAdapterHandlers,
+  extends ChatAdapterThreadManagement,
     AdapterState<ChatAdapterState>,
     AdapterDisposal,
     AdapterErrorHandlers,

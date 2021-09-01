@@ -7,7 +7,7 @@ export type {
   MeetingAdapter,
   MeetingCompositePage,
   MeetingEvent,
-  MeetingAdapterHandlers,
+  MeetingAdapterMeetingManagement,
   MeetingAdapterSubscriptions
 } from './adapter/MeetingAdapter';
 export type { MeetingState } from './state/MeetingState';

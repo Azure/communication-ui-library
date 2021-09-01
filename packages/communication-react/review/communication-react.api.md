@@ -66,24 +66,24 @@ import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-// @public (undocumented)
+// @public
 export interface AdapterDisposal {
     // (undocumented)
     dispose(): void;
 }
 
-// @public (undocumented)
+// @public
 export interface AdapterErrorHandlers {
     clearErrors(errorTypes: ErrorType[]): void;
 }
 
-// @public (undocumented)
+// @public
 export interface AdapterPages<TPage> {
     // (undocumented)
     setPage(page: TPage): void;
 }
 
-// @public (undocumented)
+// @public
 export interface AdapterState<TState> {
     // (undocumented)
     getState(): TState;
@@ -155,7 +155,7 @@ export interface BaseCustomStylesProps {
 export type ButtonCustomStylesProps = IButtonStyles;
 
 // @public (undocumented)
-export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterErrorHandlers, AdapterPages<CallCompositePage>, CallAdapterHandlers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterErrorHandlers, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement {
     // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -194,25 +194,8 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisp
     on(event: 'error', listener: (e: Error) => void): void;
 }
 
-// @public
-export type CallAdapterClientState = {
-    userId: CommunicationUserKind;
-    displayName?: string;
-    call?: CallState;
-    devices: DeviceManagerState;
-    endedCall?: CallState;
-    latestErrors: CallAdapterErrors;
-};
-
-// @public
-export type CallAdapterErrors = {
-    [operation: string]: Error;
-};
-
 // @public (undocumented)
-export interface CallAdapterHandlers {
-    // (undocumented)
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+export interface CallAdapterCallManagement {
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
@@ -226,19 +209,7 @@ export interface CallAdapterHandlers {
     // (undocumented)
     onToggleCamera(options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
-    queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
-    setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call | undefined;
     // (undocumented)
@@ -252,6 +223,39 @@ export interface CallAdapterHandlers {
     // (undocumented)
     unmute(): Promise<void>;
 }
+
+// @public
+export type CallAdapterClientState = {
+    userId: CommunicationUserKind;
+    displayName?: string;
+    call?: CallState;
+    devices: DeviceManagerState;
+    endedCall?: CallState;
+    latestErrors: CallAdapterErrors;
+};
+
+// @public (undocumented)
+export interface CallAdapterDeviceManagement {
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // (undocumented)
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    // (undocumented)
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
+    // (undocumented)
+    setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+}
+
+// @public
+export type CallAdapterErrors = {
+    [operation: string]: Error;
+};
 
 // @public (undocumented)
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -472,31 +476,13 @@ export interface CameraButtonStrings {
 }
 
 // @public (undocumented)
-export interface ChatAdapter extends ChatAdapterHandlers, AdapterState<ChatAdapterState>, AdapterDisposal, AdapterErrorHandlers, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, AdapterErrorHandlers, ChatAdapterSubscribers {
 }
 
 // @public
 export type ChatAdapterErrors = {
     [operation: string]: Error;
 };
-
-// @public (undocumented)
-export interface ChatAdapterHandlers {
-    // (undocumented)
-    fetchInitialData(): Promise<void>;
-    // (undocumented)
-    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // (undocumented)
-    removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    sendMessage(content: string): Promise<void>;
-    // (undocumented)
-    sendReadReceipt(chatMessageId: string): Promise<void>;
-    // (undocumented)
-    sendTypingIndicator(): Promise<void>;
-    // (undocumented)
-    setTopic(topicName: string): Promise<void>;
-}
 
 // @public (undocumented)
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -531,6 +517,24 @@ export interface ChatAdapterSubscribers {
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
     on(event: 'error', listener: ChatErrorListener): void;
+}
+
+// @public (undocumented)
+export interface ChatAdapterThreadManagement {
+    // (undocumented)
+    fetchInitialData(): Promise<void>;
+    // (undocumented)
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    // (undocumented)
+    removeParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    sendMessage(content: string): Promise<void>;
+    // (undocumented)
+    sendReadReceipt(chatMessageId: string): Promise<void>;
+    // (undocumented)
+    sendTypingIndicator(): Promise<void>;
+    // (undocumented)
+    setTopic(topicName: string): Promise<void>;
 }
 
 // @public (undocumented)
@@ -1190,17 +1194,17 @@ export interface LocalVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @public (undocumented)
-export interface MeetingAdapter extends AdapterState<MeetingState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterHandlers, Pick<CallAdapterHandlers, 'joinCall' | 'leaveCall' | 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers' | 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startCall' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<ChatAdapterHandlers, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'>, MeetingAdapterSubscriptions {
+// @alpha
+export interface MeetingAdapter extends AdapterState<MeetingState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
-// @public (undocumented)
-export interface MeetingAdapterHandlers {
+// @alpha
+export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'joinCall' | 'leaveCall' | 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startCall' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'> {
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
 }
 
-// @public (undocumented)
+// @alpha
 export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
@@ -1252,13 +1256,13 @@ export interface MeetingAdapterSubscriptions {
     on(event: 'messageRead', listener: MessageReadListener): void;
 }
 
-// @public
+// @alpha
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
-// @public (undocumented)
+// @alpha
 export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
-// @public
+// @alpha
 export type MeetingCompositeProps = {
     callAdapter: CallAdapter;
     chatAdapter: ChatAdapter;

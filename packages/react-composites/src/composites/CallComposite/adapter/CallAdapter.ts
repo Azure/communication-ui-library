@@ -84,16 +84,9 @@ export type DisplayNameChangedListener = (event: {
 
 export type CallEndedListener = (event: { callId: string }) => void;
 
-export interface CallAdapterHandlers {
+export interface CallAdapterCallManagement {
   joinCall(microphoneOn?: boolean): Call | undefined;
   leaveCall(forEveryone?: boolean): Promise<void>;
-  setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-  setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-  setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-  queryCameras(): Promise<VideoDeviceInfo[]>;
-  queryMicrophones(): Promise<AudioDeviceInfo[]>;
-  querySpeakers(): Promise<AudioDeviceInfo[]>;
   startCamera(): Promise<void>;
   stopCamera(): Promise<void>;
   onToggleCamera(options?: VideoStreamOptions): Promise<void>;
@@ -107,12 +100,23 @@ export interface CallAdapterHandlers {
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
 }
 
+export interface CallAdapterDeviceManagement {
+  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  queryCameras(): Promise<VideoDeviceInfo[]>;
+  queryMicrophones(): Promise<AudioDeviceInfo[]>;
+  querySpeakers(): Promise<AudioDeviceInfo[]>;
+  setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+  setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
+  setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+}
+
 export interface CallAdapter
   extends AdapterState<CallAdapterState>,
     AdapterDisposal,
     AdapterErrorHandlers,
     AdapterPages<CallCompositePage>,
-    CallAdapterHandlers {
+    CallAdapterCallManagement,
+    CallAdapterDeviceManagement {
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
