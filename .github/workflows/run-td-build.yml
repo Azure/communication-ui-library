@@ -5,9 +5,8 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch or tag to create release from'
+        description: 'Branch or tag to create a PR from'
         required: true
-        default: 'localization'
 
 jobs:
   runTDBuild:
