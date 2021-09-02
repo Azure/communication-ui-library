@@ -16,7 +16,7 @@
     "lint:quiet": "eslint */**/*.{ts,tsx} --quiet"
   },
   "dependencies": {
-    "@azure/communication-chat": "1.0.0",
+    "@azure/communication-chat": "1.0.1",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-react": "1.0.0-beta.4",
