@@ -37,6 +37,7 @@ test.describe('Call Composite E2E Tests', () => {
       await stubLocalCameraName(page);
       await page.waitForSelector(dataUiId('call-composite-device-settings'));
       await page.waitForSelector(dataUiId('call-composite-local-preview'));
+      await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-disabled.png`);
       await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
       await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
