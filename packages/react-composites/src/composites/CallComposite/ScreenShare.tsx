@@ -107,7 +107,13 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         {videoStream && videoStream.isAvailable && videoStream.renderElement && (
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
             <Stack className={aspectRatioBoxContentStyle}>
-              <VideoTile renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />} />
+              <VideoTile
+                displayName={screenShareParticipant?.displayName}
+                isMuted={screenShareParticipant?.isMuted}
+                renderElement={
+                  videoStream.renderElement ? <StreamMedia videoStreamElement={videoStream.renderElement} /> : undefined
+                }
+              />
             </Stack>
           </Stack>
         )}
