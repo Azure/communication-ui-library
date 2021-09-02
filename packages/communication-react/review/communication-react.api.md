@@ -360,9 +360,9 @@ export class CallError extends Error {
 }
 
 // @public
-export const callErrorBarSelector: OutputSelector<CallClientState, {
+export const callErrorBarSelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 activeErrors: ErrorType[];
-}, (res: CallErrors) => {
+}, (res1: CallErrors, res2: DiagnosticsCallFeatureState | undefined) => {
 activeErrors: ErrorType[];
 }>;
 
@@ -1102,6 +1102,7 @@ export interface ErrorBarStrings {
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
+    speakingWhileMuted: string;
     startScreenShareGeneric: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;

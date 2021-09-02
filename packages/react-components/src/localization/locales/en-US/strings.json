@@ -72,6 +72,7 @@
     "stopVideoGeneric": "Failed to stop video",
     "muteGeneric": "Failed to mute microphone",
     "unmuteGeneric": "Failed to unmute microphone",
+    "speakingWhileMuted": "Your microphone is muted",
     "startScreenShareGeneric": "Failed to start screen sharing",
     "stopScreenShareGeneric": "Failed to stop screen sharing"
   }

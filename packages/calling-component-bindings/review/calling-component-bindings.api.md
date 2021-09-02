@@ -18,6 +18,7 @@ import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { DiagnosticsCallFeatureState } from '@internal/calling-stateful-client';
 import { DominantSpeakers } from '@internal/react-components';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
@@ -28,7 +29,6 @@ import { LocalVideoStreamState } from '@internal/calling-stateful-client';
 import { MicrophoneButton } from '@internal/react-components';
 import { OptionsButton } from '@internal/react-components';
 import { OutputParametricSelector } from 'reselect';
-import { OutputSelector } from 'reselect';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -167,9 +167,9 @@ export const createDefaultCallingHandlersForComponent: <Props>(callClient: State
 export const emptySelector: () => Record<string, never>;
 
 // @public
-export const errorBarSelector: OutputSelector<CallClientState, {
+export const errorBarSelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 activeErrors: ErrorType[];
-}, (res: CallErrors) => {
+}, (res1: CallErrors, res2: DiagnosticsCallFeatureState | undefined) => {
 activeErrors: ErrorType[];
 }>;
 
@@ -192,6 +192,9 @@ export const getCallsEnded: (state: CallClientState) => CallState[];
 
 // @public (undocumented)
 export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
+
+// @public (undocumented)
+export const getDiagnostics: (state: CallClientState, props: CallingBaseSelectorProps) => DiagnosticsCallFeatureState | undefined;
 
 // @public (undocumented)
 export const getDisplayName: (state: CallClientState) => string | undefined;

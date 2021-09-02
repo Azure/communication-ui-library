@@ -288,6 +288,7 @@ export interface ErrorBarStrings {
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
+    speakingWhileMuted: string;
     startScreenShareGeneric: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;

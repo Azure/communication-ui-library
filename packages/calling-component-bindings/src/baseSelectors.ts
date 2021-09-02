@@ -9,7 +9,8 @@ import {
   IncomingCallState,
   RemoteParticipantState,
   LocalVideoStreamState,
-  CallErrors
+  CallErrors,
+  DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
 
 /**
@@ -67,3 +68,8 @@ export const getDisplayName = (state: CallClientState): string | undefined => st
 export const getIdentifier = (state: CallClientState): string => toFlatCommunicationIdentifier(state.userId);
 
 export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;
+
+export const getDiagnostics = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): DiagnosticsCallFeatureState | undefined => state.calls[props.callId]?.diagnostics;

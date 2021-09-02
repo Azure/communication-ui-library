@@ -327,7 +327,13 @@ const statefulErrors: { [key in ErrorType]: CallErrorTarget | undefined } = {
   sendMessageGeneric: undefined,
   sendMessageNotInThisThread: undefined,
   unableToReachChatService: undefined,
-  userNotInThisThread: undefined
+  userNotInThisThread: undefined,
+
+  // Non-dismissable errors (?).
+  // TODO(prprabhu) - the problem here is architectural - dismising the `ErrorBar` isn't the same as fixing the underlying problem.
+  // Currently, the handlers clear the error from the state. Instead, `ErrorBar` should remember what errors have been dismissed by the user.
+  // Then, these errors will also become dismissable.
+  speakingWhileMuted: undefined
 };
 
 // TODO: extract into an util.
