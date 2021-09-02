@@ -101,7 +101,9 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
               <VideoTile
                 displayName={screenShareParticipant?.displayName}
                 isMuted={screenShareParticipant?.isMuted}
-                renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />}
+                renderElement={
+                  videoStream.renderElement ? <StreamMedia videoStreamElement={videoStream.renderElement} /> : undefined
+                }
               />
             </Stack>
           </Stack>
