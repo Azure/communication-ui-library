@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { mergeStyles, IStyle } from '@fluentui/react';
+import { mergeStyles, IStyle, FontWeights } from '@fluentui/react';
 
 export const inputBoxWrapperStyle = mergeStyles({
   padding: '0'
@@ -10,7 +10,7 @@ export const inputBoxStyle = mergeStyles({
   minHeight: '2.25rem', // prevents the input text box from being sized to 0px when the meeting composite chat pane is closed.
   maxHeight: '8.25rem',
   outline: 'red 5px',
-  fontWeight: 400,
+  fontWeight: FontWeights.regular,
   fontSize: '0.875rem',
   width: '100%',
   height: '2.25rem',

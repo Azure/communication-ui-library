@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useMemo, useRef, useCallback, useState } from 'react';
-import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, Icon, IContextualMenuItem } from '@fluentui/react';
+import React, { useMemo, useRef, useState } from 'react';
+import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, IContextualMenuItem } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/react-northstar';
 import { ChatMessage, ChatMessagePayload } from '../types';
 import { LiveMessage } from 'react-aria-live';
@@ -13,20 +13,13 @@ import {
   chatMessageStyle,
   chatActionsCSS,
   iconWrapperStyle,
-  editBoxStyle,
-  inputBoxIcon,
-  editingButtonStyle,
-  editBoxStyleSet,
   menuIconStyleSet
 } from './styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { Parser } from 'html-to-react';
 import { useTheme } from '../theming';
-import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
-
-const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-const TEXT_EXCEEDS_LIMIT = `Your message is over the limit of ${MAXIMUM_LENGTH_OF_MESSAGE} characters`;
+import { EditBox } from './EditBox';
 
 type ChatMessageProps = {
   message: ChatMessage;
@@ -100,7 +93,9 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const { message, onUpdateMessage, onDeleteMessage, editDisabled, showDate, messageContainerStyle } = props;
   const [isEditing, setIsEditing] = useState(false);
 
-  const menuClass = mergeStyles(chatActionsCSS, { 'ul&': { backgroundColor: theme.palette.white } });
+  const menuClass = mergeStyles(chatActionsCSS, {
+    'ul&': { boxShadow: theme.effects.elevation4, backgroundColor: theme.palette.white }
+  });
 
   const actionMenu: MenuProps = useMemo(
     (): MenuProps => ({
@@ -156,7 +151,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
     <Chat.Message
       className={mergeStyles(chatMessageStyle as IStyle, messageContainerStyle as IStyle)}
       content={messageContentItem}
-      author={<Text className={mergeStyles(chatMessageDateStyle as IStyle)}>{payload.senderDisplayName}</Text>}
+      author={<Text className={chatMessageDateStyle}>{payload.senderDisplayName}</Text>}
       mine={payload.mine}
       timestamp={
         <Text data-ui-id={ids.messageTimestamp}>
@@ -172,90 +167,6 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         !editDisabled && message.payload.status !== 'sending' && message.payload.mine ? actionMenu : undefined
       }
     />
-  );
-};
-
-const onRenderCancelIcon = (color: string): JSX.Element => {
-  const className = mergeStyles(inputBoxIcon, { color });
-  return <Icon iconName={'EditBoxCancel'} className={className} />;
-};
-
-const onRenderSubmitIcon = (color: string): JSX.Element => {
-  const className = mergeStyles(inputBoxIcon, { color });
-  return <Icon iconName={'EditBoxSubmit'} className={className} />;
-};
-
-type EditBoxProps = {
-  onCancel?: () => void;
-  onSubmit: (text: string) => void;
-  initialValue: string;
-};
-
-const EditBox = (props: EditBoxProps): JSX.Element => {
-  const { onCancel, onSubmit, initialValue } = props;
-  const [textValue, setTextValue] = useState<string>(initialValue);
-  const [textValueOverflow, setTextValueOverflow] = useState(false);
-  const theme = useTheme();
-
-  const setText = (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newValue?: string | undefined
-  ): void => {
-    if (newValue === undefined) return;
-
-    if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
-      setTextValueOverflow(true);
-    } else {
-      setTextValueOverflow(false);
-    }
-    setTextValue(newValue);
-  };
-
-  const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
-
-  const onRenderThemedCancelIcon = useCallback(
-    () => onRenderCancelIcon(theme.palette.themePrimary),
-    [theme.palette.themePrimary]
-  );
-
-  const onRenderThemedSubmitIcon = useCallback(
-    () => onRenderSubmitIcon(theme.palette.themePrimary),
-    [theme.palette.themePrimary]
-  );
-
-  return (
-    <InputBoxComponent
-      inputClassName={editBoxStyle}
-      textValue={textValue}
-      onChange={setText}
-      onEnterKeyDown={() => {
-        onSubmit(textValue);
-      }}
-      supportNewline={false}
-      maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-      errorMessage={textTooLongMessage}
-      styles={editBoxStyleSet}
-    >
-      <InputBoxButton
-        className={editingButtonStyle}
-        onRenderIcon={onRenderThemedCancelIcon}
-        onClick={() => {
-          onCancel && onCancel();
-        }}
-        id={'dismissIconWrapper'}
-      />
-      <InputBoxButton
-        className={editingButtonStyle}
-        onRenderIcon={onRenderThemedSubmitIcon}
-        onClick={(e) => {
-          if (!textValueOverflow && textValue !== '') {
-            onSubmit(textValue);
-          }
-          e.stopPropagation();
-        }}
-        id={'submitIconWrapper'}
-      />
-    </InputBoxComponent>
   );
 };
 
