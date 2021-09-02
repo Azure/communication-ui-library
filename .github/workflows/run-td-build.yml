@@ -3,7 +3,8 @@ name: Run TD build
 on:
   # Postsubmit CI on main.
   push:
-    branches: [localization/**]
+    branches:
+      - 'localization/**'
   # Presubmit CI on PRs to all branches.
   pull_request:
   # Allows you to run this workflow manually from the Actions tab
