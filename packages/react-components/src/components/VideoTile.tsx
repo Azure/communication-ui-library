@@ -13,6 +13,7 @@ import {
   isSpeakingStyles,
   overlayContainerStyles,
   rootStyles,
+  tileInfoStackItemStyle,
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
@@ -126,6 +127,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
+  const nametagColorOverride = { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary };
+
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
@@ -156,32 +159,26 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        {(displayName || showMuteIndicator) && (
+        {(displayName || (showMuteIndicator && isMuted !== undefined)) && (
           <Stack
             horizontal
             className={mergeStyles(
               isVideoRendered ? videoHint : disabledVideoHint,
               // when video is being rendered, the displayName has a grey-ish background, so no use of theme
-              { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
+              nametagColorOverride,
               styles?.displayNameContainer
             )}
           >
-            <Stack>
+            <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>
               {displayName && (
-                <Text
-                  className={mergeStyles(displayNameStyle, {
-                    color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
-                  })}
-                >
-                  {displayName}
-                </Text>
+                <Text className={mergeStyles(displayNameStyle, nametagColorOverride)}>{displayName}</Text>
               )}
-            </Stack>
-            <Stack className={mergeStyles(iconContainerStyle)}>
+            </Stack.Item>
+            <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
               {showMuteIndicator &&
                 isMuted !== undefined &&
                 (isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />)}
-            </Stack>
+            </Stack.Item>
           </Stack>
         )}
 
