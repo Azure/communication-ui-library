@@ -21,7 +21,7 @@ import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
-import { ErrorType } from '@internal/react-components';
+import type { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { PartialTheme } from '@fluentui/react';
@@ -32,6 +32,33 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import type { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
+
+// @public
+export interface AdapterDisposal {
+    // (undocumented)
+    dispose(): void;
+}
+
+// @public
+export interface AdapterErrorHandlers {
+    clearErrors(errorTypes: ErrorType[]): void;
+}
+
+// @public
+export interface AdapterPages<TPage> {
+    // (undocumented)
+    setPage(page: TPage): void;
+}
+
+// @public
+export interface AdapterState<TState> {
+    // (undocumented)
+    getState(): TState;
+    // (undocumented)
+    offStateChange(handler: (state: TState) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: TState) => void): void;
+}
 
 // @public
 export type AvatarPersonaData = {
@@ -72,19 +99,16 @@ export interface BaseCompositeProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
-export interface CallAdapter {
-    // (undocumented)
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    clearErrors(errorTypes: ErrorType[]): void;
+// @public
+export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterErrorHandlers, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+}
+
+// @public
+export interface CallAdapterCallManagement {
     // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    dispose(): void;
-    // (undocumented)
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    getState(): CallAdapterState;
     // (undocumented)
     joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
@@ -92,63 +116,9 @@ export interface CallAdapter {
     // (undocumented)
     mute(): Promise<void>;
     // (undocumented)
-    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
-    // (undocumented)
-    offStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-    // (undocumented)
-    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-    // (undocumented)
-    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
-    // (undocumented)
-    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
-    // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
     onToggleCamera(options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
-    queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
-    setPage(page: CallCompositePage): void;
-    // (undocumented)
-    setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
     // (undocumented)
     startCall(participants: string[]): Call | undefined;
     // (undocumented)
@@ -174,12 +144,70 @@ export type CallAdapterClientState = {
 };
 
 // @public
+export interface CallAdapterDeviceManagement {
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // (undocumented)
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    // (undocumented)
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
+    // (undocumented)
+    setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+}
+
+// @public
 export type CallAdapterErrors = {
     [operation: string]: Error;
 };
 
 // @public (undocumented)
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
+
+// @public
+export interface CallAdapterSubscribers {
+    // (undocumented)
+    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+    // (undocumented)
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+    // (undocumented)
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    off(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    off(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
+    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+    // (undocumented)
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+    // (undocumented)
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    on(event: 'callEnded', listener: CallEndedListener): void;
+    // (undocumented)
+    on(event: 'error', listener: (e: Error) => void): void;
+}
 
 // @public
 export type CallAdapterUiState = {
@@ -198,6 +226,8 @@ export interface CallCompositeProps extends BaseCompositeProps {
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    visualElements?: CallCompositeVisualElements;
 }
 
 // @public
@@ -211,6 +241,11 @@ export interface CallCompositeStrings {
     teamsMeetingFailToJoin: string;
 }
 
+// @public
+export type CallCompositeVisualElements = {
+    showErrorBar?: boolean;
+};
+
 // @public (undocumented)
 export type CallEndedListener = (event: {
     callId: string;
@@ -221,19 +256,20 @@ export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
 
+// @public
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, AdapterErrorHandlers, ChatAdapterSubscribers {
+}
+
+// @public
+export type ChatAdapterErrors = {
+    [operation: string]: Error;
+};
+
 // @public (undocumented)
-export interface ChatAdapter {
-    clearErrors(errorTypes: ErrorType[]): void;
-    // (undocumented)
-    deleteMessage(messageId: string): Promise<void>;
-    // (undocumented)
-    dispose(): void;
-    // (undocumented)
-    fetchInitialData(): Promise<void>;
-    // (undocumented)
-    getState(): ChatAdapterState;
-    // (undocumented)
-    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
+
+// @public
+export interface ChatAdapterSubscribers {
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -249,8 +285,6 @@ export interface ChatAdapter {
     // (undocumented)
     off(event: 'error', listener: ChatErrorListener): void;
     // (undocumented)
-    offStateChange(handler: (state: ChatAdapterState) => void): void;
-    // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
@@ -264,8 +298,16 @@ export interface ChatAdapter {
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
     on(event: 'error', listener: ChatErrorListener): void;
+}
+
+// @public
+export interface ChatAdapterThreadManagement {
     // (undocumented)
-    onStateChange(handler: (state: ChatAdapterState) => void): void;
+    deleteMessage(messageId: string): Promise<void>;
+    // (undocumented)
+    fetchInitialData(): Promise<void>;
+    // (undocumented)
+    loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     // (undocumented)
     removeParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -279,14 +321,6 @@ export interface ChatAdapter {
     // (undocumented)
     updateMessage(messageId: string, content: string): Promise<void>;
 }
-
-// @public
-export type ChatAdapterErrors = {
-    [operation: string]: Error;
-};
-
-// @public (undocumented)
-export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public (undocumented)
 export type ChatAdapterUiState = {
@@ -309,21 +343,21 @@ export interface ChatCompositeProps extends BaseCompositeProps {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    options?: ChatOptions;
+    visualElements?: ChatCompositeVisualElements;
 }
+
+// @public
+export type ChatCompositeVisualElements = {
+    showErrorBar?: boolean;
+    showParticipantPane?: boolean;
+    showTopic?: boolean;
+};
 
 // @public
 export type ChatErrorListener = (event: {
     operation: string;
     error: Error;
 }) => void;
-
-// @public
-export type ChatOptions = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
-};
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -467,16 +501,87 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @public
+// @alpha
+export interface MeetingAdapter extends AdapterState<MeetingState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+}
+
+// @alpha
+export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'joinCall' | 'leaveCall' | 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startCall' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'> {
+    // (undocumented)
+    removeParticipant(userId: string): Promise<void>;
+}
+
+// @alpha
+export interface MeetingAdapterSubscriptions {
+    // (undocumented)
+    off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    off(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    off(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
+    off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+    // (undocumented)
+    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+    // (undocumented)
+    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    off(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    off(event: 'messageRead', listener: MessageReadListener): void;
+    // (undocumented)
+    on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
+    // (undocumented)
+    on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    on(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    // (undocumented)
+    on(event: 'error', listener: (e: Error) => void): void;
+    // (undocumented)
+    on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+    // (undocumented)
+    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
+    // (undocumented)
+    on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+    // (undocumented)
+    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
+    // (undocumented)
+    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
+    // (undocumented)
+    on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    on(event: 'messageSent', listener: MessageSentListener): void;
+    // (undocumented)
+    on(event: 'messageRead', listener: MessageReadListener): void;
+}
+
+// @alpha
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
-// @public
+// @alpha
+export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+
+// @alpha
 export type MeetingCompositeProps = {
     callAdapter: CallAdapter;
     chatAdapter: ChatAdapter;
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
 };
+
+// @public (undocumented)
+export type MeetingEvent = 'meetingEnded' | 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
+
+// @public
+export type MeetingState = unknown;
 
 // @public (undocumented)
 export type MessageReadListener = (event: {

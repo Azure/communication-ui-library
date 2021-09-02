@@ -390,7 +390,7 @@ export type MessageThreadProps = {
    */
   showMessageStatus?: boolean;
   /**
-   * Number of chat messaegs to reload each time onLoadPreviousChatMessages is called.
+   * Number of chat messages to reload each time onLoadPreviousChatMessages is called.
    *
    * @defaultValue 0
    */

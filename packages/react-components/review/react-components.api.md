@@ -254,6 +254,11 @@ export type DefaultMessageRendererType = (props: MessageProps, ids?: {
 }) => JSX.Element;
 
 // @public
+export interface DominantSpeakers {
+    speakersList: ReadonlyArray<string>;
+}
+
+// @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
@@ -708,6 +713,7 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    dominantSpeakers?: DominantSpeakers;
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
@@ -754,6 +760,7 @@ export interface VideoTileProps {
     displayName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     renderElement?: JSX.Element | null;

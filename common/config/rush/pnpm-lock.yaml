@@ -1,6 +1,5 @@
 dependencies:
   '@rush-temp/acs-ui-common': file:projects/acs-ui-common.tgz
-  '@rush-temp/build-tools': file:projects/build-tools.tgz
   '@rush-temp/calling': file:projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:projects/calling-component-bindings.tgz
   '@rush-temp/calling-stateful-client': file:projects/calling-stateful-client.tgz
@@ -9,6 +8,7 @@ dependencies:
   '@rush-temp/chat-stateful-client': file:projects/chat-stateful-client.tgz
   '@rush-temp/check-treeshaking': file:projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:projects/communication-react.tgz
+  '@rush-temp/config': file:projects/config.tgz
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
   '@rush-temp/sample-static-html-composites': file:projects/sample-static-html-composites.tgz
@@ -19002,23 +19002,6 @@ packages:
       integrity: sha512-uNfubXOvCAPnaykFFn1GobhLqi3NAf82NrHR5S1FIhM5O4kpw82DSpDYdiHPBw8z7xmlkS84BJPTRiH0dvHPxA==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
-  file:projects/build-tools.tgz:
-    dependencies:
-      '@octokit/rest': 18.0.15
-      '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
-      '@types/node': 14.17.9
-      beachball: 1.53.2
-      rollup: 2.42.4
-      rollup-plugin-sourcemaps: 0.6.3_4b45aa15ce9ce9948f319a2d6455c252
-      rollup-plugin-svg: 2.0.0
-      ts-node: 9.1.1_typescript@4.3.5
-      typescript: 4.3.5
-    dev: false
-    name: '@rush-temp/build-tools'
-    resolution:
-      integrity: sha512-eS2W625c3nEQHYn8B1vV/3TgLmrCqKSLvjYzQcdxywQSpGf3zmKbO8pvVkNSSDX6iGtntkl7EE/aeuHme+AU9Q==
-      tarball: file:projects/build-tools.tgz
-    version: 0.0.0
   file:projects/calling-component-bindings.tgz:
     dependencies:
       '@azure/communication-calling': 1.2.0-beta.1
@@ -19046,7 +19029,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-WPXKzr7RYybkbu7ELuO0QLvVcqJr3hWW0I0PqQzWxXwyaLBePosNNZqv4btakTDlEH1mGSmwiGm7M2UmNP8NPg==
+      integrity: sha512-qcWoEmiEkhSPeR61y2Lj/g3g9KN219qO4JUck6TpUSeGnIKuYLXLxfKSfclc1ohK6kp7RdX8DtrDNO4+2wZiqw==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -19076,7 +19059,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-iFe5LiwhHZXt9+jxqKHZuX6/w4AY9OokZNu3Z0hwwe+vrbbdm2Tvg9LnsjLqzGi9156iyuugI2K+i7Uw6WYCrg==
+      integrity: sha512-dpg41OL56Vd03+/AfCxa2NgA7TWRD+dFwXfmKMmJZZsHgYy3Z/Sfx/OCqjuHQtEjem8KzDG7PpS7nCfak6p1BA==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19143,7 +19126,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-RdkbHYGXyIt223kwxOdEupGzmFo40qmvRnzbCRarwRhkXnp5Dj6J3A0bWlWshCm36rAmykmHpA0lQlDtqpjxzA==
+      integrity: sha512-RNZVu/zfhoch3A5LzMXVlXqP+8oNliUmP30grqjlwnsukQM9KtoWiN0gSdQKJjrmFX+6Bq0MHhvqY3TFINZ6Mg==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19172,7 +19155,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-FBbNhojdZMyKlkC86BTq4FRwOLt5xU4V/stUlEHNWsirPj6hSpjZ9nfuCGtxZblon66LD1QFZKkH3UCg/SgaUw==
+      integrity: sha512-o05/2h8/i6BTjA/2Df9NaFVH2g4j7Y5ipy4H6/RKnDOc3aE+uHemqTt7q1U86Y2JIagAQ2DoAPAf1FN6H0UP4Q==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19204,7 +19187,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-1PMIQoOfIMfu4gaORJWp4RAK1RJDrRBgcUAPNi3Uw9RL34bn5H0AN4V7LxoQRPVjk6Kuw/4ZWqOWG3tYm8F7Ww==
+      integrity: sha512-iJRoNZxaTFIK2Yc4CPlLLOL3kxkqshv7SFK2/s5zNlaRhz7iYWbuUPCzbEDt03HuTn4tjZPCXkeFVWFF54XRdQ==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -19264,7 +19247,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-SF4N39R8Ssl0lJShCNn+n1xy5dyUldEWjCDTShG7x0PZ6CvVs368kbZidiFgQaIwzcpa/fNPCCqs3296QWT7fA==
+      integrity: sha512-HKllEH1W7PHx/YznMD5O6+qGMfQHJ3lQHLL8jjczck0M0nDRrw1qIaY17jLg/S9FpMySiCQQ3e+piE8GzVrWVw==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19280,7 +19263,7 @@ packages:
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-AspLSnBzEdZyyl6xSmdafrRRpIeazc4ymKhVFFe6/22NT1YscF6hSfbVh4e7lYTvGs+0aX5UdxoN1qcdENLzog==
+      integrity: sha512-zxKyBrPXu85w+bEGErm6YM+HmttWVxGzMjJuYq8XtYz5mdPK7b4Al8iS8A/8pWD9hXhxmpCOMWIWTd0K3/PupA==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -19356,6 +19339,23 @@ packages:
       integrity: sha512-h1DkhjtOayMGDFfroviq3xwE0kfl8gYgfgcXrGXhDGDkeYeaHTdMrgtrLf3AzvQmSyznyEG2zEMWnaKPMVnqwg==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
+  file:projects/config.tgz:
+    dependencies:
+      '@octokit/rest': 18.0.15
+      '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
+      '@types/node': 14.17.9
+      beachball: 1.53.2
+      rollup: 2.42.4
+      rollup-plugin-sourcemaps: 0.6.3_4b45aa15ce9ce9948f319a2d6455c252
+      rollup-plugin-svg: 2.0.0
+      ts-node: 9.1.1_typescript@4.3.5
+      typescript: 4.3.5
+    dev: false
+    name: '@rush-temp/config'
+    resolution:
+      integrity: sha512-aW+U6rABx4RdzDv9h48Yokz179n0E6n/61rZ/CuWTHY4IgIRWSl77rIC/d8ZTEuM57IyAgCcnnKVUs7x5ek42w==
+      tarball: file:projects/config.tgz
+    version: 0.0.0
   file:projects/react-components.tgz:
     dependencies:
       '@babel/core': 7.13.10
@@ -19427,7 +19427,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-izF1P6iNcW3nVy/deTeWiPrsy0Whdh38gn0kftPHQvV0cZ+spBy/MQ3Dll5rvKB7MPAaM5fRygHuhIn7Z7N2tQ==
+      integrity: sha512-FBypRUQpY4bil/d1KasSzUWq8VrIrblPBUbPU0vWaRdsQwessDEzSGrkq+GIfFwrw/Y3dgO84nkz+9/EAP4d8g==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19516,7 +19516,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-Pi/oHpFWnK896t61uE7gUGyjY9fOrNJ8Ws74c9Lo8JfveJdn5amgbshqv3SiP0lRDQVy7DPgvOIi6HFnoIN8Vw==
+      integrity: sha512-bNdn98VpY6b6dtmYk1Uj0rqIclxHykgrfXhhUJ/gSbj+YzaFmonvftq0Msw6z1NwjPDPgj0GoO2CviC2qmMStw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -19698,7 +19698,6 @@ packages:
     version: 0.0.0
 specifiers:
   '@rush-temp/acs-ui-common': file:./projects/acs-ui-common.tgz
-  '@rush-temp/build-tools': file:./projects/build-tools.tgz
   '@rush-temp/calling': file:./projects/calling.tgz
   '@rush-temp/calling-component-bindings': file:./projects/calling-component-bindings.tgz
   '@rush-temp/calling-stateful-client': file:./projects/calling-stateful-client.tgz
@@ -19707,6 +19706,7 @@ specifiers:
   '@rush-temp/chat-stateful-client': file:./projects/chat-stateful-client.tgz
   '@rush-temp/check-treeshaking': file:./projects/check-treeshaking.tgz
   '@rush-temp/communication-react': file:./projects/communication-react.tgz
+  '@rush-temp/config': file:./projects/config.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
   '@rush-temp/sample-static-html-composites': file:./projects/sample-static-html-composites.tgz

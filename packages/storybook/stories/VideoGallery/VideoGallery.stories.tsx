@@ -112,7 +112,8 @@ export default {
     onRenderRemoteVideoTile: hiddenControl,
     onDisposeRemoteStreamView: hiddenControl,
     onRenderAvatar: hiddenControl,
-    showMuteIndicator: hiddenControl
+    showMuteIndicator: hiddenControl,
+    dominantSpeakers: hiddenControl
   },
   parameters: {
     docs: {

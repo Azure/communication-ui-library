@@ -67,9 +67,11 @@ export const getDocs: () => JSX.Element = () => {
         It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
         then use the Azure Communication Services identity service to create corresponding authentication tokens for
         their users. The ChatComposite allows developers to easily inject custom data associated with these user
-        identities. Look at the [example canvas](./?path=/story/composites-calling--custom-data-model-example) to see
-        how the initials displayed for users can be provided by Contoso.
+        identities. Look at the [example
+        canvas](./?path=/story/composites-call-customdatamodelexample--custom-data-model-example) to see how the
+        initials displayed for users can be provided by Contoso.
       </Description>
+      <Description>Note that, by default, the initials text color is setup to `white`</Description>
       <Source code={customDataModelExampleContainerText} />
       <Description>
         See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
