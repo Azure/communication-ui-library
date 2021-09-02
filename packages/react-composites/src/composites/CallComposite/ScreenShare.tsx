@@ -84,9 +84,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
     return (
       <VideoTile
-        displayName={
-          screenShareParticipant?.displayName ? `${screenShareParticipant?.displayName}'s screen` : undefined
-        }
+        displayName={screenShareParticipant?.displayName}
         renderElement={
           screenShareStream?.renderElement ? (
             <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
