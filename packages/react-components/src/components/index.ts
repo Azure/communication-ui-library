@@ -16,6 +16,8 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
 
+export type { InputBoxButtonProps } from './InputBoxComponent';
+
 export { MessageThread } from './MessageThread';
 export type {
   MessageProps,
