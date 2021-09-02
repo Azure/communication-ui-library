@@ -14,8 +14,6 @@ jobs:
     steps:
       # Check-out repo
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       # Setup bot information for creating pull request
       # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
@@ -32,14 +30,6 @@ jobs:
 
       - name: Hop into new branch
         run: git checkout -b localization/${{ steps.datetime.outputs.datetime }}
-
-      - name: Create a change
-        run: touch packages/react-components/src/localization/locales/localization-${{ steps.datetime.outputs.datetime }}.txt
-
-      - name: Commit change
-        run: |
-          git add .
-          git commit -m "Add empty file"
 
       # Push changes
       - name: Push branch
