@@ -18,7 +18,6 @@ import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
-import { DominantSpeakers } from '@internal/react-components';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
@@ -322,7 +321,6 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
-dominantSpeakers: DominantSpeakers | undefined;
 }, (res1: string | undefined, res2: {
 [keys: string]: RemoteParticipantState;
 } | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string, res8: DominantSpeakersInfo | undefined) => {
@@ -339,7 +337,6 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
-dominantSpeakers: DominantSpeakers | undefined;
 }>;
 
 // (No @packageDocumentation comment for this package)
