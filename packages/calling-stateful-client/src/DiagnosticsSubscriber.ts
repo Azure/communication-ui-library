@@ -1,0 +1,95 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import {
+  DiagnosticsCallFeature,
+  DiagnosticChangedEventArgs,
+  LatestDiagnosticValue,
+  MediaDiagnosticChangedEventArgs,
+  NetworkDiagnosticChangedEventArgs
+} from '@azure/communication-calling';
+import { CallContext } from './CallContext';
+import { CallIdRef } from './CallIdRef';
+
+export class DiagnosticsSubscriber {
+  private _callIdRef: CallIdRef;
+  private _context: CallContext;
+  private _diagnostics: DiagnosticsCallFeature;
+
+  constructor(callIdRef: CallIdRef, context: CallContext, diagnostics: DiagnosticsCallFeature) {
+    this._callIdRef = callIdRef;
+    this._context = context;
+    this._diagnostics = diagnostics;
+
+    this.setInitialDiagnostics();
+    this.subscribe();
+  }
+
+  public unsubscribe = (): void => {
+    this._diagnostics.network.off('diagnosticChanged', this.networkDiagnosticsChanged.bind(this));
+    this._diagnostics.media.off('diagnosticChanged', this.mediaDiagnosticsChanged.bind(this));
+  };
+
+  private setInitialDiagnostics(): void {
+    const network = this._diagnostics.network.getLatest();
+    const media = this._diagnostics.media.getLatest();
+    this._context.modifyState((state) => {
+      const call = state.calls[this._callIdRef.callId];
+      if (call === undefined) {
+        return;
+      }
+      call.diagnostics = {
+        network: {
+          latest: network
+        },
+        media: {
+          latest: media
+        }
+      };
+    });
+    this.logDiagnostics('initialization');
+  }
+
+  private subscribe(): void {
+    this._diagnostics.network.on('diagnosticChanged', this.networkDiagnosticsChanged.bind(this));
+    this._diagnostics.media.on('diagnosticChanged', this.mediaDiagnosticsChanged.bind(this));
+  }
+
+  private networkDiagnosticsChanged(args: NetworkDiagnosticChangedEventArgs): void {
+    this._context.modifyState((state) => {
+      const call = state.calls[this._callIdRef.callId];
+      if (call === undefined) {
+        return;
+      }
+      const network = call.diagnostics?.network.latest;
+      if (network) {
+        network[args.diagnostic] = latestFromEvent(args);
+      }
+    });
+    this.logDiagnostics('network update');
+  }
+
+  private mediaDiagnosticsChanged(args: MediaDiagnosticChangedEventArgs): void {
+    this._context.modifyState((state) => {
+      const call = state.calls[this._callIdRef.callId];
+      if (call === undefined) {
+        return;
+      }
+      const media = call.diagnostics?.media.latest;
+      if (media) {
+        media[args.diagnostic] = latestFromEvent(args);
+      }
+    });
+    this.logDiagnostics('media update');
+  }
+
+  private logDiagnostics(operation: string) {
+    console.log(`Latest diagnostics value after ${operation}:`);
+    console.log(this._context.getState().calls[this._callIdRef.callId]?.diagnostics);
+  }
+}
+
+const latestFromEvent = (args: DiagnosticChangedEventArgs): LatestDiagnosticValue => ({
+  value: args.value,
+  valueType: args.valueType
+});
