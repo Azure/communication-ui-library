@@ -22,7 +22,11 @@ import {
   Send20Filled,
   Send20Regular,
   MicOn16Filled,
-  MicOff16Filled
+  MicOff16Filled,
+  Dismiss20Regular,
+  Checkmark20Regular,
+  Edit20Regular,
+  Delete20Regular
 } from '@fluentui/react-icons';
 import React from 'react';
 
@@ -55,5 +59,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
-  VideoTileMicOn: <MicOn16Filled />
+  VideoTileMicOn: <MicOn16Filled />,
+  EditBoxCancel: <Dismiss20Regular />,
+  EditBoxSubmit: <Checkmark20Regular />,
+  MessageEdit: <Edit20Regular />,
+  MessageRemove: <Delete20Regular />
 };

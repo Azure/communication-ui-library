@@ -47,6 +47,8 @@ export interface ChatAdapterThreadManagement {
   sendTypingIndicator(): Promise<void>;
   removeParticipant(userId: string): Promise<void>;
   setTopic(topicName: string): Promise<void>;
+  updateMessage(messageId: string, content: string): Promise<void>;
+  deleteMessage(messageId: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
 }
 

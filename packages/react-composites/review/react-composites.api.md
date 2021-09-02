@@ -303,6 +303,8 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     // (undocumented)
+    deleteMessage(messageId: string): Promise<void>;
+    // (undocumented)
     fetchInitialData(): Promise<void>;
     // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
@@ -316,6 +318,8 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateMessage(messageId: string, content: string): Promise<void>;
 }
 
 // @public (undocumented)
@@ -459,6 +463,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     VideoTileMicOn: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageRemove: JSX.Element;
 };
 
 // @public (undocumented)
