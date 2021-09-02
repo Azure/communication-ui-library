@@ -8,6 +8,7 @@ import {
   CallerInfo,
   CallState as CallStatus,
   DeviceAccess,
+  DominantSpeakersInfo,
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
@@ -249,6 +250,10 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.isScreenSharingOn}.
    */
   isScreenSharingOn: boolean;
+  /**
+   * Proxy of {@link @azure/communication-calling#DominantSpeakersInfo }.
+   */
+  dominantSpeakers?: DominantSpeakersInfo;
   /**
    * Proxy of {@link @azure/communication-calling#Call.localVideoStreams}.
    */

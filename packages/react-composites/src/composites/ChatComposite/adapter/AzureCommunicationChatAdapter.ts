@@ -119,6 +119,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.sendMessage = this.sendMessage.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
+    this.updateMessage = this.updateMessage.bind(this);
+    this.deleteMessage = this.deleteMessage.bind(this);
     this.removeParticipant = this.removeParticipant.bind(this);
     this.setTopic = this.setTopic.bind(this);
     this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
@@ -192,6 +194,18 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onLoadPreviousChatMessages(messagesToLoad);
+    });
+  }
+
+  async updateMessage(messageId: string, content: string): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onUpdateMessage(messageId, content);
+    });
+  }
+
+  async deleteMessage(messageId: string): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onDeleteMessage(messageId);
     });
   }
 

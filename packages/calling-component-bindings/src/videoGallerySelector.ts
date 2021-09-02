@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
+import { DominantSpeakers, VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
   getDisplayName,
+  getDominantSpeakers,
   getIdentifier,
   getIsMuted,
   getIsScreenSharingOn,
@@ -13,8 +16,6 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-import { memoizeFnAll } from '@internal/acs-ui-common';
-import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 
 const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamState): VideoGalleryStream => {
   return {
@@ -102,6 +103,13 @@ const videoGalleryRemoteParticipantsMemo = (
   });
 };
 
+const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | DominantSpeakers => {
+  if (!dominantSpeakers) return undefined;
+  return {
+    speakersList: dominantSpeakers.speakersList.map(toFlatCommunicationIdentifier)
+  };
+};
+
 export const videoGallerySelector = createSelector(
   [
     getScreenShareRemoteParticipant,
@@ -110,7 +118,8 @@ export const videoGallerySelector = createSelector(
     getIsMuted,
     getIsScreenSharingOn,
     getDisplayName,
-    getIdentifier
+    getIdentifier,
+    getDominantSpeakers
   ],
   (
     screenShareRemoteParticipantId,
@@ -119,7 +128,8 @@ export const videoGallerySelector = createSelector(
     isMuted,
     isScreenSharingOn,
     displayName: string | undefined,
-    identifier: string
+    identifier: string,
+    dominantSpeakers
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -147,7 +157,8 @@ export const videoGallerySelector = createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: videoGalleryRemoteParticipantsMemo(remoteParticipants)
+      remoteParticipants: videoGalleryRemoteParticipantsMemo(remoteParticipants),
+      dominantSpeakers: dominantSpeakersWithFlatId(dominantSpeakers)
     };
   }
 );

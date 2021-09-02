@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack, Modal, IDragOptions, ContextualMenu } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
+  DominantSpeakers,
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -14,10 +15,10 @@ import {
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
 import {
-  videoGalleryContainerStyle,
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
-  gridStyle
+  gridStyle,
+  videoGalleryContainerStyle
 } from './styles/VideoGallery.styles';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
 
@@ -46,6 +47,8 @@ export interface VideoGalleryProps {
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */
   remoteVideoViewOption?: VideoStreamOptions;
+  /** A list of speakers ordered by most active to least active in a call. */
+  dominantSpeakers?: DominantSpeakers;
   /** Callback to create the local video stream view */
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose of the local video stream view */
@@ -75,26 +78,51 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
+// Sort participants in the following order.
+// 1. Video participants should always render before non-video participants.
+// 2. Video Tiles should be further sorted based on their ordering in dominant speakers list.
 const sortParticipants = (
-  participants: VideoGalleryRemoteParticipant[] | undefined
+  participants?: VideoGalleryRemoteParticipant[],
+  dominantSpeakers?: DominantSpeakers
 ): VideoGalleryRemoteParticipant[] => {
-  if (!participants) {
-    return [];
+  if (!participants) return [];
+
+  const participantsWithVideo: VideoGalleryRemoteParticipant[] = [];
+  const participantsWithoutVideo: VideoGalleryRemoteParticipant[] = [];
+
+  participants.forEach((p) => {
+    if (p.videoStream?.renderElement?.childElementCount) {
+      participantsWithVideo.push(p);
+    } else {
+      participantsWithoutVideo.push(p);
+    }
+  });
+
+  const speakersList: Record<string, number> = {};
+  dominantSpeakers?.speakersList?.forEach((speaker, idx) => (speakersList[speaker] = idx));
+
+  // If dominantSpeakers are available, we sort the video tiles basis on dominant speakers.
+  if (dominantSpeakers) {
+    participantsWithVideo.sort((a, b) => {
+      const idxA = speakersList[a.userId];
+      const idxB = speakersList[b.userId];
+      if (idxA === undefined && idxB === undefined) return 0; // Both a and b don't exist in dominant speakers.
+      if (idxA === undefined && idxB >= 0) return 1; // b exists in dominant speakers.
+      if (idxB === undefined && idxA >= 0) return -1; // a exists in dominant speakers.
+      return idxA - idxB;
+    });
+
+    participantsWithoutVideo.sort((a, b) => {
+      const idxA = speakersList[a.userId];
+      const idxB = speakersList[b.userId];
+      if (idxA === undefined && idxB === undefined) return 0; // Both a and b don't exist in dominant speakers.
+      if (idxA === undefined && idxB >= 0) return 1; // b exists in dominant speakers.
+      if (idxB === undefined && idxA >= 0) return -1; // a exists in dominant speakers.
+      return idxA - idxB;
+    });
   }
 
-  return participants.sort((p1, p2) => {
-    if (!p1?.videoStream?.renderElement?.childElementCount && !p2?.videoStream?.renderElement?.childElementCount) {
-      return 0;
-    }
-    if (!p1?.videoStream?.renderElement?.childElementCount) {
-      return 1;
-    }
-    if (!p2?.videoStream?.renderElement?.childElementCount) {
-      return -1;
-    }
-
-    return 0;
-  });
+  return participantsWithVideo.concat(participantsWithoutVideo);
 };
 
 /**
@@ -119,15 +147,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
-    showMuteIndicator
+    showMuteIndicator,
+    dominantSpeakers
   } = props;
-  const [sortedRemoteParticipants, setSortedRemoteParticipants] = useState<VideoGalleryRemoteParticipant[]>([]);
 
   const ids = useIdentifiers();
 
-  useEffect(() => {
-    setSortedRemoteParticipants(sortParticipants(remoteParticipants));
-  }, [remoteParticipants]);
+  const sortedParticipants = useMemo(() => {
+    return sortParticipants(remoteParticipants, dominantSpeakers);
+  }, [remoteParticipants, dominantSpeakers]);
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
@@ -165,7 +193,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localParticipant, localParticipant.videoStream, onCreateLocalStreamView, onRenderLocalVideoTile, onRenderAvatar]);
+  }, [
+    localParticipant,
+    localParticipant.videoStream,
+    onCreateLocalStreamView,
+    onRenderLocalVideoTile,
+    onRenderAvatar,
+    shouldFloatLocalVideo
+  ]);
 
   /**
    * Utility function for memoized rendering of RemoteParticipants.
@@ -173,11 +208,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderRemoteParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return sortedRemoteParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+      return sortedParticipants.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
-    return sortedRemoteParticipants.map((participant): JSX.Element => {
+    return sortedParticipants.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
@@ -197,7 +232,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       );
     });
   }, [
-    sortedRemoteParticipants,
+    sortedParticipants,
     onRenderRemoteVideoTile,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
