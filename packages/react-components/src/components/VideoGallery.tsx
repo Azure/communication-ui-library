@@ -6,7 +6,6 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
-  DominantSpeakers,
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -47,8 +46,6 @@ export interface VideoGalleryProps {
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */
   remoteVideoViewOption?: VideoStreamOptions;
-  /** A list of speakers ordered by most active to least active in a call. */
-  dominantSpeakers?: DominantSpeakers;
   /** Callback to create the local video stream view */
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose of the local video stream view */
@@ -59,7 +56,6 @@ export interface VideoGalleryProps {
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /** Callback to render a remote video tile */
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -76,53 +72,6 @@ const DRAG_OPTIONS: IDragOptions = {
   closeMenuItemText: 'Close',
   menu: ContextualMenu,
   keepInBounds: true
-};
-
-// Sort participants in the following order.
-// 1. Video participants should always render before non-video participants.
-// 2. Video Tiles should be further sorted based on their ordering in dominant speakers list.
-const sortParticipants = (
-  participants?: VideoGalleryRemoteParticipant[],
-  dominantSpeakers?: DominantSpeakers
-): VideoGalleryRemoteParticipant[] => {
-  if (!participants) return [];
-
-  const participantsWithVideo: VideoGalleryRemoteParticipant[] = [];
-  const participantsWithoutVideo: VideoGalleryRemoteParticipant[] = [];
-
-  participants.forEach((p) => {
-    if (p.videoStream?.renderElement?.childElementCount) {
-      participantsWithVideo.push(p);
-    } else {
-      participantsWithoutVideo.push(p);
-    }
-  });
-
-  const speakersList: Record<string, number> = {};
-  dominantSpeakers?.speakersList?.forEach((speaker, idx) => (speakersList[speaker] = idx));
-
-  // If dominantSpeakers are available, we sort the video tiles basis on dominant speakers.
-  if (dominantSpeakers) {
-    participantsWithVideo.sort((a, b) => {
-      const idxA = speakersList[a.userId];
-      const idxB = speakersList[b.userId];
-      if (idxA === undefined && idxB === undefined) return 0; // Both a and b don't exist in dominant speakers.
-      if (idxA === undefined && idxB >= 0) return 1; // b exists in dominant speakers.
-      if (idxB === undefined && idxA >= 0) return -1; // a exists in dominant speakers.
-      return idxA - idxB;
-    });
-
-    participantsWithoutVideo.sort((a, b) => {
-      const idxA = speakersList[a.userId];
-      const idxB = speakersList[b.userId];
-      if (idxA === undefined && idxB === undefined) return 0; // Both a and b don't exist in dominant speakers.
-      if (idxA === undefined && idxB >= 0) return 1; // b exists in dominant speakers.
-      if (idxB === undefined && idxA >= 0) return -1; // a exists in dominant speakers.
-      return idxA - idxB;
-    });
-  }
-
-  return participantsWithVideo.concat(participantsWithoutVideo);
 };
 
 /**
@@ -147,15 +96,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
-    showMuteIndicator,
-    dominantSpeakers
+    showMuteIndicator
   } = props;
 
   const ids = useIdentifiers();
-
-  const sortedParticipants = useMemo(() => {
-    return sortParticipants(remoteParticipants, dominantSpeakers);
-  }, [remoteParticipants, dominantSpeakers]);
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
@@ -208,11 +152,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderRemoteParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return sortedParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+      return remoteParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
-    return sortedParticipants.map((participant): JSX.Element => {
+    return remoteParticipants?.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
@@ -232,7 +176,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       );
     });
   }, [
-    sortedParticipants,
+    remoteParticipants,
     onRenderRemoteVideoTile,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,

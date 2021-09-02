@@ -30,7 +30,13 @@ export type ScreenShareProps = {
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (userId: string, isMuted?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
+  (
+    userId: string,
+    isMuted?: boolean,
+    isSpeaking?: boolean,
+    renderElement?: HTMLElement,
+    displayName?: string
+  ): JSX.Element => {
     return (
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
@@ -40,6 +46,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
             renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
             displayName={displayName}
             isMuted={isMuted}
+            isSpeaking={isSpeaking}
           />
         </Stack>
       </Stack>
@@ -85,6 +92,8 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     return (
       <VideoTile
         displayName={screenShareParticipant?.displayName}
+        isMuted={screenShareParticipant?.isMuted}
+        isSpeaking={screenShareParticipant?.isSpeaking}
         renderElement={
           screenShareStream?.renderElement ? (
             <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
@@ -148,6 +157,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
               return memoizedRemoteParticipantFn(
                 participant.userId,
                 participant.isMuted,
+                participant.isSpeaking,
                 remoteVideoStream?.renderElement,
                 participant.displayName
               );
