@@ -1,12 +1,13 @@
 name: Run TD build
 
 on:
-  # Postsubmit CI on main.
-  push:
-    branches:
-      - 'localization/**'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch or tag to create release from'
+        required: true
+        default: 'localization'
 
 jobs:
   runTDBuild:
@@ -18,11 +19,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Extract branch name
-      - name: Extract branch name
-        id: extract_branch
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      # Check out onto desired branch or tag to create release from
+      - name: Checkout tag/branch
+        run: git checkout ${{ github.event.inputs.branch }}
 
       - name: Install github actions dependencies
         run: npm ci
