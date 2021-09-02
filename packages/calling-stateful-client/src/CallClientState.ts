@@ -8,6 +8,8 @@ import {
   CallerInfo,
   CallState as CallStatus,
   DeviceAccess,
+  LatestMediaDiagnostics,
+  LatestNetworkDiagnostics,
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
@@ -298,6 +300,12 @@ export interface CallState {
    * a proxy of SDK state.
    */
   endTime: Date | undefined;
+
+  /**
+   * Stores the latest call diagnostics.
+   */
+  // [xkcd] Make this non-optional.
+  diagnostics?: DiagnosticsCallFeatureState;
 }
 
 /**
@@ -510,3 +518,32 @@ export type CallErrorTarget =
   | 'DeviceManager.on'
   | 'DeviceManager.selectMicrophone'
   | 'DeviceManager.selectSpeaker';
+
+/**
+ * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
+ */
+export interface DiagnosticsCallFeatureState {
+  /**
+   * Stores diagnostics related to network conditions.
+   */
+  network: NetworkDiagnosticsState;
+
+  /**
+   * Stores diagnostics related to media quality.
+   */
+  media: MediaDiagnosticsState;
+}
+
+/**
+ * State only proxy for {@link @azure/communication-calling#NetworkDiagnostics}.
+ */
+export interface NetworkDiagnosticsState {
+  latest: LatestNetworkDiagnostics;
+}
+
+/**
+ * State only proxy for {@link @azure/communication-calling#MediaDiagnostics}.
+ */
+export interface MediaDiagnosticsState {
+  latest: LatestMediaDiagnostics;
+}

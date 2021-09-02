@@ -40,6 +40,8 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { LatestMediaDiagnostics } from '@azure/communication-calling';
+import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { OutputParametricSelector } from 'reselect';
@@ -410,6 +412,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    diagnostics?: DiagnosticsCallFeatureState;
     direction: CallDirection;
     endTime: Date | undefined;
     id: string;
@@ -1006,6 +1009,12 @@ export type DeviceManagerState = {
     unparentedViews: LocalVideoStreamState[];
 };
 
+// @public
+export interface DiagnosticsCallFeatureState {
+    media: MediaDiagnosticsState;
+    network: NetworkDiagnosticsState;
+}
+
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {
     participantId: CommunicationIdentifierKind;
@@ -1179,6 +1188,12 @@ export interface LocalVideoStreamState {
 }
 
 // @public
+export interface MediaDiagnosticsState {
+    // (undocumented)
+    latest: LatestMediaDiagnostics;
+}
+
+// @public
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @public
@@ -1327,6 +1342,12 @@ export const microphoneButtonSelector: reselect.OutputParametricSelector<CallCli
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+}
+
+// @public
+export interface NetworkDiagnosticsState {
+    // (undocumented)
+    latest: LatestNetworkDiagnostics;
 }
 
 // @public
