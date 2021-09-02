@@ -15,6 +15,11 @@ jobs:
     name: Run TD build
     runs-on: ubuntu-latest
     steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       # Extract branch name
       - name: Extract branch name
         id: extract_branch
