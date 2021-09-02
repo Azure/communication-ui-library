@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incoming Call Toast Incoming Call Toast 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -24,10 +24,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
         className="ms-Stack css-1"
       >
         <div
-          className="ms-Stack css-112 css-2"
+          className="ms-Stack css-121 css-2"
         >
           <div
-            className="ms-Stack css-113 css-3"
+            className="ms-Stack css-122 css-3"
           >
             <div
               aria-label="Maximus Aurelius"
@@ -91,7 +91,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
             className="ms-Stack css-20"
           >
             <button
-              className="ms-Button ms-Button--default css-115 root-21"
+              className="ms-Button ms-Button--default css-124 root-21"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -125,7 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
               </span>
             </button>
             <button
-              className="ms-Button ms-Button--default css-114 root-21"
+              className="ms-Button ms-Button--default css-123 root-21"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}

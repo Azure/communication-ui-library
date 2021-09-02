@@ -34,5 +34,6 @@ export type {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   OnRenderAvatarCallback,
-  CustomAvatarOptions
+  CustomAvatarOptions,
+  DominantSpeakers
 } from './types';

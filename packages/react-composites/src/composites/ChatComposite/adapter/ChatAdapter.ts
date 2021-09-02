@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import type { ErrorType } from '@internal/react-components';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
+import type { AdapterState, AdapterDisposal, AdapterErrorHandlers } from '../../common/adapters';
 
 export type ChatAdapterUiState = {
   // FIXME(Delete?)
@@ -32,11 +32,10 @@ export type ChatAdapterErrors = { [operation: string]: Error };
 
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
-export interface ChatAdapter {
-  onStateChange(handler: (state: ChatAdapterState) => void): void;
-  offStateChange(handler: (state: ChatAdapterState) => void): void;
-  getState(): ChatAdapterState;
-  dispose(): void;
+/**
+ * Functionality for managing the current chat thread.
+ */
+export interface ChatAdapterThreadManagement {
   /*
    * Fetch initial state for the Chat adapter.
    *
@@ -48,11 +47,15 @@ export interface ChatAdapter {
   sendTypingIndicator(): Promise<void>;
   removeParticipant(userId: string): Promise<void>;
   setTopic(topicName: string): Promise<void>;
+  updateMessage(messageId: string, content: string): Promise<void>;
+  deleteMessage(messageId: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  /**
-   * Clear errors for given error types from {@link ChatAdapter.getState.latestErrors}.
-   */
-  clearErrors(errorTypes: ErrorType[]): void;
+}
+
+/**
+ * Chat composite events that can be subscribed to.
+ */
+export interface ChatAdapterSubscribers {
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
@@ -69,6 +72,16 @@ export interface ChatAdapter {
   off(event: 'topicChanged', listener: TopicChangedListener): void;
   off(event: 'error', listener: ChatErrorListener): void;
 }
+
+/**
+ * Chat Composite Adapter interface.
+ */
+export interface ChatAdapter
+  extends ChatAdapterThreadManagement,
+    AdapterState<ChatAdapterState>,
+    AdapterDisposal,
+    AdapterErrorHandlers,
+    ChatAdapterSubscribers {}
 
 export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
 export type MessageSentListener = MessageReceivedListener;
