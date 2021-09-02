@@ -34,7 +34,7 @@ jobs:
         run: git checkout -b localization/${{ steps.datetime.outputs.datetime }}
 
       - name: Create a change
-        run: touch packages/react-components/src/localization/locales/localization/${{ steps.datetime.outputs.datetime }}.txt
+        run: touch packages/react-components/src/localization/locales/localization-${{ steps.datetime.outputs.datetime }}.txt
 
       - name: Commit change
         run: |
