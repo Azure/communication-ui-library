@@ -52,7 +52,6 @@ export const disabledVideoHint = mergeStyles({
 
 export const videoHint = mergeStyles(disabledVideoHint, {
   backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  alignItems: 'center',
   padding: '0.15rem'
 });
 
@@ -69,4 +68,8 @@ export const iconContainerStyle: IStyle = {
   '& svg': {
     display: 'block'
   }
+};
+
+export const tileInfoStackItemStyle: IStyle = {
+  display: 'flex'
 };
