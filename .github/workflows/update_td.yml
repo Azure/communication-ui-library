@@ -32,7 +32,6 @@ jobs:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
           azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
-          azure-pipeline-variables: '{}'
 
       - name: Trigger touchdown build pipeline for composites
         uses: ./.github/workflows/azure-pipeline-action-fork
@@ -40,4 +39,3 @@ jobs:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
           azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-composites'
           azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
-          azure-pipeline-variables: '{}'
