@@ -8,9 +8,25 @@
  */
 export interface CallCompositeStrings {
   /**
-   * Label for camera dropdown
+   * Title of configuration page.
+   */
+  configurationPageTitle: string;
+  /**
+   * Text in button to start call in configuration page.
+   */
+  startCallButtonText: string;
+  /**
+   * Placeholder text for local device settings dropdowns.
+   */
+  defaultPlaceHolder: string;
+  /**
+   * Label for camera dropdown.
    */
   cameraLabel: string;
+  /**
+   * Label for sound dropdown.
+   */
+  soundLabel: string;
   /**
    * Error shown when camera access is blocked by the browser.
    */

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Localized call composite strings",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
