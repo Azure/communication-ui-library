@@ -352,9 +352,10 @@ export type CallEndedListener = (event: {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error);
+    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
     inner: Error;
     target: CallErrorTarget;
+    timestamp: Date;
 }
 
 // @public
@@ -366,7 +367,7 @@ activeErrors: ErrorType[];
 
 // @public
 export type CallErrors = {
-    [target in CallErrorTarget]: Error;
+    [target in CallErrorTarget]: CallError;
 };
 
 // @public
@@ -611,9 +612,10 @@ export type ChatCompositeVisualElements = {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTarget, inner: Error);
+    constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
     inner: Error;
     target: ChatErrorTarget;
+    timestamp: Date;
 }
 
 // @public
@@ -631,7 +633,7 @@ export type ChatErrorListener = (event: {
 
 // @public
 export type ChatErrors = {
-    [target in ChatErrorTarget]: Error;
+    [target in ChatErrorTarget]: ChatError;
 };
 
 // @public
