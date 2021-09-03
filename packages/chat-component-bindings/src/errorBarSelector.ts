@@ -49,6 +49,7 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
           // Set the latest timestamp of all the errors that translated to an active error.
           timestamp: sendMessageError.timestamp > error.timestamp ? sendMessageError.timestamp : error.timestamp
         });
+        specificSendMessageErrorSeen = true;
       } else {
         activeErrors.push(error);
       }
@@ -88,9 +89,13 @@ const latestAccessDeniedError = (latestErrors: ChatErrors): ActiveError | undefi
 
 const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveError | undefined => {
   return latestActiveErrorSatisfying(latestErrors, 'sendMessageNotInThisThread', (error: ChatError): boolean => {
+    if (!error || !error.inner) {
+      return false;
+    }
+
     // Chat service returns 403 if a user has been removed from a thread.
-    // Chat service returns either 401 or 403 if the thread ID is malformed, depending on how the thread ID is malformed.
-    return !!error && !!error.inner && (error.inner['statusCode'] === 400 || error.inner['statusCode'] === 403);
+    // Chat service returns either 400 or 404 if the thread ID is malformed, depending on how the thread ID is malformed.
+    return [400, 403, 404].some((statusCode) => error.inner['statusCode'] === statusCode);
   });
 };
 
@@ -111,5 +116,5 @@ const latestActiveErrorSatisfying = (
     return undefined;
   }
   activeErrors.sort((a: ActiveError, b: ActiveError) => a.timestamp.getTime() - b.timestamp.getTime());
-  return errors[activeErrors.length - 1];
+  return activeErrors[activeErrors.length - 1];
 };
