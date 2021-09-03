@@ -361,7 +361,7 @@ export class ChatContext {
       } catch (error) {
         const chatError = toChatError(target, error);
         this.setLatestError(target, chatError);
-        throw new ChatError(target, chatError);
+        throw chatError;
       }
     };
   }
@@ -390,7 +390,7 @@ export class ChatContext {
       } catch (error) {
         const chatError = toChatError(target, error);
         this.setLatestError(target, chatError);
-        throw new ChatError(target, chatError);
+        throw chatError;
       }
     };
   }
@@ -456,7 +456,8 @@ export class ChatContext {
 }
 
 const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
-  const now = new Date();
+  // Testing note: It is easier to mock Date::now() than the Date() constructor.
+  const now = new Date(Date.now());
   if (error instanceof Error) {
     return new ChatError(target, error, now);
   }
