@@ -6,6 +6,9 @@ pr: none
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  createPR: not(eq(variables['bot_token'], ''), eq(variables['branch'], ''))
+
 steps:
   - checkout: self
     persistCredentials: true
@@ -29,7 +32,7 @@ steps:
       cultureMappingType: 'None'
       gitAction: 'NONE'
     displayName: 'Call Touchdown build task for composites'
-    condition: or(eq(variables['bot_token'], ''), eq(variables['branch'], ''))
+    condition: not(variables['createPR'])
 
   - task: TouchdownBuildTask@1
     inputs:
@@ -44,7 +47,7 @@ steps:
       cultureMappingType: 'None'
       gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for composites'
-    condition: not(or(eq(variables['bot_token'], ''), eq(variables['branch'], '')))
+    condition: variables['createPR']
 
   - script: |
       curl \
@@ -53,4 +56,4 @@ steps:
         -H 'authorization: Bearer $(bot_token)' \
         https://api.github.com/repos/Azure/communication-ui-library/pulls \
         -d '{ "title":"Localization updates", "head":"$(branch)", "base":"main", "body":"Created by the `Nightly localization` GitHub action. Please review." }'
-    condition: not(or(eq(variables['bot_token'], ''), eq(variables['branch'], '')))
+    condition: variables['createPR']
