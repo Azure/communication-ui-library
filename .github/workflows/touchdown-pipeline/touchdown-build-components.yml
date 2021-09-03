@@ -6,6 +6,12 @@ pr: none
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  ${{ if and($(bot_token), $(branch)) }}:
+    gitAction: 'COMMIT'
+  ${{ if not(and($(bot_token), $(branch))) }}:
+    gitAction: 'NONE'
+
 steps:
   - checkout: self
     persistCredentials: true
@@ -27,7 +33,7 @@ steps:
       resourceFilePath: 'packages/react-components/src/localization/locales/en-US/strings.json'
       outputDirectoryRoot: 'packages/react-components/src/localization/locales'
       cultureMappingType: 'None'
-      gitAction: 'COMMIT'
+      gitAction: $(gitAction)
     displayName: 'Call Touchdown build task for components'
 
   - script: |
@@ -37,3 +43,4 @@ steps:
         -H 'authorization: Bearer $(bot_token)' \
         https://api.github.com/repos/Azure/communication-ui-library/pulls \
         -d '{ "title":"Localization updates", "head":"$(branch)", "base":"main", "body":"Created by the `Nightly localization` GitHub action. Please review." }'
+    condition: and($(bot_token), $(branch))

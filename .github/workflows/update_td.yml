@@ -1,0 +1,33 @@
+name: Nightly Localization
+
+on:
+  # Postsubmit CI on main.
+  push:
+    branches: [mgamis/test-pipeline]
+    paths:
+      [
+        packages\react-components\src\localization\locales\en-US\strings.json,
+        packages\react-composites\src\composites\localization\locales\en-US\strings.json
+      ]
+  # Allows you to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+
+jobs:
+  createLocalizationBranch:
+    - name: Install github actions dependencies
+      run: npm ci
+      working-directory: ./.github/workflows/azure-pipeline-action-fork
+
+    - name: Trigger touchdown build pipeline for components
+      uses: ./.github/workflows/azure-pipeline-action-fork
+      with:
+        azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
+        azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
+        azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
+
+    - name: Trigger touchdown build pipeline for composites
+      uses: ./.github/workflows/azure-pipeline-action-fork
+      with:
+        azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
+        azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-composites'
+        azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
