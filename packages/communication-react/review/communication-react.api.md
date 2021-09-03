@@ -68,6 +68,12 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
+export interface ActiveError {
+    timestamp: Date;
+    type: ErrorType;
+}
+
+// @public
 export interface AdapterDisposal {
     // (undocumented)
     dispose(): void;
@@ -360,9 +366,9 @@ export class CallError extends Error {
 
 // @public
 export const callErrorBarSelector: OutputSelector<CallClientState, {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }, (res: CallErrors) => {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }>;
 
 // @public
@@ -620,9 +626,9 @@ export class ChatError extends Error {
 
 // @public
 export const chatErrorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }, (res: ChatErrors) => {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }>;
 
 // @public
@@ -1079,7 +1085,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
-    activeErrors: ErrorType[];
+    activeErrors: ActiveError[];
     onDismissErrors: (errorTypes: ErrorType[]) => void;
     strings?: ErrorBarStrings;
 }

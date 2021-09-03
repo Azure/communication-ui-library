@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import { getLatestErrors } from './baseSelectors';
-import { ErrorType } from '@internal/react-components';
+import { ActiveError, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
-import { ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
+import { ChatError, ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
 
 /**
  * Select the first fiew active errors from the state for the `ErrorBar` component.
@@ -16,7 +16,7 @@ import { ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
  *   - `ErrorType` is never repeated in the returned errors.
  *   - Errors are returned in a fixed order by `ErrorType`.
  */
-export const errorBarSelector = createSelector([getLatestErrors], (latestErrors): { activeErrors: ErrorType[] } => {
+export const errorBarSelector = createSelector([getLatestErrors], (latestErrors): { activeErrors: ActiveError[] } => {
   // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
   // There are several options for the ordering:
   //   - Sorted by when the errors happened (latest first / oldest first).
@@ -24,24 +24,39 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   //
   // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
   // have timestamps for errors.
-  const activeErrors: ErrorType[] = [];
+  const activeErrors: ActiveError[] = [];
   let specificSendMessageErrorSeen = false;
-  if (hasUnableToReachChatServiceError(latestErrors)) {
-    activeErrors.push('unableToReachChatService');
-  }
-  if (hasAccessDeniedError(latestErrors)) {
-    activeErrors.push('accessDenied');
-  }
-  if (hasNotInThisThreadError(latestErrors)) {
-    if (latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
-      activeErrors.push('sendMessageNotInThisThread');
-      specificSendMessageErrorSeen = true;
-    } else {
-      activeErrors.push('userNotInThisThread');
+  {
+    const error = latestUnableToReachChatServiceError(latestErrors);
+    if (error !== undefined) {
+      activeErrors.push(error);
     }
   }
-  if (!specificSendMessageErrorSeen && latestErrors['ChatThreadClient.sendMessage'] !== undefined) {
-    activeErrors.push('sendMessageGeneric');
+  {
+    const error = latestAccessDeniedError(latestErrors);
+    if (error !== undefined) {
+      activeErrors.push(error);
+    }
+  }
+
+  const sendMessageError = latestErrors['ChatThreadClient.sendMessage'];
+  {
+    const error = latestNotInThisThreadError(latestErrors);
+    if (error !== undefined) {
+      if (sendMessageError !== undefined) {
+        activeErrors.push({
+          type: 'sendMessageNotInThisThread',
+          // Set the latest timestamp of all the errors that translated to an active error.
+          timestamp: sendMessageError.timestamp > error.timestamp ? sendMessageError.timestamp : error.timestamp
+        });
+      } else {
+        activeErrors.push(error);
+      }
+    }
+  }
+
+  if (!specificSendMessageErrorSeen && sendMessageError !== undefined) {
+    activeErrors.push({ type: 'sendMessageGeneric', timestamp: sendMessageError.timestamp });
   }
 
   // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
@@ -59,34 +74,42 @@ const accessErrorTargets: ChatErrorTarget[] = [
   'ChatThreadClient.sendTypingNotification'
 ];
 
-const hasUnableToReachChatServiceError = (latestErrors: ChatErrors): boolean => {
-  for (const target of accessErrorTargets) {
-    const error = latestErrors[target]?.inner;
-    if (error !== undefined && error['code'] === 'REQUEST_SEND_ERROR') {
-      return true;
-    }
-  }
-  return false;
+const latestUnableToReachChatServiceError = (latestErrors: ChatErrors): ActiveError | undefined => {
+  return latestActiveErrorSatisfying(latestErrors, 'unableToReachChatService', (error: ChatError): boolean => {
+    return error !== undefined && error.inner['code'] === 'REQUEST_SEND_ERROR';
+  });
 };
 
-const hasAccessDeniedError = (latestErrors: ChatErrors): boolean => {
-  for (const target of accessErrorTargets) {
-    const error = latestErrors[target]?.inner;
-    if (error !== undefined && error['statusCode'] === 401) {
-      return true;
-    }
-  }
-  return false;
+const latestAccessDeniedError = (latestErrors: ChatErrors): ActiveError | undefined => {
+  return latestActiveErrorSatisfying(latestErrors, 'accessDenied', (error: ChatError): boolean => {
+    return error !== undefined && error.inner['statusCode'] === 401;
+  });
 };
 
-const hasNotInThisThreadError = (latestErrors: ChatErrors): boolean => {
-  for (const target of accessErrorTargets) {
-    const error = latestErrors[target]?.inner;
+const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveError | undefined => {
+  return latestActiveErrorSatisfying(latestErrors, 'sendMessageNotInThisThread', (error: ChatError): boolean => {
     // Chat service returns 403 if a user has been removed from a thread.
     // Chat service returns either 401 or 403 if the thread ID is malformed, depending on how the thread ID is malformed.
-    if (error !== undefined && (error['statusCode'] === 400 || error['statusCode'] === 403)) {
-      return true;
+    return error !== undefined && (error.inner['statusCode'] === 400 || error.inner['statusCode'] === 403);
+  });
+};
+
+const latestActiveErrorSatisfying = (
+  errors: ChatErrors,
+  activeErrorType: ErrorType,
+  predicate: (error: ChatError) => boolean
+): ActiveError | undefined => {
+  const activeErrors: ActiveError[] = [];
+  for (const target of accessErrorTargets) {
+    const error = errors[target];
+    if (predicate(error)) {
+      activeErrors.push({ type: activeErrorType, timestamp: error.timestamp });
     }
   }
-  return false;
+
+  if (activeErrors.length === 0) {
+    return undefined;
+  }
+  activeErrors.sort((a: ActiveError, b: ActiveError) => a.timestamp.getTime() - b.timestamp.getTime());
+  return errors[activeErrors.length - 1];
 };
