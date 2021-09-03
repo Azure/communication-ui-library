@@ -128,16 +128,15 @@ export interface ActiveError {
  * All strings that can be shown are accepted as the {@link ErrorBarProps.strings} so that they can be localized.
  * Active errors are selected by {@link ErrorBarProps.activeErrors}.
  *
+ * This component internally tracks dismissed by the user.
+ *   * Errors that have an associated timestamp: The error is shown on the UI again if it occurs after being dismissed.
+ *   * Errors that do not have a timestamp: The error is dismissed for a (configurable) amount of time, then shown again.
+ *
  * Uses {@link @fluentui/react#MessageBar} UI element.
  */
 export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const localeStrings = useLocale().strings.errorBar;
   const strings = props.strings ?? localeStrings;
-
-  // xkcd: Will this lead to `ErrorBar` getting recreated entirely?
-  if (props.activeErrors.length === 0) {
-    return <></>;
-  }
 
   const [dismissedErrors, setDismissedErrors] = useState<DismissedError[]>([]);
   const errorsToShow = useMemo(
