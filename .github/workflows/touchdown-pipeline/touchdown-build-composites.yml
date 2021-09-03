@@ -44,7 +44,7 @@ steps:
       cultureMappingType: 'None'
       gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for composites'
-    condition: and($(bot_token), $(branch))
+    condition: or(eq($(bot_token), ''), eq($(branch), ''))
 
   - script: |
       curl \
@@ -53,4 +53,4 @@ steps:
         -H 'authorization: Bearer $(bot_token)' \
         https://api.github.com/repos/Azure/communication-ui-library/pulls \
         -d '{ "title":"Localization updates", "head":"$(branch)", "base":"main", "body":"Created by the `Nightly localization` GitHub action. Please review." }'
-    condition: and($(bot_token), $(branch))
+    condition: not(or(eq($(bot_token), ''), eq($(branch), '')))
