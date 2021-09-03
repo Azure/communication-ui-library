@@ -80,7 +80,7 @@ export class ChatError extends Error {
    */
   public inner: Error;
   /**
-   * Optional timestamp added to the error by the stateful layer.
+   * Timestamp added to the error by the stateful layer.
    */
   public timestamp: Date;
 

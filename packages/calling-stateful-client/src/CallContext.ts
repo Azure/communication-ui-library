@@ -724,8 +724,9 @@ export class CallContext {
         this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
-        this.setLatestError(target, error);
-        throw new CallError(target, error);
+        const callError = toCallError(target, error);
+        this.setLatestError(target, callError);
+        throw callError;
       }
     };
   }
@@ -752,13 +753,14 @@ export class CallContext {
         this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
-        this.setLatestError(target, error);
-        throw new CallError(target, error);
+        const callError = toCallError(target, error);
+        this.setLatestError(target, callError);
+        throw callError;
       }
     };
   }
 
-  private setLatestError(target: CallErrorTarget, error: Error): void {
+  private setLatestError(target: CallErrorTarget, error: CallError): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
         draft.latestErrors[target] = error;
@@ -766,3 +768,10 @@ export class CallContext {
     );
   }
 }
+
+const toCallError = (target: CallErrorTarget, error: unknown): CallError => {
+  if (error instanceof Error) {
+    return new CallError(target, error);
+  }
+  return new CallError(target, new Error(error as string));
+};
