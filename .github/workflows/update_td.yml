@@ -17,6 +17,11 @@ jobs:
     name: Update TD build
     runs-on: ubuntu-latest
     steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - name: Install github actions dependencies
         run: npm ci
         working-directory: ./.github/workflows/azure-pipeline-action-fork
