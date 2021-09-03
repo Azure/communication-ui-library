@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
 
@@ -24,6 +24,11 @@ export interface ErrorBarProps extends IMessageBarProps {
 
   /**
    * Callback trigerred when the {@link MessageBar} for an active error is dismissed.
+   *
+   * @deprecated
+   *
+   * {@link ErrorBar} now tracks dismissed errors internally.
+   * This prop will be removed soon, along with handlers etc written for it.
    */
   onDismissErrors: (errorTypes: ErrorType[]) => void;
 }
@@ -129,19 +134,28 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const localeStrings = useLocale().strings.errorBar;
   const strings = props.strings ?? localeStrings;
 
+  // xkcd: Will this lead to `ErrorBar` getting recreated entirely?
   if (props.activeErrors.length === 0) {
     return <></>;
   }
 
-  // FIXME: Memoize onDismiss callbacks.
+  const [dismissedErrors, setDismissedErrors] = useState<DismissedError[]>([]);
+  const errorsToShow = useMemo(
+    () => getErrorsToShow(props.activeErrors, dismissedErrors),
+    [props.activeErrors, dismissedErrors]
+  );
+
   return (
     <Stack>
-      {props.activeErrors.map((activeError) => (
+      {errorsToShow.map((activeError) => (
         <MessageBar
           {...props}
           key={activeError.type}
           messageBarType={MessageBarType.error}
-          onDismiss={() => props.onDismissErrors([activeError.type])}
+          onDismiss={() => {
+            const newDismissedErrors = updatedDismissedErrors(dismissedErrors, activeError.type);
+            setDismissedErrors(newDismissedErrors);
+          }}
         >
           {strings[activeError.type]}
         </MessageBar>
@@ -149,3 +163,54 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
     </Stack>
   );
 };
+
+interface DismissedError {
+  type: ErrorType;
+  timestamp: Date;
+}
+
+// Always returns a new Array so that the state variable is updated, trigerring a render.
+const updatedDismissedErrors = (dismissedErrors: DismissedError[], toDismiss: ErrorType): DismissedError[] => {
+  const now = new Date(Date.now());
+  for (const error of dismissedErrors) {
+    if (error.type === toDismiss) {
+      // Bump the timestamp for latest dismissal of this error to now.
+      error.timestamp = now;
+      return Array.from(dismissedErrors);
+    }
+  }
+
+  // Record that this error was dismissed for the first time right now.
+  return [
+    ...dismissedErrors,
+    {
+      type: toDismiss,
+      timestamp: now
+    }
+  ];
+};
+
+const getErrorsToShow = (activeErrors: ActiveError[], dismissedErrors: DismissedError[]): ActiveError[] => {
+  const dismissed = new Map();
+  for (const error of dismissedErrors) {
+    dismissed[error.type] = error;
+  }
+
+  return activeErrors.filter((error) => {
+    if (dismissed[error.type] === undefined) {
+      // This error was never dismissed.
+      return true;
+    }
+
+    const dismissedAt = dismissed[error.type].timestamp;
+    if (error.timestamp) {
+      // Error has an associated timestamp, so compare with last dismissal.
+      return error.timestamp > dismissedAt;
+    }
+
+    // No timestamp associated with the error. In this case, dismissal is active for a fixed amount of time.
+    return Date.now() - dismissedAt.getTime() > ERROR_DISMISSAL_TIMEOUT_MS;
+  });
+};
+
+const ERROR_DISMISSAL_TIMEOUT_MS = 10000;
