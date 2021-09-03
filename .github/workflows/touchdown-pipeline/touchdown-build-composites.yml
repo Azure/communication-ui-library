@@ -29,7 +29,7 @@ steps:
       cultureMappingType: 'None'
       gitAction: 'NONE'
     displayName: 'Call Touchdown build task for composites'
-    condition: not(and($(bot_token), $(branch)))
+    condition: or(eq($(bot_token), ''), eq($(branch), ''))
 
   - task: TouchdownBuildTask@1
     inputs:
@@ -44,7 +44,7 @@ steps:
       cultureMappingType: 'None'
       gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for composites'
-    condition: or(eq($(bot_token), ''), eq($(branch), ''))
+    condition: not(or(eq($(bot_token), ''), eq($(branch), '')))
 
   - script: |
       curl \
