@@ -27,5 +27,30 @@ steps:
       resourceFilePath: 'packages/react-composites/src/composites/localization/locales/en-US/strings.json'
       outputDirectoryRoot: 'packages/react-composites/src/composites/localization/locales'
       cultureMappingType: 'None'
+      gitAction: 'NONE'
+    displayName: 'Call Touchdown build task for composites'
+    condition: not(and($(bot_token), $(branch)))
+
+  - task: TouchdownBuildTask@1
+    inputs:
+      environment: 'PRODEXT'
+      teamId: '35669'
+      authType: 'OAuth'
+      authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
+      authKey: $(AUTH_KEY)
+      isPreview: false
+      resourceFilePath: 'packages/react-composites/src/composites/localization/locales/en-US/strings.json'
+      outputDirectoryRoot: 'packages/react-composites/src/composites/localization/locales'
+      cultureMappingType: 'None'
       gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for composites'
+    condition: and($(bot_token), $(branch))
+
+  - script: |
+      curl \
+        -X POST \
+        -H 'Accept: application/vnd.github.v3+json' \
+        -H 'authorization: Bearer $(bot_token)' \
+        https://api.github.com/repos/Azure/communication-ui-library/pulls \
+        -d '{ "title":"Localization updates", "head":"$(branch)", "base":"main", "body":"Created by the `Nightly localization` GitHub action. Please review." }'
+    condition: and($(bot_token), $(branch))

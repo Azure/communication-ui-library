@@ -6,12 +6,6 @@ pr: none
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  ${{ if and($(bot_token), $(branch)) }}:
-    gitAction: 'COMMIT'
-  ${{ if not(and($(bot_token), $(branch))) }}:
-    gitAction: 'NONE'
-
 steps:
   - checkout: self
     persistCredentials: true
@@ -33,8 +27,24 @@ steps:
       resourceFilePath: 'packages/react-components/src/localization/locales/en-US/strings.json'
       outputDirectoryRoot: 'packages/react-components/src/localization/locales'
       cultureMappingType: 'None'
-      gitAction: $(gitAction)
+      gitAction: 'NONE'
     displayName: 'Call Touchdown build task for components'
+    condition: not(and($(bot_token), $(branch)))
+
+  - task: TouchdownBuildTask@1
+    inputs:
+      environment: 'PRODEXT'
+      teamId: '35669'
+      authType: 'OAuth'
+      authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
+      authKey: $(AUTH_KEY)
+      isPreview: false
+      resourceFilePath: 'packages/react-components/src/localization/locales/en-US/strings.json'
+      outputDirectoryRoot: 'packages/react-components/src/localization/locales'
+      cultureMappingType: 'None'
+      gitAction: 'COMMIT'
+    displayName: 'Call Touchdown build task for components'
+    condition: and($(bot_token), $(branch))
 
   - script: |
       curl \
