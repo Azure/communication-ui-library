@@ -76,13 +76,13 @@ const accessErrorTargets: ChatErrorTarget[] = [
 
 const latestUnableToReachChatServiceError = (latestErrors: ChatErrors): ActiveError | undefined => {
   return latestActiveErrorSatisfying(latestErrors, 'unableToReachChatService', (error: ChatError): boolean => {
-    return error !== undefined && error.inner['code'] === 'REQUEST_SEND_ERROR';
+    return !!error && !!error.inner && error.inner['code'] === 'REQUEST_SEND_ERROR';
   });
 };
 
 const latestAccessDeniedError = (latestErrors: ChatErrors): ActiveError | undefined => {
   return latestActiveErrorSatisfying(latestErrors, 'accessDenied', (error: ChatError): boolean => {
-    return error !== undefined && error.inner['statusCode'] === 401;
+    return !!error && !!error.inner && error.inner['statusCode'] === 401;
   });
 };
 
@@ -90,7 +90,7 @@ const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveError | und
   return latestActiveErrorSatisfying(latestErrors, 'sendMessageNotInThisThread', (error: ChatError): boolean => {
     // Chat service returns 403 if a user has been removed from a thread.
     // Chat service returns either 401 or 403 if the thread ID is malformed, depending on how the thread ID is malformed.
-    return error !== undefined && (error.inner['statusCode'] === 400 || error.inner['statusCode'] === 403);
+    return !!error && !!error.inner && (error.inner['statusCode'] === 400 || error.inner['statusCode'] === 403);
   });
 };
 
