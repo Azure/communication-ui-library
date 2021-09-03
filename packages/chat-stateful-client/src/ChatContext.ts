@@ -456,10 +456,8 @@ export class ChatContext {
 }
 
 const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
-  // Testing note: It is easier to mock Date::now() than the Date() constructor.
-  const now = new Date(Date.now());
   if (error instanceof Error) {
-    return new ChatError(target, error, now);
+    return new ChatError(target, error);
   }
-  return new ChatError(target, new Error(`${error}`), now);
+  return new ChatError(target, new Error(`${error}`));
 };

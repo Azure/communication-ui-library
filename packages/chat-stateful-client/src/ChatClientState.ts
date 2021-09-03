@@ -82,13 +82,14 @@ export class ChatError extends Error {
   /**
    * Optional timestamp added to the error by the stateful layer.
    */
-  public timstamp?: Date;
+  public timestamp: Date;
 
   constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date) {
     super();
     this.target = target;
     this.inner = inner;
-    this.timstamp = timestamp;
+    // Testing note: It is easier to mock Date::now() than the Date() constructor.
+    this.timestamp = timestamp ?? new Date(Date.now());
     this.name = 'ChatError';
     this.message = `${this.target}: ${this.inner.message}`;
   }

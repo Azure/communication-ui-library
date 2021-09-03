@@ -29,7 +29,7 @@ export class ChatError extends Error {
     constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
     inner: Error;
     target: ChatErrorTarget;
-    timstamp?: Date;
+    timestamp: Date;
 }
 
 // @public
