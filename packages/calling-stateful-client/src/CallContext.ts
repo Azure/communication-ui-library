@@ -770,5 +770,8 @@ export class CallContext {
 }
 
 const toCallError = (target: CallErrorTarget, error: unknown): CallError => {
-  return new CallError(target, error as Error);
+  if (error instanceof Error) {
+    return new CallError(target, error);
+  }
+  return new CallError(target, new Error(error as string));
 };
