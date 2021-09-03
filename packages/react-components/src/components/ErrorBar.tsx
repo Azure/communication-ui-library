@@ -111,8 +111,11 @@ export interface ActiveError {
   type: ErrorType;
   /**
    * The latest timestamp when this error was observed.
+   *
+   * When available, this is used to track errors that have already been seen and dismissed
+   * by the user.
    */
-  timestamp: Date;
+  timestamp?: Date;
 }
 
 /**

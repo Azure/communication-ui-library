@@ -69,7 +69,7 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
 export interface ActiveError {
-    timestamp: Date;
+    timestamp?: Date;
     type: ErrorType;
 }
 

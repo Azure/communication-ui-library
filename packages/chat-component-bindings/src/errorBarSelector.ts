@@ -47,7 +47,7 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
         activeErrors.push({
           type: 'sendMessageNotInThisThread',
           // Set the latest timestamp of all the errors that translated to an active error.
-          timestamp: sendMessageError.timestamp > error.timestamp ? sendMessageError.timestamp : error.timestamp
+          timestamp: sendMessageError.timestamp > (error.timestamp ?? 0) ? sendMessageError.timestamp : error.timestamp
         });
         specificSendMessageErrorSeen = true;
       } else {
@@ -115,6 +115,7 @@ const latestActiveErrorSatisfying = (
   if (activeErrors.length === 0) {
     return undefined;
   }
-  activeErrors.sort((a: ActiveError, b: ActiveError) => a.timestamp.getTime() - b.timestamp.getTime());
+  // We're actually sure that both timestamps will always exist, because we set them above.
+  activeErrors.sort((a: ActiveError, b: ActiveError) => (a.timestamp?.getTime() ?? 0) - (b.timestamp?.getTime() ?? 0));
   return activeErrors[activeErrors.length - 1];
 };

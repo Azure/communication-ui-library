@@ -25,7 +25,7 @@ import { Theme } from '@fluentui/react';
 
 // @public
 export interface ActiveError {
-    timestamp: Date;
+    timestamp?: Date;
     type: ErrorType;
 }
 
