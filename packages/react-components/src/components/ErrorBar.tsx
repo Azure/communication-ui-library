@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
 
@@ -130,7 +130,8 @@ export interface ActiveError {
  *
  * This component internally tracks dismissed by the user.
  *   * Errors that have an associated timestamp: The error is shown on the UI again if it occurs after being dismissed.
- *   * Errors that do not have a timestamp: The error is dismissed for a (configurable) amount of time, then shown again.
+ *   * Errors that do not have a timestamp: The error is dismissed until it dissappears from the props.
+ *         If the error recurs, it is shown in the UI.
  *
  * Uses {@link @fluentui/react#MessageBar} UI element.
  */
@@ -139,8 +140,14 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const strings = props.strings ?? localeStrings;
 
   const [dismissedErrors, setDismissedErrors] = useState<DismissedError[]>([]);
+
   const errorsToShow = useMemo(
     () => getErrorsToShow(props.activeErrors, dismissedErrors),
+    [props.activeErrors, dismissedErrors]
+  );
+
+  useEffect(
+    () => setDismissedErrors(maybeDropDismissalsForInactiveErrors(props.activeErrors, dismissedErrors)),
     [props.activeErrors, dismissedErrors]
   );
 
@@ -152,7 +159,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           key={activeError.type}
           messageBarType={MessageBarType.error}
           onDismiss={() => {
-            const newDismissedErrors = updatedDismissedErrors(dismissedErrors, activeError.type);
+            const newDismissedErrors = updatedDismissedErrors(dismissedErrors, activeError);
             setDismissedErrors(newDismissedErrors);
           }}
         >
@@ -165,16 +172,18 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
 
 interface DismissedError {
   type: ErrorType;
-  timestamp: Date;
+  dismissedAt: Date;
+  activeSince?: Date;
 }
 
 // Always returns a new Array so that the state variable is updated, trigerring a render.
-const updatedDismissedErrors = (dismissedErrors: DismissedError[], toDismiss: ErrorType): DismissedError[] => {
+const updatedDismissedErrors = (dismissedErrors: DismissedError[], toDismiss: ActiveError): DismissedError[] => {
   const now = new Date(Date.now());
   for (const error of dismissedErrors) {
-    if (error.type === toDismiss) {
+    if (error.type === toDismiss.type) {
       // Bump the timestamp for latest dismissal of this error to now.
-      error.timestamp = now;
+      error.dismissedAt = now;
+      error.activeSince = toDismiss.timestamp;
       return Array.from(dismissedErrors);
     }
   }
@@ -183,10 +192,36 @@ const updatedDismissedErrors = (dismissedErrors: DismissedError[], toDismiss: Er
   return [
     ...dismissedErrors,
     {
-      type: toDismiss,
-      timestamp: now
+      type: toDismiss.type,
+      dismissedAt: now,
+      activeSince: toDismiss.timestamp
     }
   ];
+};
+
+// Returns a new Array iff contents change, to avoid re-rendering when nothing was dropped.
+const maybeDropDismissalsForInactiveErrors = (
+  activeErrors: ActiveError[],
+  dismissedErrors: DismissedError[]
+): DismissedError[] => {
+  const active = new Map();
+  for (const error of activeErrors) {
+    active[error.type] = error;
+  }
+
+  // For an error such that:
+  // * It was previously active, and dismissed.
+  // * It did not have a timestamp associated with it.
+  // * It is no longer active.
+  //
+  // We remove it from dismissals. When it becomes active again next time, it will be shown again on the UI.
+  const shouldDeleteDismissal = (dismissed: DismissedError) =>
+    dismissed.activeSince === undefined && active[dismissed.type] === undefined;
+
+  if (dismissedErrors.some((dismissed) => shouldDeleteDismissal(dismissed))) {
+    return dismissedErrors.filter((dismissed) => !shouldDeleteDismissal(dismissed));
+  }
+  return dismissedErrors;
 };
 
 const getErrorsToShow = (activeErrors: ActiveError[], dismissedErrors: DismissedError[]): ActiveError[] => {
@@ -202,13 +237,12 @@ const getErrorsToShow = (activeErrors: ActiveError[], dismissedErrors: Dismissed
     }
 
     const dismissedAt = dismissed[error.type].timestamp;
-    if (error.timestamp) {
-      // Error has an associated timestamp, so compare with last dismissal.
-      return error.timestamp > dismissedAt;
+    if (!error.timestamp) {
+      // No timestamp associated with the error. In this case, the existence of a dismissal is enough to suppress the error.
+      return false;
     }
-
-    // No timestamp associated with the error. In this case, dismissal is active for a fixed amount of time.
-    return Date.now() - dismissedAt.getTime() > ERROR_DISMISSAL_TIMEOUT_MS;
+    // Error has an associated timestamp, so compare with last dismissal.
+    return error.timestamp > dismissedAt;
   });
 };
 
