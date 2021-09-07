@@ -1,5 +1,5 @@
 import {
-  AsyncLocalizationProvider,
+  LocalizationProvider,
   COMPONENT_LOCALE_JA_JP,
   COMPONENT_LOCALE_FR_FR,
   COMPONENT_LOCALE_EN_US,
@@ -32,8 +32,8 @@ export const AsyncLocalesSnippet = (): JSX.Element => {
   };
 
   return (
-    <AsyncLocalizationProvider defaultLocale="ja-JP" localeLoader={localeLoader}>
+    <LocalizationProvider defaultLocale="ja-JP" locale={localeLoader}>
       <CameraButton showLabel />
-    </AsyncLocalizationProvider>
+    </LocalizationProvider>
   );
 };

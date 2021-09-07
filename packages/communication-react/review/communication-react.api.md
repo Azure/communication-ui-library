@@ -108,13 +108,6 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @public (undocumented)
-export const AsyncLocalizationProvider: (props: {
-    defaultLocale?: string | undefined;
-    localeLoader: (locale?: string | undefined) => Promise<ComponentLocale>;
-    children: React_2.ReactNode;
-}) => JSX.Element;
-
 // @public
 export type AvatarPersonaData = {
     text?: string;
@@ -147,9 +140,10 @@ export type AzureCommunicationChatAdapterArgs = {
 
 // @public (undocumented)
 export interface BaseCompositeProps {
+    defaultLocale?: string;
     fluentTheme?: PartialTheme | Theme;
     icons?: CompositeIcons;
-    localeLoader?: (locale?: string) => Promise<CompositeLocale>;
+    locale?: CompositeLocale | ((locale?: string) => Promise<CompositeLocale>);
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;
 }
@@ -1220,14 +1214,12 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @public
-export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
-
-// @public
-export type LocalizationProviderProps = {
-    locale: ComponentLocale;
+// @public (undocumented)
+export const LocalizationProvider: (props: {
+    defaultLocale?: string | undefined;
+    locale: ComponentLocale | ((locale?: string | undefined) => Promise<ComponentLocale>);
     children: React_2.ReactNode;
-};
+}) => JSX.Element;
 
 // @public
 export interface LocalVideoStreamState {

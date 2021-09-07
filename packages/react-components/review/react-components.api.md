@@ -28,13 +28,6 @@ export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
 
-// @public (undocumented)
-export const AsyncLocalizationProvider: (props: {
-    defaultLocale?: string | undefined;
-    localeLoader: (locale?: string | undefined) => Promise<ComponentLocale>;
-    children: React_2.ReactNode;
-}) => JSX.Element;
-
 // @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
@@ -365,14 +358,12 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @public
-export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
-
-// @public
-export type LocalizationProviderProps = {
-    locale: ComponentLocale;
+// @public (undocumented)
+export const LocalizationProvider: (props: {
+    defaultLocale?: string | undefined;
+    locale: ComponentLocale | ((locale?: string | undefined) => Promise<ComponentLocale>);
     children: React_2.ReactNode;
-};
+}) => JSX.Element;
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {

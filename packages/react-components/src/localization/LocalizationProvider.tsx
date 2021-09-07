@@ -62,9 +62,9 @@ export interface ComponentStrings {
 export const LocaleContext = createContext<ComponentLocale>(COMPONENT_LOCALE_EN_US);
 
 /**
- * Props to LocalizationProvider
+ * Props to InternalLocalizationProvider
  */
-export type LocalizationProviderProps = {
+type InternalLocalizationProviderProps = {
   /** Locale context to provide components */
   locale: ComponentLocale;
   /** Children to provide locale context. */
@@ -76,7 +76,7 @@ export type LocalizationProviderProps = {
  * @remarks Components will be provided localized strings in English (US) by default if this
  * provider is not used
  */
-export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
+const InternalLocalizationProvider = (props: InternalLocalizationProviderProps): JSX.Element => {
   const { locale, children } = props;
   return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
 };
@@ -93,11 +93,13 @@ const SetLocaleContext = createContext<SetLocaleContext>({
   setLocale: async (locale?: string) => {}
 });
 
-export const AsyncLocalizationProvider = (props: {
+type AsyncLocalizationProviderProps = {
   defaultLocale?: string;
   localeLoader: (locale?: string) => Promise<ComponentLocale>;
   children: React.ReactNode;
-}): JSX.Element => {
+};
+
+const AsyncLocalizationProvider = (props: AsyncLocalizationProviderProps): JSX.Element => {
   const { children, defaultLocale, localeLoader } = props;
   const [componentLocale, setComponentLocale] = useState<ComponentLocale>(COMPONENT_LOCALE_EN_US);
 
@@ -120,7 +122,7 @@ export const AsyncLocalizationProvider = (props: {
 
   return (
     <SetLocaleContext.Provider value={state}>
-      <LocalizationProvider locale={componentLocale}>{children}</LocalizationProvider>
+      <InternalLocalizationProvider locale={componentLocale}>{children}</InternalLocalizationProvider>
     </SetLocaleContext.Provider>
   );
 };
@@ -129,3 +131,19 @@ export const AsyncLocalizationProvider = (props: {
  * React hook for programmatically accessing the setLocale.
  */
 export const useSetLocale = (): SetLocaleContext => useContext(SetLocaleContext);
+
+export const LocalizationProvider = (props: {
+  defaultLocale?: string;
+  locale: ComponentLocale | ((locale?: string) => Promise<ComponentLocale>);
+  children: React.ReactNode;
+}): JSX.Element => {
+  const { children, defaultLocale, locale } = props;
+  if (typeof locale === 'function') {
+    return AsyncLocalizationProvider({
+      defaultLocale,
+      localeLoader: locale as (locale?: string) => Promise<ComponentLocale>,
+      children
+    });
+  }
+  return InternalLocalizationProvider({ locale, children });
+};
