@@ -4,7 +4,7 @@
 import React from 'react';
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider } from '@internal/react-components';
-import { CompositeLocale, LocalizationProvider } from '../localization';
+import { CompositeLocale, AsyncLocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { DEFAULT_COMPOSITE_ICONS, CompositeIcons } from './icons';
 
@@ -25,7 +25,7 @@ export interface BaseCompositeProps {
    *
    * @defaultValue English (US)
    */
-  locale?: CompositeLocale;
+  localeLoader?: (locale?: string) => Promise<CompositeLocale>;
   /**
    * Whether composite is displayed right-to-left.
    *
@@ -44,7 +44,7 @@ export interface BaseCompositeProps {
  * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
  */
 export const BaseComposite = (props: BaseCompositeProps & { children: React.ReactNode }): JSX.Element => {
-  const { fluentTheme, rtl, locale } = props;
+  const { fluentTheme, rtl, localeLoader } = props;
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
@@ -58,5 +58,5 @@ export const BaseComposite = (props: BaseCompositeProps & { children: React.Reac
       {props.children}
     </FluentThemeProvider>
   );
-  return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  return localeLoader ? AsyncLocalizationProvider({ localeLoader, children: CompositeElement }) : CompositeElement;
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 import { ComponentLocale, LocalizationProvider as ComponentLocalizationProvider } from '@internal/react-components';
 
@@ -54,7 +54,7 @@ export type LocalizationProviderProps = {
  *
  * This provider is internal. Do not export in public API.
  */
-export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
+const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
   const { locale, children } = props;
   return (
     <LocaleContext.Provider value={locale}>
@@ -65,3 +65,49 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
 
 /** React hook to access locale */
 export const useLocale = (): CompositeLocale => useContext(LocaleContext);
+
+interface SetLocaleContext {
+  setLocale: (locale?: string) => Promise<void>;
+}
+
+const SetLocaleContext = createContext<SetLocaleContext>({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  setLocale: async (locale?: string) => {}
+});
+
+export const AsyncLocalizationProvider = (props: {
+  defaultLocale?: string;
+  localeLoader: (locale?: string) => Promise<CompositeLocale>;
+  children: React.ReactNode;
+}): JSX.Element => {
+  const { children, defaultLocale, localeLoader } = props;
+  const [compositeLocale, setCompositeLocale] = useState<CompositeLocale>(COMPOSITE_LOCALE_EN_US);
+
+  useEffect(() => {
+    const intializeLocale = async (): Promise<void> => {
+      const compositeLocale = await localeLoader(defaultLocale);
+      setCompositeLocale(compositeLocale);
+    };
+    intializeLocale();
+  }, [defaultLocale, localeLoader]);
+
+  const state = useMemo<SetLocaleContext>(
+    () => ({
+      setLocale: async (locale?: string): Promise<void> => {
+        setCompositeLocale(await localeLoader(locale));
+      }
+    }),
+    [localeLoader]
+  );
+
+  return (
+    <SetLocaleContext.Provider value={state}>
+      <LocalizationProvider locale={compositeLocale}>{children}</LocalizationProvider>
+    </SetLocaleContext.Provider>
+  );
+};
+
+/**
+ * React hook for programmatically accessing the setLocale.
+ */
+export const useSetLocale = (): SetLocaleContext => useContext(SetLocaleContext);

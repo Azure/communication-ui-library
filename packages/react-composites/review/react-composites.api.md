@@ -94,7 +94,7 @@ export type AzureCommunicationChatAdapterArgs = {
 export interface BaseCompositeProps {
     fluentTheme?: PartialTheme | Theme;
     icons?: CompositeIcons;
-    locale?: CompositeLocale;
+    localeLoader?: (locale?: string) => Promise<CompositeLocale>;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;
 }
