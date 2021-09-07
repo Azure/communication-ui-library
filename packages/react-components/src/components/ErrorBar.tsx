@@ -245,5 +245,3 @@ const getErrorsToShow = (activeErrors: ActiveError[], dismissedErrors: Dismissed
     return error.timestamp > dismissedAt;
   });
 };
-
-const ERROR_DISMISSAL_TIMEOUT_MS = 10000;
