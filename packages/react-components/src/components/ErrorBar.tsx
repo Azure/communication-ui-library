@@ -141,19 +141,25 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
 
   const [dismissedErrors, setDismissedErrors] = useState<DismissedError[]>([]);
 
-  const errorsToShow = useMemo(
-    () => getErrorsToShow(props.activeErrors, dismissedErrors),
+  useEffect(() => {
+    console.log('useEffect', props.activeErrors, dismissedErrors);
+    setDismissedErrors(maybeDropDismissalsForInactiveErrors(props.activeErrors, dismissedErrors));
+  }, []);
+  // }, [props.activeErrors, dismissedErrors]);
+
+  const toShow = useMemo(
+    () => errorsToShow(props.activeErrors, dismissedErrors),
     [props.activeErrors, dismissedErrors]
   );
 
-  useEffect(
-    () => setDismissedErrors(maybeDropDismissalsForInactiveErrors(props.activeErrors, dismissedErrors)),
-    [props.activeErrors, dismissedErrors]
-  );
-
+  /*
+  console.log('props', props);
+  console.log('dismissedErrors', dismissedErrors);
+  console.log('toShow', toShow);
+*/
   return (
     <Stack>
-      {errorsToShow.map((activeError) => (
+      {toShow.map((activeError) => (
         <MessageBar
           {...props}
           key={activeError.type}
@@ -224,24 +230,23 @@ const maybeDropDismissalsForInactiveErrors = (
   return dismissedErrors;
 };
 
-const getErrorsToShow = (activeErrors: ActiveError[], dismissedErrors: DismissedError[]): ActiveError[] => {
-  const dismissed = new Map();
+const errorsToShow = (activeErrors: ActiveError[], dismissedErrors: DismissedError[]): ActiveError[] => {
+  const dismissed: Map<ErrorType, DismissedError> = new Map();
   for (const error of dismissedErrors) {
     dismissed[error.type] = error;
   }
 
   return activeErrors.filter((error) => {
-    if (dismissed[error.type] === undefined) {
+    const dismissal = dismissed[error.type] as DismissedError | undefined;
+    if (!dismissal) {
       // This error was never dismissed.
       return true;
     }
-
-    const dismissedAt = dismissed[error.type].timestamp;
     if (!error.timestamp) {
       // No timestamp associated with the error. In this case, the existence of a dismissal is enough to suppress the error.
       return false;
     }
     // Error has an associated timestamp, so compare with last dismissal.
-    return error.timestamp > dismissedAt;
+    return error.timestamp > dismissal.dismissedAt;
   });
 };

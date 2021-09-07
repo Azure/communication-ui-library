@@ -12390,6 +12390,12 @@ packages:
         optional: true
     resolution:
       integrity: sha512-olV41bKSMm8BdnuMsewT4jqlZ8+3TCARAXjZGT9jcoSnrfUnRCqnMoF9XEeoWjbzObpqF9dRhHQj0Xb9QdF6/w==
+  /jest-react-hooks-shallow/1.5.1:
+    dependencies:
+      react: 16.14.0
+    dev: false
+    resolution:
+      integrity: sha512-tyIUh2aKLTGPxbc6aK54pymvvRlX8eGNn3GzXefXAX5BkUwj4geS1pPJijmYeCELbn8+BUP9uS9+6OG5ElVI5Q==
   /jest-regex-util/26.0.0:
     dev: false
     engines:
@@ -19403,6 +19409,7 @@ packages:
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
+      jest-react-hooks-shallow: 1.5.1
       json-stringify-safe: 5.0.1
       nan: 2.15.0
       node-forge: 0.10.0
@@ -19427,7 +19434,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-FBypRUQpY4bil/d1KasSzUWq8VrIrblPBUbPU0vWaRdsQwessDEzSGrkq+GIfFwrw/Y3dgO84nkz+9/EAP4d8g==
+      integrity: sha512-ZL4QWQqLFHkRLGaL7wUZatH7fxPzw8qcTiQgvZxaoNoGvG8ITQKK0KkP1FYRfYmjlkpMF5pfWwVxxUYSC9ivow==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
