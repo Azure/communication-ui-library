@@ -108,6 +108,13 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
+// @public (undocumented)
+export const AsyncLocalizationProvider: (props: {
+    defaultLocale?: string | undefined;
+    localeLoader: (locale?: string | undefined) => Promise<ComponentLocale>;
+    children: React_2.ReactNode;
+}) => JSX.Element;
+
 // @public
 export type AvatarPersonaData = {
     text?: string;

@@ -28,6 +28,13 @@ export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
 
+// @public (undocumented)
+export const AsyncLocalizationProvider: (props: {
+    defaultLocale?: string | undefined;
+    localeLoader: (locale?: string | undefined) => Promise<ComponentLocale>;
+    children: React_2.ReactNode;
+}) => JSX.Element;
+
 // @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
