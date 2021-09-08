@@ -185,9 +185,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 <Text className={tileInfoDisplayNameStyle}>{displayName}</Text>
               </Stack.Item>
             )}
-            {showMuteIndicator && isMuted !== undefined && (
+            {showMuteIndicator && isMuted && (
               <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
-                {isMuted ? <Icon iconName="VideoTileMicOff" /> : undefined}
+                <Icon iconName="VideoTileMicOff" />
               </Stack.Item>
             )}
           </Stack>
