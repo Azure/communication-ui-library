@@ -195,7 +195,7 @@ const dismissError = (dismissedErrors: DismissedError[], toDismiss: ActiveError)
   ];
 };
 
-// Returns a new Array iff contents change, to avoid re-rendering when nothing was dropped.
+// Returns a new Array if and only if contents change, to avoid re-rendering when nothing was dropped.
 const dropDismissalsForInactiveErrors = (
   activeErrors: ActiveError[],
   dismissedErrors: DismissedError[]

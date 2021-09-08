@@ -12390,12 +12390,6 @@ packages:
         optional: true
     resolution:
       integrity: sha512-olV41bKSMm8BdnuMsewT4jqlZ8+3TCARAXjZGT9jcoSnrfUnRCqnMoF9XEeoWjbzObpqF9dRhHQj0Xb9QdF6/w==
-  /jest-react-hooks-shallow/1.5.1:
-    dependencies:
-      react: 16.14.0
-    dev: false
-    resolution:
-      integrity: sha512-tyIUh2aKLTGPxbc6aK54pymvvRlX8eGNn3GzXefXAX5BkUwj4geS1pPJijmYeCELbn8+BUP9uS9+6OG5ElVI5Q==
   /jest-regex-util/26.0.0:
     dev: false
     engines:
