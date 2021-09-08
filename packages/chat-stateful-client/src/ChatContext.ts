@@ -359,8 +359,9 @@ export class ChatContext {
         this.modifyState(newClearChatErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
-        this.setLatestError(target, error);
-        throw new ChatError(target, error);
+        const chatError = toChatError(target, error);
+        this.setLatestError(target, chatError);
+        throw chatError;
       }
     };
   }
@@ -387,13 +388,14 @@ export class ChatContext {
         this.modifyState(newClearChatErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
-        this.setLatestError(target, error);
-        throw new ChatError(target, error);
+        const chatError = toChatError(target, error);
+        this.setLatestError(target, chatError);
+        throw chatError;
       }
     };
   }
 
-  private setLatestError(target: ChatErrorTarget, error: Error): void {
+  private setLatestError(target: ChatErrorTarget, error: ChatError): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.latestErrors[target] = error;
@@ -452,3 +454,10 @@ export class ChatContext {
     this._emitter.off('stateChanged', handler);
   }
 }
+
+const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
+  if (error instanceof Error) {
+    return new ChatError(target, error);
+  }
+  return new ChatError(target, new Error(`${error}`));
+};

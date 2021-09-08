@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { ActiveError } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
@@ -167,9 +168,9 @@ export const emptySelector: () => Record<string, never>;
 
 // @public
 export const errorBarSelector: OutputSelector<CallClientState, {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }, (res: CallErrors) => {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }>;
 
 // @public (undocumented)
