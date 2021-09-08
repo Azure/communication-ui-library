@@ -42,9 +42,6 @@ export const errorBarSelector = createSelector([getLatestErrors], (latestErrors)
   if (latestErrors['Call.unmute'] !== undefined) {
     activeErrors.push('unmuteGeneric');
   }
-  if (latestErrors['Call.startScreenSharing'] !== undefined) {
-    activeErrors.push('startScreenShareGeneric');
-  }
 
   // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
   activeErrors.splice(maxErrorCount);
