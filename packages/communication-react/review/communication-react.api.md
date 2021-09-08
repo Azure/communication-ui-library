@@ -340,7 +340,11 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    configurationPageTitle: string;
+    defaultPlaceHolder: string;
     microphonePermissionDenied: string;
+    soundLabel: string;
+    startCallButtonText: string;
     teamsMeetingFailReasonAccessDenied: string;
     teamsMeetingFailReasonParticipantRemoved: string;
     teamsMeetingFailToJoin: string;
@@ -610,6 +614,11 @@ export interface ChatCompositeProps extends BaseCompositeProps {
 }
 
 // @public
+export interface ChatCompositeStrings {
+    chatListHeader: string;
+}
+
+// @public
 export type ChatCompositeVisualElements = {
     showErrorBar?: boolean;
     showParticipantPane?: boolean;
@@ -874,6 +883,7 @@ export interface CompositeLocale {
 // @public
 export interface CompositeStrings {
     call: CallCompositeStrings;
+    chat: ChatCompositeStrings;
 }
 
 // @public
