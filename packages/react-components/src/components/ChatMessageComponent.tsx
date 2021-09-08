@@ -13,7 +13,8 @@ import {
   chatMessageStyle,
   chatActionsCSS,
   iconWrapperStyle,
-  menuIconStyleSet
+  menuIconStyleSet,
+  chatMessageEditedTagStyle
 } from './styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
@@ -162,6 +163,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
             : undefined}
         </Text>
       }
+      details={message.payload.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>Edited</div> : undefined}
       positionActionMenu={false}
       actionMenu={
         !editDisabled && message.payload.status !== 'sending' && message.payload.mine ? actionMenu : undefined
