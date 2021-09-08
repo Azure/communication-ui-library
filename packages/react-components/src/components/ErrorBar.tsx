@@ -141,22 +141,16 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
 
   const [dismissedErrors, setDismissedErrors] = useState<DismissedError[]>([]);
 
-  useEffect(() => {
-    console.log('useEffect', props.activeErrors, dismissedErrors);
-    setDismissedErrors(maybeDropDismissalsForInactiveErrors(props.activeErrors, dismissedErrors));
-  }, []);
-  // }, [props.activeErrors, dismissedErrors]);
+  useEffect(
+    () => setDismissedErrors(maybeDropDismissalsForInactiveErrors(props.activeErrors, dismissedErrors)),
+    [props.activeErrors, dismissedErrors]
+  );
 
   const toShow = useMemo(
     () => errorsToShow(props.activeErrors, dismissedErrors),
     [props.activeErrors, dismissedErrors]
   );
 
-  /*
-  console.log('props', props);
-  console.log('dismissedErrors', dismissedErrors);
-  console.log('toShow', toShow);
-*/
   return (
     <Stack>
       {toShow.map((activeError) => (
