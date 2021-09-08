@@ -152,14 +152,14 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
 
   return (
     <Stack>
-      {toShow.map((activeError) => (
+      {toShow.map((error) => (
         <MessageBar
           {...props}
-          key={activeError.type}
+          key={error.type}
           messageBarType={MessageBarType.error}
-          onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, activeError))}
+          onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
         >
-          {strings[activeError.type]}
+          {strings[error.type]}
         </MessageBar>
       ))}
     </Stack>
@@ -202,7 +202,7 @@ const dropDismissalsForInactiveErrors = (
 ): DismissedError[] => {
   const active = new Map();
   for (const error of activeErrors) {
-    active[error.type] = error;
+    active.set(error.type, error);
   }
 
   // For an error such that:
@@ -223,7 +223,7 @@ const dropDismissalsForInactiveErrors = (
 const errorsToShow = (activeErrors: ActiveError[], dismissedErrors: DismissedError[]): ActiveError[] => {
   const dismissed: Map<ErrorType, DismissedError> = new Map();
   for (const error of dismissedErrors) {
-    dismissed[error.type] = error;
+    dismissed.set(error.type, error);
   }
 
   return activeErrors.filter((error) => {
