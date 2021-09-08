@@ -69,5 +69,4 @@ export type CallCompositeIcons = Pick<
   | 'ParticipantItemOptions'
   | 'ParticipantItemOptionsHovered'
   | 'VideoTileMicOff'
-  | 'VideoTileMicOn'
 >;
