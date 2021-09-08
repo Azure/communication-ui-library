@@ -12,8 +12,9 @@ import {
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 
-export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
-
+/**
+ * These icons are composite specific and not being used inside components.
+ */
 export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsCamera: <Video20Filled />,
   LocalDeviceSettingsMic: <MicOn20Filled />,
@@ -30,3 +31,43 @@ export const DEFAULT_COMPOSITE_ICONS = {
   ...DEFAULT_COMPONENT_ICONS,
   ...COMPOSITE_ONLY_ICONS
 };
+
+export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
+
+export type ChatCompositeIcons = Pick<
+  CompositeIcons,
+  | 'MessageDelivered'
+  | 'MessageFailed'
+  | 'MessageSeen'
+  | 'MessageSending'
+  | 'MessageEdit'
+  | 'MessageRemove'
+  | 'ParticipantItemOptions'
+  | 'ParticipantItemOptionsHovered'
+  | 'SendBoxSend'
+  | 'SendBoxSendHovered'
+  | 'EditBoxCancel'
+  | 'EditBoxSubmit'
+>;
+
+export type CallCompositeIcons = Pick<
+  CompositeIcons,
+  | 'ControlButtonCameraOff'
+  | 'ControlButtonCameraOn'
+  | 'ControlButtonEndCall'
+  | 'ControlButtonMicOff'
+  | 'ControlButtonMicOn'
+  | 'ControlButtonOptions'
+  | 'ControlButtonParticipants'
+  | 'ControlButtonScreenShareStart'
+  | 'ControlButtonScreenShareStop'
+  | 'OptionsCamera'
+  | 'OptionsMic'
+  | 'OptionsSpeaker'
+  | 'ParticipantItemScreenShareStart'
+  | 'ParticipantItemMicOff'
+  | 'ParticipantItemOptions'
+  | 'ParticipantItemOptionsHovered'
+  | 'VideoTileMicOff'
+  | 'VideoTileMicOn'
+>;

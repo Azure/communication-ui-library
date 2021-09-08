@@ -35,6 +35,7 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 /**
  * The default set of icons that are available to use in the UI components.
  */
+// NOTE: Don't forget to add icons used in composites to the types in `packages/react-composites/src/composites/common/icons.tsx`
 export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonCameraOff: <VideoOff20Filled />,
   ControlButtonCameraOn: <Video20Filled />,
