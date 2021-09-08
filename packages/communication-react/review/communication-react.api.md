@@ -68,6 +68,12 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
+export interface ActiveError {
+    timestamp?: Date;
+    type: ErrorType;
+}
+
+// @public
 export interface AdapterDisposal {
     // (undocumented)
     dispose(): void;
@@ -356,21 +362,22 @@ export type CallEndedListener = (event: {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error);
+    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
     inner: Error;
     target: CallErrorTarget;
+    timestamp: Date;
 }
 
 // @public
 export const callErrorBarSelector: OutputSelector<CallClientState, {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }, (res: CallErrors) => {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }>;
 
 // @public
 export type CallErrors = {
-    [target in CallErrorTarget]: Error;
+    [target in CallErrorTarget]: CallError;
 };
 
 // @public
@@ -620,16 +627,17 @@ export type ChatCompositeVisualElements = {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTarget, inner: Error);
+    constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
     inner: Error;
     target: ChatErrorTarget;
+    timestamp: Date;
 }
 
 // @public
 export const chatErrorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }, (res: ChatErrors) => {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }>;
 
 // @public
@@ -640,7 +648,7 @@ export type ChatErrorListener = (event: {
 
 // @public
 export type ChatErrors = {
-    [target in ChatErrorTarget]: Error;
+    [target in ChatErrorTarget]: ChatError;
 };
 
 // @public
@@ -1087,7 +1095,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
-    activeErrors: ErrorType[];
+    activeErrors: ActiveError[];
     onDismissErrors: (errorTypes: ErrorType[]) => void;
     strings?: ErrorBarStrings;
 }
