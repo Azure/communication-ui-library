@@ -88,7 +88,7 @@ const latestAccessDeniedError = (latestErrors: ChatErrors): ActiveError | undefi
 };
 
 const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveError | undefined => {
-  return latestActiveErrorSatisfying(latestErrors, 'sendMessageNotInThisThread', (error: ChatError): boolean => {
+  return latestActiveErrorSatisfying(latestErrors, 'userNotInThisThread', (error: ChatError): boolean => {
     if (!error || !error.inner) {
       return false;
     }
