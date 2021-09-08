@@ -212,7 +212,7 @@ const dropDismissalsForInactiveErrors = (
   //
   // We remove it from dismissals. When it becomes active again next time, it will be shown again on the UI.
   const shouldDeleteDismissal = (dismissed: DismissedError) =>
-    dismissed.activeSince === undefined && active[dismissed.type] === undefined;
+    dismissed.activeSince === undefined && active.get(dismissed.type) === undefined;
 
   if (dismissedErrors.some((dismissed) => shouldDeleteDismissal(dismissed))) {
     return dismissedErrors.filter((dismissed) => !shouldDeleteDismissal(dismissed));
@@ -227,7 +227,7 @@ const errorsToShow = (activeErrors: ActiveError[], dismissedErrors: DismissedErr
   }
 
   return activeErrors.filter((error) => {
-    const dismissal = dismissed[error.type] as DismissedError | undefined;
+    const dismissal = dismissed.get(error.type);
     if (!dismissal) {
       // This error was never dismissed.
       return true;
