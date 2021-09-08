@@ -11,5 +11,8 @@
     "soundLabel": "Sound",
     "configurationPageTitle": "Start a call",
     "startCallButtonText": "Start call"
+  },
+  "chat": {
+    "chatListHeader": "In this chat"
   }
 }
