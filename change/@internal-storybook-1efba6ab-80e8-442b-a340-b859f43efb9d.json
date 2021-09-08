@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add different types for ChatComposite and CallCompposite Icons",
+  "comment": "Remove mic icon in video tile when a user is not muted",
   "packageName": "@internal/storybook",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
