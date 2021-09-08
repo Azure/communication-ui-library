@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
 
@@ -141,15 +141,14 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
 
   const [dismissedErrors, setDismissedErrors] = useState<DismissedError[]>([]);
 
+  // dropDismissalsForInactiveErrors only returns a new object if `dismissedErrors` actually changes.
+  // Without this behaviour, this `useEffect` block would cause a render loop.
   useEffect(
-    () => setDismissedErrors(maybeDropDismissalsForInactiveErrors(props.activeErrors, dismissedErrors)),
+    () => setDismissedErrors(dropDismissalsForInactiveErrors(props.activeErrors, dismissedErrors)),
     [props.activeErrors, dismissedErrors]
   );
 
-  const toShow = useMemo(
-    () => errorsToShow(props.activeErrors, dismissedErrors),
-    [props.activeErrors, dismissedErrors]
-  );
+  const toShow = errorsToShow(props.activeErrors, dismissedErrors);
 
   return (
     <Stack>
@@ -158,10 +157,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           {...props}
           key={activeError.type}
           messageBarType={MessageBarType.error}
-          onDismiss={() => {
-            const newDismissedErrors = updatedDismissedErrors(dismissedErrors, activeError);
-            setDismissedErrors(newDismissedErrors);
-          }}
+          onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, activeError))}
         >
           {strings[activeError.type]}
         </MessageBar>
@@ -177,7 +173,7 @@ interface DismissedError {
 }
 
 // Always returns a new Array so that the state variable is updated, trigerring a render.
-const updatedDismissedErrors = (dismissedErrors: DismissedError[], toDismiss: ActiveError): DismissedError[] => {
+const dismissError = (dismissedErrors: DismissedError[], toDismiss: ActiveError): DismissedError[] => {
   const now = new Date(Date.now());
   for (const error of dismissedErrors) {
     if (error.type === toDismiss.type) {
@@ -200,7 +196,7 @@ const updatedDismissedErrors = (dismissedErrors: DismissedError[], toDismiss: Ac
 };
 
 // Returns a new Array iff contents change, to avoid re-rendering when nothing was dropped.
-const maybeDropDismissalsForInactiveErrors = (
+const dropDismissalsForInactiveErrors = (
   activeErrors: ActiveError[],
   dismissedErrors: DismissedError[]
 ): DismissedError[] => {
