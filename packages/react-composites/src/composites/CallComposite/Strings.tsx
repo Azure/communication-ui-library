@@ -36,3 +36,15 @@ export interface CallCompositeStrings {
    */
   teamsMeetingFailToJoin: string;
 }
+
+/**
+ * Strings used by the {@link ChatComposite} directly.
+ *
+ * This strings are in addition to those used by the components from the component library.
+ */
+export interface ChatCompositeStrings {
+  /**
+   * Chat list header text
+   */
+  chatListHeader: string;
+}
