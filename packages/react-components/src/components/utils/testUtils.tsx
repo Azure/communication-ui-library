@@ -4,7 +4,7 @@
 import React from 'react';
 import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
 import { LocalizationProvider, ComponentLocale, ComponentStrings } from '../../localization/LocalizationProvider';
-import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
+import { COMPONENT_LOCALE_EN_US } from '../../locales';
 import { PartialDeep } from 'type-fest';
 
 export const mountWithLocalization = (node: React.ReactElement, locale: ComponentLocale): ReactWrapper => {

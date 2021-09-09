@@ -18,7 +18,7 @@ import {
   COMPONENT_LOCALE_ZH_CN,
   COMPONENT_LOCALE_ZH_TW
 } from '@internal/react-components';
-import { CompositeLocale, CompositeStrings } from '../LocalizationProvider';
+import { CompositeLocale, CompositeStrings } from '../localization/LocalizationProvider';
 import en_US from './en-US/strings.json';
 import en_GB from './en-GB/strings.json';
 import de_DE from './de-DE/strings.json';

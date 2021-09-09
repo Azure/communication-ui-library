@@ -16,7 +16,7 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings
 } from '../components';
-import { COMPONENT_LOCALE_EN_US } from './locales';
+import { COMPONENT_LOCALE_EN_US } from '../locales';
 
 /**
  * Data structure for localization
