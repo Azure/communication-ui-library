@@ -4,11 +4,12 @@
 import { CommunicationParticipant, DefaultMessageRendererType, MessageProps } from '@internal/react-components';
 import React from 'react';
 import { BaseComposite, BaseCompositeProps } from '../common/Composite';
+import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatScreen } from './ChatScreen';
 
-export interface ChatCompositeProps extends BaseCompositeProps {
+export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
   /**
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
