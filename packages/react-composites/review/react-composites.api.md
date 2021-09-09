@@ -38,8 +38,7 @@ export interface AdapterDisposal {
 }
 
 // @public
-export class AdapterError extends Error {
-    constructor(target: string, inner: Error, timestamp: Date);
+export interface AdapterError extends Error {
     inner: Error;
     target: string;
     timestamp: Date;

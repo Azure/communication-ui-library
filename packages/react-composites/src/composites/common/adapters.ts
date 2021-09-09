@@ -27,28 +27,19 @@ export interface AdapterDisposal {
 /**
  * Error reported via error events and stored in adapter state.
  */
-export class AdapterError extends Error {
+export interface AdapterError extends Error {
   /**
    * The operation that failed.
    */
-  public target: string;
+  target: string;
   /**
    * Error thrown by the failed operation.
    */
-  public inner: Error;
+  inner: Error;
   /**
    * Timestamp added to the error in the adapter implementation.
    */
-  public timestamp: Date;
-
-  constructor(target: string, inner: Error, timestamp: Date) {
-    super();
-    this.target = target;
-    this.inner = inner;
-    this.timestamp = timestamp;
-    this.name = 'AdapterError';
-    this.message = `${this.target}: ${this.inner.message}`;
-  }
+  timestamp: Date;
 }
 
 /**
