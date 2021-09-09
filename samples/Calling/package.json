@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@azure/communication-identity": "1.0.0",
-    "@azure/communication-calling": "1.2.0-beta.1",
+    "@azure/communication-calling": "1.2.1-beta.1",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-react": "1.0.0-beta.4",
     "@azure/core-http": "1.2.4",
