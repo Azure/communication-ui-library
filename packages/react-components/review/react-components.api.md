@@ -24,6 +24,12 @@ import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
+export interface ActiveError {
+    timestamp?: Date;
+    type: ErrorType;
+}
+
+// @public
 export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
@@ -271,8 +277,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
-    activeErrors: ErrorType[];
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
+    activeErrors: ActiveError[];
     strings?: ErrorBarStrings;
 }
 
