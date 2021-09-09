@@ -14,7 +14,6 @@ import {
   AudioOptions,
   CallAgent,
   Call,
-  CallClientOptions,
   GroupCallLocator,
   TeamsMeetingLinkLocator,
   LocalVideoStream as SDKLocalVideoStream,
@@ -507,17 +506,15 @@ export type AzureCommunicationCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator | GroupCallLocator;
-  callClientOptions?: CallClientOptions;
 };
 
 export const createAzureCommunicationCallAdapter = async ({
   userId,
   displayName,
   credential,
-  locator,
-  callClientOptions
+  locator
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient({ userId }, { callClientOptions });
+  const callClient = createStatefulCallClient({ userId });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
