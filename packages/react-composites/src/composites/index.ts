@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export type { AdapterDisposal, AdapterErrorHandlers, AdapterPages, AdapterState } from './common/adapters';
+export type { AdapterDisposal, AdapterPages, AdapterState } from './common/adapters';
 
 export * from './ChatComposite';
 export * from './CallComposite';

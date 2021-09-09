@@ -28,6 +28,7 @@ import {
   participantListContainerPadding
 } from './styles/Chat.styles';
 import { AvatarPersonaDataCallback, AvatarPersona } from '../common/AvatarPersona';
+import { useLocale } from '../localization';
 
 export type ChatScreenProps = {
   showErrorBar?: boolean;
@@ -49,6 +50,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   useEffect(() => {
     adapter.fetchInitialData();
   }, [adapter]);
+
+  const locale = useLocale();
+  const chatListHeader = locale.strings.chat.chatListHeader;
 
   const messageThreadProps = usePropsFor(MessageThread);
   const participantListProps = usePropsFor(ParticipantList);
@@ -90,7 +94,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         {showParticipantPane && (
           <Stack.Item className={participantListWrapper}>
             <Stack className={participantListStack}>
-              <Stack.Item className={listHeader}>In this chat</Stack.Item>
+              <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>
               <Stack.Item className={participantListStyle}>
                 <ParticipantList
                   {...participantListProps}

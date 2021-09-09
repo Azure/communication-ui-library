@@ -8,7 +8,6 @@ import {
   StatefulChatClient
 } from '@internal/chat-stateful-client';
 import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
-import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
 import type {
@@ -124,7 +123,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.removeParticipant = this.removeParticipant.bind(this);
     this.setTopic = this.setTopic.bind(this);
     this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
-    this.clearErrors = this.clearErrors.bind(this);
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
   }
@@ -207,10 +205,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onDeleteMessage(messageId);
     });
-  }
-
-  clearErrors(errorTypes: ErrorType[]): void {
-    this.handlers.onDismissErrors(errorTypes);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {

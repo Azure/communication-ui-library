@@ -64,7 +64,7 @@ export type ChatThreadProperties = {
  * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
  */
 export type ChatErrors = {
-  [target in ChatErrorTarget]: Error;
+  [target in ChatErrorTarget]: ChatError;
 };
 
 /**
@@ -79,11 +79,17 @@ export class ChatError extends Error {
    * Error thrown by the failed SDK method.
    */
   public inner: Error;
+  /**
+   * Timestamp added to the error by the stateful layer.
+   */
+  public timestamp: Date;
 
-  constructor(target: ChatErrorTarget, inner: Error) {
+  constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date) {
     super();
     this.target = target;
     this.inner = inner;
+    // Testing note: It is easier to mock Date::now() than the Date() constructor.
+    this.timestamp = timestamp ?? new Date(Date.now());
     this.name = 'ChatError';
     this.message = `${this.target}: ${this.inner.message}`;
   }
