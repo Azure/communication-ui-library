@@ -309,8 +309,7 @@ export interface CallState {
   /**
    * Stores the latest call diagnostics.
    */
-  // [xkcd] Make this non-optional.
-  diagnostics?: DiagnosticsCallFeatureState;
+  diagnostics: DiagnosticsCallFeatureState;
 }
 
 /**

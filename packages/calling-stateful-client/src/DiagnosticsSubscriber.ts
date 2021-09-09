@@ -33,6 +33,10 @@ export class DiagnosticsSubscriber {
   private setInitialDiagnostics(): void {
     const network = this._diagnostics.network.getLatest();
     const media = this._diagnostics.media.getLatest();
+    if (Object.entries(network).length === 0 && Object.entries(media).length === 0) {
+      return;
+    }
+
     this._context.modifyState((state) => {
       const call = state.calls[this._callIdRef.callId];
       if (call === undefined) {
@@ -47,7 +51,6 @@ export class DiagnosticsSubscriber {
         }
       };
     });
-    this.logDiagnostics('initialization');
   }
 
   private subscribe(): void {
@@ -66,7 +69,6 @@ export class DiagnosticsSubscriber {
         network[args.diagnostic] = latestFromEvent(args);
       }
     });
-    this.logDiagnostics('network update');
   }
 
   private mediaDiagnosticsChanged(args: MediaDiagnosticChangedEventArgs): void {
@@ -80,12 +82,6 @@ export class DiagnosticsSubscriber {
         media[args.diagnostic] = latestFromEvent(args);
       }
     });
-    this.logDiagnostics('media update');
-  }
-
-  private logDiagnostics(operation: string) {
-    console.log(`Latest diagnostics value after ${operation}:`);
-    console.log(this._context.getState().calls[this._callIdRef.callId]?.diagnostics);
   }
 }
 
