@@ -11,7 +11,7 @@ import { CommunicationUserToken } from '@azure/communication-identity';
 
 // Setup mocks
 const mockUserToken: CommunicationUserToken = {
-  user: { communicationUserId: 'mock-toker' },
+  user: { communicationUserId: 'mock-token-user' },
   token: 'mock-token-value',
   expiresOn: new Date(0)
 };
