@@ -61,9 +61,9 @@ export interface ErrorBarStrings {
   sendMessageGeneric: string;
 
   /**
-   * Local participant is speaking but their microphone is muted.
+   * Detected bad network connection via the Calling SDK.
    */
-  speakingWhileMuted: string;
+  callingNetworkFailure: string;
 
   /**
    * A generic message when starting video fails.

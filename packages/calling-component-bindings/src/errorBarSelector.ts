@@ -29,8 +29,8 @@ export const errorBarSelector = createSelector(
     const activeErrors: ActiveError[] = [];
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
-    if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
-      activeErrors.push('speakingWhileMuted');
+    if (diagnostics?.network.latest.networkReconnect?.value === 3) {
+      activeErrors.push({ type: 'callingNetworkFailure' });
     }
 
     // Prefer to show errors with privacy implications.
