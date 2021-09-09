@@ -5,6 +5,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
+import { IdentifierProvider } from '@internal/react-components';
 import { CallAdapter, createAzureCommunicationCallAdapter, CallComposite } from '../../../../src';
 import { IDS } from '../../config';
 
@@ -40,7 +41,9 @@ function App(): JSX.Element {
 
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
-      {callAdapter && <CallComposite identifiers={IDS} adapter={callAdapter} />}
+      <IdentifierProvider identifiers={IDS}>
+        {callAdapter && <CallComposite adapter={callAdapter} />}
+      </IdentifierProvider>
     </div>
   );
 }

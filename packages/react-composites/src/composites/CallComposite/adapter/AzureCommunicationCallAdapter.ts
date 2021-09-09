@@ -1,21 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
+import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
   StatefulDeviceManager,
   StatefulCallClient,
   createStatefulCallClient,
   DeviceManagerState,
-  CallState,
   CallError
 } from '@internal/calling-stateful-client';
 import {
   AudioOptions,
   CallAgent,
   Call,
-  CallClientOptions,
   GroupCallLocator,
   TeamsMeetingLinkLocator,
   LocalVideoStream as SDKLocalVideoStream,
@@ -40,7 +38,7 @@ import {
   ParticipantLeftListener
 } from './CallAdapter';
 import { isInCall } from '../../../utils';
-import { ErrorType, VideoStreamOptions } from '@internal/react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
@@ -88,10 +86,6 @@ class CallContext {
     this.setState({ ...this.state, page });
   }
 
-  public setError(error: Error): void {
-    this.setState({ ...this.state, error });
-  }
-
   public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
     this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
   }
@@ -116,10 +110,6 @@ class CallContext {
       latestErrors: clientState.latestErrors
     });
   }
-
-  public setEndedCall(call: CallState): void {
-    this.setState({ ...this.state, endedCall: call });
-  }
 }
 
 export class AzureCommunicationCallAdapter implements CallAdapter {
@@ -130,7 +120,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private locator: TeamsMeetingLinkLocator | GroupCallLocator;
   private call: Call | undefined;
   private context: CallContext;
-  private handlers: DefaultCallingHandlers;
+  private handlers: CallingHandlers;
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
@@ -163,7 +153,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.callClient.onStateChange(onStateChange);
   }
 
-  private bindPublicMethods() {
+  private bindPublicMethods(): void {
     this.onStateChange.bind(this);
     this.offStateChange.bind(this);
     this.getState.bind(this);
@@ -189,7 +179,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.setPage.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
-    this.clearErrors.bind(this);
     this.on.bind(this);
     this.off.bind(this);
   }
@@ -396,10 +385,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.offStateChange(handler);
   }
 
-  public clearErrors(errorTypes: ErrorType[]): void {
-    this.handlers.onDismissErrors(errorTypes);
-  }
-
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
@@ -521,17 +506,15 @@ export type AzureCommunicationCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator | GroupCallLocator;
-  callClientOptions?: CallClientOptions;
 };
 
 export const createAzureCommunicationCallAdapter = async ({
   userId,
   displayName,
   credential,
-  locator,
-  callClientOptions
+  locator
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient({ userId }, { callClientOptions });
+  const callClient = createStatefulCallClient({ userId });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);

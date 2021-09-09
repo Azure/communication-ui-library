@@ -10,13 +10,9 @@ import type {
   RemoteParticipant
 } from '@azure/communication-calling';
 
-import { ErrorType, VideoStreamOptions } from '@internal/react-components';
-import type {
-  CommunicationUserKind,
-  PhoneNumberKind,
-  MicrosoftTeamsUserKind,
-  UnknownIdentifierKind
-} from '@azure/communication-common';
+import { VideoStreamOptions } from '@internal/react-components';
+import type { CommunicationUserKind, CommunicationIdentifierKind } from '@azure/communication-common';
+import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
 
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -24,10 +20,8 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
  * Purely UI related adapter state.
  */
 export type CallAdapterUiState = {
-  error?: Error;
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
-  endedCall?: CallState | undefined;
 };
 
 /**
@@ -38,6 +32,7 @@ export type CallAdapterClientState = {
   displayName?: string;
   call?: CallState;
   devices: DeviceManagerState;
+  endedCall?: CallState;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
@@ -67,84 +62,64 @@ export type IncomingCallListener = (event: {
   reject: () => Promise<void>;
 }) => Promise<void>;
 
-export type CallIdentifierKinds =
-  | CommunicationUserKind
-  | PhoneNumberKind
-  | MicrosoftTeamsUserKind
-  | UnknownIdentifierKind;
-
 export type ParticipantJoinedListener = (event: { joined: RemoteParticipant[] }) => void;
 
 export type ParticipantLeftListener = (event: { removed: RemoteParticipant[] }) => void;
 
-export type IsMuteChangedListener = (event: { identifier: CallIdentifierKinds; isMuted: boolean }) => void;
+export type IsMuteChangedListener = (event: { identifier: CommunicationIdentifierKind; isMuted: boolean }) => void;
 
 export type CallIdChangedListener = (event: { callId: string }) => void;
 
 export type IsScreenSharingOnChangedListener = (event: { isScreenSharingOn: boolean }) => void;
 
-export type IsSpeakingChangedListener = (event: { identifier: CallIdentifierKinds; isSpeaking: boolean }) => void;
+export type IsSpeakingChangedListener = (event: {
+  identifier: CommunicationIdentifierKind;
+  isSpeaking: boolean;
+}) => void;
 
-export type DisplayNameChangedListener = (event: { participantId: CallIdentifierKinds; displayName: string }) => void;
+export type DisplayNameChangedListener = (event: {
+  participantId: CommunicationIdentifierKind;
+  displayName: string;
+}) => void;
 
 export type CallEndedListener = (event: { callId: string }) => void;
 
-export interface CallAdapter {
-  onStateChange(handler: (state: CallAdapterState) => void): void;
-
-  offStateChange(handler: (state: CallAdapterState) => void): void;
-
-  getState(): CallAdapterState;
-
-  dispose(): void;
-
+/**
+ * Functionality for managing the current call.
+ */
+export interface CallAdapterCallManagement {
   joinCall(microphoneOn?: boolean): Call | undefined;
-
   leaveCall(forEveryone?: boolean): Promise<void>;
-
-  setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-
-  setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-
-  setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
-
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-
-  queryCameras(): Promise<VideoDeviceInfo[]>;
-
-  queryMicrophones(): Promise<AudioDeviceInfo[]>;
-
-  querySpeakers(): Promise<AudioDeviceInfo[]>;
-
   startCamera(): Promise<void>;
-
   stopCamera(): Promise<void>;
-
   onToggleCamera(options?: VideoStreamOptions): Promise<void>;
-
   mute(): Promise<void>;
-
   unmute(): Promise<void>;
-
   startCall(participants: string[]): Call | undefined;
-
   startScreenShare(): Promise<void>;
-
   stopScreenShare(): Promise<void>;
-
   removeParticipant(userId: string): Promise<void>;
-
-  setPage(page: CallCompositePage): void;
-
   createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+}
 
-  /**
-   * Clear errors for given error types from {@link CallAdapter.getState.latestErrors}.
-   */
-  clearErrors(errorTypes: ErrorType[]): void;
+/**
+ * Functionality for managing devices within a call.
+ */
+export interface CallAdapterDeviceManagement {
+  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  queryCameras(): Promise<VideoDeviceInfo[]>;
+  queryMicrophones(): Promise<AudioDeviceInfo[]>;
+  querySpeakers(): Promise<AudioDeviceInfo[]>;
+  setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+  setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
+  setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+}
 
+/**
+ * Call composite events that can be subscribed to.
+ */
+export interface CallAdapterSubscribers {
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
@@ -165,6 +140,17 @@ export interface CallAdapter {
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
 }
+
+/**
+ * Call Composite Adapter interface.
+ */
+export interface CallAdapter
+  extends AdapterState<CallAdapterState>,
+    AdapterDisposal,
+    AdapterPages<CallCompositePage>,
+    CallAdapterCallManagement,
+    CallAdapterDeviceManagement,
+    CallAdapterSubscribers {}
 
 export type CallEvent =
   | 'participantsJoined'

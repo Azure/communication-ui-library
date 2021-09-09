@@ -1,18 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
-import { MicOff16Filled, MicOn16Filled } from '@fluentui/react-icons';
+import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
   iconContainerStyle,
+  isSpeakingStyles,
   overlayContainerStyles,
   rootStyles,
+  tileInfoStackItemStyle,
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
@@ -62,6 +63,8 @@ export interface VideoTileProps {
   displayName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
+  /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
+  isSpeaking?: boolean;
 }
 
 // Coin max size is set to 100px (PersonaSize.size100)
@@ -97,7 +100,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     showMuteIndicator = true,
     styles,
     userId,
-    noVideoAvailableAriaLabel
+    noVideoAvailableAriaLabel,
+    isSpeaking
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -123,16 +127,42 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
+  const nametagColorOverride = useMemo(
+    () => ({ color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary }),
+    [isVideoRendered, theme.palette.neutralPrimary]
+  );
+
+  const tileInfoContainerStyle = useMemo(
+    () =>
+      mergeStyles(
+        isVideoRendered ? videoHint : disabledVideoHint,
+        // when video is being rendered, the displayName has a grey-ish background, so no use of theme
+        nametagColorOverride,
+        styles?.displayNameContainer
+      ),
+    [isVideoRendered, nametagColorOverride, styles?.displayNameContainer]
+  );
+
+  const tileInfoDisplayNameStyle = useMemo(
+    () => mergeStyles(displayNameStyle, nametagColorOverride),
+    [nametagColorOverride]
+  );
+
   return (
     <Ref innerRef={videoTileRef}>
-      <Stack className={mergeStyles(rootStyles, { background: theme.palette.neutralLighter }, styles?.root)}>
+      <Stack
+        className={mergeStyles(
+          rootStyles,
+          isSpeaking ? isSpeakingStyles : {},
+          { background: theme.palette.neutralLighter },
+          styles?.root
+        )}
+      >
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
               videoContainerStyles,
-              isMirrored && {
-                transform: 'scaleX(-1)'
-              },
+              isMirrored && { transform: 'scaleX(-1)' },
               styles?.videoContainer
             )}
           >
@@ -148,36 +178,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        <Stack
-          horizontal
-          className={mergeStyles(
-            isVideoRendered ? videoHint : disabledVideoHint,
-            // when video is being rendered, the displayName has a grey-ish background, so no use of theme
-            { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
-            styles?.displayNameContainer
-          )}
-        >
-          <Stack>
+        {(displayName || (showMuteIndicator && isMuted !== undefined)) && (
+          <Stack horizontal className={tileInfoContainerStyle}>
             {displayName && (
-              <Text
-                className={mergeStyles(displayNameStyle, {
-                  color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
-                })}
-              >
-                {displayName}
-              </Text>
+              <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>
+                <Text className={tileInfoDisplayNameStyle}>{displayName}</Text>
+              </Stack.Item>
+            )}
+            {showMuteIndicator && isMuted && (
+              <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
+                <Icon iconName="VideoTileMicOff" />
+              </Stack.Item>
             )}
           </Stack>
-          <Stack className={mergeStyles(iconContainerStyle)}>
-            {showMuteIndicator &&
-              isMuted !== undefined &&
-              (isMuted ? (
-                <MicOff16Filled primaryFill="currentColor" key={'microphoneOffIconKey'} />
-              ) : (
-                <MicOn16Filled primaryFill="currentColor" key={'microphoneIconKey'} />
-              ))}
-          </Stack>
-        </Stack>
+        )}
 
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>

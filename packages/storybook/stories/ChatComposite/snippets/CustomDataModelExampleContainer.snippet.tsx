@@ -7,6 +7,7 @@ import {
   AvatarPersonaData,
   ChatAdapter,
   ChatComposite,
+  CompositeLocale,
   createAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
@@ -21,6 +22,7 @@ export interface CustomDataModelExampleContainerProps {
   botUserId: string;
   botAvatar: string;
   fluentTheme?: PartialTheme | Theme;
+  locale?: CompositeLocale;
 }
 
 export const CustomDataModelExampleContainer = (props: CustomDataModelExampleContainerProps): JSX.Element => {
@@ -70,7 +72,8 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
           fluentTheme={props.fluentTheme}
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          options={{ showParticipantPane: true, showTopic: true }}
+          visualElements={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
+          locale={props.locale}
         />
       ) : (
         <h3>Loading...</h3>

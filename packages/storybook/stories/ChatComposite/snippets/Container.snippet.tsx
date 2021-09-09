@@ -3,7 +3,12 @@ import {
   CommunicationUserIdentifier,
   getIdentifierKind
 } from '@azure/communication-common';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import {
+  ChatAdapter,
+  ChatComposite,
+  CompositeLocale,
+  createAzureCommunicationChatAdapter
+} from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -14,8 +19,10 @@ export type ContainerProps = {
   endpointUrl: string;
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
+  showErrorBar?: boolean;
   showParticipants?: boolean;
   showTopic?: boolean;
+  locale?: CompositeLocale;
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
@@ -54,7 +61,12 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
       <ChatComposite
         adapter={adapter}
         fluentTheme={props.fluentTheme}
-        options={{ showParticipantPane: props.showParticipants }}
+        visualElements={{
+          showErrorBar: props.showErrorBar,
+          showParticipantPane: props.showParticipants,
+          showTopic: props.showTopic
+        }}
+        locale={props.locale}
       />
     );
   }

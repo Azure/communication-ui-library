@@ -2,13 +2,7 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import {
-  CallAgent,
-  CallClient,
-  CallClientOptions,
-  CreateViewOptions,
-  DeviceManager
-} from '@azure/communication-calling';
+import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -227,10 +221,6 @@ export type StatefulCallClientArgs = {
  */
 export type StatefulCallClientOptions = {
   /**
-   * Options to construct the Azure CallClient with.
-   */
-  callClientOptions?: CallClientOptions;
-  /**
    * Sets the max listeners limit of the 'stateChange' event. Defaults to the node.js EventEmitter.defaultMaxListeners
    * if not specified.
    */
@@ -255,7 +245,7 @@ export const createStatefulCallClient = (
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
   return createStatefulCallClientWithDeps(
-    new CallClient(options?.callClientOptions),
+    new CallClient(),
     new CallContext(args.userId, options?.maxStateChangeListeners),
     new InternalCallContext()
   );

@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// TODO: Find a way to import version from ../package.json
-// This package is rooted at acs-ui-common/src so acs-ui-common/package.json is not accessible.
-const version = '0.0.0-alpha';
+import * as telemetryVersion from './telemetryVersion';
 
 // Removes long suffixes that don't fit the constraints for telemetry application ID.
 // e.g., the build suffix is dropped for alpha package versions.
@@ -18,4 +16,7 @@ export const sanitize = (version: string): string => {
 /**
  * Application ID to be included in telemetry data from the UI library.
  */
-export const getApplicationId = (): string => sanitize(`acr/${version}`);
+export const getApplicationId = (): string => {
+  const version = telemetryVersion['default'];
+  return sanitize(`acr/${version}`);
+};

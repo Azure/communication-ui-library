@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getLatestErrors } from './baseSelectors';
-import { ErrorType } from '@internal/react-components';
+import { getDiagnostics, getLatestErrors } from './baseSelectors';
+import { ActiveError, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
+import { CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
 
 /**
  * Select the first 3 active errors from the state for the `ErrorBar` component.
@@ -15,40 +16,51 @@ import { createSelector } from 'reselect';
  *   - `ErrorType` is never repeated in the returned errors.
  *   - Errors are returned in a fixed order by `ErrorType`.
  */
-export const errorBarSelector = createSelector([getLatestErrors], (latestErrors): { activeErrors: ErrorType[] } => {
-  // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
-  // There are several options for the ordering:
-  //   - Sorted by when the errors happened (latest first / oldest first).
-  //   - Stable sort by error type.
-  //
-  // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
-  // have timestamps for errors.
-  const activeErrors: ErrorType[] = [];
+export const errorBarSelector = createSelector(
+  [getLatestErrors, getDiagnostics],
+  (latestErrors: CallErrors, diagnostics): { activeErrors: ActiveError[] } => {
+    // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
+    // There are several options for the ordering:
+    //   - Sorted by when the errors happened (latest first / oldest first).
+    //   - Stable sort by error type.
+    //
+    // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
+    // have timestamps for errors.
+    const activeErrors: ActiveError[] = [];
 
-  // Prefer to show errors with privacy implications.
-  if (latestErrors['Call.stopVideo'] !== undefined) {
-    activeErrors.push('stopVideoGeneric');
-  }
-  if (latestErrors['Call.mute'] !== undefined) {
-    activeErrors.push('muteGeneric');
-  }
-  if (latestErrors['Call.stopScreenSharing'] !== undefined) {
-    activeErrors.push('stopScreenShareGeneric');
-  }
+    // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
+    if (diagnostics?.network.latest.networkReconnect?.value === 3) {
+      activeErrors.push({ type: 'callingNetworkFailure' });
+    }
 
-  if (latestErrors['Call.startVideo'] !== undefined) {
-    activeErrors.push('startVideoGeneric');
-  }
-  if (latestErrors['Call.unmute'] !== undefined) {
-    activeErrors.push('unmuteGeneric');
-  }
-  if (latestErrors['Call.startScreenSharing'] !== undefined) {
-    activeErrors.push('startScreenShareGeneric');
-  }
+    // Prefer to show errors with privacy implications.
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.stopVideo', 'stopVideoGeneric');
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.mute', 'muteGeneric');
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.stopScreenSharing', 'stopScreenShareGeneric');
 
-  // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
-  activeErrors.splice(maxErrorCount);
-  return { activeErrors: activeErrors };
-});
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.startVideo', 'startVideoGeneric');
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.unmute', 'unmuteGeneric');
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.startScreenSharing', 'startScreenShareGeneric');
+
+    // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
+    activeErrors.splice(maxErrorCount);
+    return { activeErrors: activeErrors };
+  }
+);
+
+const appendActiveErrorIfDefined = (
+  activeErrors: ActiveError[],
+  latestErrors: CallErrors,
+  target: CallErrorTarget,
+  activeErrorType: ErrorType
+): void => {
+  if (latestErrors[target] === undefined) {
+    return;
+  }
+  activeErrors.push({
+    type: activeErrorType,
+    timestamp: latestErrors[target].timestamp
+  });
+};
 
 const maxErrorCount = 3;

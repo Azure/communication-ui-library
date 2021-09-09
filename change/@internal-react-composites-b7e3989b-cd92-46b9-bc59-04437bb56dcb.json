@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add different types for ChatComposite and CallCompposite Icons",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

@@ -5,7 +5,7 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatMessage } from '@azure/communication-chat';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
-import { ChatAdapter, ChatState } from './ChatAdapter';
+import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
 
 jest.useFakeTimers();
@@ -112,25 +112,6 @@ describe('Error is reflected in state and events', () => {
   });
 });
 
-describe('clearErrors clears the error in stateful client and triggers a UI update', () => {
-  it('when clearning sendMessageGeneric error', async () => {
-    const threadClient = new StubChatThreadClient();
-    threadClient.sendMessage = (): Promise<ChatMessage> => {
-      throw new Error('injected error');
-    };
-    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
-
-    await expect(adapter.sendMessage('some message')).rejects.toThrow();
-    expect(adapter.getState().latestErrors['ChatThreadClient.sendMessage']).toBeDefined();
-
-    const stateListener = new StateChangeListener(adapter);
-    adapter.clearErrors(['sendMessageGeneric']);
-
-    expect(stateListener.onChangeCalledCount).toBe(1);
-    expect(stateListener.state.latestErrors['ChatThreadClient.sendMessage']).toBeUndefined();
-  });
-});
-
 export const createChatAdapterWithStubs = async (chatClient: StubChatClient): Promise<ChatAdapter> => {
   // ChatClient constructor must return a ChatClient. StubChatClient only implements the
   // public interface of ChatClient. So we are forced to lose some type information here.
@@ -157,7 +138,7 @@ export const createChatAdapterWithStubs = async (chatClient: StubChatClient): Pr
 };
 
 class StateChangeListener {
-  state: ChatState;
+  state: ChatAdapterState;
   onChangeCalledCount = 0;
 
   constructor(client: ChatAdapter) {
@@ -165,7 +146,7 @@ class StateChangeListener {
     client.onStateChange(this.onChange.bind(this));
   }
 
-  private onChange(newState: ChatState): void {
+  private onChange(newState: ChatAdapterState): void {
     this.onChangeCalledCount++;
     this.state = newState;
   }

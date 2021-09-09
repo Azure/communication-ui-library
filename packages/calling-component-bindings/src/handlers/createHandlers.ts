@@ -11,18 +11,12 @@ import {
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import {
-  CallErrorTarget,
-  DeviceManagerState,
-  newClearCallErrorsModifier,
-  StatefulCallClient,
-  StatefulDeviceManager
-} from '@internal/calling-stateful-client';
+import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { ErrorType, VideoStreamOptions } from '@internal/react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 
-export type DefaultCallingHandlers = {
+export type CallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
   onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
   onStartCall: (
@@ -42,7 +36,6 @@ export type DefaultCallingHandlers = {
   onParticipantRemove: (userId: string) => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
-  onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
@@ -281,17 +274,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
-    const onDismissErrors = (errorTypes: ErrorType[]) => {
-      const targets: Set<CallErrorTarget> = new Set();
-      for (const errorType of errorTypes) {
-        const target = statefulErrors[errorType];
-        if (target !== undefined) {
-          targets.add(target);
-        }
-      }
-      callClient.modifyState(newClearCallErrorsModifier(Array.from(targets.values())));
-    };
-
     return {
       onHangUp,
       onSelectCamera,
@@ -308,27 +290,10 @@ export const createDefaultCallingHandlers = memoizeOne(
       onParticipantRemove,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
-      onDisposeLocalStreamView,
-      onDismissErrors
+      onDisposeLocalStreamView
     };
   }
 );
-
-const statefulErrors: { [key in ErrorType]: CallErrorTarget | undefined } = {
-  muteGeneric: 'Call.mute',
-  startScreenShareGeneric: 'Call.startScreenSharing',
-  startVideoGeneric: 'Call.startVideo',
-  stopScreenShareGeneric: 'Call.stopScreenSharing',
-  stopVideoGeneric: 'Call.stopVideo',
-  unmuteGeneric: 'Call.unmute',
-
-  // Non-calling errors.
-  accessDenied: undefined,
-  sendMessageGeneric: undefined,
-  sendMessageNotInThisThread: undefined,
-  unableToReachChatService: undefined,
-  userNotInThisThread: undefined
-};
 
 // TODO: extract into an util.
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
@@ -356,6 +321,6 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultCallingHandlers, Props> => {
+): Common<CallingHandlers, Props> => {
   return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
 };

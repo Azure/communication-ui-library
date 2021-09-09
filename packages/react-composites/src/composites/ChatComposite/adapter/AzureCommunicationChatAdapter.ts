@@ -7,8 +7,7 @@ import {
   ChatError,
   StatefulChatClient
 } from '@internal/chat-stateful-client';
-import { DefaultChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
-import { ErrorType } from '@internal/react-components';
+import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
 import type {
@@ -23,7 +22,7 @@ import EventEmitter from 'events';
 import {
   ChatAdapter,
   ChatEvent,
-  ChatState,
+  ChatAdapterState,
   ChatErrorListener,
   MessageReadListener,
   MessageReceivedListener,
@@ -35,7 +34,7 @@ import {
 // Context of Chat, which is a centralized context for all state updates
 class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: ChatState;
+  private state: ChatAdapterState;
   private threadId: string;
 
   constructor(clientState: ChatClientState, threadId: string) {
@@ -50,20 +49,20 @@ class ChatContext {
     };
   }
 
-  public onStateChange(handler: (_uiState: ChatState) => void): void {
+  public onStateChange(handler: (_uiState: ChatAdapterState) => void): void {
     this.emitter.on('stateChanged', handler);
   }
 
-  public offStateChange(handler: (_uiState: ChatState) => void): void {
+  public offStateChange(handler: (_uiState: ChatAdapterState) => void): void {
     this.emitter.off('stateChanged', handler);
   }
 
-  public setState(state: ChatState): void {
+  public setState(state: ChatAdapterState): void {
     this.state = state;
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): ChatState {
+  public getState(): ChatAdapterState {
     return this.state;
   }
 
@@ -87,7 +86,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
-  private handlers: DefaultChatHandlers;
+  private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
   constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {
@@ -119,10 +118,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.sendMessage = this.sendMessage.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
+    this.updateMessage = this.updateMessage.bind(this);
+    this.deleteMessage = this.deleteMessage.bind(this);
     this.removeParticipant = this.removeParticipant.bind(this);
     this.setTopic = this.setTopic.bind(this);
     this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
-    this.clearErrors = this.clearErrors.bind(this);
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
   }
@@ -149,15 +149,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     }
   }
 
-  getState(): ChatState {
+  getState(): ChatAdapterState {
     return this.context.getState();
   }
 
-  onStateChange(handler: (state: ChatState) => void): void {
+  onStateChange(handler: (state: ChatAdapterState) => void): void {
     this.context.onStateChange(handler);
   }
 
-  offStateChange(handler: (state: ChatState) => void): void {
+  offStateChange(handler: (state: ChatAdapterState) => void): void {
     this.context.offStateChange(handler);
   }
 
@@ -195,8 +195,16 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  clearErrors(errorTypes: ErrorType[]): void {
-    this.handlers.onDismissErrors(errorTypes);
+  async updateMessage(messageId: string, content: string): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onUpdateMessage(messageId, content);
+    });
+  }
+
+  async deleteMessage(messageId: string): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onDeleteMessage(messageId);
+    });
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {

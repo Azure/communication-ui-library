@@ -8,6 +8,9 @@ import {
   CallerInfo,
   CallState as CallStatus,
   DeviceAccess,
+  DominantSpeakersInfo,
+  LatestMediaDiagnostics,
+  LatestNetworkDiagnostics,
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
@@ -35,6 +38,7 @@ export interface TransferRequest {
 /**
  * State only version of {@link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is
  * experimental. Not tested and not ready for consumption.
+ * @experimental
  */
 export interface Transfer {
   /**
@@ -247,6 +251,10 @@ export interface CallState {
    */
   isScreenSharingOn: boolean;
   /**
+   * Proxy of {@link @azure/communication-calling#DominantSpeakersInfo }.
+   */
+  dominantSpeakers?: DominantSpeakersInfo;
+  /**
    * Proxy of {@link @azure/communication-calling#Call.localVideoStreams}.
    */
   localVideoStreams: LocalVideoStreamState[];
@@ -297,6 +305,11 @@ export interface CallState {
    * a proxy of SDK state.
    */
   endTime: Date | undefined;
+
+  /**
+   * Stores the latest call diagnostics.
+   */
+  diagnostics: DiagnosticsCallFeatureState;
 }
 
 /**
@@ -423,7 +436,7 @@ export interface CallClientState {
   /**
    * Proxy of {@link @azure/communication-calling#CallAgent}. Please review {@link CallAgentState}.
    */
-  callAgent: CallAgentState | undefined;
+  callAgent?: CallAgentState;
   /**
    * Stores a userId. This is not used by the {@link StatefulCallClient} and is provided here as a convenience for the
    * developer for easier access to userId. Must be passed in at initialization of the {@link StatefulCallClient}.
@@ -450,7 +463,7 @@ export interface CallClientState {
  * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
  */
 export type CallErrors = {
-  [target in CallErrorTarget]: Error;
+  [target in CallErrorTarget]: CallError;
 };
 
 /**
@@ -465,11 +478,17 @@ export class CallError extends Error {
    * Error thrown by the failed SDK method.
    */
   public inner: Error;
+  /**
+   * Timestamp added to the error by the stateful layer.
+   */
+  public timestamp: Date;
 
-  constructor(target: CallErrorTarget, inner: Error) {
+  constructor(target: CallErrorTarget, inner: Error, timestamp?: Date) {
     super();
     this.target = target;
     this.inner = inner;
+    // Testing note: It is easier to mock Date::now() than the Date() constructor.
+    this.timestamp = timestamp ?? new Date(Date.now());
     this.name = 'CallError';
     this.message = `${this.target}: ${this.inner.message}`;
   }
@@ -509,3 +528,32 @@ export type CallErrorTarget =
   | 'DeviceManager.on'
   | 'DeviceManager.selectMicrophone'
   | 'DeviceManager.selectSpeaker';
+
+/**
+ * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
+ */
+export interface DiagnosticsCallFeatureState {
+  /**
+   * Stores diagnostics related to network conditions.
+   */
+  network: NetworkDiagnosticsState;
+
+  /**
+   * Stores diagnostics related to media quality.
+   */
+  media: MediaDiagnosticsState;
+}
+
+/**
+ * State only proxy for {@link @azure/communication-calling#NetworkDiagnostics}.
+ */
+export interface NetworkDiagnosticsState {
+  latest: LatestNetworkDiagnostics;
+}
+
+/**
+ * State only proxy for {@link @azure/communication-calling#MediaDiagnostics}.
+ */
+export interface MediaDiagnosticsState {
+  latest: LatestMediaDiagnostics;
+}

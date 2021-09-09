@@ -12,6 +12,10 @@ export const rootStyles: IStyle = {
   borderRadius: theme.effects.roundedCorner4
 };
 
+export const isSpeakingStyles: IStyle = {
+  border: `0.25rem solid ${theme.palette.themePrimary}`
+};
+
 export const videoContainerStyles: IStyle = {
   position: 'absolute',
   top: '0',
@@ -48,7 +52,6 @@ export const disabledVideoHint = mergeStyles({
 
 export const videoHint = mergeStyles(disabledVideoHint, {
   backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  alignItems: 'center',
   padding: '0.15rem'
 });
 
@@ -65,4 +68,8 @@ export const iconContainerStyle: IStyle = {
   '& svg': {
     display: 'block'
   }
+};
+
+export const tileInfoStackItemStyle: IStyle = {
+  display: 'flex'
 };

@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Title, Description, Heading, Source } from '@storybook/addon-docs';
+import { ChatComposite } from '@azure/communication-react';
+import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
 import React from 'react';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
@@ -53,6 +54,12 @@ export const getDocs: () => JSX.Element = () => {
         here](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
       </Description>
 
+      <Heading>Icons</Heading>
+      <Description>
+        Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
+        accepts an object where you can provide a custom JSX element against an icon name key.
+      </Description>
+
       <Heading>Custom Data Model</Heading>
       <Description>
         It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
@@ -62,6 +69,7 @@ export const getDocs: () => JSX.Element = () => {
         canvas](./?path=/story/composites-chat-customdatamodelexample--custom-data-model-example) to see how the name
         and avatar displayed for users can be provided by Contoso.
       </Description>
+      <Description>Note that, by default, the initials text color is setup to `white`</Description>
       <Source code={customDataModelExampleContainerText} />
       <Description>
         See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
@@ -84,6 +92,9 @@ export const getDocs: () => JSX.Element = () => {
         playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
         the composite with multiple users.
       </Description>
+
+      <Heading>Chat Composite Props</Heading>
+      <Props of={ChatComposite} />
     </>
   );
 };

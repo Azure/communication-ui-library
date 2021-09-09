@@ -74,6 +74,14 @@ function createMockCall(mockCallId: string): CallState {
     id: mockCallId,
     callerInfo: {} as CallerInfo,
     state: 'None',
+    diagnostics: {
+      network: {
+        latest: {}
+      },
+      media: {
+        latest: {}
+      }
+    },
     direction: 'Incoming',
     isMuted: true,
     isScreenSharingOn: false,
@@ -85,7 +93,8 @@ function createMockCall(mockCallId: string): CallState {
     transfer: { receivedTransferRequests: [], requestedTransfers: [] },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
-    endTime: undefined
+    endTime: undefined,
+    dominantSpeakers: undefined
   };
   return call;
 }

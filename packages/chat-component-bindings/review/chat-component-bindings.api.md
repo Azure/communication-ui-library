@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { ActiveError } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { ChatErrors } from '@internal/chat-stateful-client';
@@ -15,7 +16,6 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
-import { ErrorType } from '@internal/react-components';
 import { Message } from '@internal/react-components';
 import { MessageThread } from '@internal/react-components';
 import { OutputParametricSelector } from 'reselect';
@@ -44,6 +44,18 @@ export type ChatClientProviderProps = {
 };
 
 // @public (undocumented)
+export type ChatHandlers = {
+    onSendMessage: (content: string) => Promise<void>;
+    onMessageSeen: (chatMessageId: string) => Promise<void>;
+    onTyping: () => Promise<void>;
+    onParticipantRemove: (userId: string) => Promise<void>;
+    updateThreadTopicName: (topicName: string) => Promise<void>;
+    onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
+    onUpdateMessage: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage: (messageId: string) => Promise<void>;
+};
+
+// @public (undocumented)
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     participants: CommunicationParticipant[];
@@ -64,7 +76,26 @@ export type ChatThreadClientProviderProps = {
 };
 
 // @public (undocumented)
-export const chatThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
+export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
+
+// @public (undocumented)
+export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Common<ChatHandlers, Props>;
+
+// @public
+export const errorBarSelector: OutputSelector<ChatClientState, {
+activeErrors: ActiveError[];
+}, (res: ChatErrors) => {
+activeErrors: ActiveError[];
+}>;
+
+// @public (undocumented)
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof messageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
+
+// @public (undocumented)
+export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
+
+// @public (undocumented)
+export const messageThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
 userId: string;
 showMessageStatus: boolean;
 messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
@@ -75,36 +106,6 @@ userId: string;
 showMessageStatus: boolean;
 messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
 }>;
-
-// @public (undocumented)
-export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => DefaultChatHandlers;
-
-// @public (undocumented)
-export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Common<DefaultChatHandlers, Props>;
-
-// @public (undocumented)
-export type DefaultChatHandlers = {
-    onSendMessage: (content: string) => Promise<void>;
-    onMessageSeen: (chatMessageId: string) => Promise<void>;
-    onTyping: () => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
-    updateThreadTopicName: (topicName: string) => Promise<void>;
-    onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
-};
-
-// @public
-export const errorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ErrorType[];
-}, (res: ChatErrors) => {
-activeErrors: ErrorType[];
-}>;
-
-// @public (undocumented)
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof chatThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
-
-// @public (undocumented)
-export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
 
 // @public (undocumented)
 export const sendBoxSelector: OutputSelector<ChatClientState, {
@@ -128,10 +129,10 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
 export const useChatClient: () => StatefulChatClient;
 
 // @public (undocumented)
-export const useChatHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<DefaultChatHandlers, PropsT> | undefined;
+export const useChatHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<ChatHandlers, PropsT> | undefined;
 
 // @public (undocumented)
-export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetChatSelector<Component> extends (props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]> : undefined;
+export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetChatSelector<Component> extends (props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : undefined;
 
 // @public (undocumented)
 export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;

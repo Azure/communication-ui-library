@@ -1,58 +1,66 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import React, { useEffect } from 'react';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { BaseComposite, BaseCompositeProps } from '../common/Composite';
+import { CallCompositeIcons } from '../common/icons';
+import { useLocale } from '../localization';
+import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
+import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
-import { Theme, PartialTheme } from '@fluentui/react';
-import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
-import { IdentifierProvider, Identifiers, OnRenderAvatarCallback } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
-import { FluentThemeProvider, LocalizationProvider, Locale } from '@internal/react-components';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
-export type CallCompositeProps = {
+export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
+  /**
+   * An adapter provides logic and data to the composite.
+   * Composite can also be controlled using the adapter.
+   */
   adapter: CallAdapter;
-  /**
-   * Fluent theme for the composite.
-   *
-   * @defaultValue light theme
-   */
-  fluentTheme?: PartialTheme | Theme;
-  /**
-   * Whether composite is displayed right-to-left.
-   *
-   * @defaultValue false
-   */
-  rtl?: boolean;
-  /**
-   * Locale for the composite.
-   *
-   * @defaultValue English (US)
-   */
-  locale?: Locale;
   callInvitationURL?: string;
-  identifiers?: Identifiers;
+
   /**
    * A callback function that can be used to provide custom data to an Avatar.
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+
+  /**
+   * Flags to enable/disable visual elements of the {@link CallComposite}.
+   */
+  visualElements?: CallCompositeVisualElements;
+}
+
+/**
+ * Optional features of the {@linnk CallComposite}
+ */
+export type CallCompositeVisualElements = {
+  /**
+   * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
+   *
+   * @defaultValue false
+   */
+  showErrorBar?: boolean;
 };
 
 type MainScreenProps = {
-  showCallControls: boolean;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  visualElements: {
+    showCallControls: boolean;
+    showErrorBar: boolean;
+  };
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
-  const { showCallControls, callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData } = props;
+  const { callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData } = props;
   const page = useSelector(getPage);
   const adapter = useAdapter();
+  const locale = useLocale();
   switch (page) {
     case 'configuration':
       return <ConfigurationScreen startCallHandler={(): void => adapter.setPage('call')} />;
@@ -62,22 +70,21 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       return (
         <Error
           rejoinHandler={() => adapter.setPage('configuration')}
-          title="Error joining Teams Meeting"
-          reason="Access to the Teams meeting was denied."
+          title={locale.strings.call.teamsMeetingFailToJoin}
+          reason={locale.strings.call.teamsMeetingFailReasonAccessDenied}
         />
       );
     case 'removed':
       return (
         <Error
           rejoinHandler={() => adapter.setPage('configuration')}
-          title="Oops! You are no longer a participant of the call."
-          reason="Access to the meeting has been stopped"
+          title={locale.strings.call.teamsMeetingFailToJoin}
+          reason={locale.strings.call.teamsMeetingFailReasonParticipantRemoved}
         />
       );
     default:
       return (
         <CallScreen
-          showCallControls={showCallControls}
           endCallHandler={async (): Promise<void> => {
             adapter.setPage('configuration');
           }}
@@ -87,13 +94,18 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationURL}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          visualElements={props.visualElements}
         />
       );
   }
 };
 
 export const Call = (props: CallCompositeProps): JSX.Element => {
-  return <CallCompositeInternal {...props} showCallControls={true} />;
+  return (
+    <BaseComposite {...props}>
+      <CallCompositeInternal {...props} showCallControls={true} />
+    </BaseComposite>
+  );
 };
 
 /**
@@ -112,7 +124,7 @@ interface CallInternalProps extends CallCompositeProps {
  * @internal
  */
 export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
-  const { adapter, callInvitationURL, fluentTheme, rtl, locale, identifiers, onFetchAvatarPersonaData } = props;
+  const { adapter, callInvitationURL, onFetchAvatarPersonaData } = props;
 
   useEffect(() => {
     (async () => {
@@ -123,19 +135,16 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
     })();
   }, [adapter]);
 
-  const callElement = (
-    <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <IdentifierProvider identifiers={identifiers}>
-        <CallAdapterProvider adapter={adapter}>
-          <MainScreen
-            showCallControls={props.showCallControls}
-            callInvitationURL={callInvitationURL}
-            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          />
-        </CallAdapterProvider>
-      </IdentifierProvider>
-    </FluentThemeProvider>
+  return (
+    <CallAdapterProvider adapter={adapter}>
+      <MainScreen
+        callInvitationURL={callInvitationURL}
+        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        visualElements={{
+          showCallControls: props.showCallControls,
+          showErrorBar: props.visualElements?.showErrorBar ?? false
+        }}
+      />
+    </CallAdapterProvider>
   );
-
-  return locale ? LocalizationProvider({ locale, children: callElement }) : callElement;
 };

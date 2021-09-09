@@ -16,12 +16,11 @@ import { titleContainerStyle } from './styles/ConfigurationScreen.styles';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from './LocalPreview';
 import { configurationStackTokens, configurationContainer } from './styles/CallConfiguration.styles';
+import { useLocale } from '../localization';
 
 export interface ConfigurationScreenProps {
   startCallHandler(): void;
 }
-
-const title = 'Start a call';
 
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler } = props;
@@ -29,6 +28,9 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const options = useAdaptedSelector(getCallingSelector(OptionsButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+
+  const locale = useLocale();
+  const title = locale.strings.call.configurationPageTitle;
 
   return (
     <Stack verticalAlign="center" className={configurationContainer}>

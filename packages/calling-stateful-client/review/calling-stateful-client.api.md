@@ -6,7 +6,6 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
-import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -17,6 +16,9 @@ import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
+import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { LatestMediaDiagnostics } from '@azure/communication-calling';
+import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -35,7 +37,7 @@ export interface CallAgentState {
 
 // @public
 export interface CallClientState {
-    callAgent: CallAgentState | undefined;
+    callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
     };
@@ -51,14 +53,15 @@ export interface CallClientState {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error);
+    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
     inner: Error;
     target: CallErrorTarget;
+    timestamp: Date;
 }
 
 // @public
 export type CallErrors = {
-    [target in CallErrorTarget]: Error;
+    [target in CallErrorTarget]: CallError;
 };
 
 // @public
@@ -68,7 +71,9 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp'
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
+    dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
     id: string;
     isMuted: boolean;
@@ -108,6 +113,12 @@ export type DeviceManagerState = {
 };
 
 // @public
+export interface DiagnosticsCallFeatureState {
+    media: MediaDiagnosticsState;
+    network: NetworkDiagnosticsState;
+}
+
+// @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
@@ -121,6 +132,18 @@ export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     view?: VideoStreamRendererViewState;
+}
+
+// @public
+export interface MediaDiagnosticsState {
+    // (undocumented)
+    latest: LatestMediaDiagnostics;
+}
+
+// @public
+export interface NetworkDiagnosticsState {
+    // (undocumented)
+    latest: LatestNetworkDiagnostics;
 }
 
 // @public
@@ -169,7 +192,6 @@ export type StatefulCallClientArgs = {
 
 // @public
 export type StatefulCallClientOptions = {
-    callClientOptions?: CallClientOptions;
     maxStateChangeListeners?: number;
 };
 

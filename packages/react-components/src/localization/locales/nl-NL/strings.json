@@ -1,0 +1,78 @@
+{
+  "participantItem": {
+    "isMeText": "(jij)",
+    "menuTitle": "Meer opties"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} typt ...",
+    "multipleUsers": "{users} typen ...",
+    "multipleUsersAbbreviateOne": "{users} en 1 andere persoon typen ...",
+    "multipleUsersAbbreviateMany": "{users} en {numOthers} anderen typen ...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Een bericht invoeren"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Verzonden",
+    "seenTooltipText": "Gezien",
+    "sendingTooltipText": "Verzenden",
+    "failedToSendTooltipText": "Kan niet verzenden"
+  },
+  "endCallButton": {
+    "label": "Verlaten"
+  },
+  "cameraButton": {
+    "onLabel": "Uitschakelen",
+    "offLabel": "Inschakelen"
+  },
+  "microphoneButton": {
+    "onLabel": "Dempen",
+    "offLabel": "Dempen opheffen"
+  },
+  "optionsButton": {
+    "label": "Opties",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Camera kiezen",
+    "microphoneMenuTitle": "Microfoon",
+    "microphoneMenuTooltip": "Microfoon kiezen",
+    "speakerMenuTitle": "Spreker",
+    "speakerMenuTooltip": "Luidspreker kiezen"
+  },
+  "participantsButton": {
+    "label": "Personen",
+    "menuHeader": "In dit gesprek",
+    "participantsListButtonLabel": "{numParticipants} personen",
+    "muteAllButtonLabel": "Alles dempen",
+    "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren"
+  },
+  "screenShareButton": {
+    "onLabel": "Stoppen",
+    "offLabel": "Delen"
+  },
+  "messageThread": {
+    "yesterday": "Gisteren",
+    "sunday": "Zondag",
+    "monday": "Maandag",
+    "tuesday": "Dinsdag",
+    "wednesday": "Woensdag",
+    "thursday": "Donderdag",
+    "friday": "Vrijdag",
+    "saturday": "Zaterdag",
+    "participantJoined": "neemt nu deel aan de chat.",
+    "participantLeft": "heeft de chat verlaten."
+  },
+  "errorBar": {
+    "unableToReachChatService": "U bent offline",
+    "accessDenied": "Kan geen toegang krijgen tot chatservices. Controleer de opgegeven gebruikersreferenties",
+    "userNotInThisThread": "U bent niet meer aanwezig in deze chatthread",
+    "sendMessageNotInThisThread": "Verzenden van bericht is mislukt omdat u zich niet meer in deze chatthread bevindt",
+    "sendMessageGeneric": "Kan bericht niet verzenden",
+    "startVideoGeneric": "Kan video niet starten",
+    "stopVideoGeneric": "Kan video niet stoppen",
+    "muteGeneric": "Kan microfoon niet dempen",
+    "unmuteGeneric": "Kan dempen van microfoon niet opheffen",
+    "startScreenShareGeneric": "Kan scherm delen niet starten",
+    "stopScreenShareGeneric": "Kan scherm delen niet stoppen"
+  }
+}
