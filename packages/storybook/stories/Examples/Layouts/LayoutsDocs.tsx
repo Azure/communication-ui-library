@@ -19,11 +19,11 @@ export const getDocs: () => JSX.Element = () => {
         component from `@azure/communication-react` package and `@fluentui/react` package.
       </Description>
       <Description>
-        In these examples, we use [Stack](https://developer.microsoft.com//fluentui#/controls/web/stack) component from
+        In these examples, we use [Stack](https://developer.microsoft.com/fluentui#/controls/web/stack) component from
         `fluentui` to build a layout for our video tiles. For the individual elements in this layout we use `VideoTile`
         from `@azure/communication-react` to render each participant. We are not passing in video stream to the
         `VideoTile` component in these examples, instead a
-        [Persona](https://developer.microsoft.com//fluentui#/controls/web/persona) component is used as a placeholder
+        [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona) component is used as a placeholder
         component.
       </Description>
       <Description>

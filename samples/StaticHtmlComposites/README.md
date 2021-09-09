@@ -7,12 +7,12 @@ This sample shows how to embed the ready-to-use Calling and Chat composite compo
 - `webpack.config.js` bundles the scripts so that they can be included on your web page.
 - `index.html` loads the script bundle, and instantiates the composites with the helper functions.
 
-> *Note:* As for all Azure Communication Services applications, you will still need to write your own production service for secure [management of users and tokens](https://docs.microsoft.com//azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript).
+> *Note:* As for all Azure Communication Services applications, you will still need to write your own production service for secure [management of users and tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript).
 
 ## Prerequisites
 
 - An [Azure subscription](https://azure.microsoft.com/free/).
-- An existing Communication Services resource, or [create one](https://docs.microsoft.com//azure/communication-services/quickstarts/create-communication-resource).
+- An existing Communication Services resource, or [create one](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource).
 
 ## Commands
 

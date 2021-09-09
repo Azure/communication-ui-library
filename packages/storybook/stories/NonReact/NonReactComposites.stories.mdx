@@ -20,7 +20,8 @@ For development and prototyping purpose, import these 2 urls with `<script>` tag
 After importing chat/calling composite bundle, you are able to load composites using these 2 code snippets:
 
 ```tsx
-const chatAdapter = await chatComposite.loadChatComposite( //The for composite which allows you control composite externally,
+const chatAdapter = await chatComposite.loadChatComposite(
+  //The for composite which allows you control composite externally,
   // This function will be exposed to window.chatComposite once you import composite bundle
   {
     displayName, // string
@@ -35,7 +36,8 @@ const chatAdapter = await chatComposite.loadChatComposite( //The for composite w
 ```
 
 ```tsx
-const callAdapter = await callComposite.loadChatComposite( //The for composite which allows you control composite externally,
+const callAdapter = await callComposite.loadChatComposite(
+  //The for composite which allows you control composite externally,
   // This function will be exposed to window.callComposite once you import composite bundle
   {
     groupId, // string, Provide any GUID to join a group
@@ -108,7 +110,7 @@ Then you will be able to see 2 js bundle files:
 .\samples\StaticHtmlComposites\dist\callComposite.js
 ```
 
-There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check [Create and manage Communication Services resources](https://docs.microsoft.com//azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp):
+There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check [Create and manage Communication Services resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp):
 
 ```
 .\samples\StaticHtmlComposites\index.html

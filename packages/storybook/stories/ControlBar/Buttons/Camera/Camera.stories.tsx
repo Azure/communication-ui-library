@@ -62,7 +62,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>CameraButton Props</Heading>
       <Description>
         `CameraButton` features all props a [FluentUI
-        Button](https://developer.microsoft.com//fluentui#/controls/web/button) offers, with the following additional
+        Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional
         properties:
       </Description>
       <Props of={CameraButton} />

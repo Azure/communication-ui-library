@@ -36,7 +36,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         Here is an example of how to use `ParticipantItem.` In this example, the `menuItems` property is used to add a
         context menu. The type of `menuItems` is an array of
-        [IContextualMenuItem](https://developer.microsoft.com//fluentui#/controls/web/contextualmenu#IContextualMenuItem).
+        [IContextualMenuItem](https://developer.microsoft.com/fluentui#/controls/web/contextualmenu#IContextualMenuItem).
         Click on the rendered participant below to see the menu items.
       </Description>
       <Canvas mdxSource={ParticipantItemExampleText}>

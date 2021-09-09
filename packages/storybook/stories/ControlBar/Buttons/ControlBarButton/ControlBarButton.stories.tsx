@@ -58,7 +58,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>ControlBarButton Props</Heading>
       <Description>
         `ControlBarButton` features all props a [FluentUI
-        Button](https://developer.microsoft.com//fluentui#/controls/web/button) offers, with the additional following
+        Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the additional following
         properties.
       </Description>
       <Props of={ControlBarButton} />

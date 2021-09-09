@@ -145,7 +145,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Description>
-        Note: You can view the details of the [Persona](https://developer.microsoft.com//fluentui#/controls/web/persona)
+        Note: You can view the details of the [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona)
         component
       </Description>
       <Heading>Props</Heading>

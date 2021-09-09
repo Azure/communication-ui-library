@@ -41,7 +41,7 @@ export interface ScreenSharePopupProps {
    * If this is not supplied the modal dialog is hosted in a fixed
    * position element rendered at the end of the document.
    *
-   * {@link https://docs.microsoft.com//javascript/api/react-internal/ilayerprops?view=office-ui-fabric-react-latest#hostId}
+   * {@link https://docs.microsoft.com/javascript/api/react-internal/ilayerprops?view=office-ui-fabric-react-latest#hostId}
    */
   hostId?: string;
 }

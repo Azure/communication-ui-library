@@ -61,7 +61,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>EndCallButton Props</Heading>
       <Description>
         `EndCallButton` features all props a [FluentUI
-        Button](https://developer.microsoft.com//fluentui#/controls/web/button) offers, with the following additional
+        Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional
         properties.
       </Description>
       <Props of={EndCallButton} />
