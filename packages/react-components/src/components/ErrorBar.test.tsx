@@ -122,14 +122,7 @@ describe('ErrorBar dismissal with multiple errors', () => {
 const mountErrorBarWithDefaults = (): ReactWrapper => {
   let root;
   act(() => {
-    root = mount(
-      <ErrorBar
-        activeErrors={[]}
-        onDismissErrors={() => {
-          /* deprecated */
-        }}
-      />
-    );
+    root = mount(<ErrorBar activeErrors={[]} />);
   });
   return root;
 };

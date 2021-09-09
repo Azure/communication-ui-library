@@ -21,16 +21,6 @@ export interface ErrorBarProps extends IMessageBarProps {
    * Currently active errors.
    */
   activeErrors: ActiveError[];
-
-  /**
-   * Callback trigerred when the {@link MessageBar} for an active error is dismissed.
-   *
-   * @deprecated
-   *
-   * {@link ErrorBar} now tracks dismissed errors internally.
-   * This prop will be removed soon, along with handlers etc written for it.
-   */
-  onDismissErrors: (errorTypes: ErrorType[]) => void;
 }
 
 /**

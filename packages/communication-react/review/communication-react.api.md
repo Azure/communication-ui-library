@@ -80,11 +80,6 @@ export interface AdapterDisposal {
 }
 
 // @public
-export interface AdapterErrorHandlers {
-    clearErrors(errorTypes: ErrorType[]): void;
-}
-
-// @public
 export interface AdapterPages<TPage> {
     // (undocumented)
     setPage(page: TPage): void;
@@ -162,7 +157,7 @@ export interface BaseCustomStylesProps {
 export type ButtonCustomStylesProps = IButtonStyles;
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterErrorHandlers, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -411,7 +406,6 @@ export type CallingHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public (undocumented)
@@ -500,7 +494,7 @@ export interface CameraButtonStrings {
 }
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, AdapterErrorHandlers, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, ChatAdapterSubscribers {
 }
 
 // @public
@@ -662,7 +656,6 @@ export type ChatHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
     onUpdateMessage: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -942,7 +935,6 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
     onStartLocalVideo: () => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
 };
 
 // @public (undocumented)
@@ -1096,8 +1088,6 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrors: ActiveError[];
-    // @deprecated
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
     strings?: ErrorBarStrings;
 }
 

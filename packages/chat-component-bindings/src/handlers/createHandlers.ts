@@ -4,8 +4,7 @@
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatErrorTarget, newClearChatErrorsModifier, StatefulChatClient } from '@internal/chat-stateful-client';
-import { ErrorType } from '@internal/react-components';
+import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
@@ -16,7 +15,6 @@ export type ChatHandlers = {
   onParticipantRemove: (userId: string) => Promise<void>;
   updateThreadTopicName: (topicName: string) => Promise<void>;
   onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-  onDismissErrors: (errorTypes: ErrorType[]) => void;
   onUpdateMessage: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -71,41 +69,10 @@ export const createDefaultChatHandlers = memoizeOne(
           }
         }
         return isAllChatMessagesLoaded;
-      },
-      onDismissErrors: (errorTypes: ErrorType[]) => {
-        const targets: Set<ChatErrorTarget> = new Set();
-        for (const errorType of errorTypes) {
-          switch (errorType) {
-            case 'unableToReachChatService':
-            case 'accessDenied':
-            case 'userNotInThisThread':
-            case 'sendMessageNotInThisThread':
-              addAccessErrorTargets(targets);
-              break;
-            case 'sendMessageGeneric':
-              targets.add('ChatThreadClient.sendMessage');
-              break;
-          }
-        }
-        chatClient.modifyState(newClearChatErrorsModifier(Array.from(targets.values())));
       }
     };
   }
 );
-
-const accessErrorTargets: ChatErrorTarget[] = [
-  'ChatThreadClient.getProperties',
-  'ChatThreadClient.listMessages',
-  'ChatThreadClient.listParticipants',
-  'ChatThreadClient.sendMessage',
-  'ChatThreadClient.sendTypingNotification'
-];
-
-const addAccessErrorTargets = (targets: Set<ChatErrorTarget>): void => {
-  for (const target of accessErrorTargets) {
-    targets.add(target);
-  }
-};
 
 // These could be shared functions between Chat and Calling
 export const defaultHandlerCreator =

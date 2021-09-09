@@ -4,7 +4,7 @@
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
-import type { AdapterState, AdapterDisposal, AdapterErrorHandlers } from '../../common/adapters';
+import type { AdapterState, AdapterDisposal } from '../../common/adapters';
 
 export type ChatAdapterUiState = {
   // FIXME(Delete?)
@@ -80,7 +80,6 @@ export interface ChatAdapter
   extends ChatAdapterThreadManagement,
     AdapterState<ChatAdapterState>,
     AdapterDisposal,
-    AdapterErrorHandlers,
     ChatAdapterSubscribers {}
 
 export type MessageReceivedListener = (event: { message: ChatMessage }) => void;

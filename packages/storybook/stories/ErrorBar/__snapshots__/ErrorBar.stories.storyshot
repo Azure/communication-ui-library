@@ -25,7 +25,69 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
       >
         <div
           className="ms-Stack css-2"
-        />
+        >
+          <div
+            aria-describedby="MessageBar1"
+            className="ms-MessageBar ms-MessageBar--error ms-MessageBar-multiline root-3"
+            role="region"
+          >
+            <div
+              className="ms-MessageBar-content content-4"
+            >
+              <div
+                aria-hidden={true}
+                className="ms-MessageBar-icon iconContainer-5"
+              >
+                <i
+                  aria-hidden={true}
+                  className="root-37 icon-13"
+                  data-icon-name="ErrorBadge"
+                >
+                  
+                </i>
+              </div>
+              <div
+                aria-live="assertive"
+                className="ms-MessageBar-text text-7"
+                id="MessageBar1"
+                role="alert"
+              >
+                <span
+                  className="ms-MessageBar-innerText innerText-8"
+                />
+              </div>
+              <button
+                className="ms-Button ms-Button--icon ms-MessageBar-dismissal dismissal-14"
+                data-is-focusable={true}
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-15"
+                  data-automationid="splitbuttonprimary"
+                >
+                  <i
+                    aria-hidden={true}
+                    className="ms-Icon root-37 css-22 ms-Button-icon icon-17"
+                    data-icon-name="Clear"
+                    style={
+                      Object {
+                        "fontFamily": "\\"FabricMDL2Icons\\"",
+                      }
+                    }
+                  >
+                    
+                  </i>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
