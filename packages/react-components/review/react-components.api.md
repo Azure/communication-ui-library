@@ -284,6 +284,7 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callingNetworkFailure: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;

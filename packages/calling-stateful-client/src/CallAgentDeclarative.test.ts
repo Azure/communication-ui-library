@@ -6,6 +6,7 @@ import {
   CallAgent,
   CallFeatureFactoryType,
   CollectionUpdatedEvent,
+  DiagnosticsCallFeature,
   GroupChatCallLocator,
   GroupLocator,
   IncomingCallEvent,
@@ -37,6 +38,7 @@ import {
   MockTransferCallFeatureImpl,
   StateChangeListener,
   stubCommunicationTokenCredential,
+  StubDiagnosticsCallFeatureImpl,
   waitWithBreakCondition
 } from './TestUtils';
 
@@ -53,6 +55,9 @@ jest.mock('@azure/communication-calling', () => {
       },
       get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
         return MockTranscriptionCallFeatureImpl;
+      },
+      get Diagnostics(): CallFeatureFactoryType<DiagnosticsCallFeature> {
+        return StubDiagnosticsCallFeatureImpl;
       }
     }
   };

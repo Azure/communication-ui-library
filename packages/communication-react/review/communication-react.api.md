@@ -40,6 +40,8 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { LatestMediaDiagnostics } from '@azure/communication-calling';
+import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { OutputParametricSelector } from 'reselect';
@@ -365,9 +367,9 @@ export class CallError extends Error {
 }
 
 // @public
-export const callErrorBarSelector: OutputSelector<CallClientState, {
+export const callErrorBarSelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 activeErrors: ActiveError[];
-}, (res: CallErrors) => {
+}, (res1: CallErrors, res2: DiagnosticsCallFeatureState | undefined) => {
 activeErrors: ActiveError[];
 }>;
 
@@ -445,6 +447,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
@@ -1061,6 +1064,12 @@ export type DeviceManagerState = {
     unparentedViews: LocalVideoStreamState[];
 };
 
+// @public
+export interface DiagnosticsCallFeatureState {
+    media: MediaDiagnosticsState;
+    network: NetworkDiagnosticsState;
+}
+
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {
     participantId: CommunicationIdentifierKind;
@@ -1096,6 +1105,7 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callingNetworkFailure: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
@@ -1238,6 +1248,12 @@ export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     view?: VideoStreamRendererViewState;
+}
+
+// @public
+export interface MediaDiagnosticsState {
+    // (undocumented)
+    latest: LatestMediaDiagnostics;
 }
 
 // @alpha
@@ -1466,6 +1482,12 @@ export const microphoneButtonSelector: reselect.OutputParametricSelector<CallCli
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+}
+
+// @public
+export interface NetworkDiagnosticsState {
+    // (undocumented)
+    latest: LatestNetworkDiagnostics;
 }
 
 // @public
