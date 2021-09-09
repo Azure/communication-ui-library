@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultCallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
+import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
   StatefulDeviceManager,
   StatefulCallClient,
   createStatefulCallClient,
   DeviceManagerState,
-  CallState,
   CallError
 } from '@internal/calling-stateful-client';
 import {
@@ -88,10 +87,6 @@ class CallContext {
     this.setState({ ...this.state, page });
   }
 
-  public setError(error: Error): void {
-    this.setState({ ...this.state, error });
-  }
-
   public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
     this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
   }
@@ -116,10 +111,6 @@ class CallContext {
       latestErrors: clientState.latestErrors
     });
   }
-
-  public setEndedCall(call: CallState): void {
-    this.setState({ ...this.state, endedCall: call });
-  }
 }
 
 export class AzureCommunicationCallAdapter implements CallAdapter {
@@ -130,7 +121,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private locator: TeamsMeetingLinkLocator | GroupCallLocator;
   private call: Call | undefined;
   private context: CallContext;
-  private handlers: DefaultCallingHandlers;
+  private handlers: CallingHandlers;
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
@@ -163,7 +154,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.callClient.onStateChange(onStateChange);
   }
 
-  private bindPublicMethods() {
+  private bindPublicMethods(): void {
     this.onStateChange.bind(this);
     this.offStateChange.bind(this);
     this.getState.bind(this);

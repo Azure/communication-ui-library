@@ -5,6 +5,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
+import { IdentifierProvider } from '@internal/react-components';
 import { ChatAdapter, createAzureCommunicationChatAdapter, ChatComposite } from '../../../../src';
 import { IDS } from '../../config';
 
@@ -41,12 +42,11 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <>
+    <IdentifierProvider identifiers={IDS}>
       {chatAdapter && (
         <ChatComposite
-          identifiers={IDS}
           adapter={chatAdapter}
-          options={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
+          visualElements={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
           onRenderTypingIndicator={
             customDataModel
               ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
@@ -77,7 +77,7 @@ function App(): JSX.Element {
           }
         />
       )}
-    </>
+    </IdentifierProvider>
   );
 }
 

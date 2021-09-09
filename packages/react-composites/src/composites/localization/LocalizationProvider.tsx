@@ -3,13 +3,10 @@
 
 import React, { createContext, useContext } from 'react';
 
-import {
-  Locale as ComponentLocale,
-  LocalizationProvider as ComponentLocalizationProvider
-} from '@internal/react-components';
+import { ComponentLocale, LocalizationProvider as ComponentLocalizationProvider } from '@internal/react-components';
 
-import { COMPOSITE_LOCALE_EN_US } from '../locales';
-import { CallCompositeStrings } from '../CallComposite';
+import { COMPOSITE_LOCALE_EN_US } from './locales';
+import { CallCompositeStrings, ChatCompositeStrings } from '../CallComposite';
 
 /**
  * Data structure for localization
@@ -21,7 +18,7 @@ export interface CompositeLocale {
    */
   strings: CompositeStrings;
 
-  /** Locale information for the pure Components used by Composites. See {@link communication-react#Locale}. */
+  /** Locale information for the pure Components used by Composites. See {@link communication-react#ComponentLocale}. */
   component: ComponentLocale;
 }
 
@@ -35,6 +32,10 @@ export interface CompositeStrings {
    * Strings used by {@link CallComposite}.
    */
   call: CallCompositeStrings;
+  /**
+   * Strings used by {@link ChatComposite}.
+   */
+  chat: ChatCompositeStrings;
 }
 
 /**

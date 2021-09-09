@@ -8,6 +8,26 @@
  */
 export interface CallCompositeStrings {
   /**
+   * Title of configuration page.
+   */
+  configurationPageTitle: string;
+  /**
+   * Text in button to start call in configuration page.
+   */
+  startCallButtonText: string;
+  /**
+   * Placeholder text for local device settings dropdowns.
+   */
+  defaultPlaceHolder: string;
+  /**
+   * Label for camera dropdown.
+   */
+  cameraLabel: string;
+  /**
+   * Label for sound dropdown.
+   */
+  soundLabel: string;
+  /**
    * Error shown when camera access is blocked by the browser.
    */
   cameraPermissionDenied: string;
@@ -31,4 +51,16 @@ export interface CallCompositeStrings {
    * Error shown when Teams meeting connection is dropped for some reason.
    */
   teamsMeetingFailToJoin: string;
+}
+
+/**
+ * Strings used by the {@link ChatComposite} directly.
+ *
+ * This strings are in addition to those used by the components from the component library.
+ */
+export interface ChatCompositeStrings {
+  /**
+   * Chat list header text
+   */
+  chatListHeader: string;
 }

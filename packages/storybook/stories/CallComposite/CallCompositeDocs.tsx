@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Description, Heading, Source, Title } from '@storybook/addon-docs';
+import { CallComposite } from '@azure/communication-react';
+import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
@@ -66,9 +67,11 @@ export const getDocs: () => JSX.Element = () => {
         It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
         then use the Azure Communication Services identity service to create corresponding authentication tokens for
         their users. The ChatComposite allows developers to easily inject custom data associated with these user
-        identities. Look at the [example canvas](./?path=/story/composites-calling--custom-data-model-example) to see
-        how the initials displayed for users can be provided by Contoso.
+        identities. Look at the [example
+        canvas](./?path=/story/composites-call-customdatamodelexample--custom-data-model-example) to see how the
+        initials displayed for users can be provided by Contoso.
       </Description>
+      <Description>Note that, by default, the initials text color is setup to `white`</Description>
       <Source code={customDataModelExampleContainerText} />
       <Description>
         See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
@@ -84,12 +87,21 @@ export const getDocs: () => JSX.Element = () => {
         Typography](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
       </Description>
 
+      <Heading>Icons</Heading>
+      <Description>
+        Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
+        accepts an object where you can provide a custom JSX element against an icon name key.
+      </Description>
+
       <Heading>Joining an existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
         playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
         useful if you want to explore the composite with multiple users.
       </Description>
+
+      <Heading>Call Composite Props</Heading>
+      <Props of={CallComposite} />
     </>
   );
 };

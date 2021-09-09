@@ -25,7 +25,8 @@ import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
 import { Lobby } from './Lobby';
-import { AzureCommunicationCallAdapter, CallCompositePage } from './adapter';
+import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
+import { CallCompositePage } from './adapter/CallAdapter';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
@@ -35,11 +36,14 @@ import { usePropsFor } from './hooks/usePropsFor';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
-  showCallControls: boolean;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  visualElements: {
+    showCallControls: boolean;
+    showErrorBar: boolean;
+  };
 }
 
 const spinnerLabel = 'Initializing call client...';
@@ -133,9 +137,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               cameraPermissionGranted={devicePermissions.video}
             />
           </Stack.Item>
-          <Stack.Item style={{ width: '100%' }}>
-            <ErrorBar {...errorBarProps} />
-          </Stack.Item>
+          {props.visualElements.showErrorBar && (
+            <Stack.Item style={{ width: '100%' }}>
+              <ErrorBar {...errorBarProps} />
+            </Stack.Item>
+          )}
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
@@ -162,7 +168,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          {props.showCallControls && (
+          {props.visualElements.showCallControls && (
             <Stack.Item styles={callControlsStyles}>
               <Stack className={callControlsContainer}>
                 <CallControls

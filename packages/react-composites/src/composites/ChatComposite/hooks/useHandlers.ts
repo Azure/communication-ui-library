@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CommonProperties } from '@internal/acs-ui-common';
-import { DefaultChatHandlers } from '@internal/chat-component-bindings';
+import { ChatHandlers } from '@internal/chat-component-bindings';
 
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -14,18 +14,20 @@ import { useAdapter } from '../adapter/ChatAdapterProvider';
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
-): Pick<DefaultChatHandlers, CommonProperties<DefaultChatHandlers, PropsT>> => {
+): Pick<ChatHandlers, CommonProperties<ChatHandlers, PropsT>> => {
   return createCompositeHandlers(useAdapter());
 };
 
 const createCompositeHandlers = memoizeOne(
-  (adapter: ChatAdapter): DefaultChatHandlers => ({
+  (adapter: ChatAdapter): ChatHandlers => ({
     onSendMessage: adapter.sendMessage,
     onLoadPreviousChatMessages: adapter.loadPreviousChatMessages,
     onMessageSeen: adapter.sendReadReceipt,
     onTyping: adapter.sendTypingIndicator,
     onParticipantRemove: adapter.removeParticipant,
     updateThreadTopicName: adapter.setTopic,
-    onDismissErrors: adapter.clearErrors
+    onDismissErrors: adapter.clearErrors,
+    onUpdateMessage: adapter.updateMessage,
+    onDeleteMessage: adapter.deleteMessage
   })
 );

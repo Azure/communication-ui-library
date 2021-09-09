@@ -7,7 +7,7 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
-import { ErrorBar as ErrorBarComponent, ErrorType } from '@azure/communication-react';
+import { ActiveError, ErrorBar as ErrorBarComponent, ErrorType } from '@azure/communication-react';
 import { mergeStyles, useTheme } from '@fluentui/react';
 import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -25,7 +25,7 @@ const getDocs: () => JSX.Element = () => {
         `ErrorBar` is a wrapper on fluent UI's `MessageBar` with additional features for surfacing Azure Communication
         Services errors on the UI consistently.
       </Description>
-      <Description>Set the `showErrorBar` option for `ChatComposite` to use an `ErrorBar` to show errors.</Description>
+      <Description>Set the `showErrorBar` feature for `ChatComposite` to use an `ErrorBar` to show errors.</Description>
       <Subheading>Localization</Subheading>
       <Description>
         Similar to other UI components in this library, `ErrorBarProps` accepts all strings shown on the UI as a
@@ -46,15 +46,15 @@ const getDocs: () => JSX.Element = () => {
 const ErrorBarStory = (args): JSX.Element => {
   const theme = useTheme();
 
-  const [activeErrors, setActiveErrors] = useState<ErrorType[]>([]);
+  const [activeErrors, setActiveErrors] = useState<ActiveError[]>([]);
 
   useEffect(() => {
-    setActiveErrors(args.errorTypes);
+    setActiveErrors(args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) })));
   }, [args.errorTypes]);
 
   const onClose = useCallback(
     (toRemove: ErrorType[]) => {
-      setActiveErrors(activeErrors.filter((e) => !toRemove.includes(e)));
+      setActiveErrors(activeErrors.filter((e) => !toRemove.includes(e.type)));
     },
     [activeErrors]
   );
