@@ -24,8 +24,8 @@ steps:
       authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
       authKey: $(AUTH_KEY)
       isPreview: false
-      resourceFilePath: 'packages/react-composites/src/composites/localization/locales/en-US/strings.json'
-      outputDirectoryRoot: 'packages/react-composites/src/composites/localization/locales'
+      resourceFilePath: 'packages/react-composites/src/composites/locales/en-US/strings.json'
+      outputDirectoryRoot: 'packages/react-composites/src/composites/locales'
       cultureMappingType: 'None'
       gitAction: 'COMMIT'
     displayName: 'Call Touchdown build task for composites'
