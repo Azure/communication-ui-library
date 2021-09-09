@@ -443,7 +443,7 @@ describe('complex error handling for startRealtimeNotifications', () => {
     expect(listener.onChangeCalledCount).toBe(2);
     const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
     expect(latestError).toBeDefined();
-    expect(latestError.message).toBe('injected error #2');
+    expect(latestError).toEqual(new ChatError('ChatClient.startRealtimeNotifications', new Error('injected error #2')));
   });
 
   test('errors are cleared on successful method call', async () => {

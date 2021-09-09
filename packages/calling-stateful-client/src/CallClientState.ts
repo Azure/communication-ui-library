@@ -8,6 +8,7 @@ import {
   CallerInfo,
   CallState as CallStatus,
   DeviceAccess,
+  DominantSpeakersInfo,
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
@@ -248,6 +249,10 @@ export interface CallState {
    */
   isScreenSharingOn: boolean;
   /**
+   * Proxy of {@link @azure/communication-calling#DominantSpeakersInfo }.
+   */
+  dominantSpeakers?: DominantSpeakersInfo;
+  /**
    * Proxy of {@link @azure/communication-calling#Call.localVideoStreams}.
    */
   localVideoStreams: LocalVideoStreamState[];
@@ -451,7 +456,7 @@ export interface CallClientState {
  * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
  */
 export type CallErrors = {
-  [target in CallErrorTarget]: Error;
+  [target in CallErrorTarget]: CallError;
 };
 
 /**
@@ -466,11 +471,17 @@ export class CallError extends Error {
    * Error thrown by the failed SDK method.
    */
   public inner: Error;
+  /**
+   * Timestamp added to the error by the stateful layer.
+   */
+  public timestamp: Date;
 
-  constructor(target: CallErrorTarget, inner: Error) {
+  constructor(target: CallErrorTarget, inner: Error, timestamp?: Date) {
     super();
     this.target = target;
     this.inner = inner;
+    // Testing note: It is easier to mock Date::now() than the Date() constructor.
+    this.timestamp = timestamp ?? new Date(Date.now());
     this.name = 'CallError';
     this.message = `${this.target}: ${this.inner.message}`;
   }

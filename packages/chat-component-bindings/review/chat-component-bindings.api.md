@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { ActiveError } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { ChatErrors } from '@internal/chat-stateful-client';
@@ -52,6 +53,8 @@ export type ChatHandlers = {
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onDismissErrors: (errorTypes: ErrorType[]) => void;
+    onUpdateMessage: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
 // @public (undocumented)
@@ -82,9 +85,9 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public
 export const errorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }, (res: ChatErrors) => {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }>;
 
 // @public (undocumented)

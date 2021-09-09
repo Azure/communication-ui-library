@@ -28,6 +28,7 @@ export type AvatarPersonaData = {
   initialsColor?: PersonaInitialsColor | string;
   /**
    * The text color when the user's initials are displayed
+   * @defaultvalue `white`
    */
   initialsTextColor?: string;
 };
@@ -73,7 +74,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       imageUrl={data?.imageUrl ?? props.imageUrl}
       imageInitials={data?.imageInitials ?? props.imageInitials}
       initialsColor={data?.initialsColor ?? props.initialsColor}
-      initialsTextColor={data?.initialsTextColor ?? props.initialsTextColor}
+      initialsTextColor={data?.initialsTextColor ?? props.initialsTextColor ?? 'white'}
     />
   );
 };

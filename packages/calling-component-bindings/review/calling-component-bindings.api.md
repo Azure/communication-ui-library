@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { ActiveError } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
@@ -18,6 +19,7 @@ import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
 import { ErrorType } from '@internal/react-components';
@@ -166,9 +168,9 @@ export const emptySelector: () => Record<string, never>;
 
 // @public
 export const errorBarSelector: OutputSelector<CallClientState, {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }, (res: CallErrors) => {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }>;
 
 // @public (undocumented)
@@ -193,6 +195,9 @@ export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
 
 // @public (undocumented)
 export const getDisplayName: (state: CallClientState) => string | undefined;
+
+// @public (undocumented)
+export const getDominantSpeakers: (state: CallClientState, props: CallingBaseSelectorProps) => undefined | DominantSpeakersInfo;
 
 // @public (undocumented)
 export const getIdentifier: (state: CallClientState) => string;
@@ -319,7 +324,7 @@ renderElement: HTMLElement | undefined;
 remoteParticipants: VideoGalleryRemoteParticipant[];
 }, (res1: string | undefined, res2: {
 [keys: string]: RemoteParticipantState;
-} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string) => {
+} | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string, res8: DominantSpeakersInfo | undefined) => {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
 userId: string;

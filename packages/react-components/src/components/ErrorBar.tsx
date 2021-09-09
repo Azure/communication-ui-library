@@ -19,10 +19,8 @@ export interface ErrorBarProps extends IMessageBarProps {
 
   /**
    * Currently active errors.
-   *
-   * When the error is cleared, the {@link ErrorBar} must be removed instead of clearing {@link ErrorBarProps.activeError}.
    */
-  activeErrors: ErrorType[];
+  activeErrors: ActiveError[];
 
   /**
    * Callback trigerred when the {@link MessageBar} for an active error is dismissed.
@@ -104,6 +102,23 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 /**
+ * Active error to be shown via {@link ErrorBar}.
+ */
+export interface ActiveError {
+  /**
+   * Type of error that is active.
+   */
+  type: ErrorType;
+  /**
+   * The latest timestamp when this error was observed.
+   *
+   * When available, this is used to track errors that have already been seen and dismissed
+   * by the user.
+   */
+  timestamp?: Date;
+}
+
+/**
  * A component to show error messages on the UI.
  * All strings that can be shown are accepted as the {@link ErrorBarProps.strings} so that they can be localized.
  * Active errors are selected by {@link ErrorBarProps.activeErrors}.
@@ -124,11 +139,11 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
       {props.activeErrors.map((activeError) => (
         <MessageBar
           {...props}
-          key={activeError}
+          key={activeError.type}
           messageBarType={MessageBarType.error}
-          onDismiss={() => props.onDismissErrors([activeError])}
+          onDismiss={() => props.onDismissErrors([activeError.type])}
         >
-          {strings[activeError]}
+          {strings[activeError.type]}
         </MessageBar>
       ))}
     </Stack>

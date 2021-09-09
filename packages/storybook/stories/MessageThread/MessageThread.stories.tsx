@@ -175,8 +175,10 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const onLoadPreviousMessages = async (): Promise<boolean> => {
-    setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
-    return false;
+    return new Promise((resolve) => {
+      setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
+      resolve(true);
+    });
   };
 
   const onSendNewSystemMessage = (): void => {

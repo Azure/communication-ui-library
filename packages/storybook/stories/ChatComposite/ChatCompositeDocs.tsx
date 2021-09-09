@@ -69,6 +69,7 @@ export const getDocs: () => JSX.Element = () => {
         canvas](./?path=/story/composites-chat-customdatamodelexample--custom-data-model-example) to see how the name
         and avatar displayed for users can be provided by Contoso.
       </Description>
+      <Description>Note that, by default, the initials text color is setup to `white`</Description>
       <Source code={customDataModelExampleContainerText} />
       <Description>
         See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how

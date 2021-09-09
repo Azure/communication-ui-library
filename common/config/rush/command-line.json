@@ -24,6 +24,14 @@
       "safeForSimultaneousRushProcesses": true
     },
     {
+      "commandKind": "global",
+      "name": "ensure-consistent-versions",
+      "summary": "Ensure that package versions for released artifacts are consistent",
+      "description": "Ensure that package versions for released artifacts are consistent.",
+      "shellCommand": "node common/scripts/ensure-consistent-versions.js",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
       "commandKind": "bulk",
       "name": "test",
       "summary": "Run tests in each project.",

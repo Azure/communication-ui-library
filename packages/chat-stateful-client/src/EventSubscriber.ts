@@ -39,7 +39,8 @@ export class EventSubscriber {
       sender: event.sender,
       senderDisplayName: event.senderDisplayName,
       sequenceId: '', // Note: there is a bug in chatMessageReceived event that it is missing sequenceId
-      createdOn: new Date(event.createdOn)
+      createdOn: new Date(event.createdOn),
+      editedOn: 'editedOn' in event ? event.editedOn : undefined
     });
   };
 

@@ -1,7 +1,6 @@
 {
   "name": "@internal/storybook",
-  "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0-beta.4",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
     "build": "build-storybook -s stories,public,.storybook  --quiet --loglevel warn",
@@ -20,14 +19,14 @@
   "dependencies": {
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-calling": "1.2.0-beta.1",
-    "@azure/communication-chat": "1.0.0",
+    "@azure/communication-chat": "1.0.1",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-react": "1.0.0-beta.4",
     "@azure/communication-signaling": "1.0.0-beta.5",
     "@azure/core-http": "1.2.4",
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.137",
-    "@fluentui/react-northstar": "^0.51.2",
+    "@fluentui/react-northstar": "^0.57.0",
     "@internal/chat-component-bindings": "1.0.0-beta.4",
     "@internal/react-composites": "1.0.0-beta.4",
     "@microsoft/applicationinsights-react-js": "~3.0.5",

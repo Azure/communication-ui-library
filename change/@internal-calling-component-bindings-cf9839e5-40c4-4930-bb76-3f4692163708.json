@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add active and dominant speaker support to screenshare screen.",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

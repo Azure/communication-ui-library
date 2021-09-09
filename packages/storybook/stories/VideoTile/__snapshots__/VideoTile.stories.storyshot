@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,17 +21,17 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
       }
     >
       <div
-        className="ms-Stack css-5"
+        className="ms-Stack css-6"
       >
         <div
-          className="ms-Stack css-6"
+          className="ms-Stack css-7"
         >
           <div
-            className="ms-Stack css-8"
+            className="ms-Stack css-9"
           >
             <div
               aria-label=""
-              className="ms-Persona ms-Persona--size48 root-9"
+              className="ms-Persona ms-Persona--size48 root-10"
               style={
                 Object {
                   "height": 100,
@@ -40,11 +40,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
               }
             >
               <div
-                className="ms-Persona-coin ms-Persona--size48 coin-16"
+                className="ms-Persona-coin ms-Persona--size48 coin-17"
                 role="presentation"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-18"
+                  className="ms-Persona-imageArea imageArea-19"
                   role="presentation"
                   style={
                     Object {
@@ -55,7 +55,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
                 >
                   <div
                     aria-hidden="true"
-                    className="ms-Persona-initials initials-21"
+                    className="ms-Persona-initials initials-22"
                     style={
                       Object {
                         "height": 100,
@@ -65,7 +65,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
                   >
                     <i
                       aria-hidden={true}
-                      className="root-37 root-23"
+                      className="root-37 root-24"
                       data-icon-name="Contact"
                     >
                       
@@ -77,15 +77,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
           </div>
         </div>
         <div
-          className="ms-Stack css-81 css-26"
+          className="ms-Stack css-90 css-27"
         >
           <div
-            className="ms-Stack css-27"
-          >
-            
-          </div>
-          <div
-            className="ms-Stack css-28"
+            className="ms-StackItem css-28"
           >
             <i
               aria-hidden={true}
