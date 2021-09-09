@@ -78,8 +78,9 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
-  const defaultPlaceHolder = 'Select an option';
-  const soundLabel = 'Sound';
+  const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
+  const cameraLabel = locale.strings.call.cameraLabel;
+  const soundLabel = locale.strings.call.soundLabel;
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
@@ -89,7 +90,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     <Stack data-ui-id="call-composite-device-settings" className={localSettingsContainer} tokens={mainStackTokens}>
       <Dropdown
         data-ui-id="call-composite-local-camera-settings"
-        label={locale.strings.call.cameraLabel}
+        label={cameraLabel}
         placeholder={defaultPlaceHolder}
         options={
           props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]

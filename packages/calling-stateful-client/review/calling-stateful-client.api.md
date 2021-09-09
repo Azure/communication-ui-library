@@ -52,14 +52,15 @@ export interface CallClientState {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error);
+    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
     inner: Error;
     target: CallErrorTarget;
+    timestamp: Date;
 }
 
 // @public
 export type CallErrors = {
-    [target in CallErrorTarget]: Error;
+    [target in CallErrorTarget]: CallError;
 };
 
 // @public
