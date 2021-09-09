@@ -22,7 +22,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
     >
       <div
         className="css-1"
-      />
+      >
+        <div
+          className="ms-Stack css-2"
+        />
+      </div>
     </div>
   </div>
 </div>
