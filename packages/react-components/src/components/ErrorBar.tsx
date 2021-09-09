@@ -142,14 +142,14 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
 
   return (
     <Stack>
-      {toShow.map((activeError) => (
+      {toShow.map((error) => (
         <MessageBar
           {...props}
-          key={activeError.type}
+          key={error.type}
           messageBarType={MessageBarType.error}
-          onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, activeError))}
+          onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
         >
-          {strings[activeError.type]}
+          {strings[error.type]}
         </MessageBar>
       ))}
     </Stack>
@@ -185,14 +185,14 @@ const dismissError = (dismissedErrors: DismissedError[], toDismiss: ActiveError)
   ];
 };
 
-// Returns a new Array iff contents change, to avoid re-rendering when nothing was dropped.
+// Returns a new Array if and only if contents change, to avoid re-rendering when nothing was dropped.
 const dropDismissalsForInactiveErrors = (
   activeErrors: ActiveError[],
   dismissedErrors: DismissedError[]
 ): DismissedError[] => {
   const active = new Map();
   for (const error of activeErrors) {
-    active[error.type] = error;
+    active.set(error.type, error);
   }
 
   // For an error such that:
@@ -202,7 +202,7 @@ const dropDismissalsForInactiveErrors = (
   //
   // We remove it from dismissals. When it becomes active again next time, it will be shown again on the UI.
   const shouldDeleteDismissal = (dismissed: DismissedError) =>
-    dismissed.activeSince === undefined && active[dismissed.type] === undefined;
+    dismissed.activeSince === undefined && active.get(dismissed.type) === undefined;
 
   if (dismissedErrors.some((dismissed) => shouldDeleteDismissal(dismissed))) {
     return dismissedErrors.filter((dismissed) => !shouldDeleteDismissal(dismissed));
@@ -213,11 +213,11 @@ const dropDismissalsForInactiveErrors = (
 const errorsToShow = (activeErrors: ActiveError[], dismissedErrors: DismissedError[]): ActiveError[] => {
   const dismissed: Map<ErrorType, DismissedError> = new Map();
   for (const error of dismissedErrors) {
-    dismissed[error.type] = error;
+    dismissed.set(error.type, error);
   }
 
   return activeErrors.filter((error) => {
-    const dismissal = dismissed[error.type] as DismissedError | undefined;
+    const dismissal = dismissed.get(error.type);
     if (!dismissal) {
       // This error was never dismissed.
       return true;
