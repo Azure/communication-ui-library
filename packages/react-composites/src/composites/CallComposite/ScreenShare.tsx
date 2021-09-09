@@ -30,7 +30,13 @@ export type ScreenShareProps = {
 };
 
 const memoizeAllRemoteParticipants = memoizeFnAll(
-  (userId: string, isMuted?: boolean, renderElement?: HTMLElement, displayName?: string): JSX.Element => {
+  (
+    userId: string,
+    isMuted?: boolean,
+    isSpeaking?: boolean,
+    renderElement?: HTMLElement,
+    displayName?: string
+  ): JSX.Element => {
     return (
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
@@ -40,6 +46,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
             renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
             displayName={displayName}
             isMuted={isMuted}
+            isSpeaking={isSpeaking}
           />
         </Stack>
       </Stack>
@@ -86,6 +93,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       <VideoTile
         displayName={screenShareParticipant?.displayName}
         isMuted={screenShareParticipant?.isMuted}
+        isSpeaking={screenShareParticipant?.isSpeaking}
         renderElement={
           screenShareStream?.renderElement ? (
             <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
@@ -99,7 +107,13 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         {videoStream && videoStream.isAvailable && videoStream.renderElement && (
           <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
             <Stack className={aspectRatioBoxContentStyle}>
-              <VideoTile renderElement={<StreamMedia videoStreamElement={videoStream.renderElement ?? null} />} />
+              <VideoTile
+                displayName={screenShareParticipant?.displayName}
+                isMuted={screenShareParticipant?.isMuted}
+                renderElement={
+                  videoStream.renderElement ? <StreamMedia videoStreamElement={videoStream.renderElement} /> : undefined
+                }
+              />
             </Stack>
           </Stack>
         )}
@@ -143,6 +157,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
               return memoizedRemoteParticipantFn(
                 participant.userId,
                 participant.isMuted,
+                participant.isSpeaking,
                 remoteVideoStream?.renderElement,
                 participant.displayName
               );

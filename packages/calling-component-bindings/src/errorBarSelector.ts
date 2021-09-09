@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import { getDiagnostics, getLatestErrors } from './baseSelectors';
-import { ErrorType } from '@internal/react-components';
+import { ActiveError, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
+import { CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
 
 /**
  * Select the first 3 active errors from the state for the `ErrorBar` component.
@@ -17,7 +18,7 @@ import { createSelector } from 'reselect';
  */
 export const errorBarSelector = createSelector(
   [getLatestErrors, getDiagnostics],
-  (latestErrors, diagnostics): { activeErrors: ErrorType[] } => {
+  (latestErrors: CallErrors, diagnostics): { activeErrors: ActiveError[] } => {
     // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
     // There are several options for the ordering:
     //   - Sorted by when the errors happened (latest first / oldest first).
@@ -25,7 +26,7 @@ export const errorBarSelector = createSelector(
     //
     // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
     // have timestamps for errors.
-    const activeErrors: ErrorType[] = [];
+    const activeErrors: ActiveError[] = [];
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
@@ -33,30 +34,33 @@ export const errorBarSelector = createSelector(
     }
 
     // Prefer to show errors with privacy implications.
-    if (latestErrors['Call.stopVideo'] !== undefined) {
-      activeErrors.push('stopVideoGeneric');
-    }
-    if (latestErrors['Call.mute'] !== undefined) {
-      activeErrors.push('muteGeneric');
-    }
-    if (latestErrors['Call.stopScreenSharing'] !== undefined) {
-      activeErrors.push('stopScreenShareGeneric');
-    }
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.stopVideo', 'stopVideoGeneric');
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.mute', 'muteGeneric');
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.stopScreenSharing', 'stopScreenShareGeneric');
 
-    if (latestErrors['Call.startVideo'] !== undefined) {
-      activeErrors.push('startVideoGeneric');
-    }
-    if (latestErrors['Call.unmute'] !== undefined) {
-      activeErrors.push('unmuteGeneric');
-    }
-    if (latestErrors['Call.startScreenSharing'] !== undefined) {
-      activeErrors.push('startScreenShareGeneric');
-    }
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.startVideo', 'startVideoGeneric');
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.unmute', 'unmuteGeneric');
+    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.startScreenSharing', 'startScreenShareGeneric');
 
     // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
     activeErrors.splice(maxErrorCount);
     return { activeErrors: activeErrors };
   }
 );
+
+const appendActiveErrorIfDefined = (
+  activeErrors: ActiveError[],
+  latestErrors: CallErrors,
+  target: CallErrorTarget,
+  activeErrorType: ErrorType
+): void => {
+  if (latestErrors[target] === undefined) {
+    return;
+  }
+  activeErrors.push({
+    type: activeErrorType,
+    timestamp: latestErrors[target].timestamp
+  });
+};
 
 const maxErrorCount = 3;

@@ -14,7 +14,6 @@ import {
   AudioOptions,
   CallAgent,
   Call,
-  CallClientOptions,
   GroupCallLocator,
   TeamsMeetingLinkLocator,
   LocalVideoStream as SDKLocalVideoStream,
@@ -39,7 +38,7 @@ import {
   ParticipantLeftListener
 } from './CallAdapter';
 import { isInCall } from '../../../utils';
-import { ErrorType, VideoStreamOptions } from '@internal/react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
@@ -180,7 +179,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.setPage.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
-    this.clearErrors.bind(this);
     this.on.bind(this);
     this.off.bind(this);
   }
@@ -387,10 +385,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.offStateChange(handler);
   }
 
-  public clearErrors(errorTypes: ErrorType[]): void {
-    this.handlers.onDismissErrors(errorTypes);
-  }
-
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
@@ -512,17 +506,15 @@ export type AzureCommunicationCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator | GroupCallLocator;
-  callClientOptions?: CallClientOptions;
 };
 
 export const createAzureCommunicationCallAdapter = async ({
   userId,
   displayName,
   credential,
-  locator,
-  callClientOptions
+  locator
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient({ userId }, { callClientOptions });
+  const callClient = createStatefulCallClient({ userId });
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(credential, { displayName });
   const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);

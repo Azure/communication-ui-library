@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { ErrorType } from '@internal/react-components';
-
 /**
  * Functionality for interfacing with Composite adapter state.
  */
@@ -24,14 +22,4 @@ export interface AdapterPages<TPage> {
  */
 export interface AdapterDisposal {
   dispose(): void;
-}
-
-/**
- * Functionality for interfacing with Composite errors.
- */
-export interface AdapterErrorHandlers {
-  /**
-   * Clear errors for given error types
-   */
-  clearErrors(errorTypes: ErrorType[]): void;
 }

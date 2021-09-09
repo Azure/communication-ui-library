@@ -3,7 +3,7 @@
 
 import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import {
@@ -13,6 +13,7 @@ import {
   isSpeakingStyles,
   overlayContainerStyles,
   rootStyles,
+  tileInfoStackItemStyle,
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
@@ -126,6 +127,27 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
+  const nametagColorOverride = useMemo(
+    () => ({ color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary }),
+    [isVideoRendered, palette.neutralPrimary, theme.palette.neutralPrimary]
+  );
+
+  const tileInfoContainerStyle = useMemo(
+    () =>
+      mergeStyles(
+        isVideoRendered ? videoHint : disabledVideoHint,
+        // when video is being rendered, the displayName has a grey-ish background, so no use of theme
+        nametagColorOverride,
+        styles?.displayNameContainer
+      ),
+    [isVideoRendered, nametagColorOverride, styles?.displayNameContainer]
+  );
+
+  const tileInfoDisplayNameStyle = useMemo(
+    () => mergeStyles(displayNameStyle, nametagColorOverride),
+    [nametagColorOverride]
+  );
+
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
@@ -156,32 +178,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        <Stack
-          horizontal
-          className={mergeStyles(
-            isVideoRendered ? videoHint : disabledVideoHint,
-            // when video is being rendered, the displayName has a grey-ish background, so no use of theme
-            { color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary },
-            styles?.displayNameContainer
-          )}
-        >
-          <Stack>
+        {(displayName || (showMuteIndicator && isMuted !== undefined)) && (
+          <Stack horizontal className={tileInfoContainerStyle}>
             {displayName && (
-              <Text
-                className={mergeStyles(displayNameStyle, {
-                  color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary
-                })}
-              >
-                {displayName}
-              </Text>
+              <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>
+                <Text className={tileInfoDisplayNameStyle}>{displayName}</Text>
+              </Stack.Item>
+            )}
+            {showMuteIndicator && isMuted !== undefined && (
+              <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
+                {isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />}
+              </Stack.Item>
             )}
           </Stack>
-          <Stack className={mergeStyles(iconContainerStyle)}>
-            {showMuteIndicator &&
-              isMuted !== undefined &&
-              (isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />)}
-          </Stack>
-        </Stack>
+        )}
 
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
