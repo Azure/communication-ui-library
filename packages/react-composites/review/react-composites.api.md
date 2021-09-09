@@ -263,11 +263,6 @@ export type CallIdChangedListener = (event: {
 export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, ChatAdapterSubscribers {
 }
 
-// @public
-export type ChatAdapterErrors = {
-    [operation: string]: Error;
-};
-
 // @public (undocumented)
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
@@ -286,7 +281,7 @@ export interface ChatAdapterSubscribers {
     // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    off(event: 'error', listener: ChatErrorListener): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -300,7 +295,7 @@ export interface ChatAdapterSubscribers {
     // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    on(event: 'error', listener: ChatErrorListener): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 // @public
@@ -338,7 +333,7 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
-    latestErrors: ChatAdapterErrors;
+    latestErrors: AdapterErrors;
 };
 
 // @public (undocumented)
@@ -360,12 +355,6 @@ export type ChatCompositeVisualElements = {
     showParticipantPane?: boolean;
     showTopic?: boolean;
 };
-
-// @public
-export type ChatErrorListener = (event: {
-    operation: string;
-    error: Error;
-}) => void;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
