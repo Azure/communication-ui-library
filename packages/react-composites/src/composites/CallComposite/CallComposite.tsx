@@ -9,6 +9,7 @@ import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
+import { CallControlVisualElements } from './CallControls';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
@@ -35,25 +36,27 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 }
 
 /**
- * Optional features of the {@linnk CallComposite}
+ * Optional features of the {@link CallComposite}
  */
-export type CallCompositeVisualElements = {
+export type CallCompositeVisualElements = CallControlVisualElements & {
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    *
-   * @defaultValue false
+   * @default false
    */
   showErrorBar?: boolean;
+  /**
+   * Show call controls during a call
+   * @default true
+   */
+  showCallControls?: boolean;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  visualElements: {
-    showCallControls: boolean;
-    showErrorBar: boolean;
-  };
+  visualElements: CallCompositeVisualElements;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -100,32 +103,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }
 };
 
-export const Call = (props: CallCompositeProps): JSX.Element => {
-  return (
-    <BaseComposite {...props}>
-      <CallCompositeInternal {...props} showCallControls={true} />
-    </BaseComposite>
-  );
-};
-
-/**
- * Props for the internal-only call composite export that has extra customizability points that
- * we are not ready to export publicly.
- * @internal
- */
-interface CallInternalProps extends CallCompositeProps {
-  showCallControls: boolean;
-}
-
-/**
- * An internal-only call composite export.
- * This is used by the meeting composite and has extra customizability points that we are not ready
- * to export publicly.
- * @internal
- */
-export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
+export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   const { adapter, callInvitationURL, onFetchAvatarPersonaData } = props;
-
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });
@@ -134,17 +113,18 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
       adapter.querySpeakers();
     })();
   }, [adapter]);
-
   return (
-    <CallAdapterProvider adapter={adapter}>
-      <MainScreen
-        callInvitationURL={callInvitationURL}
-        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        visualElements={{
-          showCallControls: props.showCallControls,
-          showErrorBar: props.visualElements?.showErrorBar ?? false
-        }}
-      />
-    </CallAdapterProvider>
+    <BaseComposite {...props}>
+      <CallAdapterProvider adapter={adapter}>
+        <MainScreen
+          callInvitationURL={callInvitationURL}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          visualElements={{
+            showErrorBar: props.visualElements?.showErrorBar ?? false,
+            showCallControls: props.visualElements?.showCallControls ?? true
+          }}
+        />
+      </CallAdapterProvider>
+    </BaseComposite>
   );
 };

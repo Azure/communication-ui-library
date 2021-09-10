@@ -349,8 +349,19 @@ export interface CallCompositeStrings {
 }
 
 // @public
-export type CallCompositeVisualElements = {
+export type CallCompositeVisualElements = CallControlVisualElements & {
     showErrorBar?: boolean;
+    showCallControls?: boolean;
+};
+
+// @public (undocumented)
+export type CallControlVisualElements = {
+    showCameraButton?: boolean;
+    showEndCallButton?: boolean;
+    showMicrophoneButton?: boolean;
+    showOptionsButton?: boolean;
+    showParticipantsButton?: boolean;
+    showScreenShareButton?: boolean;
 };
 
 // @public (undocumented)

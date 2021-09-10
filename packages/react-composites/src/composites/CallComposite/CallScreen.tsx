@@ -33,6 +33,7 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { usePropsFor } from './hooks/usePropsFor';
+import { CallCompositeVisualElements } from './CallComposite';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
@@ -40,10 +41,7 @@ export interface CallScreenProps {
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  visualElements: {
-    showCallControls: boolean;
-    showErrorBar: boolean;
-  };
+  visualElements: CallCompositeVisualElements;
 }
 
 const spinnerLabel = 'Initializing call client...';
@@ -172,9 +170,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             <Stack.Item styles={callControlsStyles}>
               <Stack className={callControlsContainer}>
                 <CallControls
-                  showParticipantsControl={true}
                   onEndCallClick={endCallHandler}
                   callInvitationURL={callInvitationURL}
+                  {...props.visualElements}
                 />
               </Stack>
             </Stack.Item>
