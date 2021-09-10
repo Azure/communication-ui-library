@@ -40,6 +40,8 @@ import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { LatestMediaDiagnostics } from '@azure/communication-calling';
+import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { OutputParametricSelector } from 'reselect';
@@ -150,9 +152,9 @@ export type AzureCommunicationChatAdapterArgs = {
 };
 
 // @public (undocumented)
-export interface BaseCompositeProps {
+export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
-    icons?: CompositeIcons;
+    icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;
@@ -324,10 +326,13 @@ export interface CallClientState {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
+export type CallCompositeIcons = Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>;
+
+// @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public (undocumented)
-export interface CallCompositeProps extends BaseCompositeProps {
+export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
@@ -369,9 +374,9 @@ export class CallError extends Error {
 }
 
 // @public
-export const callErrorBarSelector: OutputSelector<CallClientState, {
+export const callErrorBarSelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 activeErrors: ActiveError[];
-}, (res: CallErrors) => {
+}, (res1: CallErrors, res2: DiagnosticsCallFeatureState | undefined) => {
 activeErrors: ActiveError[];
 }>;
 
@@ -449,6 +454,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
@@ -600,7 +606,10 @@ export type ChatCompositeClientState = {
 };
 
 // @public (undocumented)
-export interface ChatCompositeProps extends BaseCompositeProps {
+export type ChatCompositeIcons = Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>;
+
+// @public (undocumented)
+export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -848,7 +857,7 @@ export const COMPOSITE_LOCALE_ZH_CN: CompositeLocale;
 // @public
 export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
-// @public (undocumented)
+// @public
 export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsCamera: JSX.Element;
     LocalDeviceSettingsMic: JSX.Element;
@@ -990,7 +999,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
-    VideoTileMicOn: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
@@ -1028,7 +1036,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
-    VideoTileMicOn: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
@@ -1052,6 +1059,12 @@ export type DeviceManagerState = {
     deviceAccess?: DeviceAccess;
     unparentedViews: LocalVideoStreamState[];
 };
+
+// @public
+export interface DiagnosticsCallFeatureState {
+    media: MediaDiagnosticsState;
+    network: NetworkDiagnosticsState;
+}
 
 // @public (undocumented)
 export type DisplayNameChangedListener = (event: {
@@ -1088,6 +1101,7 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callingNetworkFailure: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
@@ -1230,6 +1244,12 @@ export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     view?: VideoStreamRendererViewState;
+}
+
+// @public
+export interface MediaDiagnosticsState {
+    // (undocumented)
+    latest: LatestMediaDiagnostics;
 }
 
 // @alpha
@@ -1458,6 +1478,12 @@ export const microphoneButtonSelector: reselect.OutputParametricSelector<CallCli
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+}
+
+// @public
+export interface NetworkDiagnosticsState {
+    // (undocumented)
+    latest: LatestNetworkDiagnostics;
 }
 
 // @public

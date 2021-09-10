@@ -17,15 +17,18 @@ export type {
   CallErrorTarget,
   CallState,
   DeviceManagerState,
+  DiagnosticsCallFeatureState,
   IncomingCallState,
   LocalVideoStreamState,
+  MediaDiagnosticsState,
+  NetworkDiagnosticsState,
+  RecordingCallFeature,
   RemoteParticipantState,
   RemoteVideoStreamState,
-  VideoStreamRendererViewState,
-  RecordingCallFeature,
   TranscriptionCallFeature,
   Transfer,
   TransferCallFeature,
-  TransferRequest
+  TransferRequest,
+  VideoStreamRendererViewState
 } from './CallClientState';
 export * from './modifiers';

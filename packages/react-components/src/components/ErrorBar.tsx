@@ -61,6 +61,11 @@ export interface ErrorBarStrings {
   sendMessageGeneric: string;
 
   /**
+   * Detected bad network connection via the Calling SDK.
+   */
+  callingNetworkFailure: string;
+
+  /**
    * A generic message when starting video fails.
    */
   startVideoGeneric: string;

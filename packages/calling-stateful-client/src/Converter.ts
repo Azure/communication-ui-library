@@ -75,6 +75,14 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
     callerInfo: call.callerInfo,
     state: call.state,
     callEndReason: call.callEndReason,
+    diagnostics: {
+      network: {
+        latest: {}
+      },
+      media: {
+        latest: {}
+      }
+    },
     direction: call.direction,
     isMuted: call.isMuted,
     isScreenSharingOn: call.isScreenSharingOn,
