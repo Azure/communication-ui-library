@@ -8,7 +8,8 @@ import {
   containerStyles,
   callControlsStyles,
   subContainerStyles,
-  callControlsContainer
+  callControlsContainer,
+  bannersContainerStyles
 } from './styles/CallScreen.styles';
 
 import { MediaGallery } from './MediaGallery';
@@ -126,20 +127,23 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       {isInCall(callStatus ?? 'None') ? (
         <>
-          <Stack.Item style={{ width: '100%' }}>
-            <ComplianceBanner {...complianceBannerProps} />
-          </Stack.Item>
-          <Stack.Item style={permissionsBannerContainerStyle}>
-            <PermissionsBanner
-              microphonePermissionGranted={devicePermissions.audio}
-              cameraPermissionGranted={devicePermissions.video}
-            />
-          </Stack.Item>
-          {props.visualElements.showErrorBar && (
-            <Stack.Item style={{ width: '100%' }}>
-              <ErrorBar {...errorBarProps} />
+          <Stack styles={bannersContainerStyles}>
+            <Stack.Item>
+              <ComplianceBanner {...complianceBannerProps} />
             </Stack.Item>
-          )}
+            <Stack.Item style={permissionsBannerContainerStyle}>
+              <PermissionsBanner
+                microphonePermissionGranted={devicePermissions.audio}
+                cameraPermissionGranted={devicePermissions.video}
+              />
+            </Stack.Item>
+            {props.visualElements.showErrorBar && (
+              <Stack.Item>
+                <ErrorBar {...errorBarProps} />
+              </Stack.Item>
+            )}
+          </Stack>
+
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
