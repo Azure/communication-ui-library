@@ -1,39 +1,46 @@
 import {
   LocalizationProvider,
-  COMPONENT_LOCALE_JA_JP,
-  COMPONENT_LOCALE_FR_FR,
   COMPONENT_LOCALE_EN_US,
-  ComponentLocale,
+  COMPONENT_LOCALE_FR_FR,
+  COMPONENT_LOCALE_JA_JP,
   CameraButton
 } from '@azure/communication-react';
-import React from 'react';
+import { Dropdown, IDropdownOption } from '@fluentui/react';
+import React, { useState, useCallback } from 'react';
 
 export const AsyncLocalesSnippet = (): JSX.Element => {
-  //  mock API functions
-  const localeAPIforEN_US = async (): Promise<ComponentLocale> => {
-    return COMPONENT_LOCALE_EN_US as ComponentLocale;
-  };
-  const localeAPIforFR_FR = async (): Promise<ComponentLocale> => {
-    return COMPONENT_LOCALE_FR_FR as ComponentLocale;
-  };
-  const localeAPIforJA_JP = async (): Promise<ComponentLocale> => {
-    return COMPONENT_LOCALE_JA_JP as ComponentLocale;
-  };
-
-  const localeLoader = async (locale?: string): Promise<ComponentLocale> => {
-    switch (locale) {
-      case 'fr-fr':
-        return await localeAPIforFR_FR();
+  const [localeTag, setLocaleTag] = useState('en-US');
+  const asyncLocale = useCallback(async () => {
+    switch (localeTag) {
+      case 'fr-FR':
+        // could be an awaited function here
+        return COMPONENT_LOCALE_FR_FR;
       case 'ja-JP':
-        return await localeAPIforJA_JP();
+        return COMPONENT_LOCALE_JA_JP;
       default:
-        return await localeAPIforEN_US();
+        return COMPONENT_LOCALE_EN_US;
+    }
+  }, [localeTag]);
+
+  const onChange = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption): void => {
+    if (option?.key) {
+      setLocaleTag(option?.key as string);
     }
   };
 
   return (
-    <LocalizationProvider defaultLocale="ja-JP" locale={localeLoader}>
-      <CameraButton showLabel />
-    </LocalizationProvider>
+    <>
+      <Dropdown
+        onChange={onChange}
+        options={[
+          { key: 'en_US', text: 'English (US)', selected: true },
+          { key: 'fr-FR', text: 'French (France)' },
+          { key: 'ja-JP', text: 'Japanese (Japan)' }
+        ]}
+      />
+      <LocalizationProvider locale={asyncLocale}>
+        <CameraButton showLabel />
+      </LocalizationProvider>
+    </>
   );
 };

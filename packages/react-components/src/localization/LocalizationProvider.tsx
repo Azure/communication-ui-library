@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
   CameraButtonStrings,
   EndCallButtonStrings,
@@ -84,64 +84,35 @@ const InternalLocalizationProvider = (props: InternalLocalizationProviderProps):
 /** React hook to access locale */
 export const useLocale = (): ComponentLocale => useContext(LocaleContext);
 
-interface SetLocaleContext {
-  setLocale: (locale?: string) => Promise<void>;
-}
-
-const SetLocaleContext = createContext<SetLocaleContext>({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  setLocale: async (locale?: string) => {}
-});
-
 type AsyncLocalizationProviderProps = {
-  defaultLocale?: string;
-  localeLoader: (locale?: string) => Promise<ComponentLocale>;
+  localeLoader: () => Promise<ComponentLocale>;
   children: React.ReactNode;
 };
 
 const AsyncLocalizationProvider = (props: AsyncLocalizationProviderProps): JSX.Element => {
-  const { children, defaultLocale, localeLoader } = props;
+  const { children, localeLoader } = props;
   const [componentLocale, setComponentLocale] = useState<ComponentLocale>(COMPONENT_LOCALE_EN_US);
 
   useEffect(() => {
     const intializeLocale = async (): Promise<void> => {
-      const componentLocale = await localeLoader(defaultLocale);
+      const componentLocale = await localeLoader();
       setComponentLocale(componentLocale);
     };
     intializeLocale();
-  }, [defaultLocale, localeLoader]);
+  }, [localeLoader]);
 
-  const state = useMemo<SetLocaleContext>(
-    () => ({
-      setLocale: async (locale?: string): Promise<void> => {
-        setComponentLocale(await localeLoader(locale));
-      }
-    }),
-    [localeLoader]
-  );
-
-  return (
-    <SetLocaleContext.Provider value={state}>
-      <InternalLocalizationProvider locale={componentLocale}>{children}</InternalLocalizationProvider>
-    </SetLocaleContext.Provider>
-  );
+  return <InternalLocalizationProvider locale={componentLocale}>{children}</InternalLocalizationProvider>;
 };
-
-/**
- * React hook for programmatically accessing the setLocale.
- */
-export const useSetLocale = (): SetLocaleContext => useContext(SetLocaleContext);
 
 export const LocalizationProvider = (props: {
   defaultLocale?: string;
-  locale: ComponentLocale | ((locale?: string) => Promise<ComponentLocale>);
+  locale: ComponentLocale | (() => Promise<ComponentLocale>);
   children: React.ReactNode;
 }): JSX.Element => {
-  const { children, defaultLocale, locale } = props;
+  const { children, locale } = props;
   if (typeof locale === 'function') {
     return AsyncLocalizationProvider({
-      defaultLocale,
-      localeLoader: locale as (locale?: string) => Promise<ComponentLocale>,
+      localeLoader: locale as () => Promise<ComponentLocale>,
       children
     });
   }

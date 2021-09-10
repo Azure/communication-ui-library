@@ -360,8 +360,8 @@ export const lightTheme: PartialTheme & CallingTheme;
 
 // @public (undocumented)
 export const LocalizationProvider: (props: {
-    defaultLocale?: string | undefined;
-    locale: ComponentLocale | ((locale?: string | undefined) => Promise<ComponentLocale>);
+    defaultLocale?: string;
+    locale: ComponentLocale | (() => Promise<ComponentLocale>);
     children: React_2.ReactNode;
 }) => JSX.Element;
 
