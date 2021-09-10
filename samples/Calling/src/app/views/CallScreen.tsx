@@ -36,13 +36,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         onCallEnded();
       });
       adapter.on('error', (e) => {
-        console.error(e);
-        // TODO: Handle other error types from adapter event emitter. Error type does not
-        // have properties 'operation' and 'error'
-        // Do not call error handler when start screen sharing fails
-        if (e['operation'] === 'Call.startScreenSharing' && e['error']['_code'] === 400) {
+        // Do not call error handler when error target is starting screen sharing
+        if (e.target === 'Call.startScreenSharing') {
+          console.log('Error squelched. ' + e);
           return;
         }
+        console.error(e);
         onCallError(e);
       });
       setAdapter(adapter);
