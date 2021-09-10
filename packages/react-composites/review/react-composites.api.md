@@ -38,6 +38,18 @@ export interface AdapterDisposal {
 }
 
 // @public
+export interface AdapterError extends Error {
+    inner: Error;
+    target: string;
+    timestamp: Date;
+}
+
+// @public
+export type AdapterErrors = {
+    [target: string]: AdapterError;
+};
+
+// @public
 export interface AdapterPages<TPage> {
     // (undocumented)
     setPage(page: TPage): void;
@@ -132,7 +144,7 @@ export type CallAdapterClientState = {
     call?: CallState;
     devices: DeviceManagerState;
     endedCall?: CallState;
-    latestErrors: CallAdapterErrors;
+    latestErrors: AdapterErrors;
 };
 
 // @public
@@ -152,11 +164,6 @@ export interface CallAdapterDeviceManagement {
     // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
 }
-
-// @public
-export type CallAdapterErrors = {
-    [operation: string]: Error;
-};
 
 // @public (undocumented)
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -180,7 +187,7 @@ export interface CallAdapterSubscribers {
     // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -198,7 +205,7 @@ export interface CallAdapterSubscribers {
     // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 // @public
@@ -259,11 +266,6 @@ export type CallIdChangedListener = (event: {
 export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, ChatAdapterSubscribers {
 }
 
-// @public
-export type ChatAdapterErrors = {
-    [operation: string]: Error;
-};
-
 // @public (undocumented)
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
@@ -282,7 +284,7 @@ export interface ChatAdapterSubscribers {
     // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    off(event: 'error', listener: ChatErrorListener): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -296,7 +298,7 @@ export interface ChatAdapterSubscribers {
     // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    on(event: 'error', listener: ChatErrorListener): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 // @public
@@ -334,7 +336,7 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
-    latestErrors: ChatAdapterErrors;
+    latestErrors: AdapterErrors;
 };
 
 // @public (undocumented)
@@ -359,12 +361,6 @@ export type ChatCompositeVisualElements = {
     showParticipantPane?: boolean;
     showTopic?: boolean;
 };
-
-// @public
-export type ChatErrorListener = (event: {
-    operation: string;
-    error: Error;
-}) => void;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
