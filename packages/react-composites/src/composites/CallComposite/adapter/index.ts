@@ -7,7 +7,6 @@ export type { AzureCommunicationCallAdapterArgs } from './AzureCommunicationCall
 export type {
   CallAdapter,
   CallAdapterClientState,
-  CallAdapterErrors,
   CallAdapterState,
   CallAdapterUiState,
   CallAdapterCallManagement,

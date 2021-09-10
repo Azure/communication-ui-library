@@ -10,4 +10,5 @@ export type { AvatarPersonaData, AvatarPersonaDataCallback } from './common/Avat
 export * from './common/icons';
 export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
+export type { AdapterError, AdapterErrors } from './common/adapters';
 export type { BaseCompositeProps } from './common/Composite';

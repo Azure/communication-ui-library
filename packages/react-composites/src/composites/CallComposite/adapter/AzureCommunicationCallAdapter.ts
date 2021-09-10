@@ -46,6 +46,7 @@ import {
   CommunicationUserKind
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
+import { AdapterError } from '../../common/adapters';
 
 // Context of Chat, which is a centralized context for all state updates
 class CallContext {
@@ -393,7 +394,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
-  on(event: 'error', errorHandler: (e: Error) => void): void;
+  on(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: CallEvent, listener: (e: any) => void): void {
@@ -476,7 +477,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
-  off(event: 'error', errorHandler: (e: Error) => void): void;
+  off(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: CallEvent, listener: (e: any) => void): void {
@@ -488,7 +489,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       return await f();
     } catch (error) {
       if (isCallError(error)) {
-        this.emitter.emit('error', { operation: error.target, error: error.inner });
+        this.emitter.emit('error', error as AdapterError);
       }
       throw error;
     }
