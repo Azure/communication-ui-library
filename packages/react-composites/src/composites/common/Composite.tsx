@@ -50,7 +50,7 @@ export interface BaseCompositeProps {
  * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
  */
 export const BaseComposite = (props: BaseCompositeProps & { children: React.ReactNode }): JSX.Element => {
-  const { fluentTheme, rtl, locale, defaultLocale } = props;
+  const { fluentTheme, rtl, locale } = props;
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
@@ -64,5 +64,5 @@ export const BaseComposite = (props: BaseCompositeProps & { children: React.Reac
       {props.children}
     </FluentThemeProvider>
   );
-  return locale ? LocalizationProvider({ locale, defaultLocale, children: CompositeElement }) : CompositeElement;
+  return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
 };
