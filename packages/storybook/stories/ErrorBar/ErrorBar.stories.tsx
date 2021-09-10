@@ -7,11 +7,11 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
-import { ActiveError, ErrorBar as ErrorBarComponent, ErrorType } from '@azure/communication-react';
+import { ErrorBar as ErrorBarComponent } from '@azure/communication-react';
 import { mergeStyles, useTheme } from '@fluentui/react';
 import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
@@ -46,19 +46,6 @@ const getDocs: () => JSX.Element = () => {
 const ErrorBarStory = (args): JSX.Element => {
   const theme = useTheme();
 
-  const [activeErrors, setActiveErrors] = useState<ActiveError[]>([]);
-
-  useEffect(() => {
-    setActiveErrors(args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) })));
-  }, [args.errorTypes]);
-
-  const onClose = useCallback(
-    (toRemove: ErrorType[]) => {
-      setActiveErrors(activeErrors.filter((e) => !toRemove.includes(e.type)));
-    },
-    [activeErrors]
-  );
-
   return (
     <div
       className={mergeStyles({
@@ -68,7 +55,7 @@ const ErrorBarStory = (args): JSX.Element => {
         height: '50%'
       })}
     >
-      <ErrorBarComponent activeErrors={activeErrors} onDismissErrors={onClose} />
+      <ErrorBarComponent activeErrors={args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) }))} />
     </div>
   );
 };
@@ -81,9 +68,7 @@ export default {
   argTypes: {
     errorTypes: controlsToAdd.errorTypes,
     // Hiding auto-generated controls
-    activeErrors: hiddenControl,
-    strings: hiddenControl,
-    onDismissErrors: hiddenControl
+    strings: hiddenControl
   },
   parameters: {
     docs: {

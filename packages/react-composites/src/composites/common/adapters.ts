@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { ErrorType } from '@internal/react-components';
-
 /**
  * Functionality for interfacing with Composite adapter state.
  */
@@ -27,11 +25,26 @@ export interface AdapterDisposal {
 }
 
 /**
- * Functionality for interfacing with Composite errors.
+ * Error reported via error events and stored in adapter state.
  */
-export interface AdapterErrorHandlers {
+export interface AdapterError extends Error {
   /**
-   * Clear errors for given error types
+   * The operation that failed.
    */
-  clearErrors(errorTypes: ErrorType[]): void;
+  target: string;
+  /**
+   * Error thrown by the failed operation.
+   */
+  inner: Error;
+  /**
+   * Timestamp added to the error in the adapter implementation.
+   */
+  timestamp: Date;
 }
+
+/**
+ * Adapters stores the latest error for each operation in the state.
+ *
+ * `target` is an adapter defined string for each unique operation performed by the adapter.
+ */
+export type AdapterErrors = { [target: string]: AdapterError };

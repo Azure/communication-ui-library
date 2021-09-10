@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Simplify ErrorBar story",
+  "packageName": "@internal/storybook",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
