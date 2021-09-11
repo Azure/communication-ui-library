@@ -25,13 +25,13 @@ export interface BaseCompositeProps {
    *
    * @defaultValue English (US) locale
    */
-  locale?: CompositeLocale | ((locale?: string) => Promise<CompositeLocale>);
+  locale?: CompositeLocale;
   /**
-   * Default string for locale prop if locale prop is type (locale?: string) => Promise<CompositeLocale>
+   * Asynchronous callback to change locale
    *
    * @defaultValue undefined
    */
-  defaultLocale?: string;
+  localeLoader?: () => Promise<CompositeLocale>;
   /**
    * Whether composite is displayed right-to-left.
    *
@@ -50,7 +50,7 @@ export interface BaseCompositeProps {
  * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
  */
 export const BaseComposite = (props: BaseCompositeProps & { children: React.ReactNode }): JSX.Element => {
-  const { fluentTheme, rtl, locale } = props;
+  const { fluentTheme, rtl, locale, localeLoader } = props;
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
@@ -64,5 +64,5 @@ export const BaseComposite = (props: BaseCompositeProps & { children: React.Reac
       {props.children}
     </FluentThemeProvider>
   );
-  return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  return locale ? LocalizationProvider({ locale, localeLoader, children: CompositeElement }) : CompositeElement;
 };

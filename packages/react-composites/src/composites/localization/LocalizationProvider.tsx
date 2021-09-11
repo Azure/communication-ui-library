@@ -88,13 +88,15 @@ const AsyncLocalizationProvider = (props: AsyncLocalizationProviderProps): JSX.E
 };
 
 export const LocalizationProvider = (props: {
-  locale: CompositeLocale | (() => Promise<CompositeLocale>);
+  locale: CompositeLocale;
+  localeLoader?: () => Promise<CompositeLocale>;
   children: React.ReactNode;
 }): JSX.Element => {
-  const { children, locale } = props;
-  if (typeof locale === 'function') {
+  const { children, locale, localeLoader } = props;
+  if (localeLoader) {
     return AsyncLocalizationProvider({
-      localeLoader: locale as () => Promise<CompositeLocale>,
+      defaultLocale: locale,
+      localeLoader,
       children
     });
   }

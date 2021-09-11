@@ -92,10 +92,10 @@ export type AzureCommunicationChatAdapterArgs = {
 
 // @public (undocumented)
 export interface BaseCompositeProps {
-    defaultLocale?: string;
     fluentTheme?: PartialTheme | Theme;
     icons?: CompositeIcons;
-    locale?: CompositeLocale | ((locale?: string) => Promise<CompositeLocale>);
+    locale?: CompositeLocale;
+    localeLoader?: () => Promise<CompositeLocale>;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;
 }
