@@ -90,7 +90,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-25"
+              className="ms-Stack css-89 css-25"
             >
               <div
                 className="ms-StackItem css-26"
@@ -156,7 +156,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-25"
+              className="ms-Stack css-89 css-25"
             >
               <div
                 className="ms-StackItem css-26"
@@ -222,7 +222,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-25"
+              className="ms-Stack css-89 css-25"
             >
               <div
                 className="ms-StackItem css-26"
@@ -288,7 +288,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-25"
+              className="ms-Stack css-89 css-25"
             >
               <div
                 className="ms-StackItem css-26"
