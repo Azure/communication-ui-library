@@ -1,0 +1,53 @@
+name: Run Touchdown build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      [
+        packages/react-components/src/localization/locales/en-US/strings.json,
+        packages/react-composites/src/composites/localization/locales/en-US/strings.json
+      ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run Touchdown build and create a localization PR'
+        required: true
+        default: 'main'
+
+jobs:
+  runTDBuild:
+    name: Run Touchdown build
+    runs-on: ubuntu-latest
+    env:
+      MAIN_BRANCH: 'main'
+    steps:
+      # Check-out repo
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Check out onto desired branch or tag to create release from
+      - name: Checkout tag/branch
+        run: git checkout ${{ github.event.inputs.branch }}
+
+      - name: Install github actions dependencies
+        run: npm ci
+        working-directory: ./.github/workflows/azure-pipeline-action-fork
+
+      - name: Trigger touchdown build pipeline for components
+        uses: ./.github/workflows/azure-pipeline-action-fork
+        with:
+          azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
+          azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-components'
+          azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
+          azure-pipeline-variables: '{"commit": ${{ github.event.inputs.branch == env.MAIN_BRANCH }}, "github_token": "${{ secrets.GITHUB_TOKEN }}"}'
+
+      - name: Trigger touchdown build pipeline for composites
+        uses: ./.github/workflows/azure-pipeline-action-fork
+        with:
+          azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
+          azure-pipeline-name: 'Azure.communication-ui-library-touchdown-build-composites'
+          azure-devops-token: '${{ secrets.AZURE_TOUCHDOWN_BUILD_PIPELINE_SECRET }}'
+          azure-pipeline-variables: '{"commit": ${{ github.event.inputs.branch == env.MAIN_BRANCH }}, "github_token": "${{ secrets.GITHUB_TOKEN }}"}'
