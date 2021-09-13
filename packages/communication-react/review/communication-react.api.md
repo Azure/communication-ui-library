@@ -1353,8 +1353,17 @@ export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displa
     meetingEndReason?: MeetingEndReason;
 }
 
-// @public
-export type MeetingState = unknown;
+// @alpha
+export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
+    id: string;
+    meetingEndReason?: MeetingEndReason;
+    participants: {
+        [key: string]: MeetingParticipant;
+    };
+    participantsEnded: {
+        [keys: string]: MeetingParticipant;
+    };
+}
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {
