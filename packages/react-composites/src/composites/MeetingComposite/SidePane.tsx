@@ -106,7 +106,11 @@ export const EmbeddedChatPane = (props: {
 }): JSX.Element => {
   return (
     <SidePane hidden={props.hidden} headingText={'Chat'} onClose={props.onClose}>
-      <ChatComposite adapter={props.chatAdapter} fluentTheme={props.fluentTheme} />
+      <ChatComposite
+        adapter={props.chatAdapter}
+        fluentTheme={props.fluentTheme}
+        hiddenElements={{ participantPane: true }}
+      />
     </SidePane>
   );
 };
