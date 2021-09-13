@@ -1,8 +1,25 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.5)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.0-beta.4..@internal/calling-stateful-client_v1.0.0-beta.5)
+
+### Changes
+
+- Add methods to clear calling ACS errors ([PR #685](https://github.com/azure/communication-ui-library/pull/685) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Adjust most comments in internal api review ([PR #724](https://github.com/azure/communication-ui-library/pull/724) by jinan@microsoft.com)
+- Bump acs-ui-common dep ([PR #732](https://github.com/azure/communication-ui-library/pull/732) by 82062616+prprabhu-ms@users.noreply.github.com)
+- updating calling to use 1.2.1-beta.1 ([PR #758](https://github.com/azure/communication-ui-library/pull/758) by 79329532+alkwa-msft@users.noreply.github.com)
+- Add call diagnostics to stateful client ([PR #749](https://github.com/azure/communication-ui-library/pull/749) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add timestamp to teed errors ([PR #753](https://github.com/azure/communication-ui-library/pull/753) by 82062616+prprabhu-ms@users.noreply.github.com)
+- updating immer to 9.0.6 ([PR #764](https://github.com/azure/communication-ui-library/pull/764) by 79329532+alkwa-msft@users.noreply.github.com)
+- Tee errors to CallClientState ([PR #680](https://github.com/azure/communication-ui-library/pull/680) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add Dominant Speaker support to Video Gallery ([PR #742](https://github.com/azure/communication-ui-library/pull/742) by anjulgarg@live.com)
 
 ## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.4)
 

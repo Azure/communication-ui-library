@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Refactored call join error handling",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.5)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.4..@azure/communication-react_v1.0.0-beta.5)
+
+### Changes
+
+- Bump @internal/react-composites to v1.0.0-beta.5 ([PR #716](https://github.com/azure/communication-ui-library/pull/716) by anjulgarg@live.com)
 
 ## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.4)
 

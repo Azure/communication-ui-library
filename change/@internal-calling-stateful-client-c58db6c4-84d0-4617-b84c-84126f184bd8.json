@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Tee errors to CallClientState",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
