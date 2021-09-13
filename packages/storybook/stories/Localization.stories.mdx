@@ -24,14 +24,14 @@ Developers can provide their own localization files to be used for the UI Librar
 
 ## LocalizationProvider
 
-`LocalizationProvider` is a component wrapper that sets all the strings for UI Library components using a `Locale`. By default, all
+`LocalizationProvider` is a component wrapper that sets all the strings for UI Library components using a `ComponentLocale`. By default, all
 components use our English (US) locale. If desired, LocalizationProvider can be used to set a different locale. Out of the box,
 the UI library includes a set of locales usable with the UI components and composites
 
 ### Usage
 
-To use the LocalizationProvider, import it from `@azure/communication-react` and wrap it around UI Library components. Then assign a `Locale` to the `locale` prop.
-For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `fr_FR` from `@azure/communication-react`.
+To use the LocalizationProvider, import it from `@azure/communication-react` and wrap it around UI Library components. Then assign a `ComponentLocale` to the `locale` prop.
+For the example below, we will localize buttons in a `ControlBar` in French (France) by also importing locale `COMPONENT_LOCALE_FR_FR` from `@azure/communication-react`.
 
 <Source code={LocalizationProviderSnippetText} />
 
@@ -41,7 +41,7 @@ For the example below, we will localize buttons in a `ControlBar` in French (Fra
 
 ### Composites
 
-If you want to localize your composite, assign a `Locale` to the `locale` prop of the composite. You may import one of our locales like `fr_FR` for French (France)
+If you want to localize your composite, assign a `ComponentLocale` to the `locale` prop of the composite. You may import one of our locales like `COMPONENT_LOCALE_FR_FR` for French (France)
 in the example below.
 
 <Source code={LocalizedComposites} />
@@ -53,7 +53,7 @@ with strings from our English (US) locale but you want to change the label of `C
 
 ### Option 1: Import and customize locales
 
-The first option is to import and customize locales. First, import `en_US` locale from `@azure/communication-react` and then reassign the
+The first option is to import and customize locales. First, import `COMPONENT_LOCALE_EN_US` locale from `@azure/communication-react` and then reassign the
 value `strings.cameraButton.offLabel` like shown below.
 
 <Source code={CustomLocaleSnippetText} />
@@ -62,7 +62,7 @@ value `strings.cameraButton.offLabel` like shown below.
   <CustomLocaleSnippet />
 </Canvas>
 
-`Locale` stores all strings in the `strings` property as a nested object. The component name is the first identifer and the string key is
+`ComponentLocale` stores all strings in the `strings` property as a nested object. The component name is the first identifer and the string key is
 the second identifier such that each string can be accessed in this pattern `strings.<componentName>.<stringKey>`. If you are using
 typescript and have intellisense available in your IDE, it will be easy to discover all the strings.
 
@@ -106,7 +106,7 @@ Note: All ACS UI Library components will have aria labels with the full text as 
 ## Setting rtl
 
 To set rtl of ACS UI Library components for rtl languages, use the `FluentThemeProvider` and set the `rtl` prop to true like in
-the example below localized in Arabic.
+the example below.
 
 <Source code={SetRTLSnippetText} />
 

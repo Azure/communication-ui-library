@@ -175,8 +175,10 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const onLoadPreviousMessages = async (): Promise<boolean> => {
-    setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
-    return false;
+    return new Promise((resolve) => {
+      setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
+      resolve(true);
+    });
   };
 
   const onSendNewSystemMessage = (): void => {
@@ -206,14 +208,14 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onRenderAvatar={(userId: string) => {
+        onRenderAvatar={(userId?: string) => {
           return (
             <Persona
               size={PersonaSize.size32}
               hidePersonaDetails
               presence={PersonaPresence.online}
               text={userId}
-              imageUrl={GetAvatarUrlByUserId(userId)}
+              imageUrl={GetAvatarUrlByUserId(userId ?? '')}
             />
           );
         }}

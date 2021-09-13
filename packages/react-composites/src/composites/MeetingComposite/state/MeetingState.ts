@@ -7,6 +7,10 @@ import { MeetingParticipant } from './MeetingParticipants';
 import { MeetingEndReason } from './MeetingEndReason';
 import { convertCallParticipantsToMeetingParticipants } from '../state/MeetingParticipants';
 
+/**
+ * State of a single Meeting.
+ * @alpha
+ */
 export interface MeetingState
   extends Pick<
       CallState,
@@ -26,9 +30,13 @@ export interface MeetingState
       ChatThreadClientState,
       'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'
     > {
+  /** Current Meeting ID. */
   id: string;
+  /** Active participants in the current meeting. */
   participants: { [key: string]: MeetingParticipant };
+  /** Participants who have left the current meeting. */
   participantsEnded: { [keys: string]: MeetingParticipant };
+  /** Reason the current meeting has ended. */
   meetingEndReason?: MeetingEndReason;
 }
 

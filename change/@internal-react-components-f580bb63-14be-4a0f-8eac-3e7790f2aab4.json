@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed RTL responsiveness of TypingIndicator.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

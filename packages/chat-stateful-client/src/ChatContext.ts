@@ -8,7 +8,7 @@ import {
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,
-  ChatErrorTargets,
+  ChatErrorTarget,
   ChatError
 } from './ChatClientState';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
@@ -19,7 +19,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { ChatStateModifier } from './StatefulChatClient';
-import { newClearErrorsModifier } from './modifiers';
+import { newClearChatErrorsModifier } from './modifiers';
 
 enableMapSet();
 
@@ -350,17 +350,18 @@ export class ChatContext {
    */
   public withAsyncErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => Promise<R>,
-    target: ChatErrorTargets,
-    clearTargets?: ChatErrorTargets[]
+    target: ChatErrorTarget,
+    clearTargets?: ChatErrorTarget[]
   ): (...args: Args) => Promise<R> {
     return async (...args: Args): Promise<R> => {
       try {
         const ret = await f(...args);
-        this.modifyState(newClearErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
+        this.modifyState(newClearChatErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
-        this.setLatestError(target, error);
-        throw new ChatError(target, error);
+        const chatError = toChatError(target, error);
+        this.setLatestError(target, chatError);
+        throw chatError;
       }
     };
   }
@@ -378,22 +379,23 @@ export class ChatContext {
    */
   public withErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => R,
-    target: ChatErrorTargets,
-    clearTargets?: ChatErrorTargets[]
+    target: ChatErrorTarget,
+    clearTargets?: ChatErrorTarget[]
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
         const ret = f(...args);
-        this.modifyState(newClearErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
+        this.modifyState(newClearChatErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
         return ret;
       } catch (error) {
-        this.setLatestError(target, error);
-        throw new ChatError(target, error);
+        const chatError = toChatError(target, error);
+        this.setLatestError(target, chatError);
+        throw chatError;
       }
     };
   }
 
-  private setLatestError(target: ChatErrorTargets, error: Error): void {
+  private setLatestError(target: ChatErrorTarget, error: ChatError): void {
     this.setState(
       produce(this._state, (draft: ChatClientState) => {
         draft.latestErrors[target] = error;
@@ -438,6 +440,7 @@ export class ChatContext {
       }
     } catch (e) {
       this._state = priorState;
+      throw e;
     } finally {
       this._batchMode = false;
     }
@@ -451,3 +454,10 @@ export class ChatContext {
     this._emitter.off('stateChanged', handler);
   }
 }
+
+const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
+  if (error instanceof Error) {
+    return new ChatError(target, error);
+  }
+  return new ChatError(target, new Error(`${error}`));
+};

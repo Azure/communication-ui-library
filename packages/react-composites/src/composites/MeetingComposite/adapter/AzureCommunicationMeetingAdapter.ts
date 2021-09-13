@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 
 import { AudioDeviceInfo, VideoDeviceInfo, PermissionConstraints } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
@@ -14,7 +14,6 @@ import {
   IsScreenSharingOnChangedListener,
   DisplayNameChangedListener,
   IsSpeakingChangedListener,
-  AzureCommunicationCallAdapter,
   CallAdapter,
   CallAdapterState
 } from '../../CallComposite';
@@ -27,7 +26,6 @@ import {
   mergeCallAdapterStateIntoMeetingAdapterState,
   mergeChatAdapterStateIntoMeetingAdapterState
 } from '../state/MeetingAdapterState';
-import { AzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { MeetingCompositePage, meetingPageToCallPage } from '../state/MeetingCompositePage';
 import { EventEmitter } from 'events';
 
@@ -87,6 +85,10 @@ class MeetingContext {
   }
 }
 
+/**
+ * Meeting adapter backed by Azure Communication Services.
+ * Created for easy use with the Meeting Composite.
+ */
 export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
@@ -94,7 +96,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private onChatStateChange: (newChatAdapterState: ChatState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
-  constructor(callAdapter: AzureCommunicationCallAdapter, chatAdapter: AzureCommunicationChatAdapter) {
+  constructor(callAdapter: CallAdapter, chatAdapter: ChatAdapter) {
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
     this.chatAdapter = chatAdapter;
@@ -150,25 +152,38 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.off.bind(this);
   }
 
+  /** Join existing Meeting. */
   public joinMeeting(microphoneOn?: boolean): void {
     this.callAdapter.joinCall(microphoneOn);
   }
+  /** Leave current Meeting. */
   public async leaveMeeting(): Promise<void> {
     await this.chatAdapter.removeParticipant(this.chatAdapter.getState().userId);
     await this.callAdapter.leaveCall();
   }
+  /** Start a new Meeting. */
   public startMeeting(participants: string[]): void {
     this.callAdapter.startCall(participants);
   }
-  public onStateChange(handler: MeetingAdapterStateChangedHandler): void {
+  /**
+   * Subscribe to state change events.
+   * @param handler - handler to be called when the state changes. This is passed the new state.
+   */
+  public onStateChange(handler: (state: MeetingAdapterState) => void): void {
     throw new Error('Method not implemented.');
   }
-  public offStateChange(handler: MeetingAdapterStateChangedHandler): void {
+  /**
+   * Unsubscribe to state change events.
+   * @param handler - handler to be no longer called when state changes.
+   */
+  public offStateChange(handler: (state: MeetingAdapterState) => void): void {
     throw new Error('Method not implemented.');
   }
+  /** Get current Meeting state. */
   public getState(): MeetingAdapterState {
     return this.context.getState();
   }
+  /** Dispose of the current Meeting Adapter. */
   public dispose(): void {
     this.unsubscribeMeetingEvents();
 
@@ -178,9 +193,11 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.chatAdapter.dispose();
     this.callAdapter.dispose();
   }
+  /** Set the page of the Meeting Composite. */
   public setPage(page: MeetingCompositePage): void {
     this.callAdapter.setPage(meetingPageToCallPage(page));
   }
+  /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
     await this.chatAdapter.removeParticipant(userId);
     await this.callAdapter.removeParticipant(userId);
@@ -188,63 +205,82 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.setCamera(device, options);
   }
+  /** Set the microphone to be used in the meeting. */
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
     await this.callAdapter.setMicrophone(device);
   }
+  /** Set the speaker to be used in the meeting. */
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
     await this.callAdapter.setSpeaker(device);
   }
   public async askDevicePermission(constraints: PermissionConstraints): Promise<void> {
     await this.callAdapter.askDevicePermission(constraints);
   }
+  /** Query for available cameras. */
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
     return await this.callAdapter.queryCameras();
   }
+  /** Query for available microphones. */
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
     return await this.callAdapter.queryMicrophones();
   }
+  /** Query for available speakers. */
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return await this.callAdapter.querySpeakers();
   }
+  /** Start the camera for the user in the Meeting. */
   public async startCamera(): Promise<void> {
     await this.callAdapter.startCamera();
   }
+  /** Stop the camera for the user in the Meeting. */
   public async stopCamera(): Promise<void> {
     await this.callAdapter.stopCamera();
   }
+  /** Toggle the camera for the user in the Meeting. */
   public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.onToggleCamera(options);
   }
+  /** Mute the user in the Meeting. */
   public async mute(): Promise<void> {
     await this.callAdapter.mute();
   }
+  /** Unmute the user in the Meeting. */
   public async unmute(): Promise<void> {
     await this.callAdapter.unmute();
   }
+  /** Trigger the user to start screen share. */
   public async startScreenShare(): Promise<void> {
     await this.callAdapter.startScreenShare();
   }
+  /** Stop the current active screen share. */
   public async stopScreenShare(): Promise<void> {
     await this.callAdapter.stopScreenShare();
   }
+  /** Create a stream view for a remote participants video feed. */
   public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.createStreamView(remoteUserId, options);
   }
+  /** Dispose of a created stream view of a remote participants video feed. */
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.disposeStreamView(remoteUserId, options);
   }
+  /** Fetch initial Meeting data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
     await this.chatAdapter.fetchInitialData();
   }
+  /** Send a chat message. */
   public async sendMessage(content: string): Promise<void> {
     await this.chatAdapter.sendMessage(content);
   }
+  /** Send a chat read receipt. */
   public async sendReadReceipt(chatMessageId: string): Promise<void> {
     await this.chatAdapter.sendReadReceipt(chatMessageId);
   }
+  /** Send an isTyping indicator. */
   public async sendTypingIndicator(): Promise<void> {
     await this.chatAdapter.sendTypingIndicator();
   }
+  /** Load previous Meeting chat messages. */
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
     return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
   }
@@ -265,6 +301,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   on(event: MeetingEvent, listener: any): void {
     throw new Error('Method not implemented.');
   }
+
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
   off(event: 'meetingEnded', listener: ParticipantLeftListener): void;

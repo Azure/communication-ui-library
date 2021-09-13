@@ -83,13 +83,13 @@
       "reviewCategory": "tools"
     },
     {
-      "packageName": "build-tools",
+      "packageName": "@internal/config",
       "projectFolder": "common/config",
       "reviewCategory": "tools"
     },
     {
       "packageName": "@internal/check-treeshaking",
-      "projectFolder": "packages/check-treeshaking",
+      "projectFolder": "tools/check-treeshaking",
       "reviewCategory": "tools"
     }
   ]

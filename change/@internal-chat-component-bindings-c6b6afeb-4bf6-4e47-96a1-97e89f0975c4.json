@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updated Typescript version to 4.3.5",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}

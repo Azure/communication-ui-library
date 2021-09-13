@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix local video icon + avatar not showing",
-  "packageName": "@internal/react-components",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

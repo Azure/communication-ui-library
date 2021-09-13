@@ -17,14 +17,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.0.0-beta.3",
+    "@azure/communication-react": "1.0.0-beta.4",
     "@azure/communication-common": "1.0.0",
     "react": "~16.14.0",
     "react-dom": "16.13.1",
     "uuid": "^8.1.0"
   },
   "devDependencies": {
-    "@azure/communication-chat": "1.0.0",
+    "@azure/communication-chat": "1.0.1",
     "@azure/communication-identity": "1.0.0",
     "@playwright/test": "~1.12.3",
     "@types/node-static": "~0.7.7",

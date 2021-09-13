@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
 import { createUserAndThread } from './snippets/Server.snippet';
@@ -21,6 +22,9 @@ const messageArray = [
 ];
 
 const BasicStory = (args, context): JSX.Element => {
+  const {
+    globals: { locale }
+  } = context;
   const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   useEffect(() => {
@@ -42,6 +46,8 @@ const BasicStory = (args, context): JSX.Element => {
         <ContosoChatContainer
           fluentTheme={context.theme}
           {...containerProps}
+          locale={compositeLocale(locale)}
+          showErrorBar={args.showErrorBar}
           showParticipants={args.showParticipants}
           showTopic={args.showTopic}
         />
@@ -61,6 +67,7 @@ export default {
   argTypes: {
     connectionString: controlsToAdd.connectionString,
     displayName: controlsToAdd.displayName,
+    showErrorBar: controlsToAdd.showErrorBar,
     showParticipants: controlsToAdd.showChatParticipants,
     showTopic: controlsToAdd.showChatTopic,
     // Hiding auto-generated controls

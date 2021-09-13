@@ -10,14 +10,14 @@ export const MessageThreadWithCustomAvatarExample: () => JSX.Element = () => {
       <MessageThread
         userId={'1'}
         messages={GetHistoryChatMessages()}
-        onRenderAvatar={(userId: string) => {
+        onRenderAvatar={(userId?: string) => {
           return (
             <Persona
               size={PersonaSize.size32}
               hidePersonaDetails
               presence={PersonaPresence.online}
               text={userId}
-              imageUrl={GetAvatarUrlByUserId(userId)}
+              imageUrl={GetAvatarUrlByUserId(userId ?? '')}
             />
           );
         }}

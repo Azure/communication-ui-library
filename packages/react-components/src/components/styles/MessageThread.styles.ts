@@ -33,6 +33,7 @@ export const noMessageStatusStyle = mergeStyles({
 
 export const chatStyle: ComponentSlotStyle = {
   paddingBottom: '0.5rem',
+  paddingTop: '0.8rem',
   border: 'none',
   overflow: 'auto'
 };

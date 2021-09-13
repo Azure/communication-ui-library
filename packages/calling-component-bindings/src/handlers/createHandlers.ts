@@ -16,7 +16,7 @@ import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from '@internal/react-components';
 
-export type DefaultCallingHandlers = {
+export type CallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
   onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
   onStartCall: (
@@ -321,6 +321,6 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
   _Component: (props: Props) => ReactElement | null
-): Common<DefaultCallingHandlers, Props> => {
+): Common<CallingHandlers, Props> => {
   return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
 };

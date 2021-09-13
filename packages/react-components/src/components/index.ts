@@ -5,7 +5,7 @@ export { TypingIndicator } from './TypingIndicator';
 export type { TypingIndicatorProps, TypingIndicatorStrings, TypingIndicatorStylesProps } from './TypingIndicator';
 
 export { ErrorBar } from './ErrorBar';
-export type { ErrorBarProps, ErrorBarStrings, ErrorType } from './ErrorBar';
+export type { ActiveError, ErrorBarProps, ErrorBarStrings, ErrorType } from './ErrorBar';
 
 export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutType } from './GridLayout';
@@ -15,6 +15,8 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
+
+export type { InputBoxButtonProps } from './InputBoxComponent';
 
 export { MessageThread } from './MessageThread';
 export type {
@@ -67,4 +69,4 @@ export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 
 export { VideoTile } from './VideoTile';
-export type { VideoTileProps, VideoTileStylesProps, PlaceholderProps } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';

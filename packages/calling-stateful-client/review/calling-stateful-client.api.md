@@ -6,7 +6,6 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
-import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -17,6 +16,9 @@ import { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
+import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { LatestMediaDiagnostics } from '@azure/communication-calling';
+import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -35,7 +37,7 @@ export interface CallAgentState {
 
 // @public
 export interface CallClientState {
-    callAgent: CallAgentState | undefined;
+    callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
     };
@@ -45,14 +47,33 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     incomingCallsEnded: IncomingCallState[];
+    latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
+
+// @public
+export class CallError extends Error {
+    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
+    inner: Error;
+    target: CallErrorTarget;
+    timestamp: Date;
+}
+
+// @public
+export type CallErrors = {
+    [target in CallErrorTarget]: CallError;
+};
+
+// @public
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
 
 // @public
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
+    dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
     id: string;
     isMuted: boolean;
@@ -73,6 +94,9 @@ export interface CallState {
 }
 
 // @public
+export type CallStateModifier = (state: CallClientState) => void;
+
+// @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
 // @public
@@ -89,6 +113,12 @@ export type DeviceManagerState = {
 };
 
 // @public
+export interface DiagnosticsCallFeatureState {
+    media: MediaDiagnosticsState;
+    network: NetworkDiagnosticsState;
+}
+
+// @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
@@ -103,6 +133,21 @@ export interface LocalVideoStreamState {
     source: VideoDeviceInfo;
     view?: VideoStreamRendererViewState;
 }
+
+// @public
+export interface MediaDiagnosticsState {
+    // (undocumented)
+    latest: LatestMediaDiagnostics;
+}
+
+// @public
+export interface NetworkDiagnosticsState {
+    // (undocumented)
+    latest: LatestNetworkDiagnostics;
+}
+
+// @public
+export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
 
 // @public
 export interface RecordingCallFeature {
@@ -135,6 +180,7 @@ export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
+    modifyState(modifier: CallStateModifier): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
@@ -146,7 +192,6 @@ export type StatefulCallClientArgs = {
 
 // @public
 export type StatefulCallClientOptions = {
-    callClientOptions?: CallClientOptions;
     maxStateChangeListeners?: number;
 };
 
@@ -186,7 +231,6 @@ export interface VideoStreamRendererViewState {
     scalingMode: ScalingMode;
     target: HTMLElement;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

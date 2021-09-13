@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -31,11 +31,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-61 body-1"
+          className="css-60 body-1"
           dir="ltr"
         >
           <div
-            className="css-61"
+            className="css-60"
             data-uses-unhanded-props={true}
           >
             <div
@@ -75,29 +75,35 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
-                          <span
+                          <i
                             aria-hidden={true}
-                            className="root-span"
+                            className="root-37"
+                            data-icon-name="ControlButtonCameraOff"
                           >
-                            <svg
-                              className="svg"
-                              fill="currentColor"
-                              height={20}
-                              viewBox="0 0 20 20"
-                              width={20}
-                              xmlns="http://www.w3.org/2000/svg"
+                            <span
+                              aria-hidden={true}
+                              className="root-span"
                             >
-                              <path
-                                d="M2.85 2.15a.5.5 0 10-.7.7L3.5 4.21A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.3l4.15 4.15a.5.5 0 00.7-.7l-15-15z"
-                              />
-                              <path
-                                d="M16.76 14.43l-1.4-1.2L14 11.88V7.93l2.77-2.31a.75.75 0 011.23.57v7.67c0 .64-.75.99-1.24.57z"
-                              />
-                              <path
-                                d="M13 10.88L6.12 4h4.38A2.5 2.5 0 0113 6.5v4.38z"
-                              />
-                            </svg>
-                          </span>
+                              <svg
+                                className="svg"
+                                fill="currentColor"
+                                height={20}
+                                viewBox="0 0 20 20"
+                                width={20}
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M2.85 2.15a.5.5 0 10-.7.7L3.5 4.21A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.3l4.15 4.15a.5.5 0 00.7-.7l-15-15z"
+                                />
+                                <path
+                                  d="M16.76 14.43l-1.4-1.2L14 11.88V7.93l2.77-2.31a.75.75 0 011.23.57v7.67c0 .64-.75.99-1.24.57z"
+                                />
+                                <path
+                                  d="M13 10.88L6.12 4h4.38A2.5 2.5 0 0113 6.5v4.38z"
+                                />
+                              </svg>
+                            </span>
+                          </i>
                         </span>
                       </button>
                       <button
@@ -115,29 +121,35 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
-                          <span
+                          <i
                             aria-hidden={true}
-                            className="root-span"
+                            className="root-37"
+                            data-icon-name="ControlButtonMicOff"
                           >
-                            <svg
-                              className="svg"
-                              fill="currentColor"
-                              height={20}
-                              viewBox="0 0 20 20"
-                              width={20}
-                              xmlns="http://www.w3.org/2000/svg"
+                            <span
+                              aria-hidden={true}
+                              className="root-span"
                             >
-                              <path
-                                d="M13 10a3 3 0 01-.1.78L7 4.88A3 3 0 0113 5v5z"
-                              />
-                              <path
-                                d="M7 7.7V10a3 3 0 004.74 2.45l1.07 1.07A4.5 4.5 0 015.5 10a.5.5 0 00-1.01 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02a5.48 5.48 0 003.02-1.25l3.63 3.62a.5.5 0 00.7-.7l-15-15a.5.5 0 10-.7.7L7 7.71z"
-                              />
-                              <path
-                                d="M14.8 12.68c.45-.8.7-1.7.7-2.68a.5.5 0 00-1 0c0 .7-.16 1.35-.44 1.94l.74.74z"
-                              />
-                            </svg>
-                          </span>
+                              <svg
+                                className="svg"
+                                fill="currentColor"
+                                height={20}
+                                viewBox="0 0 20 20"
+                                width={20}
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 10a3 3 0 01-.1.78L7 4.88A3 3 0 0113 5v5z"
+                                />
+                                <path
+                                  d="M7 7.7V10a3 3 0 004.74 2.45l1.07 1.07A4.5 4.5 0 015.5 10a.5.5 0 00-1.01 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02a5.48 5.48 0 003.02-1.25l3.63 3.62a.5.5 0 00.7-.7l-15-15a.5.5 0 10-.7.7L7 7.71z"
+                                />
+                                <path
+                                  d="M14.8 12.68c.45-.8.7-1.7.7-2.68a.5.5 0 00-1 0c0 .7-.16 1.35-.44 1.94l.74.74z"
+                                />
+                              </svg>
+                            </span>
+                          </i>
                         </span>
                       </button>
                       <button
@@ -155,23 +167,29 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
-                          <span
+                          <i
                             aria-hidden={true}
-                            className="root-span"
+                            className="root-37"
+                            data-icon-name="ControlButtonScreenShareStart"
                           >
-                            <svg
-                              className="svg"
-                              fill="currentColor"
-                              height={20}
-                              viewBox="0 0 20 20"
-                              width={20}
-                              xmlns="http://www.w3.org/2000/svg"
+                            <span
+                              aria-hidden={true}
+                              className="root-span"
                             >
-                              <path
-                                d="M4 4a2 2 0 00-2 2v8c0 1.1.9 2 2 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm6 10a.5.5 0 01-.5-.5V7.7L7.85 9.36a.5.5 0 11-.7-.7l2.5-2.5c.2-.2.5-.2.7 0l2.5 2.5a.5.5 0 01-.7.7L10.5 7.71v5.79a.5.5 0 01-.5.5z"
-                              />
-                            </svg>
-                          </span>
+                              <svg
+                                className="svg"
+                                fill="currentColor"
+                                height={20}
+                                viewBox="0 0 20 20"
+                                width={20}
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M4 4a2 2 0 00-2 2v8c0 1.1.9 2 2 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm6 10a.5.5 0 01-.5-.5V7.7L7.85 9.36a.5.5 0 11-.7-.7l2.5-2.5c.2-.2.5-.2.7 0l2.5 2.5a.5.5 0 01-.7.7L10.5 7.71v5.79a.5.5 0 01-.5.5z"
+                                />
+                              </svg>
+                            </span>
+                          </i>
                         </span>
                       </button>
                       <button
@@ -189,23 +207,29 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
-                          <span
+                          <i
                             aria-hidden={true}
-                            className="root-span"
+                            className="root-37"
+                            data-icon-name="ControlButtonEndCall"
                           >
-                            <svg
-                              className="svg"
-                              fill="currentColor"
-                              height={20}
-                              viewBox="0 0 20 20"
-                              width={20}
-                              xmlns="http://www.w3.org/2000/svg"
+                            <span
+                              aria-hidden={true}
+                              className="root-span"
                             >
-                              <path
-                                d="M17.96 10.94l-.16.83c-.15.78-.87 1.3-1.7 1.22l-1.63-.16c-.72-.07-1.25-.59-1.47-1.33-.3-1-.5-1.75-.5-1.75a6.63 6.63 0 00-5 0s-.2.75-.5 1.75c-.2.67-.5 1.26-1.2 1.33l-1.63.16c-.81.08-1.6-.43-1.82-1.2l-.25-.84c-.25-.82-.03-1.7.58-2.28C4.1 7.3 6.67 6.51 9.99 6.5c3.33 0 5.6.78 7.16 2.16.66.58.97 1.46.8 2.28z"
-                              />
-                            </svg>
-                          </span>
+                              <svg
+                                className="svg"
+                                fill="currentColor"
+                                height={20}
+                                viewBox="0 0 20 20"
+                                width={20}
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M17.96 10.94l-.16.83c-.15.78-.87 1.3-1.7 1.22l-1.63-.16c-.72-.07-1.25-.59-1.47-1.33-.3-1-.5-1.75-.5-1.75a6.63 6.63 0 00-5 0s-.2.75-.5 1.75c-.2.67-.5 1.26-1.2 1.33l-1.63.16c-.81.08-1.6-.43-1.82-1.2l-.25-.84c-.25-.82-.03-1.7.58-2.28C4.1 7.3 6.67 6.51 9.99 6.5c3.33 0 5.6.78 7.16 2.16.66.58.97 1.46.8 2.28z"
+                                />
+                              </svg>
+                            </span>
+                          </i>
                           <span
                             style={
                               Object {
@@ -283,20 +307,17 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-80 css-43"
+                    className="ms-Stack css-90 css-43"
                   >
                     <div
-                      className="ms-Stack css-3"
+                      className="ms-StackItem css-44"
                     >
                       <span
-                        className="css-44"
+                        className="css-45"
                       >
                         Michael
                       </span>
                     </div>
-                    <div
-                      className="ms-Stack css-45"
-                    />
                   </div>
                 </div>
               </div>

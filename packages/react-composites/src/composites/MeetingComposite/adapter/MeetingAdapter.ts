@@ -4,7 +4,8 @@
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 
 import {
-  CallAdapterHandlers,
+  CallAdapterCallManagement,
+  CallAdapterDeviceManagement,
   CallIdChangedListener,
   DisplayNameChangedListener,
   IsMuteChangedListener,
@@ -14,7 +15,7 @@ import {
   ParticipantLeftListener
 } from '../../CallComposite';
 import {
-  ChatAdapterHandlers,
+  ChatAdapterThreadManagement,
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener
@@ -24,10 +25,57 @@ import { MeetingAdapterState } from '../state/MeetingAdapterState';
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
 import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
-export interface MeetingAdapterHandlers {
+/**
+ * Functionality for managing the current meeting.
+ * @alpha
+ */
+export interface MeetingAdapterMeetingManagement
+  extends Pick<
+      CallAdapterCallManagement,
+      | 'startCamera'
+      | 'stopCamera'
+      | 'onToggleCamera'
+      | 'mute'
+      | 'unmute'
+      | 'startScreenShare'
+      | 'stopScreenShare'
+      | 'createStreamView'
+      | 'disposeStreamView'
+    >,
+    Pick<
+      CallAdapterDeviceManagement,
+      | 'setCamera'
+      | 'setMicrophone'
+      | 'setSpeaker'
+      | 'askDevicePermission'
+      | 'queryCameras'
+      | 'queryMicrophones'
+      | 'querySpeakers'
+    >,
+    Pick<
+      ChatAdapterThreadManagement,
+      'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
+    > {
+  /** Join an existing Meeting */
+  joinMeeting(microphoneOn?: boolean): void;
+  /** Leave the current Meeting */
+  leaveMeeting(): Promise<void>;
+  /**
+   * Start a new Meeting
+   * @param participants - Array of participant IDs. These represent the participants to initialize the meeting with.
+   */
+  startMeeting(participants: string[]): void;
+  /**
+   * Remove a participant from a Meeting
+   * @param userId - UserId of the participant to remove.
+   */
   removeParticipant(userId: string): Promise<void>;
 }
 
+/**
+ * Meeting events that can be subscribed to.
+ * @alpha
+ */
 export interface MeetingAdapterSubscriptions {
   // Meeting specific subscriptions
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
@@ -63,44 +111,24 @@ export interface MeetingAdapterSubscriptions {
   off(event: 'messageRead', listener: MessageReadListener): void;
 }
 
+/**
+ * Meeting Composite Adapter interface.
+ * @alpha
+ */
 export interface MeetingAdapter
   extends AdapterState<MeetingAdapterState>,
     AdapterDisposal,
     AdapterPages<MeetingCompositePage>,
-    MeetingAdapterHandlers,
-    Pick<
-      CallAdapterHandlers,
-      | 'setCamera'
-      | 'setMicrophone'
-      | 'setSpeaker'
-      | 'askDevicePermission'
-      | 'queryCameras'
-      | 'queryMicrophones'
-      | 'querySpeakers'
-      | 'startCamera'
-      | 'stopCamera'
-      | 'onToggleCamera'
-      | 'mute'
-      | 'unmute'
-      | 'startScreenShare'
-      | 'stopScreenShare'
-      | 'createStreamView'
-      | 'disposeStreamView'
-    >,
-    Pick<
-      ChatAdapterHandlers,
-      'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
-    >,
-    MeetingAdapterSubscriptions {
-  joinMeeting(microphoneOn?: boolean): void;
-  leaveMeeting(): Promise<void>;
-  startMeeting(participants: string[]): void;
-}
+    MeetingAdapterSubscriptions {}
 
+/**
+ * Events fired off by the Meeting Adapter
+ * @alpha
+ */
 export type MeetingEvent =
-  | 'meetingEnded'
   | 'participantsJoined'
   | 'participantsLeft'
+  | 'meetingEnded'
   | 'isMutedChanged'
   | 'callIdChanged'
   | 'isLocalScreenSharingActiveChanged'

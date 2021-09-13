@@ -36,6 +36,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         onCallEnded();
       });
       adapter.on('error', (e) => {
+        // Do not call error handler when error target is starting screen sharing
+        if (e.target === 'Call.startScreenSharing') {
+          console.log('Error squelched. ' + e);
+          return;
+        }
         console.error(e);
         onCallError(e);
       });
@@ -58,6 +63,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       callInvitationURL={window.location.href}
+      visualElements={{ showErrorBar: true }}
     />
   );
 };

@@ -5,6 +5,7 @@ import { CommunicationUserKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
   DeviceAccess,
+  DominantSpeakersInfo,
   TransferErrorCode,
   TransferState,
   VideoDeviceInfo
@@ -27,8 +28,13 @@ import {
   VideoStreamRendererViewState,
   CallAgentState,
   TransferRequest,
-  Transfer
+  Transfer,
+  CallErrors,
+  CallErrorTarget,
+  CallError
 } from './CallClientState';
+import { CallStateModifier } from './StatefulCallClient';
+import { newClearCallErrorsModifier } from './modifiers';
 
 enableMapSet();
 
@@ -40,6 +46,7 @@ export class CallContext {
   private _state: CallClientState;
   private _emitter: EventEmitter;
   private _atomicId: number;
+  private _batchMode: boolean;
 
   constructor(userId: CommunicationUserKind, maxListeners = 50) {
     this._state = {
@@ -55,21 +62,64 @@ export class CallContext {
         unparentedViews: []
       },
       callAgent: undefined,
-      userId: userId
+      userId: userId,
+      latestErrors: {} as CallErrors
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
-
+    this._batchMode = false;
     this._atomicId = 0;
-  }
-
-  public setState(state: CallClientState): void {
-    this._state = state;
-    this._emitter.emit('stateChanged', this._state);
   }
 
   public getState(): CallClientState {
     return this._state;
+  }
+
+  public setState(state: CallClientState): void {
+    this._state = state;
+    if (!this._batchMode) {
+      this._emitter.emit('stateChanged', this._state);
+    }
+  }
+
+  public modifyState(modifier: CallStateModifier): void {
+    this.batch(() => {
+      this.setState(
+        produce(this._state, (draft: CallClientState) => {
+          modifier(draft);
+        })
+      );
+    });
+  }
+
+  /**
+   * Batch updates to minimize `stateChanged` events across related operations.
+   *
+   * - A maximum of one `stateChanged` event is emitted, at the end of the operations.
+   * - No `stateChanged` event is emitted if the state did not change through the operations.
+   * - In case of an exception, state is reset to the prior value and no `stateChanged` event is emitted.
+   *
+   * All operations finished in this batch should be synchronous.
+   * This function is not reentrant -- do not call batch() from within another batch().
+   */
+  public batch(operations: () => void): void {
+    if (this._batchMode) {
+      throw new Error('batch() called from within another batch()');
+    }
+
+    this._batchMode = true;
+    const priorState = this._state;
+    try {
+      operations();
+      if (this._state !== priorState) {
+        this._emitter.emit('stateChanged', this._state);
+      }
+    } catch (e) {
+      this._state = priorState;
+      throw e;
+    } finally {
+      this._batchMode = false;
+    }
   }
 
   public onStateChange(handler: (state: CallClientState) => void): void {
@@ -241,6 +291,17 @@ export class CallContext {
         const call = draft.calls[callId];
         if (call) {
           call.isMuted = isMicrophoneMuted;
+        }
+      })
+    );
+  }
+
+  public setCallDominantSpeakers(callId: string, dominantSpeakers: DominantSpeakersInfo): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        const call = draft.calls[callId];
+        if (call) {
+          call.dominantSpeakers = dominantSpeakers;
         }
       })
     );
@@ -640,4 +701,77 @@ export class CallContext {
     this._atomicId++;
     return id;
   }
+
+  /**
+   * Tees any errors encountered in an async function to the state.
+   *
+   * If the function succeeds, clears associated errors from the state.
+   *
+   * @param action Async function to execute.
+   * @param target The error target to tee error to.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
+   * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   * @throws CallError. Exceptions thrown from `f` are tagged with the failed `target.
+   */
+  public withAsyncErrorTeedToState<Args extends unknown[], R>(
+    action: (...args: Args) => Promise<R>,
+    target: CallErrorTarget,
+    clearTargets?: CallErrorTarget[]
+  ): (...args: Args) => Promise<R> {
+    return async (...args: Args): Promise<R> => {
+      try {
+        const ret = await action(...args);
+        this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
+        return ret;
+      } catch (error) {
+        const callError = toCallError(target, error);
+        this.setLatestError(target, callError);
+        throw callError;
+      }
+    };
+  }
+
+  /**
+   * Tees any errors encountered in an function to the state.
+   *
+   * If the function succeeds, clears associated errors from the state.
+   *
+   * @param action Function to execute.
+   * @param target The error target to tee error to.
+   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
+   * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
+   * @throws CallError. Exceptions thrown from `f` are tagged with the failed `target.
+   */
+  public withErrorTeedToState<Args extends unknown[], R>(
+    action: (...args: Args) => R,
+    target: CallErrorTarget,
+    clearTargets?: CallErrorTarget[]
+  ): (...args: Args) => R {
+    return (...args: Args): R => {
+      try {
+        const ret = action(...args);
+        this.modifyState(newClearCallErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
+        return ret;
+      } catch (error) {
+        const callError = toCallError(target, error);
+        this.setLatestError(target, callError);
+        throw callError;
+      }
+    };
+  }
+
+  private setLatestError(target: CallErrorTarget, error: CallError): void {
+    this.setState(
+      produce(this._state, (draft: CallClientState) => {
+        draft.latestErrors[target] = error;
+      })
+    );
+  }
 }
+
+const toCallError = (target: CallErrorTarget, error: unknown): CallError => {
+  if (error instanceof Error) {
+    return new CallError(target, error);
+  }
+  return new CallError(target, new Error(error as string));
+};

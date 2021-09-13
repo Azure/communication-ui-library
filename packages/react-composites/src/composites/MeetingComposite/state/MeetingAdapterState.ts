@@ -13,18 +13,24 @@ import {
 } from './MeetingState';
 
 /**
- * Purely UI related adapter state.
+ * UI state pertaining to the Meeting Composite.
+ * @alpha
  */
 export interface MeetingAdapterUiState {
+  /** Current page in the meeting composite. */
   page: MeetingCompositePage;
 }
 
 /**
- * State from the backend ACS services.
+ * State from the backend services that drives Meeting Composite.
+ * @alpha
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+  /** ID of the meeting participant using this Meeting Adapter. */
   userId: CommunicationIdentifier;
+  /** Display name of the meeting participant using this Meeting Adapter. */
   displayName: string | undefined;
+  /** State of the current Meeting. */
   meeting: MeetingState | undefined;
 }
 
@@ -33,6 +39,8 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
  * state specific to meetings only.
  * Stateful items like Participants that apply to both calling and chat are intelligently
  * combined into one to suit the purpose of a Meeting.
+ *
+ * @alpha
  */
 export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {}
 

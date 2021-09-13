@@ -11,21 +11,28 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IPersonaStyleProps } from '@fluentui/react';
+import { IPersonaStyles } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
+import { IStyleFunctionOrObject } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
+import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
-// @public (undocumented)
+// @public
+export interface ActiveError {
+    timestamp?: Date;
+    type: ErrorType;
+}
+
+// @public
 export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
-
-// @public
-export const ar_SA: Locale;
 
 // @public
 export interface BaseCustomStylesProps {
@@ -93,6 +100,56 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_EN_GB: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_ES_ES: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_IT_IT: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_JA_JP: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_KO_KR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_NL_NL: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_PT_BR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_RU_RU: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_TR_TR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_ZH_CN: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_ZH_TW: ComponentLocale;
+
+// @public (undocumented)
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+
+// @public
+export interface ComponentLocale {
+    strings: ComponentStrings;
+}
+
+// @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
@@ -140,6 +197,18 @@ export interface ControlBarProps {
     styles?: BaseCustomStylesProps;
 }
 
+// @public
+export type CustomAvatarOptions = {
+    coinSize?: number;
+    hidePersonaDetails?: boolean;
+    initialsTextColor?: string;
+    noVideoAvailableAriaLabel?: string;
+    presence?: PersonaPresence;
+    size?: PersonaSize;
+    styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
+    text?: string;
+};
+
 // @public (undocumented)
 export type CustomMessage = Message<'custom'>;
 
@@ -154,18 +223,40 @@ export type CustomMessagePayload = {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export const de_DE: Locale;
-
-// @public
-export const defaultIdentifiers: Identifiers;
+export const DEFAULT_COMPONENT_ICONS: {
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
+    VideoTileMicOff: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageRemove: JSX.Element;
+};
 
 // @public (undocumented)
 export type DefaultMessageRendererType = (props: MessageProps, ids?: {
     messageTimestamp?: string;
 }) => JSX.Element;
-
-// @public
-export const en_US: Locale;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -186,17 +277,23 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
-    activeErrors: ErrorType[];
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
+    activeErrors: ActiveError[];
     strings?: ErrorBarStrings;
 }
 
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callingNetworkFailure: string;
+    muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
+    startScreenShareGeneric: string;
+    startVideoGeneric: string;
+    stopScreenShareGeneric: string;
+    stopVideoGeneric: string;
     unableToReachChatService: string;
+    unmuteGeneric: string;
     userNotInThisThread: string;
 }
 
@@ -213,9 +310,6 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public
-export const fr_FR: Locale;
-
 // @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
@@ -231,13 +325,10 @@ export interface GridLayoutProps {
 // @public (undocumented)
 export type GridLayoutType = 'standard';
 
-// @public (undocumented)
-export const IdentifierContext: React_2.Context<Identifiers>;
-
-// @public (undocumented)
+// @public
 export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -245,7 +336,7 @@ export interface IdentifierProviderProps {
     identifiers?: Identifiers;
 }
 
-// @public (undocumented)
+// @public
 export interface Identifiers {
     messageContent: string;
     messageTimestamp: string;
@@ -254,6 +345,14 @@ export interface Identifiers {
     typingIndicator: string;
     videoGallery: string;
 }
+
+// @public (undocumented)
+export type InputBoxButtonProps = {
+    onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+    onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    className?: string;
+    id?: string;
+};
 
 // @public (undocumented)
 export interface JumpToNewMessageButtonProps {
@@ -265,19 +364,11 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export interface Locale {
-    strings: ComponentStrings;
-}
-
-// @public
-export const LocaleContext: React_2.Context<Locale>;
-
-// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
 export type LocalizationProviderProps = {
-    locale: Locale;
+    locale: ComponentLocale;
     children: React_2.ReactNode;
 };
 
@@ -299,6 +390,9 @@ export type MessageProps = {
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
+    editDisabled?: boolean;
+    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage?: (messageId: string) => Promise<void>;
 };
 
 // @public
@@ -333,10 +427,13 @@ export type MessageThreadProps = {
     numberOfChatMessagesToReload?: number;
     onMessageSeen?: (messageId: string) => Promise<void>;
     onRenderMessageStatus?: (messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null;
-    onRenderAvatar?: (userId: string) => JSX.Element;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
+    onDeleteMessage?: (messageId: string) => Promise<void>;
+    editDisabled?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
 
@@ -383,14 +480,12 @@ export interface MicrophoneButtonStrings {
 }
 
 // @public
-export const namedLocales: Record<string, {
-    locale: Locale;
-    englishName: string;
-    displayName: string;
-}>;
-
-// @public (undocumented)
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
+
+// @public
+export type OnRenderAvatarCallback = (
+userId?: string, options?: CustomAvatarOptions,
+defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @public
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
@@ -434,11 +529,12 @@ export interface ParticipantItemProps {
     displayName: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
-    onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
     strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStylesProps;
+    userId?: string;
 }
 
 // @public
@@ -464,7 +560,7 @@ export type ParticipantListProps = {
     myUserId?: string;
     excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
-    onRenderAvatar?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
 };
 
@@ -472,10 +568,10 @@ export type ParticipantListProps = {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends ControlBarButtonProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
     callInvitationURL?: string;
     onMuteAll?: () => void;
-    participantListProps: ParticipantListProps;
+    onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStylesProps;
 }
@@ -492,13 +588,6 @@ export interface ParticipantsButtonStrings {
 // @public
 export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
     participantListContainerStyle?: IStyle;
-}
-
-// @public (undocumented)
-export interface PlaceholderProps {
-    displayName?: string;
-    noVideoAvailableAriaLabel?: string;
-    userId?: string;
 }
 
 // @public
@@ -522,7 +611,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onRenderIcon?: (props: SendBoxProps, isMouseOverSendIcon: boolean) => JSX.Element | null;
+    onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
@@ -604,12 +693,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
-export const useIdentifiers: () => Identifiers;
-
-// @public
-export const useLocale: () => Locale;
-
 // @public
 export const useTheme: () => Theme;
 
@@ -638,7 +721,7 @@ export interface VideoGalleryProps {
     onDisposeLocalStreamView?: () => void;
     // (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    onRenderAvatar?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element;
+    onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
@@ -671,14 +754,18 @@ export interface VideoStreamOptions {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
-export interface VideoTileProps extends PlaceholderProps {
+export interface VideoTileProps {
     children?: React_2.ReactNode;
+    displayName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
-    onRenderPlaceholder?: (props: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element) => JSX.Element | null;
+    isSpeaking?: boolean;
+    noVideoAvailableAriaLabel?: string;
+    onRenderPlaceholder?: OnRenderAvatarCallback;
     renderElement?: JSX.Element | null;
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
+    userId?: string;
 }
 
 // @public (undocumented)

@@ -8,7 +8,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
-import { CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
+import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CommunicationUserKind } from '@azure/communication-common';
 
 // This function highly depends on chatClient.onChange event
@@ -76,6 +76,7 @@ const memoizeState = memoizeOne(
     userId: CommunicationUserKind,
     deviceManager: DeviceManagerState,
     calls: { [key: string]: CallState },
+    latestErrors: CallErrors,
     displayName?: string
   ): CallClientState => ({
     userId,
@@ -84,7 +85,8 @@ const memoizeState = memoizeOne(
     callsEnded: [],
     deviceManager,
     callAgent: { displayName },
-    calls
+    calls,
+    latestErrors
   })
 );
 
@@ -95,6 +97,20 @@ const adaptCompositeState = (compositeState: CallAdapterState): CallClientState 
     compositeState.userId,
     compositeState.devices,
     memoizeCalls(compositeState.call),
+    // This is an unsafe type expansion.
+    // compositeState.latestErrors can contain properties that are not valid in CallErrors.
+    //
+    // But there is no way to check for valid property names at runtime:
+    // - The set of valid property names is built from types in the @azure/communication-calling.
+    //   Thus we don't have a literal array of allowed strings at runtime.
+    // - Due to minification / uglification, the property names from the objects at runtime can't be used
+    //   to compare against permissible values inferred from the types.
+    //
+    // This is not a huge problem -- it simply means that our adapted selector will include some extra operations
+    // that are unknown to the UI component and data binding libraries. Generic handling of the errors (e.g.,
+    // just displaying them in some UI surface) will continue to work for these operations. Handling of
+    // specific operations (e.g., acting on errors related to permission issues) will ignore these operations.
+    compositeState.latestErrors as CallErrors,
     compositeState.displayName
   );
 };
