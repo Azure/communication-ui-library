@@ -26,6 +26,6 @@ export const iconContainerStyle = {
 
 export const iconStyles = mergeStyles({
   display: 'flex',
-  lineHeight: 0,
+  lineHeight: 0, // ensure the icon center is on the center line and not slightly above it
   alignItems: 'center'
 });
