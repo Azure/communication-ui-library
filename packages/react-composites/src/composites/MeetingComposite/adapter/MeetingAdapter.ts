@@ -31,14 +31,11 @@ import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/a
 export interface MeetingAdapterMeetingManagement
   extends Pick<
       CallAdapterCallManagement,
-      | 'joinCall'
-      | 'leaveCall'
       | 'startCamera'
       | 'stopCamera'
       | 'onToggleCamera'
       | 'mute'
       | 'unmute'
-      | 'startCall'
       | 'startScreenShare'
       | 'stopScreenShare'
       | 'createStreamView'
@@ -58,6 +55,19 @@ export interface MeetingAdapterMeetingManagement
       ChatAdapterThreadManagement,
       'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
     > {
+  /** Join an existing Meeting */
+  joinMeeting(microphoneOn?: boolean): void;
+  /** Leave the current Meeting */
+  leaveMeeting(): Promise<void>;
+  /**
+   * Start a new Meeting
+   * @param participants - Array of participant IDs. These represent the participants to initialize the meeting with.
+   */
+  startMeeting(participants: string[]): void;
+  /**
+   * Remove a participant from a Meeting
+   * @param userId - UserId of the participant to remove.
+   */
   removeParticipant(userId: string): Promise<void>;
 }
 
@@ -115,6 +125,8 @@ export interface MeetingAdapter
  * @alpha
  */
 export type MeetingEvent =
+  | 'participantsJoined'
+  | 'participantsLeft'
   | 'meetingEnded'
   | 'isMutedChanged'
   | 'callIdChanged'
