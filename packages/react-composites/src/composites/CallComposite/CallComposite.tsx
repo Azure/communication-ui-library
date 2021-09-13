@@ -105,7 +105,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 };
 
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationURL, onFetchAvatarPersonaData } = props;
+  const { adapter, callInvitationURL, onFetchAvatarPersonaData, hiddenElements } = props;
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });
@@ -117,7 +117,11 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   return (
     <BaseComposite {...props}>
       <CallAdapterProvider adapter={adapter}>
-        <MainScreen callInvitationURL={callInvitationURL} onFetchAvatarPersonaData={onFetchAvatarPersonaData} />
+        <MainScreen
+          callInvitationURL={callInvitationURL}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          hiddenElements={hiddenElements}
+        />
       </CallAdapterProvider>
     </BaseComposite>
   );
