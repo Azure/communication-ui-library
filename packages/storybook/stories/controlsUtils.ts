@@ -261,9 +261,9 @@ export const controlsToAdd = {
     defaultValue: 'Please wait 30 seconds to send new messages',
     name: 'Warning/information message for SendBox'
   },
-  showChatParticipants: { control: 'boolean', defaultValue: true, name: 'Show Participants Pane' },
-  showChatTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
-  showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
+  hideChatParticipants: { control: 'boolean', defaultValue: false, name: 'Hide Participants Pane' },
+  hideChatTopic: { control: 'boolean', defaultValue: false, name: 'Hide Topic' },
+  hideErrorBar: { control: 'boolean', defaultValue: false, name: 'Hide ErrorBar' },
   showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
   showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
   showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },
@@ -288,7 +288,8 @@ export const defaultCallCompositeHiddenControls = {
   identifiers: hiddenControl,
   locale: hiddenControl,
   onFetchAvatarPersonaData: hiddenControl,
-  rtl: hiddenControl
+  rtl: hiddenControl,
+  hiddenElements: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
@@ -301,7 +302,8 @@ export const defaultChatCompositeHiddenControls = {
   identifiers: hiddenControl,
   locale: hiddenControl,
   onFetchAvatarPersonaData: hiddenControl,
-  rtl: hiddenControl
+  rtl: hiddenControl,
+  hiddenElements: hiddenControl
 };
 
 export const defaultMeetingCompositeHiddenControls = {
@@ -309,5 +311,6 @@ export const defaultMeetingCompositeHiddenControls = {
   chatAdapter: hiddenControl,
   fluentTheme: hiddenControl,
   meetingInvitationURL: hiddenControl,
-  rtl: hiddenControl
+  rtl: hiddenControl,
+  hiddenElements: hiddenControl
 };

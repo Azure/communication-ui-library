@@ -31,7 +31,8 @@ export const leaveIcon: IIconProps = {
 };
 
 export const panelButtonStyle = mergeStyles({
-  padding: '0px 13px'
+  padding: '0px 13px',
+  cursor: 'pointer'
 });
 
 export const iconButtonContainerStyle = mergeStyles({
