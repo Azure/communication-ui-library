@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 /* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 
@@ -26,9 +25,7 @@ import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapt
  * Created for easy use with the Meeting Composite.
  */
 export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
-  // @ts-ignore REMOVE ONCE THIS FILE IS IMPLEMENTED
   private callAdapter: CallAdapter;
-  // @ts-ignore REMOVE ONCE THIS FILE IS IMPLEMENTED
   private chatAdapter: ChatAdapter;
 
   constructor(callAdapter: CallAdapter, chatAdapter: ChatAdapter) {
@@ -75,15 +72,16 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
 
   /** Join existing Meeting. */
   public joinMeeting(microphoneOn?: boolean): void {
-    throw new Error('Method not implemented.');
+    this.callAdapter.joinCall(microphoneOn);
   }
   /** Leave current Meeting. */
   public async leaveMeeting(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.removeParticipant(this.chatAdapter.getState().userId);
+    await this.callAdapter.leaveCall();
   }
   /** Start a new Meeting. */
   public startMeeting(participants: string[]): void {
-    throw new Error('Method not implemented.');
+    this.callAdapter.startCall(participants);
   }
   /**
    * Subscribe to state change events.
@@ -105,63 +103,64 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Dispose of the current Meeting Adapter. */
   public dispose(): void {
-    throw new Error('Method not implemented.');
+    this.unsubscribeMeetingEvents();
+    this.callAdapter.dispose();
+    this.chatAdapter.dispose();
   }
   /** Set the page of the Meeting Composite. */
   public setPage(page: MeetingCompositePage): void {
-    throw new Error('Method not implemented.');
+    this.callAdapter.setPage(page === 'meeting' ? 'call' : page);
   }
   /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.removeParticipant(userId);
+    await this.callAdapter.removeParticipant(userId);
   }
-  /** Set the camera to be used in the meeting. */
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.setCamera(device, options);
   }
   /** Set the microphone to be used in the meeting. */
   public async setMicrophone(device: AudioDeviceInfo): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.setMicrophone(device);
   }
   /** Set the speaker to be used in the meeting. */
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.setSpeaker(device);
   }
-  /** Prompt the user for permission to use local devices. */
-  public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async askDevicePermission(constraints: PermissionConstraints): Promise<void> {
+    await this.callAdapter.askDevicePermission(constraints);
   }
   /** Query for available cameras. */
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
-    throw new Error('Method not implemented.');
+    return await this.callAdapter.queryCameras();
   }
   /** Query for available microphones. */
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
-    throw new Error('Method not implemented.');
+    return await this.callAdapter.queryMicrophones();
   }
   /** Query for available speakers. */
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
-    throw new Error('Method not implemented.');
+    return await this.callAdapter.querySpeakers();
   }
   /** Start the camera for the user in the Meeting. */
   public async startCamera(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.startCamera();
   }
   /** Stop the camera for the user in the Meeting. */
   public async stopCamera(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.stopCamera();
   }
   /** Toggle the camera for the user in the Meeting. */
   public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.onToggleCamera(options);
   }
   /** Mute the user in the Meeting. */
   public async mute(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.mute();
   }
   /** Unmute the user in the Meeting. */
   public async unmute(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.unmute();
   }
   /** Trigger the user to start screen share. */
   public async startScreenShare(): Promise<void> {
@@ -239,7 +238,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     throw new Error('Method not implemented.');
   }
 
-  // @ts-ignore - REMOVE ONCE THIS FILE IS IMPLEMENTED
   private unsubscribeMeetingEvents(): void {
     throw new Error('Method not implemented.');
   }
