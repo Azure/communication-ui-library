@@ -18,39 +18,40 @@ export type CallControlsProps = {
   onEndCallClick(): void;
   compressedMode?: boolean;
   callInvitationURL?: string;
-} & CallControlVisualElements;
+  hiddenElements?: CallControlHiddenElements;
+};
 
-export type CallControlVisualElements = {
+export type CallControlHiddenElements = {
   /**
-   * Show camera toggle button during a call.
+   * Hide camera button during a call.
    * @default true
    */
-  showCameraButton?: boolean;
+  cameraButton?: boolean;
   /**
-   * Show EndCall toggle button during a call.
+   *  Hide EndCall button during a call.
    * @default true
    */
-  showEndCallButton?: boolean;
+  endCallButton?: boolean;
   /**
-   * Show Microphone toggle button during a call.
+   *  Hide Microphone button during a call.
    * @default true
    */
-  showMicrophoneButton?: boolean;
+  microphoneButton?: boolean;
   /**
-   * Show Options button during a call.
+   * Hide Options button during a call.
    * @default true
    */
-  showOptionsButton?: boolean;
+  optionsButton?: boolean;
   /**
-   * Show participants button during a call.
+   * Hide participants button during a call.
    * @default true
    */
-  showParticipantsButton?: boolean;
+  participantsButton?: boolean;
   /**
-   * Show or hide the screen share button during a call.
+   * Hide the screen share button during a call.
    * @default true
    */
-  showScreenShareButton?: boolean;
+  screenShareButton?: boolean;
 };
 
 export const CallControls = (props: CallControlsProps): JSX.Element => {
@@ -67,27 +68,22 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
-  const showCameraButton = props.showCameraButton ?? true;
-  const showEndCallButton = props.showEndCallButton ?? true;
-  const showMicrophoneButton = props.showMicrophoneButton ?? true;
-  const showOptionsButton = props.showOptionsButton ?? true;
-  const showParticipantsButton = props.showParticipantsButton ?? true;
-  const showScreenShareButton = props.showScreenShareButton ?? true;
-
   return (
     <ControlBar layout="dockedBottom">
-      {showCameraButton && (
+      {props?.hiddenElements?.cameraButton !== true && (
         <CameraButton data-ui-id="call-composite-camera-button" {...cameraButtonProps} showLabel={!compressedMode} />
       )}
-      {showMicrophoneButton && (
+      {!props?.hiddenElements?.microphoneButton !== true && (
         <MicrophoneButton
           data-ui-id="call-composite-microphone-button"
           {...microphoneButtonProps}
           showLabel={!compressedMode}
         />
       )}
-      {showScreenShareButton && <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />}
-      {showParticipantsButton && (
+      {!props?.hiddenElements?.screenShareButton !== true && (
+        <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
+      )}
+      {!props?.hiddenElements?.participantsButton !== true && (
         <ParticipantsButton
           data-ui-id="call-composite-participants-button"
           {...participantsButtonProps}
@@ -95,9 +91,11 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
         />
       )}
-      {/* By setting `persistMenu` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */}
-      {showOptionsButton && <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />}
-      {showEndCallButton && (
+      {/* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */}
+      {!props?.hiddenElements?.optionsButton !== true && (
+        <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />
+      )}
+      {!props?.hiddenElements?.endCallButton !== true && (
         <EndCallButton
           data-ui-id="call-composite-hangup-button"
           {...hangUpButtonProps}

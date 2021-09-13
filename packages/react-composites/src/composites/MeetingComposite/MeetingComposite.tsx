@@ -72,11 +72,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
       <Stack verticalFill grow styles={compositeOuterContainerStyles}>
         <Stack horizontal grow>
           <Stack.Item grow>
-            <CallComposite
-              visualElements={{ showCallControls: false }}
-              adapter={callAdapter}
-              fluentTheme={fluentTheme}
-            />
+            <CallComposite hiddenElements={{ callControls: true }} adapter={callAdapter} fluentTheme={fluentTheme} />
           </Stack.Item>
           {chatAdapter && (
             <EmbeddedChatPane

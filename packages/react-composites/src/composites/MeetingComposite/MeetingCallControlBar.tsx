@@ -23,7 +23,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     <Stack horizontal>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls onEndCallClick={props.onEndCallClick} showParticipantsButton={false} />
+          <CallControls onEndCallClick={props.onEndCallClick} hiddenElements={{ participantsButton: true }} />
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>

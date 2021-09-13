@@ -9,7 +9,7 @@ import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallControlVisualElements } from './CallControls';
+import { CallControlHiddenElements } from './CallControls';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
@@ -30,33 +30,34 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 
   /**
-   * Flags to enable/disable visual elements of the {@link CallComposite}.
+   * Flags to hide UI elements of the {@link CallComposite}.
    */
-  visualElements?: CallCompositeVisualElements;
+  hiddenElements?: CallCompositeHiddenElements;
 }
 
 /**
  * Optional features of the {@link CallComposite}
  */
-export type CallCompositeVisualElements = CallControlVisualElements & {
+export type CallCompositeHiddenElements = CallControlHiddenElements & {
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
+   * Hidden if set to `true`
    *
    * @default false
    */
-  showErrorBar?: boolean;
+  errorBar?: boolean;
   /**
-   * Show call controls during a call
-   * @default true
+   * Hide call controls during a call if set to `true`
+   * @default false
    */
-  showCallControls?: boolean;
+  callControls?: boolean;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  visualElements: CallCompositeVisualElements;
+  hiddenElements?: CallCompositeHiddenElements;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -97,7 +98,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationURL}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          visualElements={props.visualElements}
+          hiddenElements={props.hiddenElements}
         />
       );
   }
@@ -116,14 +117,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   return (
     <BaseComposite {...props}>
       <CallAdapterProvider adapter={adapter}>
-        <MainScreen
-          callInvitationURL={callInvitationURL}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          visualElements={{
-            showErrorBar: props.visualElements?.showErrorBar ?? false,
-            showCallControls: props.visualElements?.showCallControls ?? true
-          }}
-        />
+        <MainScreen callInvitationURL={callInvitationURL} onFetchAvatarPersonaData={onFetchAvatarPersonaData} />
       </CallAdapterProvider>
     </BaseComposite>
   );
