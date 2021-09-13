@@ -68,8 +68,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
-  console.log('HIDDEN ELEMENTS', hiddenElements);
-
   return (
     <ControlBar layout="dockedBottom">
       {hiddenElements?.cameraButton !== true && (
