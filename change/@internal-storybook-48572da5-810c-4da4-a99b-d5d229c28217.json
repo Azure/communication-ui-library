@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adding feature toggles to Chat and Call Composites",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
