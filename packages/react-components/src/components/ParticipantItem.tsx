@@ -73,8 +73,6 @@ export interface ParticipantItemProps {
   strings?: Partial<ParticipantItemStrings>;
 }
 
-const iconsContainerDefaultWidth = '5rem';
-
 /**
  * `ParticipantItem` represents a participant in Calling or Chat. `ParticipantItem` displays a participant's avatar,
  * displayName and status as well as optional icons and context menu.
@@ -111,7 +109,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     () => mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu),
     [theme.palette.neutralLighterAlt, styles?.menu]
   );
-  const iconsContainerWidth = (styles?.iconContainer as IRawStyle)?.width ?? iconsContainerDefaultWidth;
+  const iconsContainerWidth = (styles?.iconContainer as IRawStyle)?.width ?? iconContainerStyle.width;
 
   const menuButton = useMemo(
     () => (

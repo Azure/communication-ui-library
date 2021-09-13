@@ -17,11 +17,12 @@ export const menuButtonContainerStyle = mergeStyles({
   paddingTop: '0.25rem'
 });
 
-export const iconContainerStyle = mergeStyles({
+export const iconContainerStyle = {
   display: 'flex',
   alignItems: 'center',
-  height: '100%'
-});
+  height: '100%',
+  width: '5.5rem'
+};
 
 export const iconStyles = mergeStyles({
   display: 'flex',
