@@ -40,7 +40,6 @@ export const errorBarSelector = createSelector(
 
     appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.startVideo', 'startVideoGeneric');
     appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.unmute', 'unmuteGeneric');
-    appendActiveErrorIfDefined(activeErrors, latestErrors, 'Call.startScreenSharing', 'startScreenShareGeneric');
 
     // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
     activeErrors.splice(maxErrorCount);
