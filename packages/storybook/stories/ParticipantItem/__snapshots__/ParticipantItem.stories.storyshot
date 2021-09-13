@@ -86,7 +86,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
             </div>
           </div>
           <div
-            className="ms-Stack css-84 css-24"
+            className="ms-Stack css-24"
           >
             <div
               className="ms-Stack css-25"
@@ -97,7 +97,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
             >
               <i
                 aria-hidden={true}
-                className="root-37 css-85"
+                className="root-37 css-84"
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
