@@ -3,7 +3,7 @@
 
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CallAdapter, CallAdapterClientState, CallAdapterState } from '../../CallComposite';
-import { ChatAdapter, ChatState } from '../../ChatComposite';
+import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
 import {
   generateMeetingState,
@@ -61,7 +61,7 @@ export function generateMeetingAdapterState(callAdapter: CallAdapter, chatAdapte
 }
 
 export function mergeChatAdapterStateIntoMeetingAdapterState(
-  chatAdapterState: ChatState,
+  chatAdapterState: ChatAdapterState,
   meetingAdapterState: MeetingAdapterState
 ): MeetingAdapterState {
   const newMeetingState = meetingAdapterState.meeting

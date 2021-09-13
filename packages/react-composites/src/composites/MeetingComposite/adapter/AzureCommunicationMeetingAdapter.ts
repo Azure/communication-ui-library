@@ -17,7 +17,7 @@ import {
   CallAdapter,
   CallAdapterState
 } from '../../CallComposite';
-import { MessageReceivedListener, MessageReadListener, ChatAdapter, ChatState } from '../../ChatComposite';
+import { MessageReceivedListener, MessageReadListener, ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
 import {
   generateMeetingAdapterState,
@@ -73,7 +73,7 @@ class MeetingContext {
     });
   }
 
-  public updateClientStateWithChatState(chatAdapterState: ChatState): void {
+  public updateClientStateWithChatState(chatAdapterState: ChatAdapterState): void {
     if (!this.state) {
       console.warn('Cannot update chat state with meeting state - no meeting state exists');
     }
@@ -93,7 +93,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
   private context: MeetingContext;
-  private onChatStateChange: (newChatAdapterState: ChatState) => void;
+  private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
   constructor(callAdapter: CallAdapter, chatAdapter: ChatAdapter) {
@@ -102,7 +102,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.chatAdapter = chatAdapter;
     this.context = new MeetingContext(generateMeetingAdapterState(callAdapter, chatAdapter));
 
-    const onChatStateChange = (newChatAdapterState: ChatState): void => {
+    const onChatStateChange = (newChatAdapterState: ChatAdapterState): void => {
       this.context.updateClientStateWithChatState(newChatAdapterState);
     };
     this.chatAdapter.onStateChange(onChatStateChange);
