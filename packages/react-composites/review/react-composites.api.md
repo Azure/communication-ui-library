@@ -8,7 +8,6 @@
 
 import type { AudioDeviceInfo } from '@azure/communication-calling';
 import type { Call } from '@azure/communication-calling';
-import { CallClientOptions } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
