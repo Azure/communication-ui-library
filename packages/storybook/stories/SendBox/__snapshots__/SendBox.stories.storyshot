@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -28,29 +28,28 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
         }
       >
         <div
-          className="ms-Stack css-57 css-3"
+          className="ms-Stack css-61 css-4"
         >
           <div
             style={
               Object {
-                "padding": "0.1875rem",
                 "position": "relative",
               }
             }
           >
             <div
-              className="ms-TextField ms-TextField--multiline root-5"
+              className="ms-TextField ms-TextField--multiline root-6"
             >
               <div
-                className="ms-TextField-wrapper wrapper-6"
+                className="ms-TextField-wrapper wrapper-7"
               >
                 <div
-                  className="ms-TextField-fieldGroup fieldGroup-7"
+                  className="ms-TextField-fieldGroup fieldGroup-8"
                 >
                   <textarea
                     aria-invalid={false}
                     aria-label="Type"
-                    className="ms-TextField-field ms-TextField--unresizable css-58 field-8"
+                    className="ms-TextField-field ms-TextField--unresizable css-62 css-57 field-9"
                     data-ui-id="sendbox-textfield"
                     disabled={false}
                     id="sendbox"
@@ -66,35 +65,39 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               </div>
             </div>
             <div
-              className="css-59 css-1"
-              id="sendIconWrapper"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-              onMouseLeave={[Function]}
+              className="css-3"
             >
-              <i
-                aria-hidden={true}
-                className="root-37 css-60 root-17"
-                data-icon-name="SendBoxSend"
+              <div
+                className="css-63 css-58"
+                id="sendIconWrapper"
+                onClick={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
               >
-                <span
+                <i
                   aria-hidden={true}
-                  className="root-span"
+                  className="root-37 css-59 root-18"
+                  data-icon-name="SendBoxSend"
                 >
-                  <svg
-                    className="svg"
-                    fill="currentColor"
-                    height={20}
-                    viewBox="0 0 20 20"
-                    width={20}
-                    xmlns="http://www.w3.org/2000/svg"
+                  <span
+                    aria-hidden={true}
+                    className="root-span"
                   >
-                    <path
-                      d="M2.72 2.05l15.36 7.57a.5.5 0 010 .9L2.72 18.07a.5.5 0 01-.7-.58l1.97-7.43-1.97-7.44a.5.5 0 01.7-.58zm.54 1.38l1.61 6.09.07-.02H12a.5.5 0 01.09 1H5a.5.5 0 01-.1 0l-1.63 6.2 13.45-6.63L3.26 3.43z"
-                    />
-                  </svg>
-                </span>
-              </i>
+                    <svg
+                      className="svg"
+                      fill="currentColor"
+                      height={20}
+                      viewBox="0 0 20 20"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2.72 2.05l15.36 7.57a.5.5 0 010 .9L2.72 18.07a.5.5 0 01-.7-.58l1.97-7.43-1.97-7.44a.5.5 0 01.7-.58zm.54 1.38l1.61 6.09.07-.02H12a.5.5 0 01.09 1H5a.5.5 0 01-.1 0l-1.63 6.2 13.45-6.63L3.26 3.43z"
+                      />
+                    </svg>
+                  </span>
+                </i>
+              </div>
             </div>
           </div>
         </div>

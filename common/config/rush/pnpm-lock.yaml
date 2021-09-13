@@ -24,18 +24,18 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-lNUmDRVGpanCsiUN3NWxFTdwmdFI53xwhkTFfHDGTYk46ca7Ind3nanJc+U6Zj9Tv+9nTCWRBscWEW1DyKOpTw==
-  /@azure/communication-calling/1.2.0-beta.1:
+  /@azure/communication-calling/1.2.1-beta.1:
     dependencies:
       '@azure/communication-common': 1.0.0
       '@azure/logger': 1.0.2
     dev: false
     resolution:
-      integrity: sha512-qeqb+YwgDi8DbImqyo40cK5TODeqwibZNwqOO0rCKaOtaD0x+Fkj6q0Il1+4uMwIxQZ89ucqt8WMFSN385Hl+g==
-  /@azure/communication-chat/1.0.0:
+      integrity: sha512-Bnq2YxUOp9TO2SFgbgWPlDMSJERV2iurVr9x936uVnf+n2F2pDwrMRiopWhSGFwM7jmaON40xMIzDEwHxQf+0Q==
+  /@azure/communication-chat/1.0.1:
     dependencies:
       '@azure/abort-controller': 1.0.4
       '@azure/communication-common': 1.0.0
-      '@azure/communication-signaling': 1.0.0-beta.3
+      '@azure/communication-signaling': 1.0.0-beta.8
       '@azure/core-auth': 1.3.2
       '@azure/core-http': 1.2.4
       '@azure/core-paging': 1.1.3
@@ -44,12 +44,11 @@ packages:
       '@opentelemetry/api': 0.10.2
       events: 3.3.0
       tslib: 2.3.1
-    deprecated: This version is deprecated. Please update to the latest @azure/communication-chat
     dev: false
     engines:
       node: '>=8.0.0'
     resolution:
-      integrity: sha512-2qdZwiYywurCH13mZHTV6rZNmvXYB8SGcLyAuzX6ACvBJk5Lk9GzckzdEeJzG/yY2s1q9GhVJdSalHf8DL4bVg==
+      integrity: sha512-+DZKSj8HrTFNS0A+ZVALl/EwBA2ADrtSOFrm6CDvQj73SVEi6Wt4aTTsiSxnAn5egUky2CIG+6VbyBaahArquw==
   /@azure/communication-common/1.0.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -82,19 +81,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-fa220+fQn27JN8QtajeMe88rqrJn3qctT/8FV/abJe6tSBJlAWYXOHiIF3nCgSeyIb5F9pi7Fycd9M55OY4O9w==
-  /@azure/communication-signaling/1.0.0-beta.3:
-    dependencies:
-      '@azure/core-http': 1.2.4
-      '@azure/core-tracing': 1.0.0-preview.9
-      '@azure/logger': 1.0.2
-      '@opentelemetry/api': 0.10.2
-      events: 3.3.0
-      tslib: 1.14.1
-    dev: false
-    engines:
-      node: '>=8.0.0'
-    resolution:
-      integrity: sha512-WargzA8PMc9SEvQpjhM0vVq/HB0wGUScplW8Us9nEFLHy/ZvgVjbRHlCALCa/tlU/Pv3RgZhk7XuPfwip17MCQ==
   /@azure/communication-signaling/1.0.0-beta.5:
     dependencies:
       '@azure/core-http': 1.2.4
@@ -108,6 +94,19 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-pGXI4F5OVzdM9Omg5fiflA/Vvs88qqER/ZxNj3PoWAdaYIPkWGb86OClbB0VsHi6gZ4ZDzyTP/l9hrREBuBYRA==
+  /@azure/communication-signaling/1.0.0-beta.8:
+    dependencies:
+      '@azure/core-http': 1.2.4
+      '@azure/core-tracing': 1.0.0-preview.9
+      '@azure/logger': 1.0.2
+      '@opentelemetry/api': 0.10.2
+      events: 3.3.0
+      tslib: 1.14.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-MGWfGAimafIxeK7bsUMAKNKlSTgOvE6TheN6rMjekIQyoPJ7/Tcdu8QY5YJVW1u8F4ODyh6sFIJWVKjHLGcbOA==
   /@azure/core-asynciterator-polyfill/1.0.0:
     dev: false
     resolution:
@@ -2687,14 +2686,13 @@ packages:
       node: ^10.12.0 || >=12.0.0
     resolution:
       integrity: sha512-J6KFFz5QCYUJq3pf0mjEcCJVERbzv71PUIDczuh9JkwGEzced6CO5ADLHB1rbf/+oPBtoPfMYNOpGDzCANlbXw==
-  /@fluentui/accessibility/0.51.7:
+  /@fluentui/accessibility/0.57.0:
     dependencies:
       '@babel/runtime': 7.15.3
-      '@fluentui/keyboard-key': 0.2.17
       lodash: 4.17.21
     dev: false
     resolution:
-      integrity: sha512-EcAlEsc63+UezUpO94bO41/8QY2X/B3MztLE2HTNumaUhfUNfd4veVAZwHxDcXaAP2SGXyEFuUa0pmuB2dR+HA==
+      integrity: sha512-s/XZwVKwVzU02Nl1kCQ+Qq2q9u0uLhd7cGDh2amFgWklUGaIgu+/01gLOk95OVCNfs21cA7XZpnJxdNy0ZeEqQ==
   /@fluentui/date-time-utilities/8.2.2:
     dependencies:
       '@fluentui/set-version': 8.1.4
@@ -2742,12 +2740,6 @@ packages:
       react: '>=16.8.0 <18.0.0'
     resolution:
       integrity: sha512-m0zbRbZaJbzBjv8Ziv3zpwoGFjuzzPIAmhsn58g66MZvQBd9vN92hFJBNG2bO2+ivlprns4WnLEAiPK8CjoAsA==
-  /@fluentui/keyboard-key/0.2.17:
-    dependencies:
-      tslib: 1.14.1
-    dev: false
-    resolution:
-      integrity: sha512-iT1bU56rKrKEOfODoW6fScY11qj3iaYrZ+z11T6fo5+TDm84UGkkXjLXJTE57ZJzg0/gbccHQWYv+chY7bJN8Q==
   /@fluentui/keyboard-key/0.3.4:
     dependencies:
       tslib: 2.3.1
@@ -2761,20 +2753,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-zCAEjZyALk0CGW1H9YNJU+e/MW0P5sFJfrDvac27K4S/dIQvKnOwMUNOWRkNz3yUEt0R9vo0NtiO3cW04cZq3A==
-  /@fluentui/react-bindings/0.51.7_c2a703770fc22cd5845ac34fc7d0fe24:
+  /@fluentui/react-bindings/0.57.0_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@babel/runtime': 7.15.3
-      '@emotion/serialize': 0.11.16
-      '@fluentui/accessibility': 0.51.7
-      '@fluentui/keyboard-key': 0.2.17
-      '@fluentui/react-component-event-listener': 0.51.7_react-dom@16.13.1+react@16.14.0
-      '@fluentui/react-component-ref': 0.51.7_react-dom@16.13.1+react@16.14.0
-      '@fluentui/react-compose': 0.12.8_c2a703770fc22cd5845ac34fc7d0fe24
-      '@fluentui/react-northstar-fela-renderer': 0.51.7_react-dom@16.13.1+react@16.14.0
-      '@fluentui/react-northstar-styles-renderer': 0.51.7_react@16.14.0
-      '@fluentui/state': 0.51.7
-      '@fluentui/styles': 0.51.7
-      '@quid/stylis-plugin-focus-visible': 4.0.0
+      '@fluentui/accessibility': 0.57.0
+      '@fluentui/react-component-event-listener': 0.57.0_react-dom@16.13.1+react@16.14.0
+      '@fluentui/react-component-ref': 0.57.0_react-dom@16.13.1+react@16.14.0
+      '@fluentui/react-northstar-fela-renderer': 0.57.0_react-dom@16.13.1+react@16.14.0
+      '@fluentui/react-northstar-styles-renderer': 0.57.0_react@16.14.0
+      '@fluentui/state': 0.57.0
+      '@fluentui/styles': 0.57.0
       '@uifabric/utilities': 7.33.5_c2a703770fc22cd5845ac34fc7d0fe24
       classnames: 2.3.1
       lodash: 4.17.21
@@ -2782,8 +2770,7 @@ packages:
       react: 16.14.0
       react-dom: 16.13.1_react@16.14.0
       react-is: 16.13.1
-      stylis: 3.5.4
-      stylis-plugin-rtl: 1.1.0_stylis@3.5.4
+      scheduler: 0.20.2
     dev: false
     peerDependencies:
       '@types/react': '*'
@@ -2791,8 +2778,8 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-Gp+70GYZHtrQz/480kR+qII9RMHXM+dorKnVj6D7C1/3r6iBoGPVGgRZROuOG1YOmlrM8nbZDb1VX1EqKCdNlQ==
-  /@fluentui/react-component-event-listener/0.51.7_react-dom@16.13.1+react@16.14.0:
+      integrity: sha512-gSaOfSdkA/L3r56T1AofAQhDY7iiRWyfA9ZUl8mE+HH69ltXUBGAtUFQbZMJo9uIgcOwzVXS1gzykIyoNh4g0g==
+  /@fluentui/react-component-event-listener/0.57.0_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@babel/runtime': 7.15.3
       react: 16.14.0
@@ -2802,8 +2789,8 @@ packages:
       react: ^16.8.0 || ^17
       react-dom: ^16.8.0 || ^17
     resolution:
-      integrity: sha512-NjVm+crN0T9A7vITL8alZeHnuV8zi2gos0nezU/2YOxaUAB9E4zKiPxt/6k5U50rJs/gj8Nu45iXxnjO41HbZg==
-  /@fluentui/react-component-nesting-registry/0.51.7_react-dom@16.13.1+react@16.14.0:
+      integrity: sha512-Lo5cMcxpchHVFdg9SxMdXL/EqQOXz1hEc3QrFLP/mbI3e0uIx5VgFJKZWuk4agp8cQFV5hV3bp6FibHHY1NKtw==
+  /@fluentui/react-component-nesting-registry/0.57.0_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@babel/runtime': 7.15.3
       prop-types: 15.7.2
@@ -2814,8 +2801,8 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-uuzYi8/SWAhj78z6nirDGWZYRJEmXqmeBZP+KR58m/kmQ1nq5YMZADw06JlrUqW/UMk6SKkUpHRAKYrT4NGJkw==
-  /@fluentui/react-component-ref/0.51.7_react-dom@16.13.1+react@16.14.0:
+      integrity: sha512-qvEwKz0zcqJ6o1sWde4P+L6VozZsPq7C0H7/HSgeQBSUMf+JDpu0lnCnUlqhKnNZbhub4K0T4+vvDRaw0gFfTA==
+  /@fluentui/react-component-ref/0.57.0_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@babel/runtime': 7.15.3
       react: 16.14.0
@@ -2826,33 +2813,7 @@ packages:
       react: ^16.8.0 || ^17
       react-dom: ^16.8.0 || ^17
     resolution:
-      integrity: sha512-CX27jVJYaFoBCWpuWAizQZ2se137ku1dmDyn8sw+ySNJa+kkQf7LnMydiPW5K7cRdUSqUJW3eS4EjKRvVAx8xA==
-  /@fluentui/react-compose/0.12.8_c2a703770fc22cd5845ac34fc7d0fe24:
-    dependencies:
-      '@types/classnames': 2.3.1
-      '@types/react': 16.14.13
-      '@uifabric/set-version': 7.0.24
-      '@uifabric/utilities': 7.33.5_c2a703770fc22cd5845ac34fc7d0fe24
-      classnames: 2.3.1
-      react: 16.14.0
-      tslib: 1.14.1
-    dev: false
-    peerDependencies:
-      '@types/react': '>=16.8.0 <17.0.0'
-      '@types/react-dom': '*'
-      react: '>=16.8.0 <17.0.0'
-      react-dom: '*'
-    resolution:
-      integrity: sha512-YutUjnFzDrd5gfpi2ID0GqrGZTKTckWUqdStScIe/P9oG5IaeHN49JMQmOrSq3tFAW/gnt1fFKddhrxdCO3vBA==
-  /@fluentui/react-context-selector/0.51.7_react@16.14.0:
-    dependencies:
-      '@babel/runtime': 7.15.3
-      react: 16.14.0
-    dev: false
-    peerDependencies:
-      react: ^16.8.0
-    resolution:
-      integrity: sha512-WLadFGSg9RHjlKGFK2WCV7eqKwZYOEOr6WHPmCTE8fBjDUbabsHU4U9J4OePPCIq/hSr0/8EfNPIjHqzXwofrg==
+      integrity: sha512-9in4Ax01EwW/0N+DQ03ETkG7t7nvDVrZ6HfaghPFTW1YInAJ0iA8tGbXz/Mgq7TpxmrRSLKX/AzPYk/kgMYn8A==
   /@fluentui/react-focus/8.1.10_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/keyboard-key': 0.3.4
@@ -2883,12 +2844,12 @@ packages:
       react: '>=16.8.0 <18.0.0'
     resolution:
       integrity: sha512-nz0iycSUmGX6eBKsmW23ocmKn/HdV7c8HnMHx5fcGIQbOqOH8Hv4wq8t3RozsZBapIi/nDjpZs2UvB4zDFsg1g==
-  /@fluentui/react-icons-northstar/0.51.7_c2a703770fc22cd5845ac34fc7d0fe24:
+  /@fluentui/react-icons-northstar/0.57.0_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@babel/runtime': 7.15.3
-      '@fluentui/accessibility': 0.51.7
-      '@fluentui/react-bindings': 0.51.7_c2a703770fc22cd5845ac34fc7d0fe24
-      '@fluentui/styles': 0.51.7
+      '@fluentui/accessibility': 0.57.0
+      '@fluentui/react-bindings': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/styles': 0.57.0
       classnames: 2.3.1
       react: 16.14.0
       react-dom: 16.13.1_react@16.14.0
@@ -2899,16 +2860,16 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-9p0DQcGng+CA/sTnjxxaGWC8CH/OhwZCIEwp3srMeIkPaeWG7jKIOCTjRh87l5XhaeaYds6b88zET7axAHoXvw==
+      integrity: sha512-5a+R23f2s/U+4a3JbL6Ja6D6dJ4ooez5mS4ssL4+uy3qv4ceLDw238OmJ36jyWtTQSG9mWtL+b9+od49+0mM6w==
   /@fluentui/react-icons/1.1.137:
     dev: false
     resolution:
       integrity: sha512-IPT2aOIPRN3BT+qaTUUpd1p3dUxdgAkaxmOaX2gFVeHT2A0fGYoPiu3VJ/YSNTpqtxFWtxOZLPltMdjbHEitjw==
-  /@fluentui/react-northstar-fela-renderer/0.51.7_react-dom@16.13.1+react@16.14.0:
+  /@fluentui/react-northstar-fela-renderer/0.57.0_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@babel/runtime': 7.15.3
-      '@fluentui/react-northstar-styles-renderer': 0.51.7_react@16.14.0
-      '@fluentui/styles': 0.51.7
+      '@fluentui/react-northstar-styles-renderer': 0.57.0_react@16.14.0
+      '@fluentui/styles': 0.57.0
       css-in-js-utils: 3.1.0
       fela: 10.8.2
       fela-plugin-embedded: 10.8.2
@@ -2927,35 +2888,34 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-/8nSoZVxhgzcK4DWqp0c+2PV2VZybF4I0DhJYVb352wH+tU4PNaL5eP6gP58MHCsO6192KnBYC2MZEg+0aXHlw==
-  /@fluentui/react-northstar-styles-renderer/0.51.7_react@16.14.0:
+      integrity: sha512-XodKfogFOW2pETOKQfJDvXNgS1c7InN4zWpvYYRtl3a4p9J5A1ylZ/ACpJNMz7JDw06bQNwPdHilPLV8A5mCpQ==
+  /@fluentui/react-northstar-styles-renderer/0.57.0_react@16.14.0:
     dependencies:
       '@babel/runtime': 7.15.3
-      '@fluentui/styles': 0.51.7
+      '@fluentui/styles': 0.57.0
       react: 16.14.0
     dev: false
     peerDependencies:
       react: ^16.8.0
     resolution:
-      integrity: sha512-oah7sOstbrbx8guepPpvOmLD65xmwgx9rN0KjogOxDiMYidN4eaEAVl36mQfWs1wE+Mo5iAPRj2eNtqX4bVUqg==
-  /@fluentui/react-northstar/0.51.7_c2a703770fc22cd5845ac34fc7d0fe24:
+      integrity: sha512-sqxfwVrMBV9nNPrIIbBlCCzlDlYhbNK02Cz0H8kJK7oE3pNcZ90BzQmXj/jmDiZArYwMyQH75jfTSI7FD4EaMA==
+  /@fluentui/react-northstar/0.57.0_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@babel/runtime': 7.15.3
-      '@fluentui/accessibility': 0.51.7
+      '@fluentui/accessibility': 0.57.0
       '@fluentui/dom-utilities': 1.1.2
-      '@fluentui/keyboard-key': 0.2.17
-      '@fluentui/react-bindings': 0.51.7_c2a703770fc22cd5845ac34fc7d0fe24
-      '@fluentui/react-component-event-listener': 0.51.7_react-dom@16.13.1+react@16.14.0
-      '@fluentui/react-component-nesting-registry': 0.51.7_react-dom@16.13.1+react@16.14.0
-      '@fluentui/react-component-ref': 0.51.7_react-dom@16.13.1+react@16.14.0
-      '@fluentui/react-context-selector': 0.51.7_react@16.14.0
-      '@fluentui/react-icons-northstar': 0.51.7_c2a703770fc22cd5845ac34fc7d0fe24
-      '@fluentui/react-northstar-styles-renderer': 0.51.7_react@16.14.0
-      '@fluentui/react-proptypes': 0.51.7
-      '@fluentui/state': 0.51.7
-      '@fluentui/styles': 0.51.7
-      '@popperjs/core': 2.9.3
+      '@fluentui/react-bindings': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-component-event-listener': 0.57.0_react-dom@16.13.1+react@16.14.0
+      '@fluentui/react-component-nesting-registry': 0.57.0_react-dom@16.13.1+react@16.14.0
+      '@fluentui/react-component-ref': 0.57.0_react-dom@16.13.1+react@16.14.0
+      '@fluentui/react-icons-northstar': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-northstar-styles-renderer': 0.57.0_react@16.14.0
+      '@fluentui/react-proptypes': 0.57.0
+      '@fluentui/state': 0.57.0
+      '@fluentui/styles': 0.57.0
+      '@popperjs/core': 2.4.4
       '@uifabric/utilities': 7.33.5_c2a703770fc22cd5845ac34fc7d0fe24
+      body-scroll-lock: 3.1.5
       classnames: 2.3.1
       compute-scroll-into-view: 1.0.11
       downshift: 5.0.5_react@16.14.0
@@ -2972,15 +2932,15 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-dwOUQqCgWqqO7YL/SodXM30ue+PLxdvmU8qv2uWc04XwzckiQuFaPU9kRWI6LgQUaN9VgqglO+CmfgrmLI1PmA==
-  /@fluentui/react-proptypes/0.51.7:
+      integrity: sha512-3g13l1IWi4n79faoRxjRJVIn9ln8iVpgec3B8d9xdT41Mm3y5x1PIyub7bCTdMPNgDNGgLixTb5nSshEldxaiA==
+  /@fluentui/react-proptypes/0.57.0:
     dependencies:
       '@babel/runtime': 7.15.3
       lodash: 4.17.21
       prop-types: 15.7.2
     dev: false
     resolution:
-      integrity: sha512-gzfNddyRKmZ8qqZkV+wUl58HEySW7o2DzP5mgE0aAMA3qWkyIPRSo/tvMVx4A1AsgeJ2LhNkAHGek8T0D8PA0Q==
+      integrity: sha512-FSaHdZsi+yeenLhW+QV8gLdFar27ioZrRbTNHNjhppHdg7BgUoMNwn0cljezRemT3mwwRimZuA0x1FVVPUulOw==
   /@fluentui/react-window-provider/1.0.2_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@types/react': 16.14.13
@@ -3053,12 +3013,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2otMyJ+s+W+hjBD4BKjwYKKinJUDeIKYKz93qKrrJS0i3fKfftNroy9dHFlIblZ7n747L334plLi3bzQO1bnvA==
-  /@fluentui/state/0.51.7:
+  /@fluentui/state/0.57.0:
     dependencies:
       '@babel/runtime': 7.15.3
     dev: false
     resolution:
-      integrity: sha512-sTCv3hnEpmWW/hjw+vmloaslNnYmFYeN8J9uJzYBGVi9NKKLvXtMKeoaikAXBVpnmMknl67VCapjauF0NxXDjQ==
+      integrity: sha512-9WNGHMweJgx588HNO68sMdcH1lVFU3eXnc34OygDsHh/k3ctCMFaJk+KCTZRqBl60bUE3zcbFoP54BtQFuS5gg==
   /@fluentui/style-utilities/8.2.2_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/merge-styles': 8.1.4
@@ -3073,14 +3033,14 @@ packages:
       react: '*'
     resolution:
       integrity: sha512-PKixlYfY93XOZRPNi+I8Qw9SkcBZsnG/qg2+3IxLGXpCVYKOmP52oR7N5j/nmspQZXdEoHehYa2z/lsKC2xw1w==
-  /@fluentui/styles/0.51.7:
+  /@fluentui/styles/0.57.0:
     dependencies:
       '@babel/runtime': 7.15.3
       csstype: 2.6.17
       lodash: 4.17.21
     dev: false
     resolution:
-      integrity: sha512-u4l6U47KaMM1mO1q5o9ORJLKj2yMTD/c5hwzLaxbFBf9V50aIeNNI9t/Fqphwiu+cft8T0lBLMFqR9kzxWsBIQ==
+      integrity: sha512-gbVjouBiTsYLeSh4JuDIoL472rPvU24cIOjMu6UT6dlkMWgNJ8s32fAX9UosBow0GltMHHC91AzkSFQmCEgfzw==
   /@fluentui/theme-samples/8.1.5_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
@@ -3923,14 +3883,14 @@ packages:
       node: '>=10.16'
     resolution:
       integrity: sha512-nco4+4sZqNHn60Y4VE/fbtlShCBqipyUO+nKRPvDHqLrecMW9pzHWMVRxk4nrMRoeowj3q0rX3GYRBa8lsHTAg==
+  /@popperjs/core/2.4.4:
+    dev: false
+    resolution:
+      integrity: sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==
   /@popperjs/core/2.9.3:
     dev: false
     resolution:
       integrity: sha512-xDu17cEfh7Kid/d95kB6tZsLOmSWKCZKtprnhVepjsSaCij+lM3mItSJDuuHDMbCWTh8Ejmebwb+KONcCJ0eXQ==
-  /@quid/stylis-plugin-focus-visible/4.0.0:
-    dev: false
-    resolution:
-      integrity: sha512-dS4Vl1D4NHN4gAiWxUQLPAN4k2NMmNpfujuAPU2JF5P/XX8OUD7svhM8f9TudWr8dVdWYjQEAMaRtSUcf4720w==
   /@reach/router/1.3.4_react-dom@16.13.1+react@16.14.0:
     dependencies:
       create-react-context: 0.3.0_prop-types@15.7.2+react@16.14.0
@@ -7308,6 +7268,10 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-dhEPs72UPbDnAQJ9ZKMNTP6ptJaionhP5cBb541nXPlW60Jepo9RV/a4fX4XWW9CuFNK22krhrj1+rgzifNCsw==
+  /body-scroll-lock/3.1.5:
+    dev: false
+    resolution:
+      integrity: sha512-Yi1Xaml0EvNA0OYWxXiYNqY24AfWkbA6w5vxE7GWxtKfzIbZM+Qw+aSmkgsbWzbHiy/RCSkUZBplVxTA+E4jJg==
   /bonjour/3.5.0:
     dependencies:
       array-flatten: 2.1.2
@@ -8496,12 +8460,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
-  /cssjanus/1.3.2:
-    dev: false
-    engines:
-      node: '>=6.0.0'
-    resolution:
-      integrity: sha512-5pM/C1MIfoqhXa7k9PqSnrjj1SSZDakfyB1DZhdYyJoDUH+evGbsUg6/bpQapTJeSnYaj0rdzPUMeM33CvB0vw==
   /cssom/0.3.8:
     dev: false
     resolution:
@@ -11418,10 +11376,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
-  /immer/8.0.4:
+  /immer/9.0.6:
     dev: false
     resolution:
-      integrity: sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==
+      integrity: sha512-G95ivKpy+EvVAnAab4fVa4YGYn24J1SpEktnJX7JJ45Bd7xqME/SCplFzYFmTbrkwZbQ4xJK1xMTUYBkN6pWsQ==
   /import-fresh/3.3.0:
     dependencies:
       parent-module: 1.0.1
@@ -16138,6 +16096,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+  /scheduler/0.20.2:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+    dev: false
+    resolution:
+      integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
   /schema-utils/1.0.0:
     dependencies:
       ajv: 6.12.6
@@ -17050,15 +17015,6 @@ packages:
       react-is: '>= 16.8.0'
     resolution:
       integrity: sha512-BlR+KrLW3NL1yhvEB+9Nu9Dt51CuOnHoxd+Hj+rYPdtyR8X11uIW9rvhpy3Dk4dXXBsiW1u5U78f00Lf/afGoA==
-  /stylis-plugin-rtl/1.1.0_stylis@3.5.4:
-    dependencies:
-      cssjanus: 1.3.2
-      stylis: 3.5.4
-    dev: false
-    peerDependencies:
-      stylis: 3.x
-    resolution:
-      integrity: sha512-FPoSxP+gbBLJRUXDRDFNBhqy/eToquDLn7ZrjIVBRfXaZ9bunwNnDtDm2qW1EoU0c93krm1Dy+8iVmJpjRGsKw==
   /stylis/3.5.4:
     dev: false
     resolution:
@@ -19035,6 +18991,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      immer: 9.0.6
       jest: 26.6.0
       prettier: 2.3.1
       rollup: 2.42.4
@@ -19043,12 +19000,12 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-uNfubXOvCAPnaykFFn1GobhLqi3NAf82NrHR5S1FIhM5O4kpw82DSpDYdiHPBw8z7xmlkS84BJPTRiH0dvHPxA==
+      integrity: sha512-aMFgFinQYTIIgrEHS+9i7kogI6zEE8Zn4CVxcbQ0+wjNszHdM49DpQ+iYhcCDXqA39X8lO4fwxaYUACM0xzE+w==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
     dependencies:
-      '@azure/communication-calling': 1.2.0-beta.1
+      '@azure/communication-calling': 1.2.1-beta.1
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
@@ -19062,6 +19019,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      immer: 9.0.6
       jest: 26.6.0
       memoize-one: 5.2.1
       prettier: 2.3.1
@@ -19073,12 +19031,12 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-qcWoEmiEkhSPeR61y2Lj/g3g9KN219qO4JUck6TpUSeGnIKuYLXLxfKSfclc1ohK6kp7RdX8DtrDNO4+2wZiqw==
+      integrity: sha512-CnE1eUHOAiG0On7RCaOPIts0rNFKJOEd+H4A4FNYfcYdUP2QxaQ662H4SpJASN7G4EpoJ9jI9wmaP2iB7q+w8g==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
     dependencies:
-      '@azure/communication-calling': 1.2.0-beta.1
+      '@azure/communication-calling': 1.2.1-beta.1
       '@azure/communication-common': 1.0.0
       '@azure/core-auth': 1.3.2
       '@microsoft/api-documenter': 7.12.22
@@ -19094,7 +19052,7 @@ packages:
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
-      immer: 8.0.4
+      immer: 9.0.6
       jest: 26.6.0
       prettier: 2.3.1
       rollup: 2.42.4
@@ -19103,12 +19061,12 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-dpg41OL56Vd03+/AfCxa2NgA7TWRD+dFwXfmKMmJZZsHgYy3Z/Sfx/OCqjuHQtEjem8KzDG7PpS7nCfak6p1BA==
+      integrity: sha512-Rt/wlP0PutDdKYQa3wWeMJTsl6FoXLwmub0Zb8r/+6W3mHUbHk1PNkgjw870Xz8Pw+BfncpG3FMPaH0Wyo6eqg==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
     dependencies:
-      '@azure/communication-calling': 1.2.0-beta.1
+      '@azure/communication-calling': 1.2.1-beta.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
       '@azure/core-http': 1.2.4
@@ -19145,6 +19103,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0
       jest-junit: 12.2.0
       jquery: 3.6.0
@@ -19170,12 +19129,12 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-RNZVu/zfhoch3A5LzMXVlXqP+8oNliUmP30grqjlwnsukQM9KtoWiN0gSdQKJjrmFX+6Bq0MHhvqY3TFINZ6Mg==
+      integrity: sha512-NBzZPhipuU4gZLOqfmqJwB5RXZ5l2hNOv3gqMnDPZ31TuOJQSzpWQkJFb+qjKkYruH3gw9qzHPxo2vkEAUot6Q==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
     dependencies:
-      '@azure/communication-chat': 1.0.0
+      '@azure/communication-chat': 1.0.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-paging': 1.1.3
@@ -19189,6 +19148,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      immer: 9.0.6
       jest: 26.6.0
       memoize-one: 5.2.1
       prettier: 2.3.1
@@ -19199,12 +19159,12 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-o05/2h8/i6BTjA/2Df9NaFVH2g4j7Y5ipy4H6/RKnDOc3aE+uHemqTt7q1U86Y2JIagAQ2DoAPAf1FN6H0UP4Q==
+      integrity: sha512-LDajbCvSvqU1IatQK6PMTkfgEYR3KR5nd7FR1a89vDGLViDEi/UyJkbWBaXseVkEgYNXY2fhAQ2Eaa7r01ccBQ==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
     dependencies:
-      '@azure/communication-chat': 1.0.0
+      '@azure/communication-chat': 1.0.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-paging': 1.1.3
@@ -19221,7 +19181,7 @@ packages:
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
-      immer: 8.0.4
+      immer: 9.0.6
       jest: 26.6.0
       nanoid: 3.1.25
       prettier: 2.3.1
@@ -19231,12 +19191,12 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-iJRoNZxaTFIK2Yc4CPlLLOL3kxkqshv7SFK2/s5zNlaRhz7iYWbuUPCzbEDt03HuTn4tjZPCXkeFVWFF54XRdQ==
+      integrity: sha512-dneWnN1DPlLQfp/WzOwfERXGZ8x9k69ZytSTnpXqnGGu3eJZkuedbVH78WSYCJCntKk3xq7mHMft4ptxZNCxgA==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
     dependencies:
-      '@azure/communication-chat': 1.0.0
+      '@azure/communication-chat': 1.0.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
@@ -19269,6 +19229,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
@@ -19291,7 +19252,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-HKllEH1W7PHx/YznMD5O6+qGMfQHJ3lQHLL8jjczck0M0nDRrw1qIaY17jLg/S9FpMySiCQQ3e+piE8GzVrWVw==
+      integrity: sha512-rpbYMVrq1S3INvv5nIAm9fDgIdDF2B26YA53BR21x7kMU2u8wsM1ISkhOq/Rzp5XolfrPwKzaNBTRtG2qzR6Fg==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19301,26 +19262,27 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      immer: 9.0.6
       prettier: 2.3.1
       webpack: 4.46.0_webpack-cli@4.7.2
       webpack-cli: 4.7.2_webpack@4.46.0
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-zxKyBrPXu85w+bEGErm6YM+HmttWVxGzMjJuYq8XtYz5mdPK7b4Al8iS8A/8pWD9hXhxmpCOMWIWTd0K3/PupA==
+      integrity: sha512-Kp4GPYB3AP8GQp7TrcUYjg4PbJ4z0+y5+V1Ja5B1v3Pvs1sqpo5kAZSYanDWmNqbTB2sCtncgArPU1l43uzmCA==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
     dependencies:
-      '@azure/communication-calling': 1.2.0-beta.1
-      '@azure/communication-chat': 1.0.0
+      '@azure/communication-calling': 1.2.1-beta.1
+      '@azure/communication-chat': 1.0.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-http': 1.2.4
       '@azure/core-paging': 1.1.3
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-icons': 1.1.137
-      '@fluentui/react-northstar': 0.51.7_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-northstar': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
@@ -19353,7 +19315,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       events: 3.3.0
       html-to-react: 1.4.5_react@16.14.0
-      immer: 8.0.4
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
@@ -19380,7 +19342,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-JiIKiD+u0k8rYw27IHdsuxIYDAdpLfC8wPfCmlWXeYRWb0CQEvuVToz/wcUJDMNehVFBkmtCuFGYSgttqLLiFA==
+      integrity: sha512-n33ONb3qNDtZNp+51D7iYY6/d0TjKmmYY/hT4HVOpaauHIMOMMruFObIA0HfNDhVQ57yqBlxaOhu2tSek70tXQ==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19389,6 +19351,7 @@ packages:
       '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
       '@types/node': 14.17.9
       beachball: 1.53.2
+      immer: 9.0.6
       rollup: 2.42.4
       rollup-plugin-sourcemaps: 0.6.3_4b45aa15ce9ce9948f319a2d6455c252
       rollup-plugin-svg: 2.0.0
@@ -19397,7 +19360,7 @@ packages:
     dev: false
     name: '@rush-temp/config'
     resolution:
-      integrity: sha512-aW+U6rABx4RdzDv9h48Yokz179n0E6n/61rZ/CuWTHY4IgIRWSl77rIC/d8ZTEuM57IyAgCcnnKVUs7x5ek42w==
+      integrity: sha512-jT49y1iNE/EBs5pJxl172+M9O2lNLay4FZFWYmT5ecmh69RvINfYQxgIhC/hY0Rn1cgX1L5AX+M5IYGOXotsTA==
       tarball: file:projects/config.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -19406,7 +19369,7 @@ packages:
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-icons': 1.1.137
-      '@fluentui/react-northstar': 0.51.7_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-northstar': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
@@ -19444,6 +19407,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       html-to-react: 1.4.5_react@16.14.0
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
@@ -19471,13 +19435,13 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-CMpZPNNiEsdJrx6F7QJekaX59l30qGZl9HwiEln9X4fBWihsJK38eNrXi6rdx9rBbHlUg7XG8rj9QOvSV+ZGNQ==
+      integrity: sha512-EvLXGaNnMsAim76ZrqMxqcVP6nW6jlnfU0m7BRze5MAvStoXxzTJz0QAkHdBQVIJm1oW25RV4ObBahkOtHmrug==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
     dependencies:
-      '@azure/communication-calling': 1.2.0-beta.1
-      '@azure/communication-chat': 1.0.0
+      '@azure/communication-calling': 1.2.1-beta.1
+      '@azure/communication-chat': 1.0.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
@@ -19526,6 +19490,7 @@ packages:
       express: 4.16.4
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
@@ -19560,12 +19525,12 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-bNdn98VpY6b6dtmYk1Uj0rqIclxHykgrfXhhUJ/gSbj+YzaFmonvftq0Msw6z1NwjPDPgj0GoO2CviC2qmMStw==
+      integrity: sha512-qHpJdDbqLXnQusmNnSREt67KBs0TYRJn3w0JnIVM17lmeH7CgEehkoCWkJ1cHeorQoFID13NZ9AZBOrhiw7knQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
     dependencies:
-      '@azure/communication-chat': 1.0.0
+      '@azure/communication-chat': 1.0.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
       '@playwright/test': 1.12.3
@@ -19577,6 +19542,7 @@ packages:
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       http: 0.0.1-security
       http-server: 0.12.3
+      immer: 9.0.6
       node-static: 0.7.11
       playwright: 1.12.3
       react: 16.14.0
@@ -19588,12 +19554,12 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-c7HYd1gDI0cIbKOflUozRijEaLLRV87icDcOMGNdD1pdeO4UGPu79ukye+W3qFx6HW0aZR09TMH6rQPNeMTC4Q==
+      integrity: sha512-BhDfjrxVtpbD3vvWmraxIIJmEOA/x9SkjJt4wAcN/SUOld4E0FviINFWQjkxi554UwMFwFTCx9CwJ6NSX3kdhA==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
     dependencies:
-      '@azure/communication-chat': 1.0.0
+      '@azure/communication-chat': 1.0.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
       '@azure/core-http': 1.2.4
@@ -19622,6 +19588,7 @@ packages:
       express: 4.16.4
       http-errors: 1.6.3
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-junit: 12.2.0
       morgan: 1.9.1
@@ -19639,13 +19606,13 @@ packages:
     dev: false
     name: '@rush-temp/server'
     resolution:
-      integrity: sha512-LSVYhepx/0hGMLUGcBaxfmWD5QjaMqgVCJsVtl1NXnDIRLLLH7JlkUpxY1S13LFo0Xdv9JE+YHX47D6JVjVV0A==
+      integrity: sha512-nlgiwhGc/oVA/F4WKRBSu1Ri4XtZUUY6/gbCu5bwpN5KuwlWMGrWu29pbYA0WG0UKZvzf+onNYAxdv4xyR/g4A==
       tarball: file:projects/server.tgz
     version: 0.0.0
   file:projects/storybook.tgz:
     dependencies:
-      '@azure/communication-calling': 1.2.0-beta.1
-      '@azure/communication-chat': 1.0.0
+      '@azure/communication-calling': 1.2.1-beta.1
+      '@azure/communication-chat': 1.0.1
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
@@ -19654,7 +19621,7 @@ packages:
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-icons': 1.1.137
-      '@fluentui/react-northstar': 0.51.7_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-northstar': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/theme-samples': 8.1.5_c2a703770fc22cd5845ac34fc7d0fe24
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
@@ -19707,6 +19674,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       history: 5.0.1
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
@@ -19737,7 +19705,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-ue6KY0FhpTWhztsPqCF/j82JG4zWAym9rC7VW1Up31WrGToYfPDRCX0tf7vDANjU24XwlV8AhFnz0Xpp8AeJjw==
+      integrity: sha512-Zirp5OcN+w26s88YnmfJJvKHMvX5s/BAdWNAnUCRHRbUz1Gap6VMBcWHYGJa8BcWZ/kevVyUcs6AFu2tsnF/tQ==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

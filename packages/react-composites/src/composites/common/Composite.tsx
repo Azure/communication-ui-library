@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider } from '@internal/react-components';
+import React from 'react';
+import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
-import { DEFAULT_COMPOSITE_ICONS, CompositeIcons } from './icons';
+import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 
-export interface BaseCompositeProps {
+export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
   /**
    * Fluent theme for the composite.
    *
@@ -19,7 +20,7 @@ export interface BaseCompositeProps {
    * Custom Icon override for the composite.
    * A JSX element can be provided to override the default icon.
    */
-  icons?: CompositeIcons;
+  icons?: TIcons;
   /**
    * Locale for the composite.
    *
@@ -43,7 +44,9 @@ export interface BaseCompositeProps {
  * A base class for composites.
  * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
  */
-export const BaseComposite = (props: BaseCompositeProps & { children: React.ReactNode }): JSX.Element => {
+export const BaseComposite = (
+  props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
+): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
 
   /**

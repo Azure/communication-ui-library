@@ -31,14 +31,11 @@ import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/a
 export interface MeetingAdapterMeetingManagement
   extends Pick<
       CallAdapterCallManagement,
-      | 'joinCall'
-      | 'leaveCall'
       | 'startCamera'
       | 'stopCamera'
       | 'onToggleCamera'
       | 'mute'
       | 'unmute'
-      | 'startCall'
       | 'startScreenShare'
       | 'stopScreenShare'
       | 'createStreamView'
@@ -128,9 +125,9 @@ export interface MeetingAdapter
  * @alpha
  */
 export type MeetingEvent =
-  | 'meetingEnded'
   | 'participantsJoined'
   | 'participantsLeft'
+  | 'meetingEnded'
   | 'isMutedChanged'
   | 'callIdChanged'
   | 'isLocalScreenSharingActiveChanged'

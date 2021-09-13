@@ -7,6 +7,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
+import { AdapterError } from '../../common/adapters';
 
 jest.useFakeTimers();
 jest.mock('@azure/communication-chat');
@@ -30,7 +31,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.sendMessage'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.sendMessage');
+    expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendMessage');
   });
 
   it('when removeParticipant fails', async () => {
@@ -48,7 +49,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.removeParticipant'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.removeParticipant');
+    expect(errorListener.errors[0].target).toBe('ChatThreadClient.removeParticipant');
   });
 
   it('when setTopic fails', async () => {
@@ -66,7 +67,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.updateTopic'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.updateTopic');
+    expect(errorListener.errors[0].target).toBe('ChatThreadClient.updateTopic');
   });
 
   it('when listMessages fails on iteration', async () => {
@@ -84,7 +85,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.listMessages'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.listMessages');
+    expect(errorListener.errors[0].target).toBe('ChatThreadClient.listMessages');
   });
 
   it('when listMessages fails immediately', async () => {
@@ -102,32 +103,13 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.listMessages'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].operation).toBe('ChatThreadClient.listMessages');
+    expect(errorListener.errors[0].target).toBe('ChatThreadClient.listMessages');
 
     threadClient.listMessages = (): PagedAsyncIterableIterator<ChatMessage> => {
       return pagedAsyncIterator([]);
     };
     const allLoaded = await adapter.loadPreviousChatMessages(1);
     expect(allLoaded).toBe(true);
-  });
-});
-
-describe('clearErrors clears the error in stateful client and triggers a UI update', () => {
-  it('when clearning sendMessageGeneric error', async () => {
-    const threadClient = new StubChatThreadClient();
-    threadClient.sendMessage = (): Promise<ChatMessage> => {
-      throw new Error('injected error');
-    };
-    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
-
-    await expect(adapter.sendMessage('some message')).rejects.toThrow();
-    expect(adapter.getState().latestErrors['ChatThreadClient.sendMessage']).toBeDefined();
-
-    const stateListener = new StateChangeListener(adapter);
-    adapter.clearErrors(['sendMessageGeneric']);
-
-    expect(stateListener.onChangeCalledCount).toBe(1);
-    expect(stateListener.state.latestErrors['ChatThreadClient.sendMessage']).toBeUndefined();
   });
 });
 
@@ -172,13 +154,13 @@ class StateChangeListener {
 }
 
 class ErrorListener {
-  errors: { operation: string; error: Error }[] = [];
+  errors: AdapterError[] = [];
 
   constructor(client: ChatAdapter) {
     client.on('error', this.onError.bind(this));
   }
 
-  private onError(event: { operation: string; error: Error }): void {
-    this.errors.push({ operation: event.operation, error: event.error });
+  private onError(e: AdapterError): void {
+    this.errors.push(e);
   }
 }

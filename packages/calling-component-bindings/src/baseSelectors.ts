@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -9,7 +9,8 @@ import {
   IncomingCallState,
   RemoteParticipantState,
   LocalVideoStreamState,
-  CallErrors
+  CallErrors,
+  DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
 
 /**
@@ -31,6 +32,11 @@ export const getDeviceManager = (state: CallClientState): DeviceManagerState => 
 
 export const getCallExists = (state: CallClientState, props: CallingBaseSelectorProps): boolean =>
   !!state.calls[props.callId];
+
+export const getDominantSpeakers = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): undefined | DominantSpeakersInfo => state.calls[props.callId]?.dominantSpeakers;
 
 export const getRemoteParticipants = (
   state: CallClientState,
@@ -62,3 +68,8 @@ export const getDisplayName = (state: CallClientState): string | undefined => st
 export const getIdentifier = (state: CallClientState): string => toFlatCommunicationIdentifier(state.userId);
 
 export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;
+
+export const getDiagnostics = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): DiagnosticsCallFeatureState | undefined => state.calls[props.callId]?.diagnostics;
