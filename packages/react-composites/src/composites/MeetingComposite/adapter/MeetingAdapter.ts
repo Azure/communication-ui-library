@@ -20,15 +20,9 @@ import {
   MessageReceivedListener,
   MessageSentListener
 } from '../../ChatComposite';
-import { MeetingState } from '../state/MeetingState';
+import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapterState';
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
-
-/**
- * Page state the Meeting composite could be in.
- * @alpha
- */
-export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 /**
  * Functionality for managing the current meeting.
@@ -111,15 +105,17 @@ export interface MeetingAdapterSubscriptions {
  * @alpha
  */
 export interface MeetingAdapter
-  extends AdapterState<MeetingState>,
+  extends AdapterState<MeetingAdapterState>,
     AdapterDisposal,
     AdapterPages<MeetingCompositePage>,
     MeetingAdapterSubscriptions {}
 
+/**
+ * Events fired off by the Meeting Adapter
+ * @alpha
+ */
 export type MeetingEvent =
   | 'meetingEnded'
-  | 'participantsJoined'
-  | 'participantsLeft'
   | 'isMutedChanged'
   | 'callIdChanged'
   | 'isLocalScreenSharingActiveChanged'
