@@ -1,28 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
-import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
-
+import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
+import React, { useEffect, useState } from 'react';
 import {
-  fetchTokenResponse,
   buildTime,
   callingSDKVersion,
+  createGroupId,
+  fetchTokenResponse,
   getGroupIdFromUrl,
+  getTeamsLinkFromUrl,
+  isMobileSession,
   isOnIphoneAndNotSafari,
   isSmallScreen,
-  isMobileSession,
-  navigateToHomePage,
-  createGroupId,
-  getTeamsLinkFromUrl
+  navigateToHomePage
 } from './utils/AppUtils';
-
+import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
 import { EndCall } from './views/EndCall';
-import { CallError } from './views/CallError';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
