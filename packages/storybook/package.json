@@ -31,12 +31,7 @@
     "@microsoft/applicationinsights-react-js": "~3.0.5",
     "@microsoft/applicationinsights-web": "~2.6.2",
     "@uifabric/react-hooks": "~7.13.11",
-    "classnames": "^2.2.6",
-    "copy-to-clipboard": "~3.3.1",
-    "history": "~5.0.0",
-    "react-aria-live": "^2.0.5",
-    "react-linkify": "^1.0.0-alpha",
-    "lodash": "~4.17.21"
+    "copy-to-clipboard": "~3.3.1"
   },
   "devDependencies": {
     "@babel/core": "7.13.10",
