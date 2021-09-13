@@ -30,7 +30,8 @@ export const callControlsContainer = mergeStyles({
 export const containerStyles: IStackStyles = {
   root: {
     height: '100%',
-    width: '100%'
+    width: '100%',
+    position: 'relative'
   }
 };
 
@@ -49,10 +50,14 @@ export const mediaGalleryContainerStyles: IStackItemStyles = {
   }
 };
 
-export const loadingStyle = mergeStyles({
-  height: '100%',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-});
+export const bannersContainerStyles: IStackStyles = {
+  root: {
+    width: '100%',
+    position: 'absolute',
+    // High enough to be above the video gallary.
+    zIndex: 9,
+    top: 0,
+    left: 0,
+    padding: '1rem'
+  }
+};

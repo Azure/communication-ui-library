@@ -15,6 +15,7 @@ import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
+import { DiagnosticsSubscriber } from './DiagnosticsSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -26,34 +27,39 @@ export class CallSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _internalContext: InternalCallContext;
+
+  private _diagnosticsSubscriber: DiagnosticsSubscriber;
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
+  private _receivedTransferSubscriber: ReceivedTransferSubscriber;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
-  private _receivedTransferSubscriber: ReceivedTransferSubscriber;
 
   constructor(call: Call, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
     this._callIdRef = { callId: call.id };
     this._context = context;
     this._internalContext = internalContext;
-    this._participantSubscribers = new Map<string, ParticipantSubscriber>();
 
+    this._diagnosticsSubscriber = new DiagnosticsSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.api(Features.Diagnostics)
+    );
+    this._participantSubscribers = new Map<string, ParticipantSubscriber>();
+    this._receivedTransferSubscriber = new ReceivedTransferSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.api(Features.Transfer)
+    );
     this._recordingSubscriber = new RecordingSubscriber(
       this._callIdRef,
       this._context,
       this._call.api(Features.Recording)
     );
-
     this._transcriptionSubscriber = new TranscriptionSubscriber(
       this._callIdRef,
       this._context,
       this._call.api(Features.Transcription)
-    );
-
-    this._receivedTransferSubscriber = new ReceivedTransferSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.api(Features.Transfer)
     );
 
     this.subscribe();
@@ -66,6 +72,7 @@ export class CallSubscriber {
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.on('isMutedChanged', this.isMuteChanged);
+    this._call.api(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
 
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (this._call.localVideoStreams.length > 0) {
@@ -116,9 +123,11 @@ export class CallSubscriber {
     }
 
     this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
+
+    this._diagnosticsSubscriber.unsubscribe();
+    this._receivedTransferSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
-    this._receivedTransferSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
@@ -210,5 +219,10 @@ export class CallSubscriber {
       this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
     }
+  };
+
+  private dominantSpeakersChanged = (): void => {
+    const dominantSpeakers = this._call.api(Features.DominantSpeakers).dominantSpeakers;
+    this._context.setCallDominantSpeakers(this._callIdRef.callId, dominantSpeakers);
   };
 }
