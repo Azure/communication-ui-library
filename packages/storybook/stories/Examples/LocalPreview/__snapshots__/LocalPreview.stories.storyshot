@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Preview 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,11 +21,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
       }
     >
       <div
-        className="css-61 body-0"
+        className="css-60 body-0"
         dir="ltr"
       >
         <div
-          className="css-61"
+          className="css-60"
           data-uses-unhanded-props={true}
         >
           <div
@@ -50,30 +50,20 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                     className="ms-Stack css-12"
                   >
                     <div
-                      className="css-71"
+                      className="css-80"
                     />
                   </div>
                   <div
-                    className="ms-Stack css-82 css-13"
+                    className="ms-Stack css-13"
                   >
                     <div
-                      className="ms-Stack css-14"
-                    />
-                    <div
-                      className="ms-Stack css-15"
-                    />
-                  </div>
-                  <div
-                    className="ms-Stack css-16"
-                  >
-                    <div
-                      className="css-18"
+                      className="css-15"
                     >
                       <div
-                        className="ms-Stack css-19"
+                        className="ms-Stack css-16"
                       >
                         <button
-                          className="ms-Button ms-Button--default is-checked root-20"
+                          className="ms-Button ms-Button--default is-checked root-17"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -84,7 +74,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-21"
+                            className="ms-Button-flexContainer flexContainer-18"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
@@ -116,7 +106,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           </span>
                         </button>
                         <button
-                          className="ms-Button ms-Button--default is-checked root-20"
+                          className="ms-Button ms-Button--default is-checked root-17"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -127,7 +117,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-21"
+                            className="ms-Button-flexContainer flexContainer-18"
                             data-automationid="splitbuttonprimary"
                           >
                             <i

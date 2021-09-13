@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add timestamp to teed errors",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

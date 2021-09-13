@@ -8,7 +8,6 @@ import {
   StatefulChatClient
 } from '@internal/chat-stateful-client';
 import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
-import { ErrorType } from '@internal/react-components';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
 import type {
@@ -24,13 +23,13 @@ import {
   ChatAdapter,
   ChatEvent,
   ChatAdapterState,
-  ChatErrorListener,
   MessageReadListener,
   MessageReceivedListener,
   ParticipantsAddedListener,
   ParticipantsRemovedListener,
   TopicChangedListener
 } from './ChatAdapter';
+import { AdapterError } from '../../common/adapters';
 
 // Context of Chat, which is a centralized context for all state updates
 class ChatContext {
@@ -119,10 +118,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.sendMessage = this.sendMessage.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
+    this.updateMessage = this.updateMessage.bind(this);
+    this.deleteMessage = this.deleteMessage.bind(this);
     this.removeParticipant = this.removeParticipant.bind(this);
     this.setTopic = this.setTopic.bind(this);
     this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
-    this.clearErrors = this.clearErrors.bind(this);
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
   }
@@ -195,8 +195,16 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  clearErrors(errorTypes: ErrorType[]): void {
-    this.handlers.onDismissErrors(errorTypes);
+  async updateMessage(messageId: string, content: string): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onUpdateMessage(messageId, content);
+    });
+  }
+
+  async deleteMessage(messageId: string): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onDeleteMessage(messageId);
+    });
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
@@ -252,7 +260,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
-  on(event: 'error', listener: ChatErrorListener): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: ChatEvent, listener: (e: any) => void): void {
@@ -265,7 +273,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
-  off(event: 'error', listener: ChatErrorListener): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: ChatEvent, listener: (e: any) => void): void {
@@ -277,7 +285,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       return await f();
     } catch (error) {
       if (isChatError(error)) {
-        this.emitter.emit('error', { operation: error.target, error: error.inner });
+        this.emitter.emit('error', error as AdapterError);
       }
       throw error;
     }

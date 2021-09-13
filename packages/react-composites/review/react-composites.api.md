@@ -23,7 +23,6 @@ import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
 import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
-import type { ErrorType } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { PartialTheme } from '@fluentui/react';
@@ -42,9 +41,16 @@ export interface AdapterDisposal {
 }
 
 // @public
-export interface AdapterErrorHandlers {
-    clearErrors(errorTypes: ErrorType[]): void;
+export interface AdapterError extends Error {
+    inner: Error;
+    target: string;
+    timestamp: Date;
 }
+
+// @public
+export type AdapterErrors = {
+    [target: string]: AdapterError;
+};
 
 // @public
 export interface AdapterPages<TPage> {
@@ -76,7 +82,6 @@ export type AzureCommunicationCallAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator | GroupCallLocator;
-    callClientOptions?: CallClientOptions;
 };
 
 // @public (undocumented)
@@ -89,16 +94,16 @@ export type AzureCommunicationChatAdapterArgs = {
 };
 
 // @public (undocumented)
-export interface BaseCompositeProps {
+export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
-    icons?: CompositeIcons;
+    icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     rtl?: boolean;
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterErrorHandlers, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -138,7 +143,7 @@ export type CallAdapterClientState = {
     call?: CallState;
     devices: DeviceManagerState;
     endedCall?: CallState;
-    latestErrors: CallAdapterErrors;
+    latestErrors: AdapterErrors;
 };
 
 // @public
@@ -158,11 +163,6 @@ export interface CallAdapterDeviceManagement {
     // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
 }
-
-// @public
-export type CallAdapterErrors = {
-    [operation: string]: Error;
-};
 
 // @public (undocumented)
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -186,7 +186,7 @@ export interface CallAdapterSubscribers {
     // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
     // (undocumented)
@@ -204,7 +204,7 @@ export interface CallAdapterSubscribers {
     // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 // @public
@@ -217,10 +217,13 @@ export type CallAdapterUiState = {
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public (undocumented)
+export type CallCompositeIcons = Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>;
+
+// @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public (undocumented)
-export interface CallCompositeProps extends BaseCompositeProps {
+export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
@@ -233,7 +236,11 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    configurationPageTitle: string;
+    defaultPlaceHolder: string;
     microphonePermissionDenied: string;
+    soundLabel: string;
+    startCallButtonText: string;
     teamsMeetingFailReasonAccessDenied: string;
     teamsMeetingFailReasonParticipantRemoved: string;
     teamsMeetingFailToJoin: string;
@@ -255,13 +262,8 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, AdapterErrorHandlers, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, ChatAdapterSubscribers {
 }
-
-// @public
-export type ChatAdapterErrors = {
-    [operation: string]: Error;
-};
 
 // @public (undocumented)
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -281,7 +283,7 @@ export interface ChatAdapterSubscribers {
     // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    off(event: 'error', listener: ChatErrorListener): void;
+    off(event: 'error', listener: (e: AdapterError) => void): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -295,11 +297,13 @@ export interface ChatAdapterSubscribers {
     // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     // (undocumented)
-    on(event: 'error', listener: ChatErrorListener): void;
+    on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 // @public
 export interface ChatAdapterThreadManagement {
+    // (undocumented)
+    deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
     fetchInitialData(): Promise<void>;
     // (undocumented)
@@ -314,6 +318,8 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     // (undocumented)
     setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    updateMessage(messageId: string, content: string): Promise<void>;
 }
 
 // @public (undocumented)
@@ -329,15 +335,23 @@ export type ChatCompositeClientState = {
     userId: string;
     displayName: string;
     thread: ChatThreadClientState;
-    latestErrors: ChatAdapterErrors;
+    latestErrors: AdapterErrors;
 };
 
 // @public (undocumented)
-export interface ChatCompositeProps extends BaseCompositeProps {
+export type ChatCompositeIcons = Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>;
+
+// @public (undocumented)
+export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     visualElements?: ChatCompositeVisualElements;
+}
+
+// @public
+export interface ChatCompositeStrings {
+    chatListHeader: string;
 }
 
 // @public
@@ -346,12 +360,6 @@ export type ChatCompositeVisualElements = {
     showParticipantPane?: boolean;
     showTopic?: boolean;
 };
-
-// @public
-export type ChatErrorListener = (event: {
-    operation: string;
-    error: Error;
-}) => void;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -395,7 +403,7 @@ export const COMPOSITE_LOCALE_ZH_CN: CompositeLocale;
 // @public
 export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
-// @public (undocumented)
+// @public
 export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsCamera: JSX.Element;
     LocalDeviceSettingsMic: JSX.Element;
@@ -417,10 +425,11 @@ export interface CompositeLocale {
 // @public
 export interface CompositeStrings {
     call: CallCompositeStrings;
+    chat: ChatCompositeStrings;
 }
 
 // @public (undocumented)
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, callClientOptions }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public (undocumented)
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
@@ -456,7 +465,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
-    VideoTileMicOn: JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageRemove: JSX.Element;
 };
 
 // @public (undocumented)
