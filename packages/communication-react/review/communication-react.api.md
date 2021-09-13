@@ -76,7 +76,6 @@ export interface ActiveError {
 
 // @public
 export interface AdapterDisposal {
-    // (undocumented)
     dispose(): void;
 }
 
@@ -94,17 +93,13 @@ export type AdapterErrors = {
 
 // @public
 export interface AdapterPages<TPage> {
-    // (undocumented)
     setPage(page: TPage): void;
 }
 
 // @public
 export interface AdapterState<TState> {
-    // (undocumented)
     getState(): TState;
-    // (undocumented)
     offStateChange(handler: (state: TState) => void): void;
-    // (undocumented)
     onStateChange(handler: (state: TState) => void): void;
 }
 
@@ -1264,13 +1259,27 @@ export interface MediaDiagnosticsState {
 }
 
 // @alpha
-export interface MeetingAdapter extends AdapterState<MeetingState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha
-export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'joinCall' | 'leaveCall' | 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startCall' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'> {
-    // (undocumented)
+export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+    displayName: string;
+    latestErrors: MeetingErrors;
+    meeting: MeetingState;
+    userId: CommunicationIdentifier;
+}
+
+// @alpha
+export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'> {
+    joinMeeting(microphoneOn?: boolean): void;
+    leaveMeeting(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    startMeeting(participants: string[]): void;
+}
+
+// @alpha
+export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {
 }
 
 // @alpha
@@ -1326,6 +1335,11 @@ export interface MeetingAdapterSubscriptions {
 }
 
 // @alpha
+export interface MeetingAdapterUiState {
+    page: MeetingCompositePage;
+}
+
+// @alpha
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @alpha
@@ -1339,11 +1353,32 @@ export type MeetingCompositeProps = {
     meetingInvitationURL?: string;
 };
 
-// @public (undocumented)
-export type MeetingEvent = 'meetingEnded' | 'participantsJoined' | 'participantsLeft' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
+// @alpha
+export type MeetingEndReason = CallEndReason;
 
-// @public
-export type MeetingState = unknown;
+// @alpha (undocumented)
+export type MeetingErrors = unknown;
+
+// @alpha
+export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
+
+// @alpha
+export interface MeetingParticipant extends Pick<ChatParticipant, 'shareHistoryTime'>, Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
+    id: CommunicationIdentifier;
+    meetingEndReason: MeetingEndReason;
+}
+
+// @alpha
+export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
+    id: string;
+    meetingEndReason: MeetingEndReason;
+    participants: {
+        [key: string]: MeetingParticipant;
+    };
+    participantsEnded: {
+        [keys: string]: MeetingParticipant;
+    };
+}
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {

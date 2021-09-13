@@ -98,7 +98,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         callErrorHandler('removed');
       }
     }
-  }, [adapter, callErrorHandler, endedCall]);
+  }, [callErrorHandler, endedCall]);
 
   if ('isTeamsCall' in adapter) {
     const azureAdapter = adapter as AzureCommunicationCallAdapter;

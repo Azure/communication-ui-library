@@ -20,15 +20,9 @@ import {
   MessageReceivedListener,
   MessageSentListener
 } from '../../ChatComposite';
-import { MeetingState } from '../state/MeetingState';
+import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapterState';
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
-
-/**
- * Page state the Meeting composite could be in.
- * @alpha
- */
-export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 /**
  * Functionality for managing the current meeting.
@@ -37,14 +31,11 @@ export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'erro
 export interface MeetingAdapterMeetingManagement
   extends Pick<
       CallAdapterCallManagement,
-      | 'joinCall'
-      | 'leaveCall'
       | 'startCamera'
       | 'stopCamera'
       | 'onToggleCamera'
       | 'mute'
       | 'unmute'
-      | 'startCall'
       | 'startScreenShare'
       | 'stopScreenShare'
       | 'createStreamView'
@@ -64,6 +55,19 @@ export interface MeetingAdapterMeetingManagement
       ChatAdapterThreadManagement,
       'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
     > {
+  /** Join an existing Meeting */
+  joinMeeting(microphoneOn?: boolean): void;
+  /** Leave the current Meeting */
+  leaveMeeting(): Promise<void>;
+  /**
+   * Start a new Meeting
+   * @param participants - Array of participant IDs. These represent the participants to initialize the meeting with.
+   */
+  startMeeting(participants: string[]): void;
+  /**
+   * Remove a participant from a Meeting
+   * @param userId - UserId of the participant to remove.
+   */
   removeParticipant(userId: string): Promise<void>;
 }
 
@@ -111,15 +115,19 @@ export interface MeetingAdapterSubscriptions {
  * @alpha
  */
 export interface MeetingAdapter
-  extends AdapterState<MeetingState>,
+  extends AdapterState<MeetingAdapterState>,
     AdapterDisposal,
     AdapterPages<MeetingCompositePage>,
     MeetingAdapterSubscriptions {}
 
+/**
+ * Events fired off by the Meeting Adapter
+ * @alpha
+ */
 export type MeetingEvent =
-  | 'meetingEnded'
   | 'participantsJoined'
   | 'participantsLeft'
+  | 'meetingEnded'
   | 'isMutedChanged'
   | 'callIdChanged'
   | 'isLocalScreenSharingActiveChanged'
