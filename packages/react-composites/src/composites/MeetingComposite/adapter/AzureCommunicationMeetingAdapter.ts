@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 /* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 
@@ -26,9 +25,7 @@ import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapt
  * Created for easy use with the Meeting Composite.
  */
 export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
-  // @ts-ignore REMOVE ONCE THIS FILE IS IMPLEMENTED
   private callAdapter: CallAdapter;
-  // @ts-ignore REMOVE ONCE THIS FILE IS IMPLEMENTED
   private chatAdapter: ChatAdapter;
 
   constructor(callAdapter: CallAdapter, chatAdapter: ChatAdapter) {
@@ -241,7 +238,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     throw new Error('Method not implemented.');
   }
 
-  // @ts-ignore - REMOVE ONCE THIS FILE IS IMPLEMENTED
   private unsubscribeMeetingEvents(): void {
     throw new Error('Method not implemented.');
   }
