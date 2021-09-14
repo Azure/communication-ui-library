@@ -19,7 +19,7 @@ import { useTheme } from '@azure/communication-react';
 export type ChatHeaderProps = {
   isParticipantsDisplayed: boolean;
   onEndChat(): void;
-  setShowParticipants(showParticipants: boolean): void;
+  setHideParticipants(hideParticipants: boolean): void;
 };
 
 export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
@@ -31,15 +31,9 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="end">
       <Stack horizontal={true} verticalAlign={'center'}>
         {props.isParticipantsDisplayed ? (
-          <People20Filled
-            className={panelButtonStyle}
-            onClick={() => props.setShowParticipants(!props.isParticipantsDisplayed)}
-          />
+          <People20Filled className={panelButtonStyle} onClick={() => props.setHideParticipants(true)} />
         ) : (
-          <People20Regular
-            className={panelButtonStyle}
-            onClick={() => props.setShowParticipants(!props.isParticipantsDisplayed)}
-          />
+          <People20Regular className={panelButtonStyle} onClick={() => props.setHideParticipants(false)} />
         )}
         <div className={iconButtonContainerStyle}>
           <IconButton
