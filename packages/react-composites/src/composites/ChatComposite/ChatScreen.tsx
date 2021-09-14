@@ -5,7 +5,7 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect } from 'react';
 import {
   CommunicationParticipant,
-  DefaultMessageRendererType,
+  MessageRenderer,
   ErrorBar,
   MessageProps,
   MessageThread,
@@ -35,7 +35,7 @@ export type ChatScreenProps = {
   showParticipantPane?: boolean;
   showTopic?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
 

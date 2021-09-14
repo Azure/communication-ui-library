@@ -20,10 +20,10 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
-import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
+import { MessageRenderer } from '@internal/react-components';
 import { PartialTheme } from '@fluentui/react';
 import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -343,7 +343,7 @@ export type ChatCompositeIcons = Pick<CompositeIcons, 'MessageDelivered' | 'Mess
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     visualElements?: ChatCompositeVisualElements;
 }
