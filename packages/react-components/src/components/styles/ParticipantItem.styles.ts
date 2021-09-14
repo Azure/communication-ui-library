@@ -14,17 +14,18 @@ export const participantItemContainerStyle = mergeStyles({
 });
 
 export const menuButtonContainerStyle = mergeStyles({
-  root: {
-    '&:hover': { background: 'none' },
-    '&:active': { background: 'none' }
-  }
+  paddingTop: '0.25rem'
 });
 
-export const iconContainerStyle = mergeStyles({
+export const iconContainerStyle = {
   display: 'flex',
   alignItems: 'center',
   height: '100%',
-  overflow: 'hidden'
-});
+  width: '5.5rem'
+};
 
-export const iconStyles = mergeStyles({ display: 'flex', margin: 'auto' });
+export const iconStyles = mergeStyles({
+  display: 'flex',
+  lineHeight: 0, // ensure the icon center is on the center line and not slightly above it
+  alignItems: 'center'
+});
