@@ -43,12 +43,12 @@ export type CallCompositeHiddenElements = CallControlHiddenElements & {
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    * Hidden if set to `true`
    *
-   * @default false
+   * @defaultValuefalse
    */
   errorBar?: boolean;
   /**
    * Hide call controls during a call if set to `true`
-   * @default false
+   * @defaultValuefalse
    */
   callControls?: boolean;
 };

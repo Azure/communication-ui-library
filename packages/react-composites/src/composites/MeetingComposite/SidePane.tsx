@@ -109,7 +109,7 @@ export const EmbeddedChatPane = (props: {
       <ChatComposite
         adapter={props.chatAdapter}
         fluentTheme={props.fluentTheme}
-        hiddenElements={{ participantPane: true }}
+        hiddenElements={{ participantPane: true, topic: true }}
       />
     </SidePane>
   );

@@ -24,32 +24,32 @@ export type CallControlsProps = {
 export type CallControlHiddenElements = {
   /**
    * Hide camera button during a call.
-   * @default false
+   * @defaultValuefalse
    */
   cameraButton?: boolean;
   /**
    *  Hide EndCall button during a call.
-   * @default false
+   * @defaultValuefalse
    */
   endCallButton?: boolean;
   /**
    *  Hide Microphone button during a call.
-   * @default false
+   * @defaultValuefalse
    */
   microphoneButton?: boolean;
   /**
    * Hide Options button during a call.
-   * @default false
+   * @defaultValuefalse
    */
   optionsButton?: boolean;
   /**
    * Hide participants button during a call.
-   * @default false
+   * @defaultValuefalse
    */
   participantsButton?: boolean;
   /**
    * Hide the screen share button during a call.
-   * @default false
+   * @defaultValuefalse
    */
   screenShareButton?: boolean;
 };
