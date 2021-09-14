@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
-    "build:esm": "tsc",
+    "build:esm": "rimraf dist/dist-esm && tsc",
     "build:watch": "rushx build",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
@@ -91,6 +91,7 @@
     "react-test-renderer": "^16.14.0",
     "react": "~16.14.0",
     "regenerator-runtime": "^0.13.7",
+    "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",

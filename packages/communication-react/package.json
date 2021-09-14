@@ -55,7 +55,7 @@
   "scripts": {
     "build": "rushx check-deps && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent",
-    "build:esm": "ttsc",
+    "build:esm": "rimraf dist/dist-esm && ttsc",
     "build:watch": "",
     "test": "",
     "test:coverage": "",
@@ -114,6 +114,7 @@
     "react-is": "~17.0.1",
     "react-test-renderer": "^16.14.0",
     "regenerator-runtime": "^0.13.7",
+    "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
