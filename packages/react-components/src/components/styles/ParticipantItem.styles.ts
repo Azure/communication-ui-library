@@ -13,15 +13,15 @@ export const participantItemContainerStyle = mergeStyles({
   alignItems: 'center'
 });
 
-export const menuButtonContainerStyle = mergeStyles({
-  paddingTop: '0.25rem'
-});
+export const menuButtonContainerStyle = {
+  width: '1.5rem'
+};
 
 export const iconContainerStyle = {
   display: 'flex',
   alignItems: 'center',
   height: '100%',
-  width: '5.5rem'
+  paddingTop: '0.2rem'
 };
 
 export const iconStyles = mergeStyles({
@@ -29,3 +29,7 @@ export const iconStyles = mergeStyles({
   lineHeight: 0, // ensure the icon center is on the center line and not slightly above it
   alignItems: 'center'
 });
+
+export const meContainerStyle = {
+  paddingRight: '0.5rem'
+};

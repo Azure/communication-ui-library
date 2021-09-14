@@ -6,7 +6,6 @@ import {
   DirectionalHint,
   Icon,
   IContextualMenuItem,
-  IRawStyle,
   IStyle,
   mergeStyles,
   Persona,
@@ -18,7 +17,13 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps, OnRenderAvatarCallback } from '../types';
-import { iconContainerStyle, iconStyles, participantItemContainerStyle } from './styles/ParticipantItem.styles';
+import {
+  iconContainerStyle,
+  iconStyles,
+  meContainerStyle,
+  menuButtonContainerStyle,
+  participantItemContainerStyle
+} from './styles/ParticipantItem.styles';
 
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   /** Styles for the avatar. */
@@ -102,18 +107,26 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   );
 
   const meTextStyle = useMemo(
-    () => mergeStyles({ color: theme.palette.neutralTertiary }, styles?.me),
+    () => mergeStyles(meContainerStyle, { color: theme.palette.neutralTertiary }, styles?.me),
     [theme.palette.neutralTertiary, styles?.me]
   );
   const contextualMenuStyle = useMemo(
     () => mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu),
     [theme.palette.neutralLighterAlt, styles?.menu]
   );
-  const iconsContainerWidth = (styles?.iconContainer as IRawStyle)?.width ?? iconContainerStyle.width;
+  const infoContainerStyle = useMemo(
+    () => mergeStyles(iconContainerStyle, { color: theme.palette.neutralTertiary }, styles?.iconContainer),
+    [theme.palette.neutralTertiary, styles?.iconContainer]
+  );
 
   const menuButton = useMemo(
     () => (
-      <Stack horizontal={true} horizontalAlign="end" title={menuTitle}>
+      <Stack
+        horizontal={true}
+        horizontalAlign="end"
+        className={mergeStyles(menuButtonContainerStyle)}
+        title={menuTitle}
+      >
         <Icon
           iconName={itemHovered ? 'ParticipantItemOptionsHovered' : 'ParticipantItemOptions'}
           className={iconStyles}
@@ -141,32 +154,30 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         setMenuHidden(false);
       }}
     >
-      <Stack horizontal className={mergeStyles({ width: `calc(100% - ${iconsContainerWidth})`, alignItems: 'center' })}>
+      <Stack
+        horizontal
+        className={mergeStyles({ width: `calc(100% - ${menuButtonContainerStyle.width})`, alignItems: 'center' })}
+      >
         {avatar}
         {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
+        <Stack horizontal className={mergeStyles(infoContainerStyle)}>
+          {onRenderIcon && onRenderIcon(props)}
+        </Stack>
       </Stack>
-      <Stack
-        tokens={{ childrenGap: '0.5rem' }}
-        horizontal
-        horizontalAlign="end"
-        className={mergeStyles(iconContainerStyle, { width: iconsContainerWidth }, styles?.iconContainer)}
-      >
-        {onRenderIcon && onRenderIcon(props)}
-        {menuItems && menuItems.length > 0 && (
-          <>
-            {menuButton}
-            <ContextualMenu
-              items={menuItems}
-              hidden={menuHidden}
-              target={containerRef}
-              onItemClick={onDismissMenu}
-              onDismiss={onDismissMenu}
-              directionalHint={DirectionalHint.bottomRightEdge}
-              className={contextualMenuStyle}
-            />
-          </>
-        )}
-      </Stack>
+      {menuItems && menuItems.length > 0 && (
+        <>
+          {menuButton}
+          <ContextualMenu
+            items={menuItems}
+            hidden={menuHidden}
+            target={containerRef}
+            onItemClick={onDismissMenu}
+            onDismiss={onDismissMenu}
+            directionalHint={DirectionalHint.bottomRightEdge}
+            className={contextualMenuStyle}
+          />
+        </>
+      )}
     </div>
   );
 };

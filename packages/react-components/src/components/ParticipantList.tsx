@@ -69,7 +69,7 @@ const onRenderParticipantDefault = (
             )}
           </Stack>
         )
-      : () => <></>;
+      : () => null;
 
   if (participant.displayName) {
     return (
