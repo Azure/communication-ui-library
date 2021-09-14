@@ -36,7 +36,7 @@
     "copy-to-clipboard": "~3.3.1",
     "events": "~3.3.0",
     "html-to-react": "~1.4.5",
-    "immer": "~8.0.1",
+    "immer": "9.0.6",
     "memoize-one": "~5.2.1",
     "nanoid": "~3.1.20",
     "react-aria-live": "^2.0.5",
