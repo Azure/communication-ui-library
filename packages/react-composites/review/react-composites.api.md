@@ -63,18 +63,6 @@ export interface AdapterState<TState> {
     onStateChange(handler: (state: TState) => void): void;
 }
 
-// @public
-export type AvatarPersonaData = {
-    text?: string;
-    imageUrl?: string;
-    imageInitials?: string;
-    initialsColor?: PersonaInitialsColor | string;
-    initialsTextColor?: string;
-};
-
-// @public
-export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
-
 // @public (undocumented)
 export type AzureCommunicationCallAdapterArgs = {
     userId: CommunicationUserKind;
@@ -97,7 +85,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     fluentTheme?: PartialTheme | Theme;
     icons?: TIcons;
     locale?: CompositeLocale;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchPersonalData?: PersonalDataCallback;
     rtl?: boolean;
 }
 
@@ -226,7 +214,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchAvatarPersonaData?: PersonalDataCallback;
     visualElements?: CallCompositeVisualElements;
 }
 
@@ -659,6 +647,18 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public (undocumented)
+export type PersonalData = {
+    text?: string;
+    imageUrl?: string;
+    imageInitials?: string;
+    initialsColor?: PersonaInitialsColor | string;
+    initialsTextColor?: string;
+};
+
+// @public
+export type PersonalDataCallback = (userId: string) => Promise<PersonalData>;
 
 // @public (undocumented)
 export type TopicChangedListener = (event: {

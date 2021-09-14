@@ -1,42 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
+import { IPersonaProps, Persona } from '@fluentui/react';
+import { PersonalData, PersonalDataCallback } from './PersonalData';
 import React, { useEffect } from 'react';
-
-/**
- * Custom data attributes for the AvatarPersona component.
- */
-export type AvatarPersonaData = {
-  /**
-   * Primary text to display, usually the name of the person.
-   */
-  text?: string;
-  /**
-   * Image URL to use, should be a square aspect ratio and big enough to fit in the image area.
-   */
-  imageUrl?: string;
-  /**
-   * The user's initials to display in the image area when there is no image.
-   * @defaultvalue Derived from `text`
-   */
-  imageInitials?: string;
-  /**
-   * The background color when the user's initials are displayed.
-   * @defaultvalue Derived from `text`
-   */
-  initialsColor?: PersonaInitialsColor | string;
-  /**
-   * The text color when the user's initials are displayed
-   * @defaultvalue `white`
-   */
-  initialsTextColor?: string;
-};
-
-/**
- * Callback function used to provide custom data to the AvatarPersona component.
- */
-export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 export interface AvatarPersonaProps extends IPersonaProps {
   /**
@@ -46,7 +13,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
   /**
    * A function that returns a Promise that resolves to the data to be displayed.
    */
-  dataProvider?: AvatarPersonaDataCallback;
+  dataProvider?: PersonalDataCallback;
 }
 
 /**
@@ -56,7 +23,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   const { userId, dataProvider } = props;
-  const [data, setData] = React.useState<AvatarPersonaData | undefined>();
+  const [data, setData] = React.useState<PersonalData | undefined>();
 
   useEffect(() => {
     (async () => {

@@ -3,7 +3,7 @@
 
 import { OnRenderAvatarCallback } from '@internal/react-components';
 import React, { useEffect } from 'react';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { PersonalDataCallback } from '../common/PersonalData';
 import { BaseComposite, BaseCompositeProps } from '../common/Composite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
@@ -26,7 +26,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   /**
    * A callback function that can be used to provide custom data to an Avatar.
    */
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchAvatarPersonaData?: PersonalDataCallback;
 
   /**
    * Flags to enable/disable visual elements of the {@link CallComposite}.
@@ -49,7 +49,7 @@ export type CallCompositeVisualElements = {
 type MainScreenProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationURL?: string;
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchAvatarPersonaData?: PersonalDataCallback;
   visualElements: {
     showCallControls: boolean;
     showErrorBar: boolean;

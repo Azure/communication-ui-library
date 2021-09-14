@@ -6,7 +6,7 @@ import { FluentThemeProvider } from '@internal/react-components';
 import React from 'react';
 import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
-import { AvatarPersonaDataCallback } from './AvatarPersona';
+import { PersonalDataCallback } from './PersonalData';
 import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
@@ -37,7 +37,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    * A callback function that can be used to provide custom data to Avatars rendered
    * in Composite.
    */
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchPersonalData?: PersonalDataCallback;
 }
 
 /**

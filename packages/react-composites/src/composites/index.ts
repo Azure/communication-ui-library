@@ -6,7 +6,7 @@ export type { AdapterDisposal, AdapterPages, AdapterState } from './common/adapt
 export * from './ChatComposite';
 export * from './CallComposite';
 export * from './MeetingComposite';
-export type { AvatarPersonaData, AvatarPersonaDataCallback } from './common/AvatarPersona';
+export type { PersonalData, PersonalDataCallback } from './common/PersonalData';
 export * from './common/icons';
 export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';

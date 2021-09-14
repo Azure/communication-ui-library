@@ -32,7 +32,7 @@ import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { PersonalDataCallback } from '../common/PersonalData';
 import { usePropsFor } from './hooks/usePropsFor';
 
 export interface CallScreenProps {
@@ -40,7 +40,7 @@ export interface CallScreenProps {
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: OnRenderAvatarCallback;
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchAvatarPersonaData?: PersonalDataCallback;
   visualElements: {
     showCallControls: boolean;
     showErrorBar: boolean;

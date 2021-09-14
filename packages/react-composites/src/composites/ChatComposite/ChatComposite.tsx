@@ -55,7 +55,7 @@ export type ChatCompositeVisualElements = {
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, visualElements, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
+  const { adapter, visualElements, onFetchPersonalData, onRenderTypingIndicator, onRenderMessage } = props;
 
   return (
     <BaseComposite {...props}>
@@ -64,7 +64,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
           showErrorBar={visualElements?.showErrorBar}
           showParticipantPane={visualElements?.showParticipantPane}
           showTopic={visualElements?.showTopic}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          onFetchAvatarPersonaData={onFetchPersonalData}
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}
         />
