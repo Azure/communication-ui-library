@@ -9,6 +9,7 @@ import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
+import { CallControlHiddenElements } from './CallControls';
 import { CallScreen } from './CallScreen';
 import { ConfigurationScreen } from './ConfigurationScreen';
 import { Error } from './Error';
@@ -29,31 +30,34 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 
   /**
-   * Flags to enable/disable visual elements of the {@link CallComposite}.
+   * Flags to hide UI elements of the {@link CallComposite}.
    */
-  visualElements?: CallCompositeVisualElements;
+  hiddenElements?: CallCompositeHiddenElements;
 }
 
 /**
- * Optional features of the {@linnk CallComposite}
+ * Optional features of the {@link CallComposite}
  */
-export type CallCompositeVisualElements = {
+export type CallCompositeHiddenElements = CallControlHiddenElements & {
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
+   * Hidden if set to `true`
    *
-   * @defaultValue false
+   * @defaultValuefalse
    */
-  showErrorBar?: boolean;
+  errorBar?: boolean;
+  /**
+   * Hide call controls during a call if set to `true`
+   * @defaultValuefalse
+   */
+  callControls?: boolean;
 };
 
 type MainScreenProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  visualElements: {
-    showCallControls: boolean;
-    showErrorBar: boolean;
-  };
+  hiddenElements?: CallCompositeHiddenElements;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -94,38 +98,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationURL}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          visualElements={props.visualElements}
+          hiddenElements={props.hiddenElements}
         />
       );
   }
 };
 
-export const Call = (props: CallCompositeProps): JSX.Element => {
-  return (
-    <BaseComposite {...props}>
-      <CallCompositeInternal {...props} showCallControls={true} />
-    </BaseComposite>
-  );
-};
-
-/**
- * Props for the internal-only call composite export that has extra customizability points that
- * we are not ready to export publicly.
- * @internal
- */
-interface CallInternalProps extends CallCompositeProps {
-  showCallControls: boolean;
-}
-
-/**
- * An internal-only call composite export.
- * This is used by the meeting composite and has extra customizability points that we are not ready
- * to export publicly.
- * @internal
- */
-export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => {
-  const { adapter, callInvitationURL, onFetchAvatarPersonaData } = props;
-
+export const CallComposite = (props: CallCompositeProps): JSX.Element => {
+  const { adapter, callInvitationURL, onFetchAvatarPersonaData, hiddenElements } = props;
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });
@@ -134,17 +114,15 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
       adapter.querySpeakers();
     })();
   }, [adapter]);
-
   return (
-    <CallAdapterProvider adapter={adapter}>
-      <MainScreen
-        callInvitationURL={callInvitationURL}
-        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        visualElements={{
-          showCallControls: props.showCallControls,
-          showErrorBar: props.visualElements?.showErrorBar ?? false
-        }}
-      />
-    </CallAdapterProvider>
+    <BaseComposite {...props}>
+      <CallAdapterProvider adapter={adapter}>
+        <MainScreen
+          callInvitationURL={callInvitationURL}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          hiddenElements={hiddenElements}
+        />
+      </CallAdapterProvider>
+    </BaseComposite>
   );
 };
