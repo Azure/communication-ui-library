@@ -83,7 +83,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
             </div>
           </div>
           <div
-            className="ms-Stack css-90 css-28"
+            className="ms-Stack css-88 css-28"
           >
             <div
               className="ms-StackItem css-29"
