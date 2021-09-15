@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Stop clearing errors from calling stateful client",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
