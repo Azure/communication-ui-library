@@ -26,7 +26,7 @@ export const EndCall = (props: EndCallProps): JSX.Element => {
   const rejoinCall = 'Rejoin call';
 
   const feedbackLink =
-    'https://docs.microsoft.com/en-us/answers/search.html?c=&includeChildren=&f=&type=question+OR+idea+OR+kbentry+OR+answer+OR+topic+OR+user&redirect=search%2Fsearch&sort=relevance&q=azure-communication-services';
+    'https://docs.microsoft.com/answers/search.html?c=&includeChildren=&f=&type=question+OR+idea+OR+kbentry+OR+answer+OR+topic+OR+user&redirect=search%2Fsearch&sort=relevance&q=azure-communication-services';
 
   return (
     <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
