@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { ActiveError } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { ChatErrors } from '@internal/chat-stateful-client';
@@ -15,7 +16,6 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
-import { ErrorType } from '@internal/react-components';
 import { Message } from '@internal/react-components';
 import { MessageThread } from '@internal/react-components';
 import { OutputParametricSelector } from 'reselect';
@@ -51,7 +51,6 @@ export type ChatHandlers = {
     onParticipantRemove: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
     onUpdateMessage: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -84,9 +83,9 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public
 export const errorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }, (res: ChatErrors) => {
-activeErrors: ErrorType[];
+activeErrors: ActiveError[];
 }>;
 
 // @public (undocumented)

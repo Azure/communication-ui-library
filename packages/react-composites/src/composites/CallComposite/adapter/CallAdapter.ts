@@ -12,7 +12,7 @@ import type {
 
 import { VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationUserKind, CommunicationIdentifierKind } from '@azure/communication-common';
-import type { AdapterState, AdapterDisposal, AdapterPages, AdapterErrorHandlers } from '../../common/adapters';
+import type { AdapterState, AdapterDisposal, AdapterPages, AdapterError, AdapterErrors } from '../../common/adapters';
 
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -36,17 +36,10 @@ export type CallAdapterClientState = {
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
-  latestErrors: CallAdapterErrors;
+  latestErrors: AdapterErrors;
 };
 
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
-
-/**
- * CallAdapter stores the latest error for each operation in the state.
- *
- * `operation` is a CallAdapter defined string for each unique operation performed by the adapter.
- */
-export type CallAdapterErrors = { [operation: string]: Error };
 
 export type IncomingCallListener = (event: {
   callId: string;
@@ -128,7 +121,7 @@ export interface CallAdapterSubscribers {
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
-  on(event: 'error', listener: (e: Error) => void): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
 
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
@@ -138,7 +131,7 @@ export interface CallAdapterSubscribers {
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
-  off(event: 'error', listener: (e: Error) => void): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 /**
@@ -147,7 +140,6 @@ export interface CallAdapterSubscribers {
 export interface CallAdapter
   extends AdapterState<CallAdapterState>,
     AdapterDisposal,
-    AdapterErrorHandlers,
     AdapterPages<CallCompositePage>,
     CallAdapterCallManagement,
     CallAdapterDeviceManagement,

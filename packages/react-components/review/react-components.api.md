@@ -24,6 +24,12 @@ import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
+export interface ActiveError {
+    timestamp?: Date;
+    type: ErrorType;
+}
+
+// @public
 export type AllKeys<T> = {
     [K in keyof T]: T[K] extends never ? never : K;
 };
@@ -241,17 +247,11 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
-    VideoTileMicOn: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
 };
-
-// @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps, ids?: {
-    messageTimestamp?: string;
-}) => JSX.Element;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -272,14 +272,14 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
-    activeErrors: ErrorType[];
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
+    activeErrors: ActiveError[];
     strings?: ErrorBarStrings;
 }
 
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callingNetworkFailure: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
@@ -363,7 +363,7 @@ export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Ele
 
 // @public
 export type LocalizationProviderProps = {
-    locale: ComponentLocale;
+    locale?: ComponentLocale;
     localeLoader?: () => Promise<ComponentLocale>;
     children: React_2.ReactNode;
 };
@@ -390,6 +390,9 @@ export type MessageProps = {
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
 };
+
+// @public (undocumented)
+export type MessageRenderer = (props: MessageProps) => JSX.Element;
 
 // @public
 export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;
@@ -426,7 +429,7 @@ export type MessageThreadProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     editDisabled?: boolean;

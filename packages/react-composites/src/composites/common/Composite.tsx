@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider } from '@internal/react-components';
-import { CompositeLocale, LocalizationProvider } from '../localization';
+import React from 'react';
+import { ChatCompositeIcons } from '..';
+import { CompositeLocale, LocalizationProvider, COMPOSITE_LOCALE_EN_US } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
-import { DEFAULT_COMPOSITE_ICONS, CompositeIcons } from './icons';
-import { COMPOSITE_LOCALE_EN_US } from '../localization';
+import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 
-export interface BaseCompositeProps {
+export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
   /**
    * Fluent theme for the composite.
    *
@@ -20,7 +20,7 @@ export interface BaseCompositeProps {
    * Custom Icon override for the composite.
    * A JSX element can be provided to override the default icon.
    */
-  icons?: CompositeIcons;
+  icons?: TIcons;
   /**
    * Locale for the composite.
    *
@@ -50,8 +50,10 @@ export interface BaseCompositeProps {
  * A base class for composites.
  * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
  */
-export const BaseComposite = (props: BaseCompositeProps & { children: React.ReactNode }): JSX.Element => {
-  const { fluentTheme, rtl, locale, localeLoader } = props;
+export const BaseComposite = (
+  props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
+): JSX.Element => {
+  const { fluentTheme, rtl, localeLoader } = props;
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
@@ -59,10 +61,10 @@ export const BaseComposite = (props: BaseCompositeProps & { children: React.Reac
    */
   registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS, ...props.icons } });
 
-  const compositeLocale = locale ?? COMPOSITE_LOCALE_EN_US;
+  const locale = props.locale ?? COMPOSITE_LOCALE_EN_US;
 
   return (
-    <LocalizationProvider locale={compositeLocale} localeLoader={localeLoader}>
+    <LocalizationProvider locale={locale} localeLoader={localeLoader}>
       <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         {props.children}

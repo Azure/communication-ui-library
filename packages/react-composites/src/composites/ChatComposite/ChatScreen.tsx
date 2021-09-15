@@ -5,7 +5,7 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect } from 'react';
 import {
   CommunicationParticipant,
-  DefaultMessageRendererType,
+  MessageRenderer,
   ErrorBar,
   MessageProps,
   MessageThread,
@@ -28,13 +28,14 @@ import {
   participantListContainerPadding
 } from './styles/Chat.styles';
 import { AvatarPersonaDataCallback, AvatarPersona } from '../common/AvatarPersona';
+import { useLocale } from '../localization';
 
 export type ChatScreenProps = {
   showErrorBar?: boolean;
   showParticipantPane?: boolean;
   showTopic?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
 
@@ -49,6 +50,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   useEffect(() => {
     adapter.fetchInitialData();
   }, [adapter]);
+
+  const locale = useLocale();
+  const chatListHeader = locale.strings.chat.chatListHeader;
 
   const messageThreadProps = usePropsFor(MessageThread);
   const participantListProps = usePropsFor(ParticipantList);
@@ -90,7 +94,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         {showParticipantPane && (
           <Stack.Item className={participantListWrapper}>
             <Stack className={participantListStack}>
-              <Stack.Item className={listHeader}>In this chat</Stack.Item>
+              <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>
               <Stack.Item className={participantListStyle}>
                 <ParticipantList
                   {...participantListProps}
