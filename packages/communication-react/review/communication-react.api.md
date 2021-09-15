@@ -472,9 +472,6 @@ export interface CallState {
 }
 
 // @public
-export type CallStateModifier = (state: CallClientState) => void;
-
-// @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
@@ -694,9 +691,6 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 
 // @public (undocumented)
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
-
-// @public
-export type ChatStateModifier = (state: ChatClientState) => void;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -1508,12 +1502,6 @@ export interface NetworkDiagnosticsState {
 }
 
 // @public
-export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
-
-// @public (undocumented)
-export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
-
-// @public
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
@@ -1780,7 +1768,6 @@ export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
-    modifyState(modifier: CallStateModifier): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
@@ -1799,7 +1786,6 @@ export type StatefulCallClientOptions = {
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     getState(): ChatClientState;
-    modifyState(modifier: ChatStateModifier): void;
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
