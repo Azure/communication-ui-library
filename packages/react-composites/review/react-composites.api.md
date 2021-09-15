@@ -12,7 +12,7 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
-import { ChatParticipant } from '@azure/communication-chat';
+import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
