@@ -621,6 +621,7 @@ export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered'
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
+    hiddenElements?: ChatCompositeHiddenElements;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 }
