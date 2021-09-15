@@ -48,7 +48,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     callAgent: CallAgent | undefined,
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | undefined
-  ) => {
+  ): CallingHandlers => {
     const onStartLocalVideo = async (): Promise<void> => {
       const callId = call?.id;
       let videoDeviceInfo = callClient.getState().deviceManager.selectedCamera;

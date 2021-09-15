@@ -98,7 +98,7 @@ export default (): JSX.Element => {
                 </li>
                 <li tabIndex={0}>
                   <Icon className={iconStyle} iconName={iconName} /> {listItems[3]}{' '}
-                  <Link href="https://docs.microsoft.com/en-us/azure/communication-services/overview">sample</Link>
+                  <Link href="https://docs.microsoft.com/azure/communication-services/overview">sample</Link>
                 </li>
               </ul>
             </Stack>
