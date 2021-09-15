@@ -84,7 +84,7 @@ export const getDocs: () => JSX.Element = () => {
         [CallComposite themes canvas](./?path=/story/composites-call-themeexample--theme-example) to see custom fonts in
         action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
         components in this UI library. Read more about fonts in [Fluent UI
-        Typography](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
+        Typography](https://developer.microsoft.com/fluentui#/styles/web/typography).
       </Description>
 
       <Heading>Icons</Heading>
