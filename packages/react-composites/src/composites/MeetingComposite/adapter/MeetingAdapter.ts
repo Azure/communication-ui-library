@@ -20,7 +20,8 @@ import {
   MessageReceivedListener,
   MessageSentListener
 } from '../../ChatComposite';
-import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapterState';
+import { MeetingAdapterState } from '../state/MeetingAdapterState';
+import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
 
