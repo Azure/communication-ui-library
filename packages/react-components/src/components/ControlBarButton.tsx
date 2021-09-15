@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, IButtonProps, IRenderFunction, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
+import { DefaultButton, IButtonProps, IRenderFunction, Text, concatStyleSets, mergeStyles } from '@fluentui/react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -59,9 +59,9 @@ const DefaultRenderText = (props?: ControlBarButtonProps): JSX.Element => {
   const labelText =
     props?.text ?? props?.strings?.label ?? (props?.checked ? props?.strings?.onLabel : props?.strings?.offLabel);
   return (
-    <Label key={props?.labelKey} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
+    <Text key={props?.labelKey} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
       {labelText}
-    </Label>
+    </Text>
   );
 };
 
