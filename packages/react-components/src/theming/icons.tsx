@@ -3,30 +3,30 @@
 
 import {
   CallEnd20Filled,
+  Checkmark20Regular,
   CheckmarkCircle20Regular,
   Circle20Regular,
+  Delete20Regular,
+  Dismiss20Regular,
+  Edit20Regular,
   ErrorCircle20Regular,
   EyeShow20Filled,
+  MicOff16Filled,
+  MicOff16Regular,
   MicOff20Filled,
   MicOn20Filled,
-  Video20Filled,
-  Video20Regular,
   MicOn20Regular,
-  VideoOff20Filled,
-  Speaker220Regular,
   MoreHorizontal20Filled,
   MoreHorizontal20Regular,
   People20Filled,
-  ShareScreenStart20Filled,
-  ShareScreenStop20Filled,
   Send20Filled,
   Send20Regular,
-  MicOn16Filled,
-  MicOff16Filled,
-  Dismiss20Regular,
-  Checkmark20Regular,
-  Edit20Regular,
-  Delete20Regular
+  ShareScreenStart20Filled,
+  ShareScreenStop20Filled,
+  Speaker220Regular,
+  Video20Filled,
+  Video20Regular,
+  VideoOff20Filled
 } from '@fluentui/react-icons';
 import React from 'react';
 
@@ -35,6 +35,7 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 /**
  * The default set of icons that are available to use in the UI components.
  */
+// NOTE: Don't forget to add icons used in composites to the types in `packages/react-composites/src/composites/common/icons.tsx`
 export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonCameraOff: <VideoOff20Filled />,
   ControlButtonCameraOn: <Video20Filled />,
@@ -53,13 +54,12 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsMic: <MicOn20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
-  ParticipantItemMicOff: <MicOff16Filled />,
+  ParticipantItemMicOff: <MicOff16Regular />,
   ParticipantItemOptions: <MoreHorizontal20Regular />,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
-  VideoTileMicOn: <MicOn16Filled />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   MessageEdit: <Edit20Regular />,

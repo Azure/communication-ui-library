@@ -23,7 +23,7 @@
   },
   "types": "dist/communication-react.d.ts",
   "dependencies": {
-    "@azure/communication-calling": "1.2.0-beta.1",
+    "@azure/communication-calling": "1.2.1-beta.1",
     "@azure/communication-chat": "1.0.1",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-signaling": "1.0.0-beta.5",
@@ -36,7 +36,7 @@
     "copy-to-clipboard": "~3.3.1",
     "events": "~3.3.0",
     "html-to-react": "~1.4.5",
-    "immer": "~8.0.1",
+    "immer": "9.0.6",
     "memoize-one": "~5.2.1",
     "nanoid": "~3.1.20",
     "react-aria-live": "^2.0.5",

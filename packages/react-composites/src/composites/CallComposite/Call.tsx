@@ -5,6 +5,7 @@ import { OnRenderAvatarCallback } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/Composite';
+import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
@@ -14,7 +15,7 @@ import { Error } from './Error';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 
-export interface CallCompositeProps extends BaseCompositeProps {
+export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
   /**
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
