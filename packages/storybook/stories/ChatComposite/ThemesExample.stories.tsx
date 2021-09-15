@@ -51,14 +51,7 @@ const ThemeStory = (args, context): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
-        <ContosoChatContainer
-          {...containerProps}
-          fluentTheme={theme}
-          locale={compositeLocale(locale)}
-          showErrorBar={true}
-          showParticipants={true}
-          showTopic={true}
-        />
+        <ContosoChatContainer {...containerProps} fluentTheme={theme} locale={compositeLocale(locale)} />
       ) : (
         <ConfigHintBanner />
       )}
