@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "ControlBarButton labels have regular font weight and font is customizable through FluentThemeProvider.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
