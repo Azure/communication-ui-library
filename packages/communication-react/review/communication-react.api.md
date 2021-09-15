@@ -320,8 +320,14 @@ export interface CallClientState {
 // @public (undocumented)
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
+// @public
+export type CallCompositeHiddenElements = CallControlHiddenElements & {
+    errorBar?: boolean;
+    callControls?: boolean;
+};
+
 // @public (undocumented)
-export type CallCompositeIcons = Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>;
+export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>>;
 
 // @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
@@ -331,8 +337,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
+    hiddenElements?: CallCompositeHiddenElements;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-    visualElements?: CallCompositeVisualElements;
 }
 
 // @public
@@ -350,9 +356,14 @@ export interface CallCompositeStrings {
     teamsMeetingFailToJoin: string;
 }
 
-// @public
-export type CallCompositeVisualElements = {
-    showErrorBar?: boolean;
+// @public (undocumented)
+export type CallControlHiddenElements = {
+    cameraButton?: boolean;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
+    optionsButton?: boolean;
+    participantsButton?: boolean;
+    screenShareButton?: boolean;
 };
 
 // @public (undocumented)
@@ -470,9 +481,6 @@ export interface CallState {
     transcription: TranscriptionCallFeature;
     transfer: TransferCallFeature;
 }
-
-// @public
-export type CallStateModifier = (state: CallClientState) => void;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -600,28 +608,28 @@ export type ChatCompositeClientState = {
     latestErrors: AdapterErrors;
 };
 
+// @public
+export type ChatCompositeHiddenElements = {
+    errorBar?: boolean;
+    participantPane?: boolean;
+    topic?: boolean;
+};
+
 // @public (undocumented)
-export type ChatCompositeIcons = Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>;
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
 
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
+    hiddenElements?: ChatCompositeHiddenElements;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    visualElements?: ChatCompositeVisualElements;
 }
 
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
 }
-
-// @public
-export type ChatCompositeVisualElements = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
-};
 
 // @public
 export class ChatError extends Error {
@@ -694,9 +702,6 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 
 // @public (undocumented)
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
-
-// @public
-export type ChatStateModifier = (state: ChatClientState) => void;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -1508,12 +1513,6 @@ export interface NetworkDiagnosticsState {
 }
 
 // @public
-export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
-
-// @public (undocumented)
-export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
-
-// @public
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
@@ -1780,7 +1779,6 @@ export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
-    modifyState(modifier: CallStateModifier): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
@@ -1799,7 +1797,6 @@ export type StatefulCallClientOptions = {
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     getState(): ChatClientState;
-    modifyState(modifier: ChatStateModifier): void;
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
