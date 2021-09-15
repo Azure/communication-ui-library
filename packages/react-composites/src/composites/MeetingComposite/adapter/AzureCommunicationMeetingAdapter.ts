@@ -18,7 +18,8 @@ import {
 } from '../../CallComposite';
 import { MessageReceivedListener, MessageReadListener, ChatAdapter } from '../../ChatComposite';
 import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
-import { MeetingAdapterState, MeetingCompositePage } from '../state/MeetingAdapterState';
+import { MeetingAdapterState } from '../state/MeetingAdapterState';
+import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
 /**
  * Meeting adapter backed by Azure Communication Services.
