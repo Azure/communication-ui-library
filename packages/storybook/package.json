@@ -1,6 +1,6 @@
 {
   "name": "@internal/storybook",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.5",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
     "build": "build-storybook -s stories,public,.storybook  --quiet --loglevel warn",
