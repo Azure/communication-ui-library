@@ -21,9 +21,9 @@ import {
   MessageSentListener
 } from '../../ChatComposite';
 import { MeetingAdapterState } from '../state/MeetingAdapterState';
+import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
-import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
 /**
  * Functionality for managing the current meeting.
