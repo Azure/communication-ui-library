@@ -68,13 +68,8 @@ export function mergeChatAdapterStateIntoMeetingAdapterState(
     ? mergeChatStateIntoMeetingState(chatAdapterState.thread, meetingAdapterState.meeting)
     : undefined;
 
-  const { userId, page, displayName, devices } = meetingAdapterState;
-
   return {
-    userId,
-    page,
-    displayName,
-    devices,
+    ...meetingAdapterState,
     meeting: newMeetingState
   };
 }
@@ -91,6 +86,7 @@ export function mergeCallAdapterStateIntoMeetingAdapterState(
   const { userId, page, displayName, devices } = callAdapterState;
 
   return {
+    ...callAdapterState,
     userId,
     page: callPageToMeetingPage(page),
     displayName,

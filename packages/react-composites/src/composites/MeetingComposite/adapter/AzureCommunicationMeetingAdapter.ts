@@ -32,11 +32,9 @@ import { EventEmitter } from 'events';
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
 /** Context of meeting, which is a centralized context for all state updates */
-
 class MeetingContext {
   private emitter = new EventEmitter();
   private state: MeetingAdapterState;
-  // TODO: private meetingId: string | undefined;
 
   constructor(clientState: MeetingAdapterClientState) {
     this.state = {

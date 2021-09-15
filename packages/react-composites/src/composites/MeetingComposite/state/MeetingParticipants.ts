@@ -18,18 +18,20 @@ export interface MeetingParticipant
   meetingEndReason?: MeetingEndReason;
 }
 
-export function createMeetingParticipant(callParticipant: RemoteParticipantState): MeetingParticipant {
+export type MeetingParticipants = { [keys: string]: MeetingParticipant };
+
+function meetingParticipantFromCallParticipant(callParticipant: RemoteParticipantState): MeetingParticipant {
   const { displayName, state, videoStreams, isMuted, isSpeaking, identifier, callEndReason } = callParticipant;
 
   return { id: identifier, meetingEndReason: callEndReason, displayName, state, videoStreams, isMuted, isSpeaking };
 }
 
-export function convertCallParticipantsToMeetingParticipants(callParticipants: {
+export function meetingParticipantsFromCallParticipants(callParticipants: {
   [keys: string]: RemoteParticipantState;
-}): { [keys: string]: MeetingParticipant } {
-  const meetingParticipants: { [keys: string]: MeetingParticipant } = {};
+}): MeetingParticipants {
+  const meetingParticipants: MeetingParticipants = {};
   for (const [key, value] of Object.entries(callParticipants)) {
-    meetingParticipants[key] = createMeetingParticipant(value);
+    meetingParticipants[key] = meetingParticipantFromCallParticipant(value);
   }
   return meetingParticipants;
 }
