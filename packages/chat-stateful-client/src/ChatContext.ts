@@ -19,7 +19,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { ChatStateModifier } from './StatefulChatClient';
-import { newClearChatErrorsModifier } from './modifiers';
 
 enableMapSet();
 
@@ -344,20 +343,16 @@ export class ChatContext {
    *
    * @param f Async function to execute.
    * @param target The error target to tee error to.
-   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
    */
   public withAsyncErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => Promise<R>,
-    target: ChatErrorTarget,
-    clearTargets?: ChatErrorTarget[]
+    target: ChatErrorTarget
   ): (...args: Args) => Promise<R> {
     return async (...args: Args): Promise<R> => {
       try {
-        const ret = await f(...args);
-        this.modifyState(newClearChatErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
-        return ret;
+        return await f(...args);
       } catch (error) {
         const chatError = toChatError(target, error);
         this.setLatestError(target, chatError);
@@ -373,20 +368,16 @@ export class ChatContext {
    *
    * @param f Function to execute.
    * @param target The error target to tee error to.
-   * @param clearTargets The error targets to clear errors for if the function succeeds. By default, clears errors for `target`.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
    * @throws ChatError. Exceptions thrown from `f` are tagged with the failed `target.
    */
   public withErrorTeedToState<Args extends unknown[], R>(
     f: (...args: Args) => R,
-    target: ChatErrorTarget,
-    clearTargets?: ChatErrorTarget[]
+    target: ChatErrorTarget
   ): (...args: Args) => R {
     return (...args: Args): R => {
       try {
-        const ret = f(...args);
-        this.modifyState(newClearChatErrorsModifier(clearTargets !== undefined ? clearTargets : [target]));
-        return ret;
+        return f(...args);
       } catch (error) {
         const chatError = toChatError(target, error);
         this.setLatestError(target, chatError);

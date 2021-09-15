@@ -73,31 +73,29 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
         };
       }
       case 'startRealtimeNotifications': {
-        return context.withAsyncErrorTeedToState(
-          async function (...args: Parameters<ChatClient['startRealtimeNotifications']>) {
-            const ret = await chatClient.startRealtimeNotifications(...args);
-            if (!receiver.eventSubscriber) {
-              receiver.eventSubscriber = new EventSubscriber(chatClient, context);
-            }
-            return ret;
-          },
-          'ChatClient.startRealtimeNotifications',
-          ['ChatClient.startRealtimeNotifications', 'ChatClient.stopRealtimeNotifications']
-        );
+        return context.withAsyncErrorTeedToState(async function (
+          ...args: Parameters<ChatClient['startRealtimeNotifications']>
+        ) {
+          const ret = await chatClient.startRealtimeNotifications(...args);
+          if (!receiver.eventSubscriber) {
+            receiver.eventSubscriber = new EventSubscriber(chatClient, context);
+          }
+          return ret;
+        },
+        'ChatClient.startRealtimeNotifications');
       }
       case 'stopRealtimeNotifications': {
-        return context.withAsyncErrorTeedToState(
-          async function (...args: Parameters<ChatClient['stopRealtimeNotifications']>) {
-            const ret = await chatClient.stopRealtimeNotifications(...args);
-            if (receiver.eventSubscriber) {
-              receiver.eventSubscriber.unsubscribe();
-              receiver.eventSubscriber = undefined;
-            }
-            return ret;
-          },
-          'ChatClient.stopRealtimeNotifications',
-          ['ChatClient.stopRealtimeNotifications', 'ChatClient.startRealtimeNotifications']
-        );
+        return context.withAsyncErrorTeedToState(async function (
+          ...args: Parameters<ChatClient['stopRealtimeNotifications']>
+        ) {
+          const ret = await chatClient.stopRealtimeNotifications(...args);
+          if (receiver.eventSubscriber) {
+            receiver.eventSubscriber.unsubscribe();
+            receiver.eventSubscriber = undefined;
+          }
+          return ret;
+        },
+        'ChatClient.stopRealtimeNotifications');
       }
       default:
         return Reflect.get(chatClient, prop);
