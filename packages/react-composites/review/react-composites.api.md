@@ -8,10 +8,12 @@
 
 import type { AudioDeviceInfo } from '@azure/communication-calling';
 import type { Call } from '@azure/communication-calling';
+import { CallAgent } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
-import { ChatParticipant } from '@azure/communication-chat';
+import type { ChatParticipant } from '@azure/communication-chat';
+import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -20,15 +22,17 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
-import { DefaultMessageRendererType } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
+import { MessageRenderer } from '@internal/react-components';
 import { PartialTheme } from '@fluentui/react';
 import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
+import { StatefulCallClient } from '@internal/calling-stateful-client';
+import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import type { VideoDeviceInfo } from '@azure/communication-calling';
@@ -343,7 +347,7 @@ export type ChatCompositeIcons = Pick<CompositeIcons, 'MessageDelivered' | 'Mess
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     visualElements?: ChatCompositeVisualElements;
 }
@@ -431,7 +435,13 @@ export interface CompositeStrings {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public (undocumented)
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
+
+// @public (undocumented)
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+
+// @public (undocumented)
+export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
@@ -508,9 +518,8 @@ export interface MeetingAdapter extends AdapterState<MeetingAdapterState>, Adapt
 
 // @alpha
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
-    displayName: string;
-    latestErrors: MeetingErrors;
-    meeting: MeetingState;
+    displayName: string | undefined;
+    meeting: MeetingState | undefined;
     userId: CommunicationIdentifier;
 }
 
@@ -600,22 +609,19 @@ export type MeetingCompositeProps = {
 // @alpha
 export type MeetingEndReason = CallEndReason;
 
-// @alpha (undocumented)
-export type MeetingErrors = unknown;
-
 // @alpha
 export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
 
 // @alpha
-export interface MeetingParticipant extends Pick<ChatParticipant, 'shareHistoryTime'>, Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
+export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
     id: CommunicationIdentifier;
-    meetingEndReason: MeetingEndReason;
+    meetingEndReason?: MeetingEndReason;
 }
 
 // @alpha
 export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
-    meetingEndReason: MeetingEndReason;
+    meetingEndReason?: MeetingEndReason;
     participants: {
         [key: string]: MeetingParticipant;
     };
