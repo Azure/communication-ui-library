@@ -1,8 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { DefaultButton, IButtonProps, IRenderFunction, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
+import React, { useCallback } from 'react';
+import {
+  DefaultButton,
+  IButtonProps,
+  IRenderFunction,
+  Text,
+  concatStyleSets,
+  mergeStyles,
+  useTheme
+} from '@fluentui/react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
@@ -55,16 +63,6 @@ export interface ControlBarButtonProps extends IButtonProps {
   onRenderOffIcon?: IRenderFunction<IButtonProps>;
 }
 
-const DefaultRenderText = (props?: ControlBarButtonProps): JSX.Element => {
-  const labelText =
-    props?.text ?? props?.strings?.label ?? (props?.checked ? props?.strings?.onLabel : props?.strings?.offLabel);
-  return (
-    <Label key={props?.labelKey} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-      {labelText}
-    </Label>
-  );
-};
-
 const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null => {
   return props?.checked
     ? props?.onRenderOnIcon
@@ -80,6 +78,22 @@ const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null =>
  */
 export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, props.styles ?? {});
+  const theme = useTheme();
+
+  const labelText =
+    props?.text ?? props?.strings?.label ?? (props?.checked ? props?.strings?.onLabel : props?.strings?.offLabel);
+
+  const DefaultRenderText = useCallback(() => {
+    return (
+      <Text
+        key={props?.labelKey}
+        className={mergeStyles(controlButtonLabelStyles, theme.palette.neutralPrimary, props?.styles?.label)}
+      >
+        {labelText}
+      </Text>
+    );
+  }, [labelText, props?.labelKey, props?.styles?.label, theme]);
+
   return (
     <DefaultButton
       {...props}
