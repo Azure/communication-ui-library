@@ -77,11 +77,11 @@ class MeetingContext {
     if (!this.state) {
       console.warn('Cannot update chat state with meeting state - no meeting state exists');
     }
-    this.updateClientState(mergeChatAdapterStateIntoMeetingAdapterState(chatAdapterState, this.state));
+    this.updateClientState(mergeChatAdapterStateIntoMeetingAdapterState(this.state, chatAdapterState));
   }
 
   public updateClientStateWithCallState(callAdapterState: CallAdapterState): void {
-    this.updateClientState(mergeCallAdapterStateIntoMeetingAdapterState(callAdapterState, this.state));
+    this.updateClientState(mergeCallAdapterStateIntoMeetingAdapterState(this.state, callAdapterState));
   }
 }
 

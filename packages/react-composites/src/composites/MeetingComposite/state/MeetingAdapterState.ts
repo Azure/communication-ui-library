@@ -62,11 +62,11 @@ export function generateMeetingAdapterState(callAdapter: CallAdapter, chatAdapte
 }
 
 export function mergeChatAdapterStateIntoMeetingAdapterState(
-  chatAdapterState: ChatAdapterState,
-  meetingAdapterState: MeetingAdapterState
+  meetingAdapterState: MeetingAdapterState,
+  chatAdapterState: ChatAdapterState
 ): MeetingAdapterState {
   const newMeetingState = meetingAdapterState.meeting
-    ? mergeChatStateIntoMeetingState(chatAdapterState.thread, meetingAdapterState.meeting)
+    ? mergeChatStateIntoMeetingState(meetingAdapterState.meeting, chatAdapterState.thread)
     : undefined;
 
   return {
@@ -76,12 +76,12 @@ export function mergeChatAdapterStateIntoMeetingAdapterState(
 }
 
 export function mergeCallAdapterStateIntoMeetingAdapterState(
-  callAdapterState: CallAdapterState,
-  meetingAdapterState: MeetingAdapterState
+  meetingAdapterState: MeetingAdapterState,
+  callAdapterState: CallAdapterState
 ): MeetingAdapterState {
   const newMeetingState =
     meetingAdapterState.meeting && callAdapterState.call
-      ? mergeCallStateIntoMeetingState(callAdapterState.call, meetingAdapterState.meeting)
+      ? mergeCallStateIntoMeetingState(meetingAdapterState.meeting, callAdapterState.call)
       : undefined;
 
   return {

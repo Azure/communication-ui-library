@@ -71,8 +71,8 @@ export function generateMeetingState(callState: CallState, chatState: ChatThread
 }
 
 export function mergeChatStateIntoMeetingState(
-  chatState: ChatThreadClientState,
-  meetingState: MeetingState
+  meetingState: MeetingState,
+  chatState: ChatThreadClientState
 ): MeetingState {
   return {
     // Properties from meeting state to retain
@@ -102,7 +102,7 @@ export function mergeChatStateIntoMeetingState(
   };
 }
 
-export function mergeCallStateIntoMeetingState(callState: CallState, meetingState: MeetingState): MeetingState {
+export function mergeCallStateIntoMeetingState(meetingState: MeetingState, callState: CallState): MeetingState {
   return {
     // Properties from meeting state to retain
     chatMessages: meetingState.chatMessages,
