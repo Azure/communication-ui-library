@@ -14,14 +14,6 @@ export interface StatefulChatClient extends ChatClient {
   getState(): ChatClientState;
   onStateChange(handler: (state: ChatClientState) => void): void;
   offStateChange(handler: (state: ChatClientState) => void): void;
-  /**
-   * Modify the internal state of the StatefulChatClient.
-   *
-   * This is the only way for users of StatefulChatClient to explicitly modify ChatClientState.
-   *
-   * @param modifier - ChatStateModifier callback. See documentation for {@Link ChatStateModifier}.
-   */
-  modifyState(modifier: ChatStateModifier): void;
 }
 
 export interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
@@ -196,10 +188,6 @@ export const createStatefulChatClientWithDeps = (
   Object.defineProperty(proxy, 'getState', {
     configurable: false,
     value: () => context?.getState()
-  });
-  Object.defineProperty(proxy, 'modifyState', {
-    configurable: false,
-    value: (modifier: ChatStateModifier) => context?.modifyState(modifier)
   });
   Object.defineProperty(proxy, 'onStateChange', {
     configurable: false,

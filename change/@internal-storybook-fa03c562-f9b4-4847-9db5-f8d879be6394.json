@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "fix infinite render of previous messages",
+  "comment": "Bug fixes related to QA pass on Storybook",
   "packageName": "@internal/storybook",
-  "email": "alcail@microsoft.com",
+  "email": "dademath@microsoft.com",
   "dependentChangeType": "none"
 }
