@@ -6,6 +6,7 @@ import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
+import { v1 } from 'uuid';
 
 export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 const DATA_UI_ID = 'data-ui-id';
@@ -64,7 +65,7 @@ export const disableAnimation = async (page: Page): Promise<void> => {
 
 const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
 
-export type IdentityType = {
+export type ChatUserType = {
   userId: string;
   token: string;
   endpointUrl: string;
@@ -73,7 +74,7 @@ export type IdentityType = {
   topic: string;
 };
 
-export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<IdentityType>> => {
+export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
   const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
   const userAndTokens: CommunicationUserToken[] = [];
@@ -118,18 +119,59 @@ export const createCallingUserAndToken = async (): Promise<CallUserType> => {
   };
 };
 
+export type MeetingUserType = {
+  userId: string;
+  token: string;
+  endpointUrl: string;
+  displayName: string;
+  threadId: string;
+  topic: string;
+  groupId?: string;
+};
+
+export const createMeetingUsers = async (displayNames: string[]): Promise<Array<MeetingUserType>> => {
+  const callId = v1();
+  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
+  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
+  const userAndTokens: CommunicationUserToken[] = [];
+  for (let i = 0; i < displayNames.length; i++) {
+    userAndTokens.push(await tokenClient.createUserAndToken(['chat', 'voip']));
+  }
+
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
+  const threadId =
+    (
+      await chatClient.createChatThread(
+        { topic: TOPIC_NAME },
+        {
+          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
+        }
+      )
+    ).chatThread?.id ?? '';
+
+  return displayNames.map((displayName, i) => ({
+    userId: userAndTokens[i].user.communicationUserId,
+    token: userAndTokens[i].token,
+    endpointUrl,
+    displayName,
+    threadId,
+    topic: TOPIC_NAME,
+    groupId: callId
+  }));
+};
+
 /**
  * Load a Page with ChatComposite app.
  * @param browser Browser to create Page in.
  * @param serverUrl URL to a running test app.
- * @param user IdentityType for the user to load ChatComposite for.
+ * @param user ChatUserType for the user to load ChatComposite for.
  * @param qArgs Extra quary arguments.
  * @returns
  */
 export const loadPage = async (
   browser: Browser,
   serverUrl: string,
-  user: IdentityType,
+  user: ChatUserType,
   qArgs?: { [key: string]: string }
 ): Promise<Page> => {
   const qs = encodeQueryData(user, qArgs);
@@ -147,14 +189,14 @@ export const loadPage = async (
  * Load a Page with ChatComposite app.
  * @param browser Browser to create Page in.
  * @param serverUrl URL to a running test app.
- * @param user IdentityType for the user to load ChatComposite for.
+ * @param user ChatUserType for the user to load ChatComposite for.
  * @param qArgs Extra quary arguments.
  * @returns
  */
 export const gotoPage = async (
   page: Page,
   serverUrl: string,
-  user: IdentityType,
+  user: ChatUserType,
   qArgs?: { [key: string]: string }
 ): Promise<Page> => {
   const qs = encodeQueryData(user, qArgs);
@@ -191,7 +233,7 @@ export const loadCallCompositePage = async (
   return page;
 };
 
-const encodeQueryData = (user: IdentityType | CallUserType, qArgs?: { [key: string]: string }): string => {
+const encodeQueryData = (user: ChatUserType | CallUserType, qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const d in user) {
     qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(user[d]));

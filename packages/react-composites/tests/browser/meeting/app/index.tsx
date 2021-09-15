@@ -31,11 +31,13 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
+      const credential = new AzureCommunicationTokenCredential(token);
+
       setCallAdapter(
         await createAzureCommunicationCallAdapter({
           userId: { kind: 'communicationUser', communicationUserId: userId },
           displayName,
-          credential: new AzureCommunicationTokenCredential(token),
+          credential,
           locator: { groupId: groupId }
         })
       );
@@ -44,7 +46,7 @@ function App(): JSX.Element {
         await createAzureCommunicationChatAdapter({
           userId: { kind: 'communicationUser', communicationUserId: userId },
           displayName,
-          credential: new AzureCommunicationTokenCredential(token),
+          credential,
           endpointUrl,
           threadId
         })
@@ -59,6 +61,14 @@ function App(): JSX.Element {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!token) return <h3>ERROR: No token set.</h3>;
+  else if (!displayName) return <h3>ERROR: No Display name set.</h3>;
+  else if (!groupId) return <h3>ERROR: No groupId set.</h3>;
+  else if (!userId) return <h3>ERROR: No userId set.</h3>;
+  else if (!endpointUrl) return <h3>ERROR: No endpointUrl set.</h3>;
+  else if (!threadId) return <h3>ERROR: No threadId set.</h3>;
+  else if (!callAdapter || !callAdapter) return <h3>Initalizing adapters...</h3>;
 
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>

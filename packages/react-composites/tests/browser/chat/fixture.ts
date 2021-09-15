@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IdentityType, createChatThreadAndUsers, loadPage, PAGE_VIEWPORT } from '../common/utils';
+import { ChatUserType, createChatThreadAndUsers, loadPage, PAGE_VIEWPORT } from '../common/utils';
 import { startServer, stopServer } from './app/server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
 import dotenv from 'dotenv';
@@ -15,7 +15,7 @@ const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 export interface ChatWorkerFixtures {
   serverUrl: string;
   testBrowser: Browser;
-  users: IdentityType[];
+  users: ChatUserType[];
   pages: Array<Page>;
 }
 
@@ -32,7 +32,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
-      await startServer();
+      await startServer(path.join(__dirname, '/dist'));
       try {
         await use(SERVER_URL);
       } finally {

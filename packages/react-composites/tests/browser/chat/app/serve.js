@@ -4,7 +4,7 @@
 // This file is not used by the browser tests.
 // You can use this file to run the included app standalone.
 //
-// $ node ./server.js
+// $ node ./serve.js
 //
 // This will run an app that serves the ChatComposite.
 
@@ -12,4 +12,5 @@
 const express = require('express');
 const server = express();
 server.use(express.static(__dirname + '/dist'));
-server.listen(3000);
+const listener = server.listen(3000);
+console.log('Server listening at: http://localhost:' + listener.address().port);

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallUserType, createCallingUserAndToken, loadCallCompositePage, PAGE_VIEWPORT } from '../common/utils';
-import { startServer, stopServer } from './app/server';
+import { startServer, stopServer } from '../../server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -33,7 +33,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
-      await startServer();
+      await startServer(path.join(__dirname, '/dist'));
       try {
         await use(SERVER_URL);
       } finally {
@@ -62,7 +62,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
           '--allow-file-access',
           '--use-fake-ui-for-media-stream',
           '--use-fake-device-for-media-stream',
-          `--use-file-for-fake-video-capture=${path.join(__dirname, 'test.y4m')}`,
+          `--use-file-for-fake-video-capture=${path.join(__dirname, '..', 'common', 'test.y4m')}`,
           '--lang=en-US',
           '--mute-audio'
         ],
