@@ -38,7 +38,7 @@ export const AsyncLocalesSnippet = (): JSX.Element => {
           { key: 'ja-JP', text: 'Japanese (Japan)' }
         ]}
       />
-      <LocalizationProvider locale={asyncLocale}>
+      <LocalizationProvider localeLoader={asyncLocale}>
         <CameraButton showLabel />
       </LocalizationProvider>
     </>

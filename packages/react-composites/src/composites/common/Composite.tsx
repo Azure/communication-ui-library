@@ -7,6 +7,7 @@ import { FluentThemeProvider } from '@internal/react-components';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { DEFAULT_COMPOSITE_ICONS, CompositeIcons } from './icons';
+import { COMPOSITE_LOCALE_EN_US } from '../localization';
 
 export interface BaseCompositeProps {
   /**
@@ -58,11 +59,14 @@ export const BaseComposite = (props: BaseCompositeProps & { children: React.Reac
    */
   registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS, ...props.icons } });
 
-  const CompositeElement = (
-    <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-      {props.children}
-    </FluentThemeProvider>
+  const compositeLocale = locale ?? COMPOSITE_LOCALE_EN_US;
+
+  return (
+    <LocalizationProvider locale={compositeLocale} localeLoader={localeLoader}>
+      <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        {props.children}
+      </FluentThemeProvider>
+    </LocalizationProvider>
   );
-  return locale ? LocalizationProvider({ locale, localeLoader, children: CompositeElement }) : CompositeElement;
 };

@@ -358,12 +358,15 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @public (undocumented)
-export const LocalizationProvider: (props: {
-    defaultLocale?: string;
-    locale: ComponentLocale | (() => Promise<ComponentLocale>);
+// @public
+export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
+
+// @public
+export type LocalizationProviderProps = {
+    locale: ComponentLocale;
+    localeLoader?: () => Promise<ComponentLocale>;
     children: React_2.ReactNode;
-}) => JSX.Element;
+};
 
 // @public (undocumented)
 export type Message<T extends MessageTypes> = {

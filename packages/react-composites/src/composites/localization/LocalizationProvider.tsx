@@ -42,9 +42,15 @@ export const LocaleContext = createContext<CompositeLocale>(COMPOSITE_LOCALE_EN_
 /**
  * Props to LocalizationProvider
  */
-type InternalLocalizationProviderProps = {
-  /** Locale context to provide components */
-  locale: CompositeLocale;
+export type LocalizationProviderProps = {
+  /**
+   * Locale context to provide composite
+   *
+   * @defaultValue English (US) locale
+   */
+  locale?: CompositeLocale;
+  /** Asynchronous callback to change the locale context */
+  localeLoader?: () => Promise<CompositeLocale>;
   /** Children to provide locale context. */
   children: React.ReactNode;
 };
@@ -54,51 +60,26 @@ type InternalLocalizationProviderProps = {
  *
  * This provider is internal. Do not export in public API.
  */
-const InternalLocalizationProvider = (props: InternalLocalizationProviderProps): JSX.Element => {
-  const { locale, children } = props;
+export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
+  const { children, locale, localeLoader } = props;
+  const [compositeLocale, setCompositeLocale] = useState<CompositeLocale>(locale ?? COMPOSITE_LOCALE_EN_US);
+
+  useEffect(() => {
+    if (localeLoader) {
+      const intializeLocale = async (): Promise<void> => {
+        const componentLocale = await localeLoader();
+        setCompositeLocale(componentLocale);
+      };
+      intializeLocale();
+    }
+  }, [localeLoader]);
+
   return (
-    <LocaleContext.Provider value={locale}>
-      <ComponentLocalizationProvider locale={locale.component}>{children}</ComponentLocalizationProvider>
+    <LocaleContext.Provider value={compositeLocale}>
+      <ComponentLocalizationProvider locale={compositeLocale.component}>{children}</ComponentLocalizationProvider>
     </LocaleContext.Provider>
   );
 };
 
 /** React hook to access locale */
 export const useLocale = (): CompositeLocale => useContext(LocaleContext);
-
-type AsyncLocalizationProviderProps = {
-  localeLoader: () => Promise<CompositeLocale>;
-  defaultLocale?: CompositeLocale;
-  children: React.ReactNode;
-};
-
-const AsyncLocalizationProvider = (props: AsyncLocalizationProviderProps): JSX.Element => {
-  const { children, defaultLocale, localeLoader } = props;
-  const [compositeLocale, setCompositeLocale] = useState<CompositeLocale>(COMPOSITE_LOCALE_EN_US);
-
-  useEffect(() => {
-    const intializeLocale = async (): Promise<void> => {
-      const compositeLocale = await localeLoader();
-      setCompositeLocale(compositeLocale);
-    };
-    intializeLocale();
-  }, [defaultLocale, localeLoader]);
-
-  return <InternalLocalizationProvider locale={compositeLocale}>{children}</InternalLocalizationProvider>;
-};
-
-export const LocalizationProvider = (props: {
-  locale: CompositeLocale;
-  localeLoader?: () => Promise<CompositeLocale>;
-  children: React.ReactNode;
-}): JSX.Element => {
-  const { children, locale, localeLoader } = props;
-  if (localeLoader) {
-    return AsyncLocalizationProvider({
-      defaultLocale: locale,
-      localeLoader,
-      children
-    });
-  }
-  return InternalLocalizationProvider({ locale, children });
-};
