@@ -606,7 +606,7 @@ export type ChatCompositeIcons = Pick<CompositeIcons, 'MessageDelivered' | 'Mess
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     visualElements?: ChatCompositeVisualElements;
 }
@@ -794,6 +794,9 @@ export interface ComponentLocale {
     strings: ComponentStrings;
 }
 
+// @public (undocumented)
+export type ComponentProps<Component extends (props: any) => JSX.Element> = ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
+
 // @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
@@ -913,27 +916,16 @@ export interface ControlBarProps {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public (undocumented)
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
+
+// @public (undocumented)
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public (undocumented)
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
-    onHangUp: () => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
-    onStartLocalVideo: () => Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-};
+export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+
+// @public (undocumented)
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
@@ -1036,11 +1028,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
 };
-
-// @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps, ids?: {
-    messageTimestamp?: string;
-}) => JSX.Element;
 
 // @public
 export type DeviceManagerState = {
@@ -1253,9 +1240,8 @@ export interface MeetingAdapter extends AdapterState<MeetingAdapterState>, Adapt
 
 // @alpha
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
-    displayName: string;
-    latestErrors: MeetingErrors;
-    meeting: MeetingState;
+    displayName: string | undefined;
+    meeting: MeetingState | undefined;
     userId: CommunicationIdentifier;
 }
 
@@ -1345,22 +1331,19 @@ export type MeetingCompositeProps = {
 // @alpha
 export type MeetingEndReason = CallEndReason;
 
-// @alpha (undocumented)
-export type MeetingErrors = unknown;
-
 // @alpha
 export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
 
 // @alpha
-export interface MeetingParticipant extends Pick<ChatParticipant, 'shareHistoryTime'>, Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
+export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
     id: CommunicationIdentifier;
-    meetingEndReason: MeetingEndReason;
+    meetingEndReason?: MeetingEndReason;
 }
 
 // @alpha
 export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
-    meetingEndReason: MeetingEndReason;
+    meetingEndReason?: MeetingEndReason;
     participants: {
         [key: string]: MeetingParticipant;
     };
@@ -1404,6 +1387,9 @@ export type MessageReceivedListener = (event: {
 }) => void;
 
 // @public (undocumented)
+export type MessageRenderer = (props: MessageProps) => JSX.Element;
+
+// @public (undocumented)
 export type MessageSentListener = MessageReceivedListener;
 
 // @public (undocumented)
@@ -1444,7 +1430,7 @@ export type MessageThreadProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     editDisabled?: boolean;
@@ -1959,7 +1945,7 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
-export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
+export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ComponentProps<Component>;
 
 // @public (undocumented)
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
