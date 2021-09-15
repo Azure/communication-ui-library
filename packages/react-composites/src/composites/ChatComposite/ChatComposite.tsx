@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationParticipant, DefaultMessageRendererType, MessageProps } from '@internal/react-components';
+import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';
 import { BaseComposite, BaseCompositeProps } from '../common/Composite';
 import { ChatCompositeIcons } from '../common/icons';
@@ -16,10 +16,10 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    */
   adapter: ChatAdapter;
   /**
-   * `(messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element`
+   * `(messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element`
    * A callback for customizing the message renderer.
    */
-  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   /**
    * `(typingUsers: CommunicationParticipant[]) => JSX.Element`
    * A callback for customizing the typing indicator renderer.

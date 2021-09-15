@@ -4,7 +4,7 @@
 import { mergeStyles, Stack } from '@fluentui/react';
 import {
   CommunicationParticipant,
-  DefaultMessageRendererType,
+  MessageRenderer,
   ErrorBar,
   MessageProps,
   MessageThread,
@@ -34,7 +34,7 @@ import {
 export type ChatScreenProps = {
   hiddenElements?: ChatCompositeHiddenElements;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
 

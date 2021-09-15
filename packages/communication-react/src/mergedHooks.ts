@@ -50,14 +50,16 @@ export type CallingReturnProps<Component extends (props: any) => JSX.Element> = 
   ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]>
   : never;
 
-export const usePropsFor = <Component extends (props: any) => JSX.Element>(
-  component: Component,
-  type?: 'calling' | 'chat'
-): ChatReturnProps<Component> extends never
+export type ComponentProps<Component extends (props: any) => JSX.Element> = ChatReturnProps<Component> extends never
   ? CallingReturnProps<Component> extends never
     ? undefined
     : CallingReturnProps<Component>
-  : ChatReturnProps<Component> => {
+  : ChatReturnProps<Component>;
+
+export const usePropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component,
+  type?: 'calling' | 'chat'
+): ComponentProps<Component> => {
   const callingSelector = type === 'calling' || !type ? getCallingSelector(component) : undefined;
   const chatSelector = type === 'chat' || !type ? getChatSelector(component) : undefined;
   const callProps = useCallingSelector(callingSelector);

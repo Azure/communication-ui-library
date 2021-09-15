@@ -16,7 +16,7 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 - [Visual Studio Code (Stable Build)](https://code.visualstudio.com/Download)
 - [Node.js (12.18.4 and above)](https://nodejs.org/en/download/)
 - Create an Azure account with an active subscription. For details, see [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
-- Create an Azure Communication Services resource. For details, see [Create an Azure Communication Resource](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource). You'll need to record your resource **connection string** for this quickstart.
+- Create an Azure Communication Services resource. For details, see [Create an Azure Communication Resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource). You'll need to record your resource **connection string** for this quickstart.
 
 ## Before running the sample for the first time
 
@@ -51,6 +51,6 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 
 - [Azure Communication Services - UI Library](https://azure.github.io/communication-ui-library/) - To learn more about what the `@azure/communication-react` package offers.
 - [Azure Communication Calling SDK](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/calling-sdk-features) - To learn more about the calling web sdk
-- [FluentUI](https://developer.microsoft.com/en-us/fluentui#/) - Microsoft powered UI library
+- [FluentUI](https://developer.microsoft.com/fluentui#/) - Microsoft powered UI library
 - [React](https://reactjs.org/) - Library for building user interfaces
 - [Create-React-App](https://create-react-app.dev/) - Boilerplate React code to help with a majority of React style single page applications.

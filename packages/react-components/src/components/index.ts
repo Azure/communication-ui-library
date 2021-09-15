@@ -25,7 +25,7 @@ export type {
   MessageThreadStrings,
   MessageThreadStylesProps,
   JumpToNewMessageButtonProps,
-  DefaultMessageRendererType
+  MessageRenderer
 } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';

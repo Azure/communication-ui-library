@@ -100,13 +100,5 @@
     "typescript": "4.3.5",
     "uuid": "^8.1.0",
     "webpack": "5.38.1"
-  },
-  "beachball": {
-    "tag": "next",
-    "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
-    ]
   }
 }

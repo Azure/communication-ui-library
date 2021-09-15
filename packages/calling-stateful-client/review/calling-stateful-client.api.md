@@ -94,9 +94,6 @@ export interface CallState {
 }
 
 // @public
-export type CallStateModifier = (state: CallClientState) => void;
-
-// @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
 // @public
@@ -147,9 +144,6 @@ export interface NetworkDiagnosticsState {
 }
 
 // @public
-export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
-
-// @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
 }
@@ -180,7 +174,6 @@ export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
-    modifyState(modifier: CallStateModifier): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
