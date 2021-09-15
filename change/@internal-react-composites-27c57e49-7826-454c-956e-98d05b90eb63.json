@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Asynchronous locale loader callback attribute added to composites.",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

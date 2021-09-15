@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Asynchronous locale loader callback attribute added to LocalizationProvider.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
