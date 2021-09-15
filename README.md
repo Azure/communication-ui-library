@@ -19,7 +19,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
 * "I want to see what this library can do!"
   * Check out our [Storybook](https://azure.github.io/communication-ui-library) and [Sample Apps](#samples)
 * "I want to write my own communication application"
-  * We recommend checking out our comprehensive documentation first to make the best decision for your application: <https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-framework/ui-sdk-overview>
+  * We recommend checking out our comprehensive documentation first to make the best decision for your application: <https://docs.microsoft.com/azure/communication-services/concepts/ui-framework/ui-sdk-overview>
 * "I want more information on the packages available to use"
   * Check out our [npm packages](#npm-packages) on offer
 * "I want to submit a fix for a package in this repo"
@@ -29,7 +29,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
 
 ### @azure/communication-react
 
-A React library providing UI components and  making it simple for you to build modern communication apps using [Azure Communication Services](https://azure.microsoft.com/en-us/services/communication-services/).
+A React library providing UI components and  making it simple for you to build modern communication apps using [Azure Communication Services](https://azure.microsoft.com/services/communication-services/).
 
 ## Samples
 
@@ -46,5 +46,5 @@ We look forward to building an amazing open source library with you!
 ## Further Reading
 
 * [Repo Documentation](./docs/README.md)
-* [Conceptual Documentation](https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-framework/ui-sdk-overview)
+* [Conceptual Documentation](https://docs.microsoft.com/azure/communication-services/concepts/ui-framework/ui-sdk-overview)
 * [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstart-ui-components--page)

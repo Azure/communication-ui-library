@@ -3,7 +3,7 @@
 export { v4 as createGUID } from 'uuid';
 
 // In your real app, your authenticated service should create users and issue tokens.
-// For more info, see https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript
+// For more info, see https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript
 
 export const loadConfigFromUrlQuery = () => {
   const urlSearchParams = new URLSearchParams(window.location.search);
@@ -21,7 +21,7 @@ export const loadConfigFromUrlQuery = () => {
 
 export const createUserWithToken = async () => {
   // Calling the samples/Server. In your real app, your authenticated service should create users and issue tokens.
-  // For more info, see https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript
+  // For more info, see https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript
   return (await fetch('/token?scope=chat,voip')).json();
 };
 

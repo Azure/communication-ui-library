@@ -120,7 +120,7 @@ function VideoTile (props: VideoTileProps): JSX.Element {
 - `mergeStyles` is part of the `@fluentui/merge-styles` library. Through the use of `mergeStyles`, developers can provide default styles to the components. These styles get merged with custom `styles` provided by a user. The order in which styles are passed to the `mergeStyles` function is important. Styles should be passed to `mergeStyles` in the order of priority, where the first parameter has the lowest and the last has the hights priority.
 Documentation for `mergeStyles` can be found here: <https://github.com/microsoft/fluentui/blob/master/packages/merge-styles/README.md>
 
-- Each property inside the `styles` property must be of the type `IStyle` defined in Fluent UI. Documentation for `IStyle` can be found here: <https://developer.microsoft.com/en-us/fluentui#/controls/web/references/istyle>
+- Each property inside the `styles` property must be of the type `IStyle` defined in Fluent UI. Documentation for `IStyle` can be found here: <https://developer.microsoft.com/fluentui#/controls/web/references/istyle>
 
 ### Use Fluent UI to Build New Components
 
@@ -150,4 +150,4 @@ export const CustomButton = (props: CallControlButtonProps): JSX.Element => {
 ```
 
 Refer to Fluent UI documentation for more components here:
-<https://developer.microsoft.com/en-us/fluentui#/controls/web>
+<https://developer.microsoft.com/fluentui#/controls/web>
