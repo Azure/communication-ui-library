@@ -1,7 +1,7 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "made ParticipantItems focusable + change styles",
   "packageName": "@internal/storybook",
   "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
