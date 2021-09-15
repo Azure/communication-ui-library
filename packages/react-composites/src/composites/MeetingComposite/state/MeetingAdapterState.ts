@@ -48,15 +48,16 @@ export function generateMeetingAdapterState(callAdapter: CallAdapter, chatAdapte
   const callAdapterState = callAdapter.getState();
   const chatAdapterState = chatAdapter.getState();
 
-  const { call, displayName, userId, devices, page } = callAdapterState;
-  const meeting = call ? generateMeetingState(call, chatAdapterState.thread) : undefined;
+  const meeting = callAdapterState.call
+    ? generateMeetingState(callAdapterState.call, chatAdapterState.thread)
+    : undefined;
 
   return {
     meeting,
-    userId,
-    page: callPageToMeetingPage(page),
-    displayName,
-    devices
+    userId: callAdapterState.userId,
+    page: callPageToMeetingPage(callAdapterState.page),
+    displayName: callAdapterState.displayName,
+    devices: callAdapterState.devices
   };
 }
 
@@ -83,14 +84,11 @@ export function mergeCallAdapterStateIntoMeetingAdapterState(
       ? mergeCallStateIntoMeetingState(callAdapterState.call, meetingAdapterState.meeting)
       : undefined;
 
-  const { userId, page, displayName, devices } = callAdapterState;
-
   return {
-    ...callAdapterState,
-    userId,
-    page: callPageToMeetingPage(page),
-    displayName,
-    devices,
+    userId: callAdapterState.userId,
+    page: callPageToMeetingPage(callAdapterState.page),
+    displayName: callAdapterState.displayName,
+    devices: callAdapterState.devices,
     meeting: newMeetingState
   };
 }

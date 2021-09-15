@@ -21,9 +21,15 @@ export interface MeetingParticipant
 export type MeetingParticipants = { [keys: string]: MeetingParticipant };
 
 function meetingParticipantFromCallParticipant(callParticipant: RemoteParticipantState): MeetingParticipant {
-  const { displayName, state, videoStreams, isMuted, isSpeaking, identifier, callEndReason } = callParticipant;
-
-  return { id: identifier, meetingEndReason: callEndReason, displayName, state, videoStreams, isMuted, isSpeaking };
+  return {
+    id: callParticipant.identifier,
+    meetingEndReason: callParticipant.callEndReason,
+    displayName: callParticipant.displayName,
+    state: callParticipant.state,
+    videoStreams: callParticipant.videoStreams,
+    isMuted: callParticipant.isMuted,
+    isSpeaking: callParticipant.isSpeaking
+  };
 }
 
 export function meetingParticipantsFromCallParticipants(callParticipants: {
