@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatUserType, createChatThreadAndUsers, loadPage, PAGE_VIEWPORT } from '../common/utils';
-import { startServer, stopServer } from './app/server';
+import { startServer, stopServer } from '../../server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
