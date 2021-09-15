@@ -44,7 +44,7 @@ const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
 
 /**
  * @description Provider to apply a Fluent theme across this library's react components.
- * @remarks Components in this library are composed primarily from [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web),
+ * @remarks Components in this library are composed primarily from [Fluent UI](https://developer.microsoft.com/fluentui#/controls/web),
  * controls, and also from [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0) controls.
  * This provider handles applying any theme provided to both the underlying Fluent UI controls, as well as the Fluent React Northstar controls.
  */

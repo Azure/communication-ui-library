@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Typo fix",
+  "packageName": "@internal/storybook",
+  "email": "dademath@microsoft.com",
+  "dependentChangeType": "patch"
+}

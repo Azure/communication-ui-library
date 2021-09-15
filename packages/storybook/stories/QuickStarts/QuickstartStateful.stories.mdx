@@ -20,6 +20,10 @@ Find more information about [Stateful client here.](./?path=/docs/statefulclient
 - An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
 - [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 12 Recommended).
 - An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
+- An identity with Chat scope. Generate an identity using the [Azure Portal](https://docs.microsoft.com/azure/communication-services/quickstarts/identity/quick-create-identity).
+
+Recommended:
+
 - Knowledge of [UI Library Components](./?path=/story/quickstarts-uicomponents--page). We will be using the UI Components in this quickstart.
 - Knowledge of Azure Communication Services [Chat patterns](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts).
   You will need to create a thread and a user to that thread to use the UI Library. Look at the [recommended architecture for the UI Library](./?path=/docs/usecases--page#recommended-architecture)
@@ -34,13 +38,13 @@ We'll use the `create-react-app` template for this quickstart. For more informat
 
 ```bash
 
-npx create-react-app ui-toolkit-starting-with-stateful --template typescript
+npx create-react-app ui-library-starting-with-stateful --template typescript
 
-cd ui-toolkit-quickstart
+cd ui-library-starting-with-stateful
 
 ```
 
-At the end of this process, you should have a full application inside the folder `ui-toolkit-starting-with-stateful`.
+At the end of this process, you should have a full application inside the folder `ui-library-starting-with-stateful`.
 For this quickstart, we'll be modifying files inside the `src` folder.
 
 ### Install the Package

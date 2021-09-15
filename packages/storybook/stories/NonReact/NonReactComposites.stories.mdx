@@ -20,32 +20,34 @@ For development and prototyping purpose, import these 2 urls with `<script>` tag
 After importing chat/calling composite bundle, you are able to load composites using these 2 code snippets:
 
 ```tsx
-  const chatAdapter =   The for composite which allows you control composite externally,
-    await chatComposite.loadChatComposite( // This function will be exposed to window.chatComposite once you import composite bundle
-      {
-        displayName, // string
-        threadId, // string
-        endpointUrl, // string
-        userId, // Object { communicationUserId: string }
-        token // string
-      },
-      elementToRender, // Container element
-      props // Optional, Object contains all optional props for composite, check composite page for more details
-    )
+const chatAdapter = await chatComposite.loadChatComposite(
+  //The for composite which allows you control composite externally,
+  // This function will be exposed to window.chatComposite once you import composite bundle
+  {
+    displayName, // string
+    threadId, // string
+    endpointUrl, // string
+    userId, // Object { communicationUserId: string }
+    token // string
+  },
+  elementToRender, // Container element
+  props // Optional, Object contains all optional props for composite, check composite page for more details
+);
 ```
 
 ```tsx
-  const callAdapter =   The for composite which allows you control composite externally,
-    await callComposite.loadChatComposite( // This function will be exposed to window.callComposite once you import composite bundle
-      {
-          groupId, // string, Provide any GUID to join a group
-          displayName, // string
-          userId, // Object { communicationUserId: string }
-          token // string
-      },
-      elementToRender, // container element
-      props // Optional, Object contains all optional props for composite, check composite page for more details
-    )
+const callAdapter = await callComposite.loadChatComposite(
+  //The for composite which allows you control composite externally,
+  // This function will be exposed to window.callComposite once you import composite bundle
+  {
+    groupId, // string, Provide any GUID to join a group
+    displayName, // string
+    userId, // Object { communicationUserId: string }
+    token // string
+  },
+  elementToRender, // container element
+  props // Optional, Object contains all optional props for composite, check composite page for more details
+);
 ```
 
 Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example) and [Call Composite Basic Example](./?path=/docs/composites-call-basicexample--basic-example) to see optional props of composites
@@ -83,7 +85,17 @@ Check [Example](https://github.com/Azure/communication-ui-library/blob/PublicPre
 git clone https://github.com/Azure/communication-ui-library.git
 ```
 
-### install packages and build js bundles
+### Install rush
+
+For this example, we use [rush](https://rushjs.io/) to create the bundles.
+
+```bash
+
+npm install -g @microsoft/rush
+
+```
+
+### Install packages and build js bundles
 
 ```bash
 cd communication-ui-library\samples\StaticHtmlComposites\
@@ -98,13 +110,13 @@ Then you will be able to see 2 js bundle files:
 .\samples\StaticHtmlComposites\dist\callComposite.js
 ```
 
-There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check [Create and manage Communication Services resources](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp):
+There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check [Create and manage Communication Services resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp):
 
 ```
 .\samples\StaticHtmlComposites\index.html
 ```
 
-### try it the sample
+### Try it the sample
 
 After finishing building the bundle, you can also try the sample
 
