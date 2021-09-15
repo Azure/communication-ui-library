@@ -11,7 +11,7 @@ import type { Call } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
-import { ChatParticipant } from '@azure/communication-chat';
+import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -508,9 +508,8 @@ export interface MeetingAdapter extends AdapterState<MeetingAdapterState>, Adapt
 
 // @alpha
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
-    displayName: string;
-    latestErrors: MeetingErrors;
-    meeting: MeetingState;
+    displayName: string | undefined;
+    meeting: MeetingState | undefined;
     userId: CommunicationIdentifier;
 }
 
@@ -600,22 +599,19 @@ export type MeetingCompositeProps = {
 // @alpha
 export type MeetingEndReason = CallEndReason;
 
-// @alpha (undocumented)
-export type MeetingErrors = unknown;
-
 // @alpha
 export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
 
 // @alpha
-export interface MeetingParticipant extends Pick<ChatParticipant, 'shareHistoryTime'>, Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
+export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
     id: CommunicationIdentifier;
-    meetingEndReason: MeetingEndReason;
+    meetingEndReason?: MeetingEndReason;
 }
 
 // @alpha
 export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
-    meetingEndReason: MeetingEndReason;
+    meetingEndReason?: MeetingEndReason;
     participants: {
         [key: string]: MeetingParticipant;
     };
