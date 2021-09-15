@@ -6,7 +6,7 @@ import { CallAdapter, CallAdapterClientState, CallAdapterState } from '../../Cal
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
 import {
-  generateMeetingState,
+  meetingStateFromBackingStates,
   MeetingState,
   mergeCallStateIntoMeetingState,
   mergeChatStateIntoMeetingState
@@ -44,12 +44,15 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
  */
 export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {}
 
-export function generateMeetingAdapterState(callAdapter: CallAdapter, chatAdapter: ChatAdapter): MeetingAdapterState {
+export function meetingAdapterStateFromBackingStates(
+  callAdapter: CallAdapter,
+  chatAdapter: ChatAdapter
+): MeetingAdapterState {
   const callAdapterState = callAdapter.getState();
   const chatAdapterState = chatAdapter.getState();
 
   const meeting = callAdapterState.call
-    ? generateMeetingState(callAdapterState.call, chatAdapterState.thread)
+    ? meetingStateFromBackingStates(callAdapterState.call, chatAdapterState.thread)
     : undefined;
 
   return {

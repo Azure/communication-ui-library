@@ -40,7 +40,7 @@ export interface MeetingState
   meetingEndReason?: MeetingEndReason;
 }
 
-export function generateMeetingState(callState: CallState, chatState: ChatThreadClientState): MeetingState {
+export function meetingStateFromBackingStates(callState: CallState, chatState: ChatThreadClientState): MeetingState {
   return {
     // Properties from call state
     id: callState.id,

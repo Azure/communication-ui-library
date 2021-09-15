@@ -20,7 +20,7 @@ import {
 import { MessageReceivedListener, MessageReadListener, ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
 import {
-  generateMeetingAdapterState,
+  meetingAdapterStateFromBackingStates,
   MeetingAdapterClientState,
   MeetingAdapterState,
   mergeCallAdapterStateIntoMeetingAdapterState,
@@ -100,7 +100,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
     this.chatAdapter = chatAdapter;
-    this.context = new MeetingContext(generateMeetingAdapterState(callAdapter, chatAdapter));
+    this.context = new MeetingContext(meetingAdapterStateFromBackingStates(callAdapter, chatAdapter));
 
     const onChatStateChange = (newChatAdapterState: ChatAdapterState): void => {
       this.context.updateClientStateWithChatState(newChatAdapterState);
