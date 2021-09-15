@@ -28,6 +28,24 @@ export type ParticipantListProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
   onParticipantRemove?: (userId: string) => void;
+  /** Optional callback to render custom menu items for each participant. */
+  onRenderParticipantMenuItems?: (participantUserId: string, userId?: string) => IContextualMenuItem[];
+};
+
+const defaultOnRenderParticipantMenuItems = (
+  participantUserId: string,
+  myUserId?: string,
+  onParticipantRemove?: (userId: string) => void
+): IContextualMenuItem[] => {
+  const menuItems: IContextualMenuItem[] = [];
+  if (participantUserId !== myUserId && onParticipantRemove) {
+    menuItems.push({
+      key: 'Remove',
+      text: 'Remove',
+      onClick: () => onParticipantRemove(participantUserId)
+    });
+  }
+  return menuItems;
 };
 
 const onRenderParticipantDefault = (
@@ -48,14 +66,7 @@ const onRenderParticipantDefault = (
     }
   }
 
-  const menuItems: IContextualMenuItem[] = [];
-  if (participant.userId !== myUserId && onParticipantRemove) {
-    menuItems.push({
-      key: 'Remove',
-      text: 'Remove',
-      onClick: () => onParticipantRemove(participant.userId)
-    });
-  }
+  const menuItems = defaultOnRenderParticipantMenuItems(participant.userId, myUserId, onParticipantRemove);
 
   const onRenderIcon =
     callingParticipant?.isScreenSharing || callingParticipant?.isMuted
