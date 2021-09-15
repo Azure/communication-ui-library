@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Label can be added to ParticipantsButton in ControlBar story through controls.",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
