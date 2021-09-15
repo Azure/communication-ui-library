@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallUserType, createCallingUserAndToken, loadCallCompositePage, PAGE_VIEWPORT } from '../common/utils';
-import { startServer, stopServer } from './app/server';
+import { CallUserType, createCallingUserAndToken, loadCallCompositePage, PAGE_VIEWPORT } from './utils';
+import { startServer, stopServer } from '../../server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';

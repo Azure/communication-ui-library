@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IdentityType, createChatThreadAndUsers, loadPage, PAGE_VIEWPORT } from '../utils';
+import { IdentityType, createChatThreadAndUsers, loadPage, PAGE_VIEWPORT } from '../common/utils';
 import { startServer, stopServer } from './app/server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
 import dotenv from 'dotenv';
