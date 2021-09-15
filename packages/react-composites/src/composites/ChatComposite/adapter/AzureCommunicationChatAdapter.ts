@@ -23,13 +23,13 @@ import {
   ChatAdapter,
   ChatEvent,
   ChatAdapterState,
-  ChatErrorListener,
   MessageReadListener,
   MessageReceivedListener,
   ParticipantsAddedListener,
   ParticipantsRemovedListener,
   TopicChangedListener
 } from './ChatAdapter';
+import { AdapterError } from '../../common/adapters';
 
 // Context of Chat, which is a centralized context for all state updates
 class ChatContext {
@@ -260,7 +260,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
-  on(event: 'error', listener: ChatErrorListener): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: ChatEvent, listener: (e: any) => void): void {
@@ -273,7 +273,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
-  off(event: 'error', listener: ChatErrorListener): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: ChatEvent, listener: (e: any) => void): void {
@@ -285,7 +285,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       return await f();
     } catch (error) {
       if (isChatError(error)) {
-        this.emitter.emit('error', { operation: error.target, error: error.inner });
+        this.emitter.emit('error', error as AdapterError);
       }
       throw error;
     }
@@ -330,8 +330,15 @@ export const createAzureCommunicationChatAdapter = async ({
 
   chatClient.startRealtimeNotifications();
 
-  const adapter = new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
+  const adapter = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   return adapter;
+};
+
+export const createAzureCommunicationChatAdapterFromClient = async (
+  chatClient: StatefulChatClient,
+  chatThreadClient: ChatThreadClient
+): Promise<ChatAdapter> => {
+  return new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
 };
 
 const isChatError = (e: Error): e is ChatError => {

@@ -1,13 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { createAzureCommunicationCallAdapter } from './AzureCommunicationCallAdapter';
+export {
+  createAzureCommunicationCallAdapter,
+  createAzureCommunicationCallAdapterFromClient
+} from './AzureCommunicationCallAdapter';
 export type { AzureCommunicationCallAdapterArgs } from './AzureCommunicationCallAdapter';
 
 export type {
   CallAdapter,
   CallAdapterClientState,
-  CallAdapterErrors,
   CallAdapterState,
   CallAdapterUiState,
   CallAdapterCallManagement,

@@ -129,7 +129,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const nametagColorOverride = useMemo(
     () => ({ color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary }),
-    [isVideoRendered, palette.neutralPrimary, theme.palette.neutralPrimary]
+    [isVideoRendered, theme.palette.neutralPrimary]
   );
 
   const tileInfoContainerStyle = useMemo(
@@ -185,9 +185,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 <Text className={tileInfoDisplayNameStyle}>{displayName}</Text>
               </Stack.Item>
             )}
-            {showMuteIndicator && isMuted !== undefined && (
+            {showMuteIndicator && isMuted && (
               <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
-                {isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />}
+                <Icon iconName="VideoTileMicOff" />
               </Stack.Item>
             )}
           </Stack>

@@ -11376,10 +11376,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
-  /immer/8.0.4:
+  /immer/9.0.6:
     dev: false
     resolution:
-      integrity: sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==
+      integrity: sha512-G95ivKpy+EvVAnAab4fVa4YGYn24J1SpEktnJX7JJ45Bd7xqME/SCplFzYFmTbrkwZbQ4xJK1xMTUYBkN6pWsQ==
   /import-fresh/3.3.0:
     dependencies:
       parent-module: 1.0.1
@@ -18991,6 +18991,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      immer: 9.0.6
       jest: 26.6.0
       prettier: 2.3.1
       rollup: 2.42.4
@@ -18999,7 +19000,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-uNfubXOvCAPnaykFFn1GobhLqi3NAf82NrHR5S1FIhM5O4kpw82DSpDYdiHPBw8z7xmlkS84BJPTRiH0dvHPxA==
+      integrity: sha512-aMFgFinQYTIIgrEHS+9i7kogI6zEE8Zn4CVxcbQ0+wjNszHdM49DpQ+iYhcCDXqA39X8lO4fwxaYUACM0xzE+w==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
@@ -19018,6 +19019,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      immer: 9.0.6
       jest: 26.6.0
       memoize-one: 5.2.1
       prettier: 2.3.1
@@ -19029,7 +19031,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-YOHx4SX9zSSXmHtdDuDrEocyFlMmI4Wop1bDwEObZXSbrjZWBEP2wX+IR/mSCHad4fzn+d2kP6KIw4yq1ldkrw==
+      integrity: sha512-CnE1eUHOAiG0On7RCaOPIts0rNFKJOEd+H4A4FNYfcYdUP2QxaQ662H4SpJASN7G4EpoJ9jI9wmaP2iB7q+w8g==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -19050,7 +19052,7 @@ packages:
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
-      immer: 8.0.4
+      immer: 9.0.6
       jest: 26.6.0
       prettier: 2.3.1
       rollup: 2.42.4
@@ -19059,7 +19061,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-BZi7amqz+fF5deZL9zr3YTzE4NLKurMSIX67/m6cxuCfdTYpkWaELA0fZ2pKe9hbWv+26PnRKEumYGowGN/Vjw==
+      integrity: sha512-Rt/wlP0PutDdKYQa3wWeMJTsl6FoXLwmub0Zb8r/+6W3mHUbHk1PNkgjw870Xz8Pw+BfncpG3FMPaH0Wyo6eqg==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19101,6 +19103,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0
       jest-junit: 12.2.0
       jquery: 3.6.0
@@ -19126,7 +19129,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-SRgpbe0gN/mzQ6iK7uGhRQ9sKRZyio3ADk2BxsrhyvsPLac8tCOMSoDdpL9PYmoTcDXhNE8FIOnnlYanlHJHLw==
+      integrity: sha512-NBzZPhipuU4gZLOqfmqJwB5RXZ5l2hNOv3gqMnDPZ31TuOJQSzpWQkJFb+qjKkYruH3gw9qzHPxo2vkEAUot6Q==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19145,6 +19148,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      immer: 9.0.6
       jest: 26.6.0
       memoize-one: 5.2.1
       prettier: 2.3.1
@@ -19155,7 +19159,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-ngUcRaXtv17kzC1i911Vr65SJ1q7bmULOx6E8/gkvEGwLSjNJD7ZZ9gzzBENaQWqu1jnz4KdIq9ZVP9OX1n5EA==
+      integrity: sha512-LDajbCvSvqU1IatQK6PMTkfgEYR3KR5nd7FR1a89vDGLViDEi/UyJkbWBaXseVkEgYNXY2fhAQ2Eaa7r01ccBQ==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19177,7 +19181,7 @@ packages:
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
-      immer: 8.0.4
+      immer: 9.0.6
       jest: 26.6.0
       nanoid: 3.1.25
       prettier: 2.3.1
@@ -19187,7 +19191,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-8tQbbsINDFF+A65xOeylW+t7QFSzw+c7Cxr9LQNznqVXsGAEI4kBqXTRsuglPYDd4bj960OkvlYhnanPs6S/xw==
+      integrity: sha512-dneWnN1DPlLQfp/WzOwfERXGZ8x9k69ZytSTnpXqnGGu3eJZkuedbVH78WSYCJCntKk3xq7mHMft4ptxZNCxgA==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -19225,6 +19229,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
@@ -19247,7 +19252,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-zwWX1Vje7+KrJxuT91ng84aVc+nATP+/fIyLxS/k1h4m++5ANr3sfjKLEAm6xnX4LbHX2CA9Nn7hrSXq5crutQ==
+      integrity: sha512-rpbYMVrq1S3INvv5nIAm9fDgIdDF2B26YA53BR21x7kMU2u8wsM1ISkhOq/Rzp5XolfrPwKzaNBTRtG2qzR6Fg==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19257,13 +19262,14 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
+      immer: 9.0.6
       prettier: 2.3.1
       webpack: 4.46.0_webpack-cli@4.7.2
       webpack-cli: 4.7.2_webpack@4.46.0
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-zxKyBrPXu85w+bEGErm6YM+HmttWVxGzMjJuYq8XtYz5mdPK7b4Al8iS8A/8pWD9hXhxmpCOMWIWTd0K3/PupA==
+      integrity: sha512-Kp4GPYB3AP8GQp7TrcUYjg4PbJ4z0+y5+V1Ja5B1v3Pvs1sqpo5kAZSYanDWmNqbTB2sCtncgArPU1l43uzmCA==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -19309,7 +19315,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       events: 3.3.0
       html-to-react: 1.4.5_react@16.14.0
-      immer: 8.0.4
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
@@ -19336,7 +19342,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-CvE5QTUZyHFPXsp5GgKG4RTfgesIvf3Utq9EEMR5c77RYskZVizqEc+i5g1Oy6bTmuiwA+Hi5rtoH2X5nbkGZQ==
+      integrity: sha512-n33ONb3qNDtZNp+51D7iYY6/d0TjKmmYY/hT4HVOpaauHIMOMMruFObIA0HfNDhVQ57yqBlxaOhu2tSek70tXQ==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19345,6 +19351,7 @@ packages:
       '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
       '@types/node': 14.17.9
       beachball: 1.53.2
+      immer: 9.0.6
       rollup: 2.42.4
       rollup-plugin-sourcemaps: 0.6.3_4b45aa15ce9ce9948f319a2d6455c252
       rollup-plugin-svg: 2.0.0
@@ -19353,7 +19360,7 @@ packages:
     dev: false
     name: '@rush-temp/config'
     resolution:
-      integrity: sha512-aW+U6rABx4RdzDv9h48Yokz179n0E6n/61rZ/CuWTHY4IgIRWSl77rIC/d8ZTEuM57IyAgCcnnKVUs7x5ek42w==
+      integrity: sha512-jT49y1iNE/EBs5pJxl172+M9O2lNLay4FZFWYmT5ecmh69RvINfYQxgIhC/hY0Rn1cgX1L5AX+M5IYGOXotsTA==
       tarball: file:projects/config.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -19400,6 +19407,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       html-to-react: 1.4.5_react@16.14.0
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
@@ -19427,7 +19435,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-ZL4QWQqLFHkRLGaL7wUZatH7fxPzw8qcTiQgvZxaoNoGvG8ITQKK0KkP1FYRfYmjlkpMF5pfWwVxxUYSC9ivow==
+      integrity: sha512-EvLXGaNnMsAim76ZrqMxqcVP6nW6jlnfU0m7BRze5MAvStoXxzTJz0QAkHdBQVIJm1oW25RV4ObBahkOtHmrug==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19482,6 +19490,7 @@ packages:
       express: 4.16.4
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
@@ -19516,7 +19525,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-q/Qi7vxA9Mjogqac1baWbLa3pcPUZQaikNH8t7CWPDoqxbHM3Op2UJ7KD9Gnene3BOwmhvh3hS9KgTIfCtPw+w==
+      integrity: sha512-qHpJdDbqLXnQusmNnSREt67KBs0TYRJn3w0JnIVM17lmeH7CgEehkoCWkJ1cHeorQoFID13NZ9AZBOrhiw7knQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -19533,6 +19542,7 @@ packages:
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       http: 0.0.1-security
       http-server: 0.12.3
+      immer: 9.0.6
       node-static: 0.7.11
       playwright: 1.12.3
       react: 16.14.0
@@ -19544,7 +19554,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-tyn+VyTjdxjfLHQ1k74CfJ+S/U70xOwO9lOF1urgQUUT5JeVFtgO/dzuktNVRpLoAxKbctO/Q3Cu+cs1SQDLIw==
+      integrity: sha512-BhDfjrxVtpbD3vvWmraxIIJmEOA/x9SkjJt4wAcN/SUOld4E0FviINFWQjkxi554UwMFwFTCx9CwJ6NSX3kdhA==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -19578,6 +19588,7 @@ packages:
       express: 4.16.4
       http-errors: 1.6.3
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-junit: 12.2.0
       morgan: 1.9.1
@@ -19595,7 +19606,7 @@ packages:
     dev: false
     name: '@rush-temp/server'
     resolution:
-      integrity: sha512-s7wfZsk1kiOXN3UB6czgaPK222Hh2S2gSH45GBRmIUkjki5mOferl6MY7TmK1nSb/2DnH6+Xahgs3/9Zx0x2pQ==
+      integrity: sha512-nlgiwhGc/oVA/F4WKRBSu1Ri4XtZUUY6/gbCu5bwpN5KuwlWMGrWu29pbYA0WG0UKZvzf+onNYAxdv4xyR/g4A==
       tarball: file:projects/server.tgz
     version: 0.0.0
   file:projects/storybook.tgz:
@@ -19663,6 +19674,7 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       history: 5.0.1
       husky: 4.3.8
+      immer: 9.0.6
       jest: 26.6.0_ts-node@9.1.1
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
@@ -19693,7 +19705,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-IuRoW8TjrgnRj+y/xfkV+4yG5Hf00RkMBphd21keiV/W12wyZp2qDeEply9BFeYJEWi5W1SNCXlrjWnoSuUEHQ==
+      integrity: sha512-Zirp5OcN+w26s88YnmfJJvKHMvX5s/BAdWNAnUCRHRbUz1Gap6VMBcWHYGJa8BcWZ/kevVyUcs6AFu2tsnF/tQ==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

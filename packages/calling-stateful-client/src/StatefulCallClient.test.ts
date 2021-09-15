@@ -6,6 +6,7 @@ import {
   CallApiFeature,
   CallFeatureFactoryType,
   DeviceManager,
+  DiagnosticsCallFeature,
   Features,
   LocalVideoStream,
   RecordingCallFeature,
@@ -38,6 +39,7 @@ import {
   MockTransferCallFeatureImpl,
   StateChangeListener,
   stubCommunicationTokenCredential,
+  StubDiagnosticsCallFeatureImpl,
   waitWithBreakCondition
 } from './TestUtils';
 
@@ -62,6 +64,9 @@ jest.mock('@azure/communication-calling', () => {
       },
       get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
         return MockTranscriptionCallFeatureImpl;
+      },
+      get Diagnostics(): CallFeatureFactoryType<DiagnosticsCallFeature> {
+        return StubDiagnosticsCallFeatureImpl;
       }
     }
   };
