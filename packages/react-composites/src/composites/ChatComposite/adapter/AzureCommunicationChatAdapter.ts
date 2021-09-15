@@ -330,8 +330,15 @@ export const createAzureCommunicationChatAdapter = async ({
 
   chatClient.startRealtimeNotifications();
 
-  const adapter = new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
+  const adapter = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   return adapter;
+};
+
+export const createAzureCommunicationChatAdapterFromClient = async (
+  chatClient: StatefulChatClient,
+  chatThreadClient: ChatThreadClient
+): Promise<ChatAdapter> => {
+  return new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
 };
 
 const isChatError = (e: Error): e is ChatError => {
