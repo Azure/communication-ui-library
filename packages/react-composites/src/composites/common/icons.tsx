@@ -34,39 +34,43 @@ export const DEFAULT_COMPOSITE_ICONS = {
 
 export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
 
-export type ChatCompositeIcons = Pick<
-  CompositeIcons,
-  | 'MessageDelivered'
-  | 'MessageFailed'
-  | 'MessageSeen'
-  | 'MessageSending'
-  | 'MessageEdit'
-  | 'MessageRemove'
-  | 'ParticipantItemOptions'
-  | 'ParticipantItemOptionsHovered'
-  | 'SendBoxSend'
-  | 'SendBoxSendHovered'
-  | 'EditBoxCancel'
-  | 'EditBoxSubmit'
+export type ChatCompositeIcons = Partial<
+  Pick<
+    CompositeIcons,
+    | 'MessageDelivered'
+    | 'MessageFailed'
+    | 'MessageSeen'
+    | 'MessageSending'
+    | 'MessageEdit'
+    | 'MessageRemove'
+    | 'ParticipantItemOptions'
+    | 'ParticipantItemOptionsHovered'
+    | 'SendBoxSend'
+    | 'SendBoxSendHovered'
+    | 'EditBoxCancel'
+    | 'EditBoxSubmit'
+  >
 >;
 
-export type CallCompositeIcons = Pick<
-  CompositeIcons,
-  | 'ControlButtonCameraOff'
-  | 'ControlButtonCameraOn'
-  | 'ControlButtonEndCall'
-  | 'ControlButtonMicOff'
-  | 'ControlButtonMicOn'
-  | 'ControlButtonOptions'
-  | 'ControlButtonParticipants'
-  | 'ControlButtonScreenShareStart'
-  | 'ControlButtonScreenShareStop'
-  | 'OptionsCamera'
-  | 'OptionsMic'
-  | 'OptionsSpeaker'
-  | 'ParticipantItemScreenShareStart'
-  | 'ParticipantItemMicOff'
-  | 'ParticipantItemOptions'
-  | 'ParticipantItemOptionsHovered'
-  | 'VideoTileMicOff'
+export type CallCompositeIcons = Partial<
+  Pick<
+    CompositeIcons,
+    | 'ControlButtonCameraOff'
+    | 'ControlButtonCameraOn'
+    | 'ControlButtonEndCall'
+    | 'ControlButtonMicOff'
+    | 'ControlButtonMicOn'
+    | 'ControlButtonOptions'
+    | 'ControlButtonParticipants'
+    | 'ControlButtonScreenShareStart'
+    | 'ControlButtonScreenShareStop'
+    | 'OptionsCamera'
+    | 'OptionsMic'
+    | 'OptionsSpeaker'
+    | 'ParticipantItemScreenShareStart'
+    | 'ParticipantItemMicOff'
+    | 'ParticipantItemOptions'
+    | 'ParticipantItemOptionsHovered'
+    | 'VideoTileMicOff'
+  >
 >;
