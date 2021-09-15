@@ -339,8 +339,6 @@ export class ChatContext {
   /**
    * Tees any errors encountered in an async function to the state.
    *
-   * If the function succeeds, clears associated errors from the state.
-   *
    * @param f Async function to execute.
    * @param target The error target to tee error to.
    * @returns Result of calling `f`. Also re-raises any exceptions thrown from `f`.
@@ -363,8 +361,6 @@ export class ChatContext {
 
   /**
    * Tees any errors encountered in an function to the state.
-   *
-   * If the function succeeds, clears associated errors from the state.
    *
    * @param f Function to execute.
    * @param target The error target to tee error to.
