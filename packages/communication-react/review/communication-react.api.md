@@ -1637,7 +1637,7 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     myUserId: string;
 }>;
 
-// @public (undocumented)
+// @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
 // @public (undocumented)
