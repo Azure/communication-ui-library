@@ -42,8 +42,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setCurrentPage(newState.page);
     setCurrentCallState(newState.call?.state);
   });
-  const hasJoinedCall =
-    currentPage === 'call' && currentCallState && !['Connecting', 'Ringing', 'InLobby'].includes(currentCallState);
+  const hasJoinedCall = currentPage === 'call' && currentCallState === 'Connected';
 
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -74,7 +73,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
           <Stack.Item grow>
             <CallComposite hiddenElements={{ callControls: true }} adapter={callAdapter} fluentTheme={fluentTheme} />
           </Stack.Item>
-          {chatAdapter && (
+          {chatAdapter && hasJoinedCall && (
             <EmbeddedChatPane
               hidden={!showChat}
               chatAdapter={chatAdapter}
@@ -82,7 +81,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               onClose={closePane}
             />
           )}
-          {callAdapter && chatAdapter && (
+          {callAdapter && chatAdapter && hasJoinedCall && (
             <CallAdapterProvider adapter={callAdapter}>
               <EmbeddedPeoplePane
                 hidden={!showPeople}
