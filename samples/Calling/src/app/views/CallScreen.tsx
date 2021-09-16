@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Spinner } from '@fluentui/react';
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { createAutoRefreshingCredential } from '../utils/credential';
+import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
+import { Spinner } from '@fluentui/react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
+import { createAutoRefreshingCredential } from '../utils/credential';
 
 export interface CallScreenProps {
   token: string;
@@ -63,7 +63,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       callInvitationURL={window.location.href}
-      visualElements={{ showErrorBar: true }}
     />
   );
 };
