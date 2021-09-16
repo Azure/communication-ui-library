@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MeetingUserType, createMeetingUsers, loadCallCompositePage, PAGE_VIEWPORT } from '../common/utils';
+import { MeetingUserType, createMeetingUsers, loadPageWithPermissionsForCalls, PAGE_VIEWPORT } from '../common/utils';
 import { startServer, stopServer } from '../../server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
 import dotenv from 'dotenv';
@@ -82,7 +82,9 @@ export const test = base.extend<unknown, CompositeAppWorkerFixtures>({
   ],
   pages: [
     async ({ serverUrl, testBrowser, users }, use) => {
-      const pages = await Promise.all(users.map(async (user) => loadCallCompositePage(testBrowser, serverUrl, user)));
+      const pages = await Promise.all(
+        users.map(async (user) => loadPageWithPermissionsForCalls(testBrowser, serverUrl, user))
+      );
       await use(pages);
     },
     { scope: 'worker' }

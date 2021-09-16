@@ -168,39 +168,32 @@ export const createMeetingUsers = async (displayNames: string[]): Promise<Array<
 };
 
 /**
- * Load a Page with ChatComposite app.
+ * Load a new page in the browser at the supplied url.
  * @param browser Browser to create Page in.
  * @param serverUrl URL to a running test app.
- * @param user ChatUserType for the user to load ChatComposite for.
- * @param qArgs Extra quary arguments.
+ * @param user User to load url for.
+ * @param qArgs Extra query arguments.
  * @returns
  */
 export const loadPage = async (
   browser: Browser,
   serverUrl: string,
-  user: ChatUserType,
+  user: ChatUserType | CallUserType,
   qArgs?: { [key: string]: string }
-): Promise<Page> => {
-  const qs = encodeQueryData(user, qArgs);
-  const page = await browser.newPage();
-  await page.setViewportSize(PAGE_VIEWPORT);
-  const url = `${serverUrl}?${qs}`;
-  await page.goto(url, { waitUntil: 'networkidle' });
-  return page;
-};
+): Promise<Page> => await loadUrlInPage(await browser.newPage(), serverUrl, user, qArgs);
 
 /**
- * Load a Page with ChatComposite app.
+ * Load a URL in the browser page.
  * @param browser Browser to create Page in.
  * @param serverUrl URL to a running test app.
- * @param user ChatUserType for the user to load ChatComposite for.
- * @param qArgs Extra quary arguments.
+ * @param user User to load url for.
+ * @param qArgs Extra query arguments.
  * @returns
  */
-export const gotoPage = async (
+export const loadUrlInPage = async (
   page: Page,
   serverUrl: string,
-  user: ChatUserType,
+  user: ChatUserType | CallUserType,
   qArgs?: { [key: string]: string }
 ): Promise<Page> => {
   const qs = encodeQueryData(user, qArgs);
@@ -211,27 +204,23 @@ export const gotoPage = async (
 };
 
 /**
- * Load a Page with CallComposite app.
+ * Load a URL in a new Page in the browser with permissions needed for the CallComposite.
  * @param browser Browser to create Page in.
  * @param serverUrl URL to a running test app.
- * @param user CallUserType for the user to load ChatComposite for.
- * @param qArgs Extra quary arguments.
+ * @param user User to load ChatComposite for.
+ * @param qArgs Extra query arguments.
  * @returns
  */
-export const loadCallCompositePage = async (
+export const loadPageWithPermissionsForCalls = async (
   browser: Browser,
   serverUrl: string,
-  user: CallUserType,
+  user: CallUserType | MeetingUserType,
   qArgs?: { [key: string]: string }
 ): Promise<Page> => {
   const context = await browser.newContext({ permissions: ['notifications'] });
   context.grantPermissions(['camera', 'microphone']);
-  const qs = encodeQueryData(user, qArgs);
   const page = await context.newPage();
-  await page.setViewportSize(PAGE_VIEWPORT);
-  const url = `${serverUrl}?${qs}`;
-  await page.goto(url, { waitUntil: 'networkidle' });
-  return page;
+  return await loadUrlInPage(page, serverUrl, user, qArgs);
 };
 
 const encodeQueryData = (

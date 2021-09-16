@@ -4,7 +4,7 @@ import { IDS } from '../common/config';
 import {
   createChatThreadAndUsers,
   dataUiId,
-  gotoPage,
+  loadUrlInPage,
   loadPage,
   stubMessageTimestamps,
   waitForCompositeToLoad
@@ -26,7 +26,7 @@ test.describe('Chat Composite E2E Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       const user = users[idx];
-      await gotoPage(page, serverUrl, user);
+      await loadUrlInPage(page, serverUrl, user);
       pageLoadPromises.push(waitForCompositeToLoad(page));
       stubMessageTimestamps(pages[idx]);
     }
