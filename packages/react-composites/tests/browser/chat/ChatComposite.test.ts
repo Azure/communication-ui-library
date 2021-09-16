@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IDS } from '../config';
+import { IDS } from '../common/config';
 import {
   createChatThreadAndUsers,
   dataUiId,
-  gotoPage,
+  loadUrlInPage,
   loadPage,
   stubMessageTimestamps,
-  waitForCompositeToLoad
-} from '../utils';
+  waitForChatCompositeToLoad
+} from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -26,8 +26,8 @@ test.describe('Chat Composite E2E Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       const user = users[idx];
-      await gotoPage(page, serverUrl, user);
-      pageLoadPromises.push(waitForCompositeToLoad(page));
+      await loadUrlInPage(page, serverUrl, user);
+      pageLoadPromises.push(waitForChatCompositeToLoad(page));
       stubMessageTimestamps(pages[idx]);
     }
     await Promise.all(pageLoadPromises);
@@ -105,7 +105,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await page.bringToFront();
     await page.waitForSelector(`[data-ui-status="seen"]`);
     page.reload({ waitUntil: 'networkidle' });
-    await waitForCompositeToLoad(page);
+    await waitForChatCompositeToLoad(page);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
     await page.waitForSelector(`[data-ui-status="delivered"]`);
     stubMessageTimestamps(page);
