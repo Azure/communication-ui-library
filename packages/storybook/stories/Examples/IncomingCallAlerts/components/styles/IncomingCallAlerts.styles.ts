@@ -55,7 +55,7 @@ export const incomingCallModalContainerStyle = {
 export const incomingCallModalLocalPreviewStyle = mergeStyles({
   height: '10em',
   background: palette.neutralLighterAlt,
-  margin: '1.5rem 0',
+  margin: '1.5em 0',
   borderRadius: '0.25em',
   '& video': {
     borderRadius: '0.25em'

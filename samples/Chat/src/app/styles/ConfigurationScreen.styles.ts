@@ -7,7 +7,7 @@ import { mergeStyles } from '@fluentui/react';
 export const responsiveLayoutStyle = mergeStyles({
   display: 'flex',
   flexDirection: 'row',
-  '@media (max-width: 37.5rem)': {
+  '@media (max-width: 37.5em)': {
     flexDirection: 'column'
   }
 });
@@ -16,7 +16,7 @@ export const leftPreviewContainerStyle = mergeStyles({
   height: '10.563em',
   width: '8.313em',
   marginRight: '9.688em',
-  '@media (max-width: 37.5rem)': {
+  '@media (max-width: 37.5em)': {
     marginRight: '0em'
   }
 });
@@ -24,7 +24,7 @@ export const leftPreviewContainerStyle = mergeStyles({
 export const rightInputContainerStyle = mergeStyles({
   height: '14.75em',
   width: '19em',
-  '@media (max-width: 37.5rem)': {
+  '@media (max-width: 37.5em)': {
     marginTop: '6.25em'
   }
 });
@@ -33,7 +33,7 @@ export const smallAvatarContainerStyle = (avatar: string, selectedAvatar: string
   mergeStyles({
     width: '3em',
     height: '3em',
-    border: avatar === selectedAvatar ? '0.125rem solid #0378D4' : '',
+    border: avatar === selectedAvatar ? '0.125em solid #0378D4' : '',
     backgroundColor: getBackgroundColor(avatar)?.backgroundColor,
     borderRadius: '50%',
     alignItems: 'center',
@@ -116,7 +116,7 @@ export const mainContainerStyle = mergeStyles({
   maxWidth: '46.875em',
   width: '100%',
   height: '100%',
-  '@media (max-width: 46.875rem)': {
+  '@media (max-width: 46.875em)': {
     padding: '0.625em',
     height: '100%'
   }

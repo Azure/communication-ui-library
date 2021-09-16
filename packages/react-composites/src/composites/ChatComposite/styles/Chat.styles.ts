@@ -38,11 +38,11 @@ export const chatHeaderContainerStyle = mergeStyles({
   width: '100%',
   paddingLeft: '1.5em',
   paddingRight: '1.5em',
-  '@media screen and (max-width: 25rem)': {
+  '@media screen and (max-width: 25em)': {
     paddingLeft: '5%',
     paddingRight: '5%'
   },
-  borderBottom: '0.063rem solid #DDDDDD'
+  borderBottom: '0.063em solid #DDDDDD'
 });
 
 export const topicNameLabelStyle = mergeStyles({

@@ -12,7 +12,7 @@ export const callControlsStyles: IStackItemStyles = {
 export const callControlsContainer = mergeStyles({
   width: '100%',
   height: '3.875em',
-  padding: '0.0625rem 0',
+  padding: '0.0625em 0',
 
   overflow: 'hidden',
   flexDirection: 'row',
@@ -20,7 +20,7 @@ export const callControlsContainer = mergeStyles({
   marginBottom: 2,
   justifyContent: 'center',
 
-  '@media screen and (max-width: 30rem)': {
+  '@media screen and (max-width: 30em)': {
     label: {
       display: 'none'
     }

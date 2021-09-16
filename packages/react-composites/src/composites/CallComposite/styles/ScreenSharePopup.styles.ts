@@ -32,7 +32,7 @@ export const screenSharePopupModalLabelStyles: CSSProperties = {
 export const getScreenSharePopupModalButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      padding: '0.375rem 0.75em',
+      padding: '0.375em 0.75em',
       border: '0em',
       boxShadow: theme.effects.elevation4,
       borderRadius: theme.effects.roundedCorner4,

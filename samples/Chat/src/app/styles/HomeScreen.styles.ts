@@ -8,7 +8,7 @@ const palette = getTheme().palette;
 export const imgStyle = mergeStyles({
   width: '26.813em',
   height: '20.125em',
-  '@media (max-width: 53.438rem)': {
+  '@media (max-width: 53.438em)': {
     display: 'none'
   }
 });
@@ -53,13 +53,13 @@ export const buttonStyle = mergeStyles({
   width: 'fit-content',
   height: '2.5em',
   borderRadius: 3,
-  '@media (max-width: 53.438rem)': {
+  '@media (max-width: 53.438em)': {
     padding: '0.625em'
   }
 });
 
 export const upperStackStyle = mergeStyles({
-  '@media (max-width: 53.438rem)': {
+  '@media (max-width: 53.438em)': {
     padding: '0.625'
   }
 });

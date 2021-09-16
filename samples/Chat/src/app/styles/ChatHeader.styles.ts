@@ -8,7 +8,7 @@ export const chatHeaderContainerStyle = mergeStyles({
   height: 'auto',
   paddingLeft: '3.25em',
   paddingRight: '3.25em',
-  '@media (max-width: 65rem)': {
+  '@media (max-width: 65em)': {
     paddingLeft: '5%',
     paddingRight: '5%'
   }
@@ -36,14 +36,14 @@ export const panelButtonStyle = mergeStyles({
 
 export const iconButtonContainerStyle = mergeStyles({
   whiteSpace: 'nowrap',
-  '@media (min-width: 50rem)': {
+  '@media (min-width: 50em)': {
     display: 'none'
   }
 });
 
 export const largeButtonContainerStyle = mergeStyles({
   whiteSpace: 'nowrap',
-  '@media (max-width: 50rem)': {
+  '@media (max-width: 50em)': {
     display: 'none'
   }
 });

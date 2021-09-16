@@ -4,5 +4,5 @@
 import { mergeStyles } from '@fluentui/react';
 
 export const systemMessageIconStyle = mergeStyles({
-  margin: '0 0.688rem 0 0'
+  margin: '0 0.688em 0 0'
 });
