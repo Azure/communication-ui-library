@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /**
- * @azure/communication-react is the npm package that exports functionality for the Azure Communication Services - UI Library.
+ * `@azure/communication-react` is an npm package that exports the functionality of the Azure Communication Services - UI Library.
  *
  * This package makes it easy for you to build modern communications user experiences using Azure Communication Services. It gives you a library of production-ready UI components that you can drop into your applications:
  *   - Composites: These components are turn-key solutions that implement common communication scenarios. You can quickly add video calling or chat experiences to your applications. Composites are open-source higher order components built using UI components.
