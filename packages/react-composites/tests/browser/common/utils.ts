@@ -48,6 +48,8 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   // @TODO Add more checks to make sure the composite is fully loaded.
 };
 
+const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
+
 /**
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
@@ -69,8 +71,6 @@ export const disableAnimation = async (page: Page): Promise<void> => {
     `
   });
 };
-
-const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
 
 export type ChatUserType = {
   userId: string;
