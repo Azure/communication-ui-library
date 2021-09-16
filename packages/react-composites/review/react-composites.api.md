@@ -222,6 +222,11 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 // @public (undocumented)
 export type CallCompositeIcons = Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>;
 
+// @public
+export type CallCompositeOptions = {
+    errorBar?: boolean;
+};
+
 // @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -231,7 +236,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     // (undocumented)
     callInvitationURL?: string;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-    visualElements?: CallCompositeVisualElements;
+    options?: CallCompositeOptions;
 }
 
 // @public
@@ -248,11 +253,6 @@ export interface CallCompositeStrings {
     teamsMeetingFailReasonParticipantRemoved: string;
     teamsMeetingFailToJoin: string;
 }
-
-// @public
-export type CallCompositeVisualElements = {
-    showErrorBar?: boolean;
-};
 
 // @public (undocumented)
 export type CallEndedListener = (event: {
@@ -344,25 +344,25 @@ export type ChatCompositeClientState = {
 // @public (undocumented)
 export type ChatCompositeIcons = Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>;
 
+// @public
+export type ChatCompositeOptions = {
+    errorBar?: boolean;
+    participantPane?: boolean | ParticipantOptions;
+    topic?: boolean;
+};
+
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    visualElements?: ChatCompositeVisualElements;
+    options?: ChatCompositeOptions;
 }
 
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
 }
-
-// @public
-export type ChatCompositeVisualElements = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
-};
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -653,6 +653,11 @@ export type ParticipantJoinedListener = (event: {
 export type ParticipantLeftListener = (event: {
     removed: RemoteParticipant[];
 }) => void;
+
+// @public (undocumented)
+export type ParticipantOptions = {
+    enableContextualMenu: true;
+};
 
 // @public (undocumented)
 export type ParticipantsAddedListener = (event: {

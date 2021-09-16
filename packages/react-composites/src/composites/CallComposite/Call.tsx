@@ -31,12 +31,24 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   /**
    * Flags to enable/disable visual elements of the {@link CallComposite}.
    */
-  visualElements?: CallCompositeVisualElements;
+  options?: CallCompositeOptions;
 }
 
 /**
  * Optional features of the {@linnk CallComposite}
  */
+export type CallCompositeOptions = {
+  /**
+   * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
+   *
+   * @defaultValue false
+   */
+
+  errorBar?: boolean | { visibility: boolean; align?: 'top' | 'bottom' };
+  callControls?: boolean | { visibility: boolean; align: 'top' | 'bottom' };
+  dominantSpeaker: boolean;
+};
+
 export type CallCompositeVisualElements = {
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
@@ -142,7 +154,7 @@ export const CallCompositeInternal = (props: CallInternalProps): JSX.Element => 
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
         visualElements={{
           showCallControls: props.showCallControls,
-          showErrorBar: props.visualElements?.showErrorBar ?? false
+          showErrorBar: props.options?.errorBar ?? false
         }}
       />
     </CallAdapterProvider>

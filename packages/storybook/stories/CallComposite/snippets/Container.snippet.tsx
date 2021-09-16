@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapter,
@@ -7,6 +8,7 @@ import {
   createAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
+import { features } from 'process';
 import React, { useEffect, useMemo, useState } from 'react';
 
 export type ContainerProps = {
@@ -74,10 +76,11 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       <div style={{ height: '90vh', width: '90vw' }}>
         <CallComposite
           adapter={adapter}
-          fluentTheme={props.fluentTheme}
-          callInvitationURL={props?.callInvitationURL}
-          locale={props?.locale}
-          visualElements={props?.visualElements}
+          options={{
+            errorBar: { visibility: true }, // { visibility: boolean, align: 'top' | 'bottom' }
+            callControls: { visibility: true, align: 'top' }, // { visibility: boolean, align: 'top' | 'bottom' }
+            dominantSpeaker: true
+          }}
         />
       </div>
     );

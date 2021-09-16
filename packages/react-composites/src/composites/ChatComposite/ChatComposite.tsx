@@ -29,41 +29,45 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
   /**
    * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
-  visualElements?: ChatCompositeVisualElements;
+  options?: ChatCompositeOptions;
 }
+
+export type ParticipantOptions = {
+  enableContextualMenu: true;
+};
 
 /**
  * Optional features of the {@linnk ChatComposite}
  */
-export type ChatCompositeVisualElements = {
+export type ChatCompositeOptions = {
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    *
    * @defaultValue false
    */
-  showErrorBar?: boolean;
+  errorBar?: boolean;
   /**
    * Choose to show the participant pane
    * @defaultValue false
    */
-  showParticipantPane?: boolean;
+  participantPane?: boolean | ParticipantOptions;
   /**
    * Choose to show the topic at the top of the chat
    * @defaultValue false
    */
-  showTopic?: boolean;
+  topic?: boolean;
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, visualElements, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
+  const { adapter, options, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
 
   return (
     <BaseComposite {...props}>
       <ChatAdapterProvider adapter={adapter}>
         <ChatScreen
-          showErrorBar={visualElements?.showErrorBar}
-          showParticipantPane={visualElements?.showParticipantPane}
-          showTopic={visualElements?.showTopic}
+          showErrorBar={options?.errorBar}
+          showParticipantPane={!!options?.participantPane}
+          showTopic={options?.topic}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}
