@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "converting rem to em",
+  "packageName": "@internal/storybook",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
