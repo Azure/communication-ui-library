@@ -186,9 +186,6 @@ export const loadPage = async (
   await page.setViewportSize(PAGE_VIEWPORT);
   const url = `${serverUrl}?${qs}`;
   await page.goto(url, { waitUntil: 'networkidle' });
-  // Important: For ensuring that blinking cursor doesn't get captured in
-  // snapshots and cause a diff in subsequent tests.
-  await page.addStyleTag({ content: `* { caret-color: transparent !important; }` });
   return page;
 };
 
@@ -240,7 +237,10 @@ export const loadCallCompositePage = async (
   return page;
 };
 
-const encodeQueryData = (user: ChatUserType | CallUserType, qArgs?: { [key: string]: string }): string => {
+const encodeQueryData = (
+  user: ChatUserType | CallUserType | MeetingUserType,
+  qArgs?: { [key: string]: string }
+): string => {
   const qs: Array<string> = [];
   for (const d in user) {
     qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(user[d]));
