@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { dataUiId } from '../common/utils';
+import { IDS } from '../common/config';
+import { dataUiId, stubMessageTimestamps } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 
@@ -56,20 +57,33 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     // @TODO: future tests to test toggling meeting controls
   });
 
-  test('Chat pane opens and displays correctly', async ({ pages }) => {
-    const page = pages[0];
-    await page.click(dataUiId('meeting-composite-chat-button'));
-    await page.waitForSelector(dataUiId('meeting-composite-chat-pane'));
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-chat-pane-open-screen.png`, { threshold: 0.5 });
+  test('Chat messages are displayed correctly', async ({ pages }) => {
+    // Open chat pane on page 0 and send a message
+    await pages[0].click(dataUiId('meeting-composite-chat-button'));
+    await pages[0].waitForSelector(dataUiId('meeting-composite-chat-pane'));
+    await pages[0].type(dataUiId(IDS.sendboxTextfield), 'Meeting composite is awesome!');
+    await pages[0].keyboard.press('Enter');
 
-    // @TODO: future tests to test sending chat messages
+    // Open chat pane on page 1 and send a response
+    await pages[1].bringToFront();
+    await pages[1].click(dataUiId('meeting-composite-chat-button'));
+    await pages[1].waitForSelector(dataUiId('meeting-composite-chat-pane'));
+    await pages[1].type(dataUiId(IDS.sendboxTextfield), 'I agree!');
+    await pages[1].keyboard.press('Enter');
+    await pages[1].waitForSelector(`[data-ui-status="delivered"]`);
+
+    // Test page 0 has both sent message and received message
+    await pages[0].bringToFront();
+    await pages[0].waitForSelector(`[data-ui-status="seen"]`);
+    stubMessageTimestamps(pages[0]);
+    expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`, { threshold: 0.5 });
   });
 
-  test('People pane opens and displays correctly', async ({ pages }) => {
-    const page = pages[0];
+  test.only('People pane opens and displays correctly', async ({ pages }) => {
+    const page = pages[1];
     await page.click(dataUiId('meeting-composite-people-button'));
     await page.waitForSelector(dataUiId('meeting-composite-people-pane'));
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-people-pane-screen.png`, { threshold: 0.5 });
+    expect(await page.screenshot()).toMatchSnapshot(`meeting-people-pane-has-participants.png`, { threshold: 0.5 });
 
     // @TODO: future tests to verify expected people and interacting with participants
   });
