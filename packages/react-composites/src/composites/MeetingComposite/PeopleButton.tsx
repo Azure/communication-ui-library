@@ -15,6 +15,7 @@ export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
     <ControlBarButton
       {...props}
       strings={strings}
+      labelKey={'peopleButtonLabelKey'}
       onRenderOnIcon={props.onRenderOnIcon ?? onRenderOnIcon}
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}
       onClick={props.onClick}
