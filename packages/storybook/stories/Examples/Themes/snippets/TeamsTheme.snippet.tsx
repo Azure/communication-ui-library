@@ -43,8 +43,8 @@ export const TeamsTheme: () => JSX.Element = () => {
   const wrapperStyle = {
     width: '100%',
     height: '100%',
-    maxWidth: '50rem',
-    maxHeight: '30rem'
+    maxWidth: '50em',
+    maxHeight: '30em'
   };
 
   return (
@@ -61,7 +61,7 @@ const App: () => JSX.Element = () => {
 
   const headerContainer = mergeStyles({
     width: '100%',
-    height: '3.875rem',
+    height: '3.875em',
     overflow: 'hidden',
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -72,22 +72,22 @@ const App: () => JSX.Element = () => {
 
   const controlBarStyle = {
     root: {
-      marginRight: '.5rem',
+      marginRight: '.5em',
       alignItems: 'center'
     }
   };
 
   const teamsButtonStyle = {
-    root: { minWidth: '2.75rem' },
+    root: { minWidth: '2.75em' },
     rootHovered: { color: theme.palette.themePrimary, background: 'none' }
   };
 
   const endCallButtonStyles = {
     root: {
-      height: '2rem',
-      minHeight: '2rem',
-      width: '6.5rem',
-      borderRadius: '0.125rem'
+      height: '2em',
+      minHeight: '2em',
+      width: '6.5em',
+      borderRadius: '0.125em'
     }
   };
 
@@ -130,7 +130,7 @@ const App: () => JSX.Element = () => {
               }}
               showLabel={true}
               onRenderText={() => (
-                <span key={'endCallBtnTextKey'} style={{ marginLeft: '0.5rem' }}>
+                <span key={'endCallBtnTextKey'} style={{ marginLeft: '0.5em' }}>
                   Leave
                 </span>
               )}

@@ -3,7 +3,7 @@ import React from 'react';
 
 export const SendBoxWithSystemMessageExample: () => JSX.Element = () => (
   <FluentThemeProvider>
-    <div style={{ width: '31.25rem' }}>
+    <div style={{ width: '31.25em' }}>
       <SendBox
         onSendMessage={async () => {
           return;

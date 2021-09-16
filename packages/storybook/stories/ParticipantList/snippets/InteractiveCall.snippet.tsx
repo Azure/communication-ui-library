@@ -88,7 +88,7 @@ export const InteractiveCallParticipantListExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
       <Stack>
-        <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>Participants</div>
+        <div style={{ fontSize: '1.5em', marginBottom: '1em', fontFamily: 'Segoe UI' }}>Participants</div>
         <ParticipantList
           participants={participants}
           myUserId={mockMyUserId}

@@ -12,7 +12,7 @@ export const CustomIconExample: () => JSX.Element = () => {
     return <Icon iconName="AddFriend" />;
   };
 
-  const containerStyle = mergeStyles({ width: '15rem' });
+  const containerStyle = mergeStyles({ width: '15em' });
 
   return (
     <Stack className={containerStyle}>

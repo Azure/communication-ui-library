@@ -13,7 +13,7 @@ import React from 'react';
 const componentMainDivStyle = {
   display: 'flex',
   border: 'solid 0.5px lightgray',
-  height: '24rem',
+  height: '24em',
   alignItems: 'center',
   justifyContent: 'center'
 };

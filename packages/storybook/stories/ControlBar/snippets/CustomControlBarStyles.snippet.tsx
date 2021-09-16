@@ -12,7 +12,7 @@ export const CustomControlBarStylesExample: () => JSX.Element = () => {
     root: {
       backgroundColor: 'lightgray',
       border: 'solid black',
-      borderRadius: '0.3rem',
+      borderRadius: '0.3em',
       maxWidth: 'fit-content'
     }
   };

@@ -37,7 +37,7 @@ export const DefaultCallParticipantListExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
       <Stack>
-        <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>Participants</div>
+        <div style={{ fontSize: '1.5em', marginBottom: '1em', fontFamily: 'Segoe UI' }}>Participants</div>
         <ParticipantList participants={mockParticipants} myUserId={'user1'} />
       </Stack>
     </FluentThemeProvider>

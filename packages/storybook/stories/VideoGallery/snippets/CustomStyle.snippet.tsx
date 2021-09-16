@@ -40,7 +40,7 @@ export const CustomStyleVideoGalleryExample: () => JSX.Element = () => {
     }
   };
   return (
-    <Stack style={{ height: '30rem' }}>
+    <Stack style={{ height: '30em' }}>
       <VideoGalleryComponent
         styles={customStyles}
         localParticipant={MockLocalParticipant}

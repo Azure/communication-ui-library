@@ -29,11 +29,11 @@ export const LocalPreviewExample = ({
   const palette = theme.palette;
 
   const localPreviewContainerStyle = mergeStyles({
-    minWidth: '25rem',
+    minWidth: '25em',
     width: '100\u0025',
     height: '100\u0025',
-    maxHeight: '18.75rem',
-    minHeight: '16.875rem',
+    maxHeight: '18.75em',
+    minHeight: '16.875em',
     margin: '0 auto',
     background: palette.neutralLighter,
     color: palette.neutralTertiary
@@ -41,13 +41,13 @@ export const LocalPreviewExample = ({
 
   const videoTileStyle = {
     root: {
-      minHeight: '14rem'
+      minHeight: '14em'
     }
   };
 
   const cameraOffLabelStyle = mergeStyles({
     fontFamily: 'Segoe UI Regular',
-    fontSize: '0.625rem', // 10px
+    fontSize: '0.625em', // 10px
     color: palette.neutralTertiary
   });
 

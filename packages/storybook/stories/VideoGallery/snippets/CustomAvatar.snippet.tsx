@@ -84,7 +84,7 @@ export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
   };
 
   return (
-    <Stack style={{ height: '30rem' }}>
+    <Stack style={{ height: '30em' }}>
       <VideoGalleryComponent
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}

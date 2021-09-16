@@ -7,7 +7,7 @@ export const VideoTileExample: () => JSX.Element = () => {
     root: { height: '300px', width: '400px' },
     videoContainer: { border: '5px solid firebrick' },
     overlayContainer: { background: 'rgba(165, 13, 13, 0.5)' },
-    displayNameContainer: { top: '1rem', bottom: 'auto', right: '1rem', left: 'auto', backgroundColor: 'blue' }
+    displayNameContainer: { top: '1em', bottom: 'auto', right: '1em', left: 'auto', backgroundColor: 'blue' }
   };
 
   const videoStreamElement = useVideoStreams(1)[0];

@@ -24,7 +24,7 @@ export const DefaultChatParticipantListExample: () => JSX.Element = () => {
 
   return (
     <Stack>
-      <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>Participants</div>
+      <div style={{ fontSize: '1.5em', marginBottom: '1em', fontFamily: 'Segoe UI' }}>Participants</div>
       <ParticipantList participants={mockParticipants} />
     </Stack>
   );

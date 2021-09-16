@@ -15,7 +15,7 @@ export const CustomButtonsExample: () => JSX.Element = () => {
         height: 'inherit',
         background: 'darkorange',
         color: 'white',
-        width: '10rem'
+        width: '10em'
       },
       rootHovered: {
         background: 'darkred',
@@ -30,7 +30,7 @@ export const CustomButtonsExample: () => JSX.Element = () => {
         showLabel={true}
         onRenderIcon={() => <CallEnd20Filled primaryFill="currentColor" key={'hangupBtnIconKey'} />}
         onRenderText={() => (
-          <span key={'hangupBtnTextKey'} style={{ marginLeft: '0.5rem' }}>
+          <span key={'hangupBtnTextKey'} style={{ marginLeft: '0.5em' }}>
             End Call
           </span>
         )}

@@ -12,9 +12,9 @@ import React from 'react';
 
 export const TruncationSnippet = (): JSX.Element => {
   const buttonStyle = {
-    root: { width: '4rem', padding: '0' },
+    root: { width: '4em', padding: '0' },
     label: {
-      width: '2.75rem',
+      width: '2.75em',
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
       overflow: 'hidden',

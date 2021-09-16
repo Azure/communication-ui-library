@@ -29,7 +29,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
   };
 
   const ControlBarStyles = {
-    root: { background: theme.palette.white, minHeight: '4.25rem', alignItems: 'center' }
+    root: { background: theme.palette.white, minHeight: '4.25em', alignItems: 'center' }
   };
 
   // Helper code to make the storybook work. Replace with your own code for video stream element.
@@ -60,12 +60,12 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          marginTop: '-2.125rem'
+          marginTop: '-2.125em'
         }}
       >
         <p
           style={{
-            fontSize: '1.75rem',
+            fontSize: '1.75em',
             color: props.isVideoReady ? 'white' : palette.neutralPrimary,
             textAlign: 'center',
             margin: '0'
@@ -75,7 +75,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
         </p>
         <p
           style={{
-            fontSize: '0.75rem',
+            fontSize: '0.75em',
             color: props.isVideoReady ? 'white' : palette.neutralPrimary,
             textAlign: 'center',
             margin: '0'
@@ -89,7 +89,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
         <CameraButton showLabel={true} checked={true} />
         <MicrophoneButton showLabel={true} checked={true} />
         <OptionsButton showLabel={true} />
-        <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
+        <EndCallButton showLabel={true} style={{ borderRadius: '0.25em', marginLeft: '0.25em' }} />
       </ControlBar>
     </VideoTile>
   );

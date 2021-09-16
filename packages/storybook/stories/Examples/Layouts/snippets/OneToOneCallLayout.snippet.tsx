@@ -17,8 +17,8 @@ export const OneToOneCallLayoutExample: () => JSX.Element = () => {
     border: '1',
     borderStyle: 'solid',
     position: 'absolute',
-    bottom: '.25rem',
-    right: '.25rem',
+    bottom: '.25em',
+    right: '.25em',
     height: '25\u0025',
     width: '30\u0025'
   });

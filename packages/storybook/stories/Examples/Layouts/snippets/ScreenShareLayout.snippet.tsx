@@ -34,7 +34,7 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
   const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
 
   const aspectRatioBoxStyle = mergeStyles({
-    borderWidth: '.063rem .063rem .025rem .063rem',
+    borderWidth: '.063em .063em .025em .063em',
     borderStyle: 'solid',
     width: '100\u0025',
     height: 0,
@@ -54,16 +54,16 @@ export const ScreenShareLayoutExample: () => JSX.Element = () => {
     border: '1',
     borderStyle: 'solid',
     position: 'absolute',
-    bottom: '.25rem',
-    right: '.25rem',
+    bottom: '.25em',
+    right: '.25em',
     height: '20\u0025',
     width: '30\u0025'
   });
 
   const screenShareLayoutStyle = {
-    height: `31.25rem`,
-    width: `53.125rem`,
-    border: '.063rem'
+    height: `31.25em`,
+    width: `53.125em`,
+    border: '.063em'
   };
 
   const participantsComponents = MockParticipantDisplayNames.map((participantDisplayName, index) => {

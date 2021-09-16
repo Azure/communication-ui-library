@@ -35,7 +35,7 @@ const MockRemoteParticipants = [
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const DefaultVideoGalleryExample: () => JSX.Element = () => {
   return (
-    <Stack style={{ height: '30rem' }}>
+    <Stack style={{ height: '30em' }}>
       <VideoGalleryComponent localParticipant={MockLocalParticipant} remoteParticipants={MockRemoteParticipants} />
     </Stack>
   );
