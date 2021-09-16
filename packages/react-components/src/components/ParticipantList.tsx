@@ -8,6 +8,12 @@ import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } fro
 import { ParticipantItem } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 
+export type ParticipantMenuItemsCallback = (
+  participantUserId: string,
+  userId?: string,
+  defaultMenuItems?: IContextualMenuItem[]
+) => IContextualMenuItem[];
+
 /**
  * Props for component `ParticipantList`
  */
@@ -29,10 +35,10 @@ export type ParticipantListProps = {
   /** Optional callback to render the context menu for each participant  */
   onParticipantRemove?: (userId: string) => void;
   /** Optional callback to render custom menu items for each participant. */
-  onRenderParticipantMenuItems?: (participantUserId: string, userId?: string) => IContextualMenuItem[];
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
-const defaultOnRenderParticipantMenuItems = (
+const defaultOnFetchParticipantMenuItems = (
   participantUserId: string,
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void
@@ -52,7 +58,8 @@ const onRenderParticipantDefault = (
   participant: CommunicationParticipant,
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
-  onRenderAvatar?: OnRenderAvatarCallback
+  onRenderAvatar?: OnRenderAvatarCallback,
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback
 ): JSX.Element | null => {
   // Try to consider CommunicationParticipant as CallParticipant
   const callingParticipant = participant as CallParticipant;
@@ -66,7 +73,10 @@ const onRenderParticipantDefault = (
     }
   }
 
-  const menuItems = defaultOnRenderParticipantMenuItems(participant.userId, myUserId, onParticipantRemove);
+  let defaultMenuItems = defaultOnFetchParticipantMenuItems(participant.userId, myUserId, onParticipantRemove);
+  if (onFetchParticipantMenuItems) {
+    defaultMenuItems = onFetchParticipantMenuItems(participant.userId, myUserId, defaultMenuItems);
+  }
 
   const onRenderIcon =
     callingParticipant?.isScreenSharing || callingParticipant?.isMuted
@@ -90,7 +100,7 @@ const onRenderParticipantDefault = (
         userId={participant.userId}
         displayName={participant.displayName}
         me={myUserId ? participant.userId === myUserId : false}
-        menuItems={menuItems}
+        menuItems={defaultMenuItems}
         presence={presence}
         onRenderIcon={onRenderIcon}
         onRenderAvatar={onRenderAvatar}
@@ -104,7 +114,7 @@ const getParticipantsForDefaultRender = (
   participants: CommunicationParticipant[],
   excludeMe: boolean,
   myUserId: string | undefined
-) => {
+): CommunicationParticipant[] | [] => {
   if (participants === undefined) {
     return [];
   }
@@ -130,7 +140,16 @@ const getParticipantsForDefaultRender = (
  * assigned then each participant is rendered with `ParticipantItem`.
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const { excludeMe = false, myUserId, participants, onParticipantRemove, onRenderAvatar, onRenderParticipant } = props;
+  const {
+    excludeMe = false,
+    myUserId,
+    participants,
+    onParticipantRemove,
+    onRenderAvatar,
+    onRenderParticipant,
+    onFetchParticipantMenuItems
+  } = props;
+
   const ids = useIdentifiers();
 
   const displayedParticipants: CommunicationParticipant[] = useMemo(() => {
@@ -142,7 +161,13 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       {displayedParticipants.map((participant: CommunicationParticipant) =>
         onRenderParticipant
           ? onRenderParticipant(participant)
-          : onRenderParticipantDefault(participant, myUserId, onParticipantRemove, onRenderAvatar)
+          : onRenderParticipantDefault(
+              participant,
+              myUserId,
+              onParticipantRemove,
+              onRenderAvatar,
+              onFetchParticipantMenuItems
+            )
       )}
     </Stack>
   );

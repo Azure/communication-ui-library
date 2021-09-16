@@ -96,7 +96,20 @@ const onRenderPeopleIcon = (): JSX.Element => {
  * @param props - of type ParticipantsButtonProps
  */
 export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
-  const { callInvitationURL, styles, onMuteAll, onRenderIcon, onRenderParticipantList } = props;
+  const {
+    callInvitationURL,
+    styles,
+    onMuteAll,
+    onRenderIcon,
+    onRenderParticipantList,
+    participants,
+    myUserId,
+    excludeMe,
+    onRenderParticipant,
+    onRenderAvatar,
+    onParticipantRemove,
+    onFetchParticipantMenuItems
+  } = props;
 
   const onMuteAllCallback = useCallback(() => {
     if (onMuteAll) {
@@ -104,7 +117,6 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
   }, [onMuteAll]);
 
-  const { participants, myUserId, excludeMe, onRenderParticipant, onRenderAvatar, onParticipantRemove } = props;
   const defaultParticipantList = useCallback(() => {
     return (
       <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
@@ -115,6 +127,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
           onRenderParticipant={onRenderParticipant}
           onRenderAvatar={onRenderAvatar}
           onParticipantRemove={onParticipantRemove}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       </Stack>
     );
@@ -125,7 +138,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderAvatar,
     onRenderParticipant,
     participants,
-    styles?.participantListContainerStyle
+    styles?.participantListContainerStyle,
+    onFetchParticipantMenuItems
   ]);
 
   const onCopyCallback = useCallback(() => {

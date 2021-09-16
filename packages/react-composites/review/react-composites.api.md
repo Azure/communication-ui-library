@@ -27,6 +27,7 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import type { RemoteParticipant } from '@azure/communication-calling';
@@ -102,6 +103,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     rtl?: boolean;
 }
 

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { OnRenderAvatarCallback } from '@internal/react-components';
+import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { BaseComposite, BaseCompositeProps } from '../common/Composite';
+import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
@@ -58,10 +58,11 @@ type MainScreenProps = {
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   hiddenElements?: CallCompositeHiddenElements;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
-  const { callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData } = props;
+  const { callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const adapter = useAdapter();
   const locale = useLocale();
@@ -99,13 +100,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           hiddenElements={props.hiddenElements}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       );
   }
 };
 
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationURL, onFetchAvatarPersonaData, hiddenElements } = props;
+  const { adapter, callInvitationURL, onFetchAvatarPersonaData, hiddenElements, onFetchParticipantMenuItems } = props;
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });
@@ -121,6 +123,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           hiddenElements={hiddenElements}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       </CallAdapterProvider>
     </BaseComposite>

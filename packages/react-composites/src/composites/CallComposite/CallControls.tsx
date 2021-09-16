@@ -1,24 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
 import {
   CameraButton,
   ControlBar,
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
+  ParticipantMenuItemsCallback,
   ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
-import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
+import React, { useCallback } from 'react';
 import { usePropsFor } from './hooks/usePropsFor';
+import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 
 export type CallControlsProps = {
   onEndCallClick(): void;
   compressedMode?: boolean;
   callInvitationURL?: string;
   hiddenElements?: CallControlHiddenElements;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 export type CallControlHiddenElements = {
@@ -55,7 +57,7 @@ export type CallControlHiddenElements = {
 };
 
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const { callInvitationURL, compressedMode, onEndCallClick, hiddenElements } = props;
+  const { callInvitationURL, compressedMode, onEndCallClick, hiddenElements, onFetchParticipantMenuItems } = props;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
@@ -89,6 +91,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           {...participantsButtonProps}
           showLabel={!compressedMode}
           callInvitationURL={callInvitationURL}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       )}
       {/* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */}

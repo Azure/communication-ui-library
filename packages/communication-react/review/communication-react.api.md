@@ -152,6 +152,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     rtl?: boolean;
 }
 
@@ -1622,6 +1623,7 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 // @public (undocumented)
@@ -1634,6 +1636,9 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     participants: CallParticipant[];
     myUserId: string;
 }>;
+
+// @public (undocumented)
+export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
 // @public (undocumented)
 export type ParticipantsAddedListener = (event: {
