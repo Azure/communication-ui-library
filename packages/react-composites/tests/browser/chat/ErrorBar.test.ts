@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IDS } from '../config';
+import { IDS } from '../common/config';
 import { test } from './fixture';
-import { dataUiId, gotoPage, loadPage, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
+import { dataUiId, loadUrlInPage, stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
 import { Page, expect } from '@playwright/test';
 
 // All tests in this suite *must be run sequentially*.
@@ -12,9 +12,9 @@ import { Page, expect } from '@playwright/test';
 // many threads using the same connection string in a short span of time.
 test.describe('ErrorBar is shown correctly', async () => {
   test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
-    await gotoPage(page, serverUrl, users[0]);
+    await loadUrlInPage(page, serverUrl, users[0]);
     page.bringToFront();
-    await waitForCompositeToLoad(page);
+    await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
 
@@ -27,8 +27,8 @@ test.describe('ErrorBar is shown correctly', async () => {
   test('with wrong thread ID', async ({ page, serverUrl, users }) => {
     const user = users[0];
     user.threadId = 'INCORRECT_VALUE';
-    await gotoPage(page, serverUrl, users[0]);
-    await waitForCompositeToLoad(page);
+    await loadUrlInPage(page, serverUrl, users[0]);
+    await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
 
@@ -41,8 +41,8 @@ test.describe('ErrorBar is shown correctly', async () => {
   test('with expired token', async ({ page, serverUrl, users }) => {
     const user = users[0];
     user.token = 'INCORRECT_VALUE' + user.token;
-    await gotoPage(page, serverUrl, users[0]);
-    await waitForCompositeToLoad(page);
+    await loadUrlInPage(page, serverUrl, users[0]);
+    await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
@@ -55,8 +55,8 @@ test.describe('ErrorBar is shown correctly', async () => {
   test('with wrong endpoint', async ({ page, serverUrl, users }) => {
     const user = users[0];
     user.endpointUrl = 'https://INCORRECT.VALUE';
-    await gotoPage(page, serverUrl, users[0]);
-    await waitForCompositeToLoad(page);
+    await loadUrlInPage(page, serverUrl, users[0]);
+    await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
 
