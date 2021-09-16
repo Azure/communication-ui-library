@@ -6,6 +6,13 @@
     "teamsMeetingFailReasonAccessDenied": "Toegang tot de vergadering is geweigerd",
     "teamsMeetingFailReasonParticipantRemoved": "U bent verwijderd uit de vergadering",
     "teamsMeetingFailToJoin": "Fout bij deelnemen aan Teams-vergadering",
-    "cameraLabel": "Camera"
+    "defaultPlaceHolder": "Een optie selecteren",
+    "cameraLabel": "Camera",
+    "soundLabel": "Geluid",
+    "configurationPageTitle": "Een oproep starten",
+    "startCallButtonText": "Gesprek starten"
+  },
+  "chat": {
+    "chatListHeader": "In deze chat"
   }
 }

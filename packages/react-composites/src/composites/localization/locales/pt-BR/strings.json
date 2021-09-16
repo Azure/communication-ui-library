@@ -6,6 +6,13 @@
     "teamsMeetingFailReasonAccessDenied": "O acesso à reunião foi negado",
     "teamsMeetingFailReasonParticipantRemoved": "Você foi removido da reunião",
     "teamsMeetingFailToJoin": "Erro ao ingressar na Reunião de Equipe",
-    "cameraLabel": "Camera"
+    "defaultPlaceHolder": "Selecionar uma opção",
+    "cameraLabel": "Câmera",
+    "soundLabel": "Som",
+    "configurationPageTitle": "Iniciar uma chamada",
+    "startCallButtonText": "Iniciar chamada"
+  },
+  "chat": {
+    "chatListHeader": "Neste chat"
   }
 }
