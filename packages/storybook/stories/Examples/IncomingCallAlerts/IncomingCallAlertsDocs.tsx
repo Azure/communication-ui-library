@@ -13,26 +13,26 @@ const theme = getTheme();
 const palette = theme.palette;
 
 const incomingCallToastStyle = mergeStyles({
-  minWidth: '20rem',
+  minWidth: '20em',
   width: '100%',
   height: '100%',
   backgroundColor: palette.whiteTranslucent40,
   opacity: 0.95,
-  borderRadius: '0.5rem',
+  borderRadius: '0.5em',
   boxShadow: theme.effects.elevation8,
-  padding: '1rem'
+  padding: '1em'
 });
 
 const incomingCallToastAvatarContainerStyle = mergeStyles({
-  marginRight: '0.5rem'
+  marginRight: '0.5em'
 });
 
 const incomingCallAcceptButtonStyle = mergeStyles({
   backgroundColor: palette.greenDark,
   color: palette.white,
-  borderRadius: '2rem',
-  minWidth: '2rem',
-  width: '2rem',
+  borderRadius: '2em',
+  minWidth: '2em',
+  width: '2em',
   border: 'none',
   ':hover, :active': {
     backgroundColor: palette.green,
@@ -43,9 +43,9 @@ const incomingCallAcceptButtonStyle = mergeStyles({
 const incomingCallRejectButtonStyle = mergeStyles({
   backgroundColor: palette.redDark,
   color: palette.white,
-  borderRadius: '2rem',
-  minWidth: '2rem',
-  width: '2rem',
+  borderRadius: '2em',
+  minWidth: '2em',
+  width: '2em',
   border: 'none',
   ':hover, :active': {
     backgroundColor: palette.red,
@@ -82,10 +82,10 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
       </Stack>
 
       <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-        <Stack style={{ fontSize: '0.875rem' }}>
+        <Stack style={{ fontSize: '0.875em' }}>
           <b>{callerName ?? 'No display name'}</b>
         </Stack>
-        <Stack style={{ fontSize: '0.75rem' }}>
+        <Stack style={{ fontSize: '0.75em' }}>
           <span>{alertText ?? 'Incoming call'}</span>
         </Stack>
       </Stack>
@@ -113,16 +113,16 @@ const theme = getTheme();
 const palette = theme.palette;
 
 const incomingCallModalContainerStyle = {
-  borderRadius: '0.75rem'
+  borderRadius: '0.75em'
 };
 
 const incomingCallModalLocalPreviewStyle = mergeStyles({
-  height: '10rem',
+  height: '10em',
   background: palette.neutralLighterAlt,
-  margin: '1.5rem 0',
-  borderRadius: '0.25rem',
+  margin: '1.5em 0',
+  borderRadius: '0.25em',
   '& video': {
-    borderRadius: '0.25rem'
+    borderRadius: '0.25em'
   }
 });
 
@@ -182,7 +182,7 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
         }}
       >
         <Stack horizontal verticalAlign="center">
-          <Stack horizontalAlign="start" style={{ marginRight: '0.5rem' }}>
+          <Stack horizontalAlign="start" style={{ marginRight: '0.5em' }}>
             <Persona
               imageUrl={avatar}
               text={callerName}
@@ -192,15 +192,15 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
             />
           </Stack>
           <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start' }}>
-            <Stack style={{ fontSize: '0.875rem', color: palette.black, fontWeight: 'bold' }}>
+            <Stack style={{ fontSize: '0.875em', color: palette.black, fontWeight: 'bold' }}>
               <span>
                 {callerName ?? 'No display name'}
                 {callerNameAlt ? (
-                  <span style={{ opacity: 0.5, marginLeft: '0.2rem' }}> &bull; {callerNameAlt}</span>
+                  <span style={{ opacity: 0.5, marginLeft: '0.2em' }}> &bull; {callerNameAlt}</span>
                 ) : null}
               </span>
             </Stack>
-            <Stack style={{ fontSize: '0.75rem', color: palette.neutralDark }}>
+            <Stack style={{ fontSize: '0.75em', color: palette.neutralDark }}>
               <span>{callerTitle ?? ''}</span>
             </Stack>
           </Stack>

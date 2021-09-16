@@ -287,7 +287,7 @@ const memoizeAllMessages = memoizeFnAll(
         ),
         contentPosition: payload.mine ? 'end' : 'start',
         message: {
-          className: mergeStyles({ width: 'calc(100% - 6.25rem)' }),
+          className: mergeStyles({ width: 'calc(100% - 6.25em)' }),
           content: (
             <Flex hAlign={payload.mine ? 'end' : undefined} vAlign="end">
               {chatMessageComponent}

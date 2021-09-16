@@ -51,8 +51,8 @@ const videoStreamStyle = mergeStyles({
   border: '1',
   borderStyle: 'solid',
   position: 'absolute',
-  bottom: '.25rem',
-  right: '.25rem',
+  bottom: '.25em',
+  right: '.25em',
   height: '20%',
   width: '30%'
 });
@@ -62,7 +62,7 @@ const ScreenShareLayoutStory = (args): JSX.Element => {
   const aspectRatio = (100 * parseInt(aspectRatioNumberArray[1])) / parseInt(aspectRatioNumberArray[0]) + '%';
 
   const aspectRatioBoxStyle = mergeStyles({
-    borderWidth: '.063rem .063rem .025rem .063rem',
+    borderWidth: '.063em .063em .025em .063em',
     borderStyle: 'solid',
     width: '100%',
     height: 0,
@@ -73,7 +73,7 @@ const ScreenShareLayoutStory = (args): JSX.Element => {
   const screenShareLayoutStyle = {
     height: `${args.height}px`,
     width: `${args.width}px`,
-    border: '.063rem'
+    border: '.063em'
   };
 
   const participantsComponents = MockParticipantDisplayNames.map((participantDisplayName, index) => {

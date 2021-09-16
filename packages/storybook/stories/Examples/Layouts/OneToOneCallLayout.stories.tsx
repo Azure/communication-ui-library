@@ -25,8 +25,8 @@ const OneToOneCallLayoutStory = (args): JSX.Element => {
     border: '1',
     borderStyle: 'solid',
     position: 'absolute',
-    bottom: '.25rem',
-    right: '.25rem',
+    bottom: '.25em',
+    right: '.25em',
     height: '25%',
     width: '30%'
   });

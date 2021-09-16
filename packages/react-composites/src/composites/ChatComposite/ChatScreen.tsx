@@ -81,7 +81,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
           />
           <Stack.Item align="center" className={sendBoxParentStyle}>
-            <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
+            <div style={{ paddingLeft: '0.5em', paddingRight: '0.5em' }}>
               {onRenderTypingIndicator ? (
                 onRenderTypingIndicator(typingIndicatorProps.typingUsers)
               ) : (

@@ -90,7 +90,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
           right: 0
         }}
       >
-        <p style={{ fontSize: '1.75rem', color: isVideoReady ? 'white' : palette.neutralPrimary }}>
+        <p style={{ fontSize: '1.75em', color: isVideoReady ? 'white' : palette.neutralPrimary }}>
           ☕ <br /> {callStateText}
         </p>
       </div>

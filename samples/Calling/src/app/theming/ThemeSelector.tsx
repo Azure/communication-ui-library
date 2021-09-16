@@ -43,7 +43,7 @@ export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
         text: theme,
         styles: concatStyleSets(
           { root: { marginTop: '0' } },
-          horizontal ? { choiceFieldWrapper: { marginRight: '1rem' } } : undefined
+          horizontal ? { choiceFieldWrapper: { marginRight: '1em' } } : undefined
         )
       }))}
       onChange={onChange}

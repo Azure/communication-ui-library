@@ -13,7 +13,7 @@ import { mergeStyles, Stack } from '@fluentui/react';
 const VideoGalleryStyles = {
   root: {
     height: '100%',
-    minHeight: '10rem' // space affordance to ensure media gallery is never collapsed
+    minHeight: '10em' // space affordance to ensure media gallery is never collapsed
   }
 };
 

@@ -32,10 +32,10 @@ const ComplianceBannerStory = (): JSX.Element => {
   // TODO: Fix dark theming.
   // Once https://github.com/Azure/communication-ui-library/pull/169 lands, same fix should be applied here.
   return (
-    <Stack tokens={{ childrenGap: '1rem' }} style={{ minWidth: '50%', minHeight: '50%' }}>
+    <Stack tokens={{ childrenGap: '1em' }} style={{ minWidth: '50%', minHeight: '50%' }}>
       {/* We need to use these two buttons here to toggle recording and transcription.
     Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
-      <Stack horizontal tokens={{ childrenGap: '1rem' }}>
+      <Stack horizontal tokens={{ childrenGap: '1em' }}>
         <PrimaryButton text="Toggle Recording" onClick={toggleRecording} />
         <PrimaryButton text="Toggle Transcription" onClick={toggleTranscription} />
       </Stack>

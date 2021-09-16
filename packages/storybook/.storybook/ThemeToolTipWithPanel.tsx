@@ -86,9 +86,9 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
             onChange={setText}
             errorMessage={error}
             multiline={true}
-            styles={{ fieldGroup: { height: '32rem' }, root: { height: '35rem' } }}
+            styles={{ fieldGroup: { height: '32em' }, root: { height: '35em' } }}
           />
-          <Stack horizontal tokens={{ childrenGap: '1rem' }}>
+          <Stack horizontal tokens={{ childrenGap: '1em' }}>
             <DefaultButton
               onClick={() => {
                 setTextValue('');

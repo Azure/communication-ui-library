@@ -6,7 +6,7 @@ function ChatComponents(): JSX.Element {
   const sendBoxProps = usePropsFor(SendBox);
 
   return (
-    <div style={{ height: '50rem', width: '50rem' }}>
+    <div style={{ height: '50em', width: '50em' }}>
       {/*Props are updated asynchronously, so only render the component once props are populated.*/}
       {messageThreadProps && <MessageThread {...messageThreadProps} />}
       {sendBoxProps && <SendBox {...sendBoxProps} />}

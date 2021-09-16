@@ -68,7 +68,7 @@ const getDocs: () => JSX.Element = () => {
 
 const SendBoxStory = (args): JSX.Element => {
   return (
-    <div style={{ width: '31.25rem' }}>
+    <div style={{ width: '31.25em' }}>
       <SendBoxComponent
         disabled={args.disabled}
         onSendMessage={async (message) => alert(`sent message: ${message} `)}

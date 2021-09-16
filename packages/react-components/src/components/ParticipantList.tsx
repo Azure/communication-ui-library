@@ -60,7 +60,7 @@ const onRenderParticipantDefault = (
   const onRenderIcon =
     callingParticipant?.isScreenSharing || callingParticipant?.isMuted
       ? () => (
-          <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+          <Stack horizontal={true} tokens={{ childrenGap: '0.5em' }}>
             {callingParticipant.isScreenSharing && (
               <Icon iconName="ParticipantItemScreenShareStart" className={iconStyles} ariaLabel={'Sharing'} />
             )}

@@ -30,7 +30,7 @@ const getDocs: () => JSX.Element = () => {
         issue when loading the storybook snippets
       </Description>
       <Canvas mdxSource={LocalPreviewExampleText}>
-        <div style={{ height: '17.188rem' }}>
+        <div style={{ height: '17.188em' }}>
           <LocalPreviewExample isVideoAvailable={true} isCameraEnabled={true} isMicrophoneEnabled={true} />
         </div>
       </Canvas>

@@ -222,7 +222,7 @@ const MessageThreadStory = (args): JSX.Element => {
       />
       {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
       Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
-      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1em' }}>
         <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
         <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
         <PrimaryButton text="Send new system message" onClick={onSendNewSystemMessage} />

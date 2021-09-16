@@ -80,9 +80,9 @@ const ParticipantItemStory: (args) => JSX.Element = (args) => {
       };
     });
 
-  const containerStyle = { width: '15rem' };
+  const containerStyle = { width: '15em' };
   const iconStyles = mergeStyles({ display: 'flex', alignItems: 'center' });
-  const tokenProps = { childrenGap: '0.5rem' };
+  const tokenProps = { childrenGap: '0.5em' };
 
   return (
     <div style={containerStyle}>

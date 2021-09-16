@@ -44,10 +44,10 @@ export const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element =>
       </Stack>
 
       <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-        <Stack style={{ fontSize: '0.875rem' }}>
+        <Stack style={{ fontSize: '0.875em' }}>
           <b>{callerName ?? 'No display name'}</b>
         </Stack>
-        <Stack style={{ fontSize: '0.75rem' }}>
+        <Stack style={{ fontSize: '0.75em' }}>
           <span>{alertText ?? 'Incoming call'}</span>
         </Stack>
       </Stack>
@@ -119,7 +119,7 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
         }}
       >
         <Stack horizontal verticalAlign="center">
-          <Stack horizontalAlign="start" style={{ marginRight: '0.5rem' }}>
+          <Stack horizontalAlign="start" style={{ marginRight: '0.5em' }}>
             <Persona
               imageUrl={avatar}
               text={callerName}
@@ -129,15 +129,15 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
             />
           </Stack>
           <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start' }}>
-            <Stack style={{ fontSize: '0.875rem', color: palette.black, fontWeight: 'bold' }}>
+            <Stack style={{ fontSize: '0.875em', color: palette.black, fontWeight: 'bold' }}>
               <span>
                 {callerName ?? 'No display name'}
                 {callerNameAlt ? (
-                  <span style={{ opacity: 0.5, marginLeft: '0.2rem' }}> &bull; {callerNameAlt}</span>
+                  <span style={{ opacity: 0.5, marginLeft: '0.2em' }}> &bull; {callerNameAlt}</span>
                 ) : null}
               </span>
             </Stack>
-            <Stack style={{ fontSize: '0.75rem', color: palette.neutralDark }}>
+            <Stack style={{ fontSize: '0.75em', color: palette.neutralDark }}>
               <span>{callerTitle ?? ''}</span>
             </Stack>
           </Stack>

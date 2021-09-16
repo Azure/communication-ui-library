@@ -36,10 +36,10 @@ export const TOC = (props: {children: React.ReactNode}): JSX.Element => {
     fontSize: '12px',
     '& nav': { 
       top: 0,
-      maxWidth: '10rem',
+      maxWidth: '10em',
       right: 0, 
       'div > ol > li.toc-list-item': {
-        padding: '0 0.5rem',
+        padding: '0 0.5em',
       },
       'div > ol > li > a.toc-link': {
         whiteSpace: 'break-spaces !important',
