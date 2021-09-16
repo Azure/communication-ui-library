@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Improving E2E tests for chat after custom avatar update",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}

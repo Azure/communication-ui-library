@@ -1,12 +1,13 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  CallComposite,
+  AvatarPersonaData,
   CallAdapter,
-  createAzureCommunicationCallAdapter,
-  PlaceholderProps
+  CallComposite,
+  CompositeLocale,
+  createAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -16,6 +17,7 @@ export type ContainerProps = {
   avatarInitials: string;
   callInvitationURL?: string;
   fluentTheme?: PartialTheme | Theme;
+  locale?: CompositeLocale;
 };
 
 export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Element => {
@@ -54,13 +56,18 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
     };
   }, [adapter]);
 
-  const onRenderAvatar = useCallback(
-    (onRenderAvatarprops: PlaceholderProps, defaultOnRender: (props: PlaceholderProps) => JSX.Element): JSX.Element => {
-      onRenderAvatarprops.displayName = `${props.avatarInitials}`;
-      return defaultOnRender(onRenderAvatarprops);
-    },
-    [props.avatarInitials]
-  );
+  // Data model injection: Contoso provides custom initials for the user avatar.
+  //
+  // Note: Call Composite doesn't implement a memoization mechanism for this callback.
+  // It is recommended that Contoso memoize the `onFetchAvatarPersonaData` callback
+  // to avoid costly re-fetching of data.
+  // A 3rd Party utility such as Lodash (_.memoize) can be used to memoize the callback.
+  const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
+    new Promise((resolve, reject) => {
+      return resolve({
+        text: props.avatarInitials ? props.avatarInitials : props.displayName
+      });
+    });
 
   return (
     <>
@@ -68,8 +75,9 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
         <CallComposite
           fluentTheme={props.fluentTheme}
           adapter={adapter}
-          onRenderAvatar={onRenderAvatar}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           callInvitationURL={props?.callInvitationURL}
+          locale={props?.locale}
         />
       )}
     </>

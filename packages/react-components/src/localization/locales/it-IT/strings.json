@@ -1,0 +1,78 @@
+{
+  "participantItem": {
+    "isMeText": "(tu)",
+    "menuTitle": "Altre opzioni"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} sta scrivendo ...",
+    "multipleUsers": "{users} stanno scrivendo ...",
+    "multipleUsersAbbreviateOne": "{users} e 1 altro stanno scrivendo ...",
+    "multipleUsersAbbreviateMany": "{users} e {numOthers} altri stanno scrivendo ...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Immetti un messaggio"
+  },
+  "messageStatusIndicator": {
+    "deliveredTooltipText": "Inviato",
+    "seenTooltipText": "Visualizzato",
+    "sendingTooltipText": "Invio in corso",
+    "failedToSendTooltipText": "Invio non riuscito"
+  },
+  "endCallButton": {
+    "label": "Permesso"
+  },
+  "cameraButton": {
+    "onLabel": "Disabilita",
+    "offLabel": "Abilita"
+  },
+  "microphoneButton": {
+    "onLabel": "Disattiva audio",
+    "offLabel": "Riattiva audio"
+  },
+  "optionsButton": {
+    "label": "Opzioni",
+    "cameraMenuTitle": "Fotocamera",
+    "cameraMenuTooltip": "Scegli la fotocamera",
+    "microphoneMenuTitle": "Microfono",
+    "microphoneMenuTooltip": "Scegli il microfono",
+    "speakerMenuTitle": "Altoparlante",
+    "speakerMenuTooltip": "Scegli l’altoparlante"
+  },
+  "participantsButton": {
+    "label": "Persone",
+    "menuHeader": "In questa chiamata",
+    "participantsListButtonLabel": "{numParticipants} persone",
+    "muteAllButtonLabel": "Disattiva l'audio di tutti",
+    "copyInviteLinkButtonLabel": "Copia il collegamento dell’invito"
+  },
+  "screenShareButton": {
+    "onLabel": "Arresta",
+    "offLabel": "Condividi"
+  },
+  "messageThread": {
+    "yesterday": "Ieri",
+    "sunday": "Domenica",
+    "monday": "Lunedì",
+    "tuesday": "Martedì",
+    "wednesday": "Mercoledì",
+    "thursday": "Giovedì",
+    "friday": "Venerdì",
+    "saturday": "Sabato",
+    "participantJoined": "si è unito alla chat.",
+    "participantLeft": "ha abbandonato la chat."
+  },
+  "errorBar": {
+    "unableToReachChatService": "Sei offline",
+    "accessDenied": "Non è possibile accedere ai servizi di chat. Controllare le credenziali utente specificate",
+    "userNotInThisThread": "Non fai più parte di questo thread di chat",
+    "sendMessageNotInThisThread": "Non è stato possibile inviare il messaggio perché non sei più in questo thread di chat",
+    "sendMessageGeneric": "Impossibile inviare il messaggio",
+    "startVideoGeneric": "Non è stato possibile avviare il video",
+    "stopVideoGeneric": "Non è stato possibile arrestare il video",
+    "muteGeneric": "Non è stato possibile disattivare l'audio del microfono",
+    "unmuteGeneric": "Non è stato possibile riattivare l'audio del microfono",
+    "startScreenShareGeneric": "Non è stato possibile avviare la condivisione dello schermo",
+    "stopScreenShareGeneric": "Non è stato possibile arrestare la condivisione dello schermo"
+  }
+}

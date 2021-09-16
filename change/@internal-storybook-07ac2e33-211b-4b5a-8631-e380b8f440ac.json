@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "remove unused deps",
+  "packageName": "@internal/storybook",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

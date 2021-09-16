@@ -4,7 +4,7 @@
 import { ListPageSettings } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
-import { ChatErrorTargets } from '../ChatClientState';
+import { ChatErrorTarget } from '../ChatClientState';
 
 type IteratorCreatorFn<T, OptionsType, PageT = T[]> = (options?: OptionsType) => PagedAsyncIterableIterator<T, PageT>;
 
@@ -63,26 +63,24 @@ export const createDecoratedIterator = <ItemType, OptionsType>(
  * @param iteratorCreator Function that creates the base iteartor
  * @param context The ChatContext that stores all internal state.
  * @param target See {@link ChatContext.asyncTeeErrorToState}.
- * @param clearTargets See {@link ChatContext.asyncTeeErrorToState}.
  * @returns A function to create an iterator that handles errors when iterting over the iterator from `iteratorCreator`.
  */
 export const createErrorHandlingIterator = <ItemType, OptionsType>(
   iteratorCreator: IteratorCreatorFn<ItemType, OptionsType>,
   context: ChatContext,
-  target: ChatErrorTargets,
-  clearTargets?: ChatErrorTargets[]
+  target: ChatErrorTarget
 ): IteratorCreatorFn<ItemType, OptionsType> => {
   return (...args: Parameters<IteratorCreatorFn<ItemType, OptionsType>>): PagedAsyncIterableIterator<ItemType> => {
     const innerIter = iteratorCreator(...args);
     return {
-      next: context.withAsyncErrorTeedToState(innerIter.next.bind(innerIter), target, clearTargets),
+      next: context.withAsyncErrorTeedToState(innerIter.next.bind(innerIter), target),
       [Symbol.asyncIterator]() {
         return this;
       },
       byPage: (settings: ListPageSettings = {}): AsyncIterableIterator<ItemType[]> => {
         const pages = innerIter.byPage(settings);
         return {
-          next: context.withAsyncErrorTeedToState(pages.next.bind(pages), target, clearTargets),
+          next: context.withAsyncErrorTeedToState(pages.next.bind(pages), target),
           [Symbol.asyncIterator]() {
             return this;
           }

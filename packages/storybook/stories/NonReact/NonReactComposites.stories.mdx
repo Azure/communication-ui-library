@@ -7,8 +7,60 @@ import { Canvas, Title } from '@storybook/addon-docs';
 
 If you are not using React, you can still embed a calling/chat composite into your html page with a simple `<script>` tag and several lines of code like:
 
+You can easily find prebuilt bundles from:
+
+[The latest bundles for chat composite](https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js)
+
+[The latest bundles for call composite](https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js)
+
+For development and prototyping purpose, import these 2 urls with `<script>` tags will be the fastest way. In production environment, we recommend that serving composite files on your own CDN will help with performance.
+
+## Use Composites in html
+
+After importing chat/calling composite bundle, you are able to load composites using these 2 code snippets:
+
+```tsx
+const chatAdapter = await chatComposite.loadChatComposite(
+  //The for composite which allows you control composite externally,
+  // This function will be exposed to window.chatComposite once you import composite bundle
+  {
+    displayName, // string
+    threadId, // string
+    endpointUrl, // string
+    userId, // Object { communicationUserId: string }
+    token // string
+  },
+  elementToRender, // Container element
+  props // Optional, Object contains all optional props for composite, check composite page for more details
+);
+```
+
+```tsx
+const callAdapter = await callComposite.loadChatComposite(
+  //The for composite which allows you control composite externally,
+  // This function will be exposed to window.callComposite once you import composite bundle
+  {
+    groupId, // string, Provide any GUID to join a group
+    displayName, // string
+    userId, // Object { communicationUserId: string }
+    token // string
+  },
+  elementToRender, // container element
+  props // Optional, Object contains all optional props for composite, check composite page for more details
+);
+```
+
+Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example) and [Call Composite Basic Example](./?path=/docs/composites-call-basicexample--basic-example) to see optional props of composites
+
+For more details of adapter, check [Adapters for Composites](./?path=/story/statefulclient-reacthooks-adapters--page)
+
+## Example html code
+
+Check [Example](https://github.com/Azure/communication-ui-library/blob/PublicPreview/1.0.0-beta.3/samples/StaticHtmlComposites/index.html) for more detailed example of using calling/chat composites
+
 ```html
-<script src="[url of chatComposite.js]"></script>
+<!-- Replace this url with your own CDN in production environment -->
+<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js"></script>
 <!-- height need to be set for composite to fit the layout -->
 <div id="chat-container" style="height: 50vh"></div>
 <script>
@@ -25,7 +77,7 @@ If you are not using React, you can still embed a calling/chat composite into yo
 </script>
 ```
 
-Here's the step-by-step instruction to get the composite js bundle file:
+# Build your own composite js bundle files:
 
 ### git clone our repo
 
@@ -33,7 +85,17 @@ Here's the step-by-step instruction to get the composite js bundle file:
 git clone https://github.com/Azure/communication-ui-library.git
 ```
 
-### install packages and build js bundles
+### Install rush
+
+For this example, we use [rush](https://rushjs.io/) to create the bundles.
+
+```bash
+
+npm install -g @microsoft/rush
+
+```
+
+### Install packages and build js bundles
 
 ```bash
 cd communication-ui-library\samples\StaticHtmlComposites\
@@ -48,13 +110,13 @@ Then you will be able to see 2 js bundle files:
 .\samples\StaticHtmlComposites\dist\callComposite.js
 ```
 
-There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check [Create and manage Communication Services resources](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp):
+There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check [Create and manage Communication Services resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp):
 
 ```
 .\samples\StaticHtmlComposites\index.html
 ```
 
-### try it the sample
+### Try it the sample
 
 After finishing building the bundle, you can also try the sample
 

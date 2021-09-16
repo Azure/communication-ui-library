@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Participant Item Participant Item 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -23,222 +23,263 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
       <div
         style={
           Object {
-            "width": "12rem",
+            "width": "15rem",
           }
         }
       >
         <div
-          className="css-73"
+          className="css-82"
+          data-is-focusable={true}
+          onClick={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          role="menuitem"
         >
           <div
-            className="ms-Persona ms-Persona--size32 root-4"
+            className="ms-Stack css-7"
           >
             <div
-              className="ms-Persona-coin ms-Persona--size32 coin-11"
-              role="presentation"
+              className="ms-Persona ms-Persona--size32 root-8"
             >
               <div
-                className="ms-Persona-imageArea imageArea-13"
+                className="ms-Persona-coin ms-Persona--size32 coin-15"
                 role="presentation"
               >
                 <div
-                  aria-hidden="true"
-                  className="ms-Persona-initials initials-16"
+                  className="ms-Persona-imageArea imageArea-17"
+                  role="presentation"
                 >
-                  <i
-                    aria-hidden={true}
-                    className="root-37 root-18"
-                    data-icon-name="Contact"
+                  <div
+                    aria-hidden="true"
+                    className="ms-Persona-initials initials-20"
                   >
-                    
-                  </i>
+                    <i
+                      aria-hidden={true}
+                      className="root-37 root-22"
+                      data-icon-name="Contact"
+                    >
+                      
+                    </i>
+                  </div>
                 </div>
+              </div>
+              <div
+                className="ms-Persona-details details-9"
+              >
+                <div
+                  className="ms-Persona-primaryText primaryText-10"
+                  dir="auto"
+                />
+                <div
+                  className="ms-Persona-secondaryText secondaryText-11"
+                  dir="auto"
+                />
+                <div
+                  className="ms-Persona-tertiaryText tertiaryText-12"
+                  dir="auto"
+                />
+                <div
+                  className="ms-Persona-optionalText optionalText-13"
+                  dir="auto"
+                />
               </div>
             </div>
             <div
-              className="ms-Persona-details details-5"
+              className="ms-Stack css-25"
             >
               <div
-                className="ms-Persona-primaryText primaryText-6"
-                dir="auto"
-              />
-              <div
-                className="ms-Persona-secondaryText secondaryText-7"
-                dir="auto"
-              />
-              <div
-                className="ms-Persona-tertiaryText tertiaryText-8"
-                dir="auto"
-              />
-              <div
-                className="ms-Persona-optionalText optionalText-9"
-                dir="auto"
+                className="ms-Stack css-26"
               />
             </div>
           </div>
           <div
-            className="ms-Stack css-76 css-21"
+            className="ms-Stack css-27"
+            title="More Options"
+          >
+            <i
+              aria-hidden={true}
+              className="root-37 css-83"
+              data-icon-name="ParticipantItemOptions"
+            >
+              <span
+                aria-hidden={true}
+                className="root-span"
+              >
+                <svg
+                  className="svg"
+                  fill="currentColor"
+                  height={20}
+                  viewBox="0 0 20 20"
+                  width={20}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.25 10a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"
+                  />
+                  <path
+                    d="M11.25 10a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"
+                  />
+                  <path
+                    d="M15 11.25a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5z"
+                  />
+                </svg>
+              </span>
+            </i>
+          </div>
+          <span
+            className="ms-layer"
           >
             <div
-              className="ms-Stack css-22"
-            />
-            <span
-              className="ms-layer"
+              className="ms-Fabric ms-Layer-content content-51"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClick={[Function]}
+              onContextMenu={[Function]}
+              onDoubleClick={[Function]}
+              onDrag={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragExit={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onFocus={[Function]}
+              onInput={[Function]}
+              onKeyDown={[Function]}
+              onKeyPress={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseMove={[Function]}
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}
+              onMouseUp={[Function]}
+              onSubmit={[Function]}
+              onTouchCancel={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
             >
               <div
-                className="ms-Fabric ms-Layer-content content-46"
-                onBlur={[Function]}
-                onChange={[Function]}
-                onClick={[Function]}
-                onContextMenu={[Function]}
-                onDoubleClick={[Function]}
-                onDrag={[Function]}
-                onDragEnd={[Function]}
-                onDragEnter={[Function]}
-                onDragExit={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDragStart={[Function]}
-                onDrop={[Function]}
-                onFocus={[Function]}
-                onInput={[Function]}
-                onKeyDown={[Function]}
-                onKeyPress={[Function]}
-                onKeyUp={[Function]}
-                onMouseDown={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                onMouseOut={[Function]}
-                onMouseOver={[Function]}
-                onMouseUp={[Function]}
-                onSubmit={[Function]}
-                onTouchCancel={[Function]}
-                onTouchEnd={[Function]}
-                onTouchMove={[Function]}
-                onTouchStart={[Function]}
+                className="ms-Callout-container container-53"
+                style={
+                  Object {
+                    "visibility": "hidden",
+                  }
+                }
               >
                 <div
-                  className="ms-Callout-container container-48"
+                  className="ms-Callout ms-ContextualMenu-Callout root-54"
+                  hidden={true}
+                  onScroll={[Function]}
                   style={
                     Object {
-                      "visibility": "hidden",
+                      "filter": "opacity(0)",
+                      "opacity": 0,
+                      "pointerEvents": "none",
                     }
                   }
+                  tabIndex={-1}
                 >
                   <div
-                    className="ms-Callout ms-ContextualMenu-Callout root-49"
-                    hidden={true}
+                    className="ms-Callout-main calloutMain-57"
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
                     onScroll={[Function]}
                     style={
                       Object {
-                        "filter": "opacity(0)",
-                        "opacity": 0,
-                        "pointerEvents": "none",
+                        "maxHeight": undefined,
+                        "outline": "none",
+                        "overflowY": undefined,
                       }
                     }
-                    tabIndex={-1}
                   >
                     <div
-                      className="ms-Callout-main calloutMain-52"
+                      className="ms-ContextualMenu-container container-29"
+                      onFocusCapture={[Function]}
                       onKeyDown={[Function]}
-                      onMouseDown={[Function]}
-                      onMouseUp={[Function]}
-                      onScroll={[Function]}
-                      style={
-                        Object {
-                          "maxHeight": undefined,
-                          "outline": "none",
-                          "overflowY": undefined,
-                        }
-                      }
+                      onKeyUp={[Function]}
+                      role="menu"
+                      tabIndex={-1}
                     >
                       <div
-                        className="ms-ContextualMenu-container container-24"
-                        onFocusCapture={[Function]}
+                        className="ms-FocusZone css-58 ms-ContextualMenu is-open root-28"
+                        data-focuszone-id="FocusZone3"
+                        onFocus={[Function]}
                         onKeyDown={[Function]}
-                        onKeyUp={[Function]}
-                        role="menu"
-                        tabIndex={-1}
+                        onMouseDownCapture={[Function]}
                       >
-                        <div
-                          className="ms-FocusZone css-53 ms-ContextualMenu is-open root-23"
-                          data-focuszone-id="FocusZone3"
-                          onFocus={[Function]}
+                        <ul
+                          className="ms-ContextualMenu-list is-open list-30"
                           onKeyDown={[Function]}
-                          onMouseDownCapture={[Function]}
+                          onKeyUp={[Function]}
+                          role="presentation"
                         >
-                          <ul
-                            className="ms-ContextualMenu-list is-open list-25"
-                            onKeyDown={[Function]}
-                            onKeyUp={[Function]}
+                          <li
+                            className="ms-ContextualMenu-item item-33"
                             role="presentation"
                           >
-                            <li
-                              className="ms-ContextualMenu-item item-28"
-                              role="presentation"
+                            <button
+                              aria-disabled={false}
+                              aria-posinset={1}
+                              aria-setsize={2}
+                              className="ms-ContextualMenu-link root-35"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                              onMouseMove={[Function]}
+                              role="menuitem"
                             >
-                              <button
-                                aria-disabled={false}
-                                aria-posinset={1}
-                                aria-setsize={2}
-                                className="ms-ContextualMenu-link root-30"
-                                onClick={[Function]}
-                                onMouseDown={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                                onMouseMove={[Function]}
-                                role="menuitem"
+                              <div
+                                className="ms-ContextualMenu-linkContent linkContent-39"
                               >
-                                <div
-                                  className="ms-ContextualMenu-linkContent linkContent-34"
+                                <span
+                                  className="ms-ContextualMenu-itemText label-45"
                                 >
-                                  <span
-                                    className="ms-ContextualMenu-itemText label-40"
-                                  >
-                                    Mute
-                                  </span>
-                                </div>
-                              </button>
-                            </li>
-                            <li
-                              className="ms-ContextualMenu-item item-28"
-                              role="presentation"
+                                  Mute
+                                </span>
+                              </div>
+                            </button>
+                          </li>
+                          <li
+                            className="ms-ContextualMenu-item item-33"
+                            role="presentation"
+                          >
+                            <button
+                              aria-disabled={false}
+                              aria-posinset={2}
+                              aria-setsize={2}
+                              className="ms-ContextualMenu-link root-35"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                              onMouseMove={[Function]}
+                              role="menuitem"
                             >
-                              <button
-                                aria-disabled={false}
-                                aria-posinset={2}
-                                aria-setsize={2}
-                                className="ms-ContextualMenu-link root-30"
-                                onClick={[Function]}
-                                onMouseDown={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                                onMouseMove={[Function]}
-                                role="menuitem"
+                              <div
+                                className="ms-ContextualMenu-linkContent linkContent-39"
                               >
-                                <div
-                                  className="ms-ContextualMenu-linkContent linkContent-34"
+                                <span
+                                  className="ms-ContextualMenu-itemText label-45"
                                 >
-                                  <span
-                                    className="ms-ContextualMenu-itemText label-40"
-                                  >
-                                    Remove
-                                  </span>
-                                </div>
-                              </button>
-                            </li>
-                          </ul>
-                        </div>
+                                  Remove
+                                </span>
+                              </div>
+                            </button>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </span>
-          </div>
+            </div>
+          </span>
         </div>
       </div>
     </div>

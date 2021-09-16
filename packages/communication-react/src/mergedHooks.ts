@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import {
-  DefaultCallingHandlers,
+  CallingHandlers,
   getCallingSelector,
   GetCallingSelector,
   useCallingHandlers,
   useCallingSelector
 } from '@internal/calling-component-bindings';
 import {
-  DefaultChatHandlers,
+  ChatHandlers,
   getChatSelector,
   GetChatSelector,
   useChatHandlers,
@@ -40,24 +40,26 @@ export type ChatReturnProps<Component extends (props: any) => JSX.Element> = Get
   state: ChatClientState,
   props: any
 ) => any
-  ? ReturnType<GetChatSelector<Component>> & Common<DefaultChatHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>
   : never;
 
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (
   state: CallClientState,
   props: any
 ) => any
-  ? ReturnType<GetCallingSelector<Component>> & Common<DefaultCallingHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]>
   : never;
+
+export type ComponentProps<Component extends (props: any) => JSX.Element> = ChatReturnProps<Component> extends never
+  ? CallingReturnProps<Component> extends never
+    ? undefined
+    : CallingReturnProps<Component>
+  : ChatReturnProps<Component>;
 
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component,
   type?: 'calling' | 'chat'
-): ChatReturnProps<Component> extends never
-  ? CallingReturnProps<Component> extends never
-    ? undefined
-    : CallingReturnProps<Component>
-  : ChatReturnProps<Component> => {
+): ComponentProps<Component> => {
   const callingSelector = type === 'calling' || !type ? getCallingSelector(component) : undefined;
   const chatSelector = type === 'chat' || !type ? getChatSelector(component) : undefined;
   const callProps = useCallingSelector(callingSelector);

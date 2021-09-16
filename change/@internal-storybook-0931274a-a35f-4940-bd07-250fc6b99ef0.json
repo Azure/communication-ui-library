@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix infinite render of previous messages",
+  "packageName": "@internal/storybook",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

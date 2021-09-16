@@ -2,6 +2,226 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@internal/react-composites_v1.0.0-beta.4",
+      "version": "1.0.0-beta.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.3",
+            "author": "github-action-bot@service.microsoft.com",
+            "commit": "e1c16a5e74b8c5f780d29ec88844d515a4c6ea91",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Adding test for checking config screen",
+            "author": "anjulgarg@live.com",
+            "commit": "15ac101dadfee831895e4efb992d11886d2da233",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Create meeting call control bar",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e0065510fb949e7b2ee1995b3309c9c143ac3f8d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix tsdoc comments - rename @Link -> @link",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "fdd49d7dc69ebb9c47cd285c8fdbc5be49080fad",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Get remote calling participants for the meeting composite participants",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "156ed38a194fa7f61600b6e4875c6e0d38f03f7e",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "initial meeting composite setup",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "96963830aa1a2fc87af69af705ad60b2c3d61eec",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "update to @fluent/react-icons 1.1.137 that has fix for setting primaryFill prop",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "7adf3a37c381b42f0e13664b6a550d45992addc3",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add chat and people panes to meeting composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5d35617b4e21d49a79acb6ac0fe1961c0eb21234",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove unused internal code",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "510588c71ae5e86727987a55ed25797591a9f349",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Call Automation Tests",
+            "author": "anjulgarg@live.com",
+            "commit": "5c9969858d6480bffcdcf494e7d328511de7f2b2",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/calling-component-bindings to v1.0.0-beta.4",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/calling-stateful-client to v1.0.0-beta.4",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/chat-stateful-client to v1.0.0-beta.4",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/chat-component-bindings to v1.0.0-beta.4",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@internal/react-composites"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Fix screenshare dialog eating user input across the whole web page",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a00102ab49a88899db51e26a2b96879c891a9a37",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "updated Typescript version to 4.3.5",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add remove participant button to the Meeting Composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "d3fd82d634235d47d1d3203c00ed38d86b5cb22d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "96963830aa1a2fc87af69af705ad60b2c3d61eec",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Return call from `CallComposite.joinCall`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e248c49cd5b5ff209deeb7380e774c6108190e17",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix screenshare not displaying for call attendees",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "35d3c3b5f1fc5e2c9f59d2b57b2b9001ce27a04a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix fluent theme provider not being applied to the meeting composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "8bb3022823400115d8eb413061e91cb16e26fc5d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Ensure call composite media gallery has a minimum height",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "ab982fc15b584e408e9f2731dc174cfeaedb2964",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add meeting composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b055be7feda0730fba2ecbf773d5eff83eb0b33d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add remove participant button to Call Composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a7ba52570f82492cde2e3fcf6ba5013057a86889",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update createAzureCommunicationCallAdapter constructor to take in a named object instead of seperate args",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f16a14c0fb3b272e0388c09711e7dbce5acf6f80",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Added rtl property to composites",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a4ce0e53ec681acfbc93229a4676d4777b96c373",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "fix meeting pane overlapping the call control bar",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "21ae909b0c6c9d406aa54cd808eeb2dcc12b55ca",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix partially composed chat messages being lost when closing and reopening the chat pane in the meeting composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0ea619719ff20dff41aadce978f5869d0c70cf00",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix permission banner styling - allow multiline",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3bdfb685e03bcd4f8cc462717420af085cfd0055",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Stop using deleted prop VideoTile.isVideoReady",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27c0ba5c8203cc49ed854e8fc6c7d70abaa9f26c",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix local video icon + avatar not showing",
+            "author": "jinan@microsoft.com",
+            "commit": "ad61949d2a255d7f6a341b388b9438694c712fd4",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fixing video gallery styling issues during and after screenshare",
+            "author": "anjulgarg@live.com",
+            "commit": "815ed360449e1d19c2f22cabf34b66266851a39f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "bugfix: Show avatar when video is off",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "4fc9dba3f961872568c1644a1ca928878df96375",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Exposed locale prop to localize composites.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "6e6d186f4ec249af00051404f41ecd15a9287bd6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update createAzureCommunicationChatAdapter constructor to take in a named object instead of seperate args",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "370cb99824abb85c4738987eebb4e554dfd187c9",
+            "package": "@internal/react-composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "@internal/react-composites_v1.0.0-beta.3",
       "version": "1.0.0-beta.3",

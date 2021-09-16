@@ -4,9 +4,9 @@
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
-import type { AdapterState, AdapterDisposal, AdapterErrorHandlers } from '../../common/adapters';
+import type { AdapterState, AdapterDisposal, AdapterErrors, AdapterError } from '../../common/adapters';
 
-export type ChatUIState = {
+export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
@@ -20,19 +20,15 @@ export type ChatCompositeClientState = {
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
-  latestErrors: ChatAdapterErrors;
+  latestErrors: AdapterErrors;
 };
 
+export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
+
 /**
- * ChatAdapter stores the latest error for each operation in the state.
- *
- * `operation` is a ChatAdapter defined string for each unique operation performed by the adapter.
+ * Functionality for managing the current chat thread.
  */
-export type ChatAdapterErrors = { [operation: string]: Error };
-
-export type ChatState = ChatUIState & ChatCompositeClientState;
-
-export interface ChatAdapterHandlers {
+export interface ChatAdapterThreadManagement {
   /*
    * Fetch initial state for the Chat adapter.
    *
@@ -44,9 +40,14 @@ export interface ChatAdapterHandlers {
   sendTypingIndicator(): Promise<void>;
   removeParticipant(userId: string): Promise<void>;
   setTopic(topicName: string): Promise<void>;
+  updateMessage(messageId: string, content: string): Promise<void>;
+  deleteMessage(messageId: string): Promise<void>;
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
 }
 
+/**
+ * Chat composite events that can be subscribed to.
+ */
 export interface ChatAdapterSubscribers {
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
@@ -54,7 +55,7 @@ export interface ChatAdapterSubscribers {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
-  on(event: 'error', listener: ChatErrorListener): void;
+  on(event: 'error', listener: (e: AdapterError) => void): void;
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   off(event: 'messageSent', listener: MessageSentListener): void;
@@ -62,14 +63,16 @@ export interface ChatAdapterSubscribers {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
-  off(event: 'error', listener: ChatErrorListener): void;
+  off(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
+/**
+ * Chat Composite Adapter interface.
+ */
 export interface ChatAdapter
-  extends ChatAdapterHandlers,
-    AdapterState<ChatState>,
+  extends ChatAdapterThreadManagement,
+    AdapterState<ChatAdapterState>,
     AdapterDisposal,
-    AdapterErrorHandlers,
     ChatAdapterSubscribers {}
 
 export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
@@ -83,14 +86,6 @@ export type ParticipantsRemovedListener = (event: {
   participantsRemoved: ChatParticipant[];
   removedBy: ChatParticipant;
 }) => void;
-/**
- * Listener for error events.
- *
- * Each failed operation in the {@link ChatAdapter} triggers an 'error' event.
- * `operation` is a {@link ChatAdapter} defined string for each unique operation performed
- * by the adapter.
- */
-export type ChatErrorListener = (event: { operation: string; error: Error }) => void;
 export type TopicChangedListener = (event: { topic: string }) => void;
 export type ChatEvent =
   | 'messageReceived'

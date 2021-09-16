@@ -3,12 +3,7 @@
 
 export { createStatefulChatClient } from './StatefulChatClient';
 
-export type {
-  ChatStateModifier,
-  StatefulChatClient,
-  StatefulChatClientArgs,
-  StatefulChatClientOptions
-} from './StatefulChatClient';
+export type { StatefulChatClient, StatefulChatClientArgs, StatefulChatClientOptions } from './StatefulChatClient';
 export type { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 export type {
   ChatClientState,
@@ -16,6 +11,5 @@ export type {
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,
-  ChatErrorTargets
+  ChatErrorTarget
 } from './ChatClientState';
-export * from './modifiers';

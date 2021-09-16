@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ParticipantsButton, ParticipantListProps } from '@azure/communication-react';
+import { ParticipantsButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -104,7 +104,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can change the render of the `ParticipantsButton` as you would do for any Button (onRenderIcon,
         onRenderText, etc... ) with the addition of customizing the render of the participant list (see
-        [ParticipantList](/?path=/docs/ui-components-participantlist--participant-list) component).
+        [ParticipantList](./?path=/docs/ui-components-participantlist--participant-list) component).
       </Description>
       <Canvas mdxSource={ParticipantsButtonWithCustomRenderExampleText}>
         <ParticipantsButtonWithCustomRenderExample />
@@ -113,8 +113,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>ParticipantsButton Props</Heading>
       <Description>
         `ParticipantsButton` features all props a [FluentUI
-        Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) offers, with the following
-        additional properties.
+        Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional
+        properties.
       </Description>
       <Props of={ParticipantsButton} />
     </>
@@ -143,17 +143,14 @@ const ParticipantsStory = (args): JSX.Element => {
 
   const userIndex = mockParticipants.map((p) => p.displayName).indexOf('You');
   const myUserId = userIndex !== -1 ? mockParticipants[userIndex].userId : '';
-  const mockParticipantsProps: ParticipantListProps = {
-    participants: mockParticipants,
-    myUserId: myUserId
-  };
   const onMuteAll = (): void => {
     // your implementation to mute all participants
   };
   return (
     <ParticipantsButton
       {...args}
-      participantListProps={mockParticipantsProps}
+      participants={mockParticipants}
+      myUserId={myUserId}
       onMuteAll={args.isMuteAllAvailable ? onMuteAll : undefined}
     />
   );
@@ -173,7 +170,7 @@ export default {
     callInvitationURL: controlsToAdd.callInvitationURL,
     participants: controlsToAdd.participantNames,
     // Hiding auto-generated controls
-    participantListProps: hiddenControl,
+    onRenderParticipantList: hiddenControl,
     styles: hiddenControl,
     onMuteAll: hiddenControl,
     strings: hiddenControl

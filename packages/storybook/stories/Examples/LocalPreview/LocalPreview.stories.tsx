@@ -19,11 +19,11 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Basic example</Heading>
       <Description>
         To build a local preview, we recommend using the Fluent UI
-        [Stack](https://developer.microsoft.com/en-us/fluentui#/controls/web/stack) as a container as shown in the code
-        below. For enabling and disabling the camera or microphone we suggest using the
-        [Toggle](https://developer.microsoft.com/en-us/fluentui#/controls/web/toggle) component. The area for showing
-        your local preview is a [VideoTile](./?path=/docs/ui-components-videotile--video-tile) which can also be used in
-        our video grid layouts.
+        [Stack](https://developer.microsoft.com/fluentui#/controls/web/stack) as a container as shown in the code below.
+        For enabling and disabling the camera or microphone we suggest using the
+        [Toggle](https://developer.microsoft.com/fluentui#/controls/web/toggle) component. The area for showing your
+        local preview is a [VideoTile](./?path=/docs/ui-components-videotile--video-tile) which can also be used in our
+        video grid layouts.
       </Description>
       <Description>
         Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI malformed

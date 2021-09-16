@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { waitForCallCompositeToLoad, dataUiId } from '../utils';
+import { waitForCallCompositeToLoad, dataUiId, disableAnimation } from '../utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 
@@ -34,8 +34,11 @@ test.describe('Call Composite E2E Tests', () => {
   test('local device settings can toggle camera & audio', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
-      page.bringToFront();
       await stubLocalCameraName(page);
+      await page.waitForSelector(dataUiId('call-composite-device-settings'));
+      await page.waitForSelector(dataUiId('call-composite-local-preview'));
+      await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
+      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-disabled.png`);
       await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
       await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
       await page.waitForSelector('video');
@@ -43,56 +46,80 @@ test.describe('Call Composite E2E Tests', () => {
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-enabled.png`);
     }
   });
+});
+
+test.describe('Call Composite E2E CallScreen Tests', () => {
+  // Make sure tests can still run well after retries
+  test.beforeEach(async ({ pages }) => {
+    // In case it is retry logic
+    for (const page of pages) {
+      page.reload();
+      page.bringToFront();
+      await waitForCallCompositeToLoad(page);
+
+      await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+      await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+      await page.click(dataUiId('call-composite-start-call-button'));
+    }
+
+    for (const page of pages) {
+      await page.waitForFunction(() => {
+        return document.querySelectorAll('video').length === 2;
+      });
+    }
+  });
 
   test('video gallery renders for all pages', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
       page.bringToFront();
-      await page.click(dataUiId('call-composite-start-call-button'));
-    }
 
-    for (const idx in pages) {
-      const page = pages[idx];
-      page.bringToFront();
-      await page.waitForFunction(() => {
-        return document.querySelectorAll('video').length === 2;
-      });
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-video-gallery.png`);
     }
   });
 
   test('participant list loads correctly', async ({ pages }) => {
+    // TODO: Remove this function when we fix unstable contextual menu bug
+    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
+    await turnOffAllVideos(pages);
+
     for (const idx in pages) {
       const page = pages[idx];
       page.bringToFront();
+
+      // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+      // this is for disable transition/animation of participant list
+      await disableAnimation(page);
+
       await page.click(dataUiId('call-composite-participants-button'));
-      // Clicking on participants icon displays a dropdown menu that has an animation.
-      // We wait 1 second for that animation to complete.
-      await page.waitForTimeout(1000);
+      const buttonCallOut = await page.waitForSelector('.ms-Callout');
+      // This will ensure no animation is happening for the callout
+      await buttonCallOut.waitForElementState('stable');
+
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-participants.png`);
     }
   });
 
   test('can turn off local video', async ({ pages }) => {
-    for (const idx in pages) {
-      const page = pages[idx];
-      page.bringToFront();
-      await page.click(dataUiId('call-composite-camera-button'));
-      await page.waitForFunction(() => {
-        return document.querySelectorAll('video').length === 1;
-      });
-      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-camera-toggled.png`);
-    }
-  });
-
-  test('pages[0] local device settings can toggle camera & audio', async ({ pages }) => {
     const page = pages[0];
+
     page.bringToFront();
-    await stubLocalCameraName(page);
-    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-disabled.png`);
-    await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
-    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
-    await page.waitForSelector('video');
-    expect(await page.screenshot()).toMatchSnapshot(`local-device-settings-camera-enabled.png`);
+    await page.click(dataUiId('call-composite-camera-button'));
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('video').length === 1;
+    });
+    expect(await page.screenshot()).toMatchSnapshot(`camera-toggled.png`);
   });
 });
+
+const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
+  for (const page of pages) {
+    page.click(dataUiId('call-composite-camera-button'));
+  }
+  for (const page of pages) {
+    page.bringToFront();
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('video').length === 0;
+    });
+  }
+};

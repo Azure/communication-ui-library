@@ -1,6 +1,12 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { CallComposite, CallAdapter, createAzureCommunicationCallAdapter } from '@azure/communication-react';
-import { Theme, PartialTheme } from '@fluentui/react';
+import {
+  CallAdapter,
+  CallComposite,
+  CallCompositeHiddenElements,
+  CompositeLocale,
+  createAzureCommunicationCallAdapter
+} from '@azure/communication-react';
+import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 
 export type ContainerProps = {
@@ -10,6 +16,8 @@ export type ContainerProps = {
   displayName: string;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
+  locale?: CompositeLocale;
+  hiddenElements?: CallCompositeHiddenElements;
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
@@ -64,7 +72,13 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   if (adapter) {
     return (
       <div style={{ height: '90vh', width: '90vw' }}>
-        <CallComposite adapter={adapter} fluentTheme={props.fluentTheme} callInvitationURL={props?.callInvitationURL} />
+        <CallComposite
+          adapter={adapter}
+          fluentTheme={props.fluentTheme}
+          callInvitationURL={props?.callInvitationURL}
+          locale={props?.locale}
+          hiddenElements={props?.hiddenElements}
+        />
       </div>
     );
   }

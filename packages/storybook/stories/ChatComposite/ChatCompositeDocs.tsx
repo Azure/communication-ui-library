@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Title, Description, Heading, Source } from '@storybook/addon-docs';
+import { ChatComposite } from '@azure/communication-react';
+import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
 import React from 'react';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
@@ -50,7 +51,13 @@ export const getDocs: () => JSX.Element = () => {
         [ChatComposite themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see custom fonts in
         action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
         components in this UI library. Read more about fonts in [Fluent UI Typography
-        here](https://developer.microsoft.com/en-us/fluentui#/styles/web/typography).
+        here](https://developer.microsoft.com/fluentui#/styles/web/typography).
+      </Description>
+
+      <Heading>Icons</Heading>
+      <Description>
+        Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
+        accepts an object where you can provide a custom JSX element against an icon name key.
       </Description>
 
       <Heading>Custom Data Model</Heading>
@@ -58,9 +65,11 @@ export const getDocs: () => JSX.Element = () => {
         It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
         then use the Azure Communication Services identity service to create corresponding authentication tokens for
         their users. The ChatComposite allows developers to easily inject custom data associated with these user
-        identities. Look at the [example canvas](./?path=/story/composites-chat--custom-data-model-example) to see how
-        the name and avatar displayed for users can be provided by Contoso.
+        identities. Look at the [example
+        canvas](./?path=/story/composites-chat-customdatamodelexample--custom-data-model-example) to see how the name
+        and avatar displayed for users can be provided by Contoso.
       </Description>
+      <Description>Note that, by default, the initials text color is setup to `white`</Description>
       <Source code={customDataModelExampleContainerText} />
       <Description>
         See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
@@ -71,17 +80,21 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
         component and the Azure Communication Services backend. This adds powerful customization possibilities. The
-        [Customized Behavior Example](./?path=/story/composites-chat--custom-behavior-example) shows a way to intercept
-        messages entered by the user and modify them before sending them on to the backend.
+        [Customized Behavior Example](./?path=/story/composites-chat-custombehaviorexample--custom-behavior-example)
+        shows a way to intercept messages entered by the user and modify them before sending them on to the backend.
       </Description>
       <Source code={customBehaviorExampleText} />
 
       <Heading>Joining existing Chat</Heading>
       <Description>
-        The [join existing chat thread](./?path=/story/composites-chat--join-existing-chat-thread) provides an easy
+        The [join existing chat
+        thread](./?path=/story/composites-chat-joinexistingchatthread--join-existing-chat-thread) provides an easy
         playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
         the composite with multiple users.
       </Description>
+
+      <Heading>Chat Composite Props</Heading>
+      <Props of={ChatComposite} />
     </>
   );
 };

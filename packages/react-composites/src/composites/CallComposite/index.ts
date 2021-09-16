@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export { Call as CallComposite } from './Call';
-export * from './adapter';
+export { CallComposite } from './CallComposite';
+export type { CallCompositeHiddenElements, CallCompositeProps } from './CallComposite';
+export type { CallControlHiddenElements } from './CallControls';
 
-export type { CallCompositeProps } from './Call';
+export * from './adapter';
+export * from './Strings';

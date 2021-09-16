@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Bump package version to 1.0.0-beta.3",
-  "packageName": "@internal/react-composites",
-  "email": "github-action-bot@service.microsoft.com",
-  "dependentChangeType": "none"
-}

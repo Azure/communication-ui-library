@@ -2,6 +2,47 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 16 Aug 2021 21:18:19 GMT",
+      "tag": "@azure/communication-react_v1.0.0-beta.4",
+      "version": "1.0.0-beta.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @internal/calling-component-bindings to v1.0.0-beta.4",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@azure/communication-react"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump @internal/calling-stateful-client to v1.0.0-beta.4",
+            "author": "alcail@microsoft.com",
+            "commit": "55ba11ab518b12a4e2f5976696ce4f6d1cc3af60",
+            "package": "@azure/communication-react"
+          },
+          {
+            "comment": "Bump @internal/react-composites to v1.0.0-beta.4",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a00102ab49a88899db51e26a2b96879c891a9a37",
+            "package": "@azure/communication-react"
+          },
+          {
+            "comment": "Bump @internal/chat-stateful-client to v1.0.0-beta.4",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@azure/communication-react"
+          },
+          {
+            "comment": "Bump @internal/chat-component-bindings to v1.0.0-beta.4",
+            "author": "jinan@microsoft.com",
+            "commit": "c9dfb74d7f3c67d25295b4859095fc06cf2059d4",
+            "package": "@azure/communication-react"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 17:42:41 GMT",
       "tag": "@azure/communication-react_v1.0.0-beta.3",
       "version": "1.0.0-beta.3",

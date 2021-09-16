@@ -443,47 +443,6 @@ describe('complex error handling for startRealtimeNotifications', () => {
     expect(listener.onChangeCalledCount).toBe(2);
     const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
     expect(latestError).toBeDefined();
-    expect(latestError.message).toBe('injected error #2');
-  });
-
-  test('errors are cleared on successful method call', async () => {
-    const baseClient = createMockChatClient();
-
-    let hasFailedOnce = false;
-    baseClient.startRealtimeNotifications = async () => {
-      if (!hasFailedOnce) {
-        hasFailedOnce = true;
-        throw Error('injected error');
-      }
-    };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
-    const listener = new StateChangeListener(client);
-
-    // Generates error.
-    await expect(client.startRealtimeNotifications()).rejects.toThrow();
-    // Succeeds, should clear errors in state.
-    await client.startRealtimeNotifications();
-
-    expect(listener.onChangeCalledCount).toBe(2);
-    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
-    expect(latestError).toBeUndefined();
-  });
-
-  test('related errors are cleared on successful method call', async () => {
-    const baseClient = createMockChatClient();
-    baseClient.startRealtimeNotifications = async () => {
-      throw Error('injected error');
-    };
-    const client = createStatefulChatClientWithDeps(baseClient, defaultClientArgs);
-    const listener = new StateChangeListener(client);
-
-    // Generates error.
-    await expect(client.startRealtimeNotifications()).rejects.toThrow();
-    // Succeeds, should clear errors in state.
-    await client.stopRealtimeNotifications();
-
-    expect(listener.onChangeCalledCount).toBe(2);
-    const latestError = listener.state.latestErrors['ChatClient.startRealtimeNotifications'];
-    expect(latestError).toBeUndefined();
+    expect(latestError).toEqual(new ChatError('ChatClient.startRealtimeNotifications', new Error('injected error #2')));
   });
 });

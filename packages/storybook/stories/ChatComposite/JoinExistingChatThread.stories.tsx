@@ -7,11 +7,15 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer } from './snippets/Container.snippet';
 import { ConfigJoinChatThreadHintBanner } from './snippets/Utils';
 
 const JoinExistingChatThreadStory = (args, context): JSX.Element => {
+  const {
+    globals: { locale }
+  } = context;
   const areAllControlsSet =
     !!args.endpointUrl && !!args.threadId && !!args.userId && !!args.token && !!args.displayName;
 
@@ -25,8 +29,7 @@ const JoinExistingChatThreadStory = (args, context): JSX.Element => {
           userId={{ communicationUserId: args.userId }}
           token={args.token}
           displayName={args.displayName}
-          showParticipants={true}
-          showTopic={true}
+          locale={compositeLocale(locale)}
         />
       ) : (
         <ConfigJoinChatThreadHintBanner />

@@ -2,13 +2,7 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import {
-  CallAgent,
-  CallClient,
-  CallClientOptions,
-  CreateViewOptions,
-  DeviceManager
-} from '@azure/communication-calling';
+import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -134,6 +128,18 @@ export interface StatefulCallClient extends CallClient {
 }
 
 /**
+ * A function to modify the state of the StatefulCallClient.
+ *
+ * Provided as a callback to the {@link StatefulCallClient.modifyState} method.
+ *
+ * The function must modify the provided state in place as much as possible.
+ * Making large modifications can lead to bad performance by causing spurious rerendering of the UI.
+ *
+ * Consider using commonly used modifier functions exported from this package.
+ */
+export type CallStateModifier = (state: CallClientState) => void;
+
+/**
  * ProxyCallClient proxies CallClient {@link @azure/communication-calling#CallClient} and subscribes to all events that
  * affect state. ProxyCallClient keeps its own copy of the call state and when state is updated, ProxyCallClient emits
  * the event 'stateChanged'.
@@ -153,7 +159,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
-        return async (...args: Parameters<CallClient['createCallAgent']>) => {
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<CallClient['createCallAgent']>) => {
           // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
           // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
           // callAgent if the createCallAgent succeeds.
@@ -161,10 +167,10 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
           this._context.setCallAgent({ displayName: this._callAgent.displayName });
           return this._callAgent;
-        };
+        }, 'CallClient.createCallAgent');
       }
       case 'getDeviceManager': {
-        return async () => {
+        return this._context.withAsyncErrorTeedToState(async () => {
           // As of writing, the SDK always returns the same instance of DeviceManager so we keep a reference of
           // DeviceManager and if it does not change we return the cached DeclarativeDeviceManager. If it does not we'll
           // throw an error that indicate we need to fix this issue as our implementation has diverged from the SDK.
@@ -183,7 +189,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           }
           this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context);
           return this._deviceManager;
-        };
+        }, 'CallClient.getDeviceManager');
       }
       default:
         return Reflect.get(target, prop);
@@ -206,10 +212,6 @@ export type StatefulCallClientArgs = {
  * Options to construct the StatefulCallClient with.
  */
 export type StatefulCallClientOptions = {
-  /**
-   * Options to construct the Azure CallClient with.
-   */
-  callClientOptions?: CallClientOptions;
   /**
    * Sets the max listeners limit of the 'stateChange' event. Defaults to the node.js EventEmitter.defaultMaxListeners
    * if not specified.
@@ -235,7 +237,7 @@ export const createStatefulCallClient = (
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
   return createStatefulCallClientWithDeps(
-    new CallClient(options?.callClientOptions),
+    new CallClient(),
     new CallContext(args.userId, options?.maxStateChangeListeners),
     new InternalCallContext()
   );

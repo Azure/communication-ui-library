@@ -8,7 +8,10 @@ import {
   CallClient,
   CallFeatureFactoryType,
   DeviceManager,
+  DiagnosticsCallFeature,
   IncomingCall,
+  LatestMediaDiagnostics,
+  LatestNetworkDiagnostics,
   LocalVideoStream,
   PropertyChangedEvent,
   RecordingCallFeature,
@@ -105,6 +108,32 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
   off(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.off(event, listener);
   }
+}
+
+export class StubDiagnosticsCallFeatureImpl implements DiagnosticsCallFeature {
+  public name = 'Diagnosticss';
+  public media = {
+    getLatest(): LatestMediaDiagnostics {
+      return {};
+    },
+    on(): void {
+      /* Stub to appease types */
+    },
+    off(): void {
+      /* Stub to appease types */
+    }
+  };
+  public network = {
+    getLatest(): LatestNetworkDiagnostics {
+      return {};
+    },
+    on(): void {
+      /* Stub to appease types */
+    },
+    off(): void {
+      /* Stub to appease types */
+    }
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -224,6 +253,28 @@ export function createMockApiFeatures(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
           return addMockEmitter({ state: 'None' });
+        },
+        media: {
+          getLatest(): LatestMediaDiagnostics {
+            return {};
+          },
+          on(): void {
+            /* Stub to appease types */
+          },
+          off(): void {
+            /* Stub to appease types */
+          }
+        },
+        network: {
+          getLatest(): LatestNetworkDiagnostics {
+            return {};
+          },
+          on(): void {
+            /* Stub to appease types */
+          },
+          off(): void {
+            /* Stub to appease types */
+          }
         }
       });
       return generic;
@@ -322,8 +373,12 @@ export class StateChangeListener {
 }
 
 export const createStatefulCallClientWithAgent = (agent: CallAgent): StatefulCallClient => {
+  return createStatefulCallClientWithBaseClient(createMockCallClient(agent));
+};
+
+export const createStatefulCallClientWithBaseClient = (client: CallClient): StatefulCallClient => {
   return createStatefulCallClientWithDeps(
-    createMockCallClient(agent),
+    client,
     new CallContext({ kind: 'communicationUser', communicationUserId: 'defaultUserId' }),
     new InternalCallContext()
   );

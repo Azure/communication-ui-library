@@ -3,28 +3,34 @@
 
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CallAdapter, CallAdapterClientState, CallAdapterState } from '../../CallComposite';
-import { ChatAdapter, ChatState } from '../../ChatComposite';
+import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
 import {
-  generateMeetingState,
+  meetingStateFromBackingStates,
   MeetingState,
   mergeCallStateIntoMeetingState,
   mergeChatStateIntoMeetingState
 } from './MeetingState';
 
 /**
- * Purely UI related adapter state.
+ * UI state pertaining to the Meeting Composite.
+ * @alpha
  */
 export interface MeetingAdapterUiState {
+  /** Current page in the meeting composite. */
   page: MeetingCompositePage;
 }
 
 /**
- * State from the backend ACS services.
+ * State from the backend services that drives Meeting Composite.
+ * @alpha
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+  /** ID of the meeting participant using this Meeting Adapter. */
   userId: CommunicationIdentifier;
+  /** Display name of the meeting participant using this Meeting Adapter. */
   displayName: string | undefined;
+  /** State of the current Meeting. */
   meeting: MeetingState | undefined;
 }
 
@@ -33,60 +39,59 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
  * state specific to meetings only.
  * Stateful items like Participants that apply to both calling and chat are intelligently
  * combined into one to suit the purpose of a Meeting.
+ *
+ * @alpha
  */
 export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {}
 
-export function generateMeetingAdapterState(callAdapter: CallAdapter, chatAdapter: ChatAdapter): MeetingAdapterState {
+export function meetingAdapterStateFromBackingStates(
+  callAdapter: CallAdapter,
+  chatAdapter: ChatAdapter
+): MeetingAdapterState {
   const callAdapterState = callAdapter.getState();
   const chatAdapterState = chatAdapter.getState();
 
-  const { call, displayName, userId, devices, page } = callAdapterState;
-  const meeting = call ? generateMeetingState(call, chatAdapterState.thread) : undefined;
+  const meeting = callAdapterState.call
+    ? meetingStateFromBackingStates(callAdapterState.call, chatAdapterState.thread)
+    : undefined;
 
   return {
     meeting,
-    userId,
-    page: callPageToMeetingPage(page),
-    displayName,
-    devices
+    userId: callAdapterState.userId,
+    page: callPageToMeetingPage(callAdapterState.page),
+    displayName: callAdapterState.displayName,
+    devices: callAdapterState.devices
   };
 }
 
 export function mergeChatAdapterStateIntoMeetingAdapterState(
-  chatAdapterState: ChatState,
-  meetingAdapterState: MeetingAdapterState
+  meetingAdapterState: MeetingAdapterState,
+  chatAdapterState: ChatAdapterState
 ): MeetingAdapterState {
   const newMeetingState = meetingAdapterState.meeting
-    ? mergeChatStateIntoMeetingState(chatAdapterState.thread, meetingAdapterState.meeting)
+    ? mergeChatStateIntoMeetingState(meetingAdapterState.meeting, chatAdapterState.thread)
     : undefined;
 
-  const { userId, page, displayName, devices } = meetingAdapterState;
-
   return {
-    userId,
-    page,
-    displayName,
-    devices,
+    ...meetingAdapterState,
     meeting: newMeetingState
   };
 }
 
 export function mergeCallAdapterStateIntoMeetingAdapterState(
-  callAdapterState: CallAdapterState,
-  meetingAdapterState: MeetingAdapterState
+  meetingAdapterState: MeetingAdapterState,
+  callAdapterState: CallAdapterState
 ): MeetingAdapterState {
   const newMeetingState =
     meetingAdapterState.meeting && callAdapterState.call
-      ? mergeCallStateIntoMeetingState(callAdapterState.call, meetingAdapterState.meeting)
+      ? mergeCallStateIntoMeetingState(meetingAdapterState.meeting, callAdapterState.call)
       : undefined;
 
-  const { userId, page, displayName, devices } = callAdapterState;
-
   return {
-    userId,
-    page: callPageToMeetingPage(page),
-    displayName,
-    devices,
+    userId: callAdapterState.userId,
+    page: callPageToMeetingPage(callAdapterState.page),
+    displayName: callAdapterState.displayName,
+    devices: callAdapterState.devices,
     meeting: newMeetingState
   };
 }

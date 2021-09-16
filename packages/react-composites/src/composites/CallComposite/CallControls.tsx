@@ -8,7 +8,6 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
-  ParticipantList,
   ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
@@ -16,27 +15,52 @@ import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '
 import { usePropsFor } from './hooks/usePropsFor';
 
 export type CallControlsProps = {
-  showParticipantsControl: boolean;
   onEndCallClick(): void;
   compressedMode?: boolean;
   callInvitationURL?: string;
+  hiddenElements?: CallControlHiddenElements;
+};
+
+export type CallControlHiddenElements = {
+  /**
+   * Hide camera button during a call.
+   * @defaultValuefalse
+   */
+  cameraButton?: boolean;
+  /**
+   *  Hide EndCall button during a call.
+   * @defaultValuefalse
+   */
+  endCallButton?: boolean;
+  /**
+   *  Hide Microphone button during a call.
+   * @defaultValuefalse
+   */
+  microphoneButton?: boolean;
+  /**
+   * Hide Options button during a call.
+   * @defaultValuefalse
+   */
+  optionsButton?: boolean;
+  /**
+   * Hide participants button during a call.
+   * @defaultValuefalse
+   */
+  participantsButton?: boolean;
+  /**
+   * Hide the screen share button during a call.
+   * @defaultValuefalse
+   */
+  screenShareButton?: boolean;
 };
 
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const { callInvitationURL, compressedMode, onEndCallClick } = props;
+  const { callInvitationURL, compressedMode, onEndCallClick, hiddenElements } = props;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
-
-  // TODO: Here we grab the participant list props and add them to the
-  // participant button manually. Ideally this should be done by the
-  // usePropsFor but currently the usePropsFor is not populating the
-  // handlers of the ParticipantList.
-  const participantsListProps = usePropsFor(ParticipantList);
-  participantsButtonProps.participantListProps = participantsListProps;
-
   const optionsButtonProps = usePropsFor(OptionsButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
   const onHangUp = useCallback(async () => {
@@ -46,14 +70,20 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   return (
     <ControlBar layout="dockedBottom">
-      <CameraButton data-ui-id="call-composite-camera-button" {...cameraButtonProps} showLabel={!compressedMode} />
-      <MicrophoneButton
-        data-ui-id="call-composite-microphone-button"
-        {...microphoneButtonProps}
-        showLabel={!compressedMode}
-      />
-      <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
-      {props.showParticipantsControl && (
+      {hiddenElements?.cameraButton !== true && (
+        <CameraButton data-ui-id="call-composite-camera-button" {...cameraButtonProps} showLabel={!compressedMode} />
+      )}
+      {hiddenElements?.microphoneButton !== true && (
+        <MicrophoneButton
+          data-ui-id="call-composite-microphone-button"
+          {...microphoneButtonProps}
+          showLabel={!compressedMode}
+        />
+      )}
+      {hiddenElements?.screenShareButton !== true && (
+        <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
+      )}
+      {hiddenElements?.participantsButton !== true && (
         <ParticipantsButton
           data-ui-id="call-composite-participants-button"
           {...participantsButtonProps}
@@ -61,15 +91,19 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           callInvitationURL={callInvitationURL}
         />
       )}
-      {/* By setting `persistMenu` to true, we prevent options menu from getting hidden everytime a participant joins or leaves. */}
-      <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />
-      <EndCallButton
-        data-ui-id="call-composite-hangup-button"
-        {...hangUpButtonProps}
-        onHangUp={onHangUp}
-        styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-        showLabel={!compressedMode}
-      />
+      {/* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */}
+      {hiddenElements?.optionsButton !== true && (
+        <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />
+      )}
+      {hiddenElements?.endCallButton !== true && (
+        <EndCallButton
+          data-ui-id="call-composite-hangup-button"
+          {...hangUpButtonProps}
+          onHangUp={onHangUp}
+          styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
+          showLabel={!compressedMode}
+        />
+      )}
     </ControlBar>
   );
 };

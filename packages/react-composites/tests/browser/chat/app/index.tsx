@@ -5,6 +5,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
+import { IdentifierProvider } from '@internal/react-components';
 import { ChatAdapter, createAzureCommunicationChatAdapter, ChatComposite } from '../../../../src';
 import { IDS } from '../../config';
 
@@ -41,24 +42,41 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <>
+    <IdentifierProvider identifiers={IDS}>
       {chatAdapter && (
         <ChatComposite
-          identifiers={IDS}
           adapter={chatAdapter}
-          options={{ showErrorBar: true, showParticipantPane: true, showTopic: true }}
           onRenderTypingIndicator={
             customDataModel
               ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
               : undefined
           }
           onRenderMessage={
-            customDataModel ? () => <text id="custom-data-model-message">Custom Message</text> : undefined
+            customDataModel
+              ? (messageProps) => (
+                  <text
+                    data-ui-status={messageProps.message.type === 'chat' ? messageProps.message.payload.status : ''}
+                    id="custom-data-model-message"
+                  >
+                    Custom Message
+                  </text>
+                )
+              : undefined
           }
-          onRenderAvatar={customDataModel ? () => <text id="custom-data-model-avatar">Avatar</text> : undefined}
+          onFetchAvatarPersonaData={
+            customDataModel
+              ? (userId) =>
+                  new Promise((resolve) =>
+                    resolve({
+                      imageInitials: 'CI',
+                      text: 'Custom Name'
+                    })
+                  )
+              : undefined
+          }
         />
       )}
-    </>
+    </IdentifierProvider>
   );
 }
 

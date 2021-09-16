@@ -8,7 +8,6 @@ import {
   EndCallButton,
   MicrophoneButton,
   ParticipantsButton,
-  ParticipantListProps,
   ScreenShareButton
 } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
@@ -61,11 +60,6 @@ const mockParticipants: CallParticipant[] = [
   }
 ];
 
-const mockParticipantsProps: ParticipantListProps = {
-  participants: mockParticipants,
-  myUserId: 'user1'
-};
-
 const importStatement = `
 import { FluentThemeProvider, ControlBar } from '@azure/communication-react';
 import { DefaultButton } from '@fluentui/react';
@@ -84,9 +78,9 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         We recommend using our pre-defined buttons you can start find
         [here](./?path=/docs/ui-components-controlbar-buttons) or `DefaultButton`, a
-        [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from Fluent UI, as
-        controls inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or `controlButtonLabelStyles` can
-        also be imported and used as `DefaultButton` styles for easy styling. `FluentThemeProvider` is needed around
+        [Button](https://developer.microsoft.com/fluentui#/controls/web/button) component from Fluent UI, as controls
+        inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or `controlButtonLabelStyles` can also be
+        imported and used as `DefaultButton` styles for easy styling. `FluentThemeProvider` is needed around
         `ControlBar` to provide theming and icons. Learn more about theming [here](./?path=/docs/theming--page).
       </Description>
       <Canvas mdxSource={AllButtonsControlBarExampleText}>
@@ -94,7 +88,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Description>
         Note: In the example above, `menuProps` is a property of `Button`. The property type is
-        [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps),
+        [IContextualMenuProps](https://developer.microsoft.com/fluentui#/controls/web/contextualmenu#IContextualMenuProps),
         an interface for defining dropdown menu items.
       </Description>
 
@@ -130,7 +124,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Dropdown Options Button</Heading>
       <Description>
         The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
-        out the [official Fluent UI documentation](https://developer.microsoft.com/en-us/fluentui#/controls/web/button)
+        out the [official Fluent UI documentation](https://developer.microsoft.com/fluentui#/controls/web/button)
       </Description>
       <Canvas mdxSource={OptionsButtonExampleText}>
         <OptionsButtonExample />
@@ -179,7 +173,8 @@ const ControlBarStory: (
         <ScreenShareButton showLabel={args.showLabel} checked={args.checked} />
         <ParticipantsButton
           showLabel={args.showLabels}
-          participantListProps={mockParticipantsProps}
+          participants={mockParticipants}
+          myUserId={'user1'}
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />

@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useEffect } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallCompositeInternal } from '../CallComposite/Call';
+import { CallComposite } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
@@ -17,6 +17,7 @@ import { ChatAdapter } from '../ChatComposite';
 
 /**
  * Props required for the {@link MeetingComposite}
+ * @alpha
  */
 export type MeetingCompositeProps = {
   meetingAdapter: MeetingAdapter;
@@ -31,6 +32,7 @@ export type MeetingCompositeProps = {
 
 /**
  * Meeting Composite brings together key components to provide a full meeting experience out of the box.
+ * @alpha
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { meetingAdapter, fluentTheme } = props;
@@ -53,10 +55,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setCurrentPage(newState.page);
     setCurrentMeetingState(newState.meeting?.state);
   });
-  const hasJoinedCall =
-    currentPage === 'meeting' &&
-    currentMeetingState &&
-    !['Connecting', 'Ringing', 'InLobby'].includes(currentMeetingState);
+  const hasJoinedCall = currentPage === 'meeting' && currentMeetingState === 'Connected';
 
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -85,9 +84,9 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
       <Stack verticalFill grow styles={compositeOuterContainerStyles}>
         <Stack horizontal grow>
           <Stack.Item grow>
-            <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
+            <CallComposite hiddenElements={{ callControls: true }} adapter={callAdapter} fluentTheme={fluentTheme} />
           </Stack.Item>
-          {chatAdapter && (
+          {chatAdapter && hasJoinedCall && (
             <EmbeddedChatPane
               hidden={!showChat}
               chatAdapter={chatAdapter}
@@ -95,7 +94,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               onClose={closePane}
             />
           )}
-          {callAdapter && chatAdapter && (
+          {callAdapter && chatAdapter && hasJoinedCall && (
             <CallAdapterProvider adapter={callAdapter}>
               <EmbeddedPeoplePane
                 hidden={!showPeople}

@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 
 import {
   CallAdapter,
-  CallAdapterHandlers,
+  CallAdapterCallManagement,
+  CallAdapterDeviceManagement,
   CallAdapterState,
   CallCompositePage,
   CallIdChangedListener,
@@ -18,23 +20,70 @@ import {
 } from '../../CallComposite';
 import {
   ChatAdapter,
-  ChatAdapterHandlers,
-  ChatState,
+  ChatAdapterState,
+  ChatAdapterThreadManagement,
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener
 } from '../../ChatComposite';
 import { MeetingAdapterState } from '../state/MeetingAdapterState';
+import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
-import { MeetingCompositePage } from '../state/MeetingCompositePage';
 import { ErrorBarStrings, VideoStreamOptions } from '@internal/react-components';
 import type { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
 
-export interface MeetingAdapterHandlers {
+/**
+ * Functionality for managing the current meeting.
+ * @alpha
+ */
+export interface MeetingAdapterMeetingManagement
+  extends Pick<
+      CallAdapterCallManagement,
+      | 'startCamera'
+      | 'stopCamera'
+      | 'onToggleCamera'
+      | 'mute'
+      | 'unmute'
+      | 'startScreenShare'
+      | 'stopScreenShare'
+      | 'createStreamView'
+      | 'disposeStreamView'
+    >,
+    Pick<
+      CallAdapterDeviceManagement,
+      | 'setCamera'
+      | 'setMicrophone'
+      | 'setSpeaker'
+      | 'askDevicePermission'
+      | 'queryCameras'
+      | 'queryMicrophones'
+      | 'querySpeakers'
+    >,
+    Pick<
+      ChatAdapterThreadManagement,
+      'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
+    > {
+  /** Join an existing Meeting */
+  joinMeeting(microphoneOn?: boolean): void;
+  /** Leave the current Meeting */
+  leaveMeeting(): Promise<void>;
+  /**
+   * Start a new Meeting
+   * @param participants - Array of participant IDs. These represent the participants to initialize the meeting with.
+   */
+  startMeeting(participants: string[]): void;
+  /**
+   * Remove a participant from a Meeting
+   * @param userId - UserId of the participant to remove.
+   */
   removeParticipant(userId: string): Promise<void>;
 }
 
+/**
+ * Meeting events that can be subscribed to.
+ * @alpha
+ */
 export interface MeetingAdapterSubscriptions {
   // Meeting specific subscriptions
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
@@ -70,44 +119,25 @@ export interface MeetingAdapterSubscriptions {
   off(event: 'messageRead', listener: MessageReadListener): void;
 }
 
+/**
+ * Meeting Composite Adapter interface.
+ * @alpha
+ */
 export interface MeetingAdapter
-  extends AdapterState<MeetingAdapterState>,
+  extends MeetingAdapterMeetingManagement,
+    AdapterState<MeetingAdapterState>,
     AdapterDisposal,
     AdapterPages<MeetingCompositePage>,
-    MeetingAdapterHandlers,
-    Pick<
-      CallAdapterHandlers,
-      | 'setCamera'
-      | 'setMicrophone'
-      | 'setSpeaker'
-      | 'askDevicePermission'
-      | 'queryCameras'
-      | 'queryMicrophones'
-      | 'querySpeakers'
-      | 'startCamera'
-      | 'stopCamera'
-      | 'onToggleCamera'
-      | 'mute'
-      | 'unmute'
-      | 'startScreenShare'
-      | 'stopScreenShare'
-      | 'createStreamView'
-      | 'disposeStreamView'
-    >,
-    Pick<
-      ChatAdapterHandlers,
-      'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
-    >,
-    MeetingAdapterSubscriptions {
-  joinMeeting(microphoneOn?: boolean): void;
-  leaveMeeting(): Promise<void>;
-  startMeeting(participants: string[]): void;
-}
+    MeetingAdapterSubscriptions {}
 
+/**
+ * Events fired off by the Meeting Adapter
+ * @alpha
+ */
 export type MeetingEvent =
-  | 'meetingEnded'
   | 'participantsJoined'
   | 'participantsLeft'
+  | 'meetingEnded'
   | 'isMutedChanged'
   | 'callIdChanged'
   | 'isLocalScreenSharingActiveChanged'
@@ -183,14 +213,31 @@ export class MeetingBackedChatAdapter implements ChatAdapter {
   public sendTypingIndicator = async (): Promise<void> => await this.meetingAdapter.sendTypingIndicator();
   public removeParticipant = async (userId: string): Promise<void> =>
     await this.meetingAdapter.removeParticipant(userId);
-  public setTopic = async (topicName: string): Promise<void> => await this.meetingAdapter.setTopic(topicName);
   public loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> =>
     await this.meetingAdapter.loadPreviousChatMessages(messagesToLoad);
-  public onStateChange = (handler: (state: ChatState) => void): void => this.meetingAdapter.onStateChange(handler);
-  public offStateChange = (handler: (state: ChatState) => void): void => this.meetingAdapter.offStateChange(handler);
-  public getState = (): ChatState => this.meetingAdapter.getState();
+  public onStateChange = (handler: (state: ChatAdapterState) => void): void =>
+    this.meetingAdapter.onStateChange(handler);
+  public offStateChange = (handler: (state: ChatAdapterState) => void): void =>
+    this.meetingAdapter.offStateChange(handler);
+  public getState = (): ChatAdapterState => this.meetingAdapter.getState();
   public dispose = (): void => this.meetingAdapter.dispose();
-  public clearErrors = (errorTypes: (keyof ErrorBarStrings)[]): void => this.meetingAdapter.clearErrors(errorTypes);
   public on = (event: any, listener: any): void => this.meetingAdapter.on(event, listener);
   public off = (event: any, listener: any): void => this.meetingAdapter.off(event, listener);
+
+  public updateMessage(messageId: string, content: string): Promise<void> {
+    // TODO: support editing messages
+    throw `Method not implemented. (${messageId}, ${content})`;
+  }
+  public deleteMessage(messageId: string): Promise<void> {
+    // TODO: support editing messages
+    throw `Method not implemented. (${messageId})`;
+  }
+
+  public clearErrors = (errorTypes: (keyof ErrorBarStrings)[]): void => {
+    throw `Method not supported in meetings.`;
+  };
+
+  public setTopic = async (topicName: string): Promise<void> => {
+    throw `Method not supported in meetings.`;
+  };
 }

@@ -7,32 +7,29 @@ export const participantItemContainerStyle = mergeStyles({
   paddingTop: '0.25rem',
   paddingBottom: '0.25rem',
   display: 'flex',
-  position: 'relative',
   maxWidth: '20rem',
   minWidth: '12rem',
   cursor: 'pointer',
   alignItems: 'center'
 });
 
-export const participantItemNameStyle = mergeStyles({
-  fontSize: '0.875rem', // 14px
-  fontWeight: 400,
-  marginTop: '0.3125rem',
-  marginRight: '0.25rem',
-  paddingLeft: '0.25rem',
-  overflowY: 'hidden'
-});
+export const menuButtonContainerStyle = {
+  width: '1.5rem'
+};
 
-export const participantItemMeStyle = mergeStyles({
-  fontSize: '0.875rem', // 14px
-  fontWeight: 400,
-  color: '#A19F9D',
-  marginTop: '0.3125rem'
-});
-
-export const iconContainerStyle = mergeStyles({
-  position: 'absolute',
+export const iconContainerStyle = {
   display: 'flex',
-  right: '1rem',
+  alignItems: 'center',
+  height: '100%',
+  paddingTop: '0.2rem'
+};
+
+export const iconStyles = mergeStyles({
+  display: 'flex',
+  lineHeight: 0, // ensure the icon center is on the center line and not slightly above it
   alignItems: 'center'
 });
+
+export const meContainerStyle = {
+  paddingRight: '0.5rem'
+};

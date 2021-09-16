@@ -6,6 +6,7 @@ import {
   CallAgent,
   CallFeatureFactoryType,
   CollectionUpdatedEvent,
+  DiagnosticsCallFeature,
   GroupChatCallLocator,
   GroupLocator,
   IncomingCallEvent,
@@ -19,19 +20,25 @@ import {
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
+import { CallError } from './CallClientState';
 import { CallContext, MAX_CALL_HISTORY_LENGTH } from './CallContext';
 import { DeclarativeCall } from './CallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import {
   createMockCall,
+  createMockCallAgent,
   createMockIncomingCall,
   createMockRemoteParticipant,
+  createStatefulCallClientWithAgent,
   MockCall,
   MockIncomingCall,
   mockoutObjectFreeze,
   MockRecordingCallFeatureImpl,
   MockTranscriptionCallFeatureImpl,
   MockTransferCallFeatureImpl,
+  StateChangeListener,
+  stubCommunicationTokenCredential,
+  StubDiagnosticsCallFeatureImpl,
   waitWithBreakCondition
 } from './TestUtils';
 
@@ -48,6 +55,9 @@ jest.mock('@azure/communication-calling', () => {
       },
       get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
         return MockTranscriptionCallFeatureImpl;
+      },
+      get Diagnostics(): CallFeatureFactoryType<DiagnosticsCallFeature> {
+        return StubDiagnosticsCallFeatureImpl;
       }
     }
   };
@@ -353,5 +363,39 @@ describe('declarative call agent', () => {
     expect(receivedEvent.removed).toBeDefined();
     expect(receivedEvent.removed[0]).toBeDefined();
     expect((receivedEvent.removed[0] as DeclarativeCall).unsubscribe).toBeDefined();
+  });
+});
+
+describe('errors should be reported correctly from CallAgent when', () => {
+  test('join fails', async () => {
+    const baseAgent = createMockCallAgent();
+    baseAgent.join = (): Call => {
+      throw new Error('injected error');
+    };
+    const client = createStatefulCallClientWithAgent(baseAgent);
+    const agent = await client.createCallAgent(stubCommunicationTokenCredential());
+
+    const listener = new StateChangeListener(client);
+    await expect(() => {
+      agent.join({ groupId: 'fakeCallGroup' });
+    }).toThrow(new CallError('CallAgent.join', new Error('injected error')));
+    expect(listener.onChangeCalledCount).toBe(1);
+    expect(client.getState().latestErrors['CallAgent.join']).toBeDefined();
+  });
+
+  test('startCall fails', async () => {
+    const baseAgent = createMockCallAgent();
+    baseAgent.startCall = (): Call => {
+      throw new Error('injected error');
+    };
+    const client = createStatefulCallClientWithAgent(baseAgent);
+    const agent = await client.createCallAgent(stubCommunicationTokenCredential());
+
+    const listener = new StateChangeListener(client);
+    await expect(() => {
+      agent.startCall([]);
+    }).toThrow(new CallError('CallAgent.startCall', new Error('injected error')));
+    expect(listener.onChangeCalledCount).toBe(1);
+    expect(client.getState().latestErrors['CallAgent.startCall']).toBeDefined();
   });
 });

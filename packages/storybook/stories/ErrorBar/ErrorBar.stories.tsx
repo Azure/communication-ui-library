@@ -7,11 +7,11 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
-import { ErrorBar as ErrorBarComponent, ErrorType } from '@azure/communication-react';
+import { ErrorBar as ErrorBarComponent } from '@azure/communication-react';
 import { mergeStyles, useTheme } from '@fluentui/react';
 import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
@@ -25,11 +25,22 @@ const getDocs: () => JSX.Element = () => {
         `ErrorBar` is a wrapper on fluent UI's `MessageBar` with additional features for surfacing Azure Communication
         Services errors on the UI consistently.
       </Description>
-      <Description>Set the `showErrorBar` option for `ChatComposite` to use an `ErrorBar` to show errors.</Description>
+      <Description>Set the `showErrorBar` feature for `ChatComposite` to use an `ErrorBar` to show errors.</Description>
       <Subheading>Localization</Subheading>
       <Description>
         Similar to other UI components in this library, `ErrorBarProps` accepts all strings shown on the UI as a
         `strings` field. The `activeErrors` field selects from these strings to show in the `ErrorBar` UI.
+      </Description>
+      <Subheading>Dismissed messages</Subheading>
+      <Description>
+        User can dismiss the errors shown via `ErrorBar`. The `ErrorBar` component internally tracks dismissed errors
+        and only shows a `MessageBar` for errors that have not been dismissed. When `activeErrors` include a timestamp,
+        errors that occur after the latest dismissal are shown on the UI. When `activeErrors` do not include a timestamp
+        a dismissed error is only shown on the UI if it is removed from the active errors and then occurs again.
+      </Description>
+      <Description>
+        This way, `ErrorBar` separates the tracking of active errors from the purely UI related state of `ErrorBar`
+        dismissals.
       </Description>
       <Subheading>Multiple errors</Subheading>
       <Description>
@@ -46,19 +57,6 @@ const getDocs: () => JSX.Element = () => {
 const ErrorBarStory = (args): JSX.Element => {
   const theme = useTheme();
 
-  const [activeErrors, setActiveErrors] = useState<ErrorType[]>([]);
-
-  useEffect(() => {
-    setActiveErrors(args.errorTypes);
-  }, [args.errorTypes]);
-
-  const onClose = useCallback(
-    (toRemove: ErrorType[]) => {
-      setActiveErrors(activeErrors.filter((e) => !toRemove.includes(e)));
-    },
-    [activeErrors]
-  );
-
   return (
     <div
       className={mergeStyles({
@@ -68,7 +66,7 @@ const ErrorBarStory = (args): JSX.Element => {
         height: '50%'
       })}
     >
-      <ErrorBarComponent activeErrors={activeErrors} onDismissErrors={onClose} />
+      <ErrorBarComponent activeErrors={args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) }))} />
     </div>
   );
 };
@@ -81,9 +79,7 @@ export default {
   argTypes: {
     errorTypes: controlsToAdd.errorTypes,
     // Hiding auto-generated controls
-    activeErrors: hiddenControl,
-    strings: hiddenControl,
-    onDismissErrors: hiddenControl
+    strings: hiddenControl
   },
   parameters: {
     docs: {

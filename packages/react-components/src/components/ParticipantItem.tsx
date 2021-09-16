@@ -1,23 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { participantItemContainerStyle, iconContainerStyle } from './styles/ParticipantItem.styles';
 import {
-  IContextualMenuItem,
-  Persona,
-  PersonaSize,
-  PersonaPresence,
-  Stack,
-  mergeStyles,
-  IStyle,
   ContextualMenu,
-  DirectionalHint
+  DirectionalHint,
+  Icon,
+  IContextualMenuItem,
+  IStyle,
+  mergeStyles,
+  Persona,
+  PersonaPresence,
+  PersonaSize,
+  Stack
 } from '@fluentui/react';
-import React, { useRef, useState } from 'react';
-import { BaseCustomStylesProps } from '../types';
-import { useTheme } from '../theming';
+import React, { useMemo, useRef, useState } from 'react';
 import { useLocale } from '../localization';
-import { MoreHorizontal20Filled, MoreHorizontal20Regular } from '@fluentui/react-icons';
+import { useTheme } from '../theming';
+import { BaseCustomStylesProps, OnRenderAvatarCallback } from '../types';
+import {
+  iconContainerStyle,
+  iconStyles,
+  meContainerStyle,
+  menuButtonContainerStyle,
+  participantItemContainerStyle
+} from './styles/ParticipantItem.styles';
 
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   /** Styles for the avatar. */
@@ -44,12 +50,14 @@ export interface ParticipantItemStrings {
  * Props for ParticipantItem component
  */
 export interface ParticipantItemProps {
+  /** Unique User ID of the participant. This `userId` is available in the `onRenderAvatar` callback function */
+  userId?: string;
   /** Name of participant. */
   displayName: string;
   /** Optional indicator to show participant is the user. */
   me?: boolean;
   /** Optional callback returning a JSX element to override avatar. */
-  onRenderAvatar?: (props?: ParticipantItemProps) => JSX.Element | null;
+  onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional array of IContextualMenuItem for contextual menu. */
   menuItems?: IContextualMenuItem[];
   /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem. Intended for adding icons. */
@@ -75,77 +83,100 @@ export interface ParticipantItemProps {
  * displayName and status as well as optional icons and context menu.
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
-  const { displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me } = props;
+  const { userId, displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
-  const [menuButtonHovered, setMenuButtonHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
-  const { strings } = useLocale();
+  const localeStrings = useLocale().strings.participantItem;
 
-  const isMeText = props.strings?.isMeText ?? strings.participantItem.isMeText;
-  const menuTitle = props.strings?.menuTitle ?? strings.participantItem.menuTitle;
+  const isMeText = props.strings?.isMeText ?? localeStrings.isMeText;
+  const menuTitle = props.strings?.menuTitle ?? localeStrings.menuTitle;
 
-  const avatarToUse = (
-    <Persona
-      text={displayName}
-      size={PersonaSize.size32}
-      presence={presence}
-      onRenderPersonaCoin={onRenderAvatar ? () => onRenderAvatar(props) : undefined}
-      className={mergeStyles(styles?.avatar)}
-      initialsTextColor="white"
-    />
+  const avatarOptions = {
+    text: displayName,
+    size: PersonaSize.size32,
+    presence: presence,
+    initialsTextColor: 'white'
+  };
+
+  const avatar = onRenderAvatar ? (
+    onRenderAvatar(userId ?? '', avatarOptions)
+  ) : (
+    <Persona className={mergeStyles(styles?.avatar)} {...avatarOptions} />
   );
 
-  const meTextStyle = mergeStyles({ color: theme.palette.neutralTertiary }, styles?.me);
-  const contextualMenuStyle = mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu);
-  const menuButtonContainerStyle = mergeStyles({
-    root: {
-      '&:hover': { background: 'none' },
-      '&:active': { background: 'none' }
-    }
-  });
+  const meTextStyle = useMemo(
+    () => mergeStyles(meContainerStyle, { color: theme.palette.neutralTertiary }, styles?.me),
+    [theme.palette.neutralTertiary, styles?.me]
+  );
+  const contextualMenuStyle = useMemo(
+    () => mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu),
+    [theme.palette.neutralLighterAlt, styles?.menu]
+  );
+  const infoContainerStyle = useMemo(
+    () => mergeStyles(iconContainerStyle, { color: theme.palette.neutralTertiary }, styles?.iconContainer),
+    [theme.palette.neutralTertiary, styles?.iconContainer]
+  );
+
+  const menuButton = useMemo(
+    () => (
+      <Stack
+        horizontal={true}
+        horizontalAlign="end"
+        className={mergeStyles(menuButtonContainerStyle)}
+        title={menuTitle}
+      >
+        <Icon
+          iconName={itemHovered ? 'ParticipantItemOptionsHovered' : 'ParticipantItemOptions'}
+          className={iconStyles}
+        />
+      </Stack>
+    ),
+    [itemHovered, menuTitle]
+  );
+
+  const onDismissMenu = () => {
+    setItemHovered(false);
+    setMenuHidden(true);
+  };
 
   return (
     <div
       ref={containerRef}
+      role={'menuitem'}
+      data-is-focusable={true}
       className={mergeStyles(participantItemContainerStyle, styles?.root)}
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
+      onClick={() => {
+        setItemHovered(true);
+        setMenuHidden(false);
+      }}
     >
-      {avatarToUse}
-      {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
-      {onRenderIcon && (
-        <Stack horizontal={true} className={mergeStyles(iconContainerStyle, styles?.iconContainer)}>
-          {menuItems && menuItems.length > 0 && (itemHovered || !menuHidden) ? (
-            <div
-              onMouseEnter={() => setMenuButtonHovered(true)}
-              onMouseLeave={() => setMenuButtonHovered(false)}
-              title={menuTitle}
-              className={menuButtonContainerStyle}
-              onClick={() => setMenuHidden(false)}
-            >
-              {!menuButtonHovered ? (
-                <MoreHorizontal20Regular primaryFill="currentColor" />
-              ) : (
-                <MoreHorizontal20Filled primaryFill="currentColor" />
-              )}
-            </div>
-          ) : (
-            onRenderIcon(props)
-          )}
-          {menuItems && menuItems.length > 0 && (
-            <ContextualMenu
-              items={menuItems}
-              hidden={menuHidden}
-              target={containerRef}
-              onItemClick={() => setMenuHidden(true)}
-              onDismiss={() => setMenuHidden(true)}
-              directionalHint={DirectionalHint.bottomRightEdge}
-              className={contextualMenuStyle}
-            />
-          )}
+      <Stack
+        horizontal
+        className={mergeStyles({ width: `calc(100% - ${menuButtonContainerStyle.width})`, alignItems: 'center' })}
+      >
+        {avatar}
+        {me && <Stack className={meTextStyle}>{isMeText}</Stack>}
+        <Stack horizontal className={mergeStyles(infoContainerStyle)}>
+          {onRenderIcon && onRenderIcon(props)}
         </Stack>
+      </Stack>
+      {menuItems && menuItems.length > 0 && (
+        <>
+          {menuButton}
+          <ContextualMenu
+            items={menuItems}
+            hidden={menuHidden}
+            target={containerRef}
+            onItemClick={onDismissMenu}
+            onDismiss={onDismissMenu}
+            directionalHint={DirectionalHint.bottomRightEdge}
+            className={contextualMenuStyle}
+          />
+        </>
       )}
     </div>
   );

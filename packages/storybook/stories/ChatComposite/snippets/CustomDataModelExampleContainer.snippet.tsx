@@ -3,9 +3,15 @@ import {
   CommunicationUserIdentifier,
   getIdentifierKind
 } from '@azure/communication-common';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import {
+  AvatarPersonaData,
+  ChatAdapter,
+  ChatComposite,
+  CompositeLocale,
+  createAzureCommunicationChatAdapter
+} from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export interface CustomDataModelExampleContainerProps {
   userId: CommunicationUserIdentifier;
@@ -16,6 +22,7 @@ export interface CustomDataModelExampleContainerProps {
   botUserId: string;
   botAvatar: string;
   fluentTheme?: PartialTheme | Theme;
+  locale?: CompositeLocale;
 }
 
 export const CustomDataModelExampleContainer = (props: CustomDataModelExampleContainerProps): JSX.Element => {
@@ -41,29 +48,31 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
     }
   }, [props]);
 
-  // Data model injection: Contoso provides avatars for the chat participants.
+  // Data model injection: Contoso provides avatars for the chat bot participant.
   // Unlike the displayName example above, this sets the avatar for the remote bot participant.
   //
-  // Although ChatComposite is not a pure react component, this callback may be passed on to
-  // pure components lower in the Component tree.
-  // Thus, it is best practice to memoize this with useCallback() to avoid spurious rendering.
-  const onRenderAvatar = useCallback(
-    (userId: string): JSX.Element => {
+  // Note: Chat Composite doesn't implement a memoization mechanism for this callback.
+  // It is recommended that Contoso memoize the `onFetchAvatarPersonaData` callback
+  // to avoid costly re-fetching of data.
+  // A 3rd Party utility such as Lodash (_.memoize) can be used to memoize the callback.
+  const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
+    new Promise((resolve, reject) => {
       if (userId === props.botUserId) {
-        return <label>{props.botAvatar}</label>;
+        return resolve({
+          imageInitials: props.botAvatar,
+          initialsColor: 'white'
+        });
       }
-      return <label>?</label>;
-    },
-    [props.botUserId, props.botAvatar]
-  );
+    });
+
   return (
     <>
       {adapter ? (
         <ChatComposite
           fluentTheme={props.fluentTheme}
           adapter={adapter}
-          onRenderAvatar={onRenderAvatar}
-          options={{ showParticipantPane: true, showTopic: true }}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          locale={props.locale}
         />
       ) : (
         <h3>Loading...</h3>

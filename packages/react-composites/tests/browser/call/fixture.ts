@@ -52,7 +52,8 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
       const browser = await chromium.launch({
-        executablePath: process.env.CHROME_PATH,
+        // Our calling sdk streaming does not work on chromium 93, remove this line until it gets fixed
+        channel: 'chrome',
         args: [
           `--window-size=${Object.values(PAGE_VIEWPORT).join(',')}`,
           '--font-render-hinting=medium', // Ensures that fonts are rendered consistently.
@@ -61,7 +62,9 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
           '--allow-file-access',
           '--use-fake-ui-for-media-stream',
           '--use-fake-device-for-media-stream',
-          `--use-file-for-fake-video-capture=${path.join(__dirname, 'test.y4m')}`
+          `--use-file-for-fake-video-capture=${path.join(__dirname, 'test.y4m')}`,
+          '--lang=en-US',
+          '--mute-audio'
         ],
         ignoreDefaultArgs: [
           '--hide-scrollbars' // Don't hide scrollbars in headless mode.

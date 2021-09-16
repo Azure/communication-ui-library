@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Spinner } from '@fluentui/react';
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { createAutoRefreshingCredential } from '../utils/credential';
+import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
+import { Spinner } from '@fluentui/react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
+import { createAutoRefreshingCredential } from '../utils/credential';
 
 export interface CallScreenProps {
   token: string;
@@ -36,6 +36,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         onCallEnded();
       });
       adapter.on('error', (e) => {
+        // Do not call error handler when error target is starting screen sharing
+        if (e.target === 'Call.startScreenSharing') {
+          console.log('Error squelched. ' + e);
+          return;
+        }
         console.error(e);
         onCallError(e);
       });

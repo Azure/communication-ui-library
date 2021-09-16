@@ -5,24 +5,39 @@ import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { MeetingEndReason } from './MeetingEndReason';
 
+/**
+ * Participants of a Meeting.
+ * @alpha
+ */
 export interface MeetingParticipant
+  // extends Pick<ChatParticipant, 'shareHistoryTime'>,
   extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
+  /** ID of the meeting participant. */
   id: CommunicationIdentifier;
+  /** Describes the reason the meeting ended for this participant. */
   meetingEndReason?: MeetingEndReason;
 }
 
-export function createMeetingParticipant(callParticipant: RemoteParticipantState): MeetingParticipant {
-  const { displayName, state, videoStreams, isMuted, isSpeaking, identifier, callEndReason } = callParticipant;
+export type MeetingParticipants = { [keys: string]: MeetingParticipant };
 
-  return { id: identifier, meetingEndReason: callEndReason, displayName, state, videoStreams, isMuted, isSpeaking };
+function meetingParticipantFromCallParticipant(callParticipant: RemoteParticipantState): MeetingParticipant {
+  return {
+    id: callParticipant.identifier,
+    meetingEndReason: callParticipant.callEndReason,
+    displayName: callParticipant.displayName,
+    state: callParticipant.state,
+    videoStreams: callParticipant.videoStreams,
+    isMuted: callParticipant.isMuted,
+    isSpeaking: callParticipant.isSpeaking
+  };
 }
 
-export function convertCallParticipantsToMeetingParticipants(callParticipants: {
+export function meetingParticipantsFromCallParticipants(callParticipants: {
   [keys: string]: RemoteParticipantState;
-}): { [keys: string]: MeetingParticipant } {
-  const meetingParticipants: { [keys: string]: MeetingParticipant } = {};
+}): MeetingParticipants {
+  const meetingParticipants: MeetingParticipants = {};
   for (const [key, value] of Object.entries(callParticipants)) {
-    meetingParticipants[key] = createMeetingParticipant(value);
+    meetingParticipants[key] = meetingParticipantFromCallParticipant(value);
   }
   return meetingParticipants;
 }

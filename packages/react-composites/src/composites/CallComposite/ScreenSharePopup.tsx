@@ -1,8 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, DefaultButton, FocusTrapCallout, IDragOptions, Label, Modal, Stack } from '@fluentui/react';
-import { ShareScreenStart20Filled, ShareScreenStop20Filled } from '@fluentui/react-icons';
+import {
+  ContextualMenu,
+  DefaultButton,
+  FocusTrapCallout,
+  Icon,
+  IDragOptions,
+  Label,
+  Modal,
+  Stack
+} from '@fluentui/react';
+import { useTheme } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   getScreenSharePopupModalButtonStyles,
@@ -10,12 +19,11 @@ import {
   screenSharePopupModalLabelStyles,
   screenSharePopupModalStackStyles
 } from './styles/ScreenSharePopup.styles';
-import { useTheme } from '@internal/react-components';
 
 const STOP_SCREENSHARE_BUTTON_TEXT = 'Stop presenting';
 const STOP_SCREENSHARE_LABEL_TEXT = "You're presenting your screen.";
 const onRenderStopScreenShareIcon = (): JSX.Element => {
-  return <ShareScreenStop20Filled primaryFill="currentColor" />;
+  return <Icon iconName="ScreenSharePopupStopPresenting" />;
 };
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -33,7 +41,7 @@ export interface ScreenSharePopupProps {
    * If this is not supplied the modal dialog is hosted in a fixed
    * position element rendered at the end of the document.
    *
-   * {@link https://docs.microsoft.com/en-us/javascript/api/react-internal/ilayerprops?view=office-ui-fabric-react-latest#hostId}
+   * {@link https://docs.microsoft.com/javascript/api/react-internal/ilayerprops?view=office-ui-fabric-react-latest#hostId}
    */
   hostId?: string;
 }
@@ -79,7 +87,7 @@ export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
     >
       <Stack style={screenSharePopupModalStackStyles} horizontalAlign={'center'}>
         <Stack verticalFill={true} verticalAlign={'center'} horizontalAlign={'center'}>
-          <ShareScreenStart20Filled primaryFill="disabled" />
+          <Icon iconName="ScreenSharePopupPresenting" />
           <Label style={screenSharePopupModalLabelStyles}>{STOP_SCREENSHARE_LABEL_TEXT}</Label>
         </Stack>
         <DefaultButton

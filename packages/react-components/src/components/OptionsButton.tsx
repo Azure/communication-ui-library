@@ -1,13 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { ContextualMenuItemType, Icon, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
-import { MoreHorizontal20Filled, Video20Regular } from '@fluentui/react-icons';
-import { IContextualMenuItem, IContextualMenuProps, ContextualMenuItemType, Theme } from '@fluentui/react';
-import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { iconStyle } from './styles/OptionsButton.styles';
 
 /**
  * Device to represent a camera, microphone, or speaker for component OptionsButton component
@@ -111,8 +108,7 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
  */
 const generateDefaultMenuProps = (
   props: OptionsButtonProps,
-  strings: OptionsButtonStrings,
-  theme: Theme
+  strings: OptionsButtonStrings
 ): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
@@ -145,7 +141,7 @@ const generateDefaultMenuProps = (
           key: camera.id,
           text: camera.name,
           title: camera.name,
-          onRenderIcon: () => <Video20Regular style={{ ...iconStyle, ...{ color: theme.palette.themePrimary } }} />,
+          iconProps: { iconName: 'OptionsCamera', styles: { root: { lineHeight: 0 } } },
           canCheck: true,
           isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
@@ -169,7 +165,7 @@ const generateDefaultMenuProps = (
           key: microphone.id,
           text: microphone.name,
           title: microphone.name,
-          iconProps: { iconName: 'Microphone' },
+          iconProps: { iconName: 'OptionsMic', styles: { root: { lineHeight: 0 } } },
           canCheck: true,
           isChecked: microphone.id === selectedMicrophone?.id,
           onClick: () => {
@@ -193,7 +189,7 @@ const generateDefaultMenuProps = (
           key: speaker.id,
           text: speaker.name,
           title: speaker.name,
-          iconProps: { iconName: 'Volume1' },
+          iconProps: { iconName: 'OptionsSpeaker', styles: { root: { lineHeight: 0 } } },
           canCheck: true,
           isChecked: speaker.id === selectedSpeaker?.id,
           onClick: () => {
@@ -213,25 +209,22 @@ const generateDefaultMenuProps = (
   return defaultMenuProps;
 };
 
-const onRenderOptionsIcon = (): JSX.Element => (
-  <MoreHorizontal20Filled primaryFill="currentColor" key={'optionsIconKey'} />
-);
+const onRenderOptionsIcon = (): JSX.Element => <Icon iconName="ControlButtonOptions" />;
 
 /**
  * `OptionsButton` allows you to easily create a component for rendering an options button. It can be used in your ControlBar component for example.
  * This button should contain dropdown menu items you can define through its property `menuProps`.
- * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
+ * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
  *
  * @param props - of type OptionsButtonProps
  */
 export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const { onRenderIcon } = props;
 
-  const theme = useTheme();
   const localeStrings = useLocale().strings.optionsButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  const defaultMenuProps = generateDefaultMenuProps(props, strings, theme);
+  const defaultMenuProps = generateDefaultMenuProps(props, strings);
 
   return (
     <ControlBarButton

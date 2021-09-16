@@ -1,6 +1,6 @@
 {
   "name": "@internal/acs-ui-common",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.4",
   "description": "Common types and utilities for all Azure Communication Serves UI libraries",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -41,13 +41,5 @@
     "rollup": "~2.42.4",
     "ts-jest": "^26.4.4",
     "typescript": "4.3.5"
-  },
-  "beachball": {
-    "tag": "next",
-    "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
-    ]
   }
 }

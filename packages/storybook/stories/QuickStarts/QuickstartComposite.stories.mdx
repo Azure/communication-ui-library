@@ -8,7 +8,7 @@ import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompos
 
 # Quickstart: Get started with Composites
 
-Get started with Azure Communication Services by using the UI Library to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how to integrate UI Library base components into your application to build communication experiences.
+Get started with Azure Communication Services by using the UI Library to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how to integrate UI Library composites into your application to build communication experiences.
 
 UI Library components come in two flavors: UI and Composite.
 
@@ -20,6 +20,7 @@ UI Library components come in two flavors: UI and Composite.
 - An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
 - [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 12 Recommended).
 - An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
+- An identity with both VoIP and Chat scopes. Generate an identity using the [Azure Portal](https://docs.microsoft.com/azure/communication-services/quickstarts/identity/quick-create-identity).
 
 ## Setting Up
 
@@ -31,13 +32,13 @@ We'll use the create-react-app template for this quickstart. For more informatio
 
 ```bash
 
-npx create-react-app ui-toolkit-quickstart-composites --template typescript
+npx create-react-app ui-library-quickstart-composites --template typescript
 
-cd ui-toolkit-quickstart-composites
+cd ui-library-quickstart-composites
 
 ```
 
-At the end of this process, you should have a full application inside of the folder `ui-toolkit-quickstart-composites`.
+At the end of this process, you should have a full application inside of the folder `ui-library-quickstart-composites`.
 For this quickstart, we'll be modifying files inside of the `src` folder.
 
 ### Install the Package
@@ -66,10 +67,10 @@ npm run start
 
 The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
 
-| Name                                                          | Description                                                                                  |
-| ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| [CallComposite](/?path=/story/composites-call--basic-example) | Composite component that renders a calling experience with participant gallery and controls. |
-| [ChatComposite](/?path=/story/composites-chat--basic-example) | Composite component that renders a chat experience with chat thread and input                |
+| Name                                                                        | Description                                                                                  |
+| --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [CallComposite](./?path=/story/composites-call-basicexample--basic-example) | Composite component that renders a calling experience with participant gallery and controls. |
+| [ChatComposite](./?path=/story/composites-chat-basicexample--basic-example) | Composite component that renders a chat experience with chat thread and input                |
 
 ## Set Up Adapters
 
@@ -78,13 +79,15 @@ These adapters take care of the entire state of the composites truly making them
 To setup the adapters, developers needs to pass information on the call or chat they want to join.
 
 The adapters require access tokens, group IDs, or thread IDs to be setup.
+For this quickstart, the access tokens required need to have both `chat` and `VoIP` scopes.
+For more information on access tokens see: [Identity Model](https://docs.microsoft.com/azure/communication-services/concepts/identity-model#access-tokens)
 These elements come from services that go through the proper steps to generate these IDs and pass them to the client application.
 For more information, see: [Client Server Architecture](https://docs.microsoft.com/azure/communication-services/concepts/client-and-server-architecture).
 For Example: The Group Chat composite expects that the `userId` associated to the `token` being used to initialize it has already been joined to the `threadId` being provided.
 If the token hasn't been joined to the thread ID, then the Group Chat composite will fail.
 For more information on chat, see: [Getting Started with Chat](https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp)
 
-Go to the `src` folder inside of `ui-toolkit-quickstart-composites` and look for the file `app.tsx`.
+Go to the `src` folder inside of `ui-library-quickstart-composites` and look for the file `app.tsx`.
 
 `App.tsx`
 
@@ -94,7 +97,7 @@ Next we will initialize the composite components with the adapters.
 
 ## Initialize Composites
 
-Go to the `src` folder inside of `ui-toolkit-quickstart-composites` and look for the file `app.tsx`.
+Go to the `src` folder inside of `ui-library-quickstart-composites` and look for the file `app.tsx`.
 Here we'll drop the following code to initialize our Composite Components for Chat and Calling using the adapters we set up above.
 You can choose which one to use depending on the type of communication experience you're building.
 If needed, you can use both at the same time.
@@ -121,11 +124,11 @@ Learn more about [cleaning up resources](https://docs.microsoft.com/azure/commun
 
 ## Next Steps
 
-[Try UI Library UI Components](/?path=/story/quickstarts-uicomponents--page)
+[Try UI Library UI Components](./?path=/story/quickstarts-uicomponents--page)
 
 For more information, see the following resources:
 
-- [UI Library Use Cases](/?path=/story/use-cases--page)
-- [UI Library Styling](/?path=/story/styling--page)
-- [UI Library Theming](/?path=/story/theming--page)
-- [UI Library Localization](/?path=/story/localization--page#composites)
+- [UI Library Use Cases](./?path=/story/use-cases--page)
+- [UI Library Styling](./?path=/story/styling--page)
+- [UI Library Theming](./?path=/story/theming--page)
+- [UI Library Localization](./?path=/story/localization--page#composites)

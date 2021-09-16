@@ -5,8 +5,12 @@ import { CallState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { MeetingParticipant } from './MeetingParticipants';
 import { MeetingEndReason } from './MeetingEndReason';
-import { convertCallParticipantsToMeetingParticipants } from '../state/MeetingParticipants';
+import { meetingParticipantsFromCallParticipants } from '../state/MeetingParticipants';
 
+/**
+ * State of a single Meeting.
+ * @alpha
+ */
 export interface MeetingState
   extends Pick<
       CallState,
@@ -26,156 +30,81 @@ export interface MeetingState
       ChatThreadClientState,
       'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'
     > {
+  /** Current Meeting ID. */
   id: string;
+  /** Active participants in the current meeting. */
   participants: { [key: string]: MeetingParticipant };
+  /** Participants who have left the current meeting. */
   participantsEnded: { [keys: string]: MeetingParticipant };
+  /** Reason the current meeting has ended. */
   meetingEndReason?: MeetingEndReason;
 }
 
-export function generateMeetingState(callState: CallState, chatState: ChatThreadClientState): MeetingState {
-  const {
-    callerInfo,
-    state,
-    isMuted,
-    isScreenSharingOn,
-    localVideoStreams,
-    transcription,
-    recording,
-    transfer,
-    screenShareRemoteParticipant,
-    startTime,
-    endTime,
-    id,
-    remoteParticipants,
-    remoteParticipantsEnded,
-    callEndReason
-  } = callState;
+/**
+ * Return properties from call state that are used in meeting state.
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const meetingPropsFromCallState = (callState: CallState) => ({
+  id: callState.id,
+  callerInfo: callState.callerInfo,
+  state: callState.state,
+  isMuted: callState.isMuted,
+  isScreenSharingOn: callState.isScreenSharingOn,
+  localVideoStreams: callState.localVideoStreams,
+  transcription: callState.transcription,
+  recording: callState.recording,
+  transfer: callState.transfer,
+  screenShareRemoteParticipant: callState.screenShareRemoteParticipant,
+  startTime: callState.startTime,
+  endTime: callState.endTime,
+  meetingEndReason: callState.callEndReason,
+  // For meetings we only use participants from the call in a meeting
+  participants: meetingParticipantsFromCallParticipants(callState.remoteParticipants),
+  participantsEnded: meetingParticipantsFromCallParticipants(callState.remoteParticipantsEnded)
+});
 
-  // Only use participants from the call in a meeting
-  const participants = remoteParticipants;
-  const participantsEnded = remoteParticipantsEnded;
+/**
+ * Return properties from chat state that are used in meeting state.
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const meetingPropsFromChatState = (chatState: ChatThreadClientState) => ({
+  chatMessages: chatState.chatMessages,
+  threadId: chatState.threadId,
+  properties: chatState.properties,
+  readReceipts: chatState.readReceipts,
+  typingIndicators: chatState.typingIndicators,
+  latestReadTime: chatState.latestReadTime
+});
 
-  const { chatMessages, threadId, properties, readReceipts, typingIndicators, latestReadTime } = chatState;
-
+/**
+ * Helper function to return meeting state created from call and chat states
+ */
+export function meetingStateFromBackingStates(callState: CallState, chatState: ChatThreadClientState): MeetingState {
   return {
-    id,
-    callerInfo,
-    state,
-    isMuted,
-    isScreenSharingOn,
-    localVideoStreams,
-    transcription,
-    recording,
-    transfer,
-    screenShareRemoteParticipant,
-    startTime,
-    endTime,
-    chatMessages,
-    threadId,
-    properties,
-    readReceipts,
-    typingIndicators,
-    latestReadTime,
-    participants: convertCallParticipantsToMeetingParticipants(participants),
-    participantsEnded: convertCallParticipantsToMeetingParticipants(participantsEnded),
-    meetingEndReason: callEndReason
+    ...meetingPropsFromCallState(callState),
+    ...meetingPropsFromChatState(chatState)
   };
 }
 
+/**
+ * Helper function to return an updated meeting state with new chat state applied
+ */
 export function mergeChatStateIntoMeetingState(
-  chatState: ChatThreadClientState,
-  meetingState: MeetingState
+  meetingState: MeetingState,
+  chatState: ChatThreadClientState
 ): MeetingState {
-  const {
-    callerInfo,
-    state,
-    isMuted,
-    isScreenSharingOn,
-    localVideoStreams,
-    transcription,
-    recording,
-    transfer,
-    screenShareRemoteParticipant,
-    startTime,
-    endTime,
-    id,
-    participants,
-    participantsEnded,
-    meetingEndReason
-  } = meetingState;
-
-  const { chatMessages, threadId, properties, readReceipts, typingIndicators, latestReadTime } = chatState;
-
   return {
-    id,
-    callerInfo,
-    state,
-    isMuted,
-    isScreenSharingOn,
-    localVideoStreams,
-    transcription,
-    recording,
-    transfer,
-    screenShareRemoteParticipant,
-    startTime,
-    endTime,
-    chatMessages,
-    threadId,
-    properties,
-    readReceipts,
-    typingIndicators,
-    latestReadTime,
-    participants,
-    participantsEnded,
-    meetingEndReason
+    ...meetingState,
+    ...meetingPropsFromChatState(chatState)
   };
 }
 
-export function mergeCallStateIntoMeetingState(callState: CallState, meetingState: MeetingState): MeetingState {
-  const {
-    callerInfo,
-    state,
-    isMuted,
-    isScreenSharingOn,
-    localVideoStreams,
-    transcription,
-    recording,
-    transfer,
-    screenShareRemoteParticipant,
-    startTime,
-    endTime,
-    id,
-    remoteParticipants,
-    remoteParticipantsEnded,
-    callEndReason
-  } = callState;
-
-  const participants = remoteParticipants;
-  const participantsEnded = remoteParticipantsEnded;
-
-  const { chatMessages, threadId, properties, readReceipts, typingIndicators, latestReadTime } = meetingState;
-
+/**
+ * Helper function to return an updated meeting state with new call state applied
+ */
+export function mergeCallStateIntoMeetingState(meetingState: MeetingState, callState: CallState): MeetingState {
   return {
-    id,
-    callerInfo,
-    state,
-    isMuted,
-    isScreenSharingOn,
-    localVideoStreams,
-    transcription,
-    recording,
-    transfer,
-    screenShareRemoteParticipant,
-    startTime,
-    endTime,
-    chatMessages,
-    threadId,
-    properties,
-    readReceipts,
-    typingIndicators,
-    latestReadTime,
-    participants: convertCallParticipantsToMeetingParticipants(participants),
-    participantsEnded: convertCallParticipantsToMeetingParticipants(participantsEnded),
-    meetingEndReason: callEndReason
+    ...meetingState,
+    ...meetingPropsFromCallState(callState)
   };
 }
