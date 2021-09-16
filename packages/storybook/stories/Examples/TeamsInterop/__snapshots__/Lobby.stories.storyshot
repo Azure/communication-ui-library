@@ -128,11 +128,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </svg>
                     </span>
                   </i>
-                  <label
-                    className="ms-Label root-21"
+                  <span
+                    className="#323130 css-21"
                   >
                     Turn off
-                  </label>
+                  </span>
                 </span>
               </button>
               <button
@@ -176,11 +176,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </svg>
                     </span>
                   </i>
-                  <label
-                    className="ms-Label root-21"
+                  <span
+                    className="#323130 css-21"
                   >
                     Mute
-                  </label>
+                  </span>
                 </span>
               </button>
               <button
@@ -227,11 +227,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </svg>
                     </span>
                   </i>
-                  <label
-                    className="ms-Label root-21"
+                  <span
+                    className="#323130 css-21"
                   >
                     Options
-                  </label>
+                  </span>
                   <i
                     aria-hidden={true}
                     className="ms-Icon root-37 css-24 ms-Button-menuIcon menuIcon-23"
@@ -291,11 +291,11 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </svg>
                     </span>
                   </i>
-                  <label
-                    className="ms-Label root-28"
+                  <span
+                    className="#323130 css-28"
                   >
                     Leave
-                  </label>
+                  </span>
                 </span>
               </button>
             </div>
