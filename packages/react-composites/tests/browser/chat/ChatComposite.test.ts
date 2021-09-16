@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IDS } from '../config';
+import { IDS } from '../common/config';
 import {
   createChatThreadAndUsers,
   dataUiId,
@@ -8,7 +8,7 @@ import {
   loadPage,
   stubMessageTimestamps,
   waitForCompositeToLoad
-} from '../utils';
+} from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 

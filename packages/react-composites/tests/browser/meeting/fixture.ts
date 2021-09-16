@@ -1,39 +1,36 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallUserType, createCallingUserAndToken, loadCallCompositePage, PAGE_VIEWPORT } from '../common/utils';
+import { MeetingUserType, createMeetingUsers, loadCallCompositePage, PAGE_VIEWPORT } from '../common/utils';
 import { startServer, stopServer } from '../../server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
-import { v1 } from 'uuid';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const SERVER_URL = 'http://localhost:3000';
 const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 
-export interface ChatWorkerFixtures {
+interface CompositeAppWorkerFixtures {
   serverUrl: string;
   testBrowser: Browser;
-  users: CallUserType[];
+  users: MeetingUserType[];
   pages: Array<Page>;
 }
+
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 /**
  * A worker-scoped test fixture for ChatComposite browser tests.
  */
-export const test = base.extend<unknown, ChatWorkerFixtures>({
-  /**
-   * Run a server to serve the ChatComposite example app.
-   *
-   * @returns string URL for the server.
-   */
+export const test = base.extend<unknown, CompositeAppWorkerFixtures>({
   serverUrl: [
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
-      await startServer(path.join(__dirname, '/dist'));
+      await startServer(path.join(__dirname, 'app'));
       try {
         await use(SERVER_URL);
       } finally {
@@ -42,11 +39,6 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     },
     { scope: 'worker' }
   ],
-  /**
-   * Starts a test browser to load the ChatComposite example app.
-   *
-   * @returns Browser object.
-   */
   testBrowser: [
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
@@ -79,32 +71,15 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     },
     { scope: 'worker' }
   ],
-  /**
-   * Creates a Chat thread and adds users to the thread.
-   *
-   * @returns the created users' identities.
-   */
   users: [
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
-      const groupId = v1();
-      const users: Array<CallUserType> = [];
-      for (const displayName of PARTICIPANTS) {
-        const user = await createCallingUserAndToken();
-        user.displayName = displayName;
-        user.groupId = groupId;
-        users.push(user);
-      }
+      const users = await createMeetingUsers(PARTICIPANTS);
       await use(users);
     },
     { scope: 'worker' }
   ],
-  /**
-   * Loads the ChatComposite example app for each participant in a browser page.
-   *
-   * @returns Array of Page's loaded, one for each participant.
-   */
   pages: [
     async ({ serverUrl, testBrowser, users }, use) => {
       const pages = await Promise.all(users.map(async (user) => loadCallCompositePage(testBrowser, serverUrl, user)));
