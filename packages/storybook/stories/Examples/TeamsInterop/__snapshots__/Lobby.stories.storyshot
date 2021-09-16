@@ -44,7 +44,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
             style={
               Object {
                 "left": "50%",
-                "marginTop": "-2.125rem",
+                "marginTop": "-2.125em",
                 "position": "absolute",
                 "top": "50%",
                 "transform": "translate(-50%, -50%)",
@@ -55,7 +55,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
               style={
                 Object {
                   "color": "#323130",
-                  "fontSize": "1.75rem",
+                  "fontSize": "1.75em",
                   "margin": "0",
                   "textAlign": "center",
                 }
@@ -72,7 +72,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
               style={
                 Object {
                   "color": "#323130",
-                  "fontSize": "0.75rem",
+                  "fontSize": "0.75em",
                   "margin": "0",
                   "textAlign": "center",
                 }
@@ -258,8 +258,8 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseUp={[Function]}
                 style={
                   Object {
-                    "borderRadius": "0.25rem",
-                    "marginLeft": "0.25rem",
+                    "borderRadius": "0.25em",
+                    "marginLeft": "0.25em",
                   }
                 }
                 type="button"

@@ -52,7 +52,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 style={
                   Object {
                     "overflow": "hidden",
-                    "width": "15rem",
+                    "width": "15em",
                   }
                 }
                 tabIndex={0}

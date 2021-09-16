@@ -23,7 +23,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
       <div
         style={
           Object {
-            "width": "31.25rem",
+            "width": "31.25em",
           }
         }
       >

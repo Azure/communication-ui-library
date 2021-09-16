@@ -160,7 +160,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                             className="ms-Stack css-30"
                             style={
                               Object {
-                                "marginRight": "0.5rem",
+                                "marginRight": "0.5em",
                               }
                             }
                           >
@@ -201,7 +201,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                               style={
                                 Object {
                                   "color": "#000000",
-                                  "fontSize": "0.875rem",
+                                  "fontSize": "0.875em",
                                   "fontWeight": "bold",
                                 }
                               }
@@ -211,7 +211,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                                 <span
                                   style={
                                     Object {
-                                      "marginLeft": "0.2rem",
+                                      "marginLeft": "0.2em",
                                       "opacity": 0.5,
                                     }
                                   }
@@ -226,7 +226,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
                               style={
                                 Object {
                                   "color": "#201f1e",
-                                  "fontSize": "0.75rem",
+                                  "fontSize": "0.75em",
                                 }
                               }
                             >

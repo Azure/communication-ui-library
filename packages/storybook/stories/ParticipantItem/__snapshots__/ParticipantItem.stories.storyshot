@@ -23,7 +23,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
       <div
         style={
           Object {
-            "width": "15rem",
+            "width": "15em",
           }
         }
       >

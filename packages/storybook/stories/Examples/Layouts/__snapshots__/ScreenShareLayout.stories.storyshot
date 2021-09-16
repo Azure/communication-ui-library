@@ -24,7 +24,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
         className="ms-Stack css-5"
         style={
           Object {
-            "border": ".063rem",
+            "border": ".063em",
             "height": "500px",
             "width": "850px",
           }
@@ -415,7 +415,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-122 css-45"
+              className="ms-Stack css-121 css-45"
             >
               <div
                 className="ms-Stack css-15"

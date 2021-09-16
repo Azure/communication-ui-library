@@ -24,8 +24,8 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         style={
           Object {
             "height": "100%",
-            "maxHeight": "30rem",
-            "maxWidth": "50rem",
+            "maxHeight": "30em",
+            "maxWidth": "50em",
             "width": "100%",
           }
         }
@@ -233,7 +233,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <span
                             style={
                               Object {
-                                "marginLeft": "0.5rem",
+                                "marginLeft": "0.5em",
                               }
                             }
                           >
