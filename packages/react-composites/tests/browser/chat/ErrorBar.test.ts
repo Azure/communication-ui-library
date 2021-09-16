@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
 import { test } from './fixture';
-import { dataUiId, loadUrlInPage, stubMessageTimestamps, waitForCompositeToLoad } from '../common/utils';
+import { dataUiId, loadUrlInPage, stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
 import { Page, expect } from '@playwright/test';
 
 // All tests in this suite *must be run sequentially*.
@@ -14,7 +14,7 @@ test.describe('ErrorBar is shown correctly', async () => {
   test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
     await loadUrlInPage(page, serverUrl, users[0]);
     page.bringToFront();
-    await waitForCompositeToLoad(page);
+    await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
 
@@ -28,7 +28,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     const user = users[0];
     user.threadId = 'INCORRECT_VALUE';
     await loadUrlInPage(page, serverUrl, users[0]);
-    await waitForCompositeToLoad(page);
+    await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
 
@@ -42,7 +42,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     const user = users[0];
     user.token = 'INCORRECT_VALUE' + user.token;
     await loadUrlInPage(page, serverUrl, users[0]);
-    await waitForCompositeToLoad(page);
+    await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
@@ -56,7 +56,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     const user = users[0];
     user.endpointUrl = 'https://INCORRECT.VALUE';
     await loadUrlInPage(page, serverUrl, users[0]);
-    await waitForCompositeToLoad(page);
+    await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
 

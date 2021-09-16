@@ -38,7 +38,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
     // playwright forces us to use a destructuring pattern for first argument.
     /* eslint-disable-next-line no-empty-pattern */
     async ({}, use) => {
-      await startServer(path.join(__dirname, '/dist'));
+      await startServer(path.join(__dirname, 'app'));
       try {
         await use(SERVER_URL);
       } finally {

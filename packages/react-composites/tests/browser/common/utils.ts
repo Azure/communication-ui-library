@@ -20,7 +20,7 @@ export const TOPIC_NAME = 'Cowabunga';
 /**
  * Wait for the ChatComposite on a page to fully load.
  */
-export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
+export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('networkidle');
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
 

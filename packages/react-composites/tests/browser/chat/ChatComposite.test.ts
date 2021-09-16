@@ -7,7 +7,7 @@ import {
   loadUrlInPage,
   loadPage,
   stubMessageTimestamps,
-  waitForCompositeToLoad
+  waitForChatCompositeToLoad
 } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
@@ -27,7 +27,7 @@ test.describe('Chat Composite E2E Tests', () => {
       const page = pages[idx];
       const user = users[idx];
       await loadUrlInPage(page, serverUrl, user);
-      pageLoadPromises.push(waitForCompositeToLoad(page));
+      pageLoadPromises.push(waitForChatCompositeToLoad(page));
       stubMessageTimestamps(pages[idx]);
     }
     await Promise.all(pageLoadPromises);
@@ -105,7 +105,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await page.bringToFront();
     await page.waitForSelector(`[data-ui-status="seen"]`);
     page.reload({ waitUntil: 'networkidle' });
-    await waitForCompositeToLoad(page);
+    await waitForChatCompositeToLoad(page);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
     await page.waitForSelector(`[data-ui-status="delivered"]`);
     stubMessageTimestamps(page);
