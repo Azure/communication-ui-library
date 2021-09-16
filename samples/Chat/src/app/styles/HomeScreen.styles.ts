@@ -6,8 +6,8 @@ import { IStackTokens, getTheme, mergeStyles } from '@fluentui/react';
 const palette = getTheme().palette;
 
 export const imgStyle = mergeStyles({
-  width: '26.813rem',
-  height: '20.125rem',
+  width: '26.813em',
+  height: '20.125em',
   '@media (max-width: 53.438rem)': {
     display: 'none'
   }
@@ -28,7 +28,7 @@ export const nestedStackTokens: IStackTokens = {
 export const listStyle = mergeStyles({
   listStyleType: 'none',
   paddingLeft: '0px',
-  fontSize: '0.875rem' // 14px
+  fontSize: '0.875em' // 14px
 });
 
 export const iconStyle = mergeStyles({
@@ -38,23 +38,23 @@ export const iconStyle = mergeStyles({
 
 export const headerStyle = mergeStyles({
   fontWeight: 600,
-  fontSize: '2.25rem', // 36px
-  maxWidth: '23.188rem'
+  fontSize: '2.25em', // 36px
+  maxWidth: '23.188em'
 });
 
 export const videoCameraIconStyle = mergeStyles({
-  marginRight: '0.375rem',
-  fontSize: '1.375rem' // 22px
+  marginRight: '0.375em',
+  fontSize: '1.375em' // 22px
 });
 
 export const buttonStyle = mergeStyles({
   fontWeight: 600,
-  fontSize: '0.875rem', // 14px
+  fontSize: '0.875em', // 14px
   width: 'fit-content',
-  height: '2.5rem',
+  height: '2.5em',
   borderRadius: 3,
   '@media (max-width: 53.438rem)': {
-    padding: '0.625rem'
+    padding: '0.625em'
   }
 });
 
@@ -65,5 +65,5 @@ export const upperStackStyle = mergeStyles({
 });
 
 export const startChatTextStyle = mergeStyles({
-  fontSize: '0.875rem' // 14px
+  fontSize: '0.875em' // 14px
 });

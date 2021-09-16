@@ -4,13 +4,13 @@
 import { mergeStyles } from '@fluentui/react';
 
 export const editBoxStyle = mergeStyles({
-  marginTop: '0.0875rem',
-  marginBottom: '0.0875rem',
-  paddingRight: '3.25rem'
+  marginTop: '0.0875em',
+  marginBottom: '0.0875em',
+  paddingRight: '3.25em'
 });
 
 export const editingButtonStyle = mergeStyles({
-  margin: 'auto .3rem'
+  margin: 'auto .3em'
 });
 
 export const inputBoxIcon = mergeStyles({
@@ -23,6 +23,6 @@ export const inputBoxIcon = mergeStyles({
 export const editBoxStyleSet = {
   root: {
     width: '100%',
-    marginLeft: '6.25rem'
+    marginLeft: '6.25em'
   }
 };

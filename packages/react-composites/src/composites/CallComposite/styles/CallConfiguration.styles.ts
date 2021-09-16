@@ -5,7 +5,7 @@ import { IStackTokens } from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react';
 
 export const configurationStackTokens: IStackTokens = {
-  childrenGap: '3rem'
+  childrenGap: '3em'
 };
 
 export const configurationContainer = mergeStyles({

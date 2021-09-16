@@ -7,16 +7,16 @@ import { mergeStyles } from '@fluentui/react';
 
 export const messageAvatarContainerStyle = (backgroundColor: string): string =>
   mergeStyles({
-    width: '2rem',
-    minWidth: '2rem',
-    height: '2rem',
+    width: '2em',
+    minWidth: '2em',
+    height: '2em',
     backgroundColor: backgroundColor,
     borderRadius: '50%',
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
     fontFamily: 'Segoe UI Regular',
-    fontSize: '1rem' // 16px
+    fontSize: '1em' // 16px
   });
 
 export const messageThreadContainerStyle = mergeStyles({
@@ -28,12 +28,12 @@ export const messageThreadContainerStyle = mergeStyles({
 });
 
 export const noMessageStatusStyle = mergeStyles({
-  width: '1.25rem'
+  width: '1.25em'
 });
 
 export const chatStyle: ComponentSlotStyle = {
-  paddingBottom: '0.5rem',
-  paddingTop: '0.8rem',
+  paddingBottom: '0.5em',
+  paddingTop: '0.8em',
   border: 'none',
   overflow: 'auto'
 };
@@ -42,7 +42,7 @@ export const newMessageButtonContainerStyle = mergeStyles({
   position: 'absolute',
   zIndex: 1,
   bottom: 0,
-  right: '1.5rem'
+  right: '1.5em'
 });
 
 export const chatMessageStyle: CSSProperties = {
@@ -55,7 +55,7 @@ export const chatMessageDateStyle: CSSProperties = {
 
 export const messageStatusContainerStyle = (mine: boolean): string =>
   mergeStyles({
-    marginLeft: mine ? '1rem' : '0rem'
+    marginLeft: mine ? '1em' : '0em'
   });
 
 export const newMessageButtonStyle = mergeStyles({
@@ -65,7 +65,7 @@ export const newMessageButtonStyle = mergeStyles({
 
 export const loadPreviousMessageButtonStyle = mergeStyles({
   border: 'none',
-  minHeight: '1.5rem',
+  minHeight: '1.5em',
   '&:hover': { background: 'none' },
   '&:active': { background: 'none' }
 });

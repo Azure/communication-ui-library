@@ -9,15 +9,15 @@ export const chatMessageStyle = mergeStyles({
 
 export const chatActionStyle = mergeStyles({
   visibility: 'hidden',
-  width: '1rem',
-  height: '1rem',
+  width: '1em',
+  height: '1em',
   cursor: 'pointer',
   [`.${chatMessageStyle}:hover &`]: {
     visibility: 'visible'
   },
   '& svg': {
-    height: '1rem',
-    width: '1rem'
+    height: '1em',
+    width: '1em'
   },
   '&:hover svg': {
     stroke: 'currentColor'
@@ -28,7 +28,7 @@ export const chatActionsCSS: IStyle = {
   'ul&': {
     right: '0',
     left: 'auto',
-    top: '-1.625rem',
+    top: '-1.625em',
     bottom: 'auto',
     position: 'absolute'
   },
@@ -40,7 +40,7 @@ export const chatActionsCSS: IStyle = {
 };
 
 export const iconWrapperStyle = mergeStyles({
-  padding: '0.375rem',
+  padding: '0.375em',
   webkitBoxPack: 'center',
   justifyContent: 'center'
 });
@@ -48,7 +48,7 @@ export const iconWrapperStyle = mergeStyles({
 export const chatMessageDateStyle = mergeStyles({ fontWeight: FontWeights.semibold });
 
 export const chatMessageMenuStyle = mergeStyles({
-  minWidth: '8.5rem',
+  minWidth: '8.5em',
   cursor: 'pointer'
 });
 

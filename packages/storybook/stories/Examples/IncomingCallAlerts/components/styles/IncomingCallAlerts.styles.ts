@@ -6,26 +6,26 @@ const theme = getTheme();
 const palette = theme.palette;
 
 export const incomingCallToastStyle = mergeStyles({
-  minWidth: '20rem',
+  minWidth: '20em',
   width: '100%',
   height: '100%',
   backgroundColor: palette.whiteTranslucent40,
   opacity: 0.95,
-  borderRadius: '0.5rem',
+  borderRadius: '0.5em',
   boxShadow: theme.effects.elevation8,
-  padding: '1rem'
+  padding: '1em'
 });
 
 export const incomingCallToastAvatarContainerStyle = mergeStyles({
-  marginRight: '0.5rem'
+  marginRight: '0.5em'
 });
 
 export const incomingCallAcceptButtonStyle = mergeStyles({
   backgroundColor: palette.greenDark,
   color: palette.white,
-  borderRadius: '2rem',
-  minWidth: '2rem',
-  width: '2rem',
+  borderRadius: '2em',
+  minWidth: '2em',
+  width: '2em',
   border: 'none',
   padding: 'none',
   ':hover, :active': {
@@ -37,9 +37,9 @@ export const incomingCallAcceptButtonStyle = mergeStyles({
 export const incomingCallRejectButtonStyle = mergeStyles({
   backgroundColor: palette.redDark,
   color: palette.white,
-  borderRadius: '2rem',
-  minWidth: '2rem',
-  width: '2rem',
+  borderRadius: '2em',
+  minWidth: '2em',
+  width: '2em',
   border: 'none',
   padding: 'none',
   ':hover, :active': {
@@ -49,15 +49,15 @@ export const incomingCallRejectButtonStyle = mergeStyles({
 });
 
 export const incomingCallModalContainerStyle = {
-  borderRadius: '0.75rem'
+  borderRadius: '0.75em'
 };
 
 export const incomingCallModalLocalPreviewStyle = mergeStyles({
-  height: '10rem',
+  height: '10em',
   background: palette.neutralLighterAlt,
   margin: '1.5rem 0',
-  borderRadius: '0.25rem',
+  borderRadius: '0.25em',
   '& video': {
-    borderRadius: '0.25rem'
+    borderRadius: '0.25em'
   }
 });

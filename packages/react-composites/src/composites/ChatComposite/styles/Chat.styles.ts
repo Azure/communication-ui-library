@@ -9,12 +9,12 @@ export const chatContainer = mergeStyles({
   overflow: 'hidden',
 
   '*::-webkit-scrollbar': {
-    width: '0.3rem',
-    height: '0.3rem'
+    width: '0.3em',
+    height: '0.3em'
   },
   '.scroll::-webkit-scrollbar-track': {
     background: 'rgba(150, 150, 150)',
-    borderRadius: '0.3rem'
+    borderRadius: '0.3em'
   },
   '*::-webkit-scrollbar-thumb': {
     borderRadius: '10px',
@@ -36,8 +36,8 @@ export const chatWrapper = mergeStyles({
 
 export const chatHeaderContainerStyle = mergeStyles({
   width: '100%',
-  paddingLeft: '1.5rem',
-  paddingRight: '1.5rem',
+  paddingLeft: '1.5em',
+  paddingRight: '1.5em',
   '@media screen and (max-width: 25rem)': {
     paddingLeft: '5%',
     paddingRight: '5%'
@@ -46,29 +46,29 @@ export const chatHeaderContainerStyle = mergeStyles({
 });
 
 export const topicNameLabelStyle = mergeStyles({
-  fontSize: '1.1rem',
-  lineHeight: '2.5rem',
+  fontSize: '1.1em',
+  lineHeight: '2.5em',
   fontWeight: 600,
-  marginRight: '0.125rem',
+  marginRight: '0.125em',
   textOverflow: 'ellipsis',
   overflowY: 'hidden'
 });
 
 export const participantListWrapper = mergeStyles({
   boxShadow: '0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.13)',
-  width: '15rem',
+  width: '15em',
   height: '100%'
 });
 
-export const participantListContainerPadding = { childrenGap: '0.5rem' };
+export const participantListContainerPadding = { childrenGap: '0.5em' };
 
 export const listHeader = mergeStyles({
-  fontSize: '1rem',
-  margin: '1rem'
+  fontSize: '1em',
+  margin: '1em'
 });
 
 export const participantListStack = mergeStyles({
-  width: '15rem',
+  width: '15em',
   height: '100%'
 });
 

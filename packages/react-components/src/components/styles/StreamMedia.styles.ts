@@ -10,7 +10,7 @@ export const mediaContainer = mergeStyles({
   background: 'transparent',
   display: 'flex',
   '& video': {
-    borderRadius: '.25rem'
+    borderRadius: '.25em'
   }
 });
 

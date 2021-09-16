@@ -25,13 +25,13 @@ export const subContainerStyles: IStackStyles = {
 };
 export const paneStyles: IStackItemStyles = {
   root: {
-    width: '17.875rem'
+    width: '17.875em'
   }
 };
 export const overlayStyles: IStackItemStyles = {
   root: {
     background: palette.white,
-    marginTop: '4rem'
+    marginTop: '4em'
   }
 };
 export const activeContainerClassName: IStackItemStyles = {

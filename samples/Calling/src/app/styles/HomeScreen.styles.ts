@@ -4,40 +4,40 @@
 import { IStackTokens, mergeStyles } from '@fluentui/react';
 
 export const imgStyle = mergeStyles({
-  width: '16rem',
+  width: '16em',
   '@media (max-width: 67.1875rem)': {
     display: 'none'
   }
 });
 export const containerTokens: IStackTokens = {
-  childrenGap: '5rem'
+  childrenGap: '5em'
 };
 export const listStyle = mergeStyles({
   listStyleType: 'none',
-  fontSize: '0.875rem',
+  fontSize: '0.875em',
   margin: 0,
   padding: 0,
   listStylePosition: 'outside'
 });
 export const headerStyle = mergeStyles({
   fontWeight: 600,
-  fontSize: '1.25rem', // 20px
-  lineHeight: '1.75rem', // 28px
-  width: '20rem',
-  marginBottom: '1.5rem'
+  fontSize: '1.25em', // 20px
+  lineHeight: '1.75em', // 28px
+  width: '20em',
+  marginBottom: '1.5em'
 });
 export const bodyItemStyle = mergeStyles({
-  marginTop: '1.25rem'
+  marginTop: '1.25em'
 });
 export const teamsItemStyle = mergeStyles({
-  marginTop: '0.75rem'
+  marginTop: '0.75em'
 });
 export const buttonStyle = mergeStyles({
   fontWeight: 600,
-  fontSize: '0.875rem', // 14px
+  fontSize: '0.875em', // 14px
   width: '100%',
-  height: '2.5rem',
+  height: '2.5em',
   borderRadius: 3,
-  padding: '0.625rem',
-  marginTop: '1.25rem'
+  padding: '0.625em',
+  marginTop: '1.25em'
 });

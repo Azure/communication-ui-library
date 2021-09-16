@@ -20,26 +20,26 @@ export const endCallContainerStyle = mergeStyles({
 
 export const endCallTitleStyle = mergeStyles({
   fontWeight: 600,
-  fontSize: '1.375rem' // 22px
+  fontSize: '1.375em' // 22px
 });
 
 export const buttonStyle = mergeStyles({
   fontWeight: 600,
-  height: '2.5rem',
-  width: '9.875rem',
-  fontSize: '0.875rem', // 14px
+  height: '2.5em',
+  width: '9.875em',
+  fontSize: '0.875em', // 14px
   padding: 0
 });
 
 export const videoCameraIconStyle = mergeStyles({
-  marginRight: '0.375rem',
-  fontSize: '1.375rem' // 22px
+  marginRight: '0.375em',
+  fontSize: '1.375em' // 22px
 });
 
 export const bottomStackFooterStyle = mergeStyles({
-  fontSize: '0.875rem' // 14px
+  fontSize: '0.875em' // 14px
 });
 
 export const buttonTextStyle = mergeStyles({
-  fontSize: '0.875rem' // 14px
+  fontSize: '0.875em' // 14px
 });

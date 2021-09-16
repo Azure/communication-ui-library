@@ -31,13 +31,13 @@ export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStylePro
     overflow: 'hidden'
   },
   main: {
-    minWidth: '11.25rem',
-    minHeight: '7rem',
+    minWidth: '11.25em',
+    minHeight: '7em',
     boxShadow: theme.effects.elevation8,
     borderRadius: theme.effects.roundedCorner4,
     position: 'absolute',
-    bottom: '1rem',
-    right: '1rem'
+    bottom: '1em',
+    right: '1em'
   }
 };
 
@@ -47,8 +47,8 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
     zIndex: 1,
     bottom: '0',
     right: '0',
-    width: '11.25rem',
-    height: '7rem',
+    width: '11.25em',
+    height: '7em',
     borderRadius: theme.effects.roundedCorner4
   }
 };

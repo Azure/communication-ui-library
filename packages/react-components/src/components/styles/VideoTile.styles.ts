@@ -37,32 +37,32 @@ export const overlayContainerStyles: IStyle = {
 
 export const disabledVideoHint = mergeStyles({
   backgroundColor: 'inherit',
-  bottom: '0.46875rem',
+  bottom: '0.46875em',
   boxShadow: 'none',
   textAlign: 'left',
-  left: '0.5rem',
+  left: '0.5em',
   overflow: 'hidden',
   position: 'absolute',
   whiteSpace: 'nowrap',
   maxWidth: '95%',
   borderRadius: theme.effects.roundedCorner4,
   alignItems: 'center',
-  padding: '0.15rem'
+  padding: '0.15em'
 });
 
 export const videoHint = mergeStyles(disabledVideoHint, {
   backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  padding: '0.15rem'
+  padding: '0.15em'
 });
 
 export const displayNameStyle: IStyle = {
-  padding: '0.1rem',
-  fontSize: '0.75rem',
+  padding: '0.1em',
+  fontSize: '0.75em',
   fontWeight: 600
 };
 
 export const iconContainerStyle: IStyle = {
-  padding: '0.1rem',
+  padding: '0.1em',
   height: '100%',
   alignItems: 'center',
   '& svg': {

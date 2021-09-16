@@ -3,11 +3,11 @@
 
 export const groupCallLeaveButtonStyle = {
   root: {
-    border: '0.125rem',
+    border: '0.125em',
     borderRadius: 2,
-    marginRight: '.75rem',
-    height: '2.1875rem',
-    width: '6.5625rem'
+    marginRight: '.75em',
+    height: '2.1875em',
+    width: '6.5625em'
   },
   flexContainer: {
     flexFlow: 'row'
@@ -16,11 +16,11 @@ export const groupCallLeaveButtonStyle = {
 
 export const groupCallLeaveButtonCompressedStyle = {
   root: {
-    width: '2rem',
-    height: '3.75rem',
-    border: '0.125rem',
+    width: '2em',
+    height: '3.75em',
+    border: '0.125em',
     borderRadius: 2,
-    marginRight: '0.4375rem'
+    marginRight: '0.4375em'
   },
   flexContainer: {
     flexFlow: 'row'

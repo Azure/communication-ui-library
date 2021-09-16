@@ -12,8 +12,8 @@ import {
 export const MessageThreadContainerStyles = {
   width: '100%',
   height: '100%',
-  maxWidth: '50rem',
-  maxHeight: '30rem'
+  maxWidth: '50em',
+  maxHeight: '30em'
 };
 
 export const MessageThreadStyles = {

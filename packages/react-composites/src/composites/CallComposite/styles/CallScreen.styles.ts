@@ -11,7 +11,7 @@ export const callControlsStyles: IStackItemStyles = {
 
 export const callControlsContainer = mergeStyles({
   width: '100%',
-  height: '3.875rem',
+  height: '3.875em',
   padding: '0.0625rem 0',
 
   overflow: 'hidden',
@@ -40,7 +40,7 @@ export const subContainerStyles: IStackStyles = {
     overflow: 'hidden',
     width: '100%',
     height: '100%',
-    minHeight: '10rem' // space affordance to ensure media gallery has minimum space allocated
+    minHeight: '10em' // space affordance to ensure media gallery has minimum space allocated
   }
 };
 
@@ -58,6 +58,6 @@ export const bannersContainerStyles: IStackStyles = {
     zIndex: 9,
     top: 0,
     left: 0,
-    padding: '1rem'
+    padding: '1em'
   }
 };

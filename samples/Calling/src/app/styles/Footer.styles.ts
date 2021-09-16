@@ -5,12 +5,12 @@ import { IStackStyles, IStackTokens, ITextFieldStyles, mergeStyles } from '@flue
 
 export const paneFooterStyles: IStackStyles = {
   root: {
-    marginBottom: '1.25rem'
+    marginBottom: '1.25em'
   }
 };
 
 export const paneFooterTokens: IStackTokens = {
-  childrenGap: '0.3125rem'
+  childrenGap: '0.3125em'
 };
 
 export const textFieldStyles: Partial<ITextFieldStyles> = {
@@ -18,8 +18,8 @@ export const textFieldStyles: Partial<ITextFieldStyles> = {
     padding: 0
   },
   root: {
-    marginLeft: '1rem',
-    marginRight: '1rem'
+    marginLeft: '1em',
+    marginRight: '1em'
   },
   fieldGroup: {
     border: 'none'
@@ -28,17 +28,17 @@ export const textFieldStyles: Partial<ITextFieldStyles> = {
 
 export const footerMainTextStyle = mergeStyles({
   fontWeight: 600,
-  fontSize: '1rem',
-  marginLeft: '1rem',
-  marginRight: '1rem'
+  fontSize: '1em',
+  marginLeft: '1em',
+  marginRight: '1em'
 });
 
 export const copyLinkButtonStyle = mergeStyles({
   fontWeight: 600,
-  fontSize: '0.875rem', // 14px
-  height: '2.5rem',
-  marginLeft: '1rem',
-  marginRight: '1rem',
+  fontSize: '0.875em', // 14px
+  height: '2.5em',
+  marginLeft: '1em',
+  marginRight: '1em',
   width: '90%'
 });
 

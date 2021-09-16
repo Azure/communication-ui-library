@@ -10,7 +10,7 @@ export const permissionsBannerContainerStyle = {
 export const permissionsBannerMessageBarStyle: IStyleFunctionOrObject<IMessageBarStyleProps, IMessageBarStyles> = {
   root: {
     // Constrain permission banner height if there is a long error message in a narrow space.
-    maxHeight: '5rem'
+    maxHeight: '5em'
   },
   text: {
     // Ensure the dismiss action button is aligned to the right hand side by allowing text to grow to available space

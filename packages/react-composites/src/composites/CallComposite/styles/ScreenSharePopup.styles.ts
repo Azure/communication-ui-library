@@ -18,22 +18,22 @@ export const getScreenSharePopupModalStyles = (
 };
 
 export const screenSharePopupModalStackStyles: CSSProperties = {
-  width: '18rem',
-  height: '11.4375rem',
-  paddingBottom: '0.5rem'
+  width: '18em',
+  height: '11.4375em',
+  paddingBottom: '0.5em'
 };
 
 export const screenSharePopupModalLabelStyles: CSSProperties = {
-  lineHeight: '1rem',
-  fontSize: '0.75rem',
+  lineHeight: '1em',
+  fontSize: '0.75em',
   fontWeight: 'normal'
 };
 
 export const getScreenSharePopupModalButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      padding: '0.375rem 0.75rem',
-      border: '0rem',
+      padding: '0.375rem 0.75em',
+      border: '0em',
       boxShadow: theme.effects.elevation4,
       borderRadius: theme.effects.roundedCorner4,
       svg: {

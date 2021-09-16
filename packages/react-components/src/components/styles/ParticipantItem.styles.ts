@@ -4,24 +4,24 @@
 import { mergeStyles } from '@fluentui/react';
 
 export const participantItemContainerStyle = mergeStyles({
-  paddingTop: '0.25rem',
-  paddingBottom: '0.25rem',
+  paddingTop: '0.25em',
+  paddingBottom: '0.25em',
   display: 'flex',
-  maxWidth: '20rem',
-  minWidth: '12rem',
+  maxWidth: '20em',
+  minWidth: '12em',
   cursor: 'pointer',
   alignItems: 'center'
 });
 
 export const menuButtonContainerStyle = {
-  width: '1.5rem'
+  width: '1.5em'
 };
 
 export const iconContainerStyle = {
   display: 'flex',
   alignItems: 'center',
   height: '100%',
-  paddingTop: '0.2rem'
+  paddingTop: '0.2em'
 };
 
 export const iconStyles = mergeStyles({
@@ -31,5 +31,5 @@ export const iconStyles = mergeStyles({
 });
 
 export const meContainerStyle = {
-  paddingRight: '0.5rem'
+  paddingRight: '0.5em'
 };

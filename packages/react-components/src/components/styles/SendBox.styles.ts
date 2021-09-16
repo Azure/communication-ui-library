@@ -10,21 +10,21 @@ export const suppressIconStyle = {
 
 export const sendBoxStyleSet = {
   root: {
-    padding: '0.25rem'
+    padding: '0.25em'
   }
 };
 
 export const sendBoxStyle = mergeStyles({
-  paddingRight: '2rem'
+  paddingRight: '2em'
 });
 
 export const sendButtonStyle = mergeStyles({
-  margin: 'auto .6rem',
-  paddingBottom: '1.125rem'
+  margin: 'auto .6em',
+  paddingBottom: '1.125em'
 });
 
 export const sendIconStyle = mergeStyles({
-  width: '1.0625rem',
-  height: '1.0625rem',
+  width: '1.0625em',
+  height: '1.0625em',
   margin: 'auto'
 });

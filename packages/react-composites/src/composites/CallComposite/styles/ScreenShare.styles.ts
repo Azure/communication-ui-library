@@ -5,8 +5,8 @@ import { mergeStyles } from '@fluentui/react';
 
 export const videoStreamStyle = mergeStyles({
   position: 'absolute',
-  bottom: '.25rem',
-  right: '.25rem',
+  bottom: '.25em',
+  right: '.25em',
   height: 'auto',
   width: '25%'
 });

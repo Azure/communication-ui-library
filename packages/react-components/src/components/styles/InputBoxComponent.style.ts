@@ -7,22 +7,22 @@ export const inputBoxWrapperStyle = mergeStyles({
 });
 
 export const inputBoxStyle = mergeStyles({
-  minHeight: '2.25rem', // prevents the input text box from being sized to 0px when the meeting composite chat pane is closed.
-  maxHeight: '8.25rem',
+  minHeight: '2.25em', // prevents the input text box from being sized to 0px when the meeting composite chat pane is closed.
+  maxHeight: '8.25em',
   outline: 'red 5px',
   fontWeight: FontWeights.regular,
-  fontSize: '0.875rem',
+  fontSize: '0.875em',
   width: '100%',
-  height: '2.25rem',
-  lineHeight: '1.5rem',
+  height: '2.25em',
+  lineHeight: '1.5em',
   '::-webkit-input-placeholder': {
-    fontSize: '0.875rem'
+    fontSize: '0.875em'
   },
   '::-moz-placeholder': {
-    fontSize: '0.875rem'
+    fontSize: '0.875em'
   },
   ':-moz-placeholder': {
-    fontSize: '0.875rem'
+    fontSize: '0.875em'
   }
 });
 
@@ -32,21 +32,21 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
     root: {
       width: '100%',
       minHeight: '0',
-      fontSize: '8.25rem'
+      fontSize: '8.25em'
     },
     wrapper: {},
     fieldGroup: {
       height: 'auto',
       minHeight: '0',
-      borderRadius: '0.25rem',
+      borderRadius: '0.25em',
       borderColor: borderColor,
       borderWidth: disabled ? '0px' : '1px',
       ':hover': { borderColor: borderColor },
       ':active': { borderColor: borderColor },
-      ':after': { borderColor: borderColor, borderRadius: '0.25rem' }
+      ':after': { borderColor: borderColor, borderRadius: '0.25em' }
     },
     field: {
-      borderRadius: '0.25rem'
+      borderRadius: '0.25em'
     },
     errorMessage: {
       color: errorColor
@@ -62,8 +62,8 @@ export const inputButtonStyle = mergeStyles({
   margin: 'auto',
   top: '0',
   bottom: '0',
-  width: '1.0625rem',
-  height: '1.0625rem'
+  width: '1.0625em',
+  height: '1.0625em'
 });
 
 export const inputButtonContainerStyle = (rtl?: boolean): string =>
@@ -74,6 +74,6 @@ export const inputButtonContainerStyle = (rtl?: boolean): string =>
     margin: 'auto',
     top: '0',
     bottom: '0',
-    right: !rtl ? '0.3rem' : undefined,
-    left: rtl ? '0.3rem' : undefined
+    right: !rtl ? '0.3em' : undefined,
+    left: rtl ? '0.3em' : undefined
   });

@@ -7,6 +7,6 @@ export const gridLayoutStyle = mergeStyles({
   height: '100%',
   display: 'grid',
   flexGrow: '1',
-  gap: '.5rem',
-  padding: '.5rem'
+  gap: '.5em',
+  padding: '.5em'
 });

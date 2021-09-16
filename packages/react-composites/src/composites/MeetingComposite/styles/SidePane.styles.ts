@@ -9,9 +9,9 @@ const palette = theme.palette;
 export const sidePaneContainerStyles: IStackItemStyles = {
   root: {
     height: '100%',
-    paddingTop: '0.5rem',
-    paddingBottom: '0.5rem',
-    width: '21.5rem'
+    paddingTop: '0.5em',
+    paddingBottom: '0.5em',
+    width: '21.5em'
   }
 };
 
@@ -23,14 +23,14 @@ export const sidePaneContainerHiddenStyles: IStackItemStyles = {
 };
 
 export const sidePaneContainerTokens: IStackTokens = {
-  childrenGap: '0.5rem'
+  childrenGap: '0.5em'
 };
 
 export const sidePaneHeaderStyles: IStackItemStyles = {
   root: {
-    fontSize: '0.825rem',
-    lineHeight: '1.25rem',
-    padding: '0.25rem',
+    fontSize: '0.825em',
+    lineHeight: '1.25em',
+    padding: '0.25em',
     fontWeight: '600'
   }
 };
@@ -47,11 +47,11 @@ export const scrollableContainerContents: IStackItemStyles = { root: { flexGrow:
 
 export const peopleSubheadingStyle: IStackItemStyles = {
   root: {
-    fontSize: '0.75rem',
+    fontSize: '0.75em',
     color: palette.neutralSecondary
   }
 };
 
 export const peoplePaneContainerTokens: IStackTokens = {
-  childrenGap: '0.5rem'
+  childrenGap: '0.5em'
 };

@@ -25,7 +25,7 @@ export const controlBarStyles: IControlBarStyles = {
   },
   vertical: {
     flexFlow: 'column nowrap',
-    maxWidth: '3.5rem'
+    maxWidth: '3.5em'
   },
   dockedTop: {
     flexFlow: 'row nowrap',
@@ -68,7 +68,7 @@ export const controlBarStyles: IControlBarStyles = {
     borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
-    top: '1rem',
+    top: '1em',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 10
@@ -80,7 +80,7 @@ export const controlBarStyles: IControlBarStyles = {
     borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
-    bottom: '1rem',
+    bottom: '1em',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 10
@@ -93,7 +93,7 @@ export const controlBarStyles: IControlBarStyles = {
     overflow: 'hidden',
     position: 'absolute',
     top: '50%',
-    left: '1rem',
+    left: '1em',
     transform: 'translateY(-50%)',
     zIndex: 10
   },
@@ -105,7 +105,7 @@ export const controlBarStyles: IControlBarStyles = {
     overflow: 'hidden',
     position: 'absolute',
     top: '50%',
-    right: '1rem',
+    right: '1em',
     transform: 'translateY(-50%)',
     zIndex: 10
   }
@@ -116,8 +116,8 @@ export const controlButtonStyles: IButtonStyles = {
     background: 'none',
     border: 'none',
     borderRadius: 0,
-    minHeight: '3.5rem',
-    minWidth: '3.5rem',
+    minHeight: '3.5em',
+    minWidth: '3.5em',
     svg: {
       verticalAlign: 'text-top'
     }
@@ -129,8 +129,8 @@ export const controlButtonStyles: IButtonStyles = {
 };
 
 export const controlButtonLabelStyles: IStyle = {
-  fontSize: '0.625rem',
-  lineHeight: '1rem',
+  fontSize: '0.625em',
+  lineHeight: '1em',
   cursor: 'pointer'
 };
 
@@ -153,12 +153,12 @@ export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(control
 export const participantsButtonMenuPropsStyle: Partial<IContextualMenuStyles> = {
   title: {
     background: 'initial',
-    paddingLeft: '.5rem',
+    paddingLeft: '.5em',
     fontWeight: 600,
-    fontSize: '.75rem'
+    fontSize: '.75em'
   }
 };
 
 export const defaultParticipantListContainerStyle: IStyle = {
-  maxHeight: '20rem'
+  maxHeight: '20em'
 };
