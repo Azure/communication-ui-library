@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IDS } from '../config';
+import { IDS } from '../common/config';
 import { test } from './fixture';
-import { dataUiId, gotoPage, loadPage, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
+import { dataUiId, gotoPage, loadPage, stubMessageTimestamps, waitForCompositeToLoad } from '../common/utils';
 import { Page, expect } from '@playwright/test';
 
 // All tests in this suite *must be run sequentially*.
