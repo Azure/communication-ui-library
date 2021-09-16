@@ -40,93 +40,71 @@ export interface MeetingState
   meetingEndReason?: MeetingEndReason;
 }
 
+/**
+ * Return properties from call state that are used in meeting state.
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const meetingPropsFromCallState = (callState: CallState) => ({
+  id: callState.id,
+  callerInfo: callState.callerInfo,
+  state: callState.state,
+  isMuted: callState.isMuted,
+  isScreenSharingOn: callState.isScreenSharingOn,
+  localVideoStreams: callState.localVideoStreams,
+  transcription: callState.transcription,
+  recording: callState.recording,
+  transfer: callState.transfer,
+  screenShareRemoteParticipant: callState.screenShareRemoteParticipant,
+  startTime: callState.startTime,
+  endTime: callState.endTime,
+  meetingEndReason: callState.callEndReason,
+  // For meetings we only use participants from the call in a meeting
+  participants: meetingParticipantsFromCallParticipants(callState.remoteParticipants),
+  participantsEnded: meetingParticipantsFromCallParticipants(callState.remoteParticipantsEnded)
+});
+
+/**
+ * Return properties from chat state that are used in meeting state.
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const meetingPropsFromChatState = (chatState: ChatThreadClientState) => ({
+  chatMessages: chatState.chatMessages,
+  threadId: chatState.threadId,
+  properties: chatState.properties,
+  readReceipts: chatState.readReceipts,
+  typingIndicators: chatState.typingIndicators,
+  latestReadTime: chatState.latestReadTime
+});
+
+/**
+ * Helper function to return meeting state created from call and chat states
+ */
 export function meetingStateFromBackingStates(callState: CallState, chatState: ChatThreadClientState): MeetingState {
   return {
-    // Properties from call state
-    id: callState.id,
-    callerInfo: callState.callerInfo,
-    state: callState.state,
-    isMuted: callState.isMuted,
-    isScreenSharingOn: callState.isScreenSharingOn,
-    localVideoStreams: callState.localVideoStreams,
-    transcription: callState.transcription,
-    recording: callState.recording,
-    transfer: callState.transfer,
-    screenShareRemoteParticipant: callState.screenShareRemoteParticipant,
-    startTime: callState.startTime,
-    endTime: callState.endTime,
-    meetingEndReason: callState.callEndReason,
-    // For meetings we only use participants from the call in a meeting
-    participants: meetingParticipantsFromCallParticipants(callState.remoteParticipants),
-    participantsEnded: meetingParticipantsFromCallParticipants(callState.remoteParticipantsEnded),
-
-    // Properties from chat state
-    chatMessages: chatState.chatMessages,
-    threadId: chatState.threadId,
-    properties: chatState.properties,
-    readReceipts: chatState.readReceipts,
-    typingIndicators: chatState.typingIndicators,
-    latestReadTime: chatState.latestReadTime
+    ...meetingPropsFromCallState(callState),
+    ...meetingPropsFromChatState(chatState)
   };
 }
 
+/**
+ * Helper function to return an updated meeting state with new chat state applied
+ */
 export function mergeChatStateIntoMeetingState(
   meetingState: MeetingState,
   chatState: ChatThreadClientState
 ): MeetingState {
   return {
-    // Properties from meeting state to retain
-    id: meetingState.id,
-    callerInfo: meetingState.callerInfo,
-    state: meetingState.state,
-    isMuted: meetingState.isMuted,
-    isScreenSharingOn: meetingState.isScreenSharingOn,
-    localVideoStreams: meetingState.localVideoStreams,
-    transcription: meetingState.transcription,
-    recording: meetingState.recording,
-    transfer: meetingState.transfer,
-    screenShareRemoteParticipant: meetingState.screenShareRemoteParticipant,
-    startTime: meetingState.startTime,
-    endTime: meetingState.endTime,
-    participants: meetingState.participants,
-    participantsEnded: meetingState.participantsEnded,
-    meetingEndReason: meetingState.meetingEndReason,
-
-    // New properties from chat state to be merged in
-    chatMessages: chatState.chatMessages,
-    threadId: chatState.threadId,
-    properties: chatState.properties,
-    readReceipts: chatState.readReceipts,
-    typingIndicators: chatState.typingIndicators,
-    latestReadTime: chatState.latestReadTime
+    ...meetingState,
+    ...meetingPropsFromChatState(chatState)
   };
 }
 
+/**
+ * Helper function to return an updated meeting state with new call state applied
+ */
 export function mergeCallStateIntoMeetingState(meetingState: MeetingState, callState: CallState): MeetingState {
   return {
-    // Properties from meeting state to retain
-    chatMessages: meetingState.chatMessages,
-    threadId: meetingState.threadId,
-    properties: meetingState.properties,
-    readReceipts: meetingState.readReceipts,
-    typingIndicators: meetingState.typingIndicators,
-    latestReadTime: meetingState.latestReadTime,
-
-    // New properties from call state to be merged in
-    id: callState.id,
-    callerInfo: callState.callerInfo,
-    state: callState.state,
-    isMuted: callState.isMuted,
-    isScreenSharingOn: callState.isScreenSharingOn,
-    localVideoStreams: callState.localVideoStreams,
-    transcription: callState.transcription,
-    recording: callState.recording,
-    transfer: callState.transfer,
-    screenShareRemoteParticipant: callState.screenShareRemoteParticipant,
-    startTime: callState.startTime,
-    endTime: callState.endTime,
-    participants: meetingParticipantsFromCallParticipants(callState.remoteParticipants),
-    participantsEnded: meetingParticipantsFromCallParticipants(callState.remoteParticipantsEnded),
-    meetingEndReason: callState.callEndReason
+    ...meetingState,
+    ...meetingPropsFromCallState(callState)
   };
 }
