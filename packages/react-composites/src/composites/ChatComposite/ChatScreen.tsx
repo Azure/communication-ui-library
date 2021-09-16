@@ -27,15 +27,14 @@ import {
   participantListStyle,
   participantListContainerPadding
 } from './styles/Chat.styles';
-import { AvatarPersona } from '../common/AvatarPersona';
-import { PersonalDataCallback } from '../common/PersonalData';
+import { AvatarPersonaDataCallback, AvatarPersona } from '../common/AvatarPersona';
 import { useLocale } from '../localization';
 
 export type ChatScreenProps = {
   showErrorBar?: boolean;
   showParticipantPane?: boolean;
   showTopic?: boolean;
-  onFetchAvatarPersonaData?: PersonalDataCallback;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };

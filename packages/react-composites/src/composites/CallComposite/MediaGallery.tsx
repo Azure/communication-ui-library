@@ -7,8 +7,7 @@ import { useSelector } from './hooks/useSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
-import { AvatarPersona } from '../common/AvatarPersona';
-import { PersonalDataCallback } from '../common/PersonalData';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
 
 const VideoGalleryStyles = {
@@ -32,7 +31,7 @@ export interface MediaGalleryProps {
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
   onRenderAvatar?: OnRenderAvatarCallback;
-  onFetchAvatarPersonaData?: PersonalDataCallback;
+  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
