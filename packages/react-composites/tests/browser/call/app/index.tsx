@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 
 import { IdentifierProvider } from '@internal/react-components';
 import { CallAdapter, createAzureCommunicationCallAdapter, CallComposite } from '../../../../src';
-import { IDS } from '../../config';
+import { IDS } from '../../common/config';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
