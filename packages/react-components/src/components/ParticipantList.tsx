@@ -8,6 +8,9 @@ import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } fro
 import { ParticipantItem } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 
+/**
+ * A callback for providing custom menu items for each participant in the participant list.
+ */
 export type ParticipantMenuItemsCallback = (
   participantUserId: string,
   userId?: string,

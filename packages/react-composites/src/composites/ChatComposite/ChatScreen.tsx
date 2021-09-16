@@ -10,7 +10,8 @@ import {
   MessageThread,
   ParticipantList,
   SendBox,
-  TypingIndicator
+  TypingIndicator,
+  ParticipantMenuItemsCallback
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -36,10 +37,17 @@ export type ChatScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, hiddenElements } = props;
+  const {
+    onFetchAvatarPersonaData,
+    onRenderMessage,
+    onRenderTypingIndicator,
+    hiddenElements,
+    onFetchParticipantMenuItems
+  } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -105,6 +113,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                       dataProvider={onFetchAvatarPersonaData}
                     />
                   )}
+                  onFetchParticipantMenuItems={onFetchParticipantMenuItems}
                 />
               </Stack.Item>
             </Stack>

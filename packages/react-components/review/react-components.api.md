@@ -563,7 +563,7 @@ export type ParticipantListProps = {
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
-// @public (undocumented)
+// @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
 // @public

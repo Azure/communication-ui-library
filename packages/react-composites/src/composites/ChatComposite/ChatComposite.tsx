@@ -56,7 +56,14 @@ export type ChatCompositeHiddenElements = {
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, hiddenElements, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
+  const {
+    adapter,
+    hiddenElements,
+    onFetchAvatarPersonaData,
+    onRenderTypingIndicator,
+    onRenderMessage,
+    onFetchParticipantMenuItems
+  } = props;
 
   return (
     <BaseComposite {...props}>
@@ -66,6 +73,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       </ChatAdapterProvider>
     </BaseComposite>
