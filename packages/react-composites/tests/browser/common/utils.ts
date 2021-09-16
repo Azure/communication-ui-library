@@ -207,9 +207,6 @@ export const gotoPage = async (
   await page.setViewportSize(PAGE_VIEWPORT);
   const url = `${serverUrl}?${qs}`;
   await page.goto(url, { waitUntil: 'networkidle' });
-  // Important: For ensuring that blinking cursor doesn't get captured in
-  // snapshots and cause a diff in subsequent tests.
-  page.addStyleTag({ content: `* { caret-color: transparent !important; }` });
   return page;
 };
 
