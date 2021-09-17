@@ -106,7 +106,24 @@ export function mergeChatStateIntoMeetingState(
 /**
  * Helper function to return an updated meeting state with new call state applied
  */
-export function mergeCallStateIntoMeetingState(meetingState: MeetingState, callState: CallState): MeetingState {
+export function mergeCallStateIntoMeetingState(
+  meetingState: MeetingState | undefined,
+  callState: CallState
+): MeetingState {
+  // If we have no existing meeting state, populate chat fields with defaults to merge and make a new state.
+  // This is because calls are constructed before chat state is created.
+  if (!meetingState) {
+    return {
+      chatMessages: {},
+      threadId: '',
+      properties: {},
+      readReceipts: [],
+      typingIndicators: [],
+      latestReadTime: new Date(0),
+      ...meetingPropsFromCallState(callState)
+    };
+  }
+
   return {
     ...meetingState,
     ...meetingPropsFromCallState(callState)

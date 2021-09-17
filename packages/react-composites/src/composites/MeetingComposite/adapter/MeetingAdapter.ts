@@ -13,7 +13,8 @@ import {
   IsScreenSharingOnChangedListener,
   IsSpeakingChangedListener,
   ParticipantJoinedListener,
-  ParticipantLeftListener
+  ParticipantLeftListener,
+  CallEndedListener
 } from '../../CallComposite';
 import {
   ChatAdapterThreadManagement,
@@ -81,12 +82,12 @@ export interface MeetingAdapterSubscriptions {
   // Meeting specific subscriptions
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  on(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+  on(event: 'meetingEnded', listener: CallEndedListener): void;
   on(event: 'error', listener: (e: Error) => void): void;
 
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  off(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+  off(event: 'meetingEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
 
   // Call subscriptions

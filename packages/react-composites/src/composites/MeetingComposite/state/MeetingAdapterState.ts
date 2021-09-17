@@ -82,10 +82,9 @@ export function mergeCallAdapterStateIntoMeetingAdapterState(
   meetingAdapterState: MeetingAdapterState,
   callAdapterState: CallAdapterState
 ): MeetingAdapterState {
-  const newMeetingState =
-    meetingAdapterState.meeting && callAdapterState.call
-      ? mergeCallStateIntoMeetingState(meetingAdapterState.meeting, callAdapterState.call)
-      : undefined;
+  const newMeetingState = callAdapterState.call
+    ? mergeCallStateIntoMeetingState(meetingAdapterState.meeting, callAdapterState.call)
+    : undefined;
 
   return {
     userId: callAdapterState.userId,

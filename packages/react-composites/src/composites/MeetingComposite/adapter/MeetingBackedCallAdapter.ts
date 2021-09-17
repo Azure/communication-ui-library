@@ -36,15 +36,13 @@ function callStateFromMeetingState(meetingState: MeetingState): CallState {
   };
 }
 
-function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterState): CallAdapterState {
-  if (!meetingState.meeting) throw 'Cannot get call adapter state. Meeting state is undefined.';
-
+export function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterState): CallAdapterState {
   return {
     isLocalPreviewMicrophoneEnabled: false, //@TODO: support this...
     page: meetingPageToCallPage(meetingState.page),
     userId: { kind: 'communicationUser', communicationUserId: meetingState.userId.communicationUserId },
     displayName: meetingState.displayName,
-    call: callStateFromMeetingState(meetingState.meeting),
+    call: meetingState.meeting ? callStateFromMeetingState(meetingState.meeting) : undefined,
     devices: meetingState.devices,
     latestErrors: {} //@TODO: latest errors not supported in meeting composite yet.
   };
