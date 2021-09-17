@@ -8,6 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Call Composite - Test App" />
     <title>Composite - Test App</title>
+    <style>
+      /*
+       * There is a flakiness bug in our UI tests where the isSpeaker border
+       * is sometimes showing on renders. This disables the video tiles having
+       * a border to prevent that.
+       * A work item for a real fix has been created: https://skype.visualstudio.com/SPOOL/_workitems/edit/2588337
+       */
+      div[data-ui-id='video-tile'] {
+        border: none !important;
+      }
+    </style>
   </head>
 
   <body>
