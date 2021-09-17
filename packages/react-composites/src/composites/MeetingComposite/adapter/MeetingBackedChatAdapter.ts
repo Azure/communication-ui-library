@@ -75,14 +75,9 @@ export class MeetingBackedChatAdapter implements ChatAdapter {
   public on = (event: any, listener: any): void => this.meetingAdapter.on(event, listener);
   public off = (event: any, listener: any): void => this.meetingAdapter.off(event, listener);
 
-  public updateMessage(messageId: string, content: string): Promise<void> {
-    // TODO: support editing messages
-    throw `Method not implemented.`;
-  }
-  public deleteMessage(messageId: string): Promise<void> {
-    // TODO: support editing messages
-    throw `Method not implemented.`;
-  }
+  public updateMessage = async (messageId: string, content: string): Promise<void> =>
+    await this.meetingAdapter.updateMessage(messageId, content);
+  public deleteMessage = async (messageId: string): Promise<void> => await this.meetingAdapter.deleteMessage(messageId);
 
   public clearErrors = (errorTypes: (keyof ErrorBarStrings)[]): void => {
     throw `Method not supported in meetings.`;

@@ -145,6 +145,8 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.sendReadReceipt.bind(this);
     this.sendTypingIndicator.bind(this);
     this.loadPreviousChatMessages.bind(this);
+    this.updateMessage.bind(this);
+    this.deleteMessage.bind(this);
     this.on.bind(this);
     this.off.bind(this);
   }
@@ -288,6 +290,14 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   /** Load previous Meeting chat messages. */
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
     return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
+  }
+  /** Update an existing message. */
+  public async updateMessage(messageId: string, content: string): Promise<void> {
+    return await this.chatAdapter.updateMessage(messageId, content);
+  }
+  /** Delete an existing message. */
+  public async deleteMessage(messageId: string): Promise<void> {
+    return await this.chatAdapter.deleteMessage(messageId);
   }
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
