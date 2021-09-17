@@ -54,7 +54,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
     // In case it is retry logic
     for (const page of pages) {
       page.reload();
-      page.bringToFront();
+      await page.bringToFront();
       await waitForCallCompositeToLoad(page);
 
       await page.waitForSelector(dataUiId('call-composite-start-call-button'));
@@ -62,9 +62,14 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       await page.click(dataUiId('call-composite-start-call-button'));
     }
 
+    // Wait for all video feeds to have loaded for all participants (local and remote)
     for (const page of pages) {
+      await page.bringToFront();
       await page.waitForFunction(() => {
-        return document.querySelectorAll('video').length === 2;
+        const videoNodes = document.querySelectorAll('video');
+        const correctNoOfVideos = document.querySelectorAll('video').length === 2;
+        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+        return correctNoOfVideos && allVideosLoaded;
       });
     }
   });
@@ -72,7 +77,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
   test('video gallery renders for all pages', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
-      page.bringToFront();
+      await page.bringToFront();
 
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-video-gallery.png`);
     }
@@ -85,7 +90,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
 
     for (const idx in pages) {
       const page = pages[idx];
-      page.bringToFront();
+      await page.bringToFront();
 
       // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
       // this is for disable transition/animation of participant list
@@ -103,7 +108,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
   test('can turn off local video', async ({ pages }) => {
     const page = pages[0];
 
-    page.bringToFront();
+    await page.bringToFront();
     await page.click(dataUiId('call-composite-camera-button'));
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 1;
@@ -114,10 +119,10 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
 
 const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
-    page.click(dataUiId('call-composite-camera-button'));
+    await page.click(dataUiId('call-composite-camera-button'));
   }
   for (const page of pages) {
-    page.bringToFront();
+    await page.bringToFront();
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 0;
     });
