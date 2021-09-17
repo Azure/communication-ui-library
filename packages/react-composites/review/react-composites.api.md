@@ -221,14 +221,14 @@ export type CallAdapterUiState = {
 // @public (undocumented)
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
-// @public
-export type CallCompositeHiddenElements = CallControlHiddenElements & {
-    errorBar?: boolean;
-    callControls?: boolean;
-};
-
 // @public (undocumented)
 export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>>;
+
+// @public
+export type CallCompositeOptions = {
+    errorBar?: boolean;
+    callControls?: boolean | CallControlOptions;
+};
 
 // @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
@@ -238,8 +238,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
-    hiddenElements?: CallCompositeHiddenElements;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    options?: CallCompositeOptions;
 }
 
 // @public
@@ -258,7 +258,8 @@ export interface CallCompositeStrings {
 }
 
 // @public (undocumented)
-export type CallControlHiddenElements = {
+export type CallControlOptions = {
+    compressedMode?: boolean;
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
@@ -354,22 +355,22 @@ export type ChatCompositeClientState = {
     latestErrors: AdapterErrors;
 };
 
+// @public (undocumented)
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
+
 // @public
-export type ChatCompositeHiddenElements = {
+export type ChatCompositeOptions = {
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;
 };
 
 // @public (undocumented)
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
-
-// @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
-    hiddenElements?: ChatCompositeHiddenElements;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+    options?: ChatCompositeOptions;
 }
 
 // @public

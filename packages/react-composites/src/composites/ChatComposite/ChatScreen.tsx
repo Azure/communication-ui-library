@@ -4,9 +4,9 @@
 import { mergeStyles, Stack } from '@fluentui/react';
 import {
   CommunicationParticipant,
-  MessageRenderer,
   ErrorBar,
   MessageProps,
+  MessageRenderer,
   MessageThread,
   ParticipantList,
   SendBox,
@@ -17,7 +17,7 @@ import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { useLocale } from '../localization';
 import { useAdapter } from './adapter/ChatAdapterProvider';
-import { ChatCompositeHiddenElements } from './ChatComposite';
+import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
@@ -33,7 +33,7 @@ import {
 } from './styles/Chat.styles';
 
 export type ChatScreenProps = {
-  hiddenElements?: ChatCompositeHiddenElements;
+  options?: ChatCompositeOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -41,13 +41,8 @@ export type ChatScreenProps = {
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const {
-    onFetchAvatarPersonaData,
-    onRenderMessage,
-    onRenderTypingIndicator,
-    hiddenElements,
-    onFetchParticipantMenuItems
-  } = props;
+  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, onFetchParticipantMenuItems, options } =
+    props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -69,18 +64,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
 
   const onRenderAvatarCallback = useCallback(
-    (userId, options) => {
-      return <AvatarPersona userId={userId} {...options} dataProvider={onFetchAvatarPersonaData} />;
+    (userId, defaultOptions) => {
+      return <AvatarPersona userId={userId} {...defaultOptions} dataProvider={onFetchAvatarPersonaData} />;
     },
     [onFetchAvatarPersonaData]
   );
 
   return (
     <Stack className={chatContainer} grow>
-      {hiddenElements?.topic !== true && <ChatHeader {...headerProps} />}
+      {options?.topic !== false && <ChatHeader {...headerProps} />}
       <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
-          {hiddenElements?.errorBar !== true && <ErrorBar {...errorBarProps} />}
+          {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
@@ -98,7 +93,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} />
           </Stack.Item>
         </Stack>
-        {hiddenElements?.participantPane !== true && (
+        {options?.participantPane !== false && (
           <Stack.Item className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>

@@ -8,7 +8,7 @@ export {
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
 
 export { ChatComposite } from './ChatComposite';
-export type { ChatCompositeProps, ChatCompositeHiddenElements } from './ChatComposite';
+export type { ChatCompositeProps, ChatCompositeOptions } from './ChatComposite';
 
 export type {
   ChatAdapter,
