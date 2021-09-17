@@ -85,7 +85,7 @@ export interface MeetingAdapterMeetingManagement
 
   /**
    * Remove a participant from a Meeting
-   * @param userId UserId of the participant to remove.
+   * @param - userId UserId of the participant to remove.
    */
   removeParticipant(userId: string): Promise<void>;
 }
