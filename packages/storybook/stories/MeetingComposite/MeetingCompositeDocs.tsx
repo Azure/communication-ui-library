@@ -17,11 +17,11 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Basic usage</Heading>
       <Description>
         A meeting composite is comprised of two key underlying parts: an ACS Call and an ACS Chat thread. As such you
-        must provide a CallAdapter and a ChatAdapter into the meeting interface.
+        must provide details for both in the meeting adapter interface.
       </Description>
       <Description>
-        A key thing to note is that initialization of adapters are asynchronous. Thus, the initialization step requires
-        special handling, as the example code below shows.
+        A key thing to note is that initialization of the adapter is asynchronous. Thus, the initialization step
+        requires special handling, as the example code below shows.
       </Description>
       <Source code={containerText} />
 
@@ -29,7 +29,7 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         MeetingComposite provides the UI for an *existing user* to join a call and a chat. Thus, the user and thread
         must be created beforehand. Typically, the user and group call or teams meeting are created on a Contoso-owned
-        service and provided to the client application that then passes it to the CallComposite.
+        service and provided to the client application that then passes it to the MeetingComposite.
       </Description>
       <Source code={serverText} />
 
