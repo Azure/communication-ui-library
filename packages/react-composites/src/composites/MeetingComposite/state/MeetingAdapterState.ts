@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAdapter, CallAdapterClientState, CallAdapterState } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
@@ -27,7 +27,7 @@ export interface MeetingAdapterUiState {
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
   /** ID of the meeting participant using this Meeting Adapter. */
-  userId: CommunicationIdentifier;
+  userId: CommunicationUserIdentifier;
   /** Display name of the meeting participant using this Meeting Adapter. */
   displayName: string | undefined;
   /** State of the current Meeting. */

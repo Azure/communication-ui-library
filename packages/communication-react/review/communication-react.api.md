@@ -1262,7 +1262,7 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
     displayName: string | undefined;
     meeting: MeetingState | undefined;
-    userId: CommunicationIdentifier;
+    userId: CommunicationUserIdentifier;
 }
 
 // @alpha
@@ -1355,12 +1355,12 @@ export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingE
 
 // @alpha
 export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
-    id: CommunicationIdentifier;
+    id: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     meetingEndReason?: MeetingEndReason;
 }
 
 // @alpha
-export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
+export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
     meetingEndReason?: MeetingEndReason;
     participants: {

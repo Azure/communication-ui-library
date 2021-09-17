@@ -25,6 +25,8 @@ export interface MeetingState
       | 'screenShareRemoteParticipant'
       | 'startTime'
       | 'endTime'
+      | 'diagnostics'
+      | 'dominantSpeakers'
     >,
     Pick<
       ChatThreadClientState,
@@ -58,6 +60,8 @@ const meetingPropsFromCallState = (callState: CallState) => ({
   startTime: callState.startTime,
   endTime: callState.endTime,
   meetingEndReason: callState.callEndReason,
+  diagnostics: callState.diagnostics,
+  dominantSpeakers: callState.dominantSpeakers,
   // For meetings we only use participants from the call in a meeting
   participants: meetingParticipantsFromCallParticipants(callState.remoteParticipants),
   participantsEnded: meetingParticipantsFromCallParticipants(callState.remoteParticipantsEnded)
