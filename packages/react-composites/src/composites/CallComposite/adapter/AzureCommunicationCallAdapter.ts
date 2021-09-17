@@ -54,7 +54,7 @@ class CallContext {
   private state: CallAdapterState;
   private callId: string | undefined;
 
-  constructor(clientState: CallClientState) {
+  constructor(clientState: CallClientState, isTeamsCall: boolean) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -62,7 +62,8 @@ class CallContext {
       devices: clientState.deviceManager,
       call: undefined,
       page: 'configuration',
-      latestErrors: clientState.latestErrors
+      latestErrors: clientState.latestErrors,
+      isTeamsCall
     };
   }
 
@@ -137,7 +138,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.callAgent = callAgent;
     this.locator = locator;
     this.deviceManager = deviceManager;
-    this.context = new CallContext(callClient.getState());
+    const isTeamsMeeting = 'meetingLink' in this.locator;
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting);
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -187,11 +189,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public dispose(): void {
     this.callClient.offStateChange(this.onClientStateChange);
     this.callAgent.dispose();
-  }
-
-  public isTeamsCall(): boolean {
-    //@TODO: this should be part of the CallAdapter API not hidden here.
-    return 'meetingLink' in this.locator;
   }
 
   public async queryCameras(): Promise<VideoDeviceInfo[]> {

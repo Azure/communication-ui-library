@@ -214,6 +214,7 @@ export type CallAdapterClientState = {
     call?: CallState;
     devices: DeviceManagerState;
     endedCall?: CallState;
+    isTeamsCall: boolean;
     latestErrors: AdapterErrors;
 };
 
@@ -1257,7 +1258,7 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 }
 
 // @alpha
-export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
     meeting: MeetingState | undefined;
     userId: CommunicationUserIdentifier;
