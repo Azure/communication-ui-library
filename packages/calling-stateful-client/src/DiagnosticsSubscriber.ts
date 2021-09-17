@@ -59,6 +59,7 @@ export class DiagnosticsSubscriber {
   }
 
   private networkDiagnosticsChanged(args: NetworkDiagnosticChangedEventArgs): void {
+    console.log('Received new network diagnostic', args);
     this._context.modifyState((state) => {
       const call = state.calls[this._callIdRef.callId];
       if (call === undefined) {
@@ -72,6 +73,7 @@ export class DiagnosticsSubscriber {
   }
 
   private mediaDiagnosticsChanged(args: MediaDiagnosticChangedEventArgs): void {
+    console.log('Received new media diagnostic', args);
     this._context.modifyState((state) => {
       const call = state.calls[this._callIdRef.callId];
       if (call === undefined) {
