@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CallAdapter, CallAdapterClientState, CallAdapterState } from '../../CallComposite';
+import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
 import {
@@ -16,7 +16,7 @@ import {
  * UI state pertaining to the Meeting Composite.
  * @alpha
  */
-export interface MeetingAdapterUiState {
+export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
   /** Current page in the meeting composite. */
   page: MeetingCompositePage;
 }
@@ -60,7 +60,8 @@ export function meetingAdapterStateFromBackingStates(
     userId: callAdapterState.userId,
     page: callPageToMeetingPage(callAdapterState.page),
     displayName: callAdapterState.displayName,
-    devices: callAdapterState.devices
+    devices: callAdapterState.devices,
+    isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled
   };
 }
 
@@ -91,6 +92,7 @@ export function mergeCallAdapterStateIntoMeetingAdapterState(
     page: callPageToMeetingPage(callAdapterState.page),
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
-    meeting: newMeetingState
+    meeting: newMeetingState,
+    isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled
   };
 }

@@ -37,6 +37,7 @@ import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter
 import { MeetingCompositePage, meetingPageToCallPage } from '../state/MeetingCompositePage';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserKind } from '@azure/communication-common';
+import { AzureCommunicationCallAdapter } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -46,13 +47,7 @@ class MeetingContext {
   private state: MeetingAdapterState;
 
   constructor(clientState: MeetingAdapterState) {
-    this.state = {
-      userId: clientState.userId,
-      displayName: clientState.displayName,
-      devices: clientState.devices,
-      meeting: undefined,
-      page: 'configuration'
-    };
+    this.state = clientState;
   }
 
   public onStateChange(handler: MeetingAdapterStateChangedHandler): void {
@@ -73,13 +68,7 @@ class MeetingContext {
   }
 
   public updateClientState(clientState: MeetingAdapterState): void {
-    this.setState({
-      userId: clientState.userId,
-      displayName: clientState.displayName,
-      meeting: clientState.meeting,
-      devices: clientState.devices,
-      page: clientState.page
-    });
+    this.setState(clientState);
   }
 
   public updateClientStateWithChatState(chatAdapterState: ChatAdapterState): void {
@@ -98,7 +87,7 @@ class MeetingContext {
  * Meeting adapter backed by Azure Communication Services.
  * Created for easy use with the Meeting Composite.
  */
-class AzureCommunicationMeetingAdapter implements MeetingAdapter {
+export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
   private context: MeetingContext;
@@ -157,6 +146,16 @@ class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.loadPreviousChatMessages.bind(this);
     this.on.bind(this);
     this.off.bind(this);
+  }
+
+  /**
+   * This reflects the isTeamsCall in AzureCommunicationCallAdapter
+   * @TODO: THIS NEEDS MOVED TO BE PART OF THE API NOT HIDDEN HERE.
+   */
+  public isTeamsCall(): boolean {
+    return 'isTeamsCall' in this.callAdapter
+      ? (this.callAdapter as AzureCommunicationCallAdapter).isTeamsCall()
+      : false;
   }
 
   /** Join existing Meeting. */
@@ -363,11 +362,9 @@ class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     switch (event) {
       case 'participantsJoined':
         this.callAdapter.off(event, listener);
-        //@TODO: should chat receive this event also?
         break;
       case 'participantsLeft':
         this.callAdapter.off('participantsLeft', listener);
-        //@TODO: should chat receive this event also?
         break;
       case 'meetingEnded':
         this.callAdapter.off('callEnded', listener);

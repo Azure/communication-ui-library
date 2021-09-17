@@ -38,7 +38,7 @@ function callStateFromMeetingState(meetingState: MeetingState): CallState {
 
 export function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterState): CallAdapterState {
   return {
-    isLocalPreviewMicrophoneEnabled: false, //@TODO: support this...
+    isLocalPreviewMicrophoneEnabled: meetingState.isLocalPreviewMicrophoneEnabled,
     page: meetingPageToCallPage(meetingState.page),
     userId: { kind: 'communicationUser', communicationUserId: meetingState.userId.communicationUserId },
     displayName: meetingState.displayName,
@@ -111,4 +111,14 @@ export class MeetingBackedCallAdapter implements CallAdapter {
     await this.meetingAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.meetingAdapter.disposeStreamView(remoteUserId, options);
+
+  /**
+   * This reflects the isTeamsCall in AzureCommunicationCallAdapter
+   * @TODO: THIS NEEDS MOVED TO BE PART OF THE API NOT HIDDEN HERE.
+   */
+  public isTeamsCall(): boolean {
+    return 'isTeamsCall' in this.meetingAdapter
+      ? (this.meetingAdapter as AzureCommunicationMeetingAdapter).isTeamsCall()
+      : false;
+  }
 }

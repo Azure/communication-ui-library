@@ -1284,7 +1284,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    off(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    off(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
     off(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
@@ -1308,7 +1308,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    on(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    on(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
     on(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
@@ -1330,7 +1330,7 @@ export interface MeetingAdapterSubscriptions {
 }
 
 // @alpha
-export interface MeetingAdapterUiState {
+export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
     page: MeetingCompositePage;
 }
 

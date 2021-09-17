@@ -190,6 +190,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public isTeamsCall(): boolean {
+    //@TODO: this should be part of the CallAdapter API not hidden here.
     return 'meetingLink' in this.locator;
   }
 
