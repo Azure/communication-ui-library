@@ -9,7 +9,8 @@ import {
   VideoDeviceInfo,
   PermissionConstraints,
   GroupCallLocator,
-  TeamsMeetingLinkLocator
+  TeamsMeetingLinkLocator,
+  Call
 } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
@@ -159,8 +160,8 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
 
   /** Join existing Meeting. */
-  public joinMeeting(microphoneOn?: boolean): void {
-    this.callAdapter.joinCall(microphoneOn);
+  public joinMeeting(microphoneOn?: boolean): Call | undefined {
+    return this.callAdapter.joinCall(microphoneOn);
   }
   /** Leave current Meeting. */
   public async leaveMeeting(): Promise<void> {
@@ -168,8 +169,8 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     await this.callAdapter.leaveCall();
   }
   /** Start a new Meeting. */
-  public startMeeting(participants: string[]): void {
-    this.callAdapter.startCall(participants);
+  public startMeeting(participants: string[]): Call | undefined {
+    return this.callAdapter.startCall(participants);
   }
   /**
    * Subscribe to state change events.

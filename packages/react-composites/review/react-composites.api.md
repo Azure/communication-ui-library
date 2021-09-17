@@ -7,7 +7,7 @@
 /// <reference types="react" />
 
 import type { AudioDeviceInfo } from '@azure/communication-calling';
-import type { Call } from '@azure/communication-calling';
+import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
@@ -552,10 +552,10 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
 
 // @alpha
 export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'> {
-    joinMeeting(microphoneOn?: boolean): void;
+    joinMeeting(microphoneOn?: boolean): Call | undefined;
     leaveMeeting(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    startMeeting(participants: string[]): void;
+    startMeeting(participants: string[]): Call | undefined;
 }
 
 // @alpha

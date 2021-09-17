@@ -79,13 +79,11 @@ export class MeetingBackedCallAdapter implements CallAdapter {
   public dispose = (): void => this.meetingAdapter.dispose();
   public setPage = (page: CallCompositePage): void => this.meetingAdapter.setPage(callPageToMeetingPage(page));
   public joinCall = (microphoneOn?: boolean): Call | undefined => {
-    this.meetingAdapter.joinMeeting(microphoneOn);
-    return undefined; // TODO: support returning a meeting backed call object
+    return this.meetingAdapter.joinMeeting(microphoneOn);
   };
   public leaveCall = async (): Promise<void> => await this.meetingAdapter.leaveMeeting();
   public startCall = (participants: string[]): Call | undefined => {
-    this.meetingAdapter.startMeeting(participants);
-    return undefined; // TODO: support returning a meeting backed call object
+    return this.meetingAdapter.startMeeting(participants);
   };
   public setCamera = async (sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> =>
     await this.meetingAdapter.setCamera(sourceId, options);

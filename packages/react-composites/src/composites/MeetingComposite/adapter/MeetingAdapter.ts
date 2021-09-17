@@ -26,6 +26,7 @@ import { MeetingAdapterState } from '../state/MeetingAdapterState';
 import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
+import { Call } from '@azure/communication-calling';
 
 /**
  * Functionality for managing the current meeting.
@@ -58,18 +59,27 @@ export interface MeetingAdapterMeetingManagement
       ChatAdapterThreadManagement,
       'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
     > {
-  /** Join an existing Meeting */
-  joinMeeting(microphoneOn?: boolean): void;
-  /** Leave the current Meeting */
+  /**
+   * Join an existing Meeting
+   * @returns The underlying Call object of the meeting.
+   */
+  joinMeeting(microphoneOn?: boolean): Call | undefined;
+
+  /**
+   * Leave the current Meeting
+   */
   leaveMeeting(): Promise<void>;
+
   /**
    * Start a new Meeting
    * @param participants - Array of participant IDs. These represent the participants to initialize the meeting with.
+   * @returns The underlying Call object of the meeting.
    */
-  startMeeting(participants: string[]): void;
+  startMeeting(participants: string[]): Call | undefined;
+
   /**
    * Remove a participant from a Meeting
-   * @param userId - UserId of the participant to remove.
+   * @param userId UserId of the participant to remove.
    */
   removeParticipant(userId: string): Promise<void>;
 }

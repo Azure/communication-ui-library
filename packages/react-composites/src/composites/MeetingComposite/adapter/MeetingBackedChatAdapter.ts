@@ -89,6 +89,6 @@ export class MeetingBackedChatAdapter implements ChatAdapter {
   };
 
   public setTopic = async (topicName: string): Promise<void> => {
-    throw `Method not supported in meetings.`;
+    throw `Chat Topics are not supported in meetings.`;
   };
 }
