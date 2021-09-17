@@ -2074,6 +2074,4 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     videoContainer?: IStyle;
 }
 
-// (No @packageDocumentation comment for this package)
-
 ```
