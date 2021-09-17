@@ -47,9 +47,9 @@ const BasicStory = (args, context): JSX.Element => {
           fluentTheme={context.theme}
           {...containerProps}
           locale={compositeLocale(locale)}
-          hideErrorBar={args.hideErrorBar}
-          hideParticipants={args.hideParticipants}
-          hideTopic={args.hideTopic}
+          errorBar={args.showErrorBar}
+          participants={args.showParticipants}
+          topic={args.showTopic}
         />
       ) : (
         <ConfigHintBanner />
@@ -67,9 +67,9 @@ export default {
   argTypes: {
     connectionString: controlsToAdd.connectionString,
     displayName: controlsToAdd.displayName,
-    hideErrorBar: controlsToAdd.hideErrorBar,
-    hideParticipants: controlsToAdd.hideChatParticipants,
-    hideTopic: controlsToAdd.hideChatTopic,
+    showErrorBar: controlsToAdd.showErrorBar,
+    showParticipants: controlsToAdd.showChatParticipants,
+    showTopic: controlsToAdd.showChatTopic,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
   },
