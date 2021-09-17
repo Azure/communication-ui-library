@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -43,13 +43,8 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     throw 'Meeting adapter is undefined';
   }
 
-  const [callAdapter, setCallAdapter] = useState<CallAdapter>(new MeetingBackedCallAdapter(meetingAdapter));
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>(new MeetingBackedChatAdapter(meetingAdapter));
-
-  useEffect(() => {
-    setCallAdapter(new MeetingBackedCallAdapter(meetingAdapter));
-    setChatAdapter(new MeetingBackedChatAdapter(meetingAdapter));
-  }, [meetingAdapter]);
+  const callAdapter: CallAdapter = useMemo(() => new MeetingBackedCallAdapter(meetingAdapter), [meetingAdapter]);
+  const chatAdapter: ChatAdapter = useMemo(() => new MeetingBackedChatAdapter(meetingAdapter), [meetingAdapter]);
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
