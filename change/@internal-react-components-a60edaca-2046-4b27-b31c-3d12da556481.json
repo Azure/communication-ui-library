@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix chat message text being always bold",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
