@@ -10,7 +10,6 @@ import { useLocale } from '../localization/LocalizationProvider';
 import {
   chatMessageMenuStyle,
   chatMessageDateStyle,
-  chatMessageStyle,
   chatActionsCSS,
   iconWrapperStyle,
   menuIconStyleSet
@@ -149,7 +148,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const messageContentItem = GenerateMessageContent(payload);
   return (
     <Chat.Message
-      className={mergeStyles(chatMessageStyle as IStyle, messageContainerStyle as IStyle)}
+      className={mergeStyles(messageContainerStyle as IStyle)}
       content={messageContentItem}
       author={<Text className={chatMessageDateStyle}>{payload.senderDisplayName}</Text>}
       mine={payload.mine}
