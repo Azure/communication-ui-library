@@ -401,6 +401,11 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
 }
 
+/**
+ * Arguments for {@link createAzureCommunicationMeetingAdapter}
+ *
+ * @alpha
+ */
 export type AzureCommunicationMeetingAdapterArgs = {
   endpointUrl: string;
   userId: CommunicationUserKind;
@@ -410,6 +415,12 @@ export type AzureCommunicationMeetingAdapterArgs = {
   callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
 };
 
+/**
+ * Create a meeting adapter backed by Azure Communication services
+ * to plug into the Meeting Composite.
+ *
+ * @alpha
+ */
 export const createAzureCommunicationMeetingAdapter = async ({
   userId,
   displayName,

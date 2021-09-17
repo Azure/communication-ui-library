@@ -146,7 +146,7 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @public (undocumented)
+// @alpha
 export type AzureCommunicationMeetingAdapterArgs = {
     endpointUrl: string;
     userId: CommunicationUserKind;
@@ -939,9 +939,7 @@ export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displa
 // @public (undocumented)
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// Warning: (ae-incompatible-release-tags) The symbol "createAzureCommunicationMeetingAdapter" is marked as @public, but its signature references "MeetingAdapter" which is marked as @alpha
-//
-// @public (undocumented)
+// @alpha
 export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @public (undocumented)

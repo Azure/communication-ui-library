@@ -9,6 +9,7 @@ import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@
 import { MeetingAdapterState, MeetingState } from '..';
 import { CallState } from '@internal/calling-stateful-client';
 import { callParticipantsFromMeetingParticipants } from '../state/MeetingParticipants';
+import { AzureCommunicationMeetingAdapter } from './AzureCommunicationMeetingAdapter';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
