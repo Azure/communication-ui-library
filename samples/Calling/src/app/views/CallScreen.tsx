@@ -3,8 +3,9 @@
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
+import { CallAdapter, CallComposite } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
+import { createCustomAdapter } from '../CustomCallAdapter';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
@@ -26,7 +27,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const adapter = await createAzureCommunicationCallAdapter({
+      const adapter = await createCustomAdapter({
         userId: { kind: 'communicationUser', communicationUserId: userId.communicationUserId },
         displayName: displayName,
         credential: createAutoRefreshingCredential(userId.communicationUserId, token),
