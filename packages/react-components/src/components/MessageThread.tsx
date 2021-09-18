@@ -610,6 +610,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         await onMessageSeen(lastMessage.payload.messageId);
         messageIdSeenByMeRef.current = lastMessage.payload.messageId;
       }
+      // xkcd
     } catch (e) {
       console.log('onMessageSeen Error', lastMessage, e);
     }

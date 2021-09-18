@@ -11,7 +11,12 @@ import {
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+import {
+  CallError,
+  DeviceManagerState,
+  StatefulCallClient,
+  StatefulDeviceManager
+} from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from '@internal/react-components';
@@ -275,22 +280,22 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     return {
-      onHangUp,
-      onSelectCamera,
-      onSelectMicrophone,
-      onSelectSpeaker,
+      onHangUp: ignoreCallErrorAsync(onHangUp),
+      onSelectCamera: ignoreCallErrorAsync(onSelectCamera),
+      onSelectMicrophone: ignoreCallErrorAsync(onSelectMicrophone),
+      onSelectSpeaker: ignoreCallErrorAsync(onSelectSpeaker),
       onStartCall,
-      onStartScreenShare,
-      onStopScreenShare,
-      onToggleCamera,
-      onToggleMicrophone,
-      onToggleScreenShare,
-      onCreateLocalStreamView,
-      onCreateRemoteStreamView,
-      onParticipantRemove,
-      onStartLocalVideo,
-      onDisposeRemoteStreamView,
-      onDisposeLocalStreamView
+      onStartScreenShare: ignoreCallErrorAsync(onStartScreenShare),
+      onStopScreenShare: ignoreCallErrorAsync(onStopScreenShare),
+      onToggleCamera: ignoreCallErrorAsync(onToggleCamera),
+      onToggleMicrophone: ignoreCallErrorAsync(onToggleMicrophone),
+      onToggleScreenShare: ignoreCallErrorAsync(onToggleScreenShare),
+      onCreateLocalStreamView: ignoreCallErrorAsync(onCreateLocalStreamView),
+      onCreateRemoteStreamView: ignoreCallErrorAsync(onCreateRemoteStreamView),
+      onParticipantRemove: ignoreCallErrorAsync(onParticipantRemove),
+      onStartLocalVideo: ignoreCallErrorAsync(onStartLocalVideo),
+      onDisposeRemoteStreamView: ignoreCallErrorAsync(onDisposeRemoteStreamView),
+      onDisposeLocalStreamView: ignoreCallErrorAsync(onDisposeLocalStreamView)
     };
   }
 );
@@ -323,4 +328,26 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   _Component: (props: Props) => ReactElement | null
 ): Common<CallingHandlers, Props> => {
   return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
+};
+
+/**
+ * Wraps a handler function to ignore all {@link CallError} exceptions.
+ *
+ * @param handler Handler function to wrap.
+ */
+const ignoreCallErrorAsync = <Args extends unknown[]>(
+  handler: (...args: Args) => Promise<void>
+): ((...args: Args) => Promise<void>) => {
+  return async (...args: Args): Promise<void> => {
+    try {
+      return await handler(...args);
+    } catch (error) {
+      if (error instanceof CallError) {
+        // Errors are already teed to the state and events by the stateful client and adapter.
+        // Errors that escape here only create log spam in the console.
+        return;
+      }
+      throw error;
+    }
+  };
 };

@@ -45,6 +45,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
       !isVideoReady &&
       !renderElement
     ) {
+      // xkcd
       props.onStartLocalVideo().catch((err) => console.log('Can not start video', err));
       setIsButtonStatusSynced(true);
     }
