@@ -4,7 +4,7 @@
 import { IStackTokens, mergeStyles } from '@fluentui/react';
 
 export const mainStackTokens: IStackTokens = {
-  childrenGap: '0.25rem'
+  childrenGap: '1rem'
 };
 export const buttonsStackTokens: IStackTokens = {
   childrenGap: '0.75rem'
@@ -16,7 +16,11 @@ export const bottomStackTokens: IStackTokens = {
   childrenGap: '1.4375rem'
 };
 export const endCallContainerStyle = mergeStyles({
-  width: '20.625rem'
+  height: '100%',
+  width: '100% ',
+  padding: '0.5rem', //half childrenGap from Stack
+  minWidth: '21.625rem', // max of min-width from stack items + padding * 2 = 20.625 + 0.5 * 2
+  minHeight: 'auto'
 });
 export const endCallTitleStyle = mergeStyles({
   fontSize: '1.375rem',
