@@ -22,6 +22,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
     >
       <div
         className="ms-Stack css-6"
+        data-ui-id="video-tile"
       >
         <div
           className="ms-Stack css-7"
