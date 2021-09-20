@@ -2,6 +2,95 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Mon, 13 Sep 2021 21:02:16 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.5",
+      "version": "1.0.0-beta.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adjust most comments in internal api review",
+            "author": "jinan@microsoft.com",
+            "commit": "2a89e83796a87d8dc704bdef316b8e56fcb42930",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add Dominant Speaker support to Video Gallery",
+            "author": "anjulgarg@live.com",
+            "commit": "969c3efa0d656ba6602d854e33b3c71e6910ee4e",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "updating calling to use 1.2.1-beta.1",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "e337a0813532da34430795921a4bfc324453d881",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bubble up call connection error to UI",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "d4f1ee89cec41f9796e3e753a630d3827fccb989",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Show ACS errors via ErrorBar in CallComposite ",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "ce42eff8dfc15bfe36b3d04a87335904b04606ea",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Removed errors from start screen sharing from active errors.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5ba70bfe2647153eb01161ff6cbe5b0118f6f33d",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Delete ErrorBar handlers",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "bb304627f7fdcbbec79e6098ded5fec56e3e260e",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump acs-ui-common dep",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27624cdcd3ca1db8bf36b5eabf2943557a420864",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add active and dominant speaker support to screenshare screen.",
+            "author": "anjulgarg@live.com",
+            "commit": "d32bd7329ddba0972a7bb12020814dbfe2b4fc64",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add timestamp to teed errors",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48aefca725807e58d1d2e4a6ff0121f5b09437e",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix participant button selector after update to participant button's props relating to the participant list to be top level",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e34381f9f3cca10f5d9e33f931d80ca801c0ed08",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.4",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "7a7298633353695ef6bcd659f2a39cb80ff1d67b",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Aug 2021 21:18:19 GMT",
       "tag": "@internal/calling-component-bindings_v1.0.0-beta.4",
       "version": "1.0.0-beta.4",

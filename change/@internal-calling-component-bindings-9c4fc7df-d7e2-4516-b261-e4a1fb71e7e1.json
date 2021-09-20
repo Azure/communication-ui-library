@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Show ACS errors via ErrorBar in CallComposite ",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
