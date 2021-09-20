@@ -1,0 +1,40 @@
+{
+  "name": "@internal/check-treeshaking",
+  "entries": [
+    {
+      "date": "Mon, 13 Sep 2021 21:02:16 GMT",
+      "tag": "@internal/check-treeshaking_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @internal/acs-ui-common to v1.0.0-beta.5",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27624cdcd3ca1db8bf36b5eabf2943557a420864",
+            "package": "@internal/check-treeshaking"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump @internal/chat-component-bindings to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/check-treeshaking"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/check-treeshaking"
+          },
+          {
+            "comment": "Bump @internal/calling-component-bindings to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/check-treeshaking"
+          }
+        ]
+      }
+    }
+  ]
+}

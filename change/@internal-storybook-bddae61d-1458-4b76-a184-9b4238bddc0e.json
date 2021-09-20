@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add dominant speaker support",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
