@@ -33,6 +33,8 @@ Mon, 13 Sep 2021 21:02:16 GMT
 
 * Localize errors in Call Composite
 
+* Update available locales and translations
+
 * Add chat message edit feature
 
 * Truncating long display names in ParticipantItem
