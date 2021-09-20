@@ -48,7 +48,7 @@ export interface ControlBarProps {
 
 /**
  * `ControlBar` allows you to easily create a component for call controls using
- * [Button](https://developer.microsoft.com/en-us/fluentui#/controls/web/button) component from
+ * [Button](https://developer.microsoft.com/fluentui#/controls/web/button) component from
  * Fluent UI. Users will need to provide methods to Button components used inside `ControlBar`
  * for altering call behavior.
  */

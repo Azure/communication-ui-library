@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "update docs on default colors for Persona initials + fix link in call composite doc",
+  "packageName": "@internal/storybook",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

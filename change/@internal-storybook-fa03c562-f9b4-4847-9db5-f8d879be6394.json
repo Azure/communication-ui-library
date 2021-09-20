@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bug fixes related to QA pass on Storybook",
+  "packageName": "@internal/storybook",
+  "email": "dademath@microsoft.com",
+  "dependentChangeType": "none"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Hotfix: Add delay in test to reduce CI flakiness",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

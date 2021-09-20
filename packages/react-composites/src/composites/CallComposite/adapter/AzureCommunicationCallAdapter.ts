@@ -516,10 +516,18 @@ export const createAzureCommunicationCallAdapter = async ({
   locator
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({ userId });
-  const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   const callAgent = await callClient.createCallAgent(credential, { displayName });
-  const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
+  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
+};
+
+export const createAzureCommunicationCallAdapterFromClient = async (
+  callClient: StatefulCallClient,
+  callAgent: CallAgent,
+  locator: TeamsMeetingLinkLocator | GroupCallLocator
+): Promise<CallAdapter> => {
+  const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 
 const isCallError = (e: Error): e is CallError => {

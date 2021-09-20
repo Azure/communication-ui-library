@@ -46,9 +46,6 @@ export type ChatMessageWithStatus = ChatMessage & {
     status: MessageStatus;
 };
 
-// @public
-export type ChatStateModifier = (state: ChatClientState) => void;
-
 // @public (undocumented)
 export type ChatThreadClientState = {
     chatMessages: {
@@ -73,13 +70,9 @@ export type ChatThreadProperties = {
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @public (undocumented)
-export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
-
-// @public (undocumented)
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     getState(): ChatClientState;
-    modifyState(modifier: ChatStateModifier): void;
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)

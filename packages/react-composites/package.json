@@ -9,10 +9,11 @@
     "dist/"
   ],
   "scripts": {
-    "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build": "rushx clean && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:esm": "tsc && copyfiles -u 1 src/**/assets/**/* dist/dist-esm",
     "build:watch": "rushx build",
+    "clean": "rimraf dist",
     "build:e2e:call": "webpack-cli build --config ./tests/browser/call/app/webpack.config.js --mode=production --env production",
     "build:e2e:chat": "webpack-cli build --config ./tests/browser/chat/app/webpack.config.js --mode=production --env production",
     "test": "jest",
@@ -115,6 +116,7 @@
     "react-test-renderer": "^16.14.0",
     "react": "~16.14.0",
     "regenerator-runtime": "^0.13.7",
+    "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
@@ -127,13 +129,5 @@
     "webpack": "5.38.1",
     "webpack-dev-server": "3.11.2",
     "webpack-cli": "4.7.2"
-  },
-  "beachball": {
-    "tag": "next",
-    "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
-    ]
   }
 }
