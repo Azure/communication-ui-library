@@ -4,6 +4,7 @@
 import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import {
@@ -129,7 +130,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const nametagColorOverride = useMemo(
     () => ({ color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary }),
-    [isVideoRendered, palette.neutralPrimary, theme.palette.neutralPrimary]
+    [isVideoRendered, theme.palette.neutralPrimary]
   );
 
   const tileInfoContainerStyle = useMemo(
@@ -148,9 +149,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     [nametagColorOverride]
   );
 
+  const ids = useIdentifiers();
+
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
+        data-ui-id={ids.videoTile}
         className={mergeStyles(
           rootStyles,
           isSpeaking ? isSpeakingStyles : {},
@@ -185,9 +189,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 <Text className={tileInfoDisplayNameStyle}>{displayName}</Text>
               </Stack.Item>
             )}
-            {showMuteIndicator && isMuted !== undefined && (
+            {showMuteIndicator && isMuted && (
               <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
-                {isMuted ? <Icon iconName="VideoTileMicOff" /> : <Icon iconName="VideoTileMicOn" />}
+                <Icon iconName="VideoTileMicOff" />
               </Stack.Item>
             )}
           </Stack>

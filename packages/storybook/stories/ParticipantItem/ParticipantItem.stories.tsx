@@ -4,7 +4,7 @@
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { ParticipantItem as ParticipantItemComponent } from '@azure/communication-react';
 import { Stack, mergeStyles } from '@fluentui/react';
-import { MicOff20Filled, ShareScreenStart20Filled } from '@fluentui/react-icons';
+import { MicOff16Regular, ShareScreenStart20Filled } from '@fluentui/react-icons';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -36,7 +36,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         Here is an example of how to use `ParticipantItem.` In this example, the `menuItems` property is used to add a
         context menu. The type of `menuItems` is an array of
-        [IContextualMenuItem](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuItem).
+        [IContextualMenuItem](https://developer.microsoft.com/fluentui#/controls/web/contextualmenu#IContextualMenuItem).
         Click on the rendered participant below to see the menu items.
       </Description>
       <Canvas mdxSource={ParticipantItemExampleText}>
@@ -93,7 +93,7 @@ const ParticipantItemStory: (args) => JSX.Element = (args) => {
         onRenderIcon={() => (
           <Stack horizontal tokens={tokenProps}>
             {args.isScreenSharing && <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />}
-            {args.isMuted && <MicOff20Filled className={iconStyles} primaryFill="currentColor" />}
+            {args.isMuted && <MicOff16Regular className={iconStyles} primaryFill="currentColor" />}
           </Stack>
         )}
       />

@@ -249,17 +249,11 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
-    VideoTileMicOn: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
 };
-
-// @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps, ids?: {
-    messageTimestamp?: string;
-}) => JSX.Element;
 
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
@@ -281,13 +275,13 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrors: ActiveError[];
-    onDismissErrors: (errorTypes: ErrorType[]) => void;
     strings?: ErrorBarStrings;
 }
 
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callingNetworkFailure: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;
@@ -347,6 +341,7 @@ export interface Identifiers {
     sendboxTextfield: string;
     typingIndicator: string;
     videoGallery: string;
+    videoTile: string;
 }
 
 // @public (undocumented)
@@ -398,6 +393,9 @@ export type MessageProps = {
     onDeleteMessage?: (messageId: string) => Promise<void>;
 };
 
+// @public (undocumented)
+export type MessageRenderer = (props: MessageProps) => JSX.Element;
+
 // @public
 export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;
 
@@ -433,7 +431,7 @@ export type MessageThreadProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     editDisabled?: boolean;

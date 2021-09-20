@@ -187,7 +187,7 @@ const generateParticipantsStr = (participants: CommunicationParticipant[]): stri
     )
     .join(', ');
 
-export type DefaultMessageRendererType = (props: MessageProps, ids?: { messageTimestamp?: string }) => JSX.Element;
+export type MessageRenderer = (props: MessageProps) => JSX.Element;
 
 const ParticipantSystemMessageComponent = ({
   payload,
@@ -215,7 +215,7 @@ const ParticipantSystemMessageComponent = ({
   return <></>;
 };
 
-const DefaultSystemMessageRenderer: DefaultMessageRendererType = (props: MessageProps) => {
+const DefaultSystemMessage: MessageRenderer = (props: MessageProps) => {
   if (props.message.type === 'system') {
     const payload = props.message.payload;
     if (payload.type === 'content') {
@@ -250,7 +250,7 @@ const memoizeAllMessages = memoizeFnAll(
     strings: MessageThreadStrings,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
-    onRenderMessage?: (message: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element,
+    onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>,
     onDeleteMessage?: (messageId: string) => Promise<void>
   ): ShorthandValue<ChatItemProps> => {
@@ -318,9 +318,9 @@ const memoizeAllMessages = memoizeFnAll(
 
       const systemMessageComponent =
         onRenderMessage === undefined ? (
-          <DefaultSystemMessageRenderer {...messageProps} />
+          <DefaultSystemMessage {...messageProps} />
         ) : (
-          onRenderMessage(messageProps, (props) => <DefaultSystemMessageRenderer {...props} />)
+          onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
         );
 
       return {
@@ -434,7 +434,7 @@ export type MessageThreadProps = {
    * @remarks
    * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
-  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
 
   /**
    * Optional callback to edit a message.

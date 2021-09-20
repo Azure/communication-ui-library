@@ -1,24 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationParticipant, DefaultMessageRendererType, MessageProps } from '@internal/react-components';
+import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';
 import { BaseComposite, BaseCompositeProps } from '../common/Composite';
+import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatScreen } from './ChatScreen';
 
-export interface ChatCompositeProps extends BaseCompositeProps {
+export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
   /**
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
    */
   adapter: ChatAdapter;
   /**
-   * `(messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element`
+   * `(messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element`
    * A callback for customizing the message renderer.
    */
-  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   /**
    * `(typingUsers: CommunicationParticipant[]) => JSX.Element`
    * A callback for customizing the typing indicator renderer.
@@ -28,41 +29,40 @@ export interface ChatCompositeProps extends BaseCompositeProps {
   /**
    * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
-  visualElements?: ChatCompositeVisualElements;
+  hiddenElements?: ChatCompositeHiddenElements;
 }
 
 /**
  * Optional features of the {@linnk ChatComposite}
  */
-export type ChatCompositeVisualElements = {
+export type ChatCompositeHiddenElements = {
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
+   * Hidden if set to `true`
    *
    * @defaultValue false
    */
-  showErrorBar?: boolean;
+  errorBar?: boolean;
   /**
-   * Choose to show the participant pane
+   * Choose to show the participant pane. Hidden if set to `true`
    * @defaultValue false
    */
-  showParticipantPane?: boolean;
+  participantPane?: boolean;
   /**
-   * Choose to show the topic at the top of the chat
+   * Choose to show the topic at the top of the chat. Hidden if set to `true`
    * @defaultValue false
    */
-  showTopic?: boolean;
+  topic?: boolean;
 };
 
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const { adapter, visualElements, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
+  const { adapter, hiddenElements, onFetchAvatarPersonaData, onRenderTypingIndicator, onRenderMessage } = props;
 
   return (
     <BaseComposite {...props}>
       <ChatAdapterProvider adapter={adapter}>
         <ChatScreen
-          showErrorBar={visualElements?.showErrorBar}
-          showParticipantPane={visualElements?.showParticipantPane}
-          showTopic={visualElements?.showTopic}
+          hiddenElements={hiddenElements}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}

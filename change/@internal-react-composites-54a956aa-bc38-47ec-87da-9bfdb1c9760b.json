@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Expose errors in CallAdapter",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

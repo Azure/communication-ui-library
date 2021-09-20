@@ -2,6 +2,292 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Mon, 13 Sep 2021 21:02:16 GMT",
+      "tag": "@internal/react-composites_v1.0.0-beta.5",
+      "version": "1.0.0-beta.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Expose errors in CallAdapter",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "7bc280146d19388318775e6ab2593fc5eff6c3c6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Show bannrs within call screen",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "31ce8c40026162bd4b0d3482a65f0d092fc4c670",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Adjust most comments in internal api review",
+            "author": "jinan@microsoft.com",
+            "commit": "2a89e83796a87d8dc704bdef316b8e56fcb42930",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Localized call and chat composite strings",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "3cddd9abb1eb4c694f3a266babe971e3496e93ad",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Apply chat sdk hotfix",
+            "author": "jinan@microsoft.com",
+            "commit": "9800b6315a1bf7aed50c14d7a657db4679ccfaa6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add initial meeting state and meeting adapter state interfaces",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "79d91a148d802217aa52d1312b6867e3f7107176",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Work around for menu disappearing",
+            "author": "jinan@microsoft.com",
+            "commit": "d009e3866eb63e4a97b8b895c87c0538e8674c40",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Updating composite automation snapshots",
+            "author": "jinan@microsoft.com",
+            "commit": "c82204a9af25e0ac5d7c36ffc4b1c6de59eb5b11",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Localize errors in CallComposite",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "afc47cd7a3b060a25fe0e27f926abbb638d72cd0",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix unstale participant list test",
+            "author": "jinan@microsoft.com",
+            "commit": "7d996e45e21877522e5650ac476889370fbde28e",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add flags for CallComposite visual elements",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "cb8c2f008dadca78aedf11a6bd74a35a6b9604a3",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Show ACS errors via ErrorBar in CallComposite",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "ce42eff8dfc15bfe36b3d04a87335904b04606ea",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add active and dominant speaker support to screenshare screen.",
+            "author": "anjulgarg@live.com",
+            "commit": "d32bd7329ddba0972a7bb12020814dbfe2b4fc64",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add message edit feature",
+            "author": "jinan@microsoft.com",
+            "commit": "0ec439180274944792ca520a635be68842411948",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Generate snapshot in github action for composite",
+            "author": "jinan@microsoft.com",
+            "commit": "13fe2cc057d2b48d9753a1c9397efff27fa8662f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add different types for ChatComposite and CallCompposite Icons",
+            "author": "anjulgarg@live.com",
+            "commit": "948ae4c02bc5151f352e06dc617eef292b242867",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Custom Icons injection in components and composites.",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fixed English (US) and English (GB) exports.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "7616184904d4f1a894ed5dcbd3b6b7bcfb348f6f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add initial meeting adapter interface",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "18db4266a78fc38511e3f598e6e884ee0373ebbc",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fixed theming for local preview placeholder for calling composite.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "c3d1c3b3ce407429b3f8949c493bbd6b3e335f00",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "updating calling to use 1.2.1-beta.1",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "e337a0813532da34430795921a4bfc324453d881",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Delete API to clear stateful errors",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "bb304627f7fdcbbec79e6098ded5fec56e3e260e",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Updated locale files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "92732f330b7540681c8dd914b512be39d2434af2",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Strongly type errors from adapters",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "ba81f37acf474049e9c2fcc74ff6392518d23ecd",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump acs-ui-common dep",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27624cdcd3ca1db8bf36b5eabf2943557a420864",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Rename component locale type names to match composites",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "b6e6b3bfdfb612a13a888bfdf8344ea04d4f6715",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix the problem of opacity animation",
+            "author": "jinan@microsoft.com",
+            "commit": "57193b26555b487c6f57c6b68cea688e9908c6c4",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": " Add custom avatar data injection for composites",
+            "author": "anjulgarg@live.com",
+            "commit": "8946ac0d8a668336804d7cb18604b6b8c2076dce",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Rename ChatCompositeVisualElements",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "7d4d1cefe3a2f01b782d556ecdea44ffda0ad8f5",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Meeting adapter implementations - forward events to call and chat child adapters",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "de013cc3125b2fd8681077ba3411a128b45b7f4a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Refactored call join error handling",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5ba70bfe2647153eb01161ff6cbe5b0118f6f33d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Create stub `AzureCommunicationMeetingAdapter`",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "873c2b6040e8946fcd5b2a0ce453229166d747c1",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove identifiers from composite constructor signature",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "598da55451ffc613c991bce13a656f7b1214b622",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Track dismissed errors internally in ErrorBar",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "b4920239cdab8ba2f4f9524fcec57191124f4e21",
+            "package": "@internal/react-composites"
+          }
+        ],
+        "none": [
+          {
+            "comment": "fix default Avatar text color",
+            "author": "alcail@microsoft.com",
+            "commit": "1fa155f5bfaa66bc70945c6cb7db3c960a39aa2d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove temporary solution for getting participant button's participant list handlers",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e34381f9f3cca10f5d9e33f931d80ca801c0ed08",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Trivial value change for a new type",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "11c43908cceaf9df588b7d964a7de169891e43ca",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Adding composite props to storybook",
+            "author": "anjulgarg@live.com",
+            "commit": "0e22639bc5dfcdd252637daf5441700ab32c9ab5",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.4",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "7a7298633353695ef6bcd659f2a39cb80ff1d67b",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fixing avatar tests",
+            "author": "anjulgarg@live.com",
+            "commit": "fef34bb181ec08f71b83933568c6bf71c61d0338",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update sharing screen name + sharer name and mic",
+            "author": "alcail@microsoft.com",
+            "commit": "c2450881a9621ca63ca51ee4bc784d6e5f85a919",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Improving E2E tests for chat after custom avatar update",
+            "author": "anjulgarg@live.com",
+            "commit": "b62d2ffdf2c1c6705de597a227a04a39f62e0e20",
+            "package": "@internal/react-composites"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a6d7a2c59cd81c2f88df19c4f249528e9e375bc6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/chat-component-bindings to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/react-components to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump @internal/calling-component-bindings to v1.0.0-beta.5",
+            "author": "anjulgarg@live.com",
+            "commit": "a311b0f86dddfb868b7e5c527aa15f0bb9a65d35",
+            "package": "@internal/react-composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Aug 2021 21:18:19 GMT",
       "tag": "@internal/react-composites_v1.0.0-beta.4",
       "version": "1.0.0-beta.4",

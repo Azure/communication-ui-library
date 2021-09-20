@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-composites",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "Complete Azure Communication Services experiences",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -9,15 +9,16 @@
     "dist/"
   ],
   "scripts": {
-    "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build": "rushx clean && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:esm": "tsc && copyfiles -u 1 src/**/assets/**/* dist/dist-esm",
     "build:watch": "rushx build",
+    "clean": "rimraf dist",
     "build:e2e:call": "webpack-cli build --config ./tests/browser/call/app/webpack.config.js --mode=production --env production",
     "build:e2e:chat": "webpack-cli build --config ./tests/browser/chat/app/webpack.config.js --mode=production --env production",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
-    "test:e2e:call": "playwright test --workers=1 --retries=2 tests.browser.call",
+    "test:e2e:call": "playwright test --workers=1 tests.browser.call",
     "test:e2e:chat": "playwright test --workers=1 --retries=2 tests.browser.chat",
     "test:e2e:chat:update": "playwright test --workers=1 tests.browser.chat --update-snapshots",
     "test:e2e:call:update": "playwright test --workers=1 tests.browser.call --update-snapshots",
@@ -31,7 +32,7 @@
     "lint:quiet": "npm run lint -- --quiet"
   },
   "dependencies": {
-    "@azure/communication-calling": "1.2.0-beta.1",
+    "@azure/communication-calling": "1.2.1-beta.1",
     "@azure/communication-chat": "1.0.1",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-signaling": "1.0.0-beta.5",
@@ -39,12 +40,12 @@
     "@azure/core-paging": "~1.1.3",
     "@fluentui/react": "~8.17.2",
     "@fluentui/react-icons": "~1.1.137",
-    "@internal/acs-ui-common": "1.0.0-beta.4",
-    "@internal/calling-stateful-client": "1.0.0-beta.4",
-    "@internal/calling-component-bindings": "1.0.0-beta.4",
-    "@internal/chat-stateful-client": "1.0.0-beta.4",
-    "@internal/chat-component-bindings": "1.0.0-beta.4",
-    "@internal/react-components": "1.0.0-beta.4",
+    "@internal/acs-ui-common": "1.0.0-beta.5",
+    "@internal/calling-stateful-client": "1.0.0-beta.5",
+    "@internal/calling-component-bindings": "1.0.0-beta.5",
+    "@internal/chat-stateful-client": "1.0.0-beta.5",
+    "@internal/chat-component-bindings": "1.0.0-beta.5",
+    "@internal/react-components": "1.0.0-beta.5",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
     "react-aria-live": "^2.0.5",
@@ -115,6 +116,7 @@
     "react-test-renderer": "^16.14.0",
     "react": "~16.14.0",
     "regenerator-runtime": "^0.13.7",
+    "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",
@@ -127,13 +129,5 @@
     "webpack": "5.38.1",
     "webpack-dev-server": "3.11.2",
     "webpack-cli": "4.7.2"
-  },
-  "beachball": {
-    "tag": "next",
-    "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
-    ]
   }
 }

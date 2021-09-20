@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useEffect } from 'react';
 import {
   CommunicationParticipant,
-  DefaultMessageRendererType,
+  MessageRenderer,
   ErrorBar,
   MessageProps,
   MessageThread,
@@ -13,34 +12,34 @@ import {
   SendBox,
   TypingIndicator
 } from '@internal/react-components';
+import React, { useCallback, useEffect } from 'react';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { useLocale } from '../localization';
 import { useAdapter } from './adapter/ChatAdapterProvider';
+import { ChatCompositeHiddenElements } from './ChatComposite';
+import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
-import { ChatHeader, getHeaderProps } from './ChatHeader';
 import {
+  chatArea,
   chatContainer,
   chatWrapper,
-  chatArea,
-  participantListWrapper,
   listHeader,
+  participantListContainerPadding,
   participantListStack,
   participantListStyle,
-  participantListContainerPadding
+  participantListWrapper
 } from './styles/Chat.styles';
-import { AvatarPersonaDataCallback, AvatarPersona } from '../common/AvatarPersona';
-import { useLocale } from '../localization';
 
 export type ChatScreenProps = {
-  showErrorBar?: boolean;
-  showParticipantPane?: boolean;
-  showTopic?: boolean;
+  hiddenElements?: ChatCompositeHiddenElements;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, showParticipantPane, showTopic } = props;
+  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, hiddenElements } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -70,10 +69,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   return (
     <Stack className={chatContainer} grow>
-      {!!showTopic && <ChatHeader {...headerProps} />}
+      {hiddenElements?.topic !== true && <ChatHeader {...headerProps} />}
       <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
-          {props.showErrorBar ? <ErrorBar {...errorBarProps} /> : <></>}
+          {hiddenElements?.errorBar !== true && <ErrorBar {...errorBarProps} />}
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
@@ -91,7 +90,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} />
           </Stack.Item>
         </Stack>
-        {showParticipantPane && (
+        {hiddenElements?.participantPane !== true && (
           <Stack.Item className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>

@@ -14,6 +14,7 @@ export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
   return (
     <ControlBarButton
       {...props}
+      labelKey={'chatButtonLabelKey'}
       strings={strings}
       onRenderOnIcon={props.onRenderOnIcon ?? onRenderOnIcon}
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderOffIcon}

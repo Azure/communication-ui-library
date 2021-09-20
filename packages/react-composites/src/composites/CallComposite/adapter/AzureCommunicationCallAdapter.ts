@@ -14,7 +14,6 @@ import {
   AudioOptions,
   CallAgent,
   Call,
-  CallClientOptions,
   GroupCallLocator,
   TeamsMeetingLinkLocator,
   LocalVideoStream as SDKLocalVideoStream,
@@ -39,7 +38,7 @@ import {
   ParticipantLeftListener
 } from './CallAdapter';
 import { isInCall } from '../../../utils';
-import { ErrorType, VideoStreamOptions } from '@internal/react-components';
+import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
@@ -47,6 +46,7 @@ import {
   CommunicationUserKind
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
+import { AdapterError } from '../../common/adapters';
 
 // Context of Chat, which is a centralized context for all state updates
 class CallContext {
@@ -180,7 +180,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.setPage.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
-    this.clearErrors.bind(this);
     this.on.bind(this);
     this.off.bind(this);
   }
@@ -208,7 +207,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getSpeakers();
+      return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
     });
   }
 
@@ -387,10 +386,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.offStateChange(handler);
   }
 
-  public clearErrors(errorTypes: ErrorType[]): void {
-    this.handlers.onDismissErrors(errorTypes);
-  }
-
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
@@ -399,7 +394,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
-  on(event: 'error', errorHandler: (e: Error) => void): void;
+  on(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: CallEvent, listener: (e: any) => void): void {
@@ -482,7 +477,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
-  off(event: 'error', errorHandler: (e: Error) => void): void;
+  off(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: CallEvent, listener: (e: any) => void): void {
@@ -494,7 +489,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       return await f();
     } catch (error) {
       if (isCallError(error)) {
-        this.emitter.emit('error', { operation: error.target, error: error.inner });
+        this.emitter.emit('error', error as AdapterError);
       }
       throw error;
     }
@@ -512,21 +507,27 @@ export type AzureCommunicationCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator | GroupCallLocator;
-  callClientOptions?: CallClientOptions;
 };
 
 export const createAzureCommunicationCallAdapter = async ({
   userId,
   displayName,
   credential,
-  locator,
-  callClientOptions
+  locator
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  const callClient = createStatefulCallClient({ userId }, { callClientOptions });
-  const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  const callClient = createStatefulCallClient({ userId });
   const callAgent = await callClient.createCallAgent(credential, { displayName });
-  const adapter = new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
+  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
+};
+
+export const createAzureCommunicationCallAdapterFromClient = async (
+  callClient: StatefulCallClient,
+  callAgent: CallAgent,
+  locator: TeamsMeetingLinkLocator | GroupCallLocator
+): Promise<CallAdapter> => {
+  const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 
 const isCallError = (e: Error): e is CallError => {

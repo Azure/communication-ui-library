@@ -3,27 +3,6 @@
 
 import { mergeStyles, IStyle, FontWeights, Theme } from '@fluentui/react';
 
-export const chatMessageStyle = mergeStyles({
-  fontWeight: '600'
-});
-
-export const chatActionStyle = mergeStyles({
-  visibility: 'hidden',
-  width: '1rem',
-  height: '1rem',
-  cursor: 'pointer',
-  [`.${chatMessageStyle}:hover &`]: {
-    visibility: 'visible'
-  },
-  '& svg': {
-    height: '1rem',
-    width: '1rem'
-  },
-  '&:hover svg': {
-    stroke: 'currentColor'
-  }
-});
-
 export const chatActionsCSS: IStyle = {
   'ul&': {
     right: '0',

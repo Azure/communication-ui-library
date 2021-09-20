@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Typo fix",
+  "packageName": "@internal/storybook",
+  "email": "dademath@microsoft.com",
+  "dependentChangeType": "none"
+}

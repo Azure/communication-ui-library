@@ -8,7 +8,8 @@ import {
   containerStyles,
   callControlsStyles,
   subContainerStyles,
-  callControlsContainer
+  callControlsContainer,
+  bannersContainerStyles
 } from './styles/CallScreen.styles';
 
 import { MediaGallery } from './MediaGallery';
@@ -33,6 +34,7 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { usePropsFor } from './hooks/usePropsFor';
+import { CallCompositeHiddenElements } from './CallComposite';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
@@ -40,10 +42,7 @@ export interface CallScreenProps {
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  visualElements: {
-    showCallControls: boolean;
-    showErrorBar: boolean;
-  };
+  hiddenElements?: CallCompositeHiddenElements;
 }
 
 const spinnerLabel = 'Initializing call client...';
@@ -99,7 +98,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         callErrorHandler('removed');
       }
     }
-  }, [adapter, callErrorHandler, endedCall]);
+  }, [callErrorHandler, endedCall]);
 
   if ('isTeamsCall' in adapter) {
     const azureAdapter = adapter as AzureCommunicationCallAdapter;
@@ -128,20 +127,23 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       {isInCall(callStatus ?? 'None') ? (
         <>
-          <Stack.Item style={{ width: '100%' }}>
-            <ComplianceBanner {...complianceBannerProps} />
-          </Stack.Item>
-          <Stack.Item style={permissionsBannerContainerStyle}>
-            <PermissionsBanner
-              microphonePermissionGranted={devicePermissions.audio}
-              cameraPermissionGranted={devicePermissions.video}
-            />
-          </Stack.Item>
-          {props.visualElements.showErrorBar && (
-            <Stack.Item style={{ width: '100%' }}>
-              <ErrorBar {...errorBarProps} />
+          <Stack styles={bannersContainerStyles}>
+            <Stack.Item>
+              <ComplianceBanner {...complianceBannerProps} />
             </Stack.Item>
-          )}
+            <Stack.Item style={permissionsBannerContainerStyle}>
+              <PermissionsBanner
+                microphonePermissionGranted={devicePermissions.audio}
+                cameraPermissionGranted={devicePermissions.video}
+              />
+            </Stack.Item>
+            {props?.hiddenElements?.errorBar !== true && (
+              <Stack.Item>
+                <ErrorBar {...errorBarProps} />
+              </Stack.Item>
+            )}
+          </Stack>
+
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
@@ -168,13 +170,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          {props.visualElements.showCallControls && (
+          {props?.hiddenElements?.callControls !== true && (
             <Stack.Item styles={callControlsStyles}>
               <Stack className={callControlsContainer}>
                 <CallControls
-                  showParticipantsControl={true}
                   onEndCallClick={endCallHandler}
                   callInvitationURL={callInvitationURL}
+                  hiddenElements={props.hiddenElements}
                 />
               </Stack>
             </Stack.Item>

@@ -44,8 +44,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Customize send icon</Heading>
       <Description>
         To customize the send icon, use the `onRenderIcon` property like in the example below. A Fluent UI
-        [Icon](https://developer.microsoft.com/en-us/fluentui#/controls/web/icon) is used in this example but you can
-        use any `JSX.Element`.
+        [Icon](https://developer.microsoft.com/fluentui#/controls/web/icon) is used in this example but you can use any
+        `JSX.Element`.
       </Description>
       <Canvas mdxSource={CustomIconExampleText}>
         <CustomIconExample />
