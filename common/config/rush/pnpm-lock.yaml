@@ -19270,12 +19270,13 @@ packages:
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       immer: 9.0.6
       prettier: 2.3.1
+      rimraf: 2.7.1
       webpack: 4.46.0_webpack-cli@4.7.2
       webpack-cli: 4.7.2_webpack@4.46.0
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-zxKyBrPXu85w+bEGErm6YM+HmttWVxGzMjJuYq8XtYz5mdPK7b4Al8iS8A/8pWD9hXhxmpCOMWIWTd0K3/PupA==
+      integrity: sha512-Nmo1ssBO/mzus9olwsndkHqwEicAOjLpdqGCak+dS6SBNdtSCnmi1a0oOyOfNQyMErQrTKto/rIb3EY54wvduQ==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
