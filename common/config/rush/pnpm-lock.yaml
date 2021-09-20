@@ -19247,6 +19247,7 @@ packages:
       react-linkify: 1.0.0-alpha
       react-test-renderer: 16.14.0_react@16.14.0
       reselect: 4.0.0
+      rimraf: 2.7.1
       style-loader: 2.0.0_webpack@5.38.1
       ts-loader: 8.3.0_typescript@4.3.5+webpack@5.38.1
       typescript: 4.3.5
@@ -19257,7 +19258,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-zwWX1Vje7+KrJxuT91ng84aVc+nATP+/fIyLxS/k1h4m++5ANr3sfjKLEAm6xnX4LbHX2CA9Nn7hrSXq5crutQ==
+      integrity: sha512-YaFkrvtIzlGN9TBjgtnKaf0tX26TPUQTflks+iBF/A0eM/rVMTz58NatD8kQH2shjvtp4nAGeFx+vqzwuw9ncQ==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19555,6 +19556,7 @@ packages:
       playwright: 1.12.3
       react: 16.14.0
       react-dom: 16.13.1_react@16.14.0
+      rimraf: 2.7.1
       typescript: 4.3.5
       uuid: 8.3.2
       webpack: 5.38.1_webpack-cli@4.7.2
@@ -19562,7 +19564,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-tyn+VyTjdxjfLHQ1k74CfJ+S/U70xOwO9lOF1urgQUUT5JeVFtgO/dzuktNVRpLoAxKbctO/Q3Cu+cs1SQDLIw==
+      integrity: sha512-AlIKuZpZnceR4FtuJSgnaTz1qilT7Pxu5dvW4EZKpsRTAZBL5KKvWU3XfOv87CrC8xreokjr7Z2hLBm4x4i4+A==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -19602,6 +19604,7 @@ packages:
       morgan: 1.9.1
       prettier: 2.3.1
       pretty-quick: 3.1.1_prettier@2.3.1
+      rimraf: 2.7.1
       supertest: 6.1.6
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
       ts-loader: 8.3.0_typescript@4.3.5+webpack@5.38.1
@@ -19614,7 +19617,7 @@ packages:
     dev: false
     name: '@rush-temp/server'
     resolution:
-      integrity: sha512-s7wfZsk1kiOXN3UB6czgaPK222Hh2S2gSH45GBRmIUkjki5mOferl6MY7TmK1nSb/2DnH6+Xahgs3/9Zx0x2pQ==
+      integrity: sha512-0BRMQBF1xinWmhdZPDMwxXwnqfDG/si9G9DDArsWbQCLfxMoI8f7q6kQ9vHW0Ud7Ewe9DBkjXz3R/No27UYROg==
       tarball: file:projects/server.tgz
     version: 0.0.0
   file:projects/storybook.tgz:

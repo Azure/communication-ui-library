@@ -9,10 +9,11 @@
     "dist/"
   ],
   "scripts": {
-    "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build": "rushx clean && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
-    "build:esm": "rimraf dist/dist-esm && tsc",
+    "build:esm": "tsc",
     "build:watch": "rushx build",
+    "clean": "rimraf dist",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
     "snapshot:update": "npm run test -- --update-snapshot",

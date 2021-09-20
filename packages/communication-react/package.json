@@ -53,10 +53,11 @@
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
   "scripts": {
-    "build": "rushx check-deps && rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build": "rushx clean && rushx check-deps && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent",
-    "build:esm": "rimraf dist/dist-esm && ttsc",
+    "build:esm": "ttsc",
     "build:watch": "",
+    "clean": "rimraf dist",
     "test": "",
     "test:coverage": "",
     "check-deps": "node scripts/verifyDependencies",

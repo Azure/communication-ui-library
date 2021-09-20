@@ -6,10 +6,11 @@
   "main": "dist/dist-cjs/index.js",
   "types": "dist/calling-component-bindings.d.ts",
   "scripts": {
-    "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
-    "build:esm": "rimraf dist/dist-esm && tsc",
+    "build": "rushx clean && rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build:esm": "tsc",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
+    "clean": "rimraf dist",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "test": "jest --passWithNoTests",
