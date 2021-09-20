@@ -44,6 +44,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               >
                 <div
                   className="ms-Stack css-15"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-16"
@@ -95,6 +96,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               >
                 <div
                   className="ms-Stack css-15"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-16"
@@ -146,6 +148,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               >
                 <div
                   className="ms-Stack css-15"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-16"
@@ -197,6 +200,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               >
                 <div
                   className="ms-Stack css-15"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-16"
@@ -248,6 +252,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               >
                 <div
                   className="ms-Stack css-15"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-16"
@@ -299,6 +304,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               >
                 <div
                   className="ms-Stack css-15"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-16"
@@ -350,6 +356,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               >
                 <div
                   className="ms-Stack css-15"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-16"
@@ -400,6 +407,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
         >
           <div
             className="ms-Stack css-15"
+            data-ui-id="video-tile"
           >
             <div
               className="ms-Stack css-16"
@@ -419,6 +427,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
             >
               <div
                 className="ms-Stack css-15"
+                data-ui-id="video-tile"
               >
                 <div
                   className="ms-Stack css-16"

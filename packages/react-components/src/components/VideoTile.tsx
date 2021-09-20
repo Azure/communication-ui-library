@@ -4,6 +4,7 @@
 import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import {
@@ -148,9 +149,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     [nametagColorOverride]
   );
 
+  const ids = useIdentifiers();
+
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
+        data-ui-id={ids.videoTile}
         className={mergeStyles(
           rootStyles,
           isSpeaking ? isSpeakingStyles : {},

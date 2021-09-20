@@ -32,6 +32,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
       >
         <div
           className="ms-Stack css-9"
+          data-ui-id="video-tile"
         >
           <div
             className="ms-Stack css-10"
@@ -100,6 +101,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
           >
             <div
               className="ms-Stack css-9"
+              data-ui-id="video-tile"
             >
               <div
                 className="ms-Stack css-10"
