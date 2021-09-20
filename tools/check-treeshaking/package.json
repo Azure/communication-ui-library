@@ -4,7 +4,8 @@
   "private": "true",
   "description": "Utility to ensure proper dependencies across modules",
   "scripts": {
-    "build": "npx webpack",
+    "build": "rushx clean && npx webpack",
+    "clean": "rimraf dist",
     "build:watch": "echo skip",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
@@ -29,6 +30,7 @@
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "~2.22.1",
     "prettier": "2.3.1",
+    "rimraf": "^2.6.2",
     "webpack": "^4.44.0",
     "webpack-cli": "4.7.2"
   }

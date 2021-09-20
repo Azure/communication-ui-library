@@ -1163,6 +1163,7 @@ export interface Identifiers {
     sendboxTextfield: string;
     typingIndicator: string;
     videoGallery: string;
+    videoTile: string;
 }
 
 // @public (undocumented)
@@ -2068,7 +2069,5 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
-// (No @packageDocumentation comment for this package)
 
 ```

@@ -45,12 +45,13 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
               >
                 <div
                   className="ms-Stack css-11"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-12"
                   >
                     <div
-                      className="css-80"
+                      className="css-79"
                     />
                   </div>
                   <div
