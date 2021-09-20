@@ -1,8 +1,25 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.5)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.0.0-beta.4..@internal/chat-component-bindings_v1.0.0-beta.5)
+
+### Changes
+
+- Apply chat sdk hotfix ([PR #747](https://github.com/azure/communication-ui-library/pull/747) by jinan@microsoft.com)
+- Rename ChatErrorTarget ([PR #703](https://github.com/azure/communication-ui-library/pull/703) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add deleted message fileter into bindings ([PR #734](https://github.com/azure/communication-ui-library/pull/734) by jinan@microsoft.com)
+- Add methods to clear calling ACS errors ([PR #685](https://github.com/azure/communication-ui-library/pull/685) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add timestamp to teed errors ([PR #753](https://github.com/azure/communication-ui-library/pull/753) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Delete ErrorBar handlers ([PR #756](https://github.com/azure/communication-ui-library/pull/756) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump acs-ui-common dep ([PR #732](https://github.com/azure/communication-ui-library/pull/732) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Adjust most comments in internal api review ([PR #724](https://github.com/azure/communication-ui-library/pull/724) by jinan@microsoft.com)
+- Move the name filter logic to selector Make component acs unrelated ([PR #654](https://github.com/azure/communication-ui-library/pull/654) by jinan@microsoft.com)
 
 ## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.4)
 

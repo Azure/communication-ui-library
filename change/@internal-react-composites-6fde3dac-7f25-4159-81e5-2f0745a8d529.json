@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Work around for menu disappearing",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

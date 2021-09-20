@@ -1,8 +1,17 @@
 # Change Log - calling
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [0.0.1](https://github.com/azure/communication-ui-library/tree/calling_v0.0.1)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/calling_v0.0.1..calling_v0.0.1)
+
+### Changes
+
+- Bump @azure/communication-react to v1.0.0-beta.5 ([PR #716](https://github.com/azure/communication-ui-library/pull/716) by anjulgarg@live.com)
 
 ## [0.0.1](https://github.com/azure/communication-ui-library/tree/calling_v0.0.1)
 

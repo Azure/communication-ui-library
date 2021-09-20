@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix comment spelling in MessageThreadProps",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}
