@@ -127,19 +127,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       {isInCall(callStatus ?? 'None') ? (
         <>
           <Stack.Item styles={bannersContainerStyles}>
-            <Stack.Item>
+            <Stack>
               <ComplianceBanner {...complianceBannerProps} />
-            </Stack.Item>
-            <Stack.Item style={permissionsBannerContainerStyle}>
+            </Stack>
+            <Stack style={permissionsBannerContainerStyle}>
               <PermissionsBanner
                 microphonePermissionGranted={devicePermissions.audio}
                 cameraPermissionGranted={devicePermissions.video}
               />
-            </Stack.Item>
+            </Stack>
             {props?.hiddenElements?.errorBar !== true && (
-              <Stack.Item>
+              <Stack>
                 <ErrorBar {...errorBarProps} />
-              </Stack.Item>
+              </Stack>
             )}
           </Stack.Item>
 
