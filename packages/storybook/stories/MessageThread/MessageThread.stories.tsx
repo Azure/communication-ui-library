@@ -7,7 +7,7 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  DefaultMessageRendererType
+  MessageRenderer
 } from '@azure/communication-react';
 import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
@@ -189,7 +189,7 @@ const MessageThreadStory = (args): JSX.Element => {
     setChatMessages([...chatMessages, GenerateMockCustomMessage()]);
   };
 
-  const onRenderMessage = (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType): JSX.Element => {
+  const onRenderMessage = (messageProps: MessageProps, defaultOnRender?: MessageRenderer): JSX.Element => {
     if (messageProps.message.type === 'custom') {
       return <Divider content={messageProps.message.payload.content} color="brand" important />;
     }

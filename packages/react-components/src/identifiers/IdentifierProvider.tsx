@@ -28,6 +28,8 @@ export interface Identifiers {
   typingIndicator: string;
   /** `data-ui-id` value for `VideoGallery` Component */
   videoGallery: string;
+  /** `data-ui-id` value for `VideoTile` Component */
+  videoTile: string;
 }
 
 const defaultIdentifiers: Identifiers = {
@@ -36,7 +38,8 @@ const defaultIdentifiers: Identifiers = {
   messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',
   typingIndicator: 'typing-indicator',
-  videoGallery: 'video-gallery'
+  videoGallery: 'video-gallery',
+  videoTile: 'video-tile'
 };
 
 export const IdentifierContext = createContext<Identifiers>(defaultIdentifiers);

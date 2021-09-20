@@ -28,7 +28,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
         }
       >
         <div
-          className="css-82"
+          className="css-81"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -83,7 +83,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
             </div>
           </div>
           <div
-            className="ms-Stack css-84 css-24"
+            className="ms-Stack css-83 css-24"
           >
             <div
               className="ms-Stack css-25"
