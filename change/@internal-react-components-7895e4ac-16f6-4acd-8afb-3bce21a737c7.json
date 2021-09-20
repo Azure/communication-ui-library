@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Dominant Speaker support to Video Gallery",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
