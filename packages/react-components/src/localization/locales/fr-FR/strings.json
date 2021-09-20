@@ -68,10 +68,12 @@
     "userNotInThisThread": "Vous n’est plus dans ce thread de conversation",
     "sendMessageNotInThisThread": "Échec de l’envoi du message car vous n’êtes plus dans ce thread de conversation",
     "sendMessageGeneric": "Échec de l’envoi du message",
+    "callingNetworkFailure": "Perturbation de l’appel de connexion : vous semblez être hors connexion",
     "startVideoGeneric": "Échec du démarrage de la vidéo",
     "stopVideoGeneric": "Échec de l’arrêt de la vidéo",
     "muteGeneric": "Échec de la désactivation du son du microphone",
     "unmuteGeneric": "Échec de l’activation du son du microphone",
+    "speakingWhileMuted": "Votre micro est désactivé",
     "startScreenShareGeneric": "Échec du démarrage du partage d’écran",
     "stopScreenShareGeneric": "Échec de l’arrêt du partage d’écran"
   }
