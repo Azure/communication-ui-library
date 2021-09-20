@@ -256,6 +256,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
               >
                 <div
                   className="ms-Stack css-24"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-25"
@@ -307,7 +308,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-90 css-43"
+                    className="ms-Stack css-89 css-43"
                   >
                     <div
                       className="ms-StackItem css-44"
