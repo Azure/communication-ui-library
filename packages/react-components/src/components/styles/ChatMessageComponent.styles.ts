@@ -25,7 +25,7 @@ export const iconWrapperStyle = mergeStyles({
 });
 
 export const chatMessageDateStyle = mergeStyles({ fontWeight: FontWeights.semibold });
-export const chatMessageEditedTagStyle = (theme: Theme): IStyle =>
+export const chatMessageEditedTagStyle = (theme: Theme): string =>
   mergeStyles({ fontWeight: FontWeights.semibold, color: theme.palette.neutralSecondary });
 
 export const chatMessageMenuStyle = mergeStyles({
