@@ -1163,6 +1163,7 @@ export interface Identifiers {
     sendboxTextfield: string;
     typingIndicator: string;
     videoGallery: string;
+    videoTile: string;
 }
 
 // @public (undocumented)
