@@ -13,10 +13,10 @@ export type {
 export type {
   MeetingAdapterClientState,
   MeetingAdapterUiState,
-  MeetingAdapterState,
-  MeetingCompositePage,
-  MeetingEndReason,
-  MeetingErrors,
-  MeetingParticipant,
-  MeetingState
+  MeetingAdapterState
 } from './state/MeetingAdapterState';
+
+export type { MeetingState } from './state/MeetingState';
+export type { MeetingCompositePage } from './state/MeetingCompositePage';
+export type { MeetingParticipant } from './state/MeetingParticipants';
+export type { MeetingEndReason } from './state/MeetingEndReason';

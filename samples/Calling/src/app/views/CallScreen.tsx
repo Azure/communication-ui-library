@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Spinner } from '@fluentui/react';
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { createAutoRefreshingCredential } from '../utils/credential';
+import { CallAdapter, CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
+import { Spinner } from '@fluentui/react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
+import { createAutoRefreshingCredential } from '../utils/credential';
 
 export interface CallScreenProps {
   token: string;
@@ -19,7 +19,7 @@ export interface CallScreenProps {
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, onCallEnded, onCallError } = props;
+  const { token, userId, callLocator, displayName, onCallEnded } = props;
   const [adapter, setAdapter] = useState<CallAdapter>();
   const adapterRef = useRef<CallAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -36,13 +36,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         onCallEnded();
       });
       adapter.on('error', (e) => {
-        // Do not call error handler when error target is starting screen sharing
-        if (e.target === 'Call.startScreenSharing') {
-          console.log('Error squelched. ' + e);
-          return;
-        }
-        console.error(e);
-        onCallError(e);
+        // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
       });
       setAdapter(adapter);
       adapterRef.current = adapter;
@@ -51,7 +47,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return () => {
       adapterRef?.current?.dispose();
     };
-  }, [callLocator, displayName, token, userId, onCallEnded, onCallError]);
+  }, [callLocator, displayName, token, userId, onCallEnded]);
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
@@ -63,7 +59,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       callInvitationURL={window.location.href}
-      visualElements={{ showErrorBar: true }}
     />
   );
 };

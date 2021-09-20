@@ -18,7 +18,7 @@
     "build:e2e:chat": "webpack-cli build --config ./tests/browser/chat/app/webpack.config.js --mode=production --env production",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
-    "test:e2e:call": "playwright test --workers=1 --retries=2 tests.browser.call",
+    "test:e2e:call": "playwright test --workers=1 tests.browser.call",
     "test:e2e:chat": "playwright test --workers=1 --retries=2 tests.browser.chat",
     "test:e2e:chat:update": "playwright test --workers=1 tests.browser.chat --update-snapshots",
     "test:e2e:call:update": "playwright test --workers=1 tests.browser.call --update-snapshots",
@@ -129,13 +129,5 @@
     "webpack": "5.38.1",
     "webpack-dev-server": "3.11.2",
     "webpack-cli": "4.7.2"
-  },
-  "beachball": {
-    "tag": "next",
-    "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
-    ]
   }
 }

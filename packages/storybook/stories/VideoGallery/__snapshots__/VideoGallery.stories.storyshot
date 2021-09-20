@@ -30,11 +30,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
         }
       >
         <div
-          className="ms-Stack css-89 css-1"
+          className="ms-Stack css-86 css-1"
           data-ui-id="video-gallery"
         >
           <div
             className="ms-Stack css-8"
+            data-ui-id="video-tile"
           >
             <div
               className="ms-Stack css-9"
@@ -86,7 +87,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-27"
+              className="ms-Stack css-87 css-27"
             >
               <div
                 className="ms-StackItem css-28"
@@ -134,10 +135,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           </div>
         </div>
         <div
-          className="ms-Stack css-89 css-31"
+          className="ms-Stack css-86 css-31"
         >
           <div
             className="ms-Stack css-8"
+            data-ui-id="video-tile"
           >
             <div
               className="ms-Stack css-9"
@@ -189,7 +191,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-27"
+              className="ms-Stack css-87 css-27"
             >
               <div
                 className="ms-StackItem css-28"
@@ -204,10 +206,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           </div>
         </div>
         <div
-          className="ms-Stack css-89 css-31"
+          className="ms-Stack css-86 css-31"
         >
           <div
             className="ms-Stack css-8"
+            data-ui-id="video-tile"
           >
             <div
               className="ms-Stack css-9"
@@ -259,7 +262,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-27"
+              className="ms-Stack css-87 css-27"
             >
               <div
                 className="ms-StackItem css-28"
@@ -274,10 +277,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           </div>
         </div>
         <div
-          className="ms-Stack css-89 css-31"
+          className="ms-Stack css-86 css-31"
         >
           <div
             className="ms-Stack css-8"
+            data-ui-id="video-tile"
           >
             <div
               className="ms-Stack css-9"
@@ -329,7 +333,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-27"
+              className="ms-Stack css-87 css-27"
             >
               <div
                 className="ms-StackItem css-28"
@@ -344,10 +348,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           </div>
         </div>
         <div
-          className="ms-Stack css-89 css-31"
+          className="ms-Stack css-86 css-31"
         >
           <div
             className="ms-Stack css-8"
+            data-ui-id="video-tile"
           >
             <div
               className="ms-Stack css-9"
@@ -399,7 +404,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <div
-              className="ms-Stack css-90 css-27"
+              className="ms-Stack css-87 css-27"
             >
               <div
                 className="ms-StackItem css-28"
