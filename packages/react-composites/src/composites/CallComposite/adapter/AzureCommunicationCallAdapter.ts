@@ -190,6 +190,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public isTeamsCall(): boolean {
+    //@TODO: this should be part of the CallAdapter API not hidden here.
     return 'meetingLink' in this.locator;
   }
 
@@ -225,7 +226,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      const isTeamsMeeting = 'groupId' in this.locator;
+      const isTeamsMeeting = !('groupId' in this.locator);
 
       if (isTeamsMeeting) {
         this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
@@ -233,7 +234,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
           videoOptions
         });
       } else {
-        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+        this.call = this.callAgent.join(this.locator as GroupCallLocator, {
           audioOptions,
           videoOptions
         });

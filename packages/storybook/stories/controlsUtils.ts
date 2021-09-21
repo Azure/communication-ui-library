@@ -306,8 +306,7 @@ export const defaultChatCompositeHiddenControls = {
 };
 
 export const defaultMeetingCompositeHiddenControls = {
-  callAdapter: hiddenControl,
-  chatAdapter: hiddenControl,
+  meetingAdapter: hiddenControl,
   fluentTheme: hiddenControl,
   meetingInvitationURL: hiddenControl,
   rtl: hiddenControl,
