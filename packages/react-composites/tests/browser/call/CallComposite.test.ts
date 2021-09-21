@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { waitForCallCompositeToLoad, dataUiId, disableAnimation } from '../utils';
+import { waitForCallCompositeToLoad, dataUiId, disableAnimation } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 
