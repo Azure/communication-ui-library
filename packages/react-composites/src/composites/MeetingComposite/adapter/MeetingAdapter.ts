@@ -57,7 +57,13 @@ export interface MeetingAdapterMeetingManagement
     >,
     Pick<
       ChatAdapterThreadManagement,
-      'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
+      | 'fetchInitialData'
+      | 'sendMessage'
+      | 'sendReadReceipt'
+      | 'sendTypingIndicator'
+      | 'loadPreviousChatMessages'
+      | 'updateMessage'
+      | 'deleteMessage'
     > {
   /**
    * Join an existing Meeting
