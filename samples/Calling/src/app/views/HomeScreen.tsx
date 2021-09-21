@@ -6,9 +6,13 @@ import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, TextField
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
+  infoContainerStyle,
+  callContainerStackTokens,
+  configContainerStyle,
+  configContainerStackTokens,
+  containerStyle,
   containerTokens,
   headerStyle,
-  bodyItemStyle,
   teamsItemStyle,
   buttonStyle
 } from '../styles/HomeScreen.styles';
@@ -44,51 +48,59 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonEnabled = displayName && !nameTooLongWarning && (!teamsCallChosen || teamsLink);
 
   return (
-    <Stack horizontal wrap horizontalAlign="center" verticalAlign="center" tokens={containerTokens}>
+    <Stack
+      horizontal
+      wrap
+      horizontalAlign="center"
+      verticalAlign="center"
+      tokens={containerTokens}
+      className={containerStyle}
+    >
       <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
-      <div>
+      <Stack className={infoContainerStyle}>
         <div className={headerStyle}>{headerTitle}</div>
-        {!props.joiningExistingCall && (
-          <ChoiceGroup
-            className={bodyItemStyle}
-            defaultSelectedKey="ACSCall"
-            options={callOptions}
-            required={true}
-            onChange={(_, option) => option && setChosenCallOption(option)}
-          />
-        )}
-        {teamsCallChosen && (
-          <TextField
-            className={teamsItemStyle}
-            iconProps={{ iconName: 'Link' }}
-            placeholder={'Enter a Teams meeting link'}
-            onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
-          />
-        )}
-        <div className={bodyItemStyle}>
+        <Stack className={configContainerStyle} tokens={configContainerStackTokens}>
+          <Stack tokens={callContainerStackTokens}>
+            {!props.joiningExistingCall && (
+              <ChoiceGroup
+                defaultSelectedKey="ACSCall"
+                options={callOptions}
+                required={true}
+                onChange={(_, option) => option && setChosenCallOption(option)}
+              />
+            )}
+            {teamsCallChosen && (
+              <TextField
+                className={teamsItemStyle}
+                iconProps={{ iconName: 'Link' }}
+                placeholder={'Enter a Teams meeting link'}
+                onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
+              />
+            )}
+          </Stack>
           <DisplayNameField
             defaultName={displayName}
             setName={setDisplayName}
             isNameLengthExceedLimit={nameTooLongWarning}
             setNameLengthExceedLimit={setNameTooLongWarning}
           />
-        </div>
-        <PrimaryButton
-          disabled={!buttonEnabled}
-          className={buttonStyle}
-          onClick={() => {
-            if (displayName) {
-              saveDisplayNameToLocalStorage(displayName);
-              props.startCallHandler({ displayName, teamsLink });
-            }
-          }}
-        >
-          {buttonText}
-        </PrimaryButton>
-        <div className={bodyItemStyle}>
-          <ThemeSelector label="Theme" horizontal={true} />
-        </div>
-      </div>
+          <PrimaryButton
+            disabled={!buttonEnabled}
+            className={buttonStyle}
+            onClick={() => {
+              if (displayName) {
+                saveDisplayNameToLocalStorage(displayName);
+                props.startCallHandler({ displayName, teamsLink });
+              }
+            }}
+          >
+            {buttonText}
+          </PrimaryButton>
+          <div>
+            <ThemeSelector label="Theme" horizontal={true} />
+          </div>
+        </Stack>
+      </Stack>
     </Stack>
   );
 };
