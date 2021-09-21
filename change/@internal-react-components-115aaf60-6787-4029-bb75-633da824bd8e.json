@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add custom avatar data injection for composites",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

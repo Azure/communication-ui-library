@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updating calling to use 1.2.1-beta.1",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
