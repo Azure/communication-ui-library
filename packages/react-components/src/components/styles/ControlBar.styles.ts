@@ -131,7 +131,9 @@ export const controlButtonStyles: IButtonStyles = {
 export const controlButtonLabelStyles: IStyle = {
   fontSize: '0.625rem',
   lineHeight: '1rem',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  display: 'block',
+  margin: '0rem 0.25rem'
 };
 
 export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
