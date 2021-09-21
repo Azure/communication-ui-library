@@ -84,6 +84,8 @@ export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
     createdOn?: Date;
+    editedOn?: Date;
+    deletedOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
     status?: MessageStatus;
@@ -253,11 +255,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageRemove: JSX.Element;
 };
 
-// @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps, ids?: {
-    messageTimestamp?: string;
-}) => JSX.Element;
-
 // @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
@@ -344,6 +341,7 @@ export interface Identifiers {
     sendboxTextfield: string;
     typingIndicator: string;
     videoGallery: string;
+    videoTile: string;
 }
 
 // @public (undocumented)
@@ -395,6 +393,9 @@ export type MessageProps = {
     onDeleteMessage?: (messageId: string) => Promise<void>;
 };
 
+// @public (undocumented)
+export type MessageRenderer = (props: MessageProps) => JSX.Element;
+
 // @public
 export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX.Element;
 
@@ -430,7 +431,7 @@ export type MessageThreadProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     editDisabled?: boolean;

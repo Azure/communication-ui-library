@@ -37,6 +37,7 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
  */
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('load');
+
   // @TODO Add more checks to make sure the composite is fully loaded.
 };
 

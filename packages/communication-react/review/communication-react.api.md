@@ -320,8 +320,14 @@ export interface CallClientState {
 // @public (undocumented)
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
+// @public
+export type CallCompositeHiddenElements = CallControlHiddenElements & {
+    errorBar?: boolean;
+    callControls?: boolean;
+};
+
 // @public (undocumented)
-export type CallCompositeIcons = Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>;
+export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>>;
 
 // @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
@@ -331,8 +337,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
+    hiddenElements?: CallCompositeHiddenElements;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-    visualElements?: CallCompositeVisualElements;
 }
 
 // @public
@@ -350,9 +356,14 @@ export interface CallCompositeStrings {
     teamsMeetingFailToJoin: string;
 }
 
-// @public
-export type CallCompositeVisualElements = {
-    showErrorBar?: boolean;
+// @public (undocumented)
+export type CallControlHiddenElements = {
+    cameraButton?: boolean;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
+    optionsButton?: boolean;
+    participantsButton?: boolean;
+    screenShareButton?: boolean;
 };
 
 // @public (undocumented)
@@ -470,9 +481,6 @@ export interface CallState {
     transcription: TranscriptionCallFeature;
     transfer: TransferCallFeature;
 }
-
-// @public
-export type CallStateModifier = (state: CallClientState) => void;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -600,28 +608,28 @@ export type ChatCompositeClientState = {
     latestErrors: AdapterErrors;
 };
 
+// @public
+export type ChatCompositeHiddenElements = {
+    errorBar?: boolean;
+    participantPane?: boolean;
+    topic?: boolean;
+};
+
 // @public (undocumented)
-export type ChatCompositeIcons = Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>;
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
 
 // @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    hiddenElements?: ChatCompositeHiddenElements;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
-    visualElements?: ChatCompositeVisualElements;
 }
 
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
 }
-
-// @public
-export type ChatCompositeVisualElements = {
-    showErrorBar?: boolean;
-    showParticipantPane?: boolean;
-    showTopic?: boolean;
-};
 
 // @public
 export class ChatError extends Error {
@@ -666,6 +674,8 @@ export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
     createdOn?: Date;
+    editedOn?: Date;
+    deletedOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
     status?: MessageStatus;
@@ -694,9 +704,6 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 
 // @public (undocumented)
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
-
-// @public
-export type ChatStateModifier = (state: ChatClientState) => void;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -793,6 +800,9 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 export interface ComponentLocale {
     strings: ComponentStrings;
 }
+
+// @public (undocumented)
+export type ComponentProps<Component extends (props: any) => JSX.Element> = ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
 
 // @public
 export interface ComponentStrings {
@@ -913,27 +923,16 @@ export interface ControlBarProps {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public (undocumented)
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
+
+// @public (undocumented)
 export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public (undocumented)
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => {
-    onHangUp: () => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions | undefined) => Promise<void>;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions | undefined) => Call | undefined;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions | undefined) => Promise<void>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
-    onStartLocalVideo: () => Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-};
+export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+
+// @public (undocumented)
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public (undocumented)
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
@@ -1036,11 +1035,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
 };
-
-// @public (undocumented)
-export type DefaultMessageRendererType = (props: MessageProps, ids?: {
-    messageTimestamp?: string;
-}) => JSX.Element;
 
 // @public
 export type DeviceManagerState = {
@@ -1171,6 +1165,7 @@ export interface Identifiers {
     sendboxTextfield: string;
     typingIndicator: string;
     videoGallery: string;
+    videoTile: string;
 }
 
 // @public (undocumented)
@@ -1400,6 +1395,9 @@ export type MessageReceivedListener = (event: {
 }) => void;
 
 // @public (undocumented)
+export type MessageRenderer = (props: MessageProps) => JSX.Element;
+
+// @public (undocumented)
 export type MessageSentListener = MessageReceivedListener;
 
 // @public (undocumented)
@@ -1440,7 +1438,7 @@ export type MessageThreadProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: DefaultMessageRendererType) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     editDisabled?: boolean;
@@ -1516,12 +1514,6 @@ export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
 }
-
-// @public
-export const newClearCallErrorsModifier: (targets: CallErrorTarget[]) => CallStateModifier;
-
-// @public (undocumented)
-export const newClearChatErrorsModifier: (targets: ChatErrorTarget[]) => ChatStateModifier;
 
 // @public
 export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
@@ -1790,7 +1782,6 @@ export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
-    modifyState(modifier: CallStateModifier): void;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
 }
@@ -1809,7 +1800,6 @@ export type StatefulCallClientOptions = {
 export interface StatefulChatClient extends ChatClient {
     // (undocumented)
     getState(): ChatClientState;
-    modifyState(modifier: ChatStateModifier): void;
     // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
@@ -1955,7 +1945,7 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
-export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
+export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ComponentProps<Component>;
 
 // @public (undocumented)
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
@@ -2081,7 +2071,5 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
-
-// (No @packageDocumentation comment for this package)
 
 ```

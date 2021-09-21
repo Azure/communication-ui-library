@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallCompositeInternal } from '../CallComposite/Call';
+import { CallComposite } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter, CallCompositePage } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
@@ -42,8 +42,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setCurrentPage(newState.page);
     setCurrentCallState(newState.call?.state);
   });
-  const hasJoinedCall =
-    currentPage === 'call' && currentCallState && !['Connecting', 'Ringing', 'InLobby'].includes(currentCallState);
+  const hasJoinedCall = currentPage === 'call' && currentCallState === 'Connected';
 
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -72,9 +71,9 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
       <Stack verticalFill grow styles={compositeOuterContainerStyles}>
         <Stack horizontal grow>
           <Stack.Item grow>
-            <CallCompositeInternal showCallControls={false} adapter={callAdapter} fluentTheme={fluentTheme} />
+            <CallComposite hiddenElements={{ callControls: true }} adapter={callAdapter} fluentTheme={fluentTheme} />
           </Stack.Item>
-          {chatAdapter && (
+          {chatAdapter && hasJoinedCall && (
             <EmbeddedChatPane
               hidden={!showChat}
               chatAdapter={chatAdapter}
@@ -82,7 +81,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               onClose={closePane}
             />
           )}
-          {callAdapter && chatAdapter && (
+          {callAdapter && chatAdapter && hasJoinedCall && (
             <CallAdapterProvider adapter={callAdapter}>
               <EmbeddedPeoplePane
                 hidden={!showPeople}

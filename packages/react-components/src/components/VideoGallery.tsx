@@ -140,6 +140,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [
     localParticipant,
     localParticipant.videoStream,
+    localParticipant.videoStream?.renderElement,
     onCreateLocalStreamView,
     onRenderLocalVideoTile,
     onRenderAvatar,

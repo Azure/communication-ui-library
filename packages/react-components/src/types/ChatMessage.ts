@@ -13,6 +13,8 @@ export type ChatMessagePayload = {
   content?: string;
   // ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`
   createdOn?: Date;
+  editedOn?: Date;
+  deletedOn?: Date;
   senderId?: string;
   senderDisplayName?: string;
   status?: MessageStatus;
