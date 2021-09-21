@@ -78,6 +78,15 @@
       "ignoreDependencyOrder": true,
       "incremental": false,
       "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "clean",
+      "summary": "Delete build artifacts in each project.",
+      "description": "Delete build artifacts in each project.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "safeForSimultaneousRushProcesses": true
     }
   ],
   "parameters": []

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "updated dependency of LocalVideoTile render",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

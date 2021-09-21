@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update client to get 'editedOn' property from message update event",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

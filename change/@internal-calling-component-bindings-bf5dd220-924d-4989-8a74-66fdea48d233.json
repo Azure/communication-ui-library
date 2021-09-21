@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed errors from start screen sharing from active errors.",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

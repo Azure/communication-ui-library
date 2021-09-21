@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add message edit feature",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

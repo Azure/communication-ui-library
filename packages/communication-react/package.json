@@ -1,6 +1,6 @@
 {
   "name": "@azure/communication-react",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "sideEffects": false,
   "description": "React library for building modern communication user experiences utilizing Azure Communication Services",
   "keywords": [
@@ -53,10 +53,11 @@
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
   "scripts": {
-    "build": "rushx check-deps && rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build": "rushx clean && rushx check-deps && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent",
     "build:esm": "ttsc",
     "build:watch": "",
+    "clean": "rimraf dist",
     "test": "",
     "test:coverage": "",
     "check-deps": "node scripts/verifyDependencies",
@@ -70,12 +71,12 @@
     "postpack": "copyfiles -E \"./*.tgz\" release"
   },
   "devDependencies": {
-    "@internal/calling-component-bindings": "1.0.0-beta.4",
-    "@internal/calling-stateful-client": "1.0.0-beta.4",
-    "@internal/chat-component-bindings": "1.0.0-beta.4",
-    "@internal/chat-stateful-client": "1.0.0-beta.4",
-    "@internal/react-components": "1.0.0-beta.4",
-    "@internal/react-composites": "1.0.0-beta.4",
+    "@internal/calling-component-bindings": "1.0.0-beta.5",
+    "@internal/calling-stateful-client": "1.0.0-beta.5",
+    "@internal/chat-component-bindings": "1.0.0-beta.5",
+    "@internal/chat-stateful-client": "1.0.0-beta.5",
+    "@internal/react-components": "1.0.0-beta.5",
+    "@internal/react-composites": "1.0.0-beta.5",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.18.0",
     "@rollup/plugin-json": "~4.1.0",
@@ -114,6 +115,7 @@
     "react-is": "~17.0.1",
     "react-test-renderer": "^16.14.0",
     "regenerator-runtime": "^0.13.7",
+    "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",

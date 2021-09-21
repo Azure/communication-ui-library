@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adjust most comments in internal api review",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

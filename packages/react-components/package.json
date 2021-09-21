@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -9,10 +9,11 @@
     "dist/"
   ],
   "scripts": {
-    "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build": "rushx clean && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:esm": "tsc",
     "build:watch": "rushx build",
+    "clean": "rimraf dist",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
     "snapshot:update": "npm run test -- --update-snapshot",
@@ -30,7 +31,7 @@
     "@fluentui/react-northstar": "^0.57.0",
     "@uifabric/react-hooks": "~7.13.11",
     "copy-to-clipboard": "~3.3.1",
-    "@internal/acs-ui-common": "1.0.0-beta.4",
+    "@internal/acs-ui-common": "1.0.0-beta.5",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "html-to-react": "~1.4.5"
@@ -91,6 +92,7 @@
     "react-test-renderer": "^16.14.0",
     "react": "~16.14.0",
     "regenerator-runtime": "^0.13.7",
+    "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
     "source-map-explorer": "^2.5.0",
     "styled-components": "~5.2.1",

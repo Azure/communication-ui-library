@@ -1,8 +1,51 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.5)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.4..@azure/communication-react_v1.0.0-beta.5)
+
+### Changes
+
+* Update Call Composite to use @azure/communication-calling@1.2.1-beta.1
+
+* Add Dominant Speaker support to Video Gallery
+
+* Add active and dominant speaker support to screenshare gallery
+
+* Add custom Icons injection in components and composites
+
+* Add custom avatar data injection for composites
+
+* Show ACS errors via ErrorBar in CallComposite
+
+* Add a delete API to clear calling ACS errors
+
+* Add call diagnostics to stateful client
+
+* Expose strongly type errors in CallAdapter
+
+* Localize call and chat composite strings
+
+* Localize errors in Call Composite
+
+* Update available locales and translations
+
+* Add chat message edit feature
+
+* Truncating long display names in ParticipantItem
+
+#### Bug Fixes
+* Fix menu disappearing during a call when new participants joined
+* Fix English (US) and English (GB) exports
+* Fix theming for local preview placeholder for calling composite
+* Fix theming for MessageThread icons
+* Fix Icon misalignment in ParticipantItem
+
 
 ## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.4)
 

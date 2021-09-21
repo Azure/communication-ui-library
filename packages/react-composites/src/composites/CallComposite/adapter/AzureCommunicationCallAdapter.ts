@@ -208,7 +208,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getSpeakers();
+      return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
     });
   }
 
