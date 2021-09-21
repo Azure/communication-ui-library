@@ -7,12 +7,7 @@ module.exports = {
     node: true,
     es6: true
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:jsdoc/recommended',
-    'plugin:prettier/recommended'
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'header', 'jsdoc'],
   parserOptions: {
@@ -53,17 +48,14 @@ module.exports = {
         checkConstructors: false,
         enableFixer: false
       }
-    ],
-    // Following rules are disabled temporarily.
-    // Future PRs will enable them slowly, fixing existing warnings.
-    'jsdoc/require-param': 'off',
-    'jsdoc/require-param-description': 'off',
-    'jsdoc/require-param-type': 'off',
-    'jsdoc/require-returns': 'off',
-    'jsdoc/require-returns-description': 'off',
-    'jsdoc/require-returns-type': 'off'
+    ]
   },
   root: true,
+  settings: {
+    jsdoc: {
+      ignorePrivate: true
+    }
+  },
   overrides: [
     {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
