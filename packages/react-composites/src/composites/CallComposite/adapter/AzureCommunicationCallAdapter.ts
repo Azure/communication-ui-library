@@ -48,13 +48,13 @@ import {
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 
-// Context of Chat, which is a centralized context for all state updates
+/** Context of call, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallAdapterState;
   private callId: string | undefined;
 
-  constructor(clientState: CallClientState) {
+  constructor(clientState: CallClientState, isTeamsCall: boolean) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -62,7 +62,8 @@ class CallContext {
       devices: clientState.deviceManager,
       call: undefined,
       page: 'configuration',
-      latestErrors: clientState.latestErrors
+      latestErrors: clientState.latestErrors,
+      isTeamsCall
     };
   }
 
@@ -137,7 +138,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.callAgent = callAgent;
     this.locator = locator;
     this.deviceManager = deviceManager;
-    this.context = new CallContext(callClient.getState());
+    const isTeamsMeeting = 'meetingLink' in this.locator;
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting);
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -189,10 +191,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.callAgent.dispose();
   }
 
-  public isTeamsCall(): boolean {
-    return 'meetingLink' in this.locator;
-  }
-
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return this.deviceManager.getCameras();
@@ -225,7 +223,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      const isTeamsMeeting = 'groupId' in this.locator;
+      const isTeamsMeeting = !('groupId' in this.locator);
 
       if (isTeamsMeeting) {
         this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
@@ -233,7 +231,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
           videoOptions
         });
       } else {
-        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+        this.call = this.callAgent.join(this.locator as GroupCallLocator, {
           audioOptions,
           videoOptions
         });
