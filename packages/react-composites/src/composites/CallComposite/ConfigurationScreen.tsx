@@ -12,13 +12,13 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { useSelector } from './hooks/useSelector';
 import { OptionsButton } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { titleContainerStyle } from './styles/ConfigurationScreen.styles';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from './LocalPreview';
 import {
   configurationStackTokens,
   configurationContainer,
-  selectionContainerStyle
+  selectionContainerStyle,
+  titleContainerStyle
 } from './styles/CallConfiguration.styles';
 import { useLocale } from '../localization';
 

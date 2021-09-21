@@ -20,3 +20,11 @@ export const selectionContainerStyle = mergeStyles({
   minWidth: '12.5rem',
   padding: '0.5rem'
 });
+
+export const titleContainerStyle = mergeStyles({
+  fontSize: '1.25rem',
+  lineHeight: '1.75rem',
+  fontWeight: 600,
+  marginBottom: '1.563rem',
+  width: '12.5rem'
+});
