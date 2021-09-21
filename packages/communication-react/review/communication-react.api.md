@@ -1460,10 +1460,13 @@ messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -1767,6 +1770,7 @@ userId: string;
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textExceedsLimit: string;
 }
 
 // @public (undocumented)

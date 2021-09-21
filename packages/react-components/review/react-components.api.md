@@ -440,10 +440,13 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -625,6 +628,7 @@ export interface SendBoxProps {
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textExceedsLimit: string;
 }
 
 // @public (undocumented)
