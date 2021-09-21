@@ -49,7 +49,9 @@ const convertToUiChatMessage = (
       senderDisplayName: message.senderDisplayName,
       senderId: message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId,
       messageId: message.id,
-      clientMessageId: message.clientMessageId
+      clientMessageId: message.clientMessageId,
+      editedOn: message.editedOn,
+      deletedOn: message.deletedOn
     }
   };
 };

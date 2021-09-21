@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, IStyle, FontWeights } from '@fluentui/react';
+import { mergeStyles, IStyle, FontWeights, Theme } from '@fluentui/react';
 
 export const chatActionsCSS: IStyle = {
   'ul&': {
@@ -25,6 +25,8 @@ export const iconWrapperStyle = mergeStyles({
 });
 
 export const chatMessageDateStyle = mergeStyles({ fontWeight: FontWeights.semibold });
+export const chatMessageEditedTagStyle = (theme: Theme): string =>
+  mergeStyles({ fontWeight: FontWeights.semibold, color: theme.palette.neutralSecondary });
 
 export const chatMessageMenuStyle = mergeStyles({
   minWidth: '8.5rem',

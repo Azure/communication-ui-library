@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "updated storyshots",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

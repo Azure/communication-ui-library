@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove some accidental imports; mark Identifiers experimental",
-  "packageName": "@internal/react-components",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
