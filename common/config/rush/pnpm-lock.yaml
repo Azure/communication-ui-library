@@ -2670,6 +2670,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
+  /@es-joy/jsdoccomment/0.10.8:
+    dependencies:
+      comment-parser: 1.2.4
+      esquery: 1.4.0
+      jsdoc-type-pratt-parser: 1.1.1
+    dev: false
+    engines:
+      node: ^12 || ^14 || ^16
+    resolution:
+      integrity: sha512-3P1JiGL4xaR9PoTKUHa2N/LKwa2/eUdRqGwijMWWgBqbFEqJUVpmaOi2TcjcemrsRMgFLBzQCK4ToPhrSVDiFQ==
   /@eslint/eslintrc/0.4.3:
     dependencies:
       ajv: 6.12.6
@@ -7962,6 +7972,12 @@ packages:
       node: '>= 10'
     resolution:
       integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==
+  /comment-parser/1.2.4:
+    dev: false
+    engines:
+      node: '>= 12.0.0'
+    resolution:
+      integrity: sha512-pm0b+qv+CkWNriSTMsfnjChF9kH0kxz55y44Wo5le9qLxMj5xDQAaEd9ZN1ovSuk9CsrncWaFwgpOMg7ClJwkw==
   /commondir/1.0.1:
     dev: false
     resolution:
@@ -9451,6 +9467,25 @@ packages:
       eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0
     resolution:
       integrity: sha512-8K7JjINHOpH64ozkAhpT3sd+FswIZTfMZTjdx052pnWrgRCVfp8op9tbjpAk3DdUeI/Ba4C8OjdC0r90erHEOw==
+  /eslint-plugin-jsdoc/36.1.0_eslint@7.32.0:
+    dependencies:
+      '@es-joy/jsdoccomment': 0.10.8
+      comment-parser: 1.2.4
+      debug: 4.3.2
+      eslint: 7.32.0
+      esquery: 1.4.0
+      jsdoc-type-pratt-parser: 1.1.1
+      lodash: 4.17.21
+      regextras: 0.8.0
+      semver: 7.3.5
+      spdx-expression-parse: 3.0.1
+    dev: false
+    engines:
+      node: ^12 || ^14 || ^16
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0
+    resolution:
+      integrity: sha512-Qpied2AJCQcScxfzTObLKRiP5QgLXjMU/ITjBagEV5p2Q/HpumD1EQtazdRYdjDSwPmXhwOl2yquwOGQ4HOJNw==
   /eslint-plugin-jsx-a11y/6.4.1_eslint@7.32.0:
     dependencies:
       '@babel/runtime': 7.15.3
@@ -12719,6 +12754,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
+  /jsdoc-type-pratt-parser/1.1.1:
+    dev: false
+    engines:
+      node: '>=12.0.0'
+    resolution:
+      integrity: sha512-uelRmpghNwPBuZScwgBG/OzodaFk5RbO5xaivBdsAY70icWfShwZ7PCMO0x1zSkOa8T1FzHThmrdoyg/0AwV5g==
   /jsdom/16.7.0:
     dependencies:
       abab: 2.0.5
@@ -15713,6 +15754,12 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-ywH2VUraA44DZQuRKzARmw6S66mr48pQVva4LBeRhcOltJ6hExvWly5ZjFLYo67xbIxb6W1q4bAGtgfEl20zfQ==
+  /regextras/0.8.0:
+    dev: false
+    engines:
+      node: '>=0.1.14'
+    resolution:
+      integrity: sha512-k519uI04Z3SaY0fLX843MRXnDeG2+vHOFsyhiPZvNLe7r8rD2YNRjq4BQLZZ0oAr2NrtvZlICsXysGNFPGa3CQ==
   /regjsgen/0.5.2:
     dev: false
     resolution:
@@ -19052,6 +19099,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
       immer: 9.0.6
@@ -19064,7 +19112,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-dAUYS18TGo61aDgl2aNQC9jwKHXCLPfghzzs0eNt378eXfeKZhV8tyUNa+iB1vBg9nLqwuU2+L72Q4H/ECT+WQ==
+      integrity: sha512-gi1LEx6C67KIKRFksOpAjMhdmlbWKEsEoLVQqWAMt0inDuqTbAuMuOwiRZjSfxipUOSVn2/2qmjnuUNhY0IaSg==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
