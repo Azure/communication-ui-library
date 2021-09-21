@@ -9,7 +9,7 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'header'],
+  plugins: ['@typescript-eslint', 'header', 'jsdoc'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -40,9 +40,22 @@ module.exports = {
           '**/lib/**/es/*'
         ]
       }
+    ],
+    'jsdoc/require-jsdoc': [
+      'error',
+      {
+        publicOnly: true,
+        checkConstructors: false,
+        enableFixer: false
+      }
     ]
   },
   root: true,
+  settings: {
+    jsdoc: {
+      ignorePrivate: true
+    }
+  },
   overrides: [
     {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
