@@ -72,9 +72,6 @@ class MeetingContext {
   }
 
   public updateClientStateWithChatState(chatAdapterState: ChatAdapterState): void {
-    if (!this.state) {
-      console.warn('Cannot update chat state with meeting state - no meeting state exists');
-    }
     this.updateClientState(mergeChatAdapterStateIntoMeetingAdapterState(this.state, chatAdapterState));
   }
 

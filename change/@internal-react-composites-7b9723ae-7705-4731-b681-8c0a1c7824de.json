@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix unstale participant list test",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

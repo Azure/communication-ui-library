@@ -1,8 +1,19 @@
 # Change Log - @internal/acs-ui-common
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.0.0-beta.5)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/acs-ui-common_v1.0.0-beta.3..@internal/acs-ui-common_v1.0.0-beta.5)
+
+### Changes
+
+- Bump version to match other packlets ([PR #732](https://github.com/azure/communication-ui-library/pull/732) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Synchronize telemetry version in workflows ([PR #744](https://github.com/azure/communication-ui-library/pull/744) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Adjust most comments in internal api review ([PR #724](https://github.com/azure/communication-ui-library/pull/724) by jinan@microsoft.com)
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.0.0-beta.3)
 

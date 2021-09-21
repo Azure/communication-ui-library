@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Mark package as public so it is versioned with other packlets",
-  "packageName": "@internal/storybook",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

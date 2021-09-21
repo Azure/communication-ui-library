@@ -40,7 +40,7 @@ const BasicStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          hiddenElements={{ hideErrorBar: args.hideErrorBar }}
+          options={{ errorBar: args.errorBar }}
         />
       ) : (
         <ConfigHintBanner />
@@ -59,7 +59,7 @@ export default {
     connectionString: controlsToAdd.connectionString,
     displayName: controlsToAdd.displayName,
     callInvitationURL: controlsToAdd.callInvitationURL,
-    hideErrorBar: controlsToAdd.hideErrorBar,
+    errorBar: controlsToAdd.showErrorBar,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls
   },

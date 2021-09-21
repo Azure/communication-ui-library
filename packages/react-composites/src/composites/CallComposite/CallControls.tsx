@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
 import {
   CameraButton,
   ControlBar,
@@ -11,51 +10,57 @@ import {
   ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
-import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
+import React, { useCallback } from 'react';
 import { usePropsFor } from './hooks/usePropsFor';
+import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 
 export type CallControlsProps = {
   onEndCallClick(): void;
-  compressedMode?: boolean;
   callInvitationURL?: string;
-  hiddenElements?: CallControlHiddenElements;
+  options?: boolean | CallControlOptions;
 };
 
-export type CallControlHiddenElements = {
+export type CallControlOptions = {
   /**
-   * Hide camera button during a call.
-   * @defaultValuefalse
+   * Compressed mode decreases the size of buttons in control bar and hides label
+   * @defaultValue false
+   */
+  compressedMode?: boolean;
+  /**
+   * Show or Hide Camera Button during a call
+   * @defaultValue true
    */
   cameraButton?: boolean;
   /**
-   *  Hide EndCall button during a call.
-   * @defaultValuefalse
+   * Show or Hide EndCall button during a call.
+   * @defaultValue true
    */
   endCallButton?: boolean;
   /**
-   *  Hide Microphone button during a call.
-   * @defaultValuefalse
+   * Show or Hide Microphone button during a call.
+   * @defaultValue true
    */
   microphoneButton?: boolean;
   /**
-   * Hide Options button during a call.
-   * @defaultValuefalse
+    Show or Hide Options button during a call.
+   * @defaultValue true
    */
   optionsButton?: boolean;
   /**
-   * Hide participants button during a call.
-   * @defaultValuefalse
+    Show or Hide participants button during a call.
+   * @defaultValue true
    */
   participantsButton?: boolean;
   /**
-   * Hide the screen share button during a call.
-   * @defaultValuefalse
+    Show or Hide the screen share button during a call.
+   * @defaultValue true
    */
   screenShareButton?: boolean;
 };
 
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const { callInvitationURL, compressedMode, onEndCallClick, hiddenElements } = props;
+  const { callInvitationURL, onEndCallClick } = props;
+  const options = typeof props.options === 'boolean' ? {} : props.options;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const cameraButtonProps = usePropsFor(CameraButton);
@@ -70,38 +75,42 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   return (
     <ControlBar layout="dockedBottom">
-      {hiddenElements?.cameraButton !== true && (
-        <CameraButton data-ui-id="call-composite-camera-button" {...cameraButtonProps} showLabel={!compressedMode} />
+      {options?.cameraButton !== false && (
+        <CameraButton
+          data-ui-id="call-composite-camera-button"
+          {...cameraButtonProps}
+          showLabel={!options?.compressedMode}
+        />
       )}
-      {hiddenElements?.microphoneButton !== true && (
+      {options?.microphoneButton !== false && (
         <MicrophoneButton
           data-ui-id="call-composite-microphone-button"
           {...microphoneButtonProps}
-          showLabel={!compressedMode}
+          showLabel={!options?.compressedMode}
         />
       )}
-      {hiddenElements?.screenShareButton !== true && (
-        <ScreenShareButton {...screenShareButtonProps} showLabel={!compressedMode} />
+      {options?.screenShareButton !== false && (
+        <ScreenShareButton {...screenShareButtonProps} showLabel={!options?.compressedMode} />
       )}
-      {hiddenElements?.participantsButton !== true && (
+      {options?.participantsButton !== false && (
         <ParticipantsButton
           data-ui-id="call-composite-participants-button"
           {...participantsButtonProps}
-          showLabel={!compressedMode}
+          showLabel={!options?.compressedMode}
           callInvitationURL={callInvitationURL}
         />
       )}
       {/* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */}
-      {hiddenElements?.optionsButton !== true && (
-        <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!compressedMode} />
+      {options?.optionsButton !== false && (
+        <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!options?.compressedMode} />
       )}
-      {hiddenElements?.endCallButton !== true && (
+      {options?.endCallButton !== false && (
         <EndCallButton
           data-ui-id="call-composite-hangup-button"
           {...hangUpButtonProps}
           onHangUp={onHangUp}
-          styles={!compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-          showLabel={!compressedMode}
+          styles={!options?.compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
+          showLabel={!options?.compressedMode}
         />
       )}
     </ControlBar>

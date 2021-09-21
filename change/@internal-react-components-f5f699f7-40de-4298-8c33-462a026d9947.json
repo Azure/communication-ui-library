@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update participant button's props relating to the participant list to be top level",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

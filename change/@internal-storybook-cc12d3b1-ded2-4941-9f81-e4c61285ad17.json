@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable all composite visualElements in stories",
-  "packageName": "@internal/storybook",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
