@@ -39,6 +39,7 @@ export const headerStyle = mergeStyles({
   fontWeight: 600,
   fontSize: '1.25rem', // 20px
   lineHeight: '1.75rem', // 28px
+  width: '20rem',
   marginBottom: '1.5rem'
 });
 export const bodyItemStyle = mergeStyles({
