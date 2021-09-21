@@ -42,6 +42,8 @@ import { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/commu
  *   - RecordingCallFeature 'isRecordingActiveChanged'
  *   - Transfer 'stateChanged'
  *   - TransferCallFeature 'transferRequested'
+ *
+ * @public
  */
 export interface StatefulCallClient extends CallClient {
   /**
@@ -199,6 +201,8 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
 
 /**
  * Arguments to construct the StatefulCallClient.
+ *
+ * @public
  */
 export type StatefulCallClientArgs = {
   /**
@@ -210,6 +214,8 @@ export type StatefulCallClientArgs = {
 
 /**
  * Options to construct the StatefulCallClient with.
+ *
+ * @public
  */
 export type StatefulCallClientOptions = {
   /**
@@ -230,7 +236,8 @@ export type StatefulCallClientOptions = {
  *
  * @param args - {@link StatefulCallClientArgs}
  * @param options - {@link StatefulCallClientOptions}
- * @returns
+ *
+ * @public
  */
 export const createStatefulCallClient = (
   args: StatefulCallClientArgs,

@@ -6,6 +6,8 @@ import { CallContext } from './CallContext';
 
 /**
  * Defines the additional methods added by the stateful on top of {@link @azure/communication-calling#DeviceManager}.
+ *
+ * @public
  */
 export interface StatefulDeviceManager extends DeviceManager {
   /**
