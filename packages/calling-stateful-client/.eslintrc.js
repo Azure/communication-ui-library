@@ -45,27 +45,29 @@ module.exports = {
           '**/lib/**/es/*'
         ]
       }
-    ]
+    ],
+    'jsdoc/require-jsdoc': [
+      'error',
+      {
+        publicOnly: true,
+        checkConstructors: false
+      }
+    ],
+    // Following rules are disabled temporarily.
+    // Future PRs will enable them slowly, fixing existing warnings.
+    'jsdoc/require-param': 'off',
+    'jsdoc/require-param-description': 'off',
+    'jsdoc/require-param-type': 'off',
+    'jsdoc/require-returns': 'off',
+    'jsdoc/require-returns-description': 'off',
+    'jsdoc/require-returns-type': 'off'
   },
   root: true,
   overrides: [
     {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
       rules: {
-        '@typescript-eslint/ban-ts-comment': 'off',
-        'jsdoc/require-jsdoc': [
-          'error',
-          {
-            publicOnly: true,
-            checkConstructors: false
-          }
-        ],
-        // Following rules are disabled temporarily.
-        // Future PRs will enable them slowly, fixing existing warnings.
-        'jsdoc/require-param': 'off',
-        'jsdoc/require-returns': 'off',
-        'jsdoc/require-returns-description': 'off',
-        'jsdoc/require-returns-type': 'off'
+        '@typescript-eslint/ban-ts-comment': 'off'
       },
       env: {
         jest: true
