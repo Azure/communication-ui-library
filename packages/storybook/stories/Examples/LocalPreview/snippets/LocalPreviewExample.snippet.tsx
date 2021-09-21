@@ -16,10 +16,9 @@ import {
   IContextualMenuItem,
   IContextualMenuProps,
   DirectionalHint,
-  AnimationStyles,
-  css
+  AnimationStyles
 } from '@fluentui/react';
-import { VideoOff20Filled, Speaker220Regular, Speaker220Filled } from '@fluentui/react-icons';
+import { VideoOff20Filled, Speaker220Regular, Speaker220Filled, ChevronRight20Regular } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
 import { useVideoStreams } from '../../../utils';
 
@@ -89,7 +88,12 @@ const generateSpeakerMenuProps = (): { items: IContextualMenuItem[] } | undefine
   return speakerMenuProps;
 };
 
-const DrawerMenuItem = (props: { onItemClicked?: () => void }): JSX.Element => {
+const DrawerMenuItem = (props: {
+  onItemClick?: (key: string) => void;
+  key: string;
+  text: string;
+  showSubMenuIcon?: boolean;
+}): JSX.Element => {
   return (
     <Stack
       horizontal
@@ -103,12 +107,17 @@ const DrawerMenuItem = (props: { onItemClicked?: () => void }): JSX.Element => {
         }
       }}
       tokens={{ childrenGap: '0.9rem' }}
-      onClick={props.onItemClicked}
+      onClick={() => props.onItemClick && props.onItemClick(props.key)}
     >
       <Stack.Item>
         <Speaker220Regular primaryFill="currentColor" />
       </Stack.Item>
-      <Stack.Item>{'Speaker title'}</Stack.Item>
+      <Stack.Item grow>{props.text}</Stack.Item>
+      {props.showSubMenuIcon && (
+        <Stack.Item>
+          <ChevronRight20Regular primaryFill="currentColor" />
+        </Stack.Item>
+      )}
     </Stack>
   );
 };
@@ -133,7 +142,9 @@ const DrawerItemContainer = (props: { children: React.ReactNode }): JSX.Element 
           'div:first-child': {
             borderTopRightRadius: '1rem',
             borderTopLeftRadius: '1rem'
-          }
+          },
+
+          ...AnimationStyles.slideUpIn10
         }
       }}
     >
@@ -142,7 +153,7 @@ const DrawerItemContainer = (props: { children: React.ReactNode }): JSX.Element 
   );
 };
 
-const DrawerMenu = (props: { onDismiss: () => void }): JSX.Element => {
+const DrawerMenu = (props: { onDismiss: () => void; children: React.ReactNode }): JSX.Element => {
   return (
     <Stack
       verticalFill
@@ -152,19 +163,50 @@ const DrawerMenu = (props: { onDismiss: () => void }): JSX.Element => {
           bottom: 0,
           width: '100%',
           color: '#212121',
-          background: 'rgba(0,0,0,0.6)',
-          ...AnimationStyles.slideUpIn10
+          background: 'rgba(0,0,0,0.6)'
         }
       }}
     >
       <DrawerDismiss onDismiss={props.onDismiss} />
-      <DrawerItemContainer>
-        <DrawerMenuItem onItemClicked={props.onDismiss} />
-        <DrawerMenuItem onItemClicked={props.onDismiss} />
-        <DrawerMenuItem onItemClicked={props.onDismiss} />
-        <DrawerMenuItem onItemClicked={props.onDismiss} />
-      </DrawerItemContainer>
+      <DrawerItemContainer>{props.children}</DrawerItemContainer>
     </Stack>
+  );
+};
+
+const SpeakerDrawerMenu = (props: {
+  onDismiss: () => void;
+  onItemClick: () => void;
+  onSubMenuItemClick?: () => void;
+}): JSX.Element => {
+  return (
+    <DrawerMenu onDismiss={props.onDismiss}>
+      <DrawerMenuItem key={'1'} text={'Speaker title'} onItemClick={props.onSubMenuItemClick} showSubMenuIcon />
+      <DrawerMenuItem key={'2'} text={'Speaker title'} onItemClick={() => props.onItemClick()} />
+      <DrawerMenuItem key={'3'} text={'Speaker title'} onItemClick={() => props.onItemClick()} />
+      <DrawerMenuItem key={'4'} text={'Speaker title'} onItemClick={() => props.onItemClick()} />
+    </DrawerMenu>
+  );
+};
+
+const SpeakerDrawerSubMenu = (props: { onDismiss: () => void; onItemClick: () => void }): JSX.Element => {
+  return (
+    <DrawerMenu onDismiss={props.onDismiss}>
+      <DrawerMenuItem key={'01'} text={'Sub speaker title'} onItemClick={() => props.onItemClick()} />
+      <DrawerMenuItem key={'02'} text={'Sub speaker title'} onItemClick={() => props.onItemClick()} />
+    </DrawerMenu>
+  );
+};
+
+const SpeakerDrawer = (props: { onDismiss: () => void; onItemClick?: (id: string) => void }): JSX.Element => {
+  const [showSubMenu, setShowSubMenu] = useState(false);
+  return showSubMenu ? (
+    <SpeakerDrawerSubMenu onItemClick={() => props.onDismiss()} {...props} />
+  ) : (
+    <SpeakerDrawerMenu
+      onItemClick={() => props.onDismiss()}
+      onSubMenuItemClick={() => setShowSubMenu(true)}
+      {...props}
+    />
   );
 };
 
@@ -292,7 +334,7 @@ export const LocalPreviewExample = ({
                   onClick={() => isDrawer && setDrawerShown(!drawerShown)}
                 />
               </Stack>
-              {drawerShown && <DrawerMenu onDismiss={() => setDrawerShown(false)} />}
+              {drawerShown && <SpeakerDrawer onDismiss={() => setDrawerShown(false)} />}
             </VideoTile>
           </Stack>
         </Stack.Item>
