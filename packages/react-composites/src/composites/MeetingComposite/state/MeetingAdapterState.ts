@@ -25,7 +25,7 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
  * State from the backend services that drives Meeting Composite.
  * @alpha
  */
-export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
   /** ID of the meeting participant using this Meeting Adapter. */
   userId: CommunicationUserIdentifier;
   /** Display name of the meeting participant using this Meeting Adapter. */
@@ -61,7 +61,8 @@ export function meetingAdapterStateFromBackingStates(
     page: callPageToMeetingPage(callAdapterState.page),
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
-    isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled
+    isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
+    isTeamsCall: callAdapterState.isTeamsCall
   };
 }
 
@@ -93,6 +94,7 @@ export function mergeCallAdapterStateIntoMeetingAdapterState(
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
     meeting: newMeetingState,
-    isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled
+    isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
+    isTeamsCall: callAdapterState.isTeamsCall
   };
 }
