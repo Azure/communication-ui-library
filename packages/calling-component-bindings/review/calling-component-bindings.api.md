@@ -110,7 +110,9 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
     checked: boolean;
 }>;
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "createDefaultCallingHandlers" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public

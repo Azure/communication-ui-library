@@ -49,11 +49,6 @@ export {
   CallClientProvider,
   CallAgentProvider,
   CallProvider,
-  useCallClient,
-  useCallAgent,
-  useCall,
-  useDeviceManager,
-  getCallingSelector,
   screenShareButtonSelector,
   cameraButtonSelector,
   videoGallerySelector,
@@ -62,8 +57,7 @@ export {
   errorBarSelector as callErrorBarSelector,
   participantListSelector,
   microphoneButtonSelector,
-  participantsButtonSelector,
-  createDefaultCallingHandlers
+  participantsButtonSelector
 } from '../../calling-component-bindings/src';
 
 export {

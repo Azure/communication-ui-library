@@ -53,7 +53,9 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 /**
  * Create the default implementation of {@link CallingHandlers}.
  *
- * @public
+ * Used by adapter implementation in react-composites.
+ *
+ * @internal
  */
 export const createDefaultCallingHandlers = memoizeOne(
   (
