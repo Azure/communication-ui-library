@@ -48,7 +48,7 @@ import {
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 
-// Context of Chat, which is a centralized context for all state updates
+/** Context of call, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallAdapterState;

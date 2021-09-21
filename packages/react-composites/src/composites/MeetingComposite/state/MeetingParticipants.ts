@@ -17,3 +17,27 @@ export interface MeetingParticipant
   /** Describes the reason the meeting ended for this participant. */
   meetingEndReason?: MeetingEndReason;
 }
+
+export type MeetingParticipants = { [keys: string]: MeetingParticipant };
+
+function meetingParticipantFromCallParticipant(callParticipant: RemoteParticipantState): MeetingParticipant {
+  return {
+    id: callParticipant.identifier,
+    meetingEndReason: callParticipant.callEndReason,
+    displayName: callParticipant.displayName,
+    state: callParticipant.state,
+    videoStreams: callParticipant.videoStreams,
+    isMuted: callParticipant.isMuted,
+    isSpeaking: callParticipant.isSpeaking
+  };
+}
+
+export function meetingParticipantsFromCallParticipants(callParticipants: {
+  [keys: string]: RemoteParticipantState;
+}): MeetingParticipants {
+  const meetingParticipants: MeetingParticipants = {};
+  for (const [key, value] of Object.entries(callParticipants)) {
+    meetingParticipants[key] = meetingParticipantFromCallParticipant(value);
+  }
+  return meetingParticipants;
+}
