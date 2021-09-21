@@ -9,7 +9,6 @@ import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@
 import { MeetingAdapterState, MeetingState } from '..';
 import { CallState } from '@internal/calling-stateful-client';
 import { callParticipantsFromMeetingParticipants } from '../state/MeetingParticipants';
-import { AzureCommunicationMeetingAdapter } from './AzureCommunicationMeetingAdapter';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -45,6 +44,7 @@ export function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAda
     displayName: meetingState.displayName,
     call: meetingState.meeting ? callStateFromMeetingState(meetingState.meeting) : undefined,
     devices: meetingState.devices,
+    isTeamsCall: meetingState.isTeamsCall,
     latestErrors: {} //@TODO: latest errors not supported in meeting composite yet.
   };
 }
@@ -110,14 +110,4 @@ export class MeetingBackedCallAdapter implements CallAdapter {
     await this.meetingAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.meetingAdapter.disposeStreamView(remoteUserId, options);
-
-  /**
-   * This reflects the isTeamsCall in AzureCommunicationCallAdapter
-   * @TODO: THIS NEEDS MOVED TO BE PART OF THE API NOT HIDDEN HERE.
-   */
-  public isTeamsCall(): boolean {
-    return 'isTeamsCall' in this.meetingAdapter
-      ? (this.meetingAdapter as AzureCommunicationMeetingAdapter).isTeamsCall()
-      : false;
-  }
 }
