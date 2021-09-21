@@ -31,7 +31,12 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={LocalPreviewExampleText}>
         <div style={{ height: '17.188rem' }}>
-          <LocalPreviewExample isVideoAvailable={true} isCameraEnabled={true} isMicrophoneEnabled={true} />
+          <LocalPreviewExample
+            flyoutType={'ContextMenu'}
+            isVideoAvailable={true}
+            isCameraEnabled={true}
+            isMicrophoneEnabled={true}
+          />
         </div>
       </Canvas>
     </>
@@ -49,6 +54,12 @@ export default {
   title: `${EXAMPLES_FOLDER_PREFIX}/Local Preview`,
   component: LocalPreview,
   argTypes: {
+    flyoutType: {
+      control: 'radio',
+      options: ['ContextMenu', 'Drawer'],
+      defaultValue: 'ContextMenu',
+      name: 'Menu type'
+    },
     isVideoAvailable: controlsToAdd.isVideoAvailable,
     isCameraEnabled: controlsToAdd.isCameraEnabled,
     isMicrophoneEnabled: controlsToAdd.isMicrophoneEnabled
