@@ -4,18 +4,32 @@
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+/**
+ * @private
+ */
 export type CallClientContextType = {
   callClient: StatefulCallClient;
   deviceManager: StatefulDeviceManager | undefined;
 };
 
+/**
+ * @private
+ */
 export const CallClientContext = createContext<CallClientContextType | undefined>(undefined);
 
+/**
+ * Arguments to initialize a {@link CallClientProvider}.
+ *
+ * @public
+ */
 export interface CallClientProviderProps {
   children: React.ReactNode;
   callClient: StatefulCallClient;
 }
 
+/**
+ * @private
+ */
 const CallClientProviderBase = (props: CallClientProviderProps): JSX.Element => {
   const { callClient } = props;
 
@@ -46,10 +60,20 @@ const CallClientProviderBase = (props: CallClientProviderProps): JSX.Element => 
   return <CallClientContext.Provider value={initialState}>{props.children}</CallClientContext.Provider>;
 };
 
+/**
+ * A {@link React.Context} that stores a {@link StatefulCallClient}.
+ *
+ * Calling components from this package must be wrapped with a {@link CallClientProvider}.
+ *
+ * @public
+ */
 export const CallClientProvider = (props: CallClientProviderProps): JSX.Element => (
   <CallClientProviderBase {...props} />
 );
 
+/**
+ * @private
+ */
 export const useCallClient = (): StatefulCallClient => {
   const context = useContext(CallClientContext);
   if (context === undefined) {
@@ -58,6 +82,9 @@ export const useCallClient = (): StatefulCallClient => {
   return context.callClient;
 };
 
+/**
+ * @private
+ */
 export const useDeviceManager = (): StatefulDeviceManager | undefined => {
   return useContext(CallClientContext)?.deviceManager;
 };

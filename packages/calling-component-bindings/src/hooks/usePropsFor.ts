@@ -28,6 +28,24 @@ import { CallingHandlers } from '../handlers/createHandlers';
 import { ParticipantsButton } from '@internal/react-components';
 import { errorBarSelector } from '../errorBarSelector';
 
+/**
+ * Primary hook to get all hooks necessary for a calling Component.
+ *
+ * Most straightforward usage of calling components looks like:
+ *
+ * @example
+ * ```
+ *     import { ParticipantList, usePropsFor } from '@azure/communication-react';
+ *
+ *     const App = (): JSX.Element => {
+ *         // ... code to setup Providers ...
+ *
+ *         return <ParticipantList {...usePropsFor(ParticipantList)}/>
+ *     }
+ * ```
+ *
+ * @public
+ */
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
@@ -42,8 +60,20 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   return undefined as any;
 };
 
+/**
+ * A trivial selector that returns no data.
+ *
+ * Used as a default return value if {@link usePropsFor} is called for an unsupported Component.
+ *
+ * @public
+ */
 export const emptySelector = (): Record<string, never> => ({});
 
+/**
+ * Specific type of the selector applicable to a given Component.
+ *
+ * @public
+ */
 export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
   Component,
   typeof VideoGallery
@@ -67,6 +97,13 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? typeof errorBarSelector
   : undefined;
 
+/**
+ * Get the selector for a specified component.
+ *
+ * Used by the top-level packlet to implement merged {@link usePropsFor}.
+ *
+ * @internal
+ */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component

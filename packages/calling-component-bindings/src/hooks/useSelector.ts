@@ -6,6 +6,13 @@ import { CallClientContext, useCall } from '../providers';
 
 import { useState, useEffect, useRef, useMemo, useContext } from 'react';
 
+/**
+ * Hook to obtain a selector for a specified component.
+ *
+ * Used by the top-level packlet to implement merged {@link usePropsFor}.
+ *
+ * @internal
+ */
 export const useSelector = <
   SelectorT extends (state: CallClientState, props: any) => any,
   ParamT extends SelectorT | undefined

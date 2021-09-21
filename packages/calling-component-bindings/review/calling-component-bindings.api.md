@@ -14,7 +14,6 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallErrors } from '@internal/calling-stateful-client';
 import { CallParticipant } from '@internal/react-components';
-import { CallState } from '@internal/calling-stateful-client';
 import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -23,7 +22,6 @@ import { DiagnosticsCallFeatureState } from '@internal/calling-stateful-client';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
-import { IncomingCallState } from '@internal/calling-stateful-client';
 import { LocalVideoStreamState } from '@internal/calling-stateful-client';
 import { MicrophoneButton } from '@internal/react-components';
 import { OptionsButton } from '@internal/react-components';
@@ -45,18 +43,10 @@ import { VideoGallery } from '@internal/react-components';
 import { VideoGalleryRemoteParticipant } from '@internal/react-components';
 import { VideoStreamOptions } from '@internal/react-components';
 
-// @public (undocumented)
-export const CallAgentContext: React_2.Context<CallAgentContextType | undefined>;
-
-// @public (undocumented)
-export type CallAgentContextType = {
-    callAgent: CallAgent | undefined;
-};
-
-// @public (undocumented)
+// @public
 export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface CallAgentProviderProps {
     // (undocumented)
     callAgent?: CallAgent;
@@ -64,19 +54,10 @@ export interface CallAgentProviderProps {
     children: React_2.ReactNode;
 }
 
-// @public (undocumented)
-export const CallClientContext: React_2.Context<CallClientContextType | undefined>;
-
-// @public (undocumented)
-export type CallClientContextType = {
-    callClient: StatefulCallClient;
-    deviceManager: StatefulDeviceManager | undefined;
-};
-
-// @public (undocumented)
+// @public
 export const CallClientProvider: (props: CallClientProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface CallClientProviderProps {
     // (undocumented)
     callClient: StatefulCallClient;
@@ -84,20 +65,12 @@ export interface CallClientProviderProps {
     children: React_2.ReactNode;
 }
 
-// @public (undocumented)
-export const CallContext: React_2.Context<CallContextType | undefined>;
-
-// @public (undocumented)
-export type CallContextType = {
-    call: Call | undefined;
-};
-
 // @public
 export type CallingBaseSelectorProps = {
     callId: string;
 };
 
-// @public (undocumented)
+// @public
 export type CallingHandlers = {
     onStartLocalVideo: () => Promise<void>;
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
@@ -117,10 +90,10 @@ export type CallingHandlers = {
     onDisposeLocalStreamView: () => Promise<void>;
 };
 
-// @public (undocumented)
+// @public
 export const CallProvider: (props: CallProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface CallProviderProps {
     // (undocumented)
     call?: Call;
@@ -128,7 +101,7 @@ export interface CallProviderProps {
     children: React_2.ReactNode;
 }
 
-// @public (undocumented)
+// @public
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
@@ -137,13 +110,10 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
     checked: boolean;
 }>;
 
-// @public (undocumented)
+// @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public
-export const createDefaultCallingHandlersForComponent: <Props>(callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, _Component: (props: Props) => ReactElement | null) => Common<CallingHandlers, Props>;
-
-// @public (undocumented)
 export const emptySelector: () => Record<string, never>;
 
 // @public
@@ -153,67 +123,15 @@ activeErrors: ActiveError[];
 activeErrors: ActiveError[];
 }>;
 
-// @public (undocumented)
-export const getCallExists: (state: CallClientState, props: CallingBaseSelectorProps) => boolean;
-
-// @public (undocumented)
+// @public
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "getCallingSelector" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
-// @public (undocumented)
-export const getCalls: (state: CallClientState) => {
-    [key: string]: CallState;
-};
-
-// @public (undocumented)
-export const getCallsEnded: (state: CallClientState) => CallState[];
-
-// @public (undocumented)
-export const getDeviceManager: (state: CallClientState) => DeviceManagerState;
-
-// @public (undocumented)
-export const getDiagnostics: (state: CallClientState, props: CallingBaseSelectorProps) => DiagnosticsCallFeatureState | undefined;
-
-// @public (undocumented)
-export const getDisplayName: (state: CallClientState) => string | undefined;
-
-// @public (undocumented)
-export const getDominantSpeakers: (state: CallClientState, props: CallingBaseSelectorProps) => undefined | DominantSpeakersInfo;
-
-// @public (undocumented)
-export const getIdentifier: (state: CallClientState) => string;
-
-// @public (undocumented)
-export const getIncomingCalls: (state: CallClientState) => {
-    [key: string]: IncomingCallState;
-};
-
-// @public (undocumented)
-export const getIncomingCallsEnded: (state: CallClientState) => IncomingCallState[];
-
-// @public (undocumented)
-export const getIsMuted: (state: CallClientState, props: CallingBaseSelectorProps) => boolean | undefined;
-
-// @public (undocumented)
-export const getIsScreenSharingOn: (state: CallClientState, props: CallingBaseSelectorProps) => boolean | undefined;
-
-// @public (undocumented)
-export const getLatestErrors: (state: CallClientState) => CallErrors;
-
-// @public (undocumented)
-export const getLocalVideoStreams: (state: CallClientState, props: CallingBaseSelectorProps) => LocalVideoStreamState[] | undefined;
-
-// @public (undocumented)
-export const getRemoteParticipants: (state: CallClientState, props: CallingBaseSelectorProps) => {
-    [keys: string]: RemoteParticipantState;
-} | undefined;
-
-// @public (undocumented)
-export const getScreenShareRemoteParticipant: (state: CallClientState, props: CallingBaseSelectorProps) => string | undefined;
-
-// @public (undocumented)
+// @public
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
@@ -222,7 +140,7 @@ export const microphoneButtonSelector: reselect.OutputParametricSelector<CallCli
     checked: boolean;
 }>;
 
-// @public (undocumented)
+// @public
 export const optionsButtonSelector: reselect.OutputSelector<CallClientState, {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
@@ -239,7 +157,7 @@ export const optionsButtonSelector: reselect.OutputSelector<CallClientState, {
     selectedCamera: VideoDeviceInfo | undefined;
 }>;
 
-// @public (undocumented)
+// @public
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
@@ -250,7 +168,7 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     myUserId: string;
 }>;
 
-// @public (undocumented)
+// @public
 export const participantsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
@@ -262,35 +180,27 @@ export const participantsButtonSelector: reselect.OutputParametricSelector<CallC
     myUserId: string;
 }>;
 
-// @public (undocumented)
+// @public
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
 }, (res: boolean | undefined) => {
     checked: boolean | undefined;
 }>;
 
-// @public (undocumented)
-export const useCall: () => Call | undefined;
-
-// @public (undocumented)
-export const useCallAgent: () => CallAgent | undefined;
-
-// @public (undocumented)
-export const useCallClient: () => StatefulCallClient;
-
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "useCallingHandlers" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<CallingHandlers, PropsT> | undefined;
 
-// @public (undocumented)
+// @public
 export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : undefined;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "useCallingSelector" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
 
-// @public (undocumented)
-export const useDeviceManager: () => StatefulDeviceManager | undefined;
-
-// @public (undocumented)
+// @public
 export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {

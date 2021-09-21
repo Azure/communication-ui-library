@@ -6,6 +6,13 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { createDefaultCallingHandlersForComponent } from '../handlers/createHandlers';
 import { CallClientContext, useCall, useCallAgent, useDeviceManager } from '../providers';
 
+/**
+ * Hook to obtain a handler for a specified component.
+ *
+ * Used by the top-level packlet to implement merged {@link usePropsFor}.
+ *
+ * @internal
+ */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement | null) => {
   const callClient: StatefulCallClient = (useContext(CallClientContext) as any)?.callClient;
