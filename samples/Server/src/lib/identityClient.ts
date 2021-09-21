@@ -23,5 +23,13 @@ export const getToken = (
   scopes: TokenScope[],
   options?: OperationOptions
 ): Promise<CommunicationAccessToken> => getIdentityClient().getToken(user, scopes);
-export const createUserAndToken = (scopes: TokenScope[]): Promise<CommunicationUserToken> =>
-  getIdentityClient().createUserAndToken(scopes);
+// export const createUserAndToken = (scopes: TokenScope[]): Promise<CommunicationUserToken> =>
+//   getIdentityClient().createUserAndToken(scopes);
+export const createUserAndToken = async (scopes: TokenScope[]): Promise<CommunicationUserToken> => {
+  const hardcodedUserId = '<here>';
+  const token = await getIdentityClient().getToken({ communicationUserId: hardCodedUserId }, scopes);
+  return {
+    ...token,
+    user: { communicationUserId: hardcodedUserId }
+  };
+};
