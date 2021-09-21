@@ -68,10 +68,12 @@
     "userNotInThisThread": "Sie sind nicht mehr in diesem Chatthread vertreten.",
     "sendMessageNotInThisThread": "Fehler beim Senden der Nachricht, weil Sie sich nicht mehr in diesem Chatthread befinden.",
     "sendMessageGeneric": "Fehler beim Senden der Nachricht",
+    "callingNetworkFailure": "Problematische Anrufverbindung – Sie scheinen offline zu sein",
     "startVideoGeneric": "Video konnte nicht gestartet werden",
     "stopVideoGeneric": "Video konnte nicht beendet werden",
     "muteGeneric": "Mikrofon konnte nicht stummgeschaltet werden",
     "unmuteGeneric": "Stummschaltung des Mikrofons konnte nicht beendet werden",
+    "speakingWhileMuted": "Ihr Mikrofon ist stummgeschaltet",
     "startScreenShareGeneric": "Bildschirmfreigabe konnte nicht gestartet werden",
     "stopScreenShareGeneric": "Bildschirmfreigabe konnte nicht beendet werden"
   }

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update sharing screen name + sharer name and mic",
-  "packageName": "@internal/react-composites",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

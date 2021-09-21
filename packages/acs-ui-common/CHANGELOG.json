@@ -2,6 +2,41 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Mon, 13 Sep 2021 21:02:16 GMT",
+      "tag": "@internal/acs-ui-common_v1.0.0-beta.5",
+      "version": "1.0.0-beta.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.4",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "7a7298633353695ef6bcd659f2a39cb80ff1d67b",
+            "package": "@internal/acs-ui-common"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump version to match other packlets",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27624cdcd3ca1db8bf36b5eabf2943557a420864",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Synchronize telemetry version in workflows",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a953682fd1527ed3e1ff135845db579efdc6f248",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Adjust most comments in internal api review",
+            "author": "jinan@microsoft.com",
+            "commit": "2a89e83796a87d8dc704bdef316b8e56fcb42930",
+            "package": "@internal/acs-ui-common"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Aug 2021 21:18:19 GMT",
       "tag": "@internal/acs-ui-common_v1.0.0-beta.3",
       "version": "1.0.0-beta.3",

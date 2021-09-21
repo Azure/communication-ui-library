@@ -2,6 +2,77 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Mon, 13 Sep 2021 21:02:16 GMT",
+      "tag": "@internal/calling-stateful-client_v1.0.0-beta.5",
+      "version": "1.0.0-beta.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add methods to clear calling ACS errors",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8605636fe960d1fb62ef6acc8d74a673678da849",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Adjust most comments in internal api review",
+            "author": "jinan@microsoft.com",
+            "commit": "2a89e83796a87d8dc704bdef316b8e56fcb42930",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Bump acs-ui-common dep",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "27624cdcd3ca1db8bf36b5eabf2943557a420864",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "updating calling to use 1.2.1-beta.1",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "e337a0813532da34430795921a4bfc324453d881",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Add call diagnostics to stateful client",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "d4f1ee89cec41f9796e3e753a630d3827fccb989",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Add timestamp to teed errors",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48aefca725807e58d1d2e4a6ff0121f5b09437e",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "updating immer to 9.0.6",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "96c3e129e9d3d8e4c9d7af8fb4480f7b98b79a10",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Tee errors to CallClientState",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "11c43908cceaf9df588b7d964a7de169891e43ca",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Add Dominant Speaker support to Video Gallery",
+            "author": "anjulgarg@live.com",
+            "commit": "969c3efa0d656ba6602d854e33b3c71e6910ee4e",
+            "package": "@internal/calling-stateful-client"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.4",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "7a7298633353695ef6bcd659f2a39cb80ff1d67b",
+            "package": "@internal/calling-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Aug 2021 21:18:19 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.0-beta.4",
       "version": "1.0.0-beta.4",

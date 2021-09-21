@@ -1,8 +1,38 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.5)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.0-beta.4..@internal/react-components_v1.0.0-beta.5)
+
+### Changes
+
+- Custom Icons injection in components and composites. ([PR #716](https://github.com/azure/communication-ui-library/pull/716) by anjulgarg@live.com)
+- Bump acs-ui-common dep ([PR #732](https://github.com/azure/communication-ui-library/pull/732) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Delete API to clear stateful errors ([PR #756](https://github.com/azure/communication-ui-library/pull/756) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add custom avatar data injection for composites ([PR #677](https://github.com/azure/communication-ui-library/pull/677) by anjulgarg@live.com)
+- Show ACS errors via ErrorBar in CallComposite ([PR #702](https://github.com/azure/communication-ui-library/pull/702) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Do not show unnamed moderator ([PR #654](https://github.com/azure/communication-ui-library/pull/654) by jinan@microsoft.com)
+- Fixed theming for MessageThread icons. ([PR #692](https://github.com/azure/communication-ui-library/pull/692) by miguelgamis@microsoft.com)
+- Rename component locale types to match composites ([PR #720](https://github.com/azure/communication-ui-library/pull/720) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add Dominant Speaker support to Video Gallery ([PR #742](https://github.com/azure/communication-ui-library/pull/742) by anjulgarg@live.com)
+- Adjust most comments in internal api review ([PR #724](https://github.com/azure/communication-ui-library/pull/724) by jinan@microsoft.com)
+- Add message edit feature to message thread component ([PR #734](https://github.com/azure/communication-ui-library/pull/734) by jinan@microsoft.com)
+- Updated available locales and translations. ([PR #712](https://github.com/azure/communication-ui-library/pull/712) by miguelgamis@microsoft.com)
+- Add different types for ChatComposite and CallCompposite Icons ([PR #757](https://github.com/azure/communication-ui-library/pull/757) by anjulgarg@live.com)
+- Add active and dominant speaker support to screenshare screen. ([PR #748](https://github.com/azure/communication-ui-library/pull/748) by anjulgarg@live.com)
+- Track dimissed errors internally in ErrorBar ([PR #754](https://github.com/azure/communication-ui-library/pull/754) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bubble up call connection error to UI ([PR #749](https://github.com/azure/communication-ui-library/pull/749) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Remove some accidental imports; mark Identifiers experimental ([PR #728](https://github.com/azure/communication-ui-library/pull/728) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add timestamp to teed errors ([PR #753](https://github.com/azure/communication-ui-library/pull/753) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update participant button's props relating to the participant list to be top level ([PR #674](https://github.com/azure/communication-ui-library/pull/674) by 2684369+JamesBurnside@users.noreply.github.com)
+- Truncating long display names in ParticipantItem. Ensuring icons are aligned on right side of ParticipantItem. ([PR #699](https://github.com/azure/communication-ui-library/pull/699) by miguelgamis@microsoft.com)
+- Add is speaking indicator to video tiles and gallery ([PR #738](https://github.com/azure/communication-ui-library/pull/738) by anjulgarg@live.com)
+- Remove unnecessary API exports ([PR #711](https://github.com/azure/communication-ui-library/pull/711) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.4)
 
