@@ -33,7 +33,7 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { usePropsFor } from './hooks/usePropsFor';
-import { CallCompositeHiddenElements } from './CallComposite';
+import { CallCompositeOptions } from './CallComposite';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
@@ -41,13 +41,14 @@ export interface CallScreenProps {
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  hiddenElements?: CallCompositeHiddenElements;
+  options?: CallCompositeOptions;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar, onFetchAvatarPersonaData } = props;
+  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar, onFetchAvatarPersonaData, options } =
+    props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -136,7 +137,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                 cameraPermissionGranted={devicePermissions.video}
               />
             </Stack>
-            {props?.hiddenElements?.errorBar !== true && (
+            {options?.errorBar !== false && (
               <Stack>
                 <ErrorBar {...errorBarProps} />
               </Stack>
@@ -167,12 +168,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          {props?.hiddenElements?.callControls !== true && (
+          {options?.callControls !== false && (
             <Stack.Item className={callControlsContainer}>
               <CallControls
                 onEndCallClick={endCallHandler}
                 callInvitationURL={callInvitationURL}
-                hiddenElements={props.hiddenElements}
+                options={options?.callControls}
               />
             </Stack.Item>
           )}
