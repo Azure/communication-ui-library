@@ -45,12 +45,13 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
               >
                 <div
                   className="ms-Stack css-11"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-12"
                   >
                     <div
-                      className="css-80"
+                      className="css-79"
                     />
                   </div>
                   <div
@@ -60,10 +61,10 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                       className="css-15"
                     >
                       <div
-                        className="ms-Stack css-16"
+                        className="ms-Stack css-17"
                       >
                         <button
-                          className="ms-Button ms-Button--default is-checked root-17"
+                          className="ms-Button ms-Button--default is-checked root-18"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -74,7 +75,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-18"
+                            className="ms-Button-flexContainer flexContainer-19"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
@@ -106,7 +107,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           </span>
                         </button>
                         <button
-                          className="ms-Button ms-Button--default is-checked root-17"
+                          className="ms-Button ms-Button--default is-checked root-18"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -117,7 +118,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-18"
+                            className="ms-Button-flexContainer flexContainer-19"
                             data-automationid="splitbuttonprimary"
                           >
                             <i

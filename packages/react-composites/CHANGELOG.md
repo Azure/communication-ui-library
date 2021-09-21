@@ -1,8 +1,50 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.5)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.0.0-beta.4..@internal/react-composites_v1.0.0-beta.5)
+
+### Changes
+
+- Expose errors in CallAdapter ([PR #683](https://github.com/azure/communication-ui-library/pull/683) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Show bannrs within call screen ([PR #750](https://github.com/azure/communication-ui-library/pull/750) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Adjust most comments in internal api review ([PR #724](https://github.com/azure/communication-ui-library/pull/724) by jinan@microsoft.com)
+- Localized call and chat composite strings ([PR #739](https://github.com/azure/communication-ui-library/pull/739) by miguelgamis@microsoft.com)
+- Apply chat sdk hotfix ([PR #747](https://github.com/azure/communication-ui-library/pull/747) by jinan@microsoft.com)
+- Add initial meeting state and meeting adapter state interfaces ([PR #679](https://github.com/azure/communication-ui-library/pull/679) by 2684369+JamesBurnside@users.noreply.github.com)
+- Work around for menu disappearing ([PR #717](https://github.com/azure/communication-ui-library/pull/717) by jinan@microsoft.com)
+- Updating composite automation snapshots ([PR #654](https://github.com/azure/communication-ui-library/pull/654) by jinan@microsoft.com)
+- Localize errors in CallComposite ([PR #714](https://github.com/azure/communication-ui-library/pull/714) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix unstale participant list test ([PR #709](https://github.com/azure/communication-ui-library/pull/709) by jinan@microsoft.com)
+- Add flags for CallComposite visual elements ([PR #722](https://github.com/azure/communication-ui-library/pull/722) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Show ACS errors via ErrorBar in CallComposite ([PR #702](https://github.com/azure/communication-ui-library/pull/702) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add active and dominant speaker support to screenshare screen. ([PR #748](https://github.com/azure/communication-ui-library/pull/748) by anjulgarg@live.com)
+- Add message edit feature ([PR #734](https://github.com/azure/communication-ui-library/pull/734) by jinan@microsoft.com)
+- Generate snapshot in github action for composite ([PR #694](https://github.com/azure/communication-ui-library/pull/694) by jinan@microsoft.com)
+- Add different types for ChatComposite and CallCompposite Icons ([PR #757](https://github.com/azure/communication-ui-library/pull/757) by anjulgarg@live.com)
+- Custom Icons injection in components and composites. ([PR #716](https://github.com/azure/communication-ui-library/pull/716) by anjulgarg@live.com)
+- Fixed English (US) and English (GB) exports. ([PR #737](https://github.com/azure/communication-ui-library/pull/737) by miguelgamis@microsoft.com)
+- Add initial meeting adapter interface ([PR #678](https://github.com/azure/communication-ui-library/pull/678) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fixed theming for local preview placeholder for calling composite. ([PR #692](https://github.com/azure/communication-ui-library/pull/692) by miguelgamis@microsoft.com)
+- updating calling to use 1.2.1-beta.1 ([PR #758](https://github.com/azure/communication-ui-library/pull/758) by 79329532+alkwa-msft@users.noreply.github.com)
+- Delete API to clear stateful errors ([PR #756](https://github.com/azure/communication-ui-library/pull/756) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Updated locale files. ([PR #712](https://github.com/azure/communication-ui-library/pull/712) by miguelgamis@microsoft.com)
+- Strongly type errors from adapters ([PR #761](https://github.com/azure/communication-ui-library/pull/761) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump acs-ui-common dep ([PR #732](https://github.com/azure/communication-ui-library/pull/732) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Rename component locale type names to match composites ([PR #720](https://github.com/azure/communication-ui-library/pull/720) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix the problem of opacity animation ([PR #715](https://github.com/azure/communication-ui-library/pull/715) by jinan@microsoft.com)
+-  Add custom avatar data injection for composites ([PR #677](https://github.com/azure/communication-ui-library/pull/677) by anjulgarg@live.com)
+- Rename ChatCompositeVisualElements ([PR #721](https://github.com/azure/communication-ui-library/pull/721) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Meeting adapter implementations - forward events to call and chat child adapters ([PR #696](https://github.com/azure/communication-ui-library/pull/696) by 2684369+JamesBurnside@users.noreply.github.com)
+- Refactored call join error handling ([PR #760](https://github.com/azure/communication-ui-library/pull/760) by miguelgamis@microsoft.com)
+- Create stub `AzureCommunicationMeetingAdapter` ([PR #695](https://github.com/azure/communication-ui-library/pull/695) by 2684369+JamesBurnside@users.noreply.github.com)
+- Remove identifiers from composite constructor signature ([PR #728](https://github.com/azure/communication-ui-library/pull/728) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Track dismissed errors internally in ErrorBar ([PR #754](https://github.com/azure/communication-ui-library/pull/754) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.4)
 

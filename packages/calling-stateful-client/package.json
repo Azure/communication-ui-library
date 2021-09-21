@@ -1,15 +1,16 @@
 {
   "name": "@internal/calling-stateful-client",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "Stateful proxy over the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
   "types": "dist/calling-stateful-client.d.ts",
   "scripts": {
-    "build": "rushx build:esm && rushx build:cjs && api-extractor run --local",
+    "build": "rushx clean && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:esm": "tsc",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
+    "clean": "rimraf dist",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "test": "jest",
@@ -23,7 +24,7 @@
   "dependencies": {
     "@azure/communication-common": "1.0.0",
     "@azure/communication-calling": "1.2.1-beta.1",
-    "@internal/acs-ui-common": "1.0.0-beta.4",
+    "@internal/acs-ui-common": "1.0.0-beta.5",
     "events": "~3.3.0",
     "immer": "9.0.6"
   },
@@ -41,6 +42,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint": "^7.7.0",
     "jest": "26.6.0",
+    "rimraf": "^2.6.2",
     "rollup": "~2.42.4",
     "prettier": "2.3.1",
     "ts-jest": "^26.4.4",

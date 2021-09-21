@@ -7,5 +7,6 @@ export const IDS = {
   messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',
   typingIndicator: 'typing-indicator',
-  videoGallery: 'video-gallery'
+  videoGallery: 'video-gallery',
+  videoTile: 'video-tile'
 };
