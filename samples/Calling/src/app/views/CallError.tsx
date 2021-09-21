@@ -28,7 +28,14 @@ export const CallError = (props: CallErrorProps): JSX.Element => {
   const rejoinCall = 'Retry Call';
 
   return (
-    <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
+    <Stack
+      horizontal
+      wrap
+      horizontalAlign="center"
+      verticalAlign="center"
+      tokens={mainStackTokens}
+      className={endCallContainerStyle}
+    >
       <Stack tokens={upperStackTokens}>
         <div className={endCallTitleStyle}>{title}</div>
         <Stack horizontal tokens={buttonsStackTokens}>
