@@ -63,7 +63,7 @@
     "participantJoined": "joined the chat.",
     "participantLeft": "left the chat.",
     "editMessage": "Edit",
-    "removeMessage": "removeMessage",
+    "removeMessage": "Remove",
     "editedTag": "Edited"
   },
   "errorBar": {
