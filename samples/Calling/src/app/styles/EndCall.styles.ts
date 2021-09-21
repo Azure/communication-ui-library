@@ -24,7 +24,8 @@ export const endCallContainerStyle = mergeStyles({
 });
 export const endCallTitleStyle = mergeStyles({
   fontSize: '1.375rem',
-  fontWeight: 600
+  fontWeight: 600,
+  width: '20rem'
 });
 export const buttonStyle = mergeStyles({
   fontWeight: 600,
