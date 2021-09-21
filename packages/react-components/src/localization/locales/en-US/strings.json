@@ -11,7 +11,8 @@
     "delimiter": ", "
   },
   "sendBox": {
-    "placeholderText": "Enter a message"
+    "placeholderText": "Enter a message",
+    "textExceedsLimit": "Your message length is over the maximum limit."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Sent",
@@ -60,7 +61,10 @@
     "friday": "Friday",
     "saturday": "Saturday",
     "participantJoined": "joined the chat.",
-    "participantLeft": "left the chat."
+    "participantLeft": "left the chat.",
+    "editMessage": "Edit",
+    "removeMessage": "removeMessage",
+    "editedTag": "Edited"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
