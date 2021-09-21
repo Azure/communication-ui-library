@@ -630,9 +630,11 @@ export class CallContext {
   public setDeviceManagerCameras(cameras: VideoDeviceInfo[]): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        /** SDK initializes cameras with one dummy camera with value { id: 'camera:id', name: '', deviceType: 'USBCamera' } immediately after
+        /**
+         * SDK initializes cameras with one dummy camera with value { id: 'camera:id', name: '', deviceType: 'USBCamera' } immediately after
          * camera permissions are granted. So selectedCamera will have this value before the actual cameras are obtained. Therefore we should reset
-         * selectedCamera to the first camera when there are cameras AND when current selectedCamera does not exist in the new array of cameras **/
+         * selectedCamera to the first camera when there are cameras AND when current selectedCamera does not exist in the new array of cameras *
+         */
         if (cameras.length > 0 && !cameras.some((camera) => camera.id === draft.deviceManager.selectedCamera?.id)) {
           draft.deviceManager.selectedCamera = cameras[0];
         }

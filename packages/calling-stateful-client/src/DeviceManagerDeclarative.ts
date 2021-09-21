@@ -63,6 +63,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   /**
    * Used to set a camera inside the proxy device manager.
+   *
    * @param videoDeviceInfo VideoDeviceInfo
    */
   public selectCamera = (videoDeviceInfo: VideoDeviceInfo): void => {
