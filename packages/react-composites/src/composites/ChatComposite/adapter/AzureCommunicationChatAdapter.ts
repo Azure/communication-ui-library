@@ -31,7 +31,7 @@ import {
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 
-// Context of Chat, which is a centralized context for all state updates
+/** Context of Chat, which is a centralized context for all state updates */
 class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatAdapterState;

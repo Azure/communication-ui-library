@@ -68,10 +68,12 @@
     "userNotInThisThread": "이 채팅 스레드에 더 이상 없습니다.",
     "sendMessageNotInThisThread": "이 채팅 스레드에 더 이상 존재하지 않으므로 메시지를 보내지 못했습니다.",
     "sendMessageGeneric": "메시지를 보내지 못했습니다",
+    "callingNetworkFailure": "통화 연결 중 - 오프라인 상태인 것 같습니다.",
     "startVideoGeneric": "비디오를 시작하지 못함",
     "stopVideoGeneric": "비디오를 중지하지 못함",
     "muteGeneric": "마이크를 음소거하지 못함",
     "unmuteGeneric": "마이크 음소거를 해제하지 못함",
+    "speakingWhileMuted": "마이크가 음소거됨",
     "startScreenShareGeneric": "화면 공유를 시작하지 못함",
     "stopScreenShareGeneric": "화면 공유를 중지하지 못함"
   }

@@ -48,7 +48,7 @@ import {
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 
-// Context of Chat, which is a centralized context for all state updates
+/** Context of call, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallAdapterState;
@@ -190,6 +190,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public isTeamsCall(): boolean {
+    //@TODO: this should be part of the CallAdapter API not hidden here.
     return 'meetingLink' in this.locator;
   }
 
@@ -207,7 +208,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getSpeakers();
+      return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
     });
   }
 
@@ -225,7 +226,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-      const isTeamsMeeting = 'groupId' in this.locator;
+      const isTeamsMeeting = !('groupId' in this.locator);
 
       if (isTeamsMeeting) {
         this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
@@ -233,7 +234,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
           videoOptions
         });
       } else {
-        this.call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+        this.call = this.callAgent.join(this.locator as GroupCallLocator, {
           audioOptions,
           videoOptions
         });

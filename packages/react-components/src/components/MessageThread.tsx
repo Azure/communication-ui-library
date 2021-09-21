@@ -429,7 +429,7 @@ export type MessageThreadProps = {
    * Optional callback to override render of a message.
    *
    * @param messageProps - props of type MessageProps
-   * @param defaultOnRender - default render of type DefaultMessageRendererType
+   * @param defaultOnRender - default render of type MessageRenderer
    *
    * @remarks
    * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update Storybook to create a azure communication meeting adapter for the meeting composite",
+  "packageName": "@internal/storybook",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
