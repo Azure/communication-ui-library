@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move the name filter logic to selector Make component acs unrelated",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

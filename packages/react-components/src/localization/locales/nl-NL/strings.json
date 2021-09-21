@@ -68,10 +68,12 @@
     "userNotInThisThread": "U bent niet meer aanwezig in deze chatthread",
     "sendMessageNotInThisThread": "Verzenden van bericht is mislukt omdat u zich niet meer in deze chatthread bevindt",
     "sendMessageGeneric": "Kan bericht niet verzenden",
+    "callingNetworkFailure": "Er zijn problemen met het verbinden van een gesprek - Het lijkt erop dat u offline bent",
     "startVideoGeneric": "Kan video niet starten",
     "stopVideoGeneric": "Kan video niet stoppen",
     "muteGeneric": "Kan microfoon niet dempen",
     "unmuteGeneric": "Kan dempen van microfoon niet opheffen",
+    "speakingWhileMuted": "De microfoon is gedempt",
     "startScreenShareGeneric": "Kan scherm delen niet starten",
     "stopScreenShareGeneric": "Kan scherm delen niet stoppen"
   }

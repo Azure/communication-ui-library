@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Dominant Speaker support to Video Gallery",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

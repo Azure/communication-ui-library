@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix display of VideoTile stack for name and mic",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

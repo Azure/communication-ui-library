@@ -1,11 +1,18 @@
 {
   "call": {
     "cameraPermissionDenied": "El explorador está bloqueando el acceso a la cámara",
-    "cameraTurnedOff": "Your camera is turned off",
+    "cameraTurnedOff": "La cámara está apagada",
     "microphonePermissionDenied": "El explorador está bloqueando el acceso al micrófono",
-    "teamsMeetingFailReasonAccessDenied": "Access to the meeting was denied",
-    "teamsMeetingFailReasonParticipantRemoved": "You were removed from the meeting",
-    "teamsMeetingFailToJoin": "Error joining Teams Meeting",
-    "cameraLabel": "Camera"
+    "teamsMeetingFailReasonAccessDenied": "Se denegó el acceso a la reunión",
+    "teamsMeetingFailReasonParticipantRemoved": "Le han quitado de la reunión",
+    "teamsMeetingFailToJoin": "Error al unirse a la reunión de Teams",
+    "defaultPlaceHolder": "Seleccionar una opción",
+    "cameraLabel": "Cámara",
+    "soundLabel": "Sonido",
+    "configurationPageTitle": "Iniciar una llamada",
+    "startCallButtonText": "Iniciar llamada"
+  },
+  "chat": {
+    "chatListHeader": "En este chat"
   }
 }

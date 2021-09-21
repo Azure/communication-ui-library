@@ -675,6 +675,8 @@ export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
     createdOn?: Date;
+    editedOn?: Date;
+    deletedOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
     status?: MessageStatus;
@@ -1164,6 +1166,7 @@ export interface Identifiers {
     sendboxTextfield: string;
     typingIndicator: string;
     videoGallery: string;
+    videoTile: string;
 }
 
 // @public (undocumented)

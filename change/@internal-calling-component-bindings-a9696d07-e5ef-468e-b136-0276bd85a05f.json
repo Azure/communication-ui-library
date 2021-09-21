@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix participant button selector after update to participant button's props relating to the participant list to be top level",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
