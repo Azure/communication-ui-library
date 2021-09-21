@@ -26,7 +26,6 @@ import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
 import { Lobby } from './Lobby';
-import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
 import { CallCompositePage } from './adapter/CallAdapter';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
@@ -101,26 +100,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     }
   }, [callErrorHandler, endedCall]);
 
-  if ('isTeamsCall' in adapter) {
-    const azureAdapter = adapter as AzureCommunicationCallAdapter;
-    const callState = azureAdapter.getState().call?.state;
-    if (
-      azureAdapter.isTeamsCall() &&
-      callState !== undefined &&
-      azureAdapter.getState().call &&
-      ['Connecting', 'Ringing', 'InLobby'].includes(callState)
-    ) {
-      return (
-        <Lobby
-          callState={callState}
-          {...lobbyProps}
-          {...lobbyHandlers}
-          onEndCallClick={endCallHandler}
-          isMicrophoneChecked={azureAdapter.getState().isLocalPreviewMicrophoneEnabled}
-          localVideoViewOption={localVideoViewOption}
-        />
-      );
-    }
+  const adapterState = adapter.getState();
+  const callState = adapterState.call?.state;
+  if (adapterState.isTeamsCall && callState !== undefined && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
+    return (
+      <Lobby
+        callState={callState}
+        {...lobbyProps}
+        {...lobbyHandlers}
+        onEndCallClick={endCallHandler}
+        isMicrophoneChecked={adapterState.isLocalPreviewMicrophoneEnabled}
+        localVideoViewOption={localVideoViewOption}
+      />
+    );
   }
 
   const screenShareModalHostId = 'UILibraryMediaGallery';
