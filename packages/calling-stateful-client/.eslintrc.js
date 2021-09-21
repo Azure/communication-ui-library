@@ -50,7 +50,8 @@ module.exports = {
       'error',
       {
         publicOnly: true,
-        checkConstructors: false
+        checkConstructors: false,
+        enableFixer: false
       }
     ],
     // Following rules are disabled temporarily.
