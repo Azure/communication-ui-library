@@ -26,7 +26,6 @@ import { CallControls } from './CallControls';
 import { ComplianceBanner } from './ComplianceBanner';
 import { lobbySelector } from './selectors/lobbySelector';
 import { Lobby } from './Lobby';
-import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
 import { CallCompositePage } from './adapter/CallAdapter';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
@@ -34,7 +33,7 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { ScreenSharePopup } from './ScreenSharePopup';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { usePropsFor } from './hooks/usePropsFor';
-import { CallCompositeHiddenElements } from './CallComposite';
+import { CallCompositeOptions } from './CallComposite';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
@@ -42,13 +41,14 @@ export interface CallScreenProps {
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  hiddenElements?: CallCompositeHiddenElements;
+  options?: CallCompositeOptions;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar, onFetchAvatarPersonaData } = props;
+  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar, onFetchAvatarPersonaData, options } =
+    props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -100,26 +100,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     }
   }, [callErrorHandler, endedCall]);
 
-  if ('isTeamsCall' in adapter) {
-    const azureAdapter = adapter as AzureCommunicationCallAdapter;
-    const callState = azureAdapter.getState().call?.state;
-    if (
-      azureAdapter.isTeamsCall() &&
-      callState !== undefined &&
-      azureAdapter.getState().call &&
-      ['Connecting', 'Ringing', 'InLobby'].includes(callState)
-    ) {
-      return (
-        <Lobby
-          callState={callState}
-          {...lobbyProps}
-          {...lobbyHandlers}
-          onEndCallClick={endCallHandler}
-          isMicrophoneChecked={azureAdapter.getState().isLocalPreviewMicrophoneEnabled}
-          localVideoViewOption={localVideoViewOption}
-        />
-      );
-    }
+  const adapterState = adapter.getState();
+  const callState = adapterState.call?.state;
+  if (adapterState.isTeamsCall && callState !== undefined && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
+    return (
+      <Lobby
+        callState={callState}
+        {...lobbyProps}
+        {...lobbyHandlers}
+        onEndCallClick={endCallHandler}
+        isMicrophoneChecked={adapterState.isLocalPreviewMicrophoneEnabled}
+        localVideoViewOption={localVideoViewOption}
+      />
+    );
   }
 
   const screenShareModalHostId = 'UILibraryMediaGallery';
@@ -137,7 +130,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                 cameraPermissionGranted={devicePermissions.video}
               />
             </Stack.Item>
-            {props?.hiddenElements?.errorBar !== true && (
+            {options?.errorBar !== false && (
               <Stack.Item>
                 <ErrorBar {...errorBarProps} />
               </Stack.Item>
@@ -170,13 +163,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          {props?.hiddenElements?.callControls !== true && (
+          {options?.callControls !== false && (
             <Stack.Item styles={callControlsStyles}>
               <Stack className={callControlsContainer}>
                 <CallControls
                   onEndCallClick={endCallHandler}
                   callInvitationURL={callInvitationURL}
-                  hiddenElements={props.hiddenElements}
+                  options={options?.callControls}
                 />
               </Stack>
             </Stack.Item>

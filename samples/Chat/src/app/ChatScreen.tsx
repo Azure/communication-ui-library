@@ -101,7 +101,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           <ChatComposite
             adapter={adapter}
             fluentTheme={currentTheme.theme}
-            hiddenElements={{ participantPane: hideParticipants }}
+            options={{ participantPane: !hideParticipants }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
         </Stack.Item>

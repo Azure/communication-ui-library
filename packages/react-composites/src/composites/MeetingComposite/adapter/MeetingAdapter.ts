@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 
 import {
@@ -12,7 +13,8 @@ import {
   IsScreenSharingOnChangedListener,
   IsSpeakingChangedListener,
   ParticipantJoinedListener,
-  ParticipantLeftListener
+  ParticipantLeftListener,
+  CallEndedListener
 } from '../../CallComposite';
 import {
   ChatAdapterThreadManagement,
@@ -24,6 +26,7 @@ import { MeetingAdapterState } from '../state/MeetingAdapterState';
 import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
 import type { AdapterState, AdapterDisposal, AdapterPages } from '../../common/adapters';
+import { Call } from '@azure/communication-calling';
 
 /**
  * Functionality for managing the current meeting.
@@ -54,17 +57,32 @@ export interface MeetingAdapterMeetingManagement
     >,
     Pick<
       ChatAdapterThreadManagement,
-      'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'
+      | 'fetchInitialData'
+      | 'sendMessage'
+      | 'sendReadReceipt'
+      | 'sendTypingIndicator'
+      | 'loadPreviousChatMessages'
+      | 'updateMessage'
+      | 'deleteMessage'
     > {
-  /** Join an existing Meeting */
-  joinMeeting(microphoneOn?: boolean): void;
-  /** Leave the current Meeting */
+  /**
+   * Join an existing Meeting
+   * @returns The underlying Call object of the meeting.
+   */
+  joinMeeting(microphoneOn?: boolean): Call | undefined;
+
+  /**
+   * Leave the current Meeting
+   */
   leaveMeeting(): Promise<void>;
+
   /**
    * Start a new Meeting
    * @param participants - Array of participant IDs. These represent the participants to initialize the meeting with.
+   * @returns The underlying Call object of the meeting.
    */
-  startMeeting(participants: string[]): void;
+  startMeeting(participants: string[]): Call | undefined;
+
   /**
    * Remove a participant from a Meeting
    * @param userId - UserId of the participant to remove.
@@ -80,12 +98,12 @@ export interface MeetingAdapterSubscriptions {
   // Meeting specific subscriptions
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  on(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+  on(event: 'meetingEnded', listener: CallEndedListener): void;
   on(event: 'error', listener: (e: Error) => void): void;
 
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  off(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+  off(event: 'meetingEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
 
   // Call subscriptions
@@ -116,7 +134,8 @@ export interface MeetingAdapterSubscriptions {
  * @alpha
  */
 export interface MeetingAdapter
-  extends AdapterState<MeetingAdapterState>,
+  extends MeetingAdapterMeetingManagement,
+    AdapterState<MeetingAdapterState>,
     AdapterDisposal,
     AdapterPages<MeetingCompositePage>,
     MeetingAdapterSubscriptions {}
