@@ -28,6 +28,7 @@ import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PhoneNumberKind } from '@azure/communication-common';
@@ -115,6 +116,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     rtl?: boolean;
 }
 
