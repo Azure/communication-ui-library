@@ -11,11 +11,11 @@ test.describe('Localization tests', async () => {
     users,
     testBrowser
   }) => {
-    const page = await loadCallCompositePage(testBrowser, serverUrl, users[0], { locale: 'fr-FR' });
+    const page = await loadCallCompositePage(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
     page.bringToFront();
     await waitForCallCompositeToLoad(page);
     const configurationPageTitle = await page.waitForSelector(dataUiId('call-composite-configuration-page-title'));
-    expect(await configurationPageTitle?.innerHTML()).toBe('Lancer un appel');
+    expect(await configurationPageTitle?.innerText()).toBe('Lancer un appel');
     await page.waitForSelector(dataUiId('call-composite-start-call-button'));
     await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
     await page.click(dataUiId('call-composite-start-call-button'));
