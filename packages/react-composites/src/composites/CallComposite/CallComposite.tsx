@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { OnRenderAvatarCallback } from '@internal/react-components';
+import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { BaseComposite, BaseCompositeProps } from '../common/Composite';
+import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
@@ -28,7 +28,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   /**
-   * Flags to hide UI elements of the {@link CallComposite}.
+   * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
 }
@@ -55,11 +55,12 @@ type MainScreenProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
-  const { callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData } = props;
+  const { callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const adapter = useAdapter();
   const locale = useLocale();
@@ -96,6 +97,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationURL}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           options={props.options}
         />
       );
@@ -103,7 +105,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 };
 
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationURL, onFetchAvatarPersonaData, options } = props;
+  const { adapter, callInvitationURL, onFetchAvatarPersonaData, onFetchParticipantMenuItems, options } = props;
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });
@@ -118,6 +120,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
         <MainScreen
           callInvitationURL={callInvitationURL}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           options={options}
         />
       </CallAdapterProvider>

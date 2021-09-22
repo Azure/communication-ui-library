@@ -542,6 +542,7 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    removeButtonLabel: string;
 }
 
 // @public (undocumented)
@@ -563,7 +564,11 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
+
+// @public
+export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
 // @public
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
