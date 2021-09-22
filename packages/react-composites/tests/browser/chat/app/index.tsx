@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 
 import { IdentifierProvider } from '@internal/react-components';
 import { ChatAdapter, createAzureCommunicationChatAdapter, ChatComposite } from '../../../../src';
+import { getLocale } from '../../localizationUtils';
 import { IDS } from '../../config';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -17,6 +18,7 @@ const token = params.token;
 const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 const userId = params.userId;
+const locale = params.locale;
 const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
@@ -74,6 +76,7 @@ function App(): JSX.Element {
                   )
               : undefined
           }
+          locale={getLocale(locale)}
         />
       )}
     </IdentifierProvider>

@@ -93,7 +93,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         {options?.participantPane !== false && (
           <Stack.Item className={participantListWrapper}>
             <Stack className={participantListStack}>
-              <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>
+              <Stack.Item data-ui-id="chat-composite-participant-list-header" className={listHeader}>
+                {chatListHeader}
+              </Stack.Item>
               <Stack.Item className={participantListStyle}>
                 <ParticipantList
                   {...participantListProps}
