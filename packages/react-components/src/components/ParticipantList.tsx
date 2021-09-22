@@ -76,9 +76,9 @@ const onRenderParticipantDefault = (
     }
   }
 
-  let defaultMenuItems = defaultOnFetchParticipantMenuItems(participant.userId, myUserId, onParticipantRemove);
+  let menuItems = defaultOnFetchParticipantMenuItems(participant.userId, myUserId, onParticipantRemove);
   if (onFetchParticipantMenuItems) {
-    defaultMenuItems = onFetchParticipantMenuItems(participant.userId, myUserId, defaultMenuItems);
+    menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
   }
 
   const onRenderIcon =
@@ -103,7 +103,7 @@ const onRenderParticipantDefault = (
         userId={participant.userId}
         displayName={participant.displayName}
         me={myUserId ? participant.userId === myUserId : false}
-        menuItems={defaultMenuItems}
+        menuItems={menuItems}
         presence={presence}
         onRenderIcon={onRenderIcon}
         onRenderAvatar={onRenderAvatar}
@@ -117,11 +117,7 @@ const getParticipantsForDefaultRender = (
   participants: CommunicationParticipant[],
   excludeMe: boolean,
   myUserId: string | undefined
-): CommunicationParticipant[] | [] => {
-  if (participants === undefined) {
-    return [];
-  }
-
+): CommunicationParticipant[] => {
   if (!excludeMe || !myUserId) {
     return [...participants];
   }

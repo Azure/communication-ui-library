@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Update Feature Toggle API",
+  "comment": "Breaking Change: Update Feature Toggle API. Developers will need to use `options` prop in Composite instead of `hiddenElements`",
   "packageName": "@internal/react-composites",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"

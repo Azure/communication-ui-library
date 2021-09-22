@@ -28,7 +28,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   /**
-   * Flags to hide UI elements of the {@link CallComposite}.
+   * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
 }
