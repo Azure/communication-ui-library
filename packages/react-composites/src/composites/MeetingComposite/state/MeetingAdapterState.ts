@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationIdentifier } from '@azure/communication-common';
-import { CallAdapter, CallAdapterClientState, CallAdapterState } from '../../CallComposite';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
 import {
@@ -16,7 +16,7 @@ import {
  * UI state pertaining to the Meeting Composite.
  * @alpha
  */
-export interface MeetingAdapterUiState {
+export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
   /** Current page in the meeting composite. */
   page: MeetingCompositePage;
 }
@@ -25,9 +25,9 @@ export interface MeetingAdapterUiState {
  * State from the backend services that drives Meeting Composite.
  * @alpha
  */
-export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
   /** ID of the meeting participant using this Meeting Adapter. */
-  userId: CommunicationIdentifier;
+  userId: CommunicationUserIdentifier;
   /** Display name of the meeting participant using this Meeting Adapter. */
   displayName: string | undefined;
   /** State of the current Meeting. */
@@ -60,7 +60,9 @@ export function meetingAdapterStateFromBackingStates(
     userId: callAdapterState.userId,
     page: callPageToMeetingPage(callAdapterState.page),
     displayName: callAdapterState.displayName,
-    devices: callAdapterState.devices
+    devices: callAdapterState.devices,
+    isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
+    isTeamsCall: callAdapterState.isTeamsCall
   };
 }
 
@@ -82,16 +84,17 @@ export function mergeCallAdapterStateIntoMeetingAdapterState(
   meetingAdapterState: MeetingAdapterState,
   callAdapterState: CallAdapterState
 ): MeetingAdapterState {
-  const newMeetingState =
-    meetingAdapterState.meeting && callAdapterState.call
-      ? mergeCallStateIntoMeetingState(meetingAdapterState.meeting, callAdapterState.call)
-      : undefined;
+  const newMeetingState = callAdapterState.call
+    ? mergeCallStateIntoMeetingState(meetingAdapterState.meeting, callAdapterState.call)
+    : undefined;
 
   return {
     userId: callAdapterState.userId,
     page: callPageToMeetingPage(callAdapterState.page),
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
-    meeting: newMeetingState
+    meeting: newMeetingState,
+    isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
+    isTeamsCall: callAdapterState.isTeamsCall
   };
 }

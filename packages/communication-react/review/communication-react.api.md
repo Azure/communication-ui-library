@@ -146,6 +146,16 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
+// @alpha
+export type AzureCommunicationMeetingAdapterArgs = {
+    endpointUrl: string;
+    userId: CommunicationUserKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    chatThreadId: string;
+    callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+};
+
 // @public (undocumented)
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
@@ -204,6 +214,7 @@ export type CallAdapterClientState = {
     call?: CallState;
     devices: DeviceManagerState;
     endedCall?: CallState;
+    isTeamsCall: boolean;
     latestErrors: AdapterErrors;
 };
 
@@ -932,6 +943,9 @@ export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displa
 // @public (undocumented)
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
+// @alpha
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+
 // @public (undocumented)
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
@@ -1244,22 +1258,22 @@ export interface MediaDiagnosticsState {
 }
 
 // @alpha
-export interface MeetingAdapter extends AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha
-export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
     meeting: MeetingState | undefined;
-    userId: CommunicationIdentifier;
+    userId: CommunicationUserIdentifier;
 }
 
 // @alpha
-export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'> {
-    joinMeeting(microphoneOn?: boolean): void;
+export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+    joinMeeting(microphoneOn?: boolean): Call | undefined;
     leaveMeeting(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    startMeeting(participants: string[]): void;
+    startMeeting(participants: string[]): Call | undefined;
 }
 
 // @alpha
@@ -1273,7 +1287,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    off(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    off(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
     off(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
@@ -1297,7 +1311,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    on(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    on(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
     on(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
@@ -1319,7 +1333,7 @@ export interface MeetingAdapterSubscriptions {
 }
 
 // @alpha
-export interface MeetingAdapterUiState {
+export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
     page: MeetingCompositePage;
 }
 
@@ -1331,8 +1345,7 @@ export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'erro
 
 // @alpha
 export type MeetingCompositeProps = {
-    callAdapter: CallAdapter;
-    chatAdapter: ChatAdapter;
+    meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
 };
@@ -1345,12 +1358,12 @@ export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingE
 
 // @alpha
 export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
-    id: CommunicationIdentifier;
+    id: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     meetingEndReason?: MeetingEndReason;
 }
 
 // @alpha
-export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
+export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
     meetingEndReason?: MeetingEndReason;
     participants: {

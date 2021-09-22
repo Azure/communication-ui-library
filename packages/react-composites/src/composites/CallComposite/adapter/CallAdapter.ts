@@ -33,6 +33,7 @@ export type CallAdapterClientState = {
   call?: CallState;
   devices: DeviceManagerState;
   endedCall?: CallState;
+  isTeamsCall: boolean;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
