@@ -132,7 +132,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   } = props;
 
   const ids = useIdentifiers();
-  const locale = useLocale().strings.participantItem;
+  const strings = useLocale().strings.participantItem;
 
   const displayedParticipants: CommunicationParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
@@ -143,7 +143,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     if (participant.userId !== myUserId && onParticipantRemove) {
       menuItems.push({
         key: 'remove',
-        text: locale.removeButtonLabel,
+        text: strings.removeButtonLabel,
         onClick: () => onParticipantRemove(participant.userId)
       });
     }

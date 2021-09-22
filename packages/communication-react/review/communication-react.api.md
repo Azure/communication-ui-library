@@ -1609,6 +1609,7 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    removeButtonLabel: string;
 }
 
 // @public (undocumented)
