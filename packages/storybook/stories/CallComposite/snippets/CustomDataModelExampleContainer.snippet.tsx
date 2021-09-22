@@ -72,8 +72,6 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
 
   // Custom Menu Item Callback for Participant List
   const onFetchParticipantMenuItems: ParticipantMenuItemsCallback = (participantId, userId, defaultMenuItems) => {
-    console.log('Remote Participant', participantId);
-    console.log('Current Participant', userId);
     let customMenuItems: IContextualMenuItem[] = [
       {
         key: 'Custom Menu Item',
