@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 export { CallComposite } from './CallComposite';
-export type { CallCompositeHiddenElements, CallCompositeProps } from './CallComposite';
-export type { CallControlHiddenElements } from './CallControls';
+export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
+export type { CallControlOptions } from './CallControls';
 
 export * from './adapter';
 export * from './Strings';

@@ -14,7 +14,6 @@ export const callControlsContainer = mergeStyles({
   height: '3.875rem',
   padding: '0.0625rem 0',
 
-  overflow: 'hidden',
   flexDirection: 'row',
   alignItems: 'center',
   marginBottom: 2,
@@ -31,16 +30,15 @@ export const containerStyles: IStackStyles = {
   root: {
     height: '100%',
     width: '100%',
-    position: 'relative'
+    position: 'relative',
+    minHeight: '15rem' // linked to minimum space allocated to media gallery
   }
 };
 
 export const subContainerStyles: IStackStyles = {
   root: {
-    overflow: 'hidden',
     width: '100%',
-    height: '100%',
-    minHeight: '10rem' // space affordance to ensure media gallery has minimum space allocated
+    height: '100%'
   }
 };
 

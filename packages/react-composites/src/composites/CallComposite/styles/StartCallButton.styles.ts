@@ -14,6 +14,5 @@ export const buttonStyle = mergeStyles({
   height: '2.75rem',
   width: '100%',
   marginTop: '1.125rem',
-  maxWidth: '18.75rem',
-  minWidth: '12.5rem'
+  maxWidth: '18.75rem'
 });

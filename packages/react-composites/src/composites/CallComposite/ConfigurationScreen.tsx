@@ -12,10 +12,14 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { useSelector } from './hooks/useSelector';
 import { OptionsButton } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { titleContainerStyle } from './styles/ConfigurationScreen.styles';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from './LocalPreview';
-import { configurationStackTokens, configurationContainer } from './styles/CallConfiguration.styles';
+import {
+  configurationStackTokens,
+  configurationContainer,
+  selectionContainerStyle,
+  titleContainerStyle
+} from './styles/CallConfiguration.styles';
 import { useLocale } from '../localization';
 
 export interface ConfigurationScreenProps {
@@ -33,21 +37,26 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
   const title = locale.strings.call.configurationPageTitle;
 
   return (
-    <Stack verticalAlign="center" className={configurationContainer}>
-      <Stack horizontal wrap horizontalAlign="center" verticalAlign="center" tokens={configurationStackTokens}>
-        <LocalPreview />
-        <Stack>
-          <div className={titleContainerStyle}>{title}</div>
-          <LocalDeviceSettings
-            {...options}
-            {...localDeviceSettingsHandlers}
-            cameraPermissionGranted={cameraPermissionGranted}
-            microphonePermissionGranted={microphonePermissionGranted}
-          />
-          <div>
-            <StartCallButton onClickHandler={startCallHandler} isDisabled={!microphonePermissionGranted} />
-          </div>
-        </Stack>
+    <Stack
+      horizontal
+      wrap
+      horizontalAlign="center"
+      verticalAlign="center"
+      tokens={configurationStackTokens}
+      className={configurationContainer}
+    >
+      <LocalPreview />
+      <Stack className={selectionContainerStyle}>
+        <div className={titleContainerStyle}>{title}</div>
+        <LocalDeviceSettings
+          {...options}
+          {...localDeviceSettingsHandlers}
+          cameraPermissionGranted={cameraPermissionGranted}
+          microphonePermissionGranted={microphonePermissionGranted}
+        />
+        <div>
+          <StartCallButton onClickHandler={startCallHandler} isDisabled={!microphonePermissionGranted} />
+        </div>
       </Stack>
     </Stack>
   );

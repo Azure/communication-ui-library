@@ -34,7 +34,8 @@ export const controlBarStyles: IControlBarStyles = {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%'
+    width: '100%',
+    minWidth: 'fit-content'
   },
   dockedBottom: {
     flexFlow: 'row nowrap',
@@ -43,7 +44,8 @@ export const controlBarStyles: IControlBarStyles = {
     position: 'absolute',
     bottom: 0,
     left: 0,
-    width: '100%'
+    width: '100%',
+    minWidth: 'fit-content'
   },
   dockedLeft: {
     justifyContent: 'center',
@@ -71,6 +73,7 @@ export const controlBarStyles: IControlBarStyles = {
     top: '1rem',
     left: '50%',
     transform: 'translateX(-50%)',
+    minWidth: 'fit-content',
     zIndex: 10
   },
   floatingBottom: {
@@ -83,6 +86,7 @@ export const controlBarStyles: IControlBarStyles = {
     bottom: '1rem',
     left: '50%',
     transform: 'translateX(-50%)',
+    minWidth: 'fit-content',
     zIndex: 10
   },
   floatingLeft: {
@@ -131,7 +135,9 @@ export const controlButtonStyles: IButtonStyles = {
 export const controlButtonLabelStyles: IStyle = {
   fontSize: '0.625rem',
   lineHeight: '1rem',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  display: 'block',
+  margin: '0rem 0.25rem'
 };
 
 export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {

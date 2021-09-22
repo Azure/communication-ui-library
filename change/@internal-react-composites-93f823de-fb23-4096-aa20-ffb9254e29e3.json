@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Feature Toggle API",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
