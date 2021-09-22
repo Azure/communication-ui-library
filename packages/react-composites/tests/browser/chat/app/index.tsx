@@ -6,7 +6,12 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { IdentifierProvider } from '@internal/react-components';
-import { ChatAdapter, createAzureCommunicationChatAdapter, ChatComposite } from '../../../../src';
+import {
+  ChatAdapter,
+  createAzureCommunicationChatAdapter,
+  ChatComposite,
+  COMPOSITE_LOCALE_FR_FR
+} from '../../../../src';
 import { IDS } from '../../config';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -17,6 +22,7 @@ const token = params.token;
 const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 const userId = params.userId;
+const useFrlocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
@@ -74,6 +80,7 @@ function App(): JSX.Element {
                   )
               : undefined
           }
+          locale={useFrlocale ? COMPOSITE_LOCALE_FR_FR : undefined}
         />
       )}
     </IdentifierProvider>

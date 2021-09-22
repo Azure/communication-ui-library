@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Added browser localization tests for call and chat composites",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
