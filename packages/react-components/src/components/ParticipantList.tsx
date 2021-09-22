@@ -4,9 +4,19 @@
 import { Icon, IContextualMenuItem, PersonaPresence, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
+import { useLocale } from '../localization';
 import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
 import { ParticipantItem } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
+
+/**
+ * A callback for providing custom menu items for each participant in the participant list.
+ */
+export type ParticipantMenuItemsCallback = (
+  participantUserId: string,
+  userId?: string,
+  defaultMenuItems?: IContextualMenuItem[]
+) => IContextualMenuItem[];
 
 /**
  * Props for component `ParticipantList`
@@ -28,13 +38,16 @@ export type ParticipantListProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
   onParticipantRemove?: (userId: string) => void;
+  /** Optional callback to render custom menu items for each participant. */
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 const onRenderParticipantDefault = (
   participant: CommunicationParticipant,
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
-  onRenderAvatar?: OnRenderAvatarCallback
+  onRenderAvatar?: OnRenderAvatarCallback,
+  createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[]
 ): JSX.Element | null => {
   // Try to consider CommunicationParticipant as CallParticipant
   const callingParticipant = participant as CallParticipant;
@@ -48,14 +61,7 @@ const onRenderParticipantDefault = (
     }
   }
 
-  const menuItems: IContextualMenuItem[] = [];
-  if (participant.userId !== myUserId && onParticipantRemove) {
-    menuItems.push({
-      key: 'Remove',
-      text: 'Remove',
-      onClick: () => onParticipantRemove(participant.userId)
-    });
-  }
+  const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
     callingParticipant?.isScreenSharing || callingParticipant?.isMuted
@@ -93,11 +99,7 @@ const getParticipantsForDefaultRender = (
   participants: CommunicationParticipant[],
   excludeMe: boolean,
   myUserId: string | undefined
-) => {
-  if (participants === undefined) {
-    return [];
-  }
-
+): CommunicationParticipant[] => {
   if (!excludeMe || !myUserId) {
     return [...participants];
   }
@@ -119,19 +121,52 @@ const getParticipantsForDefaultRender = (
  * assigned then each participant is rendered with `ParticipantItem`.
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
-  const { excludeMe = false, myUserId, participants, onParticipantRemove, onRenderAvatar, onRenderParticipant } = props;
+  const {
+    excludeMe = false,
+    myUserId,
+    participants,
+    onParticipantRemove,
+    onRenderAvatar,
+    onRenderParticipant,
+    onFetchParticipantMenuItems
+  } = props;
+
   const ids = useIdentifiers();
+  const strings = useLocale().strings.participantItem;
 
   const displayedParticipants: CommunicationParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
+
+  const createParticipantMenuItems = (participant): IContextualMenuItem[] => {
+    let menuItems: IContextualMenuItem[] = [];
+    if (participant.userId !== myUserId && onParticipantRemove) {
+      menuItems.push({
+        key: 'remove',
+        text: strings.removeButtonLabel,
+        onClick: () => onParticipantRemove(participant.userId)
+      });
+    }
+
+    if (onFetchParticipantMenuItems) {
+      menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
+    }
+
+    return menuItems;
+  };
 
   return (
     <Stack data-ui-id={ids.participantList} className={participantListStyle}>
       {displayedParticipants.map((participant: CommunicationParticipant) =>
         onRenderParticipant
           ? onRenderParticipant(participant)
-          : onRenderParticipantDefault(participant, myUserId, onParticipantRemove, onRenderAvatar)
+          : onRenderParticipantDefault(
+              participant,
+              myUserId,
+              onParticipantRemove,
+              onRenderAvatar,
+              createParticipantMenuItems
+            )
       )}
     </Stack>
   );
