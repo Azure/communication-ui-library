@@ -35,7 +35,7 @@ export interface SendBoxStrings {
   /**
    * The warning message when send box text length is more than max limit
    */
-  textExceedsLimit: string;
+  textTooLong: string;
 }
 
 /**
@@ -139,7 +139,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
-  const textTooLongMessage = textValueOverflow ? strings.textExceedsLimit : undefined;
+  const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
   const mergedSendButtonStyle = useMemo(

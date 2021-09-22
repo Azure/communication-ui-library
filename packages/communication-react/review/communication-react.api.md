@@ -1770,7 +1770,7 @@ userId: string;
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
-    textExceedsLimit: string;
+    textTooLong: string;
 }
 
 // @public (undocumented)

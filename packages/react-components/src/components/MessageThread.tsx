@@ -163,7 +163,7 @@ export interface MessageThreadStrings {
   participantJoined: string;
   /** String for participants left */
   participantLeft: string;
-  /** String for edited tag of a message */
+  /** Tag shown on a message that has been edited */
   editedTag: string;
   /** String for editing message in floating menu */
   editMessage: string;

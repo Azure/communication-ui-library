@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Localization for edit + delete messages: Add strings into sendbox and messageThread Remove some unnecessary variables",
+  "comment": "Localization for edit + delete messages",
   "packageName": "@internal/react-components",
   "email": "jinan@microsoft.com",
   "dependentChangeType": "patch"

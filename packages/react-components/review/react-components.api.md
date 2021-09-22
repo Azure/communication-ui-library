@@ -628,7 +628,7 @@ export interface SendBoxProps {
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
-    textExceedsLimit: string;
+    textTooLong: string;
 }
 
 // @public (undocumented)
