@@ -61,7 +61,7 @@ const onRenderParticipantDefault = (
     }
   }
 
-  let menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
+  const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
     callingParticipant?.isScreenSharing || callingParticipant?.isMuted
