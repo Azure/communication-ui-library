@@ -4,6 +4,7 @@
 import { Icon, IContextualMenuItem, PersonaPresence, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
+import { useLocale } from '../localization';
 import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
 import { ParticipantItem } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
@@ -41,28 +42,12 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
-const defaultOnFetchParticipantMenuItems = (
-  participantUserId: string,
-  myUserId?: string,
-  onParticipantRemove?: (userId: string) => void
-): IContextualMenuItem[] => {
-  const menuItems: IContextualMenuItem[] = [];
-  if (participantUserId !== myUserId && onParticipantRemove) {
-    menuItems.push({
-      key: 'Remove',
-      text: 'Remove',
-      onClick: () => onParticipantRemove(participantUserId)
-    });
-  }
-  return menuItems;
-};
-
 const onRenderParticipantDefault = (
   participant: CommunicationParticipant,
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: OnRenderAvatarCallback,
-  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback
+  createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[]
 ): JSX.Element | null => {
   // Try to consider CommunicationParticipant as CallParticipant
   const callingParticipant = participant as CallParticipant;
@@ -76,10 +61,7 @@ const onRenderParticipantDefault = (
     }
   }
 
-  let menuItems = defaultOnFetchParticipantMenuItems(participant.userId, myUserId, onParticipantRemove);
-  if (onFetchParticipantMenuItems) {
-    menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
-  }
+  let menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
     callingParticipant?.isScreenSharing || callingParticipant?.isMuted
@@ -150,10 +132,28 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   } = props;
 
   const ids = useIdentifiers();
+  const locale = useLocale().strings.participantItem;
 
   const displayedParticipants: CommunicationParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
+
+  const createParticipantMenuItems = (participant): IContextualMenuItem[] => {
+    let menuItems: IContextualMenuItem[] = [];
+    if (participant.userId !== myUserId && onParticipantRemove) {
+      menuItems.push({
+        key: 'remove',
+        text: locale.removeButtonLabel,
+        onClick: () => onParticipantRemove(participant.userId)
+      });
+    }
+
+    if (onFetchParticipantMenuItems) {
+      menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
+    }
+
+    return menuItems;
+  };
 
   return (
     <Stack data-ui-id={ids.participantList} className={participantListStyle}>
@@ -165,7 +165,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               myUserId,
               onParticipantRemove,
               onRenderAvatar,
-              onFetchParticipantMenuItems
+              createParticipantMenuItems
             )
       )}
     </Stack>
