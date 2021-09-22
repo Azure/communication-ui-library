@@ -14,12 +14,12 @@ test.describe('Localization tests', async () => {
     const page = await loadCallCompositePage(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
     page.bringToFront();
     await waitForCallCompositeToLoad(page);
-    const configurationPageTitle = await page.waitForSelector(dataUiId('call-composite-configuration-page-title'));
-    expect(await configurationPageTitle?.innerText()).toBe('Lancer un appel');
     await page.waitForSelector(dataUiId('call-composite-start-call-button'));
     await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+    await page.waitForTimeout(1000);
+    expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
     await page.click(dataUiId('call-composite-start-call-button'));
-    const participantsButton = await page.waitForSelector(dataUiId('call-composite-participants-button'));
-    expect(await participantsButton?.innerText()).toBe('Personnes');
+    await page.waitForTimeout(1000);
+    expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
   });
 });

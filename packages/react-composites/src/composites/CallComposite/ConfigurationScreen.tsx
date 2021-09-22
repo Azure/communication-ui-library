@@ -37,9 +37,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       <Stack horizontal wrap horizontalAlign="center" verticalAlign="center" tokens={configurationStackTokens}>
         <LocalPreview />
         <Stack>
-          <div data-ui-id="call-composite-configuration-page-title" className={titleContainerStyle}>
-            {title}
-          </div>
+          <div className={titleContainerStyle}>{title}</div>
           <LocalDeviceSettings
             {...options}
             {...localDeviceSettingsHandlers}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { dataUiId, gotoPage, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
+import { gotoPage, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
@@ -11,7 +11,6 @@ test.describe('Localization tests', async () => {
     page.bringToFront();
     await waitForCompositeToLoad(page);
     stubMessageTimestamps(page);
-    const participantListHeader = await page.waitForSelector(dataUiId('chat-composite-participant-list-header'));
-    expect(await participantListHeader?.innerText()).toBe('Dans cette conversation');
+    expect(await page.screenshot()).toMatchSnapshot('localized-chat.png', { threshold: 0.5 });
   });
 });
