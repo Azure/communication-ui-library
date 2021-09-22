@@ -29,7 +29,14 @@ export const EndCall = (props: EndCallProps): JSX.Element => {
     'https://docs.microsoft.com/answers/search.html?c=&includeChildren=&f=&type=question+OR+idea+OR+kbentry+OR+answer+OR+topic+OR+user&redirect=search%2Fsearch&sort=relevance&q=azure-communication-services';
 
   return (
-    <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
+    <Stack
+      horizontal
+      wrap
+      horizontalAlign="center"
+      verticalAlign="center"
+      tokens={mainStackTokens}
+      className={endCallContainerStyle}
+    >
       <Stack tokens={upperStackTokens}>
         <div className={endCallTitleStyle}>{leftCall}</div>
         <Stack horizontal wrap tokens={buttonsStackTokens}>
