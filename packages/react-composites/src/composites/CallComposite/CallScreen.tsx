@@ -13,7 +13,6 @@ import { isInCall } from '../../utils/SDKUtils';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
-import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
 import { CallCompositePage } from './adapter/CallAdapter';
 import { useAdapter } from './adapter/CallAdapterProvider';
 import { CallCompositeOptions } from './CallComposite';
@@ -34,7 +33,6 @@ import { mediaGallerySelector } from './selectors/mediaGallerySelector';
 import {
   bannersContainerStyles,
   callControlsContainer,
-  callControlsStyles,
   containerStyles,
   mediaGalleryContainerStyles,
   subContainerStyles
@@ -113,26 +111,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     }
   }, [callErrorHandler, endedCall]);
 
-  if ('isTeamsCall' in adapter) {
-    const azureAdapter = adapter as AzureCommunicationCallAdapter;
-    const callState = azureAdapter.getState().call?.state;
-    if (
-      azureAdapter.isTeamsCall() &&
-      callState !== undefined &&
-      azureAdapter.getState().call &&
-      ['Connecting', 'Ringing', 'InLobby'].includes(callState)
-    ) {
-      return (
-        <Lobby
-          callState={callState}
-          {...lobbyProps}
-          {...lobbyHandlers}
-          onEndCallClick={endCallHandler}
-          isMicrophoneChecked={azureAdapter.getState().isLocalPreviewMicrophoneEnabled}
-          localVideoViewOption={localVideoViewOption}
-        />
-      );
-    }
+  const adapterState = adapter.getState();
+  const callState = adapterState.call?.state;
+  if (adapterState.isTeamsCall && callState !== undefined && ['Connecting', 'Ringing', 'InLobby'].includes(callState)) {
+    return (
+      <Lobby
+        callState={callState}
+        {...lobbyProps}
+        {...lobbyHandlers}
+        onEndCallClick={endCallHandler}
+        isMicrophoneChecked={adapterState.isLocalPreviewMicrophoneEnabled}
+        localVideoViewOption={localVideoViewOption}
+      />
+    );
   }
 
   const screenShareModalHostId = 'UILibraryMediaGallery';
@@ -140,35 +131,33 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       {isInCall(callStatus ?? 'None') ? (
         <>
-          <Stack styles={bannersContainerStyles}>
-            <Stack.Item>
+          <Stack.Item styles={bannersContainerStyles}>
+            <Stack>
               <ComplianceBanner {...complianceBannerProps} />
-            </Stack.Item>
-            <Stack.Item style={permissionsBannerContainerStyle}>
+            </Stack>
+            <Stack style={permissionsBannerContainerStyle}>
               <PermissionsBanner
                 microphonePermissionGranted={devicePermissions.audio}
                 cameraPermissionGranted={devicePermissions.video}
               />
-            </Stack.Item>
+            </Stack>
             {options?.errorBar !== false && (
-              <Stack.Item>
+              <Stack>
                 <ErrorBar {...errorBarProps} />
-              </Stack.Item>
+              </Stack>
             )}
-          </Stack>
+          </Stack.Item>
 
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
-                <Stack styles={containerStyles} grow>
-                  <Stack.Item id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
-                    <MediaGallery
-                      {...mediaGalleryProps}
-                      {...mediaGalleryHandlers}
-                      onRenderAvatar={onRenderAvatar}
-                      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-                    />
-                  </Stack.Item>
+                <Stack id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
+                  <MediaGallery
+                    {...mediaGalleryProps}
+                    {...mediaGalleryHandlers}
+                    onRenderAvatar={onRenderAvatar}
+                    onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+                  />
                 </Stack>
                 {isScreenShareOn ? (
                   <ScreenSharePopup
@@ -184,15 +173,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             )}
           </Stack.Item>
           {options?.callControls !== false && (
-            <Stack.Item styles={callControlsStyles}>
-              <Stack className={callControlsContainer}>
-                <CallControls
-                  onEndCallClick={endCallHandler}
-                  callInvitationURL={callInvitationURL}
-                  onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-                  options={options?.callControls}
-                />
-              </Stack>
+            <Stack.Item className={callControlsContainer}>
+              <CallControls
+                onEndCallClick={endCallHandler}
+                callInvitationURL={callInvitationURL}
+                onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+                options={options?.callControls}
+              />
             </Stack.Item>
           )}
         </>
