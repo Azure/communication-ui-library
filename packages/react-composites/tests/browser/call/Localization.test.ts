@@ -3,7 +3,7 @@
 
 import { test } from './fixture';
 import {
-  loadCallCompositePage,
+  loadPageWithPermissionsForCalls,
   waitForCallCompositeToLoad,
   loadCallScreenWithParticipantVideos
 } from '../common/utils';
@@ -15,7 +15,7 @@ test.describe('Localization tests', async () => {
     users,
     testBrowser
   }) => {
-    const page = await loadCallCompositePage(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
+    const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
     await page.bringToFront();
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
