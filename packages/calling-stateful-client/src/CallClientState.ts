@@ -99,6 +99,7 @@ export interface CallAgentState {
  * automatically listen for transcription state of the call and update the state exposed by {@link StatefulCallClient}
  * accordingly.
  */
+// [ todo ] should be named *State
 export interface TranscriptionCallFeature {
   /**
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature.isTranscriptionActive}.
@@ -110,6 +111,7 @@ export interface TranscriptionCallFeature {
  * State only version of {@link @azure/communication-calling#RecordingCallFeature}. {@link StatefulCallClient} will
  * automatically listen for recording state of the call and update the state exposed by {@link StatefulCallClient} accordingly.
  */
+// [ todo ] should be named *State
 export interface RecordingCallFeature {
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature.isRecordingActive}.
@@ -253,10 +255,18 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#DominantSpeakersInfo }.
    */
+  // [note] Should there be an intermediate "FeaturesState" type. `call.features.dominantSpeaker`
+  //   * .NET folks suggested something similar.
   dominantSpeakers?: DominantSpeakersInfo;
   /**
    * Proxy of {@link @azure/communication-calling#Call.localVideoStreams}.
    */
+  // [note] TODO
+  //   * gov cloud - devicemanager is supported today without auth. But this is not allowed on gov clouds
+  // (e.g. telemetry can't be sent to public cloud from gov, and we can't know we're gov)
+  //   * Possible fixes in headless:
+  //     * Break DeviceManager usage before auth
+  //     * Buffer telemetry and then send
   localVideoStreams: LocalVideoStreamState[];
   /**
    * Proxy of {@link @azure/communication-calling#Call.remoteParticipants}.
@@ -408,6 +418,7 @@ export interface CallClientState {
    * {@link @azure/communication-calling#Call.id} could change. You should not cache the id itself but the entire
    * {@link @azure/communication-calling#Call} and then use the id contained to look up data in this map.
    */
+  // [note] This belongs in CallAgentState
   calls: { [key: string]: CallState };
   /**
    * Calls that have ended are stored here so the callEndReason could be checked. It is an array of CallState
@@ -415,11 +426,14 @@ export interface CallClientState {
    * {@link MAX_CALL_HISTORY_LENGTH} number of Calls are kept in this array with the older ones being replaced by newer
    * ones.
    */
+  // [note] This belongs in CallAgentState
+  // [note] Should this be merged with `calls` -- Check with team prprabhu?
   callsEnded: CallState[];
   /**
    * Proxy of {@link @azure/communication-calling#IncomingCall} as an object with IncomingCall {@link IncomingCall} fields.
    * It is keyed by {@link @azure/communication-calling#IncomingCall.id}.
    */
+  // [note] This belongs in CallAgentState
   incomingCalls: { [key: string]: IncomingCallState };
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a array of IncomingCall
@@ -428,6 +442,8 @@ export interface CallClientState {
    * is sorted by endTime ascending. Only MAX_CALL_HISTORY_LENGTH number of IncomingCalls are kept in this array with
    * the older ones being replaced by newer ones.
    */
+  // [note] Should probably be merged with callsEnded
+  // [note] This belongs in CallAgentState
   incomingCallsEnded: IncomingCallState[];
   /**
    * Proxy of {@link @azure/communication-calling#DeviceManager}. Please review {@link DeviceManagerState}.
@@ -442,6 +458,9 @@ export interface CallClientState {
    * developer for easier access to userId. Must be passed in at initialization of the {@link StatefulCallClient}.
    * Completely controlled by the developer.
    */
+  // [note] Does not belong in headless SDK (?)
+  // - Maybe worth moving in.
+  // - What happens if a user joins the same call from multiple devices (??).
   userId: CommunicationUserKind;
   /**
    * Stores the latest error for each API method.
