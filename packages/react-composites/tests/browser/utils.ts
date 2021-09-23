@@ -169,12 +169,6 @@ export const createCallingUserAndToken = async (): Promise<CallUserType> => {
   };
 };
 
-// eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const createTestPages = async ({ serverUrl, testBrowser, users }, use) => {
-  const pages = await Promise.all(users.map(async (user) => loadPage(testBrowser, serverUrl, user)));
-  await use(pages);
-};
-
 /**
  * Load a Page with ChatComposite app.
  * @param browser Browser to create Page in.
