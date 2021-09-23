@@ -14,7 +14,6 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
 import { v1 } from 'uuid';
-import { loadUrlInPage } from './utils';
 
 /**
  * Creates a page to be tested for each participant in a browser page.
