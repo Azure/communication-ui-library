@@ -37,7 +37,12 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
  */
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('load');
-  await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+
+  await page.waitForFunction(() => {
+    const callButton = document.querySelector('call-composite-start-call-button');
+    const callButtonEnabled = callButton?.ariaDisabled !== 'true';
+    return callButtonEnabled;
+  });
 };
 
 /**
