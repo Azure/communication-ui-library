@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Updated styles to ensure zooming in at 400%",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

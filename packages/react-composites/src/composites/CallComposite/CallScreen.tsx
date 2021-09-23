@@ -2,38 +2,41 @@
 // Licensed under the MIT license.
 
 import { Spinner, Stack } from '@fluentui/react';
-import React, { useEffect, useRef, useState } from 'react';
 import {
-  mediaGalleryContainerStyles,
-  containerStyles,
-  callControlsStyles,
-  subContainerStyles,
-  callControlsContainer,
-  bannersContainerStyles
-} from './styles/CallScreen.styles';
-
-import { MediaGallery } from './MediaGallery';
+  ErrorBar,
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback,
+  VideoStreamOptions
+} from '@internal/react-components';
+import React, { useEffect, useRef, useState } from 'react';
 import { isInCall } from '../../utils/SDKUtils';
-import { complianceBannerSelector } from './selectors/complianceBannerSelector';
-import { useAdapter } from './adapter/CallAdapterProvider';
-import { useSelector } from './hooks/useSelector';
-import { getCallId, getEndedCall } from './selectors/baseSelectors';
-import { callStatusSelector } from './selectors/callStatusSelector';
-import { mediaGallerySelector } from './selectors/mediaGallerySelector';
-import { useHandlers } from './hooks/useHandlers';
-import { ErrorBar, OnRenderAvatarCallback, VideoStreamOptions } from '@internal/react-components';
-import { CallControls } from './CallControls';
-import { ComplianceBanner } from './ComplianceBanner';
-import { lobbySelector } from './selectors/lobbySelector';
-import { Lobby } from './Lobby';
-import { CallCompositePage } from './adapter/CallAdapter';
+import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
-import { devicePermissionSelector } from './selectors/devicePermissionSelector';
-import { ScreenSharePopup } from './ScreenSharePopup';
-import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { usePropsFor } from './hooks/usePropsFor';
+import { CallCompositePage } from './adapter/CallAdapter';
+import { useAdapter } from './adapter/CallAdapterProvider';
 import { CallCompositeOptions } from './CallComposite';
+import { CallControls } from './CallControls';
+import { ComplianceBanner } from './ComplianceBanner';
+import { useHandlers } from './hooks/useHandlers';
+import { usePropsFor } from './hooks/usePropsFor';
+import { useSelector } from './hooks/useSelector';
+import { Lobby } from './Lobby';
+import { MediaGallery } from './MediaGallery';
+import { ScreenSharePopup } from './ScreenSharePopup';
+import { getCallId, getEndedCall } from './selectors/baseSelectors';
+import { callStatusSelector } from './selectors/callStatusSelector';
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
+import { lobbySelector } from './selectors/lobbySelector';
+import { mediaGallerySelector } from './selectors/mediaGallerySelector';
+import {
+  bannersContainerStyles,
+  callControlsContainer,
+  containerStyles,
+  mediaGalleryContainerStyles,
+  subContainerStyles
+} from './styles/CallScreen.styles';
 
 export interface CallScreenProps {
   callInvitationURL?: string;
@@ -41,14 +44,22 @@ export interface CallScreenProps {
   callErrorHandler(customPage?: CallCompositePage): void;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
 }
 
 const spinnerLabel = 'Initializing call client...';
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { callInvitationURL, endCallHandler, callErrorHandler, onRenderAvatar, onFetchAvatarPersonaData, options } =
-    props;
+  const {
+    callInvitationURL,
+    endCallHandler,
+    callErrorHandler,
+    onRenderAvatar,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    options
+  } = props;
 
   const [joinedCall, setJoinedCall] = useState<boolean>(false);
 
@@ -120,35 +131,33 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       {isInCall(callStatus ?? 'None') ? (
         <>
-          <Stack styles={bannersContainerStyles}>
-            <Stack.Item>
+          <Stack.Item styles={bannersContainerStyles}>
+            <Stack>
               <ComplianceBanner {...complianceBannerProps} />
-            </Stack.Item>
-            <Stack.Item style={permissionsBannerContainerStyle}>
+            </Stack>
+            <Stack style={permissionsBannerContainerStyle}>
               <PermissionsBanner
                 microphonePermissionGranted={devicePermissions.audio}
                 cameraPermissionGranted={devicePermissions.video}
               />
-            </Stack.Item>
+            </Stack>
             {options?.errorBar !== false && (
-              <Stack.Item>
+              <Stack>
                 <ErrorBar {...errorBarProps} />
-              </Stack.Item>
+              </Stack>
             )}
-          </Stack>
+          </Stack.Item>
 
           <Stack.Item styles={subContainerStyles} grow>
             {callStatus === 'Connected' && (
               <>
-                <Stack styles={containerStyles} grow>
-                  <Stack.Item id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
-                    <MediaGallery
-                      {...mediaGalleryProps}
-                      {...mediaGalleryHandlers}
-                      onRenderAvatar={onRenderAvatar}
-                      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-                    />
-                  </Stack.Item>
+                <Stack id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
+                  <MediaGallery
+                    {...mediaGalleryProps}
+                    {...mediaGalleryHandlers}
+                    onRenderAvatar={onRenderAvatar}
+                    onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+                  />
                 </Stack>
                 {isScreenShareOn ? (
                   <ScreenSharePopup
@@ -164,14 +173,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             )}
           </Stack.Item>
           {options?.callControls !== false && (
-            <Stack.Item styles={callControlsStyles}>
-              <Stack className={callControlsContainer}>
-                <CallControls
-                  onEndCallClick={endCallHandler}
-                  callInvitationURL={callInvitationURL}
-                  options={options?.callControls}
-                />
-              </Stack>
+            <Stack.Item className={callControlsContainer}>
+              <CallControls
+                onEndCallClick={endCallHandler}
+                callInvitationURL={callInvitationURL}
+                onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+                options={options?.callControls}
+              />
             </Stack.Item>
           )}
         </>

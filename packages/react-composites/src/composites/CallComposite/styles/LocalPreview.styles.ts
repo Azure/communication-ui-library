@@ -6,7 +6,9 @@ import { mergeStyles } from '@fluentui/react';
 export const localPreviewContainerStyle = mergeStyles({
   borderRadius: '.25rem',
   width: '25rem',
-  height: '18.75rem'
+  minWidth: '12.5rem',
+  height: '18.75rem',
+  padding: '0.5rem'
 });
 
 export const cameraOffLabelStyle = mergeStyles({

@@ -39,7 +39,34 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('load');
 
-  // @TODO Add more checks to make sure the composite is fully loaded.
+  await page.waitForFunction(() => {
+    const callButton = document.querySelector('[data-ui-id="call-composite-start-call-button"]');
+    const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
+    return callButtonEnabled;
+  });
+};
+
+/**
+ * Wait for the CallComposite CallScreen page to fully load.
+ */
+export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promise<void> => {
+  // Start local camera and start the call
+  for (const page of pages) {
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+    await page.click(dataUiId('call-composite-start-call-button'));
+  }
+
+  // Wait for all participants cameras to have loaded
+  for (const page of pages) {
+    await page.bringToFront();
+    await page.waitForFunction(() => {
+      const videoNodes = document.querySelectorAll('video');
+      const correctNoOfVideos = document.querySelectorAll('video').length === 2;
+      const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+      return correctNoOfVideos && allVideosLoaded;
+    });
+  }
 };
 
 const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
