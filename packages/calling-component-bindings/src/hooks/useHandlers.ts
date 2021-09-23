@@ -9,9 +9,10 @@ import { CallClientContext, useCall, useCallAgent, useDeviceManager } from '../p
 /**
  * Hook to obtain a handler for a specified component.
  *
- * Used by the top-level packlet to implement merged {@link usePropsFor}.
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
  *
- * @internal
+ * @public
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement | null) => {

@@ -100,9 +100,10 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 /**
  * Get the selector for a specified component.
  *
- * Used by the top-level packlet to implement merged {@link usePropsFor}.
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
  *
- * @internal
+ * @public
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
