@@ -29,7 +29,27 @@ export type MeetingCompositeProps = {
    * Defaults to a light theme if undefined.
    */
   fluentTheme?: PartialTheme | Theme;
+  /**
+   * URL that can be used to copy a meeting invite to the Users clipboard.
+   */
   meetingInvitationURL?: string;
+  /**
+   * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
+   */
+  options?: MeetingCompositeOptions;
+};
+
+/**
+ * Optional features of the {@link MeetingComposite}
+ */
+export type MeetingCompositeOptions = {
+  /**
+   * Choose to use the composite form optimized for use on a mobile device.
+   * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
+   * @defaultValue false
+   * @alpha
+   */
+  mobileView?: boolean;
 };
 
 /**

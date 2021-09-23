@@ -38,6 +38,13 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
  */
 export type CallCompositeOptions = {
   /**
+   * Choose to use the composite form optimized for use on a mobile device.
+   * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
+   * @defaultValue false
+   * @alpha
+   */
+  mobileView?: boolean;
+  /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    * Hide or show the error bar.
    * @defaultValue true
