@@ -39,7 +39,7 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('load');
 
   await page.waitForFunction(() => {
-    const callButton = document.querySelector(dataUiId('call-composite-start-call-button'));
+    const callButton = document.querySelector('[data-ui-id="call-composite-start-call-button"]');
     const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
     return callButtonEnabled;
   });
