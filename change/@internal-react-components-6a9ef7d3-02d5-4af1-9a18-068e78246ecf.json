@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Undo styling to body tag from FluentThemeProvider",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
