@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
-import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
+import { dataUiId, stubMessageTimestamps, updatePageQueryParam, waitForChatCompositeToLoad } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -96,19 +96,12 @@ test.describe('Chat Composite E2E Tests', () => {
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
-
-  test.afterAll(async ({ pages }) => {
-    for (const page of pages) {
-      page.close();
-    }
-  });
 });
 
 test.describe('Chat Composite custom data model', () => {
   test.beforeEach(async ({ pages }) => {
     for (const page of pages) {
-      const url = page.url() + '&' + 'customDataModel=true';
-      await page.goto(url, { waitUntil: 'networkidle' });
+      await updatePageQueryParam(page, { customDataModel: 'true' });
     }
   });
 
