@@ -56,13 +56,9 @@ module.exports = {
           'ArrowFunctionExpression',
           'FunctionDeclaration',
           'FunctionExpression',
-          'MethodDefinition',
-          'Property',
           'TSDeclareFunction',
           'TSEnumDeclaration',
           'TSInterfaceDeclaration',
-          'TSMethodSignature',
-          'TSPropertySignature',
           'TSTypeAliasDeclaration',
           'VariableDeclaration'
         ]
