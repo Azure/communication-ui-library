@@ -1133,7 +1133,7 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
