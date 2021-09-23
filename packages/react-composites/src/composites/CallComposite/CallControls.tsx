@@ -7,6 +7,7 @@ import {
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
+  ParticipantMenuItemsCallback,
   ParticipantsButton,
   ScreenShareButton
 } from '@internal/react-components';
@@ -17,6 +18,7 @@ import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '
 export type CallControlsProps = {
   onEndCallClick(): void;
   callInvitationURL?: string;
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: boolean | CallControlOptions;
 };
 
@@ -59,7 +61,7 @@ export type CallControlOptions = {
 };
 
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const { callInvitationURL, onEndCallClick } = props;
+  const { callInvitationURL, onEndCallClick, onFetchParticipantMenuItems } = props;
   const options = typeof props.options === 'boolean' ? {} : props.options;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
@@ -98,6 +100,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           {...participantsButtonProps}
           showLabel={!options?.compressedMode}
           callInvitationURL={callInvitationURL}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       )}
       {/* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */}

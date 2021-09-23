@@ -4,9 +4,10 @@ import {
   CallAdapter,
   CallComposite,
   CompositeLocale,
-  createAzureCommunicationCallAdapter
+  createAzureCommunicationCallAdapter,
+  ParticipantMenuItemsCallback
 } from '@azure/communication-react';
-import { PartialTheme, Theme } from '@fluentui/react';
+import { IContextualMenuItem, PartialTheme, Theme } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 
 export type ContainerProps = {
@@ -69,6 +70,19 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
       });
     });
 
+  // Custom Menu Item Callback for Participant List
+  const onFetchParticipantMenuItems: ParticipantMenuItemsCallback = (participantId, userId, defaultMenuItems) => {
+    let customMenuItems: IContextualMenuItem[] = [
+      {
+        key: 'Custom Menu Item',
+        text: 'Custom Menu Item',
+        onClick: () => console.log('Custom Menu Item Clicked')
+      }
+    ];
+    if (defaultMenuItems) customMenuItems = customMenuItems.concat(defaultMenuItems);
+    return customMenuItems;
+  };
+
   return (
     <>
       {adapter && (
@@ -76,6 +90,7 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
           fluentTheme={props.fluentTheme}
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           callInvitationURL={props?.callInvitationURL}
           locale={props?.locale}
         />

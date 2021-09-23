@@ -44,6 +44,8 @@ export interface ParticipantItemStrings {
   isMeText: string;
   /** String shown when hovering over menu button */
   menuTitle: string;
+  /** Label for the remove button in participant menu  */
+  removeButtonLabel: string;
 }
 
 /**
