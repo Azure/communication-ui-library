@@ -47,7 +47,35 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
 };
 
 /**
- * Wait for the CallComposite CallScreen page to fully load.
+ * Wait for the MeetingComposite on a page to fully load.
+ */
+export const waitForMeetingCompositeToLoad = async (page: Page): Promise<void> => {
+  // Meeting composite initial page is the same as call composite
+  await waitForCallCompositeToLoad(page);
+};
+
+/**
+ * Wait for the Composite CallScreen page to fully load.
+ */
+export const loadCallScreen = async (pages: Page[]): Promise<void> => {
+  for (const page of pages) {
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-start-call-button'));
+  }
+
+  // Wait for all participants tiles to have loaded
+  for (const page of pages) {
+    await page.bringToFront();
+    await page.waitForFunction(() => {
+      const tileNodes = document.querySelectorAll('[data-ui-id="video-tile"]');
+      const correctNoOfTiles = tileNodes.length === pages.length;
+      return correctNoOfTiles;
+    });
+  }
+};
+
+/**
+ * Wait for the Composite CallScreen page to fully load with video participant video feeds enabled.
  */
 export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promise<void> => {
   // Start local camera and start the call
@@ -62,7 +90,7 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
     await page.bringToFront();
     await page.waitForFunction(() => {
       const videoNodes = document.querySelectorAll('video');
-      const correctNoOfVideos = document.querySelectorAll('video').length === 2;
+      const correctNoOfVideos = videoNodes.length === pages.length;
       const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
       return correctNoOfVideos && allVideosLoaded;
     });
