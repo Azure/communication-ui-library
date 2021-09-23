@@ -40,9 +40,16 @@ const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
       linkColorMine: undefined
     }
   },
-  fontFaces: [], // suppressing font faces from teamsTheme
+  componentStyles: {
+    ChatMessage: {
+      root: {
+        lineHeight: '1.4286'
+      }
+    }
+  },
+  fontFaces: [], // suppressing font faces from teamsTheme as recommended by FluentUI N* to avoid font styling to other elements
   siteVariables: {
-    // suppressing body styles from teamsTheme
+    // suppressing body styles from teamsTheme to avoid inherited styling to other elements
     bodyPadding: undefined,
     bodyFontSize: undefined,
     bodyFontFamily: undefined,
