@@ -40,11 +40,14 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
 
-  await page.waitForFunction(() => {
-    const callButton = document.querySelector('[data-ui-id="call-composite-start-call-button"]');
-    const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
-    return callButtonEnabled;
-  });
+  await page.waitForFunction(
+    (args) => {
+      const callButton = document.querySelector(args.startCallButtonSelector);
+      const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
+      return callButtonEnabled;
+    },
+    { startCallButtonSelector: dataUiId('call-composite-start-call-button') }
+  );
 };
 
 /**
@@ -67,11 +70,14 @@ export const loadCallScreen = async (pages: Page[]): Promise<void> => {
   // Wait for all participants tiles to have loaded
   for (const page of pages) {
     await page.bringToFront();
-    await page.waitForFunction(() => {
-      const tileNodes = document.querySelectorAll('[data-ui-id="video-tile"]');
-      const correctNoOfTiles = tileNodes.length === pages.length;
-      return correctNoOfTiles;
-    });
+    await page.waitForFunction(
+      (args) => {
+        const tileNodes = document.querySelectorAll(args.participantTileSelector);
+        const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
+        return correctNoOfTiles;
+      },
+      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
+    );
   }
 };
 
@@ -89,12 +95,17 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
   // Wait for all participants cameras to have loaded
   for (const page of pages) {
     await page.bringToFront();
-    await page.waitForFunction(() => {
-      const videoNodes = document.querySelectorAll('video');
-      const correctNoOfVideos = videoNodes.length === pages.length;
-      const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
-      return correctNoOfVideos && allVideosLoaded;
-    });
+    await page.waitForFunction(
+      (args) => {
+        const videoNodes = document.querySelectorAll('video');
+        const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
+        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+        return correctNoOfVideos && allVideosLoaded;
+      },
+      {
+        expectedVideoCount: pages.length
+      }
+    );
   }
 };
 
