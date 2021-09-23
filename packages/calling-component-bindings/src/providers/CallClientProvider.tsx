@@ -72,7 +72,12 @@ export const CallClientProvider = (props: CallClientProviderProps): JSX.Element 
 );
 
 /**
- * @private
+ * Hook to obtain {@link StatefulCallClient} from the provider.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * @public
  */
 export const useCallClient = (): StatefulCallClient => {
   const context = useContext(CallClientContext);
@@ -83,7 +88,12 @@ export const useCallClient = (): StatefulCallClient => {
 };
 
 /**
- * @private
+ * Hook to obtain {@link StatefulDeviceManager} from the provider.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * @public
  */
 export const useDeviceManager = (): StatefulDeviceManager | undefined => {
   return useContext(CallClientContext)?.deviceManager;

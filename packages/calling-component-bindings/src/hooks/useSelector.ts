@@ -9,9 +9,10 @@ import { useState, useEffect, useRef, useMemo, useContext } from 'react';
 /**
  * Hook to obtain a selector for a specified component.
  *
- * Used by the top-level packlet to implement merged {@link usePropsFor}.
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
  *
- * @internal
+ * @public
  */
 export const useSelector = <
   SelectorT extends (state: CallClientState, props: any) => any,

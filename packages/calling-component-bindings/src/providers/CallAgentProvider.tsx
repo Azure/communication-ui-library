@@ -46,6 +46,11 @@ const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
 export const CallAgentProvider = (props: CallAgentProviderProps): JSX.Element => <CallAgentProviderBase {...props} />;
 
 /**
- * @private
+ * Hook to obtain {@link @azure/communication-calling#CallAgent} from the provider.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * @public
  */
 export const useCallAgent = (): CallAgent | undefined => useContext(CallAgentContext)?.callAgent;

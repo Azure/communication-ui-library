@@ -11,7 +11,15 @@ export { errorBarSelector } from './errorBarSelector';
 
 export type { CallingHandlers } from './handlers/createHandlers';
 
-export { CallAgentProvider, CallClientProvider, CallProvider } from './providers';
+export {
+  CallAgentProvider,
+  CallClientProvider,
+  CallProvider,
+  useCall,
+  useCallAgent,
+  useCallClient,
+  useDeviceManager
+} from './providers';
 export type { CallAgentProviderProps, CallClientProviderProps, CallProviderProps } from './providers';
 
 export {
