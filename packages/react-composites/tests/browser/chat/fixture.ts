@@ -3,7 +3,7 @@
 
 import { useChromeBrowser } from '../browsers';
 import { TEST_PARTICIPANTS, WorkerFixture, ChatUserType } from '../defaults';
-import { createChatUsers, createTestServer, usePagePerParticipant } from '../utils';
+import { createChatUsers, createTestServer, usePagePerParticipant } from '../common/utils';
 import { startServer, stopServer } from './app/server';
 import { test as base } from '@playwright/test';
 
