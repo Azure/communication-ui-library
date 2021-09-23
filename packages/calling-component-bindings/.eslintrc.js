@@ -51,7 +51,17 @@ module.exports = {
           ArrowFunctionExpression: true,
           ClassDeclaration: true,
           FunctionDeclaration: true
-        }
+        },
+        contexts: [
+          'ArrowFunctionExpression',
+          'FunctionDeclaration',
+          'FunctionExpression',
+          'TSDeclareFunction',
+          'TSEnumDeclaration',
+          'TSInterfaceDeclaration',
+          'TSTypeAliasDeclaration',
+          'VariableDeclaration'
+        ]
       }
     ]
   },

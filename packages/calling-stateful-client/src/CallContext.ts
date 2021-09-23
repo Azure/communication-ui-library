@@ -38,7 +38,13 @@ import { CallStateModifier } from './StatefulCallClient';
 enableMapSet();
 
 // TODO: How can we make this configurable?
+/**
+ * @private
+ */
 export const MAX_CALL_HISTORY_LENGTH = 10;
+/**
+ * @private
+ */
 export const MAX_TRANSFER_REQUEST_LENGTH = 10;
 
 /**

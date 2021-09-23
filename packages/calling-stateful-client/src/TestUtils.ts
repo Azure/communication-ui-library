@@ -66,7 +66,13 @@ export type Mutable<T> = {
   -readonly [k in keyof T]: T[k];
 };
 
+/**
+ * @private
+ */
 export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
+/**
+ * @private
+ */
 export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
 
 /**
