@@ -1,18 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
-import {
-  createChatThreadAndUsers,
-  dataUiId,
-  loadUrlInPage,
-  loadPage,
-  stubMessageTimestamps,
-  waitForChatCompositeToLoad
-} from '../common/utils';
+import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-
-const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
@@ -20,17 +11,11 @@ const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe('Chat Composite E2E Tests', () => {
-  test.beforeEach(async ({ pages, serverUrl }) => {
-    const users = await createChatThreadAndUsers(PARTICIPANTS);
-    const pageLoadPromises: Promise<unknown>[] = [];
-    for (const idx in pages) {
-      const page = pages[idx];
-      const user = users[idx];
-      await loadUrlInPage(page, serverUrl, user);
-      pageLoadPromises.push(waitForChatCompositeToLoad(page));
-      stubMessageTimestamps(pages[idx]);
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      waitForChatCompositeToLoad(page);
+      stubMessageTimestamps(page);
     }
-    await Promise.all(pageLoadPromises);
   });
 
   test('composite pages load completely', async ({ pages }) => {
@@ -120,9 +105,15 @@ test.describe('Chat Composite E2E Tests', () => {
 });
 
 test.describe('Chat Composite custom data model', () => {
-  test('can be viewed by user[1]', async ({ testBrowser, serverUrl }) => {
-    const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
-    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      const url = page.url() + '&' + 'customDataModel=true';
+      await page.goto(url, { waitUntil: 'networkidle' });
+    }
+  });
+
+  test('can be viewed by user[1]', async ({ pages }) => {
+    const page = pages[0];
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');

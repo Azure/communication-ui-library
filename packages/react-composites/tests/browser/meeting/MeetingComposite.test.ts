@@ -65,7 +65,7 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`, { threshold: 0.5 });
   });
 
-  test.only('People pane opens and displays correctly', async ({ pages }) => {
+  test('People pane opens and displays correctly', async ({ pages }) => {
     const page = pages[1];
     await page.click(dataUiId('meeting-composite-people-button'));
     await page.waitForSelector(dataUiId('meeting-composite-people-pane'));

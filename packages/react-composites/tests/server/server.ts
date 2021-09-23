@@ -22,7 +22,7 @@ export const createTestServer =
 export const startServer = (appDir: string): Promise<void> => {
   app.use(express.static(path.resolve(appDir, 'dist')));
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     server = app.listen(3000, () => {
       resolve();
     });

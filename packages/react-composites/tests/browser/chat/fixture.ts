@@ -3,7 +3,7 @@
 
 import { useChromeBrowser } from '../common/browsers';
 import { TEST_PARTICIPANTS, WorkerFixture, ChatUserType } from '../common/defaults';
-import { createChatUsers, usePagePerParticipant } from '../common/utils';
+import { createChatUsers, usePagePerParticipant } from '../common/fixtureHelpers';
 import { createTestServer } from '../../server';
 import { test as base } from '@playwright/test';
 import path from 'path';
