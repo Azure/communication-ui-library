@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add custom menu items injection support to Call and Chat Composites",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
