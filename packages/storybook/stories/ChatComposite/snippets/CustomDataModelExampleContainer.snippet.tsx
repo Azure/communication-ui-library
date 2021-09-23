@@ -8,9 +8,10 @@ import {
   ChatAdapter,
   ChatComposite,
   CompositeLocale,
-  createAzureCommunicationChatAdapter
+  createAzureCommunicationChatAdapter,
+  ParticipantMenuItemsCallback
 } from '@azure/communication-react';
-import { PartialTheme, Theme } from '@fluentui/react';
+import { IContextualMenuItem, PartialTheme, Theme } from '@fluentui/react';
 import React, { useState, useEffect } from 'react';
 
 export interface CustomDataModelExampleContainerProps {
@@ -65,6 +66,21 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
       }
     });
 
+  // Custom Menu Item Callback for Participant List
+  const onFetchParticipantMenuItems: ParticipantMenuItemsCallback = (participantId, userId, defaultMenuItems) => {
+    console.log('Remote Participant', participantId);
+    console.log('Current Participant', userId);
+    let customMenuItems: IContextualMenuItem[] = [
+      {
+        key: 'Custom Menu Item',
+        text: 'Custom Menu Item',
+        onClick: () => console.log('Custom Menu Item Clicked')
+      }
+    ];
+    if (defaultMenuItems) customMenuItems = customMenuItems.concat(defaultMenuItems);
+    return customMenuItems;
+  };
+
   return (
     <>
       {adapter ? (
@@ -72,6 +88,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
           fluentTheme={props.fluentTheme}
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           locale={props.locale}
         />
       ) : (
