@@ -25,6 +25,7 @@ const SidePane = (props: {
   children: React.ReactNode;
   onClose: () => void;
   hidden: boolean;
+  dataUiId: string;
 }): JSX.Element => {
   // We hide the side pane instead of not rendering the entire pane to persist certain elements
   // between renders. An example of this is composing a chat message - a chat message that has been
@@ -32,7 +33,7 @@ const SidePane = (props: {
   const sidePaneStyles = props.hidden ? sidePaneContainerHiddenStyles : sidePaneContainerStyles;
   return (
     <Stack.Item disableShrink verticalFill styles={sidePaneStyles} tokens={sidePaneContainerTokens}>
-      <Stack verticalFill>
+      <Stack verticalFill data-ui-id={props.dataUiId}>
         <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderStyles}>
           <Stack.Item>{props.headingText}</Stack.Item>
           <CommandBarButton
@@ -86,7 +87,12 @@ export const EmbeddedPeoplePane = (props: {
   }, [participantListDefaultProps, callAdapter, chatAdapter]);
 
   return (
-    <SidePane hidden={props.hidden} headingText={'People'} onClose={props.onClose}>
+    <SidePane
+      hidden={props.hidden}
+      headingText={'People'}
+      onClose={props.onClose}
+      dataUiId={'meeting-composite-people-pane'}
+    >
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
@@ -105,7 +111,12 @@ export const EmbeddedChatPane = (props: {
   onClose: () => void;
 }): JSX.Element => {
   return (
-    <SidePane hidden={props.hidden} headingText={'Chat'} onClose={props.onClose}>
+    <SidePane
+      hidden={props.hidden}
+      headingText={'Chat'}
+      onClose={props.onClose}
+      dataUiId={'meeting-composite-chat-pane'}
+    >
       <ChatComposite
         adapter={props.chatAdapter}
         fluentTheme={props.fluentTheme}
