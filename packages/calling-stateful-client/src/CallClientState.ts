@@ -158,6 +158,8 @@ export interface RemoteVideoStreamState {
    * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
+  // [note] stream:view may not be 1:1, there may be multiple streams in a view.
+  // TODO
   view?: VideoStreamRendererViewState;
 }
 
@@ -267,6 +269,9 @@ export interface CallState {
   //   * Possible fixes in headless:
   //     * Break DeviceManager usage before auth
   //     * Buffer telemetry and then send
+
+  // [ note ] local video stream is really associated with the devicemanager
+  //   e.g., call on hold / changes, stream unchanged. Do we recreate view (like now), or reuse.
   localVideoStreams: LocalVideoStreamState[];
   /**
    * Proxy of {@link @azure/communication-calling#Call.remoteParticipants}.

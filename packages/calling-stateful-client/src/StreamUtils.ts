@@ -13,6 +13,11 @@ import {
 import { InternalCallContext } from './InternalCallContext';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
+// * [note] hides the construction of VideoStreamRenderer
+// * [note] adding transitional state for rendering / stopping
+// *    - What happens if client creates two VideoStreamRenderer for a stream and calls createView on each
+// *    - ... client calls createView twice on a VideoStreamRenderer
+//
 async function createViewRemoteVideo(
   context: CallContext,
   internalContext: InternalCallContext,

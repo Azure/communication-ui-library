@@ -90,6 +90,9 @@ export interface StatefulCallClient extends CallClient {
    * @param stream - The LocalVideoStreamState or RemoteVideoStreamState to start rendering.
    * @param options - Options that are passed to the {@link @azure/communication-calling#VideoStreamRenderer}.
    */
+
+  // [note] Could this be moved to [RemoteParticipant, DeviceManager]
+  //   .. extract question, if this is moved to DeviceManager, what about pre-auth rendering. (do you need callAgent)
   createView(
     callId: string | undefined,
     participantId: CommunicationIdentifierKind | undefined,
