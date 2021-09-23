@@ -3,9 +3,10 @@
 
 import { useChromeBrowser } from '../common/browsers';
 import { TEST_PARTICIPANTS, WorkerFixture, MeetingUserType } from '../common/defaults';
-import { createMeetingUsers, createTestServer, usePagePerParticipantWithCallPermissions } from '../common/utils';
-import { startServer, stopServer } from '../../server';
+import { createMeetingUsers, usePagePerParticipantWithCallPermissions } from '../common/utils';
+import { createTestServer } from '../../server';
 import { test as base } from '@playwright/test';
+import path from 'path';
 
 const SERVER_URL = 'http://localhost:3000';
 
@@ -18,10 +19,7 @@ type MeetingWorkerFixture = WorkerFixture<MeetingUserType>;
  */
 export const test = base.extend<unknown, MeetingWorkerFixture>({
   /** @returns string URL for the server. */
-  serverUrl: [
-    createTestServer(() => startServer(path.join(__dirname, 'app')), stopServer, SERVER_URL),
-    { scope: 'worker' }
-  ],
+  serverUrl: [createTestServer({ appDir: path.join(__dirname, 'app'), serverUrl: SERVER_URL }), { scope: 'worker' }],
 
   /** @returns Browser object. */
   testBrowser: [useChromeBrowser, { scope: 'worker' }],

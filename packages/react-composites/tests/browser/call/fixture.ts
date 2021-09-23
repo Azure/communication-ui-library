@@ -3,8 +3,8 @@
 
 import { useChromeBrowser } from '../common/browsers';
 import { TEST_PARTICIPANTS, WorkerFixture, CallUserType } from '../common/defaults';
-import { createCallUsers, createTestServer, usePagePerParticipantWithCallPermissions } from '../common/utils';
-import { startServer, stopServer } from '../../server';
+import { createCallUsers, usePagePerParticipantWithCallPermissions } from '../common/utils';
+import { createTestServer } from '../../server';
 import { test as base } from '@playwright/test';
 import path from 'path';
 
@@ -19,11 +19,7 @@ type CallWorkerFixture = WorkerFixture<CallUserType>;
  */
 export const test = base.extend<unknown, CallWorkerFixture>({
   /** @returns string URL for the server. */
-  // await startServer(path.join(__dirname, 'app'));
-  serverUrl: [
-    createTestServer(() => startServer(path.join(__dirname, 'app')), stopServer, SERVER_URL),
-    { scope: 'worker' }
-  ],
+  serverUrl: [createTestServer({ appDir: path.join(__dirname, 'app'), serverUrl: SERVER_URL }), { scope: 'worker' }],
 
   /** @returns Browser object. */
   testBrowser: [useChromeBrowser, { scope: 'worker' }],

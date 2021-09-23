@@ -41,18 +41,6 @@ export const usePagePerParticipantWithCallPermissions = async ({ serverUrl, test
   await use(pages);
 };
 
-export const createTestServer =
-  (startServer: () => Promise<void>, stopServer: () => Promise<void>, serverUrl: string) =>
-  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-  async ({}, use: (r: string) => Promise<void>) => {
-    await startServer();
-    try {
-      await use(serverUrl);
-    } finally {
-      await stopServer();
-    }
-  };
-
 /**
  * Wait for the ChatComposite on a page to fully load.
  */
