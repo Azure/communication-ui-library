@@ -110,9 +110,7 @@ export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientS
     checked: boolean;
 }>;
 
-// Warning: (ae-internal-missing-underscore) The name "createDefaultCallingHandlers" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public
@@ -189,6 +187,15 @@ export const screenShareButtonSelector: reselect.OutputParametricSelector<CallCl
     checked: boolean | undefined;
 }>;
 
+// @public
+export const useCall: () => Call | undefined;
+
+// @public
+export const useCallAgent: () => CallAgent | undefined;
+
+// @public
+export const useCallClient: () => StatefulCallClient;
+
 // Warning: (ae-internal-missing-underscore) The name "useCallingHandlers" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
@@ -197,10 +204,11 @@ export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactEle
 // @public
 export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : undefined;
 
-// Warning: (ae-internal-missing-underscore) The name "useCallingSelector" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @public
 export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
+
+// @public
+export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public
 export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
