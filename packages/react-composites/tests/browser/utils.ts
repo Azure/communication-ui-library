@@ -2,19 +2,47 @@
 // Licensed under the MIT license.
 
 import { IDS } from './config';
+import { CONNECTION_STRING, PAGE_VIEWPORT, CHAT_TOPIC_NAME, ChatUserType } from './defaults';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
+import { v1 } from 'uuid';
 
-export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
-const DATA_UI_ID = 'data-ui-id';
-const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
-export const PAGE_VIEWPORT = {
-  width: 1024,
-  height: 768
+/** Helper function to generate the selector for selecting an HTML node by data-ui-id */
+export const dataUiId = (v: string): string => `[data-ui-id="${v}"]`;
+
+/**
+ * Creates a page to be tested for each participant in a browser page.
+ * To be used in a playwright fixture's 'pages'.
+ */
+// eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, use) => {
+  const pages = await Promise.all(users.map(async (user) => loadPage(testBrowser, serverUrl, user)));
+  await use(pages);
 };
-export const TOPIC_NAME = 'Cowabunga';
+
+/**
+ * Creates a page to be tested for each participant in a browser page.
+ * To be used in a playwright fixture's 'pages'.
+ */
+// eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+export const usePagePerParticipantWithCallPermissions = async ({ serverUrl, testBrowser, users }, use) => {
+  const pages = await Promise.all(users.map(async (user) => loadCallCompositePage(testBrowser, serverUrl, user)));
+  await use(pages);
+};
+
+export const createTestServer =
+  (startServer: () => Promise<void>, stopServer: () => Promise<void>, serverUrl: string) =>
+  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+  async ({}, use: (r: string) => Promise<void>) => {
+    await startServer();
+    try {
+      await use(serverUrl);
+    } finally {
+      await stopServer();
+    }
+  };
 
 /**
  * Wait for the ChatComposite on a page to fully load.
@@ -65,16 +93,7 @@ export const disableAnimation = async (page: Page): Promise<void> => {
 
 const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
 
-export type IdentityType = {
-  userId: string;
-  token: string;
-  endpointUrl: string;
-  displayName: string;
-  threadId: string;
-  topic: string;
-};
-
-export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<IdentityType>> => {
+export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
   const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
   const userAndTokens: CommunicationUserToken[] = [];
@@ -86,7 +105,7 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
   const threadId =
     (
       await chatClient.createChatThread(
-        { topic: TOPIC_NAME },
+        { topic: CHAT_TOPIC_NAME },
         {
           participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
         }
@@ -99,9 +118,21 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
     endpointUrl,
     displayName,
     threadId,
-    topic: TOPIC_NAME
+    topic: CHAT_TOPIC_NAME
   }));
 };
+
+/**
+ * Creates a set of chat test users.
+ * To be used in a playwright fixture 'users'.
+ */
+export const createChatUsers =
+  (testParticipants: string[]) =>
+  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+  async ({}, use: (r: ChatUserType[]) => Promise<void>) => {
+    const users = await createChatThreadAndUsers(testParticipants);
+    await use(users);
+  };
 
 export type CallUserType = {
   userId: string;
@@ -110,6 +141,25 @@ export type CallUserType = {
   groupId?: string;
 };
 
+/**
+ * Creates a set of call test users.
+ * To be used in a playwright fixture 'users'.
+ */
+export const createCallUsers =
+  (testParticipants: string[]) =>
+  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+  async ({}, use) => {
+    const groupId = v1();
+    const users: Array<CallUserType> = [];
+    for (const displayName of testParticipants) {
+      const user = await createCallingUserAndToken();
+      user.displayName = displayName;
+      user.groupId = groupId;
+      users.push(user);
+    }
+    await use(users);
+  };
+
 export const createCallingUserAndToken = async (): Promise<CallUserType> => {
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
   const user = await tokenClient.createUserAndToken(['voip']);
@@ -117,6 +167,12 @@ export const createCallingUserAndToken = async (): Promise<CallUserType> => {
     userId: user.user.communicationUserId,
     token: user.token
   };
+};
+
+// eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+export const createTestPages = async ({ serverUrl, testBrowser, users }, use) => {
+  const pages = await Promise.all(users.map(async (user) => loadPage(testBrowser, serverUrl, user)));
+  await use(pages);
 };
 
 /**
@@ -130,7 +186,7 @@ export const createCallingUserAndToken = async (): Promise<CallUserType> => {
 export const loadPage = async (
   browser: Browser,
   serverUrl: string,
-  user: IdentityType,
+  user: ChatUserType,
   qArgs?: { [key: string]: string }
 ): Promise<Page> => {
   const qs = encodeQueryData(user, qArgs);
@@ -155,7 +211,7 @@ export const loadPage = async (
 export const gotoPage = async (
   page: Page,
   serverUrl: string,
-  user: IdentityType,
+  user: ChatUserType,
   qArgs?: { [key: string]: string }
 ): Promise<Page> => {
   const qs = encodeQueryData(user, qArgs);
@@ -192,7 +248,7 @@ export const loadCallCompositePage = async (
   return page;
 };
 
-const encodeQueryData = (user: IdentityType | CallUserType, qArgs?: { [key: string]: string }): string => {
+const encodeQueryData = (user: ChatUserType | CallUserType, qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const d in user) {
     qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(user[d]));
