@@ -44,9 +44,14 @@ module.exports = {
     'jsdoc/require-jsdoc': [
       'error',
       {
-        publicOnly: true,
         checkConstructors: false,
-        enableFixer: false
+        enableFixer: false,
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: true,
+          FunctionDeclaration: true
+        }
       }
     ]
   },

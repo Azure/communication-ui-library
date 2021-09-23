@@ -46,6 +46,9 @@ export type CallingHandlers = {
   onDisposeLocalStreamView: () => Promise<void>;
 };
 
+/**
+ * @private
+ */
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
 };
