@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { gotoPage, stubMessageTimestamps, waitForCompositeToLoad } from '../utils';
+import { gotoPage, stubMessageTimestamps, waitForCompositeToLoad } from '../common/utils';
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {

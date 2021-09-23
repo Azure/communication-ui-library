@@ -2,7 +2,11 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { loadCallCompositePage, waitForCallCompositeToLoad, loadCallScreenWithParticipantVideos } from '../utils';
+import {
+  loadCallCompositePage,
+  waitForCallCompositeToLoad,
+  loadCallScreenWithParticipantVideos
+} from '../common/utils';
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
