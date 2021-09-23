@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import { IDS } from './config';
-import { CONNECTION_STRING, PAGE_VIEWPORT, CHAT_TOPIC_NAME, ChatUserType } from './defaults';
+import {
+  CONNECTION_STRING,
+  PAGE_VIEWPORT,
+  CHAT_TOPIC_NAME,
+  ChatUserType,
+  CallUserType,
+  MeetingUserType
+} from './defaults';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
@@ -212,13 +219,6 @@ export const createChatUsers =
     await use(users);
   };
 
-export type CallUserType = {
-  userId: string;
-  token: string;
-  displayName?: string;
-  groupId?: string;
-};
-
 /**
  * Creates a set of call test users.
  * To be used in a playwright fixture 'users'.
@@ -247,17 +247,7 @@ export const createCallingUserAndToken = async (): Promise<CallUserType> => {
   };
 };
 
-export type MeetingUserType = {
-  userId: string;
-  token: string;
-  endpointUrl: string;
-  displayName: string;
-  threadId: string;
-  topic: string;
-  groupId?: string;
-};
-
-export const createMeetingUsers = async (displayNames: string[]): Promise<Array<MeetingUserType>> => {
+const createMeetingObjectsAndUsers = async (displayNames: string[]): Promise<Array<MeetingUserType>> => {
   const callId = v1();
   const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
@@ -270,7 +260,7 @@ export const createMeetingUsers = async (displayNames: string[]): Promise<Array<
   const threadId =
     (
       await chatClient.createChatThread(
-        { topic: TOPIC_NAME },
+        { topic: CHAT_TOPIC_NAME },
         {
           participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
         }
@@ -283,10 +273,22 @@ export const createMeetingUsers = async (displayNames: string[]): Promise<Array<
     endpointUrl,
     displayName,
     threadId,
-    topic: TOPIC_NAME,
+    topic: CHAT_TOPIC_NAME,
     groupId: callId
   }));
 };
+
+/**
+ * Creates a set of meeting test users.
+ * To be used in a playwright fixture 'users'.
+ */
+export const createMeetingUsers =
+  (testParticipants: string[]) =>
+  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+  async ({}, use: (r: MeetingUserType[]) => Promise<void>) => {
+    const users = await createMeetingObjectsAndUsers(testParticipants);
+    await use(users);
+  };
 
 /**
  * Load a new page in the browser at the supplied url.

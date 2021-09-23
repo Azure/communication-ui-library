@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useChromeBrowser } from '../browsers';
-import { TEST_PARTICIPANTS, WorkerFixture, ChatUserType } from '../defaults';
+import { useChromeBrowser } from '../common/browsers';
+import { TEST_PARTICIPANTS, WorkerFixture, ChatUserType } from '../common/defaults';
 import { createChatUsers, createTestServer, usePagePerParticipant } from '../common/utils';
 import { startServer, stopServer } from './app/server';
 import { test as base } from '@playwright/test';

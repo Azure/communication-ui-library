@@ -3,10 +3,6 @@
 
 import { Browser, Page } from '@playwright/test';
 
-/**
- * UI Test defaults
- */
-
 export type ChatUserType = {
   userId: string;
   token: string;
@@ -14,6 +10,23 @@ export type ChatUserType = {
   displayName: string;
   threadId: string;
   topic: string;
+};
+
+export type CallUserType = {
+  userId: string;
+  token: string;
+  displayName?: string;
+  groupId?: string;
+};
+
+export type MeetingUserType = {
+  userId: string;
+  token: string;
+  endpointUrl: string;
+  displayName: string;
+  threadId: string;
+  topic: string;
+  groupId?: string;
 };
 
 export interface WorkerFixture<IdentityType> {
