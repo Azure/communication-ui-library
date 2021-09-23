@@ -36,6 +36,7 @@ export const waitForCompositeToLoad = async (page: Page): Promise<void> => {
  * Wait for the CallComposite on a page to fully load.
  */
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
+  await page.bringToFront();
   await page.waitForLoadState('load');
 
   await page.waitForFunction(() => {
