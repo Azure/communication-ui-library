@@ -6,6 +6,9 @@ import { RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
+/**
+ * @private
+ */
 export class RemoteVideoStreamSubscriber {
   private _callIdRef: CallIdRef;
   private _participantKey: string;

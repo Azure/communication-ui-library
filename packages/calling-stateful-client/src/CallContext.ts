@@ -41,6 +41,9 @@ enableMapSet();
 export const MAX_CALL_HISTORY_LENGTH = 10;
 export const MAX_TRANSFER_REQUEST_LENGTH = 10;
 
+/**
+ * @private
+ */
 export class CallContext {
   private _state: CallClientState;
   private _emitter: EventEmitter;
