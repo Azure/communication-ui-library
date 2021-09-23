@@ -2,7 +2,11 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { loadCallCompositePage, waitForCallCompositeToLoad, loadCallScreenWithParticipantVideos } from '../utils';
+import {
+  loadPageWithPermissionsForCalls,
+  waitForCallCompositeToLoad,
+  loadCallScreenWithParticipantVideos
+} from '../common/utils';
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
@@ -11,7 +15,7 @@ test.describe('Localization tests', async () => {
     users,
     testBrowser
   }) => {
-    const page = await loadCallCompositePage(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
+    const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
     await page.bringToFront();
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
