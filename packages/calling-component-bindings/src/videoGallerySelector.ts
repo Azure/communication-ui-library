@@ -107,6 +107,9 @@ const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): un
   return dominantSpeakers?.speakersList.map(toFlatCommunicationIdentifier);
 };
 
+const MAX_RENDERED_VIDEO_TILES = 4;
+let lastVisibleSpeakers: VideoGalleryRemoteParticipant[];
+
 /**
  * Sorts remote participants on the basis of their video status (on/off) and dominant speaker rank.
  * 1. Video participants should always render before non-video participants.
@@ -114,9 +117,12 @@ const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): un
  */
 const sortedRemoteParticipants = (
   participants?: VideoGalleryRemoteParticipant[],
-  dominantSpeakers?: string[]
+  dominantSpeakers?: Record<string, number>
 ): VideoGalleryRemoteParticipant[] => {
   if (!participants) return [];
+
+  console.log('visibleDominantSpeakers', lastVisibleSpeakers);
+  console.log('Participants', participants);
 
   const participantsWithVideo: VideoGalleryRemoteParticipant[] = [];
   const participantsWithoutVideo: VideoGalleryRemoteParticipant[] = [];
@@ -129,14 +135,11 @@ const sortedRemoteParticipants = (
     }
   });
 
-  const speakersList: Record<string, number> = {};
-  dominantSpeakers?.forEach((speaker, idx) => (speakersList[speaker] = idx));
-
   // If dominantSpeakers are available, we sort the video tiles basis on dominant speakers.
   if (dominantSpeakers) {
     participantsWithVideo.sort((a, b) => {
-      const idxA = speakersList[a.userId];
-      const idxB = speakersList[b.userId];
+      const idxA = dominantSpeakers[a.userId];
+      const idxB = dominantSpeakers[b.userId];
       if (idxA === undefined && idxB === undefined) return 0; // Both a and b don't exist in dominant speakers.
       if (idxA === undefined && idxB >= 0) return 1; // b exists in dominant speakers.
       if (idxB === undefined && idxA >= 0) return -1; // a exists in dominant speakers.
@@ -144,8 +147,8 @@ const sortedRemoteParticipants = (
     });
 
     participantsWithoutVideo.sort((a, b) => {
-      const idxA = speakersList[a.userId];
-      const idxB = speakersList[b.userId];
+      const idxA = dominantSpeakers[a.userId];
+      const idxB = dominantSpeakers[b.userId];
       if (idxA === undefined && idxB === undefined) return 0; // Both a and b don't exist in dominant speakers.
       if (idxA === undefined && idxB >= 0) return 1; // b exists in dominant speakers.
       if (idxB === undefined && idxA >= 0) return -1; // a exists in dominant speakers.
@@ -153,7 +156,64 @@ const sortedRemoteParticipants = (
     });
   }
 
-  return participantsWithVideo.concat(participantsWithoutVideo);
+  const allSpeakers = participantsWithVideo.concat(participantsWithoutVideo);
+
+  lastVisibleSpeakers = allSpeakers.slice(0, MAX_RENDERED_VIDEO_TILES);
+
+  return allSpeakers;
+};
+
+let lastVisibleSpeakersWithVideo: VideoGalleryRemoteParticipant[] = [];
+
+const sortedRemoteParticipantsWithVideo = (
+  participants?: VideoGalleryRemoteParticipant[],
+  dominantSpeakers: Array<string> = []
+): VideoGalleryRemoteParticipant[] | [] => {
+  if (!participants) return [];
+  const participantsWithVideo = participants.filter((p) => p.videoStream?.renderElement?.childElementCount);
+
+  // Don't apply any logic if total number of video streams is less than Max video streams.
+  if (participantsWithVideo.length <= MAX_RENDERED_VIDEO_TILES) {
+    return participantsWithVideo.slice(0, MAX_RENDERED_VIDEO_TILES);
+  }
+
+  // Remove non-video speakers from `lastVisibleSpeakersWithVideo` after re-render
+  lastVisibleSpeakersWithVideo = lastVisibleSpeakersWithVideo.filter(
+    (p) => p.videoStream?.renderElement?.childElementCount
+  );
+
+  // Initialize `lastVisibleSpeakersWithVideo` if it is empty.
+  if (!lastVisibleSpeakersWithVideo.length) {
+    lastVisibleSpeakersWithVideo = participantsWithVideo.slice(0, MAX_RENDERED_VIDEO_TILES);
+  }
+
+  const dominantSpeakerIds = dominantSpeakers.slice(0, MAX_RENDERED_VIDEO_TILES);
+  const lastVisibleSpeakerIds = lastVisibleSpeakersWithVideo.map((speaker) => speaker.userId);
+  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !lastVisibleSpeakerIds.includes(id));
+
+  lastVisibleSpeakerIds.forEach((id, idx) => {
+    if (!dominantSpeakerIds.includes(id)) {
+      const replacement = newDominantSpeakerIds.pop();
+      if (replacement) {
+        lastVisibleSpeakerIds[idx] = replacement;
+      }
+    }
+  });
+
+  const videoParticipantsToRender = participantsWithVideo.filter((p) => lastVisibleSpeakerIds.includes(p.userId));
+  videoParticipantsToRender.sort((a, b) => {
+    return lastVisibleSpeakerIds.indexOf(a.userId) - lastVisibleSpeakerIds.indexOf(b.userId);
+  });
+
+  if (videoParticipantsToRender.length < MAX_RENDERED_VIDEO_TILES) {
+    const diff = MAX_RENDERED_VIDEO_TILES - videoParticipantsToRender.length;
+    videoParticipantsToRender.concat(
+      participantsWithVideo.filter((p) => !lastVisibleSpeakerIds.includes(p.userId)).slice(0, diff)
+    );
+  }
+
+  lastVisibleSpeakersWithVideo = videoParticipantsToRender;
+  return videoParticipantsToRender;
 };
 
 export const videoGallerySelector = createSelector(
@@ -182,6 +242,18 @@ export const videoGallerySelector = createSelector(
         ? remoteParticipants[screenShareRemoteParticipantId]
         : undefined;
     const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
+
+    const dominantSpeakerIds = dominantSpeakersWithFlatId(dominantSpeakers);
+    const dominantSpeakersMap: Record<string, number> = {};
+    dominantSpeakerIds?.forEach((id, idx) => (dominantSpeakersMap[id] = idx));
+
+    const remoteParticipantsWithVideo = sortedRemoteParticipantsWithVideo(
+      videoGalleryRemoteParticipantsMemo(remoteParticipants),
+      dominantSpeakerIds
+    );
+
+    console.log('remoteParticipantsWithVideo', remoteParticipantsWithVideo);
+
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -205,8 +277,9 @@ export const videoGallerySelector = createSelector(
       },
       remoteParticipants: sortedRemoteParticipants(
         videoGalleryRemoteParticipantsMemo(remoteParticipants),
-        dominantSpeakersWithFlatId(dominantSpeakers)
-      )
+        dominantSpeakersMap
+      ),
+      remoteParticipantsWithVideo: remoteParticipantsWithVideo
     };
   }
 );
