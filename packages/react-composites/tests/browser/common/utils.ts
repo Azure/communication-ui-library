@@ -37,15 +37,76 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
  * Wait for the CallComposite on a page to fully load.
  */
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
+  await page.bringToFront();
   await page.waitForLoadState('load');
 
-  // @TODO
-  // We wait 3 sec here to work around flakiness due to timing.
-  // It sometimes take a while for the local video / audio streams to load in CI environments.
-  // We don't have a good way to know when the composite is fully loaded.
-  await page.waitForTimeout(3000);
+  await page.waitForFunction(
+    (args) => {
+      const callButton = document.querySelector(args.startCallButtonSelector);
+      const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
+      return callButtonEnabled;
+    },
+    { startCallButtonSelector: dataUiId('call-composite-start-call-button') }
+  );
+};
 
-  // @TODO Add more checks to make sure the composite is fully loaded.
+/**
+ * Wait for the MeetingComposite on a page to fully load.
+ */
+export const waitForMeetingCompositeToLoad = async (page: Page): Promise<void> => {
+  // Meeting composite initial page is the same as call composite
+  await waitForCallCompositeToLoad(page);
+};
+
+/**
+ * Wait for the Composite CallScreen page to fully load.
+ */
+export const loadCallScreen = async (pages: Page[]): Promise<void> => {
+  for (const page of pages) {
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-start-call-button'));
+  }
+
+  // Wait for all participants tiles to have loaded
+  for (const page of pages) {
+    await page.bringToFront();
+    await page.waitForFunction(
+      (args) => {
+        const tileNodes = document.querySelectorAll(args.participantTileSelector);
+        const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
+        return correctNoOfTiles;
+      },
+      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
+    );
+  }
+};
+
+/**
+ * Wait for the Composite CallScreen page to fully load with video participant video feeds enabled.
+ */
+export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promise<void> => {
+  // Start local camera and start the call
+  for (const page of pages) {
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+    await page.click(dataUiId('call-composite-start-call-button'));
+  }
+
+  // Wait for all participants cameras to have loaded
+  for (const page of pages) {
+    await page.bringToFront();
+    await page.waitForFunction(
+      (args) => {
+        const videoNodes = document.querySelectorAll('video');
+        const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
+        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+        return correctNoOfVideos && allVideosLoaded;
+      },
+      {
+        expectedVideoCount: pages.length
+      }
+    );
+  }
 };
 
 const messageTimestampId: string = dataUiId(IDS.messageTimestamp);

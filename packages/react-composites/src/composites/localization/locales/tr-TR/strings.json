@@ -1,11 +1,18 @@
 {
   "call": {
-    "cameraPermissionDenied": "Your browser is blocking access to your camera",
-    "cameraTurnedOff": "Your camera is turned off",
-    "microphonePermissionDenied": "Your browser is blocking access to your microphone",
-    "teamsMeetingFailReasonAccessDenied": "Access to the meeting was denied",
-    "teamsMeetingFailReasonParticipantRemoved": "You were removed from the meeting",
-    "teamsMeetingFailToJoin": "Error joining Teams Meeting",
-    "cameraLabel": "Camera"
+    "cameraPermissionDenied": "Tarayıcınız kameranıza erişimi engelliyor",
+    "cameraTurnedOff": "Kameranız kapatıldı",
+    "microphonePermissionDenied": "Tarayıcınız mikrofonunuza erişimi engelliyor",
+    "teamsMeetingFailReasonAccessDenied": "Toplantıya erişim reddedildi",
+    "teamsMeetingFailReasonParticipantRemoved": "Toplantıdan çıkarıldınız",
+    "teamsMeetingFailToJoin": "Teams Toplantısına katılma hatası",
+    "defaultPlaceHolder": "Bir seçenek belirleyin",
+    "cameraLabel": "Kamera",
+    "soundLabel": "Ses",
+    "configurationPageTitle": "Arama başlatın",
+    "startCallButtonText": "Arama başlat"
+  },
+  "chat": {
+    "chatListHeader": "Bu sohbette"
   }
 }

@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { waitForCallCompositeToLoad, dataUiId, disableAnimation } from '../common/utils';
+import {
+  waitForCallCompositeToLoad,
+  dataUiId,
+  disableAnimation,
+  loadCallScreenWithParticipantVideos
+} from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 
@@ -41,8 +46,11 @@ test.describe('Call Composite E2E Tests', () => {
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-disabled.png`);
       await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
       await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
-      await page.waitForSelector('video');
-      await page.waitForTimeout(1000);
+      await page.waitForFunction(() => {
+        const videoNode = document.querySelector('video');
+        const videoLoaded = videoNode?.readyState === 4;
+        return !!videoNode && videoLoaded;
+      });
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-enabled.png`);
     }
   });
@@ -53,26 +61,16 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
   test.beforeEach(async ({ pages }) => {
     // In case it is retry logic
     for (const page of pages) {
-      page.reload();
-      page.bringToFront();
+      await page.reload();
       await waitForCallCompositeToLoad(page);
-
-      await page.waitForSelector(dataUiId('call-composite-start-call-button'));
-      await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
-      await page.click(dataUiId('call-composite-start-call-button'));
     }
-
-    for (const page of pages) {
-      await page.waitForFunction(() => {
-        return document.querySelectorAll('video').length === 2;
-      });
-    }
+    await loadCallScreenWithParticipantVideos(pages);
   });
 
   test('video gallery renders for all pages', async ({ pages }) => {
     for (const idx in pages) {
       const page = pages[idx];
-      page.bringToFront();
+      await page.bringToFront();
 
       expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-video-gallery.png`);
     }
@@ -85,7 +83,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
 
     for (const idx in pages) {
       const page = pages[idx];
-      page.bringToFront();
+      await page.bringToFront();
 
       // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
       // this is for disable transition/animation of participant list
@@ -103,7 +101,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
   test('can turn off local video', async ({ pages }) => {
     const page = pages[0];
 
-    page.bringToFront();
+    await page.bringToFront();
     await page.click(dataUiId('call-composite-camera-button'));
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 1;
@@ -114,10 +112,10 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
 
 const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
-    page.click(dataUiId('call-composite-camera-button'));
+    await page.click(dataUiId('call-composite-camera-button'));
   }
   for (const page of pages) {
-    page.bringToFront();
+    await page.bringToFront();
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 0;
     });

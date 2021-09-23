@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Generate snapshot in github action for composite",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

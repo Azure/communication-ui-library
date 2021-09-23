@@ -6,13 +6,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { IdentifierProvider } from '@internal/react-components';
-import {
-  CallAdapter,
-  ChatAdapter,
-  createAzureCommunicationCallAdapter,
-  createAzureCommunicationChatAdapter,
-  MeetingComposite
-} from '../../../../src';
+import { MeetingAdapter, createAzureCommunicationMeetingAdapter, MeetingComposite } from '../../../../src';
 import { IDS } from '../../common/config';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -26,29 +20,20 @@ const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 
 function App(): JSX.Element {
-  const [callAdapter, setCallAdapter] = useState<CallAdapter>(undefined);
-  const [chatAdapter, setChatAdapter] = useState<ChatAdapter>(undefined);
+  const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter>(undefined);
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const credential = new AzureCommunicationTokenCredential(token);
 
-      setCallAdapter(
-        await createAzureCommunicationCallAdapter({
+      setMeetingAdapter(
+        await createAzureCommunicationMeetingAdapter({
           userId: { kind: 'communicationUser', communicationUserId: userId },
           displayName,
           credential,
-          locator: { groupId: groupId }
-        })
-      );
-
-      setChatAdapter(
-        await createAzureCommunicationChatAdapter({
-          userId: { kind: 'communicationUser', communicationUserId: userId },
-          displayName,
-          credential,
+          callLocator: { groupId: groupId },
           endpointUrl,
-          threadId
+          chatThreadId: threadId
         })
       );
     };
@@ -56,8 +41,7 @@ function App(): JSX.Element {
     initialize();
 
     return () => {
-      callAdapter && callAdapter.dispose();
-      chatAdapter && chatAdapter.dispose();
+      meetingAdapter && meetingAdapter.dispose();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -68,12 +52,12 @@ function App(): JSX.Element {
   else if (!userId) return <h3>ERROR: No userId set.</h3>;
   else if (!endpointUrl) return <h3>ERROR: No endpointUrl set.</h3>;
   else if (!threadId) return <h3>ERROR: No threadId set.</h3>;
-  else if (!callAdapter || !callAdapter) return <h3>Initalizing adapters...</h3>;
+  else if (!meetingAdapter) return <h3>Initializing meeting adapters...</h3>;
 
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <IdentifierProvider identifiers={IDS}>
-        {callAdapter && chatAdapter && <MeetingComposite chatAdapter={chatAdapter} callAdapter={callAdapter} />}
+        {meetingAdapter && <MeetingComposite meetingAdapter={meetingAdapter} />}
       </IdentifierProvider>
     </div>
   );

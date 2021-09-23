@@ -1,8 +1,24 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Mon, 16 Aug 2021 21:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0-beta.5)
+
+Mon, 13 Sep 2021 21:02:16 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.0.0-beta.4..@internal/chat-stateful-client_v1.0.0-beta.5)
+
+### Changes
+
+- Apply chat sdk hotfix ([PR #747](https://github.com/azure/communication-ui-library/pull/747) by jinan@microsoft.com)
+- bug-fix: Avoid squelching some exceptions ([PR #684](https://github.com/azure/communication-ui-library/pull/684) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add timestamp to teed errors ([PR #753](https://github.com/azure/communication-ui-library/pull/753) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Rename ChatErrorTarget ([PR #703](https://github.com/azure/communication-ui-library/pull/703) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump acs-ui-common dep ([PR #732](https://github.com/azure/communication-ui-library/pull/732) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update client to get 'editedOn' property from message update event ([PR #734](https://github.com/azure/communication-ui-library/pull/734) by jinan@microsoft.com)
+- Add methods to clear calling ACS errors ([PR #685](https://github.com/azure/communication-ui-library/pull/685) by 82062616+prprabhu-ms@users.noreply.github.com)
+- updating immer to 9.0.6 ([PR #764](https://github.com/azure/communication-ui-library/pull/764) by 79329532+alkwa-msft@users.noreply.github.com)
 
 ## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0-beta.4)
 

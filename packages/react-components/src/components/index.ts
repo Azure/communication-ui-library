@@ -35,7 +35,7 @@ export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStylesProps } from './ParticipantItem';
 
 export { ParticipantList } from './ParticipantList';
-export type { ParticipantListProps } from './ParticipantList';
+export type { ParticipantListProps, ParticipantMenuItemsCallback } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps } from './VideoGallery';

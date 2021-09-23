@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump version to match other packlets",
-  "packageName": "@internal/acs-ui-common",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
