@@ -114,7 +114,7 @@ test.describe('Chat Composite custom data model', () => {
   });
 
   test('can be viewed by user[1]', async ({ pages }) => {
-    const page = pages[0];
+    const page = pages[1];
     await page.bringToFront();
     await waitForChatCompositeParticipantsToLoad(page, 2);
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
