@@ -11,7 +11,9 @@ import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { endCallControlButtonStyles } from './styles/ControlBar.styles';
 
 /**
- * Strings of EndCallButton that can be overridden
+ * Strings of {@link EndCallButton} that can be overridden.
+ *
+ * @public
  */
 export interface EndCallButtonStrings {
   /**
@@ -21,7 +23,9 @@ export interface EndCallButtonStrings {
 }
 
 /**
- * Props for EndCallButton component
+ * Props for {@link EndCallButton}.
+ *
+ * @public
  */
 export interface EndCallButtonProps extends ControlBarButtonProps {
   /**
@@ -39,9 +43,11 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
 const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="ControlButtonEndCall" />;
 
 /**
- * `EndCallButton` allows you to easily create a component for rendering a end call button. It can be used in your ControlBar component for example.
+ * A button to end an ongoing call.
  *
- * @param props - of type EndCallButtonProps
+ * Can be used with {@link ControlBar}.
+ *
+ * @public
  */
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const { styles } = props;

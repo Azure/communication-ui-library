@@ -14,6 +14,7 @@ import React, { createContext, useContext } from 'react';
  * guarantee of the public API. This will remain perenially experimental and compatibility breaking changes
  * may be made at any point.
  *
+ * @public
  */
 export interface Identifiers {
   /** `data-ui-id` value for `SendBox` Component */
@@ -51,6 +52,7 @@ export const IdentifierContext = createContext<Identifiers>(defaultIdentifiers);
  *
  * See documentation for {@link Identifiers}.
  *
+ * @beta
  */
 export interface IdentifierProviderProps {
   identifiers?: Identifiers;
@@ -63,6 +65,8 @@ export interface IdentifierProviderProps {
  * @experimental
  *
  * See documentation for {@link Identifiers}.
+ *
+ * @beta
  */
 export const IdentifierProvider = (props: IdentifierProviderProps): JSX.Element => {
   const { identifiers, children } = props;

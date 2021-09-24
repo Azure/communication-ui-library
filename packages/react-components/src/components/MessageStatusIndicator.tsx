@@ -13,7 +13,9 @@ import {
 } from './styles/MessageStatusIndicator.styles';
 
 /**
- * Strings of MessageStatusIndicator that can be overridden
+ * Strings of {@link MessageStatusIndicator} that can be overridden.
+ *
+ * @public
  */
 export interface MessageStatusIndicatorStrings {
   /** Text to display in the delivered message icon tooltip. */
@@ -27,7 +29,9 @@ export interface MessageStatusIndicatorStrings {
 }
 
 /**
- * Props for MessageStatusIndicator component
+ * Props for {@link MessageStatusIndicator}.
+ *
+ * @public
  */
 export interface MessageStatusIndicatorProps {
   /** Message status that determines the icon to display. */
@@ -47,7 +51,11 @@ export interface MessageStatusIndicatorProps {
 }
 
 /**
- * MessageStatusIndicator component.
+ * Component to display the status of a sent message.
+ *
+ * Adds an icon and tooltip corresponding to the message status.
+ *
+ * @public
  */
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
   const { status, styles } = props;

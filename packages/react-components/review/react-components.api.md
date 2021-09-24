@@ -76,10 +76,10 @@ export interface CameraButtonStrings {
     onLabel: string;
 }
 
-// @public (undocumented)
+// @public
 export type ChatMessage = Message<'chat'>;
 
-// @public (undocumented)
+// @public
 export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
@@ -143,7 +143,7 @@ export const COMPONENT_LOCALE_ZH_CN: ComponentLocale;
 // @public
 export const COMPONENT_LOCALE_ZH_TW: ComponentLocale;
 
-// @public (undocumented)
+// @public
 export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
 
 // @public
@@ -189,7 +189,7 @@ export interface ControlBarButtonStrings {
     onLabel?: string;
 }
 
-// @public (undocumented)
+// @public
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
 // @public
@@ -211,10 +211,10 @@ export type CustomAvatarOptions = {
     text?: string;
 };
 
-// @public (undocumented)
+// @public
 export type CustomMessage = Message<'custom'>;
 
-// @public (undocumented)
+// @public
 export type CustomMessagePayload = {
     createdOn: Date;
     messageId: string;
@@ -307,10 +307,10 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -319,13 +319,13 @@ export interface GridLayoutProps {
     styles?: BaseCustomStylesProps;
 }
 
-// @public (undocumented)
+// @public
 export type GridLayoutType = 'standard';
 
-// @public
+// @beta
 export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
 
-// @public
+// @beta
 export interface IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -344,7 +344,7 @@ export interface Identifiers {
     videoTile: string;
 }
 
-// @public (undocumented)
+// @public
 export type InputBoxButtonProps = {
     onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
     onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
@@ -352,7 +352,7 @@ export type InputBoxButtonProps = {
     id?: string;
 };
 
-// @public (undocumented)
+// @public
 export interface JumpToNewMessageButtonProps {
     // (undocumented)
     onClick: () => void;
@@ -370,16 +370,16 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
-// @public (undocumented)
+// @public
 export type Message<T extends MessageTypes> = {
     type: T;
     payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload<'participantAdded' | 'participantRemoved'> | SystemMessagePayload<'topicUpdated'> | SystemMessagePayload<'content'> : CustomMessagePayload;
 };
 
-// @public (undocumented)
+// @public
 export type MessageAttachedStatus = 'bottom' | 'top';
 
-// @public (undocumented)
+// @public
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
 // @public
@@ -393,7 +393,7 @@ export type MessageProps = {
     onDeleteMessage?: (messageId: string) => Promise<void>;
 };
 
-// @public (undocumented)
+// @public
 export type MessageRenderer = (props: MessageProps) => JSX.Element;
 
 // @public
@@ -431,7 +431,7 @@ export type MessageThreadProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     editDisabled?: boolean;
@@ -452,7 +452,7 @@ export interface MessageThreadStrings {
     yesterday: string;
 }
 
-// @public (undocumented)
+// @public
 export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
@@ -462,7 +462,7 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     systemMessageContainer?: ComponentSlotStyle;
 }
 
-// @public (undocumented)
+// @public
 export type MessageTypes = 'chat' | 'system' | 'custom';
 
 // @public
@@ -545,7 +545,7 @@ export interface ParticipantItemStrings {
     removeButtonLabel: string;
 }
 
-// @public (undocumented)
+// @public
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     avatar?: IStyle;
     iconContainer?: IStyle;
@@ -632,7 +632,7 @@ export interface SendBoxStrings {
     placeholderText: string;
 }
 
-// @public (undocumented)
+// @public
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
     sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
@@ -650,13 +650,13 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public (undocumented)
+// @public
 export type SystemMessage = Message<'system'>;
 
-// @public (undocumented)
+// @public
 export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
 
-// @public (undocumented)
+// @public
 export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
     type: T;
     messageId: string;
@@ -667,11 +667,8 @@ export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMes
     iconName: string;
 };
 
-// @public (undocumented)
-export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
-
 // @public
-export const ThemeContext: React_2.Context<Theme>;
+export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
 
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
@@ -693,7 +690,7 @@ export interface TypingIndicatorStrings {
     singleUser: string;
 }
 
-// @public (undocumented)
+// @public
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
@@ -756,7 +753,7 @@ export interface VideoStreamOptions {
     scalingMode?: 'Stretch' | 'Crop' | 'Fit';
 }
 
-// @public (undocumented)
+// @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
@@ -774,7 +771,7 @@ export interface VideoTileProps {
     userId?: string;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
     displayNameContainer?: IStyle;
     overlayContainer?: IStyle;

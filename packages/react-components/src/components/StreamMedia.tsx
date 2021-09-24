@@ -7,7 +7,9 @@ import { BaseCustomStylesProps } from '../types';
 import { mergeStyles } from '@fluentui/react';
 
 /**
- * Props for StreamMedia component
+ * Props for {@link StreamMedia}.
+ *
+ * @public
  */
 export interface StreamMediaProps {
   /** Video stream element to render. */
@@ -25,8 +27,11 @@ export interface StreamMediaProps {
 }
 
 /**
- * StreamMedia component converts a HTMLElement to a JSX Element.
- * This component becomes very handy when you get the video stream HTMLElement from the calling sdk and want to render it in components like VideoTile.
+ * Utility component to convert an HTMLElement with a video stream into a JSX element.
+ *
+ * Use to convert an HTMLElement returned by headless calling API into a component that can be rendered as a {@link VideoTile}.
+ *
+ * @public
  */
 export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);

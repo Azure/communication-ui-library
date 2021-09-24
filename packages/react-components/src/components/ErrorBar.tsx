@@ -6,10 +6,12 @@ import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/r
 import { useLocale } from '../localization';
 
 /**
- * {@link ErrorBar} properties.
+ * Props for {@link ErrorBar}.
  *
  * In addition to the following, {@link ErrorBar} forwards all
  * {@link @fluentui/react#IMessageBarProps} to the underlying {@link @fluentui/react#MessageBar}.
+ *
+ * @public
  */
 export interface ErrorBarProps extends IMessageBarProps {
   /**
@@ -25,6 +27,8 @@ export interface ErrorBarProps extends IMessageBarProps {
 
 /**
  * All strings that may be shown on the UI in the {@link ErrorBar}.
+ *
+ * @public
  */
 export interface ErrorBarStrings {
   /**
@@ -98,11 +102,15 @@ export interface ErrorBarStrings {
 
 /**
  * All errors that can be shown in the {@link ErrorBar}.
+ *
+ * @public
  */
 export type ErrorType = keyof ErrorBarStrings;
 
 /**
  * Active error to be shown via {@link ErrorBar}.
+ *
+ * @public
  */
 export interface ActiveError {
   /**
@@ -129,6 +137,8 @@ export interface ActiveError {
  *         If the error recurs, it is shown in the UI.
  *
  * Uses {@link @fluentui/react#MessageBar} UI element.
+ *
+ * @public
  */
 export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const localeStrings = useLocale().strings.errorBar;

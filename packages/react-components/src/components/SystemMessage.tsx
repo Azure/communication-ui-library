@@ -6,12 +6,16 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import React from 'react';
 import { systemMessageIconStyle } from './styles/SystemMessage.styles';
 
-// Todo: We need to add more types of system messages that we support.
+/**
+ * Todo: We need to add more types of system messages that we support.
+ *
+ * @private
+ */
 export type SystemMessageIconTypes = 'PeopleAdd' | 'PeopleBlock' | 'Edit';
 
 export type SystemMessageProps = {
   /**
-   * Icon name for the system message. iconName should match the iconName in fluentUI icon.
+   * Icon name for the system message.
    */
   iconName: SystemMessageIconTypes;
   /**
@@ -24,6 +28,9 @@ export type SystemMessageProps = {
   containerStyle?: ComponentSlotStyle;
 };
 
+/**
+ * @private
+ */
 export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   const { iconName, content } = props;
   const Icon: JSX.Element = <FontIcon iconName={iconName} className={mergeStyles(systemMessageIconStyle)} />;

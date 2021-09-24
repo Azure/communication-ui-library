@@ -7,7 +7,9 @@ import { mergeThemes as mergeNorthstarThemes, Provider, teamsTheme } from '@flue
 import { lightTheme } from './themes';
 
 /**
- * Props for FluentThemeProvider
+ * Props for {@link FluentThemeProvider}.
+ *
+ * @public
  */
 export interface FluentThemeProviderProps {
   /** Children to be themed. */
@@ -30,7 +32,7 @@ const wrapper = mergeStyles({
 const defaultTheme = mergeThemes(getTheme(), lightTheme);
 
 /** Theme context for library's react components */
-export const ThemeContext = createContext<Theme>(defaultTheme);
+const ThemeContext = createContext<Theme>(defaultTheme);
 
 const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
   componentVariables: {
@@ -43,10 +45,13 @@ const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
 });
 
 /**
- * @description Provider to apply a Fluent theme across this library's react components.
+ * Provider to apply a Fluent theme across this library's react components.
+ *
  * @remarks Components in this library are composed primarily from [Fluent UI](https://developer.microsoft.com/fluentui#/controls/web),
  * controls, and also from [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0) controls.
  * This provider handles applying any theme provided to both the underlying Fluent UI controls, as well as the Fluent React Northstar controls.
+ *
+ * @public
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, rtl, children } = props;
@@ -88,5 +93,9 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   );
 };
 
-/** React hook to access theme */
+/**
+ * React hook to access theme
+ *
+ * @public
+ */
 export const useTheme = (): Theme => useContext(ThemeContext);
