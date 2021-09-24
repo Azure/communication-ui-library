@@ -108,7 +108,6 @@ const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): un
 };
 
 const MAX_RENDERED_VIDEO_TILES = 4;
-let lastVisibleSpeakers: VideoGalleryRemoteParticipant[];
 
 /**
  * Sorts remote participants on the basis of their video status (on/off) and dominant speaker rank.
@@ -120,9 +119,6 @@ const sortedRemoteParticipants = (
   dominantSpeakers?: Record<string, number>
 ): VideoGalleryRemoteParticipant[] => {
   if (!participants) return [];
-
-  console.log('visibleDominantSpeakers', lastVisibleSpeakers);
-  console.log('Participants', participants);
 
   const participantsWithVideo: VideoGalleryRemoteParticipant[] = [];
   const participantsWithoutVideo: VideoGalleryRemoteParticipant[] = [];
@@ -157,12 +153,10 @@ const sortedRemoteParticipants = (
   }
 
   const allSpeakers = participantsWithVideo.concat(participantsWithoutVideo);
-
-  lastVisibleSpeakers = allSpeakers.slice(0, MAX_RENDERED_VIDEO_TILES);
-
   return allSpeakers;
 };
 
+// Cache for maintaining the current visible participants and graceful subsequent renders.
 let lastVisibleSpeakersWithVideo: VideoGalleryRemoteParticipant[] = [];
 
 const sortedRemoteParticipantsWithVideo = (
@@ -178,16 +172,6 @@ const sortedRemoteParticipantsWithVideo = (
   // Don't apply any logic if total number of video streams is less than Max video streams.
   if (participantsWithVideo.length <= MAX_RENDERED_VIDEO_TILES) return participantsWithVideo;
 
-  // This doesn't work for some reason...
-  // // If dominant speakers are unchanged and exist in lastVisibleSpeakersWithVideo. Return lastVisibleSpeakersWithVideo
-  // if (dominantSpeakerIds.length > 0) {
-  //   const unchangedSpeakers = _.intersection(
-  //     dominantSpeakerIds,
-  //     lastVisibleSpeakersWithVideo.map((p) => p.userId)
-  //   );
-  //   if (unchangedSpeakers.length === dominantSpeakerIds.length) return lastVisibleSpeakersWithVideo;
-  // }
-
   // Remove non-video speakers from `lastVisibleSpeakersWithVideo` after re-render.
   // Note: This could cause the array to become null if everyone turned off video, so we handle that by re-initializing this array if it is empty after this.
   lastVisibleSpeakersWithVideo = lastVisibleSpeakersWithVideo.filter((p) => p.videoStream?.isAvailable);
@@ -200,6 +184,7 @@ const sortedRemoteParticipantsWithVideo = (
   const lastVisibleSpeakerIds = lastVisibleSpeakersWithVideo.map((speaker) => speaker.userId);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !lastVisibleSpeakerIds.includes(id));
 
+  // Remove participants that are no longer dominant and replace them with new dominant speakers.
   lastVisibleSpeakerIds.forEach((id, idx) => {
     if (!dominantSpeakerIds.includes(id)) {
       const replacement = newDominantSpeakerIds.pop();
@@ -210,6 +195,7 @@ const sortedRemoteParticipantsWithVideo = (
   });
 
   // Sort the new video participants to match the order of last visible participants.
+  // @TODO: filter here for participants without video instead of doing it above?
   let videoParticipantsToRender = participantsWithVideo.filter((p) => lastVisibleSpeakerIds.includes(p.userId));
   videoParticipantsToRender.sort((a, b) => {
     return lastVisibleSpeakerIds.indexOf(a.userId) - lastVisibleSpeakerIds.indexOf(b.userId);
@@ -255,13 +241,13 @@ export const videoGallerySelector = createSelector(
     const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
 
     const dominantSpeakerIds = dominantSpeakersWithFlatId(dominantSpeakers);
+    const dominantSpeakersMap: Record<string, number> = {};
+    dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
 
     const remoteParticipantsWithVideo = sortedRemoteParticipantsWithVideo(
       videoGalleryRemoteParticipantsMemo(remoteParticipants),
       dominantSpeakerIds
     );
-
-    console.log('remoteParticipantsWithVideo', remoteParticipantsWithVideo);
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -284,7 +270,10 @@ export const videoGallerySelector = createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: remoteParticipantsWithVideo,
+      remoteParticipants: sortedRemoteParticipants(
+        videoGalleryRemoteParticipantsMemo(remoteParticipants),
+        dominantSpeakersMap
+      ),
       remoteParticipantsWithVideo: remoteParticipantsWithVideo
     };
   }
