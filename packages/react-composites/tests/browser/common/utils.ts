@@ -11,6 +11,7 @@ export const dataUiId = (v: string): string => `[data-ui-id="${v}"]`;
  * Wait for the ChatComposite on a page to fully load.
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
+  await page.bringToFront();
   await page.waitForLoadState('networkidle');
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
 

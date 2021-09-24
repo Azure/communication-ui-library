@@ -19,7 +19,6 @@ import { Page, expect } from '@playwright/test';
 test.describe('ErrorBar is shown correctly', async () => {
   test('not shown when nothing is wrong', async ({ pages }) => {
     const page = pages[0];
-    page.bringToFront();
     await waitForChatCompositeToLoad(page);
     await waitForChatCompositeParticipantsToLoad(page, 2);
     stubMessageTimestamps(page);
