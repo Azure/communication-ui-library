@@ -86,22 +86,23 @@ test.describe('Chat Composite E2E Tests', () => {
   });
 
   test('page[1] can rejoin the chat', async ({ pages }) => {
-    const page = pages[1];
-    await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
-    await page.keyboard.press('Enter');
+    const page1 = pages[1];
+    await page1.bringToFront();
+    // From previous test, input currently says: I am not superstitious. Just a little stitious.
+    await page1.keyboard.press('Enter');
+
     // Read the message to generate stable result
     await pages[0].bringToFront();
     await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
 
-    await page.bringToFront();
-    await page.waitForSelector(`[data-ui-status="seen"]`);
-    page.reload({ waitUntil: 'networkidle' });
-    await waitForChatCompositeToLoad(page);
+    await page1.bringToFront();
+    await page1.waitForSelector(`[data-ui-status="seen"]`);
+    page1.reload({ waitUntil: 'networkidle' });
+    await waitForChatCompositeToLoad(page1);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
+    await page1.waitForSelector(`[data-ui-status="delivered"]`);
+    stubMessageTimestamps(page1);
+    expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });
 
