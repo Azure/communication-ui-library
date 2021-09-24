@@ -69,7 +69,7 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
 
-    stubMessageTimestamps(pages[0]);
+    await stubMessageTimestamps(pages[0]);
     expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`, { threshold: 0.5 });
   });
 

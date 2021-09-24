@@ -16,7 +16,7 @@ test.describe('Localization tests', async () => {
   test('Participants list header should be localized', async ({ pages }) => {
     const page = pages[0];
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-chat.png', { threshold: 0.5 });
   });
 });

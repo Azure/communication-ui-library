@@ -21,7 +21,7 @@ test.describe('Chat Composite E2E Tests', () => {
     for (const page of pages) {
       await waitForChatCompositeToLoad(page);
       await waitForChatCompositeParticipantsToLoad(page, 2);
-      stubMessageTimestamps(page);
+      await stubMessageTimestamps(page);
     }
   });
 
@@ -38,13 +38,13 @@ test.describe('Chat Composite E2E Tests', () => {
     await page0.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page0.keyboard.press('Enter');
     await page0.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page0);
+    await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('send-message.png');
 
     const page1 = pages[1];
     await page1.bringToFront();
     await page1.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page1);
+    await stubMessageTimestamps(page1);
 
     // It could be too slow to get typing indicator here, which makes the test flakey
     // so wait for typing indicator disappearing
@@ -55,7 +55,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await page0.bringToFront();
     await page0.waitForSelector(`[data-ui-status="seen"]`);
-    stubMessageTimestamps(page0);
+    await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
   });
 
@@ -101,7 +101,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await waitForChatCompositeToLoad(page1);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
     await page1.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page1);
+    await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });
@@ -113,7 +113,7 @@ test.describe('Chat Composite custom data model', () => {
     }
   });
 
-  test('messages and typing indicator reflect custom data modal', async ({ pages }) => {
+  test('messages, participants and typing indicator reflect custom data modal', async ({ pages }) => {
     await waitForChatCompositeParticipantsToLoad(pages[0], 2);
     await waitForChatCompositeParticipantsToLoad(pages[1], 2);
 
@@ -126,7 +126,7 @@ test.describe('Chat Composite custom data model', () => {
     await pages[1].waitForSelector('#custom-data-model-message');
 
     // Screenshot should show custom typing indicator and custom rendered message
-    stubMessageTimestamps(pages[1]);
+    await stubMessageTimestamps(pages[1]);
     expect(await pages[1].screenshot()).toMatchSnapshot('custom-data-model.png');
   });
 });

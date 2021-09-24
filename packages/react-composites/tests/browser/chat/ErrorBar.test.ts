@@ -21,12 +21,12 @@ test.describe('ErrorBar is shown correctly', async () => {
     const page = pages[0];
     await waitForChatCompositeToLoad(page);
     await waitForChatCompositeParticipantsToLoad(page, 2);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
 
     await sendAMessage(page);
     await waitForSendSuccess(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
   });
 
@@ -34,12 +34,12 @@ test.describe('ErrorBar is shown correctly', async () => {
     const page = pages[0];
     await updatePageQueryParam(page, { threadId: 'INCORRECT_VALUE' });
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
 
     await sendAMessage(page);
     await waitForSendFailure(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
   });
 
@@ -48,13 +48,13 @@ test.describe('ErrorBar is shown correctly', async () => {
     const user = users[0];
     await updatePageQueryParam(page, { token: user.token + 'INCORRECT_VALUE' });
     // await waitForChatCompositeToLoad(page);
-    await page.waitForTimeout(3000);
-    stubMessageTimestamps(page);
+    // await page.waitForTimeout(3000);
+    // await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
     // await sendAMessage(page);
     // await waitForSendFailure(page);
-    // stubMessageTimestamps(page);
+    // await stubMessageTimestamps(page);
     // expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
   });
 
@@ -62,12 +62,12 @@ test.describe('ErrorBar is shown correctly', async () => {
     const page = pages[0];
     await updatePageQueryParam(page, { endpointUrl: 'https://INCORRECT.VALUE' });
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
 
     await sendAMessage(page);
     await waitForSendFailure(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
   });
 });

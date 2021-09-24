@@ -121,9 +121,9 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
 /**
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
-export const stubMessageTimestamps = (page: Page): void => {
+export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
-  page.evaluate((messageTimestampId) => {
+  await page.evaluate((messageTimestampId) => {
     Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
   }, messageTimestampId);
 };
@@ -149,6 +149,8 @@ export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: s
     url.searchParams.append(encodeURIComponent(key), encodeURIComponent(value));
   });
 
+  console.log('going to new qsp page');
   await page.goto(url.toString(), { waitUntil: 'networkidle' });
+  console.log('gone to new qsp page');
   return page;
 };
