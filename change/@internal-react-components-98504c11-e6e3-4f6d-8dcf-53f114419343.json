@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Lint clean",
+  "comment": "Add release tags to all public API. Lint clean internal API.",
   "packageName": "@internal/react-components",
   "email": "82062616+prprabhu-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
