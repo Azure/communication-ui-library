@@ -113,16 +113,20 @@ test.describe('Chat Composite custom data model', () => {
     }
   });
 
-  test('can be viewed by user[1]', async ({ pages }) => {
-    const page = pages[1];
-    await page.bringToFront();
-    await waitForChatCompositeParticipantsToLoad(page, 2);
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
-    await page.keyboard.press('Enter');
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
-    await page.waitForSelector('#custom-data-model-typing-indicator');
-    await page.waitForSelector('#custom-data-model-message');
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
+  test('messages and typing indicator reflect custom data modal', async ({ pages }) => {
+    await waitForChatCompositeParticipantsToLoad(pages[0], 2);
+    await waitForChatCompositeParticipantsToLoad(pages[1], 2);
+
+    // Send typing indicator from page 0
+    await pages[0].bringToFront();
+    await pages[0].type(dataUiId(IDS.sendboxTextfield), 'Typing to display a typing indicator only');
+
+    // wait for typing indicator
+    await pages[1].waitForSelector('#custom-data-model-typing-indicator');
+    await pages[1].waitForSelector('#custom-data-model-message');
+
+    // Screenshot should show custom typing indicator and custom rendered message
+    stubMessageTimestamps(pages[1]);
+    expect(await pages[1].screenshot()).toMatchSnapshot('custom-data-model.png');
   });
 });
