@@ -48,7 +48,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 
 /**
  * A base class for composites.
- * Provides common wrappers such as FluentThemeProvider, IdentifierProvider and LocalizationProvider.
+ * Provides common wrappers such as FluentThemeProvider and LocalizationProvider.
  */
 export const BaseComposite = (
   props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }

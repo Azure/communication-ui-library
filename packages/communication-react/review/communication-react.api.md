@@ -1163,10 +1163,12 @@ export interface GridLayoutProps {
 // @public
 export type GridLayoutType = 'standard';
 
-// @beta
-export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+// @internal
+export const _IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
 
-// @beta
+// Warning: (ae-internal-missing-underscore) The name "IdentifierProviderProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export interface IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -1174,7 +1176,9 @@ export interface IdentifierProviderProps {
     identifiers?: Identifiers;
 }
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "Identifiers" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export interface Identifiers {
     messageContent: string;
     messageTimestamp: string;

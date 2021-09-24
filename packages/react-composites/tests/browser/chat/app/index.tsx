@@ -5,7 +5,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { IdentifierProvider } from '@internal/react-components';
+import { _IdentifierProvider } from '@internal/react-components';
 import {
   ChatAdapter,
   createAzureCommunicationChatAdapter,
@@ -48,7 +48,7 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <IdentifierProvider identifiers={IDS}>
+    <_IdentifierProvider identifiers={IDS}>
       {chatAdapter && (
         <ChatComposite
           adapter={chatAdapter}
@@ -83,7 +83,7 @@ function App(): JSX.Element {
           locale={useFrlocale ? COMPOSITE_LOCALE_FR_FR : undefined}
         />
       )}
-    </IdentifierProvider>
+    </_IdentifierProvider>
   );
 }
 
