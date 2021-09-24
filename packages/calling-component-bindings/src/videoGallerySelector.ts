@@ -170,24 +170,33 @@ const sortedRemoteParticipantsWithVideo = (
   dominantSpeakers: Array<string> = []
 ): VideoGalleryRemoteParticipant[] | [] => {
   if (!participants) return [];
-  const participantsWithVideo = participants.filter((p) => p.videoStream?.renderElement?.childElementCount);
+
+  // Only use the Max allowed dominant speakers.
+  const dominantSpeakerIds = dominantSpeakers.slice(0, MAX_RENDERED_VIDEO_TILES);
+  const participantsWithVideo = participants.filter((p) => p.videoStream?.isAvailable);
 
   // Don't apply any logic if total number of video streams is less than Max video streams.
-  if (participantsWithVideo.length <= MAX_RENDERED_VIDEO_TILES) {
-    return participantsWithVideo.slice(0, MAX_RENDERED_VIDEO_TILES);
-  }
+  if (participantsWithVideo.length <= MAX_RENDERED_VIDEO_TILES) return participantsWithVideo;
 
-  // Remove non-video speakers from `lastVisibleSpeakersWithVideo` after re-render
-  lastVisibleSpeakersWithVideo = lastVisibleSpeakersWithVideo.filter(
-    (p) => p.videoStream?.renderElement?.childElementCount
-  );
+  // This doesn't work for some reason...
+  // // If dominant speakers are unchanged and exist in lastVisibleSpeakersWithVideo. Return lastVisibleSpeakersWithVideo
+  // if (dominantSpeakerIds.length > 0) {
+  //   const unchangedSpeakers = _.intersection(
+  //     dominantSpeakerIds,
+  //     lastVisibleSpeakersWithVideo.map((p) => p.userId)
+  //   );
+  //   if (unchangedSpeakers.length === dominantSpeakerIds.length) return lastVisibleSpeakersWithVideo;
+  // }
+
+  // Remove non-video speakers from `lastVisibleSpeakersWithVideo` after re-render.
+  // Note: This could cause the array to become null if everyone turned off video, so we handle that by re-initializing this array if it is empty after this.
+  lastVisibleSpeakersWithVideo = lastVisibleSpeakersWithVideo.filter((p) => p.videoStream?.isAvailable);
 
   // Initialize `lastVisibleSpeakersWithVideo` if it is empty.
   if (!lastVisibleSpeakersWithVideo.length) {
     lastVisibleSpeakersWithVideo = participantsWithVideo.slice(0, MAX_RENDERED_VIDEO_TILES);
   }
 
-  const dominantSpeakerIds = dominantSpeakers.slice(0, MAX_RENDERED_VIDEO_TILES);
   const lastVisibleSpeakerIds = lastVisibleSpeakersWithVideo.map((speaker) => speaker.userId);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !lastVisibleSpeakerIds.includes(id));
 
@@ -200,16 +209,18 @@ const sortedRemoteParticipantsWithVideo = (
     }
   });
 
-  const videoParticipantsToRender = participantsWithVideo.filter((p) => lastVisibleSpeakerIds.includes(p.userId));
+  // Sort the new video participants to match the order of last visible participants.
+  let videoParticipantsToRender = participantsWithVideo.filter((p) => lastVisibleSpeakerIds.includes(p.userId));
   videoParticipantsToRender.sort((a, b) => {
     return lastVisibleSpeakerIds.indexOf(a.userId) - lastVisibleSpeakerIds.indexOf(b.userId);
   });
 
+  // Add additional participants to the final list of visible participants if the list has less than Max visible participants.
   if (videoParticipantsToRender.length < MAX_RENDERED_VIDEO_TILES) {
     const diff = MAX_RENDERED_VIDEO_TILES - videoParticipantsToRender.length;
-    videoParticipantsToRender.concat(
-      participantsWithVideo.filter((p) => !lastVisibleSpeakerIds.includes(p.userId)).slice(0, diff)
-    );
+    // @TODO: tweak implements, don't filter through all participants. Filter only the number of participants equal to diff
+    const fillers = participantsWithVideo.filter((p) => !lastVisibleSpeakerIds.includes(p.userId)).slice(0, diff);
+    videoParticipantsToRender = videoParticipantsToRender.concat(fillers);
   }
 
   lastVisibleSpeakersWithVideo = videoParticipantsToRender;
@@ -244,8 +255,6 @@ export const videoGallerySelector = createSelector(
     const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
 
     const dominantSpeakerIds = dominantSpeakersWithFlatId(dominantSpeakers);
-    const dominantSpeakersMap: Record<string, number> = {};
-    dominantSpeakerIds?.forEach((id, idx) => (dominantSpeakersMap[id] = idx));
 
     const remoteParticipantsWithVideo = sortedRemoteParticipantsWithVideo(
       videoGalleryRemoteParticipantsMemo(remoteParticipants),
@@ -275,10 +284,7 @@ export const videoGallerySelector = createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: sortedRemoteParticipants(
-        videoGalleryRemoteParticipantsMemo(remoteParticipants),
-        dominantSpeakersMap
-      ),
+      remoteParticipants: remoteParticipantsWithVideo,
       remoteParticipantsWithVideo: remoteParticipantsWithVideo
     };
   }
