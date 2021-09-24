@@ -57,7 +57,7 @@ export const IdentifierContext = createContext<_Identifiers>(defaultIdentifiers)
  *
  * @internal
  */
-export interface IdentifierProviderProps {
+export interface _IdentifierProviderProps {
   identifiers?: _Identifiers;
   children: React.ReactNode;
 }
@@ -71,7 +71,7 @@ export interface IdentifierProviderProps {
  *
  * @internal
  */
-export const _IdentifierProvider = (props: IdentifierProviderProps): JSX.Element => {
+export const _IdentifierProvider = (props: _IdentifierProviderProps): JSX.Element => {
   const { identifiers, children } = props;
   return <IdentifierContext.Provider value={identifiers ?? defaultIdentifiers}>{children}</IdentifierContext.Provider>;
 };

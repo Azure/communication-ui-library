@@ -3,7 +3,7 @@
 
 export * from './components';
 export { _IdentifierProvider } from './identifiers';
-export type { _Identifiers as Identifiers, IdentifierProviderProps } from './identifiers';
+export type { _Identifiers, _IdentifierProviderProps } from './identifiers';
 export * from './localization/locales';
 export { LocalizationProvider } from './localization';
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
