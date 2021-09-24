@@ -28,6 +28,7 @@ import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PhoneNumberKind } from '@azure/communication-common';
@@ -115,6 +116,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     rtl?: boolean;
 }
 
@@ -238,6 +240,7 @@ export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCame
 
 // @public
 export type CallCompositeOptions = {
+    mobileView?: boolean;
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
 };
@@ -624,6 +627,11 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 // @alpha
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
+// @public
+export type MeetingCompositeOptions = {
+    mobileView?: boolean;
+};
+
 // @alpha
 export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -632,6 +640,7 @@ export type MeetingCompositeProps = {
     meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
+    options?: MeetingCompositeOptions;
 };
 
 // @alpha

@@ -40,7 +40,7 @@ const BasicStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          options={{ errorBar: args.errorBar }}
+          options={{ mobileView: args.mobileView, errorBar: args.errorBar }}
         />
       ) : (
         <ConfigHintBanner />
@@ -58,6 +58,7 @@ export default {
   argTypes: {
     connectionString: controlsToAdd.connectionString,
     displayName: controlsToAdd.displayName,
+    mobileView: controlsToAdd.mobileView,
     callInvitationURL: controlsToAdd.callInvitationURL,
     errorBar: controlsToAdd.showErrorBar,
     // Hiding auto-generated controls

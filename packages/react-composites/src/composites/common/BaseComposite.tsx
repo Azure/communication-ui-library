@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
-import { FluentThemeProvider } from '@internal/react-components';
+import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
 import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
@@ -38,6 +38,12 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    * in Composite.
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+
+  /**
+   * A callback function that can be used to provide custom menu items for a participant in
+   * participant list.
+   */
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }
 
 /**
