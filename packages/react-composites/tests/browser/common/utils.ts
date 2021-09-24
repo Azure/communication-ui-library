@@ -152,6 +152,8 @@ export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: s
     .join('&');
   // For now just add the param to the end, browser will always use the latter of same-named QSPs
   const url = page.url() + '&' + newQueryParams;
+  console.log('updating params');
   await page.goto(url, { waitUntil: 'networkidle' });
+  console.log('updated params');
   return page;
 };
