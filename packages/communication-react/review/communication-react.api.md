@@ -172,9 +172,6 @@ export interface BaseCustomStylesProps {
 }
 
 // @public
-export type ButtonCustomStylesProps = IButtonStyles;
-
-// @public
 export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
@@ -914,6 +911,7 @@ export interface ControlBarButtonProps extends IButtonProps {
     onRenderOnIcon?: IRenderFunction<IButtonProps>;
     showLabel?: boolean;
     strings?: ControlBarButtonStrings;
+    styles?: ControlBarButtonStyles;
 }
 
 // @public
@@ -921,6 +919,10 @@ export interface ControlBarButtonStrings {
     label?: string;
     offLabel?: string;
     onLabel?: string;
+}
+
+// @public
+export interface ControlBarButtonStyles extends IButtonStyles {
 }
 
 // @public
@@ -1680,7 +1682,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps, Particip
     onMuteAll?: () => void;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     strings?: Partial<ParticipantsButtonStrings>;
-    styles?: ParticipantsButtonStylesProps;
+    styles?: ParticipantsButtonStyles;
 }
 
 // @public (undocumented)
@@ -1705,7 +1707,7 @@ export interface ParticipantsButtonStrings {
 }
 
 // @public
-export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
+export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
     participantListContainerStyle?: IStyle;
 }
 
