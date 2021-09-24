@@ -147,13 +147,15 @@ export const disableAnimation = async (page: Page): Promise<void> => {
 };
 
 export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: string }): Promise<Page> => {
-  const newQueryParams = Object.entries(qArgs)
-    .map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
-    .join('&');
-  // For now just add the param to the end, browser will always use the latter of same-named QSPs
-  const url = page.url() + '&' + newQueryParams;
+  const url = new URL(page.url());
+
+  Object.entries(qArgs).forEach(([key, value]) => {
+    url.searchParams.delete(key);
+    url.searchParams.append(encodeURIComponent(key), encodeURIComponent(value));
+  });
+
   console.log('updating params');
-  await page.goto(url, { waitUntil: 'networkidle' });
+  await page.goto(url.toString(), { waitUntil: 'networkidle' });
   console.log('updated params');
   return page;
 };
