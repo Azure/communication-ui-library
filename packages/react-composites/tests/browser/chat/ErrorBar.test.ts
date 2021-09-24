@@ -47,9 +47,9 @@ test.describe('ErrorBar is shown correctly', async () => {
     const page = pages[0];
     const user = users[0];
     await updatePageQueryParam(page, { token: user.token + 'INCORRECT_VALUE' });
-    // await waitForChatCompositeToLoad(page);
+    await waitForChatCompositeToLoad(page);
     // await page.waitForTimeout(3000);
-    // await stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
     // await sendAMessage(page);
