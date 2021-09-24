@@ -24,6 +24,24 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
 };
 
 /**
+ * Wait for the ChatComposite participants to fully load.
+ */
+export const waitForChatCompositeParticipantsToLoad = async (
+  page: Page,
+  numberOfParticipants: number
+): Promise<void> => {
+  await page.waitForFunction(
+    (args) => {
+      return document.querySelectorAll(args.participantSelector).length === args.numberOfParticipants;
+    },
+    {
+      numberOfParticipants: numberOfParticipants,
+      participantSelector: dataUiId('chat-composite-participant-custom-avatar')
+    }
+  );
+};
+
+/**
  * Wait for the CallComposite on a page to fully load.
  */
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
@@ -126,6 +144,7 @@ export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: s
   const newQueryParams = Object.entries(qArgs)
     .map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
     .join('&');
+  // For now just add the param to the end, browser will always use the latter of same-named QSPs
   const url = page.url() + '&' + newQueryParams;
   await page.goto(url, { waitUntil: 'networkidle' });
   return page;

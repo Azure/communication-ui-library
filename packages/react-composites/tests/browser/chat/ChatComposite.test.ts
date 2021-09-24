@@ -1,7 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
-import { dataUiId, stubMessageTimestamps, updatePageQueryParam, waitForChatCompositeToLoad } from '../common/utils';
+import {
+  dataUiId,
+  stubMessageTimestamps,
+  updatePageQueryParam,
+  waitForChatCompositeParticipantsToLoad,
+  waitForChatCompositeToLoad
+} from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -13,7 +19,8 @@ import { expect } from '@playwright/test';
 test.describe('Chat Composite E2E Tests', () => {
   test.beforeEach(async ({ pages }) => {
     for (const page of pages) {
-      waitForChatCompositeToLoad(page);
+      await waitForChatCompositeToLoad(page);
+      await waitForChatCompositeParticipantsToLoad(page, 2);
       stubMessageTimestamps(page);
     }
   });
@@ -39,7 +46,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await page1.waitForSelector(`[data-ui-status="delivered"]`);
     stubMessageTimestamps(page1);
 
-    // It could be too slow to get typing indicator here, which makes the test flacky
+    // It could be too slow to get typing indicator here, which makes the test flakey
     // so wait for typing indicator disappearing
     const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
@@ -108,12 +115,10 @@ test.describe('Chat Composite custom data model', () => {
   test('can be viewed by user[1]', async ({ pages }) => {
     const page = pages[0];
     await page.bringToFront();
+    await waitForChatCompositeParticipantsToLoad(page, 2);
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
-    await page.waitForFunction(() => {
-      return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
-    });
     await page.waitForSelector('#custom-data-model-typing-indicator');
     await page.waitForSelector('#custom-data-model-message');
     stubMessageTimestamps(page);

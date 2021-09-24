@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
 import { test } from './fixture';
-import { dataUiId, stubMessageTimestamps, updatePageQueryParam, waitForChatCompositeToLoad } from '../common/utils';
+import {
+  dataUiId,
+  stubMessageTimestamps,
+  updatePageQueryParam,
+  waitForChatCompositeParticipantsToLoad,
+  waitForChatCompositeToLoad
+} from '../common/utils';
 import { Page, expect } from '@playwright/test';
 
 // All tests in this suite *must be run sequentially*.
@@ -15,6 +21,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     const page = pages[0];
     page.bringToFront();
     await waitForChatCompositeToLoad(page);
+    await waitForChatCompositeParticipantsToLoad(page, 2);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
 
@@ -37,9 +44,10 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
   });
 
-  test('with expired token', async ({ pages }) => {
+  test('with expired token', async ({ pages, users }) => {
     const page = pages[0];
-    await updatePageQueryParam(page, { token: 'INCORRECT_VALUE' });
+    const user = users[0];
+    await updatePageQueryParam(page, { token: 'INCORRECT_VALUE' + user.token });
     await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
