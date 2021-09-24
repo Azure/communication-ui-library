@@ -216,7 +216,7 @@ const dropDismissalsForInactiveErrors = (
   // * It is no longer active.
   //
   // We remove it from dismissals. When it becomes active again next time, it will be shown again on the UI.
-  const shouldDeleteDismissal = (dismissed: DismissedError) =>
+  const shouldDeleteDismissal = (dismissed: DismissedError): boolean =>
     dismissed.activeSince === undefined && active.get(dismissed.type) === undefined;
 
   if (dismissedErrors.some((dismissed) => shouldDeleteDismissal(dismissed))) {

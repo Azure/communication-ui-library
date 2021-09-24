@@ -43,6 +43,9 @@ const defaultIdentifiers: Identifiers = {
   videoTile: 'video-tile'
 };
 
+/**
+ * @private
+ */
 export const IdentifierContext = createContext<Identifiers>(defaultIdentifiers);
 
 /**
@@ -73,4 +76,7 @@ export const IdentifierProvider = (props: IdentifierProviderProps): JSX.Element 
   return <IdentifierContext.Provider value={identifiers ?? defaultIdentifiers}>{children}</IdentifierContext.Provider>;
 };
 
+/**
+ * @private
+ */
 export const useIdentifiers = (): Identifiers => useContext(IdentifierContext);

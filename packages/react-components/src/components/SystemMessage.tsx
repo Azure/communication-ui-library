@@ -13,6 +13,9 @@ import { systemMessageIconStyle } from './styles/SystemMessage.styles';
  */
 export type SystemMessageIconTypes = 'PeopleAdd' | 'PeopleBlock' | 'Edit';
 
+/**
+ * @private
+ */
 export type SystemMessageProps = {
   /**
    * Icon name for the system message.

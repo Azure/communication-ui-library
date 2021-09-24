@@ -85,6 +85,9 @@ const GenerateTextMessageContent = (payload: ChatMessagePayload): JSX.Element =>
   );
 };
 
+/**
+ * @private
+ */
 export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const strings = useLocale().strings.messageThread;
   const ids = useIdentifiers();

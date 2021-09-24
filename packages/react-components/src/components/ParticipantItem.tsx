@@ -150,7 +150,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     [itemHovered, menuTitle]
   );
 
-  const onDismissMenu = () => {
+  const onDismissMenu = (): void => {
     setItemHovered(false);
     setMenuHidden(true);
   };

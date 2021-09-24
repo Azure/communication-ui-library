@@ -19,6 +19,9 @@ interface IControlBarStyles {
   floatingRight: IStyle;
 }
 
+/**
+ * @private
+ */
 export const controlBarStyles: IControlBarStyles = {
   horizontal: {
     flexFlow: 'row nowrap'
@@ -115,6 +118,9 @@ export const controlBarStyles: IControlBarStyles = {
   }
 };
 
+/**
+ * @private
+ */
 export const controlButtonStyles: IButtonStyles = {
   root: {
     background: 'none',
@@ -132,6 +138,9 @@ export const controlButtonStyles: IButtonStyles = {
   }
 };
 
+/**
+ * @private
+ */
 export const controlButtonLabelStyles: IStyle = {
   fontSize: '0.625rem',
   lineHeight: '1rem',
@@ -140,6 +149,9 @@ export const controlButtonLabelStyles: IStyle = {
   margin: '0rem 0.25rem'
 };
 
+/**
+ * @private
+ */
 export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
   root: {
     color: palette.white
@@ -155,7 +167,11 @@ export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(control
   }
 });
 
-// making it Partial as IContextualMenuStyles has all its props non-optional and we only need title to be defined here
+/**
+ * making it Partial as IContextualMenuStyles has all its props non-optional and we only need title to be defined here.
+ *
+ * @private
+ */
 export const participantsButtonMenuPropsStyle: Partial<IContextualMenuStyles> = {
   title: {
     background: 'initial',
@@ -165,6 +181,9 @@ export const participantsButtonMenuPropsStyle: Partial<IContextualMenuStyles> = 
   }
 };
 
+/**
+ * @private
+ */
 export const defaultParticipantListContainerStyle: IStyle = {
   maxHeight: '20rem'
 };
