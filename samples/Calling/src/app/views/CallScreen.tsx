@@ -8,6 +8,9 @@ import { Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
+import MobileDetect from 'mobile-detect';
+
+const isMobileSession = !!new MobileDetect(window.navigator.userAgent).mobile();
 
 export interface CallScreenProps {
   token: string;
@@ -59,6 +62,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       callInvitationURL={window.location.href}
+      options={{ mobileView: isMobileSession }}
     />
   );
 };
