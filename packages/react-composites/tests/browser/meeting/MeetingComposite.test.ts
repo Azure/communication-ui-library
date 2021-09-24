@@ -61,6 +61,14 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     // Test page 0 has both sent message and received message
     await pages[0].bringToFront();
     await pages[0].waitForSelector(`[data-ui-status="seen"]`);
+    await pages[1].bringToFront();
+    await pages[1].waitForSelector(`[data-ui-status="seen"]`);
+
+    // Ensure typing indicator has disappeared to prevent flakey test
+    await pages[0].bringToFront();
+    const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
+    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
+
     stubMessageTimestamps(pages[0]);
     expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`, { threshold: 0.5 });
   });
