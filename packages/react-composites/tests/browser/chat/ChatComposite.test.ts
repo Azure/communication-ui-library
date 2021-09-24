@@ -2,17 +2,14 @@
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
 import {
-  createChatThreadAndUsers,
   dataUiId,
-  loadUrlInPage,
-  loadPage,
   stubMessageTimestamps,
+  updatePageQueryParam,
+  waitForChatCompositeParticipantsToLoad,
   waitForChatCompositeToLoad
 } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-
-const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
@@ -20,17 +17,12 @@ const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe('Chat Composite E2E Tests', () => {
-  test.beforeEach(async ({ pages, serverUrl }) => {
-    const users = await createChatThreadAndUsers(PARTICIPANTS);
-    const pageLoadPromises: Promise<unknown>[] = [];
-    for (const idx in pages) {
-      const page = pages[idx];
-      const user = users[idx];
-      await loadUrlInPage(page, serverUrl, user);
-      pageLoadPromises.push(waitForChatCompositeToLoad(page));
-      stubMessageTimestamps(pages[idx]);
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      await waitForChatCompositeToLoad(page);
+      await waitForChatCompositeParticipantsToLoad(page, 2);
+      await stubMessageTimestamps(page);
     }
-    await Promise.all(pageLoadPromises);
   });
 
   test('composite pages load completely', async ({ pages }) => {
@@ -46,15 +38,15 @@ test.describe('Chat Composite E2E Tests', () => {
     await page0.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page0.keyboard.press('Enter');
     await page0.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page0);
+    await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('send-message.png');
 
     const page1 = pages[1];
     await page1.bringToFront();
     await page1.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page1);
+    await stubMessageTimestamps(page1);
 
-    // It could be too slow to get typing indicator here, which makes the test flacky
+    // It could be too slow to get typing indicator here, which makes the test flakey
     // so wait for typing indicator disappearing
     const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
@@ -63,7 +55,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await page0.bringToFront();
     await page0.waitForSelector(`[data-ui-status="seen"]`);
-    stubMessageTimestamps(page0);
+    await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
   });
 
@@ -94,46 +86,47 @@ test.describe('Chat Composite E2E Tests', () => {
   });
 
   test('page[1] can rejoin the chat', async ({ pages }) => {
-    const page = pages[1];
-    await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
-    await page.keyboard.press('Enter');
+    const page1 = pages[1];
+    await page1.bringToFront();
+    // From previous test, input currently says: I am not superstitious. Just a little stitious.
+    await page1.keyboard.press('Enter');
+
     // Read the message to generate stable result
     await pages[0].bringToFront();
     await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
 
-    await page.bringToFront();
-    await page.waitForSelector(`[data-ui-status="seen"]`);
-    page.reload({ waitUntil: 'networkidle' });
-    await waitForChatCompositeToLoad(page);
+    await page1.bringToFront();
+    await page1.waitForSelector(`[data-ui-status="seen"]`);
+    page1.reload({ waitUntil: 'networkidle' });
+    await waitForChatCompositeToLoad(page1);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
-  });
-
-  test.afterAll(async ({ pages }) => {
-    for (const page of pages) {
-      page.close();
-    }
+    await page1.waitForSelector(`[data-ui-status="delivered"]`);
+    await stubMessageTimestamps(page1);
+    expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });
 
 test.describe('Chat Composite custom data model', () => {
-  test('can be viewed by user[1]', async ({ testBrowser, serverUrl }) => {
-    const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
-    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
-    await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
-    await page.keyboard.press('Enter');
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
-    await page.waitForFunction(() => {
-      return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
-    });
-    await page.waitForSelector('#custom-data-model-typing-indicator');
-    await page.waitForSelector('#custom-data-model-message');
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
-    page.close();
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      await updatePageQueryParam(page, { customDataModel: 'true' });
+    }
+  });
+
+  test('messages, participants and typing indicator reflect custom data modal', async ({ pages }) => {
+    await waitForChatCompositeParticipantsToLoad(pages[0], 2);
+    await waitForChatCompositeParticipantsToLoad(pages[1], 2);
+
+    // Send typing indicator from page 0
+    await pages[0].bringToFront();
+    await pages[0].type(dataUiId(IDS.sendboxTextfield), 'Typing to display a typing indicator only');
+
+    // wait for typing indicator
+    await pages[1].waitForSelector('#custom-data-model-typing-indicator');
+    await pages[1].waitForSelector('#custom-data-model-message');
+
+    // Screenshot should show custom typing indicator and custom rendered message
+    await stubMessageTimestamps(pages[1]);
+    expect(await pages[1].screenshot()).toMatchSnapshot('custom-data-model.png');
   });
 });
