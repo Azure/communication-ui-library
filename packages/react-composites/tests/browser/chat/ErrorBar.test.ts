@@ -43,23 +43,23 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
   });
 
-  test('with expired token', async ({ pages, users }) => {
-    const page = pages[0];
-    const user = users[0];
-    console.log('updating sqp');
-    await updatePageQueryParam(page, { token: 'INCORRECT_VALUE' + user.token });
-    console.log('waiting for chat composite loading');
-    await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
+  // test('with expired token', async ({ pages, users }) => {
+  //   const page = pages[0];
+  //   const user = users[0];
+  //   console.log('updating sqp');
+  //   await updatePageQueryParam(page, { token: 'INCORRECT_VALUE' + user.token });
+  //   console.log('waiting for chat composite loading');
+  //   await waitForChatCompositeToLoad(page);
+  //   stubMessageTimestamps(page);
+  //   expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
-    console.log('waiting for send a message');
-    await sendAMessage(page);
-    console.log('waiting for send failure');
-    await waitForSendFailure(page);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
-  });
+  //   console.log('waiting for send a message');
+  //   await sendAMessage(page);
+  //   console.log('waiting for send failure');
+  //   await waitForSendFailure(page);
+  //   stubMessageTimestamps(page);
+  //   expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
+  // });
 
   test('with wrong endpoint', async ({ pages }) => {
     const page = pages[0];
