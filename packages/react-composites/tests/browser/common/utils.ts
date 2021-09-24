@@ -11,8 +11,11 @@ export const dataUiId = (v: string): string => `[data-ui-id="${v}"]`;
  * Wait for the ChatComposite on a page to fully load.
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
+  console.log('waiting for page front');
   await page.bringToFront();
+  console.log('waiting for load state');
   await page.waitForLoadState('networkidle');
+  console.log('waiting for send box field');
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
 
   // @TODO
@@ -21,7 +24,9 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   // in the DOM, page[1] doesn't receive the message.
   // Only when page[1] is refreshed is when it will see the message sent by p[1]
   // By waiting 3 sec before sending a message, page[1] is able to recieve that message.
+  console.log('waiting for timeout');
   await page.waitForTimeout(3000);
+  console.log('chat composite loaded');
 };
 
 /**
