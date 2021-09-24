@@ -2,17 +2,14 @@
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
 import {
-  createChatThreadAndUsers,
   dataUiId,
-  loadUrlInPage,
-  loadPage,
   stubMessageTimestamps,
+  updatePageQueryParam,
+  waitForChatCompositeParticipantsToLoad,
   waitForChatCompositeToLoad
 } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-
-const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
@@ -20,17 +17,12 @@ const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe('Chat Composite E2E Tests', () => {
-  test.beforeEach(async ({ pages, serverUrl }) => {
-    const users = await createChatThreadAndUsers(PARTICIPANTS);
-    const pageLoadPromises: Promise<unknown>[] = [];
-    for (const idx in pages) {
-      const page = pages[idx];
-      const user = users[idx];
-      await loadUrlInPage(page, serverUrl, user);
-      pageLoadPromises.push(waitForChatCompositeToLoad(page));
-      stubMessageTimestamps(pages[idx]);
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      await waitForChatCompositeToLoad(page);
+      await waitForChatCompositeParticipantsToLoad(page, 2);
+      stubMessageTimestamps(page);
     }
-    await Promise.all(pageLoadPromises);
   });
 
   test('composite pages load completely', async ({ pages }) => {
@@ -54,7 +46,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await page1.waitForSelector(`[data-ui-status="delivered"]`);
     stubMessageTimestamps(page1);
 
-    // It could be too slow to get typing indicator here, which makes the test flacky
+    // It could be too slow to get typing indicator here, which makes the test flakey
     // so wait for typing indicator disappearing
     const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
@@ -111,29 +103,25 @@ test.describe('Chat Composite E2E Tests', () => {
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
-
-  test.afterAll(async ({ pages }) => {
-    for (const page of pages) {
-      page.close();
-    }
-  });
 });
 
 test.describe('Chat Composite custom data model', () => {
-  test('can be viewed by user[1]', async ({ testBrowser, serverUrl }) => {
-    const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
-    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      await updatePageQueryParam(page, { customDataModel: 'true' });
+    }
+  });
+
+  test('can be viewed by user[1]', async ({ pages }) => {
+    const page = pages[0];
     await page.bringToFront();
+    await waitForChatCompositeParticipantsToLoad(page, 2);
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
-    await page.waitForFunction(() => {
-      return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
-    });
     await page.waitForSelector('#custom-data-model-typing-indicator');
     await page.waitForSelector('#custom-data-model-message');
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
-    page.close();
   });
 });
