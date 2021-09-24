@@ -43,7 +43,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
   });
 
-  test('with expired token', async ({ pages, users }) => {
+  test.only('with expired token', async ({ pages, users }) => {
     const page = pages[0];
     const user = users[0];
     await updatePageQueryParam(page, { token: user.token + 'INCORRECT_VALUE' });
