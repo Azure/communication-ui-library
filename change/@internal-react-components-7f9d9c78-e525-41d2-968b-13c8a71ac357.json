@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add custom menu items injection support to ParticipantList",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
