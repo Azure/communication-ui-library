@@ -30,11 +30,6 @@ export interface ActiveError {
 }
 
 // @public
-export type AllKeys<T> = {
-    [K in keyof T]: T[K] extends never ? never : K;
-};
-
-// @public
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
@@ -77,23 +72,30 @@ export interface CameraButtonStrings {
 }
 
 // @public
-export type ChatMessage = Message<'chat'>;
-
-// @public
-export type ChatMessagePayload = {
-    messageId?: string;
-    content?: string;
-    createdOn?: Date;
-    editedOn?: Date;
-    deletedOn?: Date;
-    senderId?: string;
-    senderDisplayName?: string;
-    status?: MessageStatus;
+export interface ChatMessage extends MessageCommon {
+    // (undocumented)
     attached?: MessageAttachedStatus | boolean;
-    mine?: boolean;
+    // (undocumented)
     clientMessageId?: string;
-    type: MessageContentType;
-};
+    // (undocumented)
+    content?: string;
+    // (undocumented)
+    deletedOn?: Date;
+    // (undocumented)
+    editedOn?: Date;
+    // (undocumented)
+    messageContentType: MessageContentType;
+    // (undocumented)
+    messageType: 'chat';
+    // (undocumented)
+    mine?: boolean;
+    // (undocumented)
+    senderDisplayName?: string;
+    // (undocumented)
+    senderId?: string;
+    // (undocumented)
+    status?: MessageStatus;
+}
 
 // @public
 export type CommunicationParticipant = {
@@ -167,6 +169,16 @@ export interface ComponentStrings {
     typingIndicator: TypingIndicatorStrings;
 }
 
+// @public (undocumented)
+export interface ContentSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    systemMessageType: 'content';
+}
+
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
@@ -211,15 +223,13 @@ export type CustomAvatarOptions = {
     text?: string;
 };
 
-// @public
-export type CustomMessage = Message<'custom'>;
-
-// @public
-export type CustomMessagePayload = {
-    createdOn: Date;
-    messageId: string;
-    content?: string;
-};
+// @public (undocumented)
+export interface CustomMessage extends MessageCommon {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    messageType: 'custom';
+}
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
@@ -370,21 +380,26 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
-// @public
-export type Message<T extends MessageTypes> = {
-    type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload<'participantAdded' | 'participantRemoved'> | SystemMessagePayload<'topicUpdated'> | SystemMessagePayload<'content'> : CustomMessagePayload;
-};
+// @public (undocumented)
+export type Message = ChatMessage | SystemMessage | CustomMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top';
+
+// @public (undocumented)
+export interface MessageCommon {
+    // (undocumented)
+    createdOn: Date;
+    // (undocumented)
+    messageId: string;
+}
 
 // @public
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
 // @public
 export type MessageProps = {
-    message: ChatMessage | SystemMessage | CustomMessage;
+    message: Message;
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
@@ -463,7 +478,7 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
 }
 
 // @public
-export type MessageTypes = 'chat' | 'system' | 'custom';
+export type MessageType = 'chat' | 'system' | 'custom';
 
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
@@ -479,9 +494,6 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
-
-// @public
-export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
 export type OnRenderAvatarCallback = (
@@ -520,6 +532,16 @@ export interface OptionsButtonStrings {
 export interface OptionsDevice {
     id: string;
     name: string;
+}
+
+// @public (undocumented)
+export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    participants: CommunicationParticipant[];
+    // (undocumented)
+    systemMessageType: 'participantAdded';
 }
 
 // @public
@@ -569,6 +591,16 @@ export type ParticipantListProps = {
 
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
+
+// @public (undocumented)
+export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    participants: CommunicationParticipant[];
+    // (undocumented)
+    systemMessageType: 'participantRemoved';
+}
 
 // @public
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
@@ -650,25 +682,27 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public
-export type SystemMessage = Message<'system'>;
+// @public (undocumented)
+export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
-// @public
-export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
-
-// @public
-export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
-    type: T;
-    messageId: string;
-    createdOn: Date;
-    content: T extends 'content' ? string : never;
-    participants: T extends 'participantAdded' ? CommunicationParticipant[] : T extends 'participantRemoved' ? CommunicationParticipant[] : never;
-    topic: T extends 'topicUpdated' ? string : never;
+// @public (undocumented)
+export interface SystemMessageCommon extends MessageCommon {
+    // (undocumented)
     iconName: string;
-};
+}
 
 // @public
 export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
+
+// @public (undocumented)
+export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    systemMessageType: 'topicUpdated';
+    // (undocumented)
+    topic: string;
+}
 
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;

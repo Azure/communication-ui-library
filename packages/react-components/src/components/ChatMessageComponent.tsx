@@ -3,7 +3,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, IContextualMenuItem } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/react-northstar';
-import { ChatMessage, ChatMessagePayload } from '../types';
+import { ChatMessage } from '../types';
 import { LiveMessage } from 'react-aria-live';
 import Linkify from 'react-linkify';
 import { useLocale } from '../localization/LocalizationProvider';
@@ -37,39 +37,39 @@ const extractContent = (s: string): string => {
   return span.textContent || span.innerText;
 };
 
-const GenerateMessageContent = (payload: ChatMessagePayload): JSX.Element => {
-  switch (payload.type) {
+const GenerateMessageContent = (message: ChatMessage): JSX.Element => {
+  switch (message.contentType) {
     case 'text':
-      return GenerateTextMessageContent(payload);
+      return GenerateTextMessageContent(message);
     case 'html':
-      return GenerateRichTextHTMLMessageContent(payload);
+      return GenerateRichTextHTMLMessageContent(message);
     case 'richtext/html':
-      return GenerateRichTextHTMLMessageContent(payload);
+      return GenerateRichTextHTMLMessageContent(message);
     default:
       console.warn('unknown message content type');
       return <></>;
   }
 };
 
-const GenerateRichTextHTMLMessageContent = (payload: ChatMessagePayload): JSX.Element => {
+const GenerateRichTextHTMLMessageContent = (message: ChatMessage): JSX.Element => {
   const htmlToReactParser = new Parser();
-  const liveAuthor = `${payload.senderDisplayName} says `;
+  const liveAuthor = `${message.senderDisplayName} says `;
   return (
-    <div data-ui-status={payload.status}>
+    <div data-ui-status={message.status}>
       <LiveMessage
-        message={`${payload.mine ? '' : liveAuthor} ${extractContent(payload.content || '')}`}
+        message={`${message.mine ? '' : liveAuthor} ${extractContent(message.content || '')}`}
         aria-live="polite"
       />
-      {htmlToReactParser.parse(payload.content)}
+      {htmlToReactParser.parse(message.content)}
     </div>
   );
 };
 
-const GenerateTextMessageContent = (payload: ChatMessagePayload): JSX.Element => {
-  const liveAuthor = `${payload.senderDisplayName} says `;
+const GenerateTextMessageContent = (message: ChatMessage): JSX.Element => {
+  const liveAuthor = `${message.senderDisplayName} says `;
   return (
-    <div data-ui-status={payload.status}>
-      <LiveMessage message={`${payload.mine ? '' : liveAuthor} ${payload.content}`} aria-live="polite" />
+    <div data-ui-status={message.status}>
+      <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
           return (
@@ -79,7 +79,7 @@ const GenerateTextMessageContent = (payload: ChatMessagePayload): JSX.Element =>
           );
         }}
       >
-        {payload.content}
+        {message.content}
       </Linkify>
     </div>
   );
@@ -113,7 +113,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
                 setIsEditing(true);
               }}
               onRemoveClick={async () => {
-                onDeleteMessage && message.payload.messageId && (await onDeleteMessage(message.payload.messageId));
+                onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
               }}
             />
           ),
@@ -125,22 +125,20 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         }
       ]
     }),
-    [menuClass, message.payload.messageId, onDeleteMessage]
+    [menuClass, message.messageId, onDeleteMessage]
   );
 
-  if (message.type !== 'chat') {
+  if (message.messageType !== 'chat') {
     return <></>;
   }
-
-  const payload: ChatMessagePayload = message.payload;
 
   if (isEditing) {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     return (
       <EditBox
-        initialValue={payload.content ?? ''}
+        initialValue={message.content ?? ''}
         onSubmit={async (text) => {
-          onUpdateMessage && payload.messageId && (await onUpdateMessage(payload.messageId, text));
+          onUpdateMessage && message.messageId && (await onUpdateMessage(message.messageId, text));
           setIsEditing(false);
         }}
         onCancel={() => {
@@ -149,27 +147,25 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
       />
     );
   }
-  const messageContentItem = GenerateMessageContent(payload);
+  const messageContentItem = GenerateMessageContent(message);
   return (
     <Chat.Message
       className={mergeStyles(messageContainerStyle as IStyle)}
       content={messageContentItem}
-      author={<Text className={chatMessageDateStyle}>{payload.senderDisplayName}</Text>}
-      mine={payload.mine}
+      author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
+      mine={message.mine}
       timestamp={
         <Text data-ui-id={ids.messageTimestamp}>
-          {payload.createdOn
+          {message.createdOn
             ? showDate
-              ? formatTimestampForChatMessage(payload.createdOn, new Date(), strings)
-              : formatTimeForChatMessage(payload.createdOn)
+              ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
+              : formatTimeForChatMessage(message.createdOn)
             : undefined}
         </Text>
       }
-      details={message.payload.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>Edited</div> : undefined}
+      details={message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>Edited</div> : undefined}
       positionActionMenu={false}
-      actionMenu={
-        !editDisabled && message.payload.status !== 'sending' && message.payload.mine ? actionMenu : undefined
-      }
+      actionMenu={!editDisabled && message.status !== 'sending' && message.mine ? actionMenu : undefined}
     />
   );
 };
