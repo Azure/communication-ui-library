@@ -6,10 +6,20 @@ import { stubMessageTimestamps, updatePageQueryParam, waitForChatCompositeToLoad
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
+  let originalUrls: string[];
+
   test.beforeEach(async ({ pages }) => {
-    // Load french locale for tests
     for (const page of pages) {
+      originalUrls.push(page.url());
+
+      // Load french locale for tests
       await updatePageQueryParam(page, { useFrlocale: 'true' });
+    }
+  });
+
+  test.afterEach(async ({ pages }) => {
+    for (let i = 0; i < pages.length; i++) {
+      await pages[i].goto(originalUrls[i]);
     }
   });
 

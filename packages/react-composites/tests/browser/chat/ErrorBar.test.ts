@@ -17,6 +17,20 @@ import { Page, expect } from '@playwright/test';
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe('ErrorBar is shown correctly', async () => {
+  let originalUrls: string[];
+
+  test.beforeEach(({ pages }) => {
+    for (const page of pages) {
+      originalUrls.push(page.url());
+    }
+  });
+
+  test.afterEach(async ({ pages }) => {
+    for (let i = 0; i < pages.length; i++) {
+      await pages[i].goto(originalUrls[i]);
+    }
+  });
+
   test('not shown when nothing is wrong', async ({ pages }) => {
     const page = pages[0];
     await waitForChatCompositeToLoad(page);
@@ -43,7 +57,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
   });
 
-  test.only('with expired token', async ({ pages, users }) => {
+  test('with expired token', async ({ pages, users }) => {
     const page = pages[0];
     const user = users[0];
     await updatePageQueryParam(page, { token: user.token + 'INCORRECT_VALUE' });
@@ -52,10 +66,10 @@ test.describe('ErrorBar is shown correctly', async () => {
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
-    // await sendAMessage(page);
-    // await waitForSendFailure(page);
-    // await stubMessageTimestamps(page);
-    // expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
+    await sendAMessage(page);
+    await waitForSendFailure(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
   });
 
   test('with wrong endpoint', async ({ pages }) => {
