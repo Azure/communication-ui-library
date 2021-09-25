@@ -264,7 +264,7 @@ const memoizeAllMessages = memoizeFnAll(
     };
 
     switch (message.messageType) {
-      case 'chat':
+      case 'chat': {
         messageProps.messageContainerStyle = styles?.chatMessageContainer;
 
         const chatMessageComponent =
@@ -314,29 +314,30 @@ const memoizeAllMessages = memoizeFnAll(
           attached: message.attached,
           key: _messageKey
         };
+      }
 
-      case 'system':
+      case 'system': {
         messageProps.messageContainerStyle = styles?.systemMessageContainer;
-
         const systemMessageComponent =
           onRenderMessage === undefined ? (
             <DefaultSystemMessage {...messageProps} />
           ) : (
             onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
           );
-
         return {
           children: systemMessageComponent,
           key: _messageKey
         };
+      }
 
-      default:
+      default: {
         // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
         const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
         return {
           children: customMessageComponent,
           key: _messageKey
         };
+      }
     }
   }
 );
