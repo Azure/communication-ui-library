@@ -104,11 +104,6 @@ export interface AdapterState<TState> {
 }
 
 // @public
-export type AllKeys<T> = {
-    [K in keyof T]: T[K] extends never ? never : K;
-};
-
-// @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
 // @public
@@ -681,23 +676,30 @@ export type ChatHandlers = {
 };
 
 // @public
-export type ChatMessage = Message<'chat'>;
-
-// @public
-export type ChatMessagePayload = {
-    messageId?: string;
-    content?: string;
-    createdOn?: Date;
-    editedOn?: Date;
-    deletedOn?: Date;
-    senderId?: string;
-    senderDisplayName?: string;
-    status?: MessageStatus;
+export interface ChatMessage extends MessageCommon {
+    // (undocumented)
     attached?: MessageAttachedStatus | boolean;
-    mine?: boolean;
+    // (undocumented)
     clientMessageId?: string;
-    type: MessageContentType;
-};
+    // (undocumented)
+    content?: string;
+    // (undocumented)
+    contentType: MessageContentType;
+    // (undocumented)
+    deletedOn?: Date;
+    // (undocumented)
+    editedOn?: Date;
+    // (undocumented)
+    messageType: 'chat';
+    // (undocumented)
+    mine?: boolean;
+    // (undocumented)
+    senderDisplayName?: string;
+    // (undocumented)
+    senderId?: string;
+    // (undocumented)
+    status?: MessageStatus;
+}
 
 // @public (undocumented)
 export type ChatMessageWithStatus = ChatMessage_2 & {
@@ -901,6 +903,16 @@ export interface CompositeStrings {
     chat: ChatCompositeStrings;
 }
 
+// @public (undocumented)
+export interface ContentSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    systemMessageType: 'content';
+}
+
 // @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
@@ -972,15 +984,13 @@ export type CustomAvatarOptions = {
     text?: string;
 };
 
-// @public
-export type CustomMessage = Message<'custom'>;
-
-// @public
-export type CustomMessagePayload = {
-    createdOn: Date;
-    messageId: string;
-    content?: string;
-};
+// @public (undocumented)
+export interface CustomMessage extends MessageCommon {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    messageType: 'custom';
+}
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
@@ -1382,21 +1392,26 @@ export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | '
     };
 }
 
-// @public
-export type Message<T extends MessageTypes> = {
-    type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload<'participantAdded' | 'participantRemoved'> | SystemMessagePayload<'topicUpdated'> | SystemMessagePayload<'content'> : CustomMessagePayload;
-};
+// @public (undocumented)
+export type Message = ChatMessage | SystemMessage | CustomMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top';
+
+// @public (undocumented)
+export interface MessageCommon {
+    // (undocumented)
+    createdOn: Date;
+    // (undocumented)
+    messageId: string;
+}
 
 // @public
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
 // @public
 export type MessageProps = {
-    message: ChatMessage | SystemMessage | CustomMessage;
+    message: Message;
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
@@ -1471,13 +1486,13 @@ export type MessageThreadProps = {
 export const messageThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
 userId: string;
 showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+messages: Message[];
 }, (res1: string, res2: {
 [key: string]: ChatMessageWithStatus;
 }, res3: Date, res4: boolean) => {
 userId: string;
 showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+messages: Message[];
 }>;
 
 // @public
@@ -1503,9 +1518,6 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     newMessageButtonContainer?: IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }
-
-// @public
-export type MessageTypes = 'chat' | 'system' | 'custom';
 
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
@@ -1536,9 +1548,6 @@ export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
 }
-
-// @public
-export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
 export type OnRenderAvatarCallback = (
@@ -1594,6 +1603,16 @@ export interface OptionsButtonStrings {
 export interface OptionsDevice {
     id: string;
     name: string;
+}
+
+// @public (undocumented)
+export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    participants: CommunicationParticipant[];
+    // (undocumented)
+    systemMessageType: 'participantAdded';
 }
 
 // @public
@@ -1664,6 +1683,16 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
+
+// @public (undocumented)
+export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    participants: CommunicationParticipant[];
+    // (undocumented)
+    systemMessageType: 'participantRemoved';
+}
 
 // @public (undocumented)
 export type ParticipantsAddedListener = (event: {
@@ -1862,25 +1891,14 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public
-export type SystemMessage = Message<'system'>;
+// @public (undocumented)
+export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
-// @public
-export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
-
-// @public
-export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
-    type: T;
-    messageId: string;
-    createdOn: Date;
-    content: T extends 'content' ? string : never;
-    participants: T extends 'participantAdded' ? CommunicationParticipant[] : T extends 'participantRemoved' ? CommunicationParticipant[] : never;
-    topic: T extends 'topicUpdated' ? string : never;
+// @public (undocumented)
+export interface SystemMessageCommon extends MessageCommon {
+    // (undocumented)
     iconName: string;
-};
-
-// @public
-export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
+}
 
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
@@ -1889,6 +1907,16 @@ export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => str
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @public (undocumented)
+export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    systemMessageType: 'topicUpdated';
+    // (undocumented)
+    topic: string;
+}
 
 // @public
 export interface TranscriptionCallFeature {
