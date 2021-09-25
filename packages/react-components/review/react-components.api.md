@@ -80,11 +80,11 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     content?: string;
     // (undocumented)
+    contentType: MessageContentType;
+    // (undocumented)
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
-    // (undocumented)
-    messageContentType: MessageContentType;
     // (undocumented)
     messageType: 'chat';
     // (undocumented)

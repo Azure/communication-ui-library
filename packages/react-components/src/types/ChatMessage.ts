@@ -20,16 +20,6 @@ export type MessageAttachedStatus = 'bottom' | 'top';
  */
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
-/**
- * TODO: Infer from {@link Message}.
- */
-export type MessageType = 'chat' | 'system' | 'custom';
-
-/**
- * TODO: Infer from {@link SystemMessage}.
- */
-export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
-
 export type Message = ChatMessage | SystemMessage | CustomMessage;
 
 export type SystemMessage =
