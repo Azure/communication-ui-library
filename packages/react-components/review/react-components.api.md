@@ -478,9 +478,6 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
 }
 
 // @public
-export type MessageType = 'chat' | 'system' | 'custom';
-
-// @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
@@ -690,9 +687,6 @@ export interface SystemMessageCommon extends MessageCommon {
     // (undocumented)
     iconName: string;
 }
-
-// @public
-export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
 
 // @public (undocumented)
 export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
