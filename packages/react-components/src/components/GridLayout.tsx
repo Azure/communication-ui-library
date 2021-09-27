@@ -6,8 +6,18 @@ import React, { useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { gridLayoutStyle } from './styles/GridLayout.styles';
 
+/**
+ * Preset layouts for {@link GridLayout}.
+ *
+ * @public
+ */
 export type GridLayoutType = 'standard';
 
+/**
+ * Props for {@link GridLayout}.
+ *
+ * @public
+ */
 export interface GridLayoutProps {
   children: React.ReactNode;
   layout?: GridLayoutType;
@@ -27,6 +37,11 @@ const calculateStandardLayoutRows = (numberOfItems: number, gridCol: number): nu
 const calculateStandardLayoutColumns = (numberOfItems: number): number =>
   numberOfItems > 0 ? Math.ceil(Math.sqrt(numberOfItems)) : 1;
 
+/**
+ * A component to lay out audio / video tiles in a call.
+ *
+ * @public
+ */
 export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const [gridCol, setGridCol] = useState(1);
   const [gridRow, setGridRow] = useState(1);

@@ -7,7 +7,9 @@ import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
 /**
- * Device to represent a camera, microphone, or speaker for component OptionsButton component
+ * A device, e.g. camera, microphone, or speaker, in the {@link OptionsButton} flyout.
+ *
+ * @public
  */
 export interface OptionsDevice {
   /**
@@ -21,7 +23,9 @@ export interface OptionsDevice {
 }
 
 /**
- * Strings of OptionsButton that can be overridden
+ * Strings of {@link OptionsButton} that can be overridden.
+ *
+ * @public
  */
 export interface OptionsButtonStrings {
   /**
@@ -55,7 +59,9 @@ export interface OptionsButtonStrings {
 }
 
 /**
- * Props for OptionsButton component
+ * Props for {@link OptionsButton}.
+ *
+ * @public
  */
 export interface OptionsButtonProps extends ControlBarButtonProps {
   /**
@@ -212,11 +218,11 @@ const generateDefaultMenuProps = (
 const onRenderOptionsIcon = (): JSX.Element => <Icon iconName="ControlButtonOptions" />;
 
 /**
- * `OptionsButton` allows you to easily create a component for rendering an options button. It can be used in your ControlBar component for example.
- * This button should contain dropdown menu items you can define through its property `menuProps`.
- * This `menuProps` property is of type [IContextualMenuProps](https://developer.microsoft.com/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
+ * A button to open a menu that controls device options.
  *
- * @param props - of type OptionsButtonProps
+ * Can be used with {@link ControlBar}.
+ *
+ * @public
  */
 export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const { onRenderIcon } = props;

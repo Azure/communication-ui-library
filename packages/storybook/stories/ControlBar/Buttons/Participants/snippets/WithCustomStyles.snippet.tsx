@@ -2,7 +2,7 @@ import {
   CallParticipant,
   FluentThemeProvider,
   ParticipantsButton,
-  ParticipantsButtonStylesProps
+  ParticipantsButtonStyles
 } from '@azure/communication-react';
 import React from 'react';
 
@@ -43,7 +43,7 @@ const onMuteAll = (): void => {
   // your implementation to mute all participants
 };
 
-const mockStyles: ParticipantsButtonStylesProps = {
+const mockStyles: ParticipantsButtonStyles = {
   root: { background: 'blue', color: 'white' },
   rootHovered: { background: 'crimson', color: 'white' },
   rootExpanded: { background: 'dimgrey', color: 'white' },

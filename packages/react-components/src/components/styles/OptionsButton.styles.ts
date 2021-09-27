@@ -3,4 +3,7 @@
 
 import { CSSProperties } from 'react';
 
+/**
+ * @private
+ */
 export const iconStyle: CSSProperties = { display: 'flex', alignItems: 'center' };

@@ -7,6 +7,9 @@ import { LocalizationProvider, ComponentLocale, ComponentStrings } from '../../l
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 import { PartialDeep } from 'type-fest';
 
+/**
+ * @private
+ */
 export const mountWithLocalization = (node: React.ReactElement, locale: ComponentLocale): ReactWrapper => {
   return mount(node, {
     wrappingComponent: LocalizationProvider,
@@ -14,6 +17,9 @@ export const mountWithLocalization = (node: React.ReactElement, locale: Componen
   });
 };
 
+/**
+ * @private
+ */
 export const shallowWithLocalization = (node: React.ReactElement, locale: ComponentLocale): ShallowWrapper => {
   return shallow(node, {
     wrappingComponent: LocalizationProvider,
@@ -21,6 +27,9 @@ export const shallowWithLocalization = (node: React.ReactElement, locale: Compon
   });
 };
 
+/**
+ * @private
+ */
 export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): ComponentLocale => {
   const strings: ComponentStrings = COMPONENT_LOCALE_EN_US.strings;
   Object.keys(testStrings).forEach((key: string) => {
