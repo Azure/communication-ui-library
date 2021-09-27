@@ -25,7 +25,7 @@
     "uuid": "^8.1.0"
   },
   "devDependencies": {
-    "@azure/communication-chat": "1.0.1",
+    "@azure/communication-chat": "1.1.0",
     "@azure/communication-identity": "1.0.0",
     "@playwright/test": "~1.12.3",
     "@types/node-static": "~0.7.7",
