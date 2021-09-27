@@ -17,12 +17,12 @@ export type {
   LocalVideoStreamState,
   MediaDiagnosticsState,
   NetworkDiagnosticsState,
-  RecordingCallFeature,
+  RecordingCallFeatureState as RecordingCallFeature,
   RemoteParticipantState,
   RemoteVideoStreamState,
-  TranscriptionCallFeature,
+  TranscriptionCallFeatureState as TranscriptionCallFeature,
   Transfer,
-  TransferCallFeature,
+  TransferCallFeatureState,
   TransferRequest,
   VideoStreamRendererViewState
 } from './CallClientState';

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bump chat sdk to version 1.1.0",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

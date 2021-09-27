@@ -324,19 +324,19 @@ export interface GridLayoutProps {
 // @public
 export type GridLayoutType = 'standard';
 
-// @beta
-export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+// @internal
+export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
-// @beta
-export interface IdentifierProviderProps {
+// @internal
+export interface _IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
     // (undocumented)
-    identifiers?: Identifiers;
+    identifiers?: _Identifiers;
 }
 
-// @public
-export interface Identifiers {
+// @internal
+export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
@@ -442,10 +442,13 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -632,6 +635,7 @@ export interface SendBoxProps {
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textTooLong: string;
 }
 
 // @public

@@ -30,21 +30,21 @@ export const leaveIcon: IIconProps = {
   iconName: 'Leave'
 };
 
-export const panelButtonStyle = mergeStyles({
-  padding: '0px 13px',
-  cursor: 'pointer'
+export const paneButtonContainerStyle = mergeStyles({
+  whiteSpace: 'nowrap',
+  marginRight: '0.75rem'
 });
 
-export const iconButtonContainerStyle = mergeStyles({
+export const largeLeaveButtonContainerStyle = mergeStyles({
   whiteSpace: 'nowrap',
-  '@media (min-width: 50rem)': {
+  '@media (max-width: 50rem)': {
     display: 'none'
   }
 });
 
-export const largeButtonContainerStyle = mergeStyles({
+export const smallLeaveButtonContainerStyle = mergeStyles({
   whiteSpace: 'nowrap',
-  '@media (max-width: 50rem)': {
+  '@media (min-width: 50rem)': {
     display: 'none'
   }
 });

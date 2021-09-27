@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatClient, ChatMessageReadReceipt } from '@azure/communication-chat';
+import { ChatClient, ChatMessageReadReceipt, ChatMessageType } from '@azure/communication-chat';
 import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
@@ -35,13 +35,20 @@ export class EventSubscriber {
       id: event.id,
       version: event.version,
       content: { message: event.message },
-      type: event.type,
+      type: this.convertEventType(event.type),
       sender: event.sender,
       senderDisplayName: event.senderDisplayName,
       sequenceId: '', // Note: there is a bug in chatMessageReceived event that it is missing sequenceId
       createdOn: new Date(event.createdOn),
       editedOn: 'editedOn' in event ? event.editedOn : undefined
     });
+  };
+
+  // convert event type to chatMessage type, only possible type is 'html' and 'text' in chat event
+  private convertEventType = (type: string): ChatMessageType => {
+    const lowerCaseType = type.toLowerCase();
+    if (lowerCaseType === 'richtext/html' || lowerCaseType === 'html') return 'html';
+    else return 'text';
   };
 
   private onChatMessageReceived = (event: ChatMessageReceivedEvent): void => {
