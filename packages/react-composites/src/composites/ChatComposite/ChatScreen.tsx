@@ -94,10 +94,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           </Stack.Item>
         </Stack>
         {options?.participantPane !== false && (
-          <FocusZone className={participantListWrapper}>
+          <Stack className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>
-              <Stack.Item className={participantListStyle}>
+              <FocusZone className={participantListStyle}>
                 <ParticipantList
                   {...participantListProps}
                   onRenderAvatar={(userId, options) => (
@@ -110,9 +110,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   )}
                   onFetchParticipantMenuItems={onFetchParticipantMenuItems}
                 />
-              </Stack.Item>
+              </FocusZone>
             </Stack>
-          </FocusZone>
+          </Stack>
         )}
       </Stack>
     </Stack>

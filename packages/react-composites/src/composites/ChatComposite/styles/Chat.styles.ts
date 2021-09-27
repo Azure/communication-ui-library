@@ -73,5 +73,6 @@ export const participantListStack = mergeStyles({
 });
 
 export const participantListStyle = mergeStyles({
+  height: '100%',
   overflow: 'auto'
 });
