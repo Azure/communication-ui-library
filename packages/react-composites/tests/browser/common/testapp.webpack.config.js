@@ -13,7 +13,14 @@ module.exports = (appDir) => ({
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
       // reference internal packlets src directly for hot reloading when developing
-      '@internal/react-components': path.resolve(appDir, '../../../../../react-components/src')
+      // this also removes the need for CI to wait for packages to be built before building tests
+      '@internal/react-components': path.resolve(appDir, '../../../../../react-components/src'),
+      '@internal/react-composites': path.resolve(appDir, '../../../../../react-composites/src'),
+      '@internal/chat-stateful-client': path.resolve(appDir, '../../../../../chat-stateful-client/src'),
+      '@internal/chat-component-bindings': path.resolve(appDir, '../../../../../chat-component-bindings/src'),
+      '@internal/calling-stateful-client': path.resolve(appDir, '../../../../../calling-stateful-client/src'),
+      '@internal/calling-component-bindings': path.resolve(appDir, '../../../../../calling-component-bindings/src'),
+      '@internal/acs-ui-common': path.resolve(appDir, '../../../../../acs-ui-common/src')
     }
   },
   output: {
