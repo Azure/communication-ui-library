@@ -493,7 +493,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    transfer: TransferCallFeature;
+    transfer: TransferCallFeatureState;
 }
 
 // @public
@@ -1133,7 +1133,7 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
@@ -1422,7 +1422,7 @@ export type MessageRenderer = (props: MessageProps) => JSX.Element;
 // @public (undocumented)
 export type MessageSentListener = MessageReceivedListener;
 
-// @public (undocumented)
+// @public
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
@@ -1911,7 +1911,7 @@ export interface Transfer {
 }
 
 // @public
-export interface TransferCallFeature {
+export interface TransferCallFeatureState {
     receivedTransferRequests: TransferRequest[];
     requestedTransfers: Transfer[];
 }
