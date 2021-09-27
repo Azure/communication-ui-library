@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add function for calculating smart dominant speaker tiles",
+  "comment": "Add function `smartDominantSpeakerParticipants` for calculating smart dominant speaker tiles",
   "packageName": "@internal/calling-component-bindings",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
