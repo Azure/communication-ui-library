@@ -10,5 +10,5 @@ module.exports = {
   /**
    * Exclude files and folders that should not be part of the API surface.
    */
-  exclude: ['dist-esm', 'dist/dist-cjs', 'node_modules']
+  exclude: ['dist/dist-esm', 'dist/dist-cjs', 'node_modules']
 };
