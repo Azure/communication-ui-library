@@ -1,7 +1,7 @@
 # Disallow everything by default so new files aren't accidently included:
 *
 
-# include the typedoc config file that is used to generate the docs.microsoft.com API surface
+# Allow the typedoc config file that is used to generate the docs.microsoft.com API surface
 !typedoc.js
 
 # Allow dist folder, this is the folder that should be packed and published:
