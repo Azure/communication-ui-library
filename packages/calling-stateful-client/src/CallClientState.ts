@@ -65,7 +65,7 @@ export interface Transfer {
  * {@link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is experimental. Not tested and
  * not ready for consumption.
  */
-export interface TransferCallFeature {
+export interface TransferCallFeatureState {
   /**
    * These are requests received in the {@link @azure/communication-calling#TransferCallFeature}'s 'transferRequested'
    * event. Only MAX_TRANSFER_REQUEST_LENGTH number of TransferRequest are kept in this array with the older ones being
@@ -282,9 +282,9 @@ export interface CallState {
   recording: RecordingCallFeature;
   /**
    * Proxy of {@link @azure/communication-calling#TransferCallFeature} with some differences see
-   * {@link TransferCallFeature} for details.
+   * {@link TransferCallFeatureState} for details.
    */
-  transfer: TransferCallFeature;
+  transfer: TransferCallFeatureState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.

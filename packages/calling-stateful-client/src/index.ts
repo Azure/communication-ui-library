@@ -22,7 +22,7 @@ export type {
   RemoteVideoStreamState,
   TranscriptionCallFeature,
   Transfer,
-  TransferCallFeature,
+  TransferCallFeatureState,
   TransferRequest,
   VideoStreamRendererViewState
 } from './CallClientState';
