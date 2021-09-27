@@ -99,7 +99,7 @@ export interface CallAgentState {
  * automatically listen for transcription state of the call and update the state exposed by {@link StatefulCallClient}
  * accordingly.
  */
-export interface TranscriptionCallFeature {
+export interface TranscriptionCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature.isTranscriptionActive}.
    */
@@ -110,7 +110,7 @@ export interface TranscriptionCallFeature {
  * State only version of {@link @azure/communication-calling#RecordingCallFeature}. {@link StatefulCallClient} will
  * automatically listen for recording state of the call and update the state exposed by {@link StatefulCallClient} accordingly.
  */
-export interface RecordingCallFeature {
+export interface RecordingCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature.isRecordingActive}.
    */
@@ -275,11 +275,11 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
-  transcription: TranscriptionCallFeature;
+  transcription: TranscriptionCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
-  recording: RecordingCallFeature;
+  recording: RecordingCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#TransferCallFeature} with some differences see
    * {@link TransferCallFeatureState} for details.
