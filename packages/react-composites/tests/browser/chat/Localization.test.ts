@@ -2,15 +2,32 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { loadUrlInPage, stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
+import { stubMessageTimestamps, updatePageQueryParam, waitForChatCompositeToLoad } from '../common/utils';
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
-  test('Participants list header should be localized', async ({ serverUrl, users, page }) => {
-    await loadUrlInPage(page, serverUrl, users[0], { useFrLocale: 'true' });
-    page.bringToFront();
+  let originalUrls: string[] = [];
+
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      originalUrls.push(page.url());
+
+      // Load french locale for tests
+      await updatePageQueryParam(page, { useFrlocale: 'true' });
+    }
+  });
+
+  test.afterEach(async ({ pages }) => {
+    for (let i = 0; i < pages.length; i++) {
+      await pages[i].goto(originalUrls[i]);
+    }
+    originalUrls = [];
+  });
+
+  test('Participants list header should be localized', async ({ pages }) => {
+    const page = pages[0];
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-chat.png', { threshold: 0.5 });
   });
 });

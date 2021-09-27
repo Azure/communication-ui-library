@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
 import { test } from './fixture';
-import { dataUiId, loadUrlInPage, stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
+import {
+  dataUiId,
+  stubMessageTimestamps,
+  updatePageQueryParam,
+  waitForChatCompositeParticipantsToLoad,
+  waitForChatCompositeToLoad
+} from '../common/utils';
 import { Page, expect } from '@playwright/test';
 
 // All tests in this suite *must be run sequentially*.
@@ -10,59 +16,73 @@ import { Page, expect } from '@playwright/test';
 //
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
-test.describe('ErrorBar is shown correctly', async () => {
-  test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
-    await loadUrlInPage(page, serverUrl, users[0]);
-    page.bringToFront();
-    await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
+test.describe.only('ErrorBar is shown correctly', async () => {
+  let originalUrls: string[] = [];
 
-    await sendAMessage(page);
-    await waitForSendSuccess(page);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
+  test.beforeEach(({ pages }) => {
+    for (const page of pages) {
+      originalUrls.push(page.url());
+    }
   });
 
-  test('with wrong thread ID', async ({ page, serverUrl, users }) => {
-    const user = users[0];
-    user.threadId = 'INCORRECT_VALUE';
-    await loadUrlInPage(page, serverUrl, users[0]);
-    await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
-
-    await sendAMessage(page);
-    await waitForSendFailure(page);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
+  test.afterEach(async ({ pages }) => {
+    for (let i = 0; i < pages.length; i++) {
+      await pages[i].goto(originalUrls[i]);
+    }
+    originalUrls = [];
   });
 
-  test('with expired token', async ({ page, serverUrl, users }) => {
+  test('with expired token', async ({ pages, users }) => {
+    const page = pages[0];
     const user = users[0];
-    user.token = 'INCORRECT_VALUE' + user.token;
-    await loadUrlInPage(page, serverUrl, users[0]);
+    await updatePageQueryParam(page, { token: user.token + 'INCORRECT_VALUE' });
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    // await page.waitForTimeout(3000);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
     await sendAMessage(page);
     await waitForSendFailure(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
   });
 
-  test('with wrong endpoint', async ({ page, serverUrl, users }) => {
-    const user = users[0];
-    user.endpointUrl = 'https://INCORRECT.VALUE';
-    await loadUrlInPage(page, serverUrl, users[0]);
+  test('not shown when nothing is wrong', async ({ pages }) => {
+    const page = pages[0];
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await waitForChatCompositeParticipantsToLoad(page, 2);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
+
+    await sendAMessage(page);
+    await waitForSendSuccess(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
+  });
+
+  test('with wrong thread ID', async ({ pages }) => {
+    const page = pages[0];
+    await updatePageQueryParam(page, { threadId: 'INCORRECT_VALUE' });
+    await waitForChatCompositeToLoad(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
+
+    await sendAMessage(page);
+    await waitForSendFailure(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
+  });
+
+  test('with wrong endpoint', async ({ pages }) => {
+    const page = pages[0];
+    await updatePageQueryParam(page, { endpointUrl: 'https://INCORRECT.VALUE' });
+    await waitForChatCompositeToLoad(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
 
     await sendAMessage(page);
     await waitForSendFailure(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
   });
 });
