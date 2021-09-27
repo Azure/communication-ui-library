@@ -17,7 +17,7 @@ import { Page, expect } from '@playwright/test';
 //
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
-test.describe.only('ErrorBar is shown correctly', async () => {
+test.describe('ErrorBar is shown correctly', async () => {
   test.afterEach(async ({ pages, users, serverUrl }) => {
     // Reset the page url that was changed during the error tests
     for (let i = 0; i < pages.length; i++) {

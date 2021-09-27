@@ -161,8 +161,6 @@ export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: s
     url.searchParams.append(encodeURIComponent(key), encodeURIComponent(value));
   });
 
-  console.log('going to new qsp page');
-  await page.goto(url.toString(), { waitUntil: 'networkidle' });
-  console.log('gone to new qsp page');
+  await page.goto(url.toString(), { waitUntil: 'load' });
   return page;
 };

@@ -2,26 +2,23 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { waitForCallCompositeToLoad, loadCallScreen, updatePageQueryParam } from '../common/utils';
+import { waitForCallCompositeToLoad, loadCallScreen, updatePageQueryParam, buildUrl } from '../common/utils';
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
-  let originalUrls: string[] = [];
-
   test.beforeEach(async ({ pages }) => {
     for (const page of pages) {
-      originalUrls.push(page.url());
-
       // Load french locale for tests
       await updatePageQueryParam(page, { useFrlocale: 'true' });
     }
   });
 
-  test.afterEach(async ({ pages }) => {
+  test.afterEach(async ({ pages, users, serverUrl }) => {
+    // Reset the page url that was changed during the tests
     for (let i = 0; i < pages.length; i++) {
-      await pages[i].goto(originalUrls[i]);
+      const url = buildUrl(serverUrl, users[i]);
+      await pages[i].goto(url);
     }
-    originalUrls = [];
   });
 
   test('Configuration page title and participant button in call should be localized', async ({ pages }) => {

@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { IDS } from '../common/config';
 import {
+  buildUrl,
   dataUiId,
   stubMessageTimestamps,
   updatePageQueryParam,
@@ -110,6 +111,14 @@ test.describe('Chat Composite custom data model', () => {
   test.beforeEach(async ({ pages }) => {
     for (const page of pages) {
       await updatePageQueryParam(page, { customDataModel: 'true' });
+    }
+  });
+
+  test.afterEach(async ({ pages, users, serverUrl }) => {
+    // Reset the page url that was changed during the tests
+    for (let i = 0; i < pages.length; i++) {
+      const url = buildUrl(serverUrl, users[i]);
+      await pages[i].goto(url);
     }
   });
 
