@@ -493,7 +493,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    transfer: TransferCallFeature;
+    transfer: TransferCallFeatureState;
 }
 
 // @public
@@ -1482,10 +1482,13 @@ messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -1794,6 +1797,7 @@ userId: string;
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textTooLong: string;
 }
 
 // @public (undocumented)
@@ -1907,7 +1911,7 @@ export interface Transfer {
 }
 
 // @public
-export interface TransferCallFeature {
+export interface TransferCallFeatureState {
     receivedTransferRequests: TransferRequest[];
     requestedTransfers: Transfer[];
 }
