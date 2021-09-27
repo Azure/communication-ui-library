@@ -163,6 +163,12 @@ export interface MessageThreadStrings {
   participantJoined: string;
   /** String for participants left */
   participantLeft: string;
+  /** Tag shown on a message that has been edited */
+  editedTag: string;
+  /** String for editing message in floating menu */
+  editMessage: string;
+  /** String for removing message in floating menu */
+  removeMessage: string;
 }
 
 export interface JumpToNewMessageButtonProps {
@@ -428,8 +434,8 @@ export type MessageThreadProps = {
   /**
    * Optional callback to override render of a message.
    *
-   * @param messageProps - props of type MessageProps
-   * @param defaultOnRender - default render of type MessageRenderer
+   * @param messageProps - props of type {@link communication-react#MessageProps}
+   * @param defaultOnRender - default render of type {@link communication-react#MessageRenderer}
    *
    * @remarks
    * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.

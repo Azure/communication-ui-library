@@ -34,11 +34,28 @@ export const ThemeContext = createContext<Theme>(defaultTheme);
 
 const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
   componentVariables: {
-    // suppressing teams theme for chat message links to get better styling from Fluent UI Link
+    // suppressing chat message links style from teamsTheme to get better styling from Fluent UI Link
     ChatMessage: {
       linkColor: undefined,
       linkColorMine: undefined
     }
+  },
+  componentStyles: {
+    ChatMessage: {
+      root: {
+        lineHeight: '1.4286'
+      }
+    }
+  },
+  fontFaces: [], // suppressing font faces from teamsTheme as recommended by FluentUI N* to avoid font styling to other elements
+  siteVariables: {
+    // suppressing body styles from teamsTheme to avoid inherited styling to other elements
+    bodyPadding: undefined,
+    bodyFontSize: undefined,
+    bodyFontFamily: undefined,
+    bodyBackground: undefined,
+    bodyColor: undefined,
+    bodyLineHeight: undefined
   }
 });
 

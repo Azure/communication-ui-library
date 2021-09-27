@@ -92,18 +92,18 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Build Packages
-        run: rush build -t @internal/react-composites
       - name: Build Test
         run: |
           cd packages/react-composites
           rushx build:e2e:chat
           rushx build:e2e:call
+          rushx build:e2e:meeting
       - name: Update snapshot
         run: |
           cd packages/react-composites
           rushx test:e2e:chat:update
           rushx test:e2e:call:update
+          rushx test:e2e:meeting:update
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       # Setup bot information for pushing new changes

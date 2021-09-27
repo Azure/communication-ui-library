@@ -162,6 +162,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     rtl?: boolean;
 }
 
@@ -336,6 +337,7 @@ export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCame
 
 // @public
 export type CallCompositeOptions = {
+    mobileView?: boolean;
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
 };
@@ -1340,6 +1342,11 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 // @alpha
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
+// @public
+export type MeetingCompositeOptions = {
+    mobileView?: boolean;
+};
+
 // @alpha
 export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -1348,6 +1355,7 @@ export type MeetingCompositeProps = {
     meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
+    options?: MeetingCompositeOptions;
 };
 
 // @alpha
@@ -1474,10 +1482,13 @@ messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -1608,6 +1619,7 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    removeButtonLabel: string;
 }
 
 // @public (undocumented)
@@ -1639,6 +1651,7 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 // @public (undocumented)
@@ -1651,6 +1664,9 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     participants: CallParticipant[];
     myUserId: string;
 }>;
+
+// @public
+export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
 // @public (undocumented)
 export type ParticipantsAddedListener = (event: {
@@ -1781,6 +1797,7 @@ userId: string;
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textTooLong: string;
 }
 
 // @public (undocumented)

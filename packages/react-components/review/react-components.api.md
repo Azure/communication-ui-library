@@ -440,10 +440,13 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -542,6 +545,7 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    removeButtonLabel: string;
 }
 
 // @public (undocumented)
@@ -563,7 +567,11 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
+
+// @public
+export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
 // @public
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
@@ -625,6 +633,7 @@ export interface SendBoxProps {
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textTooLong: string;
 }
 
 // @public (undocumented)
