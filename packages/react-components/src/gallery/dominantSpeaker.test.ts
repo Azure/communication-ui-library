@@ -4,23 +4,23 @@ import { VideoGalleryParticipant } from '..';
 import { smartDominantSpeakerParticipants } from './dominantSpeaker';
 
 const participants: VideoGalleryParticipant[] = [
-  { userId: '1', videoStream: { isAvailable: true } },
-  { userId: '2', videoStream: { isAvailable: true } },
-  { userId: '3', videoStream: { isAvailable: true } },
-  { userId: '4', videoStream: { isAvailable: true } },
-  { userId: '5', videoStream: { isAvailable: true } },
-  { userId: '6', videoStream: { isAvailable: true } },
-  { userId: '7', videoStream: { isAvailable: true } },
-  { userId: '8', videoStream: { isAvailable: true } }
+  { userId: '1' },
+  { userId: '2' },
+  { userId: '3' },
+  { userId: '4' },
+  { userId: '5' },
+  { userId: '6' },
+  { userId: '7' },
+  { userId: '8' }
 ];
 
 const dominantSpeakers: Array<string> = ['1', '3', '5', '7'];
 
 const visibleParticipants: VideoGalleryParticipant[] = [
-  { userId: '1', videoStream: { isAvailable: true } },
-  { userId: '2', videoStream: { isAvailable: true } },
-  { userId: '3', videoStream: { isAvailable: true } },
-  { userId: '4', videoStream: { isAvailable: true } }
+  { userId: '1' },
+  { userId: '2' },
+  { userId: '3' },
+  { userId: '4' }
 ];
 
 describe('Test smartDominantSpeakerParticipants function', () => {

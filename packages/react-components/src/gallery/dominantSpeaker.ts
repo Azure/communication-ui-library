@@ -4,10 +4,10 @@ import { VideoGalleryRemoteParticipant } from '../types';
 
 /**
  * Calculates the participants that should be renderd basis on the list of dominant speakers and currently renderd participants in a call.
- * @param participants Array containing all participants of a call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
- * @param dominantSpeakers An array containing the userId of dominant speakers in a call in the order of their dominance. 0th index is the most dominant, 1st is the second most etc
- * @param visibleParticipants  Array containing currently rendered (visible) participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
- * @param MAX_TILES Maximum number of tiles to calculate.
+ * @param participants - Array containing all participants of a call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
+ * @param dominantSpeakers - An array containing the userId of dominant speakers in a call in the order of their dominance. 0th index is the most dominant, 1st is the second most etc
+ * @param visibleParticipants - Array containing currently rendered (visible) participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
+ * @param MAX_TILES - Maximum number of tiles to calculate.
  * @returns VideoGalleryRemoteParticipant[] {@link @azure/communication-react#VideoGalleryRemoteParticipant}
  */
 export const smartDominantSpeakerParticipants = (

@@ -1809,6 +1809,9 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 }
 
 // @public
+export const smartDominantSpeakerParticipants: (participants?: VideoGalleryRemoteParticipant[], dominantSpeakers?: Array<string>, visibleParticipants?: VideoGalleryRemoteParticipant[], MAX_TILES?: number) => VideoGalleryRemoteParticipant[];
+
+// @public
 export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<void>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifierKind | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;

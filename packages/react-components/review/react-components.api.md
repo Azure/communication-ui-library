@@ -645,6 +645,9 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 }
 
 // @public
+export const smartDominantSpeakerParticipants: (participants?: VideoGalleryRemoteParticipant[], dominantSpeakers?: Array<string>, visibleParticipants?: VideoGalleryRemoteParticipant[], MAX_TILES?: number) => VideoGalleryRemoteParticipant[];
+
+// @public
 export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
 // @public
