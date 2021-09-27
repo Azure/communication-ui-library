@@ -493,12 +493,8 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-<<<<<<< HEAD
-    // Warning: (ae-incompatible-release-tags) The symbol "transfer" is marked as @public, but its signature references "TransferCallFeature" which is marked as @beta
-    transfer: TransferCallFeature;
-=======
+    // Warning: (ae-incompatible-release-tags) The symbol "transfer" is marked as @public, but its signature references "TransferCallFeatureState" which is marked as @beta
     transfer: TransferCallFeatureState;
->>>>>>> origin/main
 }
 
 // @public
@@ -954,14 +950,10 @@ export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displa
 // @public (undocumented)
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-<<<<<<< HEAD
-// @public
-=======
 // @alpha
 export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
-// @public (undocumented)
->>>>>>> origin/main
+// @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public (undocumented)
@@ -1920,13 +1912,8 @@ export interface Transfer {
     targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
 }
 
-<<<<<<< HEAD
 // @beta
-export interface TransferCallFeature {
-=======
-// @public
 export interface TransferCallFeatureState {
->>>>>>> origin/main
     receivedTransferRequests: TransferRequest[];
     requestedTransfers: Transfer[];
 }

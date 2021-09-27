@@ -17,9 +17,6 @@
       "ae-missing-release-tag": {
         "logLevel": "none"
       },
-      "ae-incompatible-release-tags": {
-        "logLevel": "none"
-      },
       "ae-unresolved-link": {
         "logLevel": "none"
       },
@@ -28,8 +25,7 @@
         "addToApiReportFile": false
       },
       "ae-incompatible-release-tags": {
-        "logLevel": "error",
-        "addToApiReportFile": false
+        "logLevel": "none"
       }
     },
     "tsdocMessageReporting": {
