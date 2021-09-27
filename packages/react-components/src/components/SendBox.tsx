@@ -12,7 +12,6 @@ import { InputBoxButton, InputBoxButtonProps, InputBoxComponent } from './InputB
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-const TEXT_EXCEEDS_LIMIT = `Your message is over the limit of ${MAXIMUM_LENGTH_OF_MESSAGE} characters`;
 
 /**
  * Fluent styles for {@link Sendbox}.
@@ -40,6 +39,10 @@ export interface SendBoxStrings {
    * Placeholder text in SendBox when there is no user input
    */
   placeholderText: string;
+  /**
+   * The warning message when send box text length is more than max limit
+   */
+  textTooLong: string;
 }
 
 /**
@@ -149,7 +152,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
-  const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
+  const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
   const mergedSendButtonStyle = useMemo(

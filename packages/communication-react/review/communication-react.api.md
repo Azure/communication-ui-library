@@ -488,7 +488,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    transfer: TransferCallFeature;
+    transfer: TransferCallFeatureState;
 }
 
 // @public
@@ -903,7 +903,7 @@ export interface CompositeStrings {
     chat: ChatCompositeStrings;
 }
 
-// @public (undocumented)
+// @public
 export interface ContentSystemMessage extends SystemMessageCommon {
     // (undocumented)
     content: string;
@@ -984,7 +984,7 @@ export type CustomAvatarOptions = {
     text?: string;
 };
 
-// @public (undocumented)
+// @public
 export interface CustomMessage extends MessageCommon {
     // (undocumented)
     content: string;
@@ -1143,7 +1143,7 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
@@ -1173,19 +1173,19 @@ export interface GridLayoutProps {
 // @public
 export type GridLayoutType = 'standard';
 
-// @beta
-export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+// @internal
+export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
-// @beta
-export interface IdentifierProviderProps {
+// @internal
+export interface _IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
     // (undocumented)
-    identifiers?: Identifiers;
+    identifiers?: _Identifiers;
 }
 
-// @public
-export interface Identifiers {
+// @internal
+export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
@@ -1392,13 +1392,13 @@ export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | '
     };
 }
 
-// @public (undocumented)
+// @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top';
 
-// @public (undocumented)
+// @public
 export interface MessageCommon {
     // (undocumented)
     createdOn: Date;
@@ -1437,7 +1437,7 @@ export type MessageRenderer = (props: MessageProps) => JSX.Element;
 // @public (undocumented)
 export type MessageSentListener = MessageReceivedListener;
 
-// @public (undocumented)
+// @public
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
@@ -1497,10 +1497,13 @@ messages: Message[];
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -1605,7 +1608,7 @@ export interface OptionsDevice {
     name: string;
 }
 
-// @public (undocumented)
+// @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     messageType: 'system';
@@ -1684,7 +1687,7 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
-// @public (undocumented)
+// @public
 export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     messageType: 'system';
@@ -1823,6 +1826,7 @@ userId: string;
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textTooLong: string;
 }
 
 // @public
@@ -1891,10 +1895,10 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public (undocumented)
+// @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
-// @public (undocumented)
+// @public
 export interface SystemMessageCommon extends MessageCommon {
     // (undocumented)
     iconName: string;
@@ -1908,7 +1912,7 @@ export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
 
-// @public (undocumented)
+// @public
 export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     messageType: 'system';
@@ -1932,7 +1936,7 @@ export interface Transfer {
 }
 
 // @public
-export interface TransferCallFeature {
+export interface TransferCallFeatureState {
     receivedTransferRequests: TransferRequest[];
     requestedTransfers: Transfer[];
 }

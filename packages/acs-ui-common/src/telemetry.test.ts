@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getApplicationId, sanitize } from './telemetry';
+import { _getApplicationId, sanitize } from './telemetry';
 
 // WARNING: Do not change this format. Restrictions:
 // - The data analytics backend depends on the application ID meeting this format.
@@ -9,7 +9,7 @@ import { getApplicationId, sanitize } from './telemetry';
 const applicationIdFormat = new RegExp('acr/[0-9][0-9]?.[0-9][0-9]?.[0-9][0-9]?(-(alpha|beta)(.[0-9][0-9]?)?)?');
 
 test('applicationId conforms to restrictions', () => {
-  expect(applicationIdFormat.test(getApplicationId())).toBe(true);
+  expect(applicationIdFormat.test(_getApplicationId())).toBe(true);
 });
 
 test('sanitize works for all versions in use', () => {

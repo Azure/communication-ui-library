@@ -152,6 +152,12 @@ export interface MessageThreadStrings {
   participantJoined: string;
   /** String for participants left */
   participantLeft: string;
+  /** Tag shown on a message that has been edited */
+  editedTag: string;
+  /** String for editing message in floating menu */
+  editMessage: string;
+  /** String for removing message in floating menu */
+  removeMessage: string;
 }
 
 /**

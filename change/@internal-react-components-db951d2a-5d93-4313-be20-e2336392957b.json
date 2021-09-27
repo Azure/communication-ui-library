@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Localization for edit + delete messages",
+  "packageName": "@internal/react-components",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -3,6 +3,9 @@
 
 import * as telemetryVersion from './telemetryVersion';
 
+/**
+ * @private
+ */
 // Removes long suffixes that don't fit the constraints for telemetry application ID.
 // e.g., the build suffix is dropped for alpha package versions.
 export const sanitize = (version: string): string => {
@@ -15,8 +18,10 @@ export const sanitize = (version: string): string => {
 
 /**
  * Application ID to be included in telemetry data from the UI library.
+ *
+ * @internal
  */
-export const getApplicationId = (): string => {
+export const _getApplicationId = (): string => {
   const version = telemetryVersion['default'];
   return sanitize(`acr/${version}`);
 };

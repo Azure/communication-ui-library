@@ -6,7 +6,6 @@ import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/r
 import { ChatMessage } from '../types';
 import { LiveMessage } from 'react-aria-live';
 import Linkify from 'react-linkify';
-import { useLocale } from '../localization/LocalizationProvider';
 import {
   chatMessageMenuStyle,
   chatMessageDateStyle,
@@ -20,6 +19,7 @@ import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { Parser } from 'html-to-react';
 import { useTheme } from '../theming';
 import { EditBox } from './EditBox';
+import { MessageThreadStrings } from './MessageThread';
 
 type ChatMessageProps = {
   message: ChatMessage;
@@ -28,6 +28,7 @@ type ChatMessageProps = {
   editDisabled?: boolean;
   onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
+  strings: MessageThreadStrings;
 };
 
 // https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
@@ -89,11 +90,10 @@ const GenerateTextMessageContent = (message: ChatMessage): JSX.Element => {
  * @private
  */
 export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
-  const strings = useLocale().strings.messageThread;
   const ids = useIdentifiers();
   const theme = useTheme();
 
-  const { message, onUpdateMessage, onDeleteMessage, editDisabled, showDate, messageContainerStyle } = props;
+  const { message, onUpdateMessage, onDeleteMessage, editDisabled, showDate, messageContainerStyle, strings } = props;
   const [isEditing, setIsEditing] = useState(false);
 
   const menuClass = mergeStyles(chatActionsCSS, {
@@ -115,17 +115,16 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
               onRemoveClick={async () => {
                 onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
               }}
+              strings={strings}
             />
           ),
 
-          key: 'menuButton2',
-          'aria-label': 'More options',
+          key: 'menuButton',
           indicator: false
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
         }
       ]
     }),
-    [menuClass, message.messageId, onDeleteMessage]
+    [menuClass, message.messageId, onDeleteMessage, strings]
   );
 
   if (message.messageType !== 'chat') {
@@ -163,7 +162,9 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
             : undefined}
         </Text>
       }
-      details={message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>Edited</div> : undefined}
+      details={
+        message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
+      }
       positionActionMenu={false}
       actionMenu={!editDisabled && message.status !== 'sending' && message.mine ? actionMenu : undefined}
     />
@@ -172,10 +173,12 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
 
 const MoreMenu = ({
   onEditClick,
-  onRemoveClick
+  onRemoveClick,
+  strings
 }: {
   onEditClick: () => void;
   onRemoveClick: () => void;
+  strings: MessageThreadStrings;
 }): JSX.Element => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [menuHidden, setMenuHidden] = useState(true);
@@ -184,13 +187,13 @@ const MoreMenu = ({
     (): IContextualMenuItem[] => [
       {
         key: 'Edit',
-        text: 'Edit',
+        text: strings.editMessage,
         iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
         onClick: onEditClick
       },
       {
         key: 'Remove',
-        text: 'Remove',
+        text: strings.removeMessage,
         iconProps: {
           iconName: 'MessageRemove',
           styles: menuIconStyleSet
@@ -198,7 +201,7 @@ const MoreMenu = ({
         onClick: onRemoveClick
       }
     ],
-    [onEditClick, onRemoveClick]
+    [onEditClick, onRemoveClick, strings]
   );
 
   return (

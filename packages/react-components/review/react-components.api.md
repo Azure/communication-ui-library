@@ -169,7 +169,7 @@ export interface ComponentStrings {
     typingIndicator: TypingIndicatorStrings;
 }
 
-// @public (undocumented)
+// @public
 export interface ContentSystemMessage extends SystemMessageCommon {
     // (undocumented)
     content: string;
@@ -223,7 +223,7 @@ export type CustomAvatarOptions = {
     text?: string;
 };
 
-// @public (undocumented)
+// @public
 export interface CustomMessage extends MessageCommon {
     // (undocumented)
     content: string;
@@ -332,19 +332,19 @@ export interface GridLayoutProps {
 // @public
 export type GridLayoutType = 'standard';
 
-// @beta
-export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+// @internal
+export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
-// @beta
-export interface IdentifierProviderProps {
+// @internal
+export interface _IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
     // (undocumented)
-    identifiers?: Identifiers;
+    identifiers?: _Identifiers;
 }
 
-// @public
-export interface Identifiers {
+// @internal
+export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
@@ -380,13 +380,13 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
-// @public (undocumented)
+// @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top';
 
-// @public (undocumented)
+// @public
 export interface MessageCommon {
     // (undocumented)
     createdOn: Date;
@@ -455,10 +455,13 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -531,7 +534,7 @@ export interface OptionsDevice {
     name: string;
 }
 
-// @public (undocumented)
+// @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     messageType: 'system';
@@ -589,7 +592,7 @@ export type ParticipantListProps = {
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
-// @public (undocumented)
+// @public
 export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     messageType: 'system';
@@ -659,6 +662,7 @@ export interface SendBoxProps {
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textTooLong: string;
 }
 
 // @public
@@ -679,16 +683,16 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public (undocumented)
+// @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
-// @public (undocumented)
+// @public
 export interface SystemMessageCommon extends MessageCommon {
     // (undocumented)
     iconName: string;
 }
 
-// @public (undocumented)
+// @public
 export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     messageType: 'system';
