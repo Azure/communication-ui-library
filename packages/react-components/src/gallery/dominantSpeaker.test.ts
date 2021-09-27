@@ -40,9 +40,13 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     expect(result.length).toBe(5);
   });
 
+  test('returns participants even when there are no visible participants', () => {
+    const result = smartDominantSpeakerParticipants(participants, dominantSpeakers, [], 4);
+    expect(result.length).toBe(4);
+  });
+
   test('returns participants array replacing non-dominant speakers with dominant speakers', () => {
     const result = smartDominantSpeakerParticipants(participants, dominantSpeakers, visibleParticipants, 4);
-    expect(result.length).toBe(4);
     const resultUserIds = result.flatMap((p) => p.userId);
     expect(resultUserIds).toEqual(['1', '5', '3', '7']);
   });
@@ -54,27 +58,28 @@ describe('Test smartDominantSpeakerParticipants function', () => {
       visibleParticipants.slice(2, 4),
       4
     );
-    expect(result.length).toBe(4);
     const resultUserIds = result.flatMap((p) => p.userId);
     expect(resultUserIds).toEqual(['3', '4', '1', '2']);
   });
 
   test('returns upto MAX participants even when number of last visible participants and dominant speakers is less than MAX', () => {
     let result = smartDominantSpeakerParticipants(participants, ['1', '2'], visibleParticipants.slice(0, 2), 4);
-    expect(result.length).toBe(4);
     let resultUserIds = result.flatMap((p) => p.userId);
     expect(resultUserIds).toEqual(['1', '2', '3', '4']);
 
     result = smartDominantSpeakerParticipants(participants, ['1', '2'], visibleParticipants.slice(1, 2), 4);
-    expect(result.length).toBe(4);
     resultUserIds = result.flatMap((p) => p.userId);
     expect(resultUserIds).toEqual(['2', '1', '3', '4']);
   });
 
   test('returns participants array always containing all dominant speakers', () => {
     const customDominantSpeakers = ['5', '6', '7', '8'];
-    const result = smartDominantSpeakerParticipants(participants, customDominantSpeakers, visibleParticipants, 4);
-    expect(result.length).toBe(4);
+    const result = smartDominantSpeakerParticipants(
+      participants,
+      customDominantSpeakers,
+      visibleParticipants,
+      customDominantSpeakers.length
+    );
     const resultUserIds = result.flatMap((p) => p.userId);
     expect(resultUserIds).toEqual(customDominantSpeakers);
   });
