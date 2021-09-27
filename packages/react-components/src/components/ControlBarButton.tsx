@@ -39,7 +39,7 @@ export interface ControlBarButtonStrings {
  *
  * @public
  */
-export interface ControlBarButtonStyles extends IButtonStyles {}
+export type ControlBarButtonStyles = IButtonStyles;
 
 /**
  * Props for {@link ControlBarButton}.
