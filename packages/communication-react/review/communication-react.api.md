@@ -1133,7 +1133,7 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public (undocumented)
@@ -1422,7 +1422,7 @@ export type MessageRenderer = (props: MessageProps) => JSX.Element;
 // @public (undocumented)
 export type MessageSentListener = MessageReceivedListener;
 
-// @public (undocumented)
+// @public
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
