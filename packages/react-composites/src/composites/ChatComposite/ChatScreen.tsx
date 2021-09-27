@@ -11,7 +11,8 @@ import {
   ParticipantList,
   SendBox,
   TypingIndicator,
-  ParticipantMenuItemsCallback
+  ParticipantMenuItemsCallback,
+  MessageThreadStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -38,11 +39,18 @@ export type ChatScreenProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  styles?: MessageThreadStylesProps;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, onFetchParticipantMenuItems, options } =
-    props;
+  const {
+    onFetchAvatarPersonaData,
+    onRenderMessage,
+    onRenderTypingIndicator,
+    onFetchParticipantMenuItems,
+    options,
+    styles
+  } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -81,6 +89,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
+            styles={styles}
           />
           <Stack.Item align="center" className={sendBoxParentStyle}>
             <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
