@@ -2,12 +2,14 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
+  VideoGalleryParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions
 } from '../types';
@@ -44,6 +46,8 @@ export interface VideoGalleryProps {
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
+  /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
+  dominantSpeakers?: Array<string>;
   /** Local video view options */
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */
@@ -88,6 +92,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteParticipants,
     localVideoViewOption,
     remoteVideoViewOption,
+    dominantSpeakers,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
@@ -104,6 +109,27 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const shouldFloatLocalVideo = useCallback((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
   }, [layout, remoteParticipants]);
+
+  const visibleVideoParticipants = useRef<VideoGalleryParticipant[] | []>([]);
+  const visibleAudioParticipants = useRef<VideoGalleryParticipant[] | []>([]);
+  const [videoParticipants, setVideoParticipants] = useState<VideoGalleryParticipant[] | []>();
+  const [audioParticipants, setAudioParticipants] = useState<VideoGalleryParticipant[] | []>();
+
+  useEffect(() => {
+    visibleVideoParticipants.current = smartDominantSpeakerParticipants(
+      remoteParticipants?.filter((p) => p.videoStream?.isAvailable),
+      dominantSpeakers,
+      visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
+    );
+    setVideoParticipants(visibleVideoParticipants.current);
+
+    visibleAudioParticipants.current = smartDominantSpeakerParticipants(
+      remoteParticipants?.filter((p) => !p.videoStream?.isAvailable),
+      dominantSpeakers,
+      visibleAudioParticipants.current.filter((p) => !p.videoStream?.isAvailable)
+    );
+    setAudioParticipants(visibleAudioParticipants.current);
+  }, [dominantSpeakers, remoteParticipants]);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -157,7 +183,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     // Else return Remote Stream Video Tiles
-    return remoteParticipants?.map((participant): JSX.Element => {
+    return videoParticipants?.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
@@ -177,8 +203,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       );
     });
   }, [
-    remoteParticipants,
     onRenderRemoteVideoTile,
+    videoParticipants,
+    remoteParticipants,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     remoteVideoViewOption,
