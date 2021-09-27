@@ -13,7 +13,7 @@ export const dataUiId = (v: string): string => `[data-ui-id="${v}"]`;
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
-  await page.waitForLoadState('load');
+  await page.waitForLoadState('networkidle');
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
 
   // @TODO
@@ -150,8 +150,18 @@ const encodeQueryData = (user: ChatUserType | CallUserType | MeetingUserType): s
   return qs.join('&');
 };
 
-export const buildUrl = (serverUrl: string, user: ChatUserType | CallUserType | MeetingUserType): string =>
-  `${serverUrl}?${encodeQueryData(user)}`;
+/**
+ * Create the test URL.
+ * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
+ * @param user - Test user the props of which populate query search parameters
+ * @param qArgs - Optional args to add to the query search parameters of the URL.
+ * @returns URL string
+ */
+export const buildUrl = (
+  serverUrl: string,
+  user: ChatUserType | CallUserType | MeetingUserType,
+  qArgs?: { [key: string]: string }
+): string => `${serverUrl}?${encodeQueryData({ ...user, ...qArgs })}`;
 
 export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: string }): Promise<Page> => {
   const url = new URL(page.url());
@@ -161,6 +171,6 @@ export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: s
     url.searchParams.append(encodeURIComponent(key), encodeURIComponent(value));
   });
 
-  await page.goto(url.toString(), { waitUntil: 'load' });
+  await page.goto(url.toString(), { waitUntil: 'networkidle' });
   return page;
 };

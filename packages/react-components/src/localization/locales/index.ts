@@ -26,31 +26,87 @@ const createComponentStrings = (localizedStrings: PartialDeep<ComponentStrings>)
   return strings;
 };
 
-/** Locale for English (US) */
+/**
+ * Locale for English (US).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_EN_US: ComponentLocale = { strings: en_US };
-/** Locale for English (US) */
+/**
+ * Locale for English (GB).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_EN_GB: ComponentLocale = { strings: createComponentStrings(en_GB) };
-/** Locale for German (Germany) */
+/**
+ * Locale for  German (Germany).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale = { strings: createComponentStrings(de_DE) };
-/** Locale for Spanish (Spain) */
+/**
+ * Locale for Spanish (Spain).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_ES_ES: ComponentLocale = { strings: createComponentStrings(es_ES) };
-/** Locale for French (France) */
+/**
+ * Locale for French (France).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_FR_FR: ComponentLocale = { strings: createComponentStrings(fr_FR) };
-/** Locale for Italian (Italy) */
+/**
+ * Locale for Italian (Italy).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_IT_IT: ComponentLocale = { strings: createComponentStrings(it_IT) };
-/** Locale for Japanese (Japan) */
+/**
+ * Locale for Japanese (Japan).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_JA_JP: ComponentLocale = { strings: createComponentStrings(ja_JP) };
-/** Locale for Korean (South Korea) */
+/**
+ * Locale for Korean (South Korea).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_KO_KR: ComponentLocale = { strings: createComponentStrings(ko_KR) };
-/** Locale for Dutch (Netherlands) */
+/**
+ * Locale for Dutch (Netherlands).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_NL_NL: ComponentLocale = { strings: createComponentStrings(nl_NL) };
-/** Locale for Portuguese (Brazil) */
+/**
+ * Locale for Portuguese (Brazil).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_PT_BR: ComponentLocale = { strings: createComponentStrings(pt_BR) };
-/** Locale for Russian (Russia) */
+/**
+ * Locale for Russian (Russia).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_RU_RU: ComponentLocale = { strings: createComponentStrings(ru_RU) };
-/** Locale for Turkish (Turkey) */
+/**
+ * Locale for Turkish (Turkey).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_TR_TR: ComponentLocale = { strings: createComponentStrings(tr_TR) };
-/** Locale for Chinese (Mainland China) */
+/**
+ * Locale for Chinese (Mainland China).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_ZH_CN: ComponentLocale = { strings: createComponentStrings(zh_CN) };
-/** Locale for Chinese (Taiwan) */
+/**
+ * Locale for Chinese (Taiwan).
+ *
+ * @public
+ */
 export const COMPONENT_LOCALE_ZH_TW: ComponentLocale = { strings: createComponentStrings(zh_TW) };

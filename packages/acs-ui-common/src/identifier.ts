@@ -9,12 +9,14 @@ import {
 } from '@azure/communication-common';
 
 /**
- * A string representation of a CommunicationIdentifier.
+ * A string representation of a {@link @azure/communication-common#CommunicationIdentifier}.
  *
  * This string representation of CommunicationIdentifier is guaranteed to be stable for
  * a unique Communication user. Thus,
  * - it can be used to persist a user's identity in external databases.
  * - it can be used as keys into a Map to store data for the user.
+ *
+ * @public
  */
 export const toFlatCommunicationIdentifier = (id: CommunicationIdentifier): string => {
   if (isCommunicationUserIdentifier(id)) {
@@ -29,6 +31,11 @@ export const toFlatCommunicationIdentifier = (id: CommunicationIdentifier): stri
   return id.id;
 };
 
+/**
+ * Reverse operation of {@link toFlatCommunicationIdentifier}.
+ *
+ * @public
+ */
 export const fromFlatCommunicationIdentifier = (id: string): CommunicationIdentifier => {
   // This implementation is currently a hack that only works with ACS identifiers.
   // TODO: Make `toFlatCommunicationIdentifier` not be lossy so this can reverse the process.

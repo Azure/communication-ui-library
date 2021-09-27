@@ -4,7 +4,9 @@
 import { PartialTheme } from '@fluentui/react';
 
 /**
- * Theme designed ACS UI SDK calling components
+ * Custom Fluent theme pallete used by calling related components in this library.
+ *
+ * @public
  */
 export interface CallingTheme {
   callingPalette: {
@@ -15,7 +17,9 @@ export interface CallingTheme {
 }
 
 /**
- * Light theme designed ACS UI SDK components
+ * Preset light theme for components exported from this library.
+ *
+ * @public
  */
 export const lightTheme: PartialTheme & CallingTheme = {
   palette: {
@@ -50,7 +54,9 @@ export const lightTheme: PartialTheme & CallingTheme = {
 };
 
 /**
- * Dark theme designed ACS UI SDK components
+ * Preset dark theme for components exported from this library.
+ *
+ * @public
  */
 export const darkTheme: PartialTheme & CallingTheme = {
   palette: {

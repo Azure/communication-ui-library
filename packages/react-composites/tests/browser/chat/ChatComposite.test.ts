@@ -133,8 +133,9 @@ test.describe('Chat Composite custom data model', () => {
     // wait for typing indicator
     await pages[1].waitForSelector('#custom-data-model-typing-indicator');
     await pages[1].waitForSelector('#custom-data-model-message');
+    await pages[1].waitForSelector(`[data-ui-status="seen"]`);
 
-    // Screenshot should show custom typing indicator and custom rendered message
+    // Screenshot should show custom typing indicator and custom rendered messages from previous tests
     await stubMessageTimestamps(pages[1]);
     expect(await pages[1].screenshot()).toMatchSnapshot('custom-data-model.png');
   });

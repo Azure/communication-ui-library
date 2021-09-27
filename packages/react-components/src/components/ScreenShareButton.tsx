@@ -7,7 +7,9 @@ import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { Icon } from '@fluentui/react';
 
 /**
- * Strings of ScreenShareButton that can be overridden
+ * Strings of {@link ScreenShareButton} that can be overridden.
+ *
+ * @public
  */
 export interface ScreenShareButtonStrings {
   /** Label when button is on. */
@@ -17,7 +19,9 @@ export interface ScreenShareButtonStrings {
 }
 
 /**
- * Props for ScreenShareButton component
+ * Props for {@link ScreenShareButton}.
+ *
+ * @public
  */
 export interface ScreenShareButtonProps extends ControlBarButtonProps {
   /**
@@ -36,10 +40,11 @@ const onRenderScreenShareOnIcon = (): JSX.Element => <Icon iconName="ControlButt
 const onRenderScreenShareOffIcon = (): JSX.Element => <Icon iconName="ControlButtonScreenShareStart" />;
 
 /**
- * `ScreenShareButton` allows you to easily create a component for rendering a screen-share button.
- * It can be used in your ControlBar component for example.
+ * A button to start / stop screen sharing.
  *
- * @param props - of type ScreenShareButtonProps
+ * Can be used with {@link ControlBar}.
+ *
+ * @public
  */
 export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.screenShareButton;

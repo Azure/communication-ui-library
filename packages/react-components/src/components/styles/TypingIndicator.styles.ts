@@ -3,10 +3,16 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const typingIndicatorContainerStyle = mergeStyles({
   height: '2.125rem'
 });
 
+/**
+ * @private
+ */
 export const typingIndicatorStringStyle = mergeStyles({
   fontWeight: 400,
   whiteSpace: 'pre',
@@ -14,6 +20,9 @@ export const typingIndicatorStringStyle = mergeStyles({
   alignItems: 'center'
 });
 
+/**
+ * @private
+ */
 export const typingIndicatorPrefixImageStyle = mergeStyles({
   width: '2.125rem',
   height: '2.125rem',
