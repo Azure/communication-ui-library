@@ -7,12 +7,12 @@ import { People20Filled, People20Regular } from '@fluentui/react-icons';
 import {
   chatHeaderContainerStyle,
   greyIconButtonStyle,
-  iconButtonContainerStyle,
-  largeButtonContainerStyle,
+  largeLeaveButtonContainerStyle,
   leaveButtonStyle,
   leaveIcon,
   leaveIconStyle,
-  panelButtonStyle
+  paneButtonContainerStyle,
+  smallLeaveButtonContainerStyle
 } from './styles/ChatHeader.styles';
 import { useTheme } from '@azure/communication-react';
 
@@ -30,19 +30,21 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   return (
     <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="end">
       <Stack horizontal={true} verticalAlign={'center'}>
-        {props.isParticipantsDisplayed ? (
-          <People20Filled className={panelButtonStyle} onClick={() => props.setHideParticipants(true)} />
-        ) : (
-          <People20Regular className={panelButtonStyle} onClick={() => props.setHideParticipants(false)} />
-        )}
-        <div className={iconButtonContainerStyle}>
+        <div className={paneButtonContainerStyle}>
+          <IconButton
+            onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
+            className={mergeStyles({ color: theme.palette.neutralPrimaryAlt })}
+            onClick={() => props.setHideParticipants(props.isParticipantsDisplayed)}
+          />
+        </div>
+        <div className={smallLeaveButtonContainerStyle}>
           <IconButton
             iconProps={leaveIcon}
             className={mergeStyles(greyIconButtonStyle, { color: theme.palette.neutralPrimaryAlt })}
             onClick={() => props.onEndChat()}
           />
         </div>
-        <div className={largeButtonContainerStyle}>
+        <div className={largeLeaveButtonContainerStyle}>
           <DefaultButton
             className={mergeStyles(leaveButtonStyle, { color: theme.palette.neutralPrimaryAlt })}
             onClick={() => props.onEndChat()}
