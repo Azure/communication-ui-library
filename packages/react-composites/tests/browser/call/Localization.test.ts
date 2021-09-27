@@ -6,7 +6,7 @@ import { waitForCallCompositeToLoad, loadCallScreen, updatePageQueryParam } from
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
-  let originalUrls: string[];
+  let originalUrls: string[] = [];
 
   test.beforeEach(async ({ pages }) => {
     for (const page of pages) {
