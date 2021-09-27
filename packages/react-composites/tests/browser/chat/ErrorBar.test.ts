@@ -11,6 +11,7 @@ import {
   waitForChatCompositeToLoad
 } from '../common/utils';
 import { Page, expect } from '@playwright/test';
+import { PAGE_VIEWPORT } from 'browser/common/defaults';
 
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, tests may depend on the final-state of the chat thread after previous tests.
@@ -18,16 +19,10 @@ import { Page, expect } from '@playwright/test';
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe('ErrorBar is shown correctly', async () => {
-  test.afterEach(async ({ pages, users, serverUrl }) => {
-    // Reset the page url that was changed during the error tests
-    for (let i = 0; i < pages.length; i++) {
-      const url = buildUrl(serverUrl, users[i]);
-      await pages[i].goto(url);
-    }
-  });
-
-  test('not shown when nothing is wrong', async ({ pages }) => {
-    const page = pages[0];
+  test('not shown when nothing is wrong', async ({ serverUrl, page, users }) => {
+    const url = buildUrl(serverUrl, users[0]);
+    await page.setViewportSize(PAGE_VIEWPORT);
+    await page.goto(url, { waitUntil: 'load' });
     await waitForChatCompositeToLoad(page);
     await waitForChatCompositeParticipantsToLoad(page, 2);
     await stubMessageTimestamps(page);
@@ -39,11 +34,10 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
   });
 
-  test('with expired token', async ({ pages, users }) => {
-    console.log('testing with expired token');
-    const page = pages[0];
-    const user = users[0];
-    await updatePageQueryParam(page, { token: user.token + 'INCORRECT_VALUE' });
+  test('with expired token', async ({ serverUrl, page, users }) => {
+    const url = buildUrl(serverUrl, users[0], { token: users[0].token + 'INCORRECT_VALUE' });
+    await page.setViewportSize(PAGE_VIEWPORT);
+    await page.goto(url, { waitUntil: 'load' });
     await waitForChatCompositeToLoad(page);
     // await page.waitForTimeout(3000);
     await stubMessageTimestamps(page);
@@ -55,9 +49,10 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
   });
 
-  test('with wrong thread ID', async ({ pages }) => {
-    const page = pages[0];
-    await updatePageQueryParam(page, { threadId: 'INCORRECT_VALUE' });
+  test('with wrong thread ID', async ({ serverUrl, page, users }) => {
+    const url = buildUrl(serverUrl, users[0], { threadId: 'INCORRECT_VALUE' });
+    await page.setViewportSize(PAGE_VIEWPORT);
+    await page.goto(url, { waitUntil: 'load' });
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
@@ -68,9 +63,10 @@ test.describe('ErrorBar is shown correctly', async () => {
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
   });
 
-  test('with wrong endpoint', async ({ pages }) => {
-    const page = pages[0];
-    await updatePageQueryParam(page, { endpointUrl: 'https://INCORRECT.VALUE' });
+  test('with wrong endpoint', async ({ serverUrl, page, users }) => {
+    const url = buildUrl(serverUrl, users[0], { endpointUrl: 'https://INCORRECT.VALUE' });
+    await page.setViewportSize(PAGE_VIEWPORT);
+    await page.goto(url, { waitUntil: 'load' });
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
