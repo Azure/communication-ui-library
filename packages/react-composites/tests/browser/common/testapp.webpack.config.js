@@ -12,8 +12,8 @@ module.exports = (appDir) => ({
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
-      // reference internal packlets src directly for hot reloading when developing
-      // this also removes the need for CI to wait for packages to be built before building tests
+      // Reference internal packlets' src directly for hot reloading when developing.
+      // This also removes the need for CI to wait for packlets to be built before building tests.
       '@internal/react-components': path.resolve(appDir, '../../../../../react-components/src'),
       '@internal/react-composites': path.resolve(appDir, '../../../../../react-composites/src'),
       '@internal/chat-stateful-client': path.resolve(appDir, '../../../../../chat-stateful-client/src'),
