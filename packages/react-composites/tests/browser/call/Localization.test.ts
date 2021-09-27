@@ -21,6 +21,7 @@ test.describe('Localization tests', async () => {
     for (let i = 0; i < pages.length; i++) {
       await pages[i].goto(originalUrls[i]);
     }
+    originalUrls = [];
   });
 
   test('Configuration page title and participant button in call should be localized', async ({ pages }) => {
