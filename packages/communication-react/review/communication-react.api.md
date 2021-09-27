@@ -1163,19 +1163,19 @@ export interface GridLayoutProps {
 // @public
 export type GridLayoutType = 'standard';
 
-// @beta
-export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+// @internal
+export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
-// @beta
-export interface IdentifierProviderProps {
+// @internal
+export interface _IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
     // (undocumented)
-    identifiers?: Identifiers;
+    identifiers?: _Identifiers;
 }
 
-// @public
-export interface Identifiers {
+// @internal
+export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
