@@ -19558,6 +19558,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-jsx-a11y: 6.4.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       eslint-plugin-react: 7.24.0_eslint@7.32.0
@@ -19593,7 +19594,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-WpxpO0vTls4cDlaqEvUQJDhjW+P5fPAulPPrtgq8DuNkoz2a2i6pXxd6pZSoDrSOxQG5Uza6vyHLqnAQRYcAQw==
+      integrity: sha512-kMEboqUm+ef7Jd9h75kmEZwaQUQj+3tXeI3hPUnuiyvWm/e8O79e+B4WxtiuqYhXvFkGBl3KWfvB6gqr2DOKyg==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:

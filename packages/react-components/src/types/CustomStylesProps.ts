@@ -4,7 +4,9 @@
 import { IButtonStyles, IStyle } from '@fluentui/react';
 
 /**
- * Basic custom styles props for components
+ * Basic fluent styles props for all components exported from this libray.
+ *
+ * @public
  */
 export interface BaseCustomStylesProps {
   /** Styles for the root container. */
@@ -12,6 +14,8 @@ export interface BaseCustomStylesProps {
 }
 
 /**
- * custom styles props for button components, extension on fluentUI IButtonStyles
+ * Custom styles props for button components, extension on fluentUI IButtonStyles.
+ *
+ * @public
  */
 export type ButtonCustomStylesProps = IButtonStyles;

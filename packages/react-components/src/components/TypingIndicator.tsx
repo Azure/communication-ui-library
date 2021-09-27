@@ -10,6 +10,11 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { formatSpanElements } from '../localization/localizationUtils';
 import { useIdentifiers } from '../identifiers';
 
+/**
+ * Fluent styles for {@link TypingIndicator}.
+ *
+ * @public
+ */
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
   /** Styles for each typing user's displayName. */
   typingUserDisplayName?: IStyle;
@@ -18,7 +23,9 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
 }
 
 /**
- * Strings of TypingIndicator that can be overridden
+ * Strings of {@link TypingIndicator} that can be overridden.
+ *
+ * @public
  */
 export interface TypingIndicatorStrings {
   /**
@@ -98,7 +105,9 @@ export interface TypingIndicatorStrings {
 }
 
 /**
- * Props for TypingIndicator component
+ * Props for {@link TypingIndicator}.
+ *
+ * @public
  */
 export interface TypingIndicatorProps {
   /** List of the typing users. */
@@ -252,7 +261,9 @@ const IndicatorComponent = (
 };
 
 /**
- * Typing Indicator is used to notify users if there are any other users typing in the thread.
+ * Component to notify local user when one or more participants in the chat thread are typing.
+ *
+ * @public
  */
 export const TypingIndicator = (props: TypingIndicatorProps): JSX.Element => {
   const { typingUsers, onRenderUser, styles } = props;

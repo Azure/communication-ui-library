@@ -10,7 +10,9 @@ import { ParticipantItem } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 
 /**
- * A callback for providing custom menu items for each participant in the participant list.
+ * A callback for providing custom menu items for each participant in {@link ParticipantList}.
+ *
+ * @public
  */
 export type ParticipantMenuItemsCallback = (
   participantUserId: string,
@@ -19,7 +21,9 @@ export type ParticipantMenuItemsCallback = (
 ) => IContextualMenuItem[];
 
 /**
- * Props for component `ParticipantList`
+ * Props for {@link ParticipantList}.
+ *
+ * @public
  */
 export type ParticipantListProps = {
   /** Participants in user call or chat */
@@ -117,8 +121,11 @@ const getParticipantsForDefaultRender = (
 };
 
 /**
- * `ParticipantList` renders a list of participants in Calling or Chat. If property `onRenderParticipant` is not
- * assigned then each participant is rendered with `ParticipantItem`.
+ * Component to render all calling or chat participants.
+ *
+ * By default, each participant is rendered with {@link ParticipantItem}. See {@link ParticipantListProps.onRenderParticipant} to override.
+ *
+ * @public
  */
 export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const {

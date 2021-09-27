@@ -3,6 +3,9 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const participantItemContainerStyle = mergeStyles({
   paddingTop: '0.25rem',
   paddingBottom: '0.25rem',
@@ -13,10 +16,16 @@ export const participantItemContainerStyle = mergeStyles({
   alignItems: 'center'
 });
 
+/**
+ * @private
+ */
 export const menuButtonContainerStyle = {
   width: '1.5rem'
 };
 
+/**
+ * @private
+ */
 export const iconContainerStyle = {
   display: 'flex',
   alignItems: 'center',
@@ -24,12 +33,18 @@ export const iconContainerStyle = {
   paddingTop: '0.2rem'
 };
 
+/**
+ * @private
+ */
 export const iconStyles = mergeStyles({
   display: 'flex',
   lineHeight: 0, // ensure the icon center is on the center line and not slightly above it
   alignItems: 'center'
 });
 
+/**
+ * @private
+ */
 export const meContainerStyle = {
   paddingRight: '0.5rem'
 };

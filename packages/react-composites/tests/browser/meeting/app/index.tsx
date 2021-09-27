@@ -5,7 +5,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { IdentifierProvider } from '@internal/react-components';
+import { _IdentifierProvider } from '@internal/react-components';
 import { MeetingAdapter, createAzureCommunicationMeetingAdapter, MeetingComposite } from '../../../../src';
 import { IDS } from '../../common/config';
 
@@ -56,9 +56,9 @@ function App(): JSX.Element {
 
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
-      <IdentifierProvider identifiers={IDS}>
+      <_IdentifierProvider identifiers={IDS}>
         {meetingAdapter && <MeetingComposite meetingAdapter={meetingAdapter} />}
-      </IdentifierProvider>
+      </_IdentifierProvider>
     </div>
   );
 }

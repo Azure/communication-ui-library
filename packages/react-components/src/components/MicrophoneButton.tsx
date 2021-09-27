@@ -7,7 +7,9 @@ import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { Icon } from '@fluentui/react';
 
 /**
- * Strings of MicrophoneButton that can be overridden
+ * Strings of {@link MicrophoneButton} that can be overridden.
+ *
+ * @public
  */
 export interface MicrophoneButtonStrings {
   /** Label when button is on. */
@@ -17,7 +19,9 @@ export interface MicrophoneButtonStrings {
 }
 
 /**
- * Props for MicrophoneButton component
+ * Props for {@link MicrophoneButton}.
+ *
+ * @public
  */
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
   /**
@@ -36,8 +40,11 @@ const onRenderMicOnIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOn"
 const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOff" />;
 
 /**
- * `MicrophoneButton` allows you to easily create a component for rendering an audio button. It can be used in your ControlBar component for example.
- * @param props - of type MicrophoneButtonProps
+ * A button to turn microphone on / off.
+ *
+ * Can be used with {@link ControlBar}.
+ *
+ * @public
  */
 export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.microphoneButton;

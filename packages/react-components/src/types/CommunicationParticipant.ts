@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 
 /**
- * `CommunicationParticipant` represents a Chat or Calling participant's state
+ * A Chat or Calling participant's state, as reflected in the UI.
+ *
+ * @public
  */
 export type CommunicationParticipant = {
   /** User ID of participant */

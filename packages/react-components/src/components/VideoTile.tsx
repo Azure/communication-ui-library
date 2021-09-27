@@ -19,6 +19,11 @@ import {
   videoHint
 } from './styles/VideoTile.styles';
 
+/**
+ * Fluent styles for {@link VideoTile}.
+ *
+ * @public
+ */
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
   /** Styles for video container. */
   videoContainer?: IStyle;
@@ -29,7 +34,9 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
 }
 
 /**
- * Props for VideoTile component
+ * Props for {@link VideoTile}.
+ *
+ * @public
  */
 export interface VideoTileProps {
   /** React Child components. Child Components will show as overlay component in the VideoTile. */
@@ -90,6 +97,13 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
 
 const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
 
+/**
+ * A component to render the video stream for a single call participant.
+ *
+ * Use with {@link GridLayout} in a {@link VideoGallery}.
+ *
+ * @public
+ */
 export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const {
     children,

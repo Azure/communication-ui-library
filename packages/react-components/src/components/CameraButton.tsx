@@ -13,7 +13,9 @@ const defaultLocalVideoViewOption = {
 } as VideoStreamOptions;
 
 /**
- * Strings of CameraButton that can be overridden
+ * Strings of CameraButton that can be overridden.
+ *
+ * @public
  */
 export interface CameraButtonStrings {
   /** Label when button is on. */
@@ -23,7 +25,9 @@ export interface CameraButtonStrings {
 }
 
 /**
- * Props for CameraButton component
+ * Props for {@link CameraButton} component.
+ *
+ * @public
  */
 export interface CameraButtonProps extends ControlBarButtonProps {
   /**
@@ -47,10 +51,11 @@ const onRenderCameraOnIcon = (): JSX.Element => <Icon iconName="ControlButtonCam
 const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="ControlButtonCameraOff" />;
 
 /**
- * `CameraButton` allows you to easily create a component for rendering a camera button.
- * It can be used in your ControlBar component for example.
+ * A button to turn camera on / off.
  *
- * @param props - of type CameraButtonProps
+ * Can be used with {@link ControlBar}.
+ *
+ * @public
  */
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const { localVideoViewOption, onToggleCamera } = props;

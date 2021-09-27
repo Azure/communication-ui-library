@@ -19,7 +19,9 @@ import {
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
- * Data structure for localization
+ * Locale information for all components exported from this library.
+ *
+ * @public
  */
 export interface ComponentLocale {
   /** Strings for components */
@@ -27,7 +29,9 @@ export interface ComponentLocale {
 }
 
 /**
- * Strings for components
+ * Strings used by all components exported from this library.
+ *
+ * @public
  */
 export interface ComponentStrings {
   /** Strings for MessageThread */
@@ -57,12 +61,16 @@ export interface ComponentStrings {
 }
 
 /**
- * Context for providing localized strings to components
+ * Context for providing localized strings to components exported from this library.
+ *
+ * @public
  */
 export const LocaleContext = createContext<ComponentLocale>(COMPONENT_LOCALE_EN_US);
 
 /**
- * Props to LocalizationProvider
+ * Props for {@link LocalizationProvider}.
+ *
+ * @public
  */
 export type LocalizationProviderProps = {
   /** Locale context to provide components */
@@ -72,9 +80,12 @@ export type LocalizationProviderProps = {
 };
 
 /**
- * @description Provider to provide localized strings for this library's react components.
+ * Provider to provide localized strings for this library's react components.
+ *
  * @remarks Components will be provided localized strings in English (US) by default if this
- * provider is not used
+ * provider is not used.
+ *
+ * @public
  */
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
   const { locale, children } = props;
