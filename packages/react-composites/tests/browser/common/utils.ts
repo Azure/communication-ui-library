@@ -3,6 +3,7 @@
 
 import { IDS } from './config';
 import { Page } from '@playwright/test';
+import { CallUserType, ChatUserType, MeetingUserType } from './defaults';
 
 /** Helper function to generate the selector for selecting an HTML node by data-ui-id */
 export const dataUiId = (v: string): string => `[data-ui-id="${v}"]`;
@@ -140,6 +141,17 @@ export const disableAnimation = async (page: Page): Promise<void> => {
     `
   });
 };
+
+const encodeQueryData = (user: ChatUserType | CallUserType | MeetingUserType): string => {
+  const qs: Array<string> = [];
+  for (const d in user) {
+    qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(user[d]));
+  }
+  return qs.join('&');
+};
+
+export const buildUrl = (serverUrl: string, user: ChatUserType | CallUserType | MeetingUserType): string =>
+  `${serverUrl}?${encodeQueryData(user)}`;
 
 export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: string }): Promise<Page> => {
   const url = new URL(page.url());

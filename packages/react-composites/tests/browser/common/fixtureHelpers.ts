@@ -14,6 +14,7 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
 import { v1 } from 'uuid';
+import { buildUrl } from './utils';
 
 /**
  * Creates a page to be tested for each participant in a browser page.
@@ -154,34 +155,14 @@ export const createMeetingUsers =
  * @param browser Browser to create Page in.
  * @param serverUrl URL to a running test app.
  * @param user User to load url for.
- * @param qArgs Extra query arguments.
  * @returns
  */
-const loadUrlInPage = async (
-  page: Page,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => {
-  const qs = encodeQueryData(user, qArgs);
+const loadUrlInPage = async (page: Page, serverUrl: string, user: ChatUserType | CallUserType): Promise<Page> => {
   await page.setViewportSize(PAGE_VIEWPORT);
-  const url = `${serverUrl}?${qs}`;
+
+  const url = buildUrl(serverUrl, user);
   await page.goto(url, { waitUntil: 'networkidle' });
   return page;
-};
-
-const encodeQueryData = (
-  user: ChatUserType | CallUserType | MeetingUserType,
-  qArgs?: { [key: string]: string }
-): string => {
-  const qs: Array<string> = [];
-  for (const d in user) {
-    qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(user[d]));
-  }
-  if (qArgs !== undefined) {
-    Object.entries(qArgs).forEach(([key, value]) => qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value)));
-  }
-  return qs.join('&');
 };
 
 /**
@@ -189,32 +170,25 @@ const encodeQueryData = (
  * @param browser Browser to create Page in.
  * @param serverUrl URL to a running test app.
  * @param user User to load url for.
- * @param qArgs Extra query arguments.
  * @returns
  */
-export const loadPage = async (
-  browser: Browser,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => await loadUrlInPage(await browser.newPage(), serverUrl, user, qArgs);
+export const loadPage = async (browser: Browser, serverUrl: string, user: ChatUserType | CallUserType): Promise<Page> =>
+  await loadUrlInPage(await browser.newPage(), serverUrl, user);
 
 /**
  * Load a URL in a new Page in the browser with permissions needed for the CallComposite.
  * @param browser Browser to create Page in.
  * @param serverUrl URL to a running test app.
  * @param user User to load ChatComposite for.
- * @param qArgs Extra query arguments.
  * @returns
  */
 export const loadPageWithPermissionsForCalls = async (
   browser: Browser,
   serverUrl: string,
-  user: CallUserType | MeetingUserType,
-  qArgs?: { [key: string]: string }
+  user: CallUserType | MeetingUserType
 ): Promise<Page> => {
   const context = await browser.newContext({ permissions: ['notifications'] });
   context.grantPermissions(['camera', 'microphone']);
   const page = await context.newPage();
-  return await loadUrlInPage(page, serverUrl, user, qArgs);
+  return await loadUrlInPage(page, serverUrl, user);
 };

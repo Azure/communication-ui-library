@@ -3,6 +3,7 @@
 import { IDS } from '../common/config';
 import { test } from './fixture';
 import {
+  buildUrl,
   dataUiId,
   stubMessageTimestamps,
   updatePageQueryParam,
@@ -17,32 +18,12 @@ import { Page, expect } from '@playwright/test';
 // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
 // many threads using the same connection string in a short span of time.
 test.describe.only('ErrorBar is shown correctly', async () => {
-  let originalUrls: string[] = [];
-
-  test.beforeEach(({ pages }) => {
-    for (const page of pages) {
-      originalUrls.push(page.url());
-    }
-  });
-
-  test.afterEach(async ({ pages }) => {
+  test.afterEach(async ({ pages, users, serverUrl }) => {
+    // Reset the page url that was changed during the error tests
     for (let i = 0; i < pages.length; i++) {
-      await pages[i].goto(originalUrls[i]);
+      const url = buildUrl(serverUrl, users[i]);
+      await pages[i].goto(url);
     }
-    originalUrls = [];
-  });
-
-  test('not shown when nothing is wrong', async ({ pages }) => {
-    const page = pages[0];
-    await waitForChatCompositeToLoad(page);
-    await waitForChatCompositeParticipantsToLoad(page, 2);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
-
-    await sendAMessage(page);
-    await waitForSendSuccess(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
   });
 
   test('with expired token', async ({ pages, users }) => {
@@ -58,6 +39,19 @@ test.describe.only('ErrorBar is shown correctly', async () => {
     await waitForSendFailure(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
+  });
+
+  test('not shown when nothing is wrong', async ({ pages }) => {
+    const page = pages[0];
+    await waitForChatCompositeToLoad(page);
+    await waitForChatCompositeParticipantsToLoad(page, 2);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
+
+    await sendAMessage(page);
+    await waitForSendSuccess(page);
+    await stubMessageTimestamps(page);
+    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
   });
 
   test('with wrong thread ID', async ({ pages }) => {
