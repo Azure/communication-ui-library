@@ -108,7 +108,6 @@ jobs:
           rushx test:e2e:meeting
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-          DEBUG: pw:api
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
         uses: actions/upload-artifact@v2
@@ -228,7 +227,6 @@ jobs:
           rushx test:e2e
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-          DEBUG: pw:api
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
         uses: actions/upload-artifact@v2

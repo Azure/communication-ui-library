@@ -6,12 +6,11 @@ import {
   buildUrl,
   dataUiId,
   stubMessageTimestamps,
-  updatePageQueryParam,
   waitForChatCompositeParticipantsToLoad,
   waitForChatCompositeToLoad
 } from '../common/utils';
 import { Page, expect } from '@playwright/test';
-import { PAGE_VIEWPORT } from 'browser/common/defaults';
+import { PAGE_VIEWPORT } from '../common/defaults';
 
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, tests may depend on the final-state of the chat thread after previous tests.
@@ -39,7 +38,6 @@ test.describe('ErrorBar is shown correctly', async () => {
     await page.setViewportSize(PAGE_VIEWPORT);
     await page.goto(url, { waitUntil: 'load' });
     await waitForChatCompositeToLoad(page);
-    // await page.waitForTimeout(3000);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
