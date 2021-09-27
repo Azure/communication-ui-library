@@ -16,15 +16,14 @@ import { ParticipantList, ParticipantListProps } from './ParticipantList';
 import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { formatString } from '../localization/localizationUtils';
-import { ButtonCustomStylesProps } from '../types';
-import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 
 /**
  * Styles Props for {@link ParticipantsButton}.
  *
  * @public
  */
-export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
+export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
   /** Styles of ParticipantList container */
   participantListContainerStyle?: IStyle;
 }
@@ -74,7 +73,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps, Particip
    * <ParticipantsButton styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: ParticipantsButtonStylesProps;
+  styles?: ParticipantsButtonStyles;
   /**
    * URL to invite new participants to the current call
    */

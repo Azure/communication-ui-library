@@ -9,7 +9,8 @@ import {
   Text,
   concatStyleSets,
   mergeStyles,
-  useTheme
+  useTheme,
+  IButtonStyles
 } from '@fluentui/react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
@@ -32,6 +33,13 @@ export interface ControlBarButtonStrings {
    */
   offLabel?: string;
 }
+
+/**
+ * Styles for all {@link ControlBarButton} implementations.
+ *
+ * @public
+ */
+export type ControlBarButtonStyles = IButtonStyles;
 
 /**
  * Props for {@link ControlBarButton}.
@@ -65,6 +73,11 @@ export interface ControlBarButtonProps extends IButtonProps {
    * Icon to render when the button is not checked.
    */
   onRenderOffIcon?: IRenderFunction<IButtonProps>;
+
+  /**
+   * Fluent styles, including extensions common to all {@link ControlBarButton}s.
+   */
+  styles?: ControlBarButtonStyles;
 }
 
 const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null => {
