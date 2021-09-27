@@ -17,13 +17,22 @@ const videoBaseStyle = mergeStyles({
   border: 0
 });
 
+/**
+ * @private
+ */
 export const gridStyle = mergeStyles(videoBaseStyle, {
   width: '100%',
   height: '100%'
 });
 
+/**
+ * @private
+ */
 export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'relative', height: '100%' } };
 
+/**
+ * @private
+ */
 export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
   root: {
     width: '100%',
@@ -41,6 +50,9 @@ export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStylePro
   }
 };
 
+/**
+ * @private
+ */
 export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
   root: {
     position: 'absolute',

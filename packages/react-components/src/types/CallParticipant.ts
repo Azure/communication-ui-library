@@ -4,7 +4,9 @@
 import { CommunicationParticipant } from './CommunicationParticipant';
 
 /**
- * `CallParticipant` represents a Calling participant's state
+ * Calling participant's state, as reflected in the UI components.
+ *
+ * @public
  */
 export type CallParticipant = CommunicationParticipant & {
   /** State of calling participant */

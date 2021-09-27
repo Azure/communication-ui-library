@@ -3,6 +3,9 @@
 
 import { Theme } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const isDarkThemed = (theme: Theme): boolean => {
   const themeBlackBrightness = getPerceptualBrightnessOfHexColor(theme.palette.black);
   const themeWhiteBrightness = getPerceptualBrightnessOfHexColor(theme.palette.white);
