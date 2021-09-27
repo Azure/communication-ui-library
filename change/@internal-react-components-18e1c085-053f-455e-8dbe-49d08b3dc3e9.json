@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add function for calculating smart dominant speaker tiles",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
