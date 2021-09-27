@@ -493,7 +493,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    transfer: TransferCallFeature;
+    transfer: TransferCallFeatureState;
 }
 
 // @public
@@ -1911,7 +1911,7 @@ export interface Transfer {
 }
 
 // @public
-export interface TransferCallFeature {
+export interface TransferCallFeatureState {
     receivedTransferRequests: TransferRequest[];
     requestedTransfers: Transfer[];
 }
