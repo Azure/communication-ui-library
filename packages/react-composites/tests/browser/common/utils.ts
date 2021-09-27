@@ -13,7 +13,7 @@ export const dataUiId = (v: string): string => `[data-ui-id="${v}"]`;
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
-  await page.waitForLoadState('networkidle');
+  await page.waitForLoadState('load');
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
 
   // @TODO
