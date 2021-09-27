@@ -188,8 +188,7 @@ export interface ControlBarButtonStrings {
 }
 
 // @public
-export interface ControlBarButtonStyles extends IButtonStyles {
-}
+export type ControlBarButtonStyles = IButtonStyles;
 
 // @public
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
