@@ -5,28 +5,28 @@ import { Browser, Page } from '@playwright/test';
 
 export type ChatUserType = {
   userId: string;
-  token: string;
   endpointUrl: string;
   displayName: string;
   threadId: string;
   topic: string;
+  token: string;
 };
 
 export type CallUserType = {
   userId: string;
-  token: string;
   displayName?: string;
   groupId?: string;
+  token: string;
 };
 
 export type MeetingUserType = {
   userId: string;
-  token: string;
   endpointUrl: string;
   displayName: string;
   threadId: string;
   topic: string;
   groupId?: string;
+  token: string;
 };
 
 export interface WorkerFixture<IdentityType> {
