@@ -13,6 +13,11 @@ import { InputBoxButton, InputBoxButtonProps, InputBoxComponent } from './InputB
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
+/**
+ * Fluent styles for {@link Sendbox}.
+ *
+ * @public
+ */
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
   /** Styles for the text field. */
   textField?: IStyle;
@@ -25,7 +30,9 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 }
 
 /**
- * Strings of SendBox that can be overridden
+ * Strings of {@link SendBox} that can be overridden.
+ *
+ * @public
  */
 export interface SendBoxStrings {
   /**
@@ -39,7 +46,9 @@ export interface SendBoxStrings {
 }
 
 /**
- * Props for SendBox component
+ * Props for {@link SendBox}.
+ *
+ * @public
  */
 export interface SendBoxProps {
   /**
@@ -89,8 +98,12 @@ export interface SendBoxProps {
 }
 
 /**
- * `SendBox` is a component for users to send messages and typing notifications. An optional message
- * can also be shown below the `SendBox`.
+ * Component for typing and sending messages.
+ *
+ * Supports sending typing notification when user starts entering text.
+ * Supports an optional message below the text input field.
+ *
+ * @public
  */
 export const SendBox = (props: SendBoxProps): JSX.Element => {
   const {

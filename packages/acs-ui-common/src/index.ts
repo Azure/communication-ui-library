@@ -3,7 +3,7 @@
 
 export { memoizeFnAll } from './memoizeFnAll';
 export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from './identifier';
-export { getApplicationId } from './telemetry';
+export { _getApplicationId } from './telemetry';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

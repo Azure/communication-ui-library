@@ -9,7 +9,7 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'header'],
+  plugins: ['@typescript-eslint', 'header', 'jsdoc'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -25,9 +25,9 @@ module.exports = {
         allowTypedFunctionExpressions: true
       }
     ],
+    '@typescript-eslint/no-explicit-any': 'error',
     eqeqeq: 'warn',
     'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.'],
-    '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
     'no-restricted-imports': [
       'error',
@@ -40,9 +40,37 @@ module.exports = {
           '**/lib/**/es/*'
         ]
       }
+    ],
+    'jsdoc/require-jsdoc': [
+      'error',
+      {
+        checkConstructors: false,
+        enableFixer: false,
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: true,
+          FunctionDeclaration: true
+        },
+        contexts: [
+          'ArrowFunctionExpression',
+          'FunctionDeclaration',
+          'FunctionExpression',
+          'TSDeclareFunction',
+          'TSEnumDeclaration',
+          'TSInterfaceDeclaration',
+          'TSTypeAliasDeclaration',
+          'VariableDeclaration'
+        ]
+      }
     ]
   },
   root: true,
+  settings: {
+    jsdoc: {
+      ignorePrivate: true
+    }
+  },
   overrides: [
     {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],

@@ -129,7 +129,7 @@ const mountErrorBarWithDefaults = (): ReactWrapper => {
 
 const messageBarCount = (root: ReactWrapper): number => root.find(MessageBar).length;
 
-const simulateDismissOneError = (root: ReactWrapper) => {
+const simulateDismissOneError = (root: ReactWrapper): void => {
   const messageBar = root.find(MessageBar).at(0);
   const button = messageBar.find('button').at(0);
   button.simulate('click');

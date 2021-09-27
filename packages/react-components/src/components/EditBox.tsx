@@ -20,12 +20,18 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
   return <Icon iconName={'EditBoxSubmit'} className={className} />;
 };
 
-type EditBoxProps = {
+/**
+ * @private
+ */
+export type EditBoxProps = {
   onCancel?: () => void;
   onSubmit: (text: string) => void;
   initialValue: string;
 };
 
+/**
+ * @private
+ */
 export const EditBox = (props: EditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, initialValue } = props;
   const [textValue, setTextValue] = useState<string>(initialValue);

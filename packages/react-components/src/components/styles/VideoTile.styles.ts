@@ -5,6 +5,9 @@ import { IStyle, getTheme, mergeStyles } from '@fluentui/react';
 
 const theme = getTheme();
 
+/**
+ * @private
+ */
 export const rootStyles: IStyle = {
   position: 'relative',
   height: '100%',
@@ -12,10 +15,16 @@ export const rootStyles: IStyle = {
   borderRadius: theme.effects.roundedCorner4
 };
 
+/**
+ * @private
+ */
 export const isSpeakingStyles: IStyle = {
   border: `0.25rem solid ${theme.palette.themePrimary}`
 };
 
+/**
+ * @private
+ */
 export const videoContainerStyles: IStyle = {
   position: 'absolute',
   top: '0',
@@ -29,12 +38,18 @@ export const videoContainerStyles: IStyle = {
   zIndex: 0
 };
 
+/**
+ * @private
+ */
 export const overlayContainerStyles: IStyle = {
   width: '100%',
   height: '100%',
   zIndex: 5
 };
 
+/**
+ * @private
+ */
 export const disabledVideoHint = mergeStyles({
   backgroundColor: 'inherit',
   bottom: '0.46875rem',
@@ -50,17 +65,26 @@ export const disabledVideoHint = mergeStyles({
   padding: '0.15rem'
 });
 
+/**
+ * @private
+ */
 export const videoHint = mergeStyles(disabledVideoHint, {
   backgroundColor: 'rgba(255, 255, 255, 0.8)',
   padding: '0.15rem'
 });
 
+/**
+ * @private
+ */
 export const displayNameStyle: IStyle = {
   padding: '0.1rem',
   fontSize: '0.75rem',
   fontWeight: 600
 };
 
+/**
+ * @private
+ */
 export const iconContainerStyle: IStyle = {
   padding: '0.1rem',
   height: '100%',
@@ -70,6 +94,9 @@ export const iconContainerStyle: IStyle = {
   }
 };
 
+/**
+ * @private
+ */
 export const tileInfoStackItemStyle: IStyle = {
   display: 'flex'
 };

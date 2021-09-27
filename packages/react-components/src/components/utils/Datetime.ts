@@ -3,6 +3,9 @@
 
 import { MessageThreadStrings } from '../MessageThread';
 
+/**
+ * @private
+ */
 export const formatTimeForChatMessage = (messageDate: Date): string => {
   let hours = messageDate.getHours();
   let minutes = messageDate.getMinutes().toString();
@@ -19,6 +22,9 @@ export const formatTimeForChatMessage = (messageDate: Date): string => {
   return hours.toString() + ':' + minutes + ' ' + (isAm ? 'a.m.' : 'p.m.');
 };
 
+/**
+ * @private
+ */
 export const formatDateForChatMessage = (messageDate: Date): string => {
   const year = messageDate.getFullYear().toString();
   let month = (messageDate.getMonth() + 1).toString();
@@ -51,6 +57,8 @@ export const formatDateForChatMessage = (messageDate: Date): string => {
  *
  * @param messageDate - date of message
  * @param currentDate - date used as offset to create the user friendly timestamp (e.g. to create 'Yesterday' instead of an absolute date)
+ *
+ * @private
  */
 export const formatTimestampForChatMessage = (
   messageDate: Date,
