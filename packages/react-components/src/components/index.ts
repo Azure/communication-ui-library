@@ -35,7 +35,7 @@ export { ParticipantItem } from './ParticipantItem';
 export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStylesProps } from './ParticipantItem';
 
 export { ParticipantList } from './ParticipantList';
-export type { ParticipantListProps } from './ParticipantList';
+export type { ParticipantListProps, ParticipantMenuItemsCallback } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps } from './VideoGallery';
@@ -47,7 +47,7 @@ export { ControlBar } from './ControlBar';
 export type { ControlBarProps, ControlBarLayoutType } from './ControlBar';
 
 export { ControlBarButton } from './ControlBarButton';
-export type { ControlBarButtonProps, ControlBarButtonStrings } from './ControlBarButton';
+export type { ControlBarButtonProps, ControlBarButtonStrings, ControlBarButtonStyles } from './ControlBarButton';
 
 export { EndCallButton } from './EndCallButton';
 export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
@@ -62,7 +62,7 @@ export { ParticipantsButton } from './ParticipantsButton';
 export type {
   ParticipantsButtonProps,
   ParticipantsButtonStrings,
-  ParticipantsButtonStylesProps
+  ParticipantsButtonStyles
 } from './ParticipantsButton';
 
 export { ScreenShareButton } from './ScreenShareButton';

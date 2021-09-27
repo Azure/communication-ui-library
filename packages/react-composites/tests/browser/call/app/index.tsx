@@ -5,9 +5,14 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { IdentifierProvider } from '@internal/react-components';
-import { CallAdapter, createAzureCommunicationCallAdapter, CallComposite } from '../../../../src';
-import { IDS } from '../../config';
+import { _IdentifierProvider } from '@internal/react-components';
+import {
+  CallAdapter,
+  createAzureCommunicationCallAdapter,
+  CallComposite,
+  COMPOSITE_LOCALE_FR_FR
+} from '../../../../src';
+import { IDS } from '../../common/config';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -16,6 +21,7 @@ const displayName = params.displayName;
 const token = params.token;
 const groupId = params.groupId;
 const userId = params.userId;
+const useFrLocale = Boolean(params.useFrlocale);
 // const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
@@ -41,9 +47,11 @@ function App(): JSX.Element {
 
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
-      <IdentifierProvider identifiers={IDS}>
-        {callAdapter && <CallComposite adapter={callAdapter} />}
-      </IdentifierProvider>
+      <_IdentifierProvider identifiers={IDS}>
+        {callAdapter && (
+          <CallComposite adapter={callAdapter} locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined} />
+        )}
+      </_IdentifierProvider>
     </div>
   );
 }

@@ -5,10 +5,26 @@ import { IStackTokens } from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react';
 
 export const configurationStackTokens: IStackTokens = {
-  childrenGap: '3rem'
+  childrenGap: '2rem'
 };
 
 export const configurationContainer = mergeStyles({
-  // we need offset for the token's childrenGap here
-  height: 'calc(100% - 3rem)'
+  height: '100%',
+  width: '100% ',
+  padding: '1rem', //half childrenGap from Stack
+  minWidth: '14.5rem', // max of min-width from stack items + padding * 2 = 12.5 + 1 * 2
+  minHeight: 'auto'
+});
+
+export const selectionContainerStyle = mergeStyles({
+  minWidth: '12.5rem',
+  padding: '0.5rem'
+});
+
+export const titleContainerStyle = mergeStyles({
+  fontSize: '1.25rem',
+  lineHeight: '1.75rem',
+  fontWeight: 600,
+  marginBottom: '1.563rem',
+  width: '12.5rem'
 });

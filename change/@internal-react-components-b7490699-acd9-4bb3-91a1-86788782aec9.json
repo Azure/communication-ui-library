@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Allow custom menu items in ParticipantList",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

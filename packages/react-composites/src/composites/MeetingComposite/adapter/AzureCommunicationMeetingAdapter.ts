@@ -4,7 +4,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 
-import { AudioDeviceInfo, VideoDeviceInfo, PermissionConstraints } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  VideoDeviceInfo,
+  PermissionConstraints,
+  GroupCallLocator,
+  TeamsMeetingLinkLocator,
+  Call
+} from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
   ParticipantJoinedListener,
@@ -14,12 +21,64 @@ import {
   IsScreenSharingOnChangedListener,
   DisplayNameChangedListener,
   IsSpeakingChangedListener,
-  CallAdapter
+  CallAdapter,
+  CallAdapterState,
+  createAzureCommunicationCallAdapter,
+  CallEndedListener
 } from '../../CallComposite';
-import { MessageReceivedListener, MessageReadListener, ChatAdapter } from '../../ChatComposite';
+import { MessageReceivedListener, MessageReadListener, ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { MeetingAdapter, MeetingEvent } from './MeetingAdapter';
-import { MeetingAdapterState } from '../state/MeetingAdapterState';
-import { MeetingCompositePage } from '../state/MeetingCompositePage';
+import {
+  meetingAdapterStateFromBackingStates,
+  MeetingAdapterState,
+  mergeCallAdapterStateIntoMeetingAdapterState,
+  mergeChatAdapterStateIntoMeetingAdapterState
+} from '../state/MeetingAdapterState';
+import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
+import { MeetingCompositePage, meetingPageToCallPage } from '../state/MeetingCompositePage';
+import { EventEmitter } from 'events';
+import { CommunicationTokenCredential, CommunicationUserKind } from '@azure/communication-common';
+
+type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
+
+/** Context of meeting, which is a centralized context for all state updates */
+class MeetingContext {
+  private emitter = new EventEmitter();
+  private state: MeetingAdapterState;
+
+  constructor(clientState: MeetingAdapterState) {
+    this.state = clientState;
+  }
+
+  public onStateChange(handler: MeetingAdapterStateChangedHandler): void {
+    this.emitter.on('stateChanged', handler);
+  }
+
+  public offStateChange(handler: MeetingAdapterStateChangedHandler): void {
+    this.emitter.off('stateChanged', handler);
+  }
+
+  public setState(state: MeetingAdapterState): void {
+    this.state = state;
+    this.emitter.emit('stateChanged', this.state);
+  }
+
+  public getState(): MeetingAdapterState {
+    return this.state;
+  }
+
+  public updateClientState(clientState: MeetingAdapterState): void {
+    this.setState(clientState);
+  }
+
+  public updateClientStateWithChatState(chatAdapterState: ChatAdapterState): void {
+    this.updateClientState(mergeChatAdapterStateIntoMeetingAdapterState(this.state, chatAdapterState));
+  }
+
+  public updateClientStateWithCallState(callAdapterState: CallAdapterState): void {
+    this.updateClientState(mergeCallAdapterStateIntoMeetingAdapterState(this.state, callAdapterState));
+  }
+}
 
 /**
  * Meeting adapter backed by Azure Communication Services.
@@ -28,12 +87,27 @@ import { MeetingCompositePage } from '../state/MeetingCompositePage';
 export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter;
+  private context: MeetingContext;
+  private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
+  private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
   constructor(callAdapter: CallAdapter, chatAdapter: ChatAdapter) {
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
     this.chatAdapter = chatAdapter;
-    this.subscribeMeetingEvents();
+    this.context = new MeetingContext(meetingAdapterStateFromBackingStates(callAdapter, chatAdapter));
+
+    const onChatStateChange = (newChatAdapterState: ChatAdapterState): void => {
+      this.context.updateClientStateWithChatState(newChatAdapterState);
+    };
+    this.chatAdapter.onStateChange(onChatStateChange);
+    this.onChatStateChange = onChatStateChange;
+
+    const onCallStateChange = (newCallAdapterState: CallAdapterState): void => {
+      this.context.updateClientStateWithCallState(newCallAdapterState);
+    };
+    this.callAdapter.onStateChange(onCallStateChange);
+    this.onCallStateChange = onCallStateChange;
   }
 
   private bindPublicMethods(): void {
@@ -67,13 +141,15 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.sendReadReceipt.bind(this);
     this.sendTypingIndicator.bind(this);
     this.loadPreviousChatMessages.bind(this);
+    this.updateMessage.bind(this);
+    this.deleteMessage.bind(this);
     this.on.bind(this);
     this.off.bind(this);
   }
 
   /** Join existing Meeting. */
-  public joinMeeting(microphoneOn?: boolean): void {
-    this.callAdapter.joinCall(microphoneOn);
+  public joinMeeting(microphoneOn?: boolean): Call | undefined {
+    return this.callAdapter.joinCall(microphoneOn);
   }
   /** Leave current Meeting. */
   public async leaveMeeting(): Promise<void> {
@@ -81,36 +157,38 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     await this.callAdapter.leaveCall();
   }
   /** Start a new Meeting. */
-  public startMeeting(participants: string[]): void {
-    this.callAdapter.startCall(participants);
+  public startMeeting(participants: string[]): Call | undefined {
+    return this.callAdapter.startCall(participants);
   }
   /**
    * Subscribe to state change events.
    * @param handler - handler to be called when the state changes. This is passed the new state.
    */
   public onStateChange(handler: (state: MeetingAdapterState) => void): void {
-    throw new Error('Method not implemented.');
+    this.context.onStateChange(handler);
   }
   /**
    * Unsubscribe to state change events.
    * @param handler - handler to be no longer called when state changes.
    */
   public offStateChange(handler: (state: MeetingAdapterState) => void): void {
-    throw new Error('Method not implemented.');
+    this.context.offStateChange(handler);
   }
   /** Get current Meeting state. */
   public getState(): MeetingAdapterState {
-    throw new Error('Method not implemented.');
+    return this.context.getState();
   }
   /** Dispose of the current Meeting Adapter. */
   public dispose(): void {
-    this.unsubscribeMeetingEvents();
-    this.callAdapter.dispose();
+    this.chatAdapter.offStateChange(this.onChatStateChange);
+    this.callAdapter.offStateChange(this.onCallStateChange);
+
     this.chatAdapter.dispose();
+    this.callAdapter.dispose();
   }
   /** Set the page of the Meeting Composite. */
   public setPage(page: MeetingCompositePage): void {
-    this.callAdapter.setPage(page === 'meeting' ? 'call' : page);
+    this.callAdapter.setPage(meetingPageToCallPage(page));
   }
   /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
@@ -165,43 +243,51 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Trigger the user to start screen share. */
   public async startScreenShare(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.startScreenShare();
   }
   /** Stop the current active screen share. */
   public async stopScreenShare(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.stopScreenShare();
   }
   /** Create a stream view for a remote participants video feed. */
   public async createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.createStreamView(remoteUserId, options);
   }
   /** Dispose of a created stream view of a remote participants video feed. */
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.callAdapter.disposeStreamView(remoteUserId, options);
   }
   /** Fetch initial Meeting data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.fetchInitialData();
   }
   /** Send a chat message. */
   public async sendMessage(content: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.sendMessage(content);
   }
   /** Send a chat read receipt. */
   public async sendReadReceipt(chatMessageId: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.sendReadReceipt(chatMessageId);
   }
   /** Send an isTyping indicator. */
   public async sendTypingIndicator(): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.chatAdapter.sendTypingIndicator();
   }
   /** Load previous Meeting chat messages. */
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return await this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
+  }
+  /** Update an existing message. */
+  public async updateMessage(messageId: string, content: string): Promise<void> {
+    return await this.chatAdapter.updateMessage(messageId, content);
+  }
+  /** Delete an existing message. */
+  public async deleteMessage(messageId: string): Promise<void> {
+    return await this.chatAdapter.deleteMessage(messageId);
   }
   on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  on(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+  on(event: 'meetingEnded', listener: CallEndedListener): void;
   on(event: 'error', listener: (e: Error) => void): void;
   on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
@@ -214,12 +300,50 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: MeetingEvent, listener: any): void {
-    throw new Error('Method not implemented.');
+    switch (event) {
+      case 'participantsJoined':
+        this.callAdapter.on(event, listener);
+        break;
+      case 'participantsLeft':
+        this.callAdapter.on('participantsLeft', listener);
+        break;
+      case 'meetingEnded':
+        this.callAdapter.on('callEnded', listener);
+        break;
+      case 'isMutedChanged':
+        this.callAdapter.on('isMutedChanged', listener);
+        break;
+      case 'callIdChanged':
+        this.callAdapter.on('callIdChanged', listener);
+        break;
+      case 'isLocalScreenSharingActiveChanged':
+        this.callAdapter.on('isLocalScreenSharingActiveChanged', listener);
+        break;
+      case 'displayNameChanged':
+        this.callAdapter.on('displayNameChanged', listener);
+        break;
+      case 'isSpeakingChanged':
+        this.callAdapter.on('isSpeakingChanged', listener);
+        break;
+      case 'messageReceived':
+        this.chatAdapter.on('messageReceived', listener);
+        break;
+      case 'messageSent':
+        this.chatAdapter.on('messageSent', listener);
+        break;
+      case 'messageRead':
+        this.chatAdapter.on('messageRead', listener);
+        break;
+      case 'error':
+        throw 'on(Error) not implemented yet.';
+      default:
+        throw `Unknown MeetingEvent: ${event}`;
+    }
   }
 
   off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  off(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+  off(event: 'meetingEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
   off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
@@ -232,14 +356,90 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: MeetingEvent, listener: any): void {
-    throw new Error('Method not implemented.');
-  }
-
-  private subscribeMeetingEvents(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  private unsubscribeMeetingEvents(): void {
-    throw new Error('Method not implemented.');
+    switch (event) {
+      case 'participantsJoined':
+        this.callAdapter.off(event, listener);
+        break;
+      case 'participantsLeft':
+        this.callAdapter.off('participantsLeft', listener);
+        break;
+      case 'meetingEnded':
+        this.callAdapter.off('callEnded', listener);
+        break;
+      case 'isMutedChanged':
+        this.callAdapter.off('isMutedChanged', listener);
+        break;
+      case 'callIdChanged':
+        this.callAdapter.off('callIdChanged', listener);
+        break;
+      case 'isLocalScreenSharingActiveChanged':
+        this.callAdapter.off('isLocalScreenSharingActiveChanged', listener);
+        break;
+      case 'displayNameChanged':
+        this.callAdapter.off('displayNameChanged', listener);
+        break;
+      case 'isSpeakingChanged':
+        this.callAdapter.off('isSpeakingChanged', listener);
+        break;
+      case 'messageReceived':
+        this.chatAdapter.off('messageReceived', listener);
+        break;
+      case 'messageSent':
+        this.chatAdapter.off('messageSent', listener);
+        break;
+      case 'messageRead':
+        this.chatAdapter.off('messageRead', listener);
+        break;
+      case 'error':
+        throw 'on(Error) not implemented yet.';
+      default:
+        throw `Unknown MeetingEvent: ${event}`;
+    }
   }
 }
+
+/**
+ * Arguments for {@link createAzureCommunicationMeetingAdapter}
+ *
+ * @alpha
+ */
+export type AzureCommunicationMeetingAdapterArgs = {
+  endpointUrl: string;
+  userId: CommunicationUserKind;
+  displayName: string;
+  credential: CommunicationTokenCredential;
+  chatThreadId: string;
+  callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+};
+
+/**
+ * Create a meeting adapter backed by Azure Communication services
+ * to plug into the Meeting Composite.
+ *
+ * @alpha
+ */
+export const createAzureCommunicationMeetingAdapter = async ({
+  userId,
+  displayName,
+  credential,
+  endpointUrl,
+  chatThreadId,
+  callLocator
+}: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
+  const callAdapter = await createAzureCommunicationCallAdapter({
+    userId,
+    displayName,
+    credential,
+    locator: callLocator
+  });
+
+  const chatAdapter = await createAzureCommunicationChatAdapter({
+    endpointUrl,
+    userId,
+    displayName,
+    credential,
+    threadId: chatThreadId
+  });
+
+  return new AzureCommunicationMeetingAdapter(callAdapter, chatAdapter);
+};

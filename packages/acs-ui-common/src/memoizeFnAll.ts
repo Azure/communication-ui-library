@@ -1,7 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * A function type where the first argument is a key used to memoize results.
+ *
+ * @public
+ */
 export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
+
+/**
+ * A function type that is called with the result of a memoized functions return value.
+ *
+ * @public
+ */
 export type CallbackType<KeyT, ArgsT extends unknown[], FnRetT> = (
   memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>
 ) => FnRetT[];
@@ -46,6 +57,8 @@ const argsCmp = (args1: unknown[], args2: unknown[], objCmp: (obj1: unknown, obj
  * delete items[0];
  * const result2 = memoizeHeavyFnAll(generateValueArray); // Cache: {1: 3, 3: 5 *hit}, nextCache: {3: 5}, heavyFn call times: 0
  * ```
+ *
+ * @public
  */
 export const memoizeFnAll = <
   KeyT,

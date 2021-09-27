@@ -25,6 +25,11 @@ import {
   participantItemContainerStyle
 } from './styles/ParticipantItem.styles';
 
+/**
+ * Fluent styles for {@link ParticipantItem}.
+ *
+ * @public
+ */
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
   /** Styles for the avatar. */
   avatar?: IStyle;
@@ -37,17 +42,23 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 }
 
 /**
- * Strings of ParticipantItem that can be overridden
+ * Strings of {@link ParticipantItem} that can be overridden.
+ *
+ * @public
  */
 export interface ParticipantItemStrings {
   /** String shown when participant is me */
   isMeText: string;
   /** String shown when hovering over menu button */
   menuTitle: string;
+  /** Label for the remove button in participant menu  */
+  removeButtonLabel: string;
 }
 
 /**
- * Props for ParticipantItem component
+ * Props for {@link ParticipantItem}.
+ *
+ * @public
  */
 export interface ParticipantItemProps {
   /** Unique User ID of the participant. This `userId` is available in the `onRenderAvatar` callback function */
@@ -79,8 +90,11 @@ export interface ParticipantItemProps {
 }
 
 /**
- * `ParticipantItem` represents a participant in Calling or Chat. `ParticipantItem` displays a participant's avatar,
- * displayName and status as well as optional icons and context menu.
+ * Component to render a calling or chat participant.
+ *
+ * Displays the participant's avatar, displayName and status as well as optional icons and context menu.
+ *
+ * @public
  */
 export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const { userId, displayName, onRenderAvatar, menuItems, onRenderIcon, presence, styles, me } = props;
@@ -136,7 +150,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     [itemHovered, menuTitle]
   );
 
-  const onDismissMenu = () => {
+  const onDismissMenu = (): void => {
     setItemHovered(false);
     setMenuHidden(true);
   };

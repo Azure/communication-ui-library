@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update edit message snapshot",
-  "packageName": "@internal/storybook",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -124,6 +124,11 @@ const didUserSendTheLatestMessage = (
   }
 };
 
+/**
+ * Fluent styles for {@link MessageThread}.
+ *
+ * @public
+ */
 export interface MessageThreadStylesProps extends BaseCustomStylesProps {
   /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
@@ -140,7 +145,9 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
 }
 
 /**
- * Strings of MessageThread that can be overridden
+ * Strings of {@link MessageThread} that can be overridden.
+ *
+ * @public
  */
 export interface MessageThreadStrings {
   /** String for Sunday */
@@ -163,8 +170,19 @@ export interface MessageThreadStrings {
   participantJoined: string;
   /** String for participants left */
   participantLeft: string;
+  /** Tag shown on a message that has been edited */
+  editedTag: string;
+  /** String for editing message in floating menu */
+  editMessage: string;
+  /** String for removing message in floating menu */
+  removeMessage: string;
 }
 
+/**
+ * Arguments for {@link MessageThreadProps.onRenderJumpToNewMessageButton}.
+ *
+ * @public
+ */
 export interface JumpToNewMessageButtonProps {
   onClick: () => void;
 }
@@ -187,6 +205,11 @@ const generateParticipantsStr = (participants: CommunicationParticipant[]): stri
     )
     .join(', ');
 
+/**
+ * A component to render a single message.
+ *
+ * @public
+ */
 export type MessageRenderer = (props: MessageProps) => JSX.Element;
 
 const ParticipantSystemMessageComponent = ({
@@ -352,7 +375,9 @@ const getLastChatMessageIdWithStatus = (
 };
 
 /**
- * Props for MessageThread component
+ * Props for {@link MessageThread}.
+ *
+ * @public
  */
 export type MessageThreadProps = {
   /**
@@ -428,13 +453,13 @@ export type MessageThreadProps = {
   /**
    * Optional callback to override render of a message.
    *
-   * @param messageProps - props of type MessageProps
-   * @param defaultOnRender - default render of type DefaultMessageRendererType
+   * @param messageProps - props of type {@link communication-react#MessageProps}
+   * @param defaultOnRender - default render of type {@link communication-react#MessageRenderer}
    *
    * @remarks
-   * `defaultOnRender` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
+   * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
-  onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
+  onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
 
   /**
    * Optional callback to edit a message.
@@ -465,7 +490,11 @@ export type MessageThreadProps = {
 };
 
 /**
- * Props for MessageThread component
+ * Props to render a single message.
+ *
+ * See {@link MessageRenderer}.
+ *
+ * @public
  */
 export type MessageProps = {
   /**
@@ -516,6 +545,8 @@ export type MessageProps = {
  * Users can also customize `MessageThread` by passing in their own Avatar, `MessageStatusIndicator` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
  *
  * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+ *
+ * @public
  */
 export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const {

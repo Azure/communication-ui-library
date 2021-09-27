@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix default Avatar text color",
-  "packageName": "@internal/react-composites",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

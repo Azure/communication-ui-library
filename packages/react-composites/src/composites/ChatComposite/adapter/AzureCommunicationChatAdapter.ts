@@ -8,7 +8,7 @@ import {
   StatefulChatClient
 } from '@internal/chat-stateful-client';
 import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
-import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
+import { ChatMessage, ChatMessageType, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
 import type {
   ChatMessageReceivedEvent,
@@ -31,7 +31,7 @@ import {
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 
-// Context of Chat, which is a centralized context for all state updates
+/** Context of Chat, which is a centralized context for all state updates */
 class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatAdapterState;
@@ -297,12 +297,19 @@ const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage
     id: event.id,
     version: event.version,
     content: { message: event.message },
-    type: event.type,
+    type: convertEventType(event.type),
     sender: event.sender,
     senderDisplayName: event.senderDisplayName,
     sequenceId: '',
     createdOn: new Date(event.createdOn)
   };
+};
+
+// only text/html message type will be received from event
+const convertEventType = (type: string): ChatMessageType => {
+  const lowerCaseType = type.toLowerCase();
+  if (lowerCaseType === 'richtext/html' || lowerCaseType === 'html') return 'html';
+  else return 'text';
 };
 
 export type AzureCommunicationChatAdapterArgs = {

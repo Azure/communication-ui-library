@@ -146,12 +146,23 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
+// @alpha
+export type AzureCommunicationMeetingAdapterArgs = {
+    endpointUrl: string;
+    userId: CommunicationUserKind;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    chatThreadId: string;
+    callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
+};
+
 // @public (undocumented)
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     rtl?: boolean;
 }
 
@@ -159,9 +170,6 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 export interface BaseCustomStylesProps {
     root?: IStyle;
 }
-
-// @public
-export type ButtonCustomStylesProps = IButtonStyles;
 
 // @public
 export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
@@ -204,6 +212,7 @@ export type CallAdapterClientState = {
     call?: CallState;
     devices: DeviceManagerState;
     endedCall?: CallState;
+    isTeamsCall: boolean;
     latestErrors: AdapterErrors;
 };
 
@@ -320,14 +329,15 @@ export interface CallClientState {
 // @public (undocumented)
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
-// @public
-export type CallCompositeHiddenElements = CallControlHiddenElements & {
-    errorBar?: boolean;
-    callControls?: boolean;
-};
-
 // @public (undocumented)
 export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCameraOff' | 'ControlButtonCameraOn' | 'ControlButtonEndCall' | 'ControlButtonMicOff' | 'ControlButtonMicOn' | 'ControlButtonOptions' | 'ControlButtonParticipants' | 'ControlButtonScreenShareStart' | 'ControlButtonScreenShareStop' | 'OptionsCamera' | 'OptionsMic' | 'OptionsSpeaker' | 'ParticipantItemScreenShareStart' | 'ParticipantItemMicOff' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'VideoTileMicOff'>>;
+
+// @public
+export type CallCompositeOptions = {
+    mobileView?: boolean;
+    errorBar?: boolean;
+    callControls?: boolean | CallControlOptions;
+};
 
 // @public (undocumented)
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
@@ -337,8 +347,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     adapter: CallAdapter;
     // (undocumented)
     callInvitationURL?: string;
-    hiddenElements?: CallCompositeHiddenElements;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    options?: CallCompositeOptions;
 }
 
 // @public
@@ -357,7 +367,8 @@ export interface CallCompositeStrings {
 }
 
 // @public (undocumented)
-export type CallControlHiddenElements = {
+export type CallControlOptions = {
+    compressedMode?: boolean;
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
@@ -482,8 +493,12 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
+<<<<<<< HEAD
     // Warning: (ae-incompatible-release-tags) The symbol "transfer" is marked as @public, but its signature references "TransferCallFeature" which is marked as @beta
     transfer: TransferCallFeature;
+=======
+    transfer: TransferCallFeatureState;
+>>>>>>> origin/main
 }
 
 // @public
@@ -612,22 +627,22 @@ export type ChatCompositeClientState = {
     latestErrors: AdapterErrors;
 };
 
+// @public (undocumented)
+export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
+
 // @public
-export type ChatCompositeHiddenElements = {
+export type ChatCompositeOptions = {
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;
 };
 
 // @public (undocumented)
-export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered' | 'MessageFailed' | 'MessageSeen' | 'MessageSending' | 'MessageEdit' | 'MessageRemove' | 'ParticipantItemOptions' | 'ParticipantItemOptionsHovered' | 'SendBoxSend' | 'SendBoxSendHovered' | 'EditBoxCancel' | 'EditBoxSubmit'>>;
-
-// @public (undocumented)
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
-    hiddenElements?: ChatCompositeHiddenElements;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
+    options?: ChatCompositeOptions;
 }
 
 // @public
@@ -670,14 +685,16 @@ export type ChatHandlers = {
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
-// @public (undocumented)
+// @public
 export type ChatMessage = Message<'chat'>;
 
-// @public (undocumented)
+// @public
 export type ChatMessagePayload = {
     messageId?: string;
     content?: string;
     createdOn?: Date;
+    editedOn?: Date;
+    deletedOn?: Date;
     senderId?: string;
     senderDisplayName?: string;
     status?: MessageStatus;
@@ -795,7 +812,7 @@ export const COMPONENT_LOCALE_ZH_CN: ComponentLocale;
 // @public
 export const COMPONENT_LOCALE_ZH_TW: ComponentLocale;
 
-// @public (undocumented)
+// @public
 export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
 
 // @public
@@ -902,6 +919,7 @@ export interface ControlBarButtonProps extends IButtonProps {
     onRenderOnIcon?: IRenderFunction<IButtonProps>;
     showLabel?: boolean;
     strings?: ControlBarButtonStrings;
+    styles?: ControlBarButtonStyles;
 }
 
 // @public
@@ -911,7 +929,10 @@ export interface ControlBarButtonStrings {
     onLabel?: string;
 }
 
-// @public (undocumented)
+// @public
+export type ControlBarButtonStyles = IButtonStyles;
+
+// @public
 export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
 // @public
@@ -933,7 +954,14 @@ export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displa
 // @public (undocumented)
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
+<<<<<<< HEAD
 // @public
+=======
+// @alpha
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+
+// @public (undocumented)
+>>>>>>> origin/main
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public (undocumented)
@@ -957,10 +985,10 @@ export type CustomAvatarOptions = {
     text?: string;
 };
 
-// @public (undocumented)
+// @public
 export type CustomMessage = Message<'custom'>;
 
-// @public (undocumented)
+// @public
 export type CustomMessagePayload = {
     createdOn: Date;
     messageId: string;
@@ -1118,7 +1146,7 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
@@ -1133,10 +1161,10 @@ export type GetChatSelector<Component extends (props: any) => JSX.Element | unde
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
 
-// @public (undocumented)
+// @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
@@ -1145,22 +1173,22 @@ export interface GridLayoutProps {
     styles?: BaseCustomStylesProps;
 }
 
-// @public (undocumented)
+// @public
 export type GridLayoutType = 'standard';
 
-// @public
-export const IdentifierProvider: (props: IdentifierProviderProps) => JSX.Element;
+// @internal
+export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
-// @public
-export interface IdentifierProviderProps {
+// @internal
+export interface _IdentifierProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
     // (undocumented)
-    identifiers?: Identifiers;
+    identifiers?: _Identifiers;
 }
 
-// @public
-export interface Identifiers {
+// @internal
+export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
@@ -1188,7 +1216,7 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @public (undocumented)
+// @public
 export type InputBoxButtonProps = {
     onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
     onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
@@ -1213,7 +1241,7 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @public (undocumented)
+// @public
 export interface JumpToNewMessageButtonProps {
     // (undocumented)
     onClick: () => void;
@@ -1245,22 +1273,22 @@ export interface MediaDiagnosticsState {
 }
 
 // @alpha
-export interface MeetingAdapter extends AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha
-export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices'> {
+export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
     meeting: MeetingState | undefined;
-    userId: CommunicationIdentifier;
+    userId: CommunicationUserIdentifier;
 }
 
 // @alpha
-export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages'> {
-    joinMeeting(microphoneOn?: boolean): void;
+export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+    joinMeeting(microphoneOn?: boolean): Call | undefined;
     leaveMeeting(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    startMeeting(participants: string[]): void;
+    startMeeting(participants: string[]): Call | undefined;
 }
 
 // @alpha
@@ -1274,7 +1302,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    off(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    off(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
     off(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
@@ -1298,7 +1326,7 @@ export interface MeetingAdapterSubscriptions {
     // (undocumented)
     on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
     // (undocumented)
-    on(event: 'meetingEnded', listener: ParticipantLeftListener): void;
+    on(event: 'meetingEnded', listener: CallEndedListener): void;
     // (undocumented)
     on(event: 'error', listener: (e: Error) => void): void;
     // (undocumented)
@@ -1320,22 +1348,27 @@ export interface MeetingAdapterSubscriptions {
 }
 
 // @alpha
-export interface MeetingAdapterUiState {
+export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
     page: MeetingCompositePage;
 }
 
 // @alpha
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
+// @public
+export type MeetingCompositeOptions = {
+    mobileView?: boolean;
+};
+
 // @alpha
 export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @alpha
 export type MeetingCompositeProps = {
-    callAdapter: CallAdapter;
-    chatAdapter: ChatAdapter;
+    meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
+    options?: MeetingCompositeOptions;
 };
 
 // @alpha
@@ -1346,12 +1379,12 @@ export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingE
 
 // @alpha
 export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
-    id: CommunicationIdentifier;
+    id: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     meetingEndReason?: MeetingEndReason;
 }
 
 // @alpha
-export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
+export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
     meetingEndReason?: MeetingEndReason;
     participants: {
@@ -1362,16 +1395,16 @@ export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | '
     };
 }
 
-// @public (undocumented)
+// @public
 export type Message<T extends MessageTypes> = {
     type: T;
     payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload<'participantAdded' | 'participantRemoved'> | SystemMessagePayload<'topicUpdated'> | SystemMessagePayload<'content'> : CustomMessagePayload;
 };
 
-// @public (undocumented)
+// @public
 export type MessageAttachedStatus = 'bottom' | 'top';
 
-// @public (undocumented)
+// @public
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
 // @public
@@ -1396,13 +1429,13 @@ export type MessageReceivedListener = (event: {
     message: ChatMessage_2;
 }) => void;
 
-// @public (undocumented)
+// @public
 export type MessageRenderer = (props: MessageProps) => JSX.Element;
 
 // @public (undocumented)
 export type MessageSentListener = MessageReceivedListener;
 
-// @public (undocumented)
+// @public
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
@@ -1440,7 +1473,7 @@ export type MessageThreadProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
-    onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
+    onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     editDisabled?: boolean;
@@ -1462,10 +1495,13 @@ messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -1474,7 +1510,7 @@ export interface MessageThreadStrings {
     yesterday: string;
 }
 
-// @public (undocumented)
+// @public
 export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
@@ -1484,7 +1520,7 @@ export interface MessageThreadStylesProps extends BaseCustomStylesProps {
     systemMessageContainer?: ComponentSlotStyle;
 }
 
-// @public (undocumented)
+// @public
 export type MessageTypes = 'chat' | 'system' | 'custom';
 
 // @public
@@ -1596,9 +1632,10 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    removeButtonLabel: string;
 }
 
-// @public (undocumented)
+// @public
 export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
     avatar?: IStyle;
     iconContainer?: IStyle;
@@ -1627,6 +1664,7 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
 // @public
@@ -1639,6 +1677,9 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
     participants: CallParticipant[];
     myUserId: string;
 }>;
+
+// @public
+export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
 // @public (undocumented)
 export type ParticipantsAddedListener = (event: {
@@ -1655,7 +1696,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps, Particip
     onMuteAll?: () => void;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     strings?: Partial<ParticipantsButtonStrings>;
-    styles?: ParticipantsButtonStylesProps;
+    styles?: ParticipantsButtonStyles;
 }
 
 // @public
@@ -1680,7 +1721,7 @@ export interface ParticipantsButtonStrings {
 }
 
 // @public
-export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
+export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
     participantListContainerStyle?: IStyle;
 }
 
@@ -1769,9 +1810,10 @@ userId: string;
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textTooLong: string;
 }
 
-// @public (undocumented)
+// @public
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
     sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
@@ -1837,13 +1879,13 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public (undocumented)
+// @public
 export type SystemMessage = Message<'system'>;
 
-// @public (undocumented)
+// @public
 export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
 
-// @public (undocumented)
+// @public
 export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
     type: T;
     messageId: string;
@@ -1854,11 +1896,8 @@ export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMes
     iconName: string;
 };
 
-// @public (undocumented)
-export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
-
 // @public
-export const ThemeContext: React_2.Context<Theme>;
+export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
 
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
@@ -1881,8 +1920,13 @@ export interface Transfer {
     targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
 }
 
+<<<<<<< HEAD
 // @beta
 export interface TransferCallFeature {
+=======
+// @public
+export interface TransferCallFeatureState {
+>>>>>>> origin/main
     receivedTransferRequests: TransferRequest[];
     requestedTransfers: Transfer[];
 }
@@ -1922,7 +1966,7 @@ export interface TypingIndicatorStrings {
     singleUser: string;
 }
 
-// @public (undocumented)
+// @public
 export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
@@ -2049,7 +2093,7 @@ export interface VideoStreamRendererViewState {
     target: HTMLElement;
 }
 
-// @public (undocumented)
+// @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
@@ -2067,7 +2111,7 @@ export interface VideoTileProps {
     userId?: string;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoTileStylesProps extends BaseCustomStylesProps {
     displayNameContainer?: IStyle;
     overlayContainer?: IStyle;

@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 
 /**
- * `VideoStreamOptions` represents the options of a video stream
+ * Options to control how video streams are rendered.
+ *
+ * @public
  */
 export declare interface VideoStreamOptions {
   /** Whether the video stream is mirrored or not */
@@ -12,7 +14,9 @@ export declare interface VideoStreamOptions {
 }
 
 /**
- * `VideoGalleryParticipant` represents the state of a video participant
+ * The state of a participant in the {@link VideoGallery}.
+ *
+ * @public
  */
 export type VideoGalleryParticipant = {
   /** User ID of participant */
@@ -28,7 +32,9 @@ export type VideoGalleryParticipant = {
 };
 
 /**
- * `VideoGalleryStream` represents a video stream of a participant in a Video Gallery
+ * Video stream of a participant in {@link VideoGallery}.
+ *
+ * @public
  */
 export interface VideoGalleryStream {
   /** ID of the video stream */
@@ -44,12 +50,16 @@ export interface VideoGalleryStream {
 // set the required attribs in selector. (Further simplifying our component logic) For example
 // isLocalVideoReady can be calculated inside selector.
 /**
- * State of local video participant
+ * The state of the local participant in the {@link VideoGallery}.
+ *
+ * @public
  */
 export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
 /**
- * State of remote video participant
+ * The state of a remote participant in the {@link VideoGallery}.
+ *
+ * @public
  */
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /** Whether participant is speaking or not */

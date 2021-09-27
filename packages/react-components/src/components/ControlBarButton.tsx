@@ -1,12 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { DefaultButton, IButtonProps, IRenderFunction, Label, concatStyleSets, mergeStyles } from '@fluentui/react';
+import React, { useCallback } from 'react';
+import {
+  DefaultButton,
+  IButtonProps,
+  IRenderFunction,
+  Text,
+  concatStyleSets,
+  mergeStyles,
+  useTheme,
+  IButtonStyles
+} from '@fluentui/react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
- * Strings of ControlBarButton that can be overridden
+ * Strings of {@link ControlBarButton} that can be overridden.
+ *
+ * @public
  */
 export interface ControlBarButtonStrings {
   /**
@@ -24,7 +35,16 @@ export interface ControlBarButtonStrings {
 }
 
 /**
- * Props for ControlBarButton component
+ * Styles for all {@link ControlBarButton} implementations.
+ *
+ * @public
+ */
+export type ControlBarButtonStyles = IButtonStyles;
+
+/**
+ * Props for {@link ControlBarButton}.
+ *
+ * @public
  */
 export interface ControlBarButtonProps extends IButtonProps {
   /**
@@ -53,17 +73,12 @@ export interface ControlBarButtonProps extends IButtonProps {
    * Icon to render when the button is not checked.
    */
   onRenderOffIcon?: IRenderFunction<IButtonProps>;
-}
 
-const DefaultRenderText = (props?: ControlBarButtonProps): JSX.Element => {
-  const labelText =
-    props?.text ?? props?.strings?.label ?? (props?.checked ? props?.strings?.onLabel : props?.strings?.offLabel);
-  return (
-    <Label key={props?.labelKey} className={mergeStyles(controlButtonLabelStyles, props?.styles?.label)}>
-      {labelText}
-    </Label>
-  );
-};
+  /**
+   * Fluent styles, including extensions common to all {@link ControlBarButton}s.
+   */
+  styles?: ControlBarButtonStyles;
+}
 
 const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null => {
   return props?.checked
@@ -76,10 +91,30 @@ const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null =>
 };
 
 /**
- * Default button styled for the Control Bar. This can be used to create custom buttons that are styled the same as other buttons provided by the UI Library.
+ * Default button styled for the {@link ControlBar}.
+ *
+ * Use this component create custom buttons that are styled the same as other buttons provided by the UI Library.
+ *
+ * @public
  */
 export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, props.styles ?? {});
+  const theme = useTheme();
+
+  const labelText =
+    props?.text ?? props?.strings?.label ?? (props?.checked ? props?.strings?.onLabel : props?.strings?.offLabel);
+
+  const DefaultRenderText = useCallback(() => {
+    return (
+      <Text
+        key={props?.labelKey}
+        className={mergeStyles(controlButtonLabelStyles, theme.palette.neutralPrimary, props?.styles?.label)}
+      >
+        {labelText}
+      </Text>
+    );
+  }, [labelText, props?.labelKey, props?.styles?.label, theme]);
+
   return (
     <DefaultButton
       {...props}

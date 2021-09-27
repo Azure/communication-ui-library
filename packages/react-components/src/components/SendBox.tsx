@@ -12,8 +12,12 @@ import { InputBoxButton, InputBoxButtonProps, InputBoxComponent } from './InputB
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-const TEXT_EXCEEDS_LIMIT = `Your message is over the limit of ${MAXIMUM_LENGTH_OF_MESSAGE} characters`;
 
+/**
+ * Fluent styles for {@link Sendbox}.
+ *
+ * @public
+ */
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
   /** Styles for the text field. */
   textField?: IStyle;
@@ -26,17 +30,25 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
 }
 
 /**
- * Strings of SendBox that can be overridden
+ * Strings of {@link SendBox} that can be overridden.
+ *
+ * @public
  */
 export interface SendBoxStrings {
   /**
    * Placeholder text in SendBox when there is no user input
    */
   placeholderText: string;
+  /**
+   * The warning message when send box text length is more than max limit
+   */
+  textTooLong: string;
 }
 
 /**
- * Props for SendBox component
+ * Props for {@link SendBox}.
+ *
+ * @public
  */
 export interface SendBoxProps {
   /**
@@ -86,8 +98,12 @@ export interface SendBoxProps {
 }
 
 /**
- * `SendBox` is a component for users to send messages and typing notifications. An optional message
- * can also be shown below the `SendBox`.
+ * Component for typing and sending messages.
+ *
+ * Supports sending typing notification when user starts entering text.
+ * Supports an optional message below the text input field.
+ *
+ * @public
  */
 export const SendBox = (props: SendBoxProps): JSX.Element => {
   const {
@@ -136,7 +152,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
-  const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
+  const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
   const mergedSendButtonStyle = useMemo(

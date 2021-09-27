@@ -29,6 +29,7 @@ const JoinExistingCallStory = (args, context): JSX.Element => {
           displayName={args.displayName}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
+          options={{ mobileView: args.mobileView }}
         />
       ) : (
         <ConfigJoinCallHintBanner />
@@ -48,6 +49,7 @@ export default {
     userId: controlsToAdd.userId,
     token: controlsToAdd.token,
     displayName: controlsToAdd.displayName,
+    mobileView: controlsToAdd.mobileView,
     callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls

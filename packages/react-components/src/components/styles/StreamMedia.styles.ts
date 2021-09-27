@@ -3,6 +3,9 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const mediaContainer = mergeStyles({
   position: 'relative',
   height: '100%',
@@ -14,6 +17,9 @@ export const mediaContainer = mergeStyles({
   }
 });
 
+/**
+ * @private
+ */
 export const invertedVideoStyle = mergeStyles(mediaContainer, {
   transform: 'rotateY(180deg)'
 });

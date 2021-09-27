@@ -23,12 +23,22 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     <Stack horizontal>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls onEndCallClick={props.onEndCallClick} hiddenElements={{ participantsButton: true }} />
+          <CallControls onEndCallClick={props.onEndCallClick} options={{ participantsButton: false }} />
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>
-        <ChatButton checked={props.chatButtonChecked} showLabel={true} onClick={props.onChatButtonClicked} />
-        <PeopleButton checked={props.peopleButtonChecked} showLabel={true} onClick={props.onPeopleButtonClicked} />
+        <ChatButton
+          checked={props.chatButtonChecked}
+          showLabel={true}
+          onClick={props.onChatButtonClicked}
+          data-ui-id="meeting-composite-chat-button"
+        />
+        <PeopleButton
+          checked={props.peopleButtonChecked}
+          showLabel={true}
+          onClick={props.onPeopleButtonClicked}
+          data-ui-id="meeting-composite-people-button"
+        />
       </Stack.Item>
     </Stack>
   );

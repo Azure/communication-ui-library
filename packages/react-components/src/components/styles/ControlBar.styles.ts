@@ -19,6 +19,9 @@ interface IControlBarStyles {
   floatingRight: IStyle;
 }
 
+/**
+ * @private
+ */
 export const controlBarStyles: IControlBarStyles = {
   horizontal: {
     flexFlow: 'row nowrap'
@@ -34,7 +37,8 @@ export const controlBarStyles: IControlBarStyles = {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%'
+    width: '100%',
+    minWidth: 'fit-content'
   },
   dockedBottom: {
     flexFlow: 'row nowrap',
@@ -43,7 +47,8 @@ export const controlBarStyles: IControlBarStyles = {
     position: 'absolute',
     bottom: 0,
     left: 0,
-    width: '100%'
+    width: '100%',
+    minWidth: 'fit-content'
   },
   dockedLeft: {
     justifyContent: 'center',
@@ -71,6 +76,7 @@ export const controlBarStyles: IControlBarStyles = {
     top: '1rem',
     left: '50%',
     transform: 'translateX(-50%)',
+    minWidth: 'fit-content',
     zIndex: 10
   },
   floatingBottom: {
@@ -83,6 +89,7 @@ export const controlBarStyles: IControlBarStyles = {
     bottom: '1rem',
     left: '50%',
     transform: 'translateX(-50%)',
+    minWidth: 'fit-content',
     zIndex: 10
   },
   floatingLeft: {
@@ -111,6 +118,9 @@ export const controlBarStyles: IControlBarStyles = {
   }
 };
 
+/**
+ * @private
+ */
 export const controlButtonStyles: IButtonStyles = {
   root: {
     background: 'none',
@@ -128,12 +138,20 @@ export const controlButtonStyles: IButtonStyles = {
   }
 };
 
+/**
+ * @private
+ */
 export const controlButtonLabelStyles: IStyle = {
   fontSize: '0.625rem',
   lineHeight: '1rem',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  display: 'block',
+  margin: '0rem 0.25rem'
 };
 
+/**
+ * @private
+ */
 export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
   root: {
     color: palette.white
@@ -149,7 +167,11 @@ export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(control
   }
 });
 
-// making it Partial as IContextualMenuStyles has all its props non-optional and we only need title to be defined here
+/**
+ * making it Partial as IContextualMenuStyles has all its props non-optional and we only need title to be defined here.
+ *
+ * @private
+ */
 export const participantsButtonMenuPropsStyle: Partial<IContextualMenuStyles> = {
   title: {
     background: 'initial',
@@ -159,6 +181,9 @@ export const participantsButtonMenuPropsStyle: Partial<IContextualMenuStyles> = 
   }
 };
 
+/**
+ * @private
+ */
 export const defaultParticipantListContainerStyle: IStyle = {
   maxHeight: '20rem'
 };
