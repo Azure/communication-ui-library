@@ -12,7 +12,7 @@ import {
   CallComposite,
   COMPOSITE_LOCALE_FR_FR
 } from '../../../../src';
-import { IDS } from '../../config';
+import { IDS } from '../../common/config';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());

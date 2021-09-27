@@ -337,6 +337,7 @@ export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCame
 
 // @public
 export type CallCompositeOptions = {
+    mobileView?: boolean;
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
 };
@@ -1341,6 +1342,11 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 // @alpha
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
+// @public
+export type MeetingCompositeOptions = {
+    mobileView?: boolean;
+};
+
 // @alpha
 export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
@@ -1349,6 +1355,7 @@ export type MeetingCompositeProps = {
     meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
     meetingInvitationURL?: string;
+    options?: MeetingCompositeOptions;
 };
 
 // @alpha
@@ -1475,10 +1482,13 @@ messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
 
 // @public
 export interface MessageThreadStrings {
+    editedTag: string;
+    editMessage: string;
     friday: string;
     monday: string;
     participantJoined: string;
     participantLeft: string;
+    removeMessage: string;
     saturday: string;
     sunday: string;
     thursday: string;
@@ -1787,6 +1797,7 @@ userId: string;
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    textTooLong: string;
 }
 
 // @public (undocumented)
