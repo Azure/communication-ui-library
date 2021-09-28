@@ -7,7 +7,7 @@ This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be m
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.6)
 
 Tue, 28 Sep 2021 19:19:18 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.0-beta.5..@internal/react-components_v1.0.0-beta.6)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.5..1.0.0-beta.6)
 
 ### Changes
 
