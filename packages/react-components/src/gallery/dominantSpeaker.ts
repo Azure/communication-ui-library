@@ -47,19 +47,27 @@ export const smartDominantSpeakerParticipants = (
   });
 
   // Sort the new video participants to match the order of last visible participants.
-  const videoParticipantsToRender = participants.filter((p) => lastVisibleSpeakerIds.includes(p.userId));
-  videoParticipantsToRender.sort((a, b) => {
+  const newSpeakers = participants.filter((p) => lastVisibleSpeakerIds.includes(p.userId));
+  const newSpeakersMap = {}; // search optimization
+  newSpeakers.forEach((p) => {
+    newSpeakersMap[p.userId] = true;
+  });
+
+  newSpeakers.sort((a, b) => {
     return lastVisibleSpeakerIds.indexOf(a.userId) - lastVisibleSpeakerIds.indexOf(b.userId);
   });
 
   // Add additional participants to the final list of visible participants if the list has less than Max visible participants.
-  if (videoParticipantsToRender.length < maxTiles) {
-    const diff = maxTiles - videoParticipantsToRender.length;
+  if (newSpeakers.length < maxTiles) {
+    const diff = maxTiles - newSpeakers.length;
     for (let index = 0; index < diff; index++) {
-      const filler = participants.find((p) => !videoParticipantsToRender.includes(p));
-      filler && videoParticipantsToRender.push(filler);
+      const filler = participants.find((p) => !newSpeakersMap[p.userId]);
+      if (filler) {
+        newSpeakers.push(filler);
+        newSpeakersMap[filler.userId] = true;
+      }
     }
   }
 
-  return videoParticipantsToRender;
+  return newSpeakers;
 };
