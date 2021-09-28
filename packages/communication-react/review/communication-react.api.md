@@ -1670,7 +1670,6 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
 
 // @public
-<<<<<<< HEAD
 export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     messageType: 'system';
@@ -1680,9 +1679,7 @@ export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
     systemMessageType: 'participantRemoved';
 }
 
-// @public (undocumented)
-=======
->>>>>>> origin/main
+// @public
 export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
     addedBy: ChatParticipant;
