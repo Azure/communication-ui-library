@@ -9,7 +9,7 @@ import { PAGE_VIEWPORT } from '../common/defaults';
 test.describe('Localization tests', async () => {
   test('Participants list header should be localized', async ({ serverUrl, page, users }) => {
     // Load french locale for tests
-    const url = buildUrl(serverUrl, users[0], { useFrlocale: 'true' });
+    const url = buildUrl(serverUrl, users[0], { useFrLocale: 'true' });
     await page.setViewportSize(PAGE_VIEWPORT);
     await page.goto(url, { waitUntil: 'load' });
 

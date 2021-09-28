@@ -22,21 +22,8 @@ const token = params.token;
 const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 const userId = params.userId;
-const useFrlocale = Boolean(params.useFrLocale);
+const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
-
-// Map UserID to a consistant name for testing custom data model
-const names = ['Alice', 'Bob', 'Charles', 'Dimitri', 'Emily', 'Francis', 'Heather', 'Ingrid', 'James'];
-const customDataModelUserMap = new Map<string, string>();
-const getCustomDisplayName = (userId: string): string => {
-  if (customDataModelUserMap.has(userId)) {
-    return customDataModelUserMap.get(userId);
-  }
-
-  const newName = names[customDataModelUserMap.size];
-  customDataModelUserMap.set(userId, names[customDataModelUserMap.size]);
-  return newName;
-};
 
 function App(): JSX.Element {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
@@ -91,13 +78,13 @@ function App(): JSX.Element {
               ? () =>
                   new Promise((resolve) =>
                     resolve({
-                      imageInitials: getCustomDisplayName(userId)[0],
-                      text: getCustomDisplayName(userId)
+                      imageInitials: 'CN',
+                      text: 'CUSTOM NAME'
                     })
                   )
               : undefined
           }
-          locale={useFrlocale ? COMPOSITE_LOCALE_FR_FR : undefined}
+          locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
         />
       )}
     </_IdentifierProvider>

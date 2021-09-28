@@ -18,7 +18,7 @@ test.describe('Localization tests', async () => {
 
     // Load french locale for tests
     console.log('item2');
-    const url = buildUrl(serverUrl, users[0], { useFrlocale: 'true' });
+    const url = buildUrl(serverUrl, users[0], { useFrLocale: 'true' });
     await page.bringToFront();
     console.log('item3');
     console.log('item4');
