@@ -188,8 +188,6 @@ export const loadPageWithPermissionsForCalls = async (
   user: CallUserType | MeetingUserType
 ): Promise<Page> => {
   const context = await browser.newContext({ permissions: ['notifications', 'camera', 'microphone'] });
-  console.log('new context loaded');
   const page = await context.newPage();
-  console.log('page created');
   return await loadUrlInPage(page, serverUrl, user);
 };
