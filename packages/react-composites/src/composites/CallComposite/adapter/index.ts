@@ -19,10 +19,9 @@ export type {
   CallEndedListener,
   CallIdChangedListener,
   DisplayNameChangedListener,
-  IncomingCallListener,
-  IsMuteChangedListener,
-  IsScreenSharingOnChangedListener,
+  IsMutedChangedListener,
+  IsLocalScreenSharingActiveChangedListener,
   IsSpeakingChangedListener,
-  ParticipantJoinedListener,
-  ParticipantLeftListener
+  ParticipantsJoinedListener,
+  ParticipantsLeftListener
 } from './CallAdapter';

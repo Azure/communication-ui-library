@@ -32,6 +32,9 @@ import {
   participantListWrapper
 } from './styles/Chat.styles';
 
+/**
+ * @private
+ */
 export type ChatScreenProps = {
   options?: ChatCompositeOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -40,6 +43,9 @@ export type ChatScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
+/**
+ * @private
+ */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, onFetchParticipantMenuItems, options } =
     props;

@@ -15,6 +15,9 @@ import React, { useCallback } from 'react';
 import { usePropsFor } from './hooks/usePropsFor';
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
 
+/**
+ * @private
+ */
 export type CallControlsProps = {
   onEndCallClick(): void;
   callInvitationURL?: string;
@@ -22,6 +25,11 @@ export type CallControlsProps = {
   options?: boolean | CallControlOptions;
 };
 
+/**
+ * Customization options for the control bar in calling experience.
+ *
+ * @public
+ */
 export type CallControlOptions = {
   /**
    * Compressed mode decreases the size of buttons in control bar and hides label
@@ -60,6 +68,9 @@ export type CallControlOptions = {
   screenShareButton?: boolean;
 };
 
+/**
+ * @private
+ */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const { callInvitationURL, onEndCallClick, onFetchParticipantMenuItems } = props;
   const options = typeof props.options === 'boolean' ? {} : props.options;

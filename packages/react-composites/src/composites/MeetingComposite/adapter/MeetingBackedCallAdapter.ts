@@ -36,7 +36,7 @@ function callStateFromMeetingState(meetingState: MeetingState): CallState {
   };
 }
 
-export function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterState): CallAdapterState {
+function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterState): CallAdapterState {
   return {
     isLocalPreviewMicrophoneEnabled: meetingState.isLocalPreviewMicrophoneEnabled,
     page: meetingPageToCallPage(meetingState.page),
@@ -51,6 +51,8 @@ export function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAda
 
 /**
  * Facade around the MeetingAdapter to satisfy the call adapter interface.
+ *
+ * @private
  */
 export class MeetingBackedCallAdapter implements CallAdapter {
   private meetingAdapter: MeetingAdapter;

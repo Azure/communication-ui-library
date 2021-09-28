@@ -6,10 +6,13 @@ import React, { createContext, useContext } from 'react';
 import { ComponentLocale, LocalizationProvider as ComponentLocalizationProvider } from '@internal/react-components';
 
 import { COMPOSITE_LOCALE_EN_US } from './locales';
-import { CallCompositeStrings, ChatCompositeStrings } from '../CallComposite';
+import { CallCompositeStrings } from '../CallComposite';
+import { ChatCompositeStrings } from '../ChatComposite';
 
 /**
- * Data structure for localization
+ * Locale information for all composites exported from this library.
+ *
+ * @public
  */
 export interface CompositeLocale {
   /** Strings used in composites directly
@@ -26,6 +29,8 @@ export interface CompositeLocale {
  * Strings used in the composites directly.
  *
  * These strings are used by the composites directly, instead of by the contained components.
+ *
+ * @public
  */
 export interface CompositeStrings {
   /**
@@ -40,11 +45,15 @@ export interface CompositeStrings {
 
 /**
  * Context for providing localized strings to components
+ *
+ * @private
  */
 export const LocaleContext = createContext<CompositeLocale>(COMPOSITE_LOCALE_EN_US);
 
 /**
  * Props to LocalizationProvider
+ *
+ * @private
  */
 export type LocalizationProviderProps = {
   /** Locale context to provide components */
@@ -56,7 +65,7 @@ export type LocalizationProviderProps = {
 /**
  * Provider to provide localized strings for this library's composites.
  *
- * This provider is internal. Do not export in public API.
+ * @private
  */
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
   const { locale, children } = props;
@@ -67,5 +76,7 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
   );
 };
 
-/** React hook to access locale */
+/**
+ * @private
+ */
 export const useLocale = (): CompositeLocale => useContext(LocaleContext);
