@@ -4,7 +4,6 @@
 import { test } from './fixture';
 import { waitForCallCompositeToLoad, loadCallScreen, buildUrl } from '../common/utils';
 import { expect } from '@playwright/test';
-import { PAGE_VIEWPORT } from '../common/defaults';
 import { loadPageWithPermissionsForCalls } from '../common/fixtureHelpers';
 
 test.describe('Localization tests', async () => {
@@ -22,7 +21,6 @@ test.describe('Localization tests', async () => {
     const url = buildUrl(serverUrl, users[0], { useFrlocale: 'true' });
     await page.bringToFront();
     console.log('item3');
-    await page.setViewportSize(PAGE_VIEWPORT);
     console.log('item4');
     await page.goto(url, { waitUntil: 'load' });
     console.log('item5');
