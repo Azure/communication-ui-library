@@ -3,8 +3,9 @@
 
 import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { smartDominantSpeakerParticipants } from '../gallery';
-import { useIdentifiers } from '../identifiers/IdentifierProvider';
+import { HorizontalGallery } from '.';
+import { smartDominantSpeakerParticipants } from '../../gallery';
+import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import {
   BaseCustomStylesProps,
   OnRenderAvatarCallback,
@@ -12,16 +13,17 @@ import {
   VideoGalleryParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions
-} from '../types';
-import { GridLayout } from './GridLayout';
-import { StreamMedia } from './StreamMedia';
+} from '../../types';
+import { GridLayout } from '../GridLayout';
+import { StreamMedia } from '../StreamMedia';
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
   videoGalleryContainerStyle
-} from './styles/VideoGallery.styles';
-import { VideoTile, VideoTileStylesProps } from './VideoTile';
+} from '../styles/VideoGallery.styles';
+import { VideoTile, VideoTileStylesProps } from '../VideoTile';
+import { RemoteVideoTile } from './RemoteVideoTile';
 
 const emptyStyles = {};
 
@@ -113,7 +115,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const visibleVideoParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const visibleAudioParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const [videoParticipants, setVideoParticipants] = useState<VideoGalleryParticipant[] | []>();
-  const [_audioParticipants, setAudioParticipants] = useState<VideoGalleryParticipant[] | []>();
+  const [audioParticipants, setAudioParticipants] = useState<VideoGalleryParticipant[] | []>();
 
   useEffect(() => {
     visibleVideoParticipants.current = smartDominantSpeakerParticipants(
@@ -126,7 +128,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     visibleAudioParticipants.current = smartDominantSpeakerParticipants(
       remoteParticipants?.filter((p) => !p.videoStream?.isAvailable),
       dominantSpeakers,
-      visibleAudioParticipants.current.filter((p) => !p.videoStream?.isAvailable)
+      visibleAudioParticipants.current.filter((p) => !p.videoStream?.isAvailable),
+      100
     );
     setAudioParticipants(visibleAudioParticipants.current);
   }, [dominantSpeakers, remoteParticipants]);
@@ -227,95 +230,31 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
         <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+        {audioParticipants && (
+          <Stack style={{ minHeight: '8rem', maxHeight: '8rem' }}>
+            <HorizontalGallery
+              onCreateRemoteStreamView={onCreateRemoteStreamView}
+              onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+              onRenderAvatar={onRenderAvatar}
+              onRenderRemoteVideoTile={onRenderRemoteVideoTile}
+              participants={audioParticipants}
+              remoteVideoViewOption={remoteVideoViewOption}
+              showMuteIndicator={showMuteIndicator}
+            />
+          </Stack>
+        )}
       </Stack>
     );
   }
 
   return (
-    <GridLayout styles={styles ?? emptyStyles}>
-      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && defaultOnRenderLocalVideoTile}
-      </Stack>
-      {defaultOnRenderRemoteParticipants}
-    </GridLayout>
+    <Stack>
+      <GridLayout styles={styles ?? emptyStyles}>
+        <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+          {localParticipant && defaultOnRenderLocalVideoTile}
+        </Stack>
+        {defaultOnRenderRemoteParticipants}
+      </GridLayout>
+    </Stack>
   );
 };
-
-// Use React.memo to create memoize cache for each RemoteVideoTile
-const RemoteVideoTile = React.memo(
-  (props: {
-    userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    isAvailable?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
-    renderElement?: HTMLElement;
-    displayName?: string;
-    remoteVideoViewOption?: VideoStreamOptions;
-    onRenderAvatar?: OnRenderAvatarCallback;
-    showMuteIndicator?: boolean;
-  }) => {
-    const {
-      isAvailable,
-      isMuted,
-      isSpeaking,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId,
-      displayName,
-      onRenderAvatar,
-      showMuteIndicator
-    } = props;
-
-    useEffect(() => {
-      if (isAvailable && !renderElement) {
-        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
-      }
-      if (!isAvailable) {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      }
-    }, [
-      isAvailable,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId
-    ]);
-
-    useEffect(() => {
-      return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      };
-    }, [onDisposeRemoteStreamView, userId]);
-
-    const renderVideoStreamElement = useMemo(() => {
-      // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
-      // implies that, after their threshold, all streams have no child (blank video)
-      if (!renderElement || !renderElement.childElementCount) {
-        // Returning `undefined` results in the placeholder with avatar being shown
-        return undefined;
-      }
-
-      return <StreamMedia videoStreamElement={renderElement} />;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [renderElement, renderElement?.childElementCount]);
-
-    return (
-      <Stack className={gridStyle} key={userId} grow>
-        <VideoTile
-          userId={userId}
-          renderElement={renderVideoStreamElement}
-          displayName={displayName}
-          onRenderPlaceholder={onRenderAvatar}
-          isMuted={isMuted}
-          isSpeaking={isSpeaking}
-          showMuteIndicator={showMuteIndicator}
-        />
-      </Stack>
-    );
-  }
-);
