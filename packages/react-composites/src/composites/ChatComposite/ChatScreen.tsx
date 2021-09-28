@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { FocusZone, mergeStyles, Stack } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -94,10 +94,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           </Stack.Item>
         </Stack>
         {options?.participantPane !== false && (
-          <Stack.Item className={participantListWrapper}>
+          <Stack className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>
-              <Stack.Item className={participantListStyle}>
+              <FocusZone className={participantListStyle}>
                 <ParticipantList
                   {...participantListProps}
                   onRenderAvatar={(userId, options) => (
@@ -110,9 +110,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   )}
                   onFetchParticipantMenuItems={onFetchParticipantMenuItems}
                 />
-              </Stack.Item>
+              </FocusZone>
             </Stack>
-          </Stack.Item>
+          </Stack>
         )}
       </Stack>
     </Stack>

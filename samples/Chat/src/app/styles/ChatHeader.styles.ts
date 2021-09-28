@@ -6,12 +6,8 @@ import { IIconProps, mergeStyles } from '@fluentui/react';
 export const chatHeaderContainerStyle = mergeStyles({
   width: '100%',
   height: 'auto',
-  paddingLeft: '3.25rem',
-  paddingRight: '3.25rem',
-  '@media (max-width: 65rem)': {
-    paddingLeft: '5%',
-    paddingRight: '5%'
-  }
+  paddingLeft: '0.5rem',
+  paddingRight: '0.5rem'
 });
 
 export const leaveButtonStyle = mergeStyles({
