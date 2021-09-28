@@ -32,7 +32,7 @@ export const smartDominantSpeakerParticipants = (
   }
 
   // Only use the Max allowed dominant speakers.
-  const dominantSpeakerIds = dominantSpeakers.slice(0, maxTiles);
+  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxTiles);
   const lastVisibleSpeakerIds = currentParticipants.map((p) => p.userId);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !lastVisibleSpeakerIds.includes(id));
 

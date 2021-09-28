@@ -118,4 +118,24 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     const resultUserIds = result.flatMap((p) => p.userId);
     expect(resultUserIds).toEqual(customDominantSpeakers);
   });
+
+  test('returns the same participants array if dominant speakers have re-ordered but are same', () => {
+    const visibleParticipants = [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }];
+    let result = smartDominantSpeakerParticipants(participants, ['1', '2', '3', '4'], visibleParticipants, 4);
+    expect(result).toEqual(visibleParticipants);
+
+    result = smartDominantSpeakerParticipants(participants, ['3', '2', '1', '4'], visibleParticipants, 4);
+    expect(result).toEqual(visibleParticipants);
+  });
+
+  test('returns participant only once even when there are duplicates in dominant speakers', () => {
+    const result = smartDominantSpeakerParticipants(
+      participants,
+      ['1', '1', '3', '7'],
+      [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      4
+    );
+    const resultUserIds = result.flatMap((p) => p.userId);
+    expect(resultUserIds).toEqual(['1', '7', '3', '4']);
+  });
 });
