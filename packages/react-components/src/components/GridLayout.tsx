@@ -32,6 +32,11 @@ export interface GridLayoutProps {
   styles?: BaseCustomStylesProps;
 }
 
+/**
+ * A component to lay out audio / video participants tiles in a call.
+ *
+ * @public
+ */
 export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const { children, styles } = props;
   const numberOfChildren = React.Children.count(children);
@@ -53,6 +58,11 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   );
 };
 
+/**
+ * Props to create blocks for children in Grid Layout
+ *
+ * @public
+ */
 export type BlockProps = {
   horizontal: boolean;
   numBlocks: number;

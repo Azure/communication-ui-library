@@ -308,7 +308,7 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
 // @public
