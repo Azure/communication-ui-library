@@ -33,7 +33,8 @@ import {
 
 /**
  * Represents a MockCall
- * @public
+ *
+ * @private
  */
 export declare interface MockCall {
   /**

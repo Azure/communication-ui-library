@@ -15,7 +15,7 @@
   "messages": {
     "extractorMessageReporting": {
       "ae-missing-release-tag": {
-        "logLevel": "none"
+        "logLevel": "error"
       },
       "ae-unresolved-link": {
         "logLevel": "none"

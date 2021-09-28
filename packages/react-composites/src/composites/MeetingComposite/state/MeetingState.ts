@@ -9,6 +9,7 @@ import { meetingParticipantsFromCallParticipants } from '../state/MeetingPartici
 
 /**
  * State of a single Meeting.
+ *
  * @alpha
  */
 export interface MeetingState
@@ -44,6 +45,8 @@ export interface MeetingState
 
 /**
  * Return properties from call state that are used in meeting state.
+ *
+ * @private
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const meetingPropsFromCallState = (callState: CallState) => ({
@@ -69,6 +72,8 @@ const meetingPropsFromCallState = (callState: CallState) => ({
 
 /**
  * Return properties from chat state that are used in meeting state.
+ *
+ * @private
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const meetingPropsFromChatState = (chatState: ChatThreadClientState) => ({
@@ -82,6 +87,8 @@ const meetingPropsFromChatState = (chatState: ChatThreadClientState) => ({
 
 /**
  * Helper function to return meeting state created from call and chat states
+ *
+ * @private
  */
 export function meetingStateFromBackingStates(callState: CallState, chatState: ChatThreadClientState): MeetingState {
   return {
@@ -92,6 +99,8 @@ export function meetingStateFromBackingStates(callState: CallState, chatState: C
 
 /**
  * Helper function to return an updated meeting state with new chat state applied
+ *
+ * @private
  */
 export function mergeChatStateIntoMeetingState(
   meetingState: MeetingState,
@@ -105,6 +114,8 @@ export function mergeChatStateIntoMeetingState(
 
 /**
  * Helper function to return an updated meeting state with new call state applied
+ *
+ * @private
  */
 export function mergeCallStateIntoMeetingState(
   meetingState: MeetingState | undefined,
