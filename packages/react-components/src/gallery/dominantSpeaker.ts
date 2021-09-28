@@ -33,26 +33,27 @@ export const smartDominantSpeakerParticipants = (
 
   // Only use the Max allowed dominant speakers.
   const dominantSpeakerIds = dominantSpeakers.slice(0, maxTiles);
-  const lastVisibleSpeakerIds = currentParticipants.map((speaker) => speaker.userId);
+  const lastVisibleSpeakerIds = currentParticipants.map((p) => p.userId);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !lastVisibleSpeakerIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
-  lastVisibleSpeakerIds.forEach((userId, index) => {
-    if (!dominantSpeakerIds.includes(userId)) {
-      const replacement = newDominantSpeakerIds.shift();
-      if (replacement) {
-        lastVisibleSpeakerIds[index] = replacement;
-      }
-    }
-  });
+  for (let index = 0; index < maxTiles; index++) {
+    const oldUserId = lastVisibleSpeakerIds[index];
 
-  // Sort the new video participants to match the order of last visible participants.
+    if ((oldUserId && !dominantSpeakerIds.includes(oldUserId)) || oldUserId === undefined) {
+      const replacement = newDominantSpeakerIds.shift();
+      if (!replacement) break;
+      lastVisibleSpeakerIds[index] = replacement;
+    }
+  }
+
   const newSpeakers = participants.filter((p) => lastVisibleSpeakerIds.includes(p.userId));
   const newSpeakersMap = {}; // search optimization
   newSpeakers.forEach((p) => {
     newSpeakersMap[p.userId] = true;
   });
 
+  // Sort the new video participants to match the order of last visible participants.
   newSpeakers.sort((a, b) => {
     return lastVisibleSpeakerIds.indexOf(a.userId) - lastVisibleSpeakerIds.indexOf(b.userId);
   });
