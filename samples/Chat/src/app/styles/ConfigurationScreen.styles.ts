@@ -2,31 +2,48 @@
 // Licensed under the MIT license.
 
 import { getBackgroundColor } from '../utils/utils';
-import { mergeStyles } from '@fluentui/react';
+import { IStackTokens, mergeStyles } from '@fluentui/react';
+
+export const responsiveLayoutStackTokens: IStackTokens = {
+  childrenGap: '5.25rem 8.6875rem'
+};
 
 export const responsiveLayoutStyle = mergeStyles({
-  display: 'flex',
-  flexDirection: 'row',
-  '@media (max-width: 37.5rem)': {
-    flexDirection: 'column'
-  }
+  height: '100%',
+  width: '100% ',
+  //half childrenGap from Stack
+  padding: '2.625rem 4.34375rem',
+  // max of min-width from stack items + padding width * 2 = 20 + 4.84375 * 2
+  minWidth: '29.6875rem',
+  minHeight: 'auto',
+  // sum of max-height of stack items + childrenGap height * (#items - 1) + padding height * 2 = (11.5625 + 15.875) + 6.25 * 1 + 3.125 * 2 =
+  maxHeight: '39.9375rem'
 });
+
+export const leftPreviewContainerStackTokens: IStackTokens = {
+  childrenGap: '0.8125rem'
+};
 
 export const leftPreviewContainerStyle = mergeStyles({
-  height: '10.563rem',
-  width: '8.313rem',
-  marginRight: '9.688rem',
-  '@media (max-width: 37.5rem)': {
-    marginRight: '0rem'
-  }
+  height: '11.563rem',
+  width: '9.313rem',
+  padding: '0.5rem'
 });
 
+export const rightInputContainerStackTokens: IStackTokens = {
+  childrenGap: '1.25rem'
+};
+
 export const rightInputContainerStyle = mergeStyles({
-  height: '14.75rem',
-  width: '19rem',
-  '@media (max-width: 37.5rem)': {
-    marginTop: '6.25rem'
-  }
+  padding: '0.5rem'
+});
+
+export const avatarListContainerStackTokens: IStackTokens = {
+  childrenGap: '0.25rem'
+};
+
+export const avatarListContainerStyle = mergeStyles({
+  width: '19rem'
 });
 
 export const smallAvatarContainerStyle = (avatar: string, selectedAvatar: string): string =>
@@ -90,12 +107,11 @@ export const namePreviewStyle = (isEmpty: boolean): string => {
 };
 
 export const labelFontStyle = mergeStyles({
-  height: '1.188rem',
   fontSize: '1rem', // 16px
   fontWeight: 600,
   letterSpacing: '0',
   lineHeight: '2rem',
-  marginBottom: '0.625rem'
+  minWidth: '19rem'
 });
 
 export const chatIconStyle = mergeStyles({
@@ -115,11 +131,7 @@ export const buttonStyle = mergeStyles({
 export const mainContainerStyle = mergeStyles({
   maxWidth: '46.875rem',
   width: '100%',
-  height: '100%',
-  '@media (max-width: 46.875rem)': {
-    padding: '0.625rem',
-    height: '100%'
-  }
+  height: '100%'
 });
 
 export const startChatButtonTextStyle = mergeStyles({

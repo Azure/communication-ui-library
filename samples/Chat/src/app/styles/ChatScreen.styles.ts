@@ -17,5 +17,6 @@ export const chatHeaderContainerStyle = mergeStyles({
 });
 
 export const chatCompositeContainerStyle = mergeStyles({
+  width: '100%',
   height: '100%'
 });
