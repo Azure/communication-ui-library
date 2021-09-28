@@ -17,7 +17,7 @@ export const upperStackTokens: IStackTokens = {
 export const endChatContainerStyle = mergeStyles({
   height: '100%',
   width: '100% ',
-  padding: '1.375rem', //half childrenGap from Stack
+  padding: '1.375rem', // half childrenGap from Stack
   minWidth: '22.75rem', // max of min-width from stack items + padding * 2 = 20.625 + 1.375 * 2
   minHeight: 'auto'
 });

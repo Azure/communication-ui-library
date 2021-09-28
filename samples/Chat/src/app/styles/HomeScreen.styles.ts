@@ -32,7 +32,7 @@ export const nestedStackTokens: IStackTokens = {
 export const containerStyle = mergeStyles({
   height: '100%',
   width: '100% ',
-  padding: '2rem', //half childrenGap from Stack (to add to compensate inner stack defined by 'wrap' prop of Stack)
+  padding: '2rem', // half childrenGap from Stack (to add to compensate inner stack defined by 'wrap' prop of Stack)
   minWidth: '27.188rem', // min-width from stack items + padding * 2 = 23.188 + 2 * 2
   minHeight: 'auto'
 });

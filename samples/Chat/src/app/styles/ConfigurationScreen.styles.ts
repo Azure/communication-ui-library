@@ -11,7 +11,7 @@ export const responsiveLayoutStackTokens: IStackTokens = {
 export const responsiveLayoutStyle = mergeStyles({
   height: '100%',
   width: '100% ',
-  //half childrenGap from Stack
+  // half childrenGap from Stack
   padding: '2.625rem 4.34375rem',
   // max of min-width from stack items + padding width * 2 = 20 + 4.84375 * 2
   minWidth: '29.6875rem',
