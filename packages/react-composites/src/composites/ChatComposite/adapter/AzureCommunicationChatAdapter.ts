@@ -21,7 +21,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import {
   ChatAdapter,
-  ChatEvent,
   ChatAdapterState,
   MessageReadListener,
   MessageReceivedListener,
@@ -82,6 +81,9 @@ class ChatContext {
   }
 }
 
+/**
+ * @private
+ */
 export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
@@ -263,7 +265,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   on(event: 'error', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  on(event: ChatEvent, listener: (e: any) => void): void {
+  on(event: string, listener: (e: any) => void): void {
     this.emitter.on(event, listener);
   }
 
@@ -276,7 +278,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'error', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  off(event: ChatEvent, listener: (e: any) => void): void {
+  off(event: string, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
   }
 
@@ -312,6 +314,11 @@ const convertEventType = (type: string): ChatMessageType => {
   else return 'text';
 };
 
+/**
+ * Arguments for creating the Azure Communication Services implementation of {@link ChatAdapter}.
+ *
+ * @public
+ */
 export type AzureCommunicationChatAdapterArgs = {
   endpointUrl: string;
   userId: CommunicationIdentifierKind;
@@ -320,6 +327,13 @@ export type AzureCommunicationChatAdapterArgs = {
   threadId: string;
 };
 
+/**
+ * Create a {@link ChatAdapter} backed by Azure Communication Services.
+ *
+ * This is the default implementation of {@link ChatAdapter} provided by this library.
+ *
+ * @public
+ */
 export const createAzureCommunicationChatAdapter = async ({
   endpointUrl,
   userId,
@@ -341,6 +355,14 @@ export const createAzureCommunicationChatAdapter = async ({
   return adapter;
 };
 
+/**
+ * Create a {@link ChatAdapter} using the provided {@link StatefulChatClient}.
+ *
+ * Useful if you want to keep a reference to {@link StatefulChatClient}.
+ * Consider using {@link createAzureCommunicationChatAdapter} for a simpler API.
+ *
+ * @public
+ */
 export const createAzureCommunicationChatAdapterFromClient = async (
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient

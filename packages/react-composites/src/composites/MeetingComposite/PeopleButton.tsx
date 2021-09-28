@@ -8,6 +8,9 @@ import { People20Filled, People20Regular } from '@fluentui/react-icons';
 const onRenderOnIcon = (): JSX.Element => <People20Filled key={'peopleOnIconKey'} primaryFill="currentColor" />;
 const onRenderOffIcon = (): JSX.Element => <People20Regular key={'peopleOffIconKey'} primaryFill="currentColor" />;
 
+/**
+ * @private
+ */
 export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
   const strings = { label: 'People', ...props.strings };
 

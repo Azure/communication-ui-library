@@ -35,6 +35,8 @@ function ChatAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterSta
 
 /**
  * Facade around the MeetingAdapter to satisfy the chat adapter interface.
+ *
+ * @private
  */
 export class MeetingBackedChatAdapter implements ChatAdapter {
   private meetingAdapter: MeetingAdapter;

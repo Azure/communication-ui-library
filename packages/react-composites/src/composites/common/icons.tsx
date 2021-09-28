@@ -13,7 +13,9 @@ import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-compone
 import React from 'react';
 
 /**
- * These icons are composite specific and not being used inside components.
+ * The default set of icons used by the composites directly (i.e. not via the components defined in this library).
+ *
+ * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsCamera: <Video20Filled />,
@@ -26,14 +28,28 @@ export const COMPOSITE_ONLY_ICONS = {
 
 /**
  * The default set of icons that are available to used in the Composites.
+ *
+ * @public
  */
 export const DEFAULT_COMPOSITE_ICONS = {
   ...DEFAULT_COMPONENT_ICONS,
   ...COMPOSITE_ONLY_ICONS
 };
 
+/**
+ * Icons that can be overridden in one of the composites exported by this library.
+ *
+ * See {@link ChatCompositeIcons} and {@link CallCompositeIcons} for more targeted types.
+ *
+ * @public
+ */
 export type CompositeIcons = ComponentIcons & Record<keyof typeof COMPOSITE_ONLY_ICONS, JSX.Element>;
 
+/**
+ * Icons that can be overridden for {@link ChatComposite}.
+ *
+ * @public
+ */
 export type ChatCompositeIcons = Partial<
   Pick<
     CompositeIcons,
@@ -51,7 +67,11 @@ export type ChatCompositeIcons = Partial<
     | 'EditBoxSubmit'
   >
 >;
-
+/**
+ * Icons that can be overridden for {@link CallComposite}.
+ *
+ * @public
+ */
 export type CallCompositeIcons = Partial<
   Pick<
     CompositeIcons,

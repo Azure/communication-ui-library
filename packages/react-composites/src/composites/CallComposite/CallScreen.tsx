@@ -38,6 +38,9 @@ import {
   subContainerStyles
 } from './styles/CallScreen.styles';
 
+/**
+ * @private
+ */
 export interface CallScreenProps {
   callInvitationURL?: string;
   endCallHandler(): void;
@@ -49,7 +52,9 @@ export interface CallScreenProps {
 }
 
 const spinnerLabel = 'Initializing call client...';
-
+/**
+ * @private
+ */
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const {
     callInvitationURL,
