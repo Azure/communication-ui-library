@@ -154,6 +154,11 @@ const sortedRemoteParticipants = (
   return allSpeakers;
 };
 
+/**
+ * Selects data that drives {@link VideoGallery} component.
+ *
+ * @public
+ */
 export const videoGallerySelector = createSelector(
   [
     getScreenShareRemoteParticipant,

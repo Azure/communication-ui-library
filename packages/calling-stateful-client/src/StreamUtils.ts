@@ -321,6 +321,9 @@ function disposeViewUnparentedVideo(
   }
 }
 
+/**
+ * @private
+ */
 export function createView(
   context: CallContext,
   internalContext: InternalCallContext,
@@ -344,6 +347,9 @@ export function createView(
   }
 }
 
+/**
+ * @private
+ */
 export function disposeView(
   context: CallContext,
   internalContext: InternalCallContext,
@@ -366,7 +372,10 @@ export function disposeView(
   }
 }
 
-// Only stops videos that are tied to a Call.
+/**
+ * @private
+ * Only stops videos that are tied to a Call.
+ */
 export function disposeAllViewsFromCall(
   context: CallContext,
   internalContext: InternalCallContext,
@@ -402,6 +411,9 @@ export function disposeAllViewsFromCall(
   }
 }
 
+/**
+ * @private
+ */
 export function disposeAllViews(context: CallContext, internalContext: InternalCallContext): void {
   const remoteStreamAndRenderers = internalContext.getRemoteRenderInfos();
   for (const [callId] of remoteStreamAndRenderers.entries()) {

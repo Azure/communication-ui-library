@@ -5,6 +5,11 @@ import { Call, CallApiFeature, CallFeatureFactoryType } from '@azure/communicati
 import { CallContext } from './CallContext';
 import { transferCallFeatureDeclaratify } from './TransferCallFeatureDeclarative';
 
+/**
+ * TODO: This should likely be exported?
+ *
+ * @private
+ */
 export interface DeclarativeCall extends Call {
   /**
    * Stop any declarative specific subscriptions and remove declarative subscribers.
