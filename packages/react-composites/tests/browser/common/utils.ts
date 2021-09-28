@@ -50,7 +50,7 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
   const startCallButton = await page.waitForSelector(dataUiId('call-composite-start-call-button'));
-  await startCallButton.waitForElementState('enabled', { timeout: 5000 });
+  await startCallButton.waitForElementState('enabled');
 };
 
 /**

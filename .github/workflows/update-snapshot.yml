@@ -42,6 +42,7 @@ jobs:
       - name: Build
         run: rush build -t sample-static-html-composites
       - name: Update snapshot
+        id: updatesnapshots
         run: |
           cd samples/StaticHtmlComposites
           rushx update:snapshot
@@ -60,6 +61,12 @@ jobs:
           (git add samples/StaticHtmlComposites/tests && 
           git commit -m 'Updating js bundle automation snapshots' && 
           git push origin HEAD:${{ github.head_ref }})
+      - name: Upload failed screenshots
+        if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshotfailures
+          path: packages/react-composites/test-results
 
   update_composite_snapshot:
     name: Update composite snapshot by label
@@ -99,6 +106,7 @@ jobs:
           rushx build:e2e:call
           rushx build:e2e:meeting
       - name: Update snapshot
+        id: updatesnapshots
         run: |
           cd packages/react-composites
           rushx test:e2e:chat:update
@@ -119,3 +127,9 @@ jobs:
           (git add packages/react-composites/tests && 
           git commit -m 'Updating composite automation snapshots' && 
           git push origin HEAD:${{ github.head_ref }})
+      - name: Upload failed screenshots
+        if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshotfailures
+          path: packages/react-composites/test-results
