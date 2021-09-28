@@ -28,6 +28,9 @@ type MockCallProps = {
   isIncoming: boolean;
 };
 
+/**
+ * @private
+ */
 export const defaultMockCallProps = {
   muteExecutedCallback: jest.fn(),
   unmuteExecutedCallback: jest.fn(),

@@ -220,8 +220,9 @@ export declare interface MockCall {
 }
 
 /**
- * Represents a mock remote participants video or screen-sharing stream
- * @public
+ * Represents a mock remote participants video or screen-sharing stream.
+ *
+ * @private
  */
 export declare interface MockRemoteVideoStream {
   /**
@@ -258,7 +259,8 @@ export declare interface MockRemoteVideoStream {
 
 /**
  * The Mock CallAgent is used to handle calls.
- * @public
+ *
+ * @private
  */
 export declare interface MockCallAgent {
   /**
