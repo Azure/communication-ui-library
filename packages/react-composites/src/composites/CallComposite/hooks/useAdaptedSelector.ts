@@ -11,8 +11,9 @@ import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CommunicationUserKind } from '@azure/communication-common';
 
-// This function highly depends on chatClient.onChange event
-// It will be moved into selector folder when the ChatClientProvide when refactor finished
+/**
+ * @private
+ */
 export const useAdaptedSelector = <SelectorT extends (state: CallClientState, props: any) => any>(
   selector: SelectorT,
   selectorProps?: Parameters<SelectorT>[1]
@@ -20,6 +21,9 @@ export const useAdaptedSelector = <SelectorT extends (state: CallClientState, pr
   return useSelectorWithAdaptation(selector, adaptCompositeState, selectorProps);
 };
 
+/**
+ * @private
+ */
 export const useSelectorWithAdaptation = <
   SelectorT extends (state: ReturnType<AdaptFuncT>, props: any) => any,
   AdaptFuncT extends (state: CallAdapterState) => any
