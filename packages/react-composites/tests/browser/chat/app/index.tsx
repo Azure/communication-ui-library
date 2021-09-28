@@ -5,7 +5,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { _IdentifierProvider } from '@internal/react-components';
+import { ChatMessage, CustomMessage, _IdentifierProvider } from '@internal/react-components';
 import {
   ChatAdapter,
   createAzureCommunicationChatAdapter,
@@ -24,6 +24,19 @@ const threadId = params.threadId;
 const userId = params.userId;
 const useFrlocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
+
+// Map UserID to a consistant name for testing custom data model
+const names = ['Alice', 'Bob', 'Charles', 'Dimitri', 'Emily', 'Francis', 'Heather', 'Ingrid', 'James'];
+const customDataModelUserMap = new Map<string, string>();
+const getCustomDisplayName = (userId: string): string => {
+  if (customDataModelUserMap.has(userId)) {
+    return customDataModelUserMap.get(userId);
+  }
+
+  const newName = names[customDataModelUserMap.size];
+  customDataModelUserMap.set(userId, names[customDataModelUserMap.size]);
+  return newName;
+};
 
 function App(): JSX.Element {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter | undefined>(undefined);
@@ -54,7 +67,7 @@ function App(): JSX.Element {
           adapter={chatAdapter}
           onRenderTypingIndicator={
             customDataModel
-              ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
+              ? () => <text id="custom-data-model-typing-indicator">SOMEONE IS TYPING...</text>
               : undefined
           }
           onRenderMessage={
@@ -64,7 +77,11 @@ function App(): JSX.Element {
                     data-ui-status={messageProps.message.type === 'chat' ? messageProps.message.payload.status : ''}
                     id="custom-data-model-message"
                   >
-                    Custom Message
+                    {messageProps.message.type === 'chat' || messageProps.message.type === 'custom'
+                      ? (messageProps.message as ChatMessage | CustomMessage).payload.content.toLocaleUpperCase()
+                      : messageProps.message.type === 'system'
+                      ? 'SYSTEM MESSAGE'
+                      : 'MESSAGE'}
                   </text>
                 )
               : undefined
@@ -74,8 +91,8 @@ function App(): JSX.Element {
               ? () =>
                   new Promise((resolve) =>
                     resolve({
-                      imageInitials: 'CI',
-                      text: 'Custom Name'
+                      imageInitials: getCustomDisplayName(userId)[0],
+                      text: getCustomDisplayName(userId)
                     })
                   )
               : undefined
