@@ -87,7 +87,8 @@ export const loadCallScreen = async (pages: Page[], logs?: boolean): Promise<voi
         console.log('args.expectedTileCount: ', args.expectedTileCount);
         return correctNoOfTiles;
       },
-      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
+      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length },
+      { timeout: 5000 }
     );
   }
 };
