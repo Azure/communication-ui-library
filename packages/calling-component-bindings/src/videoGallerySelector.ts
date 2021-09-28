@@ -156,6 +156,11 @@ const sortedRemoteParticipants = (
   return participantsWithVideo.concat(participantsWithoutVideo);
 };
 
+/**
+ * Selects data that drives {@link VideoGallery} component.
+ *
+ * @public
+ */
 export const videoGallerySelector = createSelector(
   [
     getScreenShareRemoteParticipant,

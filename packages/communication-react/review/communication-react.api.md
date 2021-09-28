@@ -283,10 +283,10 @@ export type CallAdapterUiState = {
     page: CallCompositePage;
 };
 
-// @public (undocumented)
+// @public
 export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface CallAgentProviderProps {
     // (undocumented)
     callAgent?: CallAgent;
@@ -299,10 +299,10 @@ export interface CallAgentState {
     displayName?: string;
 }
 
-// @public (undocumented)
+// @public
 export const CallClientProvider: (props: CallClientProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface CallClientProviderProps {
     // (undocumented)
     callClient: StatefulCallClient;
@@ -390,6 +390,8 @@ export class CallError extends Error {
     timestamp: Date;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "errorBarSelector" is marked as @public, but its signature references "DiagnosticsCallFeatureState" which is marked as @beta
+//
 // @public
 export const callErrorBarSelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 activeErrors: ActiveError[];
@@ -415,7 +417,7 @@ export type CallingBaseSelectorProps = {
     callId: string;
 };
 
-// @public (undocumented)
+// @public
 export type CallingHandlers = {
     onStartLocalVideo: () => Promise<void>;
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
@@ -456,10 +458,10 @@ export type CallParticipant = CommunicationParticipant & {
     isSpeaking?: boolean;
 };
 
-// @public (undocumented)
+// @public
 export const CallProvider: (props: CallProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface CallProviderProps {
     // (undocumented)
     call?: Call;
@@ -471,6 +473,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    // Warning: (ae-incompatible-release-tags) The symbol "diagnostics" is marked as @public, but its signature references "DiagnosticsCallFeatureState" which is marked as @beta
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -490,6 +493,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
+    // Warning: (ae-incompatible-release-tags) The symbol "transfer" is marked as @public, but its signature references "TransferCallFeatureState" which is marked as @beta
     transfer: TransferCallFeatureState;
 }
 
@@ -503,7 +507,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
     strings?: Partial<CameraButtonStrings>;
 }
 
-// @public (undocumented)
+// @public
 export const cameraButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
@@ -949,7 +953,7 @@ export const createAzureCommunicationChatAdapterFromClient: (chatClient: Statefu
 // @alpha
 export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
-// @public (undocumented)
+// @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public (undocumented)
@@ -1067,7 +1071,7 @@ export type DeviceManagerState = {
     unparentedViews: LocalVideoStreamState[];
 };
 
-// @public
+// @beta
 export interface DiagnosticsCallFeatureState {
     media: MediaDiagnosticsState;
     network: NetworkDiagnosticsState;
@@ -1079,7 +1083,7 @@ export type DisplayNameChangedListener = (event: {
     displayName: string;
 }) => void;
 
-// @public (undocumented)
+// @public
 export const emptySelector: () => Record<string, never>;
 
 // @public
@@ -1137,10 +1141,10 @@ export interface FluentThemeProviderProps {
 // @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
-// @public (undocumented)
+// @public
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof callErrorBarSelector : undefined;
 
-// @public (undocumented)
+// @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public (undocumented)
@@ -1245,7 +1249,7 @@ export interface LocalVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @public
+// @beta
 export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
@@ -1511,7 +1515,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
     strings?: Partial<MicrophoneButtonStrings>;
 }
 
-// @public (undocumented)
+// @public
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
     checked: boolean;
@@ -1526,7 +1530,7 @@ export interface MicrophoneButtonStrings {
     onLabel: string;
 }
 
-// @public
+// @beta
 export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
@@ -1557,7 +1561,7 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
     strings?: Partial<OptionsButtonStrings>;
 }
 
-// @public (undocumented)
+// @public
 export const optionsButtonSelector: reselect.OutputSelector<CallClientState, {
     microphones: AudioDeviceInfo[];
     speakers: AudioDeviceInfo[];
@@ -1636,7 +1640,7 @@ export type ParticipantListProps = {
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 
-// @public (undocumented)
+// @public
 export const participantListSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
@@ -1668,7 +1672,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps, Particip
     styles?: ParticipantsButtonStyles;
 }
 
-// @public (undocumented)
+// @public
 export const participantsButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     participants: CallParticipant[];
     myUserId: string;
@@ -1745,7 +1749,7 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
     strings?: Partial<ScreenShareButtonStrings>;
 }
 
-// @public (undocumented)
+// @public
 export const screenShareButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     checked: boolean | undefined;
 }, (res: boolean | undefined) => {
@@ -1891,7 +1895,7 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-// @public
+// @beta
 export interface Transfer {
     error?: TransferErrorCode;
     id: number;
@@ -1899,13 +1903,13 @@ export interface Transfer {
     targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
 }
 
-// @public
+// @beta
 export interface TransferCallFeatureState {
     receivedTransferRequests: TransferRequest[];
     requestedTransfers: Transfer[];
 }
 
-// @public
+// @beta
 export interface TransferRequest {
     // (undocumented)
     targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
@@ -1946,13 +1950,13 @@ export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
     typingUserDisplayName?: IStyle;
 }
 
-// @public (undocumented)
+// @public
 export const useCall: () => Call | undefined;
 
-// @public (undocumented)
+// @public
 export const useCallAgent: () => CallAgent | undefined;
 
-// @public (undocumented)
+// @public
 export const useCallClient: () => StatefulCallClient;
 
 // @public (undocumented)
@@ -1961,7 +1965,7 @@ export const useChatClient: () => StatefulChatClient;
 // @public (undocumented)
 export const useChatThreadClient: () => ChatThreadClient;
 
-// @public (undocumented)
+// @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public (undocumented)
@@ -2013,7 +2017,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     screenShareStream?: VideoGalleryStream;
 }
 
-// @public (undocumented)
+// @public
 export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {

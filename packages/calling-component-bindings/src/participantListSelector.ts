@@ -32,6 +32,11 @@ const convertRemoteParticipantsToCommunicationParticipants = (
   });
 };
 
+/**
+ * Selects data that drives {@link ParticipantList} component.
+ *
+ * @public
+ */
 export const participantListSelector = reselect.createSelector(
   [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted],
   (

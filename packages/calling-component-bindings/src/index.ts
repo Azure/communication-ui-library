@@ -1,18 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from './baseSelectors';
+export type { CallingBaseSelectorProps } from './baseSelectors';
 export * from './callControlSelectors';
-export { createDefaultCallingHandlersForComponent, createDefaultCallingHandlers } from './handlers/createHandlers';
+export { createDefaultCallingHandlers } from './handlers/createHandlers';
 export { participantListSelector } from './participantListSelector';
 export { participantsButtonSelector } from './participantsButtonSelector';
 export { videoGallerySelector } from './videoGallerySelector';
 export { errorBarSelector } from './errorBarSelector';
 
-export type { CallingBaseSelectorProps } from './baseSelectors';
 export type { CallingHandlers } from './handlers/createHandlers';
 
-export * from './providers';
+export {
+  CallAgentProvider,
+  CallClientProvider,
+  CallProvider,
+  useCall,
+  useCallAgent,
+  useCallClient,
+  useDeviceManager
+} from './providers';
+export type { CallAgentProviderProps, CallClientProviderProps, CallProviderProps } from './providers';
+
 export {
   usePropsFor as useCallingPropsFor,
   emptySelector,
