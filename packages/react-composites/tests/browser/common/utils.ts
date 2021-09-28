@@ -82,8 +82,9 @@ export const loadCallScreen = async (pages: Page[], logs?: boolean): Promise<voi
       (args) => {
         const tileNodes = document.querySelectorAll(args.participantTileSelector);
         const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
-        logs && console.log('correctNoOfTiles: ', correctNoOfTiles);
-        logs && console.log('tileNodes.length: ', tileNodes.length);
+        console.log('correctNoOfTiles: ', correctNoOfTiles);
+        console.log('tileNodes.length: ', tileNodes.length);
+        console.log('args.expectedTileCount: ', args.expectedTileCount);
         return correctNoOfTiles;
       },
       { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
