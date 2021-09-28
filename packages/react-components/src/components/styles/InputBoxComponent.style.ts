@@ -2,10 +2,16 @@
 // Licensed under the MIT license.
 import { mergeStyles, IStyle, FontWeights } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const inputBoxWrapperStyle = mergeStyles({
   padding: '0'
 });
 
+/**
+ * @private
+ */
 export const inputBoxStyle = mergeStyles({
   minHeight: '2.25rem', // prevents the input text box from being sized to 0px when the meeting composite chat pane is closed.
   maxHeight: '8.25rem',
@@ -26,6 +32,9 @@ export const inputBoxStyle = mergeStyles({
   }
 });
 
+/**
+ * @private
+ */
 export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, disabled: boolean): IStyle => {
   const borderColor = hasErrorMessage ? errorColor : 'none';
   return {
@@ -54,6 +63,9 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
   };
 };
 
+/**
+ * @private
+ */
 export const inputButtonStyle = mergeStyles({
   color: 'grey',
   cursor: 'pointer',
@@ -66,6 +78,9 @@ export const inputButtonStyle = mergeStyles({
   height: '1.0625rem'
 });
 
+/**
+ * @private
+ */
 export const inputButtonContainerStyle = (rtl?: boolean): string =>
   mergeStyles({
     display: 'flex',

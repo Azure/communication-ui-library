@@ -10,6 +10,11 @@ import { isDarkThemed } from '../theming/themeUtils';
 
 const mainDivStyle: IStyle = { position: 'relative', height: '100%', width: '100%' };
 
+/**
+ * Present layouts for the {@link ControlBar}.
+ *
+ * @public
+ */
 export type ControlBarLayoutType =
   | 'horizontal'
   | 'vertical'
@@ -23,7 +28,9 @@ export type ControlBarLayoutType =
   | 'floatingRight';
 
 /**
- * Props for ControlBar component.
+ * Props for {@link ControlBar}.
+ *
+ * @public
  */
 export interface ControlBarProps {
   /** React Child components. */
@@ -47,10 +54,12 @@ export interface ControlBarProps {
 }
 
 /**
- * `ControlBar` allows you to easily create a component for call controls using
- * [Button](https://developer.microsoft.com/fluentui#/controls/web/button) component from
- * Fluent UI. Users will need to provide methods to Button components used inside `ControlBar`
- * for altering call behavior.
+ * A container for various buttons for call controls.
+ *
+ * Use with various call control buttons in this library, e.g., {@link CameraButton}, or your own instances of
+ * {@link ControlBarButton} directly.
+ *
+ * @public
  */
 export const ControlBar = (props: ControlBarProps): JSX.Element => {
   const { styles, layout } = props;

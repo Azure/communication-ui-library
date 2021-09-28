@@ -17,7 +17,7 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @public (undocumented)
+// @public
 export type CallbackType<KeyT, ArgsT extends unknown[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
 // @public
@@ -28,19 +28,19 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-// @public (undocumented)
+// @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
-// @public (undocumented)
+// @public
 export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
-// @public
-export const getApplicationId: () => string;
+// @internal
+export const _getApplicationId: () => string;
 
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: unknown, args2: unknown) => boolean) => (callback: CallBackT) => FnRetT[];
 
-// @public (undocumented)
+// @public
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public

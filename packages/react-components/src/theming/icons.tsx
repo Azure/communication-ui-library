@@ -30,12 +30,22 @@ import {
 } from '@fluentui/react-icons';
 import React from 'react';
 
+/**
+ * Icons used by the React components exported from this library.
+ *
+ * @remark See {@link CompositeIcons} for icons used by composites only.
+ *
+ * @public
+ */
 export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
 
 /**
  * The default set of icons that are available to use in the UI components.
+ *
+ * @remark Icons used only in the composites are available in {@link DEFAULT_COMPOSITE_ICONS}.
+ *
+ * @public
  */
-// NOTE: Don't forget to add icons used in composites to the types in `packages/react-composites/src/composites/common/icons.tsx`
 export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonCameraOff: <VideoOff20Filled />,
   ControlButtonCameraOn: <Video20Filled />,

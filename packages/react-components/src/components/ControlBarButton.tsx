@@ -9,12 +9,15 @@ import {
   Text,
   concatStyleSets,
   mergeStyles,
-  useTheme
+  useTheme,
+  IButtonStyles
 } from '@fluentui/react';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**
- * Strings of ControlBarButton that can be overridden
+ * Strings of {@link ControlBarButton} that can be overridden.
+ *
+ * @public
  */
 export interface ControlBarButtonStrings {
   /**
@@ -32,7 +35,16 @@ export interface ControlBarButtonStrings {
 }
 
 /**
- * Props for ControlBarButton component
+ * Styles for all {@link ControlBarButton} implementations.
+ *
+ * @public
+ */
+export type ControlBarButtonStyles = IButtonStyles;
+
+/**
+ * Props for {@link ControlBarButton}.
+ *
+ * @public
  */
 export interface ControlBarButtonProps extends IButtonProps {
   /**
@@ -61,6 +73,11 @@ export interface ControlBarButtonProps extends IButtonProps {
    * Icon to render when the button is not checked.
    */
   onRenderOffIcon?: IRenderFunction<IButtonProps>;
+
+  /**
+   * Fluent styles, including extensions common to all {@link ControlBarButton}s.
+   */
+  styles?: ControlBarButtonStyles;
 }
 
 const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null => {
@@ -74,7 +91,11 @@ const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null =>
 };
 
 /**
- * Default button styled for the Control Bar. This can be used to create custom buttons that are styled the same as other buttons provided by the UI Library.
+ * Default button styled for the {@link ControlBar}.
+ *
+ * Use this component create custom buttons that are styled the same as other buttons provided by the UI Library.
+ *
+ * @public
  */
 export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, props.styles ?? {});

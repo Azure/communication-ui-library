@@ -1,17 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IStyle } from '@fluentui/react';
+import { IStyle } from '@fluentui/react';
 
 /**
- * Basic custom styles props for components
+ * Basic fluent styles props for all components exported from this libray.
+ *
+ * @public
  */
 export interface BaseCustomStylesProps {
   /** Styles for the root container. */
   root?: IStyle;
 }
-
-/**
- * custom styles props for button components, extension on fluentUI IButtonStyles
- */
-export type ButtonCustomStylesProps = IButtonStyles;

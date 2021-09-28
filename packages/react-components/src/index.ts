@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 export * from './components';
-export { IdentifierProvider } from './identifiers';
-export type { Identifiers, IdentifierProviderProps } from './identifiers';
+export { _IdentifierProvider } from './identifiers';
+export type { _Identifiers, _IdentifierProviderProps } from './identifiers';
 export * from './localization/locales';
 export { LocalizationProvider } from './localization';
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
@@ -11,7 +11,6 @@ export * from './theming';
 
 export type {
   BaseCustomStylesProps,
-  ButtonCustomStylesProps,
   ChatMessage,
   ChatMessagePayload,
   OmitNever,

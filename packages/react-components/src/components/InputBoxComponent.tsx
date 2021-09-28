@@ -15,6 +15,9 @@ import {
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming/FluentThemeProvider';
 
+/**
+ * @private
+ */
 export interface InputBoxStylesProps extends BaseCustomStylesProps {
   /** Styles for the text field. */
   textField?: IStyle;
@@ -41,6 +44,9 @@ type InputBoxComponentProps = {
   styles?: InputBoxStylesProps;
 };
 
+/**
+ * @private
+ */
 export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element => {
   const {
     styles,
@@ -110,6 +116,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 };
 
+/**
+ * Props for dispalying a send button besides the text input area.
+ *
+ * @public
+ */
 export type InputBoxButtonProps = {
   onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
@@ -117,6 +128,9 @@ export type InputBoxButtonProps = {
   id?: string;
 };
 
+/**
+ * @private
+ */
 export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   const { onRenderIcon, onClick, className, id } = props;
   const [isMouseOverSendIcon, setIsMouseOverSendIcon] = useState(false);
