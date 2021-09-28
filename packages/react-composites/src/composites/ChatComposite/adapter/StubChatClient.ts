@@ -17,7 +17,9 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
 type PublicInterface<T> = { [K in keyof T]: T[K] };
 
-// A public interface compatible stub for ChatClient.
+/**
+ * A public interface compatible stub for ChatClient.
+ */
 export class StubChatClient implements PublicInterface<ChatClient> {
   private threadClient;
 
@@ -58,7 +60,9 @@ export class StubChatClient implements PublicInterface<ChatClient> {
   }
 }
 
-// A public interface compatible stub for ChatThreadClient.
+/**
+ * A public interface compatible stub for ChatThreadClient.
+ */
 export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
   readonly threadId: string;
 
@@ -106,8 +110,10 @@ export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
   }
 }
 
-// A paged async operator that asynchronously iterates over values in an array.
-// In paging mode, the whole array is returned as a single page, ignoring all page size options.
+/**
+ * A paged async operator that asynchronously iterates over values in an array.
+ * In paging mode, the whole array is returned as a single page, ignoring all page size options.
+ */
 export const pagedAsyncIterator = <T>(values: T[]): PagedAsyncIterableIterator<T, T[]> => {
   async function* listAll(values: T[]): AsyncIterableIterator<T> {
     yield* values;
@@ -132,7 +138,9 @@ export const pagedAsyncIterator = <T>(values: T[]): PagedAsyncIterableIterator<T
   };
 };
 
-// An iterator that throws the given error when asynchronously iterating over items, directly or byPage.
+/**
+ * An iterator that throws the given error when asynchronously iterating over items, directly or byPage.
+ */
 export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIterator<T, T[]> => {
   return {
     async next() {

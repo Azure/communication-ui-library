@@ -3,14 +3,23 @@
 
 import { IDropdownStyles, IStackTokens, Theme, mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const mainStackTokens: IStackTokens = {
   childrenGap: '1rem'
 };
 
+/**
+ * @private
+ */
 export const micStackTokens: IStackTokens = {
   childrenGap: '1rem'
 };
 
+/**
+ * @private
+ */
 export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   caretDownWrapper: {
     height: '2.5rem',
@@ -42,11 +51,17 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   }
 });
 
+/**
+ * @private
+ */
 export const localSettingsContainer = mergeStyles({
   minWidth: '12.5rem',
   maxWidth: '18.75rem'
 });
 
+/**
+ * @private
+ */
 export const dropDownTitleIconStyles = mergeStyles({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -56,6 +71,9 @@ export const dropDownTitleIconStyles = mergeStyles({
   margin: '.063rem'
 });
 
+/**
+ * @private
+ */
 export const optionIconStyles = mergeStyles({
   marginRight: '8px',
   verticalAlign: 'text-top'

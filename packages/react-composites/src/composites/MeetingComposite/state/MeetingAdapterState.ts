@@ -14,6 +14,7 @@ import {
 
 /**
  * UI state pertaining to the Meeting Composite.
+ *
  * @alpha
  */
 export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
@@ -23,6 +24,7 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 
 /**
  * State from the backend services that drives Meeting Composite.
+ *
  * @alpha
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
@@ -44,6 +46,9 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
  */
 export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {}
 
+/**
+ * @private
+ */
 export function meetingAdapterStateFromBackingStates(
   callAdapter: CallAdapter,
   chatAdapter: ChatAdapter
@@ -66,6 +71,9 @@ export function meetingAdapterStateFromBackingStates(
   };
 }
 
+/**
+ * @private
+ */
 export function mergeChatAdapterStateIntoMeetingAdapterState(
   meetingAdapterState: MeetingAdapterState,
   chatAdapterState: ChatAdapterState
@@ -80,6 +88,9 @@ export function mergeChatAdapterStateIntoMeetingAdapterState(
   };
 }
 
+/**
+ * @private
+ */
 export function mergeCallAdapterStateIntoMeetingAdapterState(
   meetingAdapterState: MeetingAdapterState,
   callAdapterState: CallAdapterState

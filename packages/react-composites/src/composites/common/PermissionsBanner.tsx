@@ -5,12 +5,36 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { MessageBar, MessageBarButton, MessageBarType } from '@fluentui/react';
 import { permissionsBannerMessageBarStyle } from '../common/styles/PermissionsBanner.styles';
 
+/**
+ * @private
+ *
+ * TODO: Localize
+ */
 export const CAMERA_PERMISSION_DENIED = 'Camera use is blocked by your browser.';
+
+/**
+ * @private
+ *
+ * TODO: Localize
+ */
 export const MICROPHONE_PERMISSION_DENIED = 'Microphone use is blocked by your browser.';
+
+/**
+ * @private
+ *
+ * TODO: Localize
+ */
 export const CAMERA_AND_MICROPHONE_PERMISSION_DENIED = 'Camera and microphone use is blocked by your browser.';
+
+/**
+ * TODO: Localize
+ */
 const ALLOW_PERMISSIONS_INSTRUCTIONS =
   "Grant permission by clicking the lock in the address bar and selecting 'Allow'.";
 
+/**
+ * @private
+ */
 export interface PermissionsBannerProps {
   /**
    * If cameraPermission is true or undefined, no banner is shown for camera.
@@ -32,6 +56,7 @@ export interface PermissionsBannerProps {
  * @param dismissedCameraBanner - If camera banner was already dismissed
  * @param dismissedMicrophoneBanner - If microphone banner was already dismissed
  * @returns
+ *
  */
 export const getPermissionsBannerMessage = (
   cameraPermissionGranted: boolean | undefined,
@@ -62,6 +87,7 @@ export const getPermissionsBannerMessage = (
  * the props and stay dismissed even if permission change after dismissal.
  *
  * @param props {@link PermissionsBannerProps}
+ *
  */
 export const PermissionsBanner = (props: PermissionsBannerProps): JSX.Element => {
   const { cameraPermissionGranted, microphonePermissionGranted } = props;

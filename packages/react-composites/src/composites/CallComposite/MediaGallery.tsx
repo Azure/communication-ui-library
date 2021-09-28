@@ -27,6 +27,9 @@ const remoteVideoViewOption = {
   scalingMode: 'Crop'
 } as VideoStreamOptions;
 
+/**
+ * @private
+ */
 export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
@@ -35,6 +38,9 @@ export interface MediaGalleryProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 
+/**
+ * @private
+ */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
   const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);

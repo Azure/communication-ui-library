@@ -10,8 +10,9 @@ import { useAdapter } from '../adapter/ChatAdapterProvider';
 import memoizeOne from 'memoize-one';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 
-// This function highly depends on chatClient.onChange event
-// It will be moved into selector folder when the ChatClientProvide when refactor finished
+/**
+ * @private
+ */
 export const useAdaptedSelector = <SelectorT extends (state: ChatClientState, props: any) => any>(
   selector: SelectorT,
   selectorProps?: Parameters<SelectorT>[1]
@@ -19,6 +20,9 @@ export const useAdaptedSelector = <SelectorT extends (state: ChatClientState, pr
   return useSelectorWithAdaptation(selector, adaptCompositeState, selectorProps);
 };
 
+/**
+ * @private
+ */
 export const useSelectorWithAdaptation = <
   SelectorT extends (state: ReturnType<AdaptFuncT>, props: any) => any,
   AdaptFuncT extends (state: ChatAdapterState) => any
