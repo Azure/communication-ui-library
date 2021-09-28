@@ -129,7 +129,7 @@ const didUserSendTheLatestMessage = (
  *
  * @public
  */
-export interface MessageThreadStylesProps extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStylesProps {
   /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
   /** Styles for new message container. */
@@ -266,7 +266,7 @@ const memoizeAllMessages = memoizeFnAll(
     showMessageDate: boolean,
     showMessageStatus: boolean,
     onRenderAvatar: OnRenderAvatarCallback | undefined,
-    styles: MessageThreadStylesProps | undefined,
+    styles: MessageThreadStyles | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
@@ -399,7 +399,7 @@ export type MessageThreadProps = {
    * <MessageThread styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: MessageThreadStylesProps;
+  styles?: MessageThreadStyles;
   /**
    * Whether the new message button is disabled or not.
    *

@@ -1451,7 +1451,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 export type MessageThreadProps = {
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage)[];
-    styles?: MessageThreadStylesProps;
+    styles?: MessageThreadStyles;
     disableJumpToNewMessageButton?: boolean;
     showMessageDate?: boolean;
     showMessageStatus?: boolean;
@@ -1499,7 +1499,7 @@ export interface MessageThreadStrings {
 }
 
 // @public
-export interface MessageThreadStylesProps extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: (mine: boolean) => ComponentSlotStyle;
     chatMessageContainer?: (mine: boolean) => ComponentSlotStyle;

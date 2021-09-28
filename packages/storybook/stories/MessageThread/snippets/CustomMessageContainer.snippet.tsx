@@ -1,9 +1,9 @@
-import { FluentThemeProvider, MessageThread, MessageThreadStylesProps } from '@azure/communication-react';
+import { FluentThemeProvider, MessageThread, MessageThreadStyles } from '@azure/communication-react';
 import React from 'react';
 import { GetHistoryWithSystemMessages } from './placeholdermessages';
 
 export const MessageThreadWithCustomMessageContainerExample: () => JSX.Element = () => {
-  const messageThreadStyle: MessageThreadStylesProps = {
+  const messageThreadStyle: MessageThreadStyles = {
     chatMessageContainer: (mine: boolean) => {
       return {
         fontStyle: 'italic',

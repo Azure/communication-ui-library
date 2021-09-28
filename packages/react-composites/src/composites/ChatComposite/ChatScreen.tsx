@@ -12,7 +12,7 @@ import {
   SendBox,
   TypingIndicator,
   ParticipantMenuItemsCallback,
-  MessageThreadStylesProps
+  MessageThreadStyles
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -39,7 +39,7 @@ export type ChatScreenProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  styles?: MessageThreadStylesProps;
+  styles?: MessageThreadStyles;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
