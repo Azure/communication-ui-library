@@ -16,19 +16,22 @@ import { ParticipantList, ParticipantListProps } from './ParticipantList';
 import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { formatString } from '../localization/localizationUtils';
-import { ButtonCustomStylesProps } from '../types';
-import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 
 /**
- * Styles Props for ParticipantsButton component
+ * Styles Props for {@link ParticipantsButton}.
+ *
+ * @public
  */
-export interface ParticipantsButtonStylesProps extends ButtonCustomStylesProps {
+export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
   /** Styles of ParticipantList container */
   participantListContainerStyle?: IStyle;
 }
 
 /**
- * Strings of ParticipantsButtonStrings that can be overridden
+ * Strings of {@link ParticipantsButton} that can be overridden.
+ *
+ * @public
  */
 export interface ParticipantsButtonStrings {
   /**
@@ -54,7 +57,9 @@ export interface ParticipantsButtonStrings {
 }
 
 /**
- * Props for ParticipantsButton component
+ * Props for {@link ParticipantsButton}.
+ *
+ * @public
  */
 export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
   /**
@@ -68,7 +73,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps, Particip
    * <ParticipantsButton styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: ParticipantsButtonStylesProps;
+  styles?: ParticipantsButtonStyles;
   /**
    * URL to invite new participants to the current call
    */
@@ -88,12 +93,15 @@ const onRenderPeopleIcon = (): JSX.Element => {
 };
 
 /**
- * `ParticipantsButton` allows you to easily create a component rendering a participants button. It can be used in your ControlBar component for example.
+ * A button to show a menu with calling or chat participants.
+ *
+ * Can be used with {@link ControlBar}.
+ *
  * This button contains dropdown menu items defined through its property `menuProps`. By default, it can display the number of remote participants with the full list
  * as sub-menu and an option to mute all participants, as well as a copy-to-clipboard button to copy the call invitation URL.
  * This `menuProps` can be fully redefined and its property is of type [IContextualMenuProps](https://developer.microsoft.com/fluentui#/controls/web/contextualmenu#IContextualMenuProps).
  *
- * @param props - of type ParticipantsButtonProps
+ * @public
  */
 export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
   const {

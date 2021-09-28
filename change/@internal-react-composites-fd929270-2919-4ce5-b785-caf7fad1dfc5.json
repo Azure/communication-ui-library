@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add mobileView alpha flag to call and meeting composites",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

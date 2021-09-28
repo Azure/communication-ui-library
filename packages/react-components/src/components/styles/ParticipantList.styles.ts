@@ -3,11 +3,17 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const participantListStyle = mergeStyles({
   height: '100%',
   padding: '0.125rem'
 });
 
+/**
+ * @private
+ */
 export const participantListItemStyle = {
   root: {
     paddingLeft: '1rem',
@@ -15,6 +21,9 @@ export const participantListItemStyle = {
   }
 };
 
+/**
+ * @private
+ */
 export const iconStyles = mergeStyles({
   display: 'flex',
   lineHeight: 0,

@@ -41,6 +41,7 @@ const CustomDataModelStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
+          options={{ mobileView: args.mobileView }}
         />
       ) : (
         <ConfigHintBanner />
@@ -59,6 +60,7 @@ export default {
     connectionString: controlsToAdd.connectionString,
     displayName: controlsToAdd.displayName,
     avatarInitials: controlsToAdd.avatarInitials,
+    mobileView: controlsToAdd.mobileView,
     callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls

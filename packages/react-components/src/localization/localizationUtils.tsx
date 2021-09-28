@@ -3,6 +3,9 @@
 
 import React from 'react';
 
+/**
+ * @private
+ */
 export interface IObjectMap<T> {
   [key: string]: T;
 }

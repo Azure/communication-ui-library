@@ -8,8 +8,18 @@ import { blockStyle, cellStyle, gridLayoutContainerStyle } from './styles/GridLa
 import { SizeMe } from 'react-sizeme';
 import { calculateBlockProps } from './utils/GridLayoutUtils';
 
+/**
+ * Preset layouts for {@link GridLayout}.
+ *
+ * @public
+ */
 export type GridLayoutType = 'standard';
 
+/**
+ * Props for {@link GridLayout}.
+ *
+ * @public
+ */
 export interface GridLayoutProps {
   children: React.ReactNode;
   /**

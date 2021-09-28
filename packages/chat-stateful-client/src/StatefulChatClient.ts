@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
-import { getApplicationId } from '@internal/acs-ui-common';
+import { _getApplicationId } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
@@ -133,7 +133,7 @@ export const createStatefulChatClient = (
     ...options,
     chatClientOptions: {
       ...options?.chatClientOptions,
-      userAgentOptions: { userAgentPrefix: getApplicationId() }
+      userAgentOptions: { userAgentPrefix: _getApplicationId() }
     }
   };
   return createStatefulChatClientWithDeps(

@@ -14,8 +14,9 @@ import React, { createContext, useContext } from 'react';
  * guarantee of the public API. This will remain perenially experimental and compatibility breaking changes
  * may be made at any point.
  *
+ * @internal
  */
-export interface Identifiers {
+export interface _Identifiers {
   /** `data-ui-id` value for `SendBox` Component */
   sendboxTextfield: string;
   /** `data-ui-id` value for `ParticipantList` Component */
@@ -32,7 +33,7 @@ export interface Identifiers {
   videoTile: string;
 }
 
-const defaultIdentifiers: Identifiers = {
+const defaultIdentifiers: _Identifiers = {
   sendboxTextfield: 'sendbox-textfield',
   participantList: 'participant-list',
   messageContent: 'message-content',
@@ -42,31 +43,40 @@ const defaultIdentifiers: Identifiers = {
   videoTile: 'video-tile'
 };
 
-export const IdentifierContext = createContext<Identifiers>(defaultIdentifiers);
+/**
+ * @private
+ */
+export const IdentifierContext = createContext<_Identifiers>(defaultIdentifiers);
 
 /**
- * Arguments to Context Provider for {@link Identifiers}.
+ * Arguments to Context Provider for {@link _Identifiers}.
  *
  * @experimental
  *
- * See documentation for {@link Identifiers}.
+ * See documentation for {@link _Identifiers}.
  *
+ * @internal
  */
-export interface IdentifierProviderProps {
-  identifiers?: Identifiers;
+export interface _IdentifierProviderProps {
+  identifiers?: _Identifiers;
   children: React.ReactNode;
 }
 
 /**
- * React Context provider for {@link Identifiers}.
+ * React Context provider for {@link _Identifiers}.
  *
  * @experimental
  *
- * See documentation for {@link Identifiers}.
+ * See documentation for {@link _Identifiers}.
+ *
+ * @internal
  */
-export const IdentifierProvider = (props: IdentifierProviderProps): JSX.Element => {
+export const _IdentifierProvider = (props: _IdentifierProviderProps): JSX.Element => {
   const { identifiers, children } = props;
   return <IdentifierContext.Provider value={identifiers ?? defaultIdentifiers}>{children}</IdentifierContext.Provider>;
 };
 
-export const useIdentifiers = (): Identifiers => useContext(IdentifierContext);
+/**
+ * @private
+ */
+export const useIdentifiers = (): _Identifiers => useContext(IdentifierContext);

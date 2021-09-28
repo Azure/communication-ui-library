@@ -12,6 +12,8 @@ import {
 /**
  * Options that can be injected into the `onRender` function for customizing an
  * Avatar (`Persona`) component.
+ *
+ * @public
  */
 export type CustomAvatarOptions = {
   /** Persona coin size in pixels  */
@@ -34,6 +36,8 @@ export type CustomAvatarOptions = {
 
 /**
  * A custom rendered callback that allows users to customize the rendering of a Persona Component.
+ *
+ * @public
  */
 export type OnRenderAvatarCallback = (
   /**
