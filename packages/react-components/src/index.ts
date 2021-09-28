@@ -11,6 +11,7 @@ export * from './theming';
 
 export type {
   BaseCustomStylesProps,
+  CallParticipant,
   ChatMessage,
   CommunicationParticipant,
   ContentSystemMessage,
