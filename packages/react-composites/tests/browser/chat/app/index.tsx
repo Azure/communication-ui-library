@@ -5,7 +5,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { _IdentifierProvider } from '@internal/react-components';
+import { ChatMessage, CustomMessage, _IdentifierProvider } from '@internal/react-components';
 import {
   ChatAdapter,
   createAzureCommunicationChatAdapter,
@@ -22,7 +22,7 @@ const token = params.token;
 const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 const userId = params.userId;
-const useFrlocale = Boolean(params.useFrLocale);
+const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
@@ -54,7 +54,7 @@ function App(): JSX.Element {
           adapter={chatAdapter}
           onRenderTypingIndicator={
             customDataModel
-              ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
+              ? () => <text id="custom-data-model-typing-indicator">SOMEONE IS TYPING...</text>
               : undefined
           }
           onRenderMessage={
@@ -64,7 +64,11 @@ function App(): JSX.Element {
                     data-ui-status={messageProps.message.type === 'chat' ? messageProps.message.payload.status : ''}
                     id="custom-data-model-message"
                   >
-                    Custom Message
+                    {messageProps.message.type === 'chat' || messageProps.message.type === 'custom'
+                      ? (messageProps.message as ChatMessage | CustomMessage).payload.content.toLocaleUpperCase()
+                      : messageProps.message.type === 'system'
+                      ? 'SYSTEM MESSAGE'
+                      : 'MESSAGE'}
                   </text>
                 )
               : undefined
@@ -74,13 +78,13 @@ function App(): JSX.Element {
               ? () =>
                   new Promise((resolve) =>
                     resolve({
-                      imageInitials: 'CI',
-                      text: 'Custom Name'
+                      imageInitials: 'CN',
+                      text: 'CUSTOM NAME'
                     })
                   )
               : undefined
           }
-          locale={useFrlocale ? COMPOSITE_LOCALE_FR_FR : undefined}
+          locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
         />
       )}
     </_IdentifierProvider>
