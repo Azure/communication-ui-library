@@ -30,6 +30,8 @@ import {
 /**
  * State only version of {@link @azure/communication-calling#TransferRequestedEventArgs}. At the time of writing
  * Transfer Call is experimental. Not tested and not ready for consumption.
+ *
+ * @beta
  */
 export interface TransferRequest {
   targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
@@ -38,7 +40,8 @@ export interface TransferRequest {
 /**
  * State only version of {@link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is
  * experimental. Not tested and not ready for consumption.
- * @experimental
+ *
+ * @beta
  */
 export interface Transfer {
   /**
@@ -64,6 +67,8 @@ export interface Transfer {
  * Holds all the state found in {@link @azure/communication-calling#TransferCallFeature} and
  * {@link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is experimental. Not tested and
  * not ready for consumption.
+ *
+ * @beta
  */
 export interface TransferCallFeatureState {
   /**
@@ -86,6 +91,8 @@ export interface TransferCallFeatureState {
  * {@link CallClientState} and not included here. The reason to have CallAgent's state proxied is to provide access to
  * displayName. We don't flatten CallAgent.displayName and put it in CallClientState because it would be ambiguious that
  * displayName is actually reliant on the creation/existence of CallAgent to be available.
+ *
+ * @public
  */
 export interface CallAgentState {
   /**
@@ -98,6 +105,8 @@ export interface CallAgentState {
  * State only version of {@link @azure/communication-calling#TranscriptionCallFeature}. {@link StatefulCallClient} will
  * automatically listen for transcription state of the call and update the state exposed by {@link StatefulCallClient}
  * accordingly.
+ *
+ * @public
  */
 export interface TranscriptionCallFeatureState {
   /**
@@ -109,6 +118,8 @@ export interface TranscriptionCallFeatureState {
 /**
  * State only version of {@link @azure/communication-calling#RecordingCallFeature}. {@link StatefulCallClient} will
  * automatically listen for recording state of the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ *
+ * @public
  */
 export interface RecordingCallFeatureState {
   /**
@@ -119,6 +130,8 @@ export interface RecordingCallFeatureState {
 
 /**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.
+ *
+ * @public
  */
 export interface LocalVideoStreamState {
   /**
@@ -138,6 +151,8 @@ export interface LocalVideoStreamState {
 
 /**
  * State only version of {@link @azure/communication-calling#RemoteVideoStream}.
+ *
+ * @public
  */
 export interface RemoteVideoStreamState {
   /**
@@ -165,6 +180,8 @@ export interface RemoteVideoStreamState {
  * stop rendering the stream and re-start it using the desired scalingMode. This property is added to the state exposed
  * by {@link StatefulCallClient} by {@link StatefulCallClient.createView} and removed by
  * {@link StatefulCallClient.disposeView}.
+ *
+ * @public
  */
 export interface VideoStreamRendererViewState {
   /**
@@ -184,6 +201,8 @@ export interface VideoStreamRendererViewState {
 /**
  * State only version of {@link @azure/communication-calling#RemoteParticipant}. {@link StatefulCallClient} will
  * automatically retrieve RemoteParticipants and add their state to the state exposed by {@link StatefulCallClient}.
+ *
+ * @public
  */
 export interface RemoteParticipantState {
   /**
@@ -220,6 +239,8 @@ export interface RemoteParticipantState {
 /**
  * State only version of {@link @azure/communication-calling#Call}. {@link StatefulCallClient} will automatically
  * retrieve Call's state and add it to the state exposed by {@link StatefulCallClient}.
+ *
+ * @public
  */
 export interface CallState {
   /**
@@ -315,6 +336,8 @@ export interface CallState {
 /**
  * State only version of {@link @azure/communication-calling#IncomingCall}. {@link StatefulCallClient} will
  * automatically detect incoming calls and add their state to the state exposed by {@link StatefulCallClient}.
+ *
+ * @public
  */
 export interface IncomingCallState {
   /**
@@ -348,6 +371,8 @@ export interface IncomingCallState {
  * speakers, and deviceAccess states will be empty until the corresponding
  * {@link @azure/communication-calling#DeviceManager}'s getCameras, getMicrophones, getSpeakers, and askDevicePermission
  * APIs are called and completed.
+ *
+ * @public
  */
 export type DeviceManagerState = {
   /**
@@ -400,6 +425,8 @@ export type DeviceManagerState = {
  * incomingCallsEnded states will be automatically provided if a callAgent has been created. The deviceManager will be
  * empty initially until populated see {@link DeviceManagerState}. The userId state is provided as a convenience for the
  * developer and is completely controled and set by the developer.
+ *
+ * @public
  */
 export interface CallClientState {
   /**
@@ -461,6 +488,8 @@ export interface CallClientState {
  * - The state is cleared.
  * - Subsequent calls to related API methods succeed.
  * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
+ *
+ * @public
  */
 export type CallErrors = {
   [target in CallErrorTarget]: CallError;
@@ -468,6 +497,8 @@ export type CallErrors = {
 
 /**
  * Error thrown from failed stateful API methods.
+ *
+ * @public
  */
 export class CallError extends Error {
   /**
@@ -496,6 +527,8 @@ export class CallError extends Error {
 
 /**
  * String literal type for all permissible keys in {@Link CallErrors}.
+ *
+ * @public
  */
 export type CallErrorTarget =
   | 'Call.addParticipant'
@@ -531,6 +564,8 @@ export type CallErrorTarget =
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
+ *
+ * @beta
  */
 export interface DiagnosticsCallFeatureState {
   /**
@@ -546,6 +581,8 @@ export interface DiagnosticsCallFeatureState {
 
 /**
  * State only proxy for {@link @azure/communication-calling#NetworkDiagnostics}.
+ *
+ * @beta
  */
 export interface NetworkDiagnosticsState {
   latest: LatestNetworkDiagnostics;
@@ -553,6 +590,8 @@ export interface NetworkDiagnosticsState {
 
 /**
  * State only proxy for {@link @azure/communication-calling#MediaDiagnostics}.
+ *
+ * @beta
  */
 export interface MediaDiagnosticsState {
   latest: LatestMediaDiagnostics;

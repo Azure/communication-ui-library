@@ -24,6 +24,9 @@ import {
   Transfer as DeclarativeTransfer
 } from './CallClientState';
 
+/**
+ * @private
+ */
 export function convertSdkLocalStreamToDeclarativeLocalStream(
   stream: SdkLocalVideoStream
 ): DeclarativeLocalVideoStream {
@@ -34,6 +37,9 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
   };
 }
 
+/**
+ * @private
+ */
 export function convertSdkRemoteStreamToDeclarativeRemoteStream(
   stream: SdkRemoteVideoStream
 ): DeclarativeRemoteVideoStream {
@@ -45,6 +51,9 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
   };
 }
 
+/**
+ * @private
+ */
 export function convertSdkParticipantToDeclarativeParticipant(
   participant: SdkRemoteParticipant
 ): DeclarativeRemoteParticipant {
@@ -63,7 +72,11 @@ export function convertSdkParticipantToDeclarativeParticipant(
   };
 }
 
-// Note at the time of writing only one LocalVideoStream is supported by the SDK.
+/**
+ * @private
+ *
+ * Note at the time of writing only one LocalVideoStream is supported by the SDK.
+ */
 export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
   const declarativeRemoteParticipants = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
@@ -98,6 +111,9 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
   };
 }
 
+/**
+ * @private
+ */
 export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomingCall): DeclarativeIncomingCall {
   return {
     id: call.id,
@@ -107,6 +123,9 @@ export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomin
   };
 }
 
+/**
+ * @private
+ */
 export function convertFromSDKToDeclarativeVideoStreamRendererView(
   view: VideoStreamRendererView
 ): DeclarativeVideoStreamRendererView {
@@ -117,6 +136,9 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
   };
 }
 
+/**
+ * @private
+ */
 export function convertSdkTransferRequestedToDeclarativeTransferRequested(
   transferRequested: TransferRequestedEventArgs
 ): TransferRequest {
@@ -125,6 +147,9 @@ export function convertSdkTransferRequestedToDeclarativeTransferRequested(
   };
 }
 
+/**
+ * @private
+ */
 export function convertSdkTransferToDeclarativeTransfer(
   transfer: Transfer,
   targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier,
