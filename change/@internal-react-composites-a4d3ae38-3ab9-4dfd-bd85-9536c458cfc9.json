@@ -1,7 +1,7 @@
 {
-  "type": "prerelease",
-  "comment": "Delete dead code (no API changes)",
+  "type": "none",
+  "comment": "Delete dead code (non functional changes)",
   "packageName": "@internal/react-composites",
   "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
