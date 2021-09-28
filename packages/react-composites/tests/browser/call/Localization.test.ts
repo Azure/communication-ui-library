@@ -6,13 +6,6 @@ import { waitForCallCompositeToLoad, loadCallScreen, updatePageQueryParam, build
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
-  test.beforeEach(async ({ pages }) => {
-    for (const page of pages) {
-      // Load french locale for tests
-      await updatePageQueryParam(page, { useFrlocale: 'true' });
-    }
-  });
-
   test.afterEach(async ({ pages, users, serverUrl }) => {
     // Reset the page url that was changed during the tests
     for (let i = 0; i < pages.length; i++) {
@@ -23,6 +16,9 @@ test.describe('Localization tests', async () => {
 
   test('Configuration page title and participant button in call should be localized', async ({ pages }) => {
     const page = pages[0];
+
+    // Load french locale for tests
+    await updatePageQueryParam(page, { useFrlocale: 'true' });
 
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
