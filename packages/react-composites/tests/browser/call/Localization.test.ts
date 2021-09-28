@@ -7,7 +7,7 @@ import { expect } from '@playwright/test';
 import { PAGE_VIEWPORT } from '../common/defaults';
 import { loadPageWithPermissionsForCalls } from '../common/fixtureHelpers';
 
-test.describe.only('Localization tests', async () => {
+test.describe('Localization tests', async () => {
   test('Configuration page title and participant button in call should be localized', async ({
     serverUrl,
     users,
