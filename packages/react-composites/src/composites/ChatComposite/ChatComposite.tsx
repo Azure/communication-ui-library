@@ -73,38 +73,6 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          styles={{
-            chatItemMessageContainer: (mine: boolean) => {
-              if (mine) {
-                return {
-                  marginRight: '0px',
-                  width: 'auto !important',
-                  marginLeft: '0px'
-                };
-              } else {
-                return {
-                  marginRight: '0px',
-                  width: 'auto !important',
-                  marginLeft: '6.5rem'
-                };
-              }
-            },
-            chatMessageContainer: (mine: boolean) => {
-              if (mine) {
-                return {
-                  maxWidth: '100%',
-                  minWidth: '0%',
-                  marginLeft: '0px'
-                };
-              } else {
-                return {
-                  maxWidth: '100%',
-                  minWidth: '0%',
-                  marginRight: '0px'
-                };
-              }
-            }
-          }}
         />
       </ChatAdapterProvider>
     </BaseComposite>
