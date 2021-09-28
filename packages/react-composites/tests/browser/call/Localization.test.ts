@@ -32,7 +32,7 @@ test.describe('Localization tests', async () => {
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
     console.log('item7');
 
-    await loadCallScreen([page]);
+    await loadCallScreen([page], true);
     console.log('item8');
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
   });

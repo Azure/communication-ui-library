@@ -64,19 +64,26 @@ export const waitForMeetingCompositeToLoad = async (page: Page): Promise<void> =
 /**
  * Wait for the Composite CallScreen page to fully load.
  */
-export const loadCallScreen = async (pages: Page[]): Promise<void> => {
+export const loadCallScreen = async (pages: Page[], logs?: boolean): Promise<void> => {
+  logs && console.log('loading call screen');
   for (const page of pages) {
+    logs && console.log('bring page to front');
     await page.bringToFront();
+    logs && console.log('clicking start call button');
     await page.click(dataUiId('call-composite-start-call-button'));
   }
 
   // Wait for all participants tiles to have loaded
+  logs && console.log('waiting for participants to load');
   for (const page of pages) {
     await page.bringToFront();
+    logs && console.log('waiting for function');
     await page.waitForFunction(
       (args) => {
         const tileNodes = document.querySelectorAll(args.participantTileSelector);
         const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
+        logs && console.log('correctNoOfTiles: ', correctNoOfTiles);
+        logs && console.log('tileNodes.length: ', tileNodes.length);
         return correctNoOfTiles;
       },
       { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
