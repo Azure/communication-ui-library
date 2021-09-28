@@ -5,13 +5,17 @@ import { test } from './fixture';
 import { waitForCallCompositeToLoad, loadCallScreen, buildUrl } from '../common/utils';
 import { expect } from '@playwright/test';
 import { PAGE_VIEWPORT } from '../common/defaults';
+import { loadPageWithPermissionsForCalls } from '../common/fixtureHelpers';
 
-test.describe('Localization tests', async () => {
+test.describe.only('Localization tests', async () => {
   test('Configuration page title and participant button in call should be localized', async ({
     serverUrl,
-    page,
-    users
+    users,
+    testBrowser
   }) => {
+    // TODO: in future this will use permissions set in the playwright config project settings
+    const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0]);
+
     // Load french locale for tests
     const url = buildUrl(serverUrl, users[0], { useFrlocale: 'true' });
     await page.bringToFront();
