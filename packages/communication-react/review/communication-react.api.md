@@ -598,7 +598,7 @@ export type ChatClientProviderProps = {
     chatClient: StatefulChatClient;
 };
 
-// @public (undocumented)
+// @public
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
@@ -725,7 +725,7 @@ export type ChatThreadClientProviderProps = {
     chatThreadClient: ChatThreadClient;
 };
 
-// @public (undocumented)
+// @public
 export type ChatThreadClientState = {
     chatMessages: {
         [key: string]: ChatMessageWithStatus;
@@ -1828,13 +1828,10 @@ export type StatefulCallClientOptions = {
     maxStateChangeListeners?: number;
 };
 
-// @public (undocumented)
+// @public
 export interface StatefulChatClient extends ChatClient {
-    // (undocumented)
     getState(): ChatClientState;
-    // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
 
