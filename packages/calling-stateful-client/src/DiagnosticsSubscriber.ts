@@ -11,6 +11,9 @@ import {
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
+/**
+ * @private
+ */
 export class DiagnosticsSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;

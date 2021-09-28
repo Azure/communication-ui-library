@@ -5,6 +5,9 @@ import { RecordingCallFeature } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
+/**
+ * @private
+ */
 export class RecordingSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
