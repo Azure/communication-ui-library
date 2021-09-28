@@ -14,6 +14,7 @@ test.describe('Localization tests', async () => {
   }) => {
     // Load french locale for tests
     const url = buildUrl(serverUrl, users[0], { useFrlocale: 'true' });
+    await page.bringToFront();
     await page.setViewportSize(PAGE_VIEWPORT);
     await page.goto(url, { waitUntil: 'load' });
 
