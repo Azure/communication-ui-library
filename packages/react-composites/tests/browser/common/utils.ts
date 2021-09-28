@@ -2,25 +2,17 @@
 // Licensed under the MIT license.
 
 import { IDS } from './config';
-import { ChatClient } from '@azure/communication-chat';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { Browser, Page } from '@playwright/test';
-import { v1 } from 'uuid';
+import { Page } from '@playwright/test';
+import { CallUserType, ChatUserType, MeetingUserType } from './defaults';
 
-export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
-const DATA_UI_ID = 'data-ui-id';
-const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
-export const PAGE_VIEWPORT = {
-  width: 1024,
-  height: 768
-};
-export const TOPIC_NAME = 'Cowabunga';
+/** Helper function to generate the selector for selecting an HTML node by data-ui-id */
+export const dataUiId = (v: string): string => `[data-ui-id="${v}"]`;
 
 /**
  * Wait for the ChatComposite on a page to fully load.
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
+  await page.bringToFront();
   await page.waitForLoadState('networkidle');
   await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
 
@@ -34,20 +26,31 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
 };
 
 /**
+ * Wait for the ChatComposite participants to fully load.
+ */
+export const waitForChatCompositeParticipantsToLoad = async (
+  page: Page,
+  numberOfParticipants: number
+): Promise<void> => {
+  await page.waitForFunction(
+    (args) => {
+      return document.querySelectorAll(args.participantSelector).length === args.numberOfParticipants;
+    },
+    {
+      numberOfParticipants: numberOfParticipants,
+      participantSelector: dataUiId('chat-composite-participant-custom-avatar')
+    }
+  );
+};
+
+/**
  * Wait for the CallComposite on a page to fully load.
  */
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
-
-  await page.waitForFunction(
-    (args) => {
-      const callButton = document.querySelector(args.startCallButtonSelector);
-      const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
-      return callButtonEnabled;
-    },
-    { startCallButtonSelector: dataUiId('call-composite-start-call-button') }
-  );
+  const startCallButton = await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+  await startCallButton.waitForElementState('enabled');
 };
 
 /**
@@ -109,13 +112,12 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
   }
 };
 
-const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
-
 /**
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
-export const stubMessageTimestamps = (page: Page): void => {
-  page.evaluate((messageTimestampId) => {
+export const stubMessageTimestamps = async (page: Page): Promise<void> => {
+  const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
+  await page.evaluate((messageTimestampId) => {
     Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
   }, messageTimestampId);
 };
@@ -133,167 +135,35 @@ export const disableAnimation = async (page: Page): Promise<void> => {
   });
 };
 
-export type ChatUserType = {
-  userId: string;
-  token: string;
-  endpointUrl: string;
-  displayName: string;
-  threadId: string;
-  topic: string;
-};
-
-export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
-  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
-  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
-  const userAndTokens: CommunicationUserToken[] = [];
-  for (let i = 0; i < displayNames.length; i++) {
-    userAndTokens.push(await tokenClient.createUserAndToken(['chat']));
-  }
-
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
-  const threadId =
-    (
-      await chatClient.createChatThread(
-        { topic: TOPIC_NAME },
-        {
-          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
-        }
-      )
-    ).chatThread?.id ?? '';
-
-  return displayNames.map((displayName, i) => ({
-    userId: userAndTokens[i].user.communicationUserId,
-    token: userAndTokens[i].token,
-    endpointUrl,
-    displayName,
-    threadId,
-    topic: TOPIC_NAME
-  }));
-};
-
-export type CallUserType = {
-  userId: string;
-  token: string;
-  displayName?: string;
-  groupId?: string;
-};
-
-export const createCallingUserAndToken = async (): Promise<CallUserType> => {
-  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
-  const user = await tokenClient.createUserAndToken(['voip']);
-  return {
-    userId: user.user.communicationUserId,
-    token: user.token
-  };
-};
-
-export type MeetingUserType = {
-  userId: string;
-  token: string;
-  endpointUrl: string;
-  displayName: string;
-  threadId: string;
-  topic: string;
-  groupId?: string;
-};
-
-export const createMeetingUsers = async (displayNames: string[]): Promise<Array<MeetingUserType>> => {
-  const callId = v1();
-  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
-  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
-  const userAndTokens: CommunicationUserToken[] = [];
-  for (let i = 0; i < displayNames.length; i++) {
-    userAndTokens.push(await tokenClient.createUserAndToken(['chat', 'voip']));
-  }
-
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
-  const threadId =
-    (
-      await chatClient.createChatThread(
-        { topic: TOPIC_NAME },
-        {
-          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
-        }
-      )
-    ).chatThread?.id ?? '';
-
-  return displayNames.map((displayName, i) => ({
-    userId: userAndTokens[i].user.communicationUserId,
-    token: userAndTokens[i].token,
-    endpointUrl,
-    displayName,
-    threadId,
-    topic: TOPIC_NAME,
-    groupId: callId
-  }));
-};
-
-/**
- * Load a new page in the browser at the supplied url.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load url for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadPage = async (
-  browser: Browser,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => await loadUrlInPage(await browser.newPage(), serverUrl, user, qArgs);
-
-/**
- * Load a URL in the browser page.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load url for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadUrlInPage = async (
-  page: Page,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => {
-  const qs = encodeQueryData(user, qArgs);
-  await page.setViewportSize(PAGE_VIEWPORT);
-  const url = `${serverUrl}?${qs}`;
-  await page.goto(url, { waitUntil: 'networkidle' });
-  return page;
-};
-
-/**
- * Load a URL in a new Page in the browser with permissions needed for the CallComposite.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load ChatComposite for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadPageWithPermissionsForCalls = async (
-  browser: Browser,
-  serverUrl: string,
-  user: CallUserType | MeetingUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => {
-  const context = await browser.newContext({ permissions: ['notifications'] });
-  context.grantPermissions(['camera', 'microphone']);
-  const page = await context.newPage();
-  return await loadUrlInPage(page, serverUrl, user, qArgs);
-};
-
-const encodeQueryData = (
-  user: ChatUserType | CallUserType | MeetingUserType,
-  qArgs?: { [key: string]: string }
-): string => {
+const encodeQueryData = (user: ChatUserType | CallUserType | MeetingUserType): string => {
   const qs: Array<string> = [];
   for (const d in user) {
     qs.push(encodeURIComponent(d) + '=' + encodeURIComponent(user[d]));
   }
-  if (qArgs !== undefined) {
-    Object.entries(qArgs).forEach(([key, value]) => qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value)));
-  }
   return qs.join('&');
+};
+
+/**
+ * Create the test URL.
+ * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
+ * @param user - Test user the props of which populate query search parameters
+ * @param qArgs - Optional args to add to the query search parameters of the URL.
+ * @returns URL string
+ */
+export const buildUrl = (
+  serverUrl: string,
+  user: ChatUserType | CallUserType | MeetingUserType,
+  qArgs?: { [key: string]: string }
+): string => `${serverUrl}?${encodeQueryData({ ...user, ...qArgs })}`;
+
+export const updatePageQueryParam = async (page: Page, qArgs: { [key: string]: string }): Promise<Page> => {
+  const url = new URL(page.url());
+
+  Object.entries(qArgs).forEach(([key, value]) => {
+    url.searchParams.delete(key);
+    url.searchParams.append(encodeURIComponent(key), encodeURIComponent(value));
+  });
+
+  await page.goto(url.toString(), { waitUntil: 'load' });
+  return page;
 };
