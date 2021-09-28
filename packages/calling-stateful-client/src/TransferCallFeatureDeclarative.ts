@@ -12,6 +12,9 @@ import { CallContext, MAX_TRANSFER_REQUEST_LENGTH } from './CallContext';
 import { convertSdkTransferToDeclarativeTransfer } from './Converter';
 import { RequestedTransferSubscriber } from './RequestedTransferSubscriber';
 
+/**
+ * @private
+ */
 export interface DeclarativeTransferCallFeature extends TransferCallFeature {
   /**
    * Stop any declarative specific subscriptions and remove declarative subscribers.

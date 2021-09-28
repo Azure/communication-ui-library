@@ -20,6 +20,9 @@ import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
 import { cameraOffLabelStyle, localPreviewContainerStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
 
+/**
+ * @private
+ */
 export const LocalPreview = (): JSX.Element => {
   const locale = useLocale();
   const cameraButtonProps = usePropsFor(CameraButton);

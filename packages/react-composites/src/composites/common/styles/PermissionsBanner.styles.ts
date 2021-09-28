@@ -3,10 +3,16 @@
 
 import { IMessageBarStyleProps, IMessageBarStyles, IStyleFunctionOrObject } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const permissionsBannerContainerStyle = {
   width: '100%'
 };
 
+/**
+ * @private
+ */
 export const permissionsBannerMessageBarStyle: IStyleFunctionOrObject<IMessageBarStyleProps, IMessageBarStyles> = {
   root: {
     // Constrain permission banner height if there is a long error message in a narrow space.

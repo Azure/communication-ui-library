@@ -14,11 +14,11 @@ import {
 } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 import {
-  ParticipantJoinedListener,
-  ParticipantLeftListener,
-  IsMuteChangedListener,
+  ParticipantsJoinedListener,
+  ParticipantsLeftListener,
+  IsMutedChangedListener,
   CallIdChangedListener,
-  IsScreenSharingOnChangedListener,
+  IsLocalScreenSharingActiveChangedListener,
   DisplayNameChangedListener,
   IsSpeakingChangedListener,
   CallAdapter,
@@ -285,13 +285,13 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   public async deleteMessage(messageId: string): Promise<void> {
     return await this.chatAdapter.deleteMessage(messageId);
   }
-  on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-  on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+  on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
+  on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'meetingEnded', listener: CallEndedListener): void;
   on(event: 'error', listener: (e: Error) => void): void;
-  on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -341,13 +341,13 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     }
   }
 
-  off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-  off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+  off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
+  off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   off(event: 'meetingEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
-  off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'messageReceived', listener: MessageReceivedListener): void;

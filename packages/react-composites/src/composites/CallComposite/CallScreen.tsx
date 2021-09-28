@@ -9,7 +9,7 @@ import {
   VideoStreamOptions
 } from '@internal/react-components';
 import React, { useEffect, useRef, useState } from 'react';
-import { isInCall } from '../../utils/SDKUtils';
+import { isInCall } from './SDKUtils';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { PermissionsBanner } from '../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../common/styles/PermissionsBanner.styles';
@@ -38,6 +38,9 @@ import {
   subContainerStyles
 } from './styles/CallScreen.styles';
 
+/**
+ * @private
+ */
 export interface CallScreenProps {
   callInvitationURL?: string;
   endCallHandler(): void;
@@ -49,7 +52,9 @@ export interface CallScreenProps {
 }
 
 const spinnerLabel = 'Initializing call client...';
-
+/**
+ * @private
+ */
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const {
     callInvitationURL,

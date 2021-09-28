@@ -7,11 +7,17 @@ import { buttonStyle, videoCameraIconStyle } from './styles/StartCallButton.styl
 import { Video20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../localization';
 
+/**
+ * @private
+ */
 export interface StartCallButtonProps {
   onClickHandler: () => void;
   isDisabled: boolean;
 }
 
+/**
+ * @private
+ */
 export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
   const { isDisabled, onClickHandler } = props;
   const locale = useLocale();

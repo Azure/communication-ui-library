@@ -9,6 +9,9 @@ import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
 import { Stack } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export interface MeetingCallControlBarProps {
   callAdapter: CallAdapter;
   onEndCallClick: () => void;
@@ -18,6 +21,9 @@ export interface MeetingCallControlBarProps {
   onPeopleButtonClicked: () => void;
 }
 
+/**
+ * @private
+ */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   return (
     <Stack horizontal>

@@ -9,6 +9,11 @@ import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 
+/**
+ * Properties common to all composites exported from this library.
+ *
+ * @public
+ */
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
   /**
    * Fluent theme for the composite.
@@ -49,6 +54,8 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 /**
  * A base class for composites.
  * Provides common wrappers such as FluentThemeProvider and LocalizationProvider.
+ *
+ * @private
  */
 export const BaseComposite = (
   props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }

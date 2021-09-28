@@ -4,10 +4,16 @@
 import { IStackTokens } from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const configurationStackTokens: IStackTokens = {
   childrenGap: '2rem'
 };
 
+/**
+ * @private
+ */
 export const configurationContainer = mergeStyles({
   height: '100%',
   width: '100% ',
@@ -16,11 +22,17 @@ export const configurationContainer = mergeStyles({
   minHeight: 'auto'
 });
 
+/**
+ * @private
+ */
 export const selectionContainerStyle = mergeStyles({
   minWidth: '12.5rem',
   padding: '0.5rem'
 });
 
+/**
+ * @private
+ */
 export const titleContainerStyle = mergeStyles({
   fontSize: '1.25rem',
   lineHeight: '1.75rem',

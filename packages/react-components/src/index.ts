@@ -11,7 +11,6 @@ export * from './theming';
 
 export type {
   BaseCustomStylesProps,
-  ButtonCustomStylesProps,
   ChatMessage,
   ChatMessagePayload,
   OmitNever,
@@ -36,5 +35,3 @@ export type {
   OnRenderAvatarCallback,
   CustomAvatarOptions
 } from './types';
-
-export * from './gallery';

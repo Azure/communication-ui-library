@@ -3,6 +3,9 @@
 import { RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
 import EventEmitter from 'events';
 
+/**
+ * @private
+ */
 export class ParticipantSubscriber {
   private participant: RemoteParticipant;
   private emitter: EventEmitter;
@@ -53,4 +56,7 @@ export class ParticipantSubscriber {
   }
 }
 
+/**
+ * @private
+ */
 export type ParticipantEvent = 'isMutedChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'videoStreamsUpdated';
