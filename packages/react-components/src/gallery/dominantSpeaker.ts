@@ -47,7 +47,13 @@ export const smartDominantSpeakerParticipants = (
     }
   }
 
-  const newSpeakers = participants.filter((p) => lastVisibleSpeakerIds.includes(p.userId));
+  // Search optimization
+  const lastVisibleSpeakersMap = {};
+  lastVisibleSpeakerIds.forEach((userId) => {
+    lastVisibleSpeakersMap[userId] = true;
+  });
+
+  const newSpeakers = participants.filter((p) => lastVisibleSpeakersMap[p.userId]);
   const newSpeakersMap = {}; // search optimization
   newSpeakers.forEach((p) => {
     newSpeakersMap[p.userId] = true;
