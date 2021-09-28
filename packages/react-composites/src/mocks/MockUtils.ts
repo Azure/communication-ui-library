@@ -15,6 +15,8 @@ function waitMilliseconds(duration: number): Promise<void> {
  * fail some expects check before the 5 seconds otherwise you'll just get a cryptic 'jest timeout error'.
  *
  * @param breakCondition
+ *
+ * @private
  */
 export async function waitWithBreakCondition(breakCondition: () => boolean): Promise<void> {
   for (let i = 0; i < 40; i++) {

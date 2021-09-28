@@ -28,6 +28,9 @@ type MockCallProps = {
   isIncoming: boolean;
 };
 
+/**
+ * @private
+ */
 export const defaultMockCallProps = {
   muteExecutedCallback: jest.fn(),
   unmuteExecutedCallback: jest.fn(),
@@ -46,6 +49,9 @@ export const defaultMockCallProps = {
   isIncoming: false
 };
 
+/**
+ * @private
+ */
 export function mockCall(mockProps?: MockCallProps): MockCall {
   const props = { ...defaultMockCallProps, ...mockProps };
 
@@ -137,6 +143,9 @@ export function mockCall(mockProps?: MockCallProps): MockCall {
   };
 }
 
+/**
+ * @private
+ */
 export function mockCallAgent(props?: MockCallProps): MockCallAgent {
   const call = mockCall(props);
   return {
@@ -161,6 +170,9 @@ export function mockCallAgent(props?: MockCallProps): MockCallAgent {
   };
 }
 
+/**
+ * @private
+ */
 export function mockRemoteParticipant(
   videoStreams?: MockRemoteVideoStream[],
   displayName?: string,
@@ -183,6 +195,9 @@ export function mockRemoteParticipant(
   };
 }
 
+/**
+ * @private
+ */
 export function mockRemoteVideoStream(type?: MediaStreamType, isAvailable?: boolean): MockRemoteVideoStream {
   return {
     id: 1,

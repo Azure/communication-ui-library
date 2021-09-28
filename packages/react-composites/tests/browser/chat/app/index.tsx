@@ -88,7 +88,7 @@ function App(): JSX.Element {
           }
           onFetchAvatarPersonaData={
             customDataModel
-              ? (userId) =>
+              ? () =>
                   new Promise((resolve) =>
                     resolve({
                       imageInitials: getCustomDisplayName(userId)[0],

@@ -1,7 +1,8 @@
 {
   "participantItem": {
     "isMeText": "(siz)",
-    "menuTitle": "Diğer Seçenekler"
+    "menuTitle": "Diğer Seçenekler",
+    "removeButtonLabel": "Kaldır"
   },
   "typingIndicator": {
     "singleUser": "{user} yazıyor...",

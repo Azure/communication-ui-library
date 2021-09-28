@@ -24,3 +24,5 @@ export type {
   ParticipantsRemovedListener,
   TopicChangedListener
 } from './adapter/ChatAdapter';
+
+export * from './Strings';

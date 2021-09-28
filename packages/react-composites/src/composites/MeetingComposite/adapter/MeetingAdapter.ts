@@ -9,11 +9,11 @@ import {
   CallAdapterDeviceManagement,
   CallIdChangedListener,
   DisplayNameChangedListener,
-  IsMuteChangedListener,
-  IsScreenSharingOnChangedListener,
+  IsMutedChangedListener,
+  IsLocalScreenSharingActiveChangedListener,
   IsSpeakingChangedListener,
-  ParticipantJoinedListener,
-  ParticipantLeftListener,
+  ParticipantsJoinedListener,
+  ParticipantsLeftListener,
   CallEndedListener
 } from '../../CallComposite';
 import {
@@ -96,26 +96,26 @@ export interface MeetingAdapterMeetingManagement
  */
 export interface MeetingAdapterSubscriptions {
   // Meeting specific subscriptions
-  on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-  on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+  on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
+  on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'meetingEnded', listener: CallEndedListener): void;
   on(event: 'error', listener: (e: Error) => void): void;
 
-  off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-  off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
+  off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
+  off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   off(event: 'meetingEnded', listener: CallEndedListener): void;
   off(event: 'error', listener: (e: Error) => void): void;
 
   // Call subscriptions
-  on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
 
-  off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
 

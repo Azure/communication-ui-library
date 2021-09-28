@@ -1,7 +1,8 @@
 {
   "participantItem": {
     "isMeText": "(Sie)",
-    "menuTitle": "Weitere Optionen"
+    "menuTitle": "Weitere Optionen",
+    "removeButtonLabel": "Entfernen"
   },
   "typingIndicator": {
     "singleUser": "{user} schreibt ...",
