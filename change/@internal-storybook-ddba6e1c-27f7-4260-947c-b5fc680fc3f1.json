@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "exposing styling through composite",
+  "comment": "updating sample code with new styles prop in chat composite",
   "packageName": "@internal/storybook",
   "email": "alkwa@microsoft.com",
   "dependentChangeType": "patch"

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "exposing styling through composite",
+  "comment": "adding new style container to customize each chat item in the message thread",
   "packageName": "@internal/react-components",
   "email": "alkwa@microsoft.com",
   "dependentChangeType": "patch"
