@@ -67,6 +67,7 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { WithSizeProps } from 'react-sizeme';
 
 // @public
 export interface ActiveError {
@@ -1150,7 +1151,10 @@ export type GetChatSelector<Component extends (props: any) => JSX.Element | unde
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
 
 // @public
-export const GridLayout: (props: GridLayoutProps) => JSX.Element;
+export const GridLayout: React_2.ComponentType<{
+    children: React_2.ReactNode;
+    styles?: BaseCustomStylesProps | undefined;
+} & WithSizeProps>;
 
 // @public
 export interface GridLayoutProps {
@@ -1158,9 +1162,6 @@ export interface GridLayoutProps {
     children: React_2.ReactNode;
     styles?: BaseCustomStylesProps;
 }
-
-// @public
-export type GridLayoutType = 'standard';
 
 // @internal
 export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
