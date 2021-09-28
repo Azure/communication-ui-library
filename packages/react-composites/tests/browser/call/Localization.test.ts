@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { waitForCallCompositeToLoad, dataUiId, buildUrl, loadCallScreenWithParticipantVideos } from '../common/utils';
+import { waitForCallCompositeToLoad, dataUiId, buildUrl, loadCallScreen } from '../common/utils';
 import { expect } from '@playwright/test';
 import { loadPageWithPermissionsForCalls } from '../common/fixtureHelpers';
 
@@ -25,7 +25,7 @@ test.describe('Localization tests', async () => {
 
     await page.bringToFront();
     await page.click(dataUiId('call-composite-start-call-button'));
-    await loadCallScreenWithParticipantVideos([page]);
+    await loadCallScreen([page]);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
   });
 });

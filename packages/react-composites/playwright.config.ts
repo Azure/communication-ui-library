@@ -1,7 +1,7 @@
 import { PlaywrightTestConfig } from '@playwright/test';
 const config: PlaywrightTestConfig = {
   use: {
-    video: 'on'
+    video: 'retain-on-failure'
   }
 };
 export default config;
