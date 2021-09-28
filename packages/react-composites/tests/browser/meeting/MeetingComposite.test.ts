@@ -18,7 +18,7 @@ test.describe('Meeting Composite Pre-Join Tests', () => {
 
   test('Pre-join screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-pre-join-screen.png`, { threshold: 0.5 });
+    expect(await page.screenshot()).toMatchSnapshot(`meeting-pre-join-screen.png`);
   });
 });
 
@@ -40,7 +40,7 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
 
   test('Meeting gallery screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-basic-gallery-screen.png`, { threshold: 0.5 });
+    expect(await page.screenshot()).toMatchSnapshot(`meeting-basic-gallery-screen.png`);
   });
 
   test('Chat messages are displayed correctly', async ({ pages }) => {
@@ -61,15 +61,23 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     // Test page 0 has both sent message and received message
     await pages[0].bringToFront();
     await pages[0].waitForSelector(`[data-ui-status="seen"]`);
-    stubMessageTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`, { threshold: 0.5 });
+    await pages[1].bringToFront();
+    await pages[1].waitForSelector(`[data-ui-status="seen"]`);
+
+    // Ensure typing indicator has disappeared to prevent flakey test
+    await pages[0].bringToFront();
+    const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
+    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
+
+    await stubMessageTimestamps(pages[0]);
+    expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`);
   });
 
-  test.only('People pane opens and displays correctly', async ({ pages }) => {
+  test('People pane opens and displays correctly', async ({ pages }) => {
     const page = pages[1];
     await page.click(dataUiId('meeting-composite-people-button'));
     await page.waitForSelector(dataUiId('meeting-composite-people-pane'));
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-people-pane-has-participants.png`, { threshold: 0.5 });
+    expect(await page.screenshot()).toMatchSnapshot(`meeting-people-pane-has-participants.png`);
   });
 
   /**
