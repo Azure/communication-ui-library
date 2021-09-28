@@ -23,8 +23,6 @@ test.describe('Localization tests', async () => {
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
 
-    await page.bringToFront();
-    await page.click(dataUiId('call-composite-start-call-button'));
     await loadCallScreen([page]);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
   });
