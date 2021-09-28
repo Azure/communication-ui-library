@@ -161,7 +161,7 @@ const loadUrlInPage = async (page: Page, serverUrl: string, user: ChatUserType |
   await page.setViewportSize(PAGE_VIEWPORT);
 
   const url = buildUrl(serverUrl, user);
-  await page.goto(url, { waitUntil: 'networkidle' });
+  await page.goto(url, { waitUntil: 'load' });
   return page;
 };
 
