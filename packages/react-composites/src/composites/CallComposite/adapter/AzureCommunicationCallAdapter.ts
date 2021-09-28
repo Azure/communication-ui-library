@@ -36,7 +36,7 @@ import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener
 } from './CallAdapter';
-import { isInCall } from '../../../utils';
+import { isInCall } from '../SDKUtils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
