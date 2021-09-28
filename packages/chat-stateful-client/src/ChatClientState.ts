@@ -6,8 +6,18 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
+/**
+ * A centralized state includes data for the whole chat client.
+ */
 export type ChatClientState = {
+  /**
+   * Identifier of the current user.
+   */
   userId: CommunicationIdentifierKind;
+  /**
+   * DisplayName of the current user.
+   * The same value as what others see in {@link @azure/communication-chat#ChatParticipant.displayName}
+   */
   displayName: string;
   /**
    * Chat threads joined by the current user.
@@ -22,6 +32,9 @@ export type ChatClientState = {
   latestErrors: ChatErrors;
 };
 
+/**
+ * State for a single chat thread.
+ */
 export type ChatThreadClientState = {
   /**
    * Messages in this thread.
@@ -37,10 +50,26 @@ export type ChatThreadClientState = {
    * keyed by {@link @azure/communication-chat#ChatParticipant.id}.
    */
   participants: { [key: string]: ChatParticipant };
+  /**
+   * Id of this chat thread. Returned from {@link @azure/communication-chat#ChatThreadClient.threadId}
+   */
   threadId: string;
+  /**
+   * An object includes properties of this chat thread.
+   */
   properties?: ChatThreadProperties;
+  /**
+   * An array of ReadReceipts of this chat thread. Returned from {@link @azure/communication-chat#ChatThreadClient.listReadReceipts}
+   */
   readReceipts: ChatMessageReadReceipt[];
+  /**
+   * An array of typingIndicators of this chat thread. Captured from event listener of {@link @azure/communication-chat#ChatClient}
+   * Stateful client only stores recent 8000ms real-time typing indicators data.
+   */
   typingIndicators: TypingIndicatorReceivedEvent[];
+  /**
+   * Latest timestamp when other users read messages sent by current user.
+   */
   latestReadTime: Date;
 };
 
