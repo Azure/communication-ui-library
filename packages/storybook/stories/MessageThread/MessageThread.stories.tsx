@@ -163,8 +163,8 @@ const MessageThreadStory = (args): JSX.Element => {
     const existingChatMessages = chatMessages;
     // We dont want to render the status for previous messages
     existingChatMessages.forEach((message) => {
-      if (message.type === 'chat') {
-        message.payload.status = undefined;
+      if (message.messageType === 'chat') {
+        message.status = undefined;
       }
     });
     setChatMessages([...existingChatMessages, GenerateMockNewChatMessage()]);
@@ -190,8 +190,8 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const onRenderMessage = (messageProps: MessageProps, defaultOnRender?: MessageRenderer): JSX.Element => {
-    if (messageProps.message.type === 'custom') {
-      return <Divider content={messageProps.message.payload.content} color="brand" important />;
+    if (messageProps.message.messageType === 'custom') {
+      return <Divider content={messageProps.message.content} color="brand" important />;
     }
 
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
