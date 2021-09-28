@@ -113,7 +113,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const visibleVideoParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const visibleAudioParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const [videoParticipants, setVideoParticipants] = useState<VideoGalleryParticipant[] | []>();
-  const [audioParticipants, setAudioParticipants] = useState<VideoGalleryParticipant[] | []>();
+  const [_audioParticipants, setAudioParticipants] = useState<VideoGalleryParticipant[] | []>();
 
   useEffect(() => {
     visibleVideoParticipants.current = smartDominantSpeakerParticipants(
