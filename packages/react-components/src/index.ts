@@ -11,8 +11,6 @@ export * from './theming';
 
 export type {
   BaseCustomStylesProps,
-  ButtonCustomStylesProps,
-  CallParticipant,
   ChatMessage,
   CommunicationParticipant,
   ContentSystemMessage,
