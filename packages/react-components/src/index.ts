@@ -36,5 +36,3 @@ export type {
   OnRenderAvatarCallback,
   CustomAvatarOptions
 } from './types';
-
-export * from './gallery';
