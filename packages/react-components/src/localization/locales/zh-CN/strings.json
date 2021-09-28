@@ -1,7 +1,8 @@
 {
   "participantItem": {
     "isMeText": "(我)",
-    "menuTitle": "更多选项"
+    "menuTitle": "更多选项",
+    "removeButtonLabel": "删除"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在键入...",
