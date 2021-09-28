@@ -1149,7 +1149,7 @@ export type GetChatSelector<Component extends (props: any) => JSX.Element | unde
 // @public (undocumented)
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
 
-// @public
+// @public (undocumented)
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
 // @public
