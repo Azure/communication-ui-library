@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "exposing styling through composite",
+  "packageName": "@internal/react-components",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}
