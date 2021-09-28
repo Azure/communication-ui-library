@@ -24,7 +24,9 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 const emptyStyles = {};
 
 /**
- * Props for component `VideoGallery`
+ * Props for {@link VideoGallery}.
+ *
+ * @public
  */
 export interface VideoGalleryProps {
   /**
@@ -75,12 +77,10 @@ const DRAG_OPTIONS: IDragOptions = {
 };
 
 /**
- * VideoGallery represents a `GridLayout` of video tiles for a specific call.
- * It displays a `VideoTile` for the local user as well as for each remote participants who joined the call.
+ * VideoGallery represents a {@link GridLayout} of video tiles for a specific call.
+ * It displays a {@link VideoTile} for the local user as well as for each remote participants who joined the call.
  *
- * @param props - of type `VideoGalleryProps`
- *
- * @returns a JSX Element
+ * @public
  */
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const {

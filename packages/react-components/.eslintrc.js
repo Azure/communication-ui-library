@@ -14,7 +14,7 @@ module.exports = {
     'plugin:react-hooks/recommended'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'header'],
+  plugins: ['@typescript-eslint', 'header', 'jsdoc'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -46,10 +46,36 @@ module.exports = {
           '**/lib/**/es/*'
         ]
       }
+    ],
+    'jsdoc/require-jsdoc': [
+      'error',
+      {
+        checkConstructors: false,
+        enableFixer: false,
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: true,
+          FunctionDeclaration: true
+        },
+        contexts: [
+          'ArrowFunctionExpression',
+          'FunctionDeclaration',
+          'FunctionExpression',
+          'TSDeclareFunction',
+          'TSEnumDeclaration',
+          'TSInterfaceDeclaration',
+          'TSTypeAliasDeclaration',
+          'VariableDeclaration'
+        ]
+      }
     ]
   },
   root: true,
   settings: {
+    jsdoc: {
+      ignorePrivate: true
+    },
     react: {
       version: 'detect'
     }
