@@ -13,19 +13,27 @@ test.describe('Localization tests', async () => {
     users,
     testBrowser
   }) => {
+    console.log('item1');
     // TODO: in future this will use permissions set in the playwright config project settings
     const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0]);
 
     // Load french locale for tests
+    console.log('item2');
     const url = buildUrl(serverUrl, users[0], { useFrlocale: 'true' });
     await page.bringToFront();
+    console.log('item3');
     await page.setViewportSize(PAGE_VIEWPORT);
+    console.log('item4');
     await page.goto(url, { waitUntil: 'load' });
+    console.log('item5');
 
     await waitForCallCompositeToLoad(page);
+    console.log('item6');
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
+    console.log('item7');
 
     await loadCallScreen([page]);
+    console.log('item8');
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
   });
 });
