@@ -5,7 +5,7 @@ import { mergeStyles } from '@fluentui/react';
 import React from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { blockStyle, cellStyle, gridLayoutContainerStyle } from './styles/GridLayout.styles';
-import { SizeMe } from 'react-sizeme';
+import { withSize, SizeMeProps } from 'react-sizeme';
 import { calculateBlockProps } from './utils/GridLayoutUtils';
 
 /**
@@ -32,36 +32,31 @@ export interface GridLayoutProps {
   styles?: BaseCustomStylesProps;
 }
 
+const BlockLayout = (props: GridLayoutProps & SizeMeProps): JSX.Element => {
+  const { children, styles } = props;
+  const numberOfChildren = React.Children.count(children);
+
+  let blockProps: BlockProps = { horizontal: true, numBlocks: Math.ceil(Math.sqrt(numberOfChildren)) };
+  if (props.size.width && props.size.height) {
+    blockProps = calculateBlockProps(numberOfChildren, props.size.width, props.size.height);
+  }
+  return (
+    <div className={mergeStyles(gridLayoutContainerStyle, styles?.root)}>
+      {renderBlocks({ ...blockProps, children })}
+    </div>
+  );
+};
+
 /**
  * A component to lay out audio / video participants tiles in a call.
  *
  * @public
  */
-export const GridLayout = (props: GridLayoutProps): JSX.Element => {
-  const { children, styles } = props;
-  const numberOfChildren = React.Children.count(children);
-
-  return (
-    <SizeMe monitorHeight refreshRate={32}>
-      {({ size }) => {
-        let blockProps: BlockProps = { horizontal: true, numBlocks: Math.ceil(Math.sqrt(numberOfChildren)) };
-        if (size.width && size.height) {
-          blockProps = calculateBlockProps(numberOfChildren, size.width, size.height);
-        }
-        return (
-          <div className={mergeStyles(gridLayoutContainerStyle, styles?.root)}>
-            {renderBlocks({ ...blockProps, children })}
-          </div>
-        );
-      }}
-    </SizeMe>
-  );
-};
+export const GridLayout = withSize({ monitorHeight: true, refreshRate: 32 })(BlockLayout);
 
 /**
  * Props to create blocks for children in Grid Layout
  *
- * @public
  */
 export type BlockProps = {
   horizontal: boolean;
