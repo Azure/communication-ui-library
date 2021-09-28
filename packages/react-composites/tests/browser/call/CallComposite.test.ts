@@ -61,6 +61,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
   test.beforeEach(async ({ pages }) => {
     // In case it is retry logic
     for (const page of pages) {
+      await page.bringToFront();
       await page.reload();
       await waitForCallCompositeToLoad(page);
     }
