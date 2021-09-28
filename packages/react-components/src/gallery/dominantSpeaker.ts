@@ -25,14 +25,15 @@ export const smartDominantSpeakerParticipants = (
   // Don't apply any logic if total number of video streams is less than Max video streams.
   if (participants.length <= maxTiles) return participants;
 
-  // Initialize `visibleParticipants` if it is empty.
-  if (!visibleParticipants.length) {
-    visibleParticipants = participants.slice(0, maxTiles);
+  let currentParticipants = visibleParticipants.slice();
+  // Initialize `currentParticipants` if it is empty.
+  if (!currentParticipants.length) {
+    currentParticipants = participants.slice(0, maxTiles);
   }
 
   // Only use the Max allowed dominant speakers.
   const dominantSpeakerIds = dominantSpeakers.slice(0, maxTiles);
-  const lastVisibleSpeakerIds = visibleParticipants.map((speaker) => speaker.userId);
+  const lastVisibleSpeakerIds = currentParticipants.map((speaker) => speaker.userId);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !lastVisibleSpeakerIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
