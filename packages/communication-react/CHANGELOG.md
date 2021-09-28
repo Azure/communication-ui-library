@@ -9,76 +9,20 @@ This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be m
 Tue, 28 Sep 2021 19:19:18 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.0-beta.5..@internal/react-components_v1.0.0-beta.6)
 
-### @internal/react-components
+### Changes
 
-- Change ControlBar to be affected by theme.effects ([PR #793](https://github.com/azure/communication-ui-library/pull/793) by miguelgamis@microsoft.com)
-- Localization for edit + delete messages ([PR #809](https://github.com/azure/communication-ui-library/pull/809) by jinan@microsoft.com)
-- Make ControlBarButton styling consistent ([PR #829](https://github.com/azure/communication-ui-library/pull/829) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Adjust api comments - iteration 2 ([PR #776](https://github.com/azure/communication-ui-library/pull/776) by jinan@microsoft.com)
-- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add edited tag to messages ([PR #759](https://github.com/azure/communication-ui-library/pull/759) by jinan@microsoft.com)
-- Undo styling to body tag from FluentThemeProvider ([PR #817](https://github.com/azure/communication-ui-library/pull/817) by miguelgamis@microsoft.com)
-- ControlBarButton labels have regular font weight and font is customizable through FluentThemeProvider. ([PR #789](https://github.com/azure/communication-ui-library/pull/789) by miguelgamis@microsoft.com)
-- Add custom menu items injection support to ParticipantList ([PR #795](https://github.com/azure/communication-ui-library/pull/795) by anjulgarg@live.com)
-- TDBuild - updating localized resource files. ([PR #836](https://github.com/azure/communication-ui-library/pull/836) by miguelgamis@microsoft.com)
-- Add release tags to all public API. Lint clean internal API. ([PR #825](https://github.com/azure/communication-ui-library/pull/825) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add data-ui-id for video tiles ([PR #802](https://github.com/azure/communication-ui-library/pull/802) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix chat message text being always bold ([PR #799](https://github.com/azure/communication-ui-library/pull/799) by 2684369+JamesBurnside@users.noreply.github.com)
-- TDBuild - updating localized resource files. ([PR #794](https://github.com/azure/communication-ui-library/pull/794) by miguelgamis@microsoft.com)
-- Allow custom menu items in ParticipantList ([PR #800](https://github.com/azure/communication-ui-library/pull/800) by anjulgarg@live.com)
+* Support editing and deleting sent messages in the `MessageThread` UI
+* Support customization to the `ParticipantList` to inject menu items for each participant
+* (breaking change) API consistency and documentation updates
+  * Add a uniform way to set cutomization options on the composites.
+* Add `MeetingAdapter` to back the `MeetingComposite`. By default, the `MeetingAdapter` is backed by the Azure Communication Services backends.
+* Azure Communication Services SDK updates: @azure/communication-chat bumped to 1.1.0
+* (breaking change) Error handling: Stop clearing errors from state on successful operations; drop support for modifying state in `StatefulChatClient` and `StatefulCallClient`.
 
-### @internal/react-composites
+### Bug fixes
 
-- Update meeting examples to make use of the MeetingAdapter ([PR #700](https://github.com/azure/communication-ui-library/pull/700) by 2684369+JamesBurnside@users.noreply.github.com)
-- Construct meeting state for the meeting composite adapter. ([PR #698](https://github.com/azure/communication-ui-library/pull/698) by 2684369+JamesBurnside@users.noreply.github.com)
-- TDBuild - updating localized resource files. ([PR #836](https://github.com/azure/communication-ui-library/pull/836) by miguelgamis@microsoft.com)
-- check if speaker selection is possible ([PR #771](https://github.com/azure/communication-ui-library/pull/771) by 79329532+alkwa-msft@users.noreply.github.com)
-- TDBuild - updating localized resource files. ([PR #794](https://github.com/azure/communication-ui-library/pull/794) by miguelgamis@microsoft.com)
-- Bump chat sdk to version 1.1.0 ([PR #816](https://github.com/azure/communication-ui-library/pull/816) by jinan@microsoft.com)
-- Adding feature toggles to Chat and Call Composites ([PR #765](https://github.com/azure/communication-ui-library/pull/765) by anjulgarg@live.com)
-- Add release tags to API and tweak callback names to match events ([PR #837](https://github.com/azure/communication-ui-library/pull/837) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Adjust api comments - iteration 2 ([PR #776](https://github.com/azure/communication-ui-library/pull/776) by jinan@microsoft.com)
-- Breaking Change: Update Feature Toggle API. Developers will need to use `options` prop in Composite instead of `hiddenElements` ([PR #800](https://github.com/azure/communication-ui-library/pull/800) by anjulgarg@live.com)
-- Make IdentifierProvider @internal ([PR #825](https://github.com/azure/communication-ui-library/pull/825) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add custom menu items injection support to Call and Chat Composites ([PR #795](https://github.com/azure/communication-ui-library/pull/795) by anjulgarg@live.com)
-- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Support editing and deleting chat messages in the meeting composite adapter ([PR #797](https://github.com/azure/communication-ui-library/pull/797) by 2684369+JamesBurnside@users.noreply.github.com)
-- Add isTeamsCall to call adapter state ([PR #798](https://github.com/azure/communication-ui-library/pull/798) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix meeting composite requesting access to the meeting chat too early ([PR #783](https://github.com/azure/communication-ui-library/pull/783) by 2684369+JamesBurnside@users.noreply.github.com)
-- Add mobileView alpha flag to call and meeting composites ([PR #822](https://github.com/azure/communication-ui-library/pull/822) by 2684369+JamesBurnside@users.noreply.github.com)
-
-### @internal/chat-stateful-client
-
-- Update use of internal exported function ([PR #823](https://github.com/azure/communication-ui-library/pull/823) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Bump chat sdk to version 1.1.0 ([PR #816](https://github.com/azure/communication-ui-library/pull/816) by jinan@microsoft.com)
-- Stop clearing errors in ChatClientState ([PR #781](https://github.com/azure/communication-ui-library/pull/781) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Drop state modification API ([PR #782](https://github.com/azure/communication-ui-library/pull/782) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
-
-### @internal/chat-component-bindings
-
-- Bump chat sdk to version 1.1.0 ([PR #816](https://github.com/azure/communication-ui-library/pull/816) by jinan@microsoft.com)
-- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add edited tag to messages ([PR #759](https://github.com/azure/communication-ui-library/pull/759) by jinan@microsoft.com)
-
-### @internal/calling-stateful-client
-
-- Drop state modification API ([PR #782](https://github.com/azure/communication-ui-library/pull/782) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Stop clearing errors from calling stateful client ([PR #781](https://github.com/azure/communication-ui-library/pull/781) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Document all public API and hide leaked exports ([PR #811](https://github.com/azure/communication-ui-library/pull/811) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Fix feature types to conform to naming convention ([PR #832](https://github.com/azure/communication-ui-library/pull/832) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
-
-### @internal/calling-component-bindings
-
-- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Adjust api comments - iteration 2 ([PR #776](https://github.com/azure/communication-ui-library/pull/776) by jinan@microsoft.com)
-- Document all public API and hide leaked exports ([PR #811](https://github.com/azure/communication-ui-library/pull/811) by 82062616+prprabhu-ms@users.noreply.github.com)
-
-### @internal/acs-ui-common
-
-- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add release tags to all public API ([PR #823](https://github.com/azure/communication-ui-library/pull/823) by 82062616+prprabhu-ms@users.noreply.github.com)
+* Stop styling the `body` tag from `FluentThemeProvider` (styling leak to the host application)
+* Better themeing support in `ControlBar` component - support container border and shadow customization; support label font costumization
 
 ## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.5)
 
