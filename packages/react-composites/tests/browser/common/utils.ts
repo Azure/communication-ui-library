@@ -79,7 +79,8 @@ export const loadCallScreen = async (pages: Page[]): Promise<void> => {
         const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
         return correctNoOfTiles;
       },
-      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
+      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length },
+      { timeout: 100000 }
     );
   }
 };
