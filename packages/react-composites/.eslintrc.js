@@ -89,6 +89,12 @@ module.exports = {
       env: {
         jest: true
       }
+    },
+    {
+      files: ['tests/**/*.ts'],
+      rules: {
+        'jsdoc/require-jsdoc': 'off'
+      }
     }
   ]
 };

@@ -5,9 +5,30 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { MessageBar, MessageBarButton, MessageBarType } from '@fluentui/react';
 import { permissionsBannerMessageBarStyle } from '../common/styles/PermissionsBanner.styles';
 
+/**
+ * @private
+ *
+ * TODO: Localize
+ */
 export const CAMERA_PERMISSION_DENIED = 'Camera use is blocked by your browser.';
+
+/**
+ * @private
+ *
+ * TODO: Localize
+ */
 export const MICROPHONE_PERMISSION_DENIED = 'Microphone use is blocked by your browser.';
+
+/**
+ * @private
+ *
+ * TODO: Localize
+ */
 export const CAMERA_AND_MICROPHONE_PERMISSION_DENIED = 'Camera and microphone use is blocked by your browser.';
+
+/**
+ * TODO: Localize
+ */
 const ALLOW_PERMISSIONS_INSTRUCTIONS =
   "Grant permission by clicking the lock in the address bar and selecting 'Allow'.";
 
