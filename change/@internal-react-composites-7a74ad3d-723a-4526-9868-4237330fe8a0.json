@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add release tags to API and add jsdoc exceptions for internal types",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
