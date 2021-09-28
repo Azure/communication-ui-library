@@ -15,6 +15,8 @@ import { CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
  * Invariants:
  *   - `ErrorType` is never repeated in the returned errors.
  *   - Errors are returned in a fixed order by `ErrorType`.
+ *
+ * @public
  */
 export const errorBarSelector = createSelector(
   [getLatestErrors, getDiagnostics],
