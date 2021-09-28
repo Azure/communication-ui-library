@@ -3,8 +3,6 @@
 
 import React from 'react';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
-// TODO: Next PR should move move provider & hooks into the selector package
-// and we want to make samples and composite both use from selector package.
 import { useHandlers } from './hooks/useHandlers';
 import { LocalDeviceSettings } from './LocalDeviceSettings';
 import { StartCallButton } from './StartCallButton';
@@ -22,10 +20,16 @@ import {
 } from './styles/CallConfiguration.styles';
 import { useLocale } from '../localization';
 
+/**
+ * @private
+ */
 export interface ConfigurationScreenProps {
   startCallHandler(): void;
 }
 
+/**
+ * @private
+ */
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
   const { startCallHandler } = props;
 

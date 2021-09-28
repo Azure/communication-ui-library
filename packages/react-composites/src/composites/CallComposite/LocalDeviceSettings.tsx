@@ -61,6 +61,9 @@ const localVideoViewOption = {
   isMirrored: true
 } as VideoStreamOptions;
 
+/**
+ * @private
+ */
 export interface LocalDeviceSettingsType {
   cameras: VideoDeviceInfo[];
   microphones: AudioDeviceInfo[];
@@ -75,6 +78,9 @@ export interface LocalDeviceSettingsType {
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
 }
 
+/**
+ * @private
+ */
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();

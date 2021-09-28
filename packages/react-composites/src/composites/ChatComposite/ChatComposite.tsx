@@ -9,6 +9,11 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { ChatScreen } from './ChatScreen';
 
+/**
+ * Props for {@link ChatComposite}.
+ *
+ * @public
+ */
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
   /**
    * An adapter provides logic and data to the composite.
@@ -33,7 +38,9 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 }
 
 /**
- * Optional features of the {@link ChatComposite}
+ * Optional features of the {@link ChatComposite}.
+ *
+ * @public
  */
 export type ChatCompositeOptions = {
   /**
@@ -54,6 +61,11 @@ export type ChatCompositeOptions = {
   topic?: boolean;
 };
 
+/**
+ * A customizable UI composite for the chat experience.
+ *
+ * @public
+ */
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   const {
     adapter,

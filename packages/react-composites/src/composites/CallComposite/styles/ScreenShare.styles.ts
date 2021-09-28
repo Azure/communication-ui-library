@@ -3,6 +3,9 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const videoStreamStyle = mergeStyles({
   position: 'absolute',
   bottom: '.25rem',
@@ -11,6 +14,9 @@ export const videoStreamStyle = mergeStyles({
   width: '25%'
 });
 
+/**
+ * @private
+ */
 export const loadingStyle = mergeStyles({
   height: '100%',
   width: '100%',
