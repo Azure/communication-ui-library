@@ -112,6 +112,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
 
 const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
+    await page.bringToFront();
     await page.click(dataUiId('call-composite-camera-button'));
   }
   for (const page of pages) {
