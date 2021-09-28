@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { waitForCallCompositeToLoad, loadCallScreen, buildUrl } from '../common/utils';
+import { waitForCallCompositeToLoad, dataUiId, buildUrl } from '../common/utils';
 import { expect } from '@playwright/test';
 import { loadPageWithPermissionsForCalls } from '../common/fixtureHelpers';
 
@@ -30,9 +30,15 @@ test.describe('Localization tests', async () => {
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
     console.log('item7');
 
+    console.log('item8');
+    await page.bringToFront();
+    console.log('item9');
+    await page.click(dataUiId('call-composite-start-call-button'));
+    console.log('item10');
     // await loadCallScreen([page], true);
     page.waitForTimeout(10000);
-    console.log('item8');
+    console.log('item11');
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
+    console.log('item12');
   });
 });
