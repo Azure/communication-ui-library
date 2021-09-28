@@ -33,7 +33,7 @@ test.describe('Localization tests', async () => {
     await loadCallScreen([page]);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
 
-    // Remove user from the call
-    await page.reload();
+    // Close page created inside this test
+    await page.close();
   });
 });
