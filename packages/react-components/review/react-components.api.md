@@ -314,8 +314,6 @@ export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
-    // (undocumented)
-    layout?: GridLayoutType;
     styles?: BaseCustomStylesProps;
 }
 

@@ -2,15 +2,16 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { BaseCustomStylesProps } from '../types';
-import { gridLayoutStyle } from './styles/GridLayout.styles';
+import { blockStyle, cellStyle, gridLayoutContainerStyle } from './styles/GridLayout.styles';
+import { SizeMe } from 'react-sizeme';
+import { calculateBlockProps } from './utils/GridLayoutUtils';
 
 export type GridLayoutType = 'standard';
 
 export interface GridLayoutProps {
   children: React.ReactNode;
-  layout?: GridLayoutType;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -21,38 +22,68 @@ export interface GridLayoutProps {
   styles?: BaseCustomStylesProps;
 }
 
-const calculateStandardLayoutRows = (numberOfItems: number, gridCol: number): number =>
-  Math.ceil(numberOfItems / gridCol);
-
-const calculateStandardLayoutColumns = (numberOfItems: number): number =>
-  numberOfItems > 0 ? Math.ceil(Math.sqrt(numberOfItems)) : 1;
-
 export const GridLayout = (props: GridLayoutProps): JSX.Element => {
-  const [gridCol, setGridCol] = useState(1);
-  const [gridRow, setGridRow] = useState(1);
-
-  const { children, layout = 'standard', styles } = props;
+  const { children, styles } = props;
   const numberOfChildren = React.Children.count(children);
 
-  switch (layout) {
-    case 'standard': {
-      const numberOfColumns = calculateStandardLayoutColumns(numberOfChildren);
-      if (gridCol !== numberOfColumns) setGridCol(numberOfColumns);
-      const numberOfRows = calculateStandardLayoutRows(numberOfChildren, gridCol);
-      if (gridRow !== numberOfRows) setGridRow(numberOfRows);
-      break;
-    }
-  }
-
   return (
-    <div
-      className={mergeStyles(gridLayoutStyle, styles?.root)}
-      style={{
-        gridTemplateRows: `repeat(${gridRow}, minmax(0, 1fr))`,
-        gridTemplateColumns: `repeat(${gridCol}, 1fr)`
+    <SizeMe monitorHeight refreshRate={32}>
+      {({ size }) => {
+        let blockProps: BlockProps = { horizontal: true, numBlocks: Math.ceil(Math.sqrt(numberOfChildren)) };
+        if (size.width && size.height) {
+          blockProps = calculateBlockProps(numberOfChildren, size.width, size.height);
+        }
+        return (
+          <div className={mergeStyles(gridLayoutContainerStyle, styles?.root)}>
+            {renderBlocks({ ...blockProps, children })}
+          </div>
+        );
       }}
-    >
-      {children}
-    </div>
+    </SizeMe>
   );
+};
+
+export type BlockProps = {
+  horizontal: boolean;
+  numBlocks: number;
+};
+
+const renderBlocks = (props: BlockProps & { children: React.ReactNode }): React.ReactNode => {
+  const numberOfChildren = React.Children.count(props.children);
+  let current = 0;
+  const blockPercent = (Math.floor(10000 / props.numBlocks) / 100).toFixed(2);
+  const blocks: JSX.Element[] = [];
+  for (let i = 0; i < props.numBlocks; i++) {
+    const numChildrenInBlock = Math.ceil((numberOfChildren - current) / (props.numBlocks - i));
+    blocks.push(
+      <div
+        key={`block-${i}`}
+        className={blockStyle}
+        style={
+          props.horizontal
+            ? {
+                gridTemplateColumns: `repeat(${numChildrenInBlock}, 1fr)`,
+                width: '100%',
+                height: `${blockPercent}%`
+              }
+            : {
+                gridTemplateRows: `repeat(${numChildrenInBlock}, minmax(0, 1fr))`,
+                width: `${blockPercent}%`,
+                height: '100%',
+                float: 'left'
+              }
+        }
+      >
+        {React.Children.toArray(props.children)
+          .slice(current, current + numChildrenInBlock)
+          .map((c, j) => (
+            <div key={`cell-${i}-${j}`} className={cellStyle}>
+              {c}
+            </div>
+          ))}
+      </div>
+    );
+    current = current + numChildrenInBlock;
+  }
+  return blocks;
 };
