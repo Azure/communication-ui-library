@@ -14,10 +14,17 @@ import { VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationUserKind, CommunicationIdentifierKind } from '@azure/communication-common';
 import type { AdapterState, AdapterDisposal, AdapterPages, AdapterError, AdapterErrors } from '../../common/adapters';
 
+/**
+ * Major UI screens shown in the {@link CallComposite}.
+ *
+ * @public
+ */
 export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 /**
- * Purely UI related adapter state.
+ * {@link CallAdapter} state for pure UI purposes.
+ *
+ * @public
  */
 export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
@@ -25,7 +32,9 @@ export type CallAdapterUiState = {
 };
 
 /**
- * State from the backend ACS services.
+ * {@link CallAdapter} state inferred from Azure Communication Services backend.
+ *
+ * @public
  */
 export type CallAdapterClientState = {
   userId: CommunicationUserKind;
@@ -40,46 +49,79 @@ export type CallAdapterClientState = {
   latestErrors: AdapterErrors;
 };
 
+/**
+ * {@link CallAdapter} state.
+ *
+ * @public
+ */
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
-export type IncomingCallListener = (event: {
-  callId: string;
-  callerId: string;
-  callerDisplayName?: string;
-  /**
-   * Invoke to accept the call.
-   */
-  accept: () => Promise<void>;
-  /**
-   * Invoke to reject the call.
-   */
-  reject: () => Promise<void>;
-}) => Promise<void>;
+/**
+ * Callback for {@link CallAdapterSubscribers} 'participantsJoined' event.
+ *
+ * @public
+ */
+export type ParticipantsJoinedListener = (event: { joined: RemoteParticipant[] }) => void;
 
-export type ParticipantJoinedListener = (event: { joined: RemoteParticipant[] }) => void;
+/**
+ * Callback for {@link CallAdapterSubscribers} 'participantsLeft' event.
+ *
+ * @public
+ */
+export type ParticipantsLeftListener = (event: { removed: RemoteParticipant[] }) => void;
 
-export type ParticipantLeftListener = (event: { removed: RemoteParticipant[] }) => void;
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isMuted' event.
+ *
+ * @public
+ */
+export type IsMutedChangedListener = (event: { identifier: CommunicationIdentifierKind; isMuted: boolean }) => void;
 
-export type IsMuteChangedListener = (event: { identifier: CommunicationIdentifierKind; isMuted: boolean }) => void;
-
+/**
+ * Callback for {@link CallAdapterSubscribers} 'callIdChanged' event.
+ *
+ * @public
+ */
 export type CallIdChangedListener = (event: { callId: string }) => void;
 
-export type IsScreenSharingOnChangedListener = (event: { isScreenSharingOn: boolean }) => void;
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isLocalScreenSharingActiveChanged' event.
+ *
+ * @public
+ */
+export type IsLocalScreenSharingActiveChangedListener = (event: { isScreenSharingOn: boolean }) => void;
 
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isSpeakingChanged' event.
+ *
+ * @public
+ */
 export type IsSpeakingChangedListener = (event: {
   identifier: CommunicationIdentifierKind;
   isSpeaking: boolean;
 }) => void;
 
+/**
+ * Callback for {@link CallAdapterSubscribers} 'displayNameChanged' event.
+ *
+ * @public
+ */
 export type DisplayNameChangedListener = (event: {
   participantId: CommunicationIdentifierKind;
   displayName: string;
 }) => void;
 
+/**
+ * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
+ *
+ * @public
+ */
 export type CallEndedListener = (event: { callId: string }) => void;
 
 /**
  * Functionality for managing the current call.
+ *
+ * @public
  */
 export interface CallAdapterCallManagement {
   joinCall(microphoneOn?: boolean): Call | undefined;
@@ -99,6 +141,8 @@ export interface CallAdapterCallManagement {
 
 /**
  * Functionality for managing devices within a call.
+ *
+ * @public
  */
 export interface CallAdapterDeviceManagement {
   askDevicePermission(constrain: PermissionConstraints): Promise<void>;
@@ -112,23 +156,25 @@ export interface CallAdapterDeviceManagement {
 
 /**
  * Call composite events that can be subscribed to.
+ *
+ * @public
  */
 export interface CallAdapterSubscribers {
-  on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-  on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
+  on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
+  on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'error', listener: (e: AdapterError) => void): void;
 
-  off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-  off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
+  off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
+  off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
@@ -136,7 +182,9 @@ export interface CallAdapterSubscribers {
 }
 
 /**
- * Call Composite Adapter interface.
+ * {@link CallComposite} Adapter interface.
+ *
+ * @public
  */
 export interface CallAdapter
   extends AdapterState<CallAdapterState>,
@@ -145,14 +193,3 @@ export interface CallAdapter
     CallAdapterCallManagement,
     CallAdapterDeviceManagement,
     CallAdapterSubscribers {}
-
-export type CallEvent =
-  | 'participantsJoined'
-  | 'participantsLeft'
-  | 'isMutedChanged'
-  | 'callIdChanged'
-  | 'isLocalScreenSharingActiveChanged'
-  | 'displayNameChanged'
-  | 'isSpeakingChanged'
-  | 'callEnded'
-  | 'error';

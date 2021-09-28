@@ -3,6 +3,8 @@
 
 /**
  * Functionality for interfacing with Composite adapter state.
+ *
+ * @public
  */
 export interface AdapterState<TState> {
   /** Subscribes the handler to stateChanged events. */
@@ -15,6 +17,8 @@ export interface AdapterState<TState> {
 
 /**
  * Functionality for interfacing with Composite adapter pages.
+ *
+ * @public
  */
 export interface AdapterPages<TPage> {
   /** Set the current page of the Composite */
@@ -23,6 +27,8 @@ export interface AdapterPages<TPage> {
 
 /**
  * Functionality for correctly disposing a Composite.
+ *
+ * @public
  */
 export interface AdapterDisposal {
   /** Dispose of the Composite */
@@ -31,6 +37,8 @@ export interface AdapterDisposal {
 
 /**
  * Error reported via error events and stored in adapter state.
+ *
+ * @public
  */
 export interface AdapterError extends Error {
   /**
@@ -51,5 +59,7 @@ export interface AdapterError extends Error {
  * Adapters stores the latest error for each operation in the state.
  *
  * `target` is an adapter defined string for each unique operation performed by the adapter.
+ *
+ * @public
  */
 export type AdapterErrors = { [target: string]: AdapterError };

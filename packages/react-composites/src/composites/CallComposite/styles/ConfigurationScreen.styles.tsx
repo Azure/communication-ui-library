@@ -3,6 +3,9 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const titleContainerStyle = mergeStyles({
   fontSize: '1.25rem',
   lineHeight: '1.75rem',

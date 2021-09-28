@@ -6,7 +6,9 @@
 import { CallAdapterState } from '../adapter/CallAdapter';
 import { useSelectorWithAdaptation } from './useAdaptedSelector';
 
-// This function highly depends on callClient.onChange event
+/**
+ * @private
+ */
 export const useSelector = <SelectorT extends (state: CallAdapterState, props: any) => any>(
   selector: SelectorT,
   selectorProps?: Parameters<SelectorT>[1]

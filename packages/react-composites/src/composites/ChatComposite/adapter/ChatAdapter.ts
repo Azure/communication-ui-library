@@ -6,12 +6,22 @@ import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
 import type { AdapterState, AdapterDisposal, AdapterErrors, AdapterError } from '../../common/adapters';
 
+/**
+ * {@link ChatAdapter} state for pure UI purposes.
+ *
+ * @public
+ */
 export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
 };
 
+/**
+ * {@link ChatAdapter} state inferred from Azure Communication Services backend.
+ *
+ * @public
+ */
 export type ChatCompositeClientState = {
   // Properties from backend services
   userId: string;
@@ -23,10 +33,17 @@ export type ChatCompositeClientState = {
   latestErrors: AdapterErrors;
 };
 
+/**
+ * {@link ChatAdapter} state.
+ *
+ * @public
+ */
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 /**
  * Functionality for managing the current chat thread.
+ *
+ * @public
  */
 export interface ChatAdapterThreadManagement {
   /*
@@ -47,6 +64,8 @@ export interface ChatAdapterThreadManagement {
 
 /**
  * Chat composite events that can be subscribed to.
+ *
+ * @public
  */
 export interface ChatAdapterSubscribers {
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -67,7 +86,9 @@ export interface ChatAdapterSubscribers {
 }
 
 /**
- * Chat Composite Adapter interface.
+ * {@link ChatComposite} Adapter interface.
+ *
+ * @public
  */
 export interface ChatAdapter
   extends ChatAdapterThreadManagement,
@@ -75,23 +96,50 @@ export interface ChatAdapter
     AdapterDisposal,
     ChatAdapterSubscribers {}
 
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.
+ *
+ * @public
+ */
 export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageSent' event.
+ *
+ * @public
+ */
 export type MessageSentListener = MessageReceivedListener;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageRead' event.
+ *
+ * @public
+ */
 export type MessageReadListener = (event: { message: ChatMessage; readBy: CommunicationUserKind }) => void;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'participantsAdded' event.
+ *
+ * @public
+ */
 export type ParticipantsAddedListener = (event: {
   participantsAdded: ChatParticipant[];
   addedBy: ChatParticipant;
 }) => void;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'participantsRemoved' event.
+ *
+ * @public
+ */
 export type ParticipantsRemovedListener = (event: {
   participantsRemoved: ChatParticipant[];
   removedBy: ChatParticipant;
 }) => void;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'topicChanged' event.
+ *
+ * @public
+ */
 export type TopicChangedListener = (event: { topic: string }) => void;
-export type ChatEvent =
-  | 'messageReceived'
-  | 'messageSent'
-  | 'messageRead'
-  | 'participantsAdded'
-  | 'participantsRemoved'
-  | 'topicChanged'
-  | 'error';

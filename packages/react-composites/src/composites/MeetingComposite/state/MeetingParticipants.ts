@@ -12,6 +12,7 @@ import { MeetingEndReason } from './MeetingEndReason';
 
 /**
  * Participants of a Meeting.
+ *
  * @alpha
  */
 export interface MeetingParticipant
@@ -23,8 +24,16 @@ export interface MeetingParticipant
   meetingEndReason?: MeetingEndReason;
 }
 
+/**
+ * Participants of a Meeting, keyed by userId.
+ *
+ * @alpha
+ */
 export type MeetingParticipants = { [keys: string]: MeetingParticipant };
 
+/**
+ * @private
+ */
 function meetingParticipantFromCallParticipant(callParticipant: RemoteParticipantState): MeetingParticipant {
   return {
     id: callParticipant.identifier,
@@ -37,6 +46,9 @@ function meetingParticipantFromCallParticipant(callParticipant: RemoteParticipan
   };
 }
 
+/**
+ * @private
+ */
 function callParticipantFromMeetingParticipant(meetingParticipant: MeetingParticipant): RemoteParticipantState {
   return {
     identifier: meetingParticipant.id,
@@ -53,6 +65,9 @@ type RemoteCallParticipants = {
   [keys: string]: RemoteParticipantState;
 };
 
+/**
+ * @private
+ */
 export function meetingParticipantsFromCallParticipants(callParticipants: RemoteCallParticipants): MeetingParticipants {
   const meetingParticipants: MeetingParticipants = {};
   for (const [key, value] of Object.entries(callParticipants)) {
@@ -61,6 +76,9 @@ export function meetingParticipantsFromCallParticipants(callParticipants: Remote
   return meetingParticipants;
 }
 
+/**
+ * @private
+ */
 export function callParticipantsFromMeetingParticipants(
   meetingParticipants: MeetingParticipants
 ): RemoteCallParticipants {

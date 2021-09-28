@@ -67,6 +67,9 @@ const removeParticipantFromMeeting = async (
   await chatAdapter.removeParticipant(participantId);
 };
 
+/**
+ * @private
+ */
 export const EmbeddedPeoplePane = (props: {
   inviteLink?: string;
   onClose: () => void;
@@ -104,6 +107,9 @@ export const EmbeddedPeoplePane = (props: {
   );
 };
 
+/**
+ * @private
+ */
 export const EmbeddedChatPane = (props: {
   chatAdapter: ChatAdapter;
   fluentTheme?: PartialTheme | Theme;

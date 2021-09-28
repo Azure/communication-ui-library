@@ -15,12 +15,18 @@ import {
   bottomStackFooterStyle
 } from './styles/Error.styles';
 
+/**
+ * @private
+ */
 export interface ErrorProps {
   rejoinHandler(): void;
   title?: string;
   reason?: string;
 }
 
+/**
+ * @private
+ */
 export function Error(props: ErrorProps): JSX.Element {
   const title = props.title ?? 'Error joining the Call';
   const rejoinCall = 'Retry Call';

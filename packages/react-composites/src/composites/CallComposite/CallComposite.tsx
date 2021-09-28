@@ -16,6 +16,11 @@ import { Error } from './Error';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 
+/**
+ * Props for {@link CallComposite}.
+ *
+ * @public
+ */
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
   /**
    * An adapter provides logic and data to the composite.
@@ -34,7 +39,9 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 }
 
 /**
- * Optional features of the {@link CallComposite}
+ * Optional features of the {@link CallComposite}.
+ *
+ * @public
  */
 export type CallCompositeOptions = {
   /**
@@ -111,6 +118,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }
 };
 
+/**
+ * A customizable UI composite for calling experience.
+ *
+ * @public
+ */
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   const { adapter, callInvitationURL, onFetchAvatarPersonaData, onFetchParticipantMenuItems, options } = props;
   useEffect(() => {
