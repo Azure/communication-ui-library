@@ -89,15 +89,21 @@ export const loadCallScreen = async (pages: Page[]): Promise<void> => {
  */
 export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promise<void> => {
   // Start local camera and start the call
+  console.log('item1');
   for (const page of pages) {
+    console.log('item2');
     await page.bringToFront();
+    console.log('item3');
     await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+    console.log('item4');
     await page.click(dataUiId('call-composite-start-call-button'));
   }
 
   // Wait for all participants cameras to have loaded
+  console.log('item5');
   for (const page of pages) {
     await page.bringToFront();
+    console.log('item6');
     await page.waitForFunction(
       (args) => {
         const videoNodes = document.querySelectorAll('video');
@@ -109,6 +115,7 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
         expectedVideoCount: pages.length
       }
     );
+    console.log('item7');
   }
 };
 
