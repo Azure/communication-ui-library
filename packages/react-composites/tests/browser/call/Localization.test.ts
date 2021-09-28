@@ -23,7 +23,12 @@ test.describe('Localization tests', async () => {
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
 
-    await loadCallScreen([page]);
+    // TODO: video tile is not loading in CI so this is failing: await loadCallScreen([page]);
+    // Until this is fixed load and await manually:
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-start-call-button'));
+    await page.waitForTimeout(3000);
+
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
   });
 });
