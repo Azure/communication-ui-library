@@ -1,12 +1,16 @@
 # Change Log - @azure/communication-react
 
+## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.6)
+
+TODO
+
 This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
 
 <!-- Start content -->
 
 ## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.5)
 
-Mon, 13 Sep 2021 21:02:16 GMT 
+Mon, 13 Sep 2021 21:02:16 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.4..@azure/communication-react_v1.0.0-beta.5)
 
 ### Changes
@@ -49,7 +53,7 @@ Mon, 13 Sep 2021 21:02:16 GMT
 
 ## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.4)
 
-Mon, 16 Aug 2021 21:18:19 GMT 
+Mon, 16 Aug 2021 21:18:19 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.3..@azure/communication-react_v1.0.0-beta.4)
 
 ### Changes
@@ -93,7 +97,7 @@ Mon, 16 Aug 2021 21:18:19 GMT
   * Fix video gallery styling issues during (participant pane too large) and after (messed up format) screenshare
   * Fix sample app dark theme on IPhoneSE
   * Fix RTL responsiveness of TypingIndicator
-  * Fix video device icons in ControlBar Options button 
+  * Fix video device icons in ControlBar Options button
   * Fix meeting pane overlapping the call control bar
   * Remove type blocking usage of the package on older typescript versions
   * Fix SendBox padding so we don't overlap text with the send message button
@@ -102,7 +106,7 @@ Mon, 16 Aug 2021 21:18:19 GMT
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.3)
 
-Thu, 22 Jul 2021 17:42:41 GMT 
+Thu, 22 Jul 2021 17:42:41 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.2..@azure/communication-react_v1.0.0-beta.3)
 
 ### Changes
@@ -144,7 +148,7 @@ Thu, 22 Jul 2021 17:42:41 GMT
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.2)
 
-Fri, 09 Jul 2021 20:41:33 GMT 
+Fri, 09 Jul 2021 20:41:33 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.1..@azure/communication-react_v1.0.0-beta.2)
 
 ### Changes
