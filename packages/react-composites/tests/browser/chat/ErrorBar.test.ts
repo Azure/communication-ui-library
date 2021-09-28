@@ -87,8 +87,8 @@ const waitForSendFailure = async (page: Page): Promise<void> => {
 
 const waitForSendSuccess = async (page: Page): Promise<void> => {
   // Ensure there is no sending icon
-  const sentIconSelector = await page.$(`[data-ui-status="sent"]`);
-  sentIconSelector && (await sentIconSelector.waitForElementState('hidden'));
+  const sendingIconSelector = await page.$(`[data-ui-status="sending"]`);
+  sendingIconSelector && (await sendingIconSelector.waitForElementState('hidden'));
 
   await page.waitForSelector(`[data-ui-status="delivered"]`);
 };
