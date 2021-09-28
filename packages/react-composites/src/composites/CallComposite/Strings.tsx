@@ -5,6 +5,8 @@
  * Strings used by the {@link CallComposite} directly.
  *
  * This strings are in addition to those used by the components from the component library.
+ *
+ * @public
  */
 export interface CallCompositeStrings {
   /**
@@ -51,16 +53,4 @@ export interface CallCompositeStrings {
    * Error shown when Teams meeting connection is dropped for some reason.
    */
   teamsMeetingFailToJoin: string;
-}
-
-/**
- * Strings used by the {@link ChatComposite} directly.
- *
- * This strings are in addition to those used by the components from the component library.
- */
-export interface ChatCompositeStrings {
-  /**
-   * Chat list header text
-   */
-  chatListHeader: string;
 }

@@ -5,7 +5,9 @@ import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
 import React, { useEffect } from 'react';
 
 /**
- * Custom data attributes for the AvatarPersona component.
+ * Custom data attributes for displaying avatar for a user.
+ *
+ * @public
  */
 export type AvatarPersonaData = {
   /**
@@ -34,10 +36,15 @@ export type AvatarPersonaData = {
 };
 
 /**
- * Callback function used to provide custom data to the AvatarPersona component.
+ * Callback function used to provide custom data to build an avatar for a user.
+ *
+ * @public
  */
 export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
+/**
+ * @private
+ */
 export interface AvatarPersonaProps extends IPersonaProps {
   /**
    * Azure Communicator user ID.
@@ -53,6 +60,8 @@ export interface AvatarPersonaProps extends IPersonaProps {
  * An Avatar component made using the `Persona` component.
  * It allows you to specify a `userId` and a `dataProvider` to retrieve the `AvatarPersonaData`.
  * Read more about `Persona` component at https://developer.microsoft.com/fluentui#/controls/web/persona
+ *
+ * @private
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   const { userId, dataProvider } = props;

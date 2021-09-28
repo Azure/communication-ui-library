@@ -42,72 +42,128 @@ const createCompositeStrings = (localizedStrings: PartialDeep<CompositeStrings>)
   return strings;
 };
 
-/** Locale for English (US) */
+/**
+ * Locale for English (US)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_EN_US: CompositeLocale = {
   component: COMPONENT_LOCALE_EN_US,
   strings: en_US
 };
-/** Locale for English (British) */
+/**
+ * Locale for English (British)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_EN_GB: CompositeLocale = {
   component: COMPONENT_LOCALE_EN_GB,
   strings: createCompositeStrings(en_GB)
 };
-/** Locale for German (Germany) */
+/**
+ * Locale for German (Germany)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale = {
   component: COMPONENT_LOCALE_DE_DE,
   strings: createCompositeStrings(de_DE)
 };
-/** Locale for Spanish (Spain) */
+/**
+ * Locale for Spanish (Spain)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_ES_ES: CompositeLocale = {
   component: COMPONENT_LOCALE_ES_ES,
   strings: createCompositeStrings(es_ES)
 };
-/** Locale for French (France) */
+/**
+ * Locale for French (France)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale = {
   component: COMPONENT_LOCALE_FR_FR,
   strings: createCompositeStrings(fr_FR)
 };
-/** Locale for Italian (Italy) */
+/**
+ * Locale for Italian (Italy)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_IT_IT: CompositeLocale = {
   component: COMPONENT_LOCALE_IT_IT,
   strings: createCompositeStrings(it_IT)
 };
-/** Locale for Japanese (Japan) */
+/**
+ * Locale for Japanese (Japan)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_JA_JP: CompositeLocale = {
   component: COMPONENT_LOCALE_JA_JP,
   strings: createCompositeStrings(ja_JP)
 };
-/** Locale for Korean (South Korea) */
+/**
+ * Locale for Korean (South Korea)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_KO_KR: CompositeLocale = {
   component: COMPONENT_LOCALE_KO_KR,
   strings: createCompositeStrings(ko_KR)
 };
-/** Locale for Dutch (Netherlands) */
+/**
+ * Locale for Dutch (Netherlands)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_NL_NL: CompositeLocale = {
   component: COMPONENT_LOCALE_NL_NL,
   strings: createCompositeStrings(nl_NL)
 };
-/** Locale for Portuguese (Brazil) */
+/**
+ * Locale for Portuguese (Brazil)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_PT_BR: CompositeLocale = {
   component: COMPONENT_LOCALE_PT_BR,
   strings: createCompositeStrings(pt_BR)
 };
-/** Locale for Russian (Russia) */
+/**
+ * Locale for Russian (Russia)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_RU_RU: CompositeLocale = {
   component: COMPONENT_LOCALE_RU_RU,
   strings: createCompositeStrings(ru_RU)
 };
-/** Locale for Turkish (Turkey) */
+/**
+ * Locale for Turkish (Turkey)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_TR_TR: CompositeLocale = {
   component: COMPONENT_LOCALE_TR_TR,
   strings: createCompositeStrings(tr_TR)
 };
-/** Locale for Chinese (Mainland China) */
+/**
+ * Locale for Chinese (Mainland China)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_ZH_CN: CompositeLocale = {
   component: COMPONENT_LOCALE_ZH_CN,
   strings: createCompositeStrings(zh_CN)
 };
-/** Locale for Chinese (Taiwan) */
+/**
+ * Locale for Chinese (Taiwan)
+ *
+ * @public
+ */
 export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale = {
   component: COMPONENT_LOCALE_ZH_TW,
   strings: createCompositeStrings(zh_TW)

@@ -11,11 +11,17 @@ import {
 } from '@internal/react-components';
 import { usePropsFor } from './hooks/usePropsFor';
 
+/**
+ * @private
+ */
 export interface LobbyCallControlBarProps {
   isMicrophoneChecked?: boolean;
   onEndCallClick(): void;
 }
 
+/**
+ * @private
+ */
 export const LobbyCallControlBar = (props: LobbyCallControlBarProps): JSX.Element => {
   const theme = useTheme();
 
