@@ -12,6 +12,24 @@ import { ChatHandlers } from '../handlers/createHandlers';
 import { chatParticipantListSelector } from '../chatParticipantListSelector';
 import { errorBarSelector } from '../errorBarSelector';
 
+/**
+ * Primary hook to get all hooks necessary for a chat Component.
+ *
+ * Most straightforward usage of chat components looks like:
+ *
+ * @example
+ * ```
+ *     import { ParticipantList, usePropsFor } from '@azure/communication-react';
+ *
+ *     const App = (): JSX.Element => {
+ *         // ... code to setup Providers ...
+ *
+ *         return <ParticipantList {...usePropsFor(ParticipantList)}/>
+ *     }
+ * ```
+ *
+ * @public
+ */
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
@@ -26,6 +44,11 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   return undefined as any;
 };
 
+/**
+ * Specific type of the selector applicable to a given Component.
+ *
+ * @public
+ */
 export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
   Component,
   typeof SendBox
@@ -41,6 +64,14 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? typeof errorBarSelector
   : undefined;
 
+/**
+ * Get the selector for a specified component.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * @public
+ */
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {
