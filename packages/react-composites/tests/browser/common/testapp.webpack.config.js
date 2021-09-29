@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (appDir) => ({
   entry: path.join(appDir, 'index.tsx'),
-  devtool: 'eval-source-map',
+  devtool: undefined,
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
@@ -31,9 +31,10 @@ module.exports = (appDir) => ({
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
+        loader: 'esbuild-loader',
         options: {
-          transpileOnly: true
+          loader: 'tsx',
+          target: 'es2015'
         },
         exclude: /dist/
       },

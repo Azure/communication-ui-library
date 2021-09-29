@@ -9408,6 +9408,27 @@ packages:
     dev: false
     resolution:
       integrity: sha512-EmTr31wppcaIAgblChZiuN/l9Y7DPyw8Xtbg7fIVngn6zMW+IEBJDJngeKC3x6wr0V/vcA2wqeFnaw1bFJbDdA==
+  /esbuild-loader/2.15.1_webpack@5.38.1:
+    dependencies:
+      esbuild: 0.12.29
+      joycon: 3.0.1
+      json5: 2.2.0
+      loader-utils: 2.0.0
+      tapable: 2.2.0
+      type-fest: 1.4.0
+      webpack: 5.38.1_webpack-cli@4.7.2
+      webpack-sources: 2.3.1
+    dev: false
+    peerDependencies:
+      webpack: ^4.40.0 || ^5.0.0
+    resolution:
+      integrity: sha512-JRBL6uTeWplMbylNBt9gxLKMjD8wKnqGq786QV/cm/nPBSNA9/kC7/vNwCXTDPfYqHoWsjyfH7ub9ekN0kdAYQ==
+  /esbuild/0.12.29:
+    dev: false
+    hasBin: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-w/XuoBCSwepyiZtIRsKsetiLDUVGPVw1E/R3VTFSecIy8UR7Cq3SOtwKHJMFoVqqVG36aGkzh4e8BvpO1Fdc7g==
   /escalade/3.1.1:
     dev: false
     engines:
@@ -12809,6 +12830,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-o6vicYryQaKykE+EpiWXDzia4yo=
+  /joycon/3.0.1:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-SJcJNBg32dGgxhPtM0wQqxqV0ax9k/9TaUskGDSJkSFSQOEWWvQ3zzWdGQRIUry2j1zA5+ReH13t0Mf3StuVZA==
   /jpeg-js/0.4.3:
     dev: false
     resolution:
@@ -17817,6 +17844,12 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-w81kTuuq5V8j7aZamYO9TJ+LYqhw11mkHyMISJIRl2+uMYmgOj3yhSLk2qH6lznyTicBOdMrudxrrVvCQzK1tQ==
+  /type-fest/1.4.0:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==
   /type-is/1.6.18:
     dependencies:
       media-typer: 0.3.0
@@ -19639,6 +19672,7 @@ packages:
       copyfiles: 2.4.1
       core-js: 3.16.2
       dotenv: 10.0.0
+      esbuild-loader: 2.15.1_webpack@5.38.1
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -19688,7 +19722,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-UnTbvuErLodVzrzB+qZMuhNOe0Bo5+Y3wHE78vsV3IBj7uc70qf7WLiLpNlUXYWtok2nnuEYF7my30eS/TG+3Q==
+      integrity: sha512-XO5zcMqa6rkpyjOV8KS09SBafNhv+fnvUJY457WQJah1BIeR2T/8gmnBoVmKipwybelrQiIUpO18m+ySYzw6LA==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
