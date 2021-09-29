@@ -40,6 +40,10 @@ export type ChatScreenStyles = {
   sendBox?: SendBoxStylesProps;
   typingIndicator?: TypingIndicatorStylesProps;
 };
+
+/**
+ * @private
+ */
 export type ChatScreenProps = {
   options?: ChatCompositeOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -49,6 +53,9 @@ export type ChatScreenProps = {
   styles?: ChatScreenStyles;
 };
 
+/**
+ * @private
+ */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const {
     onFetchAvatarPersonaData,

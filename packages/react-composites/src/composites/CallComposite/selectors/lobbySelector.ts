@@ -4,6 +4,9 @@
 import * as reselect from 'reselect';
 import { getLocalVideoStreams } from './baseSelectors';
 
+/**
+ * @private
+ */
 export const lobbySelector = reselect.createSelector([getLocalVideoStreams], (localVideoStreams) => {
   const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
   return {

@@ -8,6 +8,9 @@ import memoizeOne from 'memoize-one';
 import { CallAdapter } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 
+/**
+ * @private
+ */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

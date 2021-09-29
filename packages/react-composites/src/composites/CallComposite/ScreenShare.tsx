@@ -21,6 +21,9 @@ import {
 } from './styles/MediaGallery.styles';
 import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
 
+/**
+ * @private
+ */
 export type ScreenShareProps = {
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant?: VideoGalleryLocalParticipant;
@@ -61,6 +64,9 @@ const onRenderPlaceholder: OnRenderAvatarCallback = (userId, options): JSX.Eleme
   </div>
 );
 
+/**
+ * @private
+ */
 export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   const {
     screenShareParticipant,

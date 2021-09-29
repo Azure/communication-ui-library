@@ -10,9 +10,27 @@ import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
 import { CommunicationIdentifierKind, CommunicationTokenCredential } from '@azure/communication-common';
 
+/**
+ * Defines the methods that allow ChatClient {@Link @azure/communication-chat#ChatClient} to be used with a centralized generated state.
+ * The interface provides access to proxied state and also allows registering a handler for state change events.
+ */
 export interface StatefulChatClient extends ChatClient {
+  /**
+   * Holds all the state that we could proxy from ChatClient {@Link @azure/communication-chat#ChatClient} as
+   * ChatClientState {@Link ChatClientState}.
+   */
   getState(): ChatClientState;
+  /**
+   * Allows a handler to be registered for 'stateChanged' events.
+   *
+   * @param handler - Callback to receive the state.
+   */
   onStateChange(handler: (state: ChatClientState) => void): void;
+  /**
+   * Allows unregistering for 'stateChanged' events.
+   *
+   * @param handler - Original callback to be unsubscribed.
+   */
   offStateChange(handler: (state: ChatClientState) => void): void;
 }
 

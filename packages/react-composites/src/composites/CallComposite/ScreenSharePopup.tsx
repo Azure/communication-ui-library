@@ -33,6 +33,9 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
+/**
+ * @private
+ */
 export interface ScreenSharePopupProps {
   onStopScreenShare: () => Promise<void>;
 
@@ -46,6 +49,9 @@ export interface ScreenSharePopupProps {
   hostId?: string;
 }
 
+/**
+ * @private
+ */
 export const ScreenSharePopup = (props: ScreenSharePopupProps): JSX.Element => {
   const { hostId, onStopScreenShare } = props;
   const [stoppingInProgress, setStoppingInProgress] = useState(false);

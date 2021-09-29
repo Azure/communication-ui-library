@@ -71,6 +71,7 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp'
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    // Warning: (ae-incompatible-release-tags) The symbol "diagnostics" is marked as @public, but its signature references "DiagnosticsCallFeatureState" which is marked as @beta
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -90,6 +91,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
+    // Warning: (ae-incompatible-release-tags) The symbol "transfer" is marked as @public, but its signature references "TransferCallFeatureState" which is marked as @beta
     transfer: TransferCallFeatureState;
 }
 
@@ -109,7 +111,7 @@ export type DeviceManagerState = {
     unparentedViews: LocalVideoStreamState[];
 };
 
-// @public
+// @beta
 export interface DiagnosticsCallFeatureState {
     media: MediaDiagnosticsState;
     network: NetworkDiagnosticsState;
@@ -131,13 +133,13 @@ export interface LocalVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @public
+// @beta
 export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
 }
 
-// @public
+// @beta
 export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
@@ -198,7 +200,7 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-// @public
+// @beta
 export interface Transfer {
     error?: TransferErrorCode;
     id: number;
@@ -206,13 +208,13 @@ export interface Transfer {
     targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
 }
 
-// @public
+// @beta
 export interface TransferCallFeatureState {
     receivedTransferRequests: TransferRequest[];
     requestedTransfers: Transfer[];
 }
 
-// @public
+// @beta
 export interface TransferRequest {
     // (undocumented)
     targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
