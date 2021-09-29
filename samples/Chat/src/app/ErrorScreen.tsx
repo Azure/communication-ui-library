@@ -6,8 +6,8 @@ import {
   bottomStackFooterStyle,
   buttonStyle,
   buttonsStackTokens,
-  endCallContainerStyle,
-  endCallTitleStyle,
+  endChatContainerStyle,
+  endChatTitleStyle,
   mainStackTokens,
   upperStackTokens
 } from './styles/EndChat.styles';
@@ -23,9 +23,16 @@ export const ErrorScreen = (props: ErrorEndCallProps): JSX.Element => {
   const goHomePage = 'Go to homepage';
 
   return (
-    <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
+    <Stack
+      horizontal
+      wrap
+      horizontalAlign="center"
+      verticalAlign="center"
+      tokens={mainStackTokens}
+      className={endChatContainerStyle}
+    >
       <Stack tokens={upperStackTokens}>
-        <div tabIndex={0} className={endCallTitleStyle}>
+        <div tabIndex={0} className={endChatTitleStyle}>
           {leftCall}
         </div>
         <Stack horizontal tokens={buttonsStackTokens}>
@@ -33,11 +40,11 @@ export const ErrorScreen = (props: ErrorEndCallProps): JSX.Element => {
             {goHomePage}
           </DefaultButton>
         </Stack>
+        <div className={bottomStackFooterStyle}>
+          <a href="https://github.com/Azure/Communication/issues">Give Feedback</a>
+          &nbsp;on this sample app on Github
+        </div>
       </Stack>
-      <div className={bottomStackFooterStyle}>
-        <a href="https://github.com/Azure/Communication/issues">Give Feedback</a>
-        &nbsp;on this sample app on Github
-      </div>
     </Stack>
   );
 };
