@@ -10,7 +10,7 @@ jobs:
   update_bundle_snapshot:
     name: Update embed html bundle snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
-    # if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event == 'SOMETHING???' }}
+    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
