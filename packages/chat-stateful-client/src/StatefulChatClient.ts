@@ -10,13 +10,34 @@ import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
 import { CommunicationIdentifierKind, CommunicationTokenCredential } from '@azure/communication-common';
 
+/**
+ * Defines the methods that allow {@Link @azure/communication-chat#ChatClient} to be used with a centralized generated state.
+ *
+ * The interface provides access to proxied state and also allows registering a handler for state change events.
+ *
+ * @public
+ */
 export interface StatefulChatClient extends ChatClient {
+  /**
+   * Holds all the state that we could proxy from ChatClient {@Link @azure/communication-chat#ChatClient} as
+   * ChatClientState {@Link ChatClientState}.
+   */
   getState(): ChatClientState;
+  /**
+   * Allows a handler to be registered for 'stateChanged' events.
+   *
+   * @param handler - Callback to receive the state.
+   */
   onStateChange(handler: (state: ChatClientState) => void): void;
+  /**
+   * Allows unregistering for 'stateChanged' events.
+   *
+   * @param handler - Original callback to be unsubscribed.
+   */
   offStateChange(handler: (state: ChatClientState) => void): void;
 }
 
-export interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
+interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
   context: ChatContext;
   eventSubscriber: EventSubscriber | undefined;
 }
@@ -96,7 +117,9 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
 };
 
 /**
- * Required arguments to construct the {@link StatefulChatClient}.
+ * Arguments to construct the {@link StatefulChatClient}.
+ *
+ * @public
  */
 export type StatefulChatClientArgs = {
   userId: CommunicationIdentifierKind;
@@ -106,7 +129,9 @@ export type StatefulChatClientArgs = {
 };
 
 /**
- * Options to construct the {@link StatefulChatClient} with.
+ * Options to construct the {@link StatefulChatClient}.
+ *
+ * @public
  */
 export type StatefulChatClientOptions = {
   /**
@@ -124,6 +149,8 @@ export type StatefulChatClientOptions = {
  * Creates a stateful ChatClient {@link StatefulChatClient} by proxying ChatClient
  * {@link @azure/communication-chat#ChatClient} with ProxyChatClient {@link ProxyChatClient} which then allows access
  * to state in a declarative way.
+ *
+ * @public
  */
 export const createStatefulChatClient = (
   args: StatefulChatClientArgs,

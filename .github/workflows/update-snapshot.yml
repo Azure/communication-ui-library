@@ -4,12 +4,13 @@ on:
   # Run any time when a new label added to the PR
   pull_request:
     types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
 
 jobs:
   update_bundle_snapshot:
     name: Update embed html bundle snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') }}
+    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
@@ -56,10 +57,10 @@ jobs:
       # Commit changes to snapshot files.
       - name: Commit new snapshots
         run: >
-          git diff --exit-code --quiet -- samples/StaticHtmlComposites/tests || 
-          (git add samples/StaticHtmlComposites/tests && 
-          git commit -m 'Updating js bundle automation snapshots' && 
-          git push origin HEAD:${{ github.head_ref }})
+          git diff --exit-code --quiet -- samples/StaticHtmlComposites/tests ||
+          (git add samples/StaticHtmlComposites/tests &&
+          git commit -m 'Updating js bundle automation snapshots' &&
+          git push)
 
   update_composite_snapshot:
     name: Update composite snapshot by label
@@ -95,15 +96,11 @@ jobs:
       - name: Build Test
         run: |
           cd packages/react-composites
-          rushx build:e2e:chat
-          rushx build:e2e:call
-          rushx build:e2e:meeting
+          rushx build:e2e
       - name: Update snapshot
         run: |
           cd packages/react-composites
-          rushx test:e2e:chat:update
-          rushx test:e2e:call:update
-          rushx test:e2e:meeting:update
+          rushx test:e2e:update
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       # Setup bot information for pushing new changes
@@ -115,7 +112,7 @@ jobs:
       # Commit changes to snapshot files.
       - name: Commit new snapshots
         run: >
-          git diff --exit-code --quiet -- packages/react-composites/tests || 
-          (git add packages/react-composites/tests && 
-          git commit -m 'Updating composite automation snapshots' && 
-          git push origin HEAD:${{ github.head_ref }})
+          git diff --exit-code --quiet -- packages/react-composites/tests ||
+          (git add packages/react-composites/tests &&
+          git commit -m 'Updating composite automation snapshots' &&
+          git push)
