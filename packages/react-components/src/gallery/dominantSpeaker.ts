@@ -3,8 +3,8 @@
 import { VideoGalleryRemoteParticipant } from '../types';
 
 /**
- * Calculates the participants that should be renderd based on the list of dominant
- * speakers and currently renderd participants in a call.
+ * Calculates the participants that should be rendered based on the list of dominant
+ * speakers and currently rendered participants in a call.
  * @param participants - Array containing all participants of a call.
  * {@link @azure/communication-react#VideoGalleryRemoteParticipant}
  * @param dominantSpeakers - An array containing the userId of dominant speakers
@@ -23,52 +23,45 @@ export const smartDominantSpeakerParticipants = (
   // Don't apply any logic if total number of video streams is less than Max video streams.
   if (participants.length <= maxTiles) return participants;
 
-  let activeParticipants = visibleParticipants.slice();
-  // Initialize `activeParticipants` if it is empty.
-  if (!activeParticipants.length) {
-    activeParticipants = participants.slice(0, maxTiles);
-  }
-
   // Only use the Max allowed dominant speakers.
   const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxTiles);
-  const activeParticipantIds = activeParticipants.map((p) => p.userId);
-  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !activeParticipantIds.includes(id));
+  const visibleParticipantIds = visibleParticipants.map((p) => p.userId);
+  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleParticipantIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
   for (let index = 0; index < maxTiles; index++) {
-    const activeParticipantId = activeParticipantIds[index];
-
+    const activeParticipantId = visibleParticipantIds[index];
     if (activeParticipantId === undefined || !dominantSpeakerIds.includes(activeParticipantId)) {
       const replacement = newDominantSpeakerIds.shift();
       if (!replacement) break;
-      activeParticipantIds[index] = replacement;
+      visibleParticipantIds[index] = replacement;
     }
   }
 
   // Converting array to a hashmap for faster searching
-  const activeParticipantIdsMap = {};
-  activeParticipantIds.forEach((userId) => {
-    activeParticipantIdsMap[userId] = true;
+  const visibleParticipantIdsMap = {};
+  visibleParticipantIds.forEach((userId) => {
+    visibleParticipantIdsMap[userId] = true;
   });
 
   // Add additional participants to the final list of visible participants if the list has less than Max visible participants.
-  const emptySlots = maxTiles - activeParticipantIds.length;
+  const emptySlots = maxTiles - visibleParticipantIds.length;
   if (emptySlots > 0) {
     for (let index = 0; index < emptySlots; index++) {
-      const filler = participants.find((p) => !activeParticipantIdsMap[p.userId]);
+      const filler = participants.find((p) => !visibleParticipantIdsMap[p.userId]);
       if (filler) {
-        activeParticipantIdsMap[filler.userId] = true;
-        activeParticipantIds.push(filler.userId);
+        visibleParticipantIdsMap[filler.userId] = true;
+        visibleParticipantIds.push(filler.userId);
       }
     }
   }
 
-  const newActiveParticipants = participants.filter((p) => activeParticipantIdsMap[p.userId]);
+  const newVisibleParticipants = participants.filter((p) => visibleParticipantIdsMap[p.userId]);
 
   // Sort the new video participants to match the order of last visible participants.
-  newActiveParticipants.sort((a, b) => {
-    return activeParticipantIds.indexOf(a.userId) - activeParticipantIds.indexOf(b.userId);
+  newVisibleParticipants.sort((a, b) => {
+    return visibleParticipantIds.indexOf(a.userId) - visibleParticipantIds.indexOf(b.userId);
   });
 
-  return newActiveParticipants;
+  return newVisibleParticipants;
 };
