@@ -136,4 +136,4 @@ jobs:
           git diff --exit-code --quiet -- packages/react-composites/tests || 
           (git add packages/react-composites/tests && 
           git commit -m 'Updating composite automation snapshots' && 
-          git push
+          git push)
