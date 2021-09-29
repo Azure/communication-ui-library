@@ -6,8 +6,20 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
+/**
+ * Centralized state for {@link @azure/communication-chat#ChatClient}.
+ *
+ * @public
+ */
 export type ChatClientState = {
+  /**
+   * Identifier of the current user.
+   */
   userId: CommunicationIdentifierKind;
+  /**
+   * DisplayName of the current user.
+   * The same value as what others see in {@link @azure/communication-chat#ChatParticipant.displayName}
+   */
   displayName: string;
   /**
    * Chat threads joined by the current user.
@@ -22,6 +34,11 @@ export type ChatClientState = {
   latestErrors: ChatErrors;
 };
 
+/**
+ * Centralized state for {@link @azure/communication-chat#ChatThreadClient}.
+ *
+ * @public
+ */
 export type ChatThreadClientState = {
   /**
    * Messages in this thread.
@@ -37,17 +54,39 @@ export type ChatThreadClientState = {
    * keyed by {@link @azure/communication-chat#ChatParticipant.id}.
    */
   participants: { [key: string]: ChatParticipant };
+  /**
+   * Id of this chat thread. Returned from {@link @azure/communication-chat#ChatThreadClient.threadId}
+   */
   threadId: string;
+  /**
+   * An object containing properties of this chat thread.
+   */
   properties?: ChatThreadProperties;
+  /**
+   * An array of ReadReceipts of this chat thread. Returned from {@link @azure/communication-chat#ChatThreadClient.listReadReceipts}
+   */
   readReceipts: ChatMessageReadReceipt[];
+  /**
+   * An array of typingIndicators of this chat thread. Captured from event listener of {@link @azure/communication-chat#ChatClient}
+   * Stateful client only stores recent 8000ms real-time typing indicators data.
+   */
   typingIndicators: TypingIndicatorReceivedEvent[];
+  /**
+   * Latest timestamp when other users read messages sent by current user.
+   */
   latestReadTime: Date;
 };
 
-// @azure/communication-chat exports two interfaces for this concept,
-// and @azure/communication-signaling exports one.
-// In the absence of a common interface for this concept, we define a minimal one
-// that helps us hide the different types used by underlying API.
+/**
+ * Properties of a chat thread.
+ *
+ * \@azure/communication-chat exports two interfaces for this concept,
+ * and \@azure/communication-signaling exports another.
+ *
+ * We define a minimal one that helps us hide the different types used by underlying API.
+ *
+ * @public
+ */
 export type ChatThreadProperties = {
   topic?: string;
 };
@@ -57,18 +96,16 @@ export type ChatThreadProperties = {
  *
  * Each property in the object stores the latest error for a particular SDK API method.
  *
- * Errors from this object can be cleared by calling the TODO(implement me) {@link clearError} method.
- * Additionally, errors are automatically cleared when:
- * - The state is cleared.
- * - Subsequent calls to related API methods succeed.
- * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
+ * @public
  */
 export type ChatErrors = {
   [target in ChatErrorTarget]: ChatError;
 };
 
 /**
- * Error thrown from failed stateful API methods.
+ * Error thrown from failed {@link StatefulChatClient} methods.
+ *
+ * @public
  */
 export class ChatError extends Error {
   /**
@@ -97,6 +134,8 @@ export class ChatError extends Error {
 
 /**
  * String literal type for all permissible keys in {@link ChatErrors}.
+ *
+ * @public
  */
 export type ChatErrorTarget =
   | 'ChatClient.createChatThread'
