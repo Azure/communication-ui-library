@@ -3,7 +3,7 @@
 
 import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { HorizontalGallery } from '.';
+import { HorizontalGallery } from './HorizontalGallery';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import {
@@ -119,14 +119,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   useEffect(() => {
     visibleVideoParticipants.current = smartDominantSpeakerParticipants(
-      remoteParticipants?.filter((p) => p.videoStream?.isAvailable),
+      remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
       dominantSpeakers,
       visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
     );
     setVideoParticipants(visibleVideoParticipants.current);
 
+    // @TODO: Can this possibly be done inside HorizontalGallery?
+    // Max Tiles calculated inside that gallery can be passed to this function
+    // to only return the max number of tiles that can be rendered in the gallery.
     visibleAudioParticipants.current = smartDominantSpeakerParticipants(
-      remoteParticipants?.filter((p) => !p.videoStream?.isAvailable),
+      remoteParticipants?.filter((p) => !p.videoStream?.isAvailable) ?? [],
       dominantSpeakers,
       visibleAudioParticipants.current.filter((p) => !p.videoStream?.isAvailable),
       100
@@ -240,6 +243,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               participants={audioParticipants}
               remoteVideoViewOption={remoteVideoViewOption}
               showMuteIndicator={showMuteIndicator}
+              rightGutter={176} // to leave a gap for the floating local video
             />
           </Stack>
         )}
@@ -248,13 +252,26 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }
 
   return (
-    <Stack>
+    <Stack grow styles={videoGalleryContainerStyle}>
       <GridLayout styles={styles ?? emptyStyles}>
         <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Stack>
         {defaultOnRenderRemoteParticipants}
       </GridLayout>
+      {audioParticipants && (
+        <Stack style={{ minHeight: '8rem', maxHeight: '8rem' }}>
+          <HorizontalGallery
+            onCreateRemoteStreamView={onCreateRemoteStreamView}
+            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+            onRenderAvatar={onRenderAvatar}
+            onRenderRemoteVideoTile={onRenderRemoteVideoTile}
+            participants={audioParticipants}
+            remoteVideoViewOption={remoteVideoViewOption}
+            showMuteIndicator={showMuteIndicator}
+          />
+        </Stack>
+      )}
     </Stack>
   );
 };

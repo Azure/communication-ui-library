@@ -1,10 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, mergeStyles, Stack } from '@fluentui/react';
-import React, { useEffect, useMemo, useState } from 'react';
+import { Icon, mergeStyles, Stack, DefaultButton } from '@fluentui/react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
-import { leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
+import {
+  horizontalGalleryContainerStyle,
+  horizontalGalleryTileStyle,
+  leftRightButtonStyles
+} from '../styles/HorizontalGallery.styles';
 import { RemoteVideoTile } from './RemoteVideoTile';
 
 /**
@@ -25,6 +29,10 @@ export interface HorizontalGalleryProps {
    * @defaultValue `true`
    */
   showMuteIndicator?: boolean;
+  /** Space to leave on the left of this gallery in pixels. */
+  leftGutter?: number;
+  /** Space to leave on the right of this gallery in pixels. */
+  rightGutter?: number;
 }
 
 /**
@@ -40,23 +48,28 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     onRenderRemoteVideoTile,
     remoteVideoViewOption,
     onRenderAvatar,
-    showMuteIndicator
+    showMuteIndicator,
+    leftGutter = 8,
+    rightGutter = 8
   } = props;
 
-  const initialWidth = Math.min(window.innerWidth, window.outerWidth);
-  const localTileWidth = 10 * 16 + 0.5 * 16;
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(0);
-  const [maxTiles, setMaxTiles] = useState(calculateNumberOfTiles({ windowWidth: initialWidth, localTileWidth }));
+  const [maxTiles, setMaxTiles] = useState(0);
 
   useEffect(() => {
     const updateWidth = (): void => {
-      const width = Math.min(window.innerWidth, window.outerWidth);
-      setMaxTiles(calculateNumberOfTiles({ windowWidth: width, localTileWidth }));
+      const width = (containerRef.current?.offsetWidth ?? 0) - (leftGutter + rightGutter);
+      const maxTiles = calculateNumberOfTiles({ width });
+      setMaxTiles(maxTiles);
       setPage(0);
     };
+    updateWidth();
     window.addEventListener('resize', updateWidth);
-  }, [localTileWidth]);
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, [leftGutter, rightGutter, containerRef]);
 
   const defaultOnRenderParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
@@ -64,19 +77,12 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       return participants?.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
-    // Else return Remote Stream Video Tiles
-    return participants?.slice(page, maxTiles).map((participant): JSX.Element => {
+    const start = page * maxTiles;
+    const end = start + maxTiles;
+    return participants?.slice(start, end).map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
-        <Stack
-          key={participant.userId}
-          style={{
-            minWidth: '10rem',
-            minHeight: '7.5rem',
-            maxWidth: '10rem',
-            maxHeight: '7.5rem'
-          }}
-        >
+        <Stack key={participant.userId} className={mergeStyles(horizontalGalleryTileStyle)}>
           <RemoteVideoTile
             key={participant.userId}
             userId={participant.userId}
@@ -106,30 +112,53 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     showMuteIndicator
   ]);
 
+  const changePage = (page: number): void => {
+    const maxPage = Math.ceil(participants.length / maxTiles);
+    if (page < 0) {
+      setPage(0);
+      return;
+    } else if (page >= maxPage) {
+      setPage(maxPage - 1);
+      return;
+    } else {
+      setPage(page);
+      return;
+    }
+  };
+
   return (
-    <Stack
-      horizontal
-      horizontalAlign="start"
-      tokens={{ childrenGap: '0.5rem' }}
-      style={{ height: '100%', width: '100%', paddingLeft: '0.5rem', paddingRight: '0.5rem', paddingBottom: '0.5rem' }}
-    >
-      <Stack className={mergeStyles(leftRightButtonStyles)} horizontalAlign="center" verticalAlign="center">
-        <Icon iconName="HorizontalGalleryLeftButton" />
+    <div ref={containerRef}>
+      <Stack
+        horizontal
+        horizontalAlign="start"
+        tokens={{ childrenGap: '0.5rem' }}
+        className={mergeStyles(horizontalGalleryContainerStyle, { paddingLeft: leftGutter, paddingRight: rightGutter })}
+      >
+        {maxTiles ? (
+          <DefaultButton className={mergeStyles(leftRightButtonStyles)} onClick={() => changePage(page - 1)}>
+            <Icon iconName="HorizontalGalleryLeftButton" />
+          </DefaultButton>
+        ) : undefined}
+
+        {defaultOnRenderParticipants}
+
+        {maxTiles ? (
+          <DefaultButton className={mergeStyles(leftRightButtonStyles)} onClick={() => changePage(page + 1)}>
+            <Icon iconName="HorizontalGalleryRightButton" />
+          </DefaultButton>
+        ) : undefined}
       </Stack>
-      {defaultOnRenderParticipants}
-      <Stack className={mergeStyles(leftRightButtonStyles)} horizontalAlign="center" verticalAlign="center">
-        <Icon iconName="HorizontalGalleryRightButton" />
-      </Stack>
-    </Stack>
+    </div>
   );
 };
 
-const calculateNumberOfTiles = ({
-  windowWidth,
-  tileWidth = 10 * 16,
-  gapBetweenTiles = 0.5 * 16,
-  localTileWidth = 0
-}): number => {
+const calculateNumberOfTiles = ({ width, tileWidth = 10 * 16, gapBetweenTiles = 0.5 * 16 }): number => {
+  /**
+   * A Safe Padding should be reduced from the parent width to ensure that the total width of all video tiles rendered
+   * is always less than the window width. (Window width after subtracting all margins, paddings etc.)
+   * This ensures that video tiles don't tirgger an overflow which will prevent parent component from shrinking.
+   */
+  const safePadding = 16;
   const buttonsWidth = 4 * 16;
-  return Math.floor((windowWidth - localTileWidth - buttonsWidth) / (tileWidth + gapBetweenTiles));
+  return Math.floor((width - buttonsWidth - safePadding) / (tileWidth + gapBetweenTiles));
 };
