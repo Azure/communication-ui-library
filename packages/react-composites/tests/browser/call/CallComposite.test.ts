@@ -32,7 +32,7 @@ test.describe('Call Composite E2E Tests', () => {
       await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));
       await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
       await stubLocalCameraName(pages[idx]);
-      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-call-screen.png`, { threshold: 0.5 });
+      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-call-screen.png`);
     }
   });
 

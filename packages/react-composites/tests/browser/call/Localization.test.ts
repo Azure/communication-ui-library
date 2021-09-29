@@ -18,9 +18,9 @@ test.describe('Localization tests', async () => {
     const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
     await page.bringToFront();
     await waitForCallCompositeToLoad(page);
-    expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
+    expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png');
 
     await loadCallScreenWithParticipantVideos([page]);
-    expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
+    expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png');
   });
 });
