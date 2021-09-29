@@ -3,19 +3,25 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const gridLayoutContainerStyle = mergeStyles({
   width: '100%',
   height: '100%',
   padding: '.25rem'
 });
 
+/**
+ * @private
+ */
 export const blockStyle = mergeStyles({
-  width: '100%',
-  height: '100%',
   display: 'grid'
 });
 
+/**
+ * @private
+ */
 export const cellStyle = mergeStyles({
-  gap: '.25rem',
   padding: '.25rem'
 });

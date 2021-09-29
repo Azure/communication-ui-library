@@ -42,7 +42,6 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   useEffect(() => {
     const updateBlocks = (): void => {
       if (targetRef.current) {
-        console.log(targetRef.current.offsetWidth, targetRef.current.offsetHeight);
         setBlockProps(
           calculateBlockProps(numberOfChildren, targetRef.current.offsetWidth, targetRef.current.offsetHeight)
         );
