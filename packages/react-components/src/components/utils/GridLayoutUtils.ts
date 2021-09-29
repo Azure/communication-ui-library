@@ -4,7 +4,7 @@
 import { BlockProps } from '../GridLayout';
 
 const TARGET_RATIO = 16 / 9;
-const TOLERANCE_RATIO = 0.9;
+const TOLERANCE_RATIO = 8 / 9;
 
 const isRatioBetterThan = (A: number, B: number, targetRatio?: number): boolean => {
   const _targetRatio = targetRatio ?? TARGET_RATIO;
