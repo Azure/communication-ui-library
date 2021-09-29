@@ -5,7 +5,7 @@ on:
 
 jobs:
   stress_test_ui_tests:
-    name: Run UI tests 10 times
+    name: Run UI tests 7 times
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
@@ -71,24 +71,6 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Test 7
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 8
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 9
-        run: |
-          cd packages/react-composites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Test 10
         run: |
           cd packages/react-composites
           rushx test:e2e
