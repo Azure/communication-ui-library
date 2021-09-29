@@ -4,7 +4,8 @@ import {
   waitForCallCompositeToLoad,
   dataUiId,
   disableAnimation,
-  loadCallScreenWithParticipantVideos
+  loadCallScreenWithParticipantVideos,
+  customWaitFor
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -99,25 +100,42 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
   });
 
   test('can turn off local video', async ({ pages }) => {
+    console.log('testing local video');
     const page = pages[0];
 
+    console.log('bring to front');
     await page.bringToFront();
+    console.log('clicking camera button');
     await page.click(dataUiId('call-composite-camera-button'));
-    await page.waitForFunction(() => {
-      return document.querySelectorAll('video').length === 1;
-    });
+
+    console.log('waiting for video selector');
+    const result = customWaitFor(() => document.querySelectorAll('video').length === 1, 30000);
+    console.log('video wait result: ', result);
+    // await page.waitForFunction(() => {
+    //   return document.querySelectorAll('video').length === 1;
+    // });
     expect(await page.screenshot()).toMatchSnapshot(`camera-toggled.png`);
   });
 });
 
 const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
+  console.log('turnOffAllVideos fn');
   for (const page of pages) {
-    await page.click(dataUiId('call-composite-camera-button'));
-  }
-  for (const page of pages) {
+    console.log('[turnOffAllVideos] bring page to front');
     await page.bringToFront();
-    await page.waitForFunction(() => {
-      return document.querySelectorAll('video').length === 0;
-    });
+    console.log('[turnOffAllVideos] clicking camera button');
+    await page.click(dataUiId('call-composite-camera-button'));
+    console.log('[turnOffAllVideos] clicked camera button');
   }
+  for (const page of pages) {
+    console.log('[turnOffAllVideos] bring page to front 2');
+    await page.bringToFront();
+    console.log('[turnOffAllVideos] awaiting video selctor');
+    const result = customWaitFor(() => document.querySelectorAll('video').length === 0, 30000);
+    console.log('[turnOffAllVideos] video wait result: ', result);
+    // await page.waitForFunction(() => {
+    //   return document.querySelectorAll('video').length === 0;
+    // });
+  }
+  console.log('turnOffAllVideos fn end');
 };

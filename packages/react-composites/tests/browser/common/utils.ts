@@ -297,3 +297,18 @@ const encodeQueryData = (
   }
   return qs.join('&');
 };
+
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const customWaitFor = async (checkElement: () => boolean, timeout: number): Promise<boolean> => {
+  let timeWaitedInMs = 0;
+  const intervalTime = 500;
+  while (timeWaitedInMs < timeout) {
+    if (checkElement()) return true;
+    await sleep(intervalTime);
+    timeWaitedInMs += intervalTime;
+  }
+  return false;
+};
