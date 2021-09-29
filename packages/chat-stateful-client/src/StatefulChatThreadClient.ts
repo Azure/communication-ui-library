@@ -154,6 +154,9 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
   }
 }
 
+/**
+ * @private
+ */
 export const chatThreadClientDeclaratify = (
   chatThreadClient: ChatThreadClient,
   context: ChatContext
