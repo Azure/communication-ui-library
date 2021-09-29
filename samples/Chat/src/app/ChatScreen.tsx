@@ -80,7 +80,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
       fetchEmojiForUser(userId).then(
         (emoji) =>
-          new Promise((resolve, reject) => {
+          new Promise((resolve) => {
             return resolve({
               imageInitials: emoji,
               initialsColor: getBackgroundColor(emoji)?.backgroundColor
