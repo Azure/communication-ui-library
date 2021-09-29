@@ -3,10 +3,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, MessageBar } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export type ComplianceBannerProps = {
   callTranscribeState?: boolean;
   callRecordState?: boolean;
 };
+
+/**
+ * @private
+ */
 export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   const [previousCallTranscribeState, setPreviousCallTranscribeState] = useState<boolean | undefined>(false);
   const [previousCallRecordState, setPreviousCallRecordState] = useState<boolean | undefined>(false);

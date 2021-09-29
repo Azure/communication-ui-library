@@ -11,6 +11,9 @@ import { Common } from '@internal/acs-ui-common';
 
 type Selector = (state: any, props: any) => any;
 
+/**
+ * @private
+ */
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetChatSelector<Component> extends Selector

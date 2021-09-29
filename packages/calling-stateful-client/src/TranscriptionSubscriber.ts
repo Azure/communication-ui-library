@@ -5,6 +5,9 @@ import { TranscriptionCallFeature } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
+/**
+ * @private
+ */
 export class TranscriptionSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;

@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * @private
+ */
 export const groupCallLeaveButtonStyle = {
   root: {
     border: '0.125rem',
@@ -14,6 +17,9 @@ export const groupCallLeaveButtonStyle = {
   }
 };
 
+/**
+ * @private
+ */
 export const groupCallLeaveButtonCompressedStyle = {
   root: {
     width: '2rem',

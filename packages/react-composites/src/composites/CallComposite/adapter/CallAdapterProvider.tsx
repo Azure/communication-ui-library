@@ -11,11 +11,17 @@ type CallProviderProps = {
 
 const CallAdapterContext = createContext<CallAdapter | undefined>(undefined);
 
+/**
+ * @private
+ */
 export const CallAdapterProvider = (props: CallProviderProps): JSX.Element => {
   const { adapter } = props;
   return <CallAdapterContext.Provider value={adapter}>{props.children}</CallAdapterContext.Provider>;
 };
 
+/**
+ * @private
+ */
 export const useAdapter = (): CallAdapter => {
   const adapter = useContext(CallAdapterContext);
   if (!adapter) throw 'Cannot find adapter please initialize before usage.';

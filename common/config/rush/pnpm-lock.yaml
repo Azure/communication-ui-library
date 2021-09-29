@@ -26,7 +26,7 @@ packages:
       integrity: sha512-lNUmDRVGpanCsiUN3NWxFTdwmdFI53xwhkTFfHDGTYk46ca7Ind3nanJc+U6Zj9Tv+9nTCWRBscWEW1DyKOpTw==
   /@azure/communication-calling/1.2.1-beta.1:
     dependencies:
-      '@azure/communication-common': 1.0.0
+      '@azure/communication-common': 1.1.0
       '@azure/logger': 1.0.2
     dev: false
     resolution:
@@ -81,7 +81,7 @@ packages:
   /@azure/communication-identity/1.0.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@azure/communication-common': 1.0.0
+      '@azure/communication-common': 1.1.0
       '@azure/core-auth': 1.3.2
       '@azure/core-http': 1.2.4
       '@azure/core-lro': 1.0.5
@@ -19167,6 +19167,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       immer: 9.0.6
       jest: 26.6.0
@@ -19181,7 +19182,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-Gvxz5dVdnoq0QsLqZCV2AhRVfKwTXyPwta7ov35ZMD/NxD7vB+X2Xr/DKNB1J0NvpMBu/cX+T+998DI+D8U2zg==
+      integrity: sha512-hmHW8/PyJpQGL3IdGZEMvAu791PQg9OVj/4bLS49zrhqFrs0xpY0AjMQla6lV/MaxP+GSjFvXD7klKGGY7X9Kg==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -19200,6 +19201,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
       immer: 9.0.6
@@ -19212,7 +19214,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-kCnWZfC/43w2aEZ5FdbcIeOkAIZ5BFTGmqv/1RbcXQF7Vn4u0G9riZyi/5yguNDYTaWa0jIpSEewuAbbiubUcg==
+      integrity: sha512-4zU1VE5HkbiScrkOfSJ9OmpWyxzudVCVTKqeph87CW6Ltzl/E1FIs67Sx8MXUAZpSrHRgWYp/sReWF2tH77kCA==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19641,6 +19643,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-jsx-a11y: 6.4.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       eslint-plugin-react: 7.24.0_eslint@7.32.0
@@ -19685,7 +19688,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-TOGPg+z0nS9tSj6J1sOUqyVBpc4AU/d+ziILNI73iEBFD2YSUB52IWnFA6JO/Xe7DBuTuROb+gqLFA4+KFVUuA==
+      integrity: sha512-UnTbvuErLodVzrzB+qZMuhNOe0Bo5+Y3wHE78vsV3IBj7uc70qf7WLiLpNlUXYWtok2nnuEYF7my30eS/TG+3Q==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
