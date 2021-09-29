@@ -39,15 +39,8 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
-
-  await page.waitForFunction(
-    (args) => {
-      const callButton = document.querySelector(args.startCallButtonSelector);
-      const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
-      return callButtonEnabled;
-    },
-    { startCallButtonSelector: dataUiId('call-composite-start-call-button') }
-  );
+  const startCallButton = await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+  await startCallButton.waitForElementState('enabled');
 };
 
 /**
@@ -70,14 +63,17 @@ export const loadCallScreen = async (pages: Page[]): Promise<void> => {
   // Wait for all participants tiles to have loaded
   for (const page of pages) {
     await page.bringToFront();
-    await page.waitForFunction(
-      (args) => {
-        const tileNodes = document.querySelectorAll(args.participantTileSelector);
-        const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
-        return correctNoOfTiles;
-      },
-      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
-    );
+    const result = await customWaitFor(async () => (await page.$$('video')).length === pages.length, 30000);
+    console.log('loadCallScreen customWaitFor result: ', result);
+
+    // await page.waitForFunction(
+    //   (args) => {
+    //     const tileNodes = document.querySelectorAll(args.participantTileSelector);
+    //     const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
+    //     return correctNoOfTiles;
+    //   },
+    //   { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
+    // );
   }
 };
 
@@ -95,6 +91,14 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
   // Wait for all participants cameras to have loaded
   for (const page of pages) {
     await page.bringToFront();
+    // const result = await customWaitFor(async () => {
+    //   const videos = await page.$$('video');
+    //   const correctNoOfVideos = videos.length === pages.length;
+    //   const allVideosLoaded = videos.every(async (video) => (await video.asElement()?.getProperty('readyState')). === 4);
+    //   return true;
+    //  }, 30000);
+
+    console.log('waitForFunction allVideosLoaded');
     await page.waitForFunction(
       (args) => {
         const videoNodes = document.querySelectorAll('video');
@@ -106,6 +110,7 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
         expectedVideoCount: pages.length
       }
     );
+    console.log('waitForFunction allVideosLoaded complete');
   }
 };
 

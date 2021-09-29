@@ -109,7 +109,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
     await page.click(dataUiId('call-composite-camera-button'));
 
     console.log('waiting for video selector');
-    const result = customWaitFor(async () => (await page.$$('video')).length === 1, 30000);
+    const result = await customWaitFor(async () => (await page.$$('video')).length === 1, 30000);
     console.log('video wait result: ', result);
     // await page.waitForFunction(() => {
     //   return document.querySelectorAll('video').length === 1;
@@ -131,7 +131,7 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
     console.log('[turnOffAllVideos] bring page to front 2');
     await page.bringToFront();
     console.log('[turnOffAllVideos] awaiting video selctor');
-    const result = customWaitFor(async () => (await page.$$('video')).length === 0, 30000);
+    const result = await customWaitFor(async () => (await page.$$('video')).length === 0, 30000);
     console.log('[turnOffAllVideos] video wait result: ', result);
     // await page.waitForFunction(() => {
     //   return document.querySelectorAll('video').length === 0;
