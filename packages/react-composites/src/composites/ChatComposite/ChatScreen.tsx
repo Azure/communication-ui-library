@@ -47,7 +47,9 @@ export type ChatScreenProps = {
   styles?: ChatScreenStyles;
 };
 
-// @private
+/**
+ * @private
+ */
 export type ChatScreenStyles = {
   messageThread?: MessageThreadStyles;
   sendBox?: SendBoxStylesProps;
