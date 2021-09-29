@@ -1,13 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
+import {
+  CommunicationParticipant,
+  MessageRenderer,
+  MessageProps,
+  MessageThreadStyles,
+  SendBoxStylesProps,
+  TypingIndicatorStylesProps
+} from '@internal/react-components';
 import React from 'react';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
-import { ChatScreen, ChatScreenStyles } from './ChatScreen';
+import { ChatScreen } from './ChatScreen';
 
 /**
  * Props for {@link ChatComposite}.
@@ -39,8 +46,19 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
   /**
    * Styles to customize the chat experience
    */
-  styles?: ChatScreenStyles;
+  styles?: ChatCompositeStyles;
 }
+
+/**
+ * Optional styles of the {@link ChatComposite}.
+ *
+ * @public
+ */
+export type ChatCompositeStyles = {
+  messageThread?: MessageThreadStyles;
+  sendBox?: SendBoxStylesProps;
+  typingIndicator?: TypingIndicatorStylesProps;
+};
 
 /**
  * Optional features of the {@link ChatComposite}.

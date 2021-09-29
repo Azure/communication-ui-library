@@ -634,11 +634,19 @@ export type ChatCompositeOptions = {
 };
 
 // @public
+export type ChatCompositeStyles = {
+    messageThread?: MessageThreadStyles;
+    sendBox?: SendBoxStylesProps;
+    typingIndicator?: TypingIndicatorStylesProps;
+};
+
+// @public
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatCompositeOptions;
+    styles?: ChatCompositeStyles;
 }
 
 // @public
@@ -1496,12 +1504,12 @@ export interface MessageThreadStrings {
 // @public
 export interface MessageThreadStyles extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
-    myChatItemMessageContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
-    myChatMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     messageStatusContainer?: (mine: boolean) => IStyle;
+    myChatItemMessageContainer?: ComponentSlotStyle;
+    myChatMessageContainer?: ComponentSlotStyle;
     newMessageButtonContainer?: IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }

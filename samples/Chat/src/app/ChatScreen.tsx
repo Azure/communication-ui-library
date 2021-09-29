@@ -21,7 +21,6 @@ import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
-// import { onRenderAvatar } from './Avatar';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
