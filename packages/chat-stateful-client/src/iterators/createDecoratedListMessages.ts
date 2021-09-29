@@ -7,6 +7,9 @@ import { convertChatMessage } from '../convertChatMessage';
 import { createDecoratedIterator, createErrorHandlingIterator } from './createDecoratedIterator';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
+/**
+ * @private
+ */
 export const createDecoratedListMessages = (
   chatThreadClient: ChatThreadClient,
   context: ChatContext

@@ -6,12 +6,17 @@ import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack } from '@f
 import React, { useCallback, useEffect, useState } from 'react';
 import { buttonStyle, chatIconStyle, mainContainerStyle } from './styles/ConfigurationScreen.styles';
 import {
+  avatarListContainerStackTokens,
+  avatarListContainerStyle,
   labelFontStyle,
   largeAvatarContainerStyle,
   largeAvatarStyle,
+  leftPreviewContainerStackTokens,
   leftPreviewContainerStyle,
   namePreviewStyle,
+  responsiveLayoutStackTokens,
   responsiveLayoutStyle,
+  rightInputContainerStackTokens,
   rightInputContainerStyle,
   smallAvatarContainerStyle,
   smallAvatarStyle,
@@ -144,60 +149,55 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
 
   const displayJoinChatArea = (): JSX.Element => {
     return (
-      <div>
-        <Stack className={responsiveLayoutStyle} horizontal={true} horizontalAlign="center" verticalAlign="center">
-          <Stack
-            className={leftPreviewContainerStyle}
-            horizontal={false}
-            verticalAlign="center"
-            horizontalAlign="center"
-            tokens={{ childrenGap: 13 }}
-          >
-            <div className={largeAvatarContainerStyle(selectedAvatar)}>
-              <div className={largeAvatarStyle}>{selectedAvatar}</div>
-            </div>
-            <div aria-label="Display name" className={namePreviewStyle(name !== '')}>
-              {name !== '' ? name : 'Name'}
-            </div>
-          </Stack>
-          <Stack className={rightInputContainerStyle} horizontal={false} tokens={{ childrenGap: 20 }}>
-            <div>
-              <div className={labelFontStyle}>Avatar</div>
-              <FocusZone direction={FocusZoneDirection.horizontal}>
-                <Stack role="list" horizontal={true} tokens={{ childrenGap: 4 }}>
-                  {avatarsList.map((avatar, index) => (
-                    <div
-                      role="listitem"
-                      id={avatar}
-                      key={index}
-                      tabIndex={0}
-                      data-is-focusable={true}
-                      className={smallAvatarContainerStyle(avatar, selectedAvatar)}
-                      onFocus={() => onAvatarChange(avatar)}
-                    >
-                      <div className={smallAvatarStyle}>{avatar}</div>
-                    </div>
-                  ))}
-                </Stack>
-              </FocusZone>
-            </div>
-            <DisplayNameField
-              setName={setName}
-              setEmptyWarning={setEmptyWarning}
-              setNameLengthExceedLimit={setNameLengthExceedLimit}
-              validateName={validateName}
-              isEmpty={emptyWarning}
-              isNameLengthExceedLimit={isNameLengthExceedLimit}
-            />
-            <div>
-              <PrimaryButton disabled={disableJoinChatButton} className={buttonStyle} onClick={validateName}>
-                <Chat20Filled className={chatIconStyle} primaryFill="currentColor" />
-                <div className={startChatButtonTextStyle}>Join chat</div>
-              </PrimaryButton>
-            </div>
-          </Stack>
+      <Stack
+        horizontal
+        wrap
+        horizontalAlign="center"
+        verticalAlign="center"
+        tokens={responsiveLayoutStackTokens}
+        className={responsiveLayoutStyle}
+      >
+        <Stack className={leftPreviewContainerStyle} tokens={leftPreviewContainerStackTokens}>
+          <div className={largeAvatarContainerStyle(selectedAvatar)}>
+            <div className={largeAvatarStyle}>{selectedAvatar}</div>
+          </div>
+          <div aria-label="Display name" className={namePreviewStyle(name !== '')}>
+            {name !== '' ? name : 'Name'}
+          </div>
         </Stack>
-      </div>
+        <Stack className={rightInputContainerStyle} tokens={rightInputContainerStackTokens}>
+          <div className={labelFontStyle}>Avatar</div>
+          <FocusZone direction={FocusZoneDirection.horizontal}>
+            <Stack role="list" horizontal className={avatarListContainerStyle} tokens={avatarListContainerStackTokens}>
+              {avatarsList.map((avatar, index) => (
+                <div
+                  role="listitem"
+                  id={avatar}
+                  key={index}
+                  tabIndex={0}
+                  data-is-focusable={true}
+                  className={smallAvatarContainerStyle(avatar, selectedAvatar)}
+                  onFocus={() => onAvatarChange(avatar)}
+                >
+                  <div className={smallAvatarStyle}>{avatar}</div>
+                </div>
+              ))}
+            </Stack>
+          </FocusZone>
+          <DisplayNameField
+            setName={setName}
+            setEmptyWarning={setEmptyWarning}
+            setNameLengthExceedLimit={setNameLengthExceedLimit}
+            validateName={validateName}
+            isEmpty={emptyWarning}
+            isNameLengthExceedLimit={isNameLengthExceedLimit}
+          />
+          <PrimaryButton disabled={disableJoinChatButton} className={buttonStyle} onClick={validateName}>
+            <Chat20Filled className={chatIconStyle} primaryFill="currentColor" />
+            <div className={startChatButtonTextStyle}>Join chat</div>
+          </PrimaryButton>
+        </Stack>
+      </Stack>
     );
   };
 
