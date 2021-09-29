@@ -8,7 +8,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (appDir) => ({
   entry: path.join(appDir, 'index.tsx'),
-  devtool: undefined,
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
