@@ -25,16 +25,27 @@ test.describe('Meeting Composite Pre-Join Tests', () => {
 test.describe('Meeting Composite Meeting Page Tests', () => {
   test.beforeEach(async ({ pages }) => {
     for (const page of pages) {
-      page.reload();
-      page.bringToFront();
+      await page.reload();
+      await page.bringToFront();
       await waitForMeetingCompositeToLoad(page);
 
       // Join Meeting for each participant
-      await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+      const startCallButton = await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+      await startCallButton.waitForElementState('enabled');
       await page.click(dataUiId('call-composite-start-call-button'));
+    }
 
-      // Ensure meeting has successfully loaded
-      await page.waitForSelector(dataUiId('call-composite-hangup-button'));
+    // Ensure meeting composites have successfully loaded and joined meeting
+    for (const page of pages) {
+      await page.bringToFront();
+      await page.waitForFunction(
+        (args) => {
+          const tileNodes = document.querySelectorAll(args.participantTileSelector);
+          const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
+          return correctNoOfTiles;
+        },
+        { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
+      );
     }
   });
 
