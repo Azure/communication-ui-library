@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  getChatMessages,
-  getIsLargeGroup,
-  getLatestReadTime,
-  getUserId,
-  sanitizedMessageContentType
-} from './baseSelectors';
+import { getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
-import { ChatMessage, Message, MessageAttachedStatus, CommunicationParticipant } from '@internal/react-components';
+import {
+  ChatMessage,
+  Message,
+  MessageAttachedStatus,
+  CommunicationParticipant,
+  MessageContentType
+} from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { compareMessages } from './utils/compareMessages';
 import { ACSKnownMessageType } from './utils/constants';
@@ -94,6 +94,11 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): Message<'syst
   }
 };
 
+/**
+ * Select for {@link MessageThread} component.
+ *
+ * @public
+ */
 export const messageThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
   (userId, chatMessages, latestReadTime, isLargeGroup) => {
@@ -188,4 +193,11 @@ export const updateMessagesWithAttached = (
     message.payload.attached = attached;
     message.payload.mine = mine;
   });
+};
+
+const sanitizedMessageContentType = (type: string): MessageContentType => {
+  const lowerCaseType = type.toLowerCase();
+  return lowerCaseType === 'text' || lowerCaseType === 'html' || lowerCaseType === 'richtext/html'
+    ? lowerCaseType
+    : 'unknown';
 };
