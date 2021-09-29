@@ -18,12 +18,19 @@ test.describe('Localization tests', async () => {
     users,
     testBrowser
   }) => {
+    console.log('locale test 1');
     const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
+    console.log('locale test 2');
     await page.bringToFront();
+    console.log('locale test 3');
     await waitForCallCompositeToLoad(page);
+    console.log('locale test 4');
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
+    console.log('locale test 5');
 
     await loadCallScreen([page]);
+    console.log('locale test 6');
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
+    console.log('locale test 7');
   });
 });

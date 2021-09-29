@@ -57,12 +57,15 @@ export const waitForMeetingCompositeToLoad = async (page: Page): Promise<void> =
 export const loadCallScreen = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
     await page.bringToFront();
+    console.log('[loadCallScreen] click start call btn');
     await page.click(dataUiId('call-composite-start-call-button'));
+    console.log('[loadCallScreen] finished click of start call btn');
   }
 
   // Wait for all participants tiles to have loaded
   for (const page of pages) {
     await page.bringToFront();
+    console.log('[loadCallScreen] awaiting customWaitFor');
     const result = await customWaitFor(async () => (await page.$$('video')).length === pages.length, 30000);
     console.log('loadCallScreen customWaitFor result: ', result);
 
