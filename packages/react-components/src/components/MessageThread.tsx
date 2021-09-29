@@ -298,22 +298,27 @@ const memoizeAllMessages = memoizeFnAll(
           : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
       const personaOptions: IPersona = {
-        text: payload.senderDisplayName,
         hidePersonalDetails: true,
         size: PersonaSize.size32
       };
 
       return {
-        gutter: payload.mine ? (
-          ''
-        ) : onRenderAvatar ? (
-          onRenderAvatar(payload.senderId ?? '', personaOptions)
-        ) : (
-          <Persona {...personaOptions} />
-        ),
+        gutter: {
+          styles: {
+            position: 'relative',
+            float: 'left'
+          },
+          content: payload.mine ? (
+            ''
+          ) : onRenderAvatar ? (
+            onRenderAvatar(payload.senderId ?? '', personaOptions)
+          ) : (
+            <Persona {...personaOptions} />
+          )
+        },
         contentPosition: payload.mine ? 'end' : 'start',
         message: {
-          className: mergeStyles({ width: 'calc(100% - 6.25rem)' }),
+          className: mergeStyles({ width: 'calc(100% - 5rem)' }),
           styles: styles && styles.chatItemMessageContainer && styles.chatItemMessageContainer(payload.mine ?? false),
           content: (
             <Flex hAlign={payload.mine ? 'end' : undefined} vAlign="end">

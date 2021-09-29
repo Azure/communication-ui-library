@@ -1808,6 +1808,7 @@ export interface SendBoxStylesProps extends BaseCustomStylesProps {
     sendMessageIconContainer?: IStyle;
     systemMessage?: IStyle;
     textField?: IStyle;
+    textFieldContainer?: IStyle;
 }
 
 // @public

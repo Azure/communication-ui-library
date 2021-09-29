@@ -12,7 +12,9 @@ import {
   SendBox,
   TypingIndicator,
   ParticipantMenuItemsCallback,
-  MessageThreadStyles
+  MessageThreadStyles,
+  SendBoxStylesProps,
+  TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -33,13 +35,18 @@ import {
   participantListWrapper
 } from './styles/Chat.styles';
 
+export type ChatScreenStyles = {
+  messageThread?: MessageThreadStyles;
+  sendBox?: SendBoxStylesProps;
+  typingIndicator?: TypingIndicatorStylesProps;
+};
 export type ChatScreenProps = {
   options?: ChatCompositeOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  styles?: MessageThreadStyles;
+  styles?: ChatScreenStyles;
 };
 
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
@@ -89,17 +96,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
-            styles={styles}
+            styles={styles?.messageThread}
           />
           <Stack.Item align="center" className={sendBoxParentStyle}>
             <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
               {onRenderTypingIndicator ? (
                 onRenderTypingIndicator(typingIndicatorProps.typingUsers)
               ) : (
-                <TypingIndicator {...typingIndicatorProps} />
+                <TypingIndicator {...typingIndicatorProps} styles={styles?.typingIndicator} />
               )}
             </div>
-            <SendBox {...sendBoxProps} />
+            <SendBox {...sendBoxProps} styles={styles?.sendBox} />
           </Stack.Item>
         </Stack>
         {options?.participantPane !== false && (

@@ -79,7 +79,7 @@ export const chatMessageDateStyle: CSSProperties = {
  */
 export const messageStatusContainerStyle = (mine: boolean): string =>
   mergeStyles({
-    marginLeft: mine ? '1rem' : '0rem'
+    marginLeft: mine ? '0.25rem' : '0rem'
   });
 
 /**
