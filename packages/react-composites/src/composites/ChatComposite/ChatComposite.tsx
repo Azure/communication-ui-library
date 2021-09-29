@@ -7,7 +7,7 @@ import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
-import { ChatScreen } from './ChatScreen';
+import { ChatScreen, ChatScreenStyles } from './ChatScreen';
 
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
   /**
@@ -30,6 +30,11 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
   options?: ChatCompositeOptions;
+
+  /**
+   * Styles to customize the chat experience
+   */
+  styles?: ChatScreenStyles;
 }
 
 /**
@@ -61,7 +66,8 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onRenderTypingIndicator,
     onRenderMessage,
-    onFetchParticipantMenuItems
+    onFetchParticipantMenuItems,
+    styles
   } = props;
 
   return (
@@ -73,6 +79,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          styles={styles}
         />
       </ChatAdapterProvider>
     </BaseComposite>

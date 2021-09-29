@@ -1501,8 +1501,10 @@ export interface MessageThreadStrings {
 // @public
 export interface MessageThreadStyles extends BaseCustomStylesProps {
     chatContainer?: ComponentSlotStyle;
-    chatItemMessageContainer?: (mine: boolean) => ComponentSlotStyle;
-    chatMessageContainer?: (mine: boolean) => ComponentSlotStyle;
+    myChatItemMessageContainer?: ComponentSlotStyle;
+    chatItemMessageContainer?: ComponentSlotStyle;
+    myChatMessageContainer?: ComponentSlotStyle;
+    chatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     messageStatusContainer?: (mine: boolean) => IStyle;
     newMessageButtonContainer?: IStyle;

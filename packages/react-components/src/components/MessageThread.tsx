@@ -136,10 +136,14 @@ export interface MessageThreadStyles extends BaseCustomStylesProps {
   newMessageButtonContainer?: IStyle;
   /** Styles for chat container. */
   chatContainer?: ComponentSlotStyle;
+  /** styles for my chat items.  */
+  myChatItemMessageContainer?: ComponentSlotStyle;
   /** styles for chat items.  */
-  chatItemMessageContainer?: (mine: boolean) => ComponentSlotStyle;
+  chatItemMessageContainer?: ComponentSlotStyle;
+  /** Styles for my chat message container. */
+  myChatMessageContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
-  chatMessageContainer?: (mine: boolean) => ComponentSlotStyle;
+  chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
   systemMessageContainer?: ComponentSlotStyle;
   /** Styles for message status indicator container. */
@@ -289,8 +293,9 @@ const memoizeAllMessages = memoizeFnAll(
 
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
-      messageProps.messageContainerStyle =
-        styles && styles.chatMessageContainer && styles.chatMessageContainer(message.payload.mine ?? false);
+      messageProps.messageContainerStyle = message.payload.mine
+        ? styles?.myChatMessageContainer
+        : styles?.chatMessageContainer;
 
       const chatMessageComponent =
         onRenderMessage === undefined
@@ -319,7 +324,7 @@ const memoizeAllMessages = memoizeFnAll(
         contentPosition: payload.mine ? 'end' : 'start',
         message: {
           className: mergeStyles({ width: 'calc(100% - 5rem)' }),
-          styles: styles && styles.chatItemMessageContainer && styles.chatItemMessageContainer(payload.mine ?? false),
+          styles: payload.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer,
           content: (
             <Flex hAlign={payload.mine ? 'end' : undefined} vAlign="end">
               {chatMessageComponent}
