@@ -8,8 +8,8 @@ import {
   buttonStyle,
   buttonTextStyle,
   buttonsStackTokens,
-  endCallContainerStyle,
-  endCallTitleStyle,
+  endChatContainerStyle,
+  endChatTitleStyle,
   mainStackTokens,
   upperStackTokens,
   videoCameraIconStyle
@@ -55,12 +55,19 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
     'https://docs.microsoft.com/answers/search.html?c=&includeChildren=&f=&type=question+OR+idea+OR+kbentry+OR+answer+OR+topic+OR+user&redirect=search%2Fsearch&sort=relevance&q=azure-communication-services';
 
   return (
-    <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
+    <Stack
+      horizontal
+      wrap
+      horizontalAlign="center"
+      verticalAlign="center"
+      tokens={mainStackTokens}
+      className={endChatContainerStyle}
+    >
       <Stack tokens={upperStackTokens}>
-        <div tabIndex={0} className={endCallTitleStyle}>
+        <div tabIndex={0} className={endChatTitleStyle}>
           {leftCall}
         </div>
-        <Stack horizontal tokens={buttonsStackTokens}>
+        <Stack horizontal wrap tokens={buttonsStackTokens}>
           <PrimaryButton
             disabled={isRejoiningThread}
             className={buttonStyle}
@@ -75,11 +82,11 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
             <div className={buttonTextStyle}> {goHomePage}</div>
           </DefaultButton>
         </Stack>
+        <div className={bottomStackFooterStyle}>
+          <Link href={feedbackLink}>Give Feedback</Link>
+          &nbsp;on this sample app at Microsoft Q&amp;A
+        </div>
       </Stack>
-      <div className={bottomStackFooterStyle}>
-        <Link href={feedbackLink}>Give Feedback</Link>
-        &nbsp;on this sample app at Microsoft Q&amp;A
-      </div>
     </Stack>
   );
 };
