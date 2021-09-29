@@ -117,14 +117,28 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
       );
       for (const page of pages) {
         page.on('console', (msg) => {
+          const doNotLogMessages = [
+            'The icon "chevrondown" was used but not registered',
+            'ECS - Config fetch complete',
+            'Delaying User config fetch until we have a valid SkypeToken'
+          ];
+
+          const messageText = msg.text();
+          if (
+            messageText.startsWith(doNotLogMessages[0]) ||
+            messageText.startsWith(doNotLogMessages[1]) ||
+            messageText.startsWith(doNotLogMessages[2])
+          )
+            return;
+
           if (msg.type() === 'error') {
             console.log(`CONSOLE ERROR TEXT: "${msg.text()}"`);
-            console.log(msg.args);
-            console.log(msg.location);
+            console.log(msg.args());
+            console.log(msg.location());
           } else {
             console.log(`console message: "${msg.text()}"`);
-            console.log(msg.args);
-            console.log(msg.location);
+            console.log(msg.args());
+            console.log(msg.location());
           }
         });
       }
