@@ -102,17 +102,18 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
     //  }, 30000);
 
     console.log('waitForFunction allVideosLoaded');
-    await page.waitForFunction(
-      (args) => {
-        const videoNodes = document.querySelectorAll('video');
-        const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
-        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
-        return correctNoOfVideos && allVideosLoaded;
-      },
-      {
-        expectedVideoCount: pages.length
-      }
-    );
+    await page.waitForTimeout(4000);
+    // await page.waitForFunction(
+    //   (args) => {
+    //     const videoNodes = document.querySelectorAll('video');
+    //     const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
+    //     const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+    //     return correctNoOfVideos && allVideosLoaded;
+    //   },
+    //   {
+    //     expectedVideoCount: pages.length
+    //   }
+    // );
     console.log('waitForFunction allVideosLoaded complete');
   }
 };
