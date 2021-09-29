@@ -8,6 +8,14 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatThreadClient } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 
+/**
+ * Object containing all the handlers required for chat components.
+ *
+ * Chat related components from this package are able to pick out relevant handlers from this object.
+ * See {@link useHandlers} and {@link usePropsFor}.
+ *
+ * @public
+ */
 export type ChatHandlers = {
   onSendMessage: (content: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
@@ -19,7 +27,16 @@ export type ChatHandlers = {
   onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
-// Keep all these handlers the same instance(unless client changed) to avoid re-render
+/**
+ * Create the default implementation of {@link ChatHandlers}.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * Returned object is memoized to avoid rerenders when used as props for React Components.
+ *
+ * @public
+ */
 export const createDefaultChatHandlers = memoizeOne(
   (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): ChatHandlers => {
     let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
@@ -74,13 +91,14 @@ export const createDefaultChatHandlers = memoizeOne(
   }
 );
 
-// These could be shared functions between Chat and Calling
-export const defaultHandlerCreator =
-  (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) =>
-  <Props>(_: (props: Props) => ReactElement | null): Common<ChatHandlers, Props> => {
-    return createDefaultChatHandlers(chatClient, chatThreadClient);
-  };
-
+/**
+ * Create a set of default handlers for given component.
+ *
+ * Returned object is memoized (with reference to the arguments) to avoid
+ * renders when used as props for React Components.
+ *
+ * @public
+ */
 export const createDefaultChatHandlersForComponent = <Props>(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,

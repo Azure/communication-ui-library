@@ -25,6 +25,11 @@ const moderatorIndex = (participants: CommunicationParticipant[]): number => {
   return participants.map((p) => p.displayName).indexOf(undefined);
 };
 
+/**
+ * Selector for {@link ParticipantList} component.
+ *
+ * @public
+ */
 export const chatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: { [key: string]: ChatParticipant }, displayName) => {
