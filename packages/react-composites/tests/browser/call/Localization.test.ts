@@ -20,6 +20,11 @@ test.describe('Localization tests', async () => {
   }) => {
     console.log('locale test 1');
     const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
+    page.on('console', (msg) => {
+      if (msg.type() === 'error') {
+        console.log(`PAGE2 CONSOLE ERROR TEXT: "${msg.text()}"`);
+      }
+    });
     console.log('locale test 2');
     await page.bringToFront();
     console.log('locale test 3');
