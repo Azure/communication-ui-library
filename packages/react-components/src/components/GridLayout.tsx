@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
-import React from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { blockStyle, cellStyle, gridLayoutContainerStyle } from './styles/GridLayout.styles';
-import { withSize, SizeMeProps } from 'react-sizeme';
 import { calculateBlockProps } from './utils/GridLayoutUtils';
 
 /**
@@ -25,27 +24,35 @@ export interface GridLayoutProps {
   styles?: BaseCustomStylesProps;
 }
 
-const BlockLayout = (props: GridLayoutProps & SizeMeProps): JSX.Element => {
-  const { children, styles } = props;
-  const numberOfChildren = React.Children.count(children);
-
-  let blockProps: BlockProps = { horizontal: true, numBlocks: Math.ceil(Math.sqrt(numberOfChildren)) };
-  if (props.size.width && props.size.height) {
-    blockProps = calculateBlockProps(numberOfChildren, props.size.width, props.size.height);
-  }
-  return (
-    <div className={mergeStyles(gridLayoutContainerStyle, styles?.root)}>
-      {renderBlocks({ ...blockProps, children })}
-    </div>
-  );
-};
-
 /**
  * A component to lay out audio / video participants tiles in a call.
  *
  * @public
  */
-export const GridLayout = withSize({ monitorHeight: true, refreshRate: 32 })(BlockLayout);
+export const GridLayout = (props: GridLayoutProps): JSX.Element => {
+  const { children, styles } = props;
+  const numberOfChildren = React.Children.count(children);
+
+  const targetRef = useRef<HTMLDivElement>(null);
+  const [blockProps, setBlockProps] = useState<BlockProps>({
+    horizontal: true,
+    numBlocks: Math.ceil(Math.sqrt(numberOfChildren))
+  });
+
+  useLayoutEffect(() => {
+    if (targetRef.current) {
+      setBlockProps(
+        calculateBlockProps(numberOfChildren, targetRef.current.offsetWidth, targetRef.current.offsetHeight)
+      );
+    }
+  }, [numberOfChildren, targetRef.current?.offsetWidth, targetRef.current?.offsetHeight]);
+
+  return (
+    <div ref={targetRef} className={mergeStyles(gridLayoutContainerStyle, styles?.root)}>
+      {renderBlocks({ ...blockProps, children })}
+    </div>
+  );
+};
 
 /**
  * Props to create blocks for children in Grid Layout

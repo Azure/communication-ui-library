@@ -22,7 +22,6 @@ import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
-import { WithSizeProps } from 'react-sizeme';
 
 // @public
 export interface ActiveError {
@@ -310,10 +309,7 @@ export interface FluentThemeProviderProps {
 }
 
 // @public
-export const GridLayout: React_2.ComponentType<{
-    children: React_2.ReactNode;
-    styles?: BaseCustomStylesProps | undefined;
-} & WithSizeProps>;
+export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
 // @public
 export interface GridLayoutProps {
