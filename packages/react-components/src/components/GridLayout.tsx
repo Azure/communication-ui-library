@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { blockStyle, cellStyle, gridLayoutContainerStyle } from './styles/GridLayout.styles';
 import { calculateBlockProps } from './utils/GridLayoutUtils';
@@ -39,12 +39,19 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     numBlocks: Math.ceil(Math.sqrt(numberOfChildren))
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    const updateBlocks = (): void => {
+      if (targetRef.current) {
+        console.log(targetRef.current.offsetWidth, targetRef.current.offsetHeight);
+        setBlockProps(
+          calculateBlockProps(numberOfChildren, targetRef.current.offsetWidth, targetRef.current.offsetHeight)
+        );
+      }
+    };
     if (targetRef.current) {
-      setBlockProps(
-        calculateBlockProps(numberOfChildren, targetRef.current.offsetWidth, targetRef.current.offsetHeight)
-      );
+      new ResizeObserver(updateBlocks).observe(targetRef.current);
     }
+    updateBlocks();
   }, [numberOfChildren, targetRef.current?.offsetWidth, targetRef.current?.offsetHeight]);
 
   return (
