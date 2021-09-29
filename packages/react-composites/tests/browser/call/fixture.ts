@@ -118,7 +118,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
       for (const page of pages) {
         page.on('console', (msg) => {
           const doNotLogMessages = [
-            'The icon "chevrondown" was used but not registered',
+            'The icon "',
             'ECS - Config fetch complete',
             'ECS - Delaying User config fetch until we have a valid SkypeToken'
           ];
