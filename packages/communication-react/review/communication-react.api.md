@@ -634,19 +634,11 @@ export type ChatCompositeOptions = {
 };
 
 // @public
-export type ChatCompositeStyles = {
-    messageThread?: MessageThreadStyles;
-    sendBox?: SendBoxStylesProps;
-    typingIndicator?: TypingIndicatorStylesProps;
-};
-
-// @public
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatCompositeOptions;
-    styles?: ChatCompositeStyles;
 }
 
 // @public

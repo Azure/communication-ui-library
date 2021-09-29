@@ -26,7 +26,6 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
-import { MessageThreadStyles } from '@internal/react-components';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
@@ -35,12 +34,10 @@ import { PersonaInitialsColor } from '@fluentui/react';
 import { PhoneNumberKind } from '@azure/communication-common';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import { SendBoxStylesProps } from '@internal/react-components';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { TypingIndicatorStylesProps } from '@internal/react-components';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import type { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
@@ -384,19 +381,11 @@ export type ChatCompositeOptions = {
 };
 
 // @public
-export type ChatCompositeStyles = {
-    messageThread?: MessageThreadStyles;
-    sendBox?: SendBoxStylesProps;
-    typingIndicator?: TypingIndicatorStylesProps;
-};
-
-// @public
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatCompositeOptions;
-    styles?: ChatCompositeStyles;
 }
 
 // @public

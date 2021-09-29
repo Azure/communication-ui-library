@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  CommunicationParticipant,
-  MessageRenderer,
-  MessageProps,
-  MessageThreadStyles,
-  SendBoxStylesProps,
-  TypingIndicatorStylesProps
-} from '@internal/react-components';
+import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
@@ -42,24 +35,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
   options?: ChatCompositeOptions;
-
-  /**
-   * Styles to customize the chat experience
-   */
-  styles?: ChatCompositeStyles;
 }
-
-/**
- * Optional styles of the {@link ChatComposite}.
- *
- * @public
- */
-export type ChatCompositeStyles = {
-  messageThread?: MessageThreadStyles;
-  sendBox?: SendBoxStylesProps;
-  typingIndicator?: TypingIndicatorStylesProps;
-};
-
 /**
  * Optional features of the {@link ChatComposite}.
  *
@@ -96,8 +72,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onRenderTypingIndicator,
     onRenderMessage,
-    onFetchParticipantMenuItems,
-    styles
+    onFetchParticipantMenuItems
   } = props;
 
   return (
@@ -109,7 +84,6 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
           onRenderTypingIndicator={onRenderTypingIndicator}
           onRenderMessage={onRenderMessage}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          styles={styles}
         />
       </ChatAdapterProvider>
     </BaseComposite>

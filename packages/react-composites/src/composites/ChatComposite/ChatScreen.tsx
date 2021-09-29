@@ -11,13 +11,16 @@ import {
   ParticipantList,
   SendBox,
   TypingIndicator,
-  ParticipantMenuItemsCallback
+  ParticipantMenuItemsCallback,
+  MessageThreadStyles,
+  SendBoxStylesProps,
+  TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { useLocale } from '../localization';
 import { useAdapter } from './adapter/ChatAdapterProvider';
-import { ChatCompositeOptions, ChatCompositeStyles } from './ChatComposite';
+import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
@@ -41,7 +44,14 @@ export type ChatScreenProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  styles?: ChatCompositeStyles;
+  styles?: ChatScreenStyles;
+};
+
+// @private
+export type ChatScreenStyles = {
+  messageThread?: MessageThreadStyles;
+  sendBox?: SendBoxStylesProps;
+  typingIndicator?: TypingIndicatorStylesProps;
 };
 
 /**
