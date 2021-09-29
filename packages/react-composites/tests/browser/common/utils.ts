@@ -94,26 +94,18 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
   // Wait for all participants cameras to have loaded
   for (const page of pages) {
     await page.bringToFront();
-    // const result = await customWaitFor(async () => {
-    //   const videos = await page.$$('video');
-    //   const correctNoOfVideos = videos.length === pages.length;
-    //   const allVideosLoaded = videos.every(async (video) => (await video.asElement()?.getProperty('readyState')). === 4);
-    //   return true;
-    //  }, 30000);
-
     console.log('waitForFunction allVideosLoaded');
-    await page.waitForTimeout(4000);
-    // await page.waitForFunction(
-    //   (args) => {
-    //     const videoNodes = document.querySelectorAll('video');
-    //     const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
-    //     const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
-    //     return correctNoOfVideos && allVideosLoaded;
-    //   },
-    //   {
-    //     expectedVideoCount: pages.length
-    //   }
-    // );
+    await page.waitForFunction(
+      (args) => {
+        const videoNodes = document.querySelectorAll('video');
+        const correctNoOfVideos = videoNodes.length === args.expectedVideoCount;
+        const allVideosLoaded = Array.from(videoNodes).every((videoNode) => videoNode.readyState === 4);
+        return correctNoOfVideos && allVideosLoaded;
+      },
+      {
+        expectedVideoCount: pages.length
+      }
+    );
     console.log('waitForFunction allVideosLoaded complete');
   }
 };
