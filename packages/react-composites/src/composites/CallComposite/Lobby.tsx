@@ -6,6 +6,9 @@ import { LobbyCallControlBar } from './LobbyControlBar';
 import { useSelector } from './hooks/useSelector';
 import { getIsPreviewCameraOn } from './selectors/baseSelectors';
 
+/**
+ * @private
+ */
 export interface LobbyProps {
   callState: string;
   localParticipantVideoStream: VideoGalleryStream;
@@ -19,6 +22,9 @@ export interface LobbyProps {
 
 const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
 
+/**
+ * @private
+ */
 export const Lobby = (props: LobbyProps): JSX.Element => {
   const theme = useTheme();
   const palette = theme.palette;

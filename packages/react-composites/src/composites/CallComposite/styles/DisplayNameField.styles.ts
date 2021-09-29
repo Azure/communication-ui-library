@@ -3,6 +3,9 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const TextFieldStyleProps = {
   wrapper: {
     height: '2.3rem'
@@ -12,6 +15,9 @@ export const TextFieldStyleProps = {
   }
 };
 
+/**
+ * @private
+ */
 export const inputBoxStyle = mergeStyles({
   boxSizing: 'border-box',
   height: '2.5rem',
@@ -19,6 +25,9 @@ export const inputBoxStyle = mergeStyles({
   borderRadius: '0.125rem'
 });
 
+/**
+ * @private
+ */
 export const inputBoxTextStyle = mergeStyles({
   fontSize: '0.875rem',
   fontWeight: 600,
@@ -37,6 +46,9 @@ export const inputBoxTextStyle = mergeStyles({
   }
 });
 
+/**
+ * @private
+ */
 export const inputBoxWarningStyle = mergeStyles({
   boxSizing: 'border-box',
   height: '2.5rem',
@@ -45,6 +57,9 @@ export const inputBoxWarningStyle = mergeStyles({
   fontSize: '0.875rem'
 });
 
+/**
+ * @private
+ */
 export const labelFontStyle = mergeStyles({
   fontSize: '0.875rem',
   fontWeight: 600,
@@ -56,6 +71,9 @@ export const labelFontStyle = mergeStyles({
   overflowWrap: 'break-word'
 });
 
+/**
+ * @private
+ */
 export const warningStyle = mergeStyles({
   width: '18.75rem',
   marginTop: '0.188rem',

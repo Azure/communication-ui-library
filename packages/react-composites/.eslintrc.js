@@ -14,7 +14,7 @@ module.exports = {
     'plugin:react-hooks/recommended'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'header'],
+  plugins: ['@typescript-eslint', 'header', 'jsdoc'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -34,10 +34,48 @@ module.exports = {
     'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.'],
     'react/display-name': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }]
+    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: [
+          // Do not allow references that are outside the src folder. These will break the npm package created as no src dir exists in output dir.
+          '**/../**/src/*',
+          // Do not allow references to node_modules' /es/ folder. These will break jest tests and the npm package as those imports won't be transpiled.
+          '**/dist/**/es/*',
+          '**/lib/**/es/*'
+        ]
+      }
+    ],
+    'jsdoc/require-jsdoc': [
+      'error',
+      {
+        checkConstructors: false,
+        enableFixer: false,
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: true,
+          FunctionDeclaration: true
+        },
+        contexts: [
+          'ArrowFunctionExpression',
+          'FunctionDeclaration',
+          'FunctionExpression',
+          'TSDeclareFunction',
+          'TSEnumDeclaration',
+          'TSInterfaceDeclaration',
+          'TSTypeAliasDeclaration',
+          'VariableDeclaration'
+        ]
+      }
+    ]
   },
   root: true,
   settings: {
+    jsdoc: {
+      ignorePrivate: true
+    },
     react: {
       version: 'detect'
     }
@@ -53,10 +91,9 @@ module.exports = {
       }
     },
     {
-      // remove the ban on certain types due to the complexity of this file
-      files: ['ConnectContext.tsx'],
+      files: ['tests/**/*.ts'],
       rules: {
-        '@typescript-eslint/ban-types': 'off'
+        'jsdoc/require-jsdoc': 'off'
       }
     }
   ]

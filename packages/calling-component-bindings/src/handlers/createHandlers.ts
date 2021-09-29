@@ -16,6 +16,14 @@ import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from '@internal/react-components';
 
+/**
+ * Object containing all the handlers required for calling components.
+ *
+ * Calling related components from this package are able to pick out relevant handlers from this object.
+ * See {@link useHandlers} and {@link usePropsFor}.
+ *
+ * @public
+ */
 export type CallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
   onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
@@ -38,10 +46,21 @@ export type CallingHandlers = {
   onDisposeLocalStreamView: () => Promise<void>;
 };
 
+/**
+ * @private
+ */
 export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
 };
 
+/**
+ * Create the default implementation of {@link CallingHandlers}.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * @public
+ */
 export const createDefaultCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
@@ -303,7 +322,7 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
 };
 
 /**
- * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invokations with
+ * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invocations with
  * the same arguments will return the same handler instances. DeclarativeCallAgent, DeclarativeDeviceManager, and
  * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
  *
@@ -313,7 +332,8 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * @param deviceManager - Instance of {@link @azure/communication-calling#DeviceManager}.
  * @param call - Instance of {@link @azure/communication-calling#Call}.
  * @param _ - React component that you want to generate handlers for.
- * @returns
+ *
+ * @public
  */
 export const createDefaultCallingHandlersForComponent = <Props>(
   callClient: StatefulCallClient,

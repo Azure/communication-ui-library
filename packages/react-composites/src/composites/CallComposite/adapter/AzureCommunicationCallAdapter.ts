@@ -27,17 +27,16 @@ import {
   CallAdapter,
   CallCompositePage,
   CallEndedListener,
-  CallEvent,
   CallIdChangedListener,
   CallAdapterState,
   DisplayNameChangedListener,
-  IsMuteChangedListener,
-  IsScreenSharingOnChangedListener,
+  IsMutedChangedListener,
+  IsLocalScreenSharingActiveChangedListener,
   IsSpeakingChangedListener,
-  ParticipantJoinedListener,
-  ParticipantLeftListener
+  ParticipantsJoinedListener,
+  ParticipantsLeftListener
 } from './CallAdapter';
-import { isInCall } from '../../../utils';
+import { isInCall } from '../SDKUtils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -114,6 +113,9 @@ class CallContext {
   }
 }
 
+/**
+ * @private
+ */
 export class AzureCommunicationCallAdapter implements CallAdapter {
   private callClient: StatefulCallClient;
   private callAgent: CallAgent;
@@ -384,18 +386,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context.offStateChange(handler);
   }
 
-  on(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-  on(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  on(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
+  on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
+  on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  on(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public on(event: CallEvent, listener: (e: any) => void): void {
+  public on(event: string, listener: (e: any) => void): void {
     this.emitter.on(event, listener);
   }
 
@@ -467,18 +469,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
   }
 
-  off(event: 'participantsJoined', listener: ParticipantJoinedListener): void;
-  off(event: 'participantsLeft', listener: ParticipantLeftListener): void;
-  off(event: 'isMutedChanged', listener: IsMuteChangedListener): void;
+  off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
+  off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
+  off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-  off(event: 'isLocalScreenSharingActiveChanged', listener: IsScreenSharingOnChangedListener): void;
+  off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public off(event: CallEvent, listener: (e: any) => void): void {
+  public off(event: string, listener: (e: any) => void): void {
     this.emitter.off(event, listener);
   }
 
@@ -500,6 +502,11 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
+/**
+ * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
+ *
+ * @public
+ */
 export type AzureCommunicationCallAdapterArgs = {
   userId: CommunicationUserKind;
   displayName: string;
@@ -507,6 +514,13 @@ export type AzureCommunicationCallAdapterArgs = {
   locator: TeamsMeetingLinkLocator | GroupCallLocator;
 };
 
+/**
+ * Create a {@link CallAdapter} backed by Azure Communication Services.
+ *
+ * This is the default implementation of {@link CallAdapter} provided by this library.
+ *
+ * @public
+ */
 export const createAzureCommunicationCallAdapter = async ({
   userId,
   displayName,
@@ -519,6 +533,14 @@ export const createAzureCommunicationCallAdapter = async ({
   return adapter;
 };
 
+/**
+ * Create a {@link CallAdapter} using the provided {@link StatefulCallClient}.
+ *
+ * Useful if you want to keep a reference to {@link StatefulCallClient}.
+ * Consider using {@link createAzureCommunicationCallAdapter} for a simpler API.
+ *
+ * @public
+ */
 export const createAzureCommunicationCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
