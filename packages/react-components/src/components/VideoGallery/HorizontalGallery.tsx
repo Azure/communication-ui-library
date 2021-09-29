@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
+import { Icon, mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
+import { leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
 import { RemoteVideoTile } from './RemoteVideoTile';
 
 /**
@@ -45,12 +46,14 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const initialWidth = Math.min(window.innerWidth, window.outerWidth);
   const localTileWidth = 10 * 16 + 0.5 * 16;
 
+  const [page, setPage] = useState(0);
   const [maxTiles, setMaxTiles] = useState(calculateNumberOfTiles({ windowWidth: initialWidth, localTileWidth }));
 
   useEffect(() => {
     const updateWidth = (): void => {
       const width = Math.min(window.innerWidth, window.outerWidth);
       setMaxTiles(calculateNumberOfTiles({ windowWidth: width, localTileWidth }));
+      setPage(0);
     };
     window.addEventListener('resize', updateWidth);
   }, [localTileWidth]);
@@ -62,7 +65,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     }
 
     // Else return Remote Stream Video Tiles
-    return participants?.slice(0, maxTiles).map((participant): JSX.Element => {
+    return participants?.slice(page, maxTiles).map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
         <Stack
@@ -94,6 +97,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   }, [
     onRenderRemoteVideoTile,
     participants,
+    page,
     maxTiles,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
@@ -109,7 +113,13 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       tokens={{ childrenGap: '0.5rem' }}
       style={{ height: '100%', width: '100%', paddingLeft: '0.5rem', paddingRight: '0.5rem', paddingBottom: '0.5rem' }}
     >
+      <Stack className={mergeStyles(leftRightButtonStyles)} horizontalAlign="center" verticalAlign="center">
+        <Icon iconName="HorizontalGalleryLeftButton" />
+      </Stack>
       {defaultOnRenderParticipants}
+      <Stack className={mergeStyles(leftRightButtonStyles)} horizontalAlign="center" verticalAlign="center">
+        <Icon iconName="HorizontalGalleryRightButton" />
+      </Stack>
     </Stack>
   );
 };
@@ -120,5 +130,6 @@ const calculateNumberOfTiles = ({
   gapBetweenTiles = 0.5 * 16,
   localTileWidth = 0
 }): number => {
-  return Math.floor((windowWidth - localTileWidth) / (tileWidth + gapBetweenTiles));
+  const buttonsWidth = 4 * 16;
+  return Math.floor((windowWidth - localTileWidth - buttonsWidth) / (tileWidth + gapBetweenTiles));
 };

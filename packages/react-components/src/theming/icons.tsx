@@ -26,7 +26,9 @@ import {
   Speaker220Regular,
   Video20Filled,
   Video20Regular,
-  VideoOff20Filled
+  VideoOff20Filled,
+  ChevronLeft20Regular,
+  ChevronRight20Regular
 } from '@fluentui/react-icons';
 import React from 'react';
 
@@ -73,5 +75,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   MessageEdit: <Edit20Regular />,
-  MessageRemove: <Delete20Regular />
+  MessageRemove: <Delete20Regular />,
+  HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
+  HorizontalGalleryRightButton: <ChevronRight20Regular />
 };
