@@ -10,64 +10,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_packages:
-    name: Build Packages
-    runs-on: ubuntu-latest
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      # Ensure node version is great enough
-      - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v2
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
-      - name: Install dependencies
-        run: rush install
-      # Perform changelog check
-      - name: Check the necessary change file has been submitted
-        run: rush changelog:check
-      # Perform lint check
-      - name: Run linter
-        run: rush lint
-      # Builds
-      - name: Build Packages
-        run: rush build -t @azure/communication-react
-      # Verify no uncommitted api extractor changes
-      - name: API Extractor Check
-        run: |
-          DIFF_FILE="APIChanges.diff"
-          git diff --output=$DIFF_FILE --exit-code **/review/**.md
-          DIFF_STATUS=$?
-          echo "Exit code for git diff for changes in api review files: $DIFF_STATUS"
-          if [$DIFF_STATUS -ne 0]
-          then
-              echo "API CHANGES FOUND - PLEASE RUN 'rushx api-extractor' IN THE APPROPRIATE PACKAGE(S)"
-              echo "Changes:"
-              cat $DIFF_FILE
-              exit 1
-          else
-            echo "Success, no new api changes found."
-          fi
-      # Tree-shaking check
-      - name: Treeshaking check
-        run: rush build --only @internal/check-treeshaking
-      - name: Ensure all package versions are consistent
-        run: rush ensure-consistent-versions
-      # Tests
-      - name: Test Packages
-        run: rush test -t @azure/communication-react
-
   composite_automation_test:
     name: Composite automation test
     runs-on: ubuntu-latest
@@ -106,6 +48,18 @@ jobs:
           rushx test:e2e:chat
           rushx test:e2e:call
           rushx test:e2e:meeting
+          rushx test:e2e:chat
+          rushx test:e2e:call
+          rushx test:e2e:meeting
+          rushx test:e2e:chat
+          rushx test:e2e:call
+          rushx test:e2e:meeting
+          rushx test:e2e:chat
+          rushx test:e2e:call
+          rushx test:e2e:meeting
+          rushx test:e2e:chat
+          rushx test:e2e:call
+          rushx test:e2e:meeting
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
@@ -127,143 +81,59 @@ jobs:
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
             })
 
-  build_storybook:
-    name: Build Storybook
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v2
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
-      - name: Install dependencies
-        run: rush install
-      - name: Build
-        run: rush build -o storybook
-      - name: Tests
-        run: rushx test
-        working-directory: packages/storybook
-
-  build_calling_sample:
-    name: Build Calling Sample
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v2
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
-      - name: Install dependencies
-        run: rush install
-      - name: Build
-        run: rush build -o calling
-      - name: Tests
-        run: rush test -o calling
-
-  build_chat_sample:
-    name: Build Chat Sample
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v2
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
-      - name: Install dependencies
-        run: rush install
-      - name: Build
-        run: rush build -o chat
-      - name: Tests
-        run: rush test -o chat
-
-  build_static_html_composites_sample:
-    name: Build And Test Static HTML Composites Sample
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
-      - name: Install dependencies
-        run: rush install
-      - name: Build
-        run: rush build -t sample-static-html-composites
-      - name: Visual Regression Tests
-        id: visualregressiontests
-        run: |
-          cd samples/StaticHtmlComposites
-          rushx test:e2e
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Upload snapshot diff
-        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: snapshots
-          path: samples/StaticHtmlComposites/test-results/ # or path/to/artifact
-      - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
-            })
-
-  check_failure:
-    runs-on: ubuntu-latest
-    needs:
-      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
-    if: failure() && github.ref == 'refs/heads/main'
-    name: File issue if main CI failed
-    steps:
-      # Create a GitHub issue if the CI failed when running on the `main` branch
-      - name: Create issue if main branch CI failed
-        id: create-issue
-        run: |
-          # check for an issue that is already open
-          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:CI_FAILURE+state:open > $HOME/ci_issues.json
-          issue_count=$(jq -r '.total_count' $HOME/ci_issues.json)
-          if [ $issue_count -gt 0 ]; then
-            echo "No need to create new issue, one already exists"
-          else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate.", "labels":["CI_FAILURE"]}'
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # update_composite_snapshot:
+  #   name: Update composite snapshots
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #         # Use a machine account when checking out. This is to workaround the issue were GitHub
+  #         # actions, when using the default account, cannot trigger other actions.
+  #         # This machine account is only for this PAT, pwd was created and thrown away
+  #         # If any update needed, create a new account, add access to the repo and generate a new PAT
+  #         token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+  #     # Ensure node version is great enough
+  #     - name: Use Node.js v14.x
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '14.x'
+  #     # Try get node_modules from cache
+  #     - name: Restore node_modules from cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: common/temp/pnpm-store
+  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+  #     # Install dependencies
+  #     - name: Install rush
+  #       run: npm install -g @microsoft/rush@5.47.0
+  #     - name: Install dependencies
+  #       run: rush install
+  #     - name: Build Test
+  #       run: |
+  #         cd packages/react-composites
+  #         rushx build:e2e:chat
+  #         rushx build:e2e:call
+  #         rushx build:e2e:meeting
+  #     - name: Update snapshot
+  #       run: |
+  #         cd packages/react-composites
+  #         rushx test:e2e:chat:update
+  #         rushx test:e2e:call:update
+  #         rushx test:e2e:meeting:update
+  #       env:
+  #         CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+  #     # Setup bot information for pushing new changes
+  #     # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+  #     - name: Setup bot git information
+  #       run: |
+  #         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+  #         git config user.name "github-actions[bot]"
+  #     # Commit changes to snapshot files.
+  #     - name: Commit new snapshots
+  #       run: >
+  #         git diff --exit-code --quiet -- packages/react-composites/tests ||
+  #         (git add packages/react-composites/tests &&
+  #         git commit -m 'Updating composite automation snapshots' &&
+  #         git push)
