@@ -66,7 +66,7 @@ export const loadCallScreen = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
     await page.bringToFront();
     console.log('[loadCallScreen] awaiting customWaitFor');
-    const result = await customWaitFor(async () => (await page.$$('video')).length === pages.length, 30000);
+    const result = await customWaitFor(async () => (await page.$$('video')).length === pages.length, 10000);
     console.log('loadCallScreen customWaitFor result: ', result);
 
     // await page.waitForFunction(
