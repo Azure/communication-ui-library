@@ -113,12 +113,12 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
   pages: [
     async ({ serverUrl, testBrowser, users }, use) => {
       const pages = await Promise.all(
-        users.map(async (user) => loadPageWithPermissionsForCalls(testBrowser, serverUrl, user))
+        users.map(async (user) => await loadPageWithPermissionsForCalls(testBrowser, serverUrl, user))
       );
       for (const page of pages) {
-        page.on('request', (request) =>
-          console.log('REQUEST >>', request.method(), request.url(), request.headers(), request.postDataJSON())
-        );
+        // page.on('request', (request) =>
+        //   console.log('REQUEST >>', request.method(), request.url(), request.headers(), request.postDataJSON())
+        // );
 
         page.on('console', (msg) => {
           const doNotLogMessages = [
