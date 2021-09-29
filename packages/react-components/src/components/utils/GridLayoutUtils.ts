@@ -4,13 +4,16 @@
 import { BlockProps } from '../GridLayout';
 
 const TARGET_RATIO = 16 / 9;
-const TOLERANCE_RATIO = 1;
+const TOLERANCE_RATIO = 0.9;
 
 const isRatioBetterThan = (A: number, B: number, targetRatio?: number): boolean => {
   const _targetRatio = targetRatio ?? TARGET_RATIO;
   return Math.abs(_targetRatio - A) < Math.abs(_targetRatio - B);
 };
 
+/**
+ * @private
+ */
 export const calculateBlockProps = (n: number, width: number, height: number): BlockProps => {
   if (width <= 0) {
     throw Error('Width provided [' + width + '] is less than or equal to 0.');
@@ -47,6 +50,9 @@ export const calculateBlockProps = (n: number, width: number, height: number): B
   return { horizontal: horizontal, numBlocks: horizontal ? rows : cols };
 };
 
+/**
+ * @private
+ */
 export const getBlockProps = (n: number): BlockProps => {
   switch (n) {
     case 1:
