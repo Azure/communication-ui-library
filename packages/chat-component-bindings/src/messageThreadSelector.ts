@@ -136,7 +136,7 @@ export const messageThreadSelector = createSelector(
   }
 );
 
-export const updateMessagesWithAttached = (
+const updateMessagesWithAttached = (
   chatMessagesWithStatus: (Message<'chat'> | Message<'system'> | Message<'custom'>)[],
   userId: string
 ): void => {
