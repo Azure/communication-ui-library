@@ -4,12 +4,13 @@ on:
   # Run any time when a new label added to the PR
   pull_request:
     types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
 
 jobs:
   update_bundle_snapshot:
     name: Update embed html bundle snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') }}
+    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event == 'SOMETHING???' }}
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
@@ -59,7 +60,7 @@ jobs:
           git diff --exit-code --quiet -- samples/StaticHtmlComposites/tests || 
           (git add samples/StaticHtmlComposites/tests && 
           git commit -m 'Updating js bundle automation snapshots' && 
-          git push origin HEAD:${{ github.head_ref }})
+          git push)
 
   update_composite_snapshot:
     name: Update composite snapshot by label

@@ -19,6 +19,7 @@
     "build:e2e:meeting": "webpack-cli build --config ./tests/browser/meeting/app/webpack.config.js --mode=production --env production",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
+    "test:e2e": "rushx test:e2e:call && rushx test:e2e:chat && rushx test:e2e:meeting",
     "test:e2e:call": "playwright test --workers=1 tests.browser.call",
     "test:e2e:chat": "playwright test --workers=1 --retries=2 tests.browser.chat",
     "test:e2e:meeting": "playwright test --workers=1 tests.browser.meeting",
