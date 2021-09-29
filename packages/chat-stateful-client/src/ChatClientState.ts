@@ -55,7 +55,7 @@ export type ChatThreadClientState = {
    */
   threadId: string;
   /**
-   * An object includes properties of this chat thread.
+   * An object containing properties of this chat thread.
    */
   properties?: ChatThreadProperties;
   /**
