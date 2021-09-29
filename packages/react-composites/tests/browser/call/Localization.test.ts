@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { waitForCallCompositeToLoad } from '../common/utils';
+import { waitForCallCompositeToLoad, sleep } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 
@@ -11,6 +11,7 @@ test.describe('Localization tests', async () => {
     for (const page of pages) {
       // Ensure any previous call users from prior tests have left the call
       await page.reload();
+      await sleep(2000);
     }
   });
 

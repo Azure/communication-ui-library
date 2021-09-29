@@ -5,7 +5,8 @@ import {
   CallUserType,
   createCallingUserAndToken,
   loadPageWithPermissionsForCalls,
-  PAGE_VIEWPORT
+  PAGE_VIEWPORT,
+  sleep
 } from '../common/utils';
 import { startServer, stopServer } from '../../server';
 import { chromium, Browser, Page, test as base } from '@playwright/test';
@@ -113,7 +114,11 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
   pages: [
     async ({ serverUrl, testBrowser, users }, use) => {
       const pages = await Promise.all(
-        users.map(async (user) => await loadPageWithPermissionsForCalls(testBrowser, serverUrl, user))
+        users.map(async (user) => {
+          const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, user);
+          await sleep(2000);
+          return page;
+        })
       );
       for (const page of pages) {
         // page.on('request', (request) =>

@@ -297,7 +297,7 @@ const encodeQueryData = (
   return qs.join('&');
 };
 
-const sleep = (ms) => {
+export const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 

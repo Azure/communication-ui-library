@@ -5,7 +5,8 @@ import {
   dataUiId,
   disableAnimation,
   loadCallScreenWithParticipantVideos,
-  customWaitFor
+  customWaitFor,
+  sleep
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -63,6 +64,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
     // In case it is retry logic
     for (const page of pages) {
       await page.reload();
+      await sleep(2000);
       await waitForCallCompositeToLoad(page);
     }
     await loadCallScreenWithParticipantVideos(pages);
