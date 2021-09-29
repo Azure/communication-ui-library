@@ -31,9 +31,7 @@ jobs:
       - name: Build Test
         run: |
           cd packages/react-composites
-          rushx build:e2e:chat
-          rushx build:e2e:call
-          rushx build:e2e:meeting
+          rushx build:e2e
       - name: Test 1
         run: |
           cd packages/react-composites
