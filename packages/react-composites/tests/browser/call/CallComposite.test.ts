@@ -132,12 +132,11 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
     console.log('[turnOffAllVideos] bring page to front 2');
     await page.bringToFront();
-    console.log('[turnOffAllVideos] awaiting video selctor');
-    const result = await customWaitFor(async () => (await page.$$('video')).length === 0, 10000);
-    console.log('[turnOffAllVideos] video wait result: ', result);
-    // await page.waitForFunction(() => {
-    //   return document.querySelectorAll('video').length === 0;
-    // });
+    console.log('[turnOffAllVideos] waitForFunction');
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('video').length === 0;
+    });
+    console.log('[turnOffAllVideos] waitForFunction ended');
   }
   console.log('turnOffAllVideos fn end');
 };

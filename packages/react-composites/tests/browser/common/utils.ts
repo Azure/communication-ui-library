@@ -65,18 +65,16 @@ export const loadCallScreen = async (pages: Page[]): Promise<void> => {
   // Wait for all participants tiles to have loaded
   for (const page of pages) {
     await page.bringToFront();
-    console.log('[loadCallScreen] awaiting customWaitFor');
-    const result = await customWaitFor(async () => (await page.$$('video')).length === pages.length, 10000);
-    console.log('loadCallScreen customWaitFor result: ', result);
-
-    // await page.waitForFunction(
-    //   (args) => {
-    //     const tileNodes = document.querySelectorAll(args.participantTileSelector);
-    //     const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
-    //     return correctNoOfTiles;
-    //   },
-    //   { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
-    // );
+    console.log('[loadCallScreen] waitForFunction');
+    await page.waitForFunction(
+      (args) => {
+        const tileNodes = document.querySelectorAll(args.participantTileSelector);
+        const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
+        return correctNoOfTiles;
+      },
+      { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
+    );
+    console.log('[loadCallScreen] waitForFunction ended');
   }
 };
 
