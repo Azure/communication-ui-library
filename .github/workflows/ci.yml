@@ -106,6 +106,18 @@ jobs:
           rushx test:e2e:chat
           rushx test:e2e:call
           rushx test:e2e:meeting
+          rushx test:e2e:chat
+          rushx test:e2e:call
+          rushx test:e2e:meeting
+          rushx test:e2e:chat
+          rushx test:e2e:call
+          rushx test:e2e:meeting
+          rushx test:e2e:chat
+          rushx test:e2e:call
+          rushx test:e2e:meeting
+          rushx test:e2e:chat
+          rushx test:e2e:call
+          rushx test:e2e:meeting
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
