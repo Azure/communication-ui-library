@@ -116,6 +116,10 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
         users.map(async (user) => loadPageWithPermissionsForCalls(testBrowser, serverUrl, user))
       );
       for (const page of pages) {
+        page.on('request', (request) =>
+          console.log('REQUEST >>', request.method(), request.url(), request.headers(), request.postDataJSON())
+        );
+
         page.on('console', (msg) => {
           const doNotLogMessages = [
             'The icon "',
