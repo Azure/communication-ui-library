@@ -34,7 +34,7 @@ module.exports = (appDir) => ({
         loader: 'esbuild-loader',
         options: {
           loader: 'tsx',
-          target: 'es2015'
+          target: 'esnext'
         },
         exclude: /dist/
       },
