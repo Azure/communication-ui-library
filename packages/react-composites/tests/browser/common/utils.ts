@@ -6,7 +6,7 @@ import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
-import { ChatUserType } from './defaults';
+import { ChatUserType, CallUserType, MeetingUserType } from './defaults';
 
 export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
 const DATA_UI_ID = 'data-ui-id';
@@ -39,15 +39,8 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
-
-  await page.waitForFunction(
-    (args) => {
-      const callButton = document.querySelector(args.startCallButtonSelector);
-      const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
-      return callButtonEnabled;
-    },
-    { startCallButtonSelector: dataUiId('call-composite-start-call-button') }
-  );
+  const startCallButton = await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+  await startCallButton.waitForElementState('enabled');
 };
 
 /**
@@ -112,9 +105,9 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
 /**
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
-export const stubMessageTimestamps = (page: Page): void => {
+export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
-  page.evaluate((messageTimestampId) => {
+  await page.evaluate((messageTimestampId) => {
     Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
   }, messageTimestampId);
 };

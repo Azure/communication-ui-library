@@ -10,8 +10,8 @@ import { expect } from '@playwright/test';
 test.describe('Meeting Composite Pre-Join Tests', () => {
   test.beforeEach(async ({ pages }) => {
     for (const page of pages) {
-      page.reload();
-      page.bringToFront();
+      await page.reload();
+      await page.bringToFront();
       await waitForMeetingCompositeToLoad(page);
     }
   });

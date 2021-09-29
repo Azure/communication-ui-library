@@ -28,7 +28,7 @@ test.describe('Chat Composite E2E Tests', () => {
       const user = users[idx];
       await loadUrlInPage(page, serverUrl, user);
       pageLoadPromises.push(waitForChatCompositeToLoad(page));
-      stubMessageTimestamps(pages[idx]);
+      await stubMessageTimestamps(pages[idx]);
     }
     await Promise.all(pageLoadPromises);
   });
@@ -46,15 +46,15 @@ test.describe('Chat Composite E2E Tests', () => {
     await page0.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page0.keyboard.press('Enter');
     await page0.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page0);
+    await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('send-message.png');
 
     const page1 = pages[1];
     await page1.bringToFront();
     await page1.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page1);
+    await stubMessageTimestamps(page1);
 
-    // It could be too slow to get typing indicator here, which makes the test flacky
+    // It could be too slow to get typing indicator here, which makes the test flakey
     // so wait for typing indicator disappearing
     const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
@@ -63,7 +63,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await page0.bringToFront();
     await page0.waitForSelector(`[data-ui-status="seen"]`);
-    stubMessageTimestamps(page0);
+    await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
   });
 
@@ -94,28 +94,22 @@ test.describe('Chat Composite E2E Tests', () => {
   });
 
   test('page[1] can rejoin the chat', async ({ pages }) => {
-    const page = pages[1];
-    await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
-    await page.keyboard.press('Enter');
+    const page1 = pages[1];
+    await page1.bringToFront();
+    await page1.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page1.keyboard.press('Enter');
     // Read the message to generate stable result
     await pages[0].bringToFront();
     await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
 
-    await page.bringToFront();
-    await page.waitForSelector(`[data-ui-status="seen"]`);
-    page.reload({ waitUntil: 'networkidle' });
-    await waitForChatCompositeToLoad(page);
+    await page1.bringToFront();
+    await page1.waitForSelector(`[data-ui-status="seen"]`);
+    await page1.reload({ waitUntil: 'networkidle' });
+    await waitForChatCompositeToLoad(page1);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
-  });
-
-  test.afterAll(async ({ pages }) => {
-    for (const page of pages) {
-      page.close();
-    }
+    await page1.waitForSelector(`[data-ui-status="delivered"]`);
+    await stubMessageTimestamps(page1);
+    expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });
 
@@ -132,7 +126,7 @@ test.describe('Chat Composite custom data model', () => {
     });
     await page.waitForSelector('#custom-data-model-typing-indicator');
     await page.waitForSelector('#custom-data-model-message');
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
     page.close();
   });

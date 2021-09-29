@@ -13,14 +13,14 @@ import { Page, expect } from '@playwright/test';
 test.describe('ErrorBar is shown correctly', async () => {
   test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
     await loadUrlInPage(page, serverUrl, users[0]);
-    page.bringToFront();
+    await page.bringToFront();
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
 
     await sendAMessage(page);
     await waitForSendSuccess(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
   });
 
@@ -29,12 +29,12 @@ test.describe('ErrorBar is shown correctly', async () => {
     user.threadId = 'INCORRECT_VALUE';
     await loadUrlInPage(page, serverUrl, users[0]);
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
 
     await sendAMessage(page);
     await waitForSendFailure(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
   });
 
@@ -43,12 +43,12 @@ test.describe('ErrorBar is shown correctly', async () => {
     user.token = 'INCORRECT_VALUE' + user.token;
     await loadUrlInPage(page, serverUrl, users[0]);
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
 
     await sendAMessage(page);
     await waitForSendFailure(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
   });
 
@@ -57,12 +57,12 @@ test.describe('ErrorBar is shown correctly', async () => {
     user.endpointUrl = 'https://INCORRECT.VALUE';
     await loadUrlInPage(page, serverUrl, users[0]);
     await waitForChatCompositeToLoad(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
 
     await sendAMessage(page);
     await waitForSendFailure(page);
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
   });
 });
