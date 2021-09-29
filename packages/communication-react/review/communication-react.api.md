@@ -1019,6 +1019,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element;
 };
 
 // @public
@@ -1056,6 +1058,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element;
 };
 
 // @public
@@ -1141,6 +1145,8 @@ export interface FluentThemeProviderProps {
 // @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
+// Warning: (ae-incompatible-release-tags) The symbol "GetSelector" is marked as @public, but its signature references "videoGallerySelector" which is marked as @beta
+//
 // @public
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof callErrorBarSelector : undefined;
 
@@ -1991,6 +1997,7 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    dominantSpeakers?: Array<string>;
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
@@ -2014,7 +2021,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     screenShareStream?: VideoGalleryStream;
 }
 
-// @public
+// @beta
 export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
@@ -2029,6 +2036,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: string[] | undefined;
 }, (res1: string | undefined, res2: {
 [keys: string]: RemoteParticipantState;
 } | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string, res8: DominantSpeakersInfo | undefined) => {
@@ -2045,6 +2053,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: string[] | undefined;
 }>;
 
 // @public

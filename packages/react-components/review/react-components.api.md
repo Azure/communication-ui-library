@@ -254,6 +254,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element;
 };
 
 // @public
@@ -721,6 +723,7 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    dominantSpeakers?: Array<string>;
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;

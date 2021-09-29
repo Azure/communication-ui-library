@@ -1,4 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from './VideoGallery';
+export { VideoGallery } from './VideoGallery';
+export type { VideoGalleryProps } from './VideoGallery';

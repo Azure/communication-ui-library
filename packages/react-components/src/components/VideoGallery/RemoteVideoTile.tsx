@@ -3,8 +3,9 @@
 
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
-import { StreamMedia, VideoTile } from '..';
-import { VideoStreamOptions, OnRenderAvatarCallback } from '../..';
+import { StreamMedia } from '../StreamMedia';
+import { VideoTile } from '../VideoTile';
+import { VideoStreamOptions, OnRenderAvatarCallback } from '../../types';
 import { gridStyle } from '../styles/VideoGallery.styles';
 
 /**

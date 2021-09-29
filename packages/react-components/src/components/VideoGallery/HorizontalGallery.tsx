@@ -60,7 +60,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   useEffect(() => {
     const updateWidth = (): void => {
       const width = (containerRef.current?.offsetWidth ?? 0) - (leftGutter + rightGutter);
-      const maxTiles = calculateNumberOfTiles({ width });
+      const maxTiles = calculateMaxNumberOfTiles({ width });
       setMaxTiles(maxTiles);
       setPage(0);
     };
@@ -152,7 +152,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   );
 };
 
-const calculateNumberOfTiles = ({ width, tileWidth = 10 * 16, gapBetweenTiles = 0.5 * 16 }): number => {
+const calculateMaxNumberOfTiles = ({ width, tileWidth = 10 * 16, gapBetweenTiles = 0.5 * 16 }): number => {
   /**
    * A Safe Padding should be reduced from the parent width to ensure that the total width of all video tiles rendered
    * is always less than the window width. (Window width after subtracting all margins, paddings etc.)

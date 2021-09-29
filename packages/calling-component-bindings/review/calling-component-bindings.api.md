@@ -123,6 +123,8 @@ activeErrors: ActiveError[];
 activeErrors: ActiveError[];
 }>;
 
+// Warning: (ae-incompatible-release-tags) The symbol "GetSelector" is marked as @public, but its signature references "videoGallerySelector" which is marked as @beta
+//
 // @public
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? typeof videoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? typeof optionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? typeof microphoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? typeof cameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? typeof screenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof participantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? typeof participantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? typeof emptySelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
@@ -206,7 +208,7 @@ export const useCallingSelector: <SelectorT extends (state: CallClientState, pro
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
-// @public
+// @beta
 export const videoGallerySelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
 screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
 localParticipant: {
@@ -221,6 +223,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: string[] | undefined;
 }, (res1: string | undefined, res2: {
 [keys: string]: RemoteParticipantState;
 } | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string, res8: DominantSpeakersInfo | undefined) => {
@@ -237,6 +240,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: string[] | undefined;
 }>;
 
 // (No @packageDocumentation comment for this package)
