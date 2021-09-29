@@ -27,7 +27,7 @@
   "devDependencies": {
     "@azure/communication-chat": "1.1.0",
     "@azure/communication-identity": "1.0.0",
-    "@playwright/test": "~1.12.3",
+    "@playwright/test": "~1.15.0",
     "@types/node-static": "~0.7.7",
     "@types/node": "^14.14.10",
     "concurrently": "^5.3.0",
@@ -37,7 +37,7 @@
     "http-server": "^0.12.3",
     "http": "~0.0.1-security",
     "node-static": "~0.7.11",
-    "playwright": "~1.12.3",
+    "playwright": "~1.15.0",
     "rimraf": "^2.6.2",
     "typescript": "4.3.5",
     "webpack-cli": "4.7.2",

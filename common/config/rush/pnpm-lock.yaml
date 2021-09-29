@@ -3824,7 +3824,7 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-hZNKjKOYsckoOEgBziGMnBcX0M7EtstnCmwz5jZUOUYwlZ+/xxX6z3jPu1XVO2Jivk0eLfuP9GP+vFD49CMetw==
-  /@playwright/test/1.12.3:
+  /@playwright/test/1.15.0:
     dependencies:
       '@babel/code-frame': 7.14.5
       '@babel/core': 7.15.0
@@ -3853,6 +3853,7 @@ packages:
       mime: 2.5.2
       minimatch: 3.0.4
       ms: 2.1.3
+      open: 8.2.1
       pirates: 4.0.1
       pixelmatch: 5.2.1
       pngjs: 5.0.0
@@ -3870,7 +3871,7 @@ packages:
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-e8i8rMqd1nhdyW2ELShOc5F2EiLIcZs+2LRglrCAy/nzftpLdAqfsk6gp29n8N5KExIlzpKdoQ5QBviqGzT9DA==
+      integrity: sha512-iDTD2Y3SwyFD6xHNbipyH6O/e0OQ/dJsrsiI8uz4YsRN1aeH1EJs+2qBveVtKW1nR/r0Ml/r3/VPCEi91JWPsw==
   /@pmmmwh/react-refresh-webpack-plugin/0.4.3_133f2312fd2dfba9fc3b3697533854a6:
     dependencies:
       ansi-html: 0.0.7
@@ -8730,6 +8731,12 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-h6sMrVB1VMWVrW13mSc6ia/DwYYw5MN6+exNu1OaJeFac5aSAvwM7lZ0NVfTABuSkQelr4h5oebg3KB1XPdjgA==
+  /define-lazy-prop/2.0.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==
   /define-properties/1.1.3:
     dependencies:
       object-keys: 1.1.1
@@ -14137,6 +14144,16 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-MVHddDVweXZF3awtlAS+6pgKLlm/JgxZ90+/NBurBoQctVOOB/zDdVjcyPzQ+0laDGbsWgrRkflI65sQeOgT9Q==
+  /open/8.2.1:
+    dependencies:
+      define-lazy-prop: 2.0.0
+      is-docker: 2.2.1
+      is-wsl: 2.2.0
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-rXILpcQlkF/QuFez2BJDf3GsqpjGKbkUUToAIGo9A0Q6ZkoSGogZJulrUdwRkrAsoQvoZsrjCYt8+zblOk7JQQ==
   /opencollective-postinstall/2.0.3:
     dev: false
     hasBin: true
@@ -14662,7 +14679,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==
-  /playwright/1.12.3:
+  /playwright/1.15.0:
     dependencies:
       commander: 6.2.1
       debug: 4.3.2
@@ -14684,7 +14701,7 @@ packages:
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-eyhHvZV7dMAUltqjQsgJ9CjZM8dznzN1+rcfCI6W6lfQ7IlPvTFGLuKOCcI4ETbjfbxqaS5FKIkb1WDDzq2Nww==
+      integrity: sha512-JtagFVjNvccP1rIixHB/4KbR+BzMTJLty6mo71YLatvJR9ZH+PX8DLlhw1KDdIH2YGMSQGf2ihh4KAp9tsklxQ==
   /please-upgrade-node/3.2.0:
     dependencies:
       semver-compare: 1.0.0
@@ -19615,7 +19632,7 @@ packages:
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
-      '@playwright/test': 1.12.3
+      '@playwright/test': 1.15.0
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/express': 4.17.13
@@ -19660,7 +19677,7 @@ packages:
       memoize-one: 5.2.1
       nan: 2.15.0
       node-forge: 0.10.0
-      playwright: 1.12.3
+      playwright: 1.15.0
       prettier: 2.3.1
       pretty-quick: 3.1.1_prettier@2.3.1
       puppeteer: 10.0.0
@@ -19688,7 +19705,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-UnTbvuErLodVzrzB+qZMuhNOe0Bo5+Y3wHE78vsV3IBj7uc70qf7WLiLpNlUXYWtok2nnuEYF7my30eS/TG+3Q==
+      integrity: sha512-Jw+VZisFq5PJh3wWZEA1AOWv1zFN0U8Wsg6xQNpAESuzY7bQHrKazX6/UpV59z9e3rs3gxD6B300LgzBvgNMaQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -19696,7 +19713,7 @@ packages:
       '@azure/communication-chat': 1.1.0
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
-      '@playwright/test': 1.12.3
+      '@playwright/test': 1.15.0
       '@types/node': 14.17.9
       '@types/node-static': 0.7.7
       concurrently: 5.3.0
@@ -19707,7 +19724,7 @@ packages:
       http-server: 0.12.3
       immer: 9.0.6
       node-static: 0.7.11
-      playwright: 1.12.3
+      playwright: 1.15.0
       react: 16.14.0
       react-dom: 16.13.1_react@16.14.0
       rimraf: 2.7.1
@@ -19718,7 +19735,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-qK+OhN/aDbgsb/yUxtifaPCZExeaT8OmbkECIGmZDzFRwAg9s2FncF1ESyGCPOvtUylL2okuc+HFS2C0B6CAzA==
+      integrity: sha512-HAf9DrMh6FDhCGYWGH+JlyYTT3nZ8U7qT9EkOF4N1fVWJe6/77PtRL61m1eHrt5o79bEP1yMjEZYpppGNtjBlQ==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
