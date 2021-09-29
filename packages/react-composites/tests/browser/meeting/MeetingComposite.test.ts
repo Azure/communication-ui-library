@@ -49,7 +49,6 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     await pages[0].waitForSelector(dataUiId('meeting-composite-chat-pane'));
     await pages[0].type(dataUiId(IDS.sendboxTextfield), 'Meeting composite is awesome!');
     await pages[0].keyboard.press('Enter');
-
     // Open chat pane on page 1 and send a response
     await pages[1].bringToFront();
     await pages[1].click(dataUiId('meeting-composite-chat-button'));
@@ -57,11 +56,18 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     await pages[1].type(dataUiId(IDS.sendboxTextfield), 'I agree!');
     await pages[1].keyboard.press('Enter');
     await pages[1].waitForSelector(`[data-ui-status="delivered"]`);
-
     // Test page 0 has both sent message and received message
     await pages[0].bringToFront();
     await pages[0].waitForSelector(`[data-ui-status="seen"]`);
-    stubMessageTimestamps(pages[0]);
+    await pages[1].bringToFront();
+    await pages[1].waitForSelector(`[data-ui-status="seen"]`);
+
+    // Ensure typing indicator has disappeared to prevent flakey test
+    await pages[0].bringToFront();
+    const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
+    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
+
+    await stubMessageTimestamps(pages[0]);
     expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`);
   });
 
