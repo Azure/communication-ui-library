@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call Layout One To One Call Layout 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-62 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-62"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -84,7 +84,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
             </div>
           </div>
           <div
-            className="ms-Stack css-86 css-28"
+            className="ms-Stack css-88 css-28"
           >
             <div
               className="ms-StackItem css-29"

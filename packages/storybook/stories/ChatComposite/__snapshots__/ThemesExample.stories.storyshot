@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Theme Example Theme Example 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-62 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-62"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
