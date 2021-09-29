@@ -107,6 +107,9 @@ const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): un
   return dominantSpeakers?.speakersList.map(toFlatCommunicationIdentifier);
 };
 
+/**
+ * Provides data attributes to VideoGallery component.
+ */
 export const videoGallerySelector = createSelector(
   [
     getScreenShareRemoteParticipant,
