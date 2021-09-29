@@ -30,13 +30,18 @@ Before we release a new version or beta version the following checklist should b
 
 ## Test Plan
 
-The following manual and automated tests should pass before releases. As our test automation infrastructure improves more manual tests should be converted to automated tests. These lists are kept up to date as best as possible but may have outdated entries that should be updated.
+The following manual and automated tests should pass before releases.
+As our test automation infrastructure improves more manual tests should be converted to automated tests.
+These lists are kept up to date as best as possible but may have outdated entries that should be updated.
 
 ### Automated Tests
 
 Automated test infrastructure is currently in development.
 
 ### Manual Tests
+
+See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/22634/Deploying-Beta-Candidate-builds-to-Azure-for-Validation)
+on how to setup sample apps for manual tests.
 
 | Area | Test |
 | -- | -- |
