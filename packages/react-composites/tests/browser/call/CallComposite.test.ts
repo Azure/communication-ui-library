@@ -10,6 +10,8 @@ import {
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 
+import { loadPageWithPermissionsForCalls, loadCallScreen } from '../common/utils';
+
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
  * uses it's file path as the camera name. This file location can differ on
@@ -109,7 +111,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
     await page.click(dataUiId('call-composite-camera-button'));
 
     console.log('waiting for video selector');
-    const result = await customWaitFor(async () => (await page.$$('video')).length === 1, 30000);
+    const result = await customWaitFor(async () => (await page.$$('video')).length === 1, 10000);
     console.log('video wait result: ', result);
     // await page.waitForFunction(() => {
     //   return document.querySelectorAll('video').length === 1;
@@ -131,7 +133,7 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
     console.log('[turnOffAllVideos] bring page to front 2');
     await page.bringToFront();
     console.log('[turnOffAllVideos] awaiting video selctor');
-    const result = await customWaitFor(async () => (await page.$$('video')).length === 0, 30000);
+    const result = await customWaitFor(async () => (await page.$$('video')).length === 0, 10000);
     console.log('[turnOffAllVideos] video wait result: ', result);
     // await page.waitForFunction(() => {
     //   return document.querySelectorAll('video').length === 0;
@@ -139,3 +141,38 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   }
   console.log('turnOffAllVideos fn end');
 };
+
+test.describe('Localization tests', async () => {
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      // Ensure any previous call users from prior tests have left the call
+      await page.reload();
+    }
+  });
+
+  test('Configuration page title and participant button in call should be localized', async ({
+    serverUrl,
+    users,
+    testBrowser
+  }) => {
+    console.log('locale test 1');
+    const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
+    page.on('console', (msg) => {
+      if (msg.type() === 'error') {
+        console.log(`PAGE2 CONSOLE ERROR TEXT: "${msg.text()}"`);
+      }
+    });
+    console.log('locale test 2');
+    await page.bringToFront();
+    console.log('locale test 3');
+    await waitForCallCompositeToLoad(page);
+    console.log('locale test 4');
+    expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
+    console.log('locale test 5');
+
+    await loadCallScreen([page]);
+    console.log('locale test 6');
+    expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
+    console.log('locale test 7');
+  });
+});
