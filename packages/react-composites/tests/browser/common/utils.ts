@@ -5,7 +5,7 @@ import { IDS } from './config';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { Browser, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { ChatUserType, CallUserType, MeetingUserType } from './defaults';
 
 export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
@@ -152,62 +152,6 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
     threadId,
     topic: TOPIC_NAME
   }));
-};
-
-/**
- * Load a new page in the browser at the supplied url.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load url for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadPage = async (
-  browser: Browser,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => await loadUrlInPage(await browser.newPage(), serverUrl, user, qArgs);
-
-/**
- * Load a URL in the browser page.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load url for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadUrlInPage = async (
-  page: Page,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => {
-  const qs = encodeQueryData({ ...user, ...qArgs });
-  await page.setViewportSize(PAGE_VIEWPORT);
-  const url = `${serverUrl}?${qs}`;
-  await page.goto(url, { waitUntil: 'networkidle' });
-  return page;
-};
-
-/**
- * Load a URL in a new Page in the browser with permissions needed for the CallComposite.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load ChatComposite for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadPageWithPermissionsForCalls = async (
-  browser: Browser,
-  serverUrl: string,
-  user: CallUserType | MeetingUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => {
-  const context = await browser.newContext({ permissions: ['notifications'] });
-  context.grantPermissions(['camera', 'microphone']);
-  const page = await context.newPage();
-  return await loadUrlInPage(page, serverUrl, user, qArgs);
 };
 
 const encodeQueryData = (qArgs?: { [key: string]: string }): string => {

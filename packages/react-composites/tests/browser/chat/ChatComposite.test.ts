@@ -4,12 +4,12 @@ import { IDS } from '../common/config';
 import {
   createChatThreadAndUsers,
   dataUiId,
-  loadUrlInPage,
-  loadPage,
   stubMessageTimestamps,
-  waitForChatCompositeToLoad
+  waitForChatCompositeToLoad,
+  buildUrl
 } from '../common/utils';
 import { test } from './fixture';
+import { loadNewPage, loadPageForUser } from '../common/fixtureHelpers';
 import { expect } from '@playwright/test';
 
 const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
@@ -26,7 +26,7 @@ test.describe('Chat Composite E2E Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       const user = users[idx];
-      await loadUrlInPage(page, serverUrl, user);
+      await loadPageForUser(page, serverUrl, user);
       pageLoadPromises.push(waitForChatCompositeToLoad(page));
       await stubMessageTimestamps(pages[idx]);
     }
@@ -116,7 +116,8 @@ test.describe('Chat Composite E2E Tests', () => {
 test.describe('Chat Composite custom data model', () => {
   test('can be viewed by user[1]', async ({ testBrowser, serverUrl }) => {
     const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
-    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
+    const url = buildUrl(serverUrl, user, { customDataModel: 'true' });
+    const page = await loadNewPage(testBrowser, url);
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');
