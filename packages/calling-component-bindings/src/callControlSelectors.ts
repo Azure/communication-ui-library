@@ -10,6 +10,11 @@ import {
   getLocalVideoStreams
 } from './baseSelectors';
 
+/**
+ * Selector for {@link MicrophoneButton} component.
+ *
+ * @public
+ */
 export const microphoneButtonSelector = reselect.createSelector(
   [getCallExists, getIsMuted, getDeviceManager],
   (callExists, isMuted, deviceManager) => {
@@ -20,7 +25,11 @@ export const microphoneButtonSelector = reselect.createSelector(
     };
   }
 );
-
+/**
+ * Selector for {@link CameraButton} component.
+ *
+ * @public
+ */
 export const cameraButtonSelector = reselect.createSelector(
   [getLocalVideoStreams, getDeviceManager],
   (localVideoStreams, deviceManager) => {
@@ -37,12 +46,22 @@ export const cameraButtonSelector = reselect.createSelector(
   }
 );
 
+/**
+ * Selector for {@link ScreenShareButton} component.
+ *
+ * @public
+ */
 export const screenShareButtonSelector = reselect.createSelector([getIsScreenSharingOn], (isScreenSharingOn) => {
   return {
     checked: isScreenSharingOn
   };
 });
 
+/**
+ * Selector for {@link OptionsButton} component.
+ *
+ * @public
+ */
 export const optionsButtonSelector = reselect.createSelector([getDeviceManager], (deviceManager) => {
   return {
     microphones: deviceManager.microphones,

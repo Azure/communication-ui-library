@@ -6,6 +6,8 @@ import { CallContext } from './CallContext';
 
 /**
  * Defines the additional methods added by the stateful on top of {@link @azure/communication-calling#DeviceManager}.
+ *
+ * @public
  */
 export interface StatefulDeviceManager extends DeviceManager {
   /**
@@ -63,6 +65,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   /**
    * Used to set a camera inside the proxy device manager.
+   *
    * @param videoDeviceInfo VideoDeviceInfo
    */
   public selectCamera = (videoDeviceInfo: VideoDeviceInfo): void => {

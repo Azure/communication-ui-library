@@ -19162,6 +19162,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       immer: 9.0.6
       jest: 26.6.0
@@ -19176,7 +19177,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-Gvxz5dVdnoq0QsLqZCV2AhRVfKwTXyPwta7ov35ZMD/NxD7vB+X2Xr/DKNB1J0NvpMBu/cX+T+998DI+D8U2zg==
+      integrity: sha512-hmHW8/PyJpQGL3IdGZEMvAu791PQg9OVj/4bLS49zrhqFrs0xpY0AjMQla6lV/MaxP+GSjFvXD7klKGGY7X9Kg==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -19195,6 +19196,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
       immer: 9.0.6
@@ -19207,7 +19209,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-kCnWZfC/43w2aEZ5FdbcIeOkAIZ5BFTGmqv/1RbcXQF7Vn4u0G9riZyi/5yguNDYTaWa0jIpSEewuAbbiubUcg==
+      integrity: sha512-4zU1VE5HkbiScrkOfSJ9OmpWyxzudVCVTKqeph87CW6Ltzl/E1FIs67Sx8MXUAZpSrHRgWYp/sReWF2tH77kCA==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19495,7 +19497,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-uFaMGHziLwJyBjGWnbP8sitgipj2TOStNChq6A4JaRwyM1XTu/Ao07wpDeebGxINtFNQ8EHGFqNzaOGE+JfBYQ==
+      integrity: sha512-MSaCp/MiM4wrKnTAKL9BNgJ+dUxcNNAC/J5Y7p8XkbiJEqWzS31xxqr2GdMJz9T1RkPL0LTuJyRW2rqlYxMPpA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19591,7 +19593,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-dHLRP7kQvyCZyKumB5ulLNg5ML0K61EbhrtIzjwOfQHKbNVeQuYTDDzYaZsFMeKCVcbIDIm1Be8RXh0DR3q24A==
+      integrity: sha512-kMEboqUm+ef7Jd9h75kmEZwaQUQj+3tXeI3hPUnuiyvWm/e8O79e+B4WxtiuqYhXvFkGBl3KWfvB6gqr2DOKyg==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19638,6 +19640,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-jsx-a11y: 6.4.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       eslint-plugin-react: 7.24.0_eslint@7.32.0
@@ -19682,7 +19685,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-TOGPg+z0nS9tSj6J1sOUqyVBpc4AU/d+ziILNI73iEBFD2YSUB52IWnFA6JO/Xe7DBuTuROb+gqLFA4+KFVUuA==
+      integrity: sha512-UnTbvuErLodVzrzB+qZMuhNOe0Bo5+Y3wHE78vsV3IBj7uc70qf7WLiLpNlUXYWtok2nnuEYF7my30eS/TG+3Q==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -19865,7 +19868,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-FbubYMTpTmmnJgmAgO/DVCvNMLnlktIwXzB+a5Oj2HCScXQha09Jd9iEUu2tjK6/WLVQo2dS18TqAvv2pcx04Q==
+      integrity: sha512-7NTPXigY8ZscfIbLua8RK3B18jbgV7ru3Rgsr75bG3nFQcDNlr8/6i2ht8TUsjg2VqlRRMYTpDldwf9ZVXsclQ==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

@@ -4,6 +4,9 @@
 import { IButtonStyles, IModalStyleProps, IModalStyles, IStyleFunctionOrObject, Theme } from '@fluentui/react';
 import { CSSProperties } from 'react';
 
+/**
+ * @private
+ */
 export const getScreenSharePopupModalStyles = (
   theme: Theme
 ): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
@@ -17,18 +20,27 @@ export const getScreenSharePopupModalStyles = (
   };
 };
 
+/**
+ * @private
+ */
 export const screenSharePopupModalStackStyles: CSSProperties = {
   width: '18rem',
   height: '11.4375rem',
   paddingBottom: '0.5rem'
 };
 
+/**
+ * @private
+ */
 export const screenSharePopupModalLabelStyles: CSSProperties = {
   lineHeight: '1rem',
   fontSize: '0.75rem',
   fontWeight: 'normal'
 };
 
+/**
+ * @private
+ */
 export const getScreenSharePopupModalButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {

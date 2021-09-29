@@ -3,6 +3,9 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * @private
+ */
 export const localPreviewContainerStyle = mergeStyles({
   borderRadius: '.25rem',
   width: '25rem',
@@ -11,11 +14,17 @@ export const localPreviewContainerStyle = mergeStyles({
   padding: '0.5rem'
 });
 
+/**
+ * @private
+ */
 export const cameraOffLabelStyle = mergeStyles({
   fontFamily: 'Segoe UI Regular',
   fontSize: '0.625rem' // 10px
 });
 
+/**
+ * @private
+ */
 export const localPreviewTileStyle = {
   root: {
     borderRadius: '.25rem'
