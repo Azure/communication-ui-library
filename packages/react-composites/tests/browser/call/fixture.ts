@@ -121,9 +121,9 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
         })
       );
       for (const page of pages) {
-        // page.on('request', (request) =>
-        //   console.log('REQUEST >>', request.method(), request.url(), request.headers(), request.postDataJSON())
-        // );
+        page.on('request', (request) =>
+          console.log('REQUEST >>', request.method(), request.url(), request.headers(), request.postData())
+        );
 
         page.on('console', (msg) => {
           const doNotLogMessages = [
