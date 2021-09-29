@@ -14,7 +14,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
-// @public (undocumented)
+// @public
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
@@ -46,7 +46,7 @@ export type ChatMessageWithStatus = ChatMessage & {
     status: MessageStatus;
 };
 
-// @public (undocumented)
+// @public
 export type ChatThreadClientState = {
     chatMessages: {
         [key: string]: ChatMessageWithStatus;
@@ -69,13 +69,10 @@ export type ChatThreadProperties = {
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
-// @public (undocumented)
+// @public
 export interface StatefulChatClient extends ChatClient {
-    // (undocumented)
     getState(): ChatClientState;
-    // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
 
