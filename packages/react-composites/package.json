@@ -111,7 +111,7 @@
     "json-stringify-safe": "^5.0.1",
     "nan": "^2.14.1",
     "node-forge": "0.10.0",
-    "playwright": "~1.12.3",
+    "playwright": "~1.15.0",
     "prettier": "2.3.1",
     "pretty-quick": "^3.1.0",
     "puppeteer": "~10.0.0",
