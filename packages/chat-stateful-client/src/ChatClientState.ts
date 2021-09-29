@@ -7,7 +7,9 @@ import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
 /**
- * A centralized state includes data for the whole chat client.
+ * Centralized state for {@link @azure/communication-chat#ChatClient}.
+ *
+ * @public
  */
 export type ChatClientState = {
   /**
@@ -33,7 +35,9 @@ export type ChatClientState = {
 };
 
 /**
- * State for a single chat thread.
+ * Centralized state for {@link @azure/communication-chat#ChatThreadClient}.
+ *
+ * @public
  */
 export type ChatThreadClientState = {
   /**
@@ -73,10 +77,16 @@ export type ChatThreadClientState = {
   latestReadTime: Date;
 };
 
-// @azure/communication-chat exports two interfaces for this concept,
-// and @azure/communication-signaling exports one.
-// In the absence of a common interface for this concept, we define a minimal one
-// that helps us hide the different types used by underlying API.
+/**
+ * Properties of a chat thread.
+ *
+ * \@azure/communication-chat exports two interfaces for this concept,
+ * and \@azure/communication-signaling exports another.
+ *
+ * We define a minimal one that helps us hide the different types used by underlying API.
+ *
+ * @public
+ */
 export type ChatThreadProperties = {
   topic?: string;
 };
@@ -86,18 +96,16 @@ export type ChatThreadProperties = {
  *
  * Each property in the object stores the latest error for a particular SDK API method.
  *
- * Errors from this object can be cleared by calling the TODO(implement me) {@link clearError} method.
- * Additionally, errors are automatically cleared when:
- * - The state is cleared.
- * - Subsequent calls to related API methods succeed.
- * See documentation of individual stateful client methods for details on when errors may be automatically cleared.
+ * @public
  */
 export type ChatErrors = {
   [target in ChatErrorTarget]: ChatError;
 };
 
 /**
- * Error thrown from failed stateful API methods.
+ * Error thrown from failed {@link StatefulChatClient} methods.
+ *
+ * @public
  */
 export class ChatError extends Error {
   /**
@@ -126,6 +134,8 @@ export class ChatError extends Error {
 
 /**
  * String literal type for all permissible keys in {@link ChatErrors}.
+ *
+ * @public
  */
 export type ChatErrorTarget =
   | 'ChatClient.createChatThread'
