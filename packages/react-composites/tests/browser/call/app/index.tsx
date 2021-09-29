@@ -21,7 +21,7 @@ const displayName = params.displayName;
 const token = params.token;
 const groupId = params.groupId;
 const userId = params.userId;
-const useFrLocale = Boolean(params.useFrlocale);
+const useFrLocale = Boolean(params.useFrLocale);
 // const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {

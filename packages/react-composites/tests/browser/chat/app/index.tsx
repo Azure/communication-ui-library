@@ -22,7 +22,7 @@ const token = params.token;
 const endpointUrl = params.endpointUrl;
 const threadId = params.threadId;
 const userId = params.userId;
-const useFrlocale = Boolean(params.useFrLocale);
+const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
@@ -80,7 +80,7 @@ function App(): JSX.Element {
                   )
               : undefined
           }
-          locale={useFrlocale ? COMPOSITE_LOCALE_FR_FR : undefined}
+          locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
         />
       )}
     </_IdentifierProvider>
