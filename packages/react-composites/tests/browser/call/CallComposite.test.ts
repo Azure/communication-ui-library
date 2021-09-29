@@ -160,6 +160,8 @@ test.describe('Localization tests', async () => {
     page.on('console', (msg) => {
       if (msg.type() === 'error') {
         console.log(`PAGE2 CONSOLE ERROR TEXT: "${msg.text()}"`);
+        console.log(msg.args);
+        console.log(msg.location);
       }
     });
     console.log('locale test 2');

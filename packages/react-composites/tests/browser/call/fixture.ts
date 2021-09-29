@@ -119,6 +119,12 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
         page.on('console', (msg) => {
           if (msg.type() === 'error') {
             console.log(`CONSOLE ERROR TEXT: "${msg.text()}"`);
+            console.log(msg.args);
+            console.log(msg.location);
+          } else {
+            console.log(`console message: "${msg.text()}"`);
+            console.log(msg.args);
+            console.log(msg.location);
           }
         });
       }
