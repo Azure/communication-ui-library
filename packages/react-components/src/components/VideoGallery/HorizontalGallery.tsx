@@ -117,8 +117,6 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     }
   };
 
-  console.log(participants.map((p) => p.displayName));
-
   const defaultOnRenderParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
@@ -134,14 +132,14 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           <RemoteVideoTile
             key={participant.userId}
             userId={participant.userId}
-            onCreateRemoteStreamView={onCreateRemoteStreamView}
-            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+            onCreateRemoteStreamView={hideRemoteVideoStream ? undefined : onCreateRemoteStreamView}
+            onDisposeRemoteStreamView={hideRemoteVideoStream ? undefined : onDisposeRemoteStreamView}
             isAvailable={hideRemoteVideoStream ? false : remoteVideoStream?.isAvailable}
+            renderElement={hideRemoteVideoStream ? undefined : remoteVideoStream?.renderElement}
+            remoteVideoViewOption={hideRemoteVideoStream ? undefined : remoteVideoViewOption}
             isMuted={participant.isMuted}
             isSpeaking={participant.isSpeaking}
-            renderElement={hideRemoteVideoStream ? undefined : remoteVideoStream?.renderElement}
             displayName={participant.displayName}
-            remoteVideoViewOption={remoteVideoViewOption}
             onRenderAvatar={onRenderAvatar}
             showMuteIndicator={showMuteIndicator}
           />
