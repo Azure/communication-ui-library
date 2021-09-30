@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, mergeStyles, Stack, DefaultButton } from '@fluentui/react';
+import { DefaultButton, Icon, mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
-import {
-  horizontalGalleryContainerStyle,
-  horizontalGalleryTileStyle,
-  leftRightButtonStyles
-} from '../styles/HorizontalGallery.styles';
+import { horizontalGalleryContainerStyle, leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
 import { RemoteVideoTile } from './RemoteVideoTile';
 
 /**
@@ -53,23 +49,59 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     rightGutter = 8
   } = props;
 
+  const MOBILE_WIDTH_MAX = 480;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(0);
   const [maxTiles, setMaxTiles] = useState(0);
+  const [isMobile, setIsMobie] = useState(false);
+  const [tileHeight, setTileHeight] = useState(120);
+  const [tileWidth, setTileWidth] = useState(160);
 
   useEffect(() => {
     const updateWidth = (): void => {
       const width = (containerRef.current?.offsetWidth ?? 0) - (leftGutter + rightGutter);
-      const maxTiles = calculateMaxNumberOfTiles({ width });
-      setMaxTiles(maxTiles);
+      console.log(width);
       setPage(0);
+      if (width <= MOBILE_WIDTH_MAX) {
+        setIsMobie(true);
+        setTileHeight(88);
+        setTileWidth(88);
+        const maxTiles = calculateMaxNumberOfTiles({ width, tileWidth: 88 });
+        setMaxTiles(maxTiles);
+      } else {
+        setTileHeight(120);
+        setTileWidth(160);
+        const maxTiles = calculateMaxNumberOfTiles({ width, tileWidth: 160 });
+        setMaxTiles(maxTiles);
+      }
     };
     updateWidth();
     window.addEventListener('resize', updateWidth);
     return () => {
       window.removeEventListener('resize', updateWidth);
     };
-  }, [leftGutter, rightGutter, containerRef]);
+  }, [leftGutter, rightGutter, containerRef, tileWidth]);
+
+  const tileSizeStyle = useMemo(
+    () => ({
+      minHeight: `${tileHeight}px`,
+      minWidth: `${tileWidth}px`,
+      maxHeight: `${tileHeight}px`,
+      maxWidth: `${tileWidth}px`
+    }),
+    [tileWidth, tileHeight]
+  );
+
+  const pageButtonSizeStyle = useMemo(
+    () => ({
+      minWidth: '1.75rem',
+      minHeight: `${tileHeight}px`,
+      maxWidth: '1.75rem',
+      maxHeight: `${tileHeight}px`
+    }),
+    [tileHeight]
+  );
 
   const defaultOnRenderParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
@@ -82,7 +114,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     return participants?.slice(start, end).map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
-        <Stack key={participant.userId} className={mergeStyles(horizontalGalleryTileStyle)}>
+        <Stack key={participant.userId} className={mergeStyles(tileSizeStyle)}>
           <RemoteVideoTile
             key={participant.userId}
             userId={participant.userId}
@@ -102,9 +134,10 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     });
   }, [
     onRenderRemoteVideoTile,
-    participants,
     page,
     maxTiles,
+    participants,
+    tileSizeStyle,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     remoteVideoViewOption,
@@ -134,16 +167,22 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         tokens={{ childrenGap: '0.5rem' }}
         className={mergeStyles(horizontalGalleryContainerStyle, { paddingLeft: leftGutter, paddingRight: rightGutter })}
       >
-        {maxTiles ? (
-          <DefaultButton className={mergeStyles(leftRightButtonStyles)} onClick={() => changePage(page - 1)}>
+        {maxTiles && !isMobile ? (
+          <DefaultButton
+            className={mergeStyles(leftRightButtonStyles, pageButtonSizeStyle)}
+            onClick={() => changePage(page - 1)}
+          >
             <Icon iconName="HorizontalGalleryLeftButton" />
           </DefaultButton>
         ) : undefined}
 
         {defaultOnRenderParticipants}
 
-        {maxTiles ? (
-          <DefaultButton className={mergeStyles(leftRightButtonStyles)} onClick={() => changePage(page + 1)}>
+        {maxTiles && !isMobile ? (
+          <DefaultButton
+            className={mergeStyles(leftRightButtonStyles, pageButtonSizeStyle)}
+            onClick={() => changePage(page + 1)}
+          >
             <Icon iconName="HorizontalGalleryRightButton" />
           </DefaultButton>
         ) : undefined}

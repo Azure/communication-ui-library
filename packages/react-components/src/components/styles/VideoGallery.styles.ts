@@ -33,22 +33,24 @@ export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'rel
 /**
  * @private
  */
-export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
+export const floatingLocalVideoModalStyle = (
+  isMobile?: boolean
+): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => ({
   root: {
     width: '100%',
     height: '100%',
     overflow: 'hidden'
   },
   main: {
-    minWidth: '10rem',
-    minHeight: '7.5rem',
+    minWidth: isMobile ? '4rem' : '10rem',
+    minHeight: isMobile ? '5.5rem' : '7.5rem',
     boxShadow: theme.effects.elevation8,
     borderRadius: theme.effects.roundedCorner4,
     position: 'absolute',
     bottom: '0.5rem',
     right: '0.5rem'
   }
-};
+});
 
 /**
  * @private

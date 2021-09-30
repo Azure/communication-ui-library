@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
+import { ContextualMenu, IDragOptions, mergeStyles, Modal, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { HorizontalGallery } from './HorizontalGallery';
 import { smartDominantSpeakerParticipants } from '../../gallery';
@@ -112,10 +112,25 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
   }, [layout, remoteParticipants]);
 
+  const MOBILE_WIDTH_MAX = 480;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobie] = useState(false);
   const visibleVideoParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const visibleAudioParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const [videoParticipants, setVideoParticipants] = useState<VideoGalleryParticipant[] | []>();
   const [audioParticipants, setAudioParticipants] = useState<VideoGalleryParticipant[] | []>();
+
+  useEffect(() => {
+    const updateWidth = (): void => {
+      const width = containerRef.current?.offsetWidth ?? 0;
+      setIsMobie(width <= MOBILE_WIDTH_MAX);
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, []);
 
   useEffect(() => {
     visibleVideoParticipants.current = smartDominantSpeakerParticipants(
@@ -222,56 +237,66 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   if (shouldFloatLocalVideo()) {
     const floatingTileHostId = 'UILibraryFloatingTileHost';
     return (
-      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
-        <Modal
-          isOpen={true}
-          isModeless={true}
-          dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyle}
-          layerProps={{ hostId: floatingTileHostId }}
-        >
-          {localParticipant && defaultOnRenderLocalVideoTile}
-        </Modal>
-        <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
-        {audioParticipants && (
-          <Stack style={{ minHeight: '8rem', maxHeight: '8rem' }}>
-            <HorizontalGallery
-              onCreateRemoteStreamView={onCreateRemoteStreamView}
-              onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-              onRenderAvatar={onRenderAvatar}
-              onRenderRemoteVideoTile={onRenderRemoteVideoTile}
-              participants={audioParticipants}
-              remoteVideoViewOption={remoteVideoViewOption}
-              showMuteIndicator={showMuteIndicator}
-              rightGutter={176} // to leave a gap for the floating local video
-            />
-          </Stack>
-        )}
-      </Stack>
+      <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+          <Modal
+            isOpen={true}
+            isModeless={true}
+            dragOptions={DRAG_OPTIONS}
+            styles={floatingLocalVideoModalStyle(isMobile)}
+            layerProps={{ hostId: floatingTileHostId }}
+          >
+            {localParticipant && defaultOnRenderLocalVideoTile}
+          </Modal>
+          <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+          {audioParticipants && (
+            <Stack style={{ minHeight: isMobile ? '5.5rem' : '8rem', maxHeight: isMobile ? '5.5rem' : '8rem' }}>
+              <HorizontalGallery
+                onCreateRemoteStreamView={onCreateRemoteStreamView}
+                onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+                onRenderAvatar={onRenderAvatar}
+                onRenderRemoteVideoTile={onRenderRemoteVideoTile}
+                participants={audioParticipants}
+                remoteVideoViewOption={remoteVideoViewOption}
+                showMuteIndicator={showMuteIndicator}
+                rightGutter={isMobile ? 64 : 176} // to leave a gap for the floating local video
+              />
+            </Stack>
+          )}
+        </Stack>
+      </div>
+    );
+  } else {
+    return (
+      <div ref={containerRef}>
+        <Stack grow styles={videoGalleryContainerStyle}>
+          <GridLayout styles={styles ?? emptyStyles}>
+            <Stack
+              data-ui-id={ids.videoGallery}
+              horizontalAlign="center"
+              verticalAlign="center"
+              className={gridStyle}
+              grow
+            >
+              {localParticipant && defaultOnRenderLocalVideoTile}
+            </Stack>
+            {defaultOnRenderRemoteParticipants}
+          </GridLayout>
+          {audioParticipants && (
+            <Stack style={{ minHeight: '8rem', maxHeight: '8rem' }}>
+              <HorizontalGallery
+                onCreateRemoteStreamView={onCreateRemoteStreamView}
+                onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+                onRenderAvatar={onRenderAvatar}
+                onRenderRemoteVideoTile={onRenderRemoteVideoTile}
+                participants={audioParticipants}
+                remoteVideoViewOption={remoteVideoViewOption}
+                showMuteIndicator={showMuteIndicator}
+              />
+            </Stack>
+          )}
+        </Stack>
+      </div>
     );
   }
-
-  return (
-    <Stack grow styles={videoGalleryContainerStyle}>
-      <GridLayout styles={styles ?? emptyStyles}>
-        <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-          {localParticipant && defaultOnRenderLocalVideoTile}
-        </Stack>
-        {defaultOnRenderRemoteParticipants}
-      </GridLayout>
-      {audioParticipants && (
-        <Stack style={{ minHeight: '8rem', maxHeight: '8rem' }}>
-          <HorizontalGallery
-            onCreateRemoteStreamView={onCreateRemoteStreamView}
-            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-            onRenderAvatar={onRenderAvatar}
-            onRenderRemoteVideoTile={onRenderRemoteVideoTile}
-            participants={audioParticipants}
-            remoteVideoViewOption={remoteVideoViewOption}
-            showMuteIndicator={showMuteIndicator}
-          />
-        </Stack>
-      )}
-    </Stack>
-  );
 };
