@@ -138,9 +138,17 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       # Commit changes to snapshot files.
-      - name: Commit new snapshots
+      - name: Commit new snapshots (from workflow dispatch)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: >
           git diff --exit-code --quiet -- packages/react-composites/tests ||
           (git add packages/react-composites/tests &&
           git commit -m 'Updating composite automation snapshots' &&
           git push)
+      - name: Commit new snapshots (from pull request)
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: >
+          git diff --exit-code --quiet -- packages/react-composites/tests ||
+          (git add packages/react-composites/tests &&
+          git commit -m 'Updating composite automation snapshots' &&
+          git push origin HEAD:${{ github.head_ref }})
