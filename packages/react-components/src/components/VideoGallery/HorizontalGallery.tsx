@@ -30,6 +30,8 @@ export interface HorizontalGalleryProps {
   leftGutter?: number;
   /** Space to leave on the right of this gallery in pixels. */
   rightGutter?: number;
+  /** Default `false`. If set to true, video tiles will not render remote video stream  */
+  hideRemoteVideoStream?: boolean;
 }
 
 /**
@@ -46,6 +48,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     remoteVideoViewOption,
     onRenderAvatar,
     showMuteIndicator,
+    hideRemoteVideoStream,
     leftGutter = 8,
     rightGutter = 8
   } = props;
@@ -114,6 +117,8 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     }
   };
 
+  console.log(participants.map((p) => p.displayName));
+
   const defaultOnRenderParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
@@ -131,10 +136,10 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
             userId={participant.userId}
             onCreateRemoteStreamView={onCreateRemoteStreamView}
             onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-            isAvailable={remoteVideoStream?.isAvailable}
+            isAvailable={hideRemoteVideoStream ? false : remoteVideoStream?.isAvailable}
             isMuted={participant.isMuted}
             isSpeaking={participant.isSpeaking}
-            renderElement={remoteVideoStream?.renderElement}
+            renderElement={hideRemoteVideoStream ? undefined : remoteVideoStream?.renderElement}
             displayName={participant.displayName}
             remoteVideoViewOption={remoteVideoViewOption}
             onRenderAvatar={onRenderAvatar}
@@ -151,6 +156,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     tileSizeStyle,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
+    hideRemoteVideoStream,
     remoteVideoViewOption,
     onRenderAvatar,
     showMuteIndicator

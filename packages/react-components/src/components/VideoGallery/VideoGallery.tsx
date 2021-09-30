@@ -128,14 +128,22 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
     setVideoParticipants(visibleVideoParticipants.current);
 
+    // Create a map of visibleVideoParticipants for faster searching.
+    // This map will be used to identify overflow participants. i.e., participants
+    // that should be rendered in horizontal gallery.
+    const visibleVideoParticipantsMap = {};
+    visibleVideoParticipants.current.forEach((p) => {
+      visibleVideoParticipantsMap[p.userId] = true;
+    });
     // @TODO: Can this possibly be done inside HorizontalGallery?
     // Max Tiles calculated inside that gallery can be passed to this function
     // to only return the max number of tiles that can be rendered in the gallery.
     visibleAudioParticipants.current = smartDominantSpeakerParticipants(
-      remoteParticipants?.filter((p) => !p.videoStream?.isAvailable) ?? [],
+      remoteParticipants?.filter((p) => !visibleVideoParticipantsMap[p.userId]) ?? [],
       dominantSpeakers,
-      visibleAudioParticipants.current.filter((p) => !p.videoStream?.isAvailable),
-      100
+      visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsMap[p.userId]),
+      100,
+      6
     );
     setAudioParticipants(visibleAudioParticipants.current);
   }, [dominantSpeakers, remoteParticipants]);
@@ -247,6 +255,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
                 participants={audioParticipants}
                 remoteVideoViewOption={remoteVideoViewOption}
                 showMuteIndicator={showMuteIndicator}
+                hideRemoteVideoStream={true}
                 rightGutter={isMobileScreen ? 64 : 176} // to leave a gap for the floating local video
               />
             </Stack>

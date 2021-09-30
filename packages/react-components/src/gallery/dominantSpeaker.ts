@@ -12,26 +12,30 @@ import { VideoGalleryRemoteParticipant } from '../types';
  * @param visibleParticipants - Array containing currently rendered (visible)
  * participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
  * @param maxTiles - Maximum number of tiles to calculate.
+ * @param maxDominantSpeakers - Maximum number of dominant speakers to calculate.
  * @returns VideoGalleryRemoteParticipant[] {@link @azure/communication-react#VideoGalleryRemoteParticipant}
  */
 export const smartDominantSpeakerParticipants = (
   participants: VideoGalleryRemoteParticipant[],
   dominantSpeakers: Array<string> = [],
   visibleParticipants: VideoGalleryRemoteParticipant[] = [],
-  maxTiles = 4 // For video tiles, 4 is the recommended value by Calling team.
+  maxTiles = 4, // For video tiles, 4 is the recommended value by Calling team.,
+  maxDominantSpeakers = 4
 ): VideoGalleryRemoteParticipant[] => {
   // Don't apply any logic if total number of video streams is less than Max video streams.
-  if (participants.length <= maxTiles) return participants;
+  if (participants.length <= maxDominantSpeakers) return participants;
 
   // Only use the Max allowed dominant speakers.
-  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxTiles);
-  const visibleParticipantIds = visibleParticipants.map((p) => p.userId);
+  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxDominantSpeakers);
+  // We slice the visible participants to ensure only the first `n` participants are used where n == maxDominantSpeakers.
+  // This ensures that the final result has dominant speakers first and then the filler participants both totalling up to maxTiles.
+  const visibleParticipantIds = visibleParticipants.map((p) => p.userId).slice(0, maxDominantSpeakers);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleParticipantIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
-  for (let index = 0; index < maxTiles; index++) {
-    const activeParticipantId = visibleParticipantIds[index];
-    if (activeParticipantId === undefined || !dominantSpeakerIds.includes(activeParticipantId)) {
+  for (let index = 0; index < maxDominantSpeakers; index++) {
+    const visibleParticipantId = visibleParticipantIds[index];
+    if (visibleParticipantId === undefined || !dominantSpeakerIds.includes(visibleParticipantId)) {
       const replacement = newDominantSpeakerIds.shift();
       if (!replacement) break;
       visibleParticipantIds[index] = replacement;
