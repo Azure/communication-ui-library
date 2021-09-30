@@ -250,7 +250,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           </Modal>
           <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
           {audioParticipants && (
-            <Stack style={{ minHeight: isMobile ? '5.5rem' : '8rem', maxHeight: isMobile ? '5.5rem' : '8rem' }}>
+            <Stack style={{ minHeight: isMobile ? '6rem' : '8rem', maxHeight: isMobile ? '6rem' : '8rem' }}>
               <HorizontalGallery
                 onCreateRemoteStreamView={onCreateRemoteStreamView}
                 onDisposeRemoteStreamView={onDisposeRemoteStreamView}
@@ -283,7 +283,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {defaultOnRenderRemoteParticipants}
           </GridLayout>
           {audioParticipants && (
-            <Stack style={{ minHeight: '8rem', maxHeight: '8rem' }}>
+            <Stack style={{ minHeight: isMobile ? '6rem' : '8rem', maxHeight: isMobile ? '6rem' : '8rem' }}>
               <HorizontalGallery
                 onCreateRemoteStreamView={onCreateRemoteStreamView}
                 onDisposeRemoteStreamView={onDisposeRemoteStreamView}

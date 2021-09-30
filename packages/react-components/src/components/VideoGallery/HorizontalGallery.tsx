@@ -67,9 +67,10 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         setIsMobie(true);
         setTileHeight(88);
         setTileWidth(88);
-        const maxTiles = calculateMaxNumberOfTiles({ width, tileWidth: 88 });
+        const maxTiles = calculateMaxNumberOfTiles({ width, tileWidth: 88, buttonsWidth: 0 });
         setMaxTiles(maxTiles);
       } else {
+        setIsMobie(false);
         setTileHeight(120);
         setTileWidth(160);
         const maxTiles = calculateMaxNumberOfTiles({ width, tileWidth: 160 });
@@ -191,13 +192,17 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   );
 };
 
-const calculateMaxNumberOfTiles = ({ width, tileWidth = 10 * 16, gapBetweenTiles = 0.5 * 16 }): number => {
+const calculateMaxNumberOfTiles = ({
+  width,
+  tileWidth = 10 * 16,
+  buttonsWidth = 4 * 16,
+  gapBetweenTiles = 0.5 * 16
+}): number => {
   /**
    * A Safe Padding should be reduced from the parent width to ensure that the total width of all video tiles rendered
    * is always less than the window width. (Window width after subtracting all margins, paddings etc.)
    * This ensures that video tiles don't tirgger an overflow which will prevent parent component from shrinking.
    */
   const safePadding = 16;
-  const buttonsWidth = 4 * 16;
   return Math.floor((width - buttonsWidth - safePadding) / (tileWidth + gapBetweenTiles));
 };
