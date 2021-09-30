@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, IDragOptions, mergeStyles, Modal, Stack } from '@fluentui/react';
+import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { HorizontalGallery } from './HorizontalGallery';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import {
@@ -22,7 +21,9 @@ import {
   gridStyle,
   videoGalleryContainerStyle
 } from '../styles/VideoGallery.styles';
+import { useIsMobileScreen } from '../utils/responsive';
 import { VideoTile, VideoTileStylesProps } from '../VideoTile';
+import { HorizontalGallery } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
 
 const emptyStyles = {};
@@ -112,25 +113,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
   }, [layout, remoteParticipants]);
 
-  const MOBILE_WIDTH_MAX = 480;
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobie] = useState(false);
+  const isMobileScreen = useIsMobileScreen(containerRef);
   const visibleVideoParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const visibleAudioParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const [videoParticipants, setVideoParticipants] = useState<VideoGalleryParticipant[] | []>();
   const [audioParticipants, setAudioParticipants] = useState<VideoGalleryParticipant[] | []>();
-
-  useEffect(() => {
-    const updateWidth = (): void => {
-      const width = containerRef.current?.offsetWidth ?? 0;
-      setIsMobie(width <= MOBILE_WIDTH_MAX);
-    };
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => {
-      window.removeEventListener('resize', updateWidth);
-    };
-  }, []);
 
   useEffect(() => {
     visibleVideoParticipants.current = smartDominantSpeakerParticipants(
@@ -243,14 +231,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             isOpen={true}
             isModeless={true}
             dragOptions={DRAG_OPTIONS}
-            styles={floatingLocalVideoModalStyle(isMobile)}
+            styles={floatingLocalVideoModalStyle(isMobileScreen)}
             layerProps={{ hostId: floatingTileHostId }}
           >
             {localParticipant && defaultOnRenderLocalVideoTile}
           </Modal>
           <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
           {audioParticipants && (
-            <Stack style={{ minHeight: isMobile ? '6rem' : '8rem', maxHeight: isMobile ? '6rem' : '8rem' }}>
+            <Stack style={{ minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' }}>
               <HorizontalGallery
                 onCreateRemoteStreamView={onCreateRemoteStreamView}
                 onDisposeRemoteStreamView={onDisposeRemoteStreamView}
@@ -259,7 +247,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
                 participants={audioParticipants}
                 remoteVideoViewOption={remoteVideoViewOption}
                 showMuteIndicator={showMuteIndicator}
-                rightGutter={isMobile ? 64 : 176} // to leave a gap for the floating local video
+                rightGutter={isMobileScreen ? 64 : 176} // to leave a gap for the floating local video
               />
             </Stack>
           )}
@@ -283,7 +271,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {defaultOnRenderRemoteParticipants}
           </GridLayout>
           {audioParticipants && (
-            <Stack style={{ minHeight: isMobile ? '6rem' : '8rem', maxHeight: isMobile ? '6rem' : '8rem' }}>
+            <Stack style={{ minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' }}>
               <HorizontalGallery
                 onCreateRemoteStreamView={onCreateRemoteStreamView}
                 onDisposeRemoteStreamView={onDisposeRemoteStreamView}

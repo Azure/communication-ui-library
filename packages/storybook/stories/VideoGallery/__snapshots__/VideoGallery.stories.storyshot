@@ -21,21 +21,31 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="ms-Stack css-1"
-        id="UILibraryFloatingTileHost"
-      >
-        <span
-          className="ms-layer"
-        />
-        <div
-          className="css-56"
-          style={
-            Object {
-              "gridTemplateColumns": "repeat(1, 1fr)",
-              "gridTemplateRows": "repeat(0, minmax(0, 1fr))",
-            }
+        style={
+          Object {
+            "height": "100%",
+            "position": "relative",
+            "width": "100%",
           }
-        />
+        }
+      >
+        <div
+          className="ms-Stack css-1"
+          id="UILibraryFloatingTileHost"
+        >
+          <span
+            className="ms-layer"
+          />
+          <div
+            className="css-56"
+            style={
+              Object {
+                "gridTemplateColumns": "repeat(1, 1fr)",
+                "gridTemplateRows": "repeat(0, minmax(0, 1fr))",
+              }
+            }
+          />
+        </div>
       </div>
     </div>
   </div>

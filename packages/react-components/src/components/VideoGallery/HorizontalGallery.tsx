@@ -5,6 +5,7 @@ import { DefaultButton, Icon, mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
+import { useContainerWidth, useIsMobileScreen } from '../utils/responsive';
 import { RemoteVideoTile } from './RemoteVideoTile';
 
 /**
@@ -49,40 +50,35 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     rightGutter = 8
   } = props;
 
-  const MOBILE_WIDTH_MAX = 480;
-
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobileScreen = useIsMobileScreen(containerRef);
+  const containerWidth = useContainerWidth(containerRef);
   const [page, setPage] = useState(0);
   const [maxTiles, setMaxTiles] = useState(0);
-  const [isMobile, setIsMobie] = useState(false);
   const [tileHeight, setTileHeight] = useState(120);
   const [tileWidth, setTileWidth] = useState(160);
 
   useEffect(() => {
-    const updateWidth = (): void => {
-      const width = (containerRef.current?.offsetWidth ?? 0) - (leftGutter + rightGutter);
-      console.log(width);
-      setPage(0);
-      if (width <= MOBILE_WIDTH_MAX) {
-        setIsMobie(true);
-        setTileHeight(88);
-        setTileWidth(88);
-        const maxTiles = calculateMaxNumberOfTiles({ width, tileWidth: 88, buttonsWidth: 0 });
-        setMaxTiles(maxTiles);
-      } else {
-        setIsMobie(false);
-        setTileHeight(120);
-        setTileWidth(160);
-        const maxTiles = calculateMaxNumberOfTiles({ width, tileWidth: 160 });
-        setMaxTiles(maxTiles);
-      }
-    };
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => {
-      window.removeEventListener('resize', updateWidth);
-    };
-  }, [leftGutter, rightGutter, containerRef, tileWidth]);
+    setPage(0);
+    if (isMobileScreen) {
+      setTileHeight(88);
+      setTileWidth(88);
+      const maxTiles = calculateMaxNumberOfTiles({
+        width: containerWidth - (leftGutter + rightGutter),
+        tileWidth: 88,
+        buttonsWidth: 0
+      });
+      setMaxTiles(maxTiles);
+    } else {
+      setTileHeight(120);
+      setTileWidth(160);
+      const maxTiles = calculateMaxNumberOfTiles({
+        width: containerWidth - (leftGutter + rightGutter),
+        tileWidth: 160
+      });
+      setMaxTiles(maxTiles);
+    }
+  }, [containerWidth, isMobileScreen, leftGutter, rightGutter]);
 
   const tileSizeStyle = useMemo(
     () => ({
@@ -103,6 +99,20 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     }),
     [tileHeight]
   );
+
+  const maxPages = useMemo(() => {
+    return Math.ceil(participants.length / maxTiles) - 1;
+  }, [maxTiles, participants.length]);
+
+  const changePage = (page: number): void => {
+    if (page < 0) {
+      setPage(0);
+    } else if (page >= maxPages) {
+      setPage(maxPages);
+    } else {
+      setPage(page);
+    }
+  };
 
   const defaultOnRenderParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
@@ -146,20 +156,6 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     showMuteIndicator
   ]);
 
-  const changePage = (page: number): void => {
-    const maxPage = Math.ceil(participants.length / maxTiles);
-    if (page < 0) {
-      setPage(0);
-      return;
-    } else if (page >= maxPage) {
-      setPage(maxPage - 1);
-      return;
-    } else {
-      setPage(page);
-      return;
-    }
-  };
-
   return (
     <div ref={containerRef}>
       <Stack
@@ -168,7 +164,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         tokens={{ childrenGap: '0.5rem' }}
         className={mergeStyles(horizontalGalleryContainerStyle, { paddingLeft: leftGutter, paddingRight: rightGutter })}
       >
-        {maxTiles && !isMobile ? (
+        {maxTiles && page > 0 && !isMobileScreen ? (
           <DefaultButton
             className={mergeStyles(leftRightButtonStyles, pageButtonSizeStyle)}
             onClick={() => changePage(page - 1)}
@@ -179,7 +175,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
         {defaultOnRenderParticipants}
 
-        {maxTiles && !isMobile ? (
+        {maxTiles && page < maxPages && !isMobileScreen ? (
           <DefaultButton
             className={mergeStyles(leftRightButtonStyles, pageButtonSizeStyle)}
             onClick={() => changePage(page + 1)}
