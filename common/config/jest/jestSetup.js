@@ -10,3 +10,6 @@ console.error = (...args) => {
 console.warning = (...args) => {
   throw args;
 };
+
+// Need ResizeObserver for GridLayout
+global.ResizeObserver = require('resize-observer-polyfill');

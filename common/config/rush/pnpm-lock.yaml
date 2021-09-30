@@ -15984,6 +15984,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA==
+  /resize-observer-polyfill/1.5.1:
+    dev: false
+    resolution:
+      integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
   /resolve-cwd/2.0.0:
     dependencies:
       resolve-from: 3.0.0
@@ -19856,6 +19860,7 @@ packages:
       react-sizeme: 3.0.2
       react-test-renderer: 16.14.0_react@16.14.0
       regenerator-runtime: 0.13.9
+      resize-observer-polyfill: 1.5.1
       source-map-explorer: 2.5.2
       storybook-docs-toc: 1.6.0_6433d859e8c28e84d08c611302350ec5
       styled-components: 5.2.3_2c10db6bed9aaf10b28f0c8606f7c0c7
@@ -19868,7 +19873,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-7NTPXigY8ZscfIbLua8RK3B18jbgV7ru3Rgsr75bG3nFQcDNlr8/6i2ht8TUsjg2VqlRRMYTpDldwf9ZVXsclQ==
+      integrity: sha512-hIocnSW3ui9V9oT/53f9nZ3AIi8SkkFb/hLaS1xTte20udkocL8fM0xXoWQ+gsqYNfexyzYHg7t9GPK+fCCggw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
