@@ -65,7 +65,7 @@ jobs:
   update_composite_snapshot:
     name: Update composite snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') }}
+    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
@@ -96,11 +96,11 @@ jobs:
       - name: Build Test
         run: |
           cd packages/react-composites
-          rushx build:e2e
+          rushx build:e2e:chat
       - name: Update snapshot
         run: |
           cd packages/react-composites
-          rushx test:e2e:update
+          rushx test:e2e:chat:update
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       # Setup bot information for pushing new changes
