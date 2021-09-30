@@ -18,6 +18,9 @@ import { ChatContext } from './ChatContext';
 import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
+/**
+ * @private
+ */
 export class EventSubscriber {
   private chatClient: ChatClient;
   private chatContext: ChatContext;

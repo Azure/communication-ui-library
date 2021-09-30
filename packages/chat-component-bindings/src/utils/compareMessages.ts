@@ -3,6 +3,9 @@
 
 import { Message } from '@internal/react-components';
 
+/**
+ * @private
+ */
 export const compareMessages = (
   firstMessage: Message<'chat' | 'system' | 'custom'>,
   secondMessage: Message<'chat' | 'system' | 'custom'>
