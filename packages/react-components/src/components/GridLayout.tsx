@@ -5,7 +5,7 @@ import { mergeStyles } from '@fluentui/react';
 import React, { useRef, useEffect, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { blockStyle, cellStyle, gridLayoutContainerStyle } from './styles/GridLayout.styles';
-import { calculateBlockProps } from './utils/GridLayoutUtils';
+import { calculateBlockProps, chunkify } from './utils/GridLayoutUtils';
 
 /**
  * Props for {@link GridLayout}.
@@ -40,22 +40,24 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   });
 
   useEffect(() => {
-    const updateBlocks = (): void => {
+    const updateBlockProps = (): void => {
       if (targetRef.current) {
         setBlockProps(
           calculateBlockProps(numberOfChildren, targetRef.current.offsetWidth, targetRef.current.offsetHeight)
         );
       }
     };
+    const observer = new ResizeObserver(updateBlockProps);
     if (targetRef.current) {
-      new ResizeObserver(updateBlocks).observe(targetRef.current);
+      observer.observe(targetRef.current);
     }
-    updateBlocks();
+    updateBlockProps();
+    return () => observer.disconnect();
   }, [numberOfChildren, targetRef.current?.offsetWidth, targetRef.current?.offsetHeight]);
 
   return (
     <div ref={targetRef} className={mergeStyles(gridLayoutContainerStyle, styles?.root)}>
-      {renderBlocks({ ...blockProps, children })}
+      {createBlocks({ ...blockProps, children })}
     </div>
   );
 };
@@ -69,42 +71,52 @@ export type BlockProps = {
   numBlocks: number;
 };
 
-const renderBlocks = (props: BlockProps & { children: React.ReactNode }): React.ReactNode => {
-  const numberOfChildren = React.Children.count(props.children);
-  let current = 0;
-  const blockPercent = (Math.floor(10000 / props.numBlocks) / 100).toFixed(2);
+const createBlocks = (props: BlockProps & { children: React.ReactNode }): React.ReactNode => {
   const blocks: JSX.Element[] = [];
+  // Get the percent of 1 block out of the total number of blocks rounded down.
+  const blockPercent = (Math.floor(10000 / props.numBlocks) / 100).toFixed(2);
+  // Split array of children into as even chunks
+  const chunks = chunkify(React.Children.toArray(props.children), props.numBlocks);
   for (let i = 0; i < props.numBlocks; i++) {
-    const numChildrenInBlock = Math.ceil((numberOfChildren - current) / (props.numBlocks - i));
-    blocks.push(
-      <div
-        key={`block-${i}`}
-        className={blockStyle}
-        style={
-          props.horizontal
-            ? {
-                gridTemplateColumns: `repeat(${numChildrenInBlock}, 1fr)`,
-                width: '100%',
-                height: `${blockPercent}%`
-              }
-            : {
-                gridTemplateRows: `repeat(${numChildrenInBlock}, minmax(0, 1fr))`,
-                width: `${blockPercent}%`,
-                height: '100%',
-                float: 'left'
-              }
-        }
-      >
-        {React.Children.toArray(props.children)
-          .slice(current, current + numChildrenInBlock)
-          .map((c, j) => (
-            <div key={`cell-${i}-${j}`} className={cellStyle}>
-              {c}
-            </div>
-          ))}
-      </div>
-    );
-    current = current + numChildrenInBlock;
+    // Create block for children
+    const block = createBlock(props.horizontal, `block-${i}`, `${blockPercent}%`, chunks[i]);
+    // Add block to blocks
+    blocks.push(block);
   }
   return blocks;
+};
+
+const createBlock = (
+  horizontal: boolean,
+  key: string,
+  blockPercent: string,
+  children: React.ReactNode
+): JSX.Element => {
+  const numberOfChildren = React.Children.count(children);
+  return (
+    <div
+      key={key}
+      className={blockStyle}
+      style={
+        horizontal
+          ? {
+              gridTemplateColumns: `repeat(${numberOfChildren}, 1fr)`,
+              width: '100%',
+              height: blockPercent
+            }
+          : {
+              gridTemplateRows: `repeat(${numberOfChildren}, minmax(0, 1fr))`,
+              width: blockPercent,
+              height: '100%',
+              float: 'left'
+            }
+      }
+    >
+      {React.Children.toArray(children).map((c, j) => (
+        <div key={`${key}-cell-${j}`} className={cellStyle}>
+          {c}
+        </div>
+      ))}
+    </div>
+  );
 };
