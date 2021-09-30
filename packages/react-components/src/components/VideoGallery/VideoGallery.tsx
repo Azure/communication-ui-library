@@ -21,7 +21,7 @@ import {
   gridStyle,
   videoGalleryContainerStyle
 } from '../styles/VideoGallery.styles';
-import { useIsMobileScreen } from '../utils/responsive';
+import { useIsSmallScreen } from '../utils/responsive';
 import { VideoTile, VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGallery } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
@@ -114,7 +114,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [layout, remoteParticipants]);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const isMobileScreen = useIsMobileScreen(containerRef);
+  const isMobileScreen = useIsSmallScreen(containerRef);
   const visibleVideoParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const visibleAudioParticipants = useRef<VideoGalleryParticipant[] | []>([]);
   const [videoParticipants, setVideoParticipants] = useState<VideoGalleryParticipant[] | []>();

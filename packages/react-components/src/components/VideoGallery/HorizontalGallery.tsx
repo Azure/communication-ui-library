@@ -5,7 +5,7 @@ import { DefaultButton, Icon, mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
-import { useContainerWidth, useIsMobileScreen } from '../utils/responsive';
+import { useContainerWidth, useIsSmallScreen } from '../utils/responsive';
 import { RemoteVideoTile } from './RemoteVideoTile';
 
 /**
@@ -54,7 +54,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const isMobileScreen = useIsMobileScreen(containerRef);
+  const isMobileScreen = useIsSmallScreen(containerRef);
   const containerWidth = useContainerWidth(containerRef);
   const [page, setPage] = useState(0);
   const [maxTiles, setMaxTiles] = useState(0);

@@ -22,7 +22,7 @@ export const smartDominantSpeakerParticipants = (
   maxTiles = 4, // For video tiles, 4 is the recommended value by Calling team.,
   maxDominantSpeakers = 4
 ): VideoGalleryRemoteParticipant[] => {
-  // Don't apply any logic if total number of video streams is less than Max video streams.
+  // Don't apply any logic if total number of video streams is less than Max dominant speakers.
   if (participants.length <= maxDominantSpeakers) return participants;
 
   // Only use the Max allowed dominant speakers.
