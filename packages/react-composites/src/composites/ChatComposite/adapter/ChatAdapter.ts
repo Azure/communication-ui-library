@@ -4,7 +4,7 @@
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
-import type { AdapterState, AdapterDisposal, AdapterErrors, AdapterError } from '../../common/adapters';
+import type { AdapterState, Disposal, AdapterErrors, AdapterError } from '../../common/adapters';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -93,7 +93,7 @@ export interface ChatAdapterSubscribers {
 export interface ChatAdapter
   extends ChatAdapterThreadManagement,
     AdapterState<ChatAdapterState>,
-    AdapterDisposal,
+    Disposal,
     ChatAdapterSubscribers {}
 
 /**

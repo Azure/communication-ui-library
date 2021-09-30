@@ -27,7 +27,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Composite can also be controlled using the adapter.
    */
   adapter: CallAdapter;
-  callInvitationURL?: string;
+  callInvitationUrl?: string;
   /**
    * A callback function that can be used to provide custom data to an Avatar.
    */
@@ -124,7 +124,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
  * @public
  */
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationURL, onFetchAvatarPersonaData, onFetchParticipantMenuItems, options } = props;
+  const {
+    adapter,
+    callInvitationUrl: callInvitationURL,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    options
+  } = props;
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });

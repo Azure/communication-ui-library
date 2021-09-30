@@ -30,7 +30,7 @@ export interface AdapterPages<TPage> {
  *
  * @public
  */
-export interface AdapterDisposal {
+export interface Disposal {
   /** Dispose of the Composite */
   dispose(): void;
 }
