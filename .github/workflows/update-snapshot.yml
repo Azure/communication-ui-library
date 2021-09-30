@@ -13,8 +13,9 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      # If action dispatched from workflow_dispatch, then check out branch normally
       - uses: actions/checkout@v2
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
@@ -22,6 +23,19 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+
+      # If pull request, then check out pull request head (not merge commit)
+      - uses: actions/checkout@v2
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue were GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If any update needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
@@ -68,8 +82,9 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      # If action dispatched from workflow_dispatch, then check out branch normally
       - uses: actions/checkout@v2
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
@@ -77,6 +92,19 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+
+      # If pull request, then check out pull request head (not merge commit)
+      - uses: actions/checkout@v2
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue were GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If any update needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
