@@ -122,11 +122,11 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build Test
-        working-directory: ./packages/communication-react
+        working-directory: ./packages/react-composites
         run: rushx build:e2e:chat
       - name: Update snapshot
         run: rushx test:e2e:chat:update
-        working-directory: ./packages/communication-react
+        working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       # Setup bot information for pushing new changes
@@ -148,7 +148,7 @@ jobs:
           git commit -m 'Updating composite automation snapshots' &&
           git push
       - name: Commit new snapshots (from pull request)
-        if: ${{ github.event_name != 'workflow_dispatch' }}
+        if: ${{ steps.version.outputs.version }} == 'true' && ${{ github.event_name != 'workflow_dispatch' }}
         run: >
           git add packages/react-composites/tests &&
           git commit -m 'Updating composite automation snapshots' &&
