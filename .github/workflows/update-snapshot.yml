@@ -82,22 +82,19 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      # If action dispatched from workflow_dispatch, then check out branch normally
-      - uses: actions/checkout@v2
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        with:
-          fetch-depth: 0
-          # Use a machine account when checking out. This is to workaround the issue were GitHub
-          # actions, when using the default account, cannot trigger other actions.
-          # This machine account is only for this PAT, pwd was created and thrown away
-          # If any update needed, create a new account, add access to the repo and generate a new PAT
-          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-
+      - name: Get checkout reference
+        id: checkoutref
+        run: |
+          if [ ${{ github.event_name == 'workflow_dispatch' }} ]; then
+            echo "::set-output name=ref::''"
+          else
+            echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}"
+          fi
       # If pull request, then check out pull request head (not merge commit)
       - uses: actions/checkout@v2
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ steps.checkoutref.output.ref }}
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
           # actions, when using the default account, cannot trigger other actions.
@@ -142,13 +139,13 @@ jobs:
           git diff --exit-code --quiet -- packages/react-composites/tests || echo "::set-output name=hasChanged::true"
       # Commit changes to snapshot files.
       - name: Commit new snapshots (from workflow dispatch)
-        if: ${{ steps.version.outputs.version }} == 'true' && ${{ github.event_name == 'workflow_dispatch' }}
+        if: ${{ steps.changescheck.outputs.hasChanged }} == 'true' && ${{ github.event_name == 'workflow_dispatch' }}
         run: >
           git add packages/react-composites/tests &&
           git commit -m 'Updating composite automation snapshots' &&
           git push
       - name: Commit new snapshots (from pull request)
-        if: ${{ steps.version.outputs.version }} == 'true' && ${{ github.event_name != 'workflow_dispatch' }}
+        if: ${{ steps.changescheck.outputs.hasChanged }} == 'true' && ${{ github.event_name != 'workflow_dispatch' }}
         run: >
           git add packages/react-composites/tests &&
           git commit -m 'Updating composite automation snapshots' &&
