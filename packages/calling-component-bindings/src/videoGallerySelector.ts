@@ -109,7 +109,7 @@ const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): un
 
 /**
  * Provides data attributes to VideoGallery component.
- * @beta
+ * @public
  */
 export const videoGallerySelector = createSelector(
   [
