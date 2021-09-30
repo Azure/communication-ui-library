@@ -3,7 +3,7 @@
 
 import { CSSProperties } from 'react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -30,7 +30,9 @@ export const messageThreadContainerStyle = mergeStyles({
   width: '100%',
   maxHeight: '100%',
   overflow: 'auto',
-  position: 'relative'
+  position: 'relative',
+  alignSelf: 'center',
+  maxWidth: '41.25rem'
 });
 
 /**
@@ -72,6 +74,40 @@ export const chatMessageStyle: CSSProperties = {
  */
 export const chatMessageDateStyle: CSSProperties = {
   fontWeight: 600
+};
+
+/**
+ * @private
+ */
+export const defaultMyChatItemMessageContainer: ComponentSlotStyle = {
+  marginRight: '0rem',
+  marginLeft: '0rem'
+};
+
+/**
+ * @private
+ */
+export const defaultChatItemMessageContainer: ComponentSlotStyle = {
+  marginRight: '0rem',
+  marginLeft: '0rem'
+};
+
+/**
+ * @private
+ */
+export const defaultMyChatMessageContainer: ComponentSlotStyle = {
+  maxWidth: '100%',
+  minWidth: '0%',
+  marginLeft: '0rem'
+};
+
+/**
+ * @private
+ */
+export const defaultChatMessageContainer: ComponentSlotStyle = {
+  maxWidth: '100%',
+  minWidth: '0%',
+  marginRight: '0rem'
 };
 
 /**

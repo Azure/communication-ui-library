@@ -10,7 +10,11 @@ import {
   chatStyle,
   newMessageButtonStyle,
   messageStatusContainerStyle,
-  noMessageStatusStyle
+  noMessageStatusStyle,
+  defaultMyChatItemMessageContainer,
+  defaultChatItemMessageContainer,
+  defaultMyChatMessageContainer,
+  defaultChatMessageContainer
 } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -293,9 +297,10 @@ const memoizeAllMessages = memoizeFnAll(
 
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
-      messageProps.messageContainerStyle = message.payload.mine
-        ? styles?.myChatMessageContainer
-        : styles?.chatMessageContainer;
+
+      const myChatMessageStyle = styles?.myChatMessageContainer || defaultMyChatMessageContainer;
+      const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+      messageProps.messageContainerStyle = message.payload.mine ? myChatMessageStyle : chatMessageStyle;
 
       const chatMessageComponent =
         onRenderMessage === undefined
@@ -306,6 +311,9 @@ const memoizeAllMessages = memoizeFnAll(
         hidePersonalDetails: true,
         size: PersonaSize.size32
       };
+
+      const myChatItemMessageStyle = styles?.myChatItemMessageContainer || defaultMyChatItemMessageContainer;
+      const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
 
       return {
         gutter: {
@@ -324,7 +332,7 @@ const memoizeAllMessages = memoizeFnAll(
         contentPosition: payload.mine ? 'end' : 'start',
         message: {
           className: mergeStyles({ width: 'calc(100% - 5rem)' }),
-          styles: payload.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer,
+          styles: payload.mine ? myChatItemMessageStyle : chatItemMessageStyle,
           content: (
             <Flex hAlign={payload.mine ? 'end' : undefined} vAlign="end">
               {chatMessageComponent}

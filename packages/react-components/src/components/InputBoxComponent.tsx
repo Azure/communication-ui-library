@@ -9,7 +9,8 @@ import {
   inputBoxWrapperStyle,
   inputButtonContainerStyle,
   inputButtonStyle,
-  textFieldStyle
+  textFieldStyle,
+  textContainerStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -72,7 +73,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(inputBoxStyle, inputClassName);
 
-  const mergedTextContainerStyle = mergeStyles({ position: 'relative' }, styles?.textFieldContainer);
+  const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(
     textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
     {

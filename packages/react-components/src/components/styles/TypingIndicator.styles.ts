@@ -17,7 +17,10 @@ export const typingIndicatorStringStyle = mergeStyles({
   fontWeight: 400,
   whiteSpace: 'pre',
   display: 'flex',
-  alignItems: 'center'
+  alignItems: 'center',
+  maxWidth: '41.25rem',
+  width: '100%',
+  alignSelf: 'center'
 });
 
 /**
