@@ -139,13 +139,13 @@ jobs:
           git diff --exit-code --quiet -- packages/react-composites/tests || echo "::set-output name=hasChanged::true"
       # Commit changes to snapshot files.
       - name: Commit new snapshots (from workflow dispatch)
-        if: ${{ steps.changescheck.outputs.hasChanged }} == 'true' && ${{ github.event_name == 'workflow_dispatch' }}
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' && github.event_name == 'workflow_dispatch' }}
         run: >
           git add packages/react-composites/tests &&
           git commit -m 'Updating composite automation snapshots' &&
           git push
       - name: Commit new snapshots (from pull request)
-        if: ${{ steps.changescheck.outputs.hasChanged }} == 'true' && ${{ github.event_name != 'workflow_dispatch' }}
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' && github.event_name != 'workflow_dispatch' }}
         run: >
           git add packages/react-composites/tests &&
           git commit -m 'Updating composite automation snapshots' &&
