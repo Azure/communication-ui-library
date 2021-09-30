@@ -86,11 +86,11 @@ jobs:
         id: checkoutref
         run: |
           if [ ${{ github.event_name == 'workflow_dispatch' }} ]; then
-            echo "::set-output name=ref::''"
+            echo "::set-output name=ref::''" # use default reference
           else
-            echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}"
+            echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}" # use head of PR branch
           fi
-      # If pull request, then check out pull request head (not merge commit)
+
       - uses: actions/checkout@v2
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
@@ -135,18 +135,17 @@ jobs:
       # Check if files have changed
       - name: Check for snapshot changes
         id: changescheck
-        run: >
-          git diff --exit-code --quiet -- packages/react-composites/tests || echo "::set-output name=hasChanged::true"
+        run: git diff --exit-code --quiet -- packages/react-composites/tests || echo "::set-output name=hasChanged::true" && echo "Changes found"
       # Commit changes to snapshot files.
       - name: Commit new snapshots (from workflow dispatch)
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' && github.event_name == 'workflow_dispatch' }}
-        run: >
-          git add packages/react-composites/tests &&
-          git commit -m 'Updating composite automation snapshots' &&
+        run: |
+          git add packages/react-composites/tests
+          git commit -m 'Updating composite automation snapshots'
           git push
       - name: Commit new snapshots (from pull request)
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' && github.event_name != 'workflow_dispatch' }}
-        run: >
-          git add packages/react-composites/tests &&
-          git commit -m 'Updating composite automation snapshots' &&
+        run: |
+          git add packages/react-composites/tests
+          git commit -m 'Updating composite automation snapshots'
           git push origin HEAD:${{ github.head_ref }}
