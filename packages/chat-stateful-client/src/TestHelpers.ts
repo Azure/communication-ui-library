@@ -9,6 +9,9 @@ import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
 
+/**
+ * @private
+ */
 export class StateChangeListener {
   state: ChatClientState;
   onChangeCalledCount = 0;
@@ -24,7 +27,11 @@ export class StateChangeListener {
   }
 }
 
-// An iterator that throws the given error when asynchronously iterating over items, directly or byPage.
+/**
+ * @private
+ *
+ * An iterator that throws the given error when asynchronously iterating over items, directly or byPage.
+ */
 export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIterator<T, T[]> => {
   return {
     async next() {
@@ -46,6 +53,9 @@ export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIt
   };
 };
 
+/**
+ * @private
+ */
 export const defaultClientArgs: StatefulChatClientArgs = {
   displayName: '',
   userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
@@ -53,10 +63,16 @@ export const defaultClientArgs: StatefulChatClientArgs = {
   credential: new MockCommunicationUserCredential()
 };
 
+/**
+ * @private
+ */
 export type StatefulChatClientWithEventTrigger = StatefulChatClient & {
   triggerEvent: (eventName: string, e: any) => Promise<void>;
 };
 
+/**
+ * @private
+ */
 export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigger => {
   return createStatefulChatClientWithDeps(
     createMockChatClient(),
@@ -64,10 +80,16 @@ export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigg
   ) as StatefulChatClientWithEventTrigger;
 };
 
+/**
+ * @private
+ */
 export type ChatClientWithEventTrigger = ChatClient & {
   triggerEvent: (eventName: string, e: any) => Promise<void>;
 };
 
+/**
+ * @private
+ */
 export function createMockChatClient(): ChatClientWithEventTrigger {
   const mockEventHandlersRef = { value: {} };
   const mockChatClient: ChatClientWithEventTrigger = {} as any;
@@ -121,6 +143,9 @@ const mockListChatThreads = (): any => {
 // [1, 2 ... 5] array
 const seedArray = Array.from(Array(5).keys());
 
+/**
+ * @private
+ */
 export const mockChatThreads: ChatThreadItem[] = seedArray.map((seed) => ({
   id: 'chatThreadId' + seed,
   topic: 'topic' + seed,

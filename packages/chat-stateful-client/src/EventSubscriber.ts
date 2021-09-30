@@ -21,6 +21,10 @@ import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 // TODO: When we can get messageId of event from SDK, remove this
 // Maximum time to look back message list when we receive a system event
 const maxSyncTimeInMs = 10 * 1000;
+
+/**
+ * @private
+ */
 export class EventSubscriber {
   private chatClient: ChatClient;
   private chatContext: ChatContext;

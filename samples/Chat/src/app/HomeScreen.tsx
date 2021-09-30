@@ -5,15 +5,18 @@ import { IImageStyles, Icon, Image, PrimaryButton, Spinner, Stack, Link } from '
 import React, { useState } from 'react';
 import {
   buttonStyle,
+  configContainerStackTokens,
+  configContainerStyle,
   containerTokens,
+  containerStyle,
   headerStyle,
   iconStyle,
   imgStyle,
   listStyle,
   nestedStackTokens,
   startChatTextStyle,
-  upperStackStyle,
-  upperStackTokens,
+  infoContainerStyle,
+  infoContainerStackTokens,
   videoCameraIconStyle
 } from './styles/HomeScreen.styles';
 
@@ -79,12 +82,19 @@ export default (): JSX.Element => {
 
   const displayHomeScreen = (): JSX.Element => {
     return (
-      <div>
-        <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={containerTokens}>
-          <Stack className={upperStackStyle} tokens={upperStackTokens}>
-            <div tabIndex={0} className={headerStyle}>
-              {headerTitle}
-            </div>
+      <Stack
+        horizontal
+        wrap
+        horizontalAlign="center"
+        verticalAlign="center"
+        tokens={containerTokens}
+        className={containerStyle}
+      >
+        <Stack className={infoContainerStyle} tokens={infoContainerStackTokens}>
+          <div tabIndex={0} className={headerStyle}>
+            {headerTitle}
+          </div>
+          <Stack className={configContainerStyle} tokens={configContainerStackTokens}>
             <Stack tokens={nestedStackTokens}>
               <ul className={listStyle}>
                 <li tabIndex={0}>
@@ -104,26 +114,20 @@ export default (): JSX.Element => {
             </Stack>
             <PrimaryButton
               id="startChat"
-              role="main"
               aria-label="Start chat"
               className={buttonStyle}
               onClick={() => {
                 onCreateThread();
               }}
             >
-              <Chat20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
+              <Chat20Filled className={videoCameraIconStyle} />
               <div className={startChatTextStyle}>{startChatButtonText}</div>
             </PrimaryButton>
             <ThemeSelector label="Theme" horizontal={true} />
           </Stack>
-          <Image
-            styles={imageStyleProps}
-            alt="Welcome to the ACS Chat sample app"
-            className={imgStyle}
-            {...imageProps}
-          />
         </Stack>
-      </div>
+        <Image styles={imageStyleProps} alt="Welcome to the ACS Chat sample app" className={imgStyle} {...imageProps} />
+      </Stack>
     );
   };
 

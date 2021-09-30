@@ -2,14 +2,17 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import {
-  loadPageWithPermissionsForCalls,
-  waitForCallCompositeToLoad,
-  loadCallScreenWithParticipantVideos
-} from '../common/utils';
+import { loadPageWithPermissionsForCalls, waitForCallCompositeToLoad, loadCallScreen } from '../common/utils';
 import { expect } from '@playwright/test';
 
 test.describe('Localization tests', async () => {
+  test.beforeEach(async ({ pages }) => {
+    for (const page of pages) {
+      // Ensure any previous call users from prior tests have left the call
+      await page.reload();
+    }
+  });
+
   test('Configuration page title and participant button in call should be localized', async ({
     serverUrl,
     users,
@@ -20,7 +23,7 @@ test.describe('Localization tests', async () => {
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png', { threshold: 0.5 });
 
-    await loadCallScreenWithParticipantVideos([page]);
+    await loadCallScreen([page]);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png', { threshold: 0.5 });
   });
 });
