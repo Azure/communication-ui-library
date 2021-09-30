@@ -78,7 +78,7 @@ const createBlocks = (props: BlockProps & { children: React.ReactNode }): React.
   // Split array of children into as even chunks
   const chunks = chunkify(React.Children.toArray(props.children), props.numBlocks);
   for (let i = 0; i < props.numBlocks; i++) {
-    // Create block for children
+    // Create block for i-th chunk children
     const block = createBlock(props.horizontal, `block-${i}`, `${blockPercent}%`, chunks[i]);
     // Add block to blocks
     blocks.push(block);
