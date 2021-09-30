@@ -36,7 +36,7 @@ test.describe('Chat Composite E2E Tests', () => {
   test('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
       await pages[idx].waitForSelector(dataUiId(IDS.sendboxTextfield));
-      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
+      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen2.png`);
     }
   });
 
@@ -124,7 +124,10 @@ test.describe('Chat Composite custom data model', () => {
     const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
     const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
     await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn have tables!');
+    await page.type(
+      dataUiId(IDS.sendboxTextfield),
+      'This is a much longer message that should trigger the change in snapshots'
+    );
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
     await page.waitForFunction(() => {
