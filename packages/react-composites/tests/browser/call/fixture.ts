@@ -127,6 +127,10 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
           }
         });
 
+        page.on('response', async (response) => {
+          console.log('RESPONSE >>', response.status(), response.url(), await response.text());
+        });
+
         page.on('console', (msg) => {
           const doNotLogMessages = [
             'The icon "',
