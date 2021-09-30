@@ -114,7 +114,6 @@ export default (): JSX.Element => {
             </Stack>
             <PrimaryButton
               id="startChat"
-              role="main"
               aria-label="Start chat"
               className={buttonStyle}
               onClick={() => {
