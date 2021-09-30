@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IImageStyles, Icon, Image, PrimaryButton, Spinner, Stack, Link } from '@fluentui/react';
+import { IImageStyles, Icon, Image, Link, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
   buttonStyle,
@@ -91,9 +91,9 @@ export default (): JSX.Element => {
         className={containerStyle}
       >
         <Stack className={infoContainerStyle} tokens={infoContainerStackTokens}>
-          <div tabIndex={0} className={headerStyle}>
+          <Text role={'heading'} aria-level={1} className={headerStyle}>
             {headerTitle}
-          </div>
+          </Text>
           <Stack className={configContainerStyle} tokens={configContainerStackTokens}>
             <Stack tokens={nestedStackTokens}>
               <ul className={listStyle}>
@@ -121,7 +121,7 @@ export default (): JSX.Element => {
               }}
             >
               <Chat20Filled className={videoCameraIconStyle} />
-              <div className={startChatTextStyle}>{startChatButtonText}</div>
+              <Text className={startChatTextStyle}>{startChatButtonText}</Text>
             </PrimaryButton>
             <ThemeSelector label="Theme" horizontal={true} />
           </Stack>
