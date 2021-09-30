@@ -19300,6 +19300,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       immer: 9.0.6
       jest: 26.6.0
@@ -19313,7 +19314,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-9tmGisNwFBy4QYfMLG+P7VbxZ/JPQnPwo9JH8CZGT3PlKp9uMzERy8rdKS6L8yNQ8D3nRe1l5WQ+f9NcoufFrg==
+      integrity: sha512-Gj+0lrQQVByFMjOfMpPC33PSMmkP+/7LMtUHq1urV+fsCfVk/iCMEuY7Ns7hxBr8jzy0JqhLUypmj+bik0blQA==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19333,6 +19334,7 @@ packages:
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
       immer: 9.0.6
@@ -19346,7 +19348,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-hW+yWKuiwFY7tMdzUrauDVw5ecGg7QhtqiRXQOOEFWlh8psacU6gcbQFtapj+V88aGLmGJq0kaLihGA3leOp+w==
+      integrity: sha512-rT6POTKO2fAokzXDHsThbKWum2q9brnXw9975Il8obm1IButmSTTDsYup/fuAkFt0FaEOlr1AvfJnpf3LaVJlg==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
