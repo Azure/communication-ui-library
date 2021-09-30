@@ -121,9 +121,11 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
         })
       );
       for (const page of pages) {
-        // page.on('request', (request) =>
-        //   console.log('REQUEST >>', request.method(), request.url(), request.headers(), request.postData())
-        // );
+        page.on('request', (request) => {
+          if (request.url().includes('https://api3.cc.skype.com/conv/')) {
+            console.log('REQUEST >>', request.method(), request.url(), request.headers(), request.postData());
+          }
+        });
 
         page.on('console', (msg) => {
           const doNotLogMessages = [
