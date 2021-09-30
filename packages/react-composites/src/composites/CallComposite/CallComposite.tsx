@@ -67,14 +67,14 @@ export type CallCompositeOptions = {
 
 type MainScreenProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
-  callInvitationURL?: string;
+  callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
-  const { callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const adapter = useAdapter();
   const locale = useLocale();
@@ -109,7 +109,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             customPage ? adapter.setPage(customPage) : adapter.setPage('error');
           }}
           onRenderAvatar={onRenderAvatar}
-          callInvitationURL={callInvitationURL}
+          callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           options={props.options}
@@ -124,13 +124,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
  * @public
  */
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
-  const {
-    adapter,
-    callInvitationUrl: callInvitationURL,
-    onFetchAvatarPersonaData,
-    onFetchParticipantMenuItems,
-    options
-  } = props;
+  const { adapter, callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems, options } = props;
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });
@@ -143,7 +137,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     <BaseComposite {...props}>
       <CallAdapterProvider adapter={adapter}>
         <MainScreen
-          callInvitationURL={callInvitationURL}
+          callInvitationUrl={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           options={options}
