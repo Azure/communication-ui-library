@@ -112,9 +112,9 @@ const createBlock = (
             }
       }
     >
-      {React.Children.toArray(children).map((c, j) => (
-        <div key={`${key}-cell-${j}`} className={cellStyle}>
-          {c}
+      {React.Children.toArray(children).map((child, i) => (
+        <div key={`${key}-cell-${i}`} className={cellStyle}>
+          {child}
         </div>
       ))}
     </div>
