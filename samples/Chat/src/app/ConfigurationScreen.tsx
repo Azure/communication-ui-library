@@ -157,13 +157,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
         tokens={responsiveLayoutStackTokens}
         className={responsiveLayoutStyle}
       >
-        <Stack
-          role={'heading'}
-          aria-level={1}
-          aria-label={'Avatar and name configuation'}
-          className={leftPreviewContainerStyle}
-          tokens={leftPreviewContainerStackTokens}
-        >
+        <Stack className={leftPreviewContainerStyle} tokens={leftPreviewContainerStackTokens}>
           <div className={largeAvatarContainerStyle(selectedAvatar)}>
             <div className={largeAvatarStyle}>{selectedAvatar}</div>
           </div>
