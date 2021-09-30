@@ -3,7 +3,7 @@
 
 import { CSSProperties } from 'react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { mergeStyles } from '@fluentui/react';
 
 /**
  * @private

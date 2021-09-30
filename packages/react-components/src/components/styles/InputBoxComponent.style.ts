@@ -36,7 +36,7 @@ export const inputBoxStyle = mergeStyles({
  *
  * @private
  */
-export const textContainerStyle = {
+export const textContainerStyle: IStyle = {
   alignSelf: 'center',
   position: 'relative',
   width: '100%',
