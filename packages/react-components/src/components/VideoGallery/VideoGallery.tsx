@@ -126,7 +126,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       dominantSpeakers,
       visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
     );
-    setVideoParticipants(visibleVideoParticipants.current);
 
     // Create a map of visibleVideoParticipants for faster searching.
     // This map will be used to identify overflow participants. i.e., participants
@@ -145,7 +144,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       100,
       6
     );
-    setAudioParticipants(visibleAudioParticipants.current);
+
+    // If there are no video participants, we assign all audio participants to video participants.
+    // To avoid rendering horizontal gallery and only render center canvas instead.
+    if (visibleVideoParticipants.current.length === 0) {
+      setVideoParticipants(visibleAudioParticipants.current);
+      setAudioParticipants([]);
+    } else {
+      setVideoParticipants(visibleVideoParticipants.current);
+      setAudioParticipants(visibleAudioParticipants.current);
+    }
   }, [dominantSpeakers, remoteParticipants]);
 
   /**
