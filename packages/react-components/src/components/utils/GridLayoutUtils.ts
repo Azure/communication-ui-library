@@ -11,9 +11,9 @@ const isCloserThan = (A: number, B: number, target: number): boolean => {
 };
 
 /**
- * Properties to describe a grid. The number of blocks and if they flow horizontally or vertically.
+ * Properties to describe a grid. The number of blocks and whether the blocks flow horizontally or vertically.
  *
- * Eg.
+ * e.g.
  *  ______________________
  * |_______|_______|______|
  * |___________|__________| This grid flows horizontally and has 2 blocks
@@ -60,7 +60,7 @@ const calculateGridProps = (numberOfItems: number, width: number, height: number
     if ((rows / cols) * aspectRatio >= CELL_RATIO_TOLERANCE) {
       // If n is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
       // to fill in the empty spaces
-      // Eg. For 2 rows, 3 columns, but only 5 items, we need decide whether to stetch cells
+      // e.g. For 2 rows, 3 columns, but only 5 items, we need decide whether to stetch cells
       //       horizontally            or        vertically
       //  ______________________               _______________________
       // |       |       |      |             |       |       |       |
@@ -101,7 +101,7 @@ const createGridStyles = (numberOfItems: number, gridProps: GridProps): string =
   const bigCellsPerBlock = Math.floor(numberOfItems / gridProps.numBlocks);
   const numBigCells = (gridProps.numBlocks - (numberOfItems % gridProps.numBlocks)) * bigCellsPerBlock;
   // Get grid units
-  // eg. if some blocks have 2 big cells while others have 3 small cells, we need to work with 6 units per block
+  // e.g. If some blocks have 2 big cells while others have 3 small cells, we need to work with 6 units per block
   const units = smallCellsPerBlock * bigCellsPerBlock;
 
   const gridStyles = gridProps.horizontalFlow
