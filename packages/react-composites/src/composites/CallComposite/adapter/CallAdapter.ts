@@ -158,7 +158,7 @@ export interface CallAdapterCallManagement {
    * Switch between startCamera and stopCamera according to current camera state
    * This method will stop rendering a local camera view when the call is not active
    *
-   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling/#VideoStreamOptions }
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @public
    */
@@ -210,7 +210,7 @@ export interface CallAdapterCallManagement {
    * This method is implemented for composite
    *
    * @param remoteUserId - Id of the participant to render, leave it undefined to create the local camera view
-   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling/#VideoStreamOptions }
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @public
    */
@@ -222,7 +222,7 @@ export interface CallAdapterCallManagement {
    * This method is implemented for composite
    *
    * @param remoteUserId - Id of the participant to render, leave it undefined to dispose the local camera view
-   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling/#VideoStreamOptions }
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @public
    */
@@ -241,7 +241,7 @@ export interface CallAdapterDeviceManagement {
    * @remarks
    * Browser permission window will pop up if permissions are not granted yet
    *
-   * @param constrain - Define constraints for accessing local devices {@link @azure/communication-calling/#PermissionConstraints }
+   * @param constrain - Define constraints for accessing local devices {@link @azure/communication-calling#PermissionConstraints }
    *
    * @public
    */
@@ -252,7 +252,7 @@ export interface CallAdapterDeviceManagement {
    * @remarks
    * This method should be called after askDevicePermission()
    *
-   * @return An array of video device information entities {@link @azure/communication-calling/#VideoDeviceInfo }
+   * @return An array of video device information entities {@link @azure/communication-calling#VideoDeviceInfo }
    *
    * @public
    */
@@ -263,7 +263,7 @@ export interface CallAdapterDeviceManagement {
    * @remarks
    * This method should be called after askDevicePermission()
    *
-   * @return An array of audio device information entities {@link @azure/communication-calling/#AudioDeviceInfo }
+   * @return An array of audio device information entities {@link @azure/communication-calling#AudioDeviceInfo }
    *
    * @public
    */
@@ -274,7 +274,7 @@ export interface CallAdapterDeviceManagement {
    * @remarks
    * This method should be called after askDevicePermission()
    *
-   * @return An array of audio device information entities {@link @azure/communication-calling/#AudioDeviceInfo }
+   * @return An array of audio device information entities {@link @azure/communication-calling#AudioDeviceInfo }
    *
    * @public
    */
@@ -282,8 +282,8 @@ export interface CallAdapterDeviceManagement {
   /**
    * Set the camera to use in the call.
    *
-   * @param sourceId Camera device to choose, pick one returned by  {@link CallAdapterDeviceManagement#queryCameras }
-   * @param options - Options to control how the camera stream is rendered {@link @azure/communication-calling/#VideoStreamOptions }
+   * @param sourceId - Camera device to choose, pick one returned by  {@link CallAdapterDeviceManagement#queryCameras }
+   * @param options - Options to control how the camera stream is rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @public
    */
@@ -291,7 +291,7 @@ export interface CallAdapterDeviceManagement {
   /**
    * Set the microphone to use in the call.
    *
-   * @param sourceId Microphone device to choose, pick one returned by {@link CallAdapterDeviceManagement#queryMicrophones }
+   * @param sourceId - Microphone device to choose, pick one returned by {@link CallAdapterDeviceManagement#queryMicrophones }
    *
    * @public
    */
@@ -299,7 +299,7 @@ export interface CallAdapterDeviceManagement {
   /**
    * Set the speaker to use in the call.
    *
-   * @param sourceId Speaker device to choose, pick one returned by {@link CallAdapterDeviceManagement#querySpeakers }
+   * @param sourceId - Speaker device to choose, pick one returned by {@link CallAdapterDeviceManagement#querySpeakers }
    *
    * @public
    */
