@@ -55,7 +55,10 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     return () => observer.disconnect();
   }, [numberOfChildren, targetRef.current?.offsetWidth, targetRef.current?.offsetHeight]);
 
-  console.log(createBlocks);
+  const maxCellsPerBlock = Math.ceil(numberOfChildren / blockProps.numBlocks);
+  const minCellsPerBlock = Math.floor(numberOfChildren / blockProps.numBlocks);
+  const numBigCells = (blockProps.numBlocks - (numberOfChildren % blockProps.numBlocks)) * minCellsPerBlock;
+  const units = maxCellsPerBlock * minCellsPerBlock;
 
   return (
     <div
@@ -64,19 +67,21 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
         gridLayoutContainerStyle,
         {
           '> div': {
-            gridColumn: 'auto / span 2'
+            gridColumn: `auto / span ${units / maxCellsPerBlock}`
           },
-          '> div:nth-last-child(-n + 2)': {
-            gridColumn: 'auto / span 3'
-          },
+          gridTemplateColumns: `repeat(${units}, 1fr)`,
+          gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
           gridGap: '0.5rem'
         },
+        maxCellsPerBlock !== minCellsPerBlock
+          ? {
+              [`> div:nth-last-child(-n + ${numBigCells})`]: {
+                gridColumn: `auto / span ${units / minCellsPerBlock}`
+              }
+            }
+          : {},
         styles?.root
       )}
-      style={{
-        gridTemplateColumns: 'repeat(6, 1fr)',
-        gridTemplateRows: 'repeat(2, 1fr)'
-      }}
     >
       {children}
     </div>

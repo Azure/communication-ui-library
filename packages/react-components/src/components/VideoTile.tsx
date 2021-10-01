@@ -124,8 +124,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const theme = useTheme();
 
-  console.log('renderElement: ' + renderElement);
-
   const isVideoRendered = !!renderElement;
 
   useLayoutEffect(() => {
