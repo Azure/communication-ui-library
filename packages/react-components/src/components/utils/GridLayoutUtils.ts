@@ -60,8 +60,8 @@ const calculateGridProps = (numberOfItems: number, width: number, height: number
     if ((rows / cols) * aspectRatio >= CELL_RATIO_TOLERANCE) {
       // If n is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
       // to fill in the empty spaces
-      // e.g. For 2 rows, 3 columns, but only 5 items, we need decide whether to stetch cells
-      //       horizontally            or        vertically
+      // e.g. For 2 rows, 3 columns, but only 5 items, we need to choose whether to stetch cells
+      //       horizontally            or           vertically
       //  ______________________               _______________________
       // |       |       |      |             |       |       |       |
       // |_______|_______|______|             |_______|_______|       |
@@ -72,10 +72,10 @@ const calculateGridProps = (numberOfItems: number, width: number, height: number
         const horizontallyStretchedCellRatio = (rows / (cols - 1)) * aspectRatio;
         // Calculate the width-to-height ratio of big cells stretched vertically
         const verticallyStretchedCellRatio = ((rows - 1) / cols) * aspectRatio;
-        // We know the horizontally stretched cells is higher than CELL_RATIO_TOLERANCE. If vertically stretched cell is also higher than
-        // the CELL_TOLERANCE_RATIO, then decide which ratio is better.
+        // We know the horizontally stretched cells is higher than CELL_RATIO_TOLERANCE. If vertically stretched cells is also higher than
+        // the CELL_TOLERANCE_RATIO, then choose which ratio is better.
         if (verticallyStretchedCellRatio >= CELL_RATIO_TOLERANCE) {
-          // If vertically stetched cell has ratio closer to TARGET_CELL_RATIO then change the flow
+          // If vertically stetched cell has a ratio closer to TARGET_CELL_RATIO then change the flow to vertical
           if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_RATIO)) {
             horizontalFlow = false;
           }
