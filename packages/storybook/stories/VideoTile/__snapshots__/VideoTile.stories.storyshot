@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile 1`] = `
 <div
-  className="css-62 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-62"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -78,7 +78,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
           </div>
         </div>
         <div
-          className="ms-Stack css-88 css-26"
+          className="ms-Stack css-86 css-26"
         >
           
         </div>

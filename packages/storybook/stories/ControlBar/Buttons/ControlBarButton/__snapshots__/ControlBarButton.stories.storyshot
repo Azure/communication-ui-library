@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/ControlBar/Buttons/Default Default 1`] = `
 <div
-  className="css-62 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-62"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >

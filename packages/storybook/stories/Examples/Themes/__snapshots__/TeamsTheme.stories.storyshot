@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-62 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-62"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -31,11 +31,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-62 body-1"
+          className="css-60 body-1"
           dir="ltr"
         >
           <div
-            className="css-62"
+            className="css-60"
             data-uses-unhanded-props={true}
           >
             <div
@@ -246,87 +246,72 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-56"
+                className="css-56 css-20"
               >
                 <div
-                  className="css-57"
-                  style={
-                    Object {
-                      "gridTemplateColumns": "repeat(1, 1fr)",
-                      "height": "100.00%",
-                      "width": "100%",
-                    }
-                  }
+                  className="ms-Stack css-26"
+                  data-ui-id="video-tile"
                 >
                   <div
-                    className="css-58"
+                    className="ms-Stack css-27"
                   >
                     <div
-                      className="ms-Stack css-25"
-                      data-ui-id="video-tile"
+                      className="ms-Stack css-29"
                     >
                       <div
-                        className="ms-Stack css-26"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 root-30"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          className="ms-Stack css-28"
+                          className="ms-Persona-coin ms-Persona--size48 coin-37"
+                          role="presentation"
                         >
                           <div
-                            aria-label=""
-                            className="ms-Persona ms-Persona--size48 root-29"
+                            className="ms-Persona-imageArea imageArea-39"
+                            role="presentation"
                             style={
                               Object {
                                 "height": 100,
-                                "minWidth": 100,
+                                "width": 100,
                               }
                             }
                           >
                             <div
-                              className="ms-Persona-coin ms-Persona--size48 coin-36"
-                              role="presentation"
-                            >
-                              <div
-                                className="ms-Persona-imageArea imageArea-38"
-                                role="presentation"
-                                style={
-                                  Object {
-                                    "height": 100,
-                                    "width": 100,
-                                  }
+                              aria-hidden="true"
+                              className="ms-Persona-initials initials-42"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
                                 }
-                              >
-                                <div
-                                  aria-hidden="true"
-                                  className="ms-Persona-initials initials-41"
-                                  style={
-                                    Object {
-                                      "height": 100,
-                                      "width": 100,
-                                    }
-                                  }
-                                >
-                                  <span>
-                                    M
-                                  </span>
-                                </div>
-                              </div>
+                              }
+                            >
+                              <span>
+                                M
+                              </span>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div
-                        className="ms-Stack css-88 css-44"
+                    </div>
+                  </div>
+                  <div
+                    className="ms-Stack css-86 css-45"
+                  >
+                    <div
+                      className="ms-StackItem css-46"
+                    >
+                      <span
+                        className="css-47"
                       >
-                        <div
-                          className="ms-StackItem css-45"
-                        >
-                          <span
-                            className="css-46"
-                          >
-                            Michael
-                          </span>
-                        </div>
-                      </div>
+                        Michael
+                      </span>
                     </div>
                   </div>
                 </div>
