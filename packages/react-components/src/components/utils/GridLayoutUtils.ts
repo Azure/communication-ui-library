@@ -104,41 +104,50 @@ const createGridStyles = (numberOfItems: number, gridProps: GridProps): string =
   // eg. if some blocks have 2 big cells while others have 3 small cells, we need to work with 6 units per block
   const units = smallCellsPerBlock * bigCellsPerBlock;
 
-  const dynamicGridStyles: string = mergeStyles(
-    gridProps.horizontalFlow
-      ? {
-          '> *': {
-            gridColumn: `auto / span ${units / smallCellsPerBlock}`
-          },
-          gridTemplateColumns: `repeat(${units}, 1fr)`,
-          gridTemplateRows: `repeat(${gridProps.numBlocks}, 1fr)`,
-          gridAutoFlow: 'row'
+  const gridStyles = gridProps.horizontalFlow
+    ? {
+        gridTemplateColumns: `repeat(${units}, 1fr)`,
+        gridTemplateRows: `repeat(${gridProps.numBlocks}, 1fr)`,
+        gridAutoFlow: 'row'
+      }
+    : {
+        gridTemplateColumns: `repeat(${gridProps.numBlocks}, 1fr)`,
+        gridTemplateRows: `repeat(${units}, 1fr)`,
+        gridAutoFlow: 'column'
+      };
+
+  const smallCellStyle = gridProps.horizontalFlow
+    ? {
+        '> *': {
+          gridColumn: `auto / span ${units / smallCellsPerBlock}`
         }
-      : {
-          '> *': {
-            gridRow: `auto / span ${units / smallCellsPerBlock}`
-          },
-          gridTemplateColumns: `repeat(${gridProps.numBlocks}, 1fr)`,
-          gridTemplateRows: `repeat(${units}, 1fr)`,
-          gridAutoFlow: 'column'
-        },
-    numBigCells
-      ? {
-          [`> *:nth-last-child(-n + ${numBigCells})`]: gridProps.horizontalFlow
-            ? {
-                gridColumn: `auto / span ${units / bigCellsPerBlock}`
-              }
-            : {
-                gridRow: `auto / span ${units / bigCellsPerBlock}`
-              }
+      }
+    : {
+        '> *': {
+          gridRow: `auto / span ${units / smallCellsPerBlock}`
         }
-      : {}
-  );
-  return dynamicGridStyles;
+      };
+
+  // If there are big cells, we are choosing to place the latest children into the big cells.
+  // Hence, the '> *:nth-last-child(-n + ${numBigCells})' CSS selector
+  const bigCellStyle = numBigCells
+    ? {
+        [`> *:nth-last-child(-n + ${numBigCells})`]: gridProps.horizontalFlow
+          ? {
+              gridColumn: `auto / span ${units / bigCellsPerBlock}`
+            }
+          : {
+              gridRow: `auto / span ${units / bigCellsPerBlock}`
+            }
+      }
+    : {};
+
+  const gridAndCellStyles: string = mergeStyles(gridStyles, smallCellStyle, bigCellStyle);
+  return gridAndCellStyles;
 };
 
 /**
- * Calculate the best CSS grid styles, given the number of items to place in grid, the width of the grid, and height of grid
+ * Calculate the best CSS Grid styles, given the number of items to place in grid, the width of the grid, and height of grid
  * @param numberOfItems - number of items to place in grid
  * @param width - width of grid
  * @param height - height of grid
