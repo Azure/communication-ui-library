@@ -49,22 +49,3 @@ export const calculateBlockProps = (n: number, width: number, height: number): B
 
   return { horizontal: horizontal, numBlocks: horizontal ? rows : cols };
 };
-
-/**
- * @private
- */
-export const chunkify = <T extends unknown>(items: T[], numChunks: number): T[][] => {
-  const chunks: T[][] = [];
-  const numberOfItems = items.length;
-  let currentIndex = 0;
-  for (let i = 0; i < numChunks; i++) {
-    // Divide items remaining by number of chunks remaining. Round up.
-    const numItemsInChunk = Math.ceil((numberOfItems - currentIndex) / (numChunks - i));
-    // Get items from array
-    const childrenInChunk = items.slice(currentIndex, currentIndex + numItemsInChunk);
-    chunks.push(childrenInChunk);
-    // Increase currentIndex by number of items added to block
-    currentIndex = currentIndex + numItemsInChunk;
-  }
-  return chunks;
-};
