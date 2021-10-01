@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackItemStyles, IStackStyles, IStackTokens, IStyle, mergeStyles } from '@fluentui/react';
+import { IStackItemStyles, IStackStyles, IStackTokens, IStyle, mergeStyles, getTheme } from '@fluentui/react';
 
 /**
  * @private
@@ -67,7 +67,8 @@ export const titleContainerStyleMobile = mergeStyles({
 
 const callDetailsStyle: IStyle = {
   fontSize: '0.9375',
-  lineHeight: '1.25rem'
+  lineHeight: '1.25rem',
+  marginTop: '0.25rem'
 };
 
 /**
