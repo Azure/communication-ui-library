@@ -55,9 +55,25 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     return () => observer.disconnect();
   }, [numberOfChildren, targetRef.current?.offsetWidth, targetRef.current?.offsetHeight]);
 
+  console.log(createBlocks);
+  const blockPercent = (Math.floor(10000 / blockProps.numBlocks) / 100).toFixed(2);
+  const blockSpace = (Math.floor(10000 / Math.ceil(numberOfChildren / blockProps.numBlocks)) / 100).toFixed(2);
+
   return (
-    <div ref={targetRef} className={mergeStyles(gridLayoutContainerStyle, styles?.root)}>
-      {createBlocks({ ...blockProps, children })}
+    <div
+      ref={targetRef}
+      className={mergeStyles(
+        gridLayoutContainerStyle,
+        {
+          div: blockProps.horizontal
+            ? { height: `${blockPercent}%`, width: `${blockSpace}%` }
+            : { height: `${blockSpace}%`, width: `${blockPercent}%` }
+        },
+        styles?.root
+      )}
+      style={{ display: 'flex', flexFlow: blockProps.horizontal ? 'row wrap' : 'column wrap' }}
+    >
+      {children}
     </div>
   );
 };

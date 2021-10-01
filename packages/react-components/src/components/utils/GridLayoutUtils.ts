@@ -15,6 +15,7 @@ const isRatioBetterThan = (A: number, B: number, targetRatio?: number): boolean 
  * @private
  */
 export const calculateBlockProps = (n: number, width: number, height: number): BlockProps => {
+  console.log('WORK');
   if (width <= 0) {
     throw Error('Width provided [' + width + '] is less than or equal to 0.');
   } else if (height <= 0) {
