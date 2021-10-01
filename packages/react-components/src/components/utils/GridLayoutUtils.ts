@@ -56,7 +56,7 @@ const createGridStyles = (numberOfChildren: number, blockProps: BlockProps): str
   const bigCellsPerBlock = Math.floor(numberOfChildren / blockProps.numBlocks);
   const numBigCells = (blockProps.numBlocks - (numberOfChildren % blockProps.numBlocks)) * bigCellsPerBlock;
   // Get grid units
-  // eg. if some blocks have 2 cells and other have 3 cells, our units need to repeat 6 times
+  // eg. if some blocks have 2 big cells and other have 3 small cells, we need to work with 6 units per block
   const units = smallCellsPerBlock * bigCellsPerBlock;
 
   const dynamicGridStyles: string = mergeStyles(
