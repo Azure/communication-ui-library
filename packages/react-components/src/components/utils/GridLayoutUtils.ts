@@ -6,9 +6,8 @@ import { BlockProps } from '../GridLayout';
 const TARGET_RATIO = 16 / 9;
 const TOLERANCE_RATIO = 8 / 9;
 
-const isRatioBetterThan = (A: number, B: number, targetRatio?: number): boolean => {
-  const _targetRatio = targetRatio ?? TARGET_RATIO;
-  return Math.abs(_targetRatio - A) < Math.abs(_targetRatio - B);
+const isRatioCloserThan = (A: number, B: number, targetRatio = TARGET_RATIO): boolean => {
+  return Math.abs(targetRatio - A) < Math.abs(targetRatio - B);
 };
 
 /**
@@ -20,25 +19,25 @@ export const calculateBlockProps = (n: number, width: number, height: number): B
   } else if (height <= 0) {
     throw Error('Height provided [' + height + '] is less than or equal to 0.');
   }
-  const areaRatio = width / height;
-  let rows = Math.floor(Math.sqrt((TARGET_RATIO * n) / areaRatio));
+  const aspectRatio = width / height;
+  let rows = Math.floor(Math.sqrt((TARGET_RATIO * n) / aspectRatio));
   let cols = Math.ceil(n / rows);
 
   // Default blocks to be horizontal
   let horizontal = true;
   while (rows < n) {
-    // If cell ratio is less than tolerance ratio and try more rows
-    if ((rows / cols) * areaRatio >= TOLERANCE_RATIO) {
+    // If cell ratio is less than tolerance ratio then try more rows
+    if ((rows / cols) * aspectRatio >= TOLERANCE_RATIO) {
       // If n is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
       // to fill in the empty spaces
       if (n < rows * cols) {
         // Calculate the width-to-height ratio of big cells stretched horizontally
-        const horizontallyStretchedCellRatio = (rows / (cols - 1)) * areaRatio;
+        const horizontallyStretchedCellRatio = (rows / (cols - 1)) * aspectRatio;
         // Calculate the width-to-height ratio of big cells stretched vertically
-        const verticallyStretchedCellRatio = ((rows - 1) / cols) * areaRatio;
-        // If vertically stretched cells pass the tolerance ratio then decide which stretch is better
+        const verticallyStretchedCellRatio = ((rows - 1) / cols) * aspectRatio;
+        // If vertically stretched cells pass the tolerance ratio then decide which ratio is better
         if (verticallyStretchedCellRatio >= TOLERANCE_RATIO) {
-          horizontal = isRatioBetterThan(horizontallyStretchedCellRatio, verticallyStretchedCellRatio);
+          horizontal = isRatioCloserThan(horizontallyStretchedCellRatio, verticallyStretchedCellRatio);
         }
       }
       break;
