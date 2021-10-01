@@ -18,12 +18,24 @@ import { useSelector } from './hooks/useSelector';
 import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
-import { cameraOffLabelStyle, localPreviewContainerStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
+import {
+  cameraOffLabelStyle,
+  localPreviewContainerStyleDesktop,
+  localPreviewContainerStyleMobile,
+  localPreviewTileStyle
+} from './styles/LocalPreview.styles';
 
 /**
  * @private
  */
-export const LocalPreview = (): JSX.Element => {
+export interface LocalPreviewProps {
+  mobileView?: boolean;
+}
+
+/**
+ * @private
+ */
+export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const locale = useLocale();
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
@@ -56,7 +68,10 @@ export const LocalPreview = (): JSX.Element => {
   }, [theme, locale.strings.call.cameraTurnedOff]);
 
   return (
-    <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>
+    <Stack
+      data-ui-id="call-composite-local-preview"
+      className={props.mobileView ? localPreviewContainerStyleMobile : localPreviewContainerStyleDesktop}
+    >
       <VideoTile
         styles={localPreviewTileStyle}
         renderElement={

@@ -1,14 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackTokens } from '@fluentui/react';
-import { mergeStyles } from '@fluentui/react';
+import { IStackStyles, IStackTokens, IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
  */
-export const configurationStackTokens: IStackTokens = {
+export const configurationStackTokensDesktop: IStackTokens = {
   childrenGap: '2rem'
+};
+
+/**
+ * @private
+ */
+export const configurationStackTokensMobile: IStackTokens = {
+  childrenGap: '1rem'
 };
 
 /**
@@ -30,13 +36,51 @@ export const selectionContainerStyle = mergeStyles({
   padding: '0.5rem'
 });
 
+const titleContainerStyle: IStyle = {
+  fontSize: '1.25rem',
+  lineHeight: '1.75rem',
+  fontWeight: 600
+};
+
 /**
  * @private
  */
-export const titleContainerStyle = mergeStyles({
-  fontSize: '1.25rem',
-  lineHeight: '1.75rem',
-  fontWeight: 600,
-  marginBottom: '1.563rem',
-  width: '12.5rem'
+export const titleContainerStyleDesktop = mergeStyles({
+  ...titleContainerStyle,
+  width: '12.5rem',
+  marginBottom: '1.563rem'
+});
+
+/**
+ * @private
+ */
+export const titleContainerStyleMobile = mergeStyles({
+  ...titleContainerStyle,
+  textAlign: 'center'
+});
+
+/**
+ * @private
+ */
+export const startCallButtonContainerStyleDesktop: IStackStyles = {
+  root: {
+    paddingTop: '1.125rem'
+  }
+};
+
+/**
+ * @private
+ */
+export const startCallButtonContainerStyleMobile: IStackStyles = {
+  root: {
+    textAlign: 'center'
+  }
+};
+
+/**
+ * @private
+ */
+export const startCallButtonStyleMobile = mergeStyles({
+  width: '100%',
+  maxWidth: 'unset'
 });

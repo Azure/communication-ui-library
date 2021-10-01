@@ -1,17 +1,30 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
+
+const localPreviewContainerStyle: IStyle = {
+  borderRadius: '.25rem',
+  minWidth: '12.5rem'
+};
 
 /**
  * @private
  */
-export const localPreviewContainerStyle = mergeStyles({
-  borderRadius: '.25rem',
+export const localPreviewContainerStyleDesktop = mergeStyles({
+  ...localPreviewContainerStyle,
   width: '25rem',
-  minWidth: '12.5rem',
   height: '18.75rem',
   padding: '0.5rem'
+});
+
+/**
+ * @private
+ */
+export const localPreviewContainerStyleMobile = mergeStyles({
+  ...localPreviewContainerStyle,
+  width: '100%',
+  height: '100%'
 });
 
 /**

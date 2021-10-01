@@ -80,7 +80,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const locale = useLocale();
   switch (page) {
     case 'configuration':
-      return <ConfigurationScreen startCallHandler={(): void => adapter.setPage('call')} />;
+      return (
+        <ConfigurationScreen
+          mobileView={props.options?.mobileView}
+          startCallHandler={(): void => adapter.setPage('call')}
+        />
+      );
     case 'error':
       return <Error rejoinHandler={() => adapter.setPage('configuration')} />;
     case 'errorJoiningTeamsMeeting':

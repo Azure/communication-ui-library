@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PrimaryButton } from '@fluentui/react';
+import { PrimaryButton, css } from '@fluentui/react';
 import React from 'react';
 import { buttonStyle, videoCameraIconStyle } from './styles/StartCallButton.styles';
 import { Video20Filled } from '@fluentui/react-icons';
@@ -13,6 +13,7 @@ import { useLocale } from '../localization';
 export interface StartCallButtonProps {
   onClickHandler: () => void;
   isDisabled: boolean;
+  className?: string;
 }
 
 /**
@@ -26,7 +27,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
     <PrimaryButton
       data-ui-id="call-composite-start-call-button"
       disabled={isDisabled}
-      className={buttonStyle}
+      className={css(buttonStyle, props.className)}
       onClick={onClickHandler}
     >
       <Video20Filled primaryFill="currentColor" className={videoCameraIconStyle} />
