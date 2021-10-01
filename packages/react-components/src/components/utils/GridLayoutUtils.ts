@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { BlockProps } from '../GridLayout';
+import { IStyle, mergeStyles } from '@fluentui/react';
 
 const TARGET_RATIO = 16 / 9;
 const TOLERANCE_RATIO = 8 / 9;
@@ -10,10 +10,12 @@ const isRatioCloserThan = (A: number, B: number, targetRatio = TARGET_RATIO): bo
   return Math.abs(targetRatio - A) < Math.abs(targetRatio - B);
 };
 
-/**
- * @private
- */
-export const calculateBlockProps = (n: number, width: number, height: number): BlockProps => {
+type BlockProps = {
+  horizontal: boolean;
+  numBlocks: number;
+};
+
+const calculateBlockProps = (n: number, width: number, height: number): BlockProps => {
   if (width <= 0) {
     throw Error('Width provided [' + width + '] is less than or equal to 0.');
   } else if (height <= 0) {
@@ -47,4 +49,50 @@ export const calculateBlockProps = (n: number, width: number, height: number): B
   }
 
   return { horizontal: horizontal, numBlocks: horizontal ? rows : cols };
+};
+
+const createGridStyles = (numberOfChildren: number, blockProps: BlockProps): string => {
+  const maxCellsPerBlock = Math.ceil(numberOfChildren / blockProps.numBlocks);
+  const minCellsPerBlock = Math.floor(numberOfChildren / blockProps.numBlocks);
+  const numBigCells = (blockProps.numBlocks - (numberOfChildren % blockProps.numBlocks)) * minCellsPerBlock;
+  const units = maxCellsPerBlock * minCellsPerBlock;
+
+  const dynamicGridStyles: IStyle = mergeStyles(
+    blockProps.horizontal
+      ? {
+          '> *': {
+            gridColumn: `auto / span ${units / maxCellsPerBlock}`
+          },
+          gridTemplateColumns: `repeat(${units}, 1fr)`,
+          gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
+          gridAutoFlow: 'row'
+        }
+      : {
+          '> *': {
+            gridRow: `auto / span ${units / maxCellsPerBlock}`
+          },
+          gridTemplateColumns: `repeat(${blockProps.numBlocks}, 1fr)`,
+          gridTemplateRows: `repeat(${units}, 1fr)`,
+          gridAutoFlow: 'column'
+        },
+    maxCellsPerBlock !== minCellsPerBlock
+      ? {
+          [`> *:nth-last-child(-n + ${numBigCells})`]: blockProps.horizontal
+            ? {
+                gridColumn: `auto / span ${units / minCellsPerBlock}`
+              }
+            : {
+                gridRow: `auto / span ${units / minCellsPerBlock}`
+              }
+        }
+      : {}
+  );
+  return dynamicGridStyles;
+};
+
+/**
+ * @private
+ */
+export const calculateGridStyles = (n: number, width: number, height: number): string => {
+  return createGridStyles(n, calculateBlockProps(n, width, height));
 };
