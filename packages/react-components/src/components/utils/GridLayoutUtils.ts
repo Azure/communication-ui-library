@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { mergeStyles } from '@fluentui/react';
 
 const TARGET_RATIO = 16 / 9;
 const TOLERANCE_RATIO = 8 / 9;
 
-const isRatioCloserThan = (A: number, B: number, targetRatio = TARGET_RATIO): boolean => {
+const isCloserThan = (A: number, B: number, targetRatio = TARGET_RATIO): boolean => {
   return Math.abs(targetRatio - A) < Math.abs(targetRatio - B);
 };
 
@@ -39,7 +39,7 @@ const calculateBlockProps = (n: number, width: number, height: number): BlockPro
         const verticallyStretchedCellRatio = ((rows - 1) / cols) * aspectRatio;
         // If vertically stretched cells pass the tolerance ratio then decide which ratio is better
         if (verticallyStretchedCellRatio >= TOLERANCE_RATIO) {
-          horizontal = isRatioCloserThan(horizontallyStretchedCellRatio, verticallyStretchedCellRatio);
+          horizontal = isCloserThan(horizontallyStretchedCellRatio, verticallyStretchedCellRatio);
         }
       }
       break;
@@ -52,16 +52,18 @@ const calculateBlockProps = (n: number, width: number, height: number): BlockPro
 };
 
 const createGridStyles = (numberOfChildren: number, blockProps: BlockProps): string => {
-  const maxCellsPerBlock = Math.ceil(numberOfChildren / blockProps.numBlocks);
-  const minCellsPerBlock = Math.floor(numberOfChildren / blockProps.numBlocks);
-  const numBigCells = (blockProps.numBlocks - (numberOfChildren % blockProps.numBlocks)) * minCellsPerBlock;
-  const units = maxCellsPerBlock * minCellsPerBlock;
+  const smallCellsPerBlock = Math.ceil(numberOfChildren / blockProps.numBlocks);
+  const bigCellsPerBlock = Math.floor(numberOfChildren / blockProps.numBlocks);
+  const numBigCells = (blockProps.numBlocks - (numberOfChildren % blockProps.numBlocks)) * bigCellsPerBlock;
+  // Get grid units
+  // eg. if some blocks have 2 cells and other have 3 cells, our units need to repeat 6 times
+  const units = smallCellsPerBlock * bigCellsPerBlock;
 
-  const dynamicGridStyles: IStyle = mergeStyles(
+  const dynamicGridStyles: string = mergeStyles(
     blockProps.horizontal
       ? {
           '> *': {
-            gridColumn: `auto / span ${units / maxCellsPerBlock}`
+            gridColumn: `auto / span ${units / smallCellsPerBlock}`
           },
           gridTemplateColumns: `repeat(${units}, 1fr)`,
           gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
@@ -69,20 +71,20 @@ const createGridStyles = (numberOfChildren: number, blockProps: BlockProps): str
         }
       : {
           '> *': {
-            gridRow: `auto / span ${units / maxCellsPerBlock}`
+            gridRow: `auto / span ${units / smallCellsPerBlock}`
           },
           gridTemplateColumns: `repeat(${blockProps.numBlocks}, 1fr)`,
           gridTemplateRows: `repeat(${units}, 1fr)`,
           gridAutoFlow: 'column'
         },
-    maxCellsPerBlock !== minCellsPerBlock
+    smallCellsPerBlock !== bigCellsPerBlock
       ? {
           [`> *:nth-last-child(-n + ${numBigCells})`]: blockProps.horizontal
             ? {
-                gridColumn: `auto / span ${units / minCellsPerBlock}`
+                gridColumn: `auto / span ${units / bigCellsPerBlock}`
               }
             : {
-                gridRow: `auto / span ${units / minCellsPerBlock}`
+                gridRow: `auto / span ${units / bigCellsPerBlock}`
               }
         }
       : {}
@@ -94,5 +96,6 @@ const createGridStyles = (numberOfChildren: number, blockProps: BlockProps): str
  * @private
  */
 export const calculateGridStyles = (n: number, width: number, height: number): string => {
-  return createGridStyles(n, calculateBlockProps(n, width, height));
+  const blockProps = calculateBlockProps(n, width, height);
+  return createGridStyles(n, blockProps);
 };
