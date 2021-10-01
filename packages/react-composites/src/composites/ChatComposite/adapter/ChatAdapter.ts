@@ -53,35 +53,35 @@ export interface ChatAdapterThreadManagement {
    */
   fetchInitialData(): Promise<void>;
   /**
-   * Send a message in the thread
+   * Send a message in the thread.
    */
   sendMessage(content: string): Promise<void>;
   /**
-   * Send a read receipt for a message
+   * Send a read receipt for a message.
    */
   sendReadReceipt(chatMessageId: string): Promise<void>;
   /**
-   * Send typing indicator in the thread
+   * Send typing indicator in the thread.
    */
   sendTypingIndicator(): Promise<void>;
   /**
-   * Remove a participant in the thread
+   * Remove a participant in the thread.
    */
   removeParticipant(userId: string): Promise<void>;
   /**
-   * Set the topic for the thread
+   * Set the topic for the thread.
    */
   setTopic(topicName: string): Promise<void>;
   /**
-   * Update a message content
+   * Update a message content.
    */
   updateMessage(messageId: string, content: string): Promise<void>;
   /**
-   * Delete a message in the thread
+   * Delete a message in the thread.
    */
   deleteMessage(messageId: string): Promise<void>;
   /**
-   * Load more previous messages in the chat thread history
+   * Load more previous messages in the chat thread history.
    *
    * @remarks
    * This method is usually used to control incremental fetch/infinite scroll

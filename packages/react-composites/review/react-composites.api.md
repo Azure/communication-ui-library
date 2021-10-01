@@ -302,55 +302,32 @@ export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public
 export interface ChatAdapterSubscribers {
-    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
     off(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
     off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
-    // (undocumented)
     off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
-    // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
-    // (undocumented)
     off(event: 'error', listener: (e: AdapterError) => void): void;
-    // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
     on(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
     on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
-    // (undocumented)
     on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
-    // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
-    // (undocumented)
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 // @public
 export interface ChatAdapterThreadManagement {
-    // (undocumented)
     deleteMessage(messageId: string): Promise<void>;
-    // (undocumented)
     fetchInitialData(): Promise<void>;
-    // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // (undocumented)
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
     sendMessage(content: string): Promise<void>;
-    // (undocumented)
     sendReadReceipt(chatMessageId: string): Promise<void>;
-    // (undocumented)
     sendTypingIndicator(): Promise<void>;
-    // (undocumented)
     setTopic(topicName: string): Promise<void>;
-    // (undocumented)
     updateMessage(messageId: string, content: string): Promise<void>;
 }
 
