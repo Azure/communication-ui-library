@@ -121,3 +121,18 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
     });
   }
 };
+
+/**
+  ADD THIS WHEN CALL UI TESTS ARE RE-ENABLED
+
+  test('Configuration screen should display call details', async ({
+    serverUrl,
+    users,
+    testBrowser
+  }) => {
+    const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { showCallDescription: 'true' });
+    await page.bringToFront();
+    await waitForCallCompositeToLoad(page);
+    expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
+  });
+*/

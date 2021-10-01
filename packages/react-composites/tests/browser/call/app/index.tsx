@@ -10,7 +10,9 @@ import {
   CallAdapter,
   createAzureCommunicationCallAdapter,
   CallComposite,
-  COMPOSITE_LOCALE_FR_FR
+  CompositeLocale,
+  COMPOSITE_LOCALE_FR_FR,
+  COMPOSITE_LOCALE_EN_US
 } from '../../../../src';
 import { IDS } from '../../common/config';
 
@@ -22,6 +24,7 @@ const token = params.token;
 const groupId = params.groupId;
 const userId = params.userId;
 const useFrLocale = Boolean(params.useFrlocale);
+const showCallDescription = Boolean(params.showCallDescription);
 // const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
@@ -45,12 +48,26 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  let locale: CompositeLocale;
+  if (useFrLocale) {
+    locale = COMPOSITE_LOCALE_FR_FR;
+  } else if (showCallDescription) {
+    locale = {
+      strings: {
+        ...COMPOSITE_LOCALE_EN_US.strings,
+        call: {
+          ...COMPOSITE_LOCALE_EN_US.strings.call,
+          configurationPageCallDetails: 'Some details about the call'
+        }
+      },
+      component: COMPOSITE_LOCALE_EN_US.component
+    };
+  }
+
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <_IdentifierProvider identifiers={IDS}>
-        {callAdapter && (
-          <CallComposite adapter={callAdapter} locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined} />
-        )}
+        {callAdapter && <CallComposite adapter={callAdapter} locale={locale} />}
       </_IdentifierProvider>
     </div>
   );
