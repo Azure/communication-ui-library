@@ -6,10 +6,12 @@ import {
   disableAnimation,
   loadCallScreenWithParticipantVideos,
   customWaitFor,
-  sleep
+  sleep,
+  loadUrlInPage
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
+import { v1 } from 'uuid';
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
@@ -27,6 +29,19 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
 };
 
 test.describe('Call Composite E2E Tests', () => {
+  test.beforeAll(async ({ pages, serverUrl, users }) => {
+    // In case it is retry logic
+    const newTestGuid = v1();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await loadUrlInPage(page, serverUrl, user);
+      await sleep(2000);
+    }
+  });
+
   test('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
       await waitForCallCompositeToLoad(pages[idx]);
@@ -60,10 +75,15 @@ test.describe('Call Composite E2E Tests', () => {
 
 test.describe('Call Composite E2E CallScreen Tests', () => {
   // Make sure tests can still run well after retries
-  test.beforeEach(async ({ pages }) => {
+  test.beforeEach(async ({ pages, serverUrl, users }) => {
     // In case it is retry logic
-    for (const page of pages) {
-      await page.reload();
+    const newTestGuid = v1();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await loadUrlInPage(page, serverUrl, user);
       await sleep(2000);
       await waitForCallCompositeToLoad(page);
     }

@@ -5,15 +5,16 @@ import { test } from './fixture';
 import { expect } from '@playwright/test';
 
 import { loadPageWithPermissionsForCalls, loadCallScreen } from '../common/utils';
+import { v1 } from 'uuid';
 
 test.describe('Localization tests', async () => {
-  test.beforeEach(async ({ pages }) => {
-    for (const page of pages) {
-      // Ensure any previous call users from prior tests have left the call
-      await page.reload();
-      await sleep(2000);
-    }
-  });
+  // test.beforeEach(async ({ pages }) => {
+  //   for (const page of pages) {
+  //     // Ensure any previous call users from prior tests have left the call
+  //     await page.reload();
+  //     await sleep(2000);
+  //   }
+  // });
 
   test('Configuration page title and participant button in call should be localized', async ({
     serverUrl,
@@ -21,6 +22,8 @@ test.describe('Localization tests', async () => {
     testBrowser
   }) => {
     console.log('locale test 1');
+    const newCallGuid = v1();
+    users[0].groupId = newCallGuid;
     const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { useFrlocale: 'true' });
     page.on('console', (msg) => {
       const doNotLogMessages = [
