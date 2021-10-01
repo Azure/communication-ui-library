@@ -65,19 +65,34 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
       ref={targetRef}
       className={mergeStyles(
         gridLayoutContainerStyle,
-        {
-          '> div': {
-            gridColumn: `auto / span ${units / maxCellsPerBlock}`
-          },
-          gridTemplateColumns: `repeat(${units}, 1fr)`,
-          gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
-          gridGap: '0.5rem'
-        },
+        blockProps.horizontal
+          ? {
+              '> div': {
+                gridColumn: `auto / span ${units / maxCellsPerBlock}`
+              },
+              gridTemplateColumns: `repeat(${units}, 1fr)`,
+              gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
+              gridAutoFlow: 'row',
+              gridGap: '0.5rem'
+            }
+          : {
+              '> div': {
+                gridRow: `auto / span ${units / maxCellsPerBlock}`
+              },
+              gridTemplateColumns: `repeat(${blockProps.numBlocks}, 1fr)`,
+              gridTemplateRows: `repeat(${units}, 1fr)`,
+              gridAutoFlow: 'column',
+              gridGap: '0.5rem'
+            },
         maxCellsPerBlock !== minCellsPerBlock
           ? {
-              [`> div:nth-last-child(-n + ${numBigCells})`]: {
-                gridColumn: `auto / span ${units / minCellsPerBlock}`
-              }
+              [`> div:nth-last-child(-n + ${numBigCells})`]: blockProps.horizontal
+                ? {
+                    gridColumn: `auto / span ${units / minCellsPerBlock}`
+                  }
+                : {
+                    gridRow: `auto / span ${units / minCellsPerBlock}`
+                  }
             }
           : {},
         styles?.root
