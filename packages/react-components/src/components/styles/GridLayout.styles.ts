@@ -13,17 +13,3 @@ export const gridLayoutStyle = mergeStyles({
   display: 'grid',
   gridGap: '.5rem'
 });
-
-/**
- * @private
- */
-export const blockStyle = mergeStyles({
-  display: 'grid'
-});
-
-/**
- * @private
- */
-export const cellStyle = mergeStyles({
-  padding: '.25rem'
-});
