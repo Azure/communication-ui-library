@@ -113,7 +113,9 @@ export default (): JSX.Element => {
         className={containerStyle}
       >
         <Stack className={infoContainerStyle} tokens={infoContainerStackTokens}>
-          <Text className={headerStyle}>{headerTitle}</Text>
+          <Text role={'heading'} aria-level={1} className={headerStyle}>
+            {headerTitle}
+          </Text>
           <Stack className={configContainerStyle} tokens={configContainerStackTokens}>
             <Stack tokens={nestedStackTokens}>
               <List className={listStyle} items={listItems} onRenderCell={onRenderListItem} />
@@ -127,7 +129,7 @@ export default (): JSX.Element => {
               }}
             >
               <Chat20Filled className={videoCameraIconStyle} />
-              <div className={startChatTextStyle}>{startChatButtonText}</div>
+              <Text className={startChatTextStyle}>{startChatButtonText}</Text>
             </PrimaryButton>
             <ThemeSelector label="Theme" horizontal={true} />
           </Stack>
