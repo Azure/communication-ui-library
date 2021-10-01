@@ -5,7 +5,7 @@ import { mergeStyles } from '@fluentui/react';
 import React, { useRef, useEffect, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { gridLayoutStyle } from './styles/GridLayout.styles';
-import { calculateGridStyles } from './utils/GridLayoutUtils';
+import { calculateGridProps, GridProps, createGridStyles } from './utils/GridLayoutUtils';
 
 /**
  * Props for {@link GridLayout}.
@@ -34,13 +34,16 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const numberOfChildren = React.Children.count(children);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const [dynamicGridStyles, setDynamicGridStyles] = useState<string>();
+  const [gridProps, setGridProps] = useState<GridProps>({
+    horizontalFlow: true,
+    numBlocks: Math.ceil(Math.sqrt(numberOfChildren))
+  });
 
   useEffect(() => {
     const updateDynamicGridStyles = (): void => {
       if (containerRef.current) {
-        setDynamicGridStyles(
-          calculateGridStyles(numberOfChildren, containerRef.current.offsetWidth, containerRef.current.offsetHeight)
+        setGridProps(
+          calculateGridProps(numberOfChildren, containerRef.current.offsetWidth, containerRef.current.offsetHeight)
         );
       }
     };
@@ -51,6 +54,8 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     updateDynamicGridStyles();
     return () => observer.disconnect();
   }, [numberOfChildren, containerRef.current?.offsetWidth, containerRef.current?.offsetHeight]);
+
+  const dynamicGridStyles = createGridStyles(numberOfChildren, gridProps);
 
   return (
     <div ref={containerRef} className={mergeStyles(gridLayoutStyle, dynamicGridStyles, styles?.root)}>
