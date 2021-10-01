@@ -6,6 +6,7 @@ import {
   CameraButton,
   ControlBar,
   MicrophoneButton,
+  OptionsButton,
   StreamMedia,
   useTheme,
   VideoTile
@@ -30,6 +31,7 @@ import {
  */
 export interface LocalPreviewProps {
   mobileView?: boolean;
+  showDevicesButton?: boolean;
 }
 
 /**
@@ -39,6 +41,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const locale = useLocale();
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
+  const optionsButtonProps = usePropsFor(OptionsButton);
   const { audio: microphonePermissionGranted, video: cameraPermissionGranted } = useSelector(devicePermissionSelector);
 
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
@@ -95,6 +98,15 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
             disabled={!microphonePermissionGranted}
             showLabel={true}
           />
+          {props.showDevicesButton && (
+            <OptionsButton
+              data-ui-id="call-composite-local-device-settings-options-button"
+              {...optionsButtonProps}
+              // disable button whilst all other buttons are disabled
+              disabled={!microphonePermissionGranted || !cameraPermissionGranted}
+              showLabel={true}
+            />
+          )}
         </ControlBar>
       </VideoTile>
     </Stack>

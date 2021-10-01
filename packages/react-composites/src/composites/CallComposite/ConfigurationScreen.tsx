@@ -59,7 +59,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       className={configurationContainer}
     >
       {mobileView && title}
-      <LocalPreview mobileView={mobileView} />
+      <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />
       <Stack className={mobileView ? undefined : selectionContainerStyle}>
         {!mobileView && title}
         {!mobileView && (
