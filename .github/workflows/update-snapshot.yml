@@ -133,7 +133,11 @@ jobs:
       # Check if files have changed
       - name: Check for snapshot changes
         id: changescheck
-        run: git diff --exit-code --quiet -- packages/react-composites/tests || echo "::set-output name=hasChanged::true" && echo "Changes found!"
+        run: git diff --exit-code --quiet -- packages/react-composites/tests || (echo "::set-output name=hasChanged::true" && echo "Changes found!")
+      - name: Test
+        run: echo '${{ steps.changescheck.outputs.hasChanged }}'
+      - name: Test2
+        run: echo '${{ github.event_name }}'
       # Commit changes to snapshot files.
       - name: Commit new snapshots (from pull request)
         if: ${{ github.event_name != 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
