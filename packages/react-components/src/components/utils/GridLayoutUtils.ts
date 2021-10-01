@@ -142,7 +142,7 @@ const createGridStyles = (numberOfItems: number, gridProps: GridProps): string =
  * @param numberOfItems - number of items to place in grid
  * @param width - width of grid
  * @param height - height of grid
- * @returns classname as string
+ * @returns classname string
  */
 export const calculateGridStyles = (numberOfItems: number, width: number, height: number): string => {
   const gridProps = calculateGridProps(numberOfItems, width, height);
