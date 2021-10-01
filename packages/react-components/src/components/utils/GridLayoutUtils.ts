@@ -3,83 +3,128 @@
 
 import { mergeStyles } from '@fluentui/react';
 
-const TARGET_RATIO = 16 / 9;
-const TOLERANCE_RATIO = 8 / 9;
+const TARGET_CELL_RATIO = 16 / 9;
+const CELL_RATIO_TOLERANCE = 8 / 9;
 
-const isCloserThan = (A: number, B: number, targetRatio = TARGET_RATIO): boolean => {
-  return Math.abs(targetRatio - A) < Math.abs(targetRatio - B);
+const isCloserThan = (A: number, B: number, target: number): boolean => {
+  return Math.abs(target - A) < Math.abs(target - B);
 };
 
-type BlockProps = {
-  horizontal: boolean;
+/**
+ * Properties to describe a grid. The number of blocks and if they flow horizontally or vertically.
+ *
+ * Eg.
+ *  ______________________
+ * |_______|_______|______|
+ * |___________|__________| This grid flows horizontally and has 2 blocks
+ *  ______________
+ * |    |    |    |
+ * |____|____|    |
+ * |    |    |    |
+ * |____|____|____| This grid flows vertically and has 3 blocks
+ *  _______________
+ * |       |       |
+ * |_______|_______|
+ * |       |       |
+ * |_______|_______| If all cells are equal, we default the flow as horizontal. This grid flows horizontally with 2 blocks
+ */
+type GridProps = {
+  horizontalFlow: boolean;
   numBlocks: number;
 };
 
-const calculateBlockProps = (n: number, width: number, height: number): BlockProps => {
+/**
+ * Get the best GridProps to place a number of items in a grid as evenly as possible given the width and height of the grid
+ * @param numberOfItems - number of items to place in grid
+ * @param width - width of grid
+ * @param height - height of grid
+ * @returns GridProps
+ */
+const calculateGridProps = (numberOfItems: number, width: number, height: number): GridProps => {
   if (width <= 0) {
     throw Error('Width provided [' + width + '] is less than or equal to 0.');
   } else if (height <= 0) {
     throw Error('Height provided [' + height + '] is less than or equal to 0.');
   }
   const aspectRatio = width / height;
-  let rows = Math.floor(Math.sqrt((TARGET_RATIO * n) / aspectRatio));
-  let cols = Math.ceil(n / rows);
+  // Approximate how many rows to divide the grid to achieve cells close to the TARGET_CELL_RATIO
+  let rows = Math.floor(Math.sqrt((TARGET_CELL_RATIO / aspectRatio) * numberOfItems)) ?? 1;
+  // Given the rows, get the minimum columns needed to create enough cells for the number of items
+  let cols = Math.ceil(numberOfItems / rows);
 
-  // Default blocks to be horizontal
-  let horizontal = true;
-  while (rows < n) {
-    // If cell ratio is less than tolerance ratio then try more rows
-    if ((rows / cols) * aspectRatio >= TOLERANCE_RATIO) {
+  // Default blocks to flow horizontal
+  let horizontalFlow = true;
+
+  while (rows < numberOfItems) {
+    // If cell ratio is less than CELL_RATIO_TOLERANCE then try more rows
+    if ((rows / cols) * aspectRatio >= CELL_RATIO_TOLERANCE) {
       // If n is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
       // to fill in the empty spaces
-      if (n < rows * cols) {
+      // Eg. For 2 rows, 3 columns, but only 5 items, we need decide whether to stetch cells
+      //       horizontally            or        vertically
+      //  ______________________               _______________________
+      // |       |       |      |             |       |       |       |
+      // |_______|_______|______|             |_______|_______|       |
+      // |           |          |             |       |       |       |
+      // |___________|__________|             |_______|_______|_______|
+      if (numberOfItems < rows * cols) {
         // Calculate the width-to-height ratio of big cells stretched horizontally
         const horizontallyStretchedCellRatio = (rows / (cols - 1)) * aspectRatio;
         // Calculate the width-to-height ratio of big cells stretched vertically
         const verticallyStretchedCellRatio = ((rows - 1) / cols) * aspectRatio;
-        // If vertically stretched cells pass the tolerance ratio then decide which ratio is better
-        if (verticallyStretchedCellRatio >= TOLERANCE_RATIO) {
-          horizontal = isCloserThan(horizontallyStretchedCellRatio, verticallyStretchedCellRatio);
+        // We know the horizontally stretched cells is higher than CELL_RATIO_TOLERANCE. If vertically stretched cell is also higher than
+        // the CELL_TOLERANCE_RATIO, then decide which ratio is better.
+        if (verticallyStretchedCellRatio >= CELL_RATIO_TOLERANCE) {
+          // If vertically stetched cell has ratio closer to TARGET_CELL_RATIO then change the flow
+          if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_RATIO)) {
+            horizontalFlow = false;
+          }
         }
       }
       break;
     }
     rows += 1;
-    cols = Math.ceil(n / rows);
+    cols = Math.ceil(numberOfItems / rows);
   }
 
-  return { horizontal: horizontal, numBlocks: horizontal ? rows : cols };
+  return { horizontalFlow, numBlocks: horizontalFlow ? rows : cols };
 };
 
-const createGridStyles = (numberOfChildren: number, blockProps: BlockProps): string => {
-  const smallCellsPerBlock = Math.ceil(numberOfChildren / blockProps.numBlocks);
-  const bigCellsPerBlock = Math.floor(numberOfChildren / blockProps.numBlocks);
-  const numBigCells = (blockProps.numBlocks - (numberOfChildren % blockProps.numBlocks)) * bigCellsPerBlock;
+/**
+ * Creates a styles class with CSS Grid related styles given GridProps and the number of items to distribute as evenly as possible.
+ * @param numberOfItems - number of items to place in grid
+ * @param gridProps - GridProps to define flow and number of blocks to distribute items
+ * @returns
+ */
+const createGridStyles = (numberOfItems: number, gridProps: GridProps): string => {
+  const smallCellsPerBlock = Math.ceil(numberOfItems / gridProps.numBlocks);
+  const bigCellsPerBlock = Math.floor(numberOfItems / gridProps.numBlocks);
+  const numBigCells = (gridProps.numBlocks - (numberOfItems % gridProps.numBlocks)) * bigCellsPerBlock;
   // Get grid units
-  // eg. if some blocks have 2 big cells and other have 3 small cells, we need to work with 6 units per block
+  // eg. if some blocks have 2 big cells while others have 3 small cells, we need to work with 6 units per block
   const units = smallCellsPerBlock * bigCellsPerBlock;
 
   const dynamicGridStyles: string = mergeStyles(
-    blockProps.horizontal
+    gridProps.horizontalFlow
       ? {
           '> *': {
             gridColumn: `auto / span ${units / smallCellsPerBlock}`
           },
           gridTemplateColumns: `repeat(${units}, 1fr)`,
-          gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
+          gridTemplateRows: `repeat(${gridProps.numBlocks}, 1fr)`,
           gridAutoFlow: 'row'
         }
       : {
           '> *': {
             gridRow: `auto / span ${units / smallCellsPerBlock}`
           },
-          gridTemplateColumns: `repeat(${blockProps.numBlocks}, 1fr)`,
+          gridTemplateColumns: `repeat(${gridProps.numBlocks}, 1fr)`,
           gridTemplateRows: `repeat(${units}, 1fr)`,
           gridAutoFlow: 'column'
         },
-    smallCellsPerBlock !== bigCellsPerBlock
+    numBigCells
       ? {
-          [`> *:nth-last-child(-n + ${numBigCells})`]: blockProps.horizontal
+          [`> *:nth-last-child(-n + ${numBigCells})`]: gridProps.horizontalFlow
             ? {
                 gridColumn: `auto / span ${units / bigCellsPerBlock}`
               }
@@ -93,9 +138,13 @@ const createGridStyles = (numberOfChildren: number, blockProps: BlockProps): str
 };
 
 /**
- * @private
+ * Calculate the best CSS grid styles, given the number of items to place in grid, the width of the grid, and height of grid
+ * @param numberOfItems - number of items to place in grid
+ * @param width - width of grid
+ * @param height - height of grid
+ * @returns classname as string
  */
-export const calculateGridStyles = (n: number, width: number, height: number): string => {
-  const blockProps = calculateBlockProps(n, width, height);
-  return createGridStyles(n, blockProps);
+export const calculateGridStyles = (numberOfItems: number, width: number, height: number): string => {
+  const gridProps = calculateGridProps(numberOfItems, width, height);
+  return createGridStyles(numberOfItems, gridProps);
 };
