@@ -90,7 +90,6 @@ jobs:
           else
             echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}" # use head of PR branch
           fi
-
       - uses: actions/checkout@v2
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
@@ -101,7 +100,6 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
@@ -135,16 +133,16 @@ jobs:
       # Check if files have changed
       - name: Check for snapshot changes
         id: changescheck
-        run: git diff --exit-code --quiet -- packages/react-composites/tests || echo "::set-output name=hasChanged::true" && echo "Changes found"
+        run: git diff --exit-code --quiet -- packages/react-composites/tests || echo "::set-output name=hasChanged::true" && echo "Changes found!"
       # Commit changes to snapshot files.
       - name: Commit new snapshots (from workflow dispatch)
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' && github.event_name == 'workflow_dispatch' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git add packages/react-composites/tests
           git commit -m 'Updating composite automation snapshots'
           git push
       - name: Commit new snapshots (from pull request)
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' && github.event_name != 'workflow_dispatch' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git add packages/react-composites/tests
           git commit -m 'Updating composite automation snapshots'
