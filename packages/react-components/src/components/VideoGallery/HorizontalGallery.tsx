@@ -54,7 +54,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const isMobileScreen = useIsSmallScreen(containerRef);
+  const isSmallScreen = useIsSmallScreen(containerRef);
   const containerWidth = useContainerWidth(containerRef);
   const [page, setPage] = useState(0);
   const [maxTiles, setMaxTiles] = useState(0);
@@ -63,7 +63,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   useEffect(() => {
     setPage(0);
-    if (isMobileScreen) {
+    if (isSmallScreen) {
       setTileHeight(88);
       setTileWidth(88);
       const maxTiles = calculateMaxNumberOfTiles({
@@ -81,7 +81,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       });
       setMaxTiles(maxTiles);
     }
-  }, [containerWidth, isMobileScreen, leftGutter, rightGutter]);
+  }, [containerWidth, isSmallScreen, leftGutter, rightGutter]);
 
   const tileSizeStyle = useMemo(
     () => ({
@@ -168,7 +168,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         tokens={{ childrenGap: '0.5rem' }}
         className={mergeStyles(horizontalGalleryContainerStyle, { paddingLeft: leftGutter, paddingRight: rightGutter })}
       >
-        {maxTiles && page > 0 && !isMobileScreen ? (
+        {maxTiles && page > 0 && !isSmallScreen ? (
           <DefaultButton
             className={mergeStyles(leftRightButtonStyles, pageButtonSizeStyle)}
             onClick={() => changePage(page - 1)}
@@ -179,7 +179,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
         {defaultOnRenderParticipants}
 
-        {maxTiles && page < maxPages && !isMobileScreen ? (
+        {maxTiles && page < maxPages && !isSmallScreen ? (
           <DefaultButton
             className={mergeStyles(leftRightButtonStyles, pageButtonSizeStyle)}
             onClick={() => changePage(page + 1)}

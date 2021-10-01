@@ -160,4 +160,21 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     const resultUserIds = result.flatMap((p) => p.userId);
     expect(resultUserIds).toEqual(['5', '7', '8', '1', '2', '3', '4', '6']);
   });
+
+  test('returns last visible participants without re-ordering', () => {
+    let result = smartDominantSpeakerParticipants(
+      participants,
+      ['5', '7', '8'],
+      [{ userId: '3' }, { userId: '5' }, { userId: '8' }, { userId: '4' }, { userId: '1' }],
+      8,
+      3
+    );
+    let resultUserIds = result.flatMap((p) => p.userId);
+    expect(resultUserIds).toEqual(['7', '5', '8', '3', '4', '1', '2', '6']);
+    expect(resultUserIds).toEqual(['7', '5', '8', '4', '1', '2', '3', '6']);
+
+    result = smartDominantSpeakerParticipants(participants, ['5', '7', '8'], result, 8, 3);
+    resultUserIds = result.flatMap((p) => p.userId);
+    expect(resultUserIds).toEqual(['7', '5', '8', '3', '4', '1', '2', '6']);
+  });
 });

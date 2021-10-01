@@ -27,21 +27,27 @@ export const smartDominantSpeakerParticipants = (
 
   // Only use the Max allowed dominant speakers.
   const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxDominantSpeakers);
-  // We slice the visible participants to ensure only the first `n` participants are used where n == maxDominantSpeakers.
-  // This ensures that the final result has dominant speakers first and then the filler participants both totalling up to maxTiles.
-  const visibleParticipantIds = visibleParticipants.map((p) => p.userId).slice(0, maxDominantSpeakers);
-  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleParticipantIds.includes(id));
+
+  let visibleParticipantIds = visibleParticipants.map((p) => p.userId);
+  const visibleDominantSpeakerIds = visibleParticipantIds.slice(0, maxDominantSpeakers);
+  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleDominantSpeakerIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
   for (let index = 0; index < maxDominantSpeakers; index++) {
-    const visibleParticipantId = visibleParticipantIds[index];
-    if (visibleParticipantId === undefined || !dominantSpeakerIds.includes(visibleParticipantId)) {
+    const visibleDominantSpeakerId = visibleDominantSpeakerIds[index];
+    if (visibleDominantSpeakerId === undefined || !dominantSpeakerIds.includes(visibleDominantSpeakerId)) {
       const replacement = newDominantSpeakerIds.shift();
       if (!replacement) break;
-      visibleParticipantIds[index] = replacement;
+      visibleDominantSpeakerIds[index] = replacement;
     }
   }
 
+  // We create a new array of participants by concatinating the array consisting
+  // of updated dominant speakers and array containing currently visible
+  // participants (after removing the updated dominant speakers from it).
+  // This new array will help us sort our final result in a way that minimizes re-ordering.
+  visibleParticipantIds = visibleParticipantIds.filter((p) => !visibleDominantSpeakerIds.includes(p));
+  visibleParticipantIds = visibleDominantSpeakerIds.concat(visibleParticipantIds);
   // Converting array to a hashmap for faster searching
   const visibleParticipantIdsMap = {};
   visibleParticipantIds.forEach((userId) => {
@@ -67,5 +73,5 @@ export const smartDominantSpeakerParticipants = (
     return visibleParticipantIds.indexOf(a.userId) - visibleParticipantIds.indexOf(b.userId);
   });
 
-  return newVisibleParticipants;
+  return newVisibleParticipants.slice(0, maxTiles);
 };
