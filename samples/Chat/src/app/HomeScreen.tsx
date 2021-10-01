@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IImageStyles, Icon, Image, PrimaryButton, Spinner, Stack, Link } from '@fluentui/react';
+import { IImageStyles, Icon, Image, Link, List, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
   buttonStyle,
@@ -10,7 +10,9 @@ import {
   containerTokens,
   containerStyle,
   headerStyle,
-  iconStyle,
+  listIconStyle,
+  listItemStackTokens,
+  listItemStyle,
   imgStyle,
   listStyle,
   nestedStackTokens,
@@ -80,6 +82,26 @@ export default (): JSX.Element => {
     return <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />;
   };
 
+  const onRenderListItem = (item?: string, index?: number) => {
+    const listText =
+      index !== 3 ? (
+        <Text>{item}</Text>
+      ) : (
+        <Text>
+          {item}{' '}
+          <Link href="https://docs.microsoft.com/azure/communication-services/overview" aria-label={`${item} sample`}>
+            {'sample'}
+          </Link>
+        </Text>
+      );
+    return (
+      <Stack horizontal tokens={listItemStackTokens} className={listItemStyle}>
+        <Icon className={listIconStyle} iconName={iconName} />
+        {listText}
+      </Stack>
+    );
+  };
+
   const displayHomeScreen = (): JSX.Element => {
     return (
       <Stack
@@ -91,26 +113,10 @@ export default (): JSX.Element => {
         className={containerStyle}
       >
         <Stack className={infoContainerStyle} tokens={infoContainerStackTokens}>
-          <div tabIndex={0} className={headerStyle}>
-            {headerTitle}
-          </div>
+          <Text className={headerStyle}>{headerTitle}</Text>
           <Stack className={configContainerStyle} tokens={configContainerStackTokens}>
             <Stack tokens={nestedStackTokens}>
-              <ul className={listStyle}>
-                <li tabIndex={0}>
-                  <Icon className={iconStyle} iconName={iconName} /> {listItems[0]}
-                </li>
-                <li tabIndex={0}>
-                  <Icon className={iconStyle} iconName={iconName} /> {listItems[1]}
-                </li>
-                <li tabIndex={0}>
-                  <Icon className={iconStyle} iconName={iconName} /> {listItems[2]}
-                </li>
-                <li tabIndex={0}>
-                  <Icon className={iconStyle} iconName={iconName} /> {listItems[3]}{' '}
-                  <Link href="https://docs.microsoft.com/azure/communication-services/overview">sample</Link>
-                </li>
-              </ul>
+              <List className={listStyle} items={listItems} onRenderCell={onRenderListItem} />
             </Stack>
             <PrimaryButton
               id="startChat"
