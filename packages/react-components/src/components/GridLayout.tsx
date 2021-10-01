@@ -73,7 +73,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
               gridTemplateColumns: `repeat(${units}, 1fr)`,
               gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
               gridAutoFlow: 'row',
-              gridGap: '0.5rem'
+              gridGap: '.5rem'
             }
           : {
               '> div': {
@@ -82,7 +82,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
               gridTemplateColumns: `repeat(${blockProps.numBlocks}, 1fr)`,
               gridTemplateRows: `repeat(${units}, 1fr)`,
               gridAutoFlow: 'column',
-              gridGap: '0.5rem'
+              gridGap: '.5rem'
             },
         maxCellsPerBlock !== minCellsPerBlock
           ? {
