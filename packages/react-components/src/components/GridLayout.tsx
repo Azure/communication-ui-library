@@ -33,7 +33,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const { children, styles } = props;
   const numberOfChildren = React.Children.count(children);
 
-  const targetRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [blockProps, setBlockProps] = useState<BlockProps>({
     horizontal: true,
     numBlocks: Math.ceil(Math.sqrt(numberOfChildren))
@@ -41,19 +41,19 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
 
   useEffect(() => {
     const updateBlockProps = (): void => {
-      if (targetRef.current) {
+      if (containerRef.current) {
         setBlockProps(
-          calculateBlockProps(numberOfChildren, targetRef.current.offsetWidth, targetRef.current.offsetHeight)
+          calculateBlockProps(numberOfChildren, containerRef.current.offsetWidth, containerRef.current.offsetHeight)
         );
       }
     };
     const observer = new ResizeObserver(updateBlockProps);
-    if (targetRef.current) {
-      observer.observe(targetRef.current);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
     updateBlockProps();
     return () => observer.disconnect();
-  }, [numberOfChildren, targetRef.current?.offsetWidth, targetRef.current?.offsetHeight]);
+  }, [numberOfChildren, containerRef.current?.offsetWidth, containerRef.current?.offsetHeight]);
 
   const maxCellsPerBlock = Math.ceil(numberOfChildren / blockProps.numBlocks);
   const minCellsPerBlock = Math.floor(numberOfChildren / blockProps.numBlocks);
@@ -62,7 +62,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
 
   return (
     <div
-      ref={targetRef}
+      ref={containerRef}
       className={mergeStyles(
         gridLayoutContainerStyle,
         blockProps.horizontal
