@@ -52,16 +52,8 @@ function App(): JSX.Element {
   if (useFrLocale) {
     locale = COMPOSITE_LOCALE_FR_FR;
   } else if (showCallDescription) {
-    locale = {
-      strings: {
-        ...COMPOSITE_LOCALE_EN_US.strings,
-        call: {
-          ...COMPOSITE_LOCALE_EN_US.strings.call,
-          configurationPageCallDetails: 'Some details about the call'
-        }
-      },
-      component: COMPOSITE_LOCALE_EN_US.component
-    };
+    locale = COMPOSITE_LOCALE_EN_US;
+    locale.strings.call.configurationPageCallDetails = 'Some details about the call';
   }
 
   return (

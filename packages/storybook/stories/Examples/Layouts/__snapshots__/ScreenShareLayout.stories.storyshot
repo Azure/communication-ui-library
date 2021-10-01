@@ -423,7 +423,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               </div>
             </div>
             <div
-              className="ms-Stack css-125 css-45"
+              className="ms-Stack css-127 css-45"
             >
               <div
                 className="ms-Stack css-15"
