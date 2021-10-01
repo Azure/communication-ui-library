@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef, useEffect, useState } from 'react';
 import { BaseCustomStylesProps } from '../types';
-import { gridLayoutContainerStyle } from './styles/GridLayout.styles';
+import { gridLayoutStyle } from './styles/GridLayout.styles';
 import { calculateBlockProps } from './utils/GridLayoutUtils';
 
 /**
@@ -60,42 +60,39 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const numBigCells = (blockProps.numBlocks - (numberOfChildren % blockProps.numBlocks)) * minCellsPerBlock;
   const units = maxCellsPerBlock * minCellsPerBlock;
 
+  const dynamicGridStyles: IStyle = mergeStyles(
+    blockProps.horizontal
+      ? {
+          '> *': {
+            gridColumn: `auto / span ${units / maxCellsPerBlock}`
+          },
+          gridTemplateColumns: `repeat(${units}, 1fr)`,
+          gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
+          gridAutoFlow: 'row'
+        }
+      : {
+          '> *': {
+            gridRow: `auto / span ${units / maxCellsPerBlock}`
+          },
+          gridTemplateColumns: `repeat(${blockProps.numBlocks}, 1fr)`,
+          gridTemplateRows: `repeat(${units}, 1fr)`,
+          gridAutoFlow: 'column'
+        },
+    maxCellsPerBlock !== minCellsPerBlock
+      ? {
+          [`> *:nth-last-child(-n + ${numBigCells})`]: blockProps.horizontal
+            ? {
+                gridColumn: `auto / span ${units / minCellsPerBlock}`
+              }
+            : {
+                gridRow: `auto / span ${units / minCellsPerBlock}`
+              }
+        }
+      : {}
+  );
+
   return (
-    <div
-      ref={containerRef}
-      className={mergeStyles(
-        gridLayoutContainerStyle,
-        blockProps.horizontal
-          ? {
-              '> div': {
-                gridColumn: `auto / span ${units / maxCellsPerBlock}`
-              },
-              gridTemplateColumns: `repeat(${units}, 1fr)`,
-              gridTemplateRows: `repeat(${blockProps.numBlocks}, 1fr)`,
-              gridAutoFlow: 'row'
-            }
-          : {
-              '> div': {
-                gridRow: `auto / span ${units / maxCellsPerBlock}`
-              },
-              gridTemplateColumns: `repeat(${blockProps.numBlocks}, 1fr)`,
-              gridTemplateRows: `repeat(${units}, 1fr)`,
-              gridAutoFlow: 'column'
-            },
-        maxCellsPerBlock !== minCellsPerBlock
-          ? {
-              [`> div:nth-last-child(-n + ${numBigCells})`]: blockProps.horizontal
-                ? {
-                    gridColumn: `auto / span ${units / minCellsPerBlock}`
-                  }
-                : {
-                    gridRow: `auto / span ${units / minCellsPerBlock}`
-                  }
-            }
-          : {},
-        styles?.root
-      )}
-    >
+    <div ref={containerRef} className={mergeStyles(gridLayoutStyle, dynamicGridStyles, styles?.root)}>
       {children}
     </div>
   );
