@@ -56,8 +56,6 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   }, [numberOfChildren, targetRef.current?.offsetWidth, targetRef.current?.offsetHeight]);
 
   console.log(createBlocks);
-  const blockPercent = (Math.floor(10000 / blockProps.numBlocks) / 100).toFixed(2);
-  const blockSpace = (Math.floor(10000 / Math.ceil(numberOfChildren / blockProps.numBlocks)) / 100).toFixed(2);
 
   return (
     <div
@@ -65,13 +63,20 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
       className={mergeStyles(
         gridLayoutContainerStyle,
         {
-          div: blockProps.horizontal
-            ? { height: `${blockPercent}%`, width: `${blockSpace}%` }
-            : { height: `${blockSpace}%`, width: `${blockPercent}%` }
+          '> div': {
+            gridColumn: 'auto / span 2'
+          },
+          '> div:nth-last-child(-n + 2)': {
+            gridColumn: 'auto / span 3'
+          },
+          gridGap: '0.5rem'
         },
         styles?.root
       )}
-      style={{ display: 'flex', flexFlow: blockProps.horizontal ? 'row wrap' : 'column wrap' }}
+      style={{
+        gridTemplateColumns: 'repeat(6, 1fr)',
+        gridTemplateRows: 'repeat(2, 1fr)'
+      }}
     >
       {children}
     </div>
