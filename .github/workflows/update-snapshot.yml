@@ -13,9 +13,8 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      # Checkout repo
       - uses: actions/checkout@v2
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
@@ -23,18 +22,18 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-
-      # If pull request, then check out pull request head (not the default merge commit)
-      - uses: actions/checkout@v2
+      # Setup bot information for pushing new changes
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      - name: Setup bot git information
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      # If run from a PR, checkout PR branch and merge in latest changes from main branch
+      - name: Checkout PR branch and merge main
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-          # Use a machine account when checking out. This is to workaround the issue were GitHub
-          # actions, when using the default account, cannot trigger other actions.
-          # This machine account is only for this PAT, pwd was created and thrown away
-          # If any update needed, create a new account, add access to the repo and generate a new PAT
-          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+        run: |
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git merge origin/main
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
@@ -62,19 +61,24 @@ jobs:
           rushx update:snapshot
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-      - name: Setup bot git information
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
         run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-      # Commit changes to snapshot files.
-      - name: Commit new snapshots
-        run: >
-          git diff --exit-code --quiet -- samples/StaticHtmlComposites/tests ||
-          (git add samples/StaticHtmlComposites/tests &&
-          git commit -m 'Updating js bundle automation snapshots' &&
-          git push)
+          if [[ -z $(git status -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+            exit
+          fi
+      - name: Commit new snapshots (from workflow dispatch)
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: |
+          git add packages/react-composites/tests
+          git commit -m 'Updating composite automation snapshots'
+          git push
 
   update_composite_snapshot:
     name: Update composite snapshot by label
@@ -97,7 +101,7 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      # Checkout PR branch and merge in latest changes from main branch
+      # If run from a PR, checkout PR branch and merge in latest changes from main branch
       - name: Checkout PR branch and merge main
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
@@ -140,7 +144,7 @@ jobs:
             exit
           fi
       - name: Commit new snapshots (from workflow dispatch)
-        if: ${{ github.event_name == 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git add packages/react-composites/tests
           git commit -m 'Updating composite automation snapshots'

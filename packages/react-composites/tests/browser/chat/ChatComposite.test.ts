@@ -124,10 +124,7 @@ test.describe('Chat Composite custom data model', () => {
     const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
     const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
     await page.bringToFront();
-    await page.type(
-      dataUiId(IDS.sendboxTextfield),
-      'This is a much longer message that should trigger the change in snapshots'
-    );
+    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
     await page.waitForFunction(() => {
