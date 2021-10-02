@@ -113,7 +113,15 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
   pages: [
     async ({ serverUrl, testBrowser, users }, use) => {
       const pages = await Promise.all(
-        users.map(async (user) => loadPageWithPermissionsForCalls(testBrowser, serverUrl, user))
+        users.map(async (user) => {
+          const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, user);
+          page.on('console', (msg) => {
+            if (msg.type() === 'error') {
+              console.log(`CONSOLE ERROR TEXT: "${msg.text()}"`, msg.args(), msg.location());
+            }
+          });
+          return page;
+        })
       );
       await use(pages);
     },

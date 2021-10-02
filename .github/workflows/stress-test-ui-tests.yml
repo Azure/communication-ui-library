@@ -74,3 +74,9 @@ jobs:
           rushx test:e2e
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
