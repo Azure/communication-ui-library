@@ -117,7 +117,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
           const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, user);
           page.on('console', (msg) => {
             if (msg.type() === 'error') {
-              console.log(`CONSOLE ERROR TEXT: "${msg.text()}"`, msg.args(), msg.location());
+              console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
             }
           });
           return page;
