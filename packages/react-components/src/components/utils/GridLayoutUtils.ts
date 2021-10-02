@@ -3,8 +3,14 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/**
+ * The cell ratio we aim for in a grid
+ */
 const TARGET_CELL_RATIO = 16 / 9;
-const CELL_RATIO_TOLERANCE = 8 / 9;
+/**
+ * The minimum cell ratio in a grid we allow
+ */
+const MINIMUM_CELL_RATIO_ALLOWED = 8 / 9;
 
 const isCloserThan = (A: number, B: number, target: number): boolean => {
   return Math.abs(target - A) < Math.abs(target - B);
@@ -56,8 +62,8 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
   let horizontalFlow = true;
 
   while (rows < numberOfItems) {
-    // If cell ratio is less than CELL_RATIO_TOLERANCE then try more rows
-    if ((rows / cols) * aspectRatio >= CELL_RATIO_TOLERANCE) {
+    // If cell ratio is less than MINIMUM_CELL_RATIO_ALLOWED then try more rows
+    if ((rows / cols) * aspectRatio >= MINIMUM_CELL_RATIO_ALLOWED) {
       // If n is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
       // to fill in the empty spaces
       // e.g. For 2 rows, 3 columns, but only 5 items, we need to choose whether to stetch cells
@@ -72,9 +78,9 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
         const horizontallyStretchedCellRatio = (rows / (cols - 1)) * aspectRatio;
         // Calculate the width-to-height ratio of big cells stretched vertically
         const verticallyStretchedCellRatio = ((rows - 1) / cols) * aspectRatio;
-        // We know the horizontally stretched cells is higher than CELL_RATIO_TOLERANCE. If vertically stretched cells is also higher than
-        // the CELL_TOLERANCE_RATIO, then choose which ratio is better.
-        if (verticallyStretchedCellRatio >= CELL_RATIO_TOLERANCE) {
+        // We know the horizontally stretched cells is higher than MINIMUM_CELL_RATIO_ALLOWED. If vertically stretched cells is also higher than
+        // the MINIMUM_CELL_RATIO_ALLOWED, then choose which ratio is better.
+        if (verticallyStretchedCellRatio >= MINIMUM_CELL_RATIO_ALLOWED) {
           // If vertically stetched cell has a ratio closer to TARGET_CELL_RATIO then change the flow to vertical
           if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_RATIO)) {
             horizontalFlow = false;
