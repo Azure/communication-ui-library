@@ -82,17 +82,17 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      # - name: Get checkout reference
-      #   id: checkoutref
-      #   run: |
-      #     if [ ${{ github.event_name == 'workflow_dispatch' }} ]; then
-      #       echo "::set-output name=ref::''" # use default reference
-      #     else
-      #       echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}" # use head of PR branch
-      #     fi
+      - name: Get checkout reference
+        id: checkoutref
+        run: |
+          if [ ${{ github.event_name == 'workflow_dispatch' }} ]; then
+            echo "::set-output name=ref::''" # use default reference
+          else
+            echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}" # use head of PR branch
+          fi
       - uses: actions/checkout@v2
         with:
-          # ref: ${{ steps.checkoutref.output.ref }}
+          ref: ${{ steps.checkoutref.output.ref }}
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
           # actions, when using the default account, cannot trigger other actions.
@@ -130,17 +130,19 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
       - name: Check for snapshot changes
         id: changescheck
-        run: git diff --exit-code --quiet -- packages/react-composites/tests || (echo "::set-output name=hasChanged::true" && echo "Changes found!")
+        run: |
+          if [[ -z $(git status -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+            exit
+          fi
       - name: Test
         run: echo '${{ steps.changescheck.outputs.hasChanged }}'
-      - name: Test2
-        run: echo '${{ github.event_name }}'
-      - name: Test3
-        run: git diff -- packages/react-composites/tests
-      - name: Test4
-        run: git diff
       - name: Test5
         run: git status
       # Commit changes to snapshot files.
