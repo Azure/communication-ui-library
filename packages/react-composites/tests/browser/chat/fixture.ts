@@ -91,17 +91,7 @@ export const test = base.extend<unknown, ChatWorkerFixtures>({
    */
   pages: [
     async ({ serverUrl, testBrowser, users }, use) => {
-      const pages = await Promise.all(
-        users.map(async (user) => {
-          const page = await loadPage(testBrowser, serverUrl, user);
-          page.on('console', (msg) => {
-            if (msg.type() === 'error') {
-              console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
-            }
-          });
-          return page;
-        })
-      );
+      const pages = await Promise.all(users.map(async (user) => await loadPage(testBrowser, serverUrl, user)));
       await use(pages);
     },
     { scope: 'worker' }
