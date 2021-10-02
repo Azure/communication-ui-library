@@ -82,14 +82,6 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Get checkout reference
-        id: checkoutref
-        run: |
-          if [ ${{ github.event_name == 'workflow_dispatch' }} ]; then
-            echo "::set-output name=ref::''" # use default reference
-          else
-            echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}" # use head of PR branch
-          fi
       - uses: actions/checkout@v2
         with:
           ref: ${{ steps.checkoutref.output.ref }}
@@ -105,56 +97,55 @@ jobs:
         with:
           node-version: '14.x'
       # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v2
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
-      - name: Install dependencies
-        run: rush install
-      - name: Build Test
-        working-directory: ./packages/react-composites
-        run: rushx build:e2e:chat
-      - name: Update snapshot
-        run: rushx test:e2e:chat:update
-        working-directory: ./packages/react-composites
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      # - name: Restore node_modules from cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: common/temp/pnpm-store
+      #     key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # # Install dependencies
+      # - name: Install rush
+      #   run: npm install -g @microsoft/rush@5.47.0
+      # - name: Install dependencies
+      #   run: rush install
+      # - name: Build Test
+      #   working-directory: ./packages/react-composites
+      #   run: rushx build:e2e:chat
+      # - name: Update snapshot
+      #   run: rushx test:e2e:chat:update
+      #   working-directory: ./packages/react-composites
+      #   env:
+      #     CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      # # Setup bot information for pushing new changes
+      # # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      # Check if files have changed
-      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
-      - name: Check for snapshot changes
-        id: changescheck
+      - name: test17
         run: |
-          if [[ -z $(git status -s) ]]
-          then
-            echo "::set-output name=hasChanged::false"
-          else
-            echo "::set-output name=hasChanged::true"
-            exit
-          fi
-      - name: Test
-        run: echo '${{ steps.changescheck.outputs.hasChanged }}'
-      - name: Test5
-        run: git status
-      # Commit changes to snapshot files.
-      - name: Commit new snapshots (from pull request)
-        if: ${{ github.event_name != 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
-        run: |
-          git add packages/react-composites/tests
-          git commit -m 'Updating composite automation snapshots'
-          git push origin HEAD:${{ github.head_ref }}
-      - name: Commit new snapshots (from workflow dispatch)
-        if: ${{ github.event_name == 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
-        run: |
-          git add packages/react-composites/tests
-          git commit -m 'Updating composite automation snapshots'
-          git push
+          git symbolic-ref --short HEAD
+      # # Check if files have changed
+      # # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      # - name: Check for snapshot changes
+      #   id: changescheck
+      #   run: |
+      #     if [[ -z $(git status -s) ]]
+      #     then
+      #       echo "::set-output name=hasChanged::false"
+      #     else
+      #       echo "::set-output name=hasChanged::true"
+      #       exit
+      #     fi
+      # # Commit changes to snapshot files.
+      # - name: Commit new snapshots (from pull request)
+      #   if: ${{ github.event_name != 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
+      #   run: |
+      #     git add packages/react-composites/tests
+      #     git commit -m 'Updating composite automation snapshots'
+      #     git push origin HEAD:${{ github.head_ref }}
+      # - name: Commit new snapshots (from workflow dispatch)
+      #   if: ${{ github.event_name == 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
+      #   run: |
+      #     git add packages/react-composites/tests
+      #     git commit -m 'Updating composite automation snapshots'
+      #     git push
