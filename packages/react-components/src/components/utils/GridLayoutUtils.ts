@@ -43,10 +43,8 @@ export type GridProps = {
  * @returns GridProps
  */
 export const calculateGridProps = (numberOfItems: number, width: number, height: number): GridProps => {
-  if (width <= 0) {
-    throw Error('Width provided [' + width + '] is less than or equal to 0.');
-  } else if (height <= 0) {
-    throw Error('Height provided [' + height + '] is less than or equal to 0.');
+  if (numberOfItems <= 0 || width <= 0 || height <= 0) {
+    return { horizontalFlow: true, numBlocks: 0 };
   }
   const aspectRatio = width / height;
   // Approximate how many rows to divide the grid to achieve cells close to the TARGET_CELL_RATIO
