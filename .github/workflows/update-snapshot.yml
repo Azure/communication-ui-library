@@ -73,7 +73,7 @@ jobs:
             echo "::set-output name=hasChanged::true"
             exit
           fi
-      - name: Commit new snapshots (from workflow dispatch)
+      - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git add packages/react-composites/tests
@@ -143,7 +143,7 @@ jobs:
             echo "::set-output name=hasChanged::true"
             exit
           fi
-      - name: Commit new snapshots (from workflow dispatch)
+      - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git add packages/react-composites/tests
