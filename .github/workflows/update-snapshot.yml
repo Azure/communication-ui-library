@@ -13,7 +13,7 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      # If action dispatched from workflow_dispatch, then check out branch normally
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
@@ -24,7 +24,7 @@ jobs:
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
 
-      # If pull request, then check out pull request head (not merge commit)
+      # If pull request, then check out pull request head (not the default merge commit)
       - uses: actions/checkout@v2
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
@@ -91,7 +91,6 @@ jobs:
       #       echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}" # use head of PR branch
       #     fi
       - uses: actions/checkout@v2
-        if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
           # ref: ${{ steps.checkoutref.output.ref }}
           fetch-depth: 0
@@ -130,7 +129,6 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git checkout -b tempbranch
       # Check if files have changed
       - name: Check for snapshot changes
         id: changescheck
@@ -143,6 +141,8 @@ jobs:
         run: git diff -- packages/react-composites/tests
       - name: Test4
         run: git diff
+      - name: Test5
+        run: git status
       # Commit changes to snapshot files.
       - name: Commit new snapshots (from pull request)
         if: ${{ github.event_name != 'workflow_dispatch' && steps.changescheck.outputs.hasChanged == 'true' }}
