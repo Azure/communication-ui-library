@@ -82,18 +82,18 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Get checkout reference
-        id: checkoutref
-        run: |
-          if [ ${{ github.event_name == 'workflow_dispatch' }} ]; then
-            echo "::set-output name=ref::''" # use default reference
-          else
-            echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}" # use head of PR branch
-          fi
+      # - name: Get checkout reference
+      #   id: checkoutref
+      #   run: |
+      #     if [ ${{ github.event_name == 'workflow_dispatch' }} ]; then
+      #       echo "::set-output name=ref::''" # use default reference
+      #     else
+      #       echo "::set-output name=ref::${{ github.event.pull_request.head.sha }}" # use head of PR branch
+      #     fi
       - uses: actions/checkout@v2
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
-          ref: ${{ steps.checkoutref.output.ref }}
+          # ref: ${{ steps.checkoutref.output.ref }}
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
           # actions, when using the default account, cannot trigger other actions.
