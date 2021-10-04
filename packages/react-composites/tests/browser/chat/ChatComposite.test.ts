@@ -6,8 +6,7 @@ import {
   dataUiId,
   stubMessageTimestamps,
   waitForChatCompositeToLoad,
-  buildUrl,
-  loadUrlInPage
+  buildUrl
 } from '../common/utils';
 import { test } from './fixture';
 import { loadNewPage } from '../common/fixtureHelpers';
@@ -27,7 +26,7 @@ test.describe('Chat Composite E2E Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       const user = users[idx];
-      await loadUrlInPage(page, buildUrl(serverUrl, user));
+      await page.goto(buildUrl(serverUrl, user));
       pageLoadPromises.push(waitForChatCompositeToLoad(page));
       await stubMessageTimestamps(pages[idx]);
     }

@@ -2,8 +2,13 @@
 // Licensed under the MIT license.
 
 import { IDS } from '../common/config';
-import { dataUiId, loadUrlInPage, stubMessageTimestamps } from '../common/utils';
-import { waitForMeetingCompositeToLoad } from '../common/utils';
+import {
+  buildUrl,
+  dataUiId,
+  loadUrlInPage,
+  stubMessageTimestamps,
+  waitForMeetingCompositeToLoad
+} from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
@@ -19,7 +24,7 @@ test.describe('Meeting Composite Pre-Join Tests', () => {
       const user = users[i];
       user.groupId = newTestGuid;
 
-      await loadUrlInPage(page, serverUrl, user);
+      await page.goto(buildUrl(serverUrl, user));
       await waitForMeetingCompositeToLoad(page);
     }
   });

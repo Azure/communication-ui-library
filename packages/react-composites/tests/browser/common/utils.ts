@@ -174,11 +174,3 @@ export const buildUrl = (
   user: ChatUserType | CallUserType | MeetingUserType,
   qArgs?: { [key: string]: string }
 ): string => `${serverUrl}?${encodeQueryData({ ...user, ...qArgs })}`;
-
-/**
- * Helper function to load composite in a new page
- */
-export const loadUrlInPage = async (page: Page, url: string): Promise<void> => {
-  await page.setViewportSize(PAGE_VIEWPORT);
-  await page.goto(url);
-};
