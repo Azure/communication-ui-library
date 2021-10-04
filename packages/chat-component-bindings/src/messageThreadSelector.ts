@@ -10,7 +10,7 @@ import {
   Message,
   MessageAttachedStatus,
   CommunicationParticipant,
-  SystemMessage
+  SystemMessage,
   MessageContentType
 } from '@internal/react-components';
 import { createSelector } from 'reselect';
