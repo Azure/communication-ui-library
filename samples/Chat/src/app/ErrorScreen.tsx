@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, Stack } from '@fluentui/react';
+import { DefaultButton, Stack, Text } from '@fluentui/react';
 import {
   bottomStackFooterStyle,
   buttonStyle,
@@ -32,9 +32,9 @@ export const ErrorScreen = (props: ErrorEndCallProps): JSX.Element => {
       className={endChatContainerStyle}
     >
       <Stack tokens={upperStackTokens}>
-        <div tabIndex={0} className={endChatTitleStyle}>
+        <Text role={'heading'} aria-level={1} className={endChatTitleStyle}>
           {leftCall}
-        </div>
+        </Text>
         <Stack horizontal tokens={buttonsStackTokens}>
           <DefaultButton className={buttonStyle} onClick={props.homeHandler}>
             {goHomePage}

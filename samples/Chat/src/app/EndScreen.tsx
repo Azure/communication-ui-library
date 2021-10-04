@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, PrimaryButton, Stack, Link } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack, Link, Text } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import {
   bottomStackFooterStyle,
@@ -64,9 +64,9 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
       className={endChatContainerStyle}
     >
       <Stack tokens={upperStackTokens}>
-        <div tabIndex={0} className={endChatTitleStyle}>
+        <Text role={'heading'} aria-level={1} className={endChatTitleStyle}>
           {leftCall}
-        </div>
+        </Text>
         <Stack horizontal wrap tokens={buttonsStackTokens}>
           <PrimaryButton
             disabled={isRejoiningThread}
@@ -76,10 +76,10 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
             }}
           >
             <Chat20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
-            <div className={buttonTextStyle}>{isRejoiningThread ? rejoining : rejoinChat}</div>
+            <Text className={buttonTextStyle}>{isRejoiningThread ? rejoining : rejoinChat}</Text>
           </PrimaryButton>
           <DefaultButton className={buttonStyle} onClick={props.homeHandler}>
-            <div className={buttonTextStyle}> {goHomePage}</div>
+            <Text className={buttonTextStyle}> {goHomePage}</Text>
           </DefaultButton>
         </Stack>
         <div className={bottomStackFooterStyle}>
