@@ -132,10 +132,16 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     );
   }
 
-  // Do not show screen share button when composite is optimized for mobile.
+  // Do not show screen share button when composite is optimized for mobile unless the developer
+  // has explicitly opted in.
   const callControlOptions: boolean | CallControlOptions | undefined = options?.callControls;
-  if (options?.mobileView && callControlOptions && typeof props.options !== 'boolean') {
-    (callControlOptions as CallControlOptions).screenShareButton = false;
+  if (
+    options?.mobileView &&
+    callControlOptions &&
+    typeof callControlOptions !== 'boolean' &&
+    callControlOptions.screenShareButton !== true
+  ) {
+    callControlOptions.screenShareButton = false;
   }
 
   const screenShareModalHostId = 'UILibraryMediaGallery';
