@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { CallControls } from '../CallComposite/CallControls';
+import { CallControls, CallControlOptions } from '../CallComposite/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
@@ -19,17 +19,23 @@ export interface MeetingCallControlBarProps {
   peopleButtonChecked: boolean;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
+  isMobileView: boolean;
 }
 
 /**
  * @private
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
+  const callControlsOptions: CallControlOptions = {
+    participantsButton: false,
+    screenShareButton: props.isMobileView
+  };
+
   return (
     <Stack horizontal>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls onEndCallClick={props.onEndCallClick} options={{ participantsButton: false }} />
+          <CallControls onEndCallClick={props.onEndCallClick} options={callControlsOptions} />
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>
