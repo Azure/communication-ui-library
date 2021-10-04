@@ -9,6 +9,7 @@ import { test as base } from '@playwright/test';
 import path from 'path';
 
 const SERVER_URL = 'http://localhost:3000';
+const APP_DIR = path.join(__dirname, 'app');
 
 type ChatWorkerFixture = WorkerFixture<ChatUserType>;
 
@@ -19,7 +20,7 @@ type ChatWorkerFixture = WorkerFixture<ChatUserType>;
  */
 export const test = base.extend<unknown, ChatWorkerFixture>({
   /** @returns string URL for the server. */
-  serverUrl: [createTestServer({ appDir: path.join(__dirname, 'app'), serverUrl: SERVER_URL }), { scope: 'worker' }],
+  serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'worker' }],
 
   /** @returns Browser object. */
   testBrowser: [useChromeBrowser, { scope: 'worker' }],

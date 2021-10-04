@@ -7,14 +7,16 @@ import { createSelector } from 'reselect';
 import { ChatError, ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
 
 /**
- * Select the first fiew active errors from the state for the `ErrorBar` component.
+ * Select the first fiew active errors from the state for the {@link ErrorBar} component.
  *
  * In case there are many errors, only a few top errors are returned to avoid
  * filling up the UI with too many errors.
  *
  * Invariants:
- *   - `ErrorType` is never repeated in the returned errors.
- *   - Errors are returned in a fixed order by `ErrorType`.
+ *   - {@link ErrorType} is never repeated in the returned errors.
+ *   - Errors are returned in a fixed order by {@link ErrorType}.
+ *
+ * @public
  */
 export const errorBarSelector = createSelector([getLatestErrors], (latestErrors): { activeErrors: ActiveError[] } => {
   // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.

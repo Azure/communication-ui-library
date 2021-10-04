@@ -36,7 +36,11 @@ export interface WorkerFixture<IdentityType> {
   pages: Array<Page>;
 }
 
-export const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
+if (!process.env.CONNECTION_STRING) {
+  throw 'No CONNECTION_STRING set in environment variable.';
+}
+
+export const CONNECTION_STRING: string = process.env.CONNECTION_STRING;
 
 export const PAGE_VIEWPORT = {
   width: 1024,

@@ -22,7 +22,9 @@ import { ChatStateModifier } from './StatefulChatClient';
 
 enableMapSet();
 
-// have separated ClientState and ChatThreadState?
+/**
+ * @private
+ */
 export class ChatContext {
   private _state: ChatClientState = {
     userId: <UnknownIdentifierKind>{ id: '' },

@@ -22,7 +22,7 @@ import { buildUrl } from './utils';
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, use) => {
-  const pages = await Promise.all(users.map(async (user) => loadNewPage(testBrowser, buildUrl(serverUrl, user))));
+  const pages = await Promise.all(users.map(async (user) => await loadNewPage(testBrowser, buildUrl(serverUrl, user))));
   await use(pages);
 };
 
@@ -33,7 +33,15 @@ export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, u
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePagePerParticipantWithCallPermissions = async ({ serverUrl, testBrowser, users }, use) => {
   const pages = await Promise.all(
-    users.map(async (user) => loadNewPageWithPermissionsForCalls(testBrowser, buildUrl(serverUrl, user)))
+    users.map(async (user) => {
+      const page = await loadNewPageWithPermissionsForCalls(testBrowser, buildUrl(serverUrl, user));
+      page.on('console', (msg) => {
+        if (msg.type() === 'error') {
+          console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
+        }
+      });
+      return page;
+    })
   );
   await use(pages);
 };
@@ -175,21 +183,4 @@ export const loadNewPageWithPermissionsForCalls = async (browser: Browser, url: 
   await page.setViewportSize(PAGE_VIEWPORT);
   await page.goto(url);
   return page;
-};
-
-/**
- * Helper function to load composite in a new page
- * @param page - page to load the composite in
- * @param serverUrl - url of the test server
- * @param user - user for which to load the page for
- */
-export const loadPageForUser = async (
-  page: Page,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<void> => {
-  const url = buildUrl(serverUrl, user, qArgs);
-  await page.setViewportSize(PAGE_VIEWPORT);
-  await page.goto(url);
 };

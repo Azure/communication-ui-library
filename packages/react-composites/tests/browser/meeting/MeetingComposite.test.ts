@@ -2,16 +2,24 @@
 // Licensed under the MIT license.
 
 import { IDS } from '../common/config';
-import { dataUiId, stubMessageTimestamps } from '../common/utils';
+import { dataUiId, loadUrlInPage, stubMessageTimestamps } from '../common/utils';
 import { waitForMeetingCompositeToLoad } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
+import { v1 as generateGUID } from 'uuid';
 
 test.describe('Meeting Composite Pre-Join Tests', () => {
-  test.beforeEach(async ({ pages }) => {
-    for (const page of pages) {
-      await page.reload();
-      await page.bringToFront();
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await loadUrlInPage(page, serverUrl, user);
       await waitForMeetingCompositeToLoad(page);
     }
   });

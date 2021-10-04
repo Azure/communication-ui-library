@@ -8,6 +8,9 @@ import { MockCommunicationUserCredential } from './MockCommunicationUserCredenti
 
 const seedArray = [0, 1, 2, 3, 4];
 
+/**
+ * @private
+ */
 export const messageTemplate: ChatMessageWithStatus = {
   id: 'MessageId',
   content: { message: 'MessageContent' },
@@ -24,6 +27,9 @@ export const messageTemplate: ChatMessageWithStatus = {
   status: 'delivered'
 };
 
+/**
+ * @private
+ */
 export const mockMessages: ChatMessageWithStatus[] = seedArray.map((seed) => ({
   ...messageTemplate,
   id: 'MessageId' + seed,
@@ -31,18 +37,27 @@ export const mockMessages: ChatMessageWithStatus[] = seedArray.map((seed) => ({
   sender: { kind: 'communicationUser', communicationUserId: 'User' + seed }
 }));
 
+/**
+ * @private
+ */
 export const participantTemplate: ChatParticipant = {
   id: { communicationUserId: 'id1' },
   displayName: 'user1',
   shareHistoryTime: new Date(0)
 };
 
+/**
+ * @private
+ */
 export const mockParticipants: ChatParticipant[] = seedArray.map((seed) => ({
   ...participantTemplate,
   id: { communicationUserId: `id${seed}` },
   displayName: `user${seed}`
 }));
 
+/**
+ * @private
+ */
 export const mockReadReceipts: ChatMessageReadReceipt[] = seedArray.map((seed) => ({
   chatMessageId: `id${seed}`,
   readOn: new Date(seed * 10000),
@@ -65,6 +80,9 @@ const emptyAsyncFunctionWithResponse = async (): Promise<any> => {
   return { _response: {} as any };
 };
 
+/**
+ * @private
+ */
 export const createMockChatThreadClient = (threadId: string): ChatThreadClient => {
   const mockChatThreadClient = new ChatThreadClient(threadId, '', new MockCommunicationUserCredential());
   mockChatThreadClient.listMessages = mockListMessages;
