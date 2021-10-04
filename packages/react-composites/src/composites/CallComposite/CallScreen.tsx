@@ -37,6 +37,7 @@ import {
   mediaGalleryContainerStyles,
   subContainerStyles
 } from './styles/CallScreen.styles';
+import { CallControlOptions } from './CallControls';
 
 /**
  * @private
@@ -131,6 +132,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     );
   }
 
+  // Do not show screen share button when composite is optimized for mobile.
+  const callControlOptions: boolean | CallControlOptions | undefined = options?.callControls;
+  if (options?.mobileView && callControlOptions && typeof props.options !== 'boolean') {
+    (callControlOptions as CallControlOptions).screenShareButton = false;
+  }
+
   const screenShareModalHostId = 'UILibraryMediaGallery';
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
@@ -177,13 +184,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          {options?.callControls !== false && (
+          {callControlOptions !== false && (
             <Stack.Item className={callControlsContainer}>
               <CallControls
                 onEndCallClick={endCallHandler}
                 callInvitationURL={callInvitationURL}
                 onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-                options={options?.callControls}
+                options={callControlOptions}
               />
             </Stack.Item>
           )}
