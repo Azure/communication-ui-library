@@ -31,10 +31,17 @@ test.describe('Meeting Composite Pre-Join Tests', () => {
 });
 
 test.describe('Meeting Composite Meeting Page Tests', () => {
-  test.beforeEach(async ({ pages }) => {
-    for (const page of pages) {
-      await page.reload();
-      await page.bringToFront();
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await loadUrlInPage(page, serverUrl, user);
       await waitForMeetingCompositeToLoad(page);
 
       // Join Meeting for each participant
