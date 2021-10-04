@@ -2,9 +2,7 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { waitForCallCompositeToLoad, buildUrl } from '../common/utils';
-import { loadNewPageWithPermissionsForCalls } from '../common/fixtureHelpers';
-import { waitForCallCompositeToLoad, loadCallScreen, loadUrlInPage } from '../common/utils';
+import { waitForCallCompositeToLoad, loadCallScreen, buildUrl } from '../common/utils';
 import { expect } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 
@@ -19,8 +17,7 @@ test.describe('Localization tests', async () => {
 
     // Load different locale for locale tests
     const page = pages[0];
-    const url = buildUrl(serverUrl, users[0], { useFrLocale: 'true' });
-    await loadUrlInPage(page, url);
+    await page.goto(buildUrl(serverUrl, users[0], { useFrLocale: 'true' }));
     await waitForCallCompositeToLoad(page);
   });
 
