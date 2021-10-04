@@ -19,7 +19,7 @@ export interface MeetingCallControlBarProps {
   peopleButtonChecked: boolean;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
-  isMobileView: boolean;
+  mobileView?: boolean;
 }
 
 /**
@@ -28,8 +28,8 @@ export interface MeetingCallControlBarProps {
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   const callControlsOptions: CallControlOptions = {
     participantsButton: false,
-    screenShareButton: props.isMobileView,
-    compressedMode: props.isMobileView
+    screenShareButton: props.mobileView,
+    compressedMode: props.mobileView
   };
 
   return (
