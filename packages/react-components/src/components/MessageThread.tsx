@@ -318,6 +318,7 @@ const memoizeAllMessages = memoizeFnAll(
       const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
       const chatGutterStyles =
         payload.attached === 'top' || payload.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
+
       return {
         gutter: {
           styles: chatGutterStyles,
