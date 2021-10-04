@@ -14,7 +14,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
-// @public (undocumented)
+// @public
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
@@ -40,13 +40,13 @@ export type ChatErrors = {
 // @public
 export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
 
-// @public (undocumented)
+// @public
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: MessageStatus;
 };
 
-// @public (undocumented)
+// @public
 export type ChatThreadClientState = {
     chatMessages: {
         [key: string]: ChatMessageWithStatus;
@@ -61,7 +61,7 @@ export type ChatThreadClientState = {
     latestReadTime: Date;
 };
 
-// @public (undocumented)
+// @public
 export type ChatThreadProperties = {
     topic?: string;
 };
@@ -69,13 +69,10 @@ export type ChatThreadProperties = {
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
-// @public (undocumented)
+// @public
 export interface StatefulChatClient extends ChatClient {
-    // (undocumented)
     getState(): ChatClientState;
-    // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
 

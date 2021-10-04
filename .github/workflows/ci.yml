@@ -96,16 +96,12 @@ jobs:
       - name: Build Test
         run: |
           cd packages/react-composites
-          rushx build:e2e:chat
-          rushx build:e2e:call
-          rushx build:e2e:meeting
+          rushx build:e2e
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
           cd packages/react-composites
-          rushx test:e2e:chat
-          rushx test:e2e:call
-          rushx test:e2e:meeting
+          rushx test:e2e
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff

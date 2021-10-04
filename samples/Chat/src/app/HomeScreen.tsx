@@ -1,19 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IImageStyles, Icon, Image, PrimaryButton, Spinner, Stack, Link } from '@fluentui/react';
+import { IImageStyles, Icon, Image, Link, List, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
   buttonStyle,
+  configContainerStackTokens,
+  configContainerStyle,
   containerTokens,
+  containerStyle,
   headerStyle,
-  iconStyle,
+  listIconStyle,
+  listItemStackTokens,
+  listItemStyle,
   imgStyle,
   listStyle,
   nestedStackTokens,
   startChatTextStyle,
-  upperStackStyle,
-  upperStackTokens,
+  infoContainerStyle,
+  infoContainerStackTokens,
   videoCameraIconStyle
 } from './styles/HomeScreen.styles';
 
@@ -77,53 +82,60 @@ export default (): JSX.Element => {
     return <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />;
   };
 
+  const onRenderListItem = (item?: string, index?: number) => {
+    const listText =
+      index !== 3 ? (
+        <Text>{item}</Text>
+      ) : (
+        <Text>
+          {item}{' '}
+          <Link href="https://docs.microsoft.com/azure/communication-services/overview" aria-label={`${item} sample`}>
+            {'sample'}
+          </Link>
+        </Text>
+      );
+    return (
+      <Stack horizontal tokens={listItemStackTokens} className={listItemStyle}>
+        <Icon className={listIconStyle} iconName={iconName} />
+        {listText}
+      </Stack>
+    );
+  };
+
   const displayHomeScreen = (): JSX.Element => {
     return (
-      <div>
-        <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={containerTokens}>
-          <Stack className={upperStackStyle} tokens={upperStackTokens}>
-            <div tabIndex={0} className={headerStyle}>
-              {headerTitle}
-            </div>
+      <Stack
+        horizontal
+        wrap
+        horizontalAlign="center"
+        verticalAlign="center"
+        tokens={containerTokens}
+        className={containerStyle}
+      >
+        <Stack className={infoContainerStyle} tokens={infoContainerStackTokens}>
+          <Text role={'heading'} aria-level={1} className={headerStyle}>
+            {headerTitle}
+          </Text>
+          <Stack className={configContainerStyle} tokens={configContainerStackTokens}>
             <Stack tokens={nestedStackTokens}>
-              <ul className={listStyle}>
-                <li tabIndex={0}>
-                  <Icon className={iconStyle} iconName={iconName} /> {listItems[0]}
-                </li>
-                <li tabIndex={0}>
-                  <Icon className={iconStyle} iconName={iconName} /> {listItems[1]}
-                </li>
-                <li tabIndex={0}>
-                  <Icon className={iconStyle} iconName={iconName} /> {listItems[2]}
-                </li>
-                <li tabIndex={0}>
-                  <Icon className={iconStyle} iconName={iconName} /> {listItems[3]}{' '}
-                  <Link href="https://docs.microsoft.com/azure/communication-services/overview">sample</Link>
-                </li>
-              </ul>
+              <List className={listStyle} items={listItems} onRenderCell={onRenderListItem} />
             </Stack>
             <PrimaryButton
               id="startChat"
-              role="main"
               aria-label="Start chat"
               className={buttonStyle}
               onClick={() => {
                 onCreateThread();
               }}
             >
-              <Chat20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
-              <div className={startChatTextStyle}>{startChatButtonText}</div>
+              <Chat20Filled className={videoCameraIconStyle} />
+              <Text className={startChatTextStyle}>{startChatButtonText}</Text>
             </PrimaryButton>
             <ThemeSelector label="Theme" horizontal={true} />
           </Stack>
-          <Image
-            styles={imageStyleProps}
-            alt="Welcome to the ACS Chat sample app"
-            className={imgStyle}
-            {...imageProps}
-          />
         </Stack>
-      </div>
+        <Image styles={imageStyleProps} alt="Welcome to the ACS Chat sample app" className={imgStyle} {...imageProps} />
+      </Stack>
     );
   };
 

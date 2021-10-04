@@ -43,6 +43,11 @@ const convertSdkTypingIndicatorsToCommunicationParticipants = (
   }));
 };
 
+/**
+ * Selector for {@link TypingIndicator} component.
+ *
+ * @public
+ */
 export const typingIndicatorSelector = reselect.createSelector(
   [getTypingIndicators, getParticipants, getUserId],
   (
