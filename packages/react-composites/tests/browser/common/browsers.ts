@@ -23,8 +23,7 @@ const CHROME_BROWSER_CONFIGURATION: LaunchOptions = {
   ],
   ignoreDefaultArgs: [
     '--hide-scrollbars' // Don't hide scrollbars in headless mode.
-  ],
-  headless: true
+  ]
 };
 
 /**

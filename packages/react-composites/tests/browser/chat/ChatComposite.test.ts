@@ -55,9 +55,10 @@ test.describe('Chat Composite E2E Tests', () => {
     stubMessageTimestamps(page1);
 
     // It could be too slow to get typing indicator here, which makes the test flacky
-    // so wait for typing indicator disappearing
+    // so wait for typing indicator disappearing, @Todo: stub out typing indicator instead.
+    page1.waitForTimeout(1000); // ensure typing indicator has had time to appear
     const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
+    typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
 
     expect(await page1.screenshot()).toMatchSnapshot('receive-message.png');
 
