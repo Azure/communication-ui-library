@@ -4,10 +4,12 @@ import {
   waitForCallCompositeToLoad,
   dataUiId,
   disableAnimation,
-  loadCallScreenWithParticipantVideos
+  loadCallScreenWithParticipantVideos,
+  loadUrlInPage
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
+import { v1 as generateGUID } from 'uuid';
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
@@ -25,9 +27,23 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
 };
 
 test.describe('Call Composite E2E Tests', () => {
+  test.beforeEach(async ({ pages, serverUrl, users }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await loadUrlInPage(page, serverUrl, user);
+      await waitForCallCompositeToLoad(page);
+    }
+  });
+
   test('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
-      await waitForCallCompositeToLoad(pages[idx]);
       await pages[idx].waitForSelector(dataUiId('call-composite-device-settings'));
       await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));
       await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
@@ -58,12 +74,20 @@ test.describe('Call Composite E2E Tests', () => {
 
 test.describe('Call Composite E2E CallScreen Tests', () => {
   // Make sure tests can still run well after retries
-  test.beforeEach(async ({ pages }) => {
-    // In case it is retry logic
-    for (const page of pages) {
-      await page.reload();
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await loadUrlInPage(page, serverUrl, user);
       await waitForCallCompositeToLoad(page);
     }
+
     await loadCallScreenWithParticipantVideos(pages);
   });
 

@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, PrimaryButton, Stack, Link } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack, Link, Text } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import {
   bottomStackFooterStyle,
   buttonStyle,
   buttonTextStyle,
   buttonsStackTokens,
-  endCallContainerStyle,
-  endCallTitleStyle,
+  endChatContainerStyle,
+  endChatTitleStyle,
   mainStackTokens,
   upperStackTokens,
   videoCameraIconStyle
@@ -55,12 +55,19 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
     'https://docs.microsoft.com/answers/search.html?c=&includeChildren=&f=&type=question+OR+idea+OR+kbentry+OR+answer+OR+topic+OR+user&redirect=search%2Fsearch&sort=relevance&q=azure-communication-services';
 
   return (
-    <Stack verticalAlign="center" tokens={mainStackTokens} className={endCallContainerStyle}>
+    <Stack
+      horizontal
+      wrap
+      horizontalAlign="center"
+      verticalAlign="center"
+      tokens={mainStackTokens}
+      className={endChatContainerStyle}
+    >
       <Stack tokens={upperStackTokens}>
-        <div tabIndex={0} className={endCallTitleStyle}>
+        <Text role={'heading'} aria-level={1} className={endChatTitleStyle}>
           {leftCall}
-        </div>
-        <Stack horizontal tokens={buttonsStackTokens}>
+        </Text>
+        <Stack horizontal wrap tokens={buttonsStackTokens}>
           <PrimaryButton
             disabled={isRejoiningThread}
             className={buttonStyle}
@@ -69,17 +76,17 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
             }}
           >
             <Chat20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
-            <div className={buttonTextStyle}>{isRejoiningThread ? rejoining : rejoinChat}</div>
+            <Text className={buttonTextStyle}>{isRejoiningThread ? rejoining : rejoinChat}</Text>
           </PrimaryButton>
           <DefaultButton className={buttonStyle} onClick={props.homeHandler}>
-            <div className={buttonTextStyle}> {goHomePage}</div>
+            <Text className={buttonTextStyle}> {goHomePage}</Text>
           </DefaultButton>
         </Stack>
+        <div className={bottomStackFooterStyle}>
+          <Link href={feedbackLink}>Give Feedback</Link>
+          &nbsp;on this sample app at Microsoft Q&amp;A
+        </div>
       </Stack>
-      <div className={bottomStackFooterStyle}>
-        <Link href={feedbackLink}>Give Feedback</Link>
-        &nbsp;on this sample app at Microsoft Q&amp;A
-      </div>
     </Stack>
   );
 };

@@ -39,15 +39,8 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
-
-  await page.waitForFunction(
-    (args) => {
-      const callButton = document.querySelector(args.startCallButtonSelector);
-      const callButtonEnabled = callButton && callButton.ariaDisabled !== 'true';
-      return callButtonEnabled;
-    },
-    { startCallButtonSelector: dataUiId('call-composite-start-call-button') }
-  );
+  const startCallButton = await page.waitForSelector(dataUiId('call-composite-start-call-button'));
+  await startCallButton.waitForElementState('enabled');
 };
 
 /**
