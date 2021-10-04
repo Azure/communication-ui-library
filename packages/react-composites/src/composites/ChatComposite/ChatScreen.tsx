@@ -32,7 +32,10 @@ import {
   participantListContainerPadding,
   participantListStack,
   participantListStyle,
-  participantListWrapper
+  participantListWrapper,
+  messageThreadCallCompositeStyles,
+  sendBoxCallCompositeStyles,
+  typingIndicatorCallCompositeStyles
 } from './styles/Chat.styles';
 
 /**
@@ -95,6 +98,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
+  const sendBoxStyles = Object.assign({}, sendBoxCallCompositeStyles, styles?.sendBox);
+  const messageThreadStyles = Object.assign({}, messageThreadCallCompositeStyles, styles?.messageThread);
+  const typingIndicatorStyles = Object.assign({}, typingIndicatorCallCompositeStyles, styles?.typingIndicator);
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -106,17 +113,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
-            styles={styles?.messageThread}
+            styles={messageThreadStyles}
           />
           <Stack.Item align="center" className={sendBoxParentStyle}>
             <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
               {onRenderTypingIndicator ? (
                 onRenderTypingIndicator(typingIndicatorProps.typingUsers)
               ) : (
-                <TypingIndicator {...typingIndicatorProps} styles={styles?.typingIndicator} />
+                <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox {...sendBoxProps} styles={styles?.sendBox} />
+            <SendBox {...sendBoxProps} styles={sendBoxStyles} />
           </Stack.Item>
         </Stack>
         {options?.participantPane !== false && (

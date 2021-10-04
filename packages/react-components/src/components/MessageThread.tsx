@@ -14,7 +14,9 @@ import {
   defaultMyChatItemMessageContainer,
   defaultChatItemMessageContainer,
   defaultMyChatMessageContainer,
-  defaultChatMessageContainer
+  defaultChatMessageContainer,
+  gutterWithAvatar,
+  gutterWithHiddenAvatar
 } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -317,10 +319,7 @@ const memoizeAllMessages = memoizeFnAll(
 
       return {
         gutter: {
-          styles: {
-            position: 'relative',
-            float: 'left'
-          },
+          styles: payload.attached === 'top' ? gutterWithAvatar : gutterWithHiddenAvatar,
           content: payload.mine ? (
             ''
           ) : onRenderAvatar ? (
@@ -355,7 +354,7 @@ const memoizeAllMessages = memoizeFnAll(
             </Flex>
           )
         },
-        attached: payload.attached,
+        attached: message.payload.attached,
         key: _messageKey
       };
     } else if (message.type === 'system') {

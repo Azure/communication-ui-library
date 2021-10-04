@@ -31,8 +31,7 @@ export const messageThreadContainerStyle = mergeStyles({
   maxHeight: '100%',
   overflow: 'auto',
   position: 'relative',
-  alignSelf: 'center',
-  maxWidth: '41.25rem'
+  alignSelf: 'center'
 });
 
 /**
@@ -108,6 +107,26 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
   minWidth: '0%',
   marginRight: '0rem'
+};
+
+/**
+ * @private
+ */
+export const gutterWithAvatar: ComponentSlotStyle = {
+  position: 'relative',
+  float: 'left',
+  display: 'block',
+  visibility: 'visible'
+};
+
+/**
+ * @private
+ */
+export const gutterWithHiddenAvatar: ComponentSlotStyle = {
+  position: 'relative',
+  float: 'left',
+  display: 'block',
+  visibility: 'hidden'
 };
 
 /**

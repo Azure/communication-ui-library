@@ -18,7 +18,6 @@ export const typingIndicatorStringStyle = mergeStyles({
   whiteSpace: 'pre',
   display: 'flex',
   alignItems: 'center',
-  maxWidth: '41.25rem',
   width: '100%',
   alignSelf: 'center'
 });

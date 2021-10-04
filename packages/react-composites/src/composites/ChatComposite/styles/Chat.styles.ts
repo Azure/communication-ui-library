@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
+import { MessageThreadStyles, SendBoxStylesProps, TypingIndicatorStylesProps } from '@internal/react-components';
 
 /**
  * @private
@@ -107,3 +108,20 @@ export const participantListStyle = mergeStyles({
   height: '100%',
   overflow: 'auto'
 });
+
+/**
+ * @private
+ */
+export const sendBoxCallCompositeStyles: SendBoxStylesProps = { textFieldContainer: { maxWidth: '41.25rem' } };
+
+/**
+ * @private
+ */
+export const messageThreadCallCompositeStyles: MessageThreadStyles = { root: { maxWidth: '41.25rem' } };
+
+/**
+ * @private
+ */
+export const typingIndicatorCallCompositeStyles: TypingIndicatorStylesProps = {
+  typingString: { maxWidth: '41.25rem' }
+};
