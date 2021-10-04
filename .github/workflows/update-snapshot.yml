@@ -77,7 +77,7 @@ jobs:
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git add packages/react-composites/tests
-          git commit -m 'Updating composite automation snapshots'
+          git commit -m 'Update js bundle automation snapshots'
           git push
 
   update_composite_snapshot:
@@ -147,5 +147,5 @@ jobs:
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git add packages/react-composites/tests
-          git commit -m 'Updating composite automation snapshots'
+          git commit -m 'Update composite automation snapshots'
           git push
