@@ -132,6 +132,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     );
   }
 
+  // Reduce the controls shown when mobile view is enabled.
   let callControlOptions: false | CallControlOptions =
     options?.callControls !== false ? (options?.callControls === true ? {} : options?.callControls || {}) : false;
   if (callControlOptions && options?.mobileView) {
