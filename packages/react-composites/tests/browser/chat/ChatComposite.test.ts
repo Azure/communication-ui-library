@@ -36,7 +36,7 @@ test.describe('Chat Composite E2E Tests', () => {
   test('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
       await pages[idx].waitForSelector(dataUiId(IDS.sendboxTextfield));
-      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen2.png`);
+      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
     }
   });
 
