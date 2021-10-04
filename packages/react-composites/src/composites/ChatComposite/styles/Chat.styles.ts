@@ -4,6 +4,8 @@
 import { mergeStyles } from '@fluentui/react';
 import { MessageThreadStyles, SendBoxStylesProps, TypingIndicatorStylesProps } from '@internal/react-components';
 
+const MESSAGE_THREAD_WIDTH = '41.25rem';
+
 /**
  * @private
  */
@@ -112,16 +114,18 @@ export const participantListStyle = mergeStyles({
 /**
  * @private
  */
-export const sendBoxChatCompositeStyles: SendBoxStylesProps = { textFieldContainer: { maxWidth: '41.25rem' } };
+export const sendBoxChatCompositeStyles: SendBoxStylesProps = {
+  textFieldContainer: { maxWidth: MESSAGE_THREAD_WIDTH }
+};
 
 /**
  * @private
  */
-export const messageThreadChatCompositeStyles: MessageThreadStyles = { root: { maxWidth: '41.25rem' } };
+export const messageThreadChatCompositeStyles: MessageThreadStyles = { root: { maxWidth: MESSAGE_THREAD_WIDTH } };
 
 /**
  * @private
  */
 export const typingIndicatorChatCompositeStyles: TypingIndicatorStylesProps = {
-  typingString: { maxWidth: '41.25rem' }
+  typingString: { maxWidth: MESSAGE_THREAD_WIDTH }
 };
