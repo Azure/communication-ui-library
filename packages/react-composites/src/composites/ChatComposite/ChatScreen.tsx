@@ -33,9 +33,9 @@ import {
   participantListStack,
   participantListStyle,
   participantListWrapper,
-  messageThreadCallCompositeStyles,
-  sendBoxCallCompositeStyles,
-  typingIndicatorCallCompositeStyles
+  messageThreadChatCompositeStyles,
+  sendBoxChatCompositeStyles,
+  typingIndicatorChatCompositeStyles
 } from './styles/Chat.styles';
 
 /**
@@ -98,9 +98,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  const sendBoxStyles = Object.assign({}, sendBoxCallCompositeStyles, styles?.sendBox);
-  const messageThreadStyles = Object.assign({}, messageThreadCallCompositeStyles, styles?.messageThread);
-  const typingIndicatorStyles = Object.assign({}, typingIndicatorCallCompositeStyles, styles?.typingIndicator);
+  const sendBoxStyles = Object.assign({}, sendBoxChatCompositeStyles, styles?.sendBox);
+  const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
+  const typingIndicatorStyles = Object.assign({}, typingIndicatorChatCompositeStyles, styles?.typingIndicator);
 
   return (
     <Stack className={chatContainer} grow>

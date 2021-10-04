@@ -112,16 +112,16 @@ export const participantListStyle = mergeStyles({
 /**
  * @private
  */
-export const sendBoxCallCompositeStyles: SendBoxStylesProps = { textFieldContainer: { maxWidth: '41.25rem' } };
+export const sendBoxChatCompositeStyles: SendBoxStylesProps = { textFieldContainer: { maxWidth: '41.25rem' } };
 
 /**
  * @private
  */
-export const messageThreadCallCompositeStyles: MessageThreadStyles = { root: { maxWidth: '41.25rem' } };
+export const messageThreadChatCompositeStyles: MessageThreadStyles = { root: { maxWidth: '41.25rem' } };
 
 /**
  * @private
  */
-export const typingIndicatorCallCompositeStyles: TypingIndicatorStylesProps = {
+export const typingIndicatorChatCompositeStyles: TypingIndicatorStylesProps = {
   typingString: { maxWidth: '41.25rem' }
 };
