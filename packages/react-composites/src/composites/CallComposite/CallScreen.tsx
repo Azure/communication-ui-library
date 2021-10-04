@@ -136,6 +136,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   let callControlOptions: false | CallControlOptions =
     options?.callControls !== false ? (options?.callControls === true ? {} : options?.callControls || {}) : false;
   if (callControlOptions && options?.mobileView) {
+    callControlOptions.compressedMode = true;
     callControlOptions = reduceControlsSetForMobile(callControlOptions);
   }
 
