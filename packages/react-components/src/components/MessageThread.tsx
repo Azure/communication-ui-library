@@ -316,10 +316,11 @@ const memoizeAllMessages = memoizeFnAll(
 
       const myChatItemMessageStyle = styles?.myChatItemMessageContainer || defaultMyChatItemMessageContainer;
       const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
-
+      const chatGutterStyles =
+        payload.attached === 'top' || payload.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
       return {
         gutter: {
-          styles: payload.attached === 'top' ? gutterWithAvatar : gutterWithHiddenAvatar,
+          styles: chatGutterStyles,
           content: payload.mine ? (
             ''
           ) : onRenderAvatar ? (
