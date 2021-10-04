@@ -96,11 +96,11 @@ jobs:
       - name: Build Test
         run: |
           cd packages/react-composites
-          rushx build:e2e:chat
+          rushx build:e2e
       - name: Update snapshot
         run: |
           cd packages/react-composites
-          rushx test:e2e:chat:update
+          rushx test:e2e:update
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       # Setup bot information for pushing new changes
