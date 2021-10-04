@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { DefaultButton, PrimaryButton, Stack } from '@fluentui/react';
+import { DefaultButton, PrimaryButton, Stack, Text } from '@fluentui/react';
 import { Video20Filled } from '@fluentui/react-icons';
 import {
   endCallContainerStyle,
@@ -37,7 +37,9 @@ export const CallError = (props: CallErrorProps): JSX.Element => {
       className={endCallContainerStyle}
     >
       <Stack tokens={upperStackTokens}>
-        <div className={endCallTitleStyle}>{title}</div>
+        <Text role={'heading'} aria-level={1} className={endCallTitleStyle}>
+          {title}
+        </Text>
         <Stack horizontal tokens={buttonsStackTokens}>
           <PrimaryButton className={buttonStyle} onClick={props.rejoinHandler}>
             <Video20Filled className={videoCameraIconStyle} primaryFill="currentColor" />

@@ -114,7 +114,7 @@ const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): un
  */
 const sortedRemoteParticipants = (
   participants?: VideoGalleryRemoteParticipant[],
-  dominantSpeakers?: string[]
+  dominantSpeakers?: Record<string, number>
 ): VideoGalleryRemoteParticipant[] => {
   if (!participants) return [];
 
@@ -129,14 +129,11 @@ const sortedRemoteParticipants = (
     }
   });
 
-  const speakersList: Record<string, number> = {};
-  dominantSpeakers?.forEach((speaker, idx) => (speakersList[speaker] = idx));
-
   // If dominantSpeakers are available, we sort the video tiles basis on dominant speakers.
   if (dominantSpeakers) {
     participantsWithVideo.sort((a, b) => {
-      const idxA = speakersList[a.userId];
-      const idxB = speakersList[b.userId];
+      const idxA = dominantSpeakers[a.userId];
+      const idxB = dominantSpeakers[b.userId];
       if (idxA === undefined && idxB === undefined) return 0; // Both a and b don't exist in dominant speakers.
       if (idxA === undefined && idxB >= 0) return 1; // b exists in dominant speakers.
       if (idxB === undefined && idxA >= 0) return -1; // a exists in dominant speakers.
@@ -144,8 +141,8 @@ const sortedRemoteParticipants = (
     });
 
     participantsWithoutVideo.sort((a, b) => {
-      const idxA = speakersList[a.userId];
-      const idxB = speakersList[b.userId];
+      const idxA = dominantSpeakers[a.userId];
+      const idxB = dominantSpeakers[b.userId];
       if (idxA === undefined && idxB === undefined) return 0; // Both a and b don't exist in dominant speakers.
       if (idxA === undefined && idxB >= 0) return 1; // b exists in dominant speakers.
       if (idxB === undefined && idxA >= 0) return -1; // a exists in dominant speakers.
@@ -153,7 +150,8 @@ const sortedRemoteParticipants = (
     });
   }
 
-  return participantsWithVideo.concat(participantsWithoutVideo);
+  const allSpeakers = participantsWithVideo.concat(participantsWithoutVideo);
+  return allSpeakers;
 };
 
 /**
@@ -187,6 +185,11 @@ export const videoGallerySelector = createSelector(
         ? remoteParticipants[screenShareRemoteParticipantId]
         : undefined;
     const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
+
+    const dominantSpeakerIds = dominantSpeakersWithFlatId(dominantSpeakers);
+    const dominantSpeakersMap: Record<string, number> = {};
+    dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
+
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -210,7 +213,7 @@ export const videoGallerySelector = createSelector(
       },
       remoteParticipants: sortedRemoteParticipants(
         videoGalleryRemoteParticipantsMemo(remoteParticipants),
-        dominantSpeakersWithFlatId(dominantSpeakers)
+        dominantSpeakersMap
       )
     };
   }

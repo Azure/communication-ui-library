@@ -22,7 +22,7 @@ import { buildUrl } from './utils';
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, use) => {
-  const pages = await Promise.all(users.map(async (user) => loadPage(testBrowser, serverUrl, user)));
+  const pages = await Promise.all(users.map(async (user) => await loadPage(testBrowser, serverUrl, user)));
   await use(pages);
 };
 
@@ -33,7 +33,15 @@ export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, u
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePagePerParticipantWithCallPermissions = async ({ serverUrl, testBrowser, users }, use) => {
   const pages = await Promise.all(
-    users.map(async (user) => loadPageWithPermissionsForCalls(testBrowser, serverUrl, user))
+    users.map(async (user) => {
+      const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, user);
+      page.on('console', (msg) => {
+        if (msg.type() === 'error') {
+          console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
+        }
+      });
+      return page;
+    })
   );
   await use(pages);
 };
