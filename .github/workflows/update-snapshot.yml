@@ -125,9 +125,9 @@ jobs:
         run: rush install
       - name: Build Test
         working-directory: ./packages/react-composites
-        run: rushx build:e2e:chat
+        run: rushx build:e2e
       - name: Update snapshot
-        run: rushx test:e2e:chat:update
+        run: rushx test:e2e:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
