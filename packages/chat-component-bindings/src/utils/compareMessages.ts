@@ -3,6 +3,9 @@
 
 import { Message } from '@internal/react-components';
 
+/**
+ * @private
+ */
 export const compareMessages = (firstMessage: Message, secondMessage: Message): number => {
   if (firstMessage.createdOn === undefined) {
     return 1;

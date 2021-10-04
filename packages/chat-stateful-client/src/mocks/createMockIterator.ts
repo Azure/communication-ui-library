@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * @private
+ */
 export const createMockIterator = <T>(mockItems: T[]): any => {
   let i = 0;
   const end = mockItems.length;

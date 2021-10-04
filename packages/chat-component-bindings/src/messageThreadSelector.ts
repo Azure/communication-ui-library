@@ -1,13 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  getChatMessages,
-  getIsLargeGroup,
-  getLatestReadTime,
-  getUserId,
-  sanitizedMessageContentType
-} from './baseSelectors';
+import { getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
@@ -17,6 +11,7 @@ import {
   MessageAttachedStatus,
   CommunicationParticipant,
   SystemMessage
+  MessageContentType
 } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { compareMessages } from './utils/compareMessages';
@@ -94,6 +89,11 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): SystemMessage
   }
 };
 
+/**
+ * Select for {@link MessageThread} component.
+ *
+ * @public
+ */
 export const messageThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
   (userId, chatMessages, latestReadTime, isLargeGroup) => {
@@ -131,7 +131,7 @@ export const messageThreadSelector = createSelector(
   }
 );
 
-export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[], userId: string): void => {
+const updateMessagesWithAttached = (chatMessagesWithStatus: Message[], userId: string): void => {
   chatMessagesWithStatus.sort(compareMessages);
 
   chatMessagesWithStatus.forEach((message, index, messages) => {
@@ -185,4 +185,11 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[], us
     message.attached = attached;
     message.mine = mine;
   });
+};
+
+const sanitizedMessageContentType = (type: string): MessageContentType => {
+  const lowerCaseType = type.toLowerCase();
+  return lowerCaseType === 'text' || lowerCaseType === 'html' || lowerCaseType === 'richtext/html'
+    ? lowerCaseType
+    : 'unknown';
 };

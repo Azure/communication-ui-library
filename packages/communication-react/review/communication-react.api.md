@@ -432,7 +432,7 @@ export type CallingHandlers = {
     onDisposeLocalStreamView: () => Promise<void>;
 };
 
-// @public (undocumented)
+// @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
 // @public
@@ -583,7 +583,7 @@ export type ChatAdapterUiState = {
     error?: Error;
 };
 
-// @public (undocumented)
+// @public
 export type ChatBaseSelectorProps = {
     threadId: string;
 };
@@ -591,13 +591,13 @@ export type ChatBaseSelectorProps = {
 // @public
 export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type ChatClientProviderProps = {
     children: React_2.ReactNode;
     chatClient: StatefulChatClient;
 };
 
-// @public (undocumented)
+// @public
 export type ChatClientState = {
     userId: CommunicationIdentifierKind;
     displayName: string;
@@ -664,7 +664,7 @@ export type ChatErrors = {
 // @public
 export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
 
-// @public (undocumented)
+// @public
 export type ChatHandlers = {
     onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
@@ -702,13 +702,13 @@ export interface ChatMessage extends MessageCommon {
     status?: MessageStatus;
 }
 
-// @public (undocumented)
+// @public
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
 };
 
-// @public (undocumented)
+// @public
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     participants: CommunicationParticipant[];
@@ -719,19 +719,19 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
     participants: CommunicationParticipant[];
 }>;
 
-// @public (undocumented)
+// @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type ChatThreadClientProviderProps = {
     children: React_2.ReactNode;
     chatThreadClient: ChatThreadClient;
 };
 
-// @public (undocumented)
+// @public
 export type ChatThreadClientState = {
     chatMessages: {
         [key: string]: ChatMessageWithStatus;
@@ -746,12 +746,12 @@ export type ChatThreadClientState = {
     latestReadTime: Date;
 };
 
-// @public (undocumented)
+// @public
 export type ChatThreadProperties = {
     topic?: string;
 };
 
-// @public (undocumented)
+// @public
 export type ClientState = CallClientState & ChatClientState;
 
 // @public
@@ -818,7 +818,7 @@ export interface ComponentLocale {
     strings: ComponentStrings;
 }
 
-// @public (undocumented)
+// @public
 export type ComponentProps<Component extends (props: any) => JSX.Element> = ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
 
 // @public
@@ -968,7 +968,7 @@ export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, cre
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
-// @public (undocumented)
+// @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
 // @public
@@ -1157,10 +1157,10 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
-// @public (undocumented)
+// @public
 export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof messageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof chatErrorBarSelector : undefined;
 
-// @public (undocumented)
+// @public
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
 
 // @public
@@ -1478,7 +1478,7 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
 };
 
-// @public (undocumented)
+// @public
 export const messageThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
 userId: string;
 showMessageStatus: boolean;
@@ -1791,7 +1791,7 @@ export interface ScreenShareButtonStrings {
     onLabel: string;
 }
 
-// @public (undocumented)
+// @public
 export type Selector = (state: ClientState, props: any) => any;
 
 // @public
@@ -1810,7 +1810,7 @@ export interface SendBoxProps {
     systemMessage?: string;
 }
 
-// @public (undocumented)
+// @public
 export const sendBoxSelector: OutputSelector<ChatClientState, {
 displayName: string;
 userId: string;
@@ -1852,13 +1852,10 @@ export type StatefulCallClientOptions = {
     maxStateChangeListeners?: number;
 };
 
-// @public (undocumented)
+// @public
 export interface StatefulChatClient extends ChatClient {
-    // (undocumented)
     getState(): ChatClientState;
-    // (undocumented)
     offStateChange(handler: (state: ChatClientState) => void): void;
-    // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
 }
 
@@ -1954,7 +1951,7 @@ export interface TypingIndicatorProps {
     typingUsers: CommunicationParticipant[];
 }
 
-// @public (undocumented)
+// @public
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
 }, (res1: TypingIndicatorReceivedEvent[], res2: {
@@ -1987,19 +1984,19 @@ export const useCallAgent: () => CallAgent | undefined;
 // @public
 export const useCallClient: () => StatefulCallClient;
 
-// @public (undocumented)
+// @public
 export const useChatClient: () => StatefulChatClient;
 
-// @public (undocumented)
+// @public
 export const useChatThreadClient: () => ChatThreadClient;
 
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
-// @public (undocumented)
+// @public
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ComponentProps<Component>;
 
-// @public (undocumented)
+// @public
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @public

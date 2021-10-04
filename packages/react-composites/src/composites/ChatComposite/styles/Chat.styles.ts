@@ -74,7 +74,9 @@ export const topicNameLabelStyle = mergeStyles({
  */
 export const participantListWrapper = mergeStyles({
   boxShadow: '0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.13)',
-  width: '15rem',
+  width: '20rem',
+  // max width at 50% of view so the People Pane is not squeezing the Message Pane to almost nothing when on small screen or high zoom in
+  maxWidth: '50vw',
   height: '100%'
 });
 
@@ -95,7 +97,6 @@ export const listHeader = mergeStyles({
  * @private
  */
 export const participantListStack = mergeStyles({
-  width: '15rem',
   height: '100%'
 });
 
@@ -103,5 +104,6 @@ export const participantListStack = mergeStyles({
  * @private
  */
 export const participantListStyle = mergeStyles({
-  overflowY: 'hidden'
+  height: '100%',
+  overflow: 'auto'
 });

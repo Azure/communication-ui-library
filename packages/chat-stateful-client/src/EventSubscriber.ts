@@ -18,6 +18,13 @@ import { ChatContext } from './ChatContext';
 import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
+// TODO: When we can get messageId of event from SDK, remove this
+// Maximum time to look back message list when we receive a system event
+const maxSyncTimeInMs = 10 * 1000;
+
+/**
+ * @private
+ */
 export class EventSubscriber {
   private chatClient: ChatClient;
   private chatContext: ChatContext;
@@ -91,10 +98,11 @@ export class EventSubscriber {
     threadId: string,
     actionType: 'participantAdded' | 'participantRemoved'
   ): Promise<void> => {
-    for await (const message of this.chatClient.getChatThreadClient(threadId).listMessages()) {
+    for await (const message of this.chatClient
+      .getChatThreadClient(threadId)
+      .listMessages({ startTime: new Date(Date.now() - maxSyncTimeInMs) })) {
       if (message.type === actionType) {
         this.chatContext.setChatMessage(threadId, { ...message, status: 'delivered' });
-        break;
       }
     }
   };
