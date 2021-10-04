@@ -132,16 +132,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     );
   }
 
-  // Do not show screen share button when composite is optimized for mobile unless the developer
-  // has explicitly opted in.
-  const callControlOptions: boolean | CallControlOptions | undefined = options?.callControls;
-  if (
-    options?.mobileView &&
-    callControlOptions &&
-    typeof callControlOptions !== 'boolean' &&
-    callControlOptions.screenShareButton !== true
-  ) {
-    callControlOptions.screenShareButton = false;
+  let callControlOptions: false | CallControlOptions =
+    options?.callControls !== false ? (options?.callControls === true ? {} : options?.callControls || {}) : false;
+  if (callControlOptions && options?.mobileView) {
+    callControlOptions = reduceControlsSetForMobile(callControlOptions);
   }
 
   const screenShareModalHostId = 'UILibraryMediaGallery';
@@ -206,4 +200,24 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       )}
     </Stack>
   );
+};
+
+/**
+ * Reduce the set of call controls visible on mobile.
+ * For example do not show screenshare button.
+ */
+const reduceControlsSetForMobile = (callControlOptions: CallControlOptions): CallControlOptions => {
+  const reduceCallControlOptions = callControlOptions;
+
+  // Do not show screen share button when composite is optimized for mobile unless the developer
+  // has explicitly opted in.
+  if (
+    reduceCallControlOptions &&
+    typeof reduceCallControlOptions !== 'boolean' &&
+    reduceCallControlOptions.screenShareButton !== true
+  ) {
+    reduceCallControlOptions.screenShareButton = false;
+  }
+
+  return reduceCallControlOptions;
 };
