@@ -171,7 +171,6 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     );
     let resultUserIds = result.flatMap((p) => p.userId);
     expect(resultUserIds).toEqual(['7', '5', '8', '3', '4', '1', '2', '6']);
-    expect(resultUserIds).toEqual(['7', '5', '8', '4', '1', '2', '3', '6']);
 
     result = smartDominantSpeakerParticipants(participants, ['5', '7', '8'], result, 8, 3);
     resultUserIds = result.flatMap((p) => p.userId);
