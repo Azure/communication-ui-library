@@ -43,7 +43,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
         const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
           setAdapter(
             await createAzureCommunicationCallAdapter({
-              userId: { communicationUserId: props.userId.communicationUserId },
+              userId: props.userId,
               displayName: props.displayName,
               credential,
               locator: callLocator

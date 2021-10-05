@@ -43,10 +43,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
       const adapter = await createAzureCommunicationChatAdapter({
         endpointUrl: endpointUrl,
-        userId: userIdKind,
+        userId: { communicationUserId: userId },
         displayName: displayName,
         credential: createAutoRefreshingCredential(userId, token),
         threadId: threadId

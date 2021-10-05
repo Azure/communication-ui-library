@@ -33,7 +33,7 @@ function App(): JSX.Element {
       setChatAdapter(
         await createAzureCommunicationChatAdapter({
           endpointUrl,
-          userId: { kind: 'communicationUser', communicationUserId: userId },
+          userId: { communicationUserId: userId },
           displayName,
           credential: new AzureCommunicationTokenCredential(token),
           threadId
