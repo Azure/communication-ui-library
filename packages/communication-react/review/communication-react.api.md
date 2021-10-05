@@ -75,11 +75,6 @@ export interface ActiveError {
 }
 
 // @public
-export interface AdapterDisposal {
-    dispose(): void;
-}
-
-// @public
 export interface AdapterError extends Error {
     inner: Error;
     target: string;
@@ -172,36 +167,23 @@ export interface BaseCustomStylesProps {
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
 export interface CallAdapterCallManagement {
-    // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     joinCall(microphoneOn?: boolean): Call | undefined;
-    // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
-    // (undocumented)
     mute(): Promise<void>;
-    // (undocumented)
     onToggleCamera(options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
     startCall(participants: string[]): Call | undefined;
-    // (undocumented)
     startCamera(): Promise<void>;
-    // (undocumented)
     startScreenShare(): Promise<void>;
-    // (undocumented)
     stopCamera(): Promise<void>;
-    // (undocumented)
     stopScreenShare(): Promise<void>;
-    // (undocumented)
     unmute(): Promise<void>;
 }
 
@@ -218,19 +200,12 @@ export type CallAdapterClientState = {
 
 // @public
 export interface CallAdapterDeviceManagement {
-    // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // (undocumented)
     queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
     setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
 }
 
@@ -239,41 +214,23 @@ export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
 // @public
 export interface CallAdapterSubscribers {
-    // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
     off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
     off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
     off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
     off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
     off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
     off(event: 'error', listener: (e: AdapterError) => void): void;
-    // (undocumented)
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
     on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
     on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
     on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
@@ -346,7 +303,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
     // (undocumented)
-    callInvitationURL?: string;
+    callInvitationUrl?: string;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     options?: CallCompositeOptions;
 }
@@ -489,7 +446,7 @@ export interface CallState {
     remoteParticipantsEnded: {
         [keys: string]: RemoteParticipantState;
     };
-    screenShareRemoteParticipant: string | undefined;
+    screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
@@ -523,7 +480,7 @@ export interface CameraButtonStrings {
 }
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
 }
 
 // @public
@@ -531,55 +488,32 @@ export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public
 export interface ChatAdapterSubscribers {
-    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
     off(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
     off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
-    // (undocumented)
     off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
-    // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
-    // (undocumented)
     off(event: 'error', listener: (e: AdapterError) => void): void;
-    // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
     on(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
     on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
-    // (undocumented)
     on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
-    // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
-    // (undocumented)
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 // @public
 export interface ChatAdapterThreadManagement {
-    // (undocumented)
     deleteMessage(messageId: string): Promise<void>;
-    // (undocumented)
     fetchInitialData(): Promise<void>;
-    // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // (undocumented)
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
     sendMessage(content: string): Promise<void>;
-    // (undocumented)
     sendReadReceipt(chatMessageId: string): Promise<void>;
-    // (undocumented)
     sendTypingIndicator(): Promise<void>;
-    // (undocumented)
     setTopic(topicName: string): Promise<void>;
-    // (undocumented)
     updateMessage(messageId: string, content: string): Promise<void>;
 }
 
@@ -1084,6 +1018,11 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 // @public
+export interface Disposable {
+    dispose(): void;
+}
+
+// @public
 export const emptySelector: () => Record<string, never>;
 
 // @public
@@ -1256,7 +1195,7 @@ export interface MediaDiagnosticsState {
 }
 
 // @alpha
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha
