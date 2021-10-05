@@ -53,8 +53,8 @@ export interface CallClientState {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: CallErrorTarget;
     timestamp: Date;
 }

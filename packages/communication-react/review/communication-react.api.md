@@ -76,7 +76,7 @@ export interface ActiveErrorMessage {
 
 // @public
 export interface AdapterError extends Error {
-    inner: Error;
+    innerError: Error;
     target: string;
     timestamp: Date;
 }
@@ -341,8 +341,8 @@ export type CallEndedListener = (event: {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: CallErrorTarget;
     timestamp: Date;
 }
@@ -582,8 +582,8 @@ export interface ChatCompositeStrings {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: ChatErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: ChatErrorTarget;
     timestamp: Date;
 }

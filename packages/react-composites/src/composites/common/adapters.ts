@@ -48,7 +48,7 @@ export interface AdapterError extends Error {
   /**
    * Error thrown by the failed operation.
    */
-  inner: Error;
+  innerError: Error;
   /**
    * Timestamp added to the error in the adapter implementation.
    */

@@ -551,5 +551,5 @@ export const createAzureCommunicationCallAdapterFromClient = async (
 };
 
 const isCallError = (e: Error): e is CallError => {
-  return e['target'] !== undefined && e['inner'] !== undefined;
+  return e['target'] !== undefined && e['innerError'] !== undefined;
 };
