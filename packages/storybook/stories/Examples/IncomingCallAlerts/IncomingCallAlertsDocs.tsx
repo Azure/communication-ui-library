@@ -91,12 +91,16 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
       </Stack>
 
       <Stack horizontal tokens={{ childrenGap: 10 }}>
-        <DefaultButton onClick={() => onClickReject()} className={incomingCallRejectButtonStyle}>
-          <CallEnd20Filled primaryFill="currentColor" />
-        </DefaultButton>
-        <DefaultButton onClick={() => onClickAccept()} className={incomingCallAcceptButtonStyle}>
-          <Call20Filled primaryFill="currentColor" />
-        </DefaultButton>
+        <DefaultButton
+          className={incomingCallRejectButtonStyle}
+          onClick={() => onClickReject()}
+          onRenderIcon={() => <CallEnd20Filled />}
+        />
+        <DefaultButton
+          className={incomingCallAcceptButtonStyle}
+          onClick={() => onClickAccept()}
+          onRenderIcon={() => <Call20Filled />}
+        />
       </Stack>
     </Stack>
   );
@@ -212,11 +216,10 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
 
         <DialogFooter>
           <DefaultButton
-            onClick={() => onClickVideoToggle()}
             style={{ background: palette.neutralLighterAlt, border: 'none' }}
-          >
-            {showLocalVideo ? <CallVideoIcon size="small" /> : <CallVideoOffIcon size="small" />}
-          </DefaultButton>
+            onClick={() => onClickVideoToggle()}
+            onRenderIcon={() => (showLocalVideo ? <CallVideoIcon size="small" /> : <CallVideoOffIcon size="small" />)}
+          />
 
           <DefaultButton
             onClick={() => onClickAccept()}
