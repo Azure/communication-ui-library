@@ -1,15 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IDS } from '../common/constants';
-import {
-  createChatThreadAndUsers,
-  dataUiId,
-  stubMessageTimestamps,
-  waitForChatCompositeToLoad,
-  buildUrl
-} from '../common/utils';
+import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl } from '../common/utils';
 import { test } from './fixture';
-import { loadNewPage } from '../common/fixtureHelpers';
+import { createChatThreadAndUsers, loadNewPage } from '../common/fixtureHelpers';
 import { expect } from '@playwright/test';
 
 const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];

@@ -1133,7 +1133,7 @@ export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
-    sendboxTextfield: string;
+    sendboxTextField: string;
     typingIndicator: string;
     videoGallery: string;
     videoTile: string;
