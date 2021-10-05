@@ -2,6 +2,10 @@
 // Licensed under the MIT license.
 
 import { Browser, Page } from '@playwright/test';
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 export type ChatUserType = {
   userId: string;
