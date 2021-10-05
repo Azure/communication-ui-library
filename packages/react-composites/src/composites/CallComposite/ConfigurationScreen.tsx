@@ -15,7 +15,8 @@ import { LocalPreview } from './LocalPreview';
 import {
   configurationStackTokensDesktop,
   configurationStackTokensMobile,
-  configurationContainer,
+  configurationContainerStyleDesktop,
+  configurationContainerStyleMobile,
   selectionContainerStyle,
   startCallButtonContainerStyleDesktop,
   startCallButtonContainerStyleMobile,
@@ -56,7 +57,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       horizontalAlign={mobileView ? 'stretch' : 'center'}
       verticalAlign="center"
       tokens={mobileView ? configurationStackTokensMobile : configurationStackTokensDesktop}
-      className={configurationContainer}
+      className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}
     >
       {mobileView && title}
       <LocalPreview mobileView={mobileView} />
