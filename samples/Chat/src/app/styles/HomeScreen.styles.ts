@@ -43,7 +43,15 @@ export const listStyle = mergeStyles({
   fontSize: '0.875rem' // 14px
 });
 
-export const iconStyle = mergeStyles({
+export const listItemStackTokens = {
+  childrenGap: '0.4375rem' // 7px
+};
+
+export const listItemStyle = mergeStyles({
+  paddingBottom: '0.1rem'
+});
+
+export const listIconStyle = mergeStyles({
   marginRight: 7,
   color: palette.themePrimary
 });

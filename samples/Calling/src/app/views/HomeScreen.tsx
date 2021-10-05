@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, TextField } from '@fluentui/react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -58,7 +58,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     >
       <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
       <Stack className={infoContainerStyle}>
-        <div className={headerStyle}>{headerTitle}</div>
+        <Text role={'heading'} aria-level={1} className={headerStyle}>
+          {headerTitle}
+        </Text>
         <Stack className={configContainerStyle} tokens={configContainerStackTokens}>
           <Stack tokens={callContainerStackTokens}>
             {!props.joiningExistingCall && (

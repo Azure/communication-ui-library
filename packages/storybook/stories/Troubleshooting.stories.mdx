@@ -1,0 +1,60 @@
+import { Meta } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
+
+<Meta id="troubleshooting" title="Troubleshooting" />
+
+# Troubleshooting
+
+Guidance for some common problems encountered when building with the Azure Communication Services UI library.
+
+These tips only cover problems you may encounter working with the UI library. For general troubleshooting guidance
+for Azure Communication Services, see the [common troubleshooting guide](https://docs.microsoft.com/en-us/azure/communication-services/concepts/troubleshooting-info).
+
+## Project setup errors
+
+### `npm add @azure/communication-react` fails with 'code ERESOLVE'
+
+This error occurs on projects using NPM v7+. The error log looks so:
+
+```
+PS C:\tmp\acs\my-react-app> npm add @azure/communication-react
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE unable to resolve dependency tree
+npm ERR!
+npm ERR! node_modules/react
+npm ERR!   peer react@"17.0.2" from react-dom@17.0.2
+npm ERR!   node_modules/react-dom
+npm ERR!     peer react-dom@"*" from @testing-library/react@11.2.7
+npm ERR!     node_modules/@testing-library/react
+npm ERR!       @testing-library/react@"^11.1.0" from the root project
+npm ERR!     react-dom@"^17.0.2" from the root project
+npm ERR!     2 more (@azure/communication-react, @fluentui/react)
+npm ERR!   peer react@">= 16" from react-scripts@4.0.3
+npm ERR!   node_modules/react-scripts
+npm ERR!     react-scripts@"4.0.3" from the root project
+npm ERR!   4 more (@testing-library/react, the root project, ...)
+npm ERR!
+npm ERR! Could not resolve dependency:
+npm ERR! peer react@"^16.8.0" from @fluentui/react-northstar@0.51.7
+npm ERR! node_modules/@azure/communication-react/node_modules/@fluentui/react-northstar
+npm ERR!   @fluentui/react-northstar@"^0.51.2" from @azure/communication-react@1.0.0-beta.4
+npm ERR!   node_modules/@azure/communication-react
+npm ERR!     @azure/communication-react@"*" from the root project
+npm ERR!
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force, or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+```
+
+The root cause is that one of @azure/communication-react NPM package's dependencies
+specifies an older version of React as a peer dependency than the one installed by default by
+[create-react-app](https://create-react-app.dev/).
+Since v7, npm automatically install peer dependencies for packages. This fails because of the existence of the
+more recent version of React installed by create-react-app.
+
+**Solution**: We recommend using the `--legacy-peer-deps` flag when adding the @azure/communication-react dependency, as suggested
+by `npm add`.
+
+```
+PS C:\tmp\acs\my-react-app> npm add --legacy-peer-deps @azure/communication-react
+```
