@@ -24,11 +24,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
         className="ms-Stack css-1"
       >
         <div
-          className="ms-Stack css-83 css-1"
+          className="ms-Stack css-82 css-1"
           data-ui-id="participant-list"
         >
           <div
-            className="css-81 css-6"
+            className="css-80 css-6"
             data-is-focusable={true}
             onClick={[Function]}
             onMouseEnter={[Function]}
@@ -101,7 +101,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-                className="root-37 css-82"
+                className="root-37 css-81"
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
@@ -258,7 +258,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             </span>
           </div>
           <div
-            className="css-81 css-6"
+            className="css-80 css-6"
             data-is-focusable={true}
             onClick={[Function]}
             onMouseEnter={[Function]}
@@ -331,7 +331,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-                className="root-37 css-82"
+                className="root-37 css-81"
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
@@ -488,7 +488,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             </span>
           </div>
           <div
-            className="css-81 css-6"
+            className="css-80 css-6"
             data-is-focusable={true}
             onClick={[Function]}
             onMouseEnter={[Function]}
@@ -565,7 +565,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             >
               <i
                 aria-hidden={true}
-                className="root-37 css-82"
+                className="root-37 css-81"
                 data-icon-name="ParticipantItemOptions"
               >
                 <span
@@ -722,7 +722,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
             </span>
           </div>
           <div
-            className="css-81 css-6"
+            className="css-80 css-6"
             data-is-focusable={true}
             onClick={[Function]}
             onMouseEnter={[Function]}
