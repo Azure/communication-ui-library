@@ -3,7 +3,7 @@
 
 import { PrimaryButton, mergeStyles } from '@fluentui/react';
 import React from 'react';
-import { buttonStyles, videoCameraIconStyle } from './styles/StartCallButton.styles';
+import { buttonStyle, buttonWithIconStyles, videoCameraIconStyle } from './styles/StartCallButton.styles';
 import { Video20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../localization';
 
@@ -27,8 +27,8 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
     <PrimaryButton
       data-ui-id="call-composite-start-call-button"
       disabled={isDisabled}
-      // className={mergeStyles(buttonStyle, props.className)}
-      styles={buttonStyles}
+      className={mergeStyles(buttonStyle, props.className)}
+      styles={buttonWithIconStyles}
       text={locale.strings.call.startCallButtonText}
       onClick={onClickHandler}
       onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}

@@ -7,7 +7,8 @@ import { Video20Filled } from '@fluentui/react-icons';
 import {
   endCallContainerStyle,
   endCallTitleStyle,
-  buttonStyles,
+  buttonStyle,
+  buttonWithIconStyles,
   mainStackTokens,
   buttonsStackTokens,
   upperStackTokens,
@@ -42,12 +43,18 @@ export const CallError = (props: CallErrorProps): JSX.Element => {
         </Text>
         <Stack horizontal tokens={buttonsStackTokens}>
           <PrimaryButton
-            styles={buttonStyles}
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
             text={rejoinCall}
             onClick={props.rejoinHandler}
             onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} primaryFill="currentColor" />}
           />
-          <DefaultButton styles={buttonStyles} text={goHomePage} onClick={props.homeHandler} />
+          <DefaultButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={goHomePage}
+            onClick={props.homeHandler}
+          />
         </Stack>
         <div className={bottomStackFooterStyle}>
           {props.reason ? (

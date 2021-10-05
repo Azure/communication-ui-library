@@ -4,7 +4,8 @@
 import { IImageStyles, Icon, Image, Link, List, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
-  buttonStyles,
+  buttonStyle,
+  buttonWithIconStyles,
   configContainerStackTokens,
   configContainerStyle,
   containerTokens,
@@ -123,7 +124,8 @@ export default (): JSX.Element => {
               id="startChat"
               aria-label="Start chat"
               text={startChatButtonText}
-              styles={buttonStyles}
+              className={buttonStyle}
+              styles={buttonWithIconStyles}
               onClick={() => {
                 onCreateThread();
               }}

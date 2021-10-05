@@ -7,7 +7,8 @@ import { Video20Filled } from '@fluentui/react-icons';
 import {
   endCallContainerStyle,
   endCallTitleStyle,
-  buttonStyles,
+  buttonStyle,
+  buttonWithIconStyles,
   mainStackTokens,
   buttonsStackTokens,
   upperStackTokens,
@@ -43,12 +44,18 @@ export const EndCall = (props: EndCallProps): JSX.Element => {
         </Text>
         <Stack horizontal wrap tokens={buttonsStackTokens}>
           <PrimaryButton
-            styles={buttonStyles}
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
             text={rejoinCall}
             onClick={props.rejoinHandler}
             onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
           />
-          <DefaultButton styles={buttonStyles} text={goHomePage} onClick={props.homeHandler} />
+          <DefaultButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={goHomePage}
+            onClick={props.homeHandler}
+          />
         </Stack>
         <div className={bottomStackFooterStyle}>
           <Link href={feedbackLink}>Give Feedback</Link>&nbsp;on this sample app at Microsoft Q&amp;A

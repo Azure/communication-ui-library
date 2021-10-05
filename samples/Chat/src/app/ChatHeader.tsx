@@ -5,10 +5,10 @@ import React from 'react';
 import { DefaultButton, Icon, IconButton, mergeStyles, Stack } from '@fluentui/react';
 import { People20Filled, People20Regular } from '@fluentui/react-icons';
 import {
+  buttonWithIconStyles,
   chatHeaderContainerStyle,
   greyIconButtonStyle,
   largeLeaveButtonContainerStyle,
-  largeLeaveButtonStyles,
   leaveButtonStyle,
   leaveIcon,
   leaveIconStyle,
@@ -48,7 +48,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
         <div className={largeLeaveButtonContainerStyle}>
           <DefaultButton
             className={mergeStyles(leaveButtonStyle, { color: theme.palette.neutralPrimaryAlt })}
-            styles={largeLeaveButtonStyles}
+            styles={buttonWithIconStyles}
             text={leaveString}
             onClick={() => props.onEndChat()}
             onRenderIcon={() => <Icon iconName={leaveIcon.iconName} className={leaveIconStyle} />}

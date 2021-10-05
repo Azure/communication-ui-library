@@ -8,7 +8,8 @@ import {
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
   chatStyle,
-  newMessageButtonStyles,
+  buttonWithIconStyles,
+  newMessageButtonStyle,
   messageStatusContainerStyle,
   noMessageStatusStyle,
   defaultMyChatItemMessageContainer,
@@ -185,7 +186,8 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
   const { onClick } = props;
   return (
     <PrimaryButton
-      styles={newMessageButtonStyles}
+      className={newMessageButtonStyle}
+      styles={buttonWithIconStyles}
       text={NEW_MESSAGES}
       onClick={onClick}
       onRenderIcon={() => <Icon iconName="Down" className={DownIconStyle} />}

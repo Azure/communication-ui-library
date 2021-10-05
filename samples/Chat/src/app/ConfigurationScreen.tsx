@@ -4,7 +4,12 @@
 import { CAT, FOX, KOALA, MONKEY, MOUSE, OCTOPUS } from './utils/utils';
 import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { buttonStyles, chatIconStyle, mainContainerStyle } from './styles/ConfigurationScreen.styles';
+import {
+  buttonStyle,
+  buttonWithIconStyles,
+  chatIconStyle,
+  mainContainerStyle
+} from './styles/ConfigurationScreen.styles';
 import {
   avatarListContainerStackTokens,
   avatarListContainerStyle,
@@ -191,7 +196,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           />
           <PrimaryButton
             disabled={disableJoinChatButton}
-            styles={buttonStyles}
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
             text={'Join chat'}
             onClick={validateName}
             onRenderIcon={() => <Chat20Filled className={chatIconStyle} />}

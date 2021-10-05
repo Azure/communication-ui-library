@@ -4,7 +4,8 @@
 import { DefaultButton, Stack, Text } from '@fluentui/react';
 import {
   bottomStackFooterStyle,
-  buttonStyles,
+  buttonStyle,
+  buttonWithIconStyles,
   buttonsStackTokens,
   endChatContainerStyle,
   endChatTitleStyle,
@@ -36,7 +37,12 @@ export const ErrorScreen = (props: ErrorEndCallProps): JSX.Element => {
           {leftCall}
         </Text>
         <Stack horizontal tokens={buttonsStackTokens}>
-          <DefaultButton styles={buttonStyles} text={goHomePage} onClick={props.homeHandler} />
+          <DefaultButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={goHomePage}
+            onClick={props.homeHandler}
+          />
         </Stack>
         <div className={bottomStackFooterStyle}>
           <a href="https://github.com/Azure/Communication/issues">Give Feedback</a>

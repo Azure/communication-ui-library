@@ -128,15 +128,7 @@ export const buttonStyle = mergeStyles({
   fontSize: '0.875rem' // 14px
 });
 
-export const buttonStyles: IButtonStyles = {
-  root: {
-    height: '2.75rem',
-    fontWeight: 600,
-    width: '100%',
-    maxWidth: '18.75rem',
-    minWidth: '12.5rem',
-    fontSize: '0.875rem' // 14px
-  },
+export const buttonWithIconStyles: IButtonStyles = {
   textContainer: {
     display: 'contents'
   }

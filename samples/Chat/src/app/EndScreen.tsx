@@ -5,7 +5,8 @@ import { DefaultButton, PrimaryButton, Stack, Link, Text } from '@fluentui/react
 import React, { useCallback, useState } from 'react';
 import {
   bottomStackFooterStyle,
-  buttonStyles,
+  buttonStyle,
+  buttonWithIconStyles,
   buttonsStackTokens,
   chatIconStyle,
   endChatContainerStyle,
@@ -69,14 +70,20 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
         <Stack horizontal wrap tokens={buttonsStackTokens}>
           <PrimaryButton
             disabled={isRejoiningThread}
-            styles={buttonStyles}
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
             text={isRejoiningThread ? rejoining : rejoinChat}
             onClick={async () => {
               await rejoinThread();
             }}
             onRenderIcon={() => <Chat20Filled className={chatIconStyle} />}
           />
-          <DefaultButton styles={buttonStyles} text={goHomePage} onClick={props.homeHandler} />
+          <DefaultButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={goHomePage}
+            onClick={props.homeHandler}
+          />
         </Stack>
         <div className={bottomStackFooterStyle}>
           <Link href={feedbackLink}>Give Feedback</Link>

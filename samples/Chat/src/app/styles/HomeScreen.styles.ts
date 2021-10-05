@@ -67,14 +67,15 @@ export const videoCameraIconStyle = mergeStyles({
   fontSize: '1.375rem' // 22px
 });
 
-export const buttonStyles: IButtonStyles = {
-  root: {
-    fontWeight: 600,
-    fontSize: '0.875rem', // 14px
-    width: 'fit-content',
-    height: '2.5rem',
-    borderRadius: 3
-  },
+export const buttonStyle = mergeStyles({
+  fontWeight: 600,
+  fontSize: '0.875rem', // 14px
+  width: 'fit-content',
+  height: '2.5rem',
+  borderRadius: 3
+});
+
+export const buttonWithIconStyles: IButtonStyles = {
   textContainer: {
     display: 'contents'
   }

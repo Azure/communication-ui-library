@@ -28,14 +28,15 @@ export const endChatTitleStyle = mergeStyles({
   width: '20rem'
 });
 
-export const buttonStyles: IButtonStyles = {
-  root: {
-    fontWeight: 600,
-    height: '2.5rem',
-    width: '9.875rem',
-    fontSize: '0.875rem', // 14px
-    padding: 0
-  },
+export const buttonStyle = mergeStyles({
+  fontWeight: 600,
+  height: '2.5rem',
+  width: '9.875rem',
+  fontSize: '0.875rem', // 14px
+  padding: 0
+});
+
+export const buttonWithIconStyles: IButtonStyles = {
   textContainer: {
     display: 'contents'
   }

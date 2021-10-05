@@ -140,11 +140,15 @@ export const messageStatusContainerStyle = (mine: boolean): string =>
 /**
  * @private
  */
-export const newMessageButtonStyles: IButtonStyles = {
-  root: {
-    float: 'right',
-    width: 'fit-content'
-  },
+export const newMessageButtonStyle = mergeStyles({
+  float: 'right',
+  width: 'fit-content'
+});
+
+/**
+ * @private
+ */
+export const buttonWithIconStyles: IButtonStyles = {
   textContainer: {
     display: 'contents'
   }

@@ -33,15 +33,16 @@ export const footerMainTextStyle = mergeStyles({
   marginRight: '1rem'
 });
 
-export const copyLinkButtonStyles: IButtonStyles = {
-  root: {
-    fontWeight: 600,
-    fontSize: '0.875rem', // 14px
-    height: '2.5rem',
-    marginLeft: '1rem',
-    marginRight: '1rem',
-    width: '90%'
-  },
+export const copyLinkButtonStyle = mergeStyles({
+  fontWeight: 600,
+  fontSize: '0.875rem', // 14px
+  height: '2.5rem',
+  marginLeft: '1rem',
+  marginRight: '1rem',
+  width: '90%'
+});
+
+export const buttonWithIconStyles: IButtonStyles = {
   textContainer: {
     display: 'contents'
   }

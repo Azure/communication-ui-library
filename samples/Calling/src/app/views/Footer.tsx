@@ -4,7 +4,8 @@
 import { Icon, PrimaryButton, Separator, Stack, TextField } from '@fluentui/react';
 import {
   copyIconStyle,
-  copyLinkButtonStyles,
+  copyLinkButtonStyle,
+  buttonWithIconStyles,
   footerMainTextStyle,
   paneFooterStyles,
   paneFooterTokens,
@@ -29,7 +30,8 @@ export const Footer = (): JSX.Element => {
       <div className={footerMainTextStyle}>{invitePeopleString}</div>
       <TextField styles={textFieldStyles} id="inputText" type="text" value={`${document.baseURI}`}></TextField>
       <PrimaryButton
-        styles={copyLinkButtonStyles}
+        className={copyLinkButtonStyle}
+        styles={buttonWithIconStyles}
         text={copyJoinInfoString}
         onClick={copyJoinLink}
         onRenderIcon={() => <Icon iconName="Copy" className={copyIconStyle} />}

@@ -38,7 +38,7 @@ export const largeLeaveButtonContainerStyle = mergeStyles({
   }
 });
 
-export const largeLeaveButtonStyles: IButtonStyles = {
+export const buttonWithIconStyles: IButtonStyles = {
   textContainer: {
     display: 'contents'
   }
