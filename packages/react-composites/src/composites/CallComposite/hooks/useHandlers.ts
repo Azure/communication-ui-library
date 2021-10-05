@@ -7,6 +7,7 @@ import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CallAdapter } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
+import { isCameraOn } from '../SDKUtils';
 
 /**
  * @private
@@ -53,7 +54,7 @@ const createCompositeHandlers = memoizeOne(
       await adapter.stopScreenShare();
     },
     onToggleCamera: async (options) => {
-      await adapter.onToggleCamera(options);
+      isCameraOn(adapter.getState()) ? await adapter.stopCamera() : await adapter.startCamera(options);
     },
     onToggleMicrophone: async () => {
       return adapter.getState().call?.isMuted ? await adapter.unmute() : await adapter.mute();
