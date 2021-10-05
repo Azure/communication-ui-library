@@ -6,7 +6,7 @@
 
 /// <reference types="react" />
 
-import { ActiveError } from '@internal/react-components';
+import { ActiveErrorMessage } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { ChatErrors } from '@internal/chat-stateful-client';
@@ -83,9 +83,9 @@ export const createDefaultChatHandlersForComponent: <Props>(chatClient: Stateful
 
 // @public
 export const errorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }, (res: ChatErrors) => {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }>;
 
 // @public

@@ -29,14 +29,15 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Localization</Subheading>
       <Description>
         Similar to other UI components in this library, `ErrorBarProps` accepts all strings shown on the UI as a
-        `strings` field. The `activeErrors` field selects from these strings to show in the `ErrorBar` UI.
+        `strings` field. The `activeErrorMessages` field selects from these strings to show in the `ErrorBar` UI.
       </Description>
       <Subheading>Dismissed messages</Subheading>
       <Description>
         User can dismiss the errors shown via `ErrorBar`. The `ErrorBar` component internally tracks dismissed errors
-        and only shows a `MessageBar` for errors that have not been dismissed. When `activeErrors` include a timestamp,
-        errors that occur after the latest dismissal are shown on the UI. When `activeErrors` do not include a timestamp
-        a dismissed error is only shown on the UI if it is removed from the active errors and then occurs again.
+        and only shows a `MessageBar` for errors that have not been dismissed. When `activeErrorMessages` include a
+        timestamp, errors that occur after the latest dismissal are shown on the UI. When `activeErrorMessages` do not
+        include a timestamp a dismissed error is only shown on the UI if it is removed from the active errors and then
+        occurs again.
       </Description>
       <Description>
         This way, `ErrorBar` separates the tracking of active errors from the purely UI related state of `ErrorBar`
@@ -66,7 +67,9 @@ const ErrorBarStory = (args): JSX.Element => {
         height: '50%'
       })}
     >
-      <ErrorBarComponent activeErrors={args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) }))} />
+      <ErrorBarComponent
+        activeErrorMessages={args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) }))}
+      />
     </div>
   );
 };
