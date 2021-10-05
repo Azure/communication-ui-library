@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useChromeBrowser } from '../common/browsers';
 import { TEST_PARTICIPANTS, WorkerFixture, CallUserType } from '../common/defaults';
 import { createCallUsers, usePagePerParticipantWithCallPermissions } from '../common/fixtureHelpers';
 import { createTestServer } from '../../server';

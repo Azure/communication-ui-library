@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useChromeBrowser } from '../common/browsers';
 import { TEST_PARTICIPANTS, WorkerFixture, ChatUserType } from '../common/defaults';
 import { createChatUsers, usePagePerParticipant } from '../common/fixtureHelpers';
 import { createTestServer } from '../../server';
