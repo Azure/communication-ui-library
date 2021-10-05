@@ -11,5 +11,5 @@ console.warning = (...args) => {
   throw args;
 };
 
-// Need ResizeObserver for GridLayout
+// Add `ResizeObserver` to globals. Without this GridLayout jest tests fail with "ReferenceError: ResizeObserver is not defined"
 global.ResizeObserver = require('resize-observer-polyfill');
