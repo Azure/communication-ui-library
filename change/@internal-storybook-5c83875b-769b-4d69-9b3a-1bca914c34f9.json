@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Api changes according to reviews from ARB",
+  "packageName": "@internal/storybook",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
