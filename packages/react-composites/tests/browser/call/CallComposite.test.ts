@@ -42,7 +42,7 @@ test.describe('Call Composite E2E Tests', () => {
     }
   });
 
-  test('composite pages load completely', async ({ pages }) => {
+  test.only('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
       await pages[idx].waitForSelector(dataUiId('call-composite-device-settings'));
       await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));

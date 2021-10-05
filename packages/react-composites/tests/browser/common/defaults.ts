@@ -31,7 +31,6 @@ export type MeetingUserType = {
 
 export interface WorkerFixture<IdentityType> {
   serverUrl: string;
-  testBrowser: Browser;
   users: IdentityType[];
   pages: Array<Page>;
 }

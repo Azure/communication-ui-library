@@ -115,10 +115,10 @@ test.describe('Chat Composite E2E Tests', () => {
 });
 
 test.describe('Chat Composite custom data model', () => {
-  test('can be viewed by user[1]', async ({ testBrowser, serverUrl }) => {
+  test('can be viewed by user[1]', async ({ browser, serverUrl }) => {
     const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
     const url = buildUrl(serverUrl, user, { customDataModel: 'true' });
-    const page = await loadNewPage(testBrowser, url);
+    const page = await loadNewPage(browser, url);
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
     await page.keyboard.press('Enter');

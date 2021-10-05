@@ -14,8 +14,8 @@ import { buildUrl } from './utils';
  * To be used in a playwright fixture's 'pages'.
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, use) => {
-  const pages = await Promise.all(users.map(async (user) => await loadNewPage(testBrowser, buildUrl(serverUrl, user))));
+export const usePagePerParticipant = async ({ serverUrl, browser, users }, use) => {
+  const pages = await Promise.all(users.map(async (user) => await loadNewPage(browser, buildUrl(serverUrl, user))));
   await use(pages);
 };
 
@@ -24,10 +24,10 @@ export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, u
  * To be used in a playwright fixture's 'pages'.
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePagePerParticipantWithCallPermissions = async ({ serverUrl, testBrowser, users }, use) => {
+export const usePagePerParticipantWithCallPermissions = async ({ browser, serverUrl, users }, use) => {
   const pages = await Promise.all(
     users.map(async (user) => {
-      const page = await loadNewPageWithPermissionsForCalls(testBrowser, buildUrl(serverUrl, user));
+      const page = await loadNewPageWithPermissionsForCalls(browser, buildUrl(serverUrl, user));
       page.on('console', (msg) => {
         if (msg.type() === 'error') {
           console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
