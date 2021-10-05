@@ -37,8 +37,7 @@ export const configurationContainerStyleDesktop = mergeStyles({
  */
 export const configurationContainerStyleMobile = mergeStyles({
   ...configurationContainerStyle,
-  padding: '0.5rem', //half childrenGap from Stack
-  minWidth: '13.5rem' // max of min-width from stack items + padding * 2 = 12.5 + 0.5 * 2
+  padding: '0.5rem' // half childrenGap from Stack
 });
 
 /**

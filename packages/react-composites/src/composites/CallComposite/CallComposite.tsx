@@ -82,7 +82,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'configuration':
       return (
         <ConfigurationScreen
-          mobileView={props.options?.mobileView}
+          mobileView={props.options?.mobileView ?? false}
           startCallHandler={(): void => adapter.setPage('call')}
         />
       );

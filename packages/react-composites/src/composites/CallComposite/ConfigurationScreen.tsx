@@ -30,7 +30,7 @@ import { useLocale } from '../localization';
  * @private
  */
 export interface ConfigurationScreenProps {
-  mobileView?: boolean;
+  mobileView: boolean;
   startCallHandler(): void;
 }
 
@@ -38,7 +38,7 @@ export interface ConfigurationScreenProps {
  * @private
  */
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
-  const { startCallHandler, mobileView = false } = props;
+  const { startCallHandler, mobileView } = props;
 
   const options = useAdaptedSelector(getCallingSelector(OptionsButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
