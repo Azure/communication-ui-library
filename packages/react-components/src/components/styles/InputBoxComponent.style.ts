@@ -33,6 +33,16 @@ export const inputBoxStyle = mergeStyles({
 });
 
 /**
+ *
+ * @private
+ */
+export const textContainerStyle: IStyle = {
+  alignSelf: 'center',
+  position: 'relative',
+  width: '100%'
+};
+
+/**
  * @private
  */
 export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, disabled: boolean): IStyle => {

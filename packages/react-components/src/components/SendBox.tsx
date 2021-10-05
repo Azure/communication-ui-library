@@ -21,6 +21,8 @@ const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 export interface SendBoxStylesProps extends BaseCustomStylesProps {
   /** Styles for the text field. */
   textField?: IStyle;
+  /** styles for the text field container */
+  textFieldContainer?: IStyle;
   /** Styles for the container of the send message icon. */
   sendMessageIconContainer?: IStyle;
   /** Styles for the send message icon; These styles will be ignored when a custom send message icon is provided. */

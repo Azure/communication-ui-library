@@ -10,7 +10,13 @@ import {
   chatStyle,
   newMessageButtonStyle,
   messageStatusContainerStyle,
-  noMessageStatusStyle
+  noMessageStatusStyle,
+  defaultMyChatItemMessageContainer,
+  defaultChatItemMessageContainer,
+  defaultMyChatMessageContainer,
+  defaultChatMessageContainer,
+  gutterWithAvatar,
+  gutterWithHiddenAvatar
 } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -129,13 +135,19 @@ const didUserSendTheLatestMessage = (
  *
  * @public
  */
-export interface MessageThreadStylesProps extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStylesProps {
   /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
   /** Styles for new message container. */
   newMessageButtonContainer?: IStyle;
   /** Styles for chat container. */
   chatContainer?: ComponentSlotStyle;
+  /** styles for my chat items.  */
+  myChatItemMessageContainer?: ComponentSlotStyle;
+  /** styles for chat items.  */
+  chatItemMessageContainer?: ComponentSlotStyle;
+  /** Styles for my chat message container. */
+  myChatMessageContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
@@ -264,7 +276,7 @@ const memoizeAllMessages = memoizeFnAll(
     showMessageDate: boolean,
     showMessageStatus: boolean,
     onRenderAvatar: OnRenderAvatarCallback | undefined,
-    styles: MessageThreadStylesProps | undefined,
+    styles: MessageThreadStyles | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
@@ -287,7 +299,10 @@ const memoizeAllMessages = memoizeFnAll(
 
     if (message.type === 'chat') {
       const payload: ChatMessagePayload = message.payload;
-      messageProps.messageContainerStyle = styles?.chatMessageContainer;
+
+      const myChatMessageStyle = styles?.myChatMessageContainer || defaultMyChatMessageContainer;
+      const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+      messageProps.messageContainerStyle = message.payload.mine ? myChatMessageStyle : chatMessageStyle;
 
       const chatMessageComponent =
         onRenderMessage === undefined
@@ -295,22 +310,30 @@ const memoizeAllMessages = memoizeFnAll(
           : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
       const personaOptions: IPersona = {
-        text: payload.senderDisplayName,
         hidePersonalDetails: true,
         size: PersonaSize.size32
       };
 
+      const myChatItemMessageStyle = styles?.myChatItemMessageContainer || defaultMyChatItemMessageContainer;
+      const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
+      const chatGutterStyles =
+        payload.attached === 'top' || payload.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
+
       return {
-        gutter: payload.mine ? (
-          ''
-        ) : onRenderAvatar ? (
-          onRenderAvatar(payload.senderId ?? '', personaOptions)
-        ) : (
-          <Persona {...personaOptions} />
-        ),
+        gutter: {
+          styles: chatGutterStyles,
+          content: payload.mine ? (
+            ''
+          ) : onRenderAvatar ? (
+            onRenderAvatar(payload.senderId ?? '', personaOptions)
+          ) : (
+            <Persona {...personaOptions} />
+          )
+        },
         contentPosition: payload.mine ? 'end' : 'start',
         message: {
-          className: mergeStyles({ width: 'calc(100% - 6.25rem)' }),
+          className: mergeStyles({ width: 'calc(100% - 5rem)' }),
+          styles: payload.mine ? myChatItemMessageStyle : chatItemMessageStyle,
           content: (
             <Flex hAlign={payload.mine ? 'end' : undefined} vAlign="end">
               {chatMessageComponent}
@@ -333,7 +356,7 @@ const memoizeAllMessages = memoizeFnAll(
             </Flex>
           )
         },
-        attached: payload.attached,
+        attached: message.payload.attached,
         key: _messageKey
       };
     } else if (message.type === 'system') {
@@ -395,7 +418,7 @@ export type MessageThreadProps = {
    * <MessageThread styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: MessageThreadStylesProps;
+  styles?: MessageThreadStyles;
   /**
    * Whether the new message button is disabled or not.
    *
