@@ -112,12 +112,6 @@ test.describe('Chat Composite E2E Tests', () => {
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
-
-  test.afterAll(async ({ pages }) => {
-    for (const page of pages) {
-      page.close();
-    }
-  });
 });
 
 test.describe('Chat Composite custom data model', () => {
@@ -135,6 +129,5 @@ test.describe('Chat Composite custom data model', () => {
     await page.waitForSelector('#custom-data-model-message');
     stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
-    page.close();
   });
 });
