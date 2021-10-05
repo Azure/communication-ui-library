@@ -56,6 +56,8 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
   const aspectRatio = width / height;
   // Approximate how many rows to divide the grid to achieve cells close to the TARGET_CELL_RATIO
   let rows = Math.floor(Math.sqrt((TARGET_CELL_RATIO / aspectRatio) * numberOfItems)) ?? 1;
+  // Make sure rows do not exceed numberOfItems
+  rows = Math.min(rows, numberOfItems);
   // Given the rows, get the minimum columns needed to create enough cells for the number of items
   let columns = Math.ceil(numberOfItems / rows);
 
@@ -65,7 +67,7 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
   while (rows < numberOfItems) {
     // If cell ratio is less than MINIMUM_CELL_RATIO_ALLOWED then try more rows
     if ((rows / columns) * aspectRatio >= MINIMUM_CELL_RATIO_ALLOWED) {
-      // If n is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
+      // If number of items is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
       // to fill in the empty spaces
       // e.g. For 2 rows, 3 columns, but only 5 items, we need to choose whether to stetch cells
       //       horizontally            or           vertically
@@ -98,12 +100,13 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
 };
 
 /**
- * Creates a styles class with CSS Grid related styles given GridProps and the number of items to distribute as evenly as possible.
+ * Creates a styles classname with CSS Grid related styles given GridProps and the number of items to distribute as evenly as possible.
  * @param numberOfItems - number of items to place in grid
  * @param gridProps - GridProps that define the number of rows, number of columns, and the fill direction
  * @returns
  */
 export const createGridStyles = (numberOfItems: number, gridProps: GridProps): string => {
+  console.log('createGridStyles');
   // Blocks are either rows or columns depending on whether we fill horizontally or vertically. Each block may differ in the number of cells.
   const blocks = gridProps.horizontalFill ? gridProps.rows : gridProps.columns;
   const smallCellsPerBlock = Math.ceil(numberOfItems / blocks);

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { BaseCustomStylesProps } from '../types';
 import { gridLayoutStyle } from './styles/GridLayout.styles';
 import { calculateGridProps, GridProps, createGridStyles } from './utils/GridLayoutUtils';
@@ -56,7 +56,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     return () => observer.disconnect();
   }, [numberOfChildren, containerRef.current?.offsetWidth, containerRef.current?.offsetHeight]);
 
-  const dynamicGridStyles = createGridStyles(numberOfChildren, gridProps);
+  const dynamicGridStyles = useMemo(() => createGridStyles(numberOfChildren, gridProps), [numberOfChildren, gridProps]);
 
   return (
     <div ref={containerRef} className={mergeStyles(gridLayoutStyle, dynamicGridStyles, styles?.root)}>
