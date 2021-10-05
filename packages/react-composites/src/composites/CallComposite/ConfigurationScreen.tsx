@@ -53,13 +53,9 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
     </Stack.Item>
   );
 
-  const callDescription = (
-    /*locale.strings.call.configurationPageCallDetails &&*/ <Stack.Item
-      className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}
-    >
-      {
-        'Some details about the call that span more than line - many many lines because the paper bag princess would not stand for such few lines! Could you even imagine 😲'
-      }
+  const callDescription = locale.strings.call.configurationPageCallDetails && (
+    <Stack.Item className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}>
+      {locale.strings.call.configurationPageCallDetails}
     </Stack.Item>
   );
 
