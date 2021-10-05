@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CONNECTION_STRING, IDS, TOPIC_NAME } from './constants';
+import { CONNECTION_STRING, IDS, CHAT_TOPIC_NAME } from './constants';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
@@ -131,7 +131,7 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
   const threadId =
     (
       await chatClient.createChatThread(
-        { topic: TOPIC_NAME },
+        { topic: CHAT_TOPIC_NAME },
         {
           participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
         }
@@ -144,7 +144,7 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
     endpointUrl,
     displayName,
     threadId,
-    topic: TOPIC_NAME
+    topic: CHAT_TOPIC_NAME
   }));
 };
 
