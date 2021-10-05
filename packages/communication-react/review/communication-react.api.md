@@ -139,7 +139,7 @@ export type AzureCommunicationChatAdapterArgs = {
 // @alpha
 export type AzureCommunicationMeetingAdapterArgs = {
     endpointUrl: string;
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     chatThreadId: string;

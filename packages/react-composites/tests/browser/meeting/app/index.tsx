@@ -28,7 +28,7 @@ function App(): JSX.Element {
 
       setMeetingAdapter(
         await createAzureCommunicationMeetingAdapter({
-          userId: { kind: 'communicationUser', communicationUserId: userId },
+          userId: { communicationUserId: userId },
           displayName,
           credential,
           callLocator: { groupId: groupId },

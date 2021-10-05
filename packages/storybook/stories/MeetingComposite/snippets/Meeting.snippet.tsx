@@ -40,7 +40,7 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
       const createAdapters = async (): Promise<void> => {
         setMeetingAdapter(
           await createAzureCommunicationMeetingAdapter({
-            userId: { kind: 'communicationUser', communicationUserId: props.userId.communicationUserId },
+            userId: props.userId,
             displayName: props.displayName,
             credential,
             callLocator: props.locator,
