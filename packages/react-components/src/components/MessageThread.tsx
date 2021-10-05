@@ -27,10 +27,11 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  ChatMessagePayload,
   CommunicationParticipant,
   OnRenderAvatarCallback,
-  SystemMessagePayload
+  ParticipantAddedSystemMessage,
+  ParticipantRemovedSystemMessage,
+  Message
 } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -40,11 +41,11 @@ import { useLocale } from '../localization/LocalizationProvider';
 
 const NEW_MESSAGES = 'New Messages';
 
-const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): boolean => {
+const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
     first.messageId === second.messageId &&
     first.content === second.content &&
-    first.type === second.type &&
+    first.contentType === second.contentType &&
     JSON.stringify(first.createdOn) === JSON.stringify(second.createdOn) &&
     first.senderId === second.senderId &&
     first.senderDisplayName === second.senderDisplayName &&
@@ -57,49 +58,35 @@ const isMessageSame = (first: ChatMessagePayload, second: ChatMessagePayload): b
  *
  * @param messages
  */
-const getLatestChatMessage = (
-  messages: (ChatMessage | SystemMessage | CustomMessage)[]
-): ChatMessagePayload | undefined => {
-  let latestChatMessage: ChatMessagePayload | undefined = undefined;
+const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.type === 'chat') {
-      const payload: ChatMessagePayload = message.payload;
-      if (payload.createdOn !== undefined) {
-        latestChatMessage = payload;
-        break;
-      }
+    if (message.messageType === 'chat' && !!message.createdOn) {
+      return message;
     }
   }
-
-  return latestChatMessage;
+  return undefined;
 };
 
 /**
  * Compare latestMessageFromPreviousMessages & latestMessageFromNewMessages to see if the new message is not from
  * current user.
- *
- * @param latestMessageFromPreviousMessages
- * @param latestMessageFromNewMessages
- * @param userId
  */
 const isThereNewMessageNotFromCurrentUser = (
-  latestMessageFromPreviousMessages: ChatMessagePayload | undefined,
-  latestMessageFromNewMessages: ChatMessagePayload | undefined,
-  userId: string
+  userId: string,
+  latestMessageFromPreviousMessages?: ChatMessage,
+  latestMessageFromNewMessages?: ChatMessage
 ): boolean => {
   if (latestMessageFromNewMessages === undefined) {
     return false;
-  } else {
-    if (latestMessageFromPreviousMessages === undefined) {
-      return latestMessageFromNewMessages.senderId !== userId;
-    } else {
-      return (
-        !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
-        latestMessageFromNewMessages.senderId !== userId
-      );
-    }
   }
+  if (latestMessageFromPreviousMessages === undefined) {
+    return latestMessageFromNewMessages.senderId !== userId;
+  }
+  return (
+    !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
+    latestMessageFromNewMessages.senderId !== userId
+  );
 };
 
 /**
@@ -107,27 +94,22 @@ const isThereNewMessageNotFromCurrentUser = (
  * sender, messages that have failed to send, and messages from the current user that is marked as SEEN. This is meant
  * as an indirect way to detect if user is at bottom of the chat when the component updates with new messages. If we
  * updated this component due to current user sending a message we want to then call scrollToBottom.
- *
- * @param latestMessageFromPreviousMessages
- * @param latestMessageFromNewMessages
  */
 const didUserSendTheLatestMessage = (
-  latestMessageFromPreviousMessages: ChatMessagePayload | undefined,
-  latestMessageFromNewMessages: ChatMessagePayload | undefined,
-  userId: string
+  userId: string,
+  latestMessageFromPreviousMessages?: ChatMessage,
+  latestMessageFromNewMessages?: ChatMessage
 ): boolean => {
   if (latestMessageFromNewMessages === undefined) {
     return false;
-  } else {
-    if (latestMessageFromPreviousMessages === undefined) {
-      return latestMessageFromNewMessages.senderId === userId;
-    } else {
-      return (
-        !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
-        latestMessageFromNewMessages.senderId === userId
-      );
-    }
   }
+  if (latestMessageFromPreviousMessages === undefined) {
+    return latestMessageFromNewMessages.senderId === userId;
+  }
+  return (
+    !isMessageSame(latestMessageFromNewMessages, latestMessageFromPreviousMessages) &&
+    latestMessageFromNewMessages.senderId === userId
+  );
 };
 
 /**
@@ -225,23 +207,23 @@ const generateParticipantsStr = (participants: CommunicationParticipant[]): stri
 export type MessageRenderer = (props: MessageProps) => JSX.Element;
 
 const ParticipantSystemMessageComponent = ({
-  payload,
+  message,
   style
 }: {
-  payload: SystemMessagePayload<'participantAdded' | 'participantRemoved'>;
+  message: ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage;
   style?: ComponentSlotStyle;
 }): JSX.Element => {
   const { strings } = useLocale();
-  const participantsStr = generateParticipantsStr(payload.participants);
+  const participantsStr = generateParticipantsStr(message.participants);
   const messageSuffix =
-    payload.type === 'participantAdded'
+    message.systemMessageType === 'participantAdded'
       ? strings.messageThread.participantJoined
       : strings.messageThread.participantLeft;
 
   if (participantsStr !== '') {
     return (
       <SystemMessageComponent
-        iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
+        iconName={(message.iconName ?? '') as SystemMessageIconTypes}
         content={`${participantsStr} ${messageSuffix}`}
         containerStyle={style}
       />
@@ -251,20 +233,22 @@ const ParticipantSystemMessageComponent = ({
 };
 
 const DefaultSystemMessage: MessageRenderer = (props: MessageProps) => {
-  if (props.message.type === 'system') {
-    const payload = props.message.payload;
-    if (payload.type === 'content') {
-      return (
-        <SystemMessageComponent
-          iconName={(payload.iconName ?? '') as SystemMessageIconTypes}
-          content={payload.content ?? ''}
-          containerStyle={props?.messageContainerStyle}
-        />
-      );
-    }
-    if (payload.type === 'participantAdded' || payload.type === 'participantRemoved') {
-      return <ParticipantSystemMessageComponent payload={payload} style={props.messageContainerStyle} />;
-    }
+  const message = props.message;
+  switch (message.messageType) {
+    case 'system':
+      switch (message.systemMessageType) {
+        case 'content':
+          return (
+            <SystemMessageComponent
+              iconName={(message.iconName ?? '') as SystemMessageIconTypes}
+              content={message.content ?? ''}
+              containerStyle={props?.messageContainerStyle}
+            />
+          );
+        case 'participantAdded':
+        case 'participantRemoved':
+          return <ParticipantSystemMessageComponent message={message} style={props.messageContainerStyle} />;
+      }
   }
   return <></>;
 };
@@ -272,7 +256,7 @@ const DefaultSystemMessage: MessageRenderer = (props: MessageProps) => {
 const memoizeAllMessages = memoizeFnAll(
   (
     _messageKey: string,
-    message: ChatMessage | SystemMessage | CustomMessage,
+    message: Message,
     showMessageDate: boolean,
     showMessageStatus: boolean,
     onRenderAvatar: OnRenderAvatarCallback | undefined,
@@ -297,101 +281,100 @@ const memoizeAllMessages = memoizeFnAll(
       onDeleteMessage
     };
 
-    if (message.type === 'chat') {
-      const payload: ChatMessagePayload = message.payload;
+    switch (message.messageType) {
+      case 'chat': {
+        const myChatMessageStyle = styles?.myChatMessageContainer || defaultMyChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+        messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
-      const myChatMessageStyle = styles?.myChatMessageContainer || defaultMyChatMessageContainer;
-      const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
-      messageProps.messageContainerStyle = message.payload.mine ? myChatMessageStyle : chatMessageStyle;
+        const chatMessageComponent =
+          onRenderMessage === undefined
+            ? defaultChatMessageRenderer(messageProps)
+            : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
-      const chatMessageComponent =
-        onRenderMessage === undefined
-          ? defaultChatMessageRenderer(messageProps)
-          : onRenderMessage(messageProps, defaultChatMessageRenderer);
+        const personaOptions: IPersona = {
+          hidePersonalDetails: true,
+          size: PersonaSize.size32
+        };
 
-      const personaOptions: IPersona = {
-        hidePersonalDetails: true,
-        size: PersonaSize.size32
-      };
+        const myChatItemMessageStyle = styles?.myChatItemMessageContainer || defaultMyChatItemMessageContainer;
+        const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
+        const chatGutterStyles =
+          message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
-      const myChatItemMessageStyle = styles?.myChatItemMessageContainer || defaultMyChatItemMessageContainer;
-      const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
-      const chatGutterStyles =
-        payload.attached === 'top' || payload.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
-
-      return {
-        gutter: {
-          styles: chatGutterStyles,
-          content: payload.mine ? (
-            ''
-          ) : onRenderAvatar ? (
-            onRenderAvatar(payload.senderId ?? '', personaOptions)
-          ) : (
-            <Persona {...personaOptions} />
-          )
-        },
-        contentPosition: payload.mine ? 'end' : 'start',
-        message: {
-          className: mergeStyles({ width: 'calc(100% - 5rem)' }),
-          styles: payload.mine ? myChatItemMessageStyle : chatItemMessageStyle,
-          content: (
-            <Flex hAlign={payload.mine ? 'end' : undefined} vAlign="end">
-              {chatMessageComponent}
-              <div
-                className={mergeStyles(
-                  messageStatusContainerStyle(payload.mine ?? false),
-                  styles?.messageStatusContainer ? styles.messageStatusContainer(payload.mine ?? false) : ''
-                )}
-              >
-                {showMessageStatus && statusToRender ? (
-                  onRenderMessageStatus ? (
-                    onRenderMessageStatus({ status: statusToRender })
+        return {
+          gutter: {
+            styles: chatGutterStyles,
+            content: message.mine ? (
+              ''
+            ) : onRenderAvatar ? (
+              onRenderAvatar(message.senderId ?? '', personaOptions)
+            ) : (
+              <Persona {...personaOptions} />
+            )
+          },
+          contentPosition: message.mine ? 'end' : 'start',
+          message: {
+            className: mergeStyles({ width: 'calc(100% - 5rem)' }),
+            styles: message.mine ? myChatItemMessageStyle : chatItemMessageStyle,
+            content: (
+              <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
+                {chatMessageComponent}
+                <div
+                  className={mergeStyles(
+                    messageStatusContainerStyle(message.mine ?? false),
+                    styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
+                  )}
+                >
+                  {showMessageStatus && statusToRender ? (
+                    onRenderMessageStatus ? (
+                      onRenderMessageStatus({ status: statusToRender })
+                    ) : (
+                      defaultStatusRenderer(statusToRender)
+                    )
                   ) : (
-                    defaultStatusRenderer(statusToRender)
-                  )
-                ) : (
-                  <div className={mergeStyles(noMessageStatusStyle)} />
-                )}
-              </div>
-            </Flex>
-          )
-        },
-        attached: message.payload.attached,
-        key: _messageKey
-      };
-    } else if (message.type === 'system') {
-      messageProps.messageContainerStyle = styles?.systemMessageContainer;
+                    <div className={mergeStyles(noMessageStatusStyle)} />
+                  )}
+                </div>
+              </Flex>
+            )
+          },
+          attached: message.attached,
+          key: _messageKey
+        };
+      }
 
-      const systemMessageComponent =
-        onRenderMessage === undefined ? (
-          <DefaultSystemMessage {...messageProps} />
-        ) : (
-          onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
-        );
+      case 'system': {
+        messageProps.messageContainerStyle = styles?.systemMessageContainer;
+        const systemMessageComponent =
+          onRenderMessage === undefined ? (
+            <DefaultSystemMessage {...messageProps} />
+          ) : (
+            onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
+          );
+        return {
+          children: systemMessageComponent,
+          key: _messageKey
+        };
+      }
 
-      return {
-        children: systemMessageComponent,
-        key: _messageKey
-      };
-    } else {
-      // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
-      const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
-      return {
-        children: customMessageComponent,
-        key: _messageKey
-      };
+      default: {
+        // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
+        const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
+        return {
+          children: customMessageComponent,
+          key: _messageKey
+        };
+      }
     }
   }
 );
 
-const getLastChatMessageIdWithStatus = (
-  messages: (ChatMessage | SystemMessage | CustomMessage)[],
-  status: MessageStatus
-): string | undefined => {
+const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStatus): string | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.type === 'chat' && message.payload.status === status && message.payload.mine) {
-      return message.payload.messageId;
+    if (message.messageType === 'chat' && message.status === status && message.mine) {
+      return message.messageId;
     }
   }
   return undefined;
@@ -523,7 +506,7 @@ export type MessageProps = {
   /**
    * Message to render. It can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
    */
-  message: ChatMessage | SystemMessage | CustomMessage;
+  message: Message;
   /**
    * Strings from parent MessageThread component
    */
@@ -598,8 +581,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   // Used to decide if should auto scroll to bottom or show "new message" button
-  const [latestPreviousChatMessage, setLatestPreviousChatMessage] = useState<ChatMessagePayload | undefined>(undefined);
-  const [latestCurrentChatMessage, setLatestCurrentChatMessage] = useState<ChatMessagePayload | undefined>(undefined);
+  const [latestPreviousChatMessage, setLatestPreviousChatMessage] = useState<ChatMessage | undefined>(undefined);
+  const [latestCurrentChatMessage, setLatestCurrentChatMessage] = useState<ChatMessage | undefined>(undefined);
   const [existsNewChatMessage, setExistsNewChatMessage] = useState<boolean>(false);
 
   const [lastSeenChatMessage, setLastSeenChatMessage] = useState<string | undefined>(undefined);
@@ -647,7 +630,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return;
     }
     const messagesWithId = messagesRef.current.filter((message) => {
-      return message.type === 'chat' && !message.payload.mine && !!message.payload.messageId;
+      return message.messageType === 'chat' && !message.mine && !!message.messageId;
     });
     if (messagesWithId.length === 0) {
       return;
@@ -658,11 +641,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       if (
         onMessageSeen &&
         lastMessage &&
-        lastMessage.payload.messageId &&
-        lastMessage.payload.messageId !== messageIdSeenByMeRef.current
+        lastMessage.messageId &&
+        lastMessage.messageId !== messageIdSeenByMeRef.current
       ) {
-        await onMessageSeen(lastMessage.payload.messageId);
-        messageIdSeenByMeRef.current = lastMessage.payload.messageId;
+        await onMessageSeen(lastMessage.messageId);
+        messageIdSeenByMeRef.current = lastMessage.messageId;
       }
     } catch (e) {
       console.log('onMessageSeen Error', lastMessage, e);
@@ -802,12 +785,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   useEffect(() => {
     // If user just sent the latest message then we assume we can move user to bottom of scroll.
     if (
-      isThereNewMessageNotFromCurrentUser(latestPreviousChatMessage, latestCurrentChatMessage, userId) &&
+      isThereNewMessageNotFromCurrentUser(userId, latestPreviousChatMessage, latestCurrentChatMessage) &&
       !isAtBottomOfScrollRef.current
     ) {
       setExistsNewChatMessage(true);
     } else if (
-      didUserSendTheLatestMessage(latestPreviousChatMessage, latestCurrentChatMessage, userId) ||
+      didUserSendTheLatestMessage(userId, latestPreviousChatMessage, latestCurrentChatMessage) ||
       isAtBottomOfScrollRef.current
     ) {
       scrollToBottom();
@@ -818,7 +801,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
-      if (messageProps.message.type === 'chat') {
+      if (messageProps.message.messageType === 'chat') {
         return <ChatMessageComponent {...messageProps} message={messageProps.message} />;
       }
       return <></>;
@@ -838,57 +821,57 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
-        return messages.map(
-          (message: ChatMessage | SystemMessage | CustomMessage, index: number): ShorthandValue<ChatItemProps> => {
-            let key: string | undefined = message.payload.messageId;
-            if (message.type === 'chat' && (!message.payload.messageId || message.payload.messageId === '')) {
-              key = message.payload.clientMessageId;
-            }
+        return messages.map((message: Message, index: number): ShorthandValue<ChatItemProps> => {
+          let key: string | undefined = message.messageId;
+          let statusToRender: MessageStatus | undefined = undefined;
 
-            let statusToRender: MessageStatus | undefined = undefined;
-            if (message.type === 'chat') {
-              if (showMessageStatus && message.payload.mine) {
-                switch (message.payload.messageId) {
-                  case lastSeenChatMessage: {
-                    statusToRender = 'seen';
-                    break;
-                  }
-                  case lastSendingChatMessage: {
-                    statusToRender = 'sending';
-                    break;
-                  }
-                  case lastDeliveredChatMessage: {
-                    statusToRender = 'delivered';
-                    break;
-                  }
+          if (message.messageType === 'chat') {
+            if (!message.messageId || message.messageId === '') {
+              key = message.clientMessageId;
+            }
+            if (showMessageStatus && message.mine) {
+              switch (message.messageId) {
+                case lastSeenChatMessage: {
+                  statusToRender = 'seen';
+                  break;
+                }
+                case lastSendingChatMessage: {
+                  statusToRender = 'sending';
+                  break;
+                }
+                case lastDeliveredChatMessage: {
+                  statusToRender = 'delivered';
+                  break;
                 }
               }
-              if (message.payload.mine && message.payload.status === 'failed') statusToRender = 'failed';
             }
-
-            console.log('function: ' + onUpdateMessage);
-
-            return memoizedMessageFn(
-              key ?? 'id_' + index,
-              message,
-              showMessageDate,
-              showMessageStatus,
-              onRenderAvatar,
-              styles,
-              onRenderMessageStatus,
-              defaultStatusRenderer,
-              defaultChatMessageRenderer,
-              strings,
-              // Temporary solution to make sure we re-render if attach attribute is changed.
-              // The proper fix should be in selector.
-              message.type === 'chat' ? message.payload.attached : undefined,
-              statusToRender,
-              onRenderMessage,
-              onUpdateMessage,
-              onDeleteMessage
-            );
+            if (message.mine && message.status === 'failed') {
+              statusToRender = 'failed';
+            }
           }
-        );
+
+          console.log('function: ' + onUpdateMessage);
+
+          return memoizedMessageFn(
+            key ?? 'id_' + index,
+            message,
+            showMessageDate,
+            showMessageStatus,
+            onRenderAvatar,
+            styles,
+            onRenderMessageStatus,
+            defaultStatusRenderer,
+            defaultChatMessageRenderer,
+            strings,
+            // Temporary solution to make sure we re-render if attach attribute is changed.
+            // The proper fix should be in selector.
+            message.messageType === 'chat' ? message.attached : undefined,
+            statusToRender,
+            onRenderMessage,
+            onUpdateMessage,
+            onDeleteMessage
+          );
+        });
       }),
     [
       messages,
