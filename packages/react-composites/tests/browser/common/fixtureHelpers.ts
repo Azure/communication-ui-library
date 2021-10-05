@@ -15,7 +15,7 @@ import { buildUrl } from './utils';
  * To be used in a playwright fixture's 'pages'.
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePagePerParticipant = async ({ serverUrl, browser, users }, use) => {
+export const usePagePerParticipant = async ({ serverUrl, users, browser }, use) => {
   const pages = await Promise.all(users.map(async (user) => await loadNewPage(browser, buildUrl(serverUrl, user))));
   await use(pages);
 };

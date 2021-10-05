@@ -35,7 +35,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
   test('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
-      await pages[idx].waitForSelector(dataUiId(IDS.sendboxTextfield));
+      await pages[idx].waitForSelector(dataUiId(IDS.sendboxTextField));
       expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
     }
   });
@@ -43,7 +43,7 @@ test.describe('Chat Composite E2E Tests', () => {
   test('page[1] can receive message and send readReceipt when page[0] send message', async ({ pages }) => {
     const page0 = pages[0];
     await page0.bringToFront();
-    await page0.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page0.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page0.keyboard.press('Enter');
     await page0.waitForSelector(`[data-ui-status="delivered"]`);
     await stubMessageTimestamps(page0);
@@ -73,7 +73,7 @@ test.describe('Chat Composite E2E Tests', () => {
     const page1 = pages[1];
 
     await page1.bringToFront();
-    await page1.type(dataUiId(IDS.sendboxTextfield), 'I am not superstitious. Just a little stitious.');
+    await page1.type(dataUiId(IDS.sendboxTextField), 'I am not superstitious. Just a little stitious.');
     await page0.bringToFront();
     await page0.waitForSelector(dataUiId(IDS.typingIndicator));
     const indicator0 = await page0.$(dataUiId(IDS.typingIndicator));
@@ -97,7 +97,7 @@ test.describe('Chat Composite E2E Tests', () => {
   test('page[1] can rejoin the chat', async ({ pages }) => {
     const page1 = pages[1];
     await page1.bringToFront();
-    await page1.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page1.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page1.keyboard.press('Enter');
     // Read the message to generate stable result
     await pages[0].bringToFront();
@@ -120,7 +120,7 @@ test.describe('Chat Composite custom data model', () => {
     const url = buildUrl(serverUrl, user, { customDataModel: 'true' });
     const page = await loadNewPage(browser, url);
     await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
     await page.waitForFunction(() => {

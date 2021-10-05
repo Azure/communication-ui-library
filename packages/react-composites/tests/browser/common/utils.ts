@@ -16,7 +16,7 @@ export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('networkidle');
-  await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
+  await page.waitForSelector(dataUiId(IDS.sendboxTextField));
 
   // @TODO
   // We wait 3 sec here to work around a bug.

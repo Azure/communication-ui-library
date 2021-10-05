@@ -68,7 +68,7 @@ test.describe('ErrorBar is shown correctly', async () => {
 });
 
 const sendAMessage = async (page: Page): Promise<void> => {
-  await page.type(dataUiId(IDS.sendboxTextfield), 'No, sir, this will not do.');
+  await page.type(dataUiId(IDS.sendboxTextField), 'No, sir, this will not do.');
   await page.keyboard.press('Enter');
 };
 
