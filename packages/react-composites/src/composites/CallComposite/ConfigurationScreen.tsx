@@ -13,6 +13,8 @@ import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from './LocalPreview';
 import {
+  callDetailsStyleDesktop,
+  callDetailsStyleMobile,
   configurationStackTokensDesktop,
   configurationStackTokensMobile,
   configurationContainerStyleDesktop,
@@ -22,7 +24,8 @@ import {
   startCallButtonContainerStyleMobile,
   startCallButtonStyleMobile,
   titleContainerStyleDesktop,
-  titleContainerStyleMobile
+  titleContainerStyleMobile,
+  callDetailsContainerStylesDesktop
 } from './styles/CallConfiguration.styles';
 import { useLocale } from '../localization';
 
@@ -51,6 +54,12 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
     </Stack.Item>
   );
 
+  const callDescription = locale.strings.call.configurationPageCallDetails && (
+    <Stack.Item className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}>
+      {locale.strings.call.configurationPageCallDetails}
+    </Stack.Item>
+  );
+
   return (
     <Stack
       horizontal={!mobileView}
@@ -59,17 +68,27 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       tokens={mobileView ? configurationStackTokensMobile : configurationStackTokensDesktop}
       className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}
     >
-      {mobileView && title}
+      {mobileView && (
+        <Stack.Item>
+          {title}
+          {callDescription}
+        </Stack.Item>
+      )}
       <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />
       <Stack className={mobileView ? undefined : selectionContainerStyle}>
-        {!mobileView && title}
         {!mobileView && (
-          <LocalDeviceSettings
-            {...options}
-            {...localDeviceSettingsHandlers}
-            cameraPermissionGranted={cameraPermissionGranted}
-            microphonePermissionGranted={microphonePermissionGranted}
-          />
+          <>
+            <Stack.Item styles={callDetailsContainerStylesDesktop}>
+              {title}
+              {callDescription}
+            </Stack.Item>
+            <LocalDeviceSettings
+              {...options}
+              {...localDeviceSettingsHandlers}
+              cameraPermissionGranted={cameraPermissionGranted}
+              microphonePermissionGranted={microphonePermissionGranted}
+            />
+          </>
         )}
         <Stack styles={mobileView ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}>
           <StartCallButton

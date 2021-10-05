@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStackTokens, IStyle, mergeStyles } from '@fluentui/react';
+import { IStackItemStyles, IStackStyles, IStackTokens, IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -19,7 +19,7 @@ export const configurationStackTokensMobile: IStackTokens = {
 
 const configurationContainerStyle: IStyle = {
   height: '100%',
-  width: '100% ',
+  width: '100%',
   minHeight: 'auto'
 };
 
@@ -48,26 +48,54 @@ export const selectionContainerStyle = mergeStyles({
   padding: '0.5rem'
 });
 
-const titleContainerStyle: IStyle = {
-  fontSize: '1.25rem',
-  lineHeight: '1.75rem',
-  fontWeight: 600
-};
-
 /**
  * @private
  */
 export const titleContainerStyleDesktop = mergeStyles({
-  ...titleContainerStyle,
-  width: '12.5rem',
-  marginBottom: '1.563rem'
+  fontSize: '1.25rem',
+  lineHeight: '1.75rem',
+  fontWeight: 600,
+  width: '12.5rem'
 });
 
 /**
  * @private
  */
 export const titleContainerStyleMobile = mergeStyles({
-  ...titleContainerStyle,
+  fontSize: '1.0625rem',
+  lineHeight: '1.375rem',
+  fontWeight: 600,
+  textAlign: 'center'
+});
+
+/**
+ * @private
+ */
+export const callDetailsContainerStylesDesktop: IStackItemStyles = {
+  root: {
+    marginBottom: '1.563rem'
+  }
+};
+
+const callDetailsStyle: IStyle = {
+  fontSize: '0.9375',
+  lineHeight: '1.25rem',
+  marginTop: '0.25rem'
+};
+
+/**
+ * @private
+ */
+export const callDetailsStyleDesktop = mergeStyles({
+  ...callDetailsStyle,
+  maxWidth: '18.75rem'
+});
+
+/**
+ * @private
+ */
+export const callDetailsStyleMobile = mergeStyles({
+  ...callDetailsStyle,
   textAlign: 'center'
 });
 
