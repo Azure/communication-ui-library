@@ -97,60 +97,60 @@ export interface ChatAdapterThreadManagement {
  */
 export interface ChatAdapterSubscribers {
   /**
-   * Subscribe function for messageReceived event.
+   * Subscribe function for 'messageReceived' event.
    */
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   /**
-   * Subscribe function for messageSent event.
+   * Subscribe function for 'messageSent' event.
    */
   on(event: 'messageSent', listener: MessageSentListener): void;
   /**
-   * Subscribe function for messageRead event.
+   * Subscribe function for 'messageRead' event.
    */
   on(event: 'messageRead', listener: MessageReadListener): void;
   /**
-   * Subscribe function for participantsAdded event.
+   * Subscribe function for 'participantsAdded' event.
    */
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   /**
-   * Subscribe function for participantsRemoved event.
+   * Subscribe function for 'participantsRemoved' event.
    */
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   /**
-   * Subscribe function for topicChanged event.
+   * Subscribe function for 'topicChanged' event.
    */
   on(event: 'topicChanged', listener: TopicChangedListener): void;
   /**
-   * Subscribe function for error event.
+   * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
 
   /**
-   * Unsubscribe function for messageReceived event.
+   * Unsubscribe function for 'messageReceived' event.
    */
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
   /**
-   * Unsubscribe function for messageSent event.
+   * Unsubscribe function for 'messageSent' event.
    */
   off(event: 'messageSent', listener: MessageSentListener): void;
   /**
-   * Unsubscribe function for messageRead event.
+   * Unsubscribe function for 'messageRead' event.
    */
   off(event: 'messageRead', listener: MessageReadListener): void;
   /**
-   * Unsubscribe function for participantsAdded event.
+   * Unsubscribe function for 'participantsAdded' event.
    */
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   /**
-   * Unsubscribe function for participantsRemoved event.
+   * Unsubscribe function for 'participantsRemoved' event.
    */
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   /**
-   * Unsubscribe function for topicChanged event.
+   * Unsubscribe function for 'topicChanged' event.
    */
   off(event: 'topicChanged', listener: TopicChangedListener): void;
   /**
-   * Unsubscribe function for error event.
+   * Unsubscribe function for 'error' event.
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
 }
