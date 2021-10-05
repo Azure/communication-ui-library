@@ -172,7 +172,6 @@ export const loadNewPage = async (browser: Browser, url: string): Promise<Page> 
 export const loadNewPageWithPermissionsForCalls = async (browser: Browser, url: string): Promise<Page> => {
   const context = await browser.newContext({ permissions: ['notifications', 'camera', 'microphone'] });
   const page = await context.newPage();
-  await page.setViewportSize(PAGE_VIEWPORT);
   await page.goto(url);
   return page;
 };
