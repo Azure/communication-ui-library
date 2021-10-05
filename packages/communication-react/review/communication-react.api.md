@@ -308,6 +308,7 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
     microphonePermissionDenied: string;
