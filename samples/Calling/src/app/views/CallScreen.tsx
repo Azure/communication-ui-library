@@ -30,7 +30,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const adapter = await createAzureCommunicationCallAdapter({
-        userId: { kind: 'communicationUser', communicationUserId: userId.communicationUserId },
+        userId: { communicationUserId: userId.communicationUserId },
         displayName: displayName,
         credential: createAutoRefreshingCredential(userId.communicationUserId, token),
         locator: callLocator

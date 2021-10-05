@@ -48,7 +48,7 @@ function App(): JSX.Element {
       );
       setCallAdapter(
         await createAzureCommunicationCallAdapter({
-          userId: { kind: 'communicationUser', communicationUserId: userId },
+          userId: { communicationUserId: userId },
           displayName,
           credential: new AzureCommunicationTokenCredential(token),
           locator: { groupId }
