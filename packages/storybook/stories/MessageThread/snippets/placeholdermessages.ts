@@ -8,44 +8,38 @@ import { ChatMessage, CustomMessage, MessageStatus, SystemMessage } from '@azure
 export const GetHistoryChatMessages = (): ChatMessage[] => {
   return [
     {
-      type: 'chat',
-      payload: {
-        senderId: 'user1',
-        senderDisplayName: 'Kat Larsson',
-        messageId: Math.random().toString(),
-        content: 'Hi everyone, I created this awesome group chat for us!',
-        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-        mine: true,
-        attached: false,
-        status: 'seen' as MessageStatus,
-        type: 'text'
-      }
+      messageType: 'chat',
+      senderId: 'user1',
+      senderDisplayName: 'Kat Larsson',
+      messageId: Math.random().toString(),
+      content: 'Hi everyone, I created this awesome group chat for us!',
+      createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+      mine: true,
+      attached: false,
+      status: 'seen' as MessageStatus,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        senderId: 'user2',
-        senderDisplayName: 'Robert Tolbert',
-        messageId: Math.random().toString(),
-        content: 'Nice! This looks great!',
-        createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      senderId: 'user2',
+      senderDisplayName: 'Robert Tolbert',
+      messageId: Math.random().toString(),
+      content: 'Nice! This looks great!',
+      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        senderId: 'user3',
-        senderDisplayName: 'Carole Poland',
-        messageId: Math.random().toString(),
-        content: "Yeah agree, let's chat here from now on!",
-        createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      senderId: 'user3',
+      senderDisplayName: 'Carole Poland',
+      messageId: Math.random().toString(),
+      content: "Yeah agree, let's chat here from now on!",
+      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     }
   ];
 };
@@ -54,14 +48,12 @@ export const GetHistoryWithSystemMessages = (): (SystemMessage | ChatMessage)[] 
   return [
     ...GetHistoryChatMessages(),
     {
-      type: 'system',
-      payload: {
-        createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-        type: 'content',
-        messageId: Math.random().toString(),
-        iconName: 'PeopleAdd',
-        content: 'Miguel Garcia is added to the chat'
-      }
+      messageType: 'system',
+      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+      systemMessageType: 'content',
+      messageId: Math.random().toString(),
+      iconName: 'PeopleAdd',
+      content: 'Miguel Garcia is added to the chat'
     }
   ];
 };
@@ -69,14 +61,12 @@ export const GetHistoryWithSystemMessages = (): (SystemMessage | ChatMessage)[] 
 export const GetHistoryWithCustomMessages = (): (CustomMessage | ChatMessage)[] => {
   return [
     {
-      type: 'custom',
+      messageType: 'custom',
       // Custom message's payload can be any shape, this is just an example.
       // Whatever is defined in the custom message's payload needs to be handled in onRenderMessage in MessageThread.
-      payload: {
-        createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-        messageId: Math.random().toString(),
-        content: 'Today'
-      }
+      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+      messageId: Math.random().toString(),
+      content: 'Today'
     },
     ...GetHistoryChatMessages()
   ];

@@ -6,7 +6,8 @@ import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/comm
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
 import { v1 } from 'uuid';
-import { CONNECTION_STRING, CHAT_TOPIC_NAME } from './constants';
+import { CHAT_TOPIC_NAME } from './constants';
+import { CONNECTION_STRING } from './nodeConstants';
 import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
 import { buildUrl } from './utils';
 
@@ -40,7 +41,7 @@ export const usePagePerParticipantWithCallPermissions = async ({ browser, server
   await use(pages);
 };
 
-const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
+export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
   const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
   const userAndTokens: CommunicationUserToken[] = [];

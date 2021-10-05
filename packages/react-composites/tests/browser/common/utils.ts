@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CONNECTION_STRING, IDS, CHAT_TOPIC_NAME } from './constants';
-import { ChatClient } from '@azure/communication-chat';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { IDS } from './constants';
 import { Page } from '@playwright/test';
 import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
 
@@ -117,35 +114,6 @@ export const disableAnimation = async (page: Page): Promise<void> => {
       }
     `
   });
-};
-
-export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
-  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
-  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
-  const userAndTokens: CommunicationUserToken[] = [];
-  for (let i = 0; i < displayNames.length; i++) {
-    userAndTokens.push(await tokenClient.createUserAndToken(['chat']));
-  }
-
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
-  const threadId =
-    (
-      await chatClient.createChatThread(
-        { topic: CHAT_TOPIC_NAME },
-        {
-          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
-        }
-      )
-    ).chatThread?.id ?? '';
-
-  return displayNames.map((displayName, i) => ({
-    userId: userAndTokens[i].user.communicationUserId,
-    token: userAndTokens[i].token,
-    endpointUrl,
-    displayName,
-    threadId,
-    topic: CHAT_TOPIC_NAME
-  }));
 };
 
 const encodeQueryData = (qArgs?: { [key: string]: string }): string => {

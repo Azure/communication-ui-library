@@ -20,17 +20,16 @@ describe('Message date should be formatted correctly', () => {
   test('Should locale string for "Yesterday"', async () => {
     const testLocale = createTestLocale({ messageThread: { yesterday: Math.random().toString() } });
     const sampleMessage: ChatMessage = {
-      type: 'chat',
-      payload: {
-        senderId: 'user3',
-        senderDisplayName: 'Sam Fisher',
-        messageId: Math.random().toString(),
-        content: 'Thanks for making my job easier.',
-        createdOn: twentyFourHoursAgo(),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+
+      senderId: 'user3',
+      senderDisplayName: 'Sam Fisher',
+      messageId: Math.random().toString(),
+      content: 'Thanks for making my job easier.',
+      createdOn: twentyFourHoursAgo(),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     };
     const component = mountWithLocalization(
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
