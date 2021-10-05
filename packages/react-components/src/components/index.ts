@@ -23,7 +23,7 @@ export type {
   MessageProps,
   MessageThreadProps,
   MessageThreadStrings,
-  MessageThreadStylesProps,
+  MessageThreadStyles,
   JumpToNewMessageButtonProps,
   MessageRenderer
 } from './MessageThread';

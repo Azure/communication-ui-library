@@ -30,7 +30,8 @@ export const messageThreadContainerStyle = mergeStyles({
   width: '100%',
   maxHeight: '100%',
   overflow: 'auto',
-  position: 'relative'
+  position: 'relative',
+  alignSelf: 'center'
 });
 
 /**
@@ -77,9 +78,63 @@ export const chatMessageDateStyle: CSSProperties = {
 /**
  * @private
  */
+export const defaultMyChatItemMessageContainer: ComponentSlotStyle = {
+  marginRight: '0rem',
+  marginLeft: '0rem'
+};
+
+/**
+ * @private
+ */
+export const defaultChatItemMessageContainer: ComponentSlotStyle = {
+  marginRight: '0rem',
+  marginLeft: '0rem'
+};
+
+/**
+ * @private
+ */
+export const defaultMyChatMessageContainer: ComponentSlotStyle = {
+  maxWidth: '100%',
+  minWidth: '0%',
+  marginLeft: '0rem'
+};
+
+/**
+ * @private
+ */
+export const defaultChatMessageContainer: ComponentSlotStyle = {
+  maxWidth: '100%',
+  minWidth: '0%',
+  marginRight: '0rem'
+};
+
+/**
+ * @private
+ */
+export const gutterWithAvatar: ComponentSlotStyle = {
+  position: 'relative',
+  float: 'left',
+  display: 'block',
+  visibility: 'visible'
+};
+
+/**
+ * @private
+ */
+export const gutterWithHiddenAvatar: ComponentSlotStyle = {
+  position: 'relative',
+  float: 'left',
+  display: 'block',
+  visibility: 'hidden'
+};
+
+/**
+ * @private
+ */
 export const messageStatusContainerStyle = (mine: boolean): string =>
   mergeStyles({
-    marginLeft: mine ? '1rem' : '0rem'
+    marginLeft: mine ? '0.25rem' : '0rem'
   });
 
 /**

@@ -28,28 +28,24 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
         }
       >
         <div
-          className="ms-Stack css-61 css-4"
+          className="ms-Stack css-61 css-5"
         >
           <div
-            style={
-              Object {
-                "position": "relative",
-              }
-            }
+            className="css-3"
           >
             <div
-              className="ms-TextField ms-TextField--multiline root-6"
+              className="ms-TextField ms-TextField--multiline root-7"
             >
               <div
-                className="ms-TextField-wrapper wrapper-7"
+                className="ms-TextField-wrapper wrapper-8"
               >
                 <div
-                  className="ms-TextField-fieldGroup fieldGroup-8"
+                  className="ms-TextField-fieldGroup fieldGroup-9"
                 >
                   <textarea
                     aria-invalid={false}
                     aria-label="Type"
-                    className="ms-TextField-field ms-TextField--unresizable css-62 css-57 field-9"
+                    className="ms-TextField-field ms-TextField--unresizable css-62 css-57 field-10"
                     data-ui-id="sendbox-textfield"
                     disabled={false}
                     id="sendbox"
@@ -65,7 +61,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               </div>
             </div>
             <div
-              className="css-3"
+              className="css-4"
             >
               <div
                 className="css-63 css-58"
@@ -76,7 +72,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               >
                 <i
                   aria-hidden={true}
-                  className="root-37 css-59 root-18"
+                  className="root-37 css-59 root-19"
                   data-icon-name="SendBoxSend"
                 >
                   <span
