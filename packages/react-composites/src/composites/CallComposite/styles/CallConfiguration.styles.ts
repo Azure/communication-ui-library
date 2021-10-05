@@ -17,7 +17,7 @@ export const configurationStackTokensMobile: IStackTokens = {
   childrenGap: '1rem'
 };
 
-const configurationContainerStyle = {
+const configurationContainerStyle: IStyle = {
   height: '100%',
   width: '100% ',
   minHeight: 'auto'
