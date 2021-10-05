@@ -53,7 +53,8 @@ function App(): JSX.Element {
     locale = COMPOSITE_LOCALE_FR_FR;
   } else if (showCallDescription) {
     locale = COMPOSITE_LOCALE_EN_US;
-    locale.strings.call.configurationPageCallDetails = 'Some details about the call';
+    locale.strings.call.configurationPageCallDetails =
+      'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
   }
 
   return (
