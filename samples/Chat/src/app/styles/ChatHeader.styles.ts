@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconProps, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IIconProps, mergeStyles } from '@fluentui/react';
 
 export const chatHeaderContainerStyle = mergeStyles({
   width: '100%',
@@ -37,6 +37,12 @@ export const largeLeaveButtonContainerStyle = mergeStyles({
     display: 'none'
   }
 });
+
+export const largeLeaveButtonStyles: IButtonStyles = {
+  textContainer: {
+    display: 'contents'
+  }
+};
 
 export const smallLeaveButtonContainerStyle = mergeStyles({
   whiteSpace: 'nowrap',
