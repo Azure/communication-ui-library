@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { getBackgroundColor } from '../utils/utils';
-import { IStackTokens, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 
 export const responsiveLayoutStackTokens: IStackTokens = {
   childrenGap: '5.25rem 8.6875rem'
@@ -128,12 +128,22 @@ export const buttonStyle = mergeStyles({
   fontSize: '0.875rem' // 14px
 });
 
+export const buttonStyles: IButtonStyles = {
+  root: {
+    height: '2.75rem',
+    fontWeight: 600,
+    width: '100%',
+    maxWidth: '18.75rem',
+    minWidth: '12.5rem',
+    fontSize: '0.875rem' // 14px
+  },
+  textContainer: {
+    display: 'contents'
+  }
+};
+
 export const mainContainerStyle = mergeStyles({
   maxWidth: '46.875rem',
   width: '100%',
   height: '100%'
-});
-
-export const startChatButtonTextStyle = mergeStyles({
-  fontSize: '0.875rem' // 14px
 });

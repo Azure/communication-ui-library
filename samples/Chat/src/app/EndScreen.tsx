@@ -5,14 +5,13 @@ import { DefaultButton, PrimaryButton, Stack, Link, Text } from '@fluentui/react
 import React, { useCallback, useState } from 'react';
 import {
   bottomStackFooterStyle,
-  buttonStyle,
-  buttonTextStyle,
+  buttonStyles,
   buttonsStackTokens,
+  chatIconStyle,
   endChatContainerStyle,
   endChatTitleStyle,
   mainStackTokens,
-  upperStackTokens,
-  videoCameraIconStyle
+  upperStackTokens
 } from './styles/EndChat.styles';
 
 import { Chat20Filled } from '@fluentui/react-icons';
@@ -70,17 +69,14 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
         <Stack horizontal wrap tokens={buttonsStackTokens}>
           <PrimaryButton
             disabled={isRejoiningThread}
-            className={buttonStyle}
+            styles={buttonStyles}
+            text={isRejoiningThread ? rejoining : rejoinChat}
             onClick={async () => {
               await rejoinThread();
             }}
-          >
-            <Chat20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
-            <Text className={buttonTextStyle}>{isRejoiningThread ? rejoining : rejoinChat}</Text>
-          </PrimaryButton>
-          <DefaultButton className={buttonStyle} onClick={props.homeHandler}>
-            <Text className={buttonTextStyle}> {goHomePage}</Text>
-          </DefaultButton>
+            onRenderIcon={() => <Chat20Filled className={chatIconStyle} />}
+          />
+          <DefaultButton styles={buttonStyles} text={goHomePage} onClick={props.homeHandler} />
         </Stack>
         <div className={bottomStackFooterStyle}>
           <Link href={feedbackLink}>Give Feedback</Link>

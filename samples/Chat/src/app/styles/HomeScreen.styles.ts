@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackTokens, getTheme, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStackTokens, getTheme, mergeStyles } from '@fluentui/react';
 
 const palette = getTheme().palette;
 
@@ -67,13 +67,18 @@ export const videoCameraIconStyle = mergeStyles({
   fontSize: '1.375rem' // 22px
 });
 
-export const buttonStyle = mergeStyles({
-  fontWeight: 600,
-  fontSize: '0.875rem', // 14px
-  width: 'fit-content',
-  height: '2.5rem',
-  borderRadius: 3
-});
+export const buttonStyles: IButtonStyles = {
+  root: {
+    fontWeight: 600,
+    fontSize: '0.875rem', // 14px
+    width: 'fit-content',
+    height: '2.5rem',
+    borderRadius: 3
+  },
+  textContainer: {
+    display: 'contents'
+  }
+};
 
 export const infoContainerStyle = mergeStyles({
   width: '23.188rem'
@@ -81,8 +86,4 @@ export const infoContainerStyle = mergeStyles({
 
 export const configContainerStyle = mergeStyles({
   width: 'inherit'
-});
-
-export const startChatTextStyle = mergeStyles({
-  fontSize: '0.875rem' // 14px
 });
