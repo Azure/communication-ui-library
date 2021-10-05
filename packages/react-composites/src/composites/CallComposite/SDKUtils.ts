@@ -10,6 +10,9 @@ import { CallAdapterState } from './adapter/CallAdapter';
  */
 export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== 'None' && callStatus !== 'Disconnected');
 
+/**
+ * @private
+ */
 export const isCameraOn = (state: CallAdapterState): boolean => {
   if (state.call) {
     const stream = state.call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
@@ -23,6 +26,9 @@ export const isCameraOn = (state: CallAdapterState): boolean => {
   return false;
 };
 
+/**
+ * @private
+ */
 const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
