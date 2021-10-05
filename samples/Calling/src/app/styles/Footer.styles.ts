@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStackTokens, ITextFieldStyles, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStackStyles, IStackTokens, ITextFieldStyles, mergeStyles } from '@fluentui/react';
 
 export const paneFooterStyles: IStackStyles = {
   root: {
@@ -33,14 +33,19 @@ export const footerMainTextStyle = mergeStyles({
   marginRight: '1rem'
 });
 
-export const copyLinkButtonStyle = mergeStyles({
-  fontWeight: 600,
-  fontSize: '0.875rem', // 14px
-  height: '2.5rem',
-  marginLeft: '1rem',
-  marginRight: '1rem',
-  width: '90%'
-});
+export const copyLinkButtonStyles: IButtonStyles = {
+  root: {
+    fontWeight: 600,
+    fontSize: '0.875rem', // 14px
+    height: '2.5rem',
+    marginLeft: '1rem',
+    marginRight: '1rem',
+    width: '90%'
+  },
+  textContainer: {
+    display: 'contents'
+  }
+};
 
 export const copyIconStyle = mergeStyles({
   marginRight: '0.5em'

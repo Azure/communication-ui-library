@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackTokens, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -55,13 +55,18 @@ export const endCallTitleStyle = mergeStyles({
 /**
  * @private
  */
-export const buttonStyle = mergeStyles({
-  fontWeight: 600,
-  height: '2.5rem',
-  width: '9.875rem',
-  fontSize: '0.875rem', // 14px
-  padding: 0
-});
+export const buttonStyles: IButtonStyles = {
+  root: {
+    fontWeight: 600,
+    height: '2.5rem',
+    width: '9.875rem',
+    fontSize: '0.875rem', // 14px
+    padding: 0
+  },
+  textContainer: {
+    display: 'contents'
+  }
+};
 
 /**
  * @private
