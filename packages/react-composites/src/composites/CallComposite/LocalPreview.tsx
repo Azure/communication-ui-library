@@ -31,7 +31,7 @@ import {
  */
 export interface LocalPreviewProps {
   mobileView: boolean;
-  showDevicesButton?: boolean;
+  showDevicesButton: boolean;
 }
 
 /**
