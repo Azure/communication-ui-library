@@ -28,6 +28,11 @@ export const gridStyle = mergeStyles(videoBaseStyle, {
 /**
  * @private
  */
+export const videoGalleryOuterDivStyle = mergeStyles({ position: 'relative', width: '100%', height: '100%' });
+
+/**
+ * @private
+ */
 export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'relative', height: '100%' } };
 
 /**

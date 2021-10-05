@@ -19,7 +19,8 @@ import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
-  videoGalleryContainerStyle
+  videoGalleryContainerStyle,
+  videoGalleryOuterDivStyle
 } from '../styles/VideoGallery.styles';
 import { useIsSmallScreen } from '../utils/responsive';
 import { VideoTile, VideoTileStylesProps } from '../VideoTile';
@@ -241,7 +242,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   if (shouldFloatLocalVideo()) {
     const floatingTileHostId = 'UILibraryFloatingTileHost';
     return (
-      <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <div ref={containerRef} className={videoGalleryOuterDivStyle}>
         <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
           <Modal
             isOpen={true}
@@ -253,7 +254,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {localParticipant && defaultOnRenderLocalVideoTile}
           </Modal>
           <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
-          {audioParticipants && (
+          {audioParticipants && audioParticipants.length > 0 && (
             <Stack style={{ minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' }}>
               <HorizontalGallery
                 onCreateRemoteStreamView={onCreateRemoteStreamView}
@@ -273,7 +274,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
   } else {
     return (
-      <div ref={containerRef}>
+      <div ref={containerRef} className={videoGalleryOuterDivStyle}>
         <Stack grow styles={videoGalleryContainerStyle}>
           <GridLayout styles={styles ?? emptyStyles}>
             <Stack
@@ -287,7 +288,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             </Stack>
             {defaultOnRenderRemoteParticipants}
           </GridLayout>
-          {audioParticipants && (
+          {audioParticipants && audioParticipants.length > 0 && (
             <Stack style={{ minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' }}>
               <HorizontalGallery
                 onCreateRemoteStreamView={onCreateRemoteStreamView}
