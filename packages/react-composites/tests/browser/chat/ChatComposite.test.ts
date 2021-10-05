@@ -130,6 +130,5 @@ test.describe('Chat Composite custom data model', () => {
     await page.waitForSelector('#custom-data-model-message');
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
-    page.close();
   });
 });
