@@ -172,31 +172,18 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export interface CallAdapterCallManagement {
-    // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     joinCall(microphoneOn?: boolean): Call | undefined;
-    // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
-    // (undocumented)
     mute(): Promise<void>;
-    // (undocumented)
     onToggleCamera(options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
     startCall(participants: string[]): Call | undefined;
-    // (undocumented)
     startCamera(): Promise<void>;
-    // (undocumented)
     startScreenShare(): Promise<void>;
-    // (undocumented)
     stopCamera(): Promise<void>;
-    // (undocumented)
     stopScreenShare(): Promise<void>;
-    // (undocumented)
     unmute(): Promise<void>;
 }
 
@@ -213,19 +200,12 @@ export type CallAdapterClientState = {
 
 // @public
 export interface CallAdapterDeviceManagement {
-    // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // (undocumented)
     queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
     setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
 }
 
@@ -234,41 +214,23 @@ export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
 // @public
 export interface CallAdapterSubscribers {
-    // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
     off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
     off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
     off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
     off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
     off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
     off(event: 'error', listener: (e: AdapterError) => void): void;
-    // (undocumented)
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
     on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
     on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
     on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
