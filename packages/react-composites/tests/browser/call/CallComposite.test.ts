@@ -132,6 +132,23 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
     });
     expect(await page.screenshot()).toMatchSnapshot(`camera-toggled.png`);
   });
+
+  test('Configuration screen should display call details', async ({ serverUrl, users, pages }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    const user = users[0];
+    user.groupId = newTestGuid;
+
+    // Set description to be shown
+    const page = pages[0];
+    await loadUrlInPage(page, serverUrl, user, {
+      showCallDescription: 'true'
+    });
+    await waitForCallCompositeToLoad(page);
+    expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
+  });
 });
 
 const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
@@ -145,18 +162,3 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
     });
   }
 };
-
-/**
-  ADD THIS WHEN CALL UI TESTS ARE RE-ENABLED
-
-  test('Configuration screen should display call details', async ({
-    serverUrl,
-    users,
-    testBrowser
-  }) => {
-    const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, users[0], { showCallDescription: 'true' });
-    await page.bringToFront();
-    await waitForCallCompositeToLoad(page);
-    expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
-  });
-*/
