@@ -3,14 +3,12 @@
 
 import { Browser, LaunchOptions } from '@playwright/test';
 import path from 'path';
-import { PAGE_VIEWPORT } from './defaults';
 import { chromium } from '@playwright/test';
 
 const CHROME_BROWSER_CONFIGURATION: LaunchOptions = {
   // Our calling sdk streaming does not work on chromium 93, remove this line when it gets fixed
   channel: 'chrome',
   args: [
-    `--window-size=${Object.values(PAGE_VIEWPORT).join(',')}`,
     '--font-render-hinting=medium', // Ensures that fonts are rendered consistently.
     '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
     '--disable-gpu', // Ensures that fonts are rendered consistently.

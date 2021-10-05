@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+const DESKTOP_VIEWPORT = {
+  width: 1024,
+  height: 768
+};
+
 import { PlaywrightTestConfig } from '@playwright/test';
 const config: PlaywrightTestConfig = {
   // Allow for more than the standard 30s (currently set to 2minutes). This is to ensure we get debug stack traces
@@ -21,6 +26,7 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
 
   use: {
+    viewport: DESKTOP_VIEWPORT,
     headless: true,
     video: 'retain-on-failure'
   }

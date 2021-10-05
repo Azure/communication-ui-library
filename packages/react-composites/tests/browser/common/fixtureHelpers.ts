@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  CONNECTION_STRING,
-  CHAT_TOPIC_NAME,
-  ChatUserType,
-  CallUserType,
-  MeetingUserType,
-  PAGE_VIEWPORT
-} from './defaults';
+import { CONNECTION_STRING, CHAT_TOPIC_NAME, ChatUserType, CallUserType, MeetingUserType } from './defaults';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
@@ -166,7 +159,6 @@ export const createMeetingUsers =
  */
 export const loadNewPage = async (browser: Browser, url: string): Promise<Page> => {
   const page = await browser.newPage();
-  await page.setViewportSize(PAGE_VIEWPORT);
   await page.goto(url);
   return page;
 };
