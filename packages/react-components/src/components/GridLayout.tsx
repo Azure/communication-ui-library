@@ -35,8 +35,9 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [gridProps, setGridProps] = useState<GridProps>({
-    horizontalFlow: true,
-    numBlocks: Math.ceil(Math.sqrt(numberOfChildren))
+    horizontalFill: true,
+    rows: Math.ceil(Math.sqrt(numberOfChildren)),
+    columns: Math.ceil(Math.sqrt(numberOfChildren))
   });
 
   useEffect(() => {
