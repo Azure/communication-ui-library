@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "updated call of Primary/Default buttons + snapshots",
+  "comment": "updated call of Primary/Default buttons",
   "packageName": "@internal/storybook",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "none"
