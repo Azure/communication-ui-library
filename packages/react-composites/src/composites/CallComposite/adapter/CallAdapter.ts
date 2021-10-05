@@ -313,15 +313,15 @@ export interface CallAdapterDeviceManagement {
  */
 export interface CallAdapterSubscribers {
   /**
-   * Subscribe function for participantsJoined event.
+   * Subscribe function for 'participantsJoined' event.
    */
   on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   /**
-   * Subscribe function for participantsLeft event.
+   * Subscribe function for 'participantsLeft' event.
    */
   on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   /**
-   * Subscribe function for isMutedChanged event.
+   * Subscribe function for 'isMutedChanged' event.
    *
    * @remarks
    * The event will be triggered whenever current user or remote user mute state changed
@@ -329,7 +329,7 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   /**
-   * Subscribe function for callIdChanged event.
+   * Subscribe function for 'callIdChanged' event.
    *
    * @remarks
    * The event will be triggered when callId of current user changed.
@@ -337,60 +337,60 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'callIdChanged', listener: CallIdChangedListener): void;
   /**
-   * Subscribe function for isLocalScreenSharingActiveChanged event.
+   * Subscribe function for 'isLocalScreenSharingActiveChanged' event.
    */
   on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   /**
-   * Subscribe function for displayNameChanged event.
+   * Subscribe function for 'displayNameChanged' event.
    */
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   /**
-   * Subscribe function for isSpeakingChanged event.
+   * Subscribe function for 'isSpeakingChanged' event.
    */
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   /**
-   * Subscribe function for callEnded event.
+   * Subscribe function for 'callEnded' event.
    */
   on(event: 'callEnded', listener: CallEndedListener): void;
   /**
-   * Subscribe function for error event.
+   * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
 
   /**
-   * Unsubscribe function for participantsJoined event.
+   * Unsubscribe function for 'participantsJoined' event.
    */
   off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   /**
-   * Unsubscribe function for participantsLeft event.
+   * Unsubscribe function for 'participantsLeft' event.
    */
   off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   /**
-   * Unsubscribe function for isMutedChanged event.
+   * Unsubscribe function for 'isMutedChanged' event.
    */
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   /**
-   * Unsubscribe function for callIdChanged event.
+   * Unsubscribe function for 'callIdChanged' event.
    */
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
   /**
-   * Unsubscribe function for isLocalScreenSharingActiveChanged event.
+   * Unsubscribe function for 'isLocalScreenSharingActiveChanged' event.
    */
   off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
   /**
-   * Unsubscribe function for displayNameChanged event.
+   * Unsubscribe function for 'displayNameChanged' event.
    */
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   /**
-   * Unsubscribe function for isSpeakingChanged event.
+   * Unsubscribe function for 'isSpeakingChanged' event.
    */
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   /**
-   * Unsubscribe function for callEnded event.
+   * Unsubscribe function for 'callEnded' event.
    */
   off(event: 'callEnded', listener: CallEndedListener): void;
   /**
-   * Unsubscribe function for error event.
+   * Unsubscribe function for 'error' event.
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
 }
