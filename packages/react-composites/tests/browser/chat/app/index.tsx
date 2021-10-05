@@ -61,7 +61,7 @@ function App(): JSX.Element {
             customDataModel
               ? (messageProps) => (
                   <text
-                    data-ui-status={messageProps.message.type === 'chat' ? messageProps.message.payload.status : ''}
+                    data-ui-status={messageProps.message.messageType === 'chat' ? messageProps.message.status : ''}
                     id="custom-data-model-message"
                   >
                     Custom Message
