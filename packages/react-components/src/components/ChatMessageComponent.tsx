@@ -150,6 +150,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   return (
     <Chat.Message
       className={mergeStyles(messageContainerStyle as IStyle)}
+      styles={messageContainerStyle}
       content={messageContentItem}
       author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
       mine={message.mine}

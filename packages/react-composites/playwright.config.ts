@@ -17,6 +17,9 @@ const config: PlaywrightTestConfig = {
   // many threads using the same connection string in a short span of time.
   workers: 1,
 
+  // Do not allow `.only` to be committed to the codebase. `.only` should only be used for diagnosing issues.
+  forbidOnly: !!process.env.CI,
+
   use: {
     headless: true,
     video: 'retain-on-failure'

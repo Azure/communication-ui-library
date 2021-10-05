@@ -10,7 +10,13 @@ import {
   chatStyle,
   newMessageButtonStyle,
   messageStatusContainerStyle,
-  noMessageStatusStyle
+  noMessageStatusStyle,
+  defaultMyChatItemMessageContainer,
+  defaultChatItemMessageContainer,
+  defaultMyChatMessageContainer,
+  defaultChatMessageContainer,
+  gutterWithAvatar,
+  gutterWithHiddenAvatar
 } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, Stack, IPersona } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
@@ -111,13 +117,19 @@ const didUserSendTheLatestMessage = (
  *
  * @public
  */
-export interface MessageThreadStylesProps extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStylesProps {
   /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
   /** Styles for new message container. */
   newMessageButtonContainer?: IStyle;
   /** Styles for chat container. */
   chatContainer?: ComponentSlotStyle;
+  /** styles for my chat items.  */
+  myChatItemMessageContainer?: ComponentSlotStyle;
+  /** styles for chat items.  */
+  chatItemMessageContainer?: ComponentSlotStyle;
+  /** Styles for my chat message container. */
+  myChatMessageContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
@@ -248,7 +260,7 @@ const memoizeAllMessages = memoizeFnAll(
     showMessageDate: boolean,
     showMessageStatus: boolean,
     onRenderAvatar: OnRenderAvatarCallback | undefined,
-    styles: MessageThreadStylesProps | undefined,
+    styles: MessageThreadStyles | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
@@ -271,7 +283,9 @@ const memoizeAllMessages = memoizeFnAll(
 
     switch (message.messageType) {
       case 'chat': {
-        messageProps.messageContainerStyle = styles?.chatMessageContainer;
+        const myChatMessageStyle = styles?.myChatMessageContainer || defaultMyChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+        messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
         const chatMessageComponent =
           onRenderMessage === undefined
@@ -279,22 +293,30 @@ const memoizeAllMessages = memoizeFnAll(
             : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
         const personaOptions: IPersona = {
-          text: message.senderDisplayName,
           hidePersonalDetails: true,
           size: PersonaSize.size32
         };
 
+        const myChatItemMessageStyle = styles?.myChatItemMessageContainer || defaultMyChatItemMessageContainer;
+        const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
+        const chatGutterStyles =
+          message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
+
         return {
-          gutter: message.mine ? (
-            ''
-          ) : onRenderAvatar ? (
-            onRenderAvatar(message.senderId ?? '', personaOptions)
-          ) : (
-            <Persona {...personaOptions} />
-          ),
+          gutter: {
+            styles: chatGutterStyles,
+            content: message.mine ? (
+              ''
+            ) : onRenderAvatar ? (
+              onRenderAvatar(message.senderId ?? '', personaOptions)
+            ) : (
+              <Persona {...personaOptions} />
+            )
+          },
           contentPosition: message.mine ? 'end' : 'start',
           message: {
-            className: mergeStyles({ width: 'calc(100% - 6.25rem)' }),
+            className: mergeStyles({ width: 'calc(100% - 5rem)' }),
+            styles: message.mine ? myChatItemMessageStyle : chatItemMessageStyle,
             content: (
               <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
                 {chatMessageComponent}
@@ -379,7 +401,7 @@ export type MessageThreadProps = {
    * <MessageThread styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: MessageThreadStylesProps;
+  styles?: MessageThreadStyles;
   /**
    * Whether the new message button is disabled or not.
    *

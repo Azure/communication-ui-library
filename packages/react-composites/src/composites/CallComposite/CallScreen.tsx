@@ -37,6 +37,7 @@ import {
   mediaGalleryContainerStyles,
   subContainerStyles
 } from './styles/CallScreen.styles';
+import { CallControlOptions } from './CallControls';
 
 /**
  * @private
@@ -131,6 +132,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     );
   }
 
+  // Reduce the controls shown when mobile view is enabled.
+  let callControlOptions: false | CallControlOptions =
+    options?.callControls !== false ? (options?.callControls === true ? {} : options?.callControls || {}) : false;
+  if (callControlOptions && options?.mobileView) {
+    callControlOptions.compressedMode = true;
+    callControlOptions = reduceControlsSetForMobile(callControlOptions);
+  }
+
   const screenShareModalHostId = 'UILibraryMediaGallery';
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
@@ -177,13 +186,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
               </>
             )}
           </Stack.Item>
-          {options?.callControls !== false && (
+          {callControlOptions !== false && (
             <Stack.Item className={callControlsContainer}>
               <CallControls
                 onEndCallClick={endCallHandler}
                 callInvitationURL={callInvitationURL}
                 onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-                options={options?.callControls}
+                options={callControlOptions}
               />
             </Stack.Item>
           )}
@@ -193,4 +202,24 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       )}
     </Stack>
   );
+};
+
+/**
+ * Reduce the set of call controls visible on mobile.
+ * For example do not show screenshare button.
+ */
+const reduceControlsSetForMobile = (callControlOptions: CallControlOptions): CallControlOptions => {
+  const reduceCallControlOptions = callControlOptions;
+
+  // Do not show screen share button when composite is optimized for mobile unless the developer
+  // has explicitly opted in.
+  if (
+    reduceCallControlOptions &&
+    typeof reduceCallControlOptions !== 'boolean' &&
+    reduceCallControlOptions.screenShareButton !== true
+  ) {
+    reduceCallControlOptions.screenShareButton = false;
+  }
+
+  return reduceCallControlOptions;
 };
