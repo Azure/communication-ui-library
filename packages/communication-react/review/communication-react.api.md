@@ -75,11 +75,6 @@ export interface ActiveError {
 }
 
 // @public
-export interface AdapterDisposal {
-    dispose(): void;
-}
-
-// @public
 export interface AdapterError extends Error {
     inner: Error;
     target: string;
@@ -172,7 +167,7 @@ export interface BaseCustomStylesProps {
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -308,7 +303,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
     // (undocumented)
-    callInvitationURL?: string;
+    callInvitationUrl?: string;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     options?: CallCompositeOptions;
 }
@@ -451,7 +446,7 @@ export interface CallState {
     remoteParticipantsEnded: {
         [keys: string]: RemoteParticipantState;
     };
-    screenShareRemoteParticipant: string | undefined;
+    screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
@@ -485,7 +480,7 @@ export interface CameraButtonStrings {
 }
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
 }
 
 // @public
@@ -1046,6 +1041,11 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 // @public
+export interface Disposable {
+    dispose(): void;
+}
+
+// @public
 export const emptySelector: () => Record<string, never>;
 
 // @public
@@ -1218,7 +1218,7 @@ export interface MediaDiagnosticsState {
 }
 
 // @alpha
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha

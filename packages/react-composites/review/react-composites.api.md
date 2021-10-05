@@ -43,11 +43,6 @@ import type { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
 // @public
-export interface AdapterDisposal {
-    dispose(): void;
-}
-
-// @public
 export interface AdapterError extends Error {
     inner: Error;
     target: string;
@@ -121,7 +116,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -214,7 +209,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
     // (undocumented)
-    callInvitationURL?: string;
+    callInvitationUrl?: string;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     options?: CallCompositeOptions;
 }
@@ -256,7 +251,7 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
 }
 
 // @public
@@ -481,6 +476,11 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 // @public
+export interface Disposable {
+    dispose(): void;
+}
+
+// @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
     isScreenSharingOn: boolean;
 }) => void;
@@ -498,7 +498,7 @@ export type IsSpeakingChangedListener = (event: {
 }) => void;
 
 // @alpha
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha
