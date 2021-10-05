@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS } from '../common/config';
+import { IDS } from '../common/constants';
 import { buildUrl, dataUiId, stubMessageTimestamps, waitForMeetingCompositeToLoad } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';

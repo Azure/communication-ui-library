@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TEST_PARTICIPANTS, WorkerFixture, MeetingUserType } from '../common/defaults';
+import { TEST_PARTICIPANTS } from '../common/constants';
 import { createMeetingUsers, usePagePerParticipantWithCallPermissions } from '../common/fixtureHelpers';
+import { WorkerFixture, MeetingUserType } from '../common/fixtureTypes';
 import { createTestServer } from '../../server';
 import { test as base } from '@playwright/test';
 import path from 'path';

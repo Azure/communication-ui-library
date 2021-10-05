@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 
 import { _IdentifierProvider } from '@internal/react-components';
 import { MeetingAdapter, createAzureCommunicationMeetingAdapter, MeetingComposite } from '../../../../src';
-import { IDS } from '../../common/config';
+import { IDS } from '../../common/constants';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());

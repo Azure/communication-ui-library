@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CONNECTION_STRING, CHAT_TOPIC_NAME, ChatUserType, CallUserType, MeetingUserType } from './defaults';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
 import { v1 } from 'uuid';
+import { CONNECTION_STRING, CHAT_TOPIC_NAME } from './constants';
+import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
 import { buildUrl } from './utils';
 
 /**

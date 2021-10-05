@@ -12,7 +12,7 @@ import {
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR
 } from '../../../../src';
-import { IDS } from '../../common/config';
+import { IDS } from '../../common/constants';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());

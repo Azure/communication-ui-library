@@ -1,17 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS } from './config';
+import { CONNECTION_STRING, IDS, TOPIC_NAME } from './constants';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Page } from '@playwright/test';
-import { ChatUserType, CallUserType, MeetingUserType } from './defaults';
+import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
 
-export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
-const DATA_UI_ID = 'data-ui-id';
-const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
-export const TOPIC_NAME = 'Cowabunga';
+/** Selector string to get element by data-ui-id property */
+export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 
 /**
  * Wait for the ChatComposite on a page to fully load.
