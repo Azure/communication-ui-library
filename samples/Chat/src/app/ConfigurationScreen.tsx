@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CAT, FOX, KOALA, MONKEY, MOUSE, OCTOPUS } from './utils/utils';
-import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack } from '@fluentui/react';
+import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { buttonStyle, chatIconStyle, mainContainerStyle } from './styles/ConfigurationScreen.styles';
 import {
@@ -161,12 +161,10 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           <div className={largeAvatarContainerStyle(selectedAvatar)}>
             <div className={largeAvatarStyle}>{selectedAvatar}</div>
           </div>
-          <div aria-label="Display name" className={namePreviewStyle(name !== '')}>
-            {name !== '' ? name : 'Name'}
-          </div>
+          <Text className={namePreviewStyle(name !== '')}>{name !== '' ? name : 'Name'}</Text>
         </Stack>
         <Stack className={rightInputContainerStyle} tokens={rightInputContainerStackTokens}>
-          <div className={labelFontStyle}>Avatar</div>
+          <Text className={labelFontStyle}>Avatar</Text>
           <FocusZone direction={FocusZoneDirection.horizontal}>
             <Stack role="list" horizontal className={avatarListContainerStyle} tokens={avatarListContainerStackTokens}>
               {avatarsList.map((avatar, index) => (
@@ -194,7 +192,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           />
           <PrimaryButton disabled={disableJoinChatButton} className={buttonStyle} onClick={validateName}>
             <Chat20Filled className={chatIconStyle} primaryFill="currentColor" />
-            <div className={startChatButtonTextStyle}>Join chat</div>
+            <Text className={startChatButtonTextStyle}>Join chat</Text>
           </PrimaryButton>
         </Stack>
       </Stack>

@@ -98,13 +98,13 @@ export const getChatSelector: <Component extends (props: any) => JSX.Element | u
 export const messageThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
 userId: string;
 showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+messages: Message[];
 }, (res1: string, res2: {
 [key: string]: ChatMessageWithStatus;
 }, res3: Date, res4: boolean) => {
 userId: string;
 showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+messages: Message[];
 }>;
 
 // @public

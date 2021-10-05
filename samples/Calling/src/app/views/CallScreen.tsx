@@ -61,7 +61,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
-      callInvitationURL={window.location.href}
+      callInvitationUrl={window.location.href}
       options={{ mobileView: isMobileSession }}
     />
   );

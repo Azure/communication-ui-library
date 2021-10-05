@@ -17,7 +17,8 @@ import {
   callDetailsStyleMobile,
   configurationStackTokensDesktop,
   configurationStackTokensMobile,
-  configurationContainer,
+  configurationContainerStyleDesktop,
+  configurationContainerStyleMobile,
   selectionContainerStyle,
   startCallButtonContainerStyleDesktop,
   startCallButtonContainerStyleMobile,
@@ -32,7 +33,7 @@ import { useLocale } from '../localization';
  * @private
  */
 export interface ConfigurationScreenProps {
-  mobileView?: boolean;
+  mobileView: boolean;
   startCallHandler(): void;
 }
 
@@ -40,7 +41,7 @@ export interface ConfigurationScreenProps {
  * @private
  */
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
-  const { startCallHandler, mobileView = false } = props;
+  const { startCallHandler, mobileView } = props;
 
   const options = useAdaptedSelector(getCallingSelector(OptionsButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
@@ -65,7 +66,7 @@ export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Elemen
       horizontalAlign={mobileView ? 'stretch' : 'center'}
       verticalAlign="center"
       tokens={mobileView ? configurationStackTokensMobile : configurationStackTokensDesktop}
-      className={configurationContainer}
+      className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}
     >
       {mobileView && (
         <Stack.Item>
