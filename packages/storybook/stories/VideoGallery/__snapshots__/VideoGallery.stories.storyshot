@@ -21,13 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        style={
-          Object {
-            "height": "100%",
-            "position": "relative",
-            "width": "100%",
-          }
-        }
+        className="css-86"
       >
         <div
           className="ms-Stack css-1"
