@@ -130,7 +130,7 @@ export type AzureCommunicationCallAdapterArgs = {
 // @public
 export type AzureCommunicationChatAdapterArgs = {
     endpointUrl: string;
-    userId: CommunicationIdentifierKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
@@ -1804,7 +1804,7 @@ export interface StatefulChatClient extends ChatClient {
 
 // @public
 export type StatefulChatClientArgs = {
-    userId: CommunicationIdentifierKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     endpoint: string;
     credential: CommunicationTokenCredential;

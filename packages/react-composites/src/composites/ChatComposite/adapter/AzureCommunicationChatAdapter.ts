@@ -9,11 +9,7 @@ import {
 } from '@internal/chat-stateful-client';
 import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
 import { ChatMessage, ChatMessageType, ChatThreadClient } from '@azure/communication-chat';
-import {
-  CommunicationTokenCredential,
-  CommunicationIdentifierKind,
-  CommunicationUserIdentifier
-} from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import type {
   ChatMessageReceivedEvent,
   ChatThreadPropertiesUpdatedEvent,

@@ -9,7 +9,6 @@ import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
 import {
-  CommunicationIdentifierKind,
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
   getIdentifierKind
