@@ -11,6 +11,6 @@ test.describe('Localization tests', async () => {
     page.bringToFront();
     await waitForChatCompositeToLoad(page);
     stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('localized-chat.png', { threshold: 0.5 });
+    expect(await page.screenshot()).toMatchSnapshot('localized-chat.png');
   });
 });

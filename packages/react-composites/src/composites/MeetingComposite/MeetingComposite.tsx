@@ -139,6 +139,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             peopleButtonChecked={showPeople}
             onPeopleButtonClicked={togglePeople}
             onEndCallClick={endCallClick}
+            mobileView={props.options?.mobileView}
           />
         )}
       </Stack>

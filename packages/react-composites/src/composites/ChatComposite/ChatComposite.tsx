@@ -36,7 +36,6 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    */
   options?: ChatCompositeOptions;
 }
-
 /**
  * Optional features of the {@link ChatComposite}.
  *

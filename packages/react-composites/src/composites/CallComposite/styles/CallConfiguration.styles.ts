@@ -17,15 +17,27 @@ export const configurationStackTokensMobile: IStackTokens = {
   childrenGap: '1rem'
 };
 
+const configurationContainerStyle: IStyle = {
+  height: '100%',
+  width: '100% ',
+  minHeight: 'auto'
+};
+
 /**
  * @private
  */
-export const configurationContainer = mergeStyles({
-  height: '100%',
-  width: '100% ',
+export const configurationContainerStyleDesktop = mergeStyles({
+  ...configurationContainerStyle,
   padding: '1rem', //half childrenGap from Stack
-  minWidth: '14.5rem', // max of min-width from stack items + padding * 2 = 12.5 + 1 * 2
-  minHeight: 'auto'
+  minWidth: '14.5rem' // max of min-width from stack items + padding * 2 = 12.5 + 1 * 2
+});
+
+/**
+ * @private
+ */
+export const configurationContainerStyleMobile = mergeStyles({
+  ...configurationContainerStyle,
+  padding: '0.5rem' // half childrenGap from Stack
 });
 
 /**

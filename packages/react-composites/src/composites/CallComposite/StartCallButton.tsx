@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PrimaryButton, css } from '@fluentui/react';
+import { PrimaryButton, mergeStyles } from '@fluentui/react';
 import React from 'react';
 import { buttonStyle, videoCameraIconStyle } from './styles/StartCallButton.styles';
 import { Video20Filled } from '@fluentui/react-icons';
@@ -27,7 +27,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
     <PrimaryButton
       data-ui-id="call-composite-start-call-button"
       disabled={isDisabled}
-      className={css(buttonStyle, props.className)}
+      className={mergeStyles(buttonStyle, props.className)}
       onClick={onClickHandler}
     >
       <Video20Filled primaryFill="currentColor" className={videoCameraIconStyle} />

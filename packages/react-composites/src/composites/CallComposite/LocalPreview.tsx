@@ -30,7 +30,7 @@ import {
  * @private
  */
 export interface LocalPreviewProps {
-  mobileView?: boolean;
+  mobileView: boolean;
   showDevicesButton?: boolean;
 }
 
