@@ -13,7 +13,7 @@ jobs:
     if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      # Checkout repo
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -22,6 +22,19 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      # Setup bot information for pushing new changes
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      - name: Setup bot git information
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      # If run from a PR, checkout PR branch and merge in latest changes from main branch
+      - name: Checkout PR branch and merge main
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: |
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git merge origin/main
+
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
@@ -48,27 +61,32 @@ jobs:
           rushx update:snapshot
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-      - name: Setup bot git information
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
         run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-      # Commit changes to snapshot files.
+          if [[ -z $(git status -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+            exit
+          fi
       - name: Commit new snapshots
-        run: >
-          git diff --exit-code --quiet -- samples/StaticHtmlComposites/tests ||
-          (git add samples/StaticHtmlComposites/tests &&
-          git commit -m 'Updating js bundle automation snapshots' &&
-          git push)
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: |
+          git add packages/react-composites/tests
+          git commit -m 'Update js bundle automation snapshots'
+          git push
 
   update_composite_snapshot:
     name: Update composite snapshot by label
     # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') }}
+    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      # Checkout repo
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -77,6 +95,18 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      # Setup bot information for pushing new changes
+      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
+      - name: Setup bot git information
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      # If run from a PR, checkout PR branch and merge in latest changes from main branch
+      - name: Checkout PR branch and merge main
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: |
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git merge origin/main
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
@@ -94,25 +124,28 @@ jobs:
       - name: Install dependencies
         run: rush install
       - name: Build Test
-        run: |
-          cd packages/react-composites
-          rushx build:e2e
+        working-directory: ./packages/react-composites
+        run: rushx build:e2e
       - name: Update snapshot
-        run: |
-          cd packages/react-composites
-          rushx test:e2e:update
+        run: rushx test:e2e:update
+        working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-      - name: Setup bot git information
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
         run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-      # Commit changes to snapshot files.
+          if [[ -z $(git status -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+            exit
+          fi
       - name: Commit new snapshots
-        run: >
-          git diff --exit-code --quiet -- packages/react-composites/tests ||
-          (git add packages/react-composites/tests &&
-          git commit -m 'Updating composite automation snapshots' &&
-          git push)
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: |
+          git add packages/react-composites/tests
+          git commit -m 'Update composite automation snapshots'
+          git push

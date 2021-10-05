@@ -9,7 +9,8 @@ import {
   inputBoxWrapperStyle,
   inputButtonContainerStyle,
   inputButtonStyle,
-  textFieldStyle
+  textFieldStyle,
+  textContainerStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -24,6 +25,9 @@ export interface InputBoxStylesProps extends BaseCustomStylesProps {
 
   /** Styles for the system message; These styles will be ignored when a custom system message component is provided. */
   systemMessage?: IStyle;
+
+  /** Styles for customizing the container of the text field */
+  textFieldContainer?: IStyle;
 }
 
 type InputBoxComponentProps = {
@@ -69,6 +73,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(inputBoxStyle, inputClassName);
 
+  const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(
     textFieldStyle(isDarkThemed(theme) ? '#f1707b' : '#a80000', !!errorMessage, !!disabled),
     {
@@ -90,7 +95,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   return (
     <Stack className={mergedRootStyle}>
-      <div style={{ position: 'relative' }}>
+      <div className={mergedTextContainerStyle}>
         <TextField
           data-ui-id={dataUiId}
           multiline
