@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Load env variables in e2e tests",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
