@@ -106,7 +106,6 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
  * @returns
  */
 export const createGridStyles = (numberOfItems: number, gridProps: GridProps): string => {
-  console.log('createGridStyles');
   // Blocks are either rows or columns depending on whether we fill horizontally or vertically. Each block may differ in the number of cells.
   const blocks = gridProps.horizontalFill ? gridProps.rows : gridProps.columns;
   const smallCellsPerBlock = Math.ceil(numberOfItems / blocks);
