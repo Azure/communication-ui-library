@@ -25,7 +25,7 @@ import {
 import { MeetingAdapterState } from '../state/MeetingAdapterState';
 import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
-import type { AdapterState, Disposal, AdapterPages } from '../../common/adapters';
+import type { AdapterState, Disposable, AdapterPages } from '../../common/adapters';
 import { Call } from '@azure/communication-calling';
 
 /**
@@ -136,7 +136,7 @@ export interface MeetingAdapterSubscriptions {
 export interface MeetingAdapter
   extends MeetingAdapterMeetingManagement,
     AdapterState<MeetingAdapterState>,
-    Disposal,
+    Disposable,
     AdapterPages<MeetingCompositePage>,
     MeetingAdapterSubscriptions {}
 

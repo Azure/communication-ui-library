@@ -116,7 +116,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -289,7 +289,7 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposal, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
 }
 
 // @public
@@ -514,7 +514,7 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 // @public
-export interface Disposal {
+export interface Disposable {
     dispose(): void;
 }
 
@@ -536,7 +536,7 @@ export type IsSpeakingChangedListener = (event: {
 }) => void;
 
 // @alpha
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha

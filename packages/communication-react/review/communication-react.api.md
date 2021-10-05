@@ -167,7 +167,7 @@ export interface BaseCustomStylesProps {
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -518,7 +518,7 @@ export interface CameraButtonStrings {
 }
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposal, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
 }
 
 // @public
@@ -1079,7 +1079,7 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 // @public
-export interface Disposal {
+export interface Disposable {
     dispose(): void;
 }
 
@@ -1256,7 +1256,7 @@ export interface MediaDiagnosticsState {
 }
 
 // @alpha
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha
