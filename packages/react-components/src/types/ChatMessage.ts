@@ -21,15 +21,36 @@ export type MessageAttachedStatus = 'bottom' | 'top';
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
 /**
- * Content of a single chat message.
+ * Discriminated union of all messages.
+ *
+ * The `messageType` field specializes into union variants.
  *
  * @public
  */
-export type ChatMessagePayload = {
-  messageId?: string;
+export type Message = ChatMessage | SystemMessage | CustomMessage;
+
+/**
+ * Discriminated union of all system messages.
+ *
+ * The `systemMessageType` field specializes into union variants.
+ *
+ * @public
+ */
+export type SystemMessage =
+  | ParticipantAddedSystemMessage
+  | ParticipantRemovedSystemMessage
+  | TopicUpdatedSystemMessage
+  | ContentSystemMessage;
+
+/**
+ * A chat message.
+ *
+ * @public
+ */
+export interface ChatMessage extends MessageCommon {
+  messageType: 'chat';
+
   content?: string;
-  // ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`
-  createdOn?: Date;
   editedOn?: Date;
   deletedOn?: Date;
   senderId?: string;
@@ -38,112 +59,86 @@ export type ChatMessagePayload = {
   attached?: MessageAttachedStatus | boolean;
   mine?: boolean;
   clientMessageId?: string;
-  type: MessageContentType;
-};
+  contentType: MessageContentType;
+}
 
 /**
- * Utility type to extract all props of a system message.
+ * A system message notifying that a participant was added to the chat thread.
  *
  * @public
  */
-export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
-  type: T;
-  messageId: string;
-  createdOn: Date;
-  content: T extends 'content' ? string : never;
-  participants: T extends 'participantAdded'
-    ? CommunicationParticipant[]
-    : T extends 'participantRemoved'
-    ? CommunicationParticipant[]
-    : never;
-  topic: T extends 'topicUpdated' ? string : never;
+export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
+  messageType: 'system';
+  systemMessageType: 'participantAdded';
+
+  participants: CommunicationParticipant[];
+}
+
+/**
+ * A system message notifying that a participant was removed from the chat thread.
+ *
+ * @public
+ */
+export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
+  messageType: 'system';
+  systemMessageType: 'participantRemoved';
+
+  participants: CommunicationParticipant[];
+}
+
+/**
+ * A system message notifying that the chat thread topic was updated.
+ *
+ * @public
+ */
+export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
+  messageType: 'system';
+  systemMessageType: 'topicUpdated';
+
+  topic: string;
+}
+
+/**
+ * A system message with arbitary content.
+ *
+ * @public
+ */
+export interface ContentSystemMessage extends SystemMessageCommon {
+  messageType: 'system';
+  systemMessageType: 'content';
+
+  content: string;
+}
+
+/**
+ * A custom message type.
+ *
+ * Custom messages are not rendered by default, but applications can provide custom renderers for them.
+ *
+ * @public
+ */
+export interface CustomMessage extends MessageCommon {
+  messageType: 'custom';
+
+  content: string;
+}
+
+/**
+ * Common properties of all system messages.
+ *
+ * @public
+ */
+export interface SystemMessageCommon extends MessageCommon {
   iconName: string;
-};
+}
 
 /**
- * Type that contains all keys from the source type as \{key: '[key-name]' | never\}.
- *
- * Value is `never` when the property type is `never`.
+ * Common properties of all message types.
  *
  * @public
  */
-export type AllKeys<T> = {
-  [K in keyof T]: T[K] extends never ? never : K;
-};
-
-/**
- * Omit never-typed properties from a type.
- *
- * @public
- */
-export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
-
-/**
- * Contents of system messages.
- *
- * Only contains non-never properties.
- *
- * @public
- */
-export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
-
-/**
- * Contents of custome messages.
- *
- * @public
- */
-export type CustomMessagePayload = {
-  createdOn: Date;
+export interface MessageCommon {
   messageId: string;
-  content?: string;
-};
-
-/**
- * Supported message types.
- *
- * @public
- */
-export type MessageType = 'chat' | 'system' | 'custom';
-
-/**
- * Supported system message types.
- *
- * @public
- */
-export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
-
-/**
- * Tagged union of specific {@link MessageType} contents.
- *
- * @public
- */
-export type Message<T extends MessageType> = {
-  type: T;
-  payload: T extends 'chat'
-    ? ChatMessagePayload
-    : T extends 'system'
-    ?
-        | SystemMessagePayload<'participantAdded' | 'participantRemoved'>
-        | SystemMessagePayload<'topicUpdated'>
-        | SystemMessagePayload<'content'>
-    : CustomMessagePayload;
-};
-
-/**
- * {@link Message} content, specialized for chat messages.
- *
- * @public
- */
-export type ChatMessage = Message<'chat'>;
-/**
- * {@link Message} content, specialized for system messages.
- *
- * @public
- */
-export type SystemMessage = Message<'system'>;
-/**
- * {@link Message} content, specialized for custom messages.
- *
- * @public
- */
-export type CustomMessage = Message<'custom'>;
+  // ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`
+  createdOn: Date;
+}
