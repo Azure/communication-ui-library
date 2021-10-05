@@ -34,7 +34,6 @@ export const inputBoxIcon = mergeStyles({
  */
 export const editBoxStyleSet = {
   root: {
-    width: '100%',
-    marginLeft: '6.25rem'
+    width: '100%'
   }
 };

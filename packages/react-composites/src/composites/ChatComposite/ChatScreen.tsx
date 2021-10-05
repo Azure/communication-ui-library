@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { FocusZone, mergeStyles, Stack } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -11,7 +11,10 @@ import {
   ParticipantList,
   SendBox,
   TypingIndicator,
-  ParticipantMenuItemsCallback
+  ParticipantMenuItemsCallback,
+  MessageThreadStyles,
+  SendBoxStylesProps,
+  TypingIndicatorStylesProps
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -29,7 +32,10 @@ import {
   participantListContainerPadding,
   participantListStack,
   participantListStyle,
-  participantListWrapper
+  participantListWrapper,
+  messageThreadChatCompositeStyles,
+  sendBoxChatCompositeStyles,
+  typingIndicatorChatCompositeStyles
 } from './styles/Chat.styles';
 
 /**
@@ -41,14 +47,30 @@ export type ChatScreenProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  styles?: ChatScreenStyles;
+};
+
+/**
+ * @private
+ */
+export type ChatScreenStyles = {
+  messageThread?: MessageThreadStyles;
+  sendBox?: SendBoxStylesProps;
+  typingIndicator?: TypingIndicatorStylesProps;
 };
 
 /**
  * @private
  */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, onFetchParticipantMenuItems, options } =
-    props;
+  const {
+    onFetchAvatarPersonaData,
+    onRenderMessage,
+    onRenderTypingIndicator,
+    onFetchParticipantMenuItems,
+    options,
+    styles
+  } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -76,6 +98,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
+  const sendBoxStyles = Object.assign({}, sendBoxChatCompositeStyles, styles?.sendBox);
+  const messageThreadStyles = Object.assign({}, messageThreadChatCompositeStyles, styles?.messageThread);
+  const typingIndicatorStyles = Object.assign({}, typingIndicatorChatCompositeStyles, styles?.typingIndicator);
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -87,23 +113,24 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
+            styles={messageThreadStyles}
           />
           <Stack.Item align="center" className={sendBoxParentStyle}>
             <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
               {onRenderTypingIndicator ? (
                 onRenderTypingIndicator(typingIndicatorProps.typingUsers)
               ) : (
-                <TypingIndicator {...typingIndicatorProps} />
+                <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox {...sendBoxProps} />
+            <SendBox {...sendBoxProps} styles={sendBoxStyles} />
           </Stack.Item>
         </Stack>
         {options?.participantPane !== false && (
-          <Stack.Item className={participantListWrapper}>
+          <Stack className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>
-              <Stack.Item className={participantListStyle}>
+              <FocusZone className={participantListStyle}>
                 <ParticipantList
                   {...participantListProps}
                   onRenderAvatar={(userId, options) => (
@@ -116,9 +143,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   )}
                   onFetchParticipantMenuItems={onFetchParticipantMenuItems}
                 />
-              </Stack.Item>
+              </FocusZone>
             </Stack>
-          </Stack.Item>
+          </Stack>
         )}
       </Stack>
     </Stack>

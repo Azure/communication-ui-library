@@ -4,7 +4,7 @@
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import type { CommunicationUserKind } from '@azure/communication-common';
-import type { AdapterState, AdapterDisposal, AdapterErrors, AdapterError } from '../../common/adapters';
+import type { AdapterState, Disposable, AdapterErrors, AdapterError } from '../../common/adapters';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -46,19 +46,47 @@ export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
  * @public
  */
 export interface ChatAdapterThreadManagement {
-  /*
+  /**
    * Fetch initial state for the Chat adapter.
    *
    * Performs the minimal fetch necessary for ChatComposite and API methods.
    */
   fetchInitialData(): Promise<void>;
+  /**
+   * Send a message in the thread.
+   */
   sendMessage(content: string): Promise<void>;
+  /**
+   * Send a read receipt for a message.
+   */
   sendReadReceipt(chatMessageId: string): Promise<void>;
+  /**
+   * Send typing indicator in the thread.
+   */
   sendTypingIndicator(): Promise<void>;
+  /**
+   * Remove a participant in the thread.
+   */
   removeParticipant(userId: string): Promise<void>;
+  /**
+   * Set the topic for the thread.
+   */
   setTopic(topicName: string): Promise<void>;
+  /**
+   * Update a message content.
+   */
   updateMessage(messageId: string, content: string): Promise<void>;
+  /**
+   * Delete a message in the thread.
+   */
   deleteMessage(messageId: string): Promise<void>;
+  /**
+   * Load more previous messages in the chat thread history.
+   *
+   * @remarks
+   * This method is usually used to control incremental fetch/infinite scroll
+   *
+   */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
 }
 
@@ -68,20 +96,62 @@ export interface ChatAdapterThreadManagement {
  * @public
  */
 export interface ChatAdapterSubscribers {
+  /**
+   * Subscribe function for 'messageReceived' event.
+   */
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  /**
+   * Subscribe function for 'messageSent' event.
+   */
   on(event: 'messageSent', listener: MessageSentListener): void;
+  /**
+   * Subscribe function for 'messageRead' event.
+   */
   on(event: 'messageRead', listener: MessageReadListener): void;
+  /**
+   * Subscribe function for 'participantsAdded' event.
+   */
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+  /**
+   * Subscribe function for 'participantsRemoved' event.
+   */
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+  /**
+   * Subscribe function for 'topicChanged' event.
+   */
   on(event: 'topicChanged', listener: TopicChangedListener): void;
+  /**
+   * Subscribe function for 'error' event.
+   */
   on(event: 'error', listener: (e: AdapterError) => void): void;
 
+  /**
+   * Unsubscribe function for 'messageReceived' event.
+   */
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  /**
+   * Unsubscribe function for 'messageSent' event.
+   */
   off(event: 'messageSent', listener: MessageSentListener): void;
+  /**
+   * Unsubscribe function for 'messageRead' event.
+   */
   off(event: 'messageRead', listener: MessageReadListener): void;
+  /**
+   * Unsubscribe function for 'participantsAdded' event.
+   */
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
+  /**
+   * Unsubscribe function for 'participantsRemoved' event.
+   */
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
+  /**
+   * Unsubscribe function for 'topicChanged' event.
+   */
   off(event: 'topicChanged', listener: TopicChangedListener): void;
+  /**
+   * Unsubscribe function for 'error' event.
+   */
   off(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
@@ -93,7 +163,7 @@ export interface ChatAdapterSubscribers {
 export interface ChatAdapter
   extends ChatAdapterThreadManagement,
     AdapterState<ChatAdapterState>,
-    AdapterDisposal,
+    Disposable,
     ChatAdapterSubscribers {}
 
 /**

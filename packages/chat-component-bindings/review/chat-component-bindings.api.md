@@ -29,7 +29,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TypingIndicator } from '@internal/react-components';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
-// @public (undocumented)
+// @public
 export type ChatBaseSelectorProps = {
     threadId: string;
 };
@@ -37,13 +37,13 @@ export type ChatBaseSelectorProps = {
 // @public
 export const ChatClientProvider: (props: ChatClientProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type ChatClientProviderProps = {
     children: React_2.ReactNode;
     chatClient: StatefulChatClient;
 };
 
-// @public (undocumented)
+// @public
 export type ChatHandlers = {
     onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
@@ -55,7 +55,7 @@ export type ChatHandlers = {
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
-// @public (undocumented)
+// @public
 export const chatParticipantListSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     myUserId: string;
     participants: CommunicationParticipant[];
@@ -69,16 +69,16 @@ export const chatParticipantListSelector: reselect.OutputParametricSelector<Chat
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type ChatThreadClientProviderProps = {
     children: React_2.ReactNode;
     chatThreadClient: ChatThreadClient;
 };
 
-// @public (undocumented)
+// @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
-// @public (undocumented)
+// @public
 export const createDefaultChatHandlersForComponent: <Props>(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, _: (props: Props) => ReactElement | null) => Common<ChatHandlers, Props>;
 
 // @public
@@ -88,26 +88,26 @@ activeErrors: ActiveError[];
 activeErrors: ActiveError[];
 }>;
 
-// @public (undocumented)
+// @public
 export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? typeof sendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? typeof messageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? typeof typingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? typeof chatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? typeof errorBarSelector : undefined;
 
-// @public (undocumented)
+// @public
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
 
-// @public (undocumented)
+// @public
 export const messageThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
 userId: string;
 showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+messages: Message[];
 }, (res1: string, res2: {
 [key: string]: ChatMessageWithStatus;
 }, res3: Date, res4: boolean) => {
 userId: string;
 showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+messages: Message[];
 }>;
 
-// @public (undocumented)
+// @public
 export const sendBoxSelector: OutputSelector<ChatClientState, {
 displayName: string;
 userId: string;
@@ -116,7 +116,7 @@ displayName: string;
 userId: string;
 }>;
 
-// @public (undocumented)
+// @public
 export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
     typingUsers: CommunicationParticipant[];
 }, (res1: TypingIndicatorReceivedEvent[], res2: {
@@ -125,19 +125,19 @@ export const typingIndicatorSelector: reselect.OutputParametricSelector<ChatClie
     typingUsers: CommunicationParticipant[];
 }>;
 
-// @public (undocumented)
+// @public
 export const useChatClient: () => StatefulChatClient;
 
-// @public (undocumented)
+// @public
 export const useChatHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<ChatHandlers, PropsT> | undefined;
 
-// @public (undocumented)
+// @public
 export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetChatSelector<Component> extends (props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : undefined;
 
-// @public (undocumented)
+// @public
 export const useChatSelector: <SelectorT extends (state: ChatClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
 
-// @public (undocumented)
+// @public
 export const useChatThreadClient: () => ChatThreadClient;
 
 // (No @packageDocumentation comment for this package)

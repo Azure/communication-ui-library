@@ -53,98 +53,86 @@ export const GetAvatarUrlByUserId = (userId: string): string => {
 
 export const GenerateMockNewChatMessage = (): ChatMessage => {
   return {
-    type: 'chat',
-    payload: {
-      ...UserOne,
-      messageId: Math.random().toString(),
-      content: 'I just sent a new Message!',
-      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-      mine: true,
-      attached: false,
-      status: 'seen' as MessageStatus,
-      type: 'text'
-    }
+    messageType: 'chat',
+    ...UserOne,
+    messageId: Math.random().toString(),
+    content: 'I just sent a new Message!',
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: true,
+    attached: false,
+    status: 'seen' as MessageStatus,
+    contentType: 'text'
   };
 };
 
 export const GenerateMockNewChatMessageFromOthers = (): ChatMessage => {
   return {
-    type: 'chat',
-    payload: {
-      ...UserThree,
-      messageId: Math.random().toString(),
-      content: "Sure! Let's checkout calling UI components as well!",
-      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-      mine: false,
-      attached: false,
-      type: 'text'
-    }
+    messageType: 'chat',
+    ...UserThree,
+    messageId: Math.random().toString(),
+    content: "Sure! Let's checkout calling UI components as well!",
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: false,
+    attached: false,
+    contentType: 'text'
   };
 };
 
 export const GenerateMockSystemMessage = (): SystemMessage => {
   return {
-    type: 'system',
-    payload: {
-      type: 'content',
-      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-      messageId: Math.random().toString(),
-      iconName: 'PeopleAdd',
-      content: 'Elliot Woodward added Carole Poland to the chat and shared all chat history.'
-    }
+    messageType: 'system',
+    systemMessageType: 'content',
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    messageId: Math.random().toString(),
+    iconName: 'PeopleAdd',
+    content: 'Elliot Woodward added Carole Poland to the chat and shared all chat history.'
   };
 };
 
 export const GenerateMockCustomMessage = (): CustomMessage => {
   return {
-    type: 'custom',
+    messageType: 'custom',
     // Custom message's payload can be any shape, this is just an example.
     // Whatever is defined in the custom message's payload needs to be handled in onRenderCustomMessage in MessageThread.
-    payload: {
-      createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-      messageId: Math.random().toString(),
-      content: 'Today'
-    }
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    messageId: Math.random().toString(),
+    content: 'Today'
   };
 };
 
 export const GenerateMockHistoryChatMessages = (): ChatMessage[] => {
   return [
     {
-      type: 'chat',
-      payload: {
-        ...UserOne,
-        messageId: Math.random().toString(),
-        content: 'Hi everyone, I created this awesome group chat for us!',
-        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-        mine: true,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserOne,
+      messageId: Math.random().toString(),
+      content: 'Hi everyone, I created this awesome group chat for us!',
+      createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+      mine: true,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserTwo,
-        messageId: Math.random().toString(),
-        content: 'Nice! This looks great!',
-        createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+
+      ...UserTwo,
+      messageId: Math.random().toString(),
+      content: 'Nice! This looks great!',
+      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserThree,
-        messageId: Math.random().toString(),
-        content: "Yeah agree, let's chat here from now on!",
-        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+
+      ...UserThree,
+      messageId: Math.random().toString(),
+      content: "Yeah agree, let's chat here from now on!",
+      createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     }
   ];
 };
@@ -152,137 +140,115 @@ export const GenerateMockHistoryChatMessages = (): ChatMessage[] => {
 export const GenerateMockChatMessages = (): ChatMessage[] => {
   return [
     {
-      type: 'chat',
-      payload: {
-        ...UserOne,
-        messageId: Math.random().toString(),
-        content: 'Hey folks!',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:10'),
-        mine: true,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserOne,
+      messageId: Math.random().toString(),
+      content: 'Hey folks!',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:10'),
+      mine: true,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserTwo,
-        messageId: Math.random().toString(),
-        content: 'Hey how are you?',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:09'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserTwo,
+      messageId: Math.random().toString(),
+      content: 'Hey how are you?',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:09'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserThree,
-        messageId: Math.random().toString(),
-        content: 'Hey everyone!',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:08'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserThree,
+      messageId: Math.random().toString(),
+      content: 'Hey everyone!',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:08'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserOne,
-        messageId: Math.random().toString(),
-        content: 'Doing well!',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:07'),
-        mine: true,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserOne,
+      messageId: Math.random().toString(),
+      content: 'Doing well!',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:07'),
+      mine: true,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserTwo,
-        messageId: Math.random().toString(),
-        content: 'Checking out the new UI Components for Azure Communication Services!',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:06'),
-        mine: false,
-        attached: 'top' as MessageAttachedStatus,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserTwo,
+      messageId: Math.random().toString(),
+      content: 'Checking out the new UI Components for Azure Communication Services!',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:06'),
+      mine: false,
+      attached: 'top' as MessageAttachedStatus,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserTwo,
-        messageId: Math.random().toString(),
-        content: 'The chat thread is very responsive.',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
-        mine: false,
-        attached: true,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserTwo,
+      messageId: Math.random().toString(),
+      content: 'The chat thread is very responsive.',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
+      mine: false,
+      attached: true,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserTwo,
-        messageId: Math.random().toString(),
-        content: 'It even scrolls!',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
-        mine: false,
-        attached: 'bottom' as MessageAttachedStatus,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserTwo,
+      messageId: Math.random().toString(),
+      content: 'It even scrolls!',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:05'),
+      mine: false,
+      attached: 'bottom' as MessageAttachedStatus,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserThree,
-        messageId: Math.random().toString(),
-        content: 'Can you customize it?',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:04'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserThree,
+      messageId: Math.random().toString(),
+      content: 'Can you customize it?',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:04'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserTwo,
-        messageId: Math.random().toString(),
-        content: 'Yes you can customize it.',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:03'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserTwo,
+      messageId: Math.random().toString(),
+      content: 'Yes you can customize it.',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:03'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserOne,
-        messageId: Math.random().toString(),
-        content: 'I saw there are also calling UI components',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:02'),
-        mine: true,
-        attached: false,
-        status: 'seen' as MessageStatus,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserOne,
+      messageId: Math.random().toString(),
+      content: 'I saw there are also calling UI components',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:02'),
+      mine: true,
+      attached: false,
+      status: 'seen' as MessageStatus,
+      contentType: 'text'
     },
     {
-      type: 'chat',
-      payload: {
-        ...UserTwo,
-        messageId: Math.random().toString(),
-        content: 'Yeah you can combine chat and calling components to build full communication experiences!',
-        createdOn: new Date('2020-04-13T00:00:00.000+08:01'),
-        mine: false,
-        attached: false,
-        type: 'text'
-      }
+      messageType: 'chat',
+      ...UserTwo,
+      messageId: Math.random().toString(),
+      content: 'Yeah you can combine chat and calling components to build full communication experiences!',
+      createdOn: new Date('2020-04-13T00:00:00.000+08:01'),
+      mine: false,
+      attached: false,
+      contentType: 'text'
     }
   ];
 };
