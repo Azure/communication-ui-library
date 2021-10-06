@@ -8,7 +8,11 @@ import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import { createDecoratedListThreads } from './iterators/createDecoratedListThreads';
-import { CommunicationIdentifierKind, CommunicationTokenCredential } from '@azure/communication-common';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
 
 /**
  * Defines the methods that allow {@Link @azure/communication-chat#ChatClient} to be used with a centralized generated state.
@@ -122,7 +126,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
  * @public
  */
 export type StatefulChatClientArgs = {
-  userId: CommunicationIdentifierKind;
+  userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
   credential: CommunicationTokenCredential;
@@ -195,7 +199,7 @@ export const createStatefulChatClientWithDeps = (
   const context = new ChatContext(options?.maxStateChangeListeners);
   let eventSubscriber: EventSubscriber;
 
-  context.updateChatConfig(args.userId, args.displayName);
+  context.updateChatConfig(getIdentifierKind(args.userId), args.displayName);
 
   const proxy = new Proxy(chatClient, proxyChatClient);
 

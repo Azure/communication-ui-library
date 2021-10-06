@@ -144,9 +144,11 @@ export interface CallAdapterCallManagement {
    * Start the camera
    * This method will start rendering a local camera view when the call is not active
    *
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
+   *
    * @public
    */
-  startCamera(): Promise<void>;
+  startCamera(options?: VideoStreamOptions): Promise<void>;
   /**
    * Stop the camera
    * This method will stop rendering a local camera view when the call is not active
@@ -154,15 +156,6 @@ export interface CallAdapterCallManagement {
    * @public
    */
   stopCamera(): Promise<void>;
-  /**
-   * Switch between startCamera and stopCamera according to current camera state
-   * This method will stop rendering a local camera view when the call is not active
-   *
-   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
-   *
-   * @public
-   */
-  onToggleCamera(options?: VideoStreamOptions): Promise<void>;
   /**
    * Mute the current user during the call or disable microphone locally
    *

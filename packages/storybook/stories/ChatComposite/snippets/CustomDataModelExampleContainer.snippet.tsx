@@ -1,8 +1,4 @@
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  getIdentifierKind
-} from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   AvatarPersonaData,
   ChatAdapter,
@@ -37,7 +33,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
         setAdapter(
           await createAzureCommunicationChatAdapter({
             endpointUrl: props.endpointUrl,
-            userId: getIdentifierKind(props.userId),
+            userId: props.userId,
             // Data model injection: The display name for the local user comes from Contoso's data model.
             displayName: props.displayName,
             credential: new AzureCommunicationTokenCredential(props.token),
