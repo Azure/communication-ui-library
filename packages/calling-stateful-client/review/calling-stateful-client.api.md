@@ -182,7 +182,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
 };
 
 // @public

@@ -37,7 +37,7 @@ import {
 import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { MeetingCompositePage, meetingPageToCallPage } from '../state/MeetingCompositePage';
 import { EventEmitter } from 'events';
-import { CommunicationTokenCredential, CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -405,7 +405,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
  */
 export type AzureCommunicationMeetingAdapterArgs = {
   endpointUrl: string;
-  userId: CommunicationUserKind;
+  userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
   chatThreadId: string;
