@@ -76,7 +76,7 @@ export interface ActiveErrorMessage {
 
 // @public
 export interface AdapterError extends Error {
-    inner: Error;
+    innerError: Error;
     target: string;
     timestamp: Date;
 }
@@ -121,7 +121,7 @@ export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPerson
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator | GroupCallLocator;
@@ -130,7 +130,7 @@ export type AzureCommunicationCallAdapterArgs = {
 // @public
 export type AzureCommunicationChatAdapterArgs = {
     endpointUrl: string;
-    userId: CommunicationIdentifierKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
@@ -139,7 +139,7 @@ export type AzureCommunicationChatAdapterArgs = {
 // @alpha
 export type AzureCommunicationMeetingAdapterArgs = {
     endpointUrl: string;
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     chatThreadId: string;
@@ -267,12 +267,16 @@ export interface CallClientState {
     calls: {
         [key: string]: CallState;
     };
-    callsEnded: CallState[];
+    callsEnded: {
+        [key: string]: CallState;
+    };
     deviceManager: DeviceManagerState;
     incomingCalls: {
         [key: string]: IncomingCallState;
     };
-    incomingCallsEnded: IncomingCallState[];
+    incomingCallsEnded: {
+        [key: string]: IncomingCallState;
+    };
     latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
@@ -336,8 +340,8 @@ export type CallEndedListener = (event: {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: CallErrorTarget;
     timestamp: Date;
 }
@@ -577,8 +581,8 @@ export interface ChatCompositeStrings {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: ChatErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: ChatErrorTarget;
     timestamp: Date;
 }
@@ -1787,7 +1791,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
 };
 
 // @public
@@ -1804,7 +1808,7 @@ export interface StatefulChatClient extends ChatClient {
 
 // @public
 export type StatefulChatClientArgs = {
-    userId: CommunicationIdentifierKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     endpoint: string;
     credential: CommunicationTokenCredential;

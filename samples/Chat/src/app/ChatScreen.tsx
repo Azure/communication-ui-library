@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationUserIdentifier, CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   AvatarPersonaData,
   ChatAdapter,
@@ -43,10 +43,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const userIdKind = { kind: 'communicationUser', communicationUserId: userId } as CommunicationUserKind;
       const adapter = await createAzureCommunicationChatAdapter({
         endpointUrl: endpointUrl,
-        userId: userIdKind,
+        userId: { communicationUserId: userId },
         displayName: displayName,
         credential: createAutoRefreshingCredential(userId, token),
         threadId: threadId
