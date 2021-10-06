@@ -40,18 +40,18 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   });
 
   useEffect(() => {
-    const updateDynamicGridStyles = (): void => {
+    const updateGridProps = (): void => {
       if (containerRef.current) {
         setGridProps(
           calculateGridProps(numberOfChildren, containerRef.current.offsetWidth, containerRef.current.offsetHeight)
         );
       }
     };
-    const observer = new ResizeObserver(updateDynamicGridStyles);
+    const observer = new ResizeObserver(updateGridProps);
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
-    updateDynamicGridStyles();
+    updateGridProps();
     return () => observer.disconnect();
   }, [numberOfChildren, containerRef.current?.offsetWidth, containerRef.current?.offsetHeight]);
 
