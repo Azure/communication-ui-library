@@ -93,29 +93,9 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     [tileWidth, tileHeight]
   );
 
-  const pageButtonSizeStyle = useMemo(
-    () => ({
-      minWidth: '1.75rem',
-      minHeight: `${tileHeight}px`,
-      maxWidth: '1.75rem',
-      maxHeight: `${tileHeight}px`
-    }),
-    [tileHeight]
-  );
-
   const maxPages = useMemo(() => {
     return Math.ceil(participants.length / maxTiles) - 1;
   }, [maxTiles, participants.length]);
-
-  const changePage = (page: number): void => {
-    if (page < 0) {
-      setPage(0);
-    } else if (page >= maxPages) {
-      setPage(maxPages);
-    } else {
-      setPage(page);
-    }
-  };
 
   const defaultOnRenderParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
@@ -160,6 +140,9 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     showMuteIndicator
   ]);
 
+  const showLeftButton = maxTiles && page > 0 && !isSmallScreen;
+  const showRightButton = maxTiles && page < maxPages && !isSmallScreen;
+
   return (
     <div ref={containerRef}>
       <Stack
@@ -168,25 +151,9 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         tokens={{ childrenGap: '0.5rem' }}
         className={mergeStyles(horizontalGalleryContainerStyle, { paddingLeft: leftGutter, paddingRight: rightGutter })}
       >
-        {maxTiles && page > 0 && !isSmallScreen ? (
-          <DefaultButton
-            className={mergeStyles(leftRightButtonStyles, pageButtonSizeStyle)}
-            onClick={() => changePage(page - 1)}
-          >
-            <Icon iconName="HorizontalGalleryLeftButton" />
-          </DefaultButton>
-        ) : undefined}
-
+        {showLeftButton && <LeftButton height={tileHeight} onClick={() => setPage(Math.max(0, page - 1))} />}
         {defaultOnRenderParticipants}
-
-        {maxTiles && page < maxPages && !isSmallScreen ? (
-          <DefaultButton
-            className={mergeStyles(leftRightButtonStyles, pageButtonSizeStyle)}
-            onClick={() => changePage(page + 1)}
-          >
-            <Icon iconName="HorizontalGalleryRightButton" />
-          </DefaultButton>
-        ) : undefined}
+        {showRightButton && <RightButton height={tileHeight} onClick={() => setPage(Math.min(maxPages, page + 1))} />}
       </Stack>
     </div>
   );
@@ -205,4 +172,36 @@ const calculateMaxNumberOfTiles = ({
    */
   const safePadding = 16;
   return Math.floor((width - buttonsWidth - safePadding) / (tileWidth + gapBetweenTiles));
+};
+
+const LeftButton = (props: { height: number; onClick?: () => void }): JSX.Element => {
+  return (
+    <DefaultButton
+      className={mergeStyles(leftRightButtonStyles, {
+        minWidth: '1.75rem',
+        minHeight: `${props.height}px`,
+        maxWidth: '1.75rem',
+        maxHeight: `${props.height}px`
+      })}
+      onClick={props.onClick}
+    >
+      <Icon iconName="HorizontalGalleryLeftButton" />
+    </DefaultButton>
+  );
+};
+
+const RightButton = (props: { height: number; onClick?: () => void }): JSX.Element => {
+  return (
+    <DefaultButton
+      className={mergeStyles(leftRightButtonStyles, {
+        minWidth: '1.75rem',
+        minHeight: `${props.height}px`,
+        maxWidth: '1.75rem',
+        maxHeight: `${props.height}px`
+      })}
+      onClick={props.onClick}
+    >
+      <Icon iconName="HorizontalGalleryRightButton" />
+    </DefaultButton>
+  );
 };
