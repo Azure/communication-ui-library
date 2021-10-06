@@ -97,7 +97,7 @@ const isCloserThan = (A: number, B: number, target: number): boolean => {
  * |_______|_______| If all cells are equal, we default the fill as horizontal. This grid has 2 rows, 2 columns and fills horizontally.
  * ```
  */
-export type GridProps = {
+type GridProps = {
   horizontalFill: boolean;
   rows: number;
   columns: number;
@@ -168,7 +168,7 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
  * @param gridProps - GridProps that define the number of rows, number of columns, and the fill direction
  * @returns
  */
-export const createGridStyles = (numberOfItems: number, gridProps: GridProps): string => {
+const createGridStyles = (numberOfItems: number, gridProps: GridProps): string => {
   // Blocks are either rows or columns depending on whether we fill horizontally or vertically. Each block may differ in the number of cells.
   const blocks = gridProps.horizontalFill ? gridProps.rows : gridProps.columns;
   const smallCellsPerBlock = Math.ceil(numberOfItems / blocks);
