@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import {
-  waitForCallCompositeToLoad,
+  buildUrl,
   dataUiId,
   disableAnimation,
   loadCallScreenWithParticipantVideos,
-  loadUrlInPage
+  waitForCallCompositeToLoad
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -37,7 +37,7 @@ test.describe('Call Composite E2E Tests', () => {
       const user = users[i];
       user.groupId = newTestGuid;
 
-      await loadUrlInPage(page, serverUrl, user);
+      await page.goto(buildUrl(serverUrl, user));
       await waitForCallCompositeToLoad(page);
     }
   });
@@ -84,7 +84,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       const user = users[i];
       user.groupId = newTestGuid;
 
-      await loadUrlInPage(page, serverUrl, user);
+      await page.goto(buildUrl(serverUrl, user));
       await waitForCallCompositeToLoad(page);
     }
 
@@ -131,6 +131,25 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       return document.querySelectorAll('video').length === 1;
     });
     expect(await page.screenshot()).toMatchSnapshot(`camera-toggled.png`);
+  });
+
+  test('Configuration screen should display call details', async ({ serverUrl, users, pages }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    const user = users[0];
+    user.groupId = newTestGuid;
+
+    // Set description to be shown
+    const page = pages[0];
+    await page.goto(
+      buildUrl(serverUrl, user, {
+        showCallDescription: 'true'
+      })
+    );
+    await waitForCallCompositeToLoad(page);
+    expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });
 });
 

@@ -10,18 +10,25 @@ import {
   CallAdapter,
   createAzureCommunicationCallAdapter,
   CallComposite,
-  COMPOSITE_LOCALE_FR_FR
+  CompositeLocale,
+  COMPOSITE_LOCALE_FR_FR,
+  COMPOSITE_LOCALE_EN_US
 } from '../../../../src';
-import { IDS } from '../../common/config';
+import { IDS } from '../../common/constants';
+import { verifyParamExists } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-const displayName = params.displayName;
-const token = params.token;
-const groupId = params.groupId;
-const userId = params.userId;
-const useFrLocale = Boolean(params.useFrlocale);
+// Required params
+const displayName = verifyParamExists(params.displayName, 'displayName');
+const token = verifyParamExists(params.token, 'token');
+const groupId = verifyParamExists(params.groupId, 'groupId');
+const userId = verifyParamExists(params.userId, 'userId');
+
+// Optional params
+const useFrLocale = Boolean(params.useFrLocale);
+const showCallDescription = Boolean(params.showCallDescription);
 // const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
@@ -45,12 +52,19 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  let locale: CompositeLocale;
+  if (useFrLocale) {
+    locale = COMPOSITE_LOCALE_FR_FR;
+  } else if (showCallDescription) {
+    locale = COMPOSITE_LOCALE_EN_US;
+    locale.strings.call.configurationPageCallDetails =
+      'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
+  }
+
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <_IdentifierProvider identifiers={IDS}>
-        {callAdapter && (
-          <CallComposite adapter={callAdapter} locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined} />
-        )}
+        {callAdapter && <CallComposite adapter={callAdapter} locale={locale} />}
       </_IdentifierProvider>
     </div>
   );

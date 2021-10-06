@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "ci optimization: don't wait for packlets to be built in CI UI tests",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

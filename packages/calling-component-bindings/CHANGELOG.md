@@ -1,8 +1,19 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.6)
+
+Tue, 28 Sep 2021 19:19:18 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.0.0-beta.5..@internal/calling-component-bindings_v1.0.0-beta.6)
+
+### Changes
+
+- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Adjust api comments - iteration 2 ([PR #776](https://github.com/azure/communication-ui-library/pull/776) by jinan@microsoft.com)
+- Document all public API and hide leaked exports ([PR #811](https://github.com/azure/communication-ui-library/pull/811) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.5)
 

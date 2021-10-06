@@ -13,10 +13,19 @@ import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from './LocalPreview';
 import {
-  configurationStackTokens,
-  configurationContainer,
+  callDetailsStyleDesktop,
+  callDetailsStyleMobile,
+  configurationStackTokensDesktop,
+  configurationStackTokensMobile,
+  configurationContainerStyleDesktop,
+  configurationContainerStyleMobile,
   selectionContainerStyle,
-  titleContainerStyle
+  startCallButtonContainerStyleDesktop,
+  startCallButtonContainerStyleMobile,
+  startCallButtonStyleMobile,
+  titleContainerStyleDesktop,
+  titleContainerStyleMobile,
+  callDetailsContainerStylesDesktop
 } from './styles/CallConfiguration.styles';
 import { useLocale } from '../localization';
 
@@ -24,6 +33,7 @@ import { useLocale } from '../localization';
  * @private
  */
 export interface ConfigurationScreenProps {
+  mobileView: boolean;
   startCallHandler(): void;
 }
 
@@ -31,36 +41,62 @@ export interface ConfigurationScreenProps {
  * @private
  */
 export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
-  const { startCallHandler } = props;
+  const { startCallHandler, mobileView } = props;
 
   const options = useAdaptedSelector(getCallingSelector(OptionsButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
   const locale = useLocale();
-  const title = locale.strings.call.configurationPageTitle;
+  const title = (
+    <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
+      {locale.strings.call.configurationPageTitle}
+    </Stack.Item>
+  );
+
+  const callDescription = locale.strings.call.configurationPageCallDetails && (
+    <Stack.Item className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}>
+      {locale.strings.call.configurationPageCallDetails}
+    </Stack.Item>
+  );
 
   return (
     <Stack
-      horizontal
-      wrap
-      horizontalAlign="center"
+      horizontal={!mobileView}
+      horizontalAlign={mobileView ? 'stretch' : 'center'}
       verticalAlign="center"
-      tokens={configurationStackTokens}
-      className={configurationContainer}
+      tokens={mobileView ? configurationStackTokensMobile : configurationStackTokensDesktop}
+      className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}
     >
-      <LocalPreview />
-      <Stack className={selectionContainerStyle}>
-        <div className={titleContainerStyle}>{title}</div>
-        <LocalDeviceSettings
-          {...options}
-          {...localDeviceSettingsHandlers}
-          cameraPermissionGranted={cameraPermissionGranted}
-          microphonePermissionGranted={microphonePermissionGranted}
-        />
-        <div>
-          <StartCallButton onClickHandler={startCallHandler} isDisabled={!microphonePermissionGranted} />
-        </div>
+      {mobileView && (
+        <Stack.Item>
+          {title}
+          {callDescription}
+        </Stack.Item>
+      )}
+      <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />
+      <Stack className={mobileView ? undefined : selectionContainerStyle}>
+        {!mobileView && (
+          <>
+            <Stack.Item styles={callDetailsContainerStylesDesktop}>
+              {title}
+              {callDescription}
+            </Stack.Item>
+            <LocalDeviceSettings
+              {...options}
+              {...localDeviceSettingsHandlers}
+              cameraPermissionGranted={cameraPermissionGranted}
+              microphonePermissionGranted={microphonePermissionGranted}
+            />
+          </>
+        )}
+        <Stack styles={mobileView ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}>
+          <StartCallButton
+            className={mobileView ? startCallButtonStyleMobile : undefined}
+            onClickHandler={startCallHandler}
+            isDisabled={!microphonePermissionGranted}
+          />
+        </Stack>
       </Stack>
     </Stack>
   );
