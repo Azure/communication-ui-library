@@ -160,6 +160,8 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
   return { horizontalFill, rows, columns };
 };
 
+// Note: Using CSS Grid styles to separate children instead of creating divs for subarrays of the children because when videos are turned on a lot of
+// unecessary processing to create divs occurs constantly and as a result videos often do not show
 /**
  * Creates a styles classname with CSS Grid related styles given GridProps and the number of items to distribute as evenly as possible.
  * @param numberOfItems - number of items to place in grid
