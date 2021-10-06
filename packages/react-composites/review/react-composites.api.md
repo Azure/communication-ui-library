@@ -44,7 +44,7 @@ import { VideoStreamOptions } from '@internal/react-components';
 
 // @public
 export interface AdapterError extends Error {
-    inner: Error;
+    innerError: Error;
     target: string;
     timestamp: Date;
 }
