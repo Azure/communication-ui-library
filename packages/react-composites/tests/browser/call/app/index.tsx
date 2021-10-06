@@ -15,7 +15,7 @@ import {
   COMPOSITE_LOCALE_EN_US
 } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { verifyParamExists, isMobile } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -64,7 +64,7 @@ function App(): JSX.Element {
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <_IdentifierProvider identifiers={IDS}>
-        {callAdapter && <CallComposite adapter={callAdapter} locale={locale} />}
+        {callAdapter && <CallComposite adapter={callAdapter} locale={locale} options={{ mobileView: isMobile() }} />}
       </_IdentifierProvider>
     </div>
   );
