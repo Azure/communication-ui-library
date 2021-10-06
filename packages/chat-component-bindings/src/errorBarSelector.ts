@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { getLatestErrors } from './baseSelectors';
-import { ActiveError, ErrorType } from '@internal/react-components';
+import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ChatError, ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
 
@@ -18,54 +18,58 @@ import { ChatError, ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-
  *
  * @public
  */
-export const errorBarSelector = createSelector([getLatestErrors], (latestErrors): { activeErrors: ActiveError[] } => {
-  // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
-  // There are several options for the ordering:
-  //   - Sorted by when the errors happened (latest first / oldest first).
-  //   - Stable sort by error type.
-  //
-  // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
-  // have timestamps for errors.
-  const activeErrors: ActiveError[] = [];
-  let specificSendMessageErrorSeen = false;
-  {
-    const error = latestUnableToReachChatServiceError(latestErrors);
-    if (error !== undefined) {
-      activeErrors.push(error);
-    }
-  }
-  {
-    const error = latestAccessDeniedError(latestErrors);
-    if (error !== undefined) {
-      activeErrors.push(error);
-    }
-  }
-
-  const sendMessageError = latestErrors['ChatThreadClient.sendMessage'];
-  {
-    const error = latestNotInThisThreadError(latestErrors);
-    if (error !== undefined) {
-      if (sendMessageError !== undefined) {
-        activeErrors.push({
-          type: 'sendMessageNotInThisThread',
-          // Set the latest timestamp of all the errors that translated to an active error.
-          timestamp: sendMessageError.timestamp > (error.timestamp ?? 0) ? sendMessageError.timestamp : error.timestamp
-        });
-        specificSendMessageErrorSeen = true;
-      } else {
-        activeErrors.push(error);
+export const errorBarSelector = createSelector(
+  [getLatestErrors],
+  (latestErrors): { activeErrorMessages: ActiveErrorMessage[] } => {
+    // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
+    // There are several options for the ordering:
+    //   - Sorted by when the errors happened (latest first / oldest first).
+    //   - Stable sort by error type.
+    //
+    // We chose to stable sort by error type: We intend to show only a small number of errors on the UI and we do not
+    // have timestamps for errors.
+    const activeErrorMessages: ActiveErrorMessage[] = [];
+    let specificSendMessageErrorSeen = false;
+    {
+      const error = latestUnableToReachChatServiceError(latestErrors);
+      if (error !== undefined) {
+        activeErrorMessages.push(error);
       }
     }
-  }
+    {
+      const error = latestAccessDeniedError(latestErrors);
+      if (error !== undefined) {
+        activeErrorMessages.push(error);
+      }
+    }
 
-  if (!specificSendMessageErrorSeen && sendMessageError !== undefined) {
-    activeErrors.push({ type: 'sendMessageGeneric', timestamp: sendMessageError.timestamp });
-  }
+    const sendMessageError = latestErrors['ChatThreadClient.sendMessage'];
+    {
+      const error = latestNotInThisThreadError(latestErrors);
+      if (error !== undefined) {
+        if (sendMessageError !== undefined) {
+          activeErrorMessages.push({
+            type: 'sendMessageNotInThisThread',
+            // Set the latest timestamp of all the errors that translated to an active error.
+            timestamp:
+              sendMessageError.timestamp > (error.timestamp ?? 0) ? sendMessageError.timestamp : error.timestamp
+          });
+          specificSendMessageErrorSeen = true;
+        } else {
+          activeErrorMessages.push(error);
+        }
+      }
+    }
 
-  // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
-  activeErrors.splice(maxErrorCount);
-  return { activeErrors: activeErrors };
-});
+    if (!specificSendMessageErrorSeen && sendMessageError !== undefined) {
+      activeErrorMessages.push({ type: 'sendMessageGeneric', timestamp: sendMessageError.timestamp });
+    }
+
+    // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.
+    activeErrorMessages.splice(maxErrorCount);
+    return { activeErrorMessages: activeErrorMessages };
+  }
+);
 
 const maxErrorCount = 3;
 
@@ -77,19 +81,19 @@ const accessErrorTargets: ChatErrorTarget[] = [
   'ChatThreadClient.sendTypingNotification'
 ];
 
-const latestUnableToReachChatServiceError = (latestErrors: ChatErrors): ActiveError | undefined => {
+const latestUnableToReachChatServiceError = (latestErrors: ChatErrors): ActiveErrorMessage | undefined => {
   return latestActiveErrorSatisfying(latestErrors, 'unableToReachChatService', (error: ChatError): boolean => {
     return !!error && !!error.inner && error.inner['code'] === 'REQUEST_SEND_ERROR';
   });
 };
 
-const latestAccessDeniedError = (latestErrors: ChatErrors): ActiveError | undefined => {
+const latestAccessDeniedError = (latestErrors: ChatErrors): ActiveErrorMessage | undefined => {
   return latestActiveErrorSatisfying(latestErrors, 'accessDenied', (error: ChatError): boolean => {
     return !!error && !!error.inner && error.inner['statusCode'] === 401;
   });
 };
 
-const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveError | undefined => {
+const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveErrorMessage | undefined => {
   return latestActiveErrorSatisfying(latestErrors, 'userNotInThisThread', (error: ChatError): boolean => {
     if (!error || !error.inner) {
       return false;
@@ -105,19 +109,21 @@ const latestActiveErrorSatisfying = (
   errors: ChatErrors,
   activeErrorType: ErrorType,
   predicate: (error: ChatError) => boolean
-): ActiveError | undefined => {
-  const activeErrors: ActiveError[] = [];
+): ActiveErrorMessage | undefined => {
+  const activeErrorMessages: ActiveErrorMessage[] = [];
   for (const target of accessErrorTargets) {
     const error = errors[target];
     if (predicate(error)) {
-      activeErrors.push({ type: activeErrorType, timestamp: error.timestamp });
+      activeErrorMessages.push({ type: activeErrorType, timestamp: error.timestamp });
     }
   }
 
-  if (activeErrors.length === 0) {
+  if (activeErrorMessages.length === 0) {
     return undefined;
   }
   // We're actually sure that both timestamps will always exist, because we set them above.
-  activeErrors.sort((a: ActiveError, b: ActiveError) => (a.timestamp?.getTime() ?? 0) - (b.timestamp?.getTime() ?? 0));
-  return activeErrors[activeErrors.length - 1];
+  activeErrorMessages.sort(
+    (a: ActiveErrorMessage, b: ActiveErrorMessage) => (a.timestamp?.getTime() ?? 0) - (b.timestamp?.getTime() ?? 0)
+  );
+  return activeErrorMessages[activeErrorMessages.length - 1];
 };
