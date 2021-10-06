@@ -2,6 +2,59 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Tue, 28 Sep 2021 19:19:18 GMT",
+      "tag": "@internal/calling-stateful-client_v1.0.0-beta.6",
+      "version": "1.0.0-beta.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.5",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "cb54e992d9740dac94d2b8526f9066f365242c4a",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Clean old files before build",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "696a74a572f10b9305a64e78b17de4e38c88c657",
+            "package": "@internal/calling-stateful-client"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Drop state modification API",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8993b24c40472659ab96ddbc05f8bd69f64ad01f",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Stop clearing errors from calling stateful client",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f45b8daed711cd0db72d53d868f83f331874d826",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Document all public API and hide leaked exports",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e6a412b28c67f7525b68fcd15432fe96294641e2",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Fix feature types to conform to naming convention",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "b0a551e15381f7ac54f3800c3041ba6179490830",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Centralize beachball config",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f5d9cbd40f6ea0c19315a8e81642145961ba3f56",
+            "package": "@internal/calling-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Sep 2021 21:02:16 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.0-beta.5",
       "version": "1.0.0-beta.5",

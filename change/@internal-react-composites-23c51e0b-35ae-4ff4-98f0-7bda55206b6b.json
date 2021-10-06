@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "check if speaker selection is possible",
-  "packageName": "@internal/react-composites",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

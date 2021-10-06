@@ -2,6 +2,149 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Tue, 28 Sep 2021 19:19:18 GMT",
+      "tag": "@internal/react-components_v1.0.0-beta.6",
+      "version": "1.0.0-beta.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Change ControlBar to be affected by theme.effects",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a92765b780dd0831a085e548b53ec3016dd6784d",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Localization for edit + delete messages",
+            "author": "jinan@microsoft.com",
+            "commit": "22a44e390e5de0f90cb9fa35c8a300a0029a3bc5",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Make ControlBarButton styling consistent",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8cbaa79fe5d052b5402c1dfdb5bb6db2c138858e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Adjust api comments - iteration 2",
+            "author": "jinan@microsoft.com",
+            "commit": "6e009ecb701a9838fb922cccfaa0c9642ab9067a",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Centralize beachball config",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f5d9cbd40f6ea0c19315a8e81642145961ba3f56",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add edited tag to messages",
+            "author": "jinan@microsoft.com",
+            "commit": "4546bc367f25c89e9029f7ab2e57a8d76d196c81",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Undo styling to body tag from FluentThemeProvider",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "20f6d2c2695e71882720aca471a74d460dc598bf",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "ControlBarButton labels have regular font weight and font is customizable through FluentThemeProvider.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "00ae9ae91b6bfe73e15f8da51c70656a2397c084",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add custom menu items injection support to ParticipantList",
+            "author": "anjulgarg@live.com",
+            "commit": "b2283caf0dc018157c79f8968f7d390d6fa99bb7",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "1224d0d3482542bc94617b4a5f8742983132bee6",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add release tags to all public API. Lint clean internal API.",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "54d3d33f0f1770e8280d4444b4509c74e3211eb2",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add data-ui-id for video tiles",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "50b127e4e6601a06c616a6bf5e7169faa732e675",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix chat message text being always bold",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2ca7a93e051790b657514f70a69db2f77a21bdc2",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "2814fafd80684de8c790c66f6f990cd66ffd9521",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Allow custom menu items in ParticipantList",
+            "author": "anjulgarg@live.com",
+            "commit": "2f6feef530105f66991a7462f8c8b2b15e4691f2",
+            "package": "@internal/react-components"
+          }
+        ],
+        "none": [
+          {
+            "comment": "URL link update for privacy",
+            "author": "dademath@microsoft.com",
+            "commit": "793a06a9f79a1a955a8e32148bd75a2e3ccc97db",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "made ParticipantItems focusable + change styles",
+            "author": "alcail@microsoft.com",
+            "commit": "ede8291dad3a0564fd5a67dcb155d09c08e9ef45",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "whitespace change",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "186cd947cc9a996c4db686227c55843fd6ed0ce8",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.5",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "cb54e992d9740dac94d2b8526f9066f365242c4a",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Clean old files before build",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "696a74a572f10b9305a64e78b17de4e38c88c657",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Updated styles to ensure zooming in at 400%",
+            "author": "alcail@microsoft.com",
+            "commit": "34125cdc995e6980a9532c84efac848ac3d22b7d",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "updated dependency of LocalVideoTile render",
+            "author": "alcail@microsoft.com",
+            "commit": "652d154d5ec5615cd16e4d5f1b13b15eef988af2",
+            "package": "@internal/react-components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Sep 2021 21:02:16 GMT",
       "tag": "@internal/react-components_v1.0.0-beta.5",
       "version": "1.0.0-beta.5",

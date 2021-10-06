@@ -1,8 +1,21 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.6)
+
+Tue, 28 Sep 2021 19:19:18 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.0-beta.5..@internal/calling-stateful-client_v1.0.0-beta.6)
+
+### Changes
+
+- Drop state modification API ([PR #782](https://github.com/azure/communication-ui-library/pull/782) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Stop clearing errors from calling stateful client ([PR #781](https://github.com/azure/communication-ui-library/pull/781) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Document all public API and hide leaked exports ([PR #811](https://github.com/azure/communication-ui-library/pull/811) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix feature types to conform to naming convention ([PR #832](https://github.com/azure/communication-ui-library/pull/832) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.5)
 

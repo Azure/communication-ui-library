@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "this change does not affect the published package in any way.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

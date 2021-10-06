@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add custom menu items injection support to Component and Composites",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
