@@ -110,7 +110,7 @@ export const createGridStyles = (numberOfItems: number, gridProps: GridProps): s
   const blocks = gridProps.horizontalFill ? gridProps.rows : gridProps.columns;
   const smallCellsPerBlock = Math.ceil(numberOfItems / blocks);
   const bigCellsPerBlock = Math.floor(numberOfItems / blocks);
-  const numBigCells = (blocks - (numberOfItems % blocks)) * bigCellsPerBlock;
+  const numBigCells = (gridProps.rows * gridProps.columns - numberOfItems) * bigCellsPerBlock;
   // Get grid units
   // e.g. If some blocks have 2 big cells while others have 3 small cells, we need to work with 6 units per block
   const units = smallCellsPerBlock * bigCellsPerBlock;
