@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "remove toggleCamera api in adapter",
+  "packageName": "@internal/react-composites",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
