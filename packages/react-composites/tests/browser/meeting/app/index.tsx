@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import { _IdentifierProvider } from '@internal/react-components';
 import { MeetingAdapter, createAzureCommunicationMeetingAdapter, MeetingComposite } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -59,7 +59,7 @@ function App(): JSX.Element {
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <_IdentifierProvider identifiers={IDS}>
-        {meetingAdapter && <MeetingComposite meetingAdapter={meetingAdapter} />}
+        {meetingAdapter && <MeetingComposite meetingAdapter={meetingAdapter} options={{ mobileView: isMobile() }} />}
       </_IdentifierProvider>
     </div>
   );

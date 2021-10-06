@@ -15,7 +15,7 @@ import {
   COMPOSITE_LOCALE_EN_US
 } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { verifyParamExists, isMobile } from '../../common/testAppUtils';
+import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());

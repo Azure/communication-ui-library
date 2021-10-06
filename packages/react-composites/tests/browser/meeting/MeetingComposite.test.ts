@@ -65,7 +65,7 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
 
   test('Meeting gallery screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-basic-gallery-screen.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`meeting-gallery-screen.png`);
   });
 
   test('Chat messages are displayed correctly', async ({ pages }) => {
@@ -93,14 +93,14 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
 
     await stubMessageTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`);
+    expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-gallery-screen-with-chat-pane.png`);
   });
 
   test('People pane opens and displays correctly', async ({ pages }) => {
     const page = pages[1];
     await page.click(dataUiId('meeting-composite-people-button'));
     await page.waitForSelector(dataUiId('meeting-composite-people-pane'));
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-people-pane-has-participants.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`meeting-gallery-screen-with-people-pane.png`);
   });
 
   /**
