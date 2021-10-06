@@ -18,7 +18,7 @@ import React, { createContext, useContext } from 'react';
  */
 export interface _Identifiers {
   /** `data-ui-id` value for `SendBox` Component */
-  sendboxTextfield: string;
+  sendboxTextField: string;
   /** `data-ui-id` value for `ParticipantList` Component */
   participantList: string;
   /** `data-ui-id` value for `MessageThread` components message content */
@@ -34,7 +34,7 @@ export interface _Identifiers {
 }
 
 const defaultIdentifiers: _Identifiers = {
-  sendboxTextfield: 'sendbox-textfield',
+  sendboxTextField: 'sendbox-textfield',
   participantList: 'participant-list',
   messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',

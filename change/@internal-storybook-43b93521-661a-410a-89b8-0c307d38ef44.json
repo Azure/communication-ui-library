@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update Feature Toggle API",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

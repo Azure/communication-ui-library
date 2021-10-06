@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix feature types to conform to naming convention",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

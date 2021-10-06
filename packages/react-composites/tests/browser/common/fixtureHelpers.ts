@@ -1,19 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  CONNECTION_STRING,
-  CHAT_TOPIC_NAME,
-  ChatUserType,
-  CallUserType,
-  MeetingUserType,
-  PAGE_VIEWPORT
-} from './defaults';
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { Browser, Page } from '@playwright/test';
 import { v1 } from 'uuid';
+import { CHAT_TOPIC_NAME } from './constants';
+import { CONNECTION_STRING } from './nodeConstants';
+import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
 import { buildUrl } from './utils';
 
 /**
@@ -21,8 +16,8 @@ import { buildUrl } from './utils';
  * To be used in a playwright fixture's 'pages'.
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, use) => {
-  const pages = await Promise.all(users.map(async (user) => await loadPage(testBrowser, serverUrl, user)));
+export const usePagePerParticipant = async ({ serverUrl, users, browser }, use) => {
+  const pages = await Promise.all(users.map(async (user) => await loadNewPage(browser, buildUrl(serverUrl, user))));
   await use(pages);
 };
 
@@ -31,10 +26,10 @@ export const usePagePerParticipant = async ({ serverUrl, testBrowser, users }, u
  * To be used in a playwright fixture's 'pages'.
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePagePerParticipantWithCallPermissions = async ({ serverUrl, testBrowser, users }, use) => {
+export const usePagePerParticipantWithCallPermissions = async ({ browser, serverUrl, users }, use) => {
   const pages = await Promise.all(
     users.map(async (user) => {
-      const page = await loadPageWithPermissionsForCalls(testBrowser, serverUrl, user);
+      const page = await loadNewPageWithPermissionsForCalls(browser, buildUrl(serverUrl, user));
       page.on('console', (msg) => {
         if (msg.type() === 'error') {
           console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
@@ -46,7 +41,7 @@ export const usePagePerParticipantWithCallPermissions = async ({ serverUrl, test
   await use(pages);
 };
 
-const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
+export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
   const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
   const userAndTokens: CommunicationUserToken[] = [];
@@ -161,41 +156,24 @@ export const createMeetingUsers =
 /**
  * Load a URL in the browser page.
  * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load url for.
+ * @param url URL to a running test app.
  * @returns
  */
-const loadUrlInPage = async (page: Page, serverUrl: string, user: ChatUserType | CallUserType): Promise<Page> => {
-  await page.setViewportSize(PAGE_VIEWPORT);
-
-  const url = buildUrl(serverUrl, user);
-  await page.goto(url, { waitUntil: 'load' });
+export const loadNewPage = async (browser: Browser, url: string): Promise<Page> => {
+  const page = await browser.newPage();
+  await page.goto(url);
   return page;
 };
 
 /**
- * Load a new page in the browser at the supplied url.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load url for.
- * @returns
- */
-export const loadPage = async (browser: Browser, serverUrl: string, user: ChatUserType | CallUserType): Promise<Page> =>
-  await loadUrlInPage(await browser.newPage(), serverUrl, user);
-
-/**
  * Load a URL in a new Page in the browser with permissions needed for the CallComposite.
  * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load ChatComposite for.
+ * @param url URL to a running test app.
  * @returns
  */
-export const loadPageWithPermissionsForCalls = async (
-  browser: Browser,
-  serverUrl: string,
-  user: CallUserType | MeetingUserType
-): Promise<Page> => {
+export const loadNewPageWithPermissionsForCalls = async (browser: Browser, url: string): Promise<Page> => {
   const context = await browser.newContext({ permissions: ['notifications', 'camera', 'microphone'] });
   const page = await context.newPage();
-  return await loadUrlInPage(page, serverUrl, user);
+  await page.goto(url);
+  return page;
 };

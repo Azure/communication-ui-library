@@ -2,6 +2,227 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Tue, 28 Sep 2021 19:19:18 GMT",
+      "tag": "@internal/react-composites_v1.0.0-beta.6",
+      "version": "1.0.0-beta.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Added browser localization tests for call and chat composites",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "c8c5fa6fa59378727bfcf4d9472c273536d11d02",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Line height style removal from body caused changes in text in non-northstar components",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "20f6d2c2695e71882720aca471a74d460dc598bf",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Hotfix: Add delay in test to reduce CI flakiness",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "eba7d5d3e7851e280839c8c4c88c40042fa6a59a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.5",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "cb54e992d9740dac94d2b8526f9066f365242c4a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "updated ParticipantList styles",
+            "author": "alcail@microsoft.com",
+            "commit": "ede8291dad3a0564fd5a67dcb155d09c08e9ef45",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Clean old files before build",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "696a74a572f10b9305a64e78b17de4e38c88c657",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix flakey ui tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "27077071583fa2b9e03f9e2896a1d020d36b994a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Prevent borders on the video tiles to prevent isSpeaking border flakiness",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "50b127e4e6601a06c616a6bf5e7169faa732e675",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "URL link update for privacy",
+            "author": "dademath@microsoft.com",
+            "commit": "793a06a9f79a1a955a8e32148bd75a2e3ccc97db",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Try fix flakey tests by waiting for video.isReady",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "952d7309457104a7c748ecab42ea045cd343fd68",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Updated styles to ensure zooming in at 400%",
+            "author": "alcail@microsoft.com",
+            "commit": "34125cdc995e6980a9532c84efac848ac3d22b7d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Refactor meeting state code into seperate files",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "bc3cc52827ea17f455cde7116c085b74b0a082c1",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "this change does not affect the published package in any way.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "00ae9ae91b6bfe73e15f8da51c70656a2397c084",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2ca7a93e051790b657514f70a69db2f77a21bdc2",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Meeting ui tests setup and cleanup inside test folder",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f83254dc1a3ad0164046cbe5c82cd20b6d47ced4",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Delete dead code (non functional changes)",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "186cd947cc9a996c4db686227c55843fd6ed0ce8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "ci optimization: don't wait for packlets to be built in CI UI tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a3974a196b70646526b939b2bb0b0339c392d4a7",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "More meeting composite ui tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5ff948444ea9ad10fd0526a04a0d3417681e41f7",
+            "package": "@internal/react-composites"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Update meeting examples to make use of the MeetingAdapter",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "78cb2ad7eaea2dd7e891696b39ae73154edd5c1d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Construct meeting state for the meeting composite adapter.",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "cec2af15f8413ea2293c319cacecbf1c31eb4006",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "1224d0d3482542bc94617b4a5f8742983132bee6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "check if speaker selection is possible",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "cb54e992d9740dac94d2b8526f9066f365242c4a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "2814fafd80684de8c790c66f6f990cd66ffd9521",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump chat sdk to version 1.1.0",
+            "author": "jinan@microsoft.com",
+            "commit": "8d053eded816621717e386d8b6a43111631b860f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Adding feature toggles to Chat and Call Composites",
+            "author": "anjulgarg@live.com",
+            "commit": "f2ba6cf2721c7aead0d436786cb730d48f21a83f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add release tags to API and tweak callback names to match events",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "295aaf2055f532bc93e6e2d8428dd84c7f04980f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Adjust api comments - iteration 2",
+            "author": "jinan@microsoft.com",
+            "commit": "6e009ecb701a9838fb922cccfaa0c9642ab9067a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Breaking Change: Update Feature Toggle API. Developers will need to use `options` prop in Composite instead of `hiddenElements`",
+            "author": "anjulgarg@live.com",
+            "commit": "2f6feef530105f66991a7462f8c8b2b15e4691f2",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Make IdentifierProvider @internal",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "54d3d33f0f1770e8280d4444b4509c74e3211eb2",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add custom menu items injection support to Call and Chat Composites",
+            "author": "anjulgarg@live.com",
+            "commit": "b2283caf0dc018157c79f8968f7d390d6fa99bb7",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Centralize beachball config",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f5d9cbd40f6ea0c19315a8e81642145961ba3f56",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Support editing and deleting chat messages in the meeting composite adapter",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3c5012f7f920b792a8cd86346d350113e272dc9b",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add isTeamsCall to call adapter state",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e3c31e77ebb6f60116b8926598dc9ed62f785d83",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix meeting composite requesting access to the meeting chat too early",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3637ef87b2aaccb52e0c7415b66f76d3cb1d0dca",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add mobileView alpha flag to call and meeting composites",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "ca47b99da957ee227f762c2d8413aba9d4904fc4",
+            "package": "@internal/react-composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Sep 2021 21:02:16 GMT",
       "tag": "@internal/react-composites_v1.0.0-beta.5",
       "version": "1.0.0-beta.5",

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationUserIdentifier, CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   AvatarPersonaData,
   ChatAdapter,
