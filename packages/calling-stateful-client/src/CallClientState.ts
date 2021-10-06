@@ -438,7 +438,7 @@ export interface CallClientState {
   calls: { [key: string]: CallState };
   /**
    * Calls that have ended are stored here so the callEndReason could be checked.
-   * It is an as an object with {@link @azure/communication-calling#Call.id} keys and {@link CallState} values.
+   * It is an object with {@link @azure/communication-calling#Call.id} keys and {@link CallState} values.
    *
    * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
