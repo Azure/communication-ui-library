@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update storybook code according to api change",
-  "packageName": "@internal/storybook",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

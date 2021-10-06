@@ -24,7 +24,7 @@ import { default as React_2 } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
-export interface ActiveError {
+export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
 }
@@ -285,7 +285,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
-    activeErrors: ActiveError[];
+    activeErrorMessages: ActiveErrorMessage[];
     strings?: ErrorBarStrings;
 }
 
@@ -349,7 +349,7 @@ export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
-    sendboxTextfield: string;
+    sendboxTextField: string;
     typingIndicator: string;
     videoGallery: string;
     videoTile: string;

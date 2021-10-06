@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import {
-  waitForCallCompositeToLoad,
+  buildUrl,
   dataUiId,
   disableAnimation,
   loadCallScreenWithParticipantVideos,
-  loadUrlInPage
+  waitForCallCompositeToLoad
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -37,7 +37,7 @@ test.describe('Call Composite E2E Tests', () => {
       const user = users[i];
       user.groupId = newTestGuid;
 
-      await loadUrlInPage(page, serverUrl, user);
+      await page.goto(buildUrl(serverUrl, user));
       await waitForCallCompositeToLoad(page);
     }
   });
@@ -84,7 +84,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       const user = users[i];
       user.groupId = newTestGuid;
 
-      await loadUrlInPage(page, serverUrl, user);
+      await page.goto(buildUrl(serverUrl, user));
       await waitForCallCompositeToLoad(page);
     }
 
@@ -143,9 +143,11 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
 
     // Set description to be shown
     const page = pages[0];
-    await loadUrlInPage(page, serverUrl, user, {
-      showCallDescription: 'true'
-    });
+    await page.goto(
+      buildUrl(serverUrl, user, {
+        showCallDescription: 'true'
+      })
+    );
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });

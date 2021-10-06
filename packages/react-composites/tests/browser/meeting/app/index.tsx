@@ -7,17 +7,19 @@ import ReactDOM from 'react-dom';
 
 import { _IdentifierProvider } from '@internal/react-components';
 import { MeetingAdapter, createAzureCommunicationMeetingAdapter, MeetingComposite } from '../../../../src';
-import { IDS } from '../../common/config';
+import { IDS } from '../../common/constants';
+import { verifyParamExists } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-const displayName = params.displayName;
-const token = params.token;
-const groupId = params.groupId;
-const userId = params.userId;
-const endpointUrl = params.endpointUrl;
-const threadId = params.threadId;
+// Required params
+const displayName = verifyParamExists(params.displayName, 'displayName');
+const token = verifyParamExists(params.token, 'token');
+const groupId = verifyParamExists(params.groupId, 'groupId');
+const userId = verifyParamExists(params.userId, 'userId');
+const endpointUrl = verifyParamExists(params.endpointUrl, 'endpointUrl');
+const threadId = verifyParamExists(params.threadId, 'threadId');
 
 function App(): JSX.Element {
   const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter>(undefined);

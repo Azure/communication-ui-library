@@ -14,16 +14,20 @@ import {
   COMPOSITE_LOCALE_FR_FR,
   COMPOSITE_LOCALE_EN_US
 } from '../../../../src';
-import { IDS } from '../../common/config';
+import { IDS } from '../../common/constants';
+import { verifyParamExists } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-const displayName = params.displayName;
-const token = params.token;
-const groupId = params.groupId;
-const userId = params.userId;
-const useFrLocale = Boolean(params.useFrlocale);
+// Required params
+const displayName = verifyParamExists(params.displayName, 'displayName');
+const token = verifyParamExists(params.token, 'token');
+const groupId = verifyParamExists(params.groupId, 'groupId');
+const userId = verifyParamExists(params.userId, 'userId');
+
+// Optional params
+const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
 // const customDataModel = params.customDataModel;
 
