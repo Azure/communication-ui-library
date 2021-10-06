@@ -371,5 +371,5 @@ export const createAzureCommunicationChatAdapterFromClient = async (
 };
 
 const isChatError = (e: Error): e is ChatError => {
-  return e['target'] !== undefined && e['inner'] !== undefined;
+  return e['target'] !== undefined && e['innerError'] !== undefined;
 };

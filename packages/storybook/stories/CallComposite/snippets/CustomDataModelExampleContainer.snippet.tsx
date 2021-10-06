@@ -91,7 +91,7 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          callInvitationURL={props?.callInvitationURL}
+          callInvitationUrl={props?.callInvitationURL}
           locale={props?.locale}
         />
       )}

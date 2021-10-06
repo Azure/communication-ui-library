@@ -6,7 +6,7 @@
 
 /// <reference types="react" />
 
-import { ActiveError } from '@internal/react-components';
+import { ActiveErrorMessage } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
@@ -118,9 +118,9 @@ export const emptySelector: () => Record<string, never>;
 
 // @public
 export const errorBarSelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }, (res1: CallErrors, res2: DiagnosticsCallFeatureState | undefined) => {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }>;
 
 // @public

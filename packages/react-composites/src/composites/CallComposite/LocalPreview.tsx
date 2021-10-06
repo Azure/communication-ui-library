@@ -6,6 +6,7 @@ import {
   CameraButton,
   ControlBar,
   MicrophoneButton,
+  OptionsButton,
   StreamMedia,
   useTheme,
   VideoTile
@@ -18,15 +19,29 @@ import { useSelector } from './hooks/useSelector';
 import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
 import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 import { localPreviewSelector } from './selectors/localPreviewSelector';
-import { cameraOffLabelStyle, localPreviewContainerStyle, localPreviewTileStyle } from './styles/LocalPreview.styles';
+import {
+  cameraOffLabelStyle,
+  localPreviewContainerStyleDesktop,
+  localPreviewContainerStyleMobile,
+  localPreviewTileStyle
+} from './styles/LocalPreview.styles';
 
 /**
  * @private
  */
-export const LocalPreview = (): JSX.Element => {
+export interface LocalPreviewProps {
+  mobileView: boolean;
+  showDevicesButton: boolean;
+}
+
+/**
+ * @private
+ */
+export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const locale = useLocale();
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
+  const optionsButtonProps = usePropsFor(OptionsButton);
   const { audio: microphonePermissionGranted, video: cameraPermissionGranted } = useSelector(devicePermissionSelector);
 
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
@@ -56,7 +71,10 @@ export const LocalPreview = (): JSX.Element => {
   }, [theme, locale.strings.call.cameraTurnedOff]);
 
   return (
-    <Stack data-ui-id="call-composite-local-preview" className={localPreviewContainerStyle}>
+    <Stack
+      data-ui-id="call-composite-local-preview"
+      className={props.mobileView ? localPreviewContainerStyleMobile : localPreviewContainerStyleDesktop}
+    >
       <VideoTile
         styles={localPreviewTileStyle}
         renderElement={
@@ -80,6 +98,15 @@ export const LocalPreview = (): JSX.Element => {
             disabled={!microphonePermissionGranted}
             showLabel={true}
           />
+          {props.showDevicesButton && (
+            <OptionsButton
+              data-ui-id="call-composite-local-device-settings-options-button"
+              {...optionsButtonProps}
+              // disable button whilst all other buttons are disabled
+              disabled={!microphonePermissionGranted || !cameraPermissionGranted}
+              showLabel={true}
+            />
+          )}
         </ControlBar>
       </VideoTile>
     </Stack>

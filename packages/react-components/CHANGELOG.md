@@ -1,8 +1,31 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.6)
+
+Tue, 28 Sep 2021 19:19:18 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.0-beta.5..@internal/react-components_v1.0.0-beta.6)
+
+### Changes
+
+- Change ControlBar to be affected by theme.effects ([PR #793](https://github.com/azure/communication-ui-library/pull/793) by miguelgamis@microsoft.com)
+- Localization for edit + delete messages ([PR #809](https://github.com/azure/communication-ui-library/pull/809) by jinan@microsoft.com)
+- Make ControlBarButton styling consistent ([PR #829](https://github.com/azure/communication-ui-library/pull/829) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Adjust api comments - iteration 2 ([PR #776](https://github.com/azure/communication-ui-library/pull/776) by jinan@microsoft.com)
+- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add edited tag to messages ([PR #759](https://github.com/azure/communication-ui-library/pull/759) by jinan@microsoft.com)
+- Undo styling to body tag from FluentThemeProvider ([PR #817](https://github.com/azure/communication-ui-library/pull/817) by miguelgamis@microsoft.com)
+- ControlBarButton labels have regular font weight and font is customizable through FluentThemeProvider. ([PR #789](https://github.com/azure/communication-ui-library/pull/789) by miguelgamis@microsoft.com)
+- Add custom menu items injection support to ParticipantList ([PR #795](https://github.com/azure/communication-ui-library/pull/795) by anjulgarg@live.com)
+- TDBuild - updating localized resource files. ([PR #836](https://github.com/azure/communication-ui-library/pull/836) by miguelgamis@microsoft.com)
+- Add release tags to all public API. Lint clean internal API. ([PR #825](https://github.com/azure/communication-ui-library/pull/825) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add data-ui-id for video tiles ([PR #802](https://github.com/azure/communication-ui-library/pull/802) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix chat message text being always bold ([PR #799](https://github.com/azure/communication-ui-library/pull/799) by 2684369+JamesBurnside@users.noreply.github.com)
+- TDBuild - updating localized resource files. ([PR #794](https://github.com/azure/communication-ui-library/pull/794) by miguelgamis@microsoft.com)
+- Allow custom menu items in ParticipantList ([PR #800](https://github.com/azure/communication-ui-library/pull/800) by anjulgarg@live.com)
 
 ## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.5)
 
