@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useChromeBrowser } from '../common/browsers';
-import { TEST_PARTICIPANTS, WorkerFixture, MeetingUserType } from '../common/defaults';
+import { TEST_PARTICIPANTS } from '../common/constants';
 import { createMeetingUsers, usePagePerParticipantWithCallPermissions } from '../common/fixtureHelpers';
+import { WorkerFixture, MeetingUserType } from '../common/fixtureTypes';
 import { createTestServer } from '../../server';
 import { test as base } from '@playwright/test';
 import path from 'path';
@@ -21,9 +21,6 @@ type MeetingWorkerFixture = WorkerFixture<MeetingUserType>;
 export const test = base.extend<unknown, MeetingWorkerFixture>({
   /** @returns string URL for the server. */
   serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'worker' }],
-
-  /** @returns Browser object. */
-  testBrowser: [useChromeBrowser, { scope: 'worker' }],
 
   /** @returns the created users' identities. */
   users: [createMeetingUsers(TEST_PARTICIPANTS), { scope: 'worker' }],

@@ -14,6 +14,10 @@ export interface CallCompositeStrings {
    */
   configurationPageTitle: string;
   /**
+   * Optional 1-2 lines on the call details used on the configuration page.
+   */
+  configurationPageCallDetails?: string;
+  /**
    * Text in button to start call in configuration page.
    */
   startCallButtonText: string;

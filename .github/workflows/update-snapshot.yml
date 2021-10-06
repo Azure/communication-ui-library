@@ -76,7 +76,7 @@ jobs:
       - name: Commit new snapshots
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          git add packages/react-composites/tests
+          git add samples/StaticHtmlComposites
           git commit -m 'Update js bundle automation snapshots'
           git push
 

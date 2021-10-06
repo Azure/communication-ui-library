@@ -1,28 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS } from './config';
-import { ChatClient } from '@azure/communication-chat';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { Browser, Page } from '@playwright/test';
-import { ChatUserType } from './defaults';
+import { IDS } from './constants';
+import { Page } from '@playwright/test';
+import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
 
-export const dataUiId = (v: string): string => `[${DATA_UI_ID}="${v}"]`;
-const DATA_UI_ID = 'data-ui-id';
-const CONNECTION_STRING = process.env.CONNECTION_STRING ?? '';
-export const PAGE_VIEWPORT = {
-  width: 1024,
-  height: 768
-};
-export const TOPIC_NAME = 'Cowabunga';
+/** Selector string to get element by data-ui-id property */
+export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 
 /**
  * Wait for the ChatComposite on a page to fully load.
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('networkidle');
-  await page.waitForSelector(dataUiId(IDS.sendboxTextfield));
+  await page.waitForSelector(dataUiId(IDS.sendboxTextField));
 
   // @TODO
   // We wait 3 sec here to work around a bug.
@@ -105,9 +96,9 @@ export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promis
 /**
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
-export const stubMessageTimestamps = (page: Page): void => {
+export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
-  page.evaluate((messageTimestampId) => {
+  await page.evaluate((messageTimestampId) => {
     Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.innerHTML = 'timestamp'));
   }, messageTimestampId);
 };
@@ -123,91 +114,6 @@ export const disableAnimation = async (page: Page): Promise<void> => {
       }
     `
   });
-};
-
-export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
-  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
-  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
-  const userAndTokens: CommunicationUserToken[] = [];
-  for (let i = 0; i < displayNames.length; i++) {
-    userAndTokens.push(await tokenClient.createUserAndToken(['chat']));
-  }
-
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
-  const threadId =
-    (
-      await chatClient.createChatThread(
-        { topic: TOPIC_NAME },
-        {
-          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
-        }
-      )
-    ).chatThread?.id ?? '';
-
-  return displayNames.map((displayName, i) => ({
-    userId: userAndTokens[i].user.communicationUserId,
-    token: userAndTokens[i].token,
-    endpointUrl,
-    displayName,
-    threadId,
-    topic: TOPIC_NAME
-  }));
-};
-
-/**
- * Load a new page in the browser at the supplied url.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load url for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadPage = async (
-  browser: Browser,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => await loadUrlInPage(await browser.newPage(), serverUrl, user, qArgs);
-
-/**
- * Load a URL in the browser page.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load url for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadUrlInPage = async (
-  page: Page,
-  serverUrl: string,
-  user: ChatUserType | CallUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => {
-  const qs = encodeQueryData({ ...user, ...qArgs });
-  await page.setViewportSize(PAGE_VIEWPORT);
-  const url = `${serverUrl}?${qs}`;
-  await page.goto(url, { waitUntil: 'networkidle' });
-  return page;
-};
-
-/**
- * Load a URL in a new Page in the browser with permissions needed for the CallComposite.
- * @param browser Browser to create Page in.
- * @param serverUrl URL to a running test app.
- * @param user User to load ChatComposite for.
- * @param qArgs Extra query arguments.
- * @returns
- */
-export const loadPageWithPermissionsForCalls = async (
-  browser: Browser,
-  serverUrl: string,
-  user: CallUserType | MeetingUserType,
-  qArgs?: { [key: string]: string }
-): Promise<Page> => {
-  const context = await browser.newContext({ permissions: ['notifications'] });
-  context.grantPermissions(['camera', 'microphone']);
-  const page = await context.newPage();
-  return await loadUrlInPage(page, serverUrl, user, qArgs);
 };
 
 const encodeQueryData = (qArgs?: { [key: string]: string }): string => {

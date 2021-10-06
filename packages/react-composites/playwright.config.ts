@@ -2,6 +2,13 @@
 // Licensed under the MIT license.
 
 import { PlaywrightTestConfig } from '@playwright/test';
+import path from 'path';
+
+const DESKTOP_VIEWPORT = {
+  width: 1024,
+  height: 768
+};
+
 const config: PlaywrightTestConfig = {
   // Allow for more than the standard 30s (currently set to 2minutes). This is to ensure we get debug stack traces
   // when await functions timeout. Without this, if the test itself decides to timeout, playwright gives poor feedback
@@ -21,8 +28,27 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
 
   use: {
+    viewport: DESKTOP_VIEWPORT,
     headless: true,
-    video: 'retain-on-failure'
+    video: 'retain-on-failure',
+
+    launchOptions: {
+      channel: 'chrome',
+      args: [
+        '--font-render-hinting=medium', // Ensures that fonts are rendered consistently.
+        '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
+        '--disable-gpu', // Ensures that fonts are rendered consistently.
+        '--allow-file-access',
+        '--use-fake-ui-for-media-stream',
+        '--use-fake-device-for-media-stream',
+        `--use-file-for-fake-video-capture=${path.join(__dirname, 'tests', 'browser', 'common', 'test.y4m')}`,
+        '--lang=en-US',
+        '--mute-audio'
+      ],
+      ignoreDefaultArgs: [
+        '--hide-scrollbars' // Don't hide scrollbars in headless mode.
+      ]
+    }
   }
 };
 export default config;
