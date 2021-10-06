@@ -143,9 +143,11 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
 
     // Set description to be shown
     const page = pages[0];
-    await loadUrlInPage(page, serverUrl, user, {
-      showCallDescription: 'true'
-    });
+    await page.goto(
+      buildUrl(serverUrl, user, {
+        showCallDescription: 'true'
+      })
+    );
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });
