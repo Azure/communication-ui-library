@@ -85,7 +85,7 @@ const memoizeState = memoizeOne(
   ): CallClientState => ({
     userId,
     incomingCalls: {},
-    incomingCallsEnded: [],
+    incomingCallsEnded: {},
     callsEnded: {},
     deviceManager,
     callAgent: { displayName },

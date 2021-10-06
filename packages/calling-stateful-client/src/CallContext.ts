@@ -61,7 +61,7 @@ export class CallContext {
       calls: {},
       callsEnded: {},
       incomingCalls: {},
-      incomingCallsEnded: [],
+      incomingCallsEnded: {},
       deviceManager: {
         isSpeakerSelectionAvailable: false,
         cameras: [],
@@ -147,7 +147,7 @@ export class CallContext {
         draft.calls = {};
         draft.incomingCalls = {};
         draft.callsEnded = {};
-        draft.incomingCallsEnded.splice(0, draft.incomingCallsEnded.length);
+        draft.incomingCallsEnded = {};
       })
     );
   }
@@ -597,10 +597,12 @@ export class CallContext {
           call.endTime = new Date();
           call.callEndReason = callEndReason;
           delete draft.incomingCalls[callId];
-          if (draft.incomingCallsEnded.length >= MAX_CALL_HISTORY_LENGTH) {
-            draft.incomingCallsEnded.shift();
+          // Performance note: This loop should run only once because the number of entries
+          // is never allowed to exceed MAX_CALL_HISTORY_LENGTH. A loop is used for correctness.
+          while (Object.keys(draft.incomingCallsEnded).length >= MAX_CALL_HISTORY_LENGTH) {
+            delete draft.incomingCallsEnded[findOldestCallEnded(draft.incomingCallsEnded)];
           }
-          draft.incomingCallsEnded.push(call);
+          draft.incomingCallsEnded[callId] = call;
         }
       })
     );
@@ -776,7 +778,7 @@ const toCallError = (target: CallErrorTarget, error: unknown): CallError => {
   return new CallError(target, new Error(error as string));
 };
 
-const findOldestCallEnded = (calls: { [key: string]: CallState }): string => {
+const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): string => {
   const callEntries = Object.entries(calls);
   let [oldestCallId, oldestCall] = callEntries[0];
   if (oldestCall.endTime === undefined) {
