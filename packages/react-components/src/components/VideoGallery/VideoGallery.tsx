@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import {
@@ -19,6 +19,7 @@ import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
+  getHorizontalGalleryWrapperStyle,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle
 } from '../styles/VideoGallery.styles';
@@ -110,7 +111,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const shouldFloatLocalVideo = useCallback((): boolean => {
+  const shouldFloatLocalVideo = useMemo((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
   }, [layout, remoteParticipants]);
 
@@ -166,7 +167,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
     let localVideoTileStyles: VideoTileStylesProps = {};
-    if (shouldFloatLocalVideo()) {
+    if (shouldFloatLocalVideo) {
       localVideoTileStyles = floatingLocalVideoTileStyle;
     }
 
@@ -239,7 +240,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator
   ]);
 
-  if (shouldFloatLocalVideo()) {
+  if (shouldFloatLocalVideo) {
     const floatingTileHostId = 'UILibraryFloatingTileHost';
     return (
       <div ref={containerRef} className={videoGalleryOuterDivStyle}>
@@ -289,7 +290,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {defaultOnRenderRemoteParticipants}
           </GridLayout>
           {audioParticipants && audioParticipants.length > 0 && (
-            <Stack style={{ minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' }}>
+            <Stack style={getHorizontalGalleryWrapperStyle(isMobileScreen)}>
               <HorizontalGallery
                 onCreateRemoteStreamView={onCreateRemoteStreamView}
                 onDisposeRemoteStreamView={onDisposeRemoteStreamView}

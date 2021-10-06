@@ -9,6 +9,8 @@ import {
   IModalStyles,
   IStyleFunctionOrObject
 } from '@fluentui/react';
+import { CSSProperties } from 'react';
+import { HorizontalGalleryProps } from '../VideoGallery/HorizontalGallery';
 import { VideoTileStylesProps } from '../VideoTile';
 
 const theme = getTheme();
@@ -70,4 +72,11 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
     width: '100%',
     borderRadius: theme.effects.roundedCorner4
   }
+};
+
+/**
+ * @private
+ */
+export const getHorizontalGalleryWrapperStyle = (isMobileScreen: boolean): CSSProperties => {
+  return { minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' };
 };
