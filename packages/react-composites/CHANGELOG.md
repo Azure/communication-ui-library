@@ -1,8 +1,33 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.6)
+
+Tue, 28 Sep 2021 19:19:18 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.0.0-beta.5..@internal/react-composites_v1.0.0-beta.6)
+
+### Changes
+
+- Update meeting examples to make use of the MeetingAdapter ([PR #700](https://github.com/azure/communication-ui-library/pull/700) by 2684369+JamesBurnside@users.noreply.github.com)
+- Construct meeting state for the meeting composite adapter. ([PR #698](https://github.com/azure/communication-ui-library/pull/698) by 2684369+JamesBurnside@users.noreply.github.com)
+- TDBuild - updating localized resource files. ([PR #836](https://github.com/azure/communication-ui-library/pull/836) by miguelgamis@microsoft.com)
+- check if speaker selection is possible ([PR #771](https://github.com/azure/communication-ui-library/pull/771) by 79329532+alkwa-msft@users.noreply.github.com)
+- TDBuild - updating localized resource files. ([PR #794](https://github.com/azure/communication-ui-library/pull/794) by miguelgamis@microsoft.com)
+- Bump chat sdk to version 1.1.0 ([PR #816](https://github.com/azure/communication-ui-library/pull/816) by jinan@microsoft.com)
+- Adding feature toggles to Chat and Call Composites ([PR #765](https://github.com/azure/communication-ui-library/pull/765) by anjulgarg@live.com)
+- Add release tags to API and tweak callback names to match events ([PR #837](https://github.com/azure/communication-ui-library/pull/837) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Adjust api comments - iteration 2 ([PR #776](https://github.com/azure/communication-ui-library/pull/776) by jinan@microsoft.com)
+- Breaking Change: Update Feature Toggle API. Developers will need to use `options` prop in Composite instead of `hiddenElements` ([PR #800](https://github.com/azure/communication-ui-library/pull/800) by anjulgarg@live.com)
+- Make IdentifierProvider @internal ([PR #825](https://github.com/azure/communication-ui-library/pull/825) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add custom menu items injection support to Call and Chat Composites ([PR #795](https://github.com/azure/communication-ui-library/pull/795) by anjulgarg@live.com)
+- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Support editing and deleting chat messages in the meeting composite adapter ([PR #797](https://github.com/azure/communication-ui-library/pull/797) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add isTeamsCall to call adapter state ([PR #798](https://github.com/azure/communication-ui-library/pull/798) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix meeting composite requesting access to the meeting chat too early ([PR #783](https://github.com/azure/communication-ui-library/pull/783) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add mobileView alpha flag to call and meeting composites ([PR #822](https://github.com/azure/communication-ui-library/pull/822) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.5)
 

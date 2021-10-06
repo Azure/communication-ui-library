@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "made ParticipantItems focusable + change styles",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

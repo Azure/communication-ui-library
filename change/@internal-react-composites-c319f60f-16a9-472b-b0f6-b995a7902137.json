@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Support editing and deleting chat messages in the meeting composite adapter",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
