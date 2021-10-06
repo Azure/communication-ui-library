@@ -2,6 +2,149 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Tue, 28 Sep 2021 19:19:18 GMT",
+      "tag": "@internal/storybook_v1.0.0-beta.6",
+      "version": "1.0.0-beta.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "remove unused deps",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "46e0eadb3c85d11c9ba6941eb274a01ab3f1c90c",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Clean all build files",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "696a74a572f10b9305a64e78b17de4e38c88c657",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.5",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "cb54e992d9740dac94d2b8526f9066f365242c4a",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "50b127e4e6601a06c616a6bf5e7169faa732e675",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updated Storybook snapshots",
+            "author": "alcail@microsoft.com",
+            "commit": "34125cdc995e6980a9532c84efac848ac3d22b7d",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2ca7a93e051790b657514f70a69db2f77a21bdc2",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update Storybook to create a azure communication meeting adapter for the meeting composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "78cb2ad7eaea2dd7e891696b39ae73154edd5c1d",
+            "package": "@internal/storybook"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "fix infinite render of previous messages",
+            "author": "alcail@microsoft.com",
+            "commit": "980601669bfc2136ebdb687f9451d16c42e7bda0",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Fixed label for ParticipantsButton in ControlBar story to show when toggled.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "00ae9ae91b6bfe73e15f8da51c70656a2397c084",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update composite stories to have mobile view option",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "ca47b99da957ee227f762c2d8413aba9d4904fc4",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update ControlBarButton styling type",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8cbaa79fe5d052b5402c1dfdb5bb6db2c138858e",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update docs on default colors for Persona initials + fix link in call composite doc",
+            "author": "alcail@microsoft.com",
+            "commit": "1fa155f5bfaa66bc70945c6cb7db3c960a39aa2d",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bump chat sdk to version 1.1.0",
+            "author": "jinan@microsoft.com",
+            "commit": "8d053eded816621717e386d8b6a43111631b860f",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Typo fix",
+            "author": "dademath@microsoft.com",
+            "commit": "3c7acc5d0f910502c3554b620427c99058771d09",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update Feature Toggle API",
+            "author": "anjulgarg@live.com",
+            "commit": "2f6feef530105f66991a7462f8c8b2b15e4691f2",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Adding feature toggles to Chat and Call Composites",
+            "author": "anjulgarg@live.com",
+            "commit": "f2ba6cf2721c7aead0d436786cb730d48f21a83f",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "made ParticipantItems focusable + change styles",
+            "author": "alcail@microsoft.com",
+            "commit": "ede8291dad3a0564fd5a67dcb155d09c08e9ef45",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update storybook code according to api change",
+            "author": "jinan@microsoft.com",
+            "commit": "6e009ecb701a9838fb922cccfaa0c9642ab9067a",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated storyshots",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a92765b780dd0831a085e548b53ec3016dd6784d",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add custom menu items injection support to Component and Composites",
+            "author": "anjulgarg@live.com",
+            "commit": "b2283caf0dc018157c79f8968f7d390d6fa99bb7",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bug fixes related to QA pass on Storybook",
+            "author": "dademath@microsoft.com",
+            "commit": "793a06a9f79a1a955a8e32148bd75a2e3ccc97db",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add error handling story",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "2afd0bee22a8d223e3a9e03f68c7d026cb35bc89",
+            "package": "@internal/storybook"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Sep 2021 21:02:16 GMT",
       "tag": "@internal/storybook_v1.0.0",
       "version": "1.0.0",

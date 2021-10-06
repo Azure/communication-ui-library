@@ -1,7 +1,7 @@
 {
   "type": "none",
-  "comment": "Bump package version to 1.0.0-beta.5",
-  "packageName": "@internal/calling-stateful-client",
+  "comment": "Bump package version to 1.0.0-beta.6",
+  "packageName": "@internal/chat-component-bindings",
   "email": "41898282+github-actions[bot]@users.noreply.github.com",
   "dependentChangeType": "none"
 }
