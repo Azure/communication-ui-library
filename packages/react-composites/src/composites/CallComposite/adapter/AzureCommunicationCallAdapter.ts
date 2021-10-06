@@ -7,7 +7,6 @@ import {
   CallError,
   CallState,
   createStatefulCallClient,
-  DeviceManagerState,
   StatefulCallClient,
   StatefulDeviceManager
 } from '@internal/calling-stateful-client';
