@@ -4,11 +4,12 @@
 import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
-  StatefulDeviceManager,
-  StatefulCallClient,
+  CallError,
+  CallState,
   createStatefulCallClient,
   DeviceManagerState,
-  CallError
+  StatefulCallClient,
+  StatefulDeviceManager
 } from '@internal/calling-stateful-client';
 import {
   AudioOptions,
@@ -39,11 +40,7 @@ import {
 import { isInCall } from '../SDKUtils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import {
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  CommunicationUserKind
-} from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 
@@ -97,14 +94,12 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
-    const endedCall =
-      clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
-      endedCall: endedCall,
+      endedCall: findLatestEndedCall(clientState.callsEnded),
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
         call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
@@ -112,6 +107,20 @@ class CallContext {
     });
   }
 }
+
+const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | undefined => {
+  const callStates = Object.values(calls);
+  if (callStates.length === 0) {
+    return undefined;
+  }
+  let latestCall = callStates[0];
+  for (const call of callStates.slice(1)) {
+    if ((call.endTime?.getTime() ?? 0) > (latestCall.endTime?.getTime() ?? 0)) {
+      latestCall = call;
+    }
+  }
+  return latestCall;
+};
 
 /**
  * @private
@@ -508,7 +517,7 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * @public
  */
 export type AzureCommunicationCallAdapterArgs = {
-  userId: CommunicationUserKind;
+  userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator | GroupCallLocator;

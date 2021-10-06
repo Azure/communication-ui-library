@@ -58,7 +58,7 @@ export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIt
  */
 export const defaultClientArgs: StatefulChatClientArgs = {
   displayName: '',
-  userId: { kind: 'communicationUser', communicationUserId: 'userId1' },
+  userId: { communicationUserId: 'userId1' },
   endpoint: '',
   credential: new MockCommunicationUserCredential()
 };
