@@ -1,8 +1,21 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0-beta.6)
+
+Tue, 28 Sep 2021 19:19:18 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.0.0-beta.5..@internal/chat-stateful-client_v1.0.0-beta.6)
+
+### Changes
+
+- Update use of internal exported function ([PR #823](https://github.com/azure/communication-ui-library/pull/823) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump chat sdk to version 1.1.0 ([PR #816](https://github.com/azure/communication-ui-library/pull/816) by jinan@microsoft.com)
+- Stop clearing errors in ChatClientState ([PR #781](https://github.com/azure/communication-ui-library/pull/781) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Drop state modification API ([PR #782](https://github.com/azure/communication-ui-library/pull/782) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Centralize beachball config ([PR #773](https://github.com/azure/communication-ui-library/pull/773) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0-beta.5)
 
