@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Browser, Page } from '@playwright/test';
-import dotenv from 'dotenv';
-import path from 'path';
-
-dotenv.config({ path: path.join(__dirname, '..', '.env') });
+import { Page } from '@playwright/test';
 
 export type ChatUserType = {
   userId: string;
@@ -35,22 +31,6 @@ export type MeetingUserType = {
 
 export interface WorkerFixture<IdentityType> {
   serverUrl: string;
-  testBrowser: Browser;
   users: IdentityType[];
   pages: Array<Page>;
 }
-
-if (!process.env.CONNECTION_STRING) {
-  throw 'No CONNECTION_STRING set in environment variable.';
-}
-
-export const CONNECTION_STRING: string = process.env.CONNECTION_STRING;
-
-export const PAGE_VIEWPORT = {
-  width: 1024,
-  height: 768
-};
-
-export const CHAT_TOPIC_NAME = 'Cowabunga';
-
-export const TEST_PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];

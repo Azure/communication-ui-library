@@ -1,15 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IDS } from '../common/config';
-import {
-  createChatThreadAndUsers,
-  dataUiId,
-  loadUrlInPage,
-  loadPage,
-  stubMessageTimestamps,
-  waitForChatCompositeToLoad
-} from '../common/utils';
+import { IDS } from '../common/constants';
+import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl } from '../common/utils';
 import { test } from './fixture';
+import { createChatThreadAndUsers, loadNewPage } from '../common/fixtureHelpers';
 import { expect } from '@playwright/test';
 
 const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
@@ -26,16 +20,16 @@ test.describe('Chat Composite E2E Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       const user = users[idx];
-      await loadUrlInPage(page, serverUrl, user);
+      await page.goto(buildUrl(serverUrl, user));
       pageLoadPromises.push(waitForChatCompositeToLoad(page));
-      stubMessageTimestamps(pages[idx]);
+      await stubMessageTimestamps(pages[idx]);
     }
     await Promise.all(pageLoadPromises);
   });
 
   test('composite pages load completely', async ({ pages }) => {
     for (const idx in pages) {
-      await pages[idx].waitForSelector(dataUiId(IDS.sendboxTextfield));
+      await pages[idx].waitForSelector(dataUiId(IDS.sendboxTextField));
       expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
     }
   });
@@ -43,20 +37,20 @@ test.describe('Chat Composite E2E Tests', () => {
   test('page[1] can receive message and send readReceipt when page[0] send message', async ({ pages }) => {
     const page0 = pages[0];
     await page0.bringToFront();
-    await page0.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page0.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page0.keyboard.press('Enter');
     await page0.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page0);
+    await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('send-message.png');
 
     const page1 = pages[1];
     await page1.bringToFront();
     await page1.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page1);
+    await stubMessageTimestamps(page1);
 
-    // It could be too slow to get typing indicator here, which makes the test flacky
+    // It could be too slow to get typing indicator here, which makes the test flakey
     // so wait for typing indicator disappearing, @Todo: stub out typing indicator instead.
-    page1.waitForTimeout(1000); // ensure typing indicator has had time to appear
+    await page1.waitForTimeout(1000); // ensure typing indicator has had time to appear
     const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
 
@@ -64,7 +58,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await page0.bringToFront();
     await page0.waitForSelector(`[data-ui-status="seen"]`);
-    stubMessageTimestamps(page0);
+    await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
   });
 
@@ -73,7 +67,7 @@ test.describe('Chat Composite E2E Tests', () => {
     const page1 = pages[1];
 
     await page1.bringToFront();
-    await page1.type(dataUiId(IDS.sendboxTextfield), 'I am not superstitious. Just a little stitious.');
+    await page1.type(dataUiId(IDS.sendboxTextField), 'I am not superstitious. Just a little stitious.');
     await page0.bringToFront();
     await page0.waitForSelector(dataUiId(IDS.typingIndicator));
     const indicator0 = await page0.$(dataUiId(IDS.typingIndicator));
@@ -95,31 +89,32 @@ test.describe('Chat Composite E2E Tests', () => {
   });
 
   test('page[1] can rejoin the chat', async ({ pages }) => {
-    const page = pages[1];
-    await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
-    await page.keyboard.press('Enter');
+    const page1 = pages[1];
+    await page1.bringToFront();
+    await page1.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
+    await page1.keyboard.press('Enter');
     // Read the message to generate stable result
     await pages[0].bringToFront();
     await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
 
-    await page.bringToFront();
-    await page.waitForSelector(`[data-ui-status="seen"]`);
-    page.reload({ waitUntil: 'networkidle' });
-    await waitForChatCompositeToLoad(page);
+    await page1.bringToFront();
+    await page1.waitForSelector(`[data-ui-status="seen"]`);
+    await page1.reload({ waitUntil: 'networkidle' });
+    await waitForChatCompositeToLoad(page1);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
-    stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('rejoin-thread.png');
+    await page1.waitForSelector(`[data-ui-status="delivered"]`);
+    await stubMessageTimestamps(page1);
+    expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });
 
 test.describe('Chat Composite custom data model', () => {
-  test('can be viewed by user[1]', async ({ testBrowser, serverUrl }) => {
+  test('can be viewed by user[1]', async ({ browser, serverUrl }) => {
     const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
-    const page = await loadPage(testBrowser, serverUrl, user, { customDataModel: 'true' });
+    const url = buildUrl(serverUrl, user, { customDataModel: 'true' });
+    const page = await loadNewPage(browser, url);
     await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextfield), 'How the turn tables');
+    await page.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
     await page.waitForFunction(() => {
@@ -127,7 +122,7 @@ test.describe('Chat Composite custom data model', () => {
     });
     await page.waitForSelector('#custom-data-model-typing-indicator');
     await page.waitForSelector('#custom-data-model-message');
-    stubMessageTimestamps(page);
+    await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
   });
 });
