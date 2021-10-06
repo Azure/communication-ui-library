@@ -39,11 +39,7 @@ import {
 import { isInCall } from '../SDKUtils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import {
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  CommunicationUserKind
-} from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 
@@ -508,7 +504,7 @@ const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * @public
  */
 export type AzureCommunicationCallAdapterArgs = {
-  userId: CommunicationUserKind;
+  userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator | GroupCallLocator;

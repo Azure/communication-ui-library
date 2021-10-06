@@ -15,7 +15,7 @@ import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import { CommunicationIdentifierKind } from '@azure/communication-common';
+import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -80,7 +80,7 @@ export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPerson
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator | GroupCallLocator;
@@ -89,7 +89,7 @@ export type AzureCommunicationCallAdapterArgs = {
 // @public
 export type AzureCommunicationChatAdapterArgs = {
     endpointUrl: string;
-    userId: CommunicationIdentifierKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
@@ -98,7 +98,7 @@ export type AzureCommunicationChatAdapterArgs = {
 // @alpha
 export type AzureCommunicationMeetingAdapterArgs = {
     endpointUrl: string;
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     chatThreadId: string;

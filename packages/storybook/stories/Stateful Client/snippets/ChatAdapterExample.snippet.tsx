@@ -1,8 +1,4 @@
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  getIdentifierKind
-} from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 import React, { useState, useEffect } from 'react';
 
@@ -22,7 +18,7 @@ export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element 
         setChatAdapter(
           await createAzureCommunicationChatAdapter({
             endpointUrl: props.endpointUrl,
-            userId: getIdentifierKind(props.userId),
+            userId: props.userId,
             displayName: props.displayName,
             credential: new AzureCommunicationTokenCredential(props.accessToken),
             threadId: props.threadId
