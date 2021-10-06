@@ -36,7 +36,11 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     <Stack horizontal>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls onEndCallClick={props.onEndCallClick} options={callControlsOptions} />
+          <CallControls
+            onEndCallClick={props.onEndCallClick}
+            options={callControlsOptions}
+            swapCameraAndMuteButtons={props.mobileView ?? false}
+          />
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>

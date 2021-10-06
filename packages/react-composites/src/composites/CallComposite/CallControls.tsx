@@ -23,6 +23,11 @@ export type CallControlsProps = {
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: boolean | CallControlOptions;
+
+  /**
+   * On mobile UI, we swap positions of the mute button and camera button
+   */
+  swapCameraAndMuteButtons: boolean;
 };
 
 /**
@@ -86,21 +91,34 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
+  const cameraButton = options?.cameraButton !== false && (
+    <CameraButton
+      data-ui-id="call-composite-camera-button"
+      {...cameraButtonProps}
+      showLabel={!options?.compressedMode}
+    />
+  );
+
+  const microphoneButton = options?.microphoneButton !== false && (
+    <MicrophoneButton
+      data-ui-id="call-composite-microphone-button"
+      {...microphoneButtonProps}
+      showLabel={!options?.compressedMode}
+    />
+  );
+
   return (
     <ControlBar layout="dockedBottom">
-      {options?.cameraButton !== false && (
-        <CameraButton
-          data-ui-id="call-composite-camera-button"
-          {...cameraButtonProps}
-          showLabel={!options?.compressedMode}
-        />
-      )}
-      {options?.microphoneButton !== false && (
-        <MicrophoneButton
-          data-ui-id="call-composite-microphone-button"
-          {...microphoneButtonProps}
-          showLabel={!options?.compressedMode}
-        />
+      {props.swapCameraAndMuteButtons ? (
+        <>
+          {microphoneButton}
+          {cameraButton}
+        </>
+      ) : (
+        <>
+          {cameraButton}
+          {microphoneButton}
+        </>
       )}
       {options?.screenShareButton !== false && (
         <ScreenShareButton {...screenShareButtonProps} showLabel={!options?.compressedMode} />

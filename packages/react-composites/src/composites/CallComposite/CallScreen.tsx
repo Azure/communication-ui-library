@@ -193,6 +193,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                 callInvitationURL={callInvitationURL}
                 onFetchParticipantMenuItems={onFetchParticipantMenuItems}
                 options={callControlOptions}
+                swapCameraAndMuteButtons={options?.mobileView ?? false}
               />
             </Stack.Item>
           )}
