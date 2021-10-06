@@ -133,7 +133,7 @@ const generateDefaultMenuProps = (
 
     // Confine the menu to the parents bounds.
     // More info: https://github.com/microsoft/fluentui/issues/18835
-    calloutProps: { styles: { root: { maxWidth: '100%' } } }
+    calloutProps: { styles: { root: { maxWidth: '95%' } } }
   };
 
   if (cameras && selectedCamera && onSelectCamera) {
