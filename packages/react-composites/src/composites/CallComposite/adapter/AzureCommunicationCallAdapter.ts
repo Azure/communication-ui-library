@@ -4,11 +4,11 @@
 import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
-  StatefulDeviceManager,
-  StatefulCallClient,
+  CallError,
+  CallState,
   createStatefulCallClient,
-  DeviceManagerState,
-  CallError
+  StatefulCallClient,
+  StatefulDeviceManager
 } from '@internal/calling-stateful-client';
 import {
   AudioOptions,
@@ -36,14 +36,10 @@ import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener
 } from './CallAdapter';
-import { isInCall } from '../SDKUtils';
+import { isCameraOn, isInCall } from '../SDKUtils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import {
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  CommunicationUserKind
-} from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 
@@ -97,14 +93,12 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
-    const endedCall =
-      clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
-      endedCall: endedCall,
+      endedCall: findLatestEndedCall(clientState.callsEnded),
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
         call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
@@ -112,6 +106,20 @@ class CallContext {
     });
   }
 }
+
+const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | undefined => {
+  const callStates = Object.values(calls);
+  if (callStates.length === 0) {
+    return undefined;
+  }
+  let latestCall = callStates[0];
+  for (const call of callStates.slice(1)) {
+    if ((call.endTime?.getTime() ?? 0) > (latestCall.endTime?.getTime() ?? 0)) {
+      latestCall = call;
+    }
+  }
+  return latestCall;
+};
 
 /**
  * @private
@@ -174,7 +182,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.querySpeakers.bind(this);
     this.startCamera.bind(this);
     this.stopCamera.bind(this);
-    this.onToggleCamera.bind(this);
     this.mute.bind(this);
     this.unmute.bind(this);
     this.startCall.bind(this);
@@ -296,36 +303,16 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
-  public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
+  public async startCamera(options?: VideoStreamOptions): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.handlers.onToggleCamera(options);
-    });
-  }
-
-  //TODO: seperate onToggleCamera logic in Handler
-  public async startCamera(): Promise<void> {
-    return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!this.isCameraOn()) await this.handlers.onToggleCamera();
+      if (!isCameraOn(this.getState())) await this.handlers.onToggleCamera(options);
     });
   }
 
   public async stopCamera(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (this.isCameraOn()) await this.handlers.onToggleCamera();
+      if (isCameraOn(this.getState())) await this.handlers.onToggleCamera();
     });
-  }
-
-  private isCameraOn(): boolean {
-    if (this.call) {
-      const stream = this.call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-      return !!stream;
-    } else {
-      if (this.callClient.getState().deviceManager.selectedCamera) {
-        const previewOn = isPreviewOn(this.callClient.getState().deviceManager);
-        return previewOn;
-      }
-    }
-    return false;
   }
 
   public async mute(): Promise<void> {
@@ -496,19 +483,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 }
 
-const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
-  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
-  // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
-};
-
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
  *
  * @public
  */
 export type AzureCommunicationCallAdapterArgs = {
-  userId: CommunicationUserKind;
+  userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator | GroupCallLocator;

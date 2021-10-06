@@ -1,8 +1,4 @@
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  getIdentifierKind
-} from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   ChatAdapter,
   ChatComposite,
@@ -29,7 +25,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     const createAdapter = async (): Promise<void> => {
       const chatAdapter = await createAzureCommunicationChatAdapter({
         endpointUrl: props.endpointUrl,
-        userId: getIdentifierKind(props.userId),
+        userId: props.userId,
         displayName: props.displayName,
         credential: new AzureCommunicationTokenCredential(props.token),
         threadId: props.threadId

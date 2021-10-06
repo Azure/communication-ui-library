@@ -37,7 +37,6 @@ export interface MeetingAdapterMeetingManagement
       CallAdapterCallManagement,
       | 'startCamera'
       | 'stopCamera'
-      | 'onToggleCamera'
       | 'mute'
       | 'unmute'
       | 'startScreenShare'

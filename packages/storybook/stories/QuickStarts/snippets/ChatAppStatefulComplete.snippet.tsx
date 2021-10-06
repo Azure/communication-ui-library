@@ -18,7 +18,7 @@ function App(): JSX.Element {
 
   //Instantiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
-    userId: { kind: 'communicationUser', communicationUserId: userId },
+    userId: { communicationUserId: userId },
     displayName: displayName,
     endpoint: endpointUrl,
     credential: tokenCredential
