@@ -69,19 +69,14 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
-export interface ActiveError {
+export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
 }
 
 // @public
-export interface AdapterDisposal {
-    dispose(): void;
-}
-
-// @public
 export interface AdapterError extends Error {
-    inner: Error;
+    innerError: Error;
     target: string;
     timestamp: Date;
 }
@@ -102,11 +97,6 @@ export interface AdapterState<TState> {
     offStateChange(handler: (state: TState) => void): void;
     onStateChange(handler: (state: TState) => void): void;
 }
-
-// @public
-export type AllKeys<T> = {
-    [K in keyof T]: T[K] extends never ? never : K;
-};
 
 // @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
@@ -172,36 +162,23 @@ export interface BaseCustomStylesProps {
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, AdapterDisposal, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
 export interface CallAdapterCallManagement {
-    // (undocumented)
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     joinCall(microphoneOn?: boolean): Call | undefined;
-    // (undocumented)
     leaveCall(forEveryone?: boolean): Promise<void>;
-    // (undocumented)
     mute(): Promise<void>;
-    // (undocumented)
     onToggleCamera(options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
     startCall(participants: string[]): Call | undefined;
-    // (undocumented)
     startCamera(): Promise<void>;
-    // (undocumented)
     startScreenShare(): Promise<void>;
-    // (undocumented)
     stopCamera(): Promise<void>;
-    // (undocumented)
     stopScreenShare(): Promise<void>;
-    // (undocumented)
     unmute(): Promise<void>;
 }
 
@@ -218,19 +195,12 @@ export type CallAdapterClientState = {
 
 // @public
 export interface CallAdapterDeviceManagement {
-    // (undocumented)
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // (undocumented)
     queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
     querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
     setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
     setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-    // (undocumented)
     setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
 }
 
@@ -239,41 +209,23 @@ export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
 
 // @public
 export interface CallAdapterSubscribers {
-    // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
     off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
     off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
     off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
     off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
     off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
     off(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
     off(event: 'error', listener: (e: AdapterError) => void): void;
-    // (undocumented)
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
     on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
     on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
     on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
-    // (undocumented)
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
@@ -346,7 +298,7 @@ export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoini
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
     // (undocumented)
-    callInvitationURL?: string;
+    callInvitationUrl?: string;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     options?: CallCompositeOptions;
 }
@@ -356,6 +308,7 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
     microphonePermissionDenied: string;
@@ -384,8 +337,8 @@ export type CallEndedListener = (event: {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: CallErrorTarget;
     timestamp: Date;
 }
@@ -394,9 +347,9 @@ export class CallError extends Error {
 //
 // @public
 export const callErrorBarSelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }, (res1: CallErrors, res2: DiagnosticsCallFeatureState | undefined) => {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }>;
 
 // @public
@@ -489,7 +442,7 @@ export interface CallState {
     remoteParticipantsEnded: {
         [keys: string]: RemoteParticipantState;
     };
-    screenShareRemoteParticipant: string | undefined;
+    screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
@@ -523,7 +476,7 @@ export interface CameraButtonStrings {
 }
 
 // @public
-export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, AdapterDisposal, ChatAdapterSubscribers {
+export interface ChatAdapter extends ChatAdapterThreadManagement, AdapterState<ChatAdapterState>, Disposable, ChatAdapterSubscribers {
 }
 
 // @public
@@ -531,55 +484,32 @@ export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public
 export interface ChatAdapterSubscribers {
-    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
     off(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
     off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
-    // (undocumented)
     off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
-    // (undocumented)
     off(event: 'topicChanged', listener: TopicChangedListener): void;
-    // (undocumented)
     off(event: 'error', listener: (e: AdapterError) => void): void;
-    // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
     on(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
     on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
-    // (undocumented)
     on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
-    // (undocumented)
     on(event: 'topicChanged', listener: TopicChangedListener): void;
-    // (undocumented)
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
 // @public
 export interface ChatAdapterThreadManagement {
-    // (undocumented)
     deleteMessage(messageId: string): Promise<void>;
-    // (undocumented)
     fetchInitialData(): Promise<void>;
-    // (undocumented)
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-    // (undocumented)
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
     sendMessage(content: string): Promise<void>;
-    // (undocumented)
     sendReadReceipt(chatMessageId: string): Promise<void>;
-    // (undocumented)
     sendTypingIndicator(): Promise<void>;
-    // (undocumented)
     setTopic(topicName: string): Promise<void>;
-    // (undocumented)
     updateMessage(messageId: string, content: string): Promise<void>;
 }
 
@@ -648,17 +578,17 @@ export interface ChatCompositeStrings {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: ChatErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: ChatErrorTarget;
     timestamp: Date;
 }
 
 // @public
 export const chatErrorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }, (res: ChatErrors) => {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }>;
 
 // @public
@@ -682,23 +612,30 @@ export type ChatHandlers = {
 };
 
 // @public
-export type ChatMessage = Message<'chat'>;
-
-// @public
-export type ChatMessagePayload = {
-    messageId?: string;
-    content?: string;
-    createdOn?: Date;
-    editedOn?: Date;
-    deletedOn?: Date;
-    senderId?: string;
-    senderDisplayName?: string;
-    status?: MessageStatus;
+export interface ChatMessage extends MessageCommon {
+    // (undocumented)
     attached?: MessageAttachedStatus | boolean;
-    mine?: boolean;
+    // (undocumented)
     clientMessageId?: string;
-    type: MessageContentType;
-};
+    // (undocumented)
+    content?: string;
+    // (undocumented)
+    contentType: MessageContentType;
+    // (undocumented)
+    deletedOn?: Date;
+    // (undocumented)
+    editedOn?: Date;
+    // (undocumented)
+    messageType: 'chat';
+    // (undocumented)
+    mine?: boolean;
+    // (undocumented)
+    senderDisplayName?: string;
+    // (undocumented)
+    senderId?: string;
+    // (undocumented)
+    status?: MessageStatus;
+}
 
 // @public
 export type ChatMessageWithStatus = ChatMessage_2 & {
@@ -903,6 +840,16 @@ export interface CompositeStrings {
 }
 
 // @public
+export interface ContentSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    systemMessageType: 'content';
+}
+
+// @public
 export const ControlBar: (props: ControlBarProps) => JSX.Element;
 
 // @public
@@ -978,14 +925,12 @@ export type CustomAvatarOptions = {
 };
 
 // @public
-export type CustomMessage = Message<'custom'>;
-
-// @public
-export type CustomMessagePayload = {
-    createdOn: Date;
-    messageId: string;
-    content?: string;
-};
+export interface CustomMessage extends MessageCommon {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    messageType: 'custom';
+}
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
@@ -1084,6 +1029,11 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 // @public
+export interface Disposable {
+    dispose(): void;
+}
+
+// @public
 export const emptySelector: () => Record<string, never>;
 
 // @public
@@ -1105,7 +1055,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
-    activeErrors: ActiveError[];
+    activeErrorMessages: ActiveErrorMessage[];
     strings?: ErrorBarStrings;
 }
 
@@ -1179,7 +1129,7 @@ export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
-    sendboxTextfield: string;
+    sendboxTextField: string;
     typingIndicator: string;
     videoGallery: string;
     videoTile: string;
@@ -1251,7 +1201,7 @@ export interface MediaDiagnosticsState {
 }
 
 // @alpha
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, AdapterDisposal, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
 }
 
 // @alpha
@@ -1374,20 +1324,25 @@ export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | '
 }
 
 // @public
-export type Message<T extends MessageTypes> = {
-    type: T;
-    payload: T extends 'chat' ? ChatMessagePayload : T extends 'system' ? SystemMessagePayload<'participantAdded' | 'participantRemoved'> | SystemMessagePayload<'topicUpdated'> | SystemMessagePayload<'content'> : CustomMessagePayload;
-};
+export type Message = ChatMessage | SystemMessage | CustomMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top';
+
+// @public
+export interface MessageCommon {
+    // (undocumented)
+    createdOn: Date;
+    // (undocumented)
+    messageId: string;
+}
 
 // @public
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
 // @public
 export type MessageProps = {
-    message: ChatMessage | SystemMessage | CustomMessage;
+    message: Message;
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
@@ -1462,13 +1417,13 @@ export type MessageThreadProps = {
 export const messageThreadSelector: OutputParametricSelector<ChatClientState, ChatBaseSelectorProps, {
 userId: string;
 showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+messages: Message[];
 }, (res1: string, res2: {
 [key: string]: ChatMessageWithStatus;
 }, res3: Date, res4: boolean) => {
 userId: string;
 showMessageStatus: boolean;
-messages: (Message<"chat"> | Message<"system"> | Message<"custom">)[];
+messages: Message[];
 }>;
 
 // @public
@@ -1502,9 +1457,6 @@ export interface MessageThreadStyles extends BaseCustomStylesProps {
 }
 
 // @public
-export type MessageTypes = 'chat' | 'system' | 'custom';
-
-// @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
 // @public
@@ -1533,9 +1485,6 @@ export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
 }
-
-// @public
-export type OmitNever<T> = Pick<T, AllKeys<T>[keyof AllKeys<T>]>;
 
 // @public
 export type OnRenderAvatarCallback = (
@@ -1591,6 +1540,16 @@ export interface OptionsButtonStrings {
 export interface OptionsDevice {
     id: string;
     name: string;
+}
+
+// @public
+export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    participants: CommunicationParticipant[];
+    // (undocumented)
+    systemMessageType: 'participantAdded';
 }
 
 // @public
@@ -1651,6 +1610,16 @@ export const participantListSelector: reselect.OutputParametricSelector<CallClie
 
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
+
+// @public
+export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    participants: CommunicationParticipant[];
+    // (undocumented)
+    systemMessageType: 'participantRemoved';
+}
 
 // @public
 export type ParticipantsAddedListener = (event: {
@@ -1859,24 +1828,13 @@ export interface StreamMediaProps {
 }
 
 // @public
-export type SystemMessage = Message<'system'>;
+export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
 // @public
-export type SystemMessagePayload<T extends SystemMessageType = 'content'> = OmitNever<SystemMessagePayloadAllProps<T>>;
-
-// @public
-export type SystemMessagePayloadAllProps<T extends SystemMessageType = SystemMessageType> = {
-    type: T;
-    messageId: string;
-    createdOn: Date;
-    content: T extends 'content' ? string : never;
-    participants: T extends 'participantAdded' ? CommunicationParticipant[] : T extends 'participantRemoved' ? CommunicationParticipant[] : never;
-    topic: T extends 'topicUpdated' ? string : never;
+export interface SystemMessageCommon extends MessageCommon {
+    // (undocumented)
     iconName: string;
-};
-
-// @public
-export type SystemMessageType = 'topicUpdated' | 'participantAdded' | 'participantRemoved' | 'content';
+}
 
 // @public
 export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
@@ -1885,6 +1843,16 @@ export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => str
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @public
+export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
+    // (undocumented)
+    messageType: 'system';
+    // (undocumented)
+    systemMessageType: 'topicUpdated';
+    // (undocumented)
+    topic: string;
+}
 
 // @public
 export interface TranscriptionCallFeature {

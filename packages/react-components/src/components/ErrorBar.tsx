@@ -22,7 +22,7 @@ export interface ErrorBarProps extends IMessageBarProps {
   /**
    * Currently active errors.
    */
-  activeErrors: ActiveError[];
+  activeErrorMessages: ActiveErrorMessage[];
 }
 
 /**
@@ -108,11 +108,11 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 /**
- * Active error to be shown via {@link ErrorBar}.
+ * Active error messages to be shown via {@link ErrorBar}.
  *
  * @public
  */
-export interface ActiveError {
+export interface ActiveErrorMessage {
   /**
    * Type of error that is active.
    */
@@ -129,7 +129,7 @@ export interface ActiveError {
 /**
  * A component to show error messages on the UI.
  * All strings that can be shown are accepted as the {@link ErrorBarProps.strings} so that they can be localized.
- * Active errors are selected by {@link ErrorBarProps.activeErrors}.
+ * Active errors are selected by {@link ErrorBarProps.activeErrorMessages}.
  *
  * This component internally tracks dismissed by the user.
  *   * Errors that have an associated timestamp: The error is shown on the UI again if it occurs after being dismissed.
@@ -149,11 +149,11 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   // dropDismissalsForInactiveErrors only returns a new object if `dismissedErrors` actually changes.
   // Without this behaviour, this `useEffect` block would cause a render loop.
   useEffect(
-    () => setDismissedErrors(dropDismissalsForInactiveErrors(props.activeErrors, dismissedErrors)),
-    [props.activeErrors, dismissedErrors]
+    () => setDismissedErrors(dropDismissalsForInactiveErrors(props.activeErrorMessages, dismissedErrors)),
+    [props.activeErrorMessages, dismissedErrors]
   );
 
-  const toShow = errorsToShow(props.activeErrors, dismissedErrors);
+  const toShow = errorsToShow(props.activeErrorMessages, dismissedErrors);
 
   return (
     <Stack>
@@ -178,7 +178,7 @@ interface DismissedError {
 }
 
 // Always returns a new Array so that the state variable is updated, trigerring a render.
-const dismissError = (dismissedErrors: DismissedError[], toDismiss: ActiveError): DismissedError[] => {
+const dismissError = (dismissedErrors: DismissedError[], toDismiss: ActiveErrorMessage): DismissedError[] => {
   const now = new Date(Date.now());
   for (const error of dismissedErrors) {
     if (error.type === toDismiss.type) {
@@ -202,12 +202,12 @@ const dismissError = (dismissedErrors: DismissedError[], toDismiss: ActiveError)
 
 // Returns a new Array if and only if contents change, to avoid re-rendering when nothing was dropped.
 const dropDismissalsForInactiveErrors = (
-  activeErrors: ActiveError[],
+  activeErrorMessages: ActiveErrorMessage[],
   dismissedErrors: DismissedError[]
 ): DismissedError[] => {
   const active = new Map();
-  for (const error of activeErrors) {
-    active.set(error.type, error);
+  for (const message of activeErrorMessages) {
+    active.set(message.type, message);
   }
 
   // For an error such that:
@@ -225,13 +225,16 @@ const dropDismissalsForInactiveErrors = (
   return dismissedErrors;
 };
 
-const errorsToShow = (activeErrors: ActiveError[], dismissedErrors: DismissedError[]): ActiveError[] => {
+const errorsToShow = (
+  activeErrorMessages: ActiveErrorMessage[],
+  dismissedErrors: DismissedError[]
+): ActiveErrorMessage[] => {
   const dismissed: Map<ErrorType, DismissedError> = new Map();
   for (const error of dismissedErrors) {
     dismissed.set(error.type, error);
   }
 
-  return activeErrors.filter((error) => {
+  return activeErrorMessages.filter((error) => {
     const dismissal = dismissed.get(error.type);
     if (!dismissal) {
       // This error was never dismissed.

@@ -30,7 +30,7 @@ export interface AdapterPages<TPage> {
  *
  * @public
  */
-export interface AdapterDisposal {
+export interface Disposable {
   /** Dispose of the Composite */
   dispose(): void;
 }
@@ -48,7 +48,7 @@ export interface AdapterError extends Error {
   /**
    * Error thrown by the failed operation.
    */
-  inner: Error;
+  innerError: Error;
   /**
    * Timestamp added to the error in the adapter implementation.
    */

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Drop state modification API",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

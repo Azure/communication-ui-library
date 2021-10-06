@@ -315,7 +315,7 @@ export interface CallState {
    *
    * This property is added by the stateful layer and is not a proxy of SDK state
    */
-  screenShareRemoteParticipant: string | undefined;
+  screenShareRemoteParticipant?: string;
   /**
    * Stores the local date when the call started on the client. This property is added by the stateful layer and is not
    * a proxy of SDK state.
@@ -508,20 +508,20 @@ export class CallError extends Error {
   /**
    * Error thrown by the failed SDK method.
    */
-  public inner: Error;
+  public innerError: Error;
   /**
    * Timestamp added to the error by the stateful layer.
    */
   public timestamp: Date;
 
-  constructor(target: CallErrorTarget, inner: Error, timestamp?: Date) {
+  constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date) {
     super();
     this.target = target;
-    this.inner = inner;
+    this.innerError = innerError;
     // Testing note: It is easier to mock Date::now() than the Date() constructor.
     this.timestamp = timestamp ?? new Date(Date.now());
     this.name = 'CallError';
-    this.message = `${this.target}: ${this.inner.message}`;
+    this.message = `${this.target}: ${this.innerError.message}`;
   }
 }
 

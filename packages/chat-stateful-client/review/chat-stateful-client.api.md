@@ -26,8 +26,8 @@ export type ChatClientState = {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: ChatErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: ChatErrorTarget;
     timestamp: Date;
 }
