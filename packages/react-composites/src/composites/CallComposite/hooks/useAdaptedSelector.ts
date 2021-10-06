@@ -86,7 +86,7 @@ const memoizeState = memoizeOne(
     userId,
     incomingCalls: {},
     incomingCallsEnded: [],
-    callsEnded: [],
+    callsEnded: {},
     deviceManager,
     callAgent: { displayName },
     calls,

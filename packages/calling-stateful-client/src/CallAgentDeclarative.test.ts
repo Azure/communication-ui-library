@@ -250,12 +250,12 @@ describe('declarative call agent', () => {
     mockCallAgent.calls = [];
     mockCallAgent.emit('callsUpdated', { added: [], removed: [mockCall] });
 
-    await waitWithBreakCondition(() => context.getState().callsEnded.length !== 0);
+    await waitWithBreakCondition(() => Object.keys(context.getState().callsEnded).length !== 0);
 
     expect(Object.keys(context.getState().calls).length).toBe(0);
-    expect(context.getState().callsEnded.length).toBe(1);
-    expect(context.getState().callsEnded[0].callEndReason?.code).toBe(1);
-    expect(context.getState().callsEnded[0].endTime).toBeTruthy();
+    expect(Object.keys(context.getState().callsEnded).length).toBe(1);
+    expect(context.getState().callsEnded[mockCallId].callEndReason?.code).toBe(1);
+    expect(context.getState().callsEnded[mockCallId].endTime).toBeTruthy();
   });
 
   test('should move incoming call to incomingCallEnded when incoming call is ended and add endTime', async () => {
@@ -303,7 +303,7 @@ describe('declarative call agent', () => {
 
     await waitWithBreakCondition(() => Object.keys(context.getState().calls).length === 0);
 
-    expect(context.getState().callsEnded.length).toBe(MAX_CALL_HISTORY_LENGTH);
+    expect(Object.keys(context.getState().callsEnded).length).toBe(MAX_CALL_HISTORY_LENGTH);
   });
 
   test('should make sure that incomingCallsEnded not exceed max length', async () => {

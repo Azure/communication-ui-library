@@ -4,11 +4,12 @@
 import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
-  StatefulDeviceManager,
-  StatefulCallClient,
+  CallError,
+  CallState,
   createStatefulCallClient,
   DeviceManagerState,
-  CallError
+  StatefulCallClient,
+  StatefulDeviceManager
 } from '@internal/calling-stateful-client';
 import {
   AudioOptions,
@@ -93,14 +94,12 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
-    const endedCall =
-      clientState.callsEnded.length > 0 ? clientState.callsEnded[clientState.callsEnded.length - 1] : undefined;
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
-      endedCall: endedCall,
+      endedCall: findLatestEndedCall(clientState.callsEnded),
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
         call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
@@ -108,6 +107,20 @@ class CallContext {
     });
   }
 }
+
+const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | undefined => {
+  const callStates = Object.values(calls);
+  if (callStates.length === 0) {
+    return undefined;
+  }
+  let latestCall = callStates[0];
+  for (const call of callStates.slice(1)) {
+    if ((call.endTime?.getTime() ?? 0) > (latestCall.endTime?.getTime() ?? 0)) {
+      latestCall = call;
+    }
+  }
+  return latestCall;
+};
 
 /**
  * @private
