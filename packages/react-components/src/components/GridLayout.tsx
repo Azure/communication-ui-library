@@ -63,16 +63,16 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
 };
 
 /**
- * The cell ratio we aim for in a grid
+ * The cell aspect ratio we aim for in a grid
  */
-const TARGET_CELL_RATIO = 16 / 9;
+const TARGET_CELL_ASPECT_RATIO = 16 / 9;
 /**
- * The minimum cell ratio in a grid we allow
+ * The minimum cell aspect ratio we allow
  */
-const MINIMUM_CELL_RATIO_ALLOWED = 8 / 9;
+const MINIMUM_CELL_ASPECT_RATIO_ALLOWED = 8 / 9;
 
-const isCloserThan = (A: number, B: number, target: number): boolean => {
-  return Math.abs(target - A) < Math.abs(target - B);
+const isCloserThan = (a: number, b: number, target: number): boolean => {
+  return Math.abs(target - a) < Math.abs(target - b);
 };
 
 /**
@@ -113,8 +113,8 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
     return { horizontalFill: true, rows: 0, columns: 0 };
   }
   const aspectRatio = width / height;
-  // Approximate how many rows to divide the grid to achieve cells close to the TARGET_CELL_RATIO
-  let rows = Math.floor(Math.sqrt((TARGET_CELL_RATIO / aspectRatio) * numberOfItems)) ?? 1;
+  // Approximate how many rows to divide the grid to achieve cells close to the TARGET_CELL_ASPECT_RATIO
+  let rows = Math.floor(Math.sqrt((TARGET_CELL_ASPECT_RATIO / aspectRatio) * numberOfItems)) || 1;
   // Make sure rows do not exceed numberOfItems
   rows = Math.min(rows, numberOfItems);
   // Given the rows, get the minimum columns needed to create enough cells for the number of items
@@ -124,11 +124,11 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
   let horizontalFill = true;
 
   while (rows < numberOfItems) {
-    // If cell ratio is less than MINIMUM_CELL_RATIO_ALLOWED then try more rows
-    if ((rows / columns) * aspectRatio >= MINIMUM_CELL_RATIO_ALLOWED) {
+    // If cell aspect ratio is less than MINIMUM_CELL_ASPECT_RATIO_ALLOWED then try more rows
+    if ((rows / columns) * aspectRatio >= MINIMUM_CELL_ASPECT_RATIO_ALLOWED) {
       // If number of items is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
       // to fill in the empty spaces
-      // e.g. For 2 rows, 3 columns, but only 5 items, we need to choose whether to stetch cells
+      // e.g. For 2 rows, 3 columns, but only 5 items, we need to choose whether to stretch cells
       //       horizontally            or           vertically
       //  ______________________               _______________________
       // |       |       |      |             |       |       |       |
@@ -136,15 +136,15 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
       // |           |          |             |       |       |       |
       // |___________|__________|             |_______|_______|_______|
       if (numberOfItems < rows * columns) {
-        // Calculate the width-to-height ratio of big cells stretched horizontally
+        // Calculate the aspect ratio of big cells stretched horizontally
         const horizontallyStretchedCellRatio = (rows / (columns - 1)) * aspectRatio;
-        // Calculate the width-to-height ratio of big cells stretched vertically
+        // Calculate the aspect ratio of big cells stretched vertically
         const verticallyStretchedCellRatio = ((rows - 1) / columns) * aspectRatio;
-        // We know the horizontally stretched cells is higher than MINIMUM_CELL_RATIO_ALLOWED. If vertically stretched cells is also higher than
-        // the MINIMUM_CELL_RATIO_ALLOWED, then choose which ratio is better.
-        if (verticallyStretchedCellRatio >= MINIMUM_CELL_RATIO_ALLOWED) {
-          // If vertically stetched cell has a ratio closer to TARGET_CELL_RATIO then change the flow to vertical
-          if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_RATIO)) {
+        // We know the aspect ratio of horizontally stretched cells is higher than MINIMUM_CELL_ASPECT_RATIO_ALLOWED. If the aspect ratio of
+        // vertically stretched cells is also higher than the MINIMUM_CELL_ASPECT_RATIO_ALLOWED, then choose which aspect ratio is better.
+        if (verticallyStretchedCellRatio >= MINIMUM_CELL_ASPECT_RATIO_ALLOWED) {
+          // If vertically stretched cell has an aspect ratio closer to TARGET_CELL_ASPECT_RATIO then change the flow to vertical
+          if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_ASPECT_RATIO)) {
             horizontalFill = false;
           }
         }
