@@ -14,6 +14,12 @@
       * {
         caret-color: transparent !important;
       }
+
+      /* Help with inconsistent font rendering */
+      * {
+        text-rendering: geometricprecision !important;
+      }
+
       /*
        * There is a flakiness bug in our UI tests where the isSpeaker border
        * is sometimes showing on renders. This disables the video tiles having
