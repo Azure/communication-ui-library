@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "added VideoGelleryStrings with screenSharingMessage string",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

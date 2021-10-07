@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "updated screen sharing experience with new design (no more popup)",
+  "packageName": "@internal/react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
