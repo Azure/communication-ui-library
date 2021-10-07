@@ -8,6 +8,8 @@
 /**
  * Throw error if required parameter exists.
  * Return parameter for easy usage.
+ *
+ * @private
  */
 export function verifyParamExists<T>(param: T, paramName: string): T {
   if (!param) {
@@ -16,3 +18,14 @@ export function verifyParamExists<T>(param: T, paramName: string): T {
 
   return param;
 }
+
+/**
+ * Detect if the test is run in a mobile browser.
+ *
+ * @remarks User agent string is not sufficient alone to detect if a device is mobile. It is
+ * sufficient for our tests however.
+ *
+ * @private
+ */
+export const isMobile = (): boolean =>
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
