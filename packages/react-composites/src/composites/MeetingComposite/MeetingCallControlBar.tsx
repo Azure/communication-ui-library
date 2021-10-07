@@ -36,12 +36,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     <Stack horizontal>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls
-            onEndCallClick={props.onEndCallClick}
-            options={callControlsOptions}
-            /** On desktop we set the camera button as the first item in the controls bar. */
-            firstButton={props?.mobileView ? 'microphone' : 'camera'}
-          />
+          <CallControls onEndCallClick={props.onEndCallClick} options={callControlsOptions} />
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>

@@ -193,8 +193,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                 callInvitationURL={callInvitationURL}
                 onFetchParticipantMenuItems={onFetchParticipantMenuItems}
                 options={callControlOptions}
-                /** On desktop we set the camera button as the first item in the controls bar. */
-                firstButton={options?.mobileView ? 'microphone' : 'camera'}
               />
             </Stack.Item>
           )}
