@@ -172,10 +172,9 @@ export interface CallAdapterCallManagement {
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
-    onToggleCamera(options?: VideoStreamOptions): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     startCall(participants: string[]): Call | undefined;
-    startCamera(): Promise<void>;
+    startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -1225,7 +1224,7 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
 }
 
 // @alpha
-export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
     joinMeeting(microphoneOn?: boolean): Call | undefined;
     leaveMeeting(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;

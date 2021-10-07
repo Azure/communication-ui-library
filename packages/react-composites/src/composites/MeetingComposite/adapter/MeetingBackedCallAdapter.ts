@@ -98,10 +98,9 @@ export class MeetingBackedCallAdapter implements CallAdapter {
   public queryCameras = async (): Promise<VideoDeviceInfo[]> => await this.meetingAdapter.queryCameras();
   public queryMicrophones = async (): Promise<AudioDeviceInfo[]> => await this.meetingAdapter.queryMicrophones();
   public querySpeakers = async (): Promise<AudioDeviceInfo[]> => await this.meetingAdapter.querySpeakers();
-  public startCamera = async (): Promise<void> => await this.meetingAdapter.startCamera();
+  public startCamera = async (options?: VideoStreamOptions): Promise<void> =>
+    await this.meetingAdapter.startCamera(options);
   public stopCamera = async (): Promise<void> => await this.meetingAdapter.stopCamera();
-  public onToggleCamera = async (options?: VideoStreamOptions): Promise<void> =>
-    await this.meetingAdapter.onToggleCamera(options);
   public mute = async (): Promise<void> => await this.meetingAdapter.mute();
   public unmute = async (): Promise<void> => await this.meetingAdapter.unmute();
   public startScreenShare = async (): Promise<void> => await this.meetingAdapter.startScreenShare();

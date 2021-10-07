@@ -127,7 +127,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.querySpeakers.bind(this);
     this.startCamera.bind(this);
     this.stopCamera.bind(this);
-    this.onToggleCamera.bind(this);
     this.mute.bind(this);
     this.unmute.bind(this);
     this.startScreenShare.bind(this);
@@ -222,16 +221,12 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     return await this.callAdapter.querySpeakers();
   }
   /** Start the camera for the user in the Meeting. */
-  public async startCamera(): Promise<void> {
-    await this.callAdapter.startCamera();
+  public async startCamera(options?: VideoStreamOptions): Promise<void> {
+    await this.callAdapter.startCamera(options);
   }
   /** Stop the camera for the user in the Meeting. */
   public async stopCamera(): Promise<void> {
     await this.callAdapter.stopCamera();
-  }
-  /** Toggle the camera for the user in the Meeting. */
-  public async onToggleCamera(options?: VideoStreamOptions): Promise<void> {
-    await this.callAdapter.onToggleCamera(options);
   }
   /** Mute the user in the Meeting. */
   public async mute(): Promise<void> {
