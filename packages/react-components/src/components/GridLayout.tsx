@@ -34,7 +34,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [gridProps, setGridProps] = useState<GridProps>({
-    horizontalFill: true,
+    fillDirection: 'horizontal',
     rows: Math.ceil(Math.sqrt(numberOfChildren)),
     columns: Math.ceil(Math.sqrt(numberOfChildren))
   });
@@ -91,12 +91,12 @@ const isCloserThan = (a: number, b: number, target: number): boolean => {
  *  _______________
  * |       |       |
  * |_______|_______|
- * |       |       |
- * |_______|_______| If all cells are equal, we default the fill as horizontal. This grid has 2 rows, 2 columns and fills horizontally.
+ * |       |       | If all cells are equal, we default the fill direction as horizontal.
+ * |_______|_______| This grid has 2 rows, 2 columns and fills horizontally.
  * ```
  */
 type GridProps = {
-  horizontalFill: boolean;
+  fillDirection: 'horizontal' | 'vertical';
   rows: number;
   columns: number;
 };
@@ -110,7 +110,7 @@ type GridProps = {
  */
 export const calculateGridProps = (numberOfItems: number, width: number, height: number): GridProps => {
   if (numberOfItems <= 0 || width <= 0 || height <= 0) {
-    return { horizontalFill: true, rows: 0, columns: 0 };
+    return { fillDirection: 'horizontal', rows: 0, columns: 0 };
   }
   const aspectRatio = width / height;
   // Approximate how many rows to divide the grid to achieve cells close to the TARGET_CELL_ASPECT_RATIO
@@ -120,8 +120,8 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
   // Given the rows, get the minimum columns needed to create enough cells for the number of items
   let columns = Math.ceil(numberOfItems / rows);
 
-  // Default horizontalFill to true
-  let horizontalFill = true;
+  // Default fill dIrection to horizontal
+  let fillDirection: 'horizontal' | 'vertical' = 'horizontal';
 
   while (rows < numberOfItems) {
     // If cell aspect ratio is less than MINIMUM_CELL_ASPECT_RATIO_ALLOWED then try more rows
@@ -143,9 +143,9 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
         // We know the aspect ratio of horizontally stretched cells is higher than MINIMUM_CELL_ASPECT_RATIO_ALLOWED. If the aspect ratio of
         // vertically stretched cells is also higher than the MINIMUM_CELL_ASPECT_RATIO_ALLOWED, then choose which aspect ratio is better.
         if (verticallyStretchedCellRatio >= MINIMUM_CELL_ASPECT_RATIO_ALLOWED) {
-          // If vertically stretched cell has an aspect ratio closer to TARGET_CELL_ASPECT_RATIO then change the flow to vertical
+          // If vertically stretched cell has an apect ratio closer to TARGET_CELL_ASPECT_RATIO then change the fill direction to vertical
           if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_ASPECT_RATIO)) {
-            horizontalFill = false;
+            fillDirection = 'vertical';
           }
         }
       }
@@ -155,20 +155,21 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
     columns = Math.ceil(numberOfItems / rows);
   }
 
-  return { horizontalFill, rows, columns };
+  return { fillDirection, rows, columns };
 };
 
 /**
  * Grid that is made up of one or two grids. Based on the rows and columns from GridProps, if there are more cells than number of children then
  * there will be a second grid. The second grid will contain the larger cells to fill out the empty space. The first and second grid will be
- * left-and-right if horizontalFill from Grid Props is true, otherwise they will be top-and-bottom.
+ * top-and-bottom if fill direction from Grid Props is horizontal, otherwise they will be left-and-right.
  */
 const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX.Element => {
   const gridProps = props.gridProps;
   const numberOfChildren = React.Children.count(props.children);
 
+  const horizontalFill = gridProps.fillDirection === 'horizontal';
   // Blocks are either rows or columns depending on whether we fill horizontally or vertically. Each block may differ in the number of cells.
-  const blocks = gridProps.horizontalFill ? gridProps.rows : gridProps.columns;
+  const blocks = horizontalFill ? gridProps.rows : gridProps.columns;
   const smallCellsPerBlock = Math.ceil(numberOfChildren / blocks);
   const bigCellsPerBlock = Math.floor(numberOfChildren / blocks);
   const totalCells = gridProps.rows * gridProps.columns;
@@ -179,7 +180,7 @@ const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX
 
   const smallCellsGridStyles = useMemo(
     () =>
-      gridProps.horizontalFill
+      horizontalFill
         ? {
             gridRow: `auto / span ${blocksForSmallCells}`,
             gridTemplateColumns: `repeat(${smallCellsPerBlock}, 1fr)`,
@@ -190,13 +191,13 @@ const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX
             gridTemplateRows: `repeat(${smallCellsPerBlock}, 1fr)`,
             gridTemplateColumns: `repeat(${blocksForSmallCells}, 1fr)`
           },
-    [gridProps.horizontalFill, blocksForSmallCells, smallCellsPerBlock]
+    [horizontalFill, blocksForSmallCells, smallCellsPerBlock]
   );
 
   const bigCellsGridStyles = useMemo(
     () =>
       numBigCells > 0
-        ? gridProps.horizontalFill
+        ? horizontalFill
           ? {
               gridRow: `auto / span ${blocksForBigCells}`,
               gridTemplateColumns: `repeat(${bigCellsPerBlock}, 1fr)`,
@@ -208,7 +209,7 @@ const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX
               gridTemplateColumns: `repeat(${blocksForBigCells}, 1fr)`
             }
         : {},
-    [numBigCells, gridProps.horizontalFill, blocksForBigCells, bigCellsPerBlock]
+    [numBigCells, horizontalFill, blocksForBigCells, bigCellsPerBlock]
   );
 
   const smallCellsGrid = (
@@ -225,10 +226,10 @@ const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX
 
   const mainGridStyles = useMemo(
     () =>
-      gridProps.horizontalFill
+      horizontalFill
         ? { gridAutoFlow: 'column', gridTemplateRows: `repeat(${blocks}, 1fr)` }
         : { gridAutoFlow: 'row', gridTemplateColumns: `repeat(${blocks}, 1fr)` },
-    [gridProps.horizontalFill, blocks]
+    [horizontalFill, blocks]
   );
 
   return (
