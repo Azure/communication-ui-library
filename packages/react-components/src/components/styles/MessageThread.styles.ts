@@ -96,7 +96,7 @@ export const defaultChatItemMessageContainer: ComponentSlotStyle = {
  */
 export const defaultMyChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
-  minWidth: '6.5rem',
+  minWidth: '6.25rem',
   marginLeft: '0rem'
 };
 
@@ -105,7 +105,7 @@ export const defaultMyChatMessageContainer: ComponentSlotStyle = {
  */
 export const defaultChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
-  minWidth: '6.5rem',
+  minWidth: '6.25rem',
   marginRight: '0rem'
 };
 
