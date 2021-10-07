@@ -174,13 +174,12 @@ const calculateMaxNumberOfTiles = ({
 const LeftButton = (props: { height: number; onClick?: () => void }): JSX.Element => {
   return (
     <DefaultButton
-      className={mergeStyles(leftRightButtonStyles, {
-        minWidth: '1.75rem',
-        minHeight: `${props.height}px`,
-        maxWidth: '1.75rem',
-        maxHeight: `${props.height}px`
-      })}
+      className={mergeStyles(leftRightButtonStyles)}
       onClick={props.onClick}
+      style={{
+        minHeight: `${props.height}px`,
+        maxHeight: `${props.height}px`
+      }}
     >
       <Icon iconName="HorizontalGalleryLeftButton" />
     </DefaultButton>
@@ -190,13 +189,12 @@ const LeftButton = (props: { height: number; onClick?: () => void }): JSX.Elemen
 const RightButton = (props: { height: number; onClick?: () => void }): JSX.Element => {
   return (
     <DefaultButton
-      className={mergeStyles(leftRightButtonStyles, {
-        minWidth: '1.75rem',
-        minHeight: `${props.height}px`,
-        maxWidth: '1.75rem',
-        maxHeight: `${props.height}px`
-      })}
+      className={mergeStyles(leftRightButtonStyles)}
       onClick={props.onClick}
+      style={{
+        minHeight: `${props.height}px`,
+        maxHeight: `${props.height}px`
+      }}
     >
       <Icon iconName="HorizontalGalleryRightButton" />
     </DefaultButton>
