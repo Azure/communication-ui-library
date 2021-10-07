@@ -22,11 +22,8 @@ export const groupCallLeaveButtonStyle = {
  */
 export const groupCallLeaveButtonCompressedStyle = {
   root: {
-    width: '2rem',
-    height: '3.75rem',
-    border: '0.125rem',
-    borderRadius: 2,
-    marginRight: '0.4375rem'
+    border: '0',
+    borderRadius: '0.5rem'
   },
   flexContainer: {
     flexFlow: 'row'
