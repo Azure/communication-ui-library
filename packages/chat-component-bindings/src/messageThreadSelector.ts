@@ -147,39 +147,16 @@ const updateMessagesWithAttached = (chatMessagesWithStatus: Message[], userId: s
      * in this case, we only want to show the read statusToRender of last message of the new messages block)
      */
     let attached: boolean | MessageAttachedStatus = false;
-    const nextMessage = messages[index + 1];
-    if (index === 0) {
-      if (index !== messages.length - 1) {
-        //the next message has the same sender
-        if (message.senderId === message.senderId) {
-          attached = 'top';
-        }
-      }
+    const previousMessage = index > 0 ? messages[index - 1] : undefined;
+    const nextMessage = index === messages.length - 1 ? undefined : messages[index + 1];
+
+    const previousSenderId = previousMessage?.messageType === 'chat' ? previousMessage.senderId : undefined;
+    const nextSenderId = nextMessage?.messageType === 'chat' ? nextMessage.senderId : undefined;
+
+    if (previousSenderId !== message.senderId) {
+      attached = message.senderId === nextSenderId ? 'top' : false;
     } else {
-      const previousMessage = messages[index - 1];
-      if (previousMessage.messageType === 'chat' && message.senderId === previousMessage.senderId) {
-        //the previous message has the same sender
-        if (index !== messages.length - 1 && nextMessage.messageType === 'chat') {
-          if (message.senderId === nextMessage.senderId) {
-            //the next message has the same sender
-            attached = true;
-          } else {
-            //the next message has a different sender
-            attached = 'bottom';
-          }
-        } else {
-          // this is the last message of the whole messages list or the next message is not a chat message
-          attached = 'bottom';
-        }
-      } else {
-        //the previous message has a different sender or is not a chat message
-        if (index !== messages.length - 1 && nextMessage.messageType === 'chat') {
-          if (message.senderId === nextMessage.senderId) {
-            //the next message has the same sender
-            attached = 'top';
-          }
-        }
-      }
+      attached = message.senderId === nextSenderId ? true : 'bottom';
     }
 
     message.attached = attached;
