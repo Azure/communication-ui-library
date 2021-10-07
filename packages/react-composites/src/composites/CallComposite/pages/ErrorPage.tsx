@@ -18,7 +18,7 @@ import {
 /**
  * @private
  */
-export interface ErrorProps {
+export interface ErrorPageProps {
   rejoinHandler(): void;
   title?: string;
   reason?: string;
@@ -27,7 +27,7 @@ export interface ErrorProps {
 /**
  * @private
  */
-export function ErrorPage(props: ErrorProps): JSX.Element {
+export function ErrorPage(props: ErrorPageProps): JSX.Element {
   const title = props.title ?? 'Error joining the Call';
   const rejoinCall = 'Retry Call';
 
