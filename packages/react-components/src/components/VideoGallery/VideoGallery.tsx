@@ -266,7 +266,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         )}
         {gridLayout}
         {audioParticipants && audioParticipants.length > 0 && (
-          <Stack style={{ minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' }}>
+          <Stack style={getHorizontalGalleryWrapperStyle(isMobileScreen)}>
             <HorizontalGallery
               onCreateRemoteStreamView={onCreateRemoteStreamView}
               onDisposeRemoteStreamView={onDisposeRemoteStreamView}
