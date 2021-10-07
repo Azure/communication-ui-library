@@ -437,25 +437,24 @@ export interface CallClientState {
    */
   calls: { [key: string]: CallState };
   /**
-   * Calls that have ended are stored here so the callEndReason could be checked. It is an array of CallState
-   * {@link CallState}. Calls are pushed on to the array as they end, meaning this is sorted by endTime ascending. Only
-   * {@link MAX_CALL_HISTORY_LENGTH} number of Calls are kept in this array with the older ones being replaced by newer
-   * ones.
+   * Calls that have ended are stored here so the callEndReason could be checked.
+   * It is an object with {@link @azure/communication-calling#Call.id} keys and {@link CallState} values.
+   *
+   * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
-  callsEnded: CallState[];
+  callsEnded: { [key: string]: CallState };
   /**
-   * Proxy of {@link @azure/communication-calling#IncomingCall} as an object with IncomingCall {@link IncomingCall} fields.
+   * Proxy of {@link @azure/communication-calling#IncomingCall} as an object with {@link IncomingCall} fields.
    * It is keyed by {@link @azure/communication-calling#IncomingCall.id}.
    */
   incomingCalls: { [key: string]: IncomingCallState };
   /**
-   * Incoming Calls that have ended are stored here so the callEndReason could be checked. It is a array of IncomingCall
-   * {@link IncomingCall} received in the event 'incomingCall' emitted by
-   * {@link @azure/communication-calling#CallAgent}. IncomingCalls are pushed on to the array as they end, meaning this
-   * is sorted by endTime ascending. Only MAX_CALL_HISTORY_LENGTH number of IncomingCalls are kept in this array with
-   * the older ones being replaced by newer ones.
+   * Incoming Calls that have ended are stored here so the callEndReason could be checked.
+   * It is an as an object with {@link @azure/communication-calling#Call.id} keys and {@link IncomingCall} values.
+   *
+   * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
-  incomingCallsEnded: IncomingCallState[];
+  incomingCallsEnded: { [key: string]: IncomingCallState };
   /**
    * Proxy of {@link @azure/communication-calling#DeviceManager}. Please review {@link DeviceManagerState}.
    */

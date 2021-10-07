@@ -102,14 +102,14 @@ describe('Stateful call client', () => {
       const listener = new StateChangeListener(client);
       agent.testHelperPushCall(createMockCall());
       expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
-      expect(await waitWithBreakCondition(() => client.getState().callsEnded.length === 0)).toBe(true);
+      expect(await waitWithBreakCondition(() => Object.keys(client.getState().callsEnded).length === 0)).toBe(true);
       expect(listener.onChangeCalledCount).toBe(1);
     }
     {
       const listener = new StateChangeListener(client);
       agent.testHelperPopCall();
       expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 0)).toBe(true);
-      expect(await waitWithBreakCondition(() => client.getState().callsEnded.length === 1)).toBe(true);
+      expect(await waitWithBreakCondition(() => Object.keys(client.getState().callsEnded).length === 1)).toBe(true);
       expect(listener.onChangeCalledCount).toBe(1);
     }
   });
@@ -557,8 +557,8 @@ describe('Stateful call client', () => {
     expect(client.getState().calls[callId]?.transfer.receivedTransferRequests.length).toBe(0);
 
     agent.testHelperPopCall();
-    expect(await waitWithBreakCondition(() => client.getState().callsEnded.length === 1)).toBe(true);
-    const callEnded = client.getState().callsEnded[0];
+    expect(await waitWithBreakCondition(() => Object.keys(client.getState().callsEnded).length === 1)).toBe(true);
+    const callEnded = client.getState().callsEnded[callId];
 
     // Once the call ends, expect that call state is no longer updated.
     recording.isRecordingActive = false;

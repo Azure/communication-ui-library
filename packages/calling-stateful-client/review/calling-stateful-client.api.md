@@ -41,12 +41,16 @@ export interface CallClientState {
     calls: {
         [key: string]: CallState;
     };
-    callsEnded: CallState[];
+    callsEnded: {
+        [key: string]: CallState;
+    };
     deviceManager: DeviceManagerState;
     incomingCalls: {
         [key: string]: IncomingCallState;
     };
-    incomingCallsEnded: IncomingCallState[];
+    incomingCallsEnded: {
+        [key: string]: IncomingCallState;
+    };
     latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
@@ -182,7 +186,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
 };
 
 // @public
