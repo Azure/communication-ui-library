@@ -24,10 +24,8 @@ export type CallControlsProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: boolean | CallControlOptions;
 
-  /**
-   * On mobile UI, we swap positions of the mute button and camera button
-   */
-  swapCameraAndMuteButtons: boolean;
+  /** Currently mobile and desktop differ on which button is shown first in the control bar. */
+  firstButton: 'microphone' | 'camera';
 };
 
 /**
@@ -109,7 +107,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   return (
     <ControlBar layout="dockedBottom">
-      {props.swapCameraAndMuteButtons ? (
+      {props.firstButton === 'microphone' ? (
         <>
           {microphoneButton}
           {cameraButton}

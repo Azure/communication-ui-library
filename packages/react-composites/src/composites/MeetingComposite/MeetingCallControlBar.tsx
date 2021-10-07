@@ -39,7 +39,8 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           <CallControls
             onEndCallClick={props.onEndCallClick}
             options={callControlsOptions}
-            swapCameraAndMuteButtons={props.mobileView ?? false}
+            /** On desktop we set the camera button as the first item in the controls bar. */
+            firstButton={props?.mobileView ? 'microphone' : 'camera'}
           />
         </CallAdapterProvider>
       </Stack.Item>
