@@ -128,6 +128,7 @@ export const gutterWithHiddenAvatar: ComponentSlotStyle = {
   display: 'block',
   visibility: 'hidden',
   // we use this hidden avatar just as a width placeholder
+  // the placeholder is needed for responsive bubble width
   height: 0
 };
 
