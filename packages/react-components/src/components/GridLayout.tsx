@@ -125,8 +125,36 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
 
   while (rows < numberOfItems) {
     // If cell aspect ratio is less than MINIMUM_CELL_ASPECT_RATIO_ALLOWED then try more rows
-    if ((rows / columns) * aspectRatio >= MINIMUM_CELL_ASPECT_RATIO_ALLOWED) {
-      // If number of items is less than the total cells, we need to figure out whether the big cells should stretch horizontally or vertically
+    if ((rows / columns) * aspectRatio < MINIMUM_CELL_ASPECT_RATIO_ALLOWED) {
+      rows += 1;
+      columns = Math.ceil(numberOfItems / rows);
+      continue;
+    }
+    if (numberOfItems < rows * columns) {
+      // We need to check that stretching columns vertically will result in only one less cell in stretched columns.
+      // Likewise, we need to check that stretching rows horizonally will result in only one less cell in stretched rows.
+      // e.g. For 4 rows, 2 columns, but only 6 items, we should not stretch vertically because that would result in a
+      // column of 2 cells which is less by more than 1 compared to the unstretched column.
+      //  _________
+      // |____|    |
+      // |____|____|
+      // |____|    |
+      // |____|____|
+
+      const shouldStretchVertically = numberOfItems >= rows + (columns - 1) * (rows - 1);
+      const shouldStretchHorizontally = numberOfItems >= columns + (rows - 1) * (columns - 1);
+      if (!shouldStretchVertically && !shouldStretchHorizontally) {
+        rows += 1;
+        columns = Math.ceil(numberOfItems / rows);
+        continue;
+      } else if (!shouldStretchVertically) {
+        break;
+      } else if (!shouldStretchHorizontally) {
+        fillDirection = 'vertical';
+        break;
+      }
+
+      // We need to figure out whether the big cells should stretch horizontally or vertically
       // to fill in the empty spaces
       // e.g. For 2 rows, 3 columns, but only 5 items, we need to choose whether to stretch cells
       //       horizontally            or           vertically
@@ -135,24 +163,21 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
       // |_______|_______|______|             |_______|_______|       |
       // |           |          |             |       |       |       |
       // |___________|__________|             |_______|_______|_______|
-      if (numberOfItems < rows * columns) {
-        // Calculate the aspect ratio of big cells stretched horizontally
-        const horizontallyStretchedCellRatio = (rows / (columns - 1)) * aspectRatio;
-        // Calculate the aspect ratio of big cells stretched vertically
-        const verticallyStretchedCellRatio = ((rows - 1) / columns) * aspectRatio;
-        // We know the aspect ratio of horizontally stretched cells is higher than MINIMUM_CELL_ASPECT_RATIO_ALLOWED. If the aspect ratio of
-        // vertically stretched cells is also higher than the MINIMUM_CELL_ASPECT_RATIO_ALLOWED, then choose which aspect ratio is better.
-        if (verticallyStretchedCellRatio >= MINIMUM_CELL_ASPECT_RATIO_ALLOWED) {
-          // If vertically stretched cell has an apect ratio closer to TARGET_CELL_ASPECT_RATIO then change the fill direction to vertical
-          if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_ASPECT_RATIO)) {
-            fillDirection = 'vertical';
-          }
+
+      // Calculate the aspect ratio of big cells stretched horizontally
+      const horizontallyStretchedCellRatio = (rows / (columns - 1)) * aspectRatio;
+      // Calculate the aspect ratio of big cells stretched vertically
+      const verticallyStretchedCellRatio = ((rows - 1) / columns) * aspectRatio;
+      // We know the horizontally stretched cells aspect ratio is higher than MINIMUM_CELL_ASPECT_RATIO_ALLOWED. If vertically stretched cells
+      // is also higher than the MINIMUM_CELL_ASPECT_RATIO_ALLOWED, then choose which aspect ratio is better.
+      if (verticallyStretchedCellRatio >= MINIMUM_CELL_ASPECT_RATIO_ALLOWED) {
+        // If vertically stetched cell has an apect ratio closer to TARGET_CELL_ASPECT_RATIO then change the fill direction to vertical
+        if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_ASPECT_RATIO)) {
+          fillDirection = 'vertical';
         }
       }
-      break;
     }
-    rows += 1;
-    columns = Math.ceil(numberOfItems / rows);
+    break;
   }
 
   return { fillDirection, rows, columns };
