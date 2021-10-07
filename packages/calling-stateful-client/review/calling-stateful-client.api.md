@@ -41,20 +41,24 @@ export interface CallClientState {
     calls: {
         [key: string]: CallState;
     };
-    callsEnded: CallState[];
+    callsEnded: {
+        [key: string]: CallState;
+    };
     deviceManager: DeviceManagerState;
     incomingCalls: {
         [key: string]: IncomingCallState;
     };
-    incomingCallsEnded: IncomingCallState[];
+    incomingCallsEnded: {
+        [key: string]: IncomingCallState;
+    };
     latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: CallErrorTarget;
     timestamp: Date;
 }
@@ -182,7 +186,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
 };
 
 // @public

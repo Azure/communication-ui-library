@@ -4,7 +4,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { initializeIcons, MessageBar } from '@fluentui/react';
-import { ActiveError, ErrorBar } from './ErrorBar';
+import { ActiveErrorMessage, ErrorBar } from './ErrorBar';
 import Enzyme, { ReactWrapper, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -122,7 +122,7 @@ describe('ErrorBar dismissal with multiple errors', () => {
 const mountErrorBarWithDefaults = (): ReactWrapper => {
   let root;
   act(() => {
-    root = mount(<ErrorBar activeErrors={[]} />);
+    root = mount(<ErrorBar activeErrorMessages={[]} />);
   });
   return root;
 };
@@ -141,14 +141,14 @@ const setAccessDeniedErrorAt = (root: ReactWrapper, timestamp: Date): void =>
 const setAccessDeniedErrorWithoutTimestamp = (root: ReactWrapper): void =>
   setActiveErrors(root, [{ type: 'accessDenied' }]);
 
-const setActiveErrors = (root: ReactWrapper, activeErrors: ActiveError[]): void => {
+const setActiveErrors = (root: ReactWrapper, activeErrorMessages: ActiveErrorMessage[]): void => {
   act(() => {
-    root.setProps({ activeErrors: activeErrors });
+    root.setProps({ activeErrorMessages: activeErrorMessages });
   });
 };
 
 const setNoActiveError = (root: ReactWrapper): void => {
   act(() => {
-    root.setProps({ activeErrors: [] });
+    root.setProps({ activeErrorMessages: [] });
   });
 };

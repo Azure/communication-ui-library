@@ -1,8 +1,31 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Mon, 13 Sep 2021 21:02:16 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0-beta.6)
+
+Tue, 28 Sep 2021 19:19:18 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.0..@internal/storybook_v1.0.0-beta.6)
+
+### Changes
+
+- fix infinite render of previous messages ([PR #743](https://github.com/azure/communication-ui-library/pull/743) by alcail@microsoft.com)
+- Fixed label for ParticipantsButton in ControlBar story to show when toggled. ([PR #789](https://github.com/azure/communication-ui-library/pull/789) by miguelgamis@microsoft.com)
+- Update composite stories to have mobile view option ([PR #822](https://github.com/azure/communication-ui-library/pull/822) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update ControlBarButton styling type ([PR #829](https://github.com/azure/communication-ui-library/pull/829) by 82062616+prprabhu-ms@users.noreply.github.com)
+- update docs on default colors for Persona initials + fix link in call composite doc ([PR #741](https://github.com/azure/communication-ui-library/pull/741) by alcail@microsoft.com)
+- Bump chat sdk to version 1.1.0 ([PR #816](https://github.com/azure/communication-ui-library/pull/816) by jinan@microsoft.com)
+- Typo fix ([PR #725](https://github.com/azure/communication-ui-library/pull/725) by dademath@microsoft.com)
+- Update Feature Toggle API ([PR #800](https://github.com/azure/communication-ui-library/pull/800) by anjulgarg@live.com)
+- Adding feature toggles to Chat and Call Composites ([PR #765](https://github.com/azure/communication-ui-library/pull/765) by anjulgarg@live.com)
+- made ParticipantItems focusable + change styles ([PR #767](https://github.com/azure/communication-ui-library/pull/767) by alcail@microsoft.com)
+- Update storybook code according to api change ([PR #776](https://github.com/azure/communication-ui-library/pull/776) by jinan@microsoft.com)
+- updated storyshots ([PR #793](https://github.com/azure/communication-ui-library/pull/793) by miguelgamis@microsoft.com)
+- Add custom menu items injection support to Component and Composites ([PR #795](https://github.com/azure/communication-ui-library/pull/795) by anjulgarg@live.com)
+- Bug fixes related to QA pass on Storybook ([PR #730](https://github.com/azure/communication-ui-library/pull/730) by dademath@microsoft.com)
+- Add error handling story ([PR #778](https://github.com/azure/communication-ui-library/pull/778) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0)
 

@@ -11,6 +11,7 @@ import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 
@@ -26,8 +27,8 @@ export type ChatClientState = {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: ChatErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: ChatErrorTarget;
     timestamp: Date;
 }
@@ -78,7 +79,7 @@ export interface StatefulChatClient extends ChatClient {
 
 // @public
 export type StatefulChatClientArgs = {
-    userId: CommunicationIdentifierKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     endpoint: string;
     credential: CommunicationTokenCredential;

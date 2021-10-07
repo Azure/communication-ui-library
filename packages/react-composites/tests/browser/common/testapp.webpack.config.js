@@ -6,9 +6,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+/**
+ * @param {appDir} - Directory of the app files (i.e. the folder containing the index.tsx of the test app)
+ */
 module.exports = (appDir) => ({
   entry: path.join(appDir, 'index.tsx'),
-  devtool: 'eval-source-map',
+  devtool: process.env.CI ? undefined : 'eval-source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
