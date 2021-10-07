@@ -3,7 +3,7 @@
 
 import { CallState as CallStatus } from '@azure/communication-calling';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
-import { CallAdapterState } from './adapter/CallAdapter';
+import { CallAdapterState } from '../adapter/CallAdapter';
 
 /**
  * @private

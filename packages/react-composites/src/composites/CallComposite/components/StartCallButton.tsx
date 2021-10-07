@@ -3,9 +3,9 @@
 
 import { PrimaryButton, mergeStyles } from '@fluentui/react';
 import React from 'react';
-import { buttonStyle, videoCameraIconStyle } from './styles/StartCallButton.styles';
+import { buttonStyle, videoCameraIconStyle } from '../styles/StartCallButton.styles';
 import { Video20Filled } from '@fluentui/react-icons';
-import { useLocale } from '../localization';
+import { useLocale } from '../../localization';
 
 /**
  * @private

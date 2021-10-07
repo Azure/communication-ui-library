@@ -13,7 +13,7 @@ import {
   upperStackTokens,
   videoCameraIconStyle,
   bottomStackFooterStyle
-} from './styles/Error.styles';
+} from '../styles/Error.styles';
 
 /**
  * @private
@@ -27,7 +27,7 @@ export interface ErrorProps {
 /**
  * @private
  */
-export function Error(props: ErrorProps): JSX.Element {
+export function ErrorPage(props: ErrorProps): JSX.Element {
   const title = props.title ?? 'Error joining the Call';
   const rejoinCall = 'Retry Call';
 

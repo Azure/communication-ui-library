@@ -18,8 +18,8 @@ import {
   screenShareContainerStyle,
   stackContainerStyle,
   stackContainerParticipantVideoStyles
-} from './styles/MediaGallery.styles';
-import { loadingStyle, videoStreamStyle } from './styles/ScreenShare.styles';
+} from '../styles/MediaGallery.styles';
+import { loadingStyle, videoStreamStyle } from '../styles/ScreenShare.styles';
 
 /**
  * @private

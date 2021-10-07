@@ -9,7 +9,7 @@ import {
   OptionsButton,
   useTheme
 } from '@internal/react-components';
-import { usePropsFor } from './hooks/usePropsFor';
+import { usePropsFor } from '../hooks/usePropsFor';
 
 /**
  * @private
