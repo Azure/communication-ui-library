@@ -12,7 +12,7 @@ const DESKTOP_VIEWPORT = {
 const chromeLaunchOptions = {
   channel: 'chrome',
   args: [
-    '--font-render-hinting=medium', // Ensures that fonts are rendered consistently.
+    '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
     '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
     '--disable-gpu', // Ensures that fonts are rendered consistently.
     '--allow-file-access',
