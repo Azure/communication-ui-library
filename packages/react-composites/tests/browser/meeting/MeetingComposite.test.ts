@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { IDS } from '../common/constants';
-import { buildUrl, dataUiId, stubMessageTimestamps, waitForMeetingCompositeToLoad } from '../common/utils';
+import {
+  buildUrl,
+  dataUiId,
+  loadCallScreenWithParticipantVideos,
+  stubMessageTimestamps,
+  waitForMeetingCompositeToLoad
+} from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
@@ -42,25 +48,9 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
 
       await page.goto(buildUrl(serverUrl, user));
       await waitForMeetingCompositeToLoad(page);
-
-      // Join Meeting for each participant
-      const startCallButton = await page.waitForSelector(dataUiId('call-composite-start-call-button'));
-      await startCallButton.waitForElementState('enabled');
-      await page.click(dataUiId('call-composite-start-call-button'));
     }
 
-    // Ensure meeting composites have successfully loaded and joined meeting
-    for (const page of pages) {
-      await page.bringToFront();
-      await page.waitForFunction(
-        (args) => {
-          const tileNodes = document.querySelectorAll(args.participantTileSelector);
-          const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
-          return correctNoOfTiles;
-        },
-        { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
-      );
-    }
+    await loadCallScreenWithParticipantVideos(pages);
   });
 
   test('Meeting gallery screen loads correctly', async ({ pages }) => {
