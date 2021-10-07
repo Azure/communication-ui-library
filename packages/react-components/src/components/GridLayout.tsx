@@ -120,7 +120,7 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
   // Given the rows, get the minimum columns needed to create enough cells for the number of items
   let columns = Math.ceil(numberOfItems / rows);
 
-  // Default fill dIrection to horizontal
+  // Default fill direction to horizontal
   let fillDirection: 'horizontal' | 'vertical' = 'horizontal';
 
   while (rows < numberOfItems) {
@@ -171,7 +171,7 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
       // We know the horizontally stretched cells aspect ratio is higher than MINIMUM_CELL_ASPECT_RATIO_ALLOWED. If vertically stretched cells
       // is also higher than the MINIMUM_CELL_ASPECT_RATIO_ALLOWED, then choose which aspect ratio is better.
       if (verticallyStretchedCellRatio >= MINIMUM_CELL_ASPECT_RATIO_ALLOWED) {
-        // If vertically stetched cell has an apect ratio closer to TARGET_CELL_ASPECT_RATIO then change the fill direction to vertical
+        // If vertically stetched cell has an aspect ratio closer to TARGET_CELL_ASPECT_RATIO then change the fill direction to vertical
         if (isCloserThan(verticallyStretchedCellRatio, horizontallyStretchedCellRatio, TARGET_CELL_ASPECT_RATIO)) {
           fillDirection = 'vertical';
         }
@@ -186,7 +186,7 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
 /**
  * Grid that is made up of one or two grids. Based on the rows and columns from GridProps, if there are more cells than number of children then
  * there will be a second grid. The second grid will contain the larger cells to fill out the empty space. The first and second grid will be
- * top-and-bottom if fill direction from Grid Props is horizontal, otherwise they will be left-and-right.
+ * arranged top-and-bottom if fill direction from GridProps is horizontal, otherwise they will be arranged left-and-right.
  */
 const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX.Element => {
   const gridProps = props.gridProps;
