@@ -26,7 +26,7 @@ const stubLocalCameraName = async (page: Page): Promise<void> => {
   });
 };
 
-test.describe('Call Composite E2E Tests', () => {
+test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test.beforeEach(async ({ pages, serverUrl, users }) => {
     // Each test *must* join a new call to prevent test flakiness.
     // We hit a Calling SDK service 500 error if we do not.
@@ -43,32 +43,41 @@ test.describe('Call Composite E2E Tests', () => {
   });
 
   test('composite pages load completely', async ({ pages }) => {
-    for (const idx in pages) {
-      await pages[idx].waitForSelector(dataUiId('call-composite-device-settings'));
-      await pages[idx].waitForSelector(dataUiId('call-composite-local-preview'));
-      await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
-      await stubLocalCameraName(pages[idx]);
-      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-call-screen.png`);
-    }
+    const page = pages[0];
+    await stubLocalCameraName(page);
+    expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page.png`);
   });
 
   test('local device settings can toggle camera & audio', async ({ pages }) => {
-    for (const idx in pages) {
-      const page = pages[idx];
-      await stubLocalCameraName(page);
-      await page.waitForSelector(dataUiId('call-composite-device-settings'));
-      await page.waitForSelector(dataUiId('call-composite-local-preview'));
-      await pages[idx].waitForSelector(`${dataUiId('call-composite-start-call-button')}[data-is-focusable="true"]`);
-      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-disabled.png`);
-      await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
-      await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
-      await page.waitForFunction(() => {
-        const videoNode = document.querySelector('video');
-        const videoLoaded = videoNode?.readyState === 4;
-        return !!videoNode && videoLoaded;
-      });
-      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-local-device-settings-camera-enabled.png`);
-    }
+    const page = pages[0];
+    await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
+    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+    await page.waitForFunction(() => {
+      const videoNode = document.querySelector('video');
+      const videoLoaded = videoNode?.readyState === 4;
+      return !!videoNode && videoLoaded;
+    });
+    await stubLocalCameraName(page);
+    expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
+  });
+
+  test('Configuration screen should display call details', async ({ serverUrl, users, pages }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    const user = users[0];
+    user.groupId = newTestGuid;
+
+    // Set description to be shown
+    const page = pages[0];
+    await page.goto(
+      buildUrl(serverUrl, user, {
+        showCallDescription: 'true'
+      })
+    );
+    await waitForCallCompositeToLoad(page);
+    expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });
 });
 
@@ -96,7 +105,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       const page = pages[idx];
       await page.bringToFront();
 
-      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-video-gallery.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-${idx}.png`);
     }
   });
 
@@ -118,7 +127,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       // This will ensure no animation is happening for the callout
       await buttonCallOut.waitForElementState('stable');
 
-      expect(await page.screenshot()).toMatchSnapshot(`page-${idx}-participants.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-participants-flyout-${idx}.png`);
     }
   });
 
@@ -130,26 +139,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 1;
     });
-    expect(await page.screenshot()).toMatchSnapshot(`camera-toggled.png`);
-  });
-
-  test('Configuration screen should display call details', async ({ serverUrl, users, pages }) => {
-    // Each test *must* join a new call to prevent test flakiness.
-    // We hit a Calling SDK service 500 error if we do not.
-    // An issue has been filed with the calling team.
-    const newTestGuid = generateGUID();
-    const user = users[0];
-    user.groupId = newTestGuid;
-
-    // Set description to be shown
-    const page = pages[0];
-    await page.goto(
-      buildUrl(serverUrl, user, {
-        showCallDescription: 'true'
-      })
-    );
-    await waitForCallCompositeToLoad(page);
-    expect(await page.screenshot()).toMatchSnapshot('call-configuration-page-with-call-details.png');
+    expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
   });
 });
 
