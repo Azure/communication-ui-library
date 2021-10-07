@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { DefaultPalette as palette } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
@@ -9,9 +10,10 @@ import {
   OptionsButton,
   ParticipantMenuItemsCallback,
   ParticipantsButton,
-  ScreenShareButton
+  ScreenShareButton,
+  useTheme
 } from '@internal/react-components';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '../styles/CallControls.styles';
 
@@ -73,6 +75,7 @@ export type CallControlOptions = {
  */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const { callInvitationURL, onEndCallClick, onFetchParticipantMenuItems } = props;
+
   const options = typeof props.options === 'boolean' ? {} : props.options;
 
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
@@ -81,10 +84,18 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const participantsButtonProps = usePropsFor(ParticipantsButton);
   const optionsButtonProps = usePropsFor(OptionsButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
+
+  const theme = useTheme();
+
   const onHangUp = useCallback(async () => {
     await hangUpButtonProps.onHangUp();
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
+
+  const checkedButtonStyleOverrride = useMemo(
+    () => ({ background: theme.palette.themePrimary, color: palette.white }),
+    [theme.palette.themePrimary]
+  );
 
   const microphoneButton = options?.microphoneButton !== false && (
     <MicrophoneButton
@@ -103,7 +114,14 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   );
 
   const screenShareButton = options?.screenShareButton !== false && (
-    <ScreenShareButton {...screenShareButtonProps} showLabel={!options?.compressedMode} />
+    <ScreenShareButton
+      {...screenShareButtonProps}
+      styles={{
+        rootChecked: checkedButtonStyleOverrride,
+        label: screenShareButtonProps.checked ? { color: palette.white } : {}
+      }}
+      showLabel={!options?.compressedMode}
+    />
   );
 
   const participantButton = options?.participantsButton !== false && (

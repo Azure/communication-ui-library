@@ -23,7 +23,6 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { Lobby } from './LobbyPage';
 import { MediaGallery } from '../components/MediaGallery';
-import { ScreenSharePopup } from '../components/ScreenSharePopup';
 import { getCallId, getEndedCall } from '../selectors/baseSelectors';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
@@ -71,7 +70,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
-  const { callStatus, isScreenShareOn } = useSelector(callStatusSelector);
+  const { callStatus } = useSelector(callStatusSelector);
   const callId = useSelector(getCallId);
   const currentCallId = useRef('');
 
@@ -173,16 +172,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
                     onFetchAvatarPersonaData={onFetchAvatarPersonaData}
                   />
                 </Stack>
-                {isScreenShareOn ? (
-                  <ScreenSharePopup
-                    hostId={screenShareModalHostId}
-                    onStopScreenShare={() => {
-                      return adapter.stopScreenShare();
-                    }}
-                  />
-                ) : (
-                  <></>
-                )}
               </>
             )}
           </Stack.Item>

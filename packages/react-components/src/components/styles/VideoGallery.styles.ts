@@ -64,3 +64,52 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
     borderRadius: theme.effects.roundedCorner4
   }
 };
+
+/**
+ * @private
+ */
+export const screenSharingContainer = mergeStyles({
+  width: '100%',
+  height: '100%'
+});
+
+/**
+ * @private
+ */
+export const screenSharingInfoContainerCameraOff = mergeStyles({
+  backgroundColor: 'inherit',
+  padding: '1rem',
+  maxWidth: '95%',
+  borderRadius: theme.effects.roundedCorner4
+});
+
+/**
+ * @private
+ */
+export const screenSharingInfoContainerCameraOn = mergeStyles(screenSharingInfoContainerCameraOff, {
+  backgroundColor: 'rgba(255, 255, 255, 0.8)'
+});
+
+/**
+ * @private
+ */
+export const screenSharingInfoIconContainer = mergeStyles({
+  height: '2rem',
+  lineHeight: 0
+});
+
+/**
+ * @private
+ */
+export const screenSharingInfoIconStyle = mergeStyles({
+  // svg is (20px x 20px) but path is only (16px x 12px), so need to scale at 2.5 to get 40px
+  transform: 'scale(2.5)'
+});
+
+/**
+ * @private
+ */
+export const screenSharingInfoTextStyle = mergeStyles({
+  fontSize: '1rem',
+  color: 'inherit'
+});

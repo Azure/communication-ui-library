@@ -52,6 +52,9 @@
     "onLabel": "Stop",
     "offLabel": "Share"
   },
+  "screenSharingMessage": {
+    "screenSharingMessage": "you're sharing your screen"
+  },
   "messageThread": {
     "yesterday": "Yesterday",
     "sunday": "Sunday",
