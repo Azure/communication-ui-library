@@ -96,16 +96,13 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const maxPageIndex = Math.ceil(participants.length / maxTiles) - 1;
 
   const defaultOnRenderParticipants = useMemo(() => {
-    // If user provided a custom onRender function return that function.
-    if (onRenderRemoteVideoTile) {
-      return participants?.map((participant) => onRenderRemoteVideoTile(participant));
-    }
-
     const start = page * maxTiles;
     const end = start + maxTiles;
     return participants?.slice(start, end).map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
-      return (
+      return onRenderRemoteVideoTile ? (
+        onRenderRemoteVideoTile(participant)
+      ) : (
         <Stack key={participant.userId} className={mergeStyles(tileSizeStyle)}>
           <RemoteVideoTile
             key={participant.userId}
