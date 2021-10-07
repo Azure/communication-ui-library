@@ -126,7 +126,9 @@ export const gutterWithHiddenAvatar: ComponentSlotStyle = {
   position: 'relative',
   float: 'left',
   display: 'block',
-  visibility: 'hidden'
+  visibility: 'hidden',
+  // we use this hidden avatar just as a width placeholder
+  height: 0
 };
 
 /**
