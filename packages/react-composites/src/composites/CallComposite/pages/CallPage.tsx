@@ -36,13 +36,13 @@ import {
   containerStyles,
   mediaGalleryContainerStyles,
   subContainerStyles
-} from '../styles/CallScreen.styles';
+} from '../styles/CallPage.styles';
 import { CallControlOptions } from '../components/CallControls';
 
 /**
  * @private
  */
-export interface CallScreenProps {
+export interface CallPageProps {
   callInvitationURL?: string;
   endCallHandler(): void;
   callErrorHandler(customPage?: CallCompositePage): void;
@@ -56,7 +56,7 @@ const spinnerLabel = 'Initializing call client...';
 /**
  * @private
  */
-export const CallScreen = (props: CallScreenProps): JSX.Element => {
+export const CallPage = (props: CallPageProps): JSX.Element => {
   const {
     callInvitationURL,
     endCallHandler,

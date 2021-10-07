@@ -4,7 +4,7 @@ import {
   buildUrl,
   dataUiId,
   disableAnimation,
-  loadCallScreenWithParticipantVideos,
+  loadCallPageWithParticipantVideos,
   waitForCallCompositeToLoad
 } from '../common/utils';
 import { test } from './fixture';
@@ -72,7 +72,7 @@ test.describe('Call Composite E2E Tests', () => {
   });
 });
 
-test.describe('Call Composite E2E CallScreen Tests', () => {
+test.describe('Call Composite E2E CallPage Tests', () => {
   // Make sure tests can still run well after retries
   test.beforeEach(async ({ pages, users, serverUrl }) => {
     // Each test *must* join a new call to prevent test flakiness.
@@ -88,7 +88,7 @@ test.describe('Call Composite E2E CallScreen Tests', () => {
       await waitForCallCompositeToLoad(page);
     }
 
-    await loadCallScreenWithParticipantVideos(pages);
+    await loadCallPageWithParticipantVideos(pages);
   });
 
   test('video gallery renders for all pages', async ({ pages }) => {

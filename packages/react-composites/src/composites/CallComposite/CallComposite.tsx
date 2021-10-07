@@ -10,8 +10,8 @@ import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallControlOptions } from './components/CallControls';
-import { CallScreen } from './pages/CallPage';
-import { ConfigurationScreen } from './pages/ConfigurationPage';
+import { CallPage } from './pages/CallPage';
+import { ConfigurationPage } from './pages/ConfigurationPage';
 import { ErrorPage } from './pages/ErrorPage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
@@ -81,7 +81,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   switch (page) {
     case 'configuration':
       return (
-        <ConfigurationScreen
+        <ConfigurationPage
           mobileView={props.options?.mobileView ?? false}
           startCallHandler={(): void => adapter.setPage('call')}
         />
@@ -106,7 +106,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
     default:
       return (
-        <CallScreen
+        <CallPage
           endCallHandler={async (): Promise<void> => {
             adapter.setPage('configuration');
           }}
