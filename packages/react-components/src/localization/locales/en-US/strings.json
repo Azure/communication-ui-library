@@ -52,9 +52,6 @@
     "onLabel": "Stop",
     "offLabel": "Share"
   },
-  "screenSharingMessage": {
-    "screenSharingMessage": "you're sharing your screen"
-  },
   "messageThread": {
     "yesterday": "Yesterday",
     "sunday": "Sunday",
@@ -84,5 +81,8 @@
     "speakingWhileMuted": "Your microphone is muted",
     "startScreenShareGeneric": "Failed to start screen sharing",
     "stopScreenShareGeneric": "Failed to stop screen sharing"
+  },
+  "videoGallery": {
+    "screenSharingMessage": "you're sharing your screen"
   }
 }

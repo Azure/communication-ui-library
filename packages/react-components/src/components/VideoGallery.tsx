@@ -133,7 +133,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const ids = useIdentifiers();
   const theme = useTheme();
-  const localeStrings = useLocale().strings.screenSharingMessage;
+  const localeStrings = useLocale().strings.videoGallery;
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);

@@ -51,8 +51,6 @@ export interface ComponentStrings {
   participantsButton: ParticipantsButtonStrings;
   /** Strings for ScreenShareButton */
   screenShareButton: ScreenShareButtonStrings;
-  /** Strings for VideoGallery */
-  screenSharingMessage: VideoGalleryStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */
@@ -61,6 +59,8 @@ export interface ComponentStrings {
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
+  /** Strings for VideoGallery */
+  videoGallery: VideoGalleryStrings;
 }
 
 /**
