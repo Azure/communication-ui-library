@@ -10,7 +10,6 @@ import {
   IStyleFunctionOrObject
 } from '@fluentui/react';
 import { CSSProperties } from 'react';
-import { HorizontalGalleryProps } from '../VideoGallery/HorizontalGallery';
 import { VideoTileStylesProps } from '../VideoTile';
 
 const theme = getTheme();
