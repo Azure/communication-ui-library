@@ -93,9 +93,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     [tileWidth, tileHeight]
   );
 
-  const maxPages = useMemo(() => {
-    return Math.ceil(participants.length / maxTiles) - 1;
-  }, [maxTiles, participants.length]);
+  const maxPageIndex = Math.ceil(participants.length / maxTiles) - 1;
 
   const defaultOnRenderParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
@@ -141,7 +139,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   ]);
 
   const showLeftButton = maxTiles && page > 0 && !isSmallScreen;
-  const showRightButton = maxTiles && page < maxPages && !isSmallScreen;
+  const showRightButton = maxTiles && page < maxPageIndex && !isSmallScreen;
 
   return (
     <div ref={containerRef}>
@@ -153,7 +151,9 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       >
         {showLeftButton && <LeftButton height={tileHeight} onClick={() => setPage(Math.max(0, page - 1))} />}
         {defaultOnRenderParticipants}
-        {showRightButton && <RightButton height={tileHeight} onClick={() => setPage(Math.min(maxPages, page + 1))} />}
+        {showRightButton && (
+          <RightButton height={tileHeight} onClick={() => setPage(Math.min(maxPageIndex, page + 1))} />
+        )}
       </Stack>
     </div>
   );
