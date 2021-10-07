@@ -211,10 +211,12 @@ export const videoGallerySelector = createSelector(
           renderElement: localVideoStream?.view?.target
         }
       },
-      remoteParticipants: sortedRemoteParticipants(
-        videoGalleryRemoteParticipantsMemo(remoteParticipants),
-        dominantSpeakersMap
-      )
+      // Sorting by dominant speakers is temporarily disabled because it is unstable
+      // and causes too many renders. With 6 participants, it easily causes enough renders
+      // to freeze the app.
+      // There is a new, stable, implementation of the sorting in flight, which replaces
+      // this implementation.
+      remoteParticipants: sortedRemoteParticipants(videoGalleryRemoteParticipantsMemo(remoteParticipants), {})
     };
   }
 );
