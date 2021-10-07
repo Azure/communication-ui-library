@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Preview 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-61 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,11 +21,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
       }
     >
       <div
-        className="css-60 body-0"
+        className="css-61 body-0"
         dir="ltr"
       >
         <div
-          className="css-60"
+          className="css-61"
           data-uses-unhanded-props={true}
         >
           <div
@@ -51,7 +51,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                     className="ms-Stack css-12"
                   >
                     <div
-                      className="css-79"
+                      className="css-80"
                     />
                   </div>
                   <div
