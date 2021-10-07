@@ -9,7 +9,6 @@ import {
   BaseCustomStylesProps,
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
-  VideoGalleryParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions
 } from '../../types';
@@ -117,10 +116,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobileScreen = useIsSmallScreen(containerRef);
-  const visibleVideoParticipants = useRef<VideoGalleryParticipant[] | []>([]);
-  const visibleAudioParticipants = useRef<VideoGalleryParticipant[] | []>([]);
-  const [videoParticipants, setVideoParticipants] = useState<VideoGalleryParticipant[] | []>();
-  const [audioParticipants, setAudioParticipants] = useState<VideoGalleryParticipant[] | []>();
+  const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const [videoParticipants, setVideoParticipants] = useState<VideoGalleryRemoteParticipant[]>();
+  const [audioParticipants, setAudioParticipants] = useState<VideoGalleryRemoteParticipant[]>();
 
   useEffect(() => {
     visibleVideoParticipants.current = smartDominantSpeakerParticipants(
