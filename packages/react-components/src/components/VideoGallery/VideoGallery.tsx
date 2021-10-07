@@ -239,11 +239,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator
   ]);
 
-  if (shouldFloatLocalVideo) {
-    const floatingTileHostId = 'UILibraryFloatingTileHost';
-    return (
-      <div ref={containerRef} className={videoGalleryOuterDivStyle}>
-        <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+  const gridLayout = shouldFloatLocalVideo ? (
+    <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+  ) : (
+    <GridLayout styles={styles ?? emptyStyles}>
+      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+        {localParticipant && defaultOnRenderLocalVideoTile}
+      </Stack>
+      {defaultOnRenderRemoteParticipants}
+    </GridLayout>
+  );
+
+  return (
+    <div ref={containerRef} className={videoGalleryOuterDivStyle}>
+      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+        {shouldFloatLocalVideo && (
           <Modal
             isOpen={true}
             isModeless={true}
@@ -253,56 +263,26 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           >
             {localParticipant && defaultOnRenderLocalVideoTile}
           </Modal>
-          <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
-          {audioParticipants && audioParticipants.length > 0 && (
-            <Stack style={{ minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' }}>
-              <HorizontalGallery
-                onCreateRemoteStreamView={onCreateRemoteStreamView}
-                onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-                onRenderAvatar={onRenderAvatar}
-                onRenderRemoteVideoTile={onRenderRemoteVideoTile}
-                participants={audioParticipants}
-                remoteVideoViewOption={remoteVideoViewOption}
-                showMuteIndicator={showMuteIndicator}
-                hideRemoteVideoStream={true}
-                rightGutter={isMobileScreen ? 64 : 176} // to leave a gap for the floating local video
-              />
-            </Stack>
-          )}
-        </Stack>
-      </div>
-    );
-  } else {
-    return (
-      <div ref={containerRef} className={videoGalleryOuterDivStyle}>
-        <Stack grow styles={videoGalleryContainerStyle}>
-          <GridLayout styles={styles ?? emptyStyles}>
-            <Stack
-              data-ui-id={ids.videoGallery}
-              horizontalAlign="center"
-              verticalAlign="center"
-              className={gridStyle}
-              grow
-            >
-              {localParticipant && defaultOnRenderLocalVideoTile}
-            </Stack>
-            {defaultOnRenderRemoteParticipants}
-          </GridLayout>
-          {audioParticipants && audioParticipants.length > 0 && (
-            <Stack style={getHorizontalGalleryWrapperStyle(isMobileScreen)}>
-              <HorizontalGallery
-                onCreateRemoteStreamView={onCreateRemoteStreamView}
-                onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-                onRenderAvatar={onRenderAvatar}
-                onRenderRemoteVideoTile={onRenderRemoteVideoTile}
-                participants={audioParticipants}
-                remoteVideoViewOption={remoteVideoViewOption}
-                showMuteIndicator={showMuteIndicator}
-              />
-            </Stack>
-          )}
-        </Stack>
-      </div>
-    );
-  }
+        )}
+        {gridLayout}
+        {audioParticipants && audioParticipants.length > 0 && (
+          <Stack style={{ minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' }}>
+            <HorizontalGallery
+              onCreateRemoteStreamView={onCreateRemoteStreamView}
+              onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+              onRenderAvatar={onRenderAvatar}
+              onRenderRemoteVideoTile={onRenderRemoteVideoTile}
+              participants={audioParticipants}
+              remoteVideoViewOption={remoteVideoViewOption}
+              showMuteIndicator={showMuteIndicator}
+              hideRemoteVideoStream={shouldFloatLocalVideo}
+              rightGutter={shouldFloatLocalVideo ? (isMobileScreen ? 64 : 176) : undefined} // to leave a gap for the floating local video
+            />
+          </Stack>
+        )}
+      </Stack>
+    </div>
+  );
 };
+
+const floatingTileHostId = 'UILibraryFloatingTileHost';
