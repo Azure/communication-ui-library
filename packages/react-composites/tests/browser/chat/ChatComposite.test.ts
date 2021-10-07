@@ -28,10 +28,7 @@ test.describe('Chat Composite E2E Tests', () => {
   });
 
   test('composite pages load completely', async ({ pages }) => {
-    for (const idx in pages) {
-      await pages[idx].waitForSelector(dataUiId(IDS.sendboxTextField));
-      expect(await pages[idx].screenshot()).toMatchSnapshot(`page-${idx}-chat-screen.png`);
-    }
+    expect(await pages[0].screenshot()).toMatchSnapshot(`chat-screen.png`);
   });
 
   test('page[1] can receive message and send readReceipt when page[0] send message', async ({ pages }) => {
@@ -41,7 +38,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await page0.keyboard.press('Enter');
     await page0.waitForSelector(`[data-ui-status="delivered"]`);
     await stubMessageTimestamps(page0);
-    expect(await page0.screenshot()).toMatchSnapshot('send-message.png');
+    expect(await page0.screenshot()).toMatchSnapshot('sent-messages.png');
 
     const page1 = pages[1];
     await page1.bringToFront();
@@ -54,7 +51,7 @@ test.describe('Chat Composite E2E Tests', () => {
     const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
 
-    expect(await page1.screenshot()).toMatchSnapshot('receive-message.png');
+    expect(await page1.screenshot()).toMatchSnapshot('received-messages.png');
 
     await page0.bringToFront();
     await page0.waitForSelector(`[data-ui-status="seen"]`);
