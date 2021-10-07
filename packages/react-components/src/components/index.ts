@@ -8,7 +8,7 @@ export { ErrorBar } from './ErrorBar';
 export type { ActiveErrorMessage, ErrorBarProps, ErrorBarStrings, ErrorType } from './ErrorBar';
 
 export { GridLayout } from './GridLayout';
-export type { GridLayoutProps, GridLayoutType } from './GridLayout';
+export type { GridLayoutProps } from './GridLayout';
 
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
