@@ -9,7 +9,7 @@ import {
 } from '@internal/chat-stateful-client';
 import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
 import { ChatMessage, ChatMessageType, ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import type {
   ChatMessageReceivedEvent,
   ChatThreadPropertiesUpdatedEvent,
@@ -321,7 +321,7 @@ const convertEventType = (type: string): ChatMessageType => {
  */
 export type AzureCommunicationChatAdapterArgs = {
   endpointUrl: string;
-  userId: CommunicationIdentifierKind;
+  userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
   threadId: string;
@@ -342,7 +342,7 @@ export const createAzureCommunicationChatAdapter = async ({
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
   const chatClient = createStatefulChatClient({
-    userId: userId,
+    userId,
     displayName,
     endpoint: endpointUrl,
     credential: credential
@@ -371,5 +371,5 @@ export const createAzureCommunicationChatAdapterFromClient = async (
 };
 
 const isChatError = (e: Error): e is ChatError => {
-  return e['target'] !== undefined && e['inner'] !== undefined;
+  return e['target'] !== undefined && e['innerError'] !== undefined;
 };

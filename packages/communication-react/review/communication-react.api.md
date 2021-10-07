@@ -69,14 +69,14 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
 // @public
-export interface ActiveError {
+export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
 }
 
 // @public
 export interface AdapterError extends Error {
-    inner: Error;
+    innerError: Error;
     target: string;
     timestamp: Date;
 }
@@ -121,7 +121,7 @@ export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPerson
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator | GroupCallLocator;
@@ -130,7 +130,7 @@ export type AzureCommunicationCallAdapterArgs = {
 // @public
 export type AzureCommunicationChatAdapterArgs = {
     endpointUrl: string;
-    userId: CommunicationIdentifierKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
@@ -139,7 +139,7 @@ export type AzureCommunicationChatAdapterArgs = {
 // @alpha
 export type AzureCommunicationMeetingAdapterArgs = {
     endpointUrl: string;
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     chatThreadId: string;
@@ -172,10 +172,9 @@ export interface CallAdapterCallManagement {
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
-    onToggleCamera(options?: VideoStreamOptions): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     startCall(participants: string[]): Call | undefined;
-    startCamera(): Promise<void>;
+    startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -268,12 +267,16 @@ export interface CallClientState {
     calls: {
         [key: string]: CallState;
     };
-    callsEnded: CallState[];
+    callsEnded: {
+        [key: string]: CallState;
+    };
     deviceManager: DeviceManagerState;
     incomingCalls: {
         [key: string]: IncomingCallState;
     };
-    incomingCallsEnded: IncomingCallState[];
+    incomingCallsEnded: {
+        [key: string]: IncomingCallState;
+    };
     latestErrors: CallErrors;
     userId: CommunicationUserKind;
 }
@@ -337,8 +340,8 @@ export type CallEndedListener = (event: {
 
 // @public
 export class CallError extends Error {
-    constructor(target: CallErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: CallErrorTarget;
     timestamp: Date;
 }
@@ -347,9 +350,9 @@ export class CallError extends Error {
 //
 // @public
 export const callErrorBarSelector: OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }, (res1: CallErrors, res2: DiagnosticsCallFeatureState | undefined) => {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }>;
 
 // @public
@@ -578,17 +581,17 @@ export interface ChatCompositeStrings {
 
 // @public
 export class ChatError extends Error {
-    constructor(target: ChatErrorTarget, inner: Error, timestamp?: Date);
-    inner: Error;
+    constructor(target: ChatErrorTarget, innerError: Error, timestamp?: Date);
+    innerError: Error;
     target: ChatErrorTarget;
     timestamp: Date;
 }
 
 // @public
 export const chatErrorBarSelector: OutputSelector<ChatClientState, {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }, (res: ChatErrors) => {
-activeErrors: ActiveError[];
+activeErrorMessages: ActiveErrorMessage[];
 }>;
 
 // @public
@@ -1055,7 +1058,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
-    activeErrors: ActiveError[];
+    activeErrorMessages: ActiveErrorMessage[];
     strings?: ErrorBarStrings;
 }
 
@@ -1134,7 +1137,7 @@ export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
     participantList: string;
-    sendboxTextfield: string;
+    sendboxTextField: string;
     typingIndicator: string;
     videoGallery: string;
     videoTile: string;
@@ -1217,7 +1220,7 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
 }
 
 // @alpha
-export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'onToggleCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
+export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
     joinMeeting(microphoneOn?: boolean): Call | undefined;
     leaveMeeting(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -1788,7 +1791,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserKind;
+    userId: CommunicationUserIdentifier;
 };
 
 // @public
@@ -1805,7 +1808,7 @@ export interface StatefulChatClient extends ChatClient {
 
 // @public
 export type StatefulChatClientArgs = {
-    userId: CommunicationIdentifierKind;
+    userId: CommunicationUserIdentifier;
     displayName: string;
     endpoint: string;
     credential: CommunicationTokenCredential;

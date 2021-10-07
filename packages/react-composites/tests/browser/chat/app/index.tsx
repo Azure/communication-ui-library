@@ -12,17 +12,21 @@ import {
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR
 } from '../../../../src';
-import { IDS } from '../../common/config';
+import { IDS } from '../../common/constants';
+import { verifyParamExists } from '../../common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 
-const displayName = params.displayName;
-const token = params.token;
-const endpointUrl = params.endpointUrl;
-const threadId = params.threadId;
-const userId = params.userId;
-const useFrlocale = Boolean(params.useFrLocale);
+// Required params
+const displayName = verifyParamExists(params.displayName, 'displayName');
+const token = verifyParamExists(params.token, 'token');
+const endpointUrl = verifyParamExists(params.endpointUrl, 'endpointUrl');
+const threadId = verifyParamExists(params.threadId, 'threadId');
+const userId = verifyParamExists(params.userId, 'userId');
+
+// Optional params
+const useFrLocale = Boolean(params.useFrLocale);
 const customDataModel = params.customDataModel;
 
 function App(): JSX.Element {
@@ -33,7 +37,7 @@ function App(): JSX.Element {
       setChatAdapter(
         await createAzureCommunicationChatAdapter({
           endpointUrl,
-          userId: { kind: 'communicationUser', communicationUserId: userId },
+          userId: { communicationUserId: userId },
           displayName,
           credential: new AzureCommunicationTokenCredential(token),
           threadId
@@ -80,7 +84,7 @@ function App(): JSX.Element {
                   )
               : undefined
           }
-          locale={useFrlocale ? COMPOSITE_LOCALE_FR_FR : undefined}
+          locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
         />
       )}
     </_IdentifierProvider>
