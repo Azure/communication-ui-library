@@ -86,47 +86,59 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
+  const microphoneButton = options?.microphoneButton !== false && (
+    <MicrophoneButton
+      data-ui-id="call-composite-microphone-button"
+      {...microphoneButtonProps}
+      showLabel={!options?.compressedMode}
+    />
+  );
+
+  const cameraButton = options?.cameraButton !== false && (
+    <CameraButton
+      data-ui-id="call-composite-camera-button"
+      {...cameraButtonProps}
+      showLabel={!options?.compressedMode}
+    />
+  );
+
+  const screenShareButton = options?.screenShareButton !== false && (
+    <ScreenShareButton {...screenShareButtonProps} showLabel={!options?.compressedMode} />
+  );
+
+  const participantButton = options?.participantsButton !== false && (
+    <ParticipantsButton
+      data-ui-id="call-composite-participants-button"
+      {...participantsButtonProps}
+      showLabel={!options?.compressedMode}
+      callInvitationURL={callInvitationURL}
+      onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+    />
+  );
+
+  const optionsButton = options?.optionsButton !== false && (
+    /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
+    <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!options?.compressedMode} />
+  );
+
+  const endCallButton = options?.endCallButton !== false && (
+    <EndCallButton
+      data-ui-id="call-composite-hangup-button"
+      {...hangUpButtonProps}
+      onHangUp={onHangUp}
+      styles={!options?.compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
+      showLabel={!options?.compressedMode}
+    />
+  );
+
   return (
     <ControlBar layout="dockedBottom">
-      {options?.cameraButton !== false && (
-        <CameraButton
-          data-ui-id="call-composite-camera-button"
-          {...cameraButtonProps}
-          showLabel={!options?.compressedMode}
-        />
-      )}
-      {options?.microphoneButton !== false && (
-        <MicrophoneButton
-          data-ui-id="call-composite-microphone-button"
-          {...microphoneButtonProps}
-          showLabel={!options?.compressedMode}
-        />
-      )}
-      {options?.screenShareButton !== false && (
-        <ScreenShareButton {...screenShareButtonProps} showLabel={!options?.compressedMode} />
-      )}
-      {options?.participantsButton !== false && (
-        <ParticipantsButton
-          data-ui-id="call-composite-participants-button"
-          {...participantsButtonProps}
-          showLabel={!options?.compressedMode}
-          callInvitationURL={callInvitationURL}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        />
-      )}
-      {/* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */}
-      {options?.optionsButton !== false && (
-        <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!options?.compressedMode} />
-      )}
-      {options?.endCallButton !== false && (
-        <EndCallButton
-          data-ui-id="call-composite-hangup-button"
-          {...hangUpButtonProps}
-          onHangUp={onHangUp}
-          styles={!options?.compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-          showLabel={!options?.compressedMode}
-        />
-      )}
+      {microphoneButton}
+      {cameraButton}
+      {screenShareButton}
+      {participantButton}
+      {optionsButton}
+      {endCallButton}
     </ControlBar>
   );
 };

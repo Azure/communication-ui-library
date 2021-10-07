@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Disable old unstable implementation of dominant speaker logic",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
