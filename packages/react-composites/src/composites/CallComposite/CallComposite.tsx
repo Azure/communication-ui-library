@@ -138,7 +138,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
     case 'lobby':
-      return <LobbyPage endCallHandler={() => adapter.setPage('configuration')} />;
+      return (
+        <LobbyPage
+          strings={{
+            connectingToCall: locale.strings.call.lobbyScreenConnectingToCallText,
+            waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedText
+          }}
+          endCallHandler={() => adapter.setPage('configuration')}
+        />
+      );
     case 'call':
       return (
         <CallPage

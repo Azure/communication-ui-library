@@ -57,4 +57,12 @@ export interface CallCompositeStrings {
    * Error shown when Teams meeting connection is dropped for some reason.
    */
   teamsMeetingFailToJoin: string;
+  /**
+   * Text shown to the user on the lobby screen when connecting to a call.
+   */
+  lobbyScreenConnectingToCallText: string;
+  /**
+   * Text shown to the user on the lobby screen when waiting to be admitted to a call.
+   */
+  lobbyScreenWaitingToBeAdmittedText: string;
 }

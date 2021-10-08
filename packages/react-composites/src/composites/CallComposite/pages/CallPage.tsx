@@ -69,14 +69,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         cameraPermissionGranted: devicePermissions.video
       }}
       errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
-      mediaGalleryProps={
-        callStatus === 'Connected' && {
-          ...mediaGalleryProps,
-          ...mediaGalleryHandlers,
-          onRenderAvatar: onRenderAvatar,
-          onFetchAvatarPersonaData: onFetchAvatarPersonaData
-        }
-      }
       screenSharePopupProps={
         isScreenShareOn && {
           hostId: screenShareModalHostId,
@@ -92,6 +84,20 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           onFetchParticipantMenuItems: onFetchParticipantMenuItems,
           options: callControlOptions
         }
+      }
+      onRenderGalleryContent={() =>
+        callStatus === 'Connected' ? (
+          <MediaGallery
+            {...{
+              ...mediaGalleryProps,
+              ...mediaGalleryHandlers,
+              onRenderAvatar: onRenderAvatar,
+              onFetchAvatarPersonaData: onFetchAvatarPersonaData
+            }}
+          />
+        ) : (
+          <></>
+        )
       }
     />
   );

@@ -8,7 +8,6 @@ import { PermissionsBanner, PermissionsBannerProps } from '../../common/Permissi
 import { permissionsBannerContainerStyle } from '../../common/styles/PermissionsBanner.styles';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
-import { MediaGallery, MediaGalleryProps } from '../components/MediaGallery';
 import { ScreenSharePopup, ScreenSharePopupProps } from '../components/ScreenSharePopup';
 import {
   bannersContainerStyles,
@@ -25,9 +24,9 @@ export interface CallArrangementProps {
   complianceBannerProps: ComplianceBannerProps;
   permissionBannerProps: PermissionsBannerProps;
   errorBarProps: ErrorBarProps | false;
-  mediaGalleryProps: MediaGalleryProps | false;
   screenSharePopupProps: ScreenSharePopupProps | false;
   callControlProps: CallControlsProps | false;
+  onRenderGalleryContent: () => JSX.Element;
 }
 
 /**
@@ -52,18 +51,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         </Stack.Item>
 
         <Stack.Item styles={subContainerStyles} grow>
-          {props.mediaGalleryProps !== false && (
-            <>
-              <Stack
-                id={props.screenSharePopupProps !== false ? props.screenSharePopupProps.hostId : undefined}
-                grow
-                styles={mediaGalleryContainerStyles}
-              >
-                <MediaGallery {...props.mediaGalleryProps} />
-              </Stack>
-              {props.screenSharePopupProps !== false && <ScreenSharePopup {...props.screenSharePopupProps} />}
-            </>
+          {props.onRenderGalleryContent && (
+            <Stack
+              id={props.screenSharePopupProps !== false ? props.screenSharePopupProps.hostId : undefined}
+              grow
+              styles={mediaGalleryContainerStyles}
+            >
+              {props.onRenderGalleryContent()}
+            </Stack>
           )}
+          {props.screenSharePopupProps !== false && <ScreenSharePopup {...props.screenSharePopupProps} />}
         </Stack.Item>
         {props.callControlProps !== false && (
           <Stack.Item className={callControlsContainer}>
