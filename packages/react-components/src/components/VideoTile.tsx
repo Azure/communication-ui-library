@@ -140,7 +140,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     }
     const currentObserver = observer.current;
     return () => currentObserver.disconnect();
-  }, [observer]);
+  }, [observer, videoTileRef]);
 
   const placeholderOptions = {
     userId,

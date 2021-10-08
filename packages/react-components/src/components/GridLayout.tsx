@@ -51,7 +51,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     }
     const currentObserver = observer.current;
     return () => currentObserver.disconnect();
-  }, [observer]);
+  }, [observer, containerRef]);
 
   const gridProps = useMemo(() => {
     return calculateGridProps(numberOfChildren, currentWidth, currentHeight);
