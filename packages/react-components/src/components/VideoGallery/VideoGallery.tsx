@@ -118,8 +118,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const isMobileScreen = useIsSmallScreen(containerRef);
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
-  const [videoParticipants, setVideoParticipants] = useState<VideoGalleryRemoteParticipant[]>();
-  const [audioParticipants, setAudioParticipants] = useState<VideoGalleryRemoteParticipant[]>();
+  // This component needs to be smart about which participants to pass to the grid and the horizontal gallery
+  const [gridParticipants, setGridParticipants] = useState<VideoGalleryRemoteParticipant[]>();
+  const [horizontalGalleryParticipants, setHorizontalGalleryParticipants] = useState<VideoGalleryRemoteParticipant[]>();
 
   useEffect(() => {
     visibleVideoParticipants.current = smartDominantSpeakerParticipants(
@@ -146,14 +147,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       6
     );
 
-    // If there are no video participants, we assign all audio participants to video participants.
-    // To avoid rendering horizontal gallery and only render center canvas instead.
+    // If there are no video participants, we assign all audio participants as grid participants and assign
+    // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
     if (visibleVideoParticipants.current.length === 0) {
-      setVideoParticipants(visibleAudioParticipants.current);
-      setAudioParticipants([]);
+      setGridParticipants(visibleAudioParticipants.current);
+      setHorizontalGalleryParticipants([]);
     } else {
-      setVideoParticipants(visibleVideoParticipants.current);
-      setAudioParticipants(visibleAudioParticipants.current);
+      setGridParticipants(visibleVideoParticipants.current);
+      setHorizontalGalleryParticipants(visibleAudioParticipants.current);
     }
   }, [dominantSpeakers, remoteParticipants]);
 
@@ -209,7 +210,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     // Else return Remote Stream Video Tiles
-    return videoParticipants?.map((participant): JSX.Element => {
+    return gridParticipants?.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
@@ -230,7 +231,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     });
   }, [
     onRenderRemoteVideoTile,
-    videoParticipants,
+    gridParticipants,
     remoteParticipants,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
@@ -265,14 +266,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           </Modal>
         )}
         {gridLayout}
-        {audioParticipants && audioParticipants.length > 0 && (
+        {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
           <Stack style={getHorizontalGalleryWrapperStyle(isMobileScreen)}>
             <HorizontalGallery
               onCreateRemoteStreamView={onCreateRemoteStreamView}
               onDisposeRemoteStreamView={onDisposeRemoteStreamView}
               onRenderAvatar={onRenderAvatar}
               onRenderRemoteVideoTile={onRenderRemoteVideoTile}
-              participants={audioParticipants}
+              participants={horizontalGalleryParticipants}
               remoteVideoViewOption={remoteVideoViewOption}
               showMuteIndicator={showMuteIndicator}
               hideRemoteVideoStream={shouldFloatLocalVideo}
