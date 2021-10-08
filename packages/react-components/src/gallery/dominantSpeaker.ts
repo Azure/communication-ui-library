@@ -2,26 +2,48 @@
 // Licensed under the MIT license.
 import { VideoGalleryRemoteParticipant } from '../types';
 
+type SmartDominantSpeakerParticipantsArgs = {
+  /**
+   * Array containing all participants of a call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
+   */
+  participants: VideoGalleryRemoteParticipant[];
+  /**
+   * An array containing the userId of dominant speakers
+   * in a call in the order of their dominance. 0th index is the most dominant, 1st is the second most etc
+   */
+  dominantSpeakers?: string[];
+  /**
+   * Array containing currently rendered (visible)
+   * participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
+   */
+  visibleParticipants?: VideoGalleryRemoteParticipant[];
+  /**
+   * Maximum number of tiles to calculate.
+   */
+  maxTiles?: number;
+  /**
+   * Maximum number of dominant speakers to calculate.
+   */
+  maxDominantSpeakers?: number;
+};
+
 /**
  * Calculates the participants that should be rendered based on the list of dominant
  * speakers and currently rendered participants in a call.
- * @param participants - Array containing all participants of a call.
- * {@link @azure/communication-react#VideoGalleryRemoteParticipant}
- * @param dominantSpeakers - An array containing the userId of dominant speakers
- * in a call in the order of their dominance. 0th index is the most dominant, 1st is the second most etc
- * @param visibleParticipants - Array containing currently rendered (visible)
- * participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
- * @param maxTiles - Maximum number of tiles to calculate.
- * @param maxDominantSpeakers - Maximum number of dominant speakers to calculate.
+ * @param args - SmartDominantSpeakerParticipantsArgs
  * @returns VideoGalleryRemoteParticipant[] {@link @azure/communication-react#VideoGalleryRemoteParticipant}
  */
 export const smartDominantSpeakerParticipants = (
-  participants: VideoGalleryRemoteParticipant[],
-  dominantSpeakers: Array<string> = [],
-  visibleParticipants: VideoGalleryRemoteParticipant[] = [],
-  maxTiles = 4, // For video tiles, 4 is the recommended value by Calling team.,
-  maxDominantSpeakers = 4
+  args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
+  const {
+    participants,
+    dominantSpeakers = [],
+    visibleParticipants = [],
+    maxTiles = 4 /* For video tiles, 4 is the recommended value by Calling team*/,
+    maxDominantSpeakers = 4
+  } = args;
+
   // Don't apply any logic if total number of video streams is less than Max dominant speakers.
   if (participants.length <= maxDominantSpeakers) return participants;
 

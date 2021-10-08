@@ -123,11 +123,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const [horizontalGalleryParticipants, setHorizontalGalleryParticipants] = useState<VideoGalleryRemoteParticipant[]>();
 
   useEffect(() => {
-    visibleVideoParticipants.current = smartDominantSpeakerParticipants(
-      remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
+    visibleVideoParticipants.current = smartDominantSpeakerParticipants({
+      participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
       dominantSpeakers,
-      visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
-    );
+      visibleParticipants: visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
+    });
 
     // Create a map of visibleVideoParticipants for faster searching.
     // This map will be used to identify overflow participants. i.e., participants
@@ -138,13 +138,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     });
     // Max Tiles calculated inside that gallery can be passed to this function
     // to only return the max number of tiles that can be rendered in the gallery.
-    visibleAudioParticipants.current = smartDominantSpeakerParticipants(
-      remoteParticipants?.filter((p) => !visibleVideoParticipantsMap[p.userId]) ?? [],
+    visibleAudioParticipants.current = smartDominantSpeakerParticipants({
+      participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsMap[p.userId]) ?? [],
       dominantSpeakers,
-      visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsMap[p.userId]),
-      100,
-      6
-    );
+      visibleParticipants: visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsMap[p.userId]),
+      maxTiles: 100,
+      maxDominantSpeakers: 6
+    });
 
     // If there are no video participants, we assign all audio participants as grid participants and assign
     // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
