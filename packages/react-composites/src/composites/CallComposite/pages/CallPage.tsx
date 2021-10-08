@@ -1,33 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { PermissionsBanner } from '../../common/PermissionsBanner';
-import { permissionsBannerContainerStyle } from '../../common/styles/PermissionsBanner.styles';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallCompositeOptions } from '../CallComposite';
-import { CallControls } from '../components/CallControls';
-import { ComplianceBanner } from '../components/ComplianceBanner';
 import { useHandlers } from '../hooks/useHandlers';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { MediaGallery } from '../components/MediaGallery';
-import { ScreenSharePopup } from '../components/ScreenSharePopup';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
-import {
-  bannersContainerStyles,
-  callControlsContainer,
-  containerStyles,
-  mediaGalleryContainerStyles,
-  subContainerStyles
-} from '../styles/CallPage.styles';
 import { CallControlOptions } from '../components/CallControls';
+import { CallArrangement } from '../components/CallArrangement';
 
 /**
  * @private
@@ -74,61 +62,38 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const screenShareModalHostId = 'UILibraryMediaGallery';
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
-      <>
-        <Stack.Item styles={bannersContainerStyles}>
-          <Stack>
-            <ComplianceBanner {...complianceBannerProps} />
-          </Stack>
-          <Stack style={permissionsBannerContainerStyle}>
-            <PermissionsBanner
-              microphonePermissionGranted={devicePermissions.audio}
-              cameraPermissionGranted={devicePermissions.video}
-            />
-          </Stack>
-          {options?.errorBar !== false && (
-            <Stack>
-              <ErrorBar {...errorBarProps} />
-            </Stack>
-          )}
-        </Stack.Item>
-
-        <Stack.Item styles={subContainerStyles} grow>
-          {callStatus === 'Connected' && (
-            <>
-              <Stack id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
-                <MediaGallery
-                  {...mediaGalleryProps}
-                  {...mediaGalleryHandlers}
-                  onRenderAvatar={onRenderAvatar}
-                  onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-                />
-              </Stack>
-              {isScreenShareOn ? (
-                <ScreenSharePopup
-                  hostId={screenShareModalHostId}
-                  onStopScreenShare={() => {
-                    return adapter.stopScreenShare();
-                  }}
-                />
-              ) : (
-                <></>
-              )}
-            </>
-          )}
-        </Stack.Item>
-        {callControlOptions !== false && (
-          <Stack.Item className={callControlsContainer}>
-            <CallControls
-              onEndCallClick={endCallHandler}
-              callInvitationURL={callInvitationURL}
-              onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-              options={callControlOptions}
-            />
-          </Stack.Item>
-        )}
-      </>
-    </Stack>
+    <CallArrangement
+      complianceBannerProps={{ ...complianceBannerProps }}
+      permissionBannerProps={{
+        microphonePermissionGranted: devicePermissions.audio,
+        cameraPermissionGranted: devicePermissions.video
+      }}
+      errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
+      mediaGalleryProps={
+        callStatus === 'Connected' && {
+          ...mediaGalleryProps,
+          ...mediaGalleryHandlers,
+          onRenderAvatar: onRenderAvatar,
+          onFetchAvatarPersonaData: onFetchAvatarPersonaData
+        }
+      }
+      screenSharePopupProps={
+        isScreenShareOn && {
+          hostId: screenShareModalHostId,
+          onStopScreenShare: () => {
+            return adapter.stopScreenShare();
+          }
+        }
+      }
+      callControlProps={
+        callControlOptions !== false && {
+          onEndCallClick: endCallHandler,
+          callInvitationURL: callInvitationURL,
+          onFetchParticipantMenuItems: onFetchParticipantMenuItems,
+          options: callControlOptions
+        }
+      }
+    />
   );
 };
 
