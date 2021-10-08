@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Join Existing Chat Thread Join Existing Chat Thread 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-61 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >

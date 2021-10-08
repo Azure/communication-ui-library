@@ -8,17 +8,18 @@ import {
   endCallContainerStyle,
   endCallTitleStyle,
   buttonStyle,
+  buttonWithIconStyles,
   mainStackTokens,
   buttonsStackTokens,
   upperStackTokens,
   videoCameraIconStyle,
   bottomStackFooterStyle
-} from './styles/Error.styles';
+} from '../styles/Error.styles';
 
 /**
  * @private
  */
-export interface ErrorProps {
+export interface ErrorPageProps {
   rejoinHandler(): void;
   title?: string;
   reason?: string;
@@ -27,7 +28,7 @@ export interface ErrorProps {
 /**
  * @private
  */
-export function Error(props: ErrorProps): JSX.Element {
+export function ErrorPage(props: ErrorPageProps): JSX.Element {
   const title = props.title ?? 'Error joining the Call';
   const rejoinCall = 'Retry Call';
 
@@ -36,10 +37,13 @@ export function Error(props: ErrorProps): JSX.Element {
       <Stack tokens={upperStackTokens}>
         <div className={endCallTitleStyle}>{title}</div>
         <Stack horizontal tokens={buttonsStackTokens}>
-          <PrimaryButton className={buttonStyle} onClick={props.rejoinHandler}>
-            <Video20Filled primaryFill="currentColor" className={videoCameraIconStyle} />
-            {rejoinCall}
-          </PrimaryButton>
+          <PrimaryButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={rejoinCall}
+            onClick={props.rejoinHandler}
+            onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
+          />
         </Stack>
         <div className={bottomStackFooterStyle}>
           {props.reason ? (

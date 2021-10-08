@@ -5,6 +5,7 @@ import { IImageStyles, Icon, Image, Link, List, PrimaryButton, Spinner, Stack, T
 import React, { useState } from 'react';
 import {
   buttonStyle,
+  buttonWithIconStyles,
   configContainerStackTokens,
   configContainerStyle,
   containerTokens,
@@ -16,7 +17,6 @@ import {
   imgStyle,
   listStyle,
   nestedStackTokens,
-  startChatTextStyle,
   infoContainerStyle,
   infoContainerStackTokens,
   videoCameraIconStyle
@@ -123,14 +123,14 @@ export default (): JSX.Element => {
             <PrimaryButton
               id="startChat"
               aria-label="Start chat"
+              text={startChatButtonText}
               className={buttonStyle}
+              styles={buttonWithIconStyles}
               onClick={() => {
                 onCreateThread();
               }}
-            >
-              <Chat20Filled className={videoCameraIconStyle} />
-              <Text className={startChatTextStyle}>{startChatButtonText}</Text>
-            </PrimaryButton>
+              onRenderIcon={() => <Chat20Filled className={videoCameraIconStyle} />}
+            />
             <ThemeSelector label="Theme" horizontal={true} />
           </Stack>
         </Stack>
