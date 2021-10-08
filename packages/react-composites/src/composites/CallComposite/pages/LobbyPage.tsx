@@ -8,6 +8,7 @@ import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { lobbySelector } from '../selectors/lobbySelector';
 import { useHandlers } from '../hooks/useHandlers';
 import { useAdapter } from '../adapter/CallAdapterProvider';
+import { Spinner } from '@fluentui/react';
 
 const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
 
@@ -31,6 +32,11 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const callState = adapterState.call?.state;
   const lobbyProps = useSelector(lobbySelector);
   const lobbyHandlers = useHandlers(Lobby);
+
+  if (adapterState.isTeamsCall) {
+    const spinnerLabel = 'Initializing call client...';
+    return <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />;
+  }
 
   return (
     <Lobby
