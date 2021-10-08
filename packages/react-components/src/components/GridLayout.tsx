@@ -54,15 +54,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   }, [observer]);
 
   const gridProps = useMemo(() => {
-    if (currentWidth > 0 && currentHeight > 0) {
-      return calculateGridProps(numberOfChildren, currentWidth, currentHeight);
-    }
-    const fillDirection: 'horizontal' | 'vertical' = 'horizontal';
-    return {
-      fillDirection,
-      rows: Math.ceil(Math.sqrt(numberOfChildren)),
-      columns: Math.ceil(Math.sqrt(numberOfChildren))
-    };
+    return calculateGridProps(numberOfChildren, currentWidth, currentHeight);
   }, [numberOfChildren, currentWidth, currentHeight]);
 
   return (
@@ -106,10 +98,12 @@ const isCloserThan = (a: number, b: number, target: number): boolean => {
  * ```
  */
 type GridProps = {
-  fillDirection: 'horizontal' | 'vertical';
+  fillDirection: FillDirection;
   rows: number;
   columns: number;
 };
+
+type FillDirection = 'horizontal' | 'vertical';
 
 /**
  * Get the best GridProps to place a number of items in a grid as evenly as possible given the width and height of the grid
@@ -119,8 +113,16 @@ type GridProps = {
  * @returns GridProps
  */
 export const calculateGridProps = (numberOfItems: number, width: number, height: number): GridProps => {
-  if (numberOfItems <= 0 || width <= 0 || height <= 0) {
+  if (numberOfItems <= 0) {
     return { fillDirection: 'horizontal', rows: 0, columns: 0 };
+  }
+  // If width or height are 0 then we return rows and column evenly
+  if (width <= 0 || height <= 0) {
+    return {
+      fillDirection: 'horizontal',
+      rows: Math.ceil(Math.sqrt(numberOfItems)),
+      columns: Math.ceil(Math.sqrt(numberOfItems))
+    };
   }
   const aspectRatio = width / height;
   // Approximate how many rows to divide the grid to achieve cells close to the TARGET_CELL_ASPECT_RATIO
