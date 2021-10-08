@@ -3,11 +3,11 @@
 
 import React, { useMemo, useState, useEffect } from 'react';
 import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
-import { useSelector } from './hooks/useSelector';
-import { usePropsFor } from './hooks/usePropsFor';
+import { useSelector } from '../hooks/useSelector';
+import { usePropsFor } from '../hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
-import { getIsPreviewCameraOn } from './selectors/baseSelectors';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
 
 const VideoGalleryStyles = {

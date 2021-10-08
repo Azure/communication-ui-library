@@ -18,7 +18,7 @@ import {
   getScreenSharePopupModalStyles,
   screenSharePopupModalLabelStyles,
   screenSharePopupModalStackStyles
-} from './styles/ScreenSharePopup.styles';
+} from '../styles/ScreenSharePopup.styles';
 
 const STOP_SCREENSHARE_BUTTON_TEXT = 'Stop presenting';
 const STOP_SCREENSHARE_LABEL_TEXT = "You're presenting your screen.";
