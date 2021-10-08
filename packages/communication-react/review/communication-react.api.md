@@ -314,6 +314,8 @@ export interface CallCompositeStrings {
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
+    lobbyScreenConnectingToCallText: string;
+    lobbyScreenWaitingToBeAdmittedText: string;
     microphonePermissionDenied: string;
     soundLabel: string;
     startCallButtonText: string;
