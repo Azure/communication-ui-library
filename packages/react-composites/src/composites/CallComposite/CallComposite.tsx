@@ -7,7 +7,7 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
+import { CallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallControlOptions } from './components/CallControls';
 import { CallPage } from './pages/CallPage';
