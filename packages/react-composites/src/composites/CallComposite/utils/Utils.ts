@@ -8,7 +8,8 @@ import { CallAdapterState } from '../adapter/CallAdapter';
 /**
  * @private
  */
-export const isInCall = (callStatus: CallStatus): boolean => !!(callStatus !== 'None' && callStatus !== 'Disconnected');
+export const isInCall = (callStatus?: CallStatus): boolean =>
+  !!callStatus && callStatus !== 'None' && callStatus !== 'Disconnected';
 
 /**
  * @private
