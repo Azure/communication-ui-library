@@ -32,7 +32,8 @@
     "@microsoft/applicationinsights-react-js": "~3.0.5",
     "@microsoft/applicationinsights-web": "~2.6.2",
     "@uifabric/react-hooks": "~7.13.11",
-    "copy-to-clipboard": "~3.3.1"
+    "copy-to-clipboard": "~3.3.1",
+    "resize-observer-polyfill": "~1.5.1"
   },
   "devDependencies": {
     "@babel/core": "7.13.10",
