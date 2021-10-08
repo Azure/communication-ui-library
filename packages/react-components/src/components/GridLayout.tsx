@@ -143,7 +143,7 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
     if (numberOfItems < rows * columns) {
       // We need to check that stretching columns vertically will result in only one less cell in stretched columns.
       // Likewise, we need to check that stretching rows horizonally will result in only one less cell in stretched rows.
-      // e.g. For 4 rows, 2 columns, but only 6 items, we should not stretch vertically because that would result in a
+      // e.g. For 4 rows, 2 columns, but only 6 items, we cannot stretch vertically because that would result in a
       // column of 2 cells which is less by more than 1 compared to the unstretched column.
       //  _________
       // |____|    |
@@ -151,15 +151,15 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
       // |____|    |
       // |____|____|
 
-      const shouldStretchVertically = numberOfItems >= rows + (columns - 1) * (rows - 1);
-      const shouldStretchHorizontally = numberOfItems >= columns + (rows - 1) * (columns - 1);
-      if (!shouldStretchVertically && !shouldStretchHorizontally) {
+      const canStretchVertically = numberOfItems >= rows + (columns - 1) * (rows - 1);
+      const canStretchHorizontally = numberOfItems >= columns + (rows - 1) * (columns - 1);
+      if (!canStretchVertically && !canStretchHorizontally) {
         rows += 1;
         columns = Math.ceil(numberOfItems / rows);
         continue;
-      } else if (!shouldStretchVertically) {
+      } else if (!canStretchVertically) {
         break;
-      } else if (!shouldStretchHorizontally) {
+      } else if (!canStretchHorizontally) {
         fillDirection = 'vertical';
         break;
       }
