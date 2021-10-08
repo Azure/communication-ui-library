@@ -5,7 +5,7 @@ import { IDS } from '../common/constants';
 import {
   buildUrl,
   dataUiId,
-  loadCallScreenWithParticipantVideos,
+  loadCallPageWithParticipantVideos,
   stubMessageTimestamps,
   waitForMeetingCompositeToLoad
 } from '../common/utils';
@@ -50,7 +50,7 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
       await waitForMeetingCompositeToLoad(page);
     }
 
-    await loadCallScreenWithParticipantVideos(pages);
+    await loadCallPageWithParticipantVideos(pages);
   });
 
   test('Meeting gallery screen loads correctly', async ({ pages }) => {
