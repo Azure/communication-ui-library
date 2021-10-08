@@ -115,6 +115,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const screenShareButton = options?.screenShareButton !== false && (
     <ScreenShareButton
+      data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
       styles={{
         rootChecked: checkedButtonStyleOverrride,

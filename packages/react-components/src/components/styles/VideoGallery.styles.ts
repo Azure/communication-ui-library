@@ -113,5 +113,6 @@ export const screenSharingNotificationIconStyle = mergeStyles({
  */
 export const screenSharingNotificationTextStyle = mergeStyles({
   fontSize: '1rem',
+  // Text component will take body color by default (white in Dark Mode), so forcing it to be parent container color
   color: 'inherit'
 });

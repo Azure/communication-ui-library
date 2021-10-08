@@ -18,7 +18,7 @@ import {
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
-import { getVideoTileInfoColor } from './utils/videoTileStylesUtils';
+import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
 /**
  * Fluent styles for {@link VideoTile}.
@@ -156,7 +156,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     () =>
       mergeStyles(
         isVideoRendered ? videoHint : disabledVideoHint,
-        getVideoTileInfoColor(isVideoRendered, theme),
+        getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
         styles?.displayNameContainer
       ),
     [isVideoRendered, theme.palette.neutralPrimary, styles?.displayNameContainer]
