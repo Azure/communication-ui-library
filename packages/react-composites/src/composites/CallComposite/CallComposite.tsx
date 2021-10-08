@@ -153,7 +153,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
     default:
-      throw 'Invalid call composite page';
+      throw new Error('Invalid call composite page');
   }
 };
 
