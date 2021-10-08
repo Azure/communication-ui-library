@@ -8,6 +8,7 @@ import {
   endCallContainerStyle,
   endCallTitleStyle,
   buttonStyle,
+  buttonWithIconStyles,
   mainStackTokens,
   buttonsStackTokens,
   upperStackTokens,
@@ -41,13 +42,19 @@ export const CallError = (props: CallErrorProps): JSX.Element => {
           {title}
         </Text>
         <Stack horizontal tokens={buttonsStackTokens}>
-          <PrimaryButton className={buttonStyle} onClick={props.rejoinHandler}>
-            <Video20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
-            {rejoinCall}
-          </PrimaryButton>
-          <DefaultButton className={buttonStyle} onClick={props.homeHandler}>
-            {goHomePage}
-          </DefaultButton>
+          <PrimaryButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={rejoinCall}
+            onClick={props.rejoinHandler}
+            onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} primaryFill="currentColor" />}
+          />
+          <DefaultButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={goHomePage}
+            onClick={props.homeHandler}
+          />
         </Stack>
         <div className={bottomStackFooterStyle}>
           {props.reason ? (
