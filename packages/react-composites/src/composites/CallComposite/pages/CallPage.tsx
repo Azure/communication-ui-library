@@ -7,7 +7,6 @@ import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { PermissionsBanner } from '../../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../../common/styles/PermissionsBanner.styles';
-import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallControls } from '../components/CallControls';
 import { ComplianceBanner } from '../components/ComplianceBanner';
@@ -61,7 +60,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const complianceBannerProps = useSelector(complianceBannerSelector);
   const errorBarProps = usePropsFor(ErrorBar);
   const devicePermissions = useSelector(devicePermissionSelector);
-  const adapter = useAdapter();
 
   // Reduce the controls shown when mobile view is enabled.
   let callControlOptions: false | CallControlOptions =
