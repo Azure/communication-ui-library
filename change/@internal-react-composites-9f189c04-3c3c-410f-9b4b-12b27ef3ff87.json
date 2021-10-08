@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add min width to the chat bubble",
+  "packageName": "@internal/react-composites",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
