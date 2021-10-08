@@ -130,7 +130,10 @@ export const gutterWithHiddenAvatar: ComponentSlotStyle = {
   position: 'relative',
   float: 'left',
   display: 'block',
-  visibility: 'hidden'
+  visibility: 'hidden',
+  // we use this hidden avatar just as a width placeholder
+  // the placeholder is needed for responsive bubble width
+  height: 0
 };
 
 /**
