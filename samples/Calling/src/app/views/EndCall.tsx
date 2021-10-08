@@ -8,6 +8,7 @@ import {
   endCallContainerStyle,
   endCallTitleStyle,
   buttonStyle,
+  buttonWithIconStyles,
   mainStackTokens,
   buttonsStackTokens,
   upperStackTokens,
@@ -42,13 +43,19 @@ export const EndCall = (props: EndCallProps): JSX.Element => {
           {leftCall}
         </Text>
         <Stack horizontal wrap tokens={buttonsStackTokens}>
-          <PrimaryButton className={buttonStyle} onClick={props.rejoinHandler}>
-            <Video20Filled className={videoCameraIconStyle} primaryFill="currentColor" />
-            {rejoinCall}
-          </PrimaryButton>
-          <DefaultButton className={buttonStyle} onClick={props.homeHandler}>
-            {goHomePage}
-          </DefaultButton>
+          <PrimaryButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={rejoinCall}
+            onClick={props.rejoinHandler}
+            onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
+          />
+          <DefaultButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={goHomePage}
+            onClick={props.homeHandler}
+          />
         </Stack>
         <div className={bottomStackFooterStyle}>
           <Link href={feedbackLink}>Give Feedback</Link>&nbsp;on this sample app at Microsoft Q&amp;A

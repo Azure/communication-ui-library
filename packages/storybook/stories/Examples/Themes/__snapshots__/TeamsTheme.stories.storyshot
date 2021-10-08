@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-61 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -31,11 +31,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-60 body-1"
+          className="css-61 body-1"
           dir="ltr"
         >
           <div
-            className="css-60"
+            className="css-61"
             data-uses-unhanded-props={true}
           >
             <div
@@ -58,10 +58,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     className="css-7"
                   >
                     <div
-                      className="ms-Stack css-9"
+                      className="ms-Stack css-8"
                     >
                       <button
-                        className="ms-Button ms-Button--default root-10"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -72,7 +72,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-11"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
                           <i
@@ -107,7 +107,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-10"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -118,7 +118,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-11"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
                           <i
@@ -153,7 +153,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-10"
+                        className="ms-Button ms-Button--default root-9"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -164,7 +164,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-11"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
                           <i
@@ -193,7 +193,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </span>
                       </button>
                       <button
-                        className="ms-Button ms-Button--default root-18"
+                        className="ms-Button ms-Button--default root-17"
                         data-is-focusable={true}
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -204,7 +204,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         type="button"
                       >
                         <span
-                          className="ms-Button-flexContainer flexContainer-11"
+                          className="ms-Button-flexContainer flexContainer-10"
                           data-automationid="splitbuttonprimary"
                         >
                           <i
@@ -247,77 +247,92 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
               </div>
               <div
                 className="css-56"
-                style={
-                  Object {
-                    "gridTemplateColumns": "repeat(1, 1fr)",
-                    "gridTemplateRows": "repeat(1, minmax(0, 1fr))",
-                  }
-                }
               >
                 <div
-                  className="ms-Stack css-25"
-                  data-ui-id="video-tile"
+                  className="css-57"
+                  style={
+                    Object {
+                      "gridAutoFlow": "column",
+                      "gridTemplateRows": "repeat(1, 1fr)",
+                    }
+                  }
                 >
                   <div
-                    className="ms-Stack css-26"
+                    className="css-57"
+                    style={
+                      Object {
+                        "gridRow": "auto / span 1",
+                        "gridTemplateColumns": "repeat(1, 1fr)",
+                        "gridTemplateRows": "repeat(1, 1fr)",
+                      }
+                    }
                   >
                     <div
-                      className="ms-Stack css-28"
+                      className="ms-Stack css-24"
+                      data-ui-id="video-tile"
                     >
                       <div
-                        aria-label=""
-                        className="ms-Persona ms-Persona--size48 root-29"
-                        style={
-                          Object {
-                            "height": 100,
-                            "minWidth": 100,
-                          }
-                        }
+                        className="ms-Stack css-25"
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size48 coin-36"
-                          role="presentation"
+                          className="ms-Stack css-27"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-38"
-                            role="presentation"
+                            aria-label=""
+                            className="ms-Persona ms-Persona--size48 root-28"
                             style={
                               Object {
                                 "height": 100,
-                                "width": 100,
+                                "minWidth": 100,
                               }
                             }
                           >
                             <div
-                              aria-hidden="true"
-                              className="ms-Persona-initials initials-41"
-                              style={
-                                Object {
-                                  "height": 100,
-                                  "width": 100,
-                                }
-                              }
+                              className="ms-Persona-coin ms-Persona--size48 coin-35"
+                              role="presentation"
                             >
-                              <span>
-                                M
-                              </span>
+                              <div
+                                className="ms-Persona-imageArea imageArea-37"
+                                role="presentation"
+                                style={
+                                  Object {
+                                    "height": 100,
+                                    "width": 100,
+                                  }
+                                }
+                              >
+                                <div
+                                  aria-hidden="true"
+                                  className="ms-Persona-initials initials-40"
+                                  style={
+                                    Object {
+                                      "height": 100,
+                                      "width": 100,
+                                    }
+                                  }
+                                >
+                                  <span>
+                                    M
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div
-                    className="ms-Stack css-87 css-44"
-                  >
-                    <div
-                      className="ms-StackItem css-45"
-                    >
-                      <span
-                        className="css-46"
+                      <div
+                        className="ms-Stack css-87 css-43"
                       >
-                        Michael
-                      </span>
+                        <div
+                          className="ms-StackItem css-44"
+                        >
+                          <span
+                            className="css-45"
+                          >
+                            Michael
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

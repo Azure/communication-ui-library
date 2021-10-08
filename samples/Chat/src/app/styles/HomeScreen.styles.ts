@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackTokens, getTheme, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStackTokens, getTheme, mergeStyles } from '@fluentui/react';
 
 const palette = getTheme().palette;
 
@@ -75,14 +75,16 @@ export const buttonStyle = mergeStyles({
   borderRadius: 3
 });
 
+export const buttonWithIconStyles: IButtonStyles = {
+  textContainer: {
+    display: 'contents'
+  }
+};
+
 export const infoContainerStyle = mergeStyles({
   width: '23.188rem'
 });
 
 export const configContainerStyle = mergeStyles({
   width: 'inherit'
-});
-
-export const startChatTextStyle = mergeStyles({
-  fontSize: '0.875rem' // 14px
 });
