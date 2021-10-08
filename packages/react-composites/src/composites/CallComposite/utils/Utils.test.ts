@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { isInCall } from './SDKUtils';
+import { isInCall } from './Utils';
 
 describe('SDKUtils tests', () => {
   describe('isInCall tests', () => {

@@ -36,7 +36,7 @@ import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener
 } from './CallAdapter';
-import { isCameraOn, isInCall } from '../SDKUtils';
+import { isCameraOn, isInCall } from '../utils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';

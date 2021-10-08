@@ -43,9 +43,9 @@ export const waitForMeetingCompositeToLoad = async (page: Page): Promise<void> =
 };
 
 /**
- * Wait for the Composite CallScreen page to fully load.
+ * Wait for the Composite CallPage page to fully load.
  */
-export const loadCallScreen = async (pages: Page[]): Promise<void> => {
+export const loadCallPage = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
     await page.bringToFront();
     await page.click(dataUiId('call-composite-start-call-button'));
@@ -66,9 +66,9 @@ export const loadCallScreen = async (pages: Page[]): Promise<void> => {
 };
 
 /**
- * Wait for the Composite CallScreen page to fully load with video participant video feeds enabled.
+ * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
  */
-export const loadCallScreenWithParticipantVideos = async (pages: Page[]): Promise<void> => {
+export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<void> => {
   // Start local camera and start the call
   for (const page of pages) {
     await page.bringToFront();

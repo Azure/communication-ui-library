@@ -8,7 +8,13 @@ import { CallCompositePage } from '../../CallComposite';
  *
  * @alpha
  */
-export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+export type MeetingCompositePage =
+  | 'configuration'
+  | 'lobby'
+  | 'meeting'
+  | 'error'
+  | 'errorJoiningTeamsMeeting'
+  | 'removed';
 
 /**
  * @private

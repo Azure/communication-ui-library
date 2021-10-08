@@ -2,16 +2,16 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
-import { useHandlers } from './hooks/useHandlers';
-import { LocalDeviceSettings } from './LocalDeviceSettings';
-import { StartCallButton } from './StartCallButton';
-import { devicePermissionSelector } from './selectors/devicePermissionSelector';
-import { useSelector } from './hooks/useSelector';
+import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
+import { useHandlers } from '../hooks/useHandlers';
+import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
+import { StartCallButton } from '../components/StartCallButton';
+import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
+import { useSelector } from '../hooks/useSelector';
 import { OptionsButton } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
-import { LocalPreview } from './LocalPreview';
+import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
   callDetailsStyleMobile,
@@ -26,13 +26,13 @@ import {
   titleContainerStyleDesktop,
   titleContainerStyleMobile,
   callDetailsContainerStylesDesktop
-} from './styles/CallConfiguration.styles';
-import { useLocale } from '../localization';
+} from '../styles/CallConfiguration.styles';
+import { useLocale } from '../../localization';
 
 /**
  * @private
  */
-export interface ConfigurationScreenProps {
+export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
 }
@@ -40,7 +40,7 @@ export interface ConfigurationScreenProps {
 /**
  * @private
  */
-export const ConfigurationScreen = (props: ConfigurationScreenProps): JSX.Element => {
+export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element => {
   const { startCallHandler, mobileView } = props;
 
   const options = useAdaptedSelector(getCallingSelector(OptionsButton));
