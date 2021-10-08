@@ -32,28 +32,30 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const { children, styles } = props;
   const numberOfChildren = React.Children.count(children);
 
+  const [currentWidth, setCurrentWidth] = useState(0);
+  const [currentHeight, setCurrentHeight] = useState(0);
+
   const containerRef = useRef<HTMLDivElement>(null);
-  const [gridProps, setGridProps] = useState<GridProps>({
-    fillDirection: 'horizontal',
-    rows: Math.ceil(Math.sqrt(numberOfChildren)),
-    columns: Math.ceil(Math.sqrt(numberOfChildren))
-  });
+
+  const observer = useRef(
+    new ResizeObserver((entries): void => {
+      const { width, height } = entries[0].contentRect;
+      setCurrentWidth(width);
+      setCurrentHeight(height);
+    })
+  );
 
   useEffect(() => {
-    const updateGridProps = (): void => {
-      if (containerRef.current) {
-        setGridProps(
-          calculateGridProps(numberOfChildren, containerRef.current.offsetWidth, containerRef.current.offsetHeight)
-        );
-      }
-    };
-    const observer = new ResizeObserver(updateGridProps);
     if (containerRef.current) {
-      observer.observe(containerRef.current);
+      observer.current.observe(containerRef.current);
     }
-    updateGridProps();
-    return () => observer.disconnect();
-  }, [numberOfChildren, containerRef.current?.offsetWidth, containerRef.current?.offsetHeight]);
+    const currentObserver = observer.current;
+    return () => currentObserver.disconnect();
+  }, [observer, containerRef]);
+
+  const gridProps = useMemo(() => {
+    return calculateGridProps(numberOfChildren, currentWidth, currentHeight);
+  }, [numberOfChildren, currentWidth, currentHeight]);
 
   return (
     <div ref={containerRef} className={mergeStyles(gridLayoutStyle, styles?.root)}>
@@ -96,10 +98,12 @@ const isCloserThan = (a: number, b: number, target: number): boolean => {
  * ```
  */
 type GridProps = {
-  fillDirection: 'horizontal' | 'vertical';
+  fillDirection: FillDirection;
   rows: number;
   columns: number;
 };
+
+type FillDirection = 'horizontal' | 'vertical';
 
 /**
  * Get the best GridProps to place a number of items in a grid as evenly as possible given the width and height of the grid
@@ -109,8 +113,16 @@ type GridProps = {
  * @returns GridProps
  */
 export const calculateGridProps = (numberOfItems: number, width: number, height: number): GridProps => {
-  if (numberOfItems <= 0 || width <= 0 || height <= 0) {
+  if (numberOfItems <= 0) {
     return { fillDirection: 'horizontal', rows: 0, columns: 0 };
+  }
+  // If width or height are 0 then we return rows and column evenly
+  if (width <= 0 || height <= 0) {
+    return {
+      fillDirection: 'horizontal',
+      rows: Math.ceil(Math.sqrt(numberOfItems)),
+      columns: Math.ceil(Math.sqrt(numberOfItems))
+    };
   }
   const aspectRatio = width / height;
   // Approximate how many rows to divide the grid to achieve cells close to the TARGET_CELL_ASPECT_RATIO
@@ -133,7 +145,7 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
     if (numberOfItems < rows * columns) {
       // We need to check that stretching columns vertically will result in only one less cell in stretched columns.
       // Likewise, we need to check that stretching rows horizonally will result in only one less cell in stretched rows.
-      // e.g. For 4 rows, 2 columns, but only 6 items, we should not stretch vertically because that would result in a
+      // e.g. For 4 rows, 2 columns, but only 6 items, we cannot stretch vertically because that would result in a
       // column of 2 cells which is less by more than 1 compared to the unstretched column.
       //  _________
       // |____|    |
@@ -141,15 +153,15 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
       // |____|    |
       // |____|____|
 
-      const shouldStretchVertically = numberOfItems >= rows + (columns - 1) * (rows - 1);
-      const shouldStretchHorizontally = numberOfItems >= columns + (rows - 1) * (columns - 1);
-      if (!shouldStretchVertically && !shouldStretchHorizontally) {
+      const canStretchVertically = numberOfItems >= rows + (columns - 1) * (rows - 1);
+      const canStretchHorizontally = numberOfItems >= columns + (rows - 1) * (columns - 1);
+      if (!canStretchVertically && !canStretchHorizontally) {
         rows += 1;
         columns = Math.ceil(numberOfItems / rows);
         continue;
-      } else if (!shouldStretchVertically) {
+      } else if (!canStretchVertically) {
         break;
-      } else if (!shouldStretchHorizontally) {
+      } else if (!canStretchHorizontally) {
         fillDirection = 'vertical';
         break;
       }
