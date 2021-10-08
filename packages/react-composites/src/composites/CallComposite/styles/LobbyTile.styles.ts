@@ -6,7 +6,7 @@ import { IPalette, IStyle } from '@fluentui/react';
 /**
  * @private
  */
-export const LobbyTileDarkenedOverlayStyles: (palette: IPalette, isVideoReady: boolean) => IStyle = (
+export const lobbyTileDarkenedOverlayStyles: (palette: IPalette, isVideoReady: boolean) => IStyle = (
   palette,
   isVideoReady
 ) => {
@@ -20,7 +20,7 @@ export const LobbyTileDarkenedOverlayStyles: (palette: IPalette, isVideoReady: b
 /**
  * @private
  */
-export const LobbyTileInformationStyles: (palette: IPalette, isVideoReady: boolean) => IStyle = (
+export const lobbyTileInformationStyles: (palette: IPalette, isVideoReady: boolean) => IStyle = (
   palette,
   isVideoReady
 ) => {
@@ -29,4 +29,11 @@ export const LobbyTileInformationStyles: (palette: IPalette, isVideoReady: boole
     color: isVideoReady ? 'white' : palette.neutralPrimary,
     textAlign: 'center'
   };
+};
+
+/**
+ * @private
+ */
+export const videoTileStyles = {
+  root: { height: '100%', width: '100%' }
 };

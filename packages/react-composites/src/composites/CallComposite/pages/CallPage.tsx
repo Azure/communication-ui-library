@@ -88,12 +88,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       onRenderGalleryContent={() =>
         callStatus === 'Connected' ? (
           <MediaGallery
-            {...{
-              ...mediaGalleryProps,
-              ...mediaGalleryHandlers,
-              onRenderAvatar: onRenderAvatar,
-              onFetchAvatarPersonaData: onFetchAvatarPersonaData
-            }}
+            {...mediaGalleryProps}
+            {...mediaGalleryHandlers}
+            onRenderAvatar={onRenderAvatar}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
         ) : (
           <></>

@@ -4,14 +4,13 @@
 import React, { useEffect } from 'react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { StreamMedia, VideoGalleryStream, VideoTile, useTheme, VideoStreamOptions } from '@internal/react-components';
-import { LobbyTileDarkenedOverlayStyles, LobbyTileInformationStyles } from '../styles/LobbyTile.styles';
+import {
+  lobbyTileDarkenedOverlayStyles,
+  lobbyTileInformationStyles,
+  videoTileStyles
+} from '../styles/LobbyTile.styles';
 
 const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
-
-const videoTileStyles = {
-  root: { height: '100%', width: '100%' },
-  overlayContainer: {}
-};
 
 const localVideoViewOption = {
   scalingMode: 'Crop',
@@ -60,12 +59,12 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
     >
       {props.overlay && (
         <>
-          <Stack verticalFill className={mergeStyles(LobbyTileDarkenedOverlayStyles(palette, isVideoReady))}></Stack>
+          <Stack verticalFill className={mergeStyles(lobbyTileDarkenedOverlayStyles(palette, isVideoReady))}></Stack>
           <Stack verticalFill horizontalAlign="center" verticalAlign="center">
-            <Stack.Item className={mergeStyles(LobbyTileInformationStyles(palette, isVideoReady))}>
+            <Stack.Item className={mergeStyles(lobbyTileInformationStyles(palette, isVideoReady))}>
               {props.overlay.overlayIcon()}
             </Stack.Item>
-            <Stack.Item className={mergeStyles(LobbyTileInformationStyles(palette, isVideoReady))}>
+            <Stack.Item className={mergeStyles(lobbyTileInformationStyles(palette, isVideoReady))}>
               {props.overlay.text}
             </Stack.Item>
           </Stack>
