@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import {
@@ -118,44 +118,36 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const isMobileScreen = useIsSmallScreen(containerRef);
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
-  // This component needs to be smart about which participants to pass to the grid and the horizontal gallery
-  const [gridParticipants, setGridParticipants] = useState<VideoGalleryRemoteParticipant[]>();
-  const [horizontalGalleryParticipants, setHorizontalGalleryParticipants] = useState<VideoGalleryRemoteParticipant[]>();
 
-  useEffect(() => {
-    visibleVideoParticipants.current = smartDominantSpeakerParticipants({
-      participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
-      dominantSpeakers,
-      visibleParticipants: visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
-    });
+  visibleVideoParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
+    dominantSpeakers,
+    visibleParticipants: visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
+  });
 
-    // Create a map of visibleVideoParticipants for faster searching.
-    // This map will be used to identify overflow participants. i.e., participants
-    // that should be rendered in horizontal gallery.
-    const visibleVideoParticipantsMap = {};
-    visibleVideoParticipants.current.forEach((p) => {
-      visibleVideoParticipantsMap[p.userId] = true;
-    });
-    // Max Tiles calculated inside that gallery can be passed to this function
-    // to only return the max number of tiles that can be rendered in the gallery.
-    visibleAudioParticipants.current = smartDominantSpeakerParticipants({
-      participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsMap[p.userId]) ?? [],
-      dominantSpeakers,
-      visibleParticipants: visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsMap[p.userId]),
-      maxTiles: 100,
-      maxDominantSpeakers: 6
-    });
+  // Create a map of visibleVideoParticipants for faster searching.
+  // This map will be used to identify overflow participants. i.e., participants
+  // that should be rendered in horizontal gallery.
+  const visibleVideoParticipantsMap = {};
+  visibleVideoParticipants.current.forEach((p) => {
+    visibleVideoParticipantsMap[p.userId] = true;
+  });
+  // Max Tiles calculated inside that gallery can be passed to this function
+  // to only return the max number of tiles that can be rendered in the gallery.
+  visibleAudioParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsMap[p.userId]) ?? [],
+    dominantSpeakers,
+    visibleParticipants: visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsMap[p.userId]),
+    maxTiles: 100,
+    maxDominantSpeakers: 6
+  });
 
-    // If there are no video participants, we assign all audio participants as grid participants and assign
-    // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
-    if (visibleVideoParticipants.current.length === 0) {
-      setGridParticipants(visibleAudioParticipants.current);
-      setHorizontalGalleryParticipants([]);
-    } else {
-      setGridParticipants(visibleVideoParticipants.current);
-      setHorizontalGalleryParticipants(visibleAudioParticipants.current);
-    }
-  }, [dominantSpeakers, remoteParticipants]);
+  // If there are no video participants, we assign all audio participants as grid participants and assign
+  // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
+  const gridParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
+  const horizontalGalleryParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
