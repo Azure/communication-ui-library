@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { Message, MessageAttachedStatus } from '@internal/react-components';
 import { compareMessages } from './compareMessages';
 
@@ -11,13 +13,11 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[], us
     if (message.messageType !== 'chat') {
       return;
     }
-    const mine = message.senderId === userId;
     /**
-     * A block of messages: continuous messages that belong to the same sender and not intercepted by other senders.
-     *
-     * Attacthed is the index of the last message in the previous block of messages which mine===true.
-     * This message's statusToRender will be reset when there's a new block of messages which mine===true. (Because
-     * in this case, we only want to show the read statusToRender of last message of the new messages block)
+     * Attached === true means it is within a group of messages in the current order
+     * Attached === top/bottom means it is on the top/bottom boundary
+     * Attached === false means it is just a single message
+     * A group of messages: continuous messages that belong to the same sender and not intercepted by other senders.
      */
     let attached: boolean | MessageAttachedStatus = false;
     const previousMessage = index > 0 ? messages[index - 1] : undefined;
@@ -33,6 +33,5 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[], us
     }
 
     message.attached = attached;
-    message.mine = mine;
   });
 };

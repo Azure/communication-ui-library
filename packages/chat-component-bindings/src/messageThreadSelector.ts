@@ -8,13 +8,11 @@ import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
   Message,
-  MessageAttachedStatus,
   CommunicationParticipant,
   SystemMessage,
   MessageContentType
 } from '@internal/react-components';
 import { createSelector } from 'reselect';
-import { compareMessages } from './utils/compareMessages';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
@@ -41,6 +39,7 @@ const convertToUiChatMessage = (
   isSeen: boolean,
   isLargeGroup: boolean
 ): ChatMessage => {
+  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
@@ -48,11 +47,12 @@ const convertToUiChatMessage = (
     contentType: sanitizedMessageContentType(message.type),
     status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
     senderDisplayName: message.senderDisplayName,
-    senderId: message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId,
+    senderId: messageSenderId,
     messageId: message.id,
     clientMessageId: message.clientMessageId,
     editedOn: message.editedOn,
-    deletedOn: message.deletedOn
+    deletedOn: message.deletedOn,
+    mine: messageSenderId === userId
   };
 };
 
