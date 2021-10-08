@@ -4,7 +4,12 @@
 import { CAT, FOX, KOALA, MONKEY, MOUSE, OCTOPUS } from './utils/utils';
 import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { buttonStyle, chatIconStyle, mainContainerStyle } from './styles/ConfigurationScreen.styles';
+import {
+  buttonStyle,
+  buttonWithIconStyles,
+  chatIconStyle,
+  mainContainerStyle
+} from './styles/ConfigurationScreen.styles';
 import {
   avatarListContainerStackTokens,
   avatarListContainerStyle,
@@ -19,8 +24,7 @@ import {
   rightInputContainerStackTokens,
   rightInputContainerStyle,
   smallAvatarContainerStyle,
-  smallAvatarStyle,
-  startChatButtonTextStyle
+  smallAvatarStyle
 } from './styles/ConfigurationScreen.styles';
 
 import { Chat20Filled } from '@fluentui/react-icons';
@@ -190,10 +194,14 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
             isEmpty={emptyWarning}
             isNameLengthExceedLimit={isNameLengthExceedLimit}
           />
-          <PrimaryButton disabled={disableJoinChatButton} className={buttonStyle} onClick={validateName}>
-            <Chat20Filled className={chatIconStyle} primaryFill="currentColor" />
-            <Text className={startChatButtonTextStyle}>Join chat</Text>
-          </PrimaryButton>
+          <PrimaryButton
+            disabled={disableJoinChatButton}
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={'Join chat'}
+            onClick={validateName}
+            onRenderIcon={() => <Chat20Filled className={chatIconStyle} />}
+          />
         </Stack>
       </Stack>
     );

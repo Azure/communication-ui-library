@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackTokens, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 
 export const mainStackTokens: IStackTokens = {
   childrenGap: '1rem'
@@ -34,6 +34,11 @@ export const buttonStyle = mergeStyles({
   fontSize: '0.875rem', // 14px
   padding: 0
 });
+export const buttonWithIconStyles: IButtonStyles = {
+  textContainer: {
+    display: 'contents'
+  }
+};
 export const videoCameraIconStyle = mergeStyles({
   marginRight: '0.375rem',
   fontSize: '1.375rem'

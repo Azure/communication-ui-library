@@ -89,15 +89,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
+            text={buttonText}
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
                 props.startCallHandler({ displayName, teamsLink });
               }
             }}
-          >
-            {buttonText}
-          </PrimaryButton>
+          />
           <div>
             <ThemeSelector label="Theme" horizontal={true} />
           </div>
