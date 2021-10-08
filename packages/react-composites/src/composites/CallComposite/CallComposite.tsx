@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -14,7 +14,9 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { ErrorPage } from './pages/ErrorPage';
 import { useSelector } from './hooks/useSelector';
-import { getPage } from './selectors/baseSelectors';
+import { getCallId, getCallStatus, getEndedCall, getPage } from './selectors/baseSelectors';
+import { LobbyPage } from './pages/LobbyPage';
+import { isInCall } from './utils';
 
 /**
  * Props for {@link CallComposite}.
@@ -77,13 +79,44 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const adapter = useAdapter();
+  const callState = useSelector(getCallStatus);
   const locale = useLocale();
+  const endedCall = useSelector(getEndedCall);
+  const callId = useSelector(getCallId);
+  const currentCallId = useRef('');
+
+  // Update page based on call state
+  useEffect(() => {
+    if (['Connecting', 'Ringing', 'InLobby'].includes(callState ?? 'None')) {
+      adapter.setPage('lobby');
+    } else if (isInCall(callState)) {
+      adapter.setPage('call');
+    }
+  }, [adapter, callState]);
+
+  // Remember last available callId
+  if (callId) {
+    currentCallId.current = callId;
+  }
+  // Update page if the caller was removed from a call
+  useEffect(() => {
+    if (endedCall && currentCallId.current === endedCall?.id) {
+      if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason.subCode === 5854) {
+        adapter.setPage('errorJoiningTeamsMeeting');
+      } else if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason?.subCode === 5300) {
+        adapter.setPage('removed');
+      }
+    }
+  }, [adapter, endedCall]);
+
   switch (page) {
     case 'configuration':
       return (
         <ConfigurationPage
           mobileView={props.options?.mobileView ?? false}
-          startCallHandler={(): void => adapter.setPage('call')}
+          startCallHandler={(): void => {
+            adapter.joinCall();
+          }}
         />
       );
     case 'error':
@@ -104,15 +137,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           reason={locale.strings.call.teamsMeetingFailReasonParticipantRemoved}
         />
       );
-    default:
+    case 'lobby':
+      return <LobbyPage endCallHandler={() => adapter.setPage('configuration')} />;
+    case 'call':
       return (
         <CallPage
-          endCallHandler={async (): Promise<void> => {
-            adapter.setPage('configuration');
-          }}
-          callErrorHandler={(customPage?: CallCompositePage) => {
-            customPage ? adapter.setPage(customPage) : adapter.setPage('error');
-          }}
+          endCallHandler={() => adapter.setPage('configuration')}
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
@@ -120,6 +150,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
         />
       );
+    default:
+      throw 'Invalid call composite page';
   }
 };
 

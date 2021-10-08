@@ -5,6 +5,44 @@ import { StreamMedia, VideoGalleryStream, VideoStreamOptions, VideoTile, useThem
 import { LobbyCallControlBar } from '../components/LobbyControlBar';
 import { useSelector } from '../hooks/useSelector';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
+import { lobbySelector } from '../selectors/lobbySelector';
+import { useHandlers } from '../hooks/useHandlers';
+import { useAdapter } from '../adapter/CallAdapterProvider';
+
+const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
+
+const localVideoViewOption = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
+
+/**
+ * @private
+ */
+export interface LobbyPageProps {
+  endCallHandler(): void;
+}
+
+/**
+ * @private
+ */
+export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
+  const adapterState = useAdapter().getState();
+  const callState = adapterState.call?.state;
+  const lobbyProps = useSelector(lobbySelector);
+  const lobbyHandlers = useHandlers(Lobby);
+
+  return (
+    <Lobby
+      callState={callState ?? 'None'}
+      {...lobbyProps}
+      {...lobbyHandlers}
+      onEndCallClick={props.endCallHandler}
+      isMicrophoneChecked={adapterState.isLocalPreviewMicrophoneEnabled}
+      localVideoViewOption={localVideoViewOption}
+    />
+  );
+};
 
 /**
  * @private
@@ -20,12 +58,10 @@ export interface LobbyProps {
   onEndCallClick: () => void;
 }
 
-const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
-
 /**
  * @private
  */
-export const Lobby = (props: LobbyProps): JSX.Element => {
+const Lobby = (props: LobbyProps): JSX.Element => {
   const theme = useTheme();
   const palette = theme.palette;
 
