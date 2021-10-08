@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { test } from './fixture';
-import { waitForCallCompositeToLoad, loadCallScreen, buildUrl } from '../common/utils';
+import { waitForCallCompositeToLoad, loadCallPage, buildUrl } from '../common/utils';
 import { expect } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 
@@ -27,7 +27,7 @@ test.describe('Localization tests', async () => {
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png');
 
-    await loadCallScreen([page]);
+    await loadCallPage([page]);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-screen.png');
   });
 });

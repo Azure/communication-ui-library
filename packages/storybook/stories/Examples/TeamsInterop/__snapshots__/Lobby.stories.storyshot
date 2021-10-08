@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-61 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-61"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -86,10 +86,10 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
             className="css-10"
           >
             <div
-              className="ms-Stack css-12"
+              className="ms-Stack css-11"
             >
               <button
-                className="ms-Button ms-Button--default is-checked root-13"
+                className="ms-Button ms-Button--default is-checked root-12"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -100,7 +100,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-14"
+                  className="ms-Button-flexContainer flexContainer-13"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
@@ -130,14 +130,14 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                   </i>
                   <span
-                    className="#323130 css-22"
+                    className="#323130 css-21"
                   >
                     Turn off
                   </span>
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default is-checked root-13"
+                className="ms-Button ms-Button--default is-checked root-12"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -148,7 +148,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-14"
+                  className="ms-Button-flexContainer flexContainer-13"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
@@ -178,14 +178,14 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                   </i>
                   <span
-                    className="#323130 css-22"
+                    className="#323130 css-21"
                   >
                     Mute
                   </span>
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-23"
+                className="ms-Button ms-Button--default root-22"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -196,7 +196,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-14"
+                  className="ms-Button-flexContainer flexContainer-13"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
@@ -223,13 +223,13 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                   </i>
                   <span
-                    className="#323130 css-22"
+                    className="#323130 css-21"
                   >
                     Options
                   </span>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-37 css-25 ms-Button-menuIcon menuIcon-24"
+                    className="ms-Icon root-37 css-24 ms-Button-menuIcon menuIcon-23"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -243,7 +243,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-26"
+                className="ms-Button ms-Button--default root-25"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -260,7 +260,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-14"
+                  className="ms-Button-flexContainer flexContainer-13"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
@@ -287,7 +287,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                   </i>
                   <span
-                    className="#323130 css-29"
+                    className="#323130 css-28"
                   >
                     Leave
                   </span>
