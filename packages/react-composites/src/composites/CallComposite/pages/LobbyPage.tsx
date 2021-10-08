@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { ErrorBar, VideoStreamOptions } from '@internal/react-components';
+import { ErrorBar } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
 import { CallCompositeOptions } from '../CallComposite';
@@ -35,13 +35,10 @@ export interface LobbyPageProps {
 export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const devicePermissions = useSelector(devicePermissionSelector);
   const errorBarProps = usePropsFor(ErrorBar);
-  const callState = useSelector(getCallStatus);
-
   const lobbyProps = useSelector(lobbySelector);
   const lobbyHandlers = useHandlers(LobbyTile);
 
-  console.log('lobbyProps.localParticipantVideoStream: ', lobbyProps.localParticipantVideoStream);
-
+  const callState = useSelector(getCallStatus);
   const callStateText = callState === 'InLobby' ? props.strings.waitingToBeAdmitted : props.strings.connectingToCall;
 
   return (
@@ -54,6 +51,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
       screenSharePopupProps={false}
       callControlProps={
+        // @TODO: we need to use the local device video stream until the call has been joined.
         props.options?.callControls !== false && {
           onEndCallClick: props.endCallHandler,
           options: props.options?.callControls

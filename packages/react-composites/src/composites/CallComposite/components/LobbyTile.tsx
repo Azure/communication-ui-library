@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 
 import React, { useEffect } from 'react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { StreamMedia, VideoGalleryStream, VideoTile, useTheme, VideoStreamOptions } from '@internal/react-components';
+import { LobbyTileDarkenedOverlayStyles, LobbyTileInformationStyles } from '../styles/LobbyTile.styles';
 
 const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
 
@@ -49,42 +51,25 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
   }, [isVideoReady, videoStream, props, renderElement]);
 
   const palette = useTheme().palette;
+
   return (
     <VideoTile
       styles={videoTileStyles}
       renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
       onRenderPlaceholder={onRenderEmptyPlaceholder}
     >
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          background: isVideoReady ? '#201f1e' : palette.neutralLight,
-          opacity: 0.75
-        }}
-      />
-
       {props.overlay && (
-        <div
-          style={{
-            textAlign: 'center',
-            zIndex: 0,
-            width: '50%',
-            height: '25%',
-            overflow: 'none',
-            margin: 'auto',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0
-          }}
-        >
-          <p style={{ fontSize: '1.75rem', color: isVideoReady ? 'white' : palette.neutralPrimary }}>
-            ☕ <br /> {props.overlay.text}
-          </p>
-        </div>
+        <>
+          <Stack verticalFill className={mergeStyles(LobbyTileDarkenedOverlayStyles(palette, isVideoReady))}></Stack>
+          <Stack verticalFill horizontalAlign="center" verticalAlign="center">
+            <Stack.Item className={mergeStyles(LobbyTileInformationStyles(palette, isVideoReady))}>
+              {props.overlay.overlayIcon()}
+            </Stack.Item>
+            <Stack.Item className={mergeStyles(LobbyTileInformationStyles(palette, isVideoReady))}>
+              {props.overlay.text}
+            </Stack.Item>
+          </Stack>
+        </>
       )}
     </VideoTile>
   );
