@@ -136,7 +136,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     visibleVideoParticipants.current.forEach((p) => {
       visibleVideoParticipantsMap[p.userId] = true;
     });
-    // @TODO: Can this possibly be done inside HorizontalGallery?
     // Max Tiles calculated inside that gallery can be passed to this function
     // to only return the max number of tiles that can be rendered in the gallery.
     visibleAudioParticipants.current = smartDominantSpeakerParticipants(
