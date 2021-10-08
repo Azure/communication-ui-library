@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { IDS } from '../common/constants';
-import { buildUrl, dataUiId, stubMessageTimestamps, waitForMeetingCompositeToLoad } from '../common/utils';
+import {
+  buildUrl,
+  dataUiId,
+  loadCallPageWithParticipantVideos,
+  stubMessageTimestamps,
+  waitForMeetingCompositeToLoad
+} from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
@@ -42,30 +48,14 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
 
       await page.goto(buildUrl(serverUrl, user));
       await waitForMeetingCompositeToLoad(page);
-
-      // Join Meeting for each participant
-      const startCallButton = await page.waitForSelector(dataUiId('call-composite-start-call-button'));
-      await startCallButton.waitForElementState('enabled');
-      await page.click(dataUiId('call-composite-start-call-button'));
     }
 
-    // Ensure meeting composites have successfully loaded and joined meeting
-    for (const page of pages) {
-      await page.bringToFront();
-      await page.waitForFunction(
-        (args) => {
-          const tileNodes = document.querySelectorAll(args.participantTileSelector);
-          const correctNoOfTiles = tileNodes.length === args.expectedTileCount;
-          return correctNoOfTiles;
-        },
-        { participantTileSelector: dataUiId('video-tile'), expectedTileCount: pages.length }
-      );
-    }
+    await loadCallPageWithParticipantVideos(pages);
   });
 
   test('Meeting gallery screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-basic-gallery-screen.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`meeting-gallery-screen.png`);
   });
 
   test('Chat messages are displayed correctly', async ({ pages }) => {
@@ -93,14 +83,14 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
     typingIndicator && (await typingIndicator.waitForElementState('hidden'));
 
     await stubMessageTimestamps(pages[0]);
-    expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-chat-pane-has-messages.png`);
+    expect(await pages[0].screenshot()).toMatchSnapshot(`meeting-gallery-screen-with-chat-pane.png`);
   });
 
   test('People pane opens and displays correctly', async ({ pages }) => {
     const page = pages[1];
     await page.click(dataUiId('meeting-composite-people-button'));
     await page.waitForSelector(dataUiId('meeting-composite-people-pane'));
-    expect(await page.screenshot()).toMatchSnapshot(`meeting-people-pane-has-participants.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`meeting-gallery-screen-with-people-pane.png`);
   });
 
   /**

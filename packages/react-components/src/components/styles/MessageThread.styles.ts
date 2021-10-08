@@ -3,7 +3,7 @@
 
 import { CSSProperties } from 'react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { mergeStyles } from '@fluentui/react';
+import { IButtonStyles, mergeStyles } from '@fluentui/react';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -148,6 +148,15 @@ export const newMessageButtonStyle = mergeStyles({
   float: 'right',
   width: 'fit-content'
 });
+
+/**
+ * @private
+ */
+export const buttonWithIconStyles: IButtonStyles = {
+  textContainer: {
+    display: 'contents'
+  }
+};
 
 /**
  * @private
