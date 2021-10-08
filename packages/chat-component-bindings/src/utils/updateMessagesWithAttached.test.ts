@@ -1,24 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Message } from '@internal/react-components';
+import { ChatMessage, CustomMessage, Message } from '@internal/react-components';
 import { updateMessagesWithAttached } from './updateMessagesWithAttached';
 
-const createMessageMock = (senderId: string, messageType: 'chat' | 'custom'): Message => {
-  return messageType === 'chat'
-    ? {
-        messageType,
-        senderId,
-        contentType: 'text',
-        createdOn: new Date(),
-        messageId: ''
-      }
-    : {
-        messageType,
-        content: '',
-        createdOn: new Date(),
-        messageId: ''
-      };
-};
+const cannedChatMessage = (senderId: string): ChatMessage => ({
+  messageType: 'chat',
+  senderId,
+  contentType: 'text',
+  createdOn: new Date(),
+  messageId: ''
+});
+
+const cannedCustomMessage = (): CustomMessage => ({
+  messageType: 'custom',
+  content: '',
+  createdOn: new Date(),
+  messageId: ''
+});
 
 const getAttachedStatusArray = (messages: Message[]) => {
   return messages.map((message) => (message.messageType === 'chat' ? message.attached : undefined));
@@ -26,18 +24,14 @@ const getAttachedStatusArray = (messages: Message[]) => {
 
 describe('update message with attached status', () => {
   test('Set right status for attached property for 1 message', () => {
-    const oneMessageArray: Message[] = [createMessageMock('1', 'chat')];
+    const oneMessageArray: Message[] = [cannedChatMessage('1')];
 
     updateMessagesWithAttached(oneMessageArray, '1');
     expect(getAttachedStatusArray(oneMessageArray)).toEqual([false]);
   });
 
   test('Set right status for attached property for 3 messages', () => {
-    const threeMessagesArray = [
-      createMessageMock('1', 'chat'),
-      createMessageMock('1', 'chat'),
-      createMessageMock('2', 'chat')
-    ];
+    const threeMessagesArray = [cannedChatMessage('1'), cannedChatMessage('1'), cannedChatMessage('2')];
 
     updateMessagesWithAttached(threeMessagesArray, '1');
     expect(getAttachedStatusArray(threeMessagesArray)).toEqual(['top', 'bottom', false]);
@@ -45,11 +39,11 @@ describe('update message with attached status', () => {
 
   test('Set right status for attached property for messages from different users', () => {
     const fiveMessagesArray = [
-      createMessageMock('2', 'chat'),
-      createMessageMock('1', 'chat'),
-      createMessageMock('1', 'chat'),
-      createMessageMock('1', 'chat'),
-      createMessageMock('2', 'chat')
+      cannedChatMessage('2'),
+      cannedChatMessage('1'),
+      cannedChatMessage('1'),
+      cannedChatMessage('1'),
+      cannedChatMessage('2')
     ];
 
     updateMessagesWithAttached(fiveMessagesArray, '1');
@@ -57,11 +51,7 @@ describe('update message with attached status', () => {
   });
 
   test('Set right status for attached property for different types of messages', () => {
-    const messagesArrayWithOtherMessage = [
-      createMessageMock('1', 'chat'),
-      createMessageMock('2', 'custom'),
-      createMessageMock('1', 'chat')
-    ];
+    const messagesArrayWithOtherMessage = [cannedChatMessage('1'), cannedCustomMessage(), cannedChatMessage('1')];
 
     updateMessagesWithAttached(messagesArrayWithOtherMessage, '1');
     expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual([false, undefined, false]);
