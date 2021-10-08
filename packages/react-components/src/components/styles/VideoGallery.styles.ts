@@ -77,7 +77,7 @@ export const screenSharingContainer = mergeStyles({
 /**
  * @private
  */
-export const screenSharingInfoContainerCameraOff = mergeStyles({
+export const screenSharingNotificationContainerCameraOff = mergeStyles({
   backgroundColor: 'inherit',
   padding: '1rem',
   maxWidth: '95%',
@@ -87,7 +87,7 @@ export const screenSharingInfoContainerCameraOff = mergeStyles({
 /**
  * @private
  */
-export const screenSharingInfoContainerCameraOn = mergeStyles(screenSharingInfoContainerCameraOff, {
+export const screenSharingNotificationContainerCameraOn = mergeStyles(screenSharingNotificationContainerCameraOff, {
   backgroundColor: palette.white,
   opacity: 0.8
 });
@@ -95,7 +95,7 @@ export const screenSharingInfoContainerCameraOn = mergeStyles(screenSharingInfoC
 /**
  * @private
  */
-export const screenSharingInfoIconContainer = mergeStyles({
+export const screenSharingNotificationIconContainer = mergeStyles({
   height: '2rem',
   lineHeight: 0
 });
@@ -103,7 +103,7 @@ export const screenSharingInfoIconContainer = mergeStyles({
 /**
  * @private
  */
-export const screenSharingInfoIconStyle = mergeStyles({
+export const screenSharingNotificationIconStyle = mergeStyles({
   // svg is (20px x 20px) but path is only (16px x 12px), so need to scale at 2.5 to get 40px
   transform: 'scale(2.5)'
 });
@@ -111,7 +111,7 @@ export const screenSharingInfoIconStyle = mergeStyles({
 /**
  * @private
  */
-export const screenSharingInfoTextStyle = mergeStyles({
+export const screenSharingNotificationTextStyle = mergeStyles({
   fontSize: '1rem',
   color: 'inherit'
 });

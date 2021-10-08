@@ -20,14 +20,14 @@ import {
   floatingLocalVideoTileStyle,
   gridStyle,
   screenSharingContainer,
-  screenSharingInfoIconContainer,
-  screenSharingInfoIconStyle,
-  screenSharingInfoContainerCameraOn,
-  screenSharingInfoContainerCameraOff,
-  screenSharingInfoTextStyle,
+  screenSharingNotificationIconContainer,
+  screenSharingNotificationIconStyle,
+  screenSharingNotificationContainerCameraOn,
+  screenSharingNotificationContainerCameraOff,
+  screenSharingNotificationTextStyle,
   videoGalleryContainerStyle
 } from './styles/VideoGallery.styles';
-import { getVideoTileInfoColor } from './utils/videoTileStylesUtils';
+import { getVideoTileInfoColor, getVideoTileScreenSharingNotificationIconColor } from './utils/videoTileStylesUtils';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
 
 const emptyStyles = {};
@@ -132,11 +132,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [layout, remoteParticipants]);
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {
-    const screenSharingInfoContainerStyle = mergeStyles(
+    const screenSharingNotificationContainerStyle = mergeStyles(
       localParticipant.videoStream?.renderElement
-        ? screenSharingInfoContainerCameraOn
-        : screenSharingInfoContainerCameraOff,
+        ? screenSharingNotificationContainerCameraOn
+        : screenSharingNotificationContainerCameraOff,
       getVideoTileInfoColor(!!localParticipant.videoStream?.renderElement, theme)
+    );
+
+    const screenSharingNotificationIconThemedStyle = mergeStyles(
+      screenSharingNotificationIconStyle,
+      getVideoTileScreenSharingNotificationIconColor(!!localParticipant.videoStream?.renderElement, theme)
     );
 
     return localParticipant.isScreenSharingOn ? (
@@ -144,13 +149,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <Stack
           horizontalAlign={'center'}
           verticalAlign={'center'}
-          className={screenSharingInfoContainerStyle}
+          className={screenSharingNotificationContainerStyle}
           tokens={{ childrenGap: '1rem' }}
         >
-          <Stack horizontal verticalAlign={'center'} className={screenSharingInfoIconContainer}>
-            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingInfoIconStyle} />
+          <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainer}>
+            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconThemedStyle} />
           </Stack>
-          <Text className={screenSharingInfoTextStyle} aria-live={'polite'}>
+          <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
             {props.strings?.screenSharingMessage ?? localeStrings.screenSharingMessage}
           </Text>
         </Stack>
