@@ -94,15 +94,14 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
         <Stack.Item styles={subContainerStyles} grow>
           {callStatus === 'Connected' && (
-            <>
-              <Stack id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
-                <MediaGallery
-                  {...mediaGalleryProps}
-                  {...mediaGalleryHandlers}
-                  onRenderAvatar={onRenderAvatar}
-                  onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-                />
-              </Stack>
+            <Stack id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
+              <MediaGallery
+                {...mediaGalleryProps}
+                {...mediaGalleryHandlers}
+                onRenderAvatar={onRenderAvatar}
+                onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              />
+            </Stack>
           )}
         </Stack.Item>
         {callControlOptions !== false && (
