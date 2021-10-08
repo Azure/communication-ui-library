@@ -32,28 +32,38 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const { children, styles } = props;
   const numberOfChildren = React.Children.count(children);
 
+  const [currentWidth, setCurrentWidth] = useState(0);
+  const [currentHeight, setCurrentHeight] = useState(0);
+
   const containerRef = useRef<HTMLDivElement>(null);
-  const [gridProps, setGridProps] = useState<GridProps>({
-    fillDirection: 'horizontal',
-    rows: Math.ceil(Math.sqrt(numberOfChildren)),
-    columns: Math.ceil(Math.sqrt(numberOfChildren))
-  });
+
+  const observer = useRef(
+    new ResizeObserver((entries): void => {
+      const { width, height } = entries[0].contentRect;
+      setCurrentWidth(width);
+      setCurrentHeight(height);
+    })
+  );
 
   useEffect(() => {
-    const updateGridProps = (): void => {
-      if (containerRef.current) {
-        setGridProps(
-          calculateGridProps(numberOfChildren, containerRef.current.offsetWidth, containerRef.current.offsetHeight)
-        );
-      }
-    };
-    const observer = new ResizeObserver(updateGridProps);
     if (containerRef.current) {
-      observer.observe(containerRef.current);
+      observer.current.observe(containerRef.current);
     }
-    updateGridProps();
-    return () => observer.disconnect();
-  }, [numberOfChildren, containerRef.current?.offsetWidth, containerRef.current?.offsetHeight]);
+    const currentObserver = observer.current;
+    return () => currentObserver.disconnect();
+  }, [observer]);
+
+  const gridProps = useMemo(() => {
+    if (currentWidth > 0 && currentHeight > 0) {
+      return calculateGridProps(numberOfChildren, currentWidth, currentHeight);
+    }
+    const fillDirection: 'horizontal' | 'vertical' = 'horizontal';
+    return {
+      fillDirection,
+      rows: Math.ceil(Math.sqrt(numberOfChildren)),
+      columns: Math.ceil(Math.sqrt(numberOfChildren))
+    };
+  }, [numberOfChildren, currentWidth, currentHeight]);
 
   return (
     <div ref={containerRef} className={mergeStyles(gridLayoutStyle, styles?.root)}>
