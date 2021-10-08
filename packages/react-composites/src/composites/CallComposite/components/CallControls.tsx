@@ -92,9 +92,12 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
-  const checkedButtonStyleOverrride = useMemo(
-    () => ({ background: theme.palette.themePrimary, color: palette.white }),
-    [theme.palette.themePrimary]
+  const checkedButtonOverrrideStyles = useMemo(
+    () => ({
+      rootChecked: { background: theme.palette.themePrimary, color: palette.white },
+      label: screenShareButtonProps.checked ? { color: palette.white } : {}
+    }),
+    [screenShareButtonProps.checked, theme.palette.themePrimary]
   );
 
   const microphoneButton = options?.microphoneButton !== false && (
@@ -117,10 +120,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <ScreenShareButton
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
-      styles={{
-        rootChecked: checkedButtonStyleOverrride,
-        label: screenShareButtonProps.checked ? { color: palette.white } : {}
-      }}
+      styles={checkedButtonOverrrideStyles}
       showLabel={!options?.compressedMode}
     />
   );
