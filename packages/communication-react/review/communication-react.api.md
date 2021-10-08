@@ -295,7 +295,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'configuration' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -1292,7 +1292,7 @@ export type MeetingCompositeOptions = {
 };
 
 // @alpha
-export type MeetingCompositePage = 'configuration' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+export type MeetingCompositePage = 'configuration' | 'lobby' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
 
 // @alpha
 export type MeetingCompositeProps = {
