@@ -12,8 +12,8 @@ import {
   ScreenShareButton
 } from '@internal/react-components';
 import React, { useCallback } from 'react';
-import { usePropsFor } from './hooks/usePropsFor';
-import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from './styles/CallControls.styles';
+import { usePropsFor } from '../hooks/usePropsFor';
+import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '../styles/CallControls.styles';
 
 /**
  * @private

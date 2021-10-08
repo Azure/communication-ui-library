@@ -12,19 +12,19 @@ import {
   VideoTile
 } from '@internal/react-components';
 import React, { useCallback } from 'react';
-import { useLocale } from '../localization';
-import { useAdapter } from './adapter/CallAdapterProvider';
-import { usePropsFor } from './hooks/usePropsFor';
-import { useSelector } from './hooks/useSelector';
-import { getLocalMicrophoneEnabled } from './selectors/baseSelectors';
-import { devicePermissionSelector } from './selectors/devicePermissionSelector';
-import { localPreviewSelector } from './selectors/localPreviewSelector';
+import { useLocale } from '../../localization';
+import { useAdapter } from '../adapter/CallAdapterProvider';
+import { usePropsFor } from '../hooks/usePropsFor';
+import { useSelector } from '../hooks/useSelector';
+import { getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
+import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
+import { localPreviewSelector } from '../selectors/localPreviewSelector';
 import {
   cameraOffLabelStyle,
   localPreviewContainerStyleDesktop,
   localPreviewContainerStyleMobile,
   localPreviewTileStyle
-} from './styles/LocalPreview.styles';
+} from '../styles/LocalPreview.styles';
 
 /**
  * @private

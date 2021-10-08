@@ -9,10 +9,10 @@ import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter, CallCompositePage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
-import { CallControlOptions } from './CallControls';
-import { CallScreen } from './CallScreen';
-import { ConfigurationScreen } from './ConfigurationScreen';
-import { Error } from './Error';
+import { CallControlOptions } from './components/CallControls';
+import { CallPage } from './pages/CallPage';
+import { ConfigurationPage } from './pages/ConfigurationPage';
+import { ErrorPage } from './pages/ErrorPage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 
@@ -81,16 +81,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   switch (page) {
     case 'configuration':
       return (
-        <ConfigurationScreen
+        <ConfigurationPage
           mobileView={props.options?.mobileView ?? false}
           startCallHandler={(): void => adapter.setPage('call')}
         />
       );
     case 'error':
-      return <Error rejoinHandler={() => adapter.setPage('configuration')} />;
+      return <ErrorPage rejoinHandler={() => adapter.setPage('configuration')} />;
     case 'errorJoiningTeamsMeeting':
       return (
-        <Error
+        <ErrorPage
           rejoinHandler={() => adapter.setPage('configuration')}
           title={locale.strings.call.teamsMeetingFailToJoin}
           reason={locale.strings.call.teamsMeetingFailReasonAccessDenied}
@@ -98,7 +98,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
     case 'removed':
       return (
-        <Error
+        <ErrorPage
           rejoinHandler={() => adapter.setPage('configuration')}
           title={locale.strings.call.teamsMeetingFailToJoin}
           reason={locale.strings.call.teamsMeetingFailReasonParticipantRemoved}
@@ -106,7 +106,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
     default:
       return (
-        <CallScreen
+        <CallPage
           endCallHandler={async (): Promise<void> => {
             adapter.setPage('configuration');
           }}

@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 import React, { useEffect, useState } from 'react';
 import { StreamMedia, VideoGalleryStream, VideoStreamOptions, VideoTile, useTheme } from '@internal/react-components';
-import { LobbyCallControlBar } from './LobbyControlBar';
-import { useSelector } from './hooks/useSelector';
-import { getIsPreviewCameraOn } from './selectors/baseSelectors';
+import { LobbyCallControlBar } from '../components/LobbyControlBar';
+import { useSelector } from '../hooks/useSelector';
+import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 
 /**
  * @private

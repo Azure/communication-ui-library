@@ -7,7 +7,7 @@ import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CallAdapter } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
-import { isCameraOn } from '../SDKUtils';
+import { isCameraOn } from '../utils';
 
 /**
  * @private

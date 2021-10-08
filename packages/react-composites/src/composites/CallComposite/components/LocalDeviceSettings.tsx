@@ -5,14 +5,14 @@ import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, Icon, IDropdownOption, Stack } from '@fluentui/react';
 import { useTheme, VideoStreamOptions } from '@internal/react-components';
 import React from 'react';
-import { useLocale } from '../localization';
+import { useLocale } from '../../localization';
 import {
   dropDownStyles,
   dropDownTitleIconStyles,
   localSettingsContainer,
   mainStackTokens,
   optionIconStyles
-} from './styles/LocalDeviceSettings.styles';
+} from '../styles/LocalDeviceSettings.styles';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
