@@ -5,6 +5,7 @@ import { Icon, PrimaryButton, Separator, Stack, TextField } from '@fluentui/reac
 import {
   copyIconStyle,
   copyLinkButtonStyle,
+  buttonWithIconStyles,
   footerMainTextStyle,
   paneFooterStyles,
   paneFooterTokens,
@@ -28,10 +29,13 @@ export const Footer = (): JSX.Element => {
       <Separator />
       <div className={footerMainTextStyle}>{invitePeopleString}</div>
       <TextField styles={textFieldStyles} id="inputText" type="text" value={`${document.baseURI}`}></TextField>
-      <PrimaryButton className={copyLinkButtonStyle} onClick={copyJoinLink}>
-        <Icon iconName="Copy" className={copyIconStyle} />
-        {copyJoinInfoString}
-      </PrimaryButton>
+      <PrimaryButton
+        className={copyLinkButtonStyle}
+        styles={buttonWithIconStyles}
+        text={copyJoinInfoString}
+        onClick={copyJoinLink}
+        onRenderIcon={() => <Icon iconName="Copy" className={copyIconStyle} />}
+      />
     </Stack>
   );
 };

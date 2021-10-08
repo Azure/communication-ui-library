@@ -3,7 +3,7 @@
 
 import { CSSProperties } from 'react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { mergeStyles } from '@fluentui/react';
+import { IButtonStyles, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -144,6 +144,15 @@ export const newMessageButtonStyle = mergeStyles({
   float: 'right',
   width: 'fit-content'
 });
+
+/**
+ * @private
+ */
+export const buttonWithIconStyles: IButtonStyles = {
+  textContainer: {
+    display: 'contents'
+  }
+};
 
 /**
  * @private

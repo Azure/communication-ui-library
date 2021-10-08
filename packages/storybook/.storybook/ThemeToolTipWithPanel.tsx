@@ -90,14 +90,13 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
           />
           <Stack horizontal tokens={{ childrenGap: '1rem' }}>
             <DefaultButton
+              text={'Clear'}
               onClick={() => {
                 setTextValue('');
                 setError('');
               }}
-            >
-              Clear
-            </DefaultButton>
-            <DefaultButton onClick={() => validateThenUpdate()}>Apply</DefaultButton>
+            />
+            <DefaultButton text={'Apply'} onClick={() => validateThenUpdate()} />
           </Stack>
         </Stack>
       </Panel>
