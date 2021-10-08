@@ -3,7 +3,7 @@
 
 import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
@@ -126,12 +126,21 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const isVideoRendered = !!renderElement;
 
-  useLayoutEffect(() => {
-    if (videoTileRef.current && videoTileRef.current) {
-      const minSize = Math.min(videoTileRef.current.clientHeight, videoTileRef.current.clientWidth, personaMaxSize);
+  const observer = useRef(
+    new ResizeObserver((entries): void => {
+      const { width, height } = entries[0].contentRect;
+      const minSize = Math.min(width, height, personaMaxSize);
       setPersonaSize(minSize / 2);
+    })
+  );
+
+  useEffect(() => {
+    if (videoTileRef.current) {
+      observer.current.observe(videoTileRef.current);
     }
-  }, [videoTileRef.current?.clientHeight, videoTileRef.current?.clientWidth]);
+    const currentObserver = observer.current;
+    return () => currentObserver.disconnect();
+  }, [observer]);
 
   const placeholderOptions = {
     userId,
