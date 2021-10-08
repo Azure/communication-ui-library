@@ -21,18 +21,18 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
       }
     >
       <div
-        className="ms-Stack css-5"
+        className="ms-Stack css-4"
         data-ui-id="video-tile"
       >
         <div
-          className="ms-Stack css-6"
+          className="ms-Stack css-5"
         >
           <div
-            className="ms-Stack css-8"
+            className="ms-Stack css-7"
           >
             <div
               aria-label=""
-              className="ms-Persona ms-Persona--size48 root-9"
+              className="ms-Persona ms-Persona--size48 root-8"
               style={
                 Object {
                   "height": 100,
@@ -41,11 +41,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
               }
             >
               <div
-                className="ms-Persona-coin ms-Persona--size48 coin-16"
+                className="ms-Persona-coin ms-Persona--size48 coin-15"
                 role="presentation"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-18"
+                  className="ms-Persona-imageArea imageArea-17"
                   role="presentation"
                   style={
                     Object {
@@ -56,7 +56,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
                 >
                   <div
                     aria-hidden="true"
-                    className="ms-Persona-initials initials-21"
+                    className="ms-Persona-initials initials-20"
                     style={
                       Object {
                         "height": 100,
@@ -66,7 +66,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
                   >
                     <i
                       aria-hidden={true}
-                      className="root-37 root-23"
+                      className="root-37 root-22"
                       data-icon-name="Contact"
                     >
                       
@@ -78,7 +78,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
           </div>
         </div>
         <div
-          className="ms-Stack css-93 css-26"
+          className="ms-Stack css-93 css-25"
         >
           
         </div>
