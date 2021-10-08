@@ -18,7 +18,7 @@ import { getCallId, getCallStatus, getEndedCall, getPage } from './selectors/bas
 import { LobbyPage } from './pages/LobbyPage';
 import { isInCall } from './utils';
 
-// @TODO: where are these defined? - these part of our Call Adapter contract.
+// @TODO: where are these defined? - these need to be part of our Call Adapter contract.
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
 
