@@ -8,6 +8,7 @@ import {
   endCallContainerStyle,
   endCallTitleStyle,
   buttonStyle,
+  buttonWithIconStyles,
   mainStackTokens,
   buttonsStackTokens,
   upperStackTokens,
@@ -36,10 +37,13 @@ export function ErrorPage(props: ErrorPageProps): JSX.Element {
       <Stack tokens={upperStackTokens}>
         <div className={endCallTitleStyle}>{title}</div>
         <Stack horizontal tokens={buttonsStackTokens}>
-          <PrimaryButton className={buttonStyle} onClick={props.rejoinHandler}>
-            <Video20Filled primaryFill="currentColor" className={videoCameraIconStyle} />
-            {rejoinCall}
-          </PrimaryButton>
+          <PrimaryButton
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={rejoinCall}
+            onClick={props.rejoinHandler}
+            onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
+          />
         </Stack>
         <div className={bottomStackFooterStyle}>
           {props.reason ? (
