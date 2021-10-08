@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, getTheme, mergeStyles } from '@fluentui/react';
+import { DefaultPalette as palette, IStyle, getTheme, mergeStyles } from '@fluentui/react';
 
 const theme = getTheme();
 
@@ -69,7 +69,8 @@ export const disabledVideoHint = mergeStyles({
  * @private
  */
 export const videoHint = mergeStyles(disabledVideoHint, {
-  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  backgroundColor: palette.white,
+  opacity: 0.8,
   padding: '0.15rem'
 });
 
@@ -79,7 +80,8 @@ export const videoHint = mergeStyles(disabledVideoHint, {
 export const displayNameStyle: IStyle = {
   padding: '0.1rem',
   fontSize: '0.75rem',
-  fontWeight: 600
+  fontWeight: 600,
+  color: 'inherit'
 };
 
 /**

@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  DefaultPalette as palette,
   mergeStyles,
   getTheme,
   IStackStyles,
@@ -87,7 +88,8 @@ export const screenSharingInfoContainerCameraOff = mergeStyles({
  * @private
  */
 export const screenSharingInfoContainerCameraOn = mergeStyles(screenSharingInfoContainerCameraOff, {
-  backgroundColor: 'rgba(255, 255, 255, 0.8)'
+  backgroundColor: palette.white,
+  opacity: 0.8
 });
 
 /**

@@ -1,16 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  DefaultPalette as palette,
-  ContextualMenu,
-  Icon,
-  IDragOptions,
-  Modal,
-  Stack,
-  Text,
-  mergeStyles
-} from '@fluentui/react';
+import { ContextualMenu, Icon, IDragOptions, Modal, Stack, Text, mergeStyles } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useLocale } from '../localization';
@@ -36,6 +27,7 @@ import {
   screenSharingInfoTextStyle,
   videoGalleryContainerStyle
 } from './styles/VideoGallery.styles';
+import { getVideoTileInfoColor } from './utils/videoTileStylesUtils';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
 
 const emptyStyles = {};
@@ -139,19 +131,43 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
   }, [layout, remoteParticipants]);
 
+  const screenSharingNotification = useMemo((): JSX.Element | undefined => {
+    const screenSharingInfoContainerStyle = mergeStyles(
+      localParticipant.videoStream?.renderElement
+        ? screenSharingInfoContainerCameraOn
+        : screenSharingInfoContainerCameraOff,
+      getVideoTileInfoColor(!!localParticipant.videoStream?.renderElement, theme)
+    );
+
+    return localParticipant.isScreenSharingOn ? (
+      <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
+        <Stack
+          horizontalAlign={'center'}
+          verticalAlign={'center'}
+          className={screenSharingInfoContainerStyle}
+          tokens={{ childrenGap: '1rem' }}
+        >
+          <Stack horizontal verticalAlign={'center'} className={screenSharingInfoIconContainer}>
+            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingInfoIconStyle} />
+          </Stack>
+          <Text className={screenSharingInfoTextStyle} aria-live={'polite'}>
+            {props.strings?.screenSharingMessage ?? localeStrings.screenSharingMessage}
+          </Text>
+        </Stack>
+      </Stack>
+    ) : undefined;
+  }, [
+    localParticipant.isScreenSharingOn,
+    localParticipant.videoStream,
+    localParticipant.videoStream?.renderElement,
+    theme
+  ]);
+
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
   const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
-
-    const screenSharingInfoContainerStyle = mergeStyles(
-      localParticipant.videoStream?.renderElement
-        ? screenSharingInfoContainerCameraOn
-        : screenSharingInfoContainerCameraOff,
-      // when video is being rendered, the displayName has a grey-ish background, so no use of theme
-      { color: localParticipant.videoStream?.renderElement ? palette.neutralPrimary : theme.palette.neutralPrimary }
-    );
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
@@ -178,31 +194,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
       >
-        {localParticipant.isScreenSharingOn && (
-          <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
-            <Stack
-              horizontalAlign={'center'}
-              verticalAlign={'center'}
-              className={screenSharingInfoContainerStyle}
-              tokens={{ childrenGap: '1rem' }}
-            >
-              <Stack horizontal verticalAlign={'center'} className={screenSharingInfoIconContainer}>
-                <Icon iconName="ControlButtonScreenShareStart" className={screenSharingInfoIconStyle} />
-              </Stack>
-              <Text className={screenSharingInfoTextStyle} aria-live={'polite'}>
-                {props.strings?.screenSharingMessage ?? localeStrings.screenSharingMessage}
-              </Text>
-            </Stack>
-          </Stack>
-        )}
+        {screenSharingNotification}
       </VideoTile>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     localParticipant,
+    localParticipant.isScreenSharingOn,
     localParticipant.videoStream,
     localParticipant.videoStream?.renderElement,
-    theme.palette.neutralPrimary,
     onCreateLocalStreamView,
     onRenderLocalVideoTile,
     onRenderAvatar,

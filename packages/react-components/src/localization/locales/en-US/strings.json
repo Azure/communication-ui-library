@@ -83,6 +83,6 @@
     "stopScreenShareGeneric": "Failed to stop screen sharing"
   },
   "videoGallery": {
-    "screenSharingMessage": "you're sharing your screen"
+    "screenSharingMessage": "you are sharing your screen"
   }
 }
