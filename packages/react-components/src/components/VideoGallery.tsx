@@ -132,6 +132,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [layout, remoteParticipants]);
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {
+    if (!localParticipant.isScreenSharingOn) {
+      return undefined;
+    }
+
     const screenSharingNotificationContainerStyle = mergeStyles(
       localParticipant.videoStream?.renderElement
         ? screenSharingNotificationContainerCameraOn
@@ -144,7 +148,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralTertiary')
     );
 
-    return localParticipant.isScreenSharingOn ? (
+    return (
       <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
         <Stack
           horizontalAlign={'center'}
@@ -160,7 +164,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           </Text>
         </Stack>
       </Stack>
-    ) : undefined;
+    );
   }, [
     localParticipant.isScreenSharingOn,
     localParticipant.videoStream,
