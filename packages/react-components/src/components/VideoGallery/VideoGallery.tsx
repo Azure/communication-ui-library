@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import {
