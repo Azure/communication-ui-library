@@ -90,6 +90,7 @@ export const screenSharingNotificationContainerCameraOffStyles = mergeStyles({
 export const screenSharingNotificationContainerCameraOnStyles = mergeStyles(
   screenSharingNotificationContainerCameraOffStyles,
   {
+    // This will appear on top of the video stream, so no dependency on theme and thus the direct use of default palette
     backgroundColor: palette.white,
     opacity: 0.8
   }
