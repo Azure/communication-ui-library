@@ -22,8 +22,8 @@ import {
   screenSharingContainer,
   screenSharingNotificationIconContainer,
   screenSharingNotificationIconStyle,
-  screenSharingNotificationContainerCameraOn,
-  screenSharingNotificationContainerCameraOff,
+  screenSharingNotificationContainerCameraOnStyles,
+  screenSharingNotificationContainerCameraOffStyles,
   screenSharingNotificationTextStyle,
   videoGalleryContainerStyle
 } from './styles/VideoGallery.styles';
@@ -138,8 +138,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const screenSharingNotificationContainerStyle = mergeStyles(
       localParticipant.videoStream?.renderElement
-        ? screenSharingNotificationContainerCameraOn
-        : screenSharingNotificationContainerCameraOff,
+        ? screenSharingNotificationContainerCameraOnStyles
+        : screenSharingNotificationContainerCameraOffStyles,
       getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralSecondary')
     );
 

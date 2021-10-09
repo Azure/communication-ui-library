@@ -77,7 +77,7 @@ export const screenSharingContainer = mergeStyles({
 /**
  * @private
  */
-export const screenSharingNotificationContainerCameraOff = mergeStyles({
+export const screenSharingNotificationContainerCameraOffStyles = mergeStyles({
   backgroundColor: 'inherit',
   padding: '1rem',
   maxWidth: '95%',
@@ -87,10 +87,13 @@ export const screenSharingNotificationContainerCameraOff = mergeStyles({
 /**
  * @private
  */
-export const screenSharingNotificationContainerCameraOn = mergeStyles(screenSharingNotificationContainerCameraOff, {
-  backgroundColor: palette.white,
-  opacity: 0.8
-});
+export const screenSharingNotificationContainerCameraOnStyles = mergeStyles(
+  screenSharingNotificationContainerCameraOffStyles,
+  {
+    backgroundColor: palette.white,
+    opacity: 0.8
+  }
+);
 
 /**
  * @private
