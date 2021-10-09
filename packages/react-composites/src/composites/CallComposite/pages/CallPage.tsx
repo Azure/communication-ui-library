@@ -7,7 +7,6 @@ import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { PermissionsBanner } from '../../common/PermissionsBanner';
 import { permissionsBannerContainerStyle } from '../../common/styles/PermissionsBanner.styles';
-import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallControls } from '../components/CallControls';
 import { ComplianceBanner } from '../components/ComplianceBanner';
@@ -15,7 +14,6 @@ import { useHandlers } from '../hooks/useHandlers';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { MediaGallery } from '../components/MediaGallery';
-import { ScreenSharePopup } from '../components/ScreenSharePopup';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
@@ -56,13 +54,12 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
-  const { callStatus, isScreenShareOn } = useSelector(callStatusSelector);
+  const { callStatus } = useSelector(callStatusSelector);
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
   const complianceBannerProps = useSelector(complianceBannerSelector);
   const errorBarProps = usePropsFor(ErrorBar);
   const devicePermissions = useSelector(devicePermissionSelector);
-  const adapter = useAdapter();
 
   // Reduce the controls shown when mobile view is enabled.
   let callControlOptions: false | CallControlOptions =
@@ -95,26 +92,14 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
         <Stack.Item styles={subContainerStyles} grow>
           {callStatus === 'Connected' && (
-            <>
-              <Stack id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
-                <MediaGallery
-                  {...mediaGalleryProps}
-                  {...mediaGalleryHandlers}
-                  onRenderAvatar={onRenderAvatar}
-                  onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-                />
-              </Stack>
-              {isScreenShareOn ? (
-                <ScreenSharePopup
-                  hostId={screenShareModalHostId}
-                  onStopScreenShare={() => {
-                    return adapter.stopScreenShare();
-                  }}
-                />
-              ) : (
-                <></>
-              )}
-            </>
+            <Stack id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
+              <MediaGallery
+                {...mediaGalleryProps}
+                {...mediaGalleryHandlers}
+                onRenderAvatar={onRenderAvatar}
+                onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              />
+            </Stack>
           )}
         </Stack.Item>
         {callControlOptions !== false && (
