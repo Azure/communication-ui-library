@@ -194,7 +194,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of RemoteParticipants.
    */
-  const defaultOnRenderRemoteParticipants = useMemo(() => {
+  const onRenderRemoteParticipants = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
       return remoteParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
@@ -232,13 +232,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   const gridLayout = shouldFloatLocalVideo ? (
-    <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+    <GridLayout styles={styles ?? emptyStyles}>{onRenderRemoteParticipants}</GridLayout>
   ) : (
     <GridLayout styles={styles ?? emptyStyles}>
       <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
-      {defaultOnRenderRemoteParticipants}
+      {onRenderRemoteParticipants}
     </GridLayout>
   );
 
