@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect, useState, useRef } from 'react';
 
 /**
  * A utility hook for providing the width of a parent element.
@@ -10,17 +10,24 @@ import { RefObject, useEffect, useState } from 'react';
  */
 export const useContainerWidth = (containerRef: RefObject<HTMLDivElement>): number => {
   const [width, setWidth] = useState(0);
-  useEffect(() => {
-    const updateWidth = (): void => {
-      const width = containerRef.current?.offsetWidth ?? 0;
+
+  const observer = useRef(
+    new ResizeObserver((entries) => {
+      const { width } = entries[0].contentRect;
       setWidth(width);
-    };
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
+    })
+  );
+
+  useEffect(() => {
+    if (containerRef.current) {
+      observer.current.observe(containerRef.current);
+    }
+
+    const currentObserver = observer.current;
     return () => {
-      window.removeEventListener('resize', updateWidth);
+      currentObserver.disconnect();
     };
-  }, [containerRef]);
+  }, [containerRef, observer]);
 
   return width;
 };
