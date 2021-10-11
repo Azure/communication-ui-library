@@ -3,7 +3,7 @@
 
 import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
@@ -134,7 +134,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     })
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (videoTileRef.current) {
       observer.current.observe(videoTileRef.current);
     }
