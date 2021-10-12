@@ -13,7 +13,6 @@ import { RemoteVideoTile } from './RemoteVideoTile';
  */
 export interface HorizontalGalleryProps {
   participants: VideoGalleryRemoteParticipant[];
-  /** Remote videos view options */
   remoteVideoViewOption?: VideoStreamOptions;
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
