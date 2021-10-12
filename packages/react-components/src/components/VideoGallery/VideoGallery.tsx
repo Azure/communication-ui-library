@@ -37,6 +37,12 @@ import { RemoteVideoTile } from './RemoteVideoTile';
 import { getVideoTileOverrideColor } from '../utils/videoTileStylesUtils';
 
 const emptyStyles = {};
+const floatingTileHostId = 'UILibraryFloatingTileHost';
+
+const MAX_VIDEO_PARTICIPANTS_TILES = 4; // Currently the Calling JS SDK supports up to 4 remote video streams
+const MAX_VIDEO_DOMINANT_SPEAKERS = 4;
+const MAX_AUDIO_PARTICIPANTS_TILES = 100;
+const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
  * Strings of {@link VideoGalleryStrings} that can be overridden.
@@ -149,7 +155,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   visibleVideoParticipants.current = smartDominantSpeakerParticipants({
     participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
     dominantSpeakers,
-    visibleParticipants: visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
+    visibleParticipants: visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable),
+    maxTiles: MAX_VIDEO_PARTICIPANTS_TILES,
+    maxDominantSpeakers: MAX_VIDEO_DOMINANT_SPEAKERS
   });
 
   // Create a map of visibleVideoParticipants for faster searching.
@@ -165,8 +173,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsMap[p.userId]) ?? [],
     dominantSpeakers,
     visibleParticipants: visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsMap[p.userId]),
-    maxTiles: 100,
-    maxDominantSpeakers: 6
+    maxTiles: MAX_AUDIO_PARTICIPANTS_TILES,
+    maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
   // If there are no video participants, we assign all audio participants as grid participants and assign
@@ -346,5 +354,3 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     </div>
   );
 };
-
-const floatingTileHostId = 'UILibraryFloatingTileHost';

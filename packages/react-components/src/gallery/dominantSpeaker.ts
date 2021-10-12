@@ -20,11 +20,11 @@ type SmartDominantSpeakerParticipantsArgs = {
   /**
    * Maximum number of tiles to calculate.
    */
-  maxTiles?: number;
+  maxTiles: number;
   /**
    * Maximum number of dominant speakers to calculate.
    */
-  maxDominantSpeakers?: number;
+  maxDominantSpeakers: number;
 };
 
 /**
@@ -36,13 +36,7 @@ type SmartDominantSpeakerParticipantsArgs = {
 export const smartDominantSpeakerParticipants = (
   args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
-  const {
-    participants,
-    dominantSpeakers = [],
-    visibleParticipants = [],
-    maxTiles = 4 /* For video tiles, 4 is the recommended value by Calling team*/,
-    maxDominantSpeakers = 4
-  } = args;
+  const { participants, dominantSpeakers = [], visibleParticipants = [], maxTiles, maxDominantSpeakers } = args;
 
   // Don't apply any logic if total number of video streams is less than Max dominant speakers.
   if (participants.length <= maxDominantSpeakers) return participants;
