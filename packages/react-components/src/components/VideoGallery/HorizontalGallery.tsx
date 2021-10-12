@@ -64,13 +64,13 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     setPage(0);
     if (isNarrow) {
       return calculateMaxNumberOfTiles({
-        width: containerWidth - (leftGutter + rightGutter),
+        width: containerWidth - (leftGutter + rightGutter) * REM_TO_PX,
         tileWidth: TILE_SIZE_SMALL.width,
         buttonsWidth: 0
       });
     } else {
       return calculateMaxNumberOfTiles({
-        width: containerWidth - (leftGutter + rightGutter),
+        width: containerWidth - (leftGutter + rightGutter) * REM_TO_PX,
         tileWidth: TILE_SIZE_LARGE.width
       });
     }
