@@ -85,6 +85,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const closePane = useCallback(() => {
     setShowChat(false);
     setShowPeople(false);
+    setShowTestPane(false);
   }, []);
 
   const toggleChat = useCallback(() => {
@@ -139,7 +140,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               />
             </CallAdapterProvider>
           )}
-          {hasJoinedCall && <EmbeddedTestPane hidden={showTestPane} onClose={closePane} />}
+          {hasJoinedCall && <EmbeddedTestPane hidden={!showTestPane} onClose={closePane} />}
         </Stack>
         {hasJoinedCall && (
           <MeetingCallControlBar
