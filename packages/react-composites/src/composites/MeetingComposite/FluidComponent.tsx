@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import {
   AzureClient,
-  InsecureTokenProvider,
+  AzureFunctionTokenProvider,
   AzureConnectionConfig,
   AzureContainerServices
 } from '@fluidframework/azure-client';
@@ -16,9 +16,9 @@ function throwIfNotFound<T>(param: T, name: string): T {
 
 const config: AzureConnectionConfig = {
   tenantId: throwIfNotFound(process.env.tenantId, 'tenantId') ?? '',
-  tokenProvider: new InsecureTokenProvider(throwIfNotFound(process.env.tokenProvider, 'tokenProvider'), {
-    id: 'UserId',
-    name: 'Test User'
+  tokenProvider: new AzureFunctionTokenProvider(throwIfNotFound(process.env.tokenProvider, 'tokenProvider') ?? '', {
+    userId: 'UserId',
+    userName: 'Test User'
   }),
   orderer: throwIfNotFound(process.env.orderer, 'orderer') ?? '',
   storage: throwIfNotFound(process.env.storage, 'storage') ?? ''
