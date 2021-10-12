@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add horizontal participant gallery in video gallery",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

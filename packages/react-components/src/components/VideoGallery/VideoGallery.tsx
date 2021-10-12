@@ -2,33 +2,39 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, Icon, IDragOptions, Modal, Stack, Text, mergeStyles } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { useIdentifiers } from '../identifiers/IdentifierProvider';
-import { useLocale } from '../localization';
-import { useTheme } from '../theming';
+import React, { useMemo, useRef } from 'react';
+import { smartDominantSpeakerParticipants } from '../../gallery';
+import { useIdentifiers } from '../../identifiers/IdentifierProvider';
+import { useLocale } from '../../localization';
+import { useTheme } from '../../theming';
 import {
   BaseCustomStylesProps,
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions
-} from '../types';
-import { GridLayout } from './GridLayout';
-import { StreamMedia } from './StreamMedia';
+} from '../../types';
+import { GridLayout } from '../GridLayout';
+import { StreamMedia } from '../StreamMedia';
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
+  getHorizontalGalleryWrapperStyle,
   screenSharingContainer,
   screenSharingNotificationIconContainer,
   screenSharingNotificationIconStyle,
   screenSharingNotificationContainerCameraOnStyles,
   screenSharingNotificationContainerCameraOffStyles,
   screenSharingNotificationTextStyle,
-  videoGalleryContainerStyle
-} from './styles/VideoGallery.styles';
-import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
-import { VideoTile, VideoTileStylesProps } from './VideoTile';
+  videoGalleryContainerStyle,
+  videoGalleryOuterDivStyle
+} from '../styles/VideoGallery.styles';
+import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
+import { VideoTile, VideoTileStylesProps } from '../VideoTile';
+import { HorizontalGallery } from './HorizontalGallery';
+import { RemoteVideoTile } from './RemoteVideoTile';
+import { getVideoTileOverrideColor } from '../utils/videoTileStylesUtils';
 
 const emptyStyles = {};
 
@@ -63,6 +69,8 @@ export interface VideoGalleryProps {
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
+  /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
+  dominantSpeakers?: Array<string>;
   /** Local video view options */
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */
@@ -112,6 +120,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteParticipants,
     localVideoViewOption,
     remoteVideoViewOption,
+    dominantSpeakers,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
@@ -127,9 +136,45 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.videoGallery;
 
-  const shouldFloatLocalVideo = useCallback((): boolean => {
+  const shouldFloatLocalVideo = useMemo((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
   }, [layout, remoteParticipants]);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerWidth = useContainerWidth(containerRef);
+  const isNarrow = isNarrowWidth(containerWidth);
+  const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+
+  visibleVideoParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
+    dominantSpeakers,
+    visibleParticipants: visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable)
+  });
+
+  // Create a map of visibleVideoParticipants for faster searching.
+  // This map will be used to identify overflow participants. i.e., participants
+  // that should be rendered in horizontal gallery.
+  const visibleVideoParticipantsMap = {};
+  visibleVideoParticipants.current.forEach((p) => {
+    visibleVideoParticipantsMap[p.userId] = true;
+  });
+  // Max Tiles calculated inside that gallery can be passed to this function
+  // to only return the max number of tiles that can be rendered in the gallery.
+  visibleAudioParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsMap[p.userId]) ?? [],
+    dominantSpeakers,
+    visibleParticipants: visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsMap[p.userId]),
+    maxTiles: 100,
+    maxDominantSpeakers: 6
+  });
+
+  // If there are no video participants, we assign all audio participants as grid participants and assign
+  // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
+  const gridParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
+  const horizontalGalleryParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {
     if (!localParticipant.isScreenSharingOn) {
@@ -181,7 +226,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
     let localVideoTileStyles: VideoTileStylesProps = {};
-    if (shouldFloatLocalVideo()) {
+    if (shouldFloatLocalVideo) {
       localVideoTileStyles = floatingLocalVideoTileStyle;
     }
 
@@ -221,14 +266,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of RemoteParticipants.
    */
-  const defaultOnRenderRemoteParticipants = useMemo(() => {
+  const remoteGridTiles = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
       return remoteParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
-    return remoteParticipants?.map((participant): JSX.Element => {
+    return gridParticipants?.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
@@ -248,8 +293,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       );
     });
   }, [
-    remoteParticipants,
     onRenderRemoteVideoTile,
+    gridParticipants,
+    remoteParticipants,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
     remoteVideoViewOption,
@@ -257,109 +303,48 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator
   ]);
 
-  if (shouldFloatLocalVideo()) {
-    const floatingTileHostId = 'UILibraryFloatingTileHost';
-    return (
-      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
-        <Modal
-          isOpen={true}
-          isModeless={true}
-          dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyle}
-          layerProps={{ hostId: floatingTileHostId }}
-        >
-          {localParticipant && defaultOnRenderLocalVideoTile}
-        </Modal>
-        <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+  const gridTiles = remoteGridTiles ?? [];
+  if (!shouldFloatLocalVideo && localParticipant) {
+    gridTiles.push(
+      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+        {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
     );
   }
 
   return (
-    <GridLayout styles={styles ?? emptyStyles}>
-      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && defaultOnRenderLocalVideoTile}
+    <div ref={containerRef} className={videoGalleryOuterDivStyle}>
+      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+        {shouldFloatLocalVideo && (
+          <Modal
+            isOpen={true}
+            isModeless={true}
+            dragOptions={DRAG_OPTIONS}
+            styles={floatingLocalVideoModalStyle(isNarrow)}
+            layerProps={{ hostId: floatingTileHostId }}
+          >
+            {localParticipant && defaultOnRenderLocalVideoTile}
+          </Modal>
+        )}
+        <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
+        {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
+          <Stack style={getHorizontalGalleryWrapperStyle(isNarrow)}>
+            <HorizontalGallery
+              onCreateRemoteStreamView={onCreateRemoteStreamView}
+              onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+              onRenderAvatar={onRenderAvatar}
+              onRenderRemoteVideoTile={onRenderRemoteVideoTile}
+              participants={horizontalGalleryParticipants}
+              remoteVideoViewOption={remoteVideoViewOption}
+              showMuteIndicator={showMuteIndicator}
+              hideRemoteVideoStream={shouldFloatLocalVideo}
+              rightGutter={shouldFloatLocalVideo ? (isNarrow ? 64 : 176) : undefined} // to leave a gap for the floating local video
+            />
+          </Stack>
+        )}
       </Stack>
-      {defaultOnRenderRemoteParticipants}
-    </GridLayout>
+    </div>
   );
 };
 
-// Use React.memo to create memoize cache for each RemoteVideoTile
-const RemoteVideoTile = React.memo(
-  (props: {
-    userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    isAvailable?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
-    renderElement?: HTMLElement;
-    displayName?: string;
-    remoteVideoViewOption?: VideoStreamOptions;
-    onRenderAvatar?: OnRenderAvatarCallback;
-    showMuteIndicator?: boolean;
-  }) => {
-    const {
-      isAvailable,
-      isMuted,
-      isSpeaking,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId,
-      displayName,
-      onRenderAvatar,
-      showMuteIndicator
-    } = props;
-
-    useEffect(() => {
-      if (isAvailable && !renderElement) {
-        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
-      }
-      if (!isAvailable) {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      }
-    }, [
-      isAvailable,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId
-    ]);
-
-    useEffect(() => {
-      return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      };
-    }, [onDisposeRemoteStreamView, userId]);
-
-    const renderVideoStreamElement = useMemo(() => {
-      // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
-      // implies that, after their threshold, all streams have no child (blank video)
-      if (!renderElement || !renderElement.childElementCount) {
-        // Returning `undefined` results in the placeholder with avatar being shown
-        return undefined;
-      }
-
-      return <StreamMedia videoStreamElement={renderElement} />;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [renderElement, renderElement?.childElementCount]);
-
-    return (
-      <Stack className={gridStyle} key={userId} grow>
-        <VideoTile
-          userId={userId}
-          renderElement={renderVideoStreamElement}
-          displayName={displayName}
-          onRenderPlaceholder={onRenderAvatar}
-          isMuted={isMuted}
-          isSpeaking={isSpeaking}
-          showMuteIndicator={showMuteIndicator}
-        />
-      </Stack>
-    );
-  }
-);
+const floatingTileHostId = 'UILibraryFloatingTileHost';
