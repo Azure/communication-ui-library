@@ -195,7 +195,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of RemoteParticipants.
    */
-  const onRenderRemoteParticipants = useMemo(() => {
+  const remoteGridTiles = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
       return remoteParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
@@ -232,7 +232,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator
   ]);
 
-  const gridTiles = onRenderRemoteParticipants ?? [];
+  const gridTiles = remoteGridTiles ?? [];
   if (!shouldFloatLocalVideo && localParticipant) {
     gridTiles.push(
       <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
