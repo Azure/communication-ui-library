@@ -44,13 +44,20 @@ export const FluidComponent = (): JSX.Element => {
   const [fluidMap, setFluidMap] = React.useState<ISharedMap | undefined>(undefined);
 
   useEffect(() => {
-    async () => {
+    (async () => {
       const { container } = await createFluidContainer(client);
-      container.initialObjects.myMap.set('firstflag', true);
+      const map = container.initialObjects.myMap as ISharedMap;
+      map.set('myFirstCounter', 0);
       const id = await container.attach();
+      console.log(id);
       window.location.hash = id;
-    };
+      setFluidMap(map);
+    })();
   }, []);
 
-  return <>{'This is the fluid component'}</>;
+  useEffect(() => {
+    fluidMap?.set('myFirstCounter', 1);
+  }, [fluidMap]);
+
+  return <>{`FluidMap value: ${fluidMap?.get('myFirstCounter')}`}</>;
 };
