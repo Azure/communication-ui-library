@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add horizontal participant gallery in video gallery",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

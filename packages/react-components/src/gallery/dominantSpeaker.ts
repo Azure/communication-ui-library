@@ -2,42 +2,74 @@
 // Licensed under the MIT license.
 import { VideoGalleryRemoteParticipant } from '../types';
 
+type SmartDominantSpeakerParticipantsArgs = {
+  /**
+   * Array containing all participants of a call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
+   */
+  participants: VideoGalleryRemoteParticipant[];
+  /**
+   * An array containing the userId of dominant speakers
+   * in a call in the order of their dominance. 0th index is the most dominant, 1st is the second most etc
+   */
+  dominantSpeakers?: string[];
+  /**
+   * Array containing currently rendered (visible)
+   * participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
+   */
+  visibleParticipants?: VideoGalleryRemoteParticipant[];
+  /**
+   * Maximum number of tiles to calculate.
+   */
+  maxTiles?: number;
+  /**
+   * Maximum number of dominant speakers to calculate.
+   */
+  maxDominantSpeakers?: number;
+};
+
 /**
  * Calculates the participants that should be rendered based on the list of dominant
  * speakers and currently rendered participants in a call.
- * @param participants - Array containing all participants of a call.
- * {@link @azure/communication-react#VideoGalleryRemoteParticipant}
- * @param dominantSpeakers - An array containing the userId of dominant speakers
- * in a call in the order of their dominance. 0th index is the most dominant, 1st is the second most etc
- * @param visibleParticipants - Array containing currently rendered (visible)
- * participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
- * @param maxTiles - Maximum number of tiles to calculate.
+ * @param args - SmartDominantSpeakerParticipantsArgs
  * @returns VideoGalleryRemoteParticipant[] {@link @azure/communication-react#VideoGalleryRemoteParticipant}
  */
 export const smartDominantSpeakerParticipants = (
-  participants: VideoGalleryRemoteParticipant[],
-  dominantSpeakers: Array<string> = [],
-  visibleParticipants: VideoGalleryRemoteParticipant[] = [],
-  maxTiles = 4 // For video tiles, 4 is the recommended value by Calling team.
+  args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
-  // Don't apply any logic if total number of video streams is less than Max video streams.
-  if (participants.length <= maxTiles) return participants;
+  const {
+    participants,
+    dominantSpeakers = [],
+    visibleParticipants = [],
+    maxTiles = 4 /* For video tiles, 4 is the recommended value by Calling team*/,
+    maxDominantSpeakers = 4
+  } = args;
+
+  // Don't apply any logic if total number of video streams is less than Max dominant speakers.
+  if (participants.length <= maxDominantSpeakers) return participants;
 
   // Only use the Max allowed dominant speakers.
-  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxTiles);
-  const visibleParticipantIds = visibleParticipants.map((p) => p.userId);
-  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleParticipantIds.includes(id));
+  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxDominantSpeakers);
+
+  let visibleParticipantIds = visibleParticipants.map((p) => p.userId);
+  const visibleDominantSpeakerIds = visibleParticipantIds.slice(0, maxDominantSpeakers);
+  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleDominantSpeakerIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
-  for (let index = 0; index < maxTiles; index++) {
-    const activeParticipantId = visibleParticipantIds[index];
-    if (activeParticipantId === undefined || !dominantSpeakerIds.includes(activeParticipantId)) {
+  for (let index = 0; index < maxDominantSpeakers; index++) {
+    const visibleDominantSpeakerId = visibleDominantSpeakerIds[index];
+    if (visibleDominantSpeakerId === undefined || !dominantSpeakerIds.includes(visibleDominantSpeakerId)) {
       const replacement = newDominantSpeakerIds.shift();
       if (!replacement) break;
-      visibleParticipantIds[index] = replacement;
+      visibleDominantSpeakerIds[index] = replacement;
     }
   }
 
+  // We create a new array of participants by concatinating the array consisting
+  // of updated dominant speakers and array containing currently visible
+  // participants (after removing the updated dominant speakers from it).
+  // This new array will help us sort our final result in a way that minimizes re-ordering.
+  visibleParticipantIds = visibleParticipantIds.filter((p) => !visibleDominantSpeakerIds.includes(p));
+  visibleParticipantIds = visibleDominantSpeakerIds.concat(visibleParticipantIds);
   // Converting array to a hashmap for faster searching
   const visibleParticipantIdsMap = {};
   visibleParticipantIds.forEach((userId) => {
@@ -63,5 +95,5 @@ export const smartDominantSpeakerParticipants = (
     return visibleParticipantIds.indexOf(a.userId) - visibleParticipantIds.indexOf(b.userId);
   });
 
-  return newVisibleParticipants;
+  return newVisibleParticipants.slice(0, maxTiles);
 };

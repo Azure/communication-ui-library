@@ -76,7 +76,8 @@ const VideoGalleryStory = (args): JSX.Element => {
     .map((p, i) => {
       return {
         userId: `user${i}`,
-        displayName: p
+        displayName: p,
+        videoStream: { isAvailable: i % 2 }
       };
     });
 
