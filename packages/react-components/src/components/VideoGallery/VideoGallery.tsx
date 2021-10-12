@@ -231,16 +231,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator
   ]);
 
-  const gridLayout = shouldFloatLocalVideo ? (
-    <GridLayout styles={styles ?? emptyStyles}>{onRenderRemoteParticipants}</GridLayout>
-  ) : (
-    <GridLayout styles={styles ?? emptyStyles}>
+  const gridTiles = onRenderRemoteParticipants ?? [];
+  if (!shouldFloatLocalVideo && localParticipant) {
+    gridTiles.push(
       <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
-      {onRenderRemoteParticipants}
-    </GridLayout>
-  );
+    );
+  }
 
   return (
     <div ref={containerRef} className={videoGalleryOuterDivStyle}>
@@ -256,7 +254,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {localParticipant && defaultOnRenderLocalVideoTile}
           </Modal>
         )}
-        {gridLayout}
+        <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
         {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
           <Stack style={getHorizontalGalleryWrapperStyle(isMobileScreen)}>
             <HorizontalGallery
