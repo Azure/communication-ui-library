@@ -8,23 +8,7 @@ import {
   AzureContainerServices
 } from '@fluidframework/azure-client';
 import { SharedMap, ISharedMap, FluidContainer } from 'fluid-framework';
-
-function throwIfNotFound<T>(param: T, name: string): T {
-  if (!param) throw new Error(`${name} not found in env file`);
-  return param;
-}
-
-const config: AzureConnectionConfig = {
-  tenantId: throwIfNotFound(process.env.tenantId, 'tenantId') ?? '',
-  tokenProvider: new AzureFunctionTokenProvider(throwIfNotFound(process.env.tokenProvider, 'tokenProvider') ?? '', {
-    userId: 'UserId',
-    userName: 'Test User'
-  }),
-  orderer: throwIfNotFound(process.env.orderer, 'orderer') ?? '',
-  storage: throwIfNotFound(process.env.storage, 'storage') ?? ''
-};
-
-const client = new AzureClient({ connection: config });
+import { configDetails } from './env';
 
 const containerSchema = {
   initialObjects: { myMap: SharedMap }
@@ -45,6 +29,18 @@ export const FluidComponent = (): JSX.Element => {
 
   useEffect(() => {
     (async () => {
+      const config: AzureConnectionConfig = {
+        tenantId: configDetails.tenantId,
+        tokenProvider: new AzureFunctionTokenProvider(configDetails.tokenProviderId, {
+          userId: 'UserId',
+          userName: 'Test User'
+        }),
+        orderer: configDetails.orderer,
+        storage: configDetails.storage
+      };
+
+      const client = new AzureClient({ connection: config });
+
       const { container } = await createFluidContainer(client);
       const map = container.initialObjects.myMap as ISharedMap;
       map.set('myFirstCounter', 0);
