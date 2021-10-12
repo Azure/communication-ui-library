@@ -12,6 +12,7 @@ import { SharedMap, ISharedMap, FluidContainer } from 'fluid-framework';
 import { configDetails } from './env';
 
 const USE_LOCAL_FLUID_SERVER = true;
+const URL_PARAM_KEY = 'fluidContainerId';
 
 const containerSchema = {
   initialObjects: { myMap: SharedMap }
@@ -34,14 +35,24 @@ const createFluidContainer = async (
   services: AzureContainerServices;
 }> => await client.createContainer(containerSchema);
 
-const initializeFluidMap = async (
-  client: AzureClient | TinyliciousClient
-): Promise<{ map: ISharedMap; containerId: string }> => {
+const initializeFluidMap = async (client: AzureClient | TinyliciousClient, urlParams: string): Promise<ISharedMap> => {
+  const existingContainerId = getContainerIdIfExists(urlParams);
+  if (existingContainerId) {
+    const { container } = await client.getContainer(existingContainerId, containerSchema);
+    return container.initialObjects.myMap as ISharedMap;
+  }
   const { container } = await createFluidContainer(client);
   const map = container.initialObjects.myMap as ISharedMap;
 
-  const id = await container.attach();
-  return { map, containerId: id };
+  const containerId = await container.attach();
+
+  // `window.location.search` already contains groupId etc.
+  window.history.pushState(
+    {},
+    document.title,
+    window.location.origin + window.location.search + `&${URL_PARAM_KEY}=${containerId}`
+  );
+  return map;
 };
 
 /**
@@ -53,17 +64,21 @@ export const FluidComponent = (): JSX.Element => {
   useEffect(() => {
     (async () => {
       const client = USE_LOCAL_FLUID_SERVER ? new TinyliciousClient() : new AzureClient({ connection: config });
-      const { map, containerId } = await initializeFluidMap(client);
-
-      window.location.hash = containerId;
-
+      const map = await initializeFluidMap(client, window.location.search);
       setFluidMap(map);
     })();
   }, []);
 
   useEffect(() => {
-    fluidMap?.set('myFirstCounter', 1);
+    const oldVal = fluidMap?.get('myFirstCounter') || 1;
+    // DON'T DO THIS.
+    fluidMap?.set('myFirstCounter', oldVal + 1);
   }, [fluidMap]);
 
   return <>{`FluidMap value: ${fluidMap?.get('myFirstCounter')}`}</>;
+};
+
+const getContainerIdIfExists = (urlParams: string): string | undefined => {
+  const params = new URLSearchParams(urlParams);
+  return params.get(URL_PARAM_KEY) || undefined;
 };
