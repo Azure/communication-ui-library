@@ -5,7 +5,7 @@ import React, { useCallback, useState, useMemo } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
+import { EmbeddedChatPane, EmbeddedPeoplePane, EmbeddedTestPane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
 import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
@@ -80,21 +80,31 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
 
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
+  const [showTestPane, setShowTestPane] = useState(false);
 
   const closePane = useCallback(() => {
     setShowChat(false);
     setShowPeople(false);
+    setShowTestPane(false);
   }, []);
 
   const toggleChat = useCallback(() => {
+    setShowTestPane(false);
     setShowPeople(false);
     setShowChat(!showChat);
   }, [showChat]);
 
   const togglePeople = useCallback(() => {
+    setShowTestPane(false);
     setShowChat(false);
     setShowPeople(!showPeople);
   }, [showPeople]);
+
+  const toggleTestPane = useCallback(() => {
+    setShowChat(false);
+    setShowPeople(false);
+    setShowTestPane(!showTestPane);
+  }, [showTestPane]);
 
   const endCallClick = (): void => {
     meetingAdapter.setPage('configuration');
@@ -130,6 +140,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               />
             </CallAdapterProvider>
           )}
+          {hasJoinedCall && <EmbeddedTestPane hidden={!showTestPane} onClose={closePane} />}
         </Stack>
         {hasJoinedCall && (
           <MeetingCallControlBar
@@ -137,7 +148,9 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             chatButtonChecked={showChat}
             onChatButtonClicked={toggleChat}
             peopleButtonChecked={showPeople}
+            testButtonChecked={showTestPane}
             onPeopleButtonClicked={togglePeople}
+            onTestButtonClicked={toggleTestPane}
             onEndCallClick={endCallClick}
             mobileView={props.options?.mobileView}
           />

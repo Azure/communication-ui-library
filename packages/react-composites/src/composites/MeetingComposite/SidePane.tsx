@@ -19,6 +19,7 @@ import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
+import { FluidComponent } from './FluidComponent';
 
 const SidePane = (props: {
   headingText: string;
@@ -128,6 +129,26 @@ export const EmbeddedChatPane = (props: {
         fluentTheme={props.fluentTheme}
         options={{ participantPane: false, topic: false }}
       />
+    </SidePane>
+  );
+};
+
+/**
+ * @private
+ */
+export const EmbeddedTestPane = (props: {
+  fluentTheme?: PartialTheme | Theme;
+  hidden: boolean;
+  onClose: () => void;
+}): JSX.Element => {
+  return (
+    <SidePane
+      hidden={props.hidden}
+      headingText={'Test Pane'}
+      onClose={props.onClose}
+      dataUiId={'meeting-composite-test-pane'}
+    >
+      <FluidComponent />
     </SidePane>
   );
 };

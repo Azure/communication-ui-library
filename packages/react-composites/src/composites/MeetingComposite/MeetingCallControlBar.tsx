@@ -8,6 +8,7 @@ import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
 import { Stack } from '@fluentui/react';
+import { ControlBarButton } from '@internal/react-components';
 
 /**
  * @private
@@ -17,8 +18,10 @@ export interface MeetingCallControlBarProps {
   onEndCallClick: () => void;
   chatButtonChecked: boolean;
   peopleButtonChecked: boolean;
+  testButtonChecked: boolean;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
+  onTestButtonClicked: () => void;
   mobileView?: boolean;
 }
 
@@ -57,6 +60,12 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           showLabel={true}
           onClick={props.onPeopleButtonClicked}
           data-ui-id="meeting-composite-people-button"
+        />
+        <ControlBarButton
+          checked={props.testButtonChecked}
+          showLabel={true}
+          onClick={props.onTestButtonClicked}
+          data-ui-id="meeting-composite-test-button"
         />
       </Stack.Item>
     </Stack>
