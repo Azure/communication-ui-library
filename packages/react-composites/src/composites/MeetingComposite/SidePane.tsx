@@ -19,6 +19,7 @@ import { ParticipantList } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
+import { FluidComponent } from './FluidComponent';
 
 const SidePane = (props: {
   headingText: string;
@@ -147,7 +148,7 @@ export const EmbeddedTestPane = (props: {
       onClose={props.onClose}
       dataUiId={'meeting-composite-test-pane'}
     >
-      {'Test pane content'}
+      <FluidComponent />
     </SidePane>
   );
 };
