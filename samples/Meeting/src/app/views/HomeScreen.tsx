@@ -23,7 +23,7 @@ import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export interface HomeScreenProps {
-  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): void;
+  startCallHandler(callDetails: { displayName: string; teamsLink?: TeamsMeetingLinkLocator }): Promise<void>;
   joiningExistingCall: boolean;
 }
 
@@ -90,10 +90,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             disabled={!buttonEnabled}
             className={buttonStyle}
             text={buttonText}
-            onClick={() => {
+            onClick={async () => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                props.startCallHandler({ displayName, teamsLink });
+                await props.startCallHandler({ displayName, teamsLink });
               }
             }}
           />

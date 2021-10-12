@@ -9,13 +9,14 @@ import React, { useEffect, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
+import { ACSMeetingLocator } from 'app/utils/AppUtils';
 
 const isMobileSession = !!new MobileDetect(window.navigator.userAgent).mobile();
 
 export interface CallScreenProps {
   token: string;
   userId: CommunicationUserIdentifier;
-  callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
+  callLocator: ACSMeetingLocator | TeamsMeetingLinkLocator;
   displayName: string;
   endpointUrl: string;
   onCallEnded: () => void;
@@ -29,6 +30,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter | undefined>(undefined);
 
+  let meetingCallLocator: GroupCallLocator | TeamsMeetingLinkLocator;
+  let threadId = '';
+  if (callLocator['threadId'] !== undefined) {
+    meetingCallLocator = callLocator['groupLocator'];
+    threadId = callLocator['threadId'];
+  } else {
+    meetingCallLocator = callLocator as TeamsMeetingLinkLocator;
+  }
+
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const credential = createAutoRefreshingCredential(userId.communicationUserId, token);
@@ -36,9 +46,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         userId,
         displayName,
         credential,
-        callLocator,
-        endpointUrl,
-        chatThreadId: 'TODO: ACS thread ID'
+        callLocator: meetingCallLocator,
+        chatThreadId: threadId,
+        endpointUrl
       });
       adapter.on('meetingEnded', () => {
         onCallEnded();

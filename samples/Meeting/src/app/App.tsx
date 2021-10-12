@@ -7,15 +7,18 @@ import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
 import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import {
+  ACSMeetingLocator,
   buildTime,
   callingSDKVersion,
   createGroupId,
   fetchTokenResponse,
+  getEndpointUrl,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
   isMobileSession,
   isOnIphoneAndNotSafari,
   isSmallScreen,
+  joinThread,
   navigateToHomePage
 } from './utils/AppUtils';
 import { CallError } from './views/CallError';
@@ -42,7 +45,8 @@ const App = (): JSX.Element => {
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callLocator, setCallLocator] = useState<GroupLocator | TeamsMeetingLinkLocator>(createGroupId());
+  const [callLocator, setCallLocator] = useState<ACSMeetingLocator | TeamsMeetingLinkLocator | undefined>(undefined);
+  const [endpointUrl, setEndpointUrl] = useState('');
   const [displayName, setDisplayName] = useState<string>('');
 
   // Get Azure Communications Service token from the server
@@ -55,6 +59,14 @@ const App = (): JSX.Element => {
       } catch (e) {
         console.error(e);
         setUserCredentialFetchError(true);
+      }
+    })();
+
+    (async () => {
+      try {
+        setEndpointUrl(await getEndpointUrl());
+      } catch (e) {
+        console.error(e);
       }
     })();
   }, []);
@@ -73,18 +85,25 @@ const App = (): JSX.Element => {
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
-          startCallHandler={(callDetails) => {
+          startCallHandler={async (callDetails) => {
             setDisplayName(callDetails.displayName);
             const isTeamsCall = !!callDetails.teamsLink;
             const callLocator =
-              callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
+              callDetails.teamsLink || getTeamsLinkFromUrl() || getGroupIdFromUrl() || (await createGroupId());
             setCallLocator(callLocator);
+
+            if (!isTeamsCall && userId) {
+              joinThread((callLocator as ACSMeetingLocator).threadId, userId.communicationUserId, displayName);
+            }
 
             // Update window URL to have a joinable link
             if (!joiningExistingCall) {
               const joinParam = isTeamsCall
                 ? '?teamsLink=' + encodeURIComponent((callLocator as TeamsMeetingLinkLocator).meetingLink)
-                : '?groupId=' + (callLocator as GroupCallLocator).groupId;
+                : '?groupId=' +
+                  (callLocator as ACSMeetingLocator).groupLocator.groupId +
+                  '&threadId=' +
+                  (callLocator as ACSMeetingLocator).threadId;
               window.history.pushState({}, document.title, window.location.origin + joinParam);
             }
 
@@ -139,6 +158,7 @@ const App = (): JSX.Element => {
           userId={userId}
           displayName={displayName}
           callLocator={callLocator}
+          endpointUrl={endpointUrl}
           onCallEnded={() => setPage('endCall')}
           onCallError={() => setPage('callError')}
         />
