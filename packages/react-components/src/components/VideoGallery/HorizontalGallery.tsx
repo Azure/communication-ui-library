@@ -34,6 +34,9 @@ export interface HorizontalGalleryProps {
   hideRemoteVideoStream?: boolean;
 }
 
+const TILE_SIZE_SMALL = { height: 5.5, width: 5.5 }; // Small tile size in rem
+const TILE_SIZE_LARGE = { height: 7.5, width: 10 }; // Large tile size in rem
+
 /**
  * Renders a horizontal gallery of video tiles.
  * @param props - HorizontalGalleryProps {@link @azure/communication-react#HorizontalGalleryProps}
@@ -49,8 +52,8 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     onRenderAvatar,
     showMuteIndicator,
     hideRemoteVideoStream,
-    leftGutter = 8,
-    rightGutter = 8
+    leftGutter = 0.5,
+    rightGutter = 0.5
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -58,26 +61,26 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const containerWidth = useContainerWidth(containerRef);
   const [page, setPage] = useState(0);
   const [maxTiles, setMaxTiles] = useState(0);
-  const [tileHeight, setTileHeight] = useState(120);
-  const [tileWidth, setTileWidth] = useState(160);
+  const [tileHeight, setTileHeight] = useState(TILE_SIZE_LARGE.height);
+  const [tileWidth, setTileWidth] = useState(TILE_SIZE_LARGE.width);
 
   useEffect(() => {
     setPage(0);
     if (isSmallScreen) {
-      setTileHeight(88);
-      setTileWidth(88);
+      setTileHeight(TILE_SIZE_SMALL.height);
+      setTileWidth(TILE_SIZE_SMALL.width);
       const maxTiles = calculateMaxNumberOfTiles({
         width: containerWidth - (leftGutter + rightGutter),
-        tileWidth: 88,
+        tileWidth: TILE_SIZE_SMALL.width,
         buttonsWidth: 0
       });
       setMaxTiles(maxTiles);
     } else {
-      setTileHeight(120);
-      setTileWidth(160);
+      setTileHeight(TILE_SIZE_LARGE.height);
+      setTileWidth(TILE_SIZE_LARGE.width);
       const maxTiles = calculateMaxNumberOfTiles({
         width: containerWidth - (leftGutter + rightGutter),
-        tileWidth: 160
+        tileWidth: TILE_SIZE_LARGE.width
       });
       setMaxTiles(maxTiles);
     }
@@ -85,10 +88,10 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   const tileSizeStyle = useMemo(
     () => ({
-      minHeight: `${tileHeight}px`,
-      minWidth: `${tileWidth}px`,
-      maxHeight: `${tileHeight}px`,
-      maxWidth: `${tileWidth}px`
+      minHeight: `${tileHeight}rem`,
+      minWidth: `${tileWidth}rem`,
+      maxHeight: `${tileHeight}rem`,
+      maxWidth: `${tileWidth}rem`
     }),
     [tileWidth, tileHeight]
   );
@@ -144,7 +147,10 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         horizontal
         horizontalAlign="start"
         tokens={{ childrenGap: '0.5rem' }}
-        className={mergeStyles(horizontalGalleryContainerStyle, { paddingLeft: leftGutter, paddingRight: rightGutter })}
+        className={mergeStyles(horizontalGalleryContainerStyle, {
+          paddingLeft: `${leftGutter}rem`,
+          paddingRight: `${rightGutter}rem`
+        })}
       >
         {showLeftButton && <LeftButton height={tileHeight} onClick={() => setPage(Math.max(0, page - 1))} />}
         {defaultOnRenderParticipants}
@@ -156,19 +162,18 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   );
 };
 
-const calculateMaxNumberOfTiles = ({
-  width,
-  tileWidth = 10 * 16,
-  buttonsWidth = 4 * 16,
-  gapBetweenTiles = 0.5 * 16
-}): number => {
+const REM_TO_PX = 16;
+
+const calculateMaxNumberOfTiles = ({ width, tileWidth = 10, buttonsWidth = 4, gapBetweenTiles = 0.5 }): number => {
   /**
    * A Safe Padding should be reduced from the parent width to ensure that the total width of all video tiles rendered
    * is always less than the window width. (Window width after subtracting all margins, paddings etc.)
    * This ensures that video tiles don't tirgger an overflow which will prevent parent component from shrinking.
    */
-  const safePadding = 16;
-  return Math.floor((width - buttonsWidth - safePadding) / (tileWidth + gapBetweenTiles));
+  const safePadding = 1;
+  return Math.floor(
+    (width - buttonsWidth * REM_TO_PX - safePadding * REM_TO_PX) / (tileWidth * REM_TO_PX + gapBetweenTiles * REM_TO_PX)
+  );
 };
 
 const LeftButton = (props: { height: number; onClick?: () => void }): JSX.Element => {
@@ -177,8 +182,8 @@ const LeftButton = (props: { height: number; onClick?: () => void }): JSX.Elemen
       className={mergeStyles(leftRightButtonStyles)}
       onClick={props.onClick}
       style={{
-        minHeight: `${props.height}px`,
-        maxHeight: `${props.height}px`
+        minHeight: `${props.height}rem`,
+        maxHeight: `${props.height}rem`
       }}
     >
       <Icon iconName="HorizontalGalleryLeftButton" />
@@ -192,8 +197,8 @@ const RightButton = (props: { height: number; onClick?: () => void }): JSX.Eleme
       className={mergeStyles(leftRightButtonStyles)}
       onClick={props.onClick}
       style={{
-        minHeight: `${props.height}px`,
-        maxHeight: `${props.height}px`
+        minHeight: `${props.height}rem`,
+        maxHeight: `${props.height}rem`
       }}
     >
       <Icon iconName="HorizontalGalleryRightButton" />
