@@ -2,4 +2,4 @@
 // Licensed under the MIT license.
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings } from './VideoGallery';

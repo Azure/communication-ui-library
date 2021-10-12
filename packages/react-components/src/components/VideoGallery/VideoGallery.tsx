@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
+import { ContextualMenu, Icon, IDragOptions, Modal, Stack, Text, mergeStyles } from '@fluentui/react';
 import React, { useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
+import { useLocale } from '../../localization';
+import { useTheme } from '../../theming';
 import {
   BaseCustomStylesProps,
   OnRenderAvatarCallback,
@@ -19,6 +21,12 @@ import {
   floatingLocalVideoTileStyle,
   gridStyle,
   getHorizontalGalleryWrapperStyle,
+  screenSharingContainer,
+  screenSharingNotificationIconContainer,
+  screenSharingNotificationIconStyle,
+  screenSharingNotificationContainerCameraOnStyles,
+  screenSharingNotificationContainerCameraOffStyles,
+  screenSharingNotificationTextStyle,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle
 } from '../styles/VideoGallery.styles';
@@ -26,8 +34,19 @@ import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
 import { VideoTile, VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGallery } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
+import { getVideoTileOverrideColor } from '../utils/videoTileStylesUtils';
 
 const emptyStyles = {};
+
+/**
+ * Strings of {@link VideoGalleryStrings} that can be overridden.
+ *
+ * @public
+ */
+export interface VideoGalleryStrings {
+  /** Message to let user know they are sharing their screen. */
+  screenSharingMessage: string;
+}
 
 /**
  * Props for {@link VideoGallery}.
@@ -75,6 +94,11 @@ export interface VideoGalleryProps {
    * @defaultValue `true`
    */
   showMuteIndicator?: boolean;
+
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<VideoGalleryStrings>;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -109,6 +133,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   } = props;
 
   const ids = useIdentifiers();
+  const theme = useTheme();
+  const localeStrings = useLocale().strings.videoGallery;
 
   const shouldFloatLocalVideo = useMemo((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
@@ -150,6 +176,47 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const horizontalGalleryParticipants =
     visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
 
+  const screenSharingNotification = useMemo((): JSX.Element | undefined => {
+    if (!localParticipant.isScreenSharingOn) {
+      return undefined;
+    }
+
+    const screenSharingNotificationContainerStyle = mergeStyles(
+      localParticipant.videoStream?.renderElement
+        ? screenSharingNotificationContainerCameraOnStyles
+        : screenSharingNotificationContainerCameraOffStyles,
+      getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralSecondary')
+    );
+
+    const screenSharingNotificationIconThemedStyle = mergeStyles(
+      screenSharingNotificationIconStyle,
+      getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralTertiary')
+    );
+
+    return (
+      <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
+        <Stack
+          horizontalAlign={'center'}
+          verticalAlign={'center'}
+          className={screenSharingNotificationContainerStyle}
+          tokens={{ childrenGap: '1rem' }}
+        >
+          <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainer}>
+            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconThemedStyle} />
+          </Stack>
+          <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
+            {props.strings?.screenSharingMessage ?? localeStrings.screenSharingMessage}
+          </Text>
+        </Stack>
+      </Stack>
+    );
+  }, [
+    localParticipant.isScreenSharingOn,
+    localParticipant.videoStream,
+    localParticipant.videoStream?.renderElement,
+    theme
+  ]);
+
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
@@ -166,6 +233,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
     }
+
     return (
       <VideoTile
         userId={localParticipant.userId}
@@ -176,14 +244,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         }
         displayName={localParticipant?.displayName}
         styles={localVideoTileStyles}
-        onRenderPlaceholder={onRenderAvatar}
+        onRenderPlaceholder={localParticipant.isScreenSharingOn ? () => <></> : onRenderAvatar}
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
-      />
+      >
+        {screenSharingNotification}
+      </VideoTile>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     localParticipant,
+    localParticipant.isScreenSharingOn,
     localParticipant.videoStream,
     localParticipant.videoStream?.renderElement,
     onCreateLocalStreamView,
