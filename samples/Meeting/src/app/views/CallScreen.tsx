@@ -23,7 +23,7 @@ export interface CallScreenProps {
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, onCallEnded } = props;
+  const { token, userId, callLocator, displayName, endpointUrl, onCallEnded } = props;
 
   const { currentTheme } = useSwitchableFluentTheme();
 
@@ -37,7 +37,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         displayName,
         credential,
         callLocator,
-        props.endpointUrl,
+        endpointUrl,
         chatThreadId: 'TODO: ACS thread ID'
       });
       adapter.on('meetingEnded', () => {

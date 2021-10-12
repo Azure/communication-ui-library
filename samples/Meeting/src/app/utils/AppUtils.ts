@@ -40,7 +40,7 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
  */
 export const getThreadIdFromUrl = (): string | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('threadId') ? undefined;
+  return urlParams.get('threadId') || undefined;
 };
 
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
