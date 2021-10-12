@@ -18,6 +18,8 @@ console.info(`Build Date : ${getBuildTime()}`);
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
+const websiteName = document.title;
+
 export default (): JSX.Element => {
   const [page, setPage] = useState('home');
   const [token, setToken] = useState('');
@@ -29,9 +31,11 @@ export default (): JSX.Element => {
   const getComponent = (): JSX.Element => {
     switch (page) {
       case 'home': {
+        document.title = `home - ${websiteName}`;
         return <HomeScreen />;
       }
       case 'configuration': {
+        document.title = `configuration - ${websiteName}`;
         return (
           <ConfigurationScreen
             joinChatHandler={() => {
@@ -46,6 +50,7 @@ export default (): JSX.Element => {
         );
       }
       case 'chat': {
+        document.title = `chat - ${websiteName}`;
         if (token && userId && displayName && threadId && endpointUrl) {
           return (
             <ChatScreen
@@ -67,6 +72,7 @@ export default (): JSX.Element => {
         return <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />;
       }
       case 'end': {
+        document.title = `end chat - ${websiteName}`;
         return (
           <EndScreen
             rejoinHandler={() => {
@@ -81,6 +87,7 @@ export default (): JSX.Element => {
         );
       }
       case 'error': {
+        document.title = `error - ${websiteName}`;
         return (
           <ErrorScreen
             homeHandler={() => {
@@ -90,6 +97,7 @@ export default (): JSX.Element => {
         );
       }
       default:
+        document.title = `error - ${websiteName}`;
         throw new Error('Page type not recognized');
     }
   };
