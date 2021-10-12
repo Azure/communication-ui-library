@@ -68,6 +68,11 @@
       "reviewCategory": "sample"
     },
     {
+      "packageName": "meeting",
+      "projectFolder": "samples/Meeting",
+      "reviewCategory": "sample"
+    },
+    {
       "packageName": "server",
       "projectFolder": "samples/Server",
       "reviewCategory": "sample"
