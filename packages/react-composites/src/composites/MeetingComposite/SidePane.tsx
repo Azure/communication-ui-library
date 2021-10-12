@@ -131,3 +131,23 @@ export const EmbeddedChatPane = (props: {
     </SidePane>
   );
 };
+
+/**
+ * @private
+ */
+export const EmbeddedTestPane = (props: {
+  fluentTheme?: PartialTheme | Theme;
+  hidden: boolean;
+  onClose: () => void;
+}): JSX.Element => {
+  return (
+    <SidePane
+      hidden={props.hidden}
+      headingText={'Test Pane'}
+      onClose={props.onClose}
+      dataUiId={'meeting-composite-test-pane'}
+    >
+      {'Test pane content'}
+    </SidePane>
+  );
+};
