@@ -20,6 +20,7 @@ import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
 import { FluidComponent } from './FluidComponent';
+import { PollCreator } from './PollCreator';
 
 const SidePane = (props: {
   headingText: string;
@@ -149,6 +150,26 @@ export const EmbeddedTestPane = (props: {
       dataUiId={'meeting-composite-test-pane'}
     >
       <FluidComponent />
+    </SidePane>
+  );
+};
+
+/**
+ * @private
+ */
+export const EmbeddedPollCreatorPane = (props: {
+  fluentTheme?: PartialTheme | Theme;
+  hidden: boolean;
+  onClose: () => void;
+}): JSX.Element => {
+  return (
+    <SidePane
+      hidden={props.hidden}
+      headingText={'Create live poll'}
+      onClose={props.onClose}
+      dataUiId={'meeting-composite-poll-creator-pane'}
+    >
+      <PollCreator question={'What is the question?'} />
     </SidePane>
   );
 };
