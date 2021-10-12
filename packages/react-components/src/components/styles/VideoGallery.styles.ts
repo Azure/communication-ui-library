@@ -41,7 +41,7 @@ export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'rel
  * @private
  */
 export const floatingLocalVideoModalStyle = (
-  isMobile?: boolean
+  isNarrow?: boolean
 ): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => ({
   root: {
     width: '100%',
@@ -49,8 +49,8 @@ export const floatingLocalVideoModalStyle = (
     overflow: 'hidden'
   },
   main: {
-    minWidth: isMobile ? '4rem' : '10rem',
-    minHeight: isMobile ? '5.5rem' : '7.5rem',
+    minWidth: isNarrow ? '4rem' : '10rem',
+    minHeight: isNarrow ? '5.5rem' : '7.5rem',
     boxShadow: theme.effects.elevation8,
     borderRadius: theme.effects.roundedCorner4,
     position: 'absolute',
@@ -77,8 +77,8 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
 /**
  * @private
  */
-export const getHorizontalGalleryWrapperStyle = (isMobileScreen: boolean): CSSProperties => {
-  return { minHeight: isMobileScreen ? '6rem' : '8rem', maxHeight: isMobileScreen ? '6rem' : '8rem' };
+export const getHorizontalGalleryWrapperStyle = (isNarrow: boolean): CSSProperties => {
+  return { minHeight: isNarrow ? '6rem' : '8rem', maxHeight: isNarrow ? '6rem' : '8rem' };
 };
 
 /**
