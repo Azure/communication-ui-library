@@ -5,7 +5,7 @@ import { DefaultButton, Icon, mergeStyles, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
-import { useContainerWidth, useIsSmallScreen } from '../utils/responsive';
+import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
 import { RemoteVideoTile } from './RemoteVideoTile';
 
 /**
@@ -57,8 +57,8 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const isSmallScreen = useIsSmallScreen(containerRef);
   const containerWidth = useContainerWidth(containerRef);
+  const isNarrow = isNarrowWidth(containerWidth);
   const [page, setPage] = useState(0);
   const [maxTiles, setMaxTiles] = useState(0);
   const [tileHeight, setTileHeight] = useState(TILE_SIZE_LARGE.height);
@@ -66,7 +66,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   useEffect(() => {
     setPage(0);
-    if (isSmallScreen) {
+    if (isNarrow) {
       setTileHeight(TILE_SIZE_SMALL.height);
       setTileWidth(TILE_SIZE_SMALL.width);
       const maxTiles = calculateMaxNumberOfTiles({
@@ -84,7 +84,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       });
       setMaxTiles(maxTiles);
     }
-  }, [containerWidth, isSmallScreen, leftGutter, rightGutter]);
+  }, [containerWidth, isNarrow, leftGutter, rightGutter]);
 
   const tileSizeStyle = useMemo(
     () => ({
@@ -138,8 +138,8 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     showMuteIndicator
   ]);
 
-  const showLeftButton = maxTiles && page > 0 && !isSmallScreen;
-  const showRightButton = maxTiles && page < maxPageIndex && !isSmallScreen;
+  const showLeftButton = maxTiles && page > 0 && !isNarrow;
+  const showRightButton = maxTiles && page < maxPageIndex && !isNarrow;
 
   return (
     <div ref={containerRef}>

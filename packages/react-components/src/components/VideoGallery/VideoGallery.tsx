@@ -22,7 +22,7 @@ import {
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle
 } from '../styles/VideoGallery.styles';
-import { useIsSmallScreen } from '../utils/responsive';
+import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
 import { VideoTile, VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGallery } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
@@ -115,7 +115,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [layout, remoteParticipants]);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const isMobileScreen = useIsSmallScreen(containerRef);
+  const containerWidth = useContainerWidth(containerRef);
+  const isNarrow = isNarrowWidth(containerWidth);
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
@@ -248,7 +249,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             isOpen={true}
             isModeless={true}
             dragOptions={DRAG_OPTIONS}
-            styles={floatingLocalVideoModalStyle(isMobileScreen)}
+            styles={floatingLocalVideoModalStyle(isNarrow)}
             layerProps={{ hostId: floatingTileHostId }}
           >
             {localParticipant && defaultOnRenderLocalVideoTile}
@@ -256,7 +257,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         )}
         <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
         {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
-          <Stack style={getHorizontalGalleryWrapperStyle(isMobileScreen)}>
+          <Stack style={getHorizontalGalleryWrapperStyle(isNarrow)}>
             <HorizontalGallery
               onCreateRemoteStreamView={onCreateRemoteStreamView}
               onDisposeRemoteStreamView={onDisposeRemoteStreamView}
@@ -266,7 +267,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               remoteVideoViewOption={remoteVideoViewOption}
               showMuteIndicator={showMuteIndicator}
               hideRemoteVideoStream={shouldFloatLocalVideo}
-              rightGutter={shouldFloatLocalVideo ? (isMobileScreen ? 64 : 176) : undefined} // to leave a gap for the floating local video
+              rightGutter={shouldFloatLocalVideo ? (isNarrow ? 64 : 176) : undefined} // to leave a gap for the floating local video
             />
           </Stack>
         )}

@@ -32,19 +32,9 @@ export const useContainerWidth = (containerRef: RefObject<HTMLDivElement>): numb
   return width;
 };
 
+const NARROW_WIDTH = 480;
+
 /**
- * A utility hook for identifying if the current viewport size is is a small screen i.e., < 480px.
- * Returns updated result if parent/window resizes.
- * @param containerRef - Ref of a parent element whose width will be used to determine the viewport size
+ * Utility function to determine if container width is narrow
  */
-export const useIsSmallScreen = (containerRef: RefObject<HTMLDivElement>): boolean => {
-  const MOBILE_WIDTH_MAX = 480;
-  const containerWidth = useContainerWidth(containerRef);
-  const [isMobileScreen, setIsMobileScreen] = useState(false);
-
-  useEffect(() => {
-    setIsMobileScreen(containerWidth <= MOBILE_WIDTH_MAX);
-  }, [containerRef, containerWidth]);
-
-  return isMobileScreen;
-};
+export const isNarrowWidth = (containerWidth: number): boolean => containerWidth <= NARROW_WIDTH;
