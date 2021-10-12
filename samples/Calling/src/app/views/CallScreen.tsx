@@ -22,13 +22,13 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   callLocator: GroupCallLocator | TeamsMeetingLinkLocator;
   displayName: string;
-  websiteName: string;
+  webAppTitle: string;
   onCallEnded: () => void;
   onCallError: (e: Error) => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, callLocator, displayName, websiteName, onCallEnded } = props;
+  const { token, userId, callLocator, displayName, webAppTitle, onCallEnded } = props;
   const [adapter, setAdapter] = useState<CallAdapter>();
   const adapterRef = useRef<CallAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -55,7 +55,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           // End call is handled at the App level, so no need to change the title again here
           return;
         }
-        document.title = `${state.page} - ${websiteName}`;
+        document.title = `${state.page} - ${webAppTitle}`;
       });
       setAdapter(adapter);
       adapterRef.current = adapter;

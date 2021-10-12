@@ -33,7 +33,7 @@ registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 type AppPages = 'home' | 'call' | 'endCall' | 'callError' | 'teamsMeetingDenied' | 'removed';
 
-const websiteName = document.title;
+const webAppTitle = document.title;
 
 const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
@@ -70,7 +70,7 @@ const App = (): JSX.Element => {
 
   switch (page) {
     case 'home': {
-      document.title = `home - ${websiteName}`;
+      document.title = `home - ${webAppTitle}`;
       // Show a simplified join home screen if joining an existing call
       const joiningExistingCall: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl();
       return (
@@ -97,15 +97,15 @@ const App = (): JSX.Element => {
       );
     }
     case 'endCall': {
-      document.title = `end call - ${websiteName}`;
+      document.title = `end call - ${webAppTitle}`;
       return <EndCall rejoinHandler={() => setPage('call')} homeHandler={navigateToHomePage} />;
     }
     case 'callError': {
-      document.title = `error - ${websiteName}`;
+      document.title = `error - ${webAppTitle}`;
       return <CallError rejoinHandler={() => setPage('call')} homeHandler={navigateToHomePage} />;
     }
     case 'teamsMeetingDenied': {
-      document.title = `error - ${websiteName}`;
+      document.title = `error - ${webAppTitle}`;
       return (
         <CallError
           title="Error joining Teams Meeting"
@@ -116,7 +116,7 @@ const App = (): JSX.Element => {
       );
     }
     case 'removed': {
-      document.title = `error - ${websiteName}`;
+      document.title = `error - ${webAppTitle}`;
       return (
         <CallError
           title="Oops! You are no longer a participant of the call."
@@ -128,7 +128,7 @@ const App = (): JSX.Element => {
     }
     case 'call': {
       if (userCredentialFetchError) {
-        document.title = `error - ${websiteName}`;
+        document.title = `error - ${webAppTitle}`;
         return (
           <CallError
             title="Error getting user credentials from server"
@@ -140,7 +140,7 @@ const App = (): JSX.Element => {
       }
 
       if (!token || !userId || !displayName || !callLocator) {
-        document.title = `credentials - ${websiteName}`;
+        document.title = `credentials - ${webAppTitle}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
@@ -151,12 +151,12 @@ const App = (): JSX.Element => {
           callLocator={callLocator}
           onCallEnded={() => setPage('endCall')}
           onCallError={() => setPage('callError')}
-          websiteName={websiteName}
+          webAppTitle={webAppTitle}
         />
       );
     }
     default:
-      document.title = `error - ${websiteName}`;
+      document.title = `error - ${webAppTitle}`;
       return <>Invalid page</>;
   }
 };

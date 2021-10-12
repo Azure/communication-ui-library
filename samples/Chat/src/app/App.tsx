@@ -18,7 +18,7 @@ console.info(`Build Date : ${getBuildTime()}`);
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
-const websiteName = document.title;
+const webAppTitle = document.title;
 
 export default (): JSX.Element => {
   const [page, setPage] = useState('home');
@@ -31,11 +31,11 @@ export default (): JSX.Element => {
   const getComponent = (): JSX.Element => {
     switch (page) {
       case 'home': {
-        document.title = `home - ${websiteName}`;
+        document.title = `home - ${webAppTitle}`;
         return <HomeScreen />;
       }
       case 'configuration': {
-        document.title = `configuration - ${websiteName}`;
+        document.title = `configuration - ${webAppTitle}`;
         return (
           <ConfigurationScreen
             joinChatHandler={() => {
@@ -50,7 +50,7 @@ export default (): JSX.Element => {
         );
       }
       case 'chat': {
-        document.title = `chat - ${websiteName}`;
+        document.title = `chat - ${webAppTitle}`;
         if (token && userId && displayName && threadId && endpointUrl) {
           return (
             <ChatScreen
@@ -72,7 +72,7 @@ export default (): JSX.Element => {
         return <Spinner label={'Loading...'} ariaLive="assertive" labelPosition="top" />;
       }
       case 'end': {
-        document.title = `end chat - ${websiteName}`;
+        document.title = `end chat - ${webAppTitle}`;
         return (
           <EndScreen
             rejoinHandler={() => {
@@ -87,7 +87,7 @@ export default (): JSX.Element => {
         );
       }
       case 'error': {
-        document.title = `error - ${websiteName}`;
+        document.title = `error - ${webAppTitle}`;
         return (
           <ErrorScreen
             homeHandler={() => {
@@ -97,7 +97,7 @@ export default (): JSX.Element => {
         );
       }
       default:
-        document.title = `error - ${websiteName}`;
+        document.title = `error - ${webAppTitle}`;
         throw new Error('Page type not recognized');
     }
   };
