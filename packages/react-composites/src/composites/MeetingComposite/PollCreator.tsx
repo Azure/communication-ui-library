@@ -24,13 +24,14 @@ interface PollCreatorProps {
 export const PollCreator = (props: PollCreatorProps): JSX.Element => {
   const theme = useTheme();
 
-  const [displayNames, setDisplayNames] = useState(['']);
-  const [connectionString, setConnectionString] = useState('');
+  const [choices, setChoices] = useState(['']);
+  const [question, setQuestion] = useState('');
 
-  const onConnectionStringChange = useCallback((_, value) => setConnectionString(value ?? ''), []);
-  const onGenerateClick = useCallback(async () => {
+  const onQuestionChanged = useCallback((_, value) => setQuestion(value ?? ''), []);
+  const onPresentPoll = useCallback(async () => {
     // TODO: Add a callback prop to set the poll question.
-  }, [connectionString, displayNames]);
+  }, [question, choices]);
+
   return (
     <Stack
       tokens={containerStackTokens}
@@ -53,18 +54,15 @@ export const PollCreator = (props: PollCreatorProps): JSX.Element => {
               className={mergeStyles({
                 width: '100%'
               })}
-              placeholder="Enter a valid connection string"
-              onChange={onConnectionStringChange}
+              placeholder="Enter a poll question"
+              onChange={onQuestionChanged}
             />
           </Stack.Item>
           <Stack.Item>
-            <Text>Chat participants:</Text>
+            <ChiocesInput choices={choices} setChoices={setChoices} />
           </Stack.Item>
           <Stack.Item>
-            <DisplayNamesInput displayNames={displayNames} setDisplayNames={setDisplayNames} />
-          </Stack.Item>
-          <Stack.Item>
-            <PrimaryButton text="Generate" onClick={onGenerateClick} />
+            <PrimaryButton text="Present live poll" onClick={onPresentPoll} />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -72,33 +70,32 @@ export const PollCreator = (props: PollCreatorProps): JSX.Element => {
   );
 };
 
-interface DisplayNamesInputProps {
-  displayNames: string[];
-  setDisplayNames: (displayNames: string[]) => void;
+interface ChoicesInputProps {
+  choices: string[];
+  setChoices: (displayNames: string[]) => void;
 }
 
-const DisplayNamesInput = (props: DisplayNamesInputProps): JSX.Element => {
-  const { displayNames, setDisplayNames } = props;
+const ChiocesInput = (props: ChoicesInputProps): JSX.Element => {
+  const { choices, setChoices } = props;
 
   const onTextChange = useCallback(
     (i: number, value: string | undefined) => {
-      // TODO: `draft` is unnecessary.
-      const draft = [...displayNames];
+      const draft = [...choices];
       draft[i] = value ?? '';
-      setDisplayNames(draft);
+      setChoices(draft);
     },
-    [displayNames, setDisplayNames]
+    [choices, setChoices]
   );
-  const onAddParticipant = useCallback(() => {
-    const draft = [...displayNames];
+  const onAddChoice = useCallback(() => {
+    const draft = [...choices];
     draft.push('');
-    setDisplayNames(draft);
-  }, [displayNames, setDisplayNames]);
-  const onRemoveParticipant = useCallback(() => {
-    const draft = [...displayNames];
+    setChoices(draft);
+  }, [choices, setChoices]);
+  const onRemoveChoice = useCallback(() => {
+    const draft = [...choices];
     draft.splice(draft.length - 1, 1);
-    setDisplayNames(draft);
-  }, [displayNames, setDisplayNames]);
+    setChoices(draft);
+  }, [choices, setChoices]);
 
   return (
     <Stack
@@ -107,15 +104,15 @@ const DisplayNamesInput = (props: DisplayNamesInputProps): JSX.Element => {
         width: '100%'
       })}
     >
-      {displayNames.map((name, i) => (
-        <Stack.Item key={`displayNameInput.${i}`}>
+      {choices.map((name, i) => (
+        <Stack.Item key={`choice.${i}`}>
           <TextField
             className={mergeStyles({
               width: '30%',
               maxWidth: 300
             })}
-            placeholder="Enter display name"
-            value={displayNames[i]}
+            placeholder={`Enter choice ${i}`}
+            value={choices[i]}
             onChange={(_, value) => onTextChange(i, value)}
           />
         </Stack.Item>
@@ -129,20 +126,15 @@ const DisplayNamesInput = (props: DisplayNamesInputProps): JSX.Element => {
           })}
         >
           <Stack.Item>
-            <IconButton
-              iconProps={addIcon}
-              title="Add Participant"
-              ariaLabel="Add Participant"
-              onClick={onAddParticipant}
-            />
+            <IconButton iconProps={addIcon} title="Add choice" ariaLabel="Add choice" onClick={onAddChoice} />
           </Stack.Item>
-          {displayNames.length > 1 ? (
+          {choices.length > 1 ? (
             <Stack.Item>
               <IconButton
                 iconProps={removeIcon}
-                title="Remove Participant"
-                ariaLabel="Remove Participant"
-                onClick={onRemoveParticipant}
+                title="Remove Choice"
+                ariaLabel="Remove choice"
+                onClick={onRemoveChoice}
               />
             </Stack.Item>
           ) : (
