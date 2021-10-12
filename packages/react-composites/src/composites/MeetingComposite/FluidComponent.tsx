@@ -1,52 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useEffect } from 'react';
-import { AzureClient, AzureConnectionConfig, AzureContainerServices } from '@fluidframework/azure-client';
-import { TinyliciousClient } from '@fluidframework/tinylicious-client';
-import { SharedMap, ISharedMap, FluidContainer } from 'fluid-framework';
-import { configDetails } from './env';
-import { InsecureTokenProvider } from '@fluidframework/test-client-utils';
+import { ISharedMap } from 'fluid-framework';
+import { createFluidClient, initializeFluidMap } from './FluidUtils';
 
-const URL_PARAM_KEY = 'fluidContainerId';
-const USE_LOCAL_FLUID_SERVER = false;
-
-const containerSchema = {
-  initialObjects: { myMap: SharedMap }
-};
-
-const config: AzureConnectionConfig = {
-  tenantId: configDetails.tenantId,
-  tokenProvider: new InsecureTokenProvider(configDetails.tokenProviderId, { id: 'UserId' }),
-  orderer: configDetails.orderer,
-  storage: configDetails.storage
-};
-
-const createFluidContainer = async (
-  client: AzureClient | TinyliciousClient
-): Promise<{
-  container: FluidContainer;
-  services: AzureContainerServices;
-}> => await client.createContainer(containerSchema);
-
-const initializeFluidMap = async (client: AzureClient | TinyliciousClient, urlParams: string): Promise<ISharedMap> => {
-  const existingContainerId = getContainerIdIfExists(urlParams);
-  if (existingContainerId) {
-    const { container } = await client.getContainer(existingContainerId, containerSchema);
-    return container.initialObjects.myMap as ISharedMap;
-  }
-  const { container } = await createFluidContainer(client);
-  const map = container.initialObjects.myMap as ISharedMap;
-
-  const containerId = await container.attach();
-
-  // `window.location.search` already contains groupId etc.
-  window.history.pushState(
-    {},
-    document.title,
-    window.location.origin + window.location.search + `&${URL_PARAM_KEY}=${containerId}`
-  );
-  return map;
-};
+const FLUID_COUNTER_KEY = 'myFirstCounter';
 
 /**
  * @private
@@ -56,22 +14,17 @@ export const FluidComponent = (): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const client = USE_LOCAL_FLUID_SERVER ? new TinyliciousClient() : new AzureClient({ connection: config });
+      const client = createFluidClient();
       const map = await initializeFluidMap(client, window.location.search);
       setFluidMap(map);
     })();
   }, []);
 
   useEffect(() => {
-    const oldVal = fluidMap?.get('myFirstCounter') || 1;
+    const oldVal = fluidMap?.get(FLUID_COUNTER_KEY) || 1;
     // DON'T DO THIS.
-    fluidMap?.set('myFirstCounter', oldVal + 1);
+    fluidMap?.set(FLUID_COUNTER_KEY, oldVal + 1);
   }, [fluidMap]);
 
-  return <>{`FluidMap value: ${fluidMap?.get('myFirstCounter')}`}</>;
-};
-
-const getContainerIdIfExists = (urlParams: string): string | undefined => {
-  const params = new URLSearchParams(urlParams);
-  return params.get(URL_PARAM_KEY) || undefined;
+  return <>{`FluidMap value: ${fluidMap?.get(FLUID_COUNTER_KEY)}`}</>;
 };
