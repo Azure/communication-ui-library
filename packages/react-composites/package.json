@@ -72,6 +72,7 @@
     "@babel/core": "7.13.10",
     "@babel/preset-env": "7.13.10",
     "@fluidframework/azure-client": "^0.47.1",
+    "@fluidframework/test-client-utils": "^0.49.2",
     "@fluidframework/test-utils": "^0.47.1",
     "@fluidframework/tinylicious-client": "^0.47.1",
     "@mdx-js/react": "^1.6.22",

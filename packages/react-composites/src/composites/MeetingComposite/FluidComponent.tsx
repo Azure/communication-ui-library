@@ -1,18 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useEffect, useMemo } from 'react';
-import {
-  AzureClient,
-  AzureFunctionTokenProvider,
-  AzureConnectionConfig,
-  AzureContainerServices
-} from '@fluidframework/azure-client';
+import React, { useEffect } from 'react';
+import { AzureClient, AzureConnectionConfig, AzureContainerServices } from '@fluidframework/azure-client';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
 import { SharedMap, ISharedMap, FluidContainer } from 'fluid-framework';
 import { configDetails } from './env';
+import { InsecureTokenProvider } from '@fluidframework/test-client-utils';
 
-const USE_LOCAL_FLUID_SERVER = true;
 const URL_PARAM_KEY = 'fluidContainerId';
+const USE_LOCAL_FLUID_SERVER = false;
 
 const containerSchema = {
   initialObjects: { myMap: SharedMap }
@@ -20,10 +16,7 @@ const containerSchema = {
 
 const config: AzureConnectionConfig = {
   tenantId: configDetails.tenantId,
-  tokenProvider: new AzureFunctionTokenProvider(configDetails.tokenProviderId, {
-    userId: 'UserId',
-    userName: 'Test User'
-  }),
+  tokenProvider: new InsecureTokenProvider(configDetails.tokenProviderId, { id: 'UserId' }),
   orderer: configDetails.orderer,
   storage: configDetails.storage
 };
