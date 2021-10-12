@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DefaultButton, Icon, mergeStyles, Stack } from '@fluentui/react';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { CSSProperties, useMemo, useRef, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
 import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
@@ -60,40 +60,53 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const containerWidth = useContainerWidth(containerRef);
   const isNarrow = isNarrowWidth(containerWidth);
   const [page, setPage] = useState(0);
-  const [maxTiles, setMaxTiles] = useState(0);
-  const [tileHeight, setTileHeight] = useState(TILE_SIZE_LARGE.height);
-  const [tileWidth, setTileWidth] = useState(TILE_SIZE_LARGE.width);
 
-  useEffect(() => {
+  const maxTiles = useMemo(() => {
     setPage(0);
     if (isNarrow) {
-      setTileHeight(TILE_SIZE_SMALL.height);
-      setTileWidth(TILE_SIZE_SMALL.width);
-      const maxTiles = calculateMaxNumberOfTiles({
+      return calculateMaxNumberOfTiles({
         width: containerWidth - (leftGutter + rightGutter),
         tileWidth: TILE_SIZE_SMALL.width,
         buttonsWidth: 0
       });
-      setMaxTiles(maxTiles);
     } else {
-      setTileHeight(TILE_SIZE_LARGE.height);
-      setTileWidth(TILE_SIZE_LARGE.width);
-      const maxTiles = calculateMaxNumberOfTiles({
+      return calculateMaxNumberOfTiles({
         width: containerWidth - (leftGutter + rightGutter),
         tileWidth: TILE_SIZE_LARGE.width
       });
-      setMaxTiles(maxTiles);
     }
   }, [containerWidth, isNarrow, leftGutter, rightGutter]);
 
   const tileSizeStyle = useMemo(
-    () => ({
-      minHeight: `${tileHeight}rem`,
-      minWidth: `${tileWidth}rem`,
-      maxHeight: `${tileHeight}rem`,
-      maxWidth: `${tileWidth}rem`
-    }),
-    [tileWidth, tileHeight]
+    () =>
+      isNarrow
+        ? {
+            minHeight: `${TILE_SIZE_SMALL.height}rem`,
+            minWidth: `${TILE_SIZE_SMALL.width}rem`,
+            maxHeight: `${TILE_SIZE_SMALL.height}rem`,
+            maxWidth: `${TILE_SIZE_SMALL.width}rem`
+          }
+        : {
+            minHeight: `${TILE_SIZE_LARGE.height}rem`,
+            minWidth: `${TILE_SIZE_LARGE.width}rem`,
+            maxHeight: `${TILE_SIZE_LARGE.height}rem`,
+            maxWidth: `${TILE_SIZE_LARGE.width}rem`
+          },
+    [isNarrow]
+  );
+
+  const leftRightButtonHeightStyles = useMemo(
+    () =>
+      isNarrow
+        ? {
+            minHeight: `${TILE_SIZE_SMALL.height}rem`,
+            maxHeight: `${TILE_SIZE_SMALL.height}rem`
+          }
+        : {
+            minHeight: `${TILE_SIZE_LARGE.height}rem`,
+            maxHeight: `${TILE_SIZE_LARGE.height}rem`
+          },
+    [isNarrow]
   );
 
   const maxPageIndex = Math.ceil(participants.length / maxTiles) - 1;
@@ -152,10 +165,12 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           paddingRight: `${rightGutter}rem`
         })}
       >
-        {showLeftButton && <LeftButton height={tileHeight} onClick={() => setPage(Math.max(0, page - 1))} />}
+        {showLeftButton && (
+          <LeftButton style={leftRightButtonHeightStyles} onClick={() => setPage(Math.max(0, page - 1))} />
+        )}
         {defaultOnRenderParticipants}
         {showRightButton && (
-          <RightButton height={tileHeight} onClick={() => setPage(Math.min(maxPageIndex, page + 1))} />
+          <RightButton style={leftRightButtonHeightStyles} onClick={() => setPage(Math.min(maxPageIndex, page + 1))} />
         )}
       </Stack>
     </div>
@@ -176,31 +191,17 @@ const calculateMaxNumberOfTiles = ({ width, tileWidth = 10, buttonsWidth = 4, ga
   );
 };
 
-const LeftButton = (props: { height: number; onClick?: () => void }): JSX.Element => {
+const LeftButton = (props: { style: CSSProperties; onClick?: () => void }): JSX.Element => {
   return (
-    <DefaultButton
-      className={mergeStyles(leftRightButtonStyles)}
-      onClick={props.onClick}
-      style={{
-        minHeight: `${props.height}rem`,
-        maxHeight: `${props.height}rem`
-      }}
-    >
+    <DefaultButton className={mergeStyles(leftRightButtonStyles)} onClick={props.onClick} style={props.style}>
       <Icon iconName="HorizontalGalleryLeftButton" />
     </DefaultButton>
   );
 };
 
-const RightButton = (props: { height: number; onClick?: () => void }): JSX.Element => {
+const RightButton = (props: { style: CSSProperties; onClick?: () => void }): JSX.Element => {
   return (
-    <DefaultButton
-      className={mergeStyles(leftRightButtonStyles)}
-      onClick={props.onClick}
-      style={{
-        minHeight: `${props.height}rem`,
-        maxHeight: `${props.height}rem`
-      }}
-    >
+    <DefaultButton className={mergeStyles(leftRightButtonStyles)} onClick={props.onClick} style={props.style}>
       <Icon iconName="HorizontalGalleryRightButton" />
     </DefaultButton>
   );
