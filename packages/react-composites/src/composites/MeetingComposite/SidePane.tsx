@@ -20,7 +20,7 @@ import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
 import { FluidComponent } from './FluidComponent';
-import { PollCreator } from './PollCreator';
+import { PollCreator, PollQuestion } from './PollCreator';
 
 const SidePane = (props: {
   headingText: string;
@@ -169,7 +169,12 @@ export const EmbeddedPollCreatorPane = (props: {
       onClose={props.onClose}
       dataUiId={'meeting-composite-poll-creator-pane'}
     >
-      <PollCreator question={'What is the question?'} />
+      <PollCreator
+        onPresentPoll={(question: PollQuestion) => {
+          // TODO: Connect with fluid!
+          console.log('Egad! A new poll question is come!', question);
+        }}
+      />
     </SidePane>
   );
 };

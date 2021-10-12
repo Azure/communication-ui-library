@@ -9,28 +9,32 @@ import {
   mergeStyles,
   PrimaryButton,
   Stack,
-  Text,
   TextField,
   useTheme
 } from '@fluentui/react';
 
-interface PollCreatorProps {
-  question: string;
+/**
+ * @private
+ */
+export interface PollCreatorProps {
+  onPresentPoll: (question: PollQuestion) => void;
+}
+
+/**
+ * @private
+ */
+export interface PollQuestion {
+  prompt: string;
+  choices: string[];
 }
 
 /**
  * @private
  */
 export const PollCreator = (props: PollCreatorProps): JSX.Element => {
+  const { onPresentPoll } = props;
   const theme = useTheme();
-
-  const [choices, setChoices] = useState(['']);
-  const [question, setQuestion] = useState('');
-
-  const onQuestionChanged = useCallback((_, value) => setQuestion(value ?? ''), []);
-  const onPresentPoll = useCallback(async () => {
-    // TODO: Add a callback prop to set the poll question.
-  }, [question, choices]);
+  const [question, setQuestion] = useState<PollQuestion>({ prompt: '', choices: [] });
 
   return (
     <Stack
@@ -55,14 +59,17 @@ export const PollCreator = (props: PollCreatorProps): JSX.Element => {
                 width: '100%'
               })}
               placeholder="Enter a poll question"
-              onChange={onQuestionChanged}
+              onChange={(_, prompt?: string) => prompt && setQuestion({ ...question, prompt })}
             />
           </Stack.Item>
           <Stack.Item>
-            <ChiocesInput choices={choices} setChoices={setChoices} />
+            <ChiocesInput
+              choices={question.choices}
+              setChoices={(choices: string[]) => setQuestion({ ...question, choices })}
+            />
           </Stack.Item>
           <Stack.Item>
-            <PrimaryButton text="Present live poll" onClick={onPresentPoll} />
+            <PrimaryButton text="Present live poll" onClick={() => onPresentPoll(question)} />
           </Stack.Item>
         </Stack>
       </Stack.Item>
