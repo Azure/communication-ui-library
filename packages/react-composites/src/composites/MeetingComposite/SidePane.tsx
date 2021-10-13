@@ -20,6 +20,7 @@ import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
 import { FluidComponent } from './FluidComponent';
+import { PollCreator, PollQuestion } from './PollCreator';
 
 const SidePane = (props: {
   headingText: string;
@@ -149,6 +150,31 @@ export const EmbeddedTestPane = (props: {
       dataUiId={'meeting-composite-test-pane'}
     >
       <FluidComponent />
+    </SidePane>
+  );
+};
+
+/**
+ * @private
+ */
+export const EmbeddedPollCreatorPane = (props: {
+  fluentTheme?: PartialTheme | Theme;
+  hidden: boolean;
+  onClose: () => void;
+}): JSX.Element => {
+  return (
+    <SidePane
+      hidden={props.hidden}
+      headingText={'Create live poll'}
+      onClose={props.onClose}
+      dataUiId={'meeting-composite-poll-creator-pane'}
+    >
+      <PollCreator
+        onPresentPoll={(question: PollQuestion) => {
+          // TODO: Connect with fluid!
+          console.log('Egad! A new poll question is come!', question);
+        }}
+      />
     </SidePane>
   );
 };
