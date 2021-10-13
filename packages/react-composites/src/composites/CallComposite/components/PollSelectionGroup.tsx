@@ -2,7 +2,14 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { ChoiceGroup, IChoiceGroupOption, IChoiceGroupOptionStyles, IPalette, useTheme } from '@fluentui/react';
+import {
+  ChoiceGroup,
+  IChoiceGroupOption,
+  IChoiceGroupOptionStyles,
+  IChoiceGroupStyles,
+  IPalette,
+  useTheme
+} from '@fluentui/react';
 
 /**
  * @private
@@ -30,15 +37,25 @@ export interface PollSelectionGroupProps {
  */
 export const PollSelectionGroup = (props: PollSelectionGroupProps): JSX.Element => {
   const palette = useTheme().palette;
+  const containerStyles: IChoiceGroupStyles = {
+    root: {
+      height: '100%',
+      width: '100%'
+    }
+  };
   const pollSelectionStyles = (palette: IPalette, isSelected: boolean): IChoiceGroupOptionStyles => ({
     root: {
-      margin: '15px',
+      padding: '15px',
       borderRadius: '4px',
-      fontSize: '12px',
-      lineHeight: '16px',
+      fontSize: '14px',
+      fontWeight: 600,
+      lineHeight: '20px',
       border: `1.5px solid ${isSelected ? palette.themePrimary : palette.neutralQuaternary}`,
       width: '100%',
       height: '50px'
+    },
+    labelWrapper: {
+      paddingLeft: '36px'
     }
   });
 
@@ -49,5 +66,6 @@ export const PollSelectionGroup = (props: PollSelectionGroupProps): JSX.Element 
     defaultChecked: pollOption.chosen,
     styles: pollSelectionStyles(palette, pollOption.chosen)
   }));
-  return <ChoiceGroup disabled={!props.interactive} options={choiceGroupSelections} />;
+
+  return <ChoiceGroup styles={containerStyles} disabled={!props.interactive} options={choiceGroupSelections} />;
 };

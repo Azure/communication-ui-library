@@ -20,7 +20,7 @@ const PollResultBarStory = (args): JSX.Element => {
         }
       }}
     >
-      <PollResultBarComponent {...args} />;{' '}
+      <PollResultBarComponent {...args} />
     </Stack>
   );
 };
@@ -30,16 +30,16 @@ const PollResultBarStory = (args): JSX.Element => {
 export const PollResultBar = PollResultBarStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-poll-result-bar`,
+  id: `${COMPONENT_FOLDER_PREFIX}-poll--poll-result-bar`,
   title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollResultBar`,
   component: PollResultBarComponent,
   argTypes: {
     barWidthPercentage: {
-      control: { type: 'range', min: 0, max: 100, step: 5 },
+      control: { type: 'range', min: 0, max: 100, step: 1 },
       defaultValue: 80,
       name: 'Bar Width Percentage'
     },
-    percentage: { control: { type: 'number' }, defaultValue: 80, name: 'Percentage String' },
-    votes: { control: { type: 'number' }, defaultValue: 1, name: 'Votes' }
+    percentage: { control: 'number', defaultValue: 80, name: 'Percentage String' },
+    votes: { control: 'number', defaultValue: 5, name: 'Votes' }
   }
 } as Meta;

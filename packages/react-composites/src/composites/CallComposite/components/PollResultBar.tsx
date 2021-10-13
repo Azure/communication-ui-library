@@ -28,7 +28,9 @@ export const PollResultBar = (props: PollResultBarProps): JSX.Element => {
       background: palette.themeLighterAlt,
       color: palette.themeDarkAlt,
       width: `${props.barWidthPercentage}%`,
-      height: '50px',
+      height: '40px',
+      marginTop: '5px',
+      marginBottom: '5px',
       zIndex: '0'
     }
   };

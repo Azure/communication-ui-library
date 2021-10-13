@@ -1,63 +1,67 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PollSelectionGroup as PollSelectionGroupComponent } from '@azure/communication-react';
+import { PollResults as PollResultsComponent, PollResultsData } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-const PollSelectionGroupStory = (args): JSX.Element => {
+const PollResultsStory = (args): JSX.Element => {
   return (
     <Stack
       horizontalAlign="center"
       verticalAlign="center"
       styles={{
         root: {
-          width: '50vw',
-          height: '50vh'
+          width: '90vw',
+          height: '90vh'
         }
       }}
     >
-      <PollSelectionGroupComponent {...args} />
+      <PollResultsComponent {...args} />
     </Stack>
   );
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const PollSelectionGroup = PollSelectionGroupStory.bind({});
+export const PollResults = PollResultsStory.bind({});
 
-const pollOptions = [
+const pollData: PollResultsData = [
   {
     option: 'Chips',
-    chosen: true
+    chosen: true,
+    votes: 2
   },
   {
     option: 'Cocoa Puffs',
-    chosen: false
+    chosen: false,
+    votes: 5
   },
   {
     option: 'Dunkaroos',
-    chosen: false
+    chosen: false,
+    votes: 2
   },
   {
     option: 'Roasted Almonds',
-    chosen: false
+    chosen: false,
+    votes: 1
   },
   {
     option: 'M&Ms',
-    chosen: false
+    chosen: false,
+    votes: 0
   }
 ];
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-poll-poll-selection-group`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollSelectionGroup`,
-  component: PollSelectionGroupComponent,
+  id: `${COMPONENT_FOLDER_PREFIX}-poll-poll-results`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollResults`,
+  component: PollResultsComponent,
   argTypes: {
-    interactive: { control: 'boolean', defaultValue: true, name: 'Interactive' },
-    pollOptions: { control: 'object', defaultValue: pollOptions, name: 'Poll Options' }
+    pollData: { control: 'object', defaultValue: pollData, name: 'Poll Data' }
   }
 } as Meta;

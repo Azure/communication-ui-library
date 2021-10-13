@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PollSelectionGroup as PollSelectionGroupComponent } from '@azure/communication-react';
+import { PollSelector as PollSelectorComponent } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-const PollSelectionGroupStory = (args): JSX.Element => {
+const PollSelectorStory = (args): JSX.Element => {
   return (
     <Stack
       horizontalAlign="center"
@@ -16,18 +16,18 @@ const PollSelectionGroupStory = (args): JSX.Element => {
       styles={{
         root: {
           width: '50vw',
-          height: '50vh'
+          height: '90vh'
         }
       }}
     >
-      <PollSelectionGroupComponent {...args} />
+      <PollSelectorComponent {...args} />
     </Stack>
   );
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const PollSelectionGroup = PollSelectionGroupStory.bind({});
+export const PollSelector = PollSelectorStory.bind({});
 
 const pollOptions = [
   {
@@ -53,11 +53,10 @@ const pollOptions = [
 ];
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-poll-poll-selection-group`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollSelectionGroup`,
-  component: PollSelectionGroupComponent,
+  id: `${COMPONENT_FOLDER_PREFIX}-poll-poll-selector`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollSelector`,
+  component: PollSelectorComponent,
   argTypes: {
-    interactive: { control: 'boolean', defaultValue: true, name: 'Interactive' },
     pollOptions: { control: 'object', defaultValue: pollOptions, name: 'Poll Options' }
   }
 } as Meta;
