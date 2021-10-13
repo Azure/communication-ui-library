@@ -34,6 +34,10 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * A callback function that can be used to provide custom data to an Avatar.
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+
+  /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
+  spotFocusTile?: JSX.Element;
+
   /**
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
@@ -72,6 +76,8 @@ type MainScreenProps = {
   callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
+  spotFocusTile?: JSX.Element;
   options?: CallCompositeOptions;
 };
 
@@ -147,6 +153,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          spotFocusTile={props.spotFocusTile}
           options={props.options}
         />
       );
@@ -177,6 +184,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
           callInvitationUrl={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          spotFocusTile={props.spotFocusTile}
           options={options}
         />
       </CallAdapterProvider>

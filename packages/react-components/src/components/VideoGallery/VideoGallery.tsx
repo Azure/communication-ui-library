@@ -89,6 +89,9 @@ export interface VideoGalleryProps {
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
 
+  /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
+  spotFocusTile?: JSX.Element;
+
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue `true`
@@ -171,10 +174,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   // If there are no video participants, we assign all audio participants as grid participants and assign
   // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
-  const gridParticipants =
+  let gridParticipants =
     visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
-  const horizontalGalleryParticipants =
+  let horizontalGalleryParticipants =
     visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
+
+  if (props.spotFocusTile) {
+    // Center stage will be taken entirely by `spotFocusTile`, so move all participants to horizontal gallery.
+    horizontalGalleryParticipants = gridParticipants.concat(horizontalGalleryParticipants);
+    gridParticipants = [];
+  }
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {
     if (!localParticipant.isScreenSharingOn) {
@@ -304,10 +313,24 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   const gridTiles = remoteGridTiles ?? [];
-  if (!shouldFloatLocalVideo && localParticipant) {
+  if (!shouldFloatLocalVideo && localParticipant && props.spotFocusTile) {
     gridTiles.push(
-      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+      <Stack
+        key="non-floating-local"
+        data-ui-id={ids.videoGallery}
+        horizontalAlign="center"
+        verticalAlign="center"
+        className={gridStyle}
+        grow
+      >
         {localParticipant && defaultOnRenderLocalVideoTile}
+      </Stack>
+    );
+  }
+  if (props.spotFocusTile) {
+    gridTiles.push(
+      <Stack key="spotFocusTile" horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+        {props.spotFocusTile}
       </Stack>
     );
   }
@@ -337,7 +360,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               participants={horizontalGalleryParticipants}
               remoteVideoViewOption={remoteVideoViewOption}
               showMuteIndicator={showMuteIndicator}
-              hideRemoteVideoStream={shouldFloatLocalVideo}
               rightGutter={shouldFloatLocalVideo ? (isNarrow ? 64 : 176) : undefined} // to leave a gap for the floating local video
             />
           </Stack>
