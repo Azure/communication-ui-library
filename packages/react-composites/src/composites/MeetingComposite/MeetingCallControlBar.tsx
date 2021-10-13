@@ -8,7 +8,7 @@ import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
 import { Stack } from '@fluentui/react';
-import { GiftButton } from './GitfButton';
+import { PollButton } from './PollButton';
 
 /**
  * @private
@@ -49,11 +49,11 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>
-        <GiftButton
+        <PollButton
           checked={props.testButtonChecked}
           showLabel={true}
           onClick={props.onTestButtonClicked}
-          data-ui-id="meeting-composite-test-button"
+          data-ui-id="meeting-composite-poll-button"
         />
         <ChatButton
           checked={props.chatButtonChecked}
