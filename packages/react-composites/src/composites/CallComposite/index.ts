@@ -13,3 +13,6 @@ export * from './components/PollResultsBarGroup';
 export * from './components/PollResults';
 export * from './components/PollSelectionGroup';
 export * from './components/PollSelector';
+export * from './components/PollTile';
+export * from './components/PollQuestionTile';
+export * from './components/PollResultTile';

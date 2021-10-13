@@ -16,11 +16,11 @@ export const PollResults = (props: PollResultsProps): JSX.Element => {
     }
   };
   return (
-    <Stack horizontal verticalFill styles={containerStyles} verticalAlign="start" tokens={{ childrenGap: '30px' }}>
-      <Stack.Item grow={1} verticalFill>
+    <Stack horizontal styles={containerStyles} verticalAlign="start" tokens={{ childrenGap: '30px' }}>
+      <Stack.Item grow={1}>
         <PollSelectionGroup pollOptions={props.pollData} interactive={false} />
       </Stack.Item>
-      <Stack.Item grow={1} verticalFill styles={{ root: { marginTop: '5px' } }}>
+      <Stack.Item grow={1} styles={{ root: { marginTop: '5px' } }}>
         <PollResultBarGroup pollData={props.pollData} />
       </Stack.Item>
     </Stack>
