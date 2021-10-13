@@ -5,7 +5,7 @@ import React, { useCallback, useState, useMemo } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { EmbeddedChatPane, EmbeddedPeoplePane, EmbeddedPollCreatorPane, EmbeddedTestPane } from './SidePane';
+import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
 import { CallState } from '@azure/communication-calling';
 import { compositeOuterContainerStyles } from './styles/MeetingCompositeStyles';
@@ -16,6 +16,7 @@ import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
+import { PollCreator, PollQuestion } from './PollCreator';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -119,6 +120,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               options={{ callControls: false, mobileView: props.options?.mobileView }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
+              spotFocusTile={showPollCreatorPane ? <PollCreatorTile /> : undefined}
             />
           </Stack.Item>
           {chatAdapter && hasJoinedCall && (
@@ -140,7 +142,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               />
             </CallAdapterProvider>
           )}
-          {hasJoinedCall && <EmbeddedPollCreatorPane hidden={!showPollCreatorPane} onClose={closePane} />}
         </Stack>
         {hasJoinedCall && (
           <MeetingCallControlBar
@@ -157,5 +158,16 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
         )}
       </Stack>
     </FluentThemeProvider>
+  );
+};
+
+const PollCreatorTile = (): JSX.Element => {
+  return (
+    <PollCreator
+      onPresentPoll={(question: PollQuestion) => {
+        // TODO: Connect with fluid!
+        console.log('Egad! A new poll question is come!', question);
+      }}
+    />
   );
 };

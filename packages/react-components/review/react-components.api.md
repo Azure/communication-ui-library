@@ -766,6 +766,7 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
+    spotFocusTile?: JSX.Element;
     strings?: Partial<VideoGalleryStrings>;
     styles?: BaseCustomStylesProps;
 }

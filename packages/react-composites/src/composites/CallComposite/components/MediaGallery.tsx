@@ -33,6 +33,8 @@ const remoteVideoViewOption = {
 export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
+  /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
+  spotFocusTile?: JSX.Element;
   onStartLocalVideo: () => Promise<void>;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -65,6 +67,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoViewOption={remoteVideoViewOption}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
+        spotFocusTile={props.spotFocusTile}
         onRenderAvatar={(userId, options) => (
           <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
             <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />

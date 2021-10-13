@@ -36,6 +36,8 @@ export interface CallPageProps {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
+  spotFocusTile?: JSX.Element;
   options?: CallCompositeOptions;
 }
 
@@ -98,6 +100,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
                 {...mediaGalleryHandlers}
                 onRenderAvatar={onRenderAvatar}
                 onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+                spotFocusTile={props.spotFocusTile}
               />
             </Stack>
           )}
