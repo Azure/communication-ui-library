@@ -3,7 +3,8 @@
 
 import React, { useState } from 'react';
 import { IButtonStyles, IStackStyles, PrimaryButton, Stack } from '@fluentui/react';
-import { PollOption, PollOptions, PollSelectionGroup } from './PollSelectionGroup';
+import { PollSelectionGroup } from './PollSelectionGroup';
+import { PollOption, PollOptions } from './PollTypes';
 
 /**
  * @private

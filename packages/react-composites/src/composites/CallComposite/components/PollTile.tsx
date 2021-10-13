@@ -9,7 +9,7 @@ import { QuestionCircle20Filled } from '@fluentui/react-icons';
  * @private
  */
 export interface PollTileProps {
-  question: string;
+  prompt: string;
   children: React.ReactNode;
 }
 
@@ -55,7 +55,7 @@ export const PollTile = (props: PollTileProps): JSX.Element => {
         <TileHeader text={'Live poll'} />
       </Stack.Item>
       <Stack verticalFill styles={innerContainerStyles} verticalAlign="space-evenly" horizontalAlign="center">
-        <Stack.Item styles={questionStyles}>{props.question}</Stack.Item>
+        <Stack.Item styles={questionStyles}>{props.prompt}</Stack.Item>
         {props.children}
       </Stack>
     </Stack>

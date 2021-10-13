@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite, PollQuestionTile, PollResultTile } from '../CallComposite';
+import { CallComposite, PollData, PollQuestionTile, PollResultTile } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
@@ -112,16 +112,40 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     meetingAdapter.setPage('configuration');
   };
 
-  const [submittedPollAnswer, setShowSubmittedPollAnswer] = useState(false);
-  const focusTile = !submittedPollAnswer ? (
-    <PollQuestionTile
-      question={'What snack should we add to the kitchen'}
-      options={dummyPollData}
-      onSubmitAnswer={() => setShowSubmittedPollAnswer(true)}
-    />
-  ) : (
-    <PollResultTile question={'What snack should we add to the kitchen'} results={dummyPollData} />
-  );
+  const fluidModel = useRef<FluidModel | undefined>(undefined);
+  const [pollData, setPollData] = useState<PollData | undefined>(undefined);
+  useEffect(() => {
+    (async () => {
+      if (hasJoinedCall) {
+        const client = createFluidClient();
+        const container = await initializeFluidContainer(client, window.location.search);
+        fluidModel.current = new FluidModel(container);
+        fluidModel.current?.on('modelChanged', async () => {
+          const newPollData = await fluidModel.current?.getPoll();
+          console.log('[xkcd] Got a new Poll object', newPollData);
+          setPollData(newPollData);
+        });
+      }
+    })();
+  }, [hasJoinedCall]);
+
+  const [pollAnswered, setPollAnswered] = useState(false);
+  let focusTile: JSX.Element | undefined = undefined;
+  if (pollData) {
+    focusTile = !pollAnswered ? (
+      <PollQuestionTile
+        pollData={pollData}
+        onSubmitAnswer={() => {
+          fluidModel.current?.addVoteForOption(0);
+          setPollAnswered(true);
+        }}
+      />
+    ) : (
+      <PollResultTile pollData={pollData} />
+    );
+  } else if (showPollCreatorPane && fluidModel.current) {
+    focusTile = <PollCreatorTile fluidModel={fluidModel.current} />;
+  }
 
   return (
     <FluentThemeProvider fluentTheme={props.fluentTheme}>
@@ -173,59 +197,14 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   );
 };
 
-const PollCreatorTile = (): JSX.Element => {
-  /** SCRATCH: Move to a better home */
-  const fluidModel = useRef<FluidModel | undefined>(undefined);
-  useEffect(() => {
-    (async () => {
-      const client = createFluidClient();
-      const container = await initializeFluidContainer(client, window.location.search);
-      fluidModel.current = new FluidModel(container);
-      fluidModel.current?.on('modelChanged', async () => {
-        console.log('[xkcd] Got a new Poll object', await fluidModel.current?.getPoll());
-      });
-    })();
-  }, []);
-  /** END SCRATCH */
-
-  const onPresentPoll = useCallback(
-    (question: PollQuestion) => {
-      console.log('Setting a new poll!', question);
-      fluidModel.current?.setPoll({
-        prompt: question.prompt,
-        options: question.choices.map((choice) => ({ option: choice, votes: 0 }))
-      });
-    },
-    [fluidModel.current]
-  );
+const PollCreatorTile = (props: { fluidModel: FluidModel }): JSX.Element => {
+  const onPresentPoll = (question: PollQuestion): void => {
+    console.log('Setting a new poll!', question);
+    props.fluidModel.setPoll({
+      prompt: question.prompt,
+      options: question.choices.map((choice) => ({ option: choice, votes: 0 }))
+    });
+  };
 
   return <PollCreator onPresentPoll={onPresentPoll} />;
 };
-
-const dummyPollData = [
-  {
-    option: 'Chips',
-    chosen: true,
-    votes: 2
-  },
-  {
-    option: 'Cocoa Puffs',
-    chosen: false,
-    votes: 5
-  },
-  {
-    option: 'Dunkaroos',
-    chosen: false,
-    votes: 2
-  },
-  {
-    option: 'Roasted Almonds',
-    chosen: false,
-    votes: 1
-  },
-  {
-    option: 'M&Ms',
-    chosen: false,
-    votes: 0
-  }
-];

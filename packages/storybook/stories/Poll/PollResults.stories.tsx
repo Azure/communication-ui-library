@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PollResults as PollResultsComponent, PollResultsData } from '@azure/communication-react';
+import { PollResults as PollResultsComponent, PollOptions } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -9,6 +9,7 @@ import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 const PollResultsStory = (args): JSX.Element => {
+  const pollOptions: PollOptions = args.pollOptions;
   return (
     <Stack
       horizontalAlign="center"
@@ -20,7 +21,7 @@ const PollResultsStory = (args): JSX.Element => {
         }
       }}
     >
-      <PollResultsComponent {...args} />
+      <PollResultsComponent pollData={{ prompt: '', options: pollOptions }} />
     </Stack>
   );
 };
@@ -29,30 +30,25 @@ const PollResultsStory = (args): JSX.Element => {
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const PollResults = PollResultsStory.bind({});
 
-const pollData: PollResultsData = [
+const pollOptions: PollOptions = [
   {
     option: 'Chips',
-    chosen: true,
     votes: 2
   },
   {
     option: 'Cocoa Puffs',
-    chosen: false,
     votes: 5
   },
   {
     option: 'Dunkaroos',
-    chosen: false,
     votes: 2
   },
   {
     option: 'Roasted Almonds',
-    chosen: false,
     votes: 1
   },
   {
     option: 'M&Ms',
-    chosen: false,
     votes: 0
   }
 ];
@@ -62,6 +58,6 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollResults`,
   component: PollResultsComponent,
   argTypes: {
-    pollData: { control: 'object', defaultValue: pollData, name: 'Poll Data' }
+    pollOptions: { control: 'object', defaultValue: pollOptions, name: 'Poll Options' }
   }
 } as Meta;

@@ -16,3 +16,4 @@ export * from './components/PollSelector';
 export * from './components/PollTile';
 export * from './components/PollQuestionTile';
 export * from './components/PollResultTile';
+export * from './components/PollTypes';

@@ -1,37 +1,37 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PollQuestionTile, PollResultTile, PollTile as PollTileComponent } from '@azure/communication-react';
+import {
+  PollOptions,
+  PollQuestionTile,
+  PollResultTile,
+  PollTile as PollTileComponent
+} from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-const pollData = [
+const pollOptions: PollOptions = [
   {
     option: 'Chips',
-    chosen: true,
     votes: 2
   },
   {
     option: 'Cocoa Puffs',
-    chosen: false,
     votes: 5
   },
   {
     option: 'Dunkaroos',
-    chosen: false,
     votes: 2
   },
   {
     option: 'Roasted Almonds',
-    chosen: false,
     votes: 1
   },
   {
     option: 'M&Ms',
-    chosen: false,
     votes: 0
   }
 ];
@@ -41,9 +41,12 @@ const PollTileStory = (args): JSX.Element => {
   if (args.tileType === 'blank') {
     tileElement = <PollTileComponent {...args} />;
   } else if (args.tileType === 'question') {
-    tileElement = <PollQuestionTile options={pollData} question={args.question} />;
+    tileElement = (
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      <PollQuestionTile pollData={{ prompt: args.prompt, options: pollOptions }} onSubmitAnswer={() => {}} />
+    );
   } else {
-    tileElement = <PollResultTile results={pollData} question={args.question} />;
+    tileElement = <PollResultTile pollData={{ prompt: args.prompt, options: pollOptions }} />;
   }
 
   return (
@@ -71,7 +74,7 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollTile`,
   component: PollTileComponent,
   argTypes: {
-    question: { control: 'text', defaultValue: 'What snack should we add to the kitchen?', name: 'Poll Question' },
+    prompt: { control: 'text', defaultValue: 'What snack should we add to the kitchen?', name: 'Poll Prompt' },
     tileType: {
       control: 'select',
       options: ['blank', 'question', 'results'],
