@@ -45,7 +45,7 @@ export const PollResultBar = (props: PollResultBarProps): JSX.Element => {
   };
   const textStyles: IStackItemStyles = {
     root: {
-      fontSize: '14px',
+      fontSize: '12px',
       lineHeight: '16px',
       color: palette.themeDarkAlt,
       fontWeight: '600'

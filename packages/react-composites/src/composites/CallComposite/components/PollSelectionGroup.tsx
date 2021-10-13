@@ -47,7 +47,7 @@ export const PollSelectionGroup = (props: PollSelectionGroupProps): JSX.Element 
     root: {
       padding: '15px',
       borderRadius: '4px',
-      fontSize: '14px',
+      fontSize: '12px',
       fontWeight: 600,
       lineHeight: '20px',
       border: `1.5px solid ${isSelected ? palette.themePrimary : palette.neutralQuaternary}`,
