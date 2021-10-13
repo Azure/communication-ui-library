@@ -3,16 +3,13 @@
 
 import { AzureClient, AzureConnectionConfig, AzureContainerServices } from '@fluidframework/azure-client';
 import { TinyliciousClient } from '@fluidframework/tinylicious-client';
-import { SharedMap, ISharedMap, FluidContainer } from 'fluid-framework';
+import { FluidContainer, IFluidContainer } from 'fluid-framework';
 import { configDetails } from './env';
 import { InsecureTokenProvider } from '@fluidframework/test-client-utils';
+import { containerSchema } from './FluidModel';
 
 const URL_PARAM_KEY = 'fluidContainerId';
 const USE_LOCAL_FLUID_SERVER = false;
-
-const containerSchema = {
-  initialObjects: { myMap: SharedMap }
-};
 
 const config: AzureConnectionConfig = {
   tenantId: configDetails.tenantId,
@@ -37,30 +34,31 @@ const createFluidContainer = async (
 /**
  * @private
  */
-export const initializeFluidMap = async (
+export const initializeFluidContainer = async (
   client: AzureClient | TinyliciousClient,
   urlParams: string
-): Promise<ISharedMap> => {
+): Promise<IFluidContainer> => {
   const existingContainerId = getContainerIdIfExists(urlParams);
   if (existingContainerId) {
     const { container } = await client.getContainer(existingContainerId, containerSchema);
-    return container.initialObjects.myMap as ISharedMap;
+    return container;
   }
+
   const { container } = await createFluidContainer(client);
-  const map = container.initialObjects.myMap as ISharedMap;
+  updateUrl(await container.attach());
+  return container;
+};
 
-  const containerId = await container.attach();
+const getContainerIdIfExists = (urlParams: string): string | undefined => {
+  const params = new URLSearchParams(urlParams);
+  return params.get(URL_PARAM_KEY) || undefined;
+};
 
+const updateUrl = (containerId: string): void => {
   // `window.location.search` already contains groupId etc.
   window.history.pushState(
     {},
     document.title,
     window.location.origin + window.location.search + `&${URL_PARAM_KEY}=${containerId}`
   );
-  return map;
-};
-
-const getContainerIdIfExists = (urlParams: string): string | undefined => {
-  const params = new URLSearchParams(urlParams);
-  return params.get(URL_PARAM_KEY) || undefined;
 };
