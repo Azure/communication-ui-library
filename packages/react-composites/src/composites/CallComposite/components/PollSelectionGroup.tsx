@@ -30,6 +30,7 @@ export type PollOptions = PollOption[];
 export interface PollSelectionGroupProps {
   pollOptions: PollOptions;
   interactive: boolean;
+  onSelectionChanged: (newSelection: PollOption) => void;
 }
 
 /**
@@ -67,5 +68,14 @@ export const PollSelectionGroup = (props: PollSelectionGroupProps): JSX.Element 
     styles: pollSelectionStyles(palette, pollOption.chosen)
   }));
 
-  return <ChoiceGroup styles={containerStyles} disabled={!props.interactive} options={choiceGroupSelections} />;
+  return (
+    <ChoiceGroup
+      styles={containerStyles}
+      disabled={!props.interactive}
+      options={choiceGroupSelections}
+      onChange={(e, option) => {
+        props.onSelectionChanged({ option: option?.text ?? '', chosen: true });
+      }}
+    />
+  );
 };

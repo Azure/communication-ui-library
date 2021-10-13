@@ -22,14 +22,16 @@ export const PollTile = (props: PollTileProps): JSX.Element => {
     root: {
       width: '100%',
       border: `2px solid ${palette.themeLight}`,
+      borderRadius: '4px',
       background: `${palette.white}`,
-      position: 'relative'
+      position: 'relative',
+      margin: '15px'
     }
   };
   const tileHeaderStyles: IStackItemStyles = {
     root: {
       position: 'absolute',
-      top: '-20px', // minus 50% of height
+      top: '-20px', // this is 50% of height minus 50% of padding applied to container class
       left: 'calc(50% - 50px)' // minus 50% of width
     }
   };

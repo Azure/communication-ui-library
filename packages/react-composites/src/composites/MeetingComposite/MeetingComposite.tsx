@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite } from '../CallComposite';
+import { CallComposite, PollQuestionTile, PollResultTile } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
@@ -112,6 +112,17 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     meetingAdapter.setPage('configuration');
   };
 
+  const [submittedPollAnswer, setShowSubmittedPollAnswer] = useState(false);
+  const focusTile = !submittedPollAnswer ? (
+    <PollQuestionTile
+      question={'What snack should we add to the kitchen'}
+      options={dummyPollData}
+      onSubmitAnswer={() => setShowSubmittedPollAnswer(true)}
+    />
+  ) : (
+    <PollResultTile question={'What snack should we add to the kitchen'} results={dummyPollData} />
+  );
+
   return (
     <FluentThemeProvider fluentTheme={props.fluentTheme}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles}>
@@ -121,7 +132,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               options={{ callControls: false, mobileView: props.options?.mobileView }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
-              spotFocusTile={showPollCreatorPane ? <PollCreatorTile /> : undefined}
+              spotFocusTile={focusTile}
             />
           </Stack.Item>
           {chatAdapter && hasJoinedCall && (
@@ -190,3 +201,31 @@ const PollCreatorTile = (): JSX.Element => {
 
   return <PollCreator onPresentPoll={onPresentPoll} />;
 };
+
+const dummyPollData = [
+  {
+    option: 'Chips',
+    chosen: true,
+    votes: 2
+  },
+  {
+    option: 'Cocoa Puffs',
+    chosen: false,
+    votes: 5
+  },
+  {
+    option: 'Dunkaroos',
+    chosen: false,
+    votes: 2
+  },
+  {
+    option: 'Roasted Almonds',
+    chosen: false,
+    votes: 1
+  },
+  {
+    option: 'M&Ms',
+    chosen: false,
+    votes: 0
+  }
+];
