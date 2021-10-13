@@ -211,6 +211,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     callInvitationUrl?: string;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     options?: CallCompositeOptions;
+    spotFocusTile?: JSX.Element;
 }
 
 // @public
@@ -634,6 +635,73 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public (undocumented)
+export interface PollOption {
+    // (undocumented)
+    chosen: boolean;
+    // (undocumented)
+    option: string;
+}
+
+// @public (undocumented)
+export type PollOptions = PollOption[];
+
+// @public (undocumented)
+export const PollResultBar: (props: PollResultBarProps) => JSX.Element;
+
+// @public (undocumented)
+export const PollResultBarGroup: (props: PollResultsProps) => JSX.Element;
+
+// @public (undocumented)
+export interface PollResultBarProps {
+    // (undocumented)
+    barWidthPercentage: number;
+    // (undocumented)
+    percentage: number;
+    // (undocumented)
+    votes: number;
+}
+
+// @public (undocumented)
+export interface PollResultData extends PollOption {
+    // (undocumented)
+    votes: number;
+}
+
+// @public (undocumented)
+export const PollResults: (props: PollResultsProps) => JSX.Element;
+
+// @public (undocumented)
+export type PollResultsData = PollResultData[];
+
+// @public (undocumented)
+export interface PollResultsProps {
+    // (undocumented)
+    pollData: PollResultsData;
+}
+
+// @public (undocumented)
+export const PollSelectionGroup: (props: PollSelectionGroupProps) => JSX.Element;
+
+// @public (undocumented)
+export interface PollSelectionGroupProps {
+    // (undocumented)
+    interactive: boolean;
+    // (undocumented)
+    pollOptions: PollOptions;
+}
+
+// @public (undocumented)
+export const PollSelector: (props: PollSelectorProps) => JSX.Element;
+
+// @public (undocumented)
+export interface PollSelectorProps {
+    // (undocumented)
+    onOptionChosen?: (pollOption: PollOption) => void;
+    // (undocumented)
+    pollOptions: PollOptions;
+}
 
 // @public
 export type TopicChangedListener = (event: {
