@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PollSelectionGroup as PollSelectionGroupComponent } from '@azure/communication-react';
+import { PollSelectionGroup as PollSelectionGroupComponent, PollSelectionOptions } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -29,7 +29,7 @@ const PollSelectionGroupStory = (args): JSX.Element => {
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const PollSelectionGroup = PollSelectionGroupStory.bind({});
 
-const pollOptions = [
+const pollOptions: PollSelectionOptions = [
   {
     option: 'Chips',
     chosen: true

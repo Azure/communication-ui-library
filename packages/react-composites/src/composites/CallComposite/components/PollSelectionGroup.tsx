@@ -10,27 +10,28 @@ import {
   IPalette,
   useTheme
 } from '@fluentui/react';
+import { PollOption } from './PollTypes';
 
 /**
  * @private
  */
-export interface PollOption {
+export interface PollSelectionOption {
   option: string;
-  chosen: boolean;
+  chosen?: boolean;
 }
 
 /**
  * @private
  */
-export type PollOptions = PollOption[];
+export type PollSelectionOptions = PollSelectionOption[];
 
 /**
  * @private
  */
 export interface PollSelectionGroupProps {
-  pollOptions: PollOptions;
+  pollOptions: PollSelectionOptions;
   interactive: boolean;
-  onSelectionChanged: (newSelection: PollOption) => void;
+  onSelectionChanged?: (newSelection: PollOption) => void;
 }
 
 /**
@@ -64,8 +65,8 @@ export const PollSelectionGroup = (props: PollSelectionGroupProps): JSX.Element 
     key: `${index}`,
     text: pollOption.option,
     ariaLabel: pollOption.option,
-    defaultChecked: pollOption.chosen,
-    styles: pollSelectionStyles(palette, pollOption.chosen)
+    defaultChecked: !!pollOption.chosen,
+    styles: pollSelectionStyles(palette, !!pollOption.chosen)
   }));
 
   return (
@@ -74,7 +75,7 @@ export const PollSelectionGroup = (props: PollSelectionGroupProps): JSX.Element 
       disabled={!props.interactive}
       options={choiceGroupSelections}
       onChange={(e, option) => {
-        props.onSelectionChanged({ option: option?.text ?? '', chosen: true });
+        option?.text && props.onSelectionChanged && props.onSelectionChanged({ option: option.text });
       }}
     />
   );

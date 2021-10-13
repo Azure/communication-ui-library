@@ -3,24 +3,23 @@
 
 import React from 'react';
 import { PollResults } from './PollResults';
-import { PollResultsData } from './PollResultsBarGroup';
 import { PollTile } from './PollTile';
+import { PollData } from './PollTypes';
 
 /**
  * @private
  */
-export interface QuestionPollTileProps {
-  question: string;
-  results: PollResultsData;
+export interface PollResultTileProps {
+  pollData: PollData;
 }
 
 /**
  * @private
  */
-export const PollResultTile = (props: QuestionPollTileProps): JSX.Element => {
+export const PollResultTile = (props: PollResultTileProps): JSX.Element => {
   return (
-    <PollTile question={props.question}>
-      <PollResults pollData={props.results} />
+    <PollTile prompt={props.pollData.prompt}>
+      <PollResults pollData={props.pollData} />
     </PollTile>
   );
 };

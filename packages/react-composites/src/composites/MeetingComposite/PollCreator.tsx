@@ -63,7 +63,7 @@ export const PollCreator = (props: PollCreatorProps): JSX.Element => {
             />
           </Stack.Item>
           <Stack.Item>
-            <ChiocesInput
+            <ChoicesInput
               choices={question.choices}
               setChoices={(choices: string[]) => setQuestion({ ...question, choices })}
             />
@@ -82,7 +82,7 @@ interface ChoicesInputProps {
   setChoices: (displayNames: string[]) => void;
 }
 
-const ChiocesInput = (props: ChoicesInputProps): JSX.Element => {
+const ChoicesInput = (props: ChoicesInputProps): JSX.Element => {
   const { choices, setChoices } = props;
 
   const onTextChange = useCallback(

@@ -3,17 +3,9 @@
 
 import { SharedMap, ISharedMap, IFluidContainer } from 'fluid-framework';
 import { EventEmitter } from 'events';
+import { PollData, PollOptions } from '../CallComposite';
 
-export interface Poll {
-  prompt: string;
-  options: PollOption[];
-}
-
-export interface PollOption {
-  option: string;
-  votes: number;
-}
-
+/** @private */
 export class FluidModel extends EventEmitter {
   constructor(private container: IFluidContainer) {
     super();
@@ -28,7 +20,7 @@ export class FluidModel extends EventEmitter {
     return this.container.initialObjects.question as ISharedMap;
   }
 
-  public async getPoll(): Promise<Poll> {
+  public async getPoll(): Promise<PollData> {
     return {
       prompt: this.getPrompt(),
       options: await this.getOptions()
@@ -39,9 +31,9 @@ export class FluidModel extends EventEmitter {
     return this.ddsQuestion.get<string>('prompt') ?? '';
   }
 
-  private async getOptions(): Promise<PollOption[]> {
+  private async getOptions(): Promise<PollOptions> {
     const ddsOptions = this.ddsQuestion.get<DDSOption[]>('options') ?? [];
-    let options: PollOption[] = [];
+    const options: PollOptions = [];
     for (const { option, votesCounterHandle } of ddsOptions) {
       const votesCounter: ISharedMap = await votesCounterHandle.get();
       options.push({
@@ -52,12 +44,12 @@ export class FluidModel extends EventEmitter {
     return options;
   }
 
-  public async setPoll(poll: Poll): Promise<void> {
+  public async setPoll(poll: PollData): Promise<void> {
     // This is a problem because the write to propmt and options is not atomic.
     // Ideally there should be a single top-level object that's written atomically.
     this.ddsQuestion.set('prompt', poll.prompt);
 
-    let ddsOptions: DDSOption[] = [];
+    const ddsOptions: DDSOption[] = [];
     for (const { option } of poll.options) {
       // TODO: Use a `SharedCounter`.
       const votesCounter = await this.container.create(SharedMap);
@@ -73,6 +65,7 @@ export class FluidModel extends EventEmitter {
   public async addVoteForOption(index: number): Promise<void> {
     const counter = this.getVoteCounterForOption(index);
     // TODO: This is not concurrency safe:
+    console.log(`Adding vote for ${index}`);
     counter.set('value', counter.get('value') + 1);
   }
 
@@ -94,9 +87,11 @@ export class FluidModel extends EventEmitter {
 interface DDSOption {
   option: string;
   // IFluidHandle is not exported, unfortunately
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   votesCounterHandle: any;
 }
 
+/** @private */
 export const containerSchema = {
   initialObjects: { question: SharedMap },
   // TODO: Use `SharedCounter`, but the FluidContainer doesn't like that type here currently.
