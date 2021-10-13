@@ -20,7 +20,8 @@ export const PollSelector = (props: PollSelectorProps): JSX.Element => {
   const containerStyles: IStackStyles = {
     root: {
       height: '100%',
-      width: '100%'
+      width: '100%',
+      maxWidth: '320px'
     }
   };
   const buttonStyles: IButtonStyles = {
