@@ -7,3 +7,9 @@ export type { CallControlOptions } from './components/CallControls';
 
 export * from './adapter';
 export * from './Strings';
+
+export * from './components/PollResultBar';
+export * from './components/PollResultsBarGroup';
+export * from './components/PollResults';
+export * from './components/PollSelectionGroup';
+export * from './components/PollSelector';
