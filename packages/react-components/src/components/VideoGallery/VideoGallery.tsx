@@ -139,9 +139,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.videoGallery;
 
-  const shouldFloatLocalVideo = useMemo((): boolean => {
-    return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
-  }, [layout, remoteParticipants]);
+  const shouldFloatLocalVideo = !!(
+    (layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0) ||
+    props.spotFocusTile
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);

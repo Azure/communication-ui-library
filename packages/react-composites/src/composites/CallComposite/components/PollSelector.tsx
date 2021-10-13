@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { IButtonStyles, IStackStyles, PrimaryButton, Stack } from '@fluentui/react';
 import { PollOption, PollOptions, PollSelectionGroup } from './PollSelectionGroup';
 
@@ -9,7 +9,7 @@ import { PollOption, PollOptions, PollSelectionGroup } from './PollSelectionGrou
  * @private
  */
 export interface PollSelectorProps {
-  onOptionChosen?: (pollOption: PollOption) => void;
+  onOptionSubmitted?: (pollOption: PollOption) => void;
   pollOptions: PollOptions;
 }
 
@@ -17,6 +17,8 @@ export interface PollSelectorProps {
  * @private
  */
 export const PollSelector = (props: PollSelectorProps): JSX.Element => {
+  const [chosenOption, setChosenOption] = useState<PollOption | undefined>();
+
   const containerStyles: IStackStyles = {
     root: {
       height: '100%',
@@ -34,10 +36,23 @@ export const PollSelector = (props: PollSelectorProps): JSX.Element => {
   return (
     <Stack verticalFill verticalAlign="center" styles={containerStyles} tokens={{ childrenGap: '8px' }}>
       <Stack.Item>
-        <PollSelectionGroup pollOptions={props.pollOptions} interactive={true} />
+        <PollSelectionGroup
+          onSelectionChanged={(option) => {
+            setChosenOption(option);
+          }}
+          pollOptions={props.pollOptions}
+          interactive={true}
+        />
       </Stack.Item>
       <Stack.Item>
-        <PrimaryButton text="Submit" styles={buttonStyles} />
+        <PrimaryButton
+          disabled={!chosenOption}
+          text="Submit"
+          styles={buttonStyles}
+          onClick={() => {
+            chosenOption && props.onOptionSubmitted && props.onOptionSubmitted(chosenOption);
+          }}
+        />
       </Stack.Item>
     </Stack>
   );

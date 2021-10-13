@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { PollOptions } from './PollSelectionGroup';
+import { PollOption, PollOptions } from './PollSelectionGroup';
 import { PollSelector } from './PollSelector';
 import { PollTile } from './PollTile';
 
@@ -12,6 +12,7 @@ import { PollTile } from './PollTile';
 export interface QuestionPollTileProps {
   question: string;
   options: PollOptions;
+  onSubmitAnswer: (answer: PollOption) => void;
 }
 
 /**
@@ -20,7 +21,7 @@ export interface QuestionPollTileProps {
 export const PollQuestionTile = (props: QuestionPollTileProps): JSX.Element => {
   return (
     <PollTile question={props.question}>
-      <PollSelector pollOptions={props.options} />
+      <PollSelector pollOptions={props.options} onOptionSubmitted={props.onSubmitAnswer} />
     </PollTile>
   );
 };

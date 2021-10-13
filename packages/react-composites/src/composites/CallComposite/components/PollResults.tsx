@@ -12,7 +12,8 @@ import { PollResultBarGroup, PollResultsProps } from './PollResultsBarGroup';
 export const PollResults = (props: PollResultsProps): JSX.Element => {
   const containerStyles: IStackStyles = {
     root: {
-      width: '100%'
+      width: '100%',
+      maxWidth: '750px'
     }
   };
   return (
@@ -20,7 +21,7 @@ export const PollResults = (props: PollResultsProps): JSX.Element => {
       <Stack.Item grow={1}>
         <PollSelectionGroup pollOptions={props.pollData} interactive={false} />
       </Stack.Item>
-      <Stack.Item grow={1} styles={{ root: { marginTop: '5px' } }}>
+      <Stack.Item grow={3} styles={{ root: { marginTop: '5px' } }}>
         <PollResultBarGroup pollData={props.pollData} />
       </Stack.Item>
     </Stack>
