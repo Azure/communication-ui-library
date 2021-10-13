@@ -361,7 +361,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               participants={horizontalGalleryParticipants}
               remoteVideoViewOption={remoteVideoViewOption}
               showMuteIndicator={showMuteIndicator}
-              rightGutter={shouldFloatLocalVideo ? (isNarrow ? 64 : 176) : undefined} // to leave a gap for the floating local video
+              // rightGutter={shouldFloatLocalVideo ? (isNarrow ? 64 : 64) : undefined} // to leave a gap for the floating local video
             />
           </Stack>
         )}

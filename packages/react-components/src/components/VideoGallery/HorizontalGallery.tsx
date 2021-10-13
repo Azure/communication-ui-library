@@ -154,7 +154,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const showRightButton = maxTiles && page < maxPageIndex && !isNarrow;
 
   return (
-    <div ref={containerRef}>
+    <div style={{ maxWidth: '100vw' }} ref={containerRef}>
       <Stack
         horizontal
         horizontalAlign="start"
