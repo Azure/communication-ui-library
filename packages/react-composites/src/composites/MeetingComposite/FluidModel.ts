@@ -1,0 +1,104 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { SharedMap, ISharedMap, IFluidContainer } from 'fluid-framework';
+import { EventEmitter } from 'events';
+
+export interface Poll {
+  prompt: string;
+  options: PollOption[];
+}
+
+export interface PollOption {
+  option: string;
+  votes: number;
+}
+
+export class FluidModel extends EventEmitter {
+  constructor(private container: IFluidContainer) {
+    super();
+    // TODO: Check if we get an event when a counter is incremented. The `ddsQuestion` isn't being modified directly.
+    // Else, subscribe to each counter as it is created.
+    this.ddsQuestion.on('valueChanged', (changed) => {
+      this.emit('modelChanged');
+    });
+  }
+
+  private get ddsQuestion(): ISharedMap {
+    return this.container.initialObjects.question as ISharedMap;
+  }
+
+  public async getPoll(): Promise<Poll> {
+    return {
+      prompt: this.getPrompt(),
+      options: await this.getOptions()
+    };
+  }
+
+  private getPrompt(): string {
+    return this.ddsQuestion.get<string>('prompt') ?? '';
+  }
+
+  private async getOptions(): Promise<PollOption[]> {
+    const ddsOptions = this.ddsQuestion.get<DDSOption[]>('options') ?? [];
+    let options: PollOption[] = [];
+    for (const { option, votesCounterHandle } of ddsOptions) {
+      const votesCounter: ISharedMap = await votesCounterHandle.get();
+      options.push({
+        option,
+        votes: votesCounter.get('value') ?? 0
+      });
+    }
+    return options;
+  }
+
+  public async setPoll(poll: Poll): Promise<void> {
+    // This is a problem because the write to propmt and options is not atomic.
+    // Ideally there should be a single top-level object that's written atomically.
+    this.ddsQuestion.set('prompt', poll.prompt);
+
+    let ddsOptions: DDSOption[] = [];
+    for (const { option } of poll.options) {
+      // TODO: Use a `SharedCounter`.
+      const votesCounter = await this.container.create(SharedMap);
+      votesCounter.set('value', 0);
+      ddsOptions.push({
+        option,
+        votesCounterHandle: votesCounter.handle
+      });
+    }
+    this.ddsQuestion.set('options', ddsOptions);
+  }
+
+  public async addVoteForOption(index: number): Promise<void> {
+    const counter = this.getVoteCounterForOption(index);
+    // TODO: This is not concurrency safe:
+    counter.set('value', counter.get('value') + 1);
+  }
+
+  public async removeVoteForOption(index: number): Promise<void> {
+    const counter = this.getVoteCounterForOption(index);
+    // TODO: This is not concurrency safe:
+    counter.set('value', counter.get('value') - 1);
+  }
+
+  private getVoteCounterForOption(index: number): ISharedMap {
+    const ddsOptions = this.ddsQuestion.get<DDSOption[]>('options') ?? [];
+    if (ddsOptions.length <= index) {
+      throw new Error(`attempted to get option ${index}, but only ${ddsOptions.length} exist`);
+    }
+    return ddsOptions[index].votesCounterHandle.get();
+  }
+}
+
+interface DDSOption {
+  option: string;
+  // IFluidHandle is not exported, unfortunately
+  votesCounterHandle: any;
+}
+
+export const containerSchema = {
+  initialObjects: { question: SharedMap },
+  // TODO: Use `SharedCounter`, but the FluidContainer doesn't like that type here currently.
+  dynamicObjectTypes: [SharedMap]
+};
