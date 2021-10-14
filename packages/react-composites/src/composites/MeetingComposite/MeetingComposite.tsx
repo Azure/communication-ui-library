@@ -105,6 +105,11 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const togglePollCreatorPane = useCallback(() => {
     setShowChat(false);
     setShowPeople(false);
+
+    if (showPollCreatorPane) {
+      //end poll
+    }
+
     setShowPollCreatorPane(!showPollCreatorPane);
   }, [showPollCreatorPane]);
 
@@ -135,8 +140,11 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     focusTile = !pollAnswered ? (
       <PollQuestionTile
         pollData={pollData}
-        onSubmitAnswer={() => {
-          fluidModel.current?.addVoteForOption(0);
+        onSubmitAnswer={(chosenPollOption) => {
+          const pollOptionindex = pollData.options.findIndex(
+            (pollOption) => pollOption.option === chosenPollOption.option
+          );
+          fluidModel.current?.addVoteForOption(pollOptionindex);
           setPollAnswered(true);
         }}
       />
