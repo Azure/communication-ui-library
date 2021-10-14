@@ -18,7 +18,7 @@ import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
 import { PollCreator, PollQuestion } from './PollCreator';
 import { createFluidClient, initializeFluidContainer } from './FluidUtils';
-import { FluidModel } from './FluidModel';
+import { CursorChatFluidModel, PollFluidModel } from './FluidModel';
 /**
  * Props required for the {@link MeetingComposite}
  *
@@ -117,22 +117,23 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     meetingAdapter.setPage('configuration');
   };
 
-  const fluidModel = useRef<FluidModel | undefined>(undefined);
+  const pollFluidModel = useRef<PollFluidModel | undefined>(undefined);
+  const [cursorChatFluidModel, setCursorChatFluidModel] = useState<CursorChatFluidModel | undefined>(undefined);
   const [pollData, setPollData] = useState<PollData | undefined>(undefined);
   useEffect(() => {
     (async () => {
       if (hasJoinedCall) {
         const client = createFluidClient();
         const container = await initializeFluidContainer(client, window.location.search);
-        fluidModel.current = new FluidModel(container);
-        fluidModel.current?.on('modelChanged', async () => {
-          const newPollData = await fluidModel.current?.getPoll();
-          console.log('[xkcd] Got a new Poll object', newPollData);
+        pollFluidModel.current = new PollFluidModel(container);
+        pollFluidModel.current?.on('modelChanged', async () => {
+          const newPollData = await pollFluidModel.current?.getPoll();
           setPollData(newPollData);
         });
+        setCursorChatFluidModel(new CursorChatFluidModel(container, meetingAdapter?.getState().displayName ?? 'FNU'));
       }
     })();
-  }, [hasJoinedCall]);
+  }, [hasJoinedCall, meetingAdapter]);
 
   const [pollAnswered, setPollAnswered] = useState(false);
   let focusTile: JSX.Element | undefined = undefined;
@@ -144,15 +145,15 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
           const pollOptionindex = pollData.options.findIndex(
             (pollOption) => pollOption.option === chosenPollOption.option
           );
-          fluidModel.current?.addVoteForOption(pollOptionindex);
+          pollFluidModel.current?.addVoteForOption(pollOptionindex);
           setPollAnswered(true);
         }}
       />
     ) : (
       <PollResultTile pollData={pollData} />
     );
-  } else if (showPollCreatorPane && fluidModel.current) {
-    focusTile = <PollCreatorTile fluidModel={fluidModel.current} />;
+  } else if (showPollCreatorPane && pollFluidModel.current) {
+    focusTile = <PollCreatorTile fluidModel={pollFluidModel.current} />;
   }
 
   return (
@@ -165,6 +166,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               adapter={callAdapter}
               fluentTheme={fluentTheme}
               spotFocusTile={focusTile}
+              fluidModel={cursorChatFluidModel}
             />
           </Stack.Item>
           {chatAdapter && hasJoinedCall && (
@@ -205,7 +207,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   );
 };
 
-const PollCreatorTile = (props: { fluidModel: FluidModel }): JSX.Element => {
+const PollCreatorTile = (props: { fluidModel: PollFluidModel }): JSX.Element => {
   const onPresentPoll = (question: PollQuestion): void => {
     console.log('Setting a new poll!', question);
     props.fluidModel.setPoll({

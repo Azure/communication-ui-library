@@ -17,6 +17,7 @@ import { useSelector } from './hooks/useSelector';
 import { getCallId, getCallStatus, getEndedCall, getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { isInCall } from './utils';
+import { CursorChatFluidModel } from '../MeetingComposite/FluidModel';
 
 /**
  * Props for {@link CallComposite}.
@@ -42,6 +43,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
+  fluidModel?: CursorChatFluidModel;
 }
 
 /**
@@ -79,6 +81,7 @@ type MainScreenProps = {
   /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
   spotFocusTile?: JSX.Element;
   options?: CallCompositeOptions;
+  fluidModel?: CursorChatFluidModel;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -155,6 +158,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           spotFocusTile={props.spotFocusTile}
           options={props.options}
+          fluidModel={props.fluidModel}
         />
       );
     default:
@@ -186,6 +190,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           spotFocusTile={props.spotFocusTile}
           options={options}
+          fluidModel={props.fluidModel}
         />
       </CallAdapterProvider>
     </BaseComposite>

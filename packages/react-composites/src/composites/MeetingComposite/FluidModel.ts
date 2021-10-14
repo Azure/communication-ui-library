@@ -6,10 +6,10 @@ import { EventEmitter } from 'events';
 import { PollData, PollOptions } from '../CallComposite';
 
 /** @private */
-export class FluidModel extends EventEmitter {
+export class PollFluidModel extends EventEmitter {
   constructor(private container: IFluidContainer) {
     super();
-    this.ddsQuestion.on('valueChanged', (changed) => {
+    this.ddsQuestion.on('valueChanged', () => {
       this.emit('modelChanged');
       // We know that this event fires only because of `setPoll`, and that updates the `prompt` and `options` together,
       // so we must subscribe to the new options.
@@ -50,7 +50,7 @@ export class FluidModel extends EventEmitter {
     const ddsOptions = this.ddsQuestion.get<DDSOption[]>('options') ?? [];
     for (const { votesCounterHandle } of ddsOptions) {
       const votesCounter: ISharedMap = await votesCounterHandle.get();
-      votesCounter.on('valueChanged', (changed) => {
+      votesCounter.on('valueChanged', () => {
         this.emit('modelChanged');
       });
     }
@@ -106,9 +106,74 @@ interface DDSOption {
   votesCounterHandle: any;
 }
 
+export class CursorChatFluidModel extends EventEmitter {
+  private handRolledReducedCursors: { [key: string]: Cursor } = {};
+
+  constructor(private container: IFluidContainer, private userId: string) {
+    super();
+
+    this.handRolledReducedCursors = this.getAllCursors();
+
+    this.ddsCursors.on('valueChanged', ({ key }) => {
+      this.updateHandRolledReducedCursors(key);
+      this.emit('cursorsChanged');
+    });
+    this.setCursorChat({ userId: this.userId, x: 0, y: 0, text: '' });
+  }
+
+  public get reducedCursors() {
+    return this.handRolledReducedCursors;
+  }
+
+  public setCursorPosition(x: number, y: number): void {
+    this.setCursorChat({ ...this.getOwnCursor(), x, y });
+  }
+
+  public setText(text: string): void {
+    this.setCursorChat({ ...this.getOwnCursor(), text });
+  }
+
+  private getAllCursors(): { [key: string]: Cursor } {
+    const cursors = {};
+    this.ddsCursors.forEach((cursor: Cursor) => {
+      cursors[cursor.userId] = cursor;
+    });
+    return cursors;
+  }
+
+  private getCursor(userId: string): Cursor {
+    return this.ddsCursors.get(userId) as Cursor;
+  }
+
+  private getOwnCursor(): Cursor {
+    return this.getCursor(this.userId);
+  }
+
+  private get ddsCursors(): ISharedMap {
+    return this.container.initialObjects.cursors as ISharedMap;
+  }
+
+  private setCursorChat(cursor: Cursor): void {
+    this.ddsCursors.set(this.userId, cursor);
+  }
+
+  private updateHandRolledReducedCursors(userId: string): void {
+    const handRolledReducedCursors = { ...this.handRolledReducedCursors };
+    handRolledReducedCursors[userId] = this.getCursor(userId);
+    this.handRolledReducedCursors = handRolledReducedCursors;
+  }
+}
+
+interface Cursor {
+  userId: string;
+  x: number;
+  y: number;
+  text: string;
+}
+
 /** @private */
 export const containerSchema = {
-  initialObjects: { question: SharedMap },
+  initialObjects: { question: SharedMap, cursors: SharedMap },
   // TODO: Use `SharedCounter`, but the FluidContainer doesn't like that type here currently.
   dynamicObjectTypes: [SharedMap]
 };
