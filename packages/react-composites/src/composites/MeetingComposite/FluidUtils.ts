@@ -9,7 +9,7 @@ import { InsecureTokenProvider } from '@fluidframework/test-client-utils';
 import { containerSchema } from './FluidModel';
 
 const URL_PARAM_KEY = 'fluidContainerId';
-const USE_LOCAL_FLUID_SERVER = false;
+const USE_LOCAL_FLUID_SERVER = true;
 
 const config: AzureConnectionConfig = {
   tenantId: configDetails.tenantId,
