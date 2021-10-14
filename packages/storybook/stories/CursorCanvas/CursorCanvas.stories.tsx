@@ -91,7 +91,7 @@ export const CursorCanvas = CursorCanvasStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-cursor-canvas`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Cursor Canvas`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Canvas/Cursor Canvas`,
   component: CursorCanvasComponent,
   argTypes: {
     makeColorful: { control: 'boolean', defaultValue: false, name: 'Make Colorful' }
