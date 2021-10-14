@@ -107,24 +107,22 @@ interface DDSOption {
 }
 
 export class CursorChatFluidModel extends EventEmitter {
+  private handRolledReducedCursors: { [key: string]: Cursor } = {};
+
   constructor(private container: IFluidContainer, private userId: string) {
     super();
-    this.setCursorChat({ userId: this.userId, x: 0, y: 0, text: '' });
+
+    this.handRolledReducedCursors = this.getAllCursors();
+
     this.ddsCursors.on('valueChanged', ({ key }) => {
-      this.emit('cursorChanged', { userId: key });
+      this.updateHandRolledReducedCursors(key);
+      this.emit('cursorsChanged');
     });
+    this.setCursorChat({ userId: this.userId, x: 0, y: 0, text: '' });
   }
 
-  public getAllCursors(): Record<string, Cursor> {
-    const cursors = {};
-    this.ddsCursors.forEach((cursor: Cursor) => {
-      cursors[cursor.userId] = cursor;
-    });
-    return cursors;
-  }
-
-  public getCursor(userId: string): Cursor {
-    return this.ddsCursors.get(userId) as Cursor;
+  public get reducedCursors() {
+    return this.handRolledReducedCursors;
   }
 
   public setCursorPosition(x: number, y: number): void {
@@ -133,6 +131,18 @@ export class CursorChatFluidModel extends EventEmitter {
 
   public setText(text: string): void {
     this.setCursorChat({ ...this.getOwnCursor(), text });
+  }
+
+  private getAllCursors(): { [key: string]: Cursor } {
+    const cursors = {};
+    this.ddsCursors.forEach((cursor: Cursor) => {
+      cursors[cursor.userId] = cursor;
+    });
+    return cursors;
+  }
+
+  private getCursor(userId: string): Cursor {
+    return this.ddsCursors.get(userId) as Cursor;
   }
 
   private getOwnCursor(): Cursor {
@@ -145,6 +155,12 @@ export class CursorChatFluidModel extends EventEmitter {
 
   private setCursorChat(cursor: Cursor): void {
     this.ddsCursors.set(this.userId, cursor);
+  }
+
+  private updateHandRolledReducedCursors(userId: string): void {
+    const handRolledReducedCursors = { ...this.handRolledReducedCursors };
+    handRolledReducedCursors[userId] = this.getCursor(userId);
+    this.handRolledReducedCursors = handRolledReducedCursors;
   }
 }
 
