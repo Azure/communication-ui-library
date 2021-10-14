@@ -9,6 +9,7 @@ import { ScreenShare } from './ScreenShare';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
+import { CursorChatFluidModel } from '../../MeetingComposite/FluidModel';
 
 const VideoGalleryStyles = {
   root: {
@@ -31,6 +32,7 @@ const remoteVideoViewOption = {
  * @private
  */
 export interface MediaGalleryProps {
+  fluidModel: CursorChatFluidModel;
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
   /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
@@ -77,5 +79,5 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [props.onFetchAvatarPersonaData, videoGalleryProps]);
 
-  return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
+  return isScreenShareActive ? <ScreenShare {...(videoGalleryProps, props.fluidModel)} /> : VideoGalleryMemoized;
 };

@@ -3,7 +3,7 @@
 
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import { mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   OnRenderAvatarCallback,
   StreamMedia,
@@ -21,11 +21,13 @@ import {
 } from '../styles/MediaGallery.styles';
 import { loadingStyle, videoStreamStyle } from '../styles/ScreenShare.styles';
 import { CursorCanvas, CursorData } from './CursorCanvas';
+import { CursorChatFluidModel } from '../../MeetingComposite/FluidModel';
 
 /**
  * @private
  */
 export type ScreenShareProps = {
+  fluidModel: CursorChatFluidModel;
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant?: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];

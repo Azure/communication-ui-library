@@ -26,6 +26,7 @@ import {
   subContainerStyles
 } from '../styles/CallPage.styles';
 import { CallControlOptions } from '../components/CallControls';
+import { CursorChatFluidModel } from '../../MeetingComposite/FluidModel';
 
 /**
  * @private
@@ -39,6 +40,7 @@ export interface CallPageProps {
   /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
   spotFocusTile?: JSX.Element;
   options?: CallCompositeOptions;
+  fluidModel: CursorChatFluidModel;
 }
 
 /**
@@ -101,6 +103,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
                 onRenderAvatar={onRenderAvatar}
                 onFetchAvatarPersonaData={onFetchAvatarPersonaData}
                 spotFocusTile={props.spotFocusTile}
+                fluidModel={props.fluidModel}
               />
             </Stack>
           )}
