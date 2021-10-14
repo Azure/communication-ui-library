@@ -32,7 +32,7 @@ const remoteVideoViewOption = {
  * @private
  */
 export interface MediaGalleryProps {
-  fluidModel: CursorChatFluidModel;
+  fluidModel?: CursorChatFluidModel;
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
   /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */

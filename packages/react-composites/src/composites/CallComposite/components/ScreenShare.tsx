@@ -27,7 +27,7 @@ import { CursorChatFluidModel } from '../../MeetingComposite/FluidModel';
  * @private
  */
 export type ScreenShareProps = {
-  fluidModel: CursorChatFluidModel;
+  fluidModel?: CursorChatFluidModel;
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant?: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
@@ -176,6 +176,22 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   }, [remoteParticipants, onCreateRemoteStreamView, screenShareParticipant]);
 
   const [cursorState, setCursorState] = useState<CursorData[]>([]);
+  useEffect(() => {
+    props.fluidModel?.on('cursorsChanged', () => {
+      if (props.fluidModel) {
+        console.log('xkcd, got cursors', props.fluidModel.reducedCursors);
+        setCursorState(
+          Object.values(props.fluidModel.reducedCursors).map((value) => ({
+            posX: value.x,
+            posY: value.y,
+            message: value.text,
+            name: value.userId,
+            color: '#e74c3c'
+          }))
+        );
+      }
+    });
+  }, [props.fluidModel]);
 
   return (
     <Stack horizontal verticalFill>
@@ -191,13 +207,8 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         onMouseMove={(ev) => {
           const mouseX = ev.clientX - ev.currentTarget.offsetLeft;
           const mouseY = ev.clientY - ev.currentTarget.offsetTop;
-          setCursorState([
-            {
-              color: '#e74c3c',
-              posX: mouseX,
-              posY: mouseY
-            }
-          ]);
+          props.fluidModel?.setCursorPosition(mouseX, mouseY);
+          console.log('[xkcd] Sending cursor', mouseX, mouseY);
         }}
         className={screenShareContainerStyle}
       >

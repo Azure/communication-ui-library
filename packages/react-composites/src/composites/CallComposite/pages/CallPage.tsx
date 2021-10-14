@@ -40,7 +40,7 @@ export interface CallPageProps {
   /** If set, takes the center stage entirely. All other tiles are moved to horizontal gallery. */
   spotFocusTile?: JSX.Element;
   options?: CallCompositeOptions;
-  fluidModel: CursorChatFluidModel;
+  fluidModel?: CursorChatFluidModel;
 }
 
 /**
