@@ -28,7 +28,8 @@ const CursorCanvasStory = (args): JSX.Element => {
             {
               color: '#e74c3c',
               posX: mouseX,
-              posY: mouseY
+              posY: mouseY,
+              name: ''
             }
           ]);
           return;
@@ -41,32 +42,38 @@ const CursorCanvasStory = (args): JSX.Element => {
           {
             color: '#2c3e50',
             posX: mouseX - radius * Math.cos(0),
-            posY: mouseY - radius * Math.sin(0)
+            posY: mouseY - radius * Math.sin(0),
+            name: ''
           },
           {
             color: '#1abc9c',
             posX: mouseX - radius * Math.cos(30 * degressToRadians),
-            posY: mouseY - radius * Math.sin(30 * degressToRadians)
+            posY: mouseY - radius * Math.sin(30 * degressToRadians),
+            name: ''
           },
           {
             color: '#2ecc71',
             posX: mouseX - radius * Math.cos(60 * degressToRadians),
-            posY: mouseY - radius * Math.sin(60 * degressToRadians)
+            posY: mouseY - radius * Math.sin(60 * degressToRadians),
+            name: ''
           },
           {
             color: '#9b59b6',
             posX: mouseX - radius * Math.cos(90 * degressToRadians),
-            posY: mouseY - radius * Math.sin(90 * degressToRadians)
+            posY: mouseY - radius * Math.sin(90 * degressToRadians),
+            name: ''
           },
           {
             color: '#f1c40f',
             posX: mouseX - radius * Math.cos(120 * degressToRadians),
-            posY: mouseY - radius * Math.sin(120 * degressToRadians)
+            posY: mouseY - radius * Math.sin(120 * degressToRadians),
+            name: ''
           },
           {
             color: '#e74c3c',
             posX: mouseX - radius * Math.cos(150 * degressToRadians),
-            posY: mouseY - radius * Math.sin(150 * degressToRadians)
+            posY: mouseY - radius * Math.sin(150 * degressToRadians),
+            name: ''
           }
         ]);
       }}
