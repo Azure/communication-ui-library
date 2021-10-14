@@ -13,10 +13,14 @@ let throttleCounter = throttleAmount;
 
 const CursorCanvasStory = (args): JSX.Element => {
   const [cursorState, setCursorState] = useState<CursorData[] | null>(null);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const palette = useTheme().palette;
 
   return (
     <Stack
+      onMouseUp={(ev) => {
+        setIsEditing(!isEditing);
+      }}
       onMouseMove={(ev) => {
         if (throttleCounter++ % throttleAmount !== 0) return;
 
@@ -29,7 +33,7 @@ const CursorCanvasStory = (args): JSX.Element => {
               color: '#e74c3c',
               posX: mouseX,
               posY: mouseY,
-              name: ''
+              name: 'Mike Bubbles'
             }
           ]);
           return;
@@ -87,7 +91,16 @@ const CursorCanvasStory = (args): JSX.Element => {
         }
       }}
     >
-      <CursorCanvasComponent cursors={cursorState ? cursorState : []} />
+      <CursorCanvasComponent
+        cursors={cursorState ? cursorState : []}
+        isEditingChatBubble={isEditing}
+        onTextFieldEnterPressed={() => {
+          setIsEditing(false);
+        }}
+        onTextFieldChanged={function (text: string): void {
+          console.log(text);
+        }}
+      />
     </Stack>
   );
 };

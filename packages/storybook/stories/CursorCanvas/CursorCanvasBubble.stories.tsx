@@ -17,8 +17,12 @@ const CursorCanvasBubbleStory = (args): JSX.Element => {
         bubbleOwnerName={args.name}
         color={args.color}
         text={text}
-        onEditingFinished={function (text: string): void {
+        isEditing={args.isEditing}
+        onTextFieldChange={function (text: string): void {
           setText(text);
+        }}
+        onTextFieldEnterPressed={function (): void {
+          console.log('enter pressed');
         }}
       />
     </Stack>
@@ -35,6 +39,7 @@ export default {
   component: CursorCanvasBubbleComponent,
   argTypes: {
     name: { control: 'text', defaultValue: 'Mike Bublé', name: 'User name' },
-    color: { control: 'color', defaultValue: '#c0392b', name: 'Color' }
+    color: { control: 'color', defaultValue: '#c0392b', name: 'Color' },
+    isEditing: { control: 'boolean', defaultValue: true, name: 'Is Editing' }
   }
 } as Meta;
