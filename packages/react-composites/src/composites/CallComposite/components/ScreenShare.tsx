@@ -186,12 +186,15 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             posY: value.y,
             message: value.text,
             name: value.userId,
-            color: pickColor(value.userId)
+            color: pickColor(value.userId),
+            mine: value.mine
           }))
         );
       }
     });
   }, [props.fluidModel]);
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   return (
     <Stack horizontal verticalFill>
@@ -211,11 +214,25 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
           props.fluidModel?.setCursorPosition(mouseX, mouseY);
         }}
         className={screenShareContainerStyle}
+        onMouseUp={() => {
+          console.log('on mouse up called');
+          setIsEditing(!isEditing);
+        }}
       >
         <>
           {screenShareStreamComponent}
           <Stack style={{ height: '100%', width: '100%', position: 'absolute', top: '0', pointerEvents: 'none' }}>
-            <CursorCanvas cursors={cursorState} />
+            <CursorCanvas
+              cursors={cursorState}
+              isEditingChatBubble={isEditing}
+              onTextFieldEnterPressed={function (): void {
+                setIsEditing(!isEditing);
+              }}
+              onTextFieldChanged={function (text: string): void {
+                console.log('sendingText: ', text);
+                props.fluidModel?.setText(text);
+              }}
+            />
           </Stack>
         </>
       </Stack.Item>

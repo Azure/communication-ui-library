@@ -15,6 +15,7 @@ export interface CursorData {
   color: string;
   name: string;
   message?: string;
+  mine?: boolean;
 }
 
 /**
@@ -22,6 +23,9 @@ export interface CursorData {
  */
 export interface CursorCanvasProps {
   cursors: CursorData[];
+  isEditingChatBubble: boolean;
+  onTextFieldEnterPressed: () => void;
+  onTextFieldChanged: (text: string) => void;
 }
 
 /**
@@ -41,6 +45,9 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
 
   const [currentWidth, setCurrentWidth] = useState(0);
   const [currentHeight, setCurrentHeight] = useState(0);
+
+  const [currentChatBubbleText, setCurrentChatBubbleText] = useState<string>('');
+  const chatBubbleTimeoutHandle = useRef<number>(-1);
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
@@ -76,14 +83,40 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
       paddingLeft: '13px'
     };
     return (
-      <div key={i} style={floatingContainer}>
-        <Cursor20Filled style={cursorStyle} primaryFill={cursor.color} />
-        <Stack style={bubbleStyle}>
+      <div
+        key={i}
+        style={floatingContainer}
+        onMouseUp={() => {
+          console.log('on floating div');
+        }}
+      >
+        <Cursor20Filled
+          onMouseUp={() => {
+            console.log('on mouse up called on the cursor itself');
+          }}
+          style={cursorStyle}
+          primaryFill={cursor.color}
+        />
+        <Stack
+          style={bubbleStyle}
+          onMouseUp={() => {
+            console.log('on mouse up called on cursor canvas');
+          }}
+        >
           <CursorCanvasBubble
             bubbleOwnerName={cursor.name}
             color={cursor.color}
-            onEditingFinished={function (text: string): void {
-              throw new Error('Function not implemented.');
+            text={cursor.mine ? currentChatBubbleText : cursor.message}
+            isEditing={!!(props.isEditingChatBubble && cursor.mine)}
+            onTextFieldEnterPressed={props.onTextFieldEnterPressed}
+            onTextFieldChange={(newValue) => {
+              setCurrentChatBubbleText(newValue);
+              props.onTextFieldChanged(newValue);
+              window.clearTimeout(chatBubbleTimeoutHandle.current);
+              chatBubbleTimeoutHandle.current = window.setTimeout(() => {
+                props.onTextFieldChanged('');
+                setCurrentChatBubbleText('');
+              }, 5000);
             }}
           />
         </Stack>

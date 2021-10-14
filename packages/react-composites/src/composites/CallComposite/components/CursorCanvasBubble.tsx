@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  FocusTrapZone,
   IStackItemStyles,
   IStackStyles,
   ITextFieldStyles,
@@ -10,7 +11,7 @@ import {
   TextField,
   useTheme
 } from '@fluentui/react';
-import React, { useRef } from 'react';
+import React from 'react';
 
 /**
  * @private
@@ -18,8 +19,10 @@ import React, { useRef } from 'react';
 export interface CursorCanvasBubbleProps {
   bubbleOwnerName: string;
   color: string;
-  onEditingFinished: (text: string) => void;
   text?: string;
+  isEditing: boolean;
+  onTextFieldChange?: (text: string) => void;
+  onTextFieldEnterPressed: () => void;
 }
 
 /**
@@ -27,38 +30,38 @@ export interface CursorCanvasBubbleProps {
  */
 export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element => {
   const palette = useTheme().palette;
-  const editedText = useRef<string>();
+  const showNameOnly = !(props.isEditing || props.text);
   const bubbleStyles: IStackStyles = {
     root: {
-      minWidth: '111px',
-      height: '30px',
+      minWidth: showNameOnly ? '10px' : '111px',
       background: props.color,
-      borderRadius: '2px 10px 10px 10px',
-      paddingLeft: '4px',
-      paddingRight: '4px',
-      paddingTop: '2px',
-      paddingBottom: '2px'
+      borderRadius: '2px 16px 16px 16px',
+      paddingLeft: '10px',
+      paddingRight: '10px',
+      paddingTop: '8px',
+      paddingBottom: '8px'
     }
   };
   const bubbleHeaderStyles: IStackItemStyles = {
     root: {
       color: `${palette.white}`,
-      opacity: 0.6,
-      fontSize: '8px',
-      lineHeight: '9px'
+      opacity: showNameOnly ? 1 : 0.8,
+      fontSize: showNameOnly ? '8px' : '8px',
+      lineHeight: showNameOnly ? '16px' : '9px',
+      paddingBottom: showNameOnly ? '0px' : '4px'
     }
   };
   const bubbleBodyStyles: IStackItemStyles = {
     root: {
       color: `${palette.white}`,
-      fontSize: '10px',
+      fontSize: '12px',
       lineHeight: '14px'
     }
   };
   const overwritingStyles = {
     color: `${palette.white} !important`,
-    fontSize: '10px !important',
-    lineHeight: '14px !important',
+    fontSize: '12px !important',
+    lineHeight: '18px !important',
     border: 'none !important',
     background: 'none !important',
     padding: 'none !important',
@@ -86,28 +89,30 @@ export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element 
   });
 
   const bubbleHeader = props.bubbleOwnerName;
-  const bubbleBody = props.text ? (
+  const bubbleBody = !props.isEditing ? (
     props.text
   ) : (
-    <TextField
-      styles={bubbleTextFieldWrapperStyles}
-      inputClassName={bubbleTextFieldStyles}
-      onChange={(e, newValue) => {
-        editedText.current = newValue;
-      }}
-      onKeyPress={(ev) => {
-        if (ev.key === 'Enter') {
-          console.log(editedText.current);
-          editedText.current && props.onEditingFinished(editedText.current);
-        }
-      }}
-    />
+    <FocusTrapZone>
+      <TextField
+        value={props.text}
+        styles={bubbleTextFieldWrapperStyles}
+        inputClassName={bubbleTextFieldStyles}
+        onChange={(e, newValue) => {
+          props.onTextFieldChange && props.onTextFieldChange(newValue ?? '');
+        }}
+        onKeyPress={(ev) => {
+          if (ev.key === 'Enter') {
+            props.onTextFieldEnterPressed && props.onTextFieldEnterPressed();
+          }
+        }}
+      />
+    </FocusTrapZone>
   );
 
   return (
     <Stack styles={bubbleStyles}>
       <Stack.Item styles={bubbleHeaderStyles}>{bubbleHeader}</Stack.Item>
-      <Stack.Item styles={bubbleBodyStyles}>{bubbleBody}</Stack.Item>
+      {!showNameOnly && <Stack.Item styles={bubbleBodyStyles}>{bubbleBody}</Stack.Item>}
     </Stack>
   );
 };
