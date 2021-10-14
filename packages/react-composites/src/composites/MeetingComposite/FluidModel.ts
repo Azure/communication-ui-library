@@ -109,7 +109,7 @@ interface DDSOption {
 export class CursorChatFluidModel extends EventEmitter {
   private handRolledReducedCursors: { [key: string]: Cursor } = {};
 
-  constructor(private container: IFluidContainer, private userId: string) {
+  constructor(private container: IFluidContainer, private userId: string, displayName: string) {
     super();
 
     this.handRolledReducedCursors = this.getAllCursors();
@@ -118,7 +118,7 @@ export class CursorChatFluidModel extends EventEmitter {
       this.updateHandRolledReducedCursors(key);
       this.emit('cursorsChanged');
     });
-    this.setCursorChat({ userId: this.userId, x: 0, y: 0, text: '' });
+    this.setCursorChat({ displayName: displayName, x: 0, y: 0, text: '' });
   }
 
   public get reducedCursors() {
@@ -136,7 +136,7 @@ export class CursorChatFluidModel extends EventEmitter {
   private getAllCursors(): { [key: string]: Cursor } {
     const cursors = {};
     this.ddsCursors.forEach((cursor: Cursor) => {
-      cursors[cursor.userId] = cursor;
+      cursors[cursor.displayName] = cursor;
     });
     return cursors;
   }
@@ -154,8 +154,8 @@ export class CursorChatFluidModel extends EventEmitter {
   }
 
   private setCursorChat(cursor: Cursor): void {
-    const { userId, x, y, text } = cursor;
-    this.ddsCursors.set(this.userId, { userId, x, y, text });
+    const { displayName, x, y, text } = cursor;
+    this.ddsCursors.set(this.userId, { displayName, x, y, text });
   }
 
   private updateHandRolledReducedCursors(userId: string): void {
@@ -171,7 +171,7 @@ export class CursorChatFluidModel extends EventEmitter {
 }
 
 interface Cursor {
-  userId: string;
+  displayName: string;
   x: number;
   y: number;
   text: string;
