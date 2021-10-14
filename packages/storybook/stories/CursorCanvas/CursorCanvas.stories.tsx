@@ -21,7 +21,7 @@ const CursorCanvasStory = (args): JSX.Element => {
         if (throttleCounter++ % throttleAmount !== 0) return;
 
         const mouseX = ev.clientX - ev.currentTarget.offsetLeft;
-        const mouseY = ev.clientY - ev.currentTarget.offsetLeft;
+        const mouseY = ev.clientY - ev.currentTarget.offsetTop;
 
         if (!args.makeColorful) {
           setCursorState([
