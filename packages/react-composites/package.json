@@ -62,6 +62,7 @@
     "events": "~3.3.0",
     "fluid-framework": "^0.47.1",
     "memoize-one": "~5.2.1",
+    "murmurhash-js": "^1.0.0",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
