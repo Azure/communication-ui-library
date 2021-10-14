@@ -15,6 +15,7 @@ export interface CursorData {
   color: string;
   name: string;
   message?: string;
+  mine?: boolean;
 }
 
 /**
@@ -22,6 +23,9 @@ export interface CursorData {
  */
 export interface CursorCanvasProps {
   cursors: CursorData[];
+  isEditingChatBubble: boolean;
+  onTextFieldEnterPressed: () => void;
+  onTextFieldChanged: (text: string) => void;
 }
 
 /**
@@ -55,15 +59,33 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
       paddingLeft: '13px'
     };
     return (
-      <div key={i} style={floatingContainer}>
-        <Cursor20Filled style={cursorStyle} primaryFill={cursor.color} />
-        <Stack style={bubbleStyle}>
+      <div
+        key={i}
+        style={floatingContainer}
+        onMouseUp={() => {
+          console.log('on floating div');
+        }}
+      >
+        <Cursor20Filled
+          onMouseUp={() => {
+            console.log('on mouse up called on the cursor itself');
+          }}
+          style={cursorStyle}
+          primaryFill={cursor.color}
+        />
+        <Stack
+          style={bubbleStyle}
+          onMouseUp={() => {
+            console.log('on mouse up called on cursor canvas');
+          }}
+        >
           <CursorCanvasBubble
             bubbleOwnerName={cursor.name}
             color={cursor.color}
-            onEditingFinished={function (text: string): void {
-              throw new Error('Function not implemented.');
-            }}
+            text={cursor.message}
+            isEditing={props.isEditingChatBubble && cursor.mine}
+            onTextFieldEnterPressed={props.onTextFieldEnterPressed}
+            onTextFieldChange={props.onTextFieldChanged}
           />
         </Stack>
       </div>

@@ -154,12 +154,18 @@ export class CursorChatFluidModel extends EventEmitter {
   }
 
   private setCursorChat(cursor: Cursor): void {
-    this.ddsCursors.set(this.userId, cursor);
+    const { userId, x, y, text } = cursor;
+    this.ddsCursors.set(this.userId, { userId, x, y, text });
   }
 
   private updateHandRolledReducedCursors(userId: string): void {
     const handRolledReducedCursors = { ...this.handRolledReducedCursors };
     handRolledReducedCursors[userId] = this.getCursor(userId);
+
+    if (userId === this.userId) {
+      handRolledReducedCursors[userId].mine = true;
+    }
+
     this.handRolledReducedCursors = handRolledReducedCursors;
   }
 }
@@ -169,6 +175,7 @@ interface Cursor {
   x: number;
   y: number;
   text: string;
+  mine?: boolean;
 }
 
 /** @private */
