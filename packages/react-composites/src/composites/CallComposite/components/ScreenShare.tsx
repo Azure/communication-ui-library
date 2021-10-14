@@ -3,7 +3,7 @@
 
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import { mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   OnRenderAvatarCallback,
   StreamMedia,
@@ -20,6 +20,7 @@ import {
   stackContainerParticipantVideoStyles
 } from '../styles/MediaGallery.styles';
 import { loadingStyle, videoStreamStyle } from '../styles/ScreenShare.styles';
+import { CursorCanvas, CursorData } from './CursorCanvas';
 
 /**
  * @private
@@ -172,6 +173,8 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     });
   }, [remoteParticipants, onCreateRemoteStreamView, screenShareParticipant]);
 
+  const [cursorState, setCursorState] = useState<CursorData[]>([]);
+
   return (
     <Stack horizontal verticalFill>
       <Stack.Item className={stackContainerStyle}>
@@ -182,7 +185,25 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
           {sidePanelRemoteParticipants}
         </Stack>
       </Stack.Item>
-      <Stack.Item className={screenShareContainerStyle}>{screenShareStreamComponent}</Stack.Item>
+      <Stack.Item
+        onMouseMove={(ev) => {
+          const mouseX = ev.clientX - ev.currentTarget.offsetLeft;
+          const mouseY = ev.clientY - ev.currentTarget.offsetTop;
+          setCursorState([
+            {
+              color: '#e74c3c',
+              posX: mouseX,
+              posY: mouseY
+            }
+          ]);
+        }}
+        className={screenShareContainerStyle}
+      >
+        <>
+          <CursorCanvas cursors={cursorState} />
+          {screenShareStreamComponent}
+        </>
+      </Stack.Item>
     </Stack>
   );
 };
