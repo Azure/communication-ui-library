@@ -244,4 +244,4 @@ const pickColor = (name: string): string => {
   return colorPalette[murmur.murmur3(name) % colorPalette.length];
 };
 
-const colorPalette = ['#d0fffe', '#fffddb', '#e4ffde', '#ffd3fd', '#ffe7d3'];
+const colorPalette = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e'];
