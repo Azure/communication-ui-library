@@ -25,7 +25,8 @@ import {
   screenSharingNotificationContainerCameraOnStyles,
   screenSharingNotificationContainerCameraOffStyles,
   screenSharingNotificationTextStyle,
-  videoGalleryContainerStyle
+  videoGalleryContainerStyle,
+  videoWithNoRoundedBorderStyle
 } from './styles/VideoGallery.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
@@ -344,9 +345,11 @@ const RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} />;
+      const videoStyles = isSpeaking ? videoWithNoRoundedBorderStyle : {};
+
+      return <StreamMedia styles={videoStyles} videoStreamElement={renderElement} />;
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [renderElement, renderElement?.childElementCount]);
+    }, [renderElement, renderElement?.childElementCount, isSpeaking]);
 
     return (
       <Stack className={gridStyle} key={userId} grow>

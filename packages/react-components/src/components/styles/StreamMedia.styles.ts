@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { getTheme, mergeStyles } from '@fluentui/react';
+
+const theme = getTheme();
 
 /**
  * @private
@@ -13,7 +15,7 @@ export const mediaContainer = mergeStyles({
   background: 'transparent',
   display: 'flex',
   '& video': {
-    borderRadius: '.25rem'
+    borderRadius: theme.effects.roundedCorner4
   }
 });
 

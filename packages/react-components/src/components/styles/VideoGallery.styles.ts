@@ -120,3 +120,12 @@ export const screenSharingNotificationTextStyle = mergeStyles({
   // Text component will take body color by default (white in Dark Mode), so forcing it to be parent container color
   color: 'inherit'
 });
+
+/**
+ * @private
+ */
+export const videoWithNoRoundedBorderStyle = {
+  root: {
+    '& video': { borderRadius: '0rem' }
+  }
+};
