@@ -11,7 +11,7 @@ import {
   TextField,
   useTheme
 } from '@fluentui/react';
-import React, { useState } from 'react';
+import React from 'react';
 
 /**
  * @private
@@ -94,6 +94,7 @@ export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element 
   ) : (
     <FocusTrapZone>
       <TextField
+        value={props.text}
         styles={bubbleTextFieldWrapperStyles}
         inputClassName={bubbleTextFieldStyles}
         onChange={(e, newValue) => {

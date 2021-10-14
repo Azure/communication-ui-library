@@ -46,6 +46,9 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
   const [currentWidth, setCurrentWidth] = useState(0);
   const [currentHeight, setCurrentHeight] = useState(0);
 
+  const [currentChatBubbleText, setCurrentChatBubbleText] = useState<string>('');
+  const chatBubbleTimeoutHandle = useRef<number>(-1);
+
   const observer = useRef(
     new ResizeObserver((entries): void => {
       const { width, height } = entries[0].contentRect;
@@ -103,10 +106,18 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
           <CursorCanvasBubble
             bubbleOwnerName={cursor.name}
             color={cursor.color}
-            text={cursor.message}
-            isEditing={props.isEditingChatBubble && cursor.mine}
+            text={cursor.mine ? currentChatBubbleText : cursor.message}
+            isEditing={!!(props.isEditingChatBubble && cursor.mine)}
             onTextFieldEnterPressed={props.onTextFieldEnterPressed}
-            onTextFieldChange={props.onTextFieldChanged}
+            onTextFieldChange={(newValue) => {
+              setCurrentChatBubbleText(newValue);
+              props.onTextFieldChanged(newValue);
+              window.clearTimeout(chatBubbleTimeoutHandle.current);
+              chatBubbleTimeoutHandle.current = window.setTimeout(() => {
+                props.onTextFieldChanged('');
+                setCurrentChatBubbleText('');
+              }, 5000);
+            }}
           />
         </Stack>
       </div>
