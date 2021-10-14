@@ -200,8 +200,10 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         className={screenShareContainerStyle}
       >
         <>
-          <CursorCanvas cursors={cursorState} />
           {screenShareStreamComponent}
+          <Stack style={{ height: '100%', width: '100%', position: 'absolute', top: '0', pointerEvents: 'none' }}>
+            <CursorCanvas cursors={cursorState} />
+          </Stack>
         </>
       </Stack.Item>
     </Stack>
