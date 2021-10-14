@@ -207,8 +207,9 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       </Stack.Item>
       <Stack.Item
         onMouseMove={(ev) => {
-          const mouseX = ev.clientX - ev.currentTarget.offsetLeft;
-          const mouseY = ev.clientY - ev.currentTarget.offsetTop;
+          const mouseX = (ev.clientX - ev.currentTarget.offsetLeft) / ev.currentTarget.offsetWidth;
+          const mouseY = (ev.clientY - ev.currentTarget.offsetTop) / ev.currentTarget.offsetHeight;
+          console.log('Sending cursor position', mouseX, mouseY);
           props.fluidModel?.setCursorPosition(mouseX, mouseY);
         }}
         className={screenShareContainerStyle}
