@@ -128,7 +128,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
         pollFluidModel.current = new PollFluidModel(container);
         pollFluidModel.current?.on('modelChanged', async () => {
           const newPollData = await pollFluidModel.current?.getPoll();
-          console.log('[xkcd] Got a new Poll object', newPollData);
           setPollData(newPollData);
         });
         setCursorChatFluidModel(new CursorChatFluidModel(container, meetingAdapter?.getState().displayName ?? 'FNU'));

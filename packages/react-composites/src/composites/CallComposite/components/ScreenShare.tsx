@@ -179,7 +179,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   useEffect(() => {
     props.fluidModel?.on('cursorsChanged', () => {
       if (props.fluidModel) {
-        console.log('xkcd, got cursors', props.fluidModel.reducedCursors);
         setCursorState(
           Object.values(props.fluidModel.reducedCursors).map((value) => ({
             posX: value.x,
@@ -208,7 +207,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
           const mouseX = ev.clientX - ev.currentTarget.offsetLeft;
           const mouseY = ev.clientY - ev.currentTarget.offsetTop;
           props.fluidModel?.setCursorPosition(mouseX, mouseY);
-          console.log('[xkcd] Sending cursor', mouseX, mouseY);
         }}
         className={screenShareContainerStyle}
       >
