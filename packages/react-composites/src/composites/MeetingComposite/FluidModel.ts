@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { SharedMap, ISharedMap, IFluidContainer } from 'fluid-framework';
+import { SharedCounter } from '@fluidframework/counter';
 import { EventEmitter } from 'events';
 import { PollData, PollOptions } from '../CallComposite';
 
@@ -45,10 +46,10 @@ export class PollFluidModel extends EventEmitter {
     const ddsOptions = this.ddsQuestion.get<DDSOption[]>('options') ?? [];
     const options: PollOptions = [];
     for (const { option, votesCounterHandle } of ddsOptions) {
-      const votesCounter: ISharedMap = await votesCounterHandle.get();
+      const votesCounter: SharedCounter = await votesCounterHandle.get();
       options.push({
         option,
-        votes: votesCounter.get('value') ?? 0
+        votes: votesCounter.value
       });
     }
     return options;
@@ -57,8 +58,8 @@ export class PollFluidModel extends EventEmitter {
   private async subscribeToOptionUpdates(): Promise<void> {
     const ddsOptions = this.ddsQuestion.get<DDSOption[]>('options') ?? [];
     for (const { votesCounterHandle } of ddsOptions) {
-      const votesCounter: ISharedMap = await votesCounterHandle.get();
-      votesCounter.on('valueChanged', () => {
+      const votesCounter: SharedCounter = await votesCounterHandle.get();
+      votesCounter.on('incremented', () => {
         this.emit('modelChanged');
       });
     }
@@ -72,12 +73,7 @@ export class PollFluidModel extends EventEmitter {
 
     const ddsOptions: DDSOption[] = [];
     for (const { option } of poll.options) {
-      // TODO: Use a `SharedCounter`.
-      const votesCounter = await this.container.create(SharedMap);
-      // votesCounter.on('valueChanged', (changed) => {
-      //  this.emit('modelChanged');
-      // });
-      votesCounter.set('value', 0);
+      const votesCounter = await this.container.create(SharedCounter);
       ddsOptions.push({
         option,
         votesCounterHandle: votesCounter.handle
@@ -88,18 +84,15 @@ export class PollFluidModel extends EventEmitter {
 
   public async addVoteForOption(index: number): Promise<void> {
     const counter = await this.getVoteCounterForOption(index);
-    // TODO: This is not concurrency safe:
-    console.log(`Adding vote for ${index}`);
-    counter.set('value', counter.get('value') + 1);
+    counter.increment(1);
   }
 
   public async removeVoteForOption(index: number): Promise<void> {
     const counter = await this.getVoteCounterForOption(index);
-    // TODO: This is not concurrency safe:
-    counter.set('value', counter.get('value') - 1);
+    counter.increment(-1);
   }
 
-  private async getVoteCounterForOption(index: number): Promise<ISharedMap> {
+  private async getVoteCounterForOption(index: number): Promise<SharedCounter> {
     const ddsOptions = this.ddsQuestion.get<DDSOption[]>('options') ?? [];
     if (ddsOptions.length <= index) {
       throw new Error(`attempted to get option ${index}, but only ${ddsOptions.length} exist`);
@@ -190,6 +183,5 @@ interface Cursor {
 /** @private */
 export const containerSchema = {
   initialObjects: { question: SharedMap, cursors: SharedMap },
-  // TODO: Use `SharedCounter`, but the FluidContainer doesn't like that type here currently.
-  dynamicObjectTypes: [SharedMap]
+  dynamicObjectTypes: [SharedMap, SharedCounter]
 };
