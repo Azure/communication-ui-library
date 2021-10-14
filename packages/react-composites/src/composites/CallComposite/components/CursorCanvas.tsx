@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack, useTheme } from '@fluentui/react';
+import { mergeStyles, Stack, useTheme } from '@fluentui/react';
 import { Cursor20Filled } from '@fluentui/react-icons';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CursorCanvasBubble } from './CursorCanvasBubble';
 
 /**
@@ -37,6 +37,27 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
     position: 'relative'
   };
 
+  const containerRef = useRef(null);
+
+  const [currentWidth, setCurrentWidth] = useState(0);
+  const [currentHeight, setCurrentHeight] = useState(0);
+
+  const observer = useRef(
+    new ResizeObserver((entries): void => {
+      const { width, height } = entries[0].contentRect;
+      setCurrentWidth(width);
+      setCurrentHeight(height);
+    })
+  );
+
+  useEffect(() => {
+    if (containerRef.current) {
+      observer.current.observe(containerRef.current);
+    }
+    const currentObserver = observer.current;
+    return () => currentObserver.disconnect();
+  }, [observer, containerRef]);
+
   const cursorElements: JSX.Element[] = props.cursors.map((cursor, i) => {
     // icon itself has a small amount of padding to account for
     const cursorIconOffsetX = 4;
@@ -44,8 +65,8 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
     const floatingContainer: React.CSSProperties = {
       position: 'absolute',
       display: 'inline-block',
-      left: cursor.posX - cursorIconOffsetX,
-      top: cursor.posY - cursorIconOffsetY
+      left: Math.floor(currentWidth * cursor.posX) - cursorIconOffsetX,
+      top: Math.floor(currentHeight * cursor.posY) - cursorIconOffsetY
     };
     const cursorStyle: React.CSSProperties = {
       stroke: `${palette.white}`,
@@ -70,7 +91,13 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
     );
   });
 
-  return <Stack style={canvasStyles}>{cursorElements}</Stack>;
+  return (
+    <Stack style={canvasStyles}>
+      <div className={mergeStyles({ width: '100%', height: '100%' })} ref={containerRef}>
+        {cursorElements}
+      </div>
+    </Stack>
+  );
 };
 
 /// Code trying out an html5 canvas - absolute positioning seems more than performant though
