@@ -130,7 +130,13 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
           const newPollData = await pollFluidModel.current?.getPoll();
           setPollData(newPollData);
         });
-        setCursorChatFluidModel(new CursorChatFluidModel(container, meetingAdapter?.getState().displayName ?? 'FNU'));
+        setCursorChatFluidModel(
+          new CursorChatFluidModel(
+            container,
+            meetingAdapter?.getState().userId.communicationUserId ?? 'no_user_id',
+            meetingAdapter?.getState().displayName ?? 'FNU'
+          )
+        );
       }
     })();
   }, [hasJoinedCall, meetingAdapter]);

@@ -185,8 +185,8 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             posX: value.x,
             posY: value.y,
             message: value.text,
-            name: value.userId,
-            color: pickColor(value.userId),
+            name: value.displayName,
+            color: pickColor(value.displayName),
             mine: value.mine
           }))
         );
