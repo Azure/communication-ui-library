@@ -138,7 +138,13 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             setPollAnswered(false);
           }
         });
-        setCursorChatFluidModel(new CursorChatFluidModel(container, meetingAdapter?.getState().displayName ?? 'FNU'));
+        setCursorChatFluidModel(
+          new CursorChatFluidModel(
+            container,
+            meetingAdapter?.getState().userId.communicationUserId ?? 'no_user_id',
+            meetingAdapter?.getState().displayName ?? 'FNU'
+          )
+        );
       }
     })();
   }, [hasJoinedCall, meetingAdapter]);
