@@ -3314,31 +3314,21 @@ packages:
     dev: false
     resolution:
       integrity: sha512-l9VZok8XptGdPDChHGs+DJE+oPQ1fFhQRkw1jhOVVrAZIDw6ay6jjq8B2Hy+dQqLMVuF5/eLFcaoIir5GyeyXA==
-  /@fluidframework/container-utils/0.49.2:
-    dependencies:
-      '@fluidframework/common-definitions': 0.20.1
-      '@fluidframework/common-utils': 0.32.1
-      '@fluidframework/container-definitions': 0.40.0
-      '@fluidframework/protocol-definitions': 0.1025.1
-      '@fluidframework/telemetry-utils': 0.49.2
-    dev: false
-    resolution:
-      integrity: sha512-dsgWoNi4zH3dtKGq2R2DyA5TwFbQgz8VgnF1eJUlw0guamlI/EnDXMj1yaSlSH1kQGWJ3opjCYs0lQqXNFKduA==
   /@fluidframework/core-interfaces/0.39.8:
     dev: false
     resolution:
       integrity: sha512-S5UzMPngTUSXcArpzfsVOh4p9hyKtLt3HjYCwtscTqUR+FgH0MeaUUYQQULAwqcXIIFnVfa1a4ZeT2zsRjTCpw==
-  /@fluidframework/counter/0.49.2:
+  /@fluidframework/counter/0.47.1:
     dependencies:
       '@fluidframework/common-utils': 0.32.1
       '@fluidframework/core-interfaces': 0.39.8
-      '@fluidframework/datastore-definitions': 0.49.2
-      '@fluidframework/driver-utils': 0.49.2
-      '@fluidframework/protocol-definitions': 0.1025.1
-      '@fluidframework/shared-object-base': 0.49.2
+      '@fluidframework/datastore-definitions': 0.47.1
+      '@fluidframework/driver-utils': 0.47.1
+      '@fluidframework/protocol-definitions': 0.1024.1
+      '@fluidframework/shared-object-base': 0.47.1
     dev: false
     resolution:
-      integrity: sha512-xiRqNuM+j5aZ0Xa2r0yZOaZ3Sl2ogNnUTBOaHfxtgRVIIsZf+hiJ5mpc8EK2BIbvwSerynNi2gHBx3uTFh2zHQ==
+      integrity: sha512-btqQj0rm7AHJREQjqo4WbRMuTiVcEiKHxYi5rdLa+M+uM9EFWifg61TONVfe/fzJe0otPNsUOd5RvNPerKL3gw==
   /@fluidframework/datastore-definitions/0.47.1:
     dependencies:
       '@fluidframework/common-definitions': 0.20.1
@@ -3384,27 +3374,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dd1DjHJZ/dLOrVSKWxELSf1YHeObEWGXVgDKtvMdT8ZJ6OffI2KXcPNK4GVgxC9UxwfJ2agNujtOTeDWGc/zPw==
-  /@fluidframework/datastore/0.49.2:
-    dependencies:
-      '@fluidframework/common-definitions': 0.20.1
-      '@fluidframework/common-utils': 0.32.1
-      '@fluidframework/container-definitions': 0.40.0
-      '@fluidframework/container-utils': 0.49.2
-      '@fluidframework/core-interfaces': 0.39.8
-      '@fluidframework/datastore-definitions': 0.49.2
-      '@fluidframework/driver-definitions': 0.40.0
-      '@fluidframework/driver-utils': 0.49.2
-      '@fluidframework/garbage-collector': 0.49.2
-      '@fluidframework/protocol-base': 0.1032.0
-      '@fluidframework/protocol-definitions': 0.1025.1
-      '@fluidframework/runtime-definitions': 0.49.2
-      '@fluidframework/runtime-utils': 0.49.2
-      '@fluidframework/telemetry-utils': 0.49.2
-      lodash: 4.17.21
-      uuid: 8.3.2
-    dev: false
-    resolution:
-      integrity: sha512-lbxJW9L60a9uQCrT3WiQleQa1fx6FTwSpMkqPk4R6LKNUKIo3qDDRfge/g6sd0HyfydBsUrUSRUYU+6nV4pZUg==
   /@fluidframework/driver-base/0.47.1:
     dependencies:
       '@fluidframework/common-definitions': 0.20.1
@@ -3890,22 +3859,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-KLE6MiSSuwrqicr4LPCO6x5wQALj37Olm0LdXF2uolv0/BmFTtAD7GKDUT3Ui5+Oqs7J7KuFwtl5fDf5ZTblbg==
-  /@fluidframework/shared-object-base/0.49.2:
-    dependencies:
-      '@fluidframework/common-definitions': 0.20.1
-      '@fluidframework/common-utils': 0.32.1
-      '@fluidframework/container-definitions': 0.40.0
-      '@fluidframework/core-interfaces': 0.39.8
-      '@fluidframework/datastore': 0.49.2
-      '@fluidframework/datastore-definitions': 0.49.2
-      '@fluidframework/protocol-definitions': 0.1025.1
-      '@fluidframework/runtime-definitions': 0.49.2
-      '@fluidframework/runtime-utils': 0.49.2
-      '@fluidframework/telemetry-utils': 0.49.2
-      uuid: 8.3.2
-    dev: false
-    resolution:
-      integrity: sha512-mw6qkRKc7zFCoBGlAwfa/1AlGkcf/RSU7zn5lc81ZG83P2LZJuH41LVQI2ucEGw8EwOGTl93D6AqPOhEsviMmw==
   /@fluidframework/synthesize/0.47.1:
     dependencies:
       '@fluidframework/core-interfaces': 0.39.8
@@ -20850,7 +20803,7 @@ packages:
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-icons': 1.1.137
       '@fluidframework/azure-client': 0.47.1
-      '@fluidframework/counter': 0.49.2
+      '@fluidframework/counter': 0.47.1
       '@fluidframework/test-client-utils': 0.49.2
       '@fluidframework/test-utils': 0.47.1
       '@fluidframework/tinylicious-client': 0.47.1
@@ -20932,7 +20885,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-WZgLXQcWBXrm81yL0lYHcJkXDX9OoWye/GdvdmuV8qwRhCYkSPos+HH+XWFXTkkWE+ZEhWLoCeWkzd/p51F+BA==
+      integrity: sha512-EIGImwbi2WuLUXPyQeLcJXnXsYuou6IHWdAujKhRdiPhY0tf9VIzoJ5vHUJnfa/7/SkQI7Ykr06fyNnMenlSFQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
