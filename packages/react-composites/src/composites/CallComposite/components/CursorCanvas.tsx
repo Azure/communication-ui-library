@@ -45,7 +45,7 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
       left: cursor.posX - cursorIconOffsetX,
       top: cursor.posY - cursorIconOffsetY,
       stroke: `${palette.white}`,
-      strokeWidth: '2px'
+      strokeWidth: '1px'
     };
     return <Cursor20Filled key={i} style={cursorStyle} primaryFill={cursor.color} />;
   });
