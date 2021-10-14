@@ -71,7 +71,7 @@ export const PollTile = PollTileStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-poll-poll-Tile`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollTile`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Poll/Poll Tile`,
   component: PollTileComponent,
   argTypes: {
     prompt: { control: 'text', defaultValue: 'What snack should we add to the kitchen?', name: 'Poll Prompt' },
