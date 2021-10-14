@@ -11,7 +11,7 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 const throttleAmount = 5;
 let throttleCounter = throttleAmount;
 
-const CursorCanvasStory = (): JSX.Element => {
+const CursorCanvasStory = (args): JSX.Element => {
   const [cursorState, setCursorState] = useState<CursorData[] | null>(null);
   const palette = useTheme().palette;
 
@@ -22,6 +22,18 @@ const CursorCanvasStory = (): JSX.Element => {
 
         const mouseX = ev.clientX - ev.currentTarget.offsetLeft;
         const mouseY = ev.clientY - ev.currentTarget.offsetLeft;
+
+        if (!args.makeColorful) {
+          setCursorState([
+            {
+              color: '#e74c3c',
+              posX: mouseX,
+              posY: mouseY
+            }
+          ]);
+          return;
+        }
+
         const radius = 60;
         const degressToRadians = Math.PI / 180;
 
@@ -80,5 +92,8 @@ export const CursorCanvas = CursorCanvasStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-cursor-canvas`,
   title: `${COMPONENT_FOLDER_PREFIX}/Cursor Canvas`,
-  component: CursorCanvasComponent
+  component: CursorCanvasComponent,
+  argTypes: {
+    makeColorful: { control: 'boolean', defaultValue: false, name: 'Make Colorful' }
+  }
 } as Meta;
