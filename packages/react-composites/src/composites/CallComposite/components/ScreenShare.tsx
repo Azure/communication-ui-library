@@ -22,6 +22,7 @@ import {
 import { loadingStyle, videoStreamStyle } from '../styles/ScreenShare.styles';
 import { CursorCanvas, CursorData } from './CursorCanvas';
 import { CursorChatFluidModel } from '../../MeetingComposite/FluidModel';
+import murmur from 'murmurhash-js';
 
 /**
  * @private
@@ -185,7 +186,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             posY: value.y,
             message: value.text,
             name: value.userId,
-            color: '#e74c3c',
+            color: pickColor(value.userId),
             mine: value.mine
           }))
         );
@@ -238,3 +239,9 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     </Stack>
   );
 };
+
+const pickColor = (name: string): string => {
+  return colorPalette[murmur.murmur3(name) % colorPalette.length];
+  // return colorPalette[(name.length + (name.length > 0 ? name.charCodeAt(0) : 0)) % colorPalette.length];
+};
+const colorPalette = ['#d0fffe', '#fffddb', '#e4ffde', '#ffd3fd', '#ffe7d3'];
