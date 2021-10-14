@@ -35,6 +35,9 @@ export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element 
     root: {
       minWidth: showNameOnly ? '10px' : '111px',
       background: props.color,
+      // All the background colors are light
+      color: '#000000',
+      // border: 'solid 2px #000000',
       borderRadius: '2px 16px 16px 16px',
       paddingLeft: '10px',
       paddingRight: '10px',
@@ -44,7 +47,8 @@ export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element 
   };
   const bubbleHeaderStyles: IStackItemStyles = {
     root: {
-      color: `${palette.white}`,
+      // All the background colors are light
+      color: '#000000',
       opacity: showNameOnly ? 1 : 0.8,
       fontSize: showNameOnly ? '8px' : '8px',
       lineHeight: showNameOnly ? '16px' : '9px',
@@ -53,16 +57,18 @@ export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element 
   };
   const bubbleBodyStyles: IStackItemStyles = {
     root: {
-      color: `${palette.white}`,
+      // All the background colors are light
+      color: '#000000',
       fontSize: '12px',
       lineHeight: '14px'
     }
   };
   const overwritingStyles = {
-    color: `${palette.white} !important`,
+    // All the background colors are light
+    color: '#000000 !important',
+    border: 'none !important',
     fontSize: '12px !important',
     lineHeight: '18px !important',
-    border: 'none !important',
     background: 'none !important',
     padding: 'none !important',
     height: 'unset !important',

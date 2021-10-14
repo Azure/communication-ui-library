@@ -242,6 +242,6 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
 const pickColor = (name: string): string => {
   return colorPalette[murmur.murmur3(name) % colorPalette.length];
-  // return colorPalette[(name.length + (name.length > 0 ? name.charCodeAt(0) : 0)) % colorPalette.length];
 };
+
 const colorPalette = ['#d0fffe', '#fffddb', '#e4ffde', '#ffd3fd', '#ffe7d3'];
