@@ -9,11 +9,13 @@ import { PollData, PollOptions } from '../CallComposite';
 export class FluidModel extends EventEmitter {
   constructor(private container: IFluidContainer) {
     super();
-    // TODO: Check if we get an event when a counter is incremented. The `ddsQuestion` isn't being modified directly.
-    // Else, subscribe to each counter as it is created.
     this.ddsQuestion.on('valueChanged', (changed) => {
       this.emit('modelChanged');
+      // We know that this event fires only because of `setPoll`, and that updates the `prompt` and `options` together,
+      // so we must subscribe to the new options.
+      this.subscribeToOptionUpdates();
     });
+    this.subscribeToOptionUpdates();
   }
 
   private get ddsQuestion(): ISharedMap {
@@ -44,6 +46,16 @@ export class FluidModel extends EventEmitter {
     return options;
   }
 
+  private async subscribeToOptionUpdates(): Promise<void> {
+    const ddsOptions = this.ddsQuestion.get<DDSOption[]>('options') ?? [];
+    for (const { votesCounterHandle } of ddsOptions) {
+      const votesCounter: ISharedMap = await votesCounterHandle.get();
+      votesCounter.on('valueChanged', (changed) => {
+        this.emit('modelChanged');
+      });
+    }
+  }
+
   public async setPoll(poll: PollData): Promise<void> {
     // This is a problem because the write to propmt and options is not atomic.
     // Ideally there should be a single top-level object that's written atomically.
@@ -53,9 +65,9 @@ export class FluidModel extends EventEmitter {
     for (const { option } of poll.options) {
       // TODO: Use a `SharedCounter`.
       const votesCounter = await this.container.create(SharedMap);
-      votesCounter.on('valueChanged', (changed) => {
-        this.emit('modelChanged');
-      });
+      // votesCounter.on('valueChanged', (changed) => {
+      //  this.emit('modelChanged');
+      // });
       votesCounter.set('value', 0);
       ddsOptions.push({
         option,
