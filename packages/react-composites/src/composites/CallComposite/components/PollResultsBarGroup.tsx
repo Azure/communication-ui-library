@@ -26,15 +26,15 @@ export const PollResultBarGroup = (props: PollResultsProps): JSX.Element => {
 
   return (
     <Stack tokens={{ childrenGap: '10px' }}>
-      {props.pollData.options.map((pollResult, index) => (
-        <Stack.Item key={index}>
-          <PollResultBar
-            percentage={Math.floor((pollResult.votes ?? 0 / totalVotes) * 100) ?? 0}
-            barWidthPercentage={Math.floor((pollResult.votes ?? 0 / maxVotesOnASingleResult) * 100) ?? 0}
-            votes={pollResult.votes ?? 0}
-          />
-        </Stack.Item>
-      ))}
+      {props.pollData.options.map((pollResult, index) => {
+        const percentage = Math.floor((pollResult.votes ?? 0 / totalVotes) * 100) ?? 0;
+        const barPercentage = Math.floor(((pollResult.votes ?? 0) / maxVotesOnASingleResult) * 100) ?? 0;
+        return (
+          <Stack.Item key={index}>
+            <PollResultBar percentage={percentage} barWidthPercentage={barPercentage} votes={pollResult.votes ?? 0} />
+          </Stack.Item>
+        );
+      })}
     </Stack>
   );
 };

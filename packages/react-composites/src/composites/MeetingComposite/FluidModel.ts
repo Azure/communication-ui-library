@@ -15,11 +15,19 @@ export class PollFluidModel extends EventEmitter {
       // so we must subscribe to the new options.
       this.subscribeToOptionUpdates();
     });
+    this.ddsQuestion.on('clear', () => {
+      this.emit('modelChanged');
+    });
     this.subscribeToOptionUpdates();
   }
 
   private get ddsQuestion(): ISharedMap {
     return this.container.initialObjects.question as ISharedMap;
+  }
+
+  public clearPoll(): void {
+    console.log('clearPoll called');
+    this.ddsQuestion.clear();
   }
 
   public async getPoll(): Promise<PollData> {
@@ -57,6 +65,7 @@ export class PollFluidModel extends EventEmitter {
   }
 
   public async setPoll(poll: PollData): Promise<void> {
+    this.clearPoll();
     // This is a problem because the write to propmt and options is not atomic.
     // Ideally there should be a single top-level object that's written atomically.
     this.ddsQuestion.set('prompt', poll.prompt);

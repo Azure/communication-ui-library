@@ -102,12 +102,13 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setShowPeople(!showPeople);
   }, [showPeople]);
 
+  const pollFluidModel = useRef<PollFluidModel | undefined>(undefined);
   const togglePollCreatorPane = useCallback(() => {
     setShowChat(false);
     setShowPeople(false);
 
     if (showPollCreatorPane) {
-      //end poll
+      pollFluidModel.current?.clearPoll();
     }
 
     setShowPollCreatorPane(!showPollCreatorPane);
@@ -117,7 +118,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     meetingAdapter.setPage('configuration');
   };
 
-  const pollFluidModel = useRef<PollFluidModel | undefined>(undefined);
   const [cursorChatFluidModel, setCursorChatFluidModel] = useState<CursorChatFluidModel | undefined>(undefined);
   const [pollData, setPollData] = useState<PollData | undefined>(undefined);
   useEffect(() => {
@@ -128,7 +128,15 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
         pollFluidModel.current = new PollFluidModel(container);
         pollFluidModel.current?.on('modelChanged', async () => {
           const newPollData = await pollFluidModel.current?.getPoll();
-          setPollData(newPollData);
+          setPollData(
+            newPollData?.prompt || (newPollData && newPollData.options && newPollData.options.length > 0)
+              ? newPollData
+              : undefined
+          );
+
+          if (!newPollData?.prompt) {
+            setPollAnswered(false);
+          }
         });
         setCursorChatFluidModel(new CursorChatFluidModel(container, meetingAdapter?.getState().displayName ?? 'FNU'));
       }
@@ -209,7 +217,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
 
 const PollCreatorTile = (props: { fluidModel: PollFluidModel }): JSX.Element => {
   const onPresentPoll = (question: PollQuestion): void => {
-    console.log('Setting a new poll!', question);
     props.fluidModel.setPoll({
       prompt: question.prompt,
       options: question.choices.map((choice) => ({ option: choice, votes: 0 }))
