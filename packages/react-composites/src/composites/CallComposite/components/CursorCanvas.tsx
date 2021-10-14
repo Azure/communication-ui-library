@@ -4,6 +4,7 @@
 import { Stack, useTheme } from '@fluentui/react';
 import { Cursor20Filled } from '@fluentui/react-icons';
 import React from 'react';
+import { CursorCanvasBubble } from './CursorCanvasBubble';
 
 /**
  * @private
@@ -12,7 +13,8 @@ export interface CursorData {
   posX: number;
   posY: number;
   color: string;
-  userId?: string;
+  name: string;
+  message?: string;
 }
 
 /**
@@ -39,15 +41,33 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
     // icon itself has a small amount of padding to account for
     const cursorIconOffsetX = 4;
     const cursorIconOffsetY = 3;
-
-    const cursorStyle: React.CSSProperties = {
+    const floatingContainer: React.CSSProperties = {
       position: 'absolute',
+      display: 'inline-block',
       left: cursor.posX - cursorIconOffsetX,
-      top: cursor.posY - cursorIconOffsetY,
+      top: cursor.posY - cursorIconOffsetY
+    };
+    const cursorStyle: React.CSSProperties = {
       stroke: `${palette.white}`,
       strokeWidth: '1px'
     };
-    return <Cursor20Filled key={i} style={cursorStyle} primaryFill={cursor.color} />;
+    const bubbleStyle: React.CSSProperties = {
+      paddingLeft: '13px'
+    };
+    return (
+      <div key={i} style={floatingContainer}>
+        <Cursor20Filled style={cursorStyle} primaryFill={cursor.color} />
+        <Stack style={bubbleStyle}>
+          <CursorCanvasBubble
+            bubbleOwnerName={cursor.name}
+            color={cursor.color}
+            onEditingFinished={function (text: string): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        </Stack>
+      </div>
+    );
   });
 
   return <Stack style={canvasStyles}>{cursorElements}</Stack>;
