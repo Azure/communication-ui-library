@@ -57,7 +57,7 @@ const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     userId,
     displayName,
     isMuted,
-    isSpeaking,
+    isSpeaking: isSpeaking && !isMuted,
     videoStream,
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable
