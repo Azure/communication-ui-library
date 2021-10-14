@@ -21,7 +21,7 @@ const CursorCanvasStory = (args): JSX.Element => {
         if (throttleCounter++ % throttleAmount !== 0) return;
 
         const mouseX = ev.clientX - ev.currentTarget.offsetLeft;
-        const mouseY = ev.clientY - ev.currentTarget.offsetLeft;
+        const mouseY = ev.clientY - ev.currentTarget.offsetTop;
 
         if (!args.makeColorful) {
           setCursorState([
@@ -91,7 +91,7 @@ export const CursorCanvas = CursorCanvasStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-cursor-canvas`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Cursor Canvas`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Canvas/Cursor Canvas`,
   component: CursorCanvasComponent,
   argTypes: {
     makeColorful: { control: 'boolean', defaultValue: false, name: 'Make Colorful' }
