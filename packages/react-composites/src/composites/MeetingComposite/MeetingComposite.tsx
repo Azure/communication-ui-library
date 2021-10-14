@@ -18,7 +18,7 @@ import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
 import { PollCreator, PollQuestion } from './PollCreator';
 import { createFluidClient, initializeFluidContainer } from './FluidUtils';
-import { FluidModel } from './FluidModel';
+import { PollFluidModel } from './FluidModel';
 /**
  * Props required for the {@link MeetingComposite}
  *
@@ -117,14 +117,14 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     meetingAdapter.setPage('configuration');
   };
 
-  const fluidModel = useRef<FluidModel | undefined>(undefined);
+  const fluidModel = useRef<PollFluidModel | undefined>(undefined);
   const [pollData, setPollData] = useState<PollData | undefined>(undefined);
   useEffect(() => {
     (async () => {
       if (hasJoinedCall) {
         const client = createFluidClient();
         const container = await initializeFluidContainer(client, window.location.search);
-        fluidModel.current = new FluidModel(container);
+        fluidModel.current = new PollFluidModel(container);
         fluidModel.current?.on('modelChanged', async () => {
           const newPollData = await fluidModel.current?.getPoll();
           console.log('[xkcd] Got a new Poll object', newPollData);
@@ -205,7 +205,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   );
 };
 
-const PollCreatorTile = (props: { fluidModel: FluidModel }): JSX.Element => {
+const PollCreatorTile = (props: { fluidModel: PollFluidModel }): JSX.Element => {
   const onPresentPoll = (question: PollQuestion): void => {
     console.log('Setting a new poll!', question);
     props.fluidModel.setPoll({
