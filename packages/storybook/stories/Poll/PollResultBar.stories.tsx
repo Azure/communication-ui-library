@@ -31,7 +31,7 @@ export const PollResultBar = PollResultBarStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-poll--poll-result-bar`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollResultBar`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Poll/Poll Result Bar`,
   component: PollResultBarComponent,
   argTypes: {
     barWidthPercentage: {

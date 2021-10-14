@@ -54,7 +54,7 @@ const pollOptions: PollSelectionOptions = [
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-poll-poll-selection-group`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollSelectionGroup`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Poll/Poll Selection Group`,
   component: PollSelectionGroupComponent,
   argTypes: {
     interactive: { control: 'boolean', defaultValue: true, name: 'Interactive' },

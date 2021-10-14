@@ -35,6 +35,6 @@ export const PollCreator = PollCreatorStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-poll--poll-creator`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollCreator`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Poll/Poll Creator`,
   component: PollCreatorComponent
 } as Meta;

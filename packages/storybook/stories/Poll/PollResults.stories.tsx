@@ -55,7 +55,7 @@ const pollOptions: PollOptions = [
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-poll-poll-results`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Poll/PollResults`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Poll/Poll Results`,
   component: PollResultsComponent,
   argTypes: {
     pollOptions: { control: 'object', defaultValue: pollOptions, name: 'Poll Options' }
