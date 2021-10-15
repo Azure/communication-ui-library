@@ -4,7 +4,16 @@
 import { DefaultButton, Icon, mergeStyles, Stack } from '@fluentui/react';
 import React, { CSSProperties, useMemo, useRef, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
-import { horizontalGalleryContainerStyle, leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
+import {
+  horizontalGalleryContainerStyle,
+  LARGE_BUTTON_STYLE,
+  LARGE_TILE_SIZE,
+  LARGE_TILE_STYLE,
+  leftRightButtonStyles,
+  SMALL_BUTTON_STYLE,
+  SMALL_TILE_SIZE,
+  SMALL_TILE_STYLE
+} from '../styles/HorizontalGallery.styles';
 import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
 import { RemoteVideoTile } from './RemoteVideoTile';
 
@@ -33,8 +42,7 @@ export interface HorizontalGalleryProps {
   hideRemoteVideoStream?: boolean;
 }
 
-const TILE_SIZE_SMALL = { height: 5.5, width: 5.5 }; // Small tile size in rem
-const TILE_SIZE_LARGE = { height: 7.5, width: 10 }; // Large tile size in rem
+const PX_PER_REM = 16;
 
 /**
  * Renders a horizontal gallery of video tiles.
@@ -64,49 +72,20 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     setPage(0);
     if (isNarrow) {
       return calculateMaxNumberOfTiles({
-        width: containerWidth - (leftGutter + rightGutter) * REM_TO_PX,
-        tileWidth: TILE_SIZE_SMALL.width,
+        width: containerWidth - (leftGutter + rightGutter) * PX_PER_REM,
+        tileWidth: SMALL_TILE_SIZE.width,
         buttonsWidth: 0
       });
     } else {
       return calculateMaxNumberOfTiles({
-        width: containerWidth - (leftGutter + rightGutter) * REM_TO_PX,
-        tileWidth: TILE_SIZE_LARGE.width
+        width: containerWidth - (leftGutter + rightGutter) * PX_PER_REM,
+        tileWidth: LARGE_TILE_SIZE.width
       });
     }
   }, [containerWidth, isNarrow, leftGutter, rightGutter]);
 
-  const tileSizeStyle = useMemo(
-    () =>
-      isNarrow
-        ? {
-            minHeight: `${TILE_SIZE_SMALL.height}rem`,
-            minWidth: `${TILE_SIZE_SMALL.width}rem`,
-            maxHeight: `${TILE_SIZE_SMALL.height}rem`,
-            maxWidth: `${TILE_SIZE_SMALL.width}rem`
-          }
-        : {
-            minHeight: `${TILE_SIZE_LARGE.height}rem`,
-            minWidth: `${TILE_SIZE_LARGE.width}rem`,
-            maxHeight: `${TILE_SIZE_LARGE.height}rem`,
-            maxWidth: `${TILE_SIZE_LARGE.width}rem`
-          },
-    [isNarrow]
-  );
-
-  const leftRightButtonHeightStyles = useMemo(
-    () =>
-      isNarrow
-        ? {
-            minHeight: `${TILE_SIZE_SMALL.height}rem`,
-            maxHeight: `${TILE_SIZE_SMALL.height}rem`
-          }
-        : {
-            minHeight: `${TILE_SIZE_LARGE.height}rem`,
-            maxHeight: `${TILE_SIZE_LARGE.height}rem`
-          },
-    [isNarrow]
-  );
+  const tileSizeStyle = isNarrow ? SMALL_TILE_STYLE : LARGE_TILE_STYLE;
+  const leftRightButtonHeightStyles = isNarrow ? SMALL_BUTTON_STYLE : LARGE_BUTTON_STYLE;
 
   const maxPageIndex = Math.ceil(participants.length / maxTiles) - 1;
 
@@ -176,8 +155,6 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   );
 };
 
-const REM_TO_PX = 16;
-
 const calculateMaxNumberOfTiles = ({ width, tileWidth = 10, buttonsWidth = 4, gapBetweenTiles = 0.5 }): number => {
   /**
    * A Safe Padding should be reduced from the parent width to ensure that the total width of all video tiles rendered
@@ -186,7 +163,8 @@ const calculateMaxNumberOfTiles = ({ width, tileWidth = 10, buttonsWidth = 4, ga
    */
   const safePadding = 1;
   return Math.floor(
-    (width - buttonsWidth * REM_TO_PX - safePadding * REM_TO_PX) / (tileWidth * REM_TO_PX + gapBetweenTiles * REM_TO_PX)
+    (width - buttonsWidth * PX_PER_REM - safePadding * PX_PER_REM) /
+      (tileWidth * PX_PER_REM + gapBetweenTiles * PX_PER_REM)
   );
 };
 

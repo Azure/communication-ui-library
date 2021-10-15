@@ -44,6 +44,9 @@ const MAX_VIDEO_DOMINANT_SPEAKERS = 4;
 const MAX_AUDIO_PARTICIPANTS_TILES = 100;
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
+const RIGHT_PADDING_FOR_NARROW_WIDTH_REM = 4;
+const RIGHT_PADDING_REM = 11;
+
 /**
  * Strings of {@link VideoGalleryStrings} that can be overridden.
  *
@@ -346,7 +349,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               remoteVideoViewOption={remoteVideoViewOption}
               showMuteIndicator={showMuteIndicator}
               hideRemoteVideoStream={shouldFloatLocalVideo}
-              rightGutter={shouldFloatLocalVideo ? (isNarrow ? 4 : 11) : undefined} // to leave a gap for the floating local video
+              rightGutter={
+                shouldFloatLocalVideo ? (isNarrow ? RIGHT_PADDING_FOR_NARROW_WIDTH_REM : RIGHT_PADDING_REM) : undefined
+              } // to leave a gap for the floating local video
             />
           </Stack>
         )}
