@@ -12,9 +12,7 @@ export const leftRightButtonStyles: IStyle = {
   background: 'none',
   border: `1px solid ${theme.palette.neutralLight}`,
   padding: 0,
-  borderRadius: theme.effects.roundedCorner4,
-  minWidth: '1.75rem',
-  maxWidth: '1.75rem'
+  borderRadius: theme.effects.roundedCorner4
 };
 
 /**
@@ -27,13 +25,21 @@ export const horizontalGalleryContainerStyle: IStyle = {
 };
 
 /**
+ * Gap between tiles in rem
  * @private
  */
-export const SMALL_TILE_SIZE = { height: 5.5, width: 5.5 }; // Small tile size in rem
+export const TILE_GAP = 0.5;
+
 /**
+ * Small tile size in rem
  * @private
  */
-export const LARGE_TILE_SIZE = { height: 7.5, width: 10 }; // Large tile size in rem
+export const SMALL_TILE_SIZE = { height: 5.5, width: 5.5 };
+/**
+ * Large tile size in rem
+ * @private
+ */
+export const LARGE_TILE_SIZE = { height: 7.5, width: 10 };
 
 /**
  * @private
@@ -47,23 +53,36 @@ export const SMALL_TILE_STYLE = {
 /**
  * @private
  */
-export const SMALL_BUTTON_STYLE = {
-  minHeight: `${SMALL_TILE_SIZE.height}rem`,
-  maxHeight: `${SMALL_TILE_SIZE.height}rem`
-};
-/**
- * @private
- */
 export const LARGE_TILE_STYLE = {
   minHeight: `${LARGE_TILE_SIZE.height}rem`,
   minWidth: `${LARGE_TILE_SIZE.width}rem`,
   maxHeight: `${LARGE_TILE_SIZE.height}rem`,
   maxWidth: `${LARGE_TILE_SIZE.width}rem`
 };
+
+/**
+ * @private
+ */
+export const SMALL_BUTTON_SIZE = { height: 5.5, width: 1.75 }; // Small button size in rem
+/**
+ * @private
+ */
+export const LARGE_BUTTON_SIZE = { height: 7.5, width: 1.75 }; // Large button size in rem
+/**
+ * @private
+ */
+export const SMALL_BUTTON_STYLE = {
+  minHeight: `${SMALL_BUTTON_SIZE.height}rem`,
+  maxHeight: `${SMALL_BUTTON_SIZE.height}rem`,
+  minWidth: `${SMALL_BUTTON_SIZE.width}rem`,
+  maxWidth: `${SMALL_BUTTON_SIZE.width}rem`
+};
 /**
  * @private
  */
 export const LARGE_BUTTON_STYLE = {
-  minHeight: `${LARGE_TILE_SIZE.height}rem`,
-  maxHeight: `${LARGE_TILE_SIZE.height}rem`
+  minHeight: `${LARGE_BUTTON_SIZE.height}rem`,
+  maxHeight: `${LARGE_BUTTON_SIZE.height}rem`,
+  minWidth: `${LARGE_BUTTON_SIZE.width}rem`,
+  maxWidth: `${LARGE_BUTTON_SIZE.width}rem`
 };

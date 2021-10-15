@@ -6,13 +6,16 @@ import React, { CSSProperties, useMemo, useRef, useState } from 'react';
 import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
 import {
   horizontalGalleryContainerStyle,
+  LARGE_BUTTON_SIZE,
   LARGE_BUTTON_STYLE,
   LARGE_TILE_SIZE,
   LARGE_TILE_STYLE,
   leftRightButtonStyles,
+  SMALL_BUTTON_SIZE,
   SMALL_BUTTON_STYLE,
   SMALL_TILE_SIZE,
-  SMALL_TILE_STYLE
+  SMALL_TILE_STYLE,
+  TILE_GAP
 } from '../styles/HorizontalGallery.styles';
 import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
 import { RemoteVideoTile } from './RemoteVideoTile';
@@ -74,12 +77,15 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       return calculateMaxNumberOfTiles({
         width: containerWidth - (leftGutter + rightGutter) * PX_PER_REM,
         tileWidth: SMALL_TILE_SIZE.width,
-        buttonsWidth: 0
+        buttonsWidth: SMALL_BUTTON_SIZE.width,
+        gapBetweenTiles: TILE_GAP
       });
     } else {
       return calculateMaxNumberOfTiles({
         width: containerWidth - (leftGutter + rightGutter) * PX_PER_REM,
-        tileWidth: LARGE_TILE_SIZE.width
+        tileWidth: LARGE_TILE_SIZE.width,
+        buttonsWidth: LARGE_BUTTON_SIZE.width,
+        gapBetweenTiles: TILE_GAP
       });
     }
   }, [containerWidth, isNarrow, leftGutter, rightGutter]);
@@ -137,7 +143,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       <Stack
         horizontal
         horizontalAlign="start"
-        tokens={{ childrenGap: '0.5rem' }}
+        tokens={{ childrenGap: `${TILE_GAP}rem` }}
         className={mergeStyles(horizontalGalleryContainerStyle, {
           paddingLeft: `${leftGutter}rem`,
           paddingRight: `${rightGutter}rem`
@@ -155,7 +161,13 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   );
 };
 
-const calculateMaxNumberOfTiles = ({ width, tileWidth = 10, buttonsWidth = 4, gapBetweenTiles = 0.5 }): number => {
+const calculateMaxNumberOfTiles = (args: {
+  width: number;
+  tileWidth: number;
+  buttonsWidth: number;
+  gapBetweenTiles: number;
+}): number => {
+  const { width, tileWidth, buttonsWidth, gapBetweenTiles } = args;
   /**
    * A Safe Padding should be reduced from the parent width to ensure that the total width of all video tiles rendered
    * is always less than the window width. (Window width after subtracting all margins, paddings etc.)
@@ -163,7 +175,7 @@ const calculateMaxNumberOfTiles = ({ width, tileWidth = 10, buttonsWidth = 4, ga
    */
   const safePadding = 1;
   return Math.floor(
-    (width - buttonsWidth * PX_PER_REM - safePadding * PX_PER_REM) /
+    (width - buttonsWidth * PX_PER_REM - safePadding * PX_PER_REM - gapBetweenTiles * PX_PER_REM) /
       (tileWidth * PX_PER_REM + gapBetweenTiles * PX_PER_REM)
   );
 };
