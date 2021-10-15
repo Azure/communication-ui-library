@@ -31,7 +31,8 @@ export const PollResultBar = (props: PollResultBarProps): JSX.Element => {
       height: '40px',
       marginTop: '5px',
       marginBottom: '5px',
-      zIndex: '0'
+      zIndex: '0',
+      transition: 'width 1s'
     }
   };
   const textContainerStyles: IStackStyles = {
