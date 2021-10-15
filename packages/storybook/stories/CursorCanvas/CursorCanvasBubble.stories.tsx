@@ -8,6 +8,13 @@ import React, { useState } from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
+const colors = {
+  '[self]': ['#EDEBE9', '#201F1E'],
+  Orange: ['#CA5010', '#FFFFFF'],
+  Green: ['#4EB4C2', '#FFFFFF'],
+  Pink: ['#CF6196', '#FFFFFF']
+};
+
 const CursorCanvasBubbleStory = (args): JSX.Element => {
   const [text, setText] = useState<string | undefined>(undefined);
 
@@ -15,7 +22,8 @@ const CursorCanvasBubbleStory = (args): JSX.Element => {
     <Stack>
       <CursorCanvasBubbleComponent
         bubbleOwnerName={args.name}
-        color={args.color}
+        backgroundColor={colors[args.backgroundColor][0]}
+        color={colors[args.backgroundColor][1]}
         text={text}
         isEditing={args.isEditing}
         onTextFieldChange={function (text: string): void {
@@ -39,7 +47,7 @@ export default {
   component: CursorCanvasBubbleComponent,
   argTypes: {
     name: { control: 'text', defaultValue: 'Mike Bublé', name: 'User name' },
-    color: { control: 'color', defaultValue: '#c0392b', name: 'Color' },
+    backgroundColor: { control: 'select', options: Object.keys(colors), defaultValue: '[self]' },
     isEditing: { control: 'boolean', defaultValue: true, name: 'Is Editing' }
   }
 } as Meta;

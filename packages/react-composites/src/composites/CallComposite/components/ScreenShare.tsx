@@ -181,14 +181,18 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     props.fluidModel?.on('cursorsChanged', () => {
       if (props.fluidModel) {
         setCursorState(
-          Object.values(props.fluidModel.reducedCursors).map((value) => ({
-            posX: value.x,
-            posY: value.y,
-            message: value.text,
-            name: value.displayName,
-            color: pickColor(value.displayName),
-            mine: value.mine
-          }))
+          Object.values(props.fluidModel.reducedCursors).map((value) => {
+            const [backgroundColor, color] = value.mine ? selfColors : pickColors(value.displayName);
+            return {
+              posX: value.x,
+              posY: value.y,
+              message: value.text,
+              name: value.displayName,
+              mine: value.mine,
+              color,
+              backgroundColor
+            };
+          })
         );
       }
     });
@@ -240,8 +244,15 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
   );
 };
 
-const pickColor = (name: string): string => {
+const pickColors = (name: string): string[] => {
   return colorPalette[murmur.murmur3(name) % colorPalette.length];
 };
 
-const colorPalette = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e'];
+// Each entry is [background, color]
+const colorPalette = [
+  ['#CA5010', '#FFFFFF'], // Orange
+  ['#4EB4C2', '#FFFFFF'], // Green
+  ['#CF6196', '#FFFFFF'] // Pink
+];
+
+const selfColors = ['#EDEBE9', '#201F1E'];
