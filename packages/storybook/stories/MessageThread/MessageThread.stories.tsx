@@ -258,7 +258,8 @@ export default {
     onLoadPreviousChatMessages: hiddenControl,
     onRenderMessage: hiddenControl,
     onUpdateMessage: hiddenControl,
-    onDeleteMessage: hiddenControl
+    onDeleteMessage: hiddenControl,
+    editDisabled: hiddenControl
   },
   parameters: {
     docs: {
