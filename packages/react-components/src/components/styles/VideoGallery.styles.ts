@@ -10,7 +10,6 @@ import {
   IModalStyles,
   IStyleFunctionOrObject
 } from '@fluentui/react';
-import { CSSProperties } from 'react';
 import { HorizontalGalleryStyles } from '../VideoGallery/HorizontalGallery';
 import { VideoTileStylesProps } from '../VideoTile';
 
