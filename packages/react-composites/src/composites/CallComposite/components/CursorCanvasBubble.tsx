@@ -19,6 +19,7 @@ import React from 'react';
 export interface CursorCanvasBubbleProps {
   bubbleOwnerName: string;
   color: string;
+  backgroundColor: string;
   text?: string;
   isEditing: boolean;
   onTextFieldChange?: (text: string) => void;
@@ -29,15 +30,12 @@ export interface CursorCanvasBubbleProps {
  * @private
  */
 export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element => {
-  const palette = useTheme().palette;
   const showNameOnly = !(props.isEditing || props.text);
   const bubbleStyles: IStackStyles = {
     root: {
       minWidth: showNameOnly ? '10px' : '111px',
-      background: props.color,
-      // All the background colors are light
-      color: '#000000',
-      // border: 'solid 2px #000000',
+      background: props.backgroundColor,
+      color: props.color,
       borderRadius: '2px 16px 16px 16px',
       paddingLeft: '10px',
       paddingRight: '10px',
@@ -47,8 +45,7 @@ export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element 
   };
   const bubbleHeaderStyles: IStackItemStyles = {
     root: {
-      // All the background colors are light
-      color: '#000000',
+      color: props.color,
       opacity: showNameOnly ? 1 : 0.8,
       fontSize: showNameOnly ? '8px' : '8px',
       lineHeight: showNameOnly ? '16px' : '9px',
@@ -57,15 +54,13 @@ export const CursorCanvasBubble = (props: CursorCanvasBubbleProps): JSX.Element 
   };
   const bubbleBodyStyles: IStackItemStyles = {
     root: {
-      // All the background colors are light
-      color: '#000000',
+      color: props.color,
       fontSize: '12px',
       lineHeight: '14px'
     }
   };
   const overwritingStyles = {
-    // All the background colors are light
-    color: '#000000 !important',
+    color: `${props.color} !important`,
     border: 'none !important',
     fontSize: '12px !important',
     lineHeight: '18px !important',

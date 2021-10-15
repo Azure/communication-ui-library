@@ -13,6 +13,7 @@ export interface CursorData {
   posX: number;
   posY: number;
   color: string;
+  backgroundColor: string;
   name: string;
   message?: string;
   mine?: boolean;
@@ -95,7 +96,7 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
             console.log('on mouse up called on the cursor itself');
           }}
           style={cursorStyle}
-          primaryFill={cursor.color}
+          primaryFill={cursor.backgroundColor}
         />
         <Stack
           style={bubbleStyle}
@@ -106,6 +107,7 @@ export const CursorCanvas = (props: CursorCanvasProps): JSX.Element => {
           <CursorCanvasBubble
             bubbleOwnerName={cursor.name}
             color={cursor.color}
+            backgroundColor={cursor.backgroundColor}
             text={cursor.mine ? currentChatBubbleText : cursor.message}
             isEditing={!!(props.isEditingChatBubble && cursor.mine)}
             onTextFieldEnterPressed={props.onTextFieldEnterPressed}
