@@ -324,15 +324,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
   }
 
-  const tileSizeStyle = isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE;
-
   const horizontalGalleryTiles = useMemo(() => {
     return horizontalGalleryParticipants.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return onRenderRemoteVideoTile ? (
         onRenderRemoteVideoTile(participant)
       ) : (
-        <div key={participant.userId} style={tileSizeStyle}>
+        <div
+          key={participant.userId}
+          style={isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE}
+        >
           <RemoteVideoTile
             key={participant.userId}
             userId={participant.userId}
@@ -359,7 +360,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoViewOption,
     onRenderAvatar,
     showMuteIndicator,
-    tileSizeStyle
+    isNarrow
   ]);
 
   const tilesPerHorizontalGalleryPage = isNarrow
