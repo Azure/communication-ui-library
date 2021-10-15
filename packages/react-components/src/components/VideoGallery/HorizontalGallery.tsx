@@ -37,19 +37,7 @@ export interface HorizontalGalleryStyles extends BaseCustomStylesProps {
  * HorizontalGallery Component Props.
  */
 export interface HorizontalGalleryProps {
-  participants: VideoGalleryRemoteParticipant[];
-  remoteVideoViewOption?: VideoStreamOptions;
-  onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-  onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-  /** Callback to render a remote video tile */
-  onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-  /** Callback to render a particpant avatar */
-  onRenderAvatar?: OnRenderAvatarCallback;
-  /**
-   * Whether to display a mute icon beside the user's display name.
-   * @defaultValue `true`
-   */
-  showMuteIndicator?: boolean;
+  children: React.ReactNode;
   /** Space to leave on the left of this gallery in pixels. */
   leftGutter?: number;
   /** Space to leave on the right of this gallery in pixels. */
@@ -67,18 +55,7 @@ const PX_PER_REM = 16;
  * @returns
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
-  const {
-    participants,
-    onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
-    onRenderRemoteVideoTile,
-    remoteVideoViewOption,
-    onRenderAvatar,
-    showMuteIndicator,
-    hideRemoteVideoStream,
-    leftGutter = 0.5,
-    rightGutter = 0.5
-  } = props;
+  const { children, styles, leftGutter = 0.5, rightGutter = 0.5 } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
@@ -104,50 +81,14 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     }
   }, [containerWidth, isNarrow, leftGutter, rightGutter]);
 
-  const tileSizeStyle = isNarrow ? SMALL_TILE_STYLE : LARGE_TILE_STYLE;
-  const leftRightButtonHeightStyles = isNarrow ? SMALL_BUTTON_STYLE : LARGE_BUTTON_STYLE;
+  const numberOfChildren = React.Children.count(children);
+  const maxPageIndex = Math.ceil(numberOfChildren / maxTiles) - 1;
 
-  const maxPageIndex = Math.ceil(participants.length / maxTiles) - 1;
-
-  const defaultOnRenderParticipants = useMemo(() => {
+  const defaultOnRenderChildren = useMemo(() => {
     const start = page * maxTiles;
     const end = start + maxTiles;
-    return participants?.slice(start, end).map((participant): JSX.Element => {
-      const remoteVideoStream = participant.videoStream;
-      return onRenderRemoteVideoTile ? (
-        onRenderRemoteVideoTile(participant)
-      ) : (
-        <Stack key={participant.userId} className={mergeStyles(tileSizeStyle)}>
-          <RemoteVideoTile
-            key={participant.userId}
-            userId={participant.userId}
-            onCreateRemoteStreamView={hideRemoteVideoStream ? undefined : onCreateRemoteStreamView}
-            onDisposeRemoteStreamView={hideRemoteVideoStream ? undefined : onDisposeRemoteStreamView}
-            isAvailable={hideRemoteVideoStream ? false : remoteVideoStream?.isAvailable}
-            renderElement={hideRemoteVideoStream ? undefined : remoteVideoStream?.renderElement}
-            remoteVideoViewOption={hideRemoteVideoStream ? undefined : remoteVideoViewOption}
-            isMuted={participant.isMuted}
-            isSpeaking={participant.isSpeaking}
-            displayName={participant.displayName}
-            onRenderAvatar={onRenderAvatar}
-            showMuteIndicator={showMuteIndicator}
-          />
-        </Stack>
-      );
-    });
-  }, [
-    onRenderRemoteVideoTile,
-    page,
-    maxTiles,
-    participants,
-    tileSizeStyle,
-    onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
-    hideRemoteVideoStream,
-    remoteVideoViewOption,
-    onRenderAvatar,
-    showMuteIndicator
-  ]);
+    return React.Children.toArray(children).slice(start, end);
+  }, [page, maxTiles, children]);
 
   const showLeftButton = maxTiles && page > 0 && !isNarrow;
   const showRightButton = maxTiles && page < maxPageIndex && !isNarrow;
@@ -155,11 +96,11 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   return (
     <div ref={containerRef} className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
       {showLeftButton && (
-        <LeftButton style={leftRightButtonHeightStyles} onClick={() => setPage(Math.max(0, page - 1))} />
+        <PreviousButton styles={styles?.previousButton} onClick={() => setPage(Math.max(0, page - 1))} />
       )}
-      {defaultOnRenderParticipants}
+      {defaultOnRenderChildren}
       {showRightButton && (
-        <RightButton style={leftRightButtonHeightStyles} onClick={() => setPage(Math.min(maxPageIndex, page + 1))} />
+        <NextButton styles={styles?.nextButton} onClick={() => setPage(Math.min(maxPageIndex, page + 1))} />
       )}
     </div>
   );
@@ -184,17 +125,25 @@ const calculateMaxNumberOfTiles = (args: {
   );
 };
 
-const LeftButton = (props: { style: CSSProperties; onClick?: () => void }): JSX.Element => {
+const PreviousButton = (props: { styles: IStyle; onClick?: () => void }): JSX.Element => {
   return (
-    <DefaultButton className={mergeStyles(leftRightButtonStyles)} onClick={props.onClick} style={props.style}>
+    <DefaultButton
+      className={mergeStyles(leftRightButtonStyles)}
+      onClick={props.onClick}
+      styles={{ root: props.styles }}
+    >
       <Icon iconName="HorizontalGalleryLeftButton" />
     </DefaultButton>
   );
 };
 
-const RightButton = (props: { style: CSSProperties; onClick?: () => void }): JSX.Element => {
+const NextButton = (props: { styles: IStyle; onClick?: () => void }): JSX.Element => {
   return (
-    <DefaultButton className={mergeStyles(leftRightButtonStyles)} onClick={props.onClick} style={props.style}>
+    <DefaultButton
+      className={mergeStyles(leftRightButtonStyles)}
+      onClick={props.onClick}
+      styles={{ root: props.styles }}
+    >
       <Icon iconName="HorizontalGalleryRightButton" />
     </DefaultButton>
   );

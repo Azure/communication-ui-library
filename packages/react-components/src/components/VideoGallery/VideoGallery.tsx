@@ -35,6 +35,7 @@ import { VideoTile, VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGallery } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { getVideoTileOverrideColor } from '../utils/videoTileStylesUtils';
+import { LARGE_TILE_STYLE, SMALL_TILE_STYLE } from '../styles/HorizontalGallery.styles';
 
 const emptyStyles = {};
 const floatingTileHostId = 'UILibraryFloatingTileHost';
@@ -184,8 +185,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
   const gridParticipants =
     visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
-  const horizontalGalleryParticipants =
-    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
+  const horizontalGalleryParticipants = useMemo(
+    () => (visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : []),
+    []
+  );
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {
     if (!localParticipant.isScreenSharingOn) {
@@ -323,6 +326,44 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
   }
 
+  const tileSizeStyle = isNarrow ? SMALL_TILE_STYLE : LARGE_TILE_STYLE;
+
+  const horizontalGalleryTiles = useMemo(() => {
+    return horizontalGalleryParticipants.map((participant): JSX.Element => {
+      const remoteVideoStream = participant.videoStream;
+      return onRenderRemoteVideoTile ? (
+        onRenderRemoteVideoTile(participant)
+      ) : (
+        <Stack key={participant.userId} className={mergeStyles(tileSizeStyle)}>
+          <RemoteVideoTile
+            key={participant.userId}
+            userId={participant.userId}
+            onCreateRemoteStreamView={shouldFloatLocalVideo ? undefined : onCreateRemoteStreamView}
+            onDisposeRemoteStreamView={shouldFloatLocalVideo ? undefined : onDisposeRemoteStreamView}
+            isAvailable={shouldFloatLocalVideo ? false : remoteVideoStream?.isAvailable}
+            renderElement={shouldFloatLocalVideo ? undefined : remoteVideoStream?.renderElement}
+            remoteVideoViewOption={shouldFloatLocalVideo ? undefined : remoteVideoViewOption}
+            isMuted={participant.isMuted}
+            isSpeaking={participant.isSpeaking}
+            displayName={participant.displayName}
+            onRenderAvatar={onRenderAvatar}
+            showMuteIndicator={showMuteIndicator}
+          />
+        </Stack>
+      );
+    });
+  }, [
+    horizontalGalleryParticipants,
+    onRenderRemoteVideoTile,
+    onCreateRemoteStreamView,
+    onDisposeRemoteStreamView,
+    shouldFloatLocalVideo,
+    remoteVideoViewOption,
+    onRenderAvatar,
+    showMuteIndicator,
+    tileSizeStyle
+  ]);
+
   return (
     <div ref={containerRef} className={videoGalleryOuterDivStyle}>
       <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
@@ -341,14 +382,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
           <Stack style={getHorizontalGalleryWrapperStyle(isNarrow)}>
             <HorizontalGallery
-              onCreateRemoteStreamView={onCreateRemoteStreamView}
-              onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-              onRenderAvatar={onRenderAvatar}
-              onRenderRemoteVideoTile={onRenderRemoteVideoTile}
-              participants={horizontalGalleryParticipants}
-              remoteVideoViewOption={remoteVideoViewOption}
-              showMuteIndicator={showMuteIndicator}
-              hideRemoteVideoStream={shouldFloatLocalVideo}
               rightGutter={
                 shouldFloatLocalVideo ? (isNarrow ? RIGHT_PADDING_FOR_NARROW_WIDTH_REM : RIGHT_PADDING_REM) : undefined
               } // to leave a gap for the floating local video
@@ -358,7 +391,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
                   paddingLeft: '0.5rem'
                 }
               }}
-            />
+            >
+              {horizontalGalleryTiles}
+            </HorizontalGallery>
           </Stack>
         )}
       </Stack>
