@@ -20,7 +20,6 @@ import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
-  getHorizontalGalleryWrapperStyle,
   screenSharingContainer,
   screenSharingNotificationIconContainer,
   screenSharingNotificationIconStyle,
@@ -28,14 +27,16 @@ import {
   screenSharingNotificationContainerCameraOffStyles,
   screenSharingNotificationTextStyle,
   videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle
+  videoGalleryOuterDivStyle,
+  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
+  SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
+  horizontalGalleryStyle
 } from '../styles/VideoGallery.styles';
 import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
 import { VideoTile, VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGallery } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { getVideoTileOverrideColor } from '../utils/videoTileStylesUtils';
-import { LARGE_TILE_STYLE, SMALL_TILE_STYLE } from '../styles/HorizontalGallery.styles';
 
 const emptyStyles = {};
 const floatingTileHostId = 'UILibraryFloatingTileHost';
@@ -44,9 +45,6 @@ const MAX_VIDEO_PARTICIPANTS_TILES = 4; // Currently the Calling JS SDK supports
 const MAX_VIDEO_DOMINANT_SPEAKERS = 4;
 const MAX_AUDIO_PARTICIPANTS_TILES = 100;
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
-
-const RIGHT_PADDING_FOR_NARROW_WIDTH_REM = 4;
-const RIGHT_PADDING_REM = 11;
 
 /**
  * Strings of {@link VideoGalleryStrings} that can be overridden.
@@ -234,7 +232,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
-  const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
+  const localVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
@@ -280,7 +278,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of RemoteParticipants.
    */
-  const remoteGridTiles = useMemo(() => {
+  const remoteParticipantGridTiles = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
       return remoteParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
@@ -317,16 +315,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator
   ]);
 
-  const gridTiles = remoteGridTiles ?? [];
+  const gridTiles = remoteParticipantGridTiles ?? [];
   if (!shouldFloatLocalVideo && localParticipant) {
     gridTiles.push(
       <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && defaultOnRenderLocalVideoTile}
+        {localParticipant && localVideoTile}
       </Stack>
     );
   }
 
-  const tileSizeStyle = isNarrow ? SMALL_TILE_STYLE : LARGE_TILE_STYLE;
+  const tileSizeStyle = isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE;
 
   const horizontalGalleryTiles = useMemo(() => {
     return horizontalGalleryParticipants.map((participant): JSX.Element => {
@@ -334,7 +332,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return onRenderRemoteVideoTile ? (
         onRenderRemoteVideoTile(participant)
       ) : (
-        <Stack key={participant.userId} className={mergeStyles(tileSizeStyle)}>
+        <div key={participant.userId} style={tileSizeStyle}>
           <RemoteVideoTile
             key={participant.userId}
             userId={participant.userId}
@@ -349,7 +347,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             onRenderAvatar={onRenderAvatar}
             showMuteIndicator={showMuteIndicator}
           />
-        </Stack>
+        </div>
       );
     });
   }, [
@@ -364,6 +362,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     tileSizeStyle
   ]);
 
+  const tilesPerHorizontalGalleryPage = isNarrow
+    ? calculateHorizontalGalleryTilesPerPage({
+        horizontalGalleryWidth: containerWidth - 80, // subtract 64px from floatingLocalVideo and (8px x 2) for container paddingRight and paddingLeft
+        tileWidth: 88,
+        gapBetweenTiles: 8
+      })
+    : calculateHorizontalGalleryTilesPerPage({
+        horizontalGalleryWidth: containerWidth - 186, // subtract 160px from floatingLocalVideo and (8px x 2) for container paddingRight and paddingLeft
+        buttonsWidth: 56,
+        tileWidth: 160,
+        gapBetweenTiles: 8
+      });
+
   return (
     <div ref={containerRef} className={videoGalleryOuterDivStyle}>
       <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
@@ -375,28 +386,34 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             styles={floatingLocalVideoModalStyle(isNarrow)}
             layerProps={{ hostId: floatingTileHostId }}
           >
-            {localParticipant && defaultOnRenderLocalVideoTile}
+            {localParticipant && localVideoTile}
           </Modal>
         )}
         <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
         {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
-          <Stack style={getHorizontalGalleryWrapperStyle(isNarrow)}>
-            <HorizontalGallery
-              rightGutter={
-                shouldFloatLocalVideo ? (isNarrow ? RIGHT_PADDING_FOR_NARROW_WIDTH_REM : RIGHT_PADDING_REM) : undefined
-              } // to leave a gap for the floating local video
-              styles={{
-                root: {
-                  paddingRight: '0.5rem',
-                  paddingLeft: '0.5rem'
-                }
-              }}
-            >
-              {horizontalGalleryTiles}
-            </HorizontalGallery>
-          </Stack>
+          <HorizontalGallery
+            styles={horizontalGalleryStyle(isNarrow)}
+            itemsPerPage={tilesPerHorizontalGalleryPage}
+            hidePreviousButton={isNarrow}
+            hideNextButton={isNarrow}
+          >
+            {horizontalGalleryTiles}
+          </HorizontalGallery>
         )}
       </Stack>
     </div>
   );
+};
+
+/**
+ * Helper function to calculate tiles per page for HorizontalGallery based on the available width and the width of a tile. All units are in px.
+ */
+const calculateHorizontalGalleryTilesPerPage = (args: {
+  horizontalGalleryWidth: number;
+  buttonsWidth?: number;
+  tileWidth: number;
+  gapBetweenTiles: number;
+}): number => {
+  const { horizontalGalleryWidth, buttonsWidth = 0, tileWidth, gapBetweenTiles } = args;
+  return Math.floor((horizontalGalleryWidth - buttonsWidth - gapBetweenTiles) / (tileWidth + gapBetweenTiles));
 };

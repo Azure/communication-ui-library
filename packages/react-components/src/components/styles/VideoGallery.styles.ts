@@ -11,6 +11,7 @@ import {
   IStyleFunctionOrObject
 } from '@fluentui/react';
 import { CSSProperties } from 'react';
+import { HorizontalGalleryStyles } from '../VideoGallery/HorizontalGallery';
 import { VideoTileStylesProps } from '../VideoTile';
 
 const theme = getTheme();
@@ -77,8 +78,15 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
 /**
  * @private
  */
-export const getHorizontalGalleryWrapperStyle = (isNarrow: boolean): CSSProperties => {
-  return { minHeight: isNarrow ? '6rem' : '8rem', maxHeight: isNarrow ? '6rem' : '8rem' };
+export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
+  return {
+    root: {
+      height: isNarrow ? '6rem' : '8rem',
+      width: isNarrow ? 'calc(100% - 4rem)' : 'calc(100% - 10rem)',
+      paddingRight: '0.5rem',
+      paddingLeft: '0.5rem'
+    }
+  };
 };
 
 /**
@@ -135,3 +143,33 @@ export const screenSharingNotificationTextStyle = mergeStyles({
   // Text component will take body color by default (white in Dark Mode), so forcing it to be parent container color
   color: 'inherit'
 });
+
+/**
+ * Small horizontal gallery tile size in rem
+ * @private
+ */
+export const SMALL_HORIZONTAL_GALLERY_TILE_SIZE = { height: 5.5, width: 5.5 };
+/**
+ * Large horizontal gallery tile size in rem
+ * @private
+ */
+export const LARGE_HORIZONTAL_GALLERY_TILE_SIZE = { height: 7.5, width: 10 };
+
+/**
+ * @private
+ */
+export const SMALL_HORIZONTAL_GALLERY_TILE_STYLE = {
+  minHeight: `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE.height}rem`,
+  minWidth: `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE.width}rem`,
+  maxHeight: `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE.height}rem`,
+  maxWidth: `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE.width}rem`
+};
+/**
+ * @private
+ */
+export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
+  minHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE.height}rem`,
+  minWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE.width}rem`,
+  maxHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE.height}rem`,
+  maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE.width}rem`
+};
