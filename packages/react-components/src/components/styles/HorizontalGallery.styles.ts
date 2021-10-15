@@ -21,7 +21,10 @@ export const leftRightButtonStyles: IStyle = {
 export const horizontalGalleryContainerStyle: IStyle = {
   height: '100%',
   width: '100%',
-  paddingBottom: '0.5rem'
+  paddingBottom: '0.5rem',
+  display: 'flex',
+  flexFlow: 'row',
+  gap: '0.5rem'
 };
 
 /**

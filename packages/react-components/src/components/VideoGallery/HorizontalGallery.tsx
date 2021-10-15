@@ -1,9 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, Icon, mergeStyles, Stack } from '@fluentui/react';
+import { DefaultButton, Icon, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { CSSProperties, useMemo, useRef, useState } from 'react';
-import { OnRenderAvatarCallback, VideoGalleryRemoteParticipant, VideoStreamOptions } from '../../types';
+import {
+  OnRenderAvatarCallback,
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions,
+  BaseCustomStylesProps
+} from '../../types';
 import {
   horizontalGalleryContainerStyle,
   LARGE_BUTTON_SIZE,
@@ -19,6 +24,14 @@ import {
 } from '../styles/HorizontalGallery.styles';
 import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
 import { RemoteVideoTile } from './RemoteVideoTile';
+
+/**
+ * HorizontalGallery Component Styles.
+ */
+export interface HorizontalGalleryStyles extends BaseCustomStylesProps {
+  previousButton?: IStyle;
+  nextButton?: IStyle;
+}
 
 /**
  * HorizontalGallery Component Props.
@@ -43,6 +56,7 @@ export interface HorizontalGalleryProps {
   rightGutter?: number;
   /** Default `false`. If set to true, video tiles will not render remote video stream  */
   hideRemoteVideoStream?: boolean;
+  styles?: HorizontalGalleryStyles;
 }
 
 const PX_PER_REM = 16;
@@ -139,24 +153,14 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const showRightButton = maxTiles && page < maxPageIndex && !isNarrow;
 
   return (
-    <div ref={containerRef}>
-      <Stack
-        horizontal
-        horizontalAlign="start"
-        tokens={{ childrenGap: `${TILE_GAP}rem` }}
-        className={mergeStyles(horizontalGalleryContainerStyle, {
-          paddingLeft: `${leftGutter}rem`,
-          paddingRight: `${rightGutter}rem`
-        })}
-      >
-        {showLeftButton && (
-          <LeftButton style={leftRightButtonHeightStyles} onClick={() => setPage(Math.max(0, page - 1))} />
-        )}
-        {defaultOnRenderParticipants}
-        {showRightButton && (
-          <RightButton style={leftRightButtonHeightStyles} onClick={() => setPage(Math.min(maxPageIndex, page + 1))} />
-        )}
-      </Stack>
+    <div ref={containerRef} className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
+      {showLeftButton && (
+        <LeftButton style={leftRightButtonHeightStyles} onClick={() => setPage(Math.max(0, page - 1))} />
+      )}
+      {defaultOnRenderParticipants}
+      {showRightButton && (
+        <RightButton style={leftRightButtonHeightStyles} onClick={() => setPage(Math.min(maxPageIndex, page + 1))} />
+      )}
     </div>
   );
 };

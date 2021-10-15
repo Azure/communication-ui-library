@@ -352,6 +352,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               rightGutter={
                 shouldFloatLocalVideo ? (isNarrow ? RIGHT_PADDING_FOR_NARROW_WIDTH_REM : RIGHT_PADDING_REM) : undefined
               } // to leave a gap for the floating local video
+              styles={{
+                root: {
+                  paddingRight: '0.5rem',
+                  paddingLeft: '0.5rem'
+                }
+              }}
             />
           </Stack>
         )}
