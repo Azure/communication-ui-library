@@ -3,7 +3,7 @@
 
 import { concatStyleSets, DefaultButton, Icon, IStyle, mergeStyles } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
-import { useTheme } from '../..';
+import { useTheme } from '../../theming';
 import { BaseCustomStylesProps } from '../../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from '../styles/HorizontalGallery.styles';
 
@@ -37,21 +37,22 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const [page, setPage] = useState(0);
 
   const numberOfChildren = React.Children.count(children);
-  const maxPageIndex = Math.ceil(numberOfChildren / itemsPerPage) - 1;
+  const lastPage = Math.ceil(numberOfChildren / itemsPerPage) - 1;
 
   const subArrayOfChildren = useMemo(() => {
+    const numberOfChildren = React.Children.count(children);
     let start = page * itemsPerPage;
-    // Check if start is greater than the last index. If yes, set page to last page.
+    // Check if start is greater than the last child index. If yes, set page to last page.
     if (start > numberOfChildren - 1) {
-      setPage(Math.floor(numberOfChildren / itemsPerPage));
+      setPage(lastPage);
       start = page * itemsPerPage;
     }
     const end = start + itemsPerPage;
     return React.Children.toArray(children).slice(start, end);
-  }, [page, itemsPerPage, children, numberOfChildren]);
+  }, [page, itemsPerPage, lastPage, children]);
 
-  const showLeftButton = itemsPerPage > 0 && page > 0 && !hidePreviousButton;
-  const showRightButton = itemsPerPage > 0 && page < maxPageIndex && !hideNextButton;
+  const showPreviousButton = itemsPerPage > 0 && page > 0 && !hidePreviousButton;
+  const showNextButton = itemsPerPage > 0 && page < lastPage && !hideNextButton;
 
   const theme = useTheme();
   const borderStyles = {
@@ -63,13 +64,11 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   return (
     <div className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
-      {showLeftButton && (
+      {showPreviousButton && (
         <PreviousButton styles={previousButtonStyles} onClick={() => setPage(Math.max(0, page - 1))} />
       )}
       {subArrayOfChildren}
-      {showRightButton && (
-        <NextButton styles={nextButtonStyles} onClick={() => setPage(Math.min(maxPageIndex, page + 1))} />
-      )}
+      {showNextButton && <NextButton styles={nextButtonStyles} onClick={() => setPage(Math.min(lastPage, page + 1))} />}
     </div>
   );
 };
