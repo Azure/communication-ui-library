@@ -4,7 +4,6 @@
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallCompositeOptions } from '../CallComposite';
 import { useHandlers } from '../hooks/useHandlers';
 import { usePropsFor } from '../hooks/usePropsFor';
@@ -44,13 +43,12 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
-  const { callStatus, isScreenShareOn } = useSelector(callStatusSelector);
+  const { callStatus } = useSelector(callStatusSelector);
   const mediaGalleryProps = useSelector(mediaGallerySelector);
   const mediaGalleryHandlers = useHandlers(MediaGallery);
   const complianceBannerProps = useSelector(complianceBannerSelector);
   const errorBarProps = usePropsFor(ErrorBar);
   const devicePermissions = useSelector(devicePermissionSelector);
-  const adapter = useAdapter();
 
   // Reduce the controls shown when mobile view is enabled.
   let callControlOptions: false | CallControlOptions =
@@ -60,7 +58,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     callControlOptions = reduceControlsSetForMobile(callControlOptions);
   }
 
-  const screenShareModalHostId = 'UILibraryMediaGallery';
   return (
     <CallArrangement
       complianceBannerProps={{ ...complianceBannerProps }}
@@ -75,14 +72,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           ...mediaGalleryHandlers,
           onRenderAvatar: onRenderAvatar,
           onFetchAvatarPersonaData: onFetchAvatarPersonaData
-        }
-      }
-      screenSharePopupProps={
-        isScreenShareOn && {
-          hostId: screenShareModalHostId,
-          onStopScreenShare: () => {
-            return adapter.stopScreenShare();
-          }
         }
       }
       callControlProps={

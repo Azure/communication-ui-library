@@ -9,7 +9,6 @@ import { permissionsBannerContainerStyle } from '../../common/styles/Permissions
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import { MediaGallery, MediaGalleryProps } from '../components/MediaGallery';
-import { ScreenSharePopup, ScreenSharePopupProps } from '../components/ScreenSharePopup';
 import {
   bannersContainerStyles,
   callControlsContainer,
@@ -26,7 +25,6 @@ export interface CallArrangementProps {
   permissionBannerProps: PermissionsBannerProps;
   errorBarProps: ErrorBarProps | false;
   mediaGalleryProps: MediaGalleryProps | false;
-  screenSharePopupProps: ScreenSharePopupProps | false;
   callControlProps: CallControlsProps | false;
 }
 
@@ -54,14 +52,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         <Stack.Item styles={subContainerStyles} grow>
           {props.mediaGalleryProps !== false && (
             <>
-              <Stack
-                id={props.screenSharePopupProps !== false ? props.screenSharePopupProps.hostId : undefined}
-                grow
-                styles={mediaGalleryContainerStyles}
-              >
+              <Stack grow styles={mediaGalleryContainerStyles}>
                 <MediaGallery {...props.mediaGalleryProps} />
               </Stack>
-              {props.screenSharePopupProps !== false && <ScreenSharePopup {...props.screenSharePopupProps} />}
             </>
           )}
         </Stack.Item>

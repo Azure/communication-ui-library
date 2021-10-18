@@ -19,7 +19,7 @@ import type { AdapterState, Disposable, AdapterPages, AdapterError, AdapterError
  *
  * @public
  */
-export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
 
 /**
  * {@link CallAdapter} state for pure UI purposes.

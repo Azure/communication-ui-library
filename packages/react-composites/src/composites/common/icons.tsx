@@ -21,9 +21,7 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsCamera: <Video20Filled />,
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
-  LocalPreviewPlaceholder: <VideoOff20Filled />,
-  ScreenSharePopupPresenting: <ShareScreenStart20Filled />,
-  ScreenSharePopupStopPresenting: <ShareScreenStop20Filled />
+  LocalPreviewPlaceholder: <VideoOff20Filled />
 };
 
 /**

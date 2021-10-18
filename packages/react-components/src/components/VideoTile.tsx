@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -18,6 +18,7 @@ import {
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
+import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
 /**
  * Fluent styles for {@link VideoTile}.
@@ -151,25 +152,14 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
-  const nametagColorOverride = useMemo(
-    () => ({ color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary }),
-    [isVideoRendered, theme.palette.neutralPrimary]
-  );
-
   const tileInfoContainerStyle = useMemo(
     () =>
       mergeStyles(
         isVideoRendered ? videoHint : disabledVideoHint,
-        // when video is being rendered, the displayName has a grey-ish background, so no use of theme
-        nametagColorOverride,
+        getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
         styles?.displayNameContainer
       ),
-    [isVideoRendered, nametagColorOverride, styles?.displayNameContainer]
-  );
-
-  const tileInfoDisplayNameStyle = useMemo(
-    () => mergeStyles(displayNameStyle, nametagColorOverride),
-    [nametagColorOverride]
+    [isVideoRendered, theme.palette.neutralPrimary, styles?.displayNameContainer]
   );
 
   const ids = useIdentifiers();
@@ -209,7 +199,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack horizontal className={tileInfoContainerStyle}>
             {displayName && (
               <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>
-                <Text className={tileInfoDisplayNameStyle}>{displayName}</Text>
+                <Text className={mergeStyles(displayNameStyle)}>{displayName}</Text>
               </Stack.Item>
             )}
             {showMuteIndicator && isMuted && (

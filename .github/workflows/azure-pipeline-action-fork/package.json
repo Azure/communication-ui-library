@@ -14,6 +14,7 @@
     "@types/node": "^12.12.6",
     "azure-devops-node-api": "^9.0.1",
     "jest": "^26.0.1",
+    "set-value": ">=4.0.1",
     "ts-jest": "^25.5.1",
     "typescript": "^3.7.7"
   },
