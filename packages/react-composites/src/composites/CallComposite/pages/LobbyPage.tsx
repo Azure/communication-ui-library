@@ -57,7 +57,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
 /**
  * @private
  */
-export interface LobbyProps {
+interface LobbyProps {
   callState: string;
   localParticipantVideoStream: VideoGalleryStream;
   localVideoViewOption?: VideoStreamOptions;
