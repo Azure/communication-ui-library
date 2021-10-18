@@ -76,6 +76,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setCurrentPage(newState.page);
     setCurrentMeetingState(newState.meeting?.state);
   });
+  const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = currentPage === 'meeting' && currentMeetingState === 'Connected';
 
   const [showChat, setShowChat] = useState(false);
@@ -131,7 +132,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             </CallAdapterProvider>
           )}
         </Stack>
-        {hasJoinedCall && (
+        {(isInLobbyOrConnecting || hasJoinedCall) && (
           <MeetingCallControlBar
             callAdapter={callAdapter}
             chatButtonChecked={showChat}
@@ -140,6 +141,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onPeopleButtonClicked={togglePeople}
             onEndCallClick={endCallClick}
             mobileView={props.options?.mobileView}
+            disableRightHandButtons={isInLobbyOrConnecting}
           />
         )}
       </Stack>
