@@ -78,7 +78,7 @@ export interface VideoGalleryProps {
   /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
   /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
-  dominantSpeakers?: Array<string>;
+  dominantSpeakers?: string[];
   /** Local video view options */
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */

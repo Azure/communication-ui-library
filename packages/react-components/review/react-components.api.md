@@ -751,7 +751,7 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
-    dominantSpeakers?: Array<string>;
+    dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
