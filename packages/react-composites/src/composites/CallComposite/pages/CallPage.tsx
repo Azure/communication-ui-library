@@ -15,6 +15,7 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
 import { CallControlOptions } from '../components/CallControls';
 import { CallArrangement } from '../components/CallArrangement';
+import { reduceCallControlsSetForMobile } from '../utils';
 
 /**
  * @private
@@ -55,7 +56,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     options?.callControls !== false ? (options?.callControls === true ? {} : options?.callControls || {}) : false;
   if (callControlOptions && options?.mobileView) {
     callControlOptions.compressedMode = true;
-    callControlOptions = reduceControlsSetForMobile(callControlOptions);
+    callControlOptions = reduceCallControlsSetForMobile(callControlOptions);
   }
 
   return (
@@ -89,24 +90,4 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       dataUiId={'call-page'}
     />
   );
-};
-
-/**
- * Reduce the set of call controls visible on mobile.
- * For example do not show screenshare button.
- */
-const reduceControlsSetForMobile = (callControlOptions: CallControlOptions): CallControlOptions => {
-  const reduceCallControlOptions = callControlOptions;
-
-  // Do not show screen share button when composite is optimized for mobile unless the developer
-  // has explicitly opted in.
-  if (
-    reduceCallControlOptions &&
-    typeof reduceCallControlOptions !== 'boolean' &&
-    reduceCallControlOptions.screenShareButton !== true
-  ) {
-    reduceCallControlOptions.screenShareButton = false;
-  }
-
-  return reduceCallControlOptions;
 };

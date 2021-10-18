@@ -11,6 +11,8 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyTile } from '../components/LobbyTile';
 import { getCallStatus } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
+import { CallControlOptions } from '../components/CallControls';
+import { reduceCallControlsSetForMobile } from '../utils';
 
 /**
  * @private
@@ -41,6 +43,18 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const callState = useSelector(getCallStatus);
   const callStateText = callState === 'InLobby' ? props.strings.waitingToBeAdmitted : props.strings.connectingToCall;
 
+  // Reduce the controls shown when mobile view is enabled.
+  let callControlOptions: false | CallControlOptions =
+    props.options?.callControls !== false
+      ? props.options?.callControls === true
+        ? {}
+        : props.options?.callControls || {}
+      : false;
+  if (callControlOptions && props.options?.mobileView) {
+    callControlOptions.compressedMode = true;
+    callControlOptions = reduceCallControlsSetForMobile(callControlOptions);
+  }
+
   return (
     <CallArrangement
       complianceBannerProps={{}}
@@ -56,9 +70,9 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
         // props and handlers for a non-existent call state. So the lobby screen has to pivot between
         // using the localDevicePreview-style props/handlers when it is "connecting" but use the
         // call-style props when "connected".
-        props.options?.callControls !== false && {
+        callControlOptions !== false && {
           onEndCallClick: props.endCallHandler,
-          options: props.options?.callControls
+          options: callControlOptions
         }
       }
       onRenderGalleryContent={() => (
