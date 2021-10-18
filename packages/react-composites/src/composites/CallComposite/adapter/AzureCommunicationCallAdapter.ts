@@ -36,9 +36,9 @@ import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener
 } from './CallAdapter';
-import { isCameraOn, isInCall } from '../utils';
+import { isCameraOn } from '../utils';
 import { VideoStreamOptions } from '@internal/react-components';
-import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { fromFlatCommunicationIdentifier, _isInCall, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -225,7 +225,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public joinCall(microphoneOn?: boolean): Call | undefined {
-    if (isInCall(this.getState().call?.state ?? 'None')) {
+    if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     } else {
       const audioOptions: AudioOptions = { muted: microphoneOn ?? !this.getState().isLocalPreviewMicrophoneEnabled };
@@ -317,7 +317,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async mute(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!this.call) {
+      if (!_isInCall(this.call?.state)) {
         this.context.setIsLocalMicrophoneEnabled(false);
       }
       await this.call?.mute();
@@ -326,7 +326,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async unmute(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!this.call) {
+      if (!_isInCall(this.call?.state)) {
         this.context.setIsLocalMicrophoneEnabled(true);
       }
       await this.call?.unmute();

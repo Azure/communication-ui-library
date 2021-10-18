@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { _isInCall } from '@internal/acs-ui-common';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useEffect, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -16,7 +17,6 @@ import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getCallId, getCallStatus, getEndedCall, getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
-import { isInCall } from './utils';
 
 // @TODO: move to the AzureCommunicationCallAdapter implementation and map to an EndCallReason
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
@@ -93,7 +93,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEffect(() => {
     if (['Connecting', 'Ringing', 'InLobby'].includes(callState ?? 'None')) {
       adapter.setPage('lobby');
-    } else if (isInCall(callState)) {
+    } else if (_isInCall(callState)) {
       adapter.setPage('call');
     }
   }, [adapter, callState]);

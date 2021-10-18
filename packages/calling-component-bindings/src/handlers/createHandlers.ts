@@ -10,7 +10,12 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import {
+  Common,
+  fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier,
+  _isInCall
+} from '@internal/acs-ui-common';
 import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
@@ -96,7 +101,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
-      if (call) {
+      if (call && _isInCall(call.state)) {
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         if (stream) {
           await onStopLocalVideo(stream);
@@ -155,7 +160,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       if (!deviceManager) {
         return;
       }
-      if (call) {
+      if (call && _isInCall(call.state)) {
         deviceManager.selectCamera(device);
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         return stream?.switchSource(device);
@@ -183,7 +188,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
-      if (!call) {
+      if (!call || !_isInCall(call.state)) {
         throw new Error(`Please invoke onToggleMicrophone after call is started`);
       }
       return call.isMuted ? await call.unmute() : await call.mute();

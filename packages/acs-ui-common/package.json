@@ -22,6 +22,7 @@
     "generate-doc": "api-documenter markdown -i temp -o docGen"
   },
   "dependencies": {
+    "@azure/communication-calling": "1.2.1-beta.1",
     "@azure/communication-common": "1.0.0"
   },
   "devDependencies": {

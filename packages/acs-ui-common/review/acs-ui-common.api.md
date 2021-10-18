@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { CallState } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 // @public
@@ -36,6 +37,9 @@ export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, .
 
 // @internal
 export const _getApplicationId: () => string;
+
+// @internal
+export const _isInCall: (callStatus?: CallState | undefined) => boolean;
 
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: unknown, args2: unknown) => boolean) => (callback: CallBackT) => FnRetT[];
