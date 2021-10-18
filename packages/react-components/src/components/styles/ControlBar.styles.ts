@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, IButtonStyles, IContextualMenuStyles, concatStyleSets } from '@fluentui/react';
+import { IStyle, IButtonStyles, IContextualMenuStyles } from '@fluentui/react';
 
 interface IControlBarStyles {
   horizontal: IStyle;
@@ -137,24 +137,6 @@ export const controlButtonLabelStyles: IStyle = {
   display: 'block',
   margin: '0rem 0.25rem'
 };
-
-/**
- * @private
- */
-export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
-  root: {
-    color: 'white'
-  },
-  rootHovered: {
-    color: 'white'
-  },
-  rootPressed: {
-    color: 'white'
-  },
-  label: {
-    color: 'white'
-  }
-});
 
 /**
  * making it Partial as IContextualMenuStyles has all its props non-optional and we only need title to be defined here.
