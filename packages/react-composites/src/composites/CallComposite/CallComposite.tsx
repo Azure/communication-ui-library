@@ -147,6 +147,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedTitle
           }}
           endCallHandler={() => adapter.setPage('configuration')}
+          options={props.options}
         />
       );
     case 'call':
