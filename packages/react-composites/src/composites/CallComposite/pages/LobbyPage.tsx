@@ -51,6 +51,11 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
       callControlProps={
         // @TODO: we need to use the local device video stream until the call has been joined.
+        // The issue is that when the call state is "connecting" to the call we show the lobby
+        // screen but we haven't connected to a call yet. The lobby screen is trying to use the
+        // props and handlers for a non-existent call state. So the lobby screen has to pivot between
+        // using the localDevicePreview-style props/handlers when it is "connecting" but use the
+        // call-style props when "connected".
         props.options?.callControls !== false && {
           onEndCallClick: props.endCallHandler,
           options: props.options?.callControls
