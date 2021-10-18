@@ -14,7 +14,8 @@ import {
   ParticipantItemStrings,
   ScreenShareButtonStrings,
   SendBoxStrings,
-  TypingIndicatorStrings
+  TypingIndicatorStrings,
+  VideoGalleryStrings
 } from '../components';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
@@ -48,7 +49,7 @@ export interface ComponentStrings {
   optionsButton: OptionsButtonStrings;
   /** Strings for ParticipantsButton */
   participantsButton: ParticipantsButtonStrings;
-  /** Strings for OptionsButton */
+  /** Strings for ScreenShareButton */
   screenShareButton: ScreenShareButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
@@ -58,6 +59,8 @@ export interface ComponentStrings {
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
+  /** Strings for VideoGallery */
+  videoGallery: VideoGalleryStrings;
 }
 
 /**

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "hide strings control in VideoGallery story",
+  "packageName": "@internal/storybook",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

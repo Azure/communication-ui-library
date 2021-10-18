@@ -46,17 +46,21 @@ export interface CallCompositeStrings {
    */
   microphonePermissionDenied: string;
   /**
-   * Error reason when joining a Teams meeting fails because meeting owner denied access.
+   * Title text of the page shown to the user when joining a Teams meeting fails because meeting owner denied access.
    */
-  teamsMeetingFailReasonAccessDenied: string;
+  failedToJoinTeamsMeetingReasonAccessDeniedTitleMessage: string;
   /**
-   * Error reason when Teams meeting is disconnected because meeting owner removed the user.
+   * More details text of the page shown to the user when joining a Teams meeting fails because meeting owner denied access.
    */
-  teamsMeetingFailReasonParticipantRemoved: string;
+  failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
   /**
-   * Error shown when Teams meeting connection is dropped for some reason.
+   * Title text of the page shown to the user when they are removed from a meeting.
    */
-  teamsMeetingFailToJoin: string;
+  removedFromMeetingTitleMessage: string;
+  /**
+   * More details text of the page shown to the user when they are removed from a meeting.
+   */
+  removedFromMeetingMoreDetailsMessage?: string;
   /**
    * Text shown to the user on the lobby screen when connecting to a call.
    */

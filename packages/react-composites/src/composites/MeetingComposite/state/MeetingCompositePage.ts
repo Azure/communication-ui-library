@@ -12,9 +12,8 @@ export type MeetingCompositePage =
   | 'configuration'
   | 'lobby'
   | 'meeting'
-  | 'error'
-  | 'errorJoiningTeamsMeeting'
-  | 'removed';
+  | 'accessDeniedTeamsMeeting'
+  | 'removedFromCall';
 
 /**
  * @private

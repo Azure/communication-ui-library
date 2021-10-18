@@ -295,7 +295,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -314,14 +314,15 @@ export interface CallCompositeStrings {
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
+    failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
+    failedToJoinTeamsMeetingReasonAccessDeniedTitleMessage: string;
     lobbyScreenConnectingToCallText: string;
     lobbyScreenWaitingToBeAdmittedText: string;
     microphonePermissionDenied: string;
+    removedFromMeetingMoreDetailsMessage?: string;
+    removedFromMeetingTitleMessage: string;
     soundLabel: string;
     startCallButtonText: string;
-    teamsMeetingFailReasonAccessDenied: string;
-    teamsMeetingFailReasonParticipantRemoved: string;
-    teamsMeetingFailToJoin: string;
 }
 
 // @public
@@ -775,6 +776,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    videoGallery: VideoGalleryStrings;
 }
 
 // @public
@@ -825,8 +827,6 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
-    ScreenSharePopupPresenting: JSX.Element;
-    ScreenSharePopupStopPresenting: JSX.Element;
 };
 
 // @public
@@ -977,8 +977,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
-    ScreenSharePopupPresenting: JSX.Element;
-    ScreenSharePopupStopPresenting: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1294,7 +1292,7 @@ export type MeetingCompositeOptions = {
 };
 
 // @alpha
-export type MeetingCompositePage = 'configuration' | 'lobby' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+export type MeetingCompositePage = 'configuration' | 'lobby' | 'meeting' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
 
 // @alpha
 export type MeetingCompositeProps = {
@@ -1977,6 +1975,7 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
+    strings?: Partial<VideoGalleryStrings>;
     styles?: BaseCustomStylesProps;
 }
 
@@ -2025,6 +2024,11 @@ export interface VideoGalleryStream {
     isAvailable?: boolean;
     isMirrored?: boolean;
     renderElement?: HTMLElement;
+}
+
+// @public
+export interface VideoGalleryStrings {
+    screenSharingMessage: string;
 }
 
 // @public

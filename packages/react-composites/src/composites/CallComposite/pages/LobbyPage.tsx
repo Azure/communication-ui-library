@@ -49,7 +49,6 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
         cameraPermissionGranted: devicePermissions.video
       }}
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
-      screenSharePopupProps={false}
       callControlProps={
         // @TODO: we need to use the local device video stream until the call has been joined.
         props.options?.callControls !== false && {
