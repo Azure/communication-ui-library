@@ -5,6 +5,10 @@ import { CSSProperties } from 'react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonStyles, mergeStyles } from '@fluentui/react';
 
+// Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
+// that can contain a message and a timestamp.
+const CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM = 6.25;
+
 /**
  * @private
  */
@@ -96,7 +100,7 @@ export const defaultChatItemMessageContainer: ComponentSlotStyle = {
  */
 export const defaultMyChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
-  minWidth: '0%',
+  minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
   marginLeft: '0rem'
 };
 
@@ -105,7 +109,7 @@ export const defaultMyChatMessageContainer: ComponentSlotStyle = {
  */
 export const defaultChatMessageContainer: ComponentSlotStyle = {
   maxWidth: '100%',
-  minWidth: '0%',
+  minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
   marginRight: '0rem'
 };
 
@@ -126,7 +130,10 @@ export const gutterWithHiddenAvatar: ComponentSlotStyle = {
   position: 'relative',
   float: 'left',
   display: 'block',
-  visibility: 'hidden'
+  visibility: 'hidden',
+  // we use this hidden avatar just as a width placeholder
+  // the placeholder is needed for responsive bubble width
+  height: 0
 };
 
 /**

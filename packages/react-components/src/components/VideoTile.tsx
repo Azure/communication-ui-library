@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
@@ -18,6 +18,7 @@ import {
   videoContainerStyles,
   videoHint
 } from './styles/VideoTile.styles';
+import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
 /**
  * Fluent styles for {@link VideoTile}.
@@ -126,12 +127,21 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const isVideoRendered = !!renderElement;
 
-  useLayoutEffect(() => {
-    if (videoTileRef.current && videoTileRef.current) {
-      const minSize = Math.min(videoTileRef.current.clientHeight, videoTileRef.current.clientWidth, personaMaxSize);
+  const observer = useRef(
+    new ResizeObserver((entries): void => {
+      const { width, height } = entries[0].contentRect;
+      const minSize = Math.min(width, height, personaMaxSize);
       setPersonaSize(minSize / 2);
+    })
+  );
+
+  useEffect(() => {
+    if (videoTileRef.current) {
+      observer.current.observe(videoTileRef.current);
     }
-  }, [videoTileRef.current?.clientHeight, videoTileRef.current?.clientWidth]);
+    const currentObserver = observer.current;
+    return () => currentObserver.disconnect();
+  }, [observer, videoTileRef]);
 
   const placeholderOptions = {
     userId,
@@ -142,25 +152,14 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
-  const nametagColorOverride = useMemo(
-    () => ({ color: isVideoRendered ? palette.neutralPrimary : theme.palette.neutralPrimary }),
-    [isVideoRendered, theme.palette.neutralPrimary]
-  );
-
   const tileInfoContainerStyle = useMemo(
     () =>
       mergeStyles(
         isVideoRendered ? videoHint : disabledVideoHint,
-        // when video is being rendered, the displayName has a grey-ish background, so no use of theme
-        nametagColorOverride,
+        getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
         styles?.displayNameContainer
       ),
-    [isVideoRendered, nametagColorOverride, styles?.displayNameContainer]
-  );
-
-  const tileInfoDisplayNameStyle = useMemo(
-    () => mergeStyles(displayNameStyle, nametagColorOverride),
-    [nametagColorOverride]
+    [isVideoRendered, theme.palette.neutralPrimary, styles?.displayNameContainer]
   );
 
   const ids = useIdentifiers();
@@ -200,7 +199,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack horizontal className={tileInfoContainerStyle}>
             {displayName && (
               <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>
-                <Text className={tileInfoDisplayNameStyle}>{displayName}</Text>
+                <Text className={mergeStyles(displayNameStyle)}>{displayName}</Text>
               </Stack.Item>
             )}
             {showMuteIndicator && isMuted && (
