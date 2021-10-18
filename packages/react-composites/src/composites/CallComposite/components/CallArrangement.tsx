@@ -25,6 +25,7 @@ export interface CallArrangementProps {
   errorBarProps: ErrorBarProps | false;
   callControlProps: CallControlsProps | false;
   onRenderGalleryContent: () => JSX.Element;
+  dataUiId: string;
 }
 
 /**
@@ -32,7 +33,7 @@ export interface CallArrangementProps {
  */
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow data-ui-id={props.dataUiId}>
       <>
         <Stack.Item styles={bannersContainerStyles}>
           <Stack>

@@ -86,6 +86,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           <></>
         )
       }
+      dataUiId={'call-page'}
     />
   );
 };

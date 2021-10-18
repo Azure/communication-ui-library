@@ -64,6 +64,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       onRenderGalleryContent={() => (
         <LobbyTile {...lobbyProps} {...lobbyHandlers} overlay={{ text: callStateText, overlayIcon: () => <>☕</> }} />
       )}
+      dataUiId={'lobby-page'}
     />
   );
 };
