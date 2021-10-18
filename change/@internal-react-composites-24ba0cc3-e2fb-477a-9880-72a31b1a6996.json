@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Code refactor - make call page use a pure component",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
