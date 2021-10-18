@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackItemStyles, IStackStyles, getTheme } from '@fluentui/react';
+import { IStackItemStyles, IStackStyles } from '@fluentui/react';
 
-const palette = getTheme().palette;
 export const headerStyles: IStackItemStyles = {
   root: {
     width: '100%'
@@ -26,12 +25,6 @@ export const subContainerStyles: IStackStyles = {
 export const paneStyles: IStackItemStyles = {
   root: {
     width: '17.875rem'
-  }
-};
-export const overlayStyles: IStackItemStyles = {
-  root: {
-    background: palette.white,
-    marginTop: '4rem'
   }
 };
 export const activeContainerClassName: IStackItemStyles = {

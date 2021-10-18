@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, Icon, IDragOptions, Modal, Stack, Text, mergeStyles } from '@fluentui/react';
+import { ContextualMenu, Icon, IDragOptions, Modal, Stack, Text, mergeStyles, concatStyleSets } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useLocale } from '../localization';
@@ -140,6 +140,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localParticipant.videoStream?.renderElement
         ? screenSharingNotificationContainerCameraOnStyles
         : screenSharingNotificationContainerCameraOffStyles,
+      { borderRadius: theme.effects.roundedCorner4 },
       getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralSecondary')
     );
 
@@ -185,6 +186,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localVideoTileStyles = floatingLocalVideoTileStyle;
     }
 
+    const localVideoTileStylesThemed = concatStyleSets(localVideoTileStyles, {
+      root: { borderRadius: theme.effects.roundedCorner4 }
+    });
+
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
     }
@@ -198,7 +203,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           ) : undefined
         }
         displayName={localParticipant?.displayName}
-        styles={localVideoTileStyles}
+        styles={localVideoTileStylesThemed}
         onRenderPlaceholder={localParticipant.isScreenSharingOn ? () => <></> : onRenderAvatar}
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
@@ -257,6 +262,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator
   ]);
 
+  const floatingLocalVideoModalStyleThemed = useMemo(
+    () =>
+      concatStyleSets(floatingLocalVideoModalStyle, {
+        main: { boxShadow: theme.effects.elevation8, borderRadius: theme.effects.roundedCorner4 }
+      }),
+    [theme.effects.elevation8, theme.effects.roundedCorner4]
+  );
+
   if (shouldFloatLocalVideo()) {
     const floatingTileHostId = 'UILibraryFloatingTileHost';
     return (
@@ -265,7 +278,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isOpen={true}
           isModeless={true}
           dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyle}
+          styles={floatingLocalVideoModalStyleThemed}
           layerProps={{ hostId: floatingTileHostId }}
         >
           {localParticipant && defaultOnRenderLocalVideoTile}

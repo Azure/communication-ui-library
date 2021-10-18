@@ -4,15 +4,12 @@
 import {
   DefaultPalette as palette,
   mergeStyles,
-  getTheme,
   IStackStyles,
   IModalStyleProps,
   IModalStyles,
   IStyleFunctionOrObject
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
-
-const theme = getTheme();
 
 const videoBaseStyle = mergeStyles({
   border: 0
@@ -43,8 +40,6 @@ export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStylePro
   main: {
     minWidth: '11.25rem',
     minHeight: '7rem',
-    boxShadow: theme.effects.elevation8,
-    borderRadius: theme.effects.roundedCorner4,
     position: 'absolute',
     bottom: '1rem',
     right: '1rem'
@@ -61,8 +56,7 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
     bottom: '0',
     right: '0',
     width: '11.25rem',
-    height: '7rem',
-    borderRadius: theme.effects.roundedCorner4
+    height: '7rem'
   }
 };
 
@@ -80,8 +74,7 @@ export const screenSharingContainer = mergeStyles({
 export const screenSharingNotificationContainerCameraOffStyles = mergeStyles({
   backgroundColor: 'inherit',
   padding: '1rem',
-  maxWidth: '95%',
-  borderRadius: theme.effects.roundedCorner4
+  maxWidth: '95%'
 });
 
 /**

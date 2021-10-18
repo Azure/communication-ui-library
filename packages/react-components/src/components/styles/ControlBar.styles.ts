@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, IStyle, IButtonStyles, IContextualMenuStyles, concatStyleSets } from '@fluentui/react';
-
-const theme = getTheme();
-const palette = theme.palette;
+import { IStyle, IButtonStyles, IContextualMenuStyles, concatStyleSets } from '@fluentui/react';
 
 interface IControlBarStyles {
   horizontal: IStyle;
@@ -69,8 +66,6 @@ export const controlBarStyles: IControlBarStyles = {
   floatingTop: {
     flexFlow: 'row nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation16,
-    borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
     top: '1rem',
@@ -82,8 +77,6 @@ export const controlBarStyles: IControlBarStyles = {
   floatingBottom: {
     flexFlow: 'row nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation16,
-    borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
     bottom: '1rem',
@@ -95,8 +88,6 @@ export const controlBarStyles: IControlBarStyles = {
   floatingLeft: {
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation16,
-    borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
     top: '50%',
@@ -107,8 +98,6 @@ export const controlBarStyles: IControlBarStyles = {
   floatingRight: {
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation16,
-    borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
     top: '50%',
@@ -154,16 +143,16 @@ export const controlButtonLabelStyles: IStyle = {
  */
 export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
   root: {
-    color: palette.white
+    color: 'white'
   },
   rootHovered: {
-    color: palette.white
+    color: 'white'
   },
   rootPressed: {
-    color: palette.white
+    color: 'white'
   },
   label: {
-    color: palette.white
+    color: 'white'
   }
 });
 

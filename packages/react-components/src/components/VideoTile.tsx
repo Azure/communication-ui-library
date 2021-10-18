@@ -11,7 +11,6 @@ import {
   disabledVideoHint,
   displayNameStyle,
   iconContainerStyle,
-  isSpeakingStyles,
   overlayContainerStyles,
   rootStyles,
   tileInfoStackItemStyle,
@@ -152,17 +151,25 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
+  const disabledVideoHintWithBorder = mergeStyles(disabledVideoHint, { borderRadius: theme.effects.roundedCorner4 });
+
   const tileInfoContainerStyle = useMemo(
     () =>
       mergeStyles(
-        isVideoRendered ? videoHint : disabledVideoHint,
+        isVideoRendered ? videoHint : disabledVideoHintWithBorder,
         getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
         styles?.displayNameContainer
       ),
-    [isVideoRendered, theme.palette.neutralPrimary, styles?.displayNameContainer]
+    [isVideoRendered, disabledVideoHintWithBorder, theme, styles?.displayNameContainer]
   );
 
   const ids = useIdentifiers();
+
+  const isSpeakingStyles = isSpeaking
+    ? {
+        border: `0.25rem solid ${theme.palette.themePrimary}`
+      }
+    : {};
 
   return (
     <Ref innerRef={videoTileRef}>
@@ -170,8 +177,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         data-ui-id={ids.videoTile}
         className={mergeStyles(
           rootStyles,
-          isSpeaking ? isSpeakingStyles : {},
-          { background: theme.palette.neutralLighter },
+          isSpeakingStyles,
+          { background: theme.palette.neutralLighter, borderRadius: theme.effects.roundedCorner4 },
           styles?.root
         )}
       >
