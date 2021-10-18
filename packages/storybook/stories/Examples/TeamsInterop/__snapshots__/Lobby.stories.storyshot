@@ -287,7 +287,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                   </i>
                   <span
-                    className="#323130 css-21"
+                    className="#323130 css-28"
                   >
                     Leave
                   </span>

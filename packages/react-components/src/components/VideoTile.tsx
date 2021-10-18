@@ -151,16 +151,16 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
-  const disabledVideoHintWithBorder = mergeStyles(disabledVideoHint, { borderRadius: theme.effects.roundedCorner4 });
+  const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
 
   const tileInfoContainerStyle = useMemo(
     () =>
       mergeStyles(
-        isVideoRendered ? videoHint : disabledVideoHintWithBorder,
+        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
         getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
         styles?.displayNameContainer
       ),
-    [isVideoRendered, disabledVideoHintWithBorder, theme, styles?.displayNameContainer]
+    [isVideoRendered, videoHintWithBorderRadius, theme, styles?.displayNameContainer]
   );
 
   const ids = useIdentifiers();
