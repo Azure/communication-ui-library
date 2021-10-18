@@ -128,19 +128,28 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'accessDeniedTeamsMeeting':
       return (
         <NoticePage
-          title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitleMessage}
+          title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
         />
       );
     case 'removedFromCall':
       return (
         <NoticePage
-          title={locale.strings.call.removedFromMeetingTitleMessage}
-          moreDetails={locale.strings.call.removedFromMeetingMoreDetailsMessage}
+          title={locale.strings.call.removedFromMeetingTitle}
+          moreDetails={locale.strings.call.removedFromMeetingMoreDetails}
         />
       );
     case 'lobby':
-      return <LobbyPage endCallHandler={() => adapter.setPage('configuration')} />;
+      return (
+        <LobbyPage
+          strings={{
+            connectingToCall: locale.strings.call.lobbyScreenConnectingToCallTitle,
+            waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedTitle
+          }}
+          endCallHandler={() => adapter.setPage('configuration')}
+          options={props.options}
+        />
+      );
     case 'call':
       return (
         <CallPage

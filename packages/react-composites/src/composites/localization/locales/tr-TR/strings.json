@@ -10,7 +10,7 @@
     "cameraLabel": "Kamera",
     "soundLabel": "Ses",
     "configurationPageTitle": "Arama başlatın",
-    "startCallButtonText": "Arama başlat"
+    "startCallButtonLabel": "Arama başlat"
   },
   "chat": {
     "chatListHeader": "Bu sohbette"

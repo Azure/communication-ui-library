@@ -8,7 +8,6 @@ import { PermissionsBanner, PermissionsBannerProps } from '../../common/Permissi
 import { permissionsBannerContainerStyle } from '../../common/styles/PermissionsBanner.styles';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
-import { MediaGallery, MediaGalleryProps } from '../components/MediaGallery';
 import {
   bannersContainerStyles,
   callControlsContainer,
@@ -24,8 +23,9 @@ export interface CallArrangementProps {
   complianceBannerProps: ComplianceBannerProps;
   permissionBannerProps: PermissionsBannerProps;
   errorBarProps: ErrorBarProps | false;
-  mediaGalleryProps: MediaGalleryProps | false;
   callControlProps: CallControlsProps | false;
+  onRenderGalleryContent: () => JSX.Element;
+  dataUiId: string;
 }
 
 /**
@@ -33,7 +33,7 @@ export interface CallArrangementProps {
  */
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow data-ui-id={props.dataUiId}>
       <>
         <Stack.Item styles={bannersContainerStyles}>
           <Stack>
@@ -50,12 +50,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         </Stack.Item>
 
         <Stack.Item styles={subContainerStyles} grow>
-          {props.mediaGalleryProps !== false && (
-            <>
-              <Stack grow styles={mediaGalleryContainerStyles}>
-                <MediaGallery {...props.mediaGalleryProps} />
-              </Stack>
-            </>
+          {props.onRenderGalleryContent && (
+            <Stack grow styles={mediaGalleryContainerStyles}>
+              {props.onRenderGalleryContent()}
+            </Stack>
           )}
         </Stack.Item>
         {props.callControlProps !== false && (
