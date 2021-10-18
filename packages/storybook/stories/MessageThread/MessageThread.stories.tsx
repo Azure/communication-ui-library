@@ -256,7 +256,10 @@ export default {
     onRenderAvatar: hiddenControl,
     onRenderJumpToNewMessageButton: hiddenControl,
     onLoadPreviousChatMessages: hiddenControl,
-    onRenderMessage: hiddenControl
+    onRenderMessage: hiddenControl,
+    onUpdateMessage: hiddenControl,
+    onDeleteMessage: hiddenControl,
+    editDisabled: hiddenControl
   },
   parameters: {
     docs: {

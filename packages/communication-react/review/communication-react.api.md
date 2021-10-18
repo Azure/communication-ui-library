@@ -825,8 +825,6 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
-    ScreenSharePopupPresenting: JSX.Element;
-    ScreenSharePopupStopPresenting: JSX.Element;
 };
 
 // @public
@@ -977,8 +975,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
-    ScreenSharePopupPresenting: JSX.Element;
-    ScreenSharePopupStopPresenting: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
