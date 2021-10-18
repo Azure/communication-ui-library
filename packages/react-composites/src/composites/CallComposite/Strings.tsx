@@ -20,7 +20,7 @@ export interface CallCompositeStrings {
   /**
    * Text in button to start call in configuration page.
    */
-  startCallButtonText: string;
+  startCallButtonLabel: string;
   /**
    * Placeholder text for local device settings dropdowns.
    */
@@ -48,7 +48,7 @@ export interface CallCompositeStrings {
   /**
    * Title text of the page shown to the user when joining a Teams meeting fails because meeting owner denied access.
    */
-  failedToJoinTeamsMeetingReasonAccessDeniedTitleMessage: string;
+  failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
   /**
    * More details text of the page shown to the user when joining a Teams meeting fails because meeting owner denied access.
    */
@@ -56,9 +56,17 @@ export interface CallCompositeStrings {
   /**
    * Title text of the page shown to the user when they are removed from a meeting.
    */
-  removedFromMeetingTitleMessage: string;
+  removedFromMeetingTitle: string;
   /**
    * More details text of the page shown to the user when they are removed from a meeting.
    */
-  removedFromMeetingMoreDetailsMessage?: string;
+  removedFromMeetingMoreDetails?: string;
+  /**
+   * Text shown to the user on the lobby screen when connecting to a call.
+   */
+  lobbyScreenConnectingToCallTitle: string;
+  /**
+   * Text shown to the user on the lobby screen when waiting to be admitted to a call.
+   */
+  lobbyScreenWaitingToBeAdmittedTitle: string;
 }

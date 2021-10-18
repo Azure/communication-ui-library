@@ -5,11 +5,13 @@
     "cameraTurnedOff": "Your camera is turned off",
     "configurationPageTitle": "Start a call",
     "defaultPlaceHolder": "Select an option",
-    "failedToJoinTeamsMeetingReasonAccessDeniedTitleMessage": "Access to the meeting was denied",
+    "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Access to the meeting was denied",
+    "lobbyScreenConnectingToCallTitle": "Joining call",
+    "lobbyScreenWaitingToBeAdmittedTitle": "Waiting to be admitted",
     "microphonePermissionDenied": "Your browser is blocking access to your microphone",
-    "removedFromMeetingTitleMessage": "You were removed from the meeting",
+    "removedFromMeetingTitle": "You were removed from the meeting",
     "soundLabel": "Sound",
-    "startCallButtonText": "Start call"
+    "startCallButtonLabel": "Start call"
   },
   "chat": {
     "chatListHeader": "In this chat"
