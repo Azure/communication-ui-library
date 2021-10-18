@@ -43,7 +43,9 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const callStateText = callState === 'InLobby' ? props.strings.waitingToBeAdmitted : props.strings.connectingToCall;
 
   // Reduce the controls shown when mobile view is enabled.
-  const callControlOptions = reduceCallControlsForMobile(props.options?.callControls);
+  const callControlOptions = props.options?.mobileView
+    ? reduceCallControlsForMobile(props.options?.callControls)
+    : props.options?.callControls;
 
   return (
     <CallArrangement

@@ -51,7 +51,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const devicePermissions = useSelector(devicePermissionSelector);
 
   // Reduce the controls shown when mobile view is enabled.
-  const callControlOptions = reduceCallControlsForMobile(options?.callControls);
+  const callControlOptions = options?.mobileView
+    ? reduceCallControlsForMobile(options?.callControls)
+    : options?.callControls;
 
   return (
     <CallArrangement

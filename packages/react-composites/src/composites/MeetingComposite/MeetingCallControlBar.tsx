@@ -32,7 +32,9 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   let callControlsOptions: CallControlOptions | false = { participantsButton: false };
 
   // Reduce the controls shown when mobile view is enabled.
-  callControlsOptions = reduceCallControlsForMobile(callControlsOptions);
+  if (props.mobileView) {
+    callControlsOptions = reduceCallControlsForMobile(callControlsOptions);
+  }
 
   /**
    * Until mobile meetings is worked on, statically set the width of the
