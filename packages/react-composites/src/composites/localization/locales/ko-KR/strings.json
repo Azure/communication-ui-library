@@ -10,7 +10,7 @@
     "cameraLabel": "카메라",
     "soundLabel": "소리",
     "configurationPageTitle": "통화 시작",
-    "startCallButtonText": "통화 시작"
+    "startCallButtonLabel": "통화 시작"
   },
   "chat": {
     "chatListHeader": "채팅 참가자"

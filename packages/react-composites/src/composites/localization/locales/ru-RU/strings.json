@@ -10,7 +10,7 @@
     "cameraLabel": "Камера",
     "soundLabel": "Звук",
     "configurationPageTitle": "Позвонить",
-    "startCallButtonText": "Начать звонок"
+    "startCallButtonLabel": "Начать звонок"
   },
   "chat": {
     "chatListHeader": "В этом чате"

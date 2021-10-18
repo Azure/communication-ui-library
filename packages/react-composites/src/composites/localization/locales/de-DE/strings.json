@@ -10,7 +10,7 @@
     "cameraLabel": "Kamera",
     "soundLabel": "Sound",
     "configurationPageTitle": "Einen Anruf beginnen",
-    "startCallButtonText": "Anruf beginnen"
+    "startCallButtonLabel": "Anruf beginnen"
   },
   "chat": {
     "chatListHeader": "In diesem Chat"
