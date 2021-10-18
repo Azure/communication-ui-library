@@ -10,7 +10,7 @@
     "cameraLabel": "カメラ",
     "soundLabel": "音声",
     "configurationPageTitle": "通話を開始",
-    "startCallButtonText": "通話を開始"
+    "startCallButtonLabel": "通話を開始"
   },
   "chat": {
     "chatListHeader": "このチャット内"

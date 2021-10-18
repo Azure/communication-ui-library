@@ -10,7 +10,7 @@
     "cameraLabel": "照相机",
     "soundLabel": "声音",
     "configurationPageTitle": "开始通话",
-    "startCallButtonText": "开始通话"
+    "startCallButtonLabel": "开始通话"
   },
   "chat": {
     "chatListHeader": "在此聊天中"

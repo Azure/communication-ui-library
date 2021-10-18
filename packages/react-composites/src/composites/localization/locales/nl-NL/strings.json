@@ -10,7 +10,7 @@
     "cameraLabel": "Camera",
     "soundLabel": "Geluid",
     "configurationPageTitle": "Een oproep starten",
-    "startCallButtonText": "Gesprek starten"
+    "startCallButtonLabel": "Gesprek starten"
   },
   "chat": {
     "chatListHeader": "In deze chat"
