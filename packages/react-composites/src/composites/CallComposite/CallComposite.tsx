@@ -18,7 +18,7 @@ import { getCallId, getCallStatus, getEndedCall, getPage } from './selectors/bas
 import { LobbyPage } from './pages/LobbyPage';
 import { isInCall } from './utils';
 
-// @TODO: where are these defined? - these need to be part of our Call Adapter contract.
+// @TODO: move to the AzureCommunicationCallAdapter implementation and map to an EndCallReason
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
 
@@ -105,9 +105,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   // Update page if the caller is no longer in a call
   useEffect(() => {
     if (endedCall && currentCallId.current === endedCall?.id && endedCall?.callEndReason?.code === 0) {
-      if (endedCall?.callEndReason.subCode === ACCESS_DENIED_TEAMS_MEETING_SUB_CODE) {
+      if (endedCall.callEndReason.subCode === ACCESS_DENIED_TEAMS_MEETING_SUB_CODE) {
         adapter.setPage('accessDeniedTeamsMeeting');
-      } else if (REMOVED_FROM_CALL_SUB_CODES.includes[endedCall?.callEndReason.subCode ?? -1]) {
+      } else if (REMOVED_FROM_CALL_SUB_CODES.includes(endedCall.callEndReason.subCode ?? -1)) {
         adapter.setPage('removedFromCall');
       } else {
         //@TODO: when call ended page is implemented: adapter.setPage('leftCall');
