@@ -4,15 +4,25 @@
 import { IStyle } from '@fluentui/react';
 
 /**
+ * Horizontal Gallery button width in rem
+ */
+export const HORIZONTAL_GALLERY_BUTTON_WIDTH = 1.75;
+
+/**
  * @private
  */
 export const leftRightButtonStyles: IStyle = {
   background: 'none',
   padding: 0,
   height: '100%',
-  minWidth: '1.75rem',
-  maxWidth: '1.75rem'
+  minWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
+  maxWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`
 };
+
+/**
+ * Horizontal Gallery gap size in rem between tiles and buttons
+ */
+export const HORIZONTAL_GALLERY_GAP = 0.5;
 
 /**
  * @private
@@ -23,5 +33,5 @@ export const horizontalGalleryContainerStyle: IStyle = {
   paddingBottom: '0.5rem',
   display: 'flex',
   flexFlow: 'row',
-  gap: '0.5rem'
+  gap: `${HORIZONTAL_GALLERY_GAP}rem`
 };

@@ -38,6 +38,21 @@ export const videoGalleryOuterDivStyle = mergeStyles({ position: 'relative', wid
 export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'relative', height: '100%' } };
 
 /**
+ * Large floating modal width and height for small screen
+ */
+export const SMALL_FLOATING_MODAL_SIZE = { width: 4, height: 5.5 }; //size in rem
+
+/**
+ * Large floating modal width and height for large screen
+ */
+export const LARGE_FLOATING_MODAL_SIZE = { width: 10, height: 7.5 };
+
+/**
+ * Floating modal horizontal position from the right in rem
+ */
+export const FLOATING_MODAL_POSITION_FROM_RIGHT = 0.5;
+
+/**
  * @private
  */
 export const floatingLocalVideoModalStyle = (
@@ -49,13 +64,13 @@ export const floatingLocalVideoModalStyle = (
     overflow: 'hidden'
   },
   main: {
-    minWidth: isNarrow ? '4rem' : '10rem',
-    minHeight: isNarrow ? '5.5rem' : '7.5rem',
+    minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE.width}rem` : `${LARGE_FLOATING_MODAL_SIZE.width}rem`,
+    minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE.height}rem` : `${LARGE_FLOATING_MODAL_SIZE.height}rem`,
     boxShadow: theme.effects.elevation8,
     borderRadius: theme.effects.roundedCorner4,
     position: 'absolute',
     bottom: '0.5rem',
-    right: '0.5rem'
+    right: `${FLOATING_MODAL_POSITION_FROM_RIGHT}rem`
   }
 });
 
@@ -75,15 +90,22 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
 };
 
 /**
+ * Horizontal Gallery padding in rem
+ */
+export const HORIZONTAL_GALLERY_PADDING = 0.5; // in rem
+
+/**
  * @private
  */
 export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
   return {
     root: {
       height: isNarrow ? '6rem' : '8rem',
-      width: isNarrow ? 'calc(100% - 4rem)' : 'calc(100% - 10rem)',
-      paddingRight: '0.5rem',
-      paddingLeft: '0.5rem'
+      width: isNarrow
+        ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE.width}rem)`
+        : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE.width}rem)`,
+      paddingRight: `${HORIZONTAL_GALLERY_PADDING}rem`,
+      paddingLeft: `${HORIZONTAL_GALLERY_PADDING}rem`
     }
   };
 };

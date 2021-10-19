@@ -28,15 +28,22 @@ import {
   screenSharingNotificationTextStyle,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle,
-  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
+  horizontalGalleryStyle,
   SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
-  horizontalGalleryStyle
+  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE,
+  LARGE_HORIZONTAL_GALLERY_TILE_SIZE,
+  SMALL_FLOATING_MODAL_SIZE,
+  LARGE_FLOATING_MODAL_SIZE,
+  HORIZONTAL_GALLERY_PADDING,
+  FLOATING_MODAL_POSITION_FROM_RIGHT
 } from '../styles/VideoGallery.styles';
 import { useContainerWidth, isNarrowWidth } from '../utils/responsive';
 import { VideoTile, VideoTileStylesProps } from '../VideoTile';
 import { HorizontalGallery } from './HorizontalGallery';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { getVideoTileOverrideColor } from '../utils/videoTileStylesUtils';
+import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
 
 const emptyStyles = {};
 const floatingTileHostId = 'UILibraryFloatingTileHost';
@@ -365,15 +372,25 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const tilesPerHorizontalGalleryPage = isNarrow
     ? calculateHorizontalGalleryTilesPerPage({
-        horizontalGalleryWidth: containerWidth - 80, // subtract 64px from floatingLocalVideo and (8px x 2) for container paddingRight and paddingLeft
-        tileWidth: 88,
-        gapBetweenTiles: 8
+        horizontalGalleryWidth:
+          // subtract modal width, modal position from right and Horizontal Gallery paddingLeft and paddingRight
+          containerWidth -
+          convertRemToPx(SMALL_FLOATING_MODAL_SIZE.width) -
+          convertRemToPx(FLOATING_MODAL_POSITION_FROM_RIGHT) -
+          convertRemToPx(HORIZONTAL_GALLERY_PADDING) * 2,
+        tileWidth: convertRemToPx(SMALL_HORIZONTAL_GALLERY_TILE_SIZE.width),
+        horizontalGalleryGap: convertRemToPx(HORIZONTAL_GALLERY_GAP)
       })
     : calculateHorizontalGalleryTilesPerPage({
-        horizontalGalleryWidth: containerWidth - 186, // subtract 160px from floatingLocalVideo and (8px x 2) for container paddingRight and paddingLeft
-        buttonsWidth: 56,
-        tileWidth: 160,
-        gapBetweenTiles: 8
+        horizontalGalleryWidth:
+          // subtract modal width, modal position from right and Horizontal Gallery paddingLeft and paddingRight
+          containerWidth -
+          convertRemToPx(LARGE_FLOATING_MODAL_SIZE.width) -
+          convertRemToPx(FLOATING_MODAL_POSITION_FROM_RIGHT) -
+          convertRemToPx(HORIZONTAL_GALLERY_PADDING) * 2,
+        buttonsWidth: convertRemToPx(HORIZONTAL_GALLERY_BUTTON_WIDTH),
+        tileWidth: convertRemToPx(LARGE_HORIZONTAL_GALLERY_TILE_SIZE.width),
+        horizontalGalleryGap: convertRemToPx(HORIZONTAL_GALLERY_GAP)
       });
 
   return (
@@ -407,14 +424,41 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 };
 
 /**
- * Helper function to calculate tiles per page for HorizontalGallery based on the available width and the width of a tile. All units are in px.
+ * Helper function to calculate tiles per page for HorizontalGallery based on the available width and the width of a tile.
  */
 const calculateHorizontalGalleryTilesPerPage = (args: {
   horizontalGalleryWidth: number;
   buttonsWidth?: number;
   tileWidth: number;
-  gapBetweenTiles: number;
+  horizontalGalleryGap: number;
 }): number => {
-  const { horizontalGalleryWidth, buttonsWidth = 0, tileWidth, gapBetweenTiles } = args;
-  return Math.floor((horizontalGalleryWidth - buttonsWidth - gapBetweenTiles) / (tileWidth + gapBetweenTiles));
+  const { horizontalGalleryWidth, buttonsWidth = 0, tileWidth, horizontalGalleryGap } = args;
+  /** First, figure out tileSpace
+   *    <----horizontalGalleryWidth------->
+   *    __________________________________
+   *   | ||             ||             || |
+   *   |<||             ||             ||>|
+   *   |_||_____________||_____________||_|
+   *       <---------tileSpace-------->
+   *       OR if there are no buttons
+   *    __________________________________
+   *   |                ||                |
+   *   |                ||                |
+   *   |________________||________________|
+   *   <-------------tileSpace----------->
+   */
+  let tileSpace = horizontalGalleryWidth;
+  if (buttonsWidth !== 0) {
+    // need to subtract width of buttons
+    tileSpace -= 2 * buttonsWidth;
+    // need to subtract 2 gaps for buttons
+    tileSpace -= 2 * horizontalGalleryGap;
+  }
+  // Then figure out how many tiles can fit in tileSpace.
+  // tileSpace = n * tileWidth + (n - 1) * gap. Isolate n and take the floor.
+  return Math.floor((tileSpace + horizontalGalleryGap) / (tileWidth + horizontalGalleryGap));
+};
+
+const convertRemToPx = (rem: number): number => {
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
