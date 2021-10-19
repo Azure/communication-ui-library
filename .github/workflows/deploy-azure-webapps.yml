@@ -5,7 +5,7 @@ on:
     # minute 0, hour 0 UTC (which is 6pm PST/5pm PDT), any day of month, any month, any day of the week
     # if we want to support only Mon - Fri we need to change the check how we look for new changes. Currently we
     # check for any new changes in the last 24 hours regardless of day)
-    - cron: '0 0 * * *'
+    - cron: '0 21 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
