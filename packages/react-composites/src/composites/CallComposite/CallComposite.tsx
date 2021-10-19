@@ -12,11 +12,15 @@ import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallControlOptions } from './components/CallControls';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
-import { ErrorPage } from './pages/ErrorPage';
+import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getCallId, getCallStatus, getEndedCall, getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { isInCall } from './utils';
+
+// @TODO: move to the AzureCommunicationCallAdapter implementation and map to an EndCallReason
+const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
+const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
 
 /**
  * Props for {@link CallComposite}.
@@ -94,17 +98,19 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     }
   }, [adapter, callState]);
 
-  // Remember last available callId
+  // Remember last available callId to compare against when the call ends.
   if (callId) {
     currentCallId.current = callId;
   }
-  // Update page if the caller was removed from a call
+  // Update page if the caller is no longer in a call
   useEffect(() => {
-    if (endedCall && currentCallId.current === endedCall?.id) {
-      if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason.subCode === 5854) {
-        adapter.setPage('errorJoiningTeamsMeeting');
-      } else if (endedCall?.callEndReason?.code === 0 && endedCall?.callEndReason?.subCode === 5300) {
-        adapter.setPage('removed');
+    if (endedCall && currentCallId.current === endedCall?.id && endedCall?.callEndReason?.code === 0) {
+      if (endedCall.callEndReason.subCode === ACCESS_DENIED_TEAMS_MEETING_SUB_CODE) {
+        adapter.setPage('accessDeniedTeamsMeeting');
+      } else if (REMOVED_FROM_CALL_SUB_CODES.includes(endedCall.callEndReason.subCode ?? -1)) {
+        adapter.setPage('removedFromCall');
+      } else {
+        //@TODO: when call ended page is implemented: adapter.setPage('leftCall');
       }
     }
   }, [adapter, endedCall]);
@@ -119,26 +125,31 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           }}
         />
       );
-    case 'error':
-      return <ErrorPage rejoinHandler={() => adapter.setPage('configuration')} />;
-    case 'errorJoiningTeamsMeeting':
+    case 'accessDeniedTeamsMeeting':
       return (
-        <ErrorPage
-          rejoinHandler={() => adapter.setPage('configuration')}
-          title={locale.strings.call.teamsMeetingFailToJoin}
-          reason={locale.strings.call.teamsMeetingFailReasonAccessDenied}
+        <NoticePage
+          title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
+          moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
         />
       );
-    case 'removed':
+    case 'removedFromCall':
       return (
-        <ErrorPage
-          rejoinHandler={() => adapter.setPage('configuration')}
-          title={locale.strings.call.teamsMeetingFailToJoin}
-          reason={locale.strings.call.teamsMeetingFailReasonParticipantRemoved}
+        <NoticePage
+          title={locale.strings.call.removedFromMeetingTitle}
+          moreDetails={locale.strings.call.removedFromMeetingMoreDetails}
         />
       );
     case 'lobby':
-      return <LobbyPage endCallHandler={() => adapter.setPage('configuration')} />;
+      return (
+        <LobbyPage
+          strings={{
+            connectingToCall: locale.strings.call.lobbyScreenConnectingToCallTitle,
+            waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedTitle
+          }}
+          endCallHandler={() => adapter.setPage('configuration')}
+          options={props.options}
+        />
+      );
     case 'call':
       return (
         <CallPage
@@ -151,7 +162,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
     default:
-      throw 'Invalid call composite page';
+      throw new Error('Invalid call composite page');
   }
 };
 

@@ -202,7 +202,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -221,12 +221,15 @@ export interface CallCompositeStrings {
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
+    failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
+    failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    lobbyScreenConnectingToCallTitle: string;
+    lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+    removedFromMeetingMoreDetails?: string;
+    removedFromMeetingTitle: string;
     soundLabel: string;
-    startCallButtonText: string;
-    teamsMeetingFailReasonAccessDenied: string;
-    teamsMeetingFailReasonParticipantRemoved: string;
-    teamsMeetingFailToJoin: string;
+    startCallButtonLabel: string;
 }
 
 // @public
@@ -375,8 +378,6 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
-    ScreenSharePopupPresenting: JSX.Element;
-    ScreenSharePopupStopPresenting: JSX.Element;
 };
 
 // @public
@@ -415,8 +416,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
-    ScreenSharePopupPresenting: JSX.Element;
-    ScreenSharePopupStopPresenting: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -565,7 +564,7 @@ export type MeetingCompositeOptions = {
 };
 
 // @alpha
-export type MeetingCompositePage = 'configuration' | 'lobby' | 'meeting' | 'error' | 'errorJoiningTeamsMeeting' | 'removed';
+export type MeetingCompositePage = 'configuration' | 'lobby' | 'meeting' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
 
 // @alpha
 export type MeetingCompositeProps = {

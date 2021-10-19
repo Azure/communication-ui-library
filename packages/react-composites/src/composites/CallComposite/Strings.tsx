@@ -20,7 +20,7 @@ export interface CallCompositeStrings {
   /**
    * Text in button to start call in configuration page.
    */
-  startCallButtonText: string;
+  startCallButtonLabel: string;
   /**
    * Placeholder text for local device settings dropdowns.
    */
@@ -46,15 +46,27 @@ export interface CallCompositeStrings {
    */
   microphonePermissionDenied: string;
   /**
-   * Error reason when joining a Teams meeting fails because meeting owner denied access.
+   * Title text of the page shown to the user when joining a Teams meeting fails because meeting owner denied access.
    */
-  teamsMeetingFailReasonAccessDenied: string;
+  failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
   /**
-   * Error reason when Teams meeting is disconnected because meeting owner removed the user.
+   * More details text of the page shown to the user when joining a Teams meeting fails because meeting owner denied access.
    */
-  teamsMeetingFailReasonParticipantRemoved: string;
+  failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
   /**
-   * Error shown when Teams meeting connection is dropped for some reason.
+   * Title text of the page shown to the user when they are removed from a meeting.
    */
-  teamsMeetingFailToJoin: string;
+  removedFromMeetingTitle: string;
+  /**
+   * More details text of the page shown to the user when they are removed from a meeting.
+   */
+  removedFromMeetingMoreDetails?: string;
+  /**
+   * Text shown to the user on the lobby screen when connecting to a call.
+   */
+  lobbyScreenConnectingToCallTitle: string;
+  /**
+   * Text shown to the user on the lobby screen when waiting to be admitted to a call.
+   */
+  lobbyScreenWaitingToBeAdmittedTitle: string;
 }

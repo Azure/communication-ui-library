@@ -29,7 +29,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
       disabled={isDisabled}
       className={mergeStyles(buttonStyle, props.className)}
       styles={buttonWithIconStyles}
-      text={locale.strings.call.startCallButtonText}
+      text={locale.strings.call.startCallButtonLabel}
       onClick={onClickHandler}
       onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
     />

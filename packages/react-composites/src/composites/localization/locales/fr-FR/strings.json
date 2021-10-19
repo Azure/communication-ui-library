@@ -10,7 +10,7 @@
     "cameraLabel": "Appareil photo",
     "soundLabel": "Son",
     "configurationPageTitle": "Lancer un appel",
-    "startCallButtonText": "Lancer l'appel"
+    "startCallButtonLabel": "Lancer l'appel"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation"

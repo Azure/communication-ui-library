@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { useTheme } from '../theming/FluentThemeProvider';
-import React, { useCallback, useState } from 'react';
-import { Icon, mergeStyles } from '@fluentui/react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { concatStyleSets, Icon, mergeStyles } from '@fluentui/react';
 
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from './styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
@@ -55,14 +55,18 @@ export const EditBox = (props: EditBoxProps): JSX.Element => {
   const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
 
   const onRenderThemedCancelIcon = useCallback(
-    () => onRenderCancelIcon(theme.palette.themePrimary),
-    [theme.palette.themePrimary]
+    () => onRenderCancelIcon(theme.palette.neutralSecondary),
+    [theme.palette.neutralSecondary]
   );
 
   const onRenderThemedSubmitIcon = useCallback(
-    () => onRenderSubmitIcon(theme.palette.themePrimary),
-    [theme.palette.themePrimary]
+    () => onRenderSubmitIcon(theme.palette.neutralSecondary),
+    [theme.palette.neutralSecondary]
   );
+
+  const editBoxStyles = useMemo(() => {
+    return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
+  }, [theme.palette.themePrimary]);
 
   return (
     <InputBoxComponent
@@ -75,7 +79,7 @@ export const EditBox = (props: EditBoxProps): JSX.Element => {
       supportNewline={false}
       maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
       errorMessage={textTooLongMessage}
-      styles={editBoxStyleSet}
+      styles={editBoxStyles}
     >
       <InputBoxButton
         className={editingButtonStyle}

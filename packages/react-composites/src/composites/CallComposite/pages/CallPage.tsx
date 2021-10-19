@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { PermissionsBanner } from '../../common/PermissionsBanner';
-import { permissionsBannerContainerStyle } from '../../common/styles/PermissionsBanner.styles';
 import { CallCompositeOptions } from '../CallComposite';
-import { CallControls } from '../components/CallControls';
-import { ComplianceBanner } from '../components/ComplianceBanner';
 import { useHandlers } from '../hooks/useHandlers';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
@@ -18,14 +13,9 @@ import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
-import {
-  bannersContainerStyles,
-  callControlsContainer,
-  containerStyles,
-  mediaGalleryContainerStyles,
-  subContainerStyles
-} from '../styles/CallPage.styles';
 import { CallControlOptions } from '../components/CallControls';
+import { CallArrangement } from '../components/CallArrangement';
+import { reduceCallControlsSetForMobile } from '../utils';
 
 /**
  * @private
@@ -66,73 +56,38 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     options?.callControls !== false ? (options?.callControls === true ? {} : options?.callControls || {}) : false;
   if (callControlOptions && options?.mobileView) {
     callControlOptions.compressedMode = true;
-    callControlOptions = reduceControlsSetForMobile(callControlOptions);
+    callControlOptions = reduceCallControlsSetForMobile(callControlOptions);
   }
 
-  const screenShareModalHostId = 'UILibraryMediaGallery';
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
-      <>
-        <Stack.Item styles={bannersContainerStyles}>
-          <Stack>
-            <ComplianceBanner {...complianceBannerProps} />
-          </Stack>
-          <Stack style={permissionsBannerContainerStyle}>
-            <PermissionsBanner
-              microphonePermissionGranted={devicePermissions.audio}
-              cameraPermissionGranted={devicePermissions.video}
-            />
-          </Stack>
-          {options?.errorBar !== false && (
-            <Stack>
-              <ErrorBar {...errorBarProps} />
-            </Stack>
-          )}
-        </Stack.Item>
-
-        <Stack.Item styles={subContainerStyles} grow>
-          {callStatus === 'Connected' && (
-            <Stack id={screenShareModalHostId} grow styles={mediaGalleryContainerStyles}>
-              <MediaGallery
-                {...mediaGalleryProps}
-                {...mediaGalleryHandlers}
-                onRenderAvatar={onRenderAvatar}
-                onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-              />
-            </Stack>
-          )}
-        </Stack.Item>
-        {callControlOptions !== false && (
-          <Stack.Item className={callControlsContainer}>
-            <CallControls
-              onEndCallClick={endCallHandler}
-              callInvitationURL={callInvitationURL}
-              onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-              options={callControlOptions}
-            />
-          </Stack.Item>
-        )}
-      </>
-    </Stack>
+    <CallArrangement
+      complianceBannerProps={{ ...complianceBannerProps }}
+      permissionBannerProps={{
+        microphonePermissionGranted: devicePermissions.audio,
+        cameraPermissionGranted: devicePermissions.video
+      }}
+      errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
+      callControlProps={
+        callControlOptions !== false && {
+          onEndCallClick: endCallHandler,
+          callInvitationURL: callInvitationURL,
+          onFetchParticipantMenuItems: onFetchParticipantMenuItems,
+          options: callControlOptions
+        }
+      }
+      onRenderGalleryContent={() =>
+        callStatus === 'Connected' ? (
+          <MediaGallery
+            {...mediaGalleryProps}
+            {...mediaGalleryHandlers}
+            onRenderAvatar={onRenderAvatar}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          />
+        ) : (
+          <></>
+        )
+      }
+      dataUiId={'call-page'}
+    />
   );
-};
-
-/**
- * Reduce the set of call controls visible on mobile.
- * For example do not show screenshare button.
- */
-const reduceControlsSetForMobile = (callControlOptions: CallControlOptions): CallControlOptions => {
-  const reduceCallControlOptions = callControlOptions;
-
-  // Do not show screen share button when composite is optimized for mobile unless the developer
-  // has explicitly opted in.
-  if (
-    reduceCallControlOptions &&
-    typeof reduceCallControlOptions !== 'boolean' &&
-    reduceCallControlOptions.screenShareButton !== true
-  ) {
-    reduceCallControlOptions.screenShareButton = false;
-  }
-
-  return reduceCallControlOptions;
 };
