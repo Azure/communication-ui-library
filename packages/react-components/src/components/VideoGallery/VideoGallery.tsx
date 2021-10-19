@@ -288,7 +288,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const remoteParticipantGridTiles = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return remoteParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
+      return gridParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
@@ -332,11 +332,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }
 
   const horizontalGalleryTiles = useMemo(() => {
+    // If user provided a custom onRender function return that function.
+    if (onRenderRemoteVideoTile) {
+      return horizontalGalleryParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
+    }
     return horizontalGalleryParticipants.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
-      return onRenderRemoteVideoTile ? (
-        onRenderRemoteVideoTile(participant)
-      ) : (
+      return (
         <div
           key={participant.userId}
           style={isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE}
@@ -370,28 +372,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     isNarrow
   ]);
 
-  const tilesPerHorizontalGalleryPage = isNarrow
-    ? calculateHorizontalGalleryTilesPerPage({
-        horizontalGalleryWidth:
-          // subtract modal width, modal position from right and Horizontal Gallery paddingLeft and paddingRight
-          containerWidth -
-          convertRemToPx(SMALL_FLOATING_MODAL_SIZE.width) -
-          convertRemToPx(FLOATING_MODAL_POSITION_FROM_RIGHT) -
-          convertRemToPx(HORIZONTAL_GALLERY_PADDING) * 2,
-        tileWidth: convertRemToPx(SMALL_HORIZONTAL_GALLERY_TILE_SIZE.width),
-        horizontalGalleryGap: convertRemToPx(HORIZONTAL_GALLERY_GAP)
-      })
-    : calculateHorizontalGalleryTilesPerPage({
-        horizontalGalleryWidth:
-          // subtract modal width, modal position from right and Horizontal Gallery paddingLeft and paddingRight
-          containerWidth -
-          convertRemToPx(LARGE_FLOATING_MODAL_SIZE.width) -
-          convertRemToPx(FLOATING_MODAL_POSITION_FROM_RIGHT) -
-          convertRemToPx(HORIZONTAL_GALLERY_PADDING) * 2,
-        buttonsWidth: convertRemToPx(HORIZONTAL_GALLERY_BUTTON_WIDTH),
-        tileWidth: convertRemToPx(LARGE_HORIZONTAL_GALLERY_TILE_SIZE.width),
-        horizontalGalleryGap: convertRemToPx(HORIZONTAL_GALLERY_GAP)
-      });
+  const tilesPerHorizontalGalleryPage = getTilesPerHorizontalGalleryPage(containerWidth, isNarrow);
 
   return (
     <div ref={containerRef} className={videoGalleryOuterDivStyle}>
@@ -424,23 +405,50 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 };
 
 /**
- * Helper function to calculate tiles per page for HorizontalGallery based on the available width and the width of a tile.
+ * Helper function to get tiles per page for HorizontalGallery based on width and whether narrow widths are used.
  */
+const getTilesPerHorizontalGalleryPage = (containerWidth: number, isNarrow: boolean): number => {
+  const modalWidth = isNarrow
+    ? convertRemToPx(SMALL_FLOATING_MODAL_SIZE.width)
+    : convertRemToPx(LARGE_FLOATING_MODAL_SIZE.width);
+  const modalPositionFromRight = convertRemToPx(FLOATING_MODAL_POSITION_FROM_RIGHT);
+  const horizontalGalleryPadding = convertRemToPx(HORIZONTAL_GALLERY_PADDING);
+  // subtract modal width, modal position from right and Horizontal Gallery paddingLeft and paddingRight
+  const horizontalGalleryWidth = containerWidth - modalWidth - modalPositionFromRight - horizontalGalleryPadding * 2;
+
+  const buttonsWidth = isNarrow ? 0 : convertRemToPx(HORIZONTAL_GALLERY_BUTTON_WIDTH);
+  const tileWidth = isNarrow
+    ? convertRemToPx(SMALL_HORIZONTAL_GALLERY_TILE_SIZE.width)
+    : convertRemToPx(LARGE_HORIZONTAL_GALLERY_TILE_SIZE.width);
+  const horizontalGalleryGap = convertRemToPx(HORIZONTAL_GALLERY_GAP);
+
+  return calculateHorizontalGalleryTilesPerPage({
+    horizontalGalleryWidth,
+    buttonsWidth,
+    tileWidth,
+    horizontalGalleryGap
+  });
+};
+
+const convertRemToPx = (rem: number): number => {
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+};
+
 const calculateHorizontalGalleryTilesPerPage = (args: {
   horizontalGalleryWidth: number;
-  buttonsWidth?: number;
+  buttonsWidth: number;
   tileWidth: number;
   horizontalGalleryGap: number;
 }): number => {
-  const { horizontalGalleryWidth, buttonsWidth = 0, tileWidth, horizontalGalleryGap } = args;
-  /** First, figure out tileSpace
+  const { horizontalGalleryWidth, buttonsWidth, tileWidth, horizontalGalleryGap } = args;
+  /** First, figure out tileSpace if there are buttons
    *    <----horizontalGalleryWidth------->
    *    __________________________________
    *   | ||             ||             || |
    *   |<||             ||             ||>|
    *   |_||_____________||_____________||_|
    *       <---------tileSpace-------->
-   *       OR if there are no buttons
+   *              OR  no buttons
    *    __________________________________
    *   |                ||                |
    *   |                ||                |
@@ -457,8 +465,4 @@ const calculateHorizontalGalleryTilesPerPage = (args: {
   // Then figure out how many tiles can fit in tileSpace.
   // tileSpace = n * tileWidth + (n - 1) * gap. Isolate n and take the floor.
   return Math.floor((tileSpace + horizontalGalleryGap) / (tileWidth + horizontalGalleryGap));
-};
-
-const convertRemToPx = (rem: number): number => {
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
