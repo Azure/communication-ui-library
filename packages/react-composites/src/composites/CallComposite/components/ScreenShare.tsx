@@ -24,6 +24,7 @@ import {
 import {
   loadingStyle,
   videoStreamStyle,
+  videoWithNoRoundedBorderStyle,
   screenSharingContainer,
   screenSharingNotificationContainer,
   screenSharingNotificationIconContainer,
@@ -50,13 +51,17 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
     renderElement?: HTMLElement,
     displayName?: string
   ): JSX.Element => {
+    const videoStyles = isSpeaking ? videoWithNoRoundedBorderStyle : {};
+
     return (
       <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle} key={userId}>
         <Stack className={aspectRatioBoxContentStyle}>
           <VideoTile
             styles={stackContainerParticipantVideoStyles}
             userId={userId}
-            renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
+            renderElement={
+              renderElement ? <StreamMedia styles={videoStyles} videoStreamElement={renderElement} /> : undefined
+            }
             displayName={displayName}
             isMuted={isMuted}
             isSpeaking={isSpeaking}
@@ -150,6 +155,8 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
     }
 
+    const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
+
     return (
       <VideoTile
         displayName={screenShareParticipant?.displayName}
@@ -157,7 +164,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         isSpeaking={screenShareParticipant?.isSpeaking}
         renderElement={
           screenShareStream?.renderElement ? (
-            <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
+            <StreamMedia styles={videoStyles} videoStreamElement={screenShareStream?.renderElement} />
           ) : undefined
         }
         onRenderPlaceholder={onRenderPlaceholder}

@@ -3,15 +3,13 @@
 
 import {
   mergeStyles,
-  getTheme,
   IStackStyles,
   IModalStyleProps,
   IModalStyles,
-  IStyleFunctionOrObject
+  IStyleFunctionOrObject,
+  Theme
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
-
-const theme = getTheme();
 
 const videoBaseStyle = mergeStyles({
   border: 0
@@ -33,7 +31,7 @@ export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'rel
 /**
  * @private
  */
-export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
+export const floatingLocalVideoModalStyle = (theme: Theme): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => ({
   root: {
     width: '100%',
     height: '100%',
@@ -48,12 +46,12 @@ export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStylePro
     bottom: '1rem',
     right: '1rem'
   }
-};
+});
 
 /**
  * @private
  */
-export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
+export const floatingLocalVideoTileStyle = (theme: Theme): VideoTileStylesProps => ({
   root: {
     position: 'absolute',
     zIndex: 1,
@@ -62,5 +60,14 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
     width: '11.25rem',
     height: '7rem',
     borderRadius: theme.effects.roundedCorner4
+  }
+});
+
+/**
+ * @private
+ */
+export const videoWithNoRoundedBorderStyle = {
+  root: {
+    '& video': { borderRadius: '0rem' }
   }
 };
