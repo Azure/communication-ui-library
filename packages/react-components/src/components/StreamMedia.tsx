@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { mergeStyles } from '@fluentui/react';
 import React, { useEffect, useRef } from 'react';
 import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
+import { useTheme } from '../theming';
 import { BaseCustomStylesProps } from '../types';
-import { mergeStyles } from '@fluentui/react';
 
 /**
  * Props for {@link StreamMedia}.
@@ -35,6 +36,8 @@ export interface StreamMediaProps {
  */
 export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
+
   const { isMirrored, videoStreamElement, styles } = props;
 
   useEffect(() => {
@@ -57,6 +60,9 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   }, [videoStreamElement]);
 
   return (
-    <div className={mergeStyles(isMirrored ? invertedVideoStyle : mediaContainer, styles?.root)} ref={containerEl} />
+    <div
+      className={mergeStyles(isMirrored ? invertedVideoStyle(theme) : mediaContainer(theme), styles?.root)}
+      ref={containerEl}
+    />
   );
 };

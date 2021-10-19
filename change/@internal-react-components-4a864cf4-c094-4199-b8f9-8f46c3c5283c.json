@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "removed video stream border radius when speaking",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
