@@ -19,17 +19,6 @@
       * {
         text-rendering: geometricprecision !important;
       }
-
-      /*
-       * There is a flakiness bug in our UI tests where the isSpeaker border
-       * is sometimes showing on renders. This disables the video tiles having
-       * a border to prevent that. This workaround is intended to be temporary only.
-       *
-       * A work item to solve this has been created: https://skype.visualstudio.com/SPOOL/_workitems/edit/2588338
-       */
-      div[data-ui-id='video-tile'] {
-        border: none !important;
-      }
     </style>
   </head>
 

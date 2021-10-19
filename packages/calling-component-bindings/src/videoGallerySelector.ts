@@ -16,6 +16,7 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+import { checkIsSpeaking } from './SelectorUtils';
 
 const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamState): VideoGalleryStream => {
   return {
@@ -95,7 +96,7 @@ const videoGalleryRemoteParticipantsMemo = (
       return memoizedFn(
         toFlatCommunicationIdentifier(participant.identifier),
         participant.isMuted,
-        participant.isSpeaking,
+        checkIsSpeaking(participant),
         participant.videoStreams,
         participant.displayName
       );
@@ -195,7 +196,7 @@ export const videoGallerySelector = createSelector(
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
             toFlatCommunicationIdentifier(screenShareRemoteParticipant.identifier),
             screenShareRemoteParticipant.isMuted,
-            screenShareRemoteParticipant.isSpeaking,
+            checkIsSpeaking(screenShareRemoteParticipant),
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.displayName
           )
