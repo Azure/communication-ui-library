@@ -201,9 +201,9 @@ async function createViewUnparentedVideo(
 
   internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendering', undefined);
 
-  let view;
   try {
-    view = await renderer.createView(options);
+    const view = await renderer.createView(options);
+    stream.view = convertFromSDKToDeclarativeVideoStreamRendererView(view);
   } catch (e) {
     // Special case for unparented views. Since they are not tied to anything and created by us based on the calls to
     // this function we'll delete it to clean up the data since keeping it around doesn't help us and if developer wants
@@ -232,8 +232,6 @@ async function createViewUnparentedVideo(
     context.deleteDeviceManagerUnparentedView(stream);
     return;
   }
-
-  stream.view = convertFromSDKToDeclarativeVideoStreamRendererView(view);
 
   // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
