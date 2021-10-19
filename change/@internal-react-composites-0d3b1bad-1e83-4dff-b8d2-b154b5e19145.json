@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "added screenSharing",
+  "comment": "added screenSharing message string",
   "packageName": "@internal/react-composites",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "patch"
