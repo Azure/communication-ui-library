@@ -315,13 +315,15 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     defaultPlaceHolder: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
-    failedToJoinTeamsMeetingReasonAccessDeniedTitleMessage: string;
+    failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    lobbyScreenConnectingToCallTitle: string;
+    lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
-    removedFromMeetingMoreDetailsMessage?: string;
-    removedFromMeetingTitleMessage: string;
+    removedFromMeetingMoreDetails?: string;
+    removedFromMeetingTitle: string;
     screenSharingMessage: string;
     soundLabel: string;
-    startCallButtonText: string;
+    startCallButtonLabel: string;
 }
 
 // @public

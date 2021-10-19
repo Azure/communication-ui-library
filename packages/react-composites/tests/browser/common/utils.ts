@@ -49,6 +49,9 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
     await page.bringToFront();
     await page.click(dataUiId('call-composite-start-call-button'));
+
+    // Wait for call page to load (i.e. wait for connecting screen to have passed)
+    await page.waitForSelector(dataUiId('call-page'));
   }
 
   // Wait for all participants tiles to have loaded
@@ -74,6 +77,9 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
     await page.bringToFront();
     await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
     await page.click(dataUiId('call-composite-start-call-button'));
+
+    // Wait for call page to load (i.e. wait for connecting screen to have passed)
+    await page.waitForSelector(dataUiId('call-page'));
   }
 
   // Wait for all participants cameras to have loaded
