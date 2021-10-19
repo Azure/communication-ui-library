@@ -25,7 +25,8 @@ import {
   screenSharingNotificationContainerCameraOnStyles,
   screenSharingNotificationContainerCameraOffStyles,
   screenSharingNotificationTextStyle,
-  videoGalleryContainerStyle
+  videoGalleryContainerStyle,
+  videoWithNoRoundedBorderStyle
 } from './styles/VideoGallery.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
@@ -138,8 +139,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const screenSharingNotificationContainerStyle = mergeStyles(
       localParticipant.videoStream?.renderElement
-        ? screenSharingNotificationContainerCameraOnStyles
-        : screenSharingNotificationContainerCameraOffStyles,
+        ? screenSharingNotificationContainerCameraOnStyles(theme)
+        : screenSharingNotificationContainerCameraOffStyles(theme),
       getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralSecondary')
     );
 
@@ -182,7 +183,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     let localVideoTileStyles: VideoTileStylesProps = {};
     if (shouldFloatLocalVideo()) {
-      localVideoTileStyles = floatingLocalVideoTileStyle;
+      localVideoTileStyles = floatingLocalVideoTileStyle(theme);
     }
 
     if (localVideoStream && !localVideoStream.renderElement) {
@@ -265,7 +266,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isOpen={true}
           isModeless={true}
           dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyle}
+          styles={floatingLocalVideoModalStyle(theme)}
           layerProps={{ hostId: floatingTileHostId }}
         >
           {localParticipant && defaultOnRenderLocalVideoTile}
@@ -344,9 +345,11 @@ const RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} />;
+      const videoStyles = isSpeaking ? videoWithNoRoundedBorderStyle : {};
+
+      return <StreamMedia styles={videoStyles} videoStreamElement={renderElement} />;
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [renderElement, renderElement?.childElementCount]);
+    }, [renderElement, renderElement?.childElementCount, isSpeaking]);
 
     return (
       <Stack className={gridStyle} key={userId} grow>
