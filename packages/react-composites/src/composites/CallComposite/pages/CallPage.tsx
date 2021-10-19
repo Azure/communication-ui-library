@@ -13,9 +13,8 @@ import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
-import { CallControlOptions } from '../components/CallControls';
 import { CallArrangement } from '../components/CallArrangement';
-import { reduceCallControlsSetForMobile } from '../utils';
+import { reduceCallControlsForMobile } from '../utils';
 
 /**
  * @private
@@ -52,12 +51,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const devicePermissions = useSelector(devicePermissionSelector);
 
   // Reduce the controls shown when mobile view is enabled.
-  let callControlOptions: false | CallControlOptions =
-    options?.callControls !== false ? (options?.callControls === true ? {} : options?.callControls || {}) : false;
-  if (callControlOptions && options?.mobileView) {
-    callControlOptions.compressedMode = true;
-    callControlOptions = reduceCallControlsSetForMobile(callControlOptions);
-  }
+  const callControlOptions = options?.mobileView
+    ? reduceCallControlsForMobile(options?.callControls)
+    : options?.callControls;
 
   return (
     <CallArrangement

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CallState } from '@azure/communication-calling';
 import { CallCompositePage } from '../../CallComposite';
 
 /**
@@ -28,3 +29,14 @@ export function callPageToMeetingPage(page: CallCompositePage): MeetingComposite
 export function meetingPageToCallPage(page: MeetingCompositePage): CallCompositePage {
   return page === 'meeting' ? 'call' : page;
 }
+
+/**
+ * @private
+ */
+export const isInLobbyOrConnecting = (page: MeetingCompositePage) => page === 'lobby';
+
+/**
+ * @private
+ */
+export const hasJoinedCall = (page: MeetingCompositePage, callStatus: CallState) =>
+  page === 'meeting' && callStatus === 'Connected';

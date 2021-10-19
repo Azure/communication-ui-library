@@ -11,8 +11,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyTile } from '../components/LobbyTile';
 import { getCallStatus } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
-import { CallControlOptions } from '../components/CallControls';
-import { reduceCallControlsSetForMobile } from '../utils';
+import { reduceCallControlsForMobile } from '../utils';
 
 /**
  * @private
@@ -44,16 +43,9 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const callStateText = callState === 'InLobby' ? props.strings.waitingToBeAdmitted : props.strings.connectingToCall;
 
   // Reduce the controls shown when mobile view is enabled.
-  let callControlOptions: false | CallControlOptions =
-    props.options?.callControls !== false
-      ? props.options?.callControls === true
-        ? {}
-        : props.options?.callControls || {}
-      : false;
-  if (callControlOptions && props.options?.mobileView) {
-    callControlOptions.compressedMode = true;
-    callControlOptions = reduceCallControlsSetForMobile(callControlOptions);
-  }
+  const callControlOptions = props.options?.mobileView
+    ? reduceCallControlsForMobile(props.options?.callControls)
+    : props.options?.callControls;
 
   return (
     <CallArrangement
