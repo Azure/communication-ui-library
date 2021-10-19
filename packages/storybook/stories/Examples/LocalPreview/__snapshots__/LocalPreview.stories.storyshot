@@ -51,20 +51,20 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                     className="ms-Stack css-11"
                   >
                     <div
-                      className="css-80"
+                      className="css-12"
                     />
                   </div>
                   <div
-                    className="ms-Stack css-12"
+                    className="ms-Stack css-13"
                   >
                     <div
-                      className="css-14"
+                      className="css-15"
                     >
                       <div
-                        className="ms-Stack css-15"
+                        className="ms-Stack css-16"
                       >
                         <button
-                          className="ms-Button ms-Button--default is-checked root-16"
+                          className="ms-Button ms-Button--default is-checked root-17"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -75,7 +75,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-17"
+                            className="ms-Button-flexContainer flexContainer-18"
                             data-automationid="splitbuttonprimary"
                           >
                             <i
@@ -107,7 +107,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           </span>
                         </button>
                         <button
-                          className="ms-Button ms-Button--default is-checked root-16"
+                          className="ms-Button ms-Button--default is-checked root-17"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -118,7 +118,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           type="button"
                         >
                           <span
-                            className="ms-Button-flexContainer flexContainer-17"
+                            className="ms-Button-flexContainer flexContainer-18"
                             data-automationid="splitbuttonprimary"
                           >
                             <i

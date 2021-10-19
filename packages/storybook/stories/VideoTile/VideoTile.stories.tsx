@@ -73,10 +73,13 @@ const VideoTileStory = (args): JSX.Element => {
 
   const videoStreams = useVideoStreams(1);
   const videoStreamElement = args.isVideoReady ? videoStreams[0] : null;
+  const videoStyles = args.isSpeaking ? { root: { '& video': { borderRadius: '0rem' } } } : {};
 
   return (
     <VideoTileComponent
-      renderElement={args.isVideoReady ? <StreamMedia videoStreamElement={videoStreamElement} /> : undefined}
+      renderElement={
+        args.isVideoReady ? <StreamMedia styles={videoStyles} videoStreamElement={videoStreamElement} /> : undefined
+      }
       displayName={args.displayName}
       showMuteIndicator={args.showMuteIndicator}
       isMirrored={args.isMirrored}
