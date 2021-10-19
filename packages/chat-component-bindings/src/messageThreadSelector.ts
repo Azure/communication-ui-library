@@ -25,7 +25,11 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
-    if (messageType === 'text' || messageType === 'richtext/html') {
+    if (
+      messageType === ACSKnownMessageType.text ||
+      messageType === ACSKnownMessageType.richtextHtml ||
+      messageType === ACSKnownMessageType.html
+    ) {
       return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup);
     } else {
       return convertToUiSystemMessage(chatMessage);
