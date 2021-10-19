@@ -10,16 +10,12 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import {
-  Common,
-  fromFlatCommunicationIdentifier,
-  toFlatCommunicationIdentifier,
-  _isInCall
-} from '@internal/acs-ui-common';
+import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from '@internal/react-components';
+import { _isInCall } from '../isInCall';
 
 /**
  * Object containing all the handlers required for calling components.

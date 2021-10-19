@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _isInCall } from '@internal/acs-ui-common';
+import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useEffect, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';

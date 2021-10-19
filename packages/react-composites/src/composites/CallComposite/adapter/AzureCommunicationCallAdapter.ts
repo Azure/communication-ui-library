@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
+import { CallingHandlers, createDefaultCallingHandlers, _isInCall } from '@internal/calling-component-bindings';
 import {
   CallClientState,
   CallError,
@@ -38,7 +38,7 @@ import {
 } from './CallAdapter';
 import { isCameraOn } from '../utils';
 import { VideoStreamOptions } from '@internal/react-components';
-import { fromFlatCommunicationIdentifier, _isInCall, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
