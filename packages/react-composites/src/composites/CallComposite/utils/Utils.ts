@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { _isPreviewOn } from '@internal/calling-component-bindings';
 import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallControlOptions } from '../components/CallControls';
 
@@ -14,20 +14,11 @@ export const isCameraOn = (state: CallAdapterState): boolean => {
     return !!stream;
   } else {
     if (state.devices.selectedCamera) {
-      const previewOn = isPreviewOn(state.devices);
+      const previewOn = _isPreviewOn(state.devices);
       return previewOn;
     }
   }
   return false;
-};
-
-/**
- * @private
- */
-export const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
-  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
-  // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
 };
 
 /**

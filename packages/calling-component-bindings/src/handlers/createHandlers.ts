@@ -11,11 +11,11 @@ import {
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from '@internal/react-components';
-import { _isInCall } from '../isInCall';
+import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../callUtils';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -107,14 +107,12 @@ export const createDefaultCallingHandlers = memoizeOne(
       } else {
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         if (selectedCamera) {
-          const previewOn = isPreviewOn(callClient.getState().deviceManager);
+          const previewOn = _isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
             // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
             // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
             // currently.
-            callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
-              await callClient.disposeView(undefined, undefined, view);
-            });
+            await disposeAllLocalPreviewViews(callClient);
           } else {
             await callClient.createView(
               undefined,
@@ -161,7 +159,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         return stream?.switchSource(device);
       } else {
-        const previewOn = isPreviewOn(callClient.getState().deviceManager);
+        const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
         if (!previewOn) {
           deviceManager.selectCamera(device);
@@ -314,13 +312,6 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
   }
 );
-
-// TODO: extract into an util.
-const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
-  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
-  // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
-};
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invocations with

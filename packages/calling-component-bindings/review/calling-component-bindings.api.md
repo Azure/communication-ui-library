@@ -133,6 +133,9 @@ export const getCallingSelector: <Component extends (props: any) => JSX.Element 
 // @internal
 export const _isInCall: (callStatus?: CallState | undefined) => boolean;
 
+// @internal
+export const _isPreviewOn: (deviceManager: DeviceManagerState) => boolean;
+
 // @public
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;

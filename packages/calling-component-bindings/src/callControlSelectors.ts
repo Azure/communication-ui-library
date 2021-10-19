@@ -9,6 +9,7 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams
 } from './baseSelectors';
+import { _isPreviewOn } from './callUtils';
 
 /**
  * Selector for {@link MicrophoneButton} component.
@@ -33,9 +34,7 @@ export const microphoneButtonSelector = reselect.createSelector(
 export const cameraButtonSelector = reselect.createSelector(
   [getLocalVideoStreams, getDeviceManager],
   (localVideoStreams, deviceManager) => {
-    // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
-    // handle cases where 'Preview' view is in progress and not necessary completed.
-    const previewOn = deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
+    const previewOn = _isPreviewOn(deviceManager);
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
 
