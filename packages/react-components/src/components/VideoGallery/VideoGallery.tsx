@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, Icon, IDragOptions, Modal, Stack, Text, mergeStyles } from '@fluentui/react';
-import React, { useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useLocale } from '../../localization';
@@ -282,47 +282,41 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     shouldFloatLocalVideo
   ]);
 
-  /**
-   * Utility function for memoized rendering of RemoteParticipants.
-   */
-  const remoteParticipantGridTiles = useMemo(() => {
-    // If user provided a custom onRender function return that function.
-    if (onRenderRemoteVideoTile) {
-      return gridParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
-    }
-
-    // Else return Remote Stream Video Tiles
-    return gridParticipants?.map((participant): JSX.Element => {
+  const defaultOnRenderVideoTile = useCallback(
+    (participant: VideoGalleryRemoteParticipant, isVideoParticipant: boolean) => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
           key={participant.userId}
           userId={participant.userId}
-          onCreateRemoteStreamView={onCreateRemoteStreamView}
-          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-          isAvailable={remoteVideoStream?.isAvailable}
+          onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
+          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
+          isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
+          renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
+          remoteVideoViewOption={isVideoParticipant ? remoteVideoViewOption : undefined}
           isMuted={participant.isMuted}
           isSpeaking={participant.isSpeaking}
-          renderElement={remoteVideoStream?.renderElement}
           displayName={participant.displayName}
-          remoteVideoViewOption={remoteVideoViewOption}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
         />
       );
-    });
-  }, [
-    onRenderRemoteVideoTile,
-    gridParticipants,
-    remoteParticipants,
-    onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
-    remoteVideoViewOption,
-    onRenderAvatar,
-    showMuteIndicator
-  ]);
+    },
+    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOption, onRenderAvatar, showMuteIndicator]
+  );
 
-  const gridTiles = remoteParticipantGridTiles ?? [];
+  const gridTiles = useMemo(() => {
+    // If user provided a custom onRender function return that function.
+    if (onRenderRemoteVideoTile) {
+      return gridParticipants.map((participant) => onRenderRemoteVideoTile(participant));
+    }
+
+    // Else return Remote Stream Video Tiles
+    return gridParticipants.map((participant): JSX.Element => {
+      return defaultOnRenderVideoTile(participant, true);
+    });
+  }, [defaultOnRenderVideoTile, gridParticipants, onRenderRemoteVideoTile]);
+
   if (!shouldFloatLocalVideo && localParticipant) {
     gridTiles.push(
       <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
@@ -334,42 +328,24 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const horizontalGalleryTiles = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return horizontalGalleryParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
+      return horizontalGalleryParticipants.map((participant) => onRenderRemoteVideoTile(participant));
     }
     return horizontalGalleryParticipants.map((participant): JSX.Element => {
-      const remoteVideoStream = participant.videoStream;
       return (
         <div
           key={participant.userId}
           style={isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE}
         >
-          <RemoteVideoTile
-            key={participant.userId}
-            userId={participant.userId}
-            onCreateRemoteStreamView={shouldFloatLocalVideo ? undefined : onCreateRemoteStreamView}
-            onDisposeRemoteStreamView={shouldFloatLocalVideo ? undefined : onDisposeRemoteStreamView}
-            isAvailable={shouldFloatLocalVideo ? false : remoteVideoStream?.isAvailable}
-            renderElement={shouldFloatLocalVideo ? undefined : remoteVideoStream?.renderElement}
-            remoteVideoViewOption={shouldFloatLocalVideo ? undefined : remoteVideoViewOption}
-            isMuted={participant.isMuted}
-            isSpeaking={participant.isSpeaking}
-            displayName={participant.displayName}
-            onRenderAvatar={onRenderAvatar}
-            showMuteIndicator={showMuteIndicator}
-          />
+          {defaultOnRenderVideoTile(participant, shouldFloatLocalVideo)}
         </div>
       );
     });
   }, [
     horizontalGalleryParticipants,
     onRenderRemoteVideoTile,
-    onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
-    shouldFloatLocalVideo,
-    remoteVideoViewOption,
-    onRenderAvatar,
-    showMuteIndicator,
-    isNarrow
+    isNarrow,
+    defaultOnRenderVideoTile,
+    shouldFloatLocalVideo
   ]);
 
   const tilesPerHorizontalGalleryPage = getTilesPerHorizontalGalleryPage(containerWidth, isNarrow);
