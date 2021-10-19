@@ -4,15 +4,13 @@
 import {
   DefaultPalette as palette,
   mergeStyles,
-  getTheme,
   IStackStyles,
   IModalStyleProps,
   IModalStyles,
-  IStyleFunctionOrObject
+  IStyleFunctionOrObject,
+  Theme
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
-
-const theme = getTheme();
 
 const videoBaseStyle = mergeStyles({
   border: 0
@@ -34,7 +32,7 @@ export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'rel
 /**
  * @private
  */
-export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> = {
+export const floatingLocalVideoModalStyle = (theme: Theme): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => ({
   root: {
     width: '100%',
     height: '100%',
@@ -49,12 +47,12 @@ export const floatingLocalVideoModalStyle: IStyleFunctionOrObject<IModalStylePro
     bottom: '1rem',
     right: '1rem'
   }
-};
+});
 
 /**
  * @private
  */
-export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
+export const floatingLocalVideoTileStyle = (theme: Theme): VideoTileStylesProps => ({
   root: {
     position: 'absolute',
     zIndex: 1,
@@ -64,7 +62,7 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
     height: '7rem',
     borderRadius: theme.effects.roundedCorner4
   }
-};
+});
 
 /**
  * @private
@@ -77,24 +75,23 @@ export const screenSharingContainer = mergeStyles({
 /**
  * @private
  */
-export const screenSharingNotificationContainerCameraOffStyles = mergeStyles({
-  backgroundColor: 'inherit',
-  padding: '1rem',
-  maxWidth: '95%',
-  borderRadius: theme.effects.roundedCorner4
-});
+export const screenSharingNotificationContainerCameraOffStyles = (theme: Theme) =>
+  mergeStyles({
+    backgroundColor: 'inherit',
+    padding: '1rem',
+    maxWidth: '95%',
+    borderRadius: theme.effects.roundedCorner4
+  });
 
 /**
  * @private
  */
-export const screenSharingNotificationContainerCameraOnStyles = mergeStyles(
-  screenSharingNotificationContainerCameraOffStyles,
-  {
+export const screenSharingNotificationContainerCameraOnStyles = (theme: Theme) =>
+  mergeStyles(screenSharingNotificationContainerCameraOffStyles(theme), {
     // This will appear on top of the video stream, so no dependency on theme and thus the direct use of default palette
     backgroundColor: palette.white,
     opacity: 0.8
-  }
-);
+  });
 
 /**
  * @private

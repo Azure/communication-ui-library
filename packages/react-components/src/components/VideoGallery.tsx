@@ -139,8 +139,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const screenSharingNotificationContainerStyle = mergeStyles(
       localParticipant.videoStream?.renderElement
-        ? screenSharingNotificationContainerCameraOnStyles
-        : screenSharingNotificationContainerCameraOffStyles,
+        ? screenSharingNotificationContainerCameraOnStyles(theme)
+        : screenSharingNotificationContainerCameraOffStyles(theme),
       getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralSecondary')
     );
 
@@ -183,7 +183,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     let localVideoTileStyles: VideoTileStylesProps = {};
     if (shouldFloatLocalVideo()) {
-      localVideoTileStyles = floatingLocalVideoTileStyle;
+      localVideoTileStyles = floatingLocalVideoTileStyle(theme);
     }
 
     if (localVideoStream && !localVideoStream.renderElement) {
@@ -266,7 +266,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isOpen={true}
           isModeless={true}
           dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyle}
+          styles={floatingLocalVideoModalStyle(theme)}
           layerProps={{ hostId: floatingTileHostId }}
         >
           {localParticipant && defaultOnRenderLocalVideoTile}
