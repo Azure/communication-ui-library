@@ -382,15 +382,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
  * Helper function to get tiles per page for HorizontalGallery based on width and whether narrow widths are used.
  */
 const getTilesPerHorizontalGalleryPage = (containerWidth: number, isNarrow: boolean): number => {
+  // To get the width available for the horizontal gallery, we start with container width and subtract modal width,
+  // modal position from right, and left and right padding of Horizontal Gallery
   const modalWidth = isNarrow
     ? convertRemToPx(SMALL_FLOATING_MODAL_SIZE.width)
     : convertRemToPx(LARGE_FLOATING_MODAL_SIZE.width);
   const modalPositionFromRight = convertRemToPx(FLOATING_MODAL_POSITION_FROM_RIGHT);
   const horizontalGalleryPadding = convertRemToPx(HORIZONTAL_GALLERY_PADDING);
-  // subtract modal width, modal position from right and Horizontal Gallery paddingLeft and paddingRight
   const horizontalGalleryWidth = containerWidth - modalWidth - modalPositionFromRight - horizontalGalleryPadding * 2;
 
-  const buttonsWidth = isNarrow ? 0 : convertRemToPx(HORIZONTAL_GALLERY_BUTTON_WIDTH);
+  const buttonWidth = isNarrow ? 0 : convertRemToPx(HORIZONTAL_GALLERY_BUTTON_WIDTH);
   const tileWidth = isNarrow
     ? convertRemToPx(SMALL_HORIZONTAL_GALLERY_TILE_SIZE.width)
     : convertRemToPx(LARGE_HORIZONTAL_GALLERY_TILE_SIZE.width);
@@ -398,7 +399,7 @@ const getTilesPerHorizontalGalleryPage = (containerWidth: number, isNarrow: bool
 
   return calculateHorizontalGalleryTilesPerPage({
     horizontalGalleryWidth,
-    buttonsWidth,
+    buttonWidth,
     tileWidth,
     horizontalGalleryGap
   });
@@ -410,11 +411,11 @@ const convertRemToPx = (rem: number): number => {
 
 const calculateHorizontalGalleryTilesPerPage = (args: {
   horizontalGalleryWidth: number;
-  buttonsWidth: number;
+  buttonWidth: number;
   tileWidth: number;
   horizontalGalleryGap: number;
 }): number => {
-  const { horizontalGalleryWidth, buttonsWidth, tileWidth, horizontalGalleryGap } = args;
+  const { horizontalGalleryWidth, buttonWidth, tileWidth, horizontalGalleryGap } = args;
   /** First, figure out tileSpace if there are buttons
    *    <----horizontalGalleryWidth------->
    *    __________________________________
@@ -422,7 +423,7 @@ const calculateHorizontalGalleryTilesPerPage = (args: {
    *   |<||             ||             ||>|
    *   |_||_____________||_____________||_|
    *       <---------tileSpace-------->
-   *              OR  no buttons
+   *              OR no buttons
    *    __________________________________
    *   |                ||                |
    *   |                ||                |
@@ -430,9 +431,9 @@ const calculateHorizontalGalleryTilesPerPage = (args: {
    *   <-------------tileSpace----------->
    */
   let tileSpace = horizontalGalleryWidth;
-  if (buttonsWidth !== 0) {
+  if (buttonWidth !== 0) {
     // need to subtract width of buttons
-    tileSpace -= 2 * buttonsWidth;
+    tileSpace -= 2 * buttonWidth;
     // need to subtract 2 gaps for buttons
     tileSpace -= 2 * horizontalGalleryGap;
   }
