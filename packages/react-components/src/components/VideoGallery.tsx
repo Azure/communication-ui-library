@@ -4,6 +4,7 @@
 import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
+import { useTheme } from '../theming';
 import {
   BaseCustomStylesProps,
   OnRenderAvatarCallback,
@@ -101,6 +102,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   } = props;
 
   const ids = useIdentifiers();
+  const theme = useTheme();
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
