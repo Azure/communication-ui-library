@@ -190,10 +190,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
   const gridParticipants =
     visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
-  const horizontalGalleryParticipants = useMemo(
-    () => (visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : []),
-    []
-  );
+  const horizontalGalleryParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {
     if (!localParticipant.isScreenSharingOn) {
