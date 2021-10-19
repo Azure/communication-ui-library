@@ -13,7 +13,11 @@ import { FluentThemeProvider } from '@internal/react-components';
 import { MeetingAdapter } from './adapter/MeetingAdapter';
 import { MeetingBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
-import { MeetingCompositePage } from './state/MeetingCompositePage';
+import {
+  hasJoinedCall as hasJoinedCallFn,
+  isInLobbyOrConnecting as isInLobbyOrConnectingFn,
+  MeetingCompositePage
+} from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
 
@@ -76,8 +80,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setCurrentPage(newState.page);
     setCurrentMeetingState(newState.meeting?.state);
   });
-  const isInLobbyOrConnecting = currentPage === 'lobby';
-  const hasJoinedCall = currentPage === 'meeting' && currentMeetingState === 'Connected';
 
   const [showChat, setShowChat] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -101,6 +103,8 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     meetingAdapter.setPage('configuration');
   };
 
+  const isInLobbyOrConnecting = !!(currentPage && isInLobbyOrConnectingFn(currentPage));
+  const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentMeetingState ?? 'None'));
   return (
     <FluentThemeProvider fluentTheme={props.fluentTheme}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles}>
