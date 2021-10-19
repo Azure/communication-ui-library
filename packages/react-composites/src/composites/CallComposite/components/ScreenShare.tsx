@@ -100,24 +100,16 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
       return undefined;
     }
 
-    const screenSharingNotificationContainerStyle = mergeStyles(screenSharingNotificationContainer, {
-      color: theme.palette.neutralSecondary
-    });
-
-    const screenSharingNotificationIconThemedStyle = mergeStyles(screenSharingNotificationIconStyle, {
-      color: theme.palette.neutralTertiary
-    });
-
     return (
       <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
         <Stack
           horizontalAlign={'center'}
           verticalAlign={'center'}
-          className={screenSharingNotificationContainerStyle}
+          className={screenSharingNotificationContainer(theme)}
           tokens={{ childrenGap: '1rem' }}
         >
           <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainer}>
-            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconThemedStyle} />
+            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconStyle(theme)} />
           </Stack>
           <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
             {locale.strings.call.screenSharingMessage}

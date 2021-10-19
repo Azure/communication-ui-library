@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, mergeStyles } from '@fluentui/react';
+import { getTheme, mergeStyles, Theme } from '@fluentui/react';
 
 const theme = getTheme();
 
@@ -37,12 +37,14 @@ export const screenSharingContainer = mergeStyles({
 /**
  * @private
  */
-export const screenSharingNotificationContainer = mergeStyles({
-  backgroundColor: 'inherit',
-  padding: '1rem',
-  maxWidth: '95%',
-  borderRadius: theme.effects.roundedCorner4
-});
+export const screenSharingNotificationContainer = (contextTheme: Theme) =>
+  mergeStyles({
+    backgroundColor: 'inherit',
+    padding: '1rem',
+    maxWidth: '95%',
+    borderRadius: theme.effects.roundedCorner4,
+    color: contextTheme.palette.neutralSecondary
+  });
 
 /**
  * @private
@@ -55,10 +57,12 @@ export const screenSharingNotificationIconContainer = mergeStyles({
 /**
  * @private
  */
-export const screenSharingNotificationIconStyle = mergeStyles({
-  // svg is (20px x 20px) but path is only (16px x 12px), so need to scale at 2.5 to get 40px
-  transform: 'scale(2.5)'
-});
+export const screenSharingNotificationIconStyle = (contextTheme: Theme) =>
+  mergeStyles({
+    // svg is (20px x 20px) but path is only (16px x 12px), so need to scale at 2.5 to get 40px
+    transform: 'scale(2.5)',
+    color: contextTheme.palette.neutralTertiary
+  });
 
 /**
  * @private
