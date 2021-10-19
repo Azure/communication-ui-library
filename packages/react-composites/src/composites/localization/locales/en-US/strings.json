@@ -8,6 +8,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedTitleMessage": "Access to the meeting was denied",
     "microphonePermissionDenied": "Your browser is blocking access to your microphone",
     "removedFromMeetingTitleMessage": "You were removed from the meeting",
+    "screenSharingMessage": "you are sharing your screen",
     "soundLabel": "Sound",
     "startCallButtonText": "Start call"
   },

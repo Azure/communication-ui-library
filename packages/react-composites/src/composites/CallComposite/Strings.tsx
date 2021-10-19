@@ -61,4 +61,8 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when they are removed from a meeting.
    */
   removedFromMeetingMoreDetailsMessage?: string;
+  /**
+   * Message to let user know they are sharing their screen.
+   */
+  screenSharingMessage: string;
 }

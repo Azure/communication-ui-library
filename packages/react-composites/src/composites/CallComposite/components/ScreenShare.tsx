@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { memoizeFnAll } from '@internal/acs-ui-common';
-import { mergeStyles, Spinner, SpinnerSize, Stack } from '@fluentui/react';
+import { Icon, mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   OnRenderAvatarCallback,
@@ -10,8 +10,10 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions,
-  VideoTile
+  VideoTile,
+  useTheme
 } from '@internal/react-components';
+import { useLocale } from '../../localization';
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,
@@ -19,7 +21,15 @@ import {
   stackContainerStyle,
   stackContainerParticipantVideoStyles
 } from '../styles/MediaGallery.styles';
-import { loadingStyle, videoStreamStyle } from '../styles/ScreenShare.styles';
+import {
+  loadingStyle,
+  videoStreamStyle,
+  screenSharingContainer,
+  screenSharingNotificationContainer,
+  screenSharingNotificationIconContainer,
+  screenSharingNotificationIconStyle,
+  screenSharingNotificationTextStyle
+} from '../styles/ScreenShare.styles';
 
 /**
  * @private
@@ -76,11 +86,64 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
     onCreateLocalStreamView
   } = props;
 
+  const theme = useTheme();
+  const locale = useLocale();
+
   const localVideoStream = localParticipant?.videoStream;
   const isScreenShareAvailable =
     screenShareParticipant &&
     screenShareParticipant.screenShareStream &&
     screenShareParticipant.screenShareStream.isAvailable;
+
+  const localScreenSharingNotification = useMemo((): JSX.Element | undefined => {
+    if (!localParticipant || !localParticipant.isScreenSharingOn) {
+      return undefined;
+    }
+
+    const screenSharingNotificationContainerStyle = mergeStyles(screenSharingNotificationContainer, {
+      color: theme.palette.neutralSecondary
+    });
+
+    const screenSharingNotificationIconThemedStyle = mergeStyles(screenSharingNotificationIconStyle, {
+      color: theme.palette.neutralTertiary
+    });
+
+    return (
+      <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
+        <Stack
+          horizontalAlign={'center'}
+          verticalAlign={'center'}
+          className={screenSharingNotificationContainerStyle}
+          tokens={{ childrenGap: '1rem' }}
+        >
+          <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainer}>
+            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconThemedStyle} />
+          </Stack>
+          <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
+            {locale.strings.call.screenSharingMessage}
+          </Text>
+        </Stack>
+      </Stack>
+    );
+  }, [
+    localParticipant?.isScreenSharingOn,
+    localParticipant?.videoStream,
+    localParticipant?.videoStream?.renderElement,
+    theme
+  ]);
+
+  const localScreenShareStreamComponent = useMemo(() => {
+    return (
+      <VideoTile
+        displayName={localParticipant?.displayName}
+        isMuted={localParticipant?.isMuted}
+        renderElement={undefined}
+        onRenderPlaceholder={() => <></>}
+      >
+        {localScreenSharingNotification}
+      </VideoTile>
+    );
+  }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant, localParticipant?.isScreenSharingOn]);
 
   const screenShareStreamComponent = useMemo(() => {
     if (!isScreenShareAvailable) {
@@ -109,21 +172,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
         styles={{
           overlayContainer: videoStreamStyle
         }}
-      >
-        {videoStream && videoStream.isAvailable && videoStream.renderElement && (
-          <Stack horizontalAlign="center" verticalAlign="center" className={aspectRatioBoxStyle}>
-            <Stack className={aspectRatioBoxContentStyle}>
-              <VideoTile
-                displayName={screenShareParticipant?.displayName}
-                isMuted={screenShareParticipant?.isMuted}
-                renderElement={
-                  videoStream.renderElement ? <StreamMedia videoStreamElement={videoStream.renderElement} /> : undefined
-                }
-              />
-            </Stack>
-          </Stack>
-        )}
-      </VideoTile>
+      />
     );
   }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant]);
 
@@ -148,29 +197,25 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
 
   const sidePanelRemoteParticipants = useMemo(() => {
     return memoizeAllRemoteParticipants((memoizedRemoteParticipantFn) => {
-      return remoteParticipants && screenShareParticipant
-        ? remoteParticipants
-            .filter((remoteParticipant: VideoGalleryRemoteParticipant) => {
-              return remoteParticipant.userId !== screenShareParticipant.userId;
-            })
-            .map((participant: VideoGalleryRemoteParticipant) => {
-              const remoteVideoStream = participant.videoStream;
+      return remoteParticipants
+        ? remoteParticipants.map((participant: VideoGalleryRemoteParticipant) => {
+            const remoteVideoStream = participant.videoStream;
 
-              if (remoteVideoStream?.isAvailable && !remoteVideoStream?.renderElement) {
-                onCreateRemoteStreamView && onCreateRemoteStreamView(participant.userId);
-              }
+            if (remoteVideoStream?.isAvailable && !remoteVideoStream?.renderElement) {
+              onCreateRemoteStreamView && onCreateRemoteStreamView(participant.userId);
+            }
 
-              return memoizedRemoteParticipantFn(
-                participant.userId,
-                participant.isMuted,
-                participant.isSpeaking,
-                remoteVideoStream?.renderElement,
-                participant.displayName
-              );
-            })
+            return memoizedRemoteParticipantFn(
+              participant.userId,
+              participant.isMuted,
+              participant.isSpeaking,
+              remoteVideoStream?.renderElement,
+              participant.displayName
+            );
+          })
         : [];
     });
-  }, [remoteParticipants, onCreateRemoteStreamView, screenShareParticipant]);
+  }, [remoteParticipants, onCreateRemoteStreamView]);
 
   return (
     <Stack horizontal verticalFill>
@@ -182,7 +227,9 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
           {sidePanelRemoteParticipants}
         </Stack>
       </Stack.Item>
-      <Stack.Item className={screenShareContainerStyle}>{screenShareStreamComponent}</Stack.Item>
+      <Stack.Item className={screenShareContainerStyle}>
+        {localParticipant?.isScreenSharingOn ? localScreenShareStreamComponent : screenShareStreamComponent}
+      </Stack.Item>
     </Stack>
   );
 };
