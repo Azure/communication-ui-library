@@ -15,6 +15,7 @@ import { DeviceManagerState, StatefulCallClient, StatefulDeviceManager } from '@
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { VideoStreamOptions } from '@internal/react-components';
+import { disposeAllLocalPreviewViews } from '../callUtils';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -69,6 +70,11 @@ export const createDefaultCallingHandlers = memoizeOne(
     call: Call | undefined
   ): CallingHandlers => {
     const onStartLocalVideo = async (): Promise<void> => {
+      // Before the call object creates a stream, dispose of any local preview streams.
+      // @TODO: is there any way to parent the unparented view to the call object instead
+      // of disposing and creating a new stream?
+      await onDisposeLocalStreamView();
+
       const callId = call?.id;
       let videoDeviceInfo = callClient.getState().deviceManager.selectedCamera;
       if (!videoDeviceInfo) {
@@ -108,12 +114,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         if (selectedCamera) {
           const previewOn = isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
-            // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
-            // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
-            // currently.
-            callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
-              await callClient.disposeView(undefined, undefined, view);
-            });
+            await onDisposeLocalStreamView();
           } else {
             await callClient.createView(
               undefined,
@@ -167,7 +168,7 @@ export const createDefaultCallingHandlers = memoizeOne(
           return;
         }
 
-        onDisposeLocalStreamView();
+        await onDisposeLocalStreamView();
 
         deviceManager.selectCamera(device);
         await callClient.createView(
@@ -277,16 +278,10 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onDisposeLocalStreamView = async (): Promise<void> => {
-      const selectedCamera = callClient.getState().deviceManager.selectedCamera;
-      // If preview is on, then stop current preview and then start new preview with new device
-      if (selectedCamera) {
-        // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
-        // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
-        // currently.
-        callClient.getState().deviceManager.unparentedViews.forEach(async (view) => {
-          await callClient.disposeView(undefined, undefined, view);
-        });
-      }
+      // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one. For now
+      // assume any unparented view is a LocalPreview and stop all since those are only used for LocalPreview
+      // currently.
+      await disposeAllLocalPreviewViews(callClient);
     };
 
     const onParticipantRemove = async (userId: string): Promise<void> => {
