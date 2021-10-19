@@ -23,3 +23,12 @@ export const loadingStyle = mergeStyles({
   display: 'flex',
   justifyContent: 'center'
 });
+
+/**
+ * @private
+ */
+export const videoWithNoRoundedBorderStyle = {
+  root: {
+    '& video': { borderRadius: '0rem' }
+  }
+};
