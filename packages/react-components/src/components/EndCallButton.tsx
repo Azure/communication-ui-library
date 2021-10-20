@@ -55,9 +55,11 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.endCallButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  const isDarkTheme = isDarkThemed(useTheme());
+  const theme = useTheme();
+  const isDarkTheme = isDarkThemed(theme);
+
   const componentStyles = concatStyleSets(
-    endCallControlButtonStyles,
+    endCallControlButtonStyles(theme),
     {
       root: {
         background: isDarkTheme ? darkTheme.callingPalette.callRed : lightTheme.callingPalette.callRed

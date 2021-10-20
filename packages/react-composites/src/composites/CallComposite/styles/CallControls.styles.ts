@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { DefaultPalette as palette, Theme } from '@fluentui/react';
+
 /**
  * @private
  */
@@ -29,3 +31,15 @@ export const groupCallLeaveButtonCompressedStyle = {
     flexFlow: 'row'
   }
 };
+
+/**
+ * @private
+ */
+export const checkedButtonOverrideStyles = (theme: Theme, isChecked?: boolean) => ({
+  rootChecked: {
+    background: theme.palette.themePrimary,
+    color: palette.white,
+    ':focus::after': { outlineColor: `${palette.white} !important` }
+  },
+  label: isChecked ? { color: palette.white } : {}
+});
