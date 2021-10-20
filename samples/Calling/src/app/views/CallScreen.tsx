@@ -7,9 +7,10 @@ import {
   CallAdapter,
   CallAdapterState,
   CallComposite,
+  ControlBarButtonProps,
   createAzureCommunicationCallAdapter
 } from '@azure/communication-react';
-import { Spinner } from '@fluentui/react';
+import { Icon, Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
@@ -76,7 +77,21 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       callInvitationUrl={window.location.href}
-      options={{ mobileView: isMobileSession }}
+      options={{
+        mobileView: isMobileSession,
+        callControls: { customButtons: [{ getProps: getCustomButtonProps, placement: 'first' }] }
+      }}
     />
   );
 };
+
+const getCustomButtonProps = (): ControlBarButtonProps => ({
+  onClick: () => window.alert('You clicked a custom button'),
+  onRenderOnIcon: onRenderMicOnIcon,
+  onRenderOffIcon: onRenderMicOffIcon,
+  strings: { label: 'customButton', offLabel: 'customOff', onLabel: 'customOn' },
+  labelKey: 'customButton'
+});
+
+const onRenderMicOnIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOn" />;
+const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOff" />;
