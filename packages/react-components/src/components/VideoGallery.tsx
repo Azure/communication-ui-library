@@ -144,7 +144,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   remoteParticipantsRef.current = smartDominantSpeakerParticipants({
     participants: remoteParticipants,
     dominantSpeakers,
-    visibleParticipants: remoteParticipantsRef.current,
+    lastVisibleParticipants: remoteParticipantsRef.current,
     maxTiles: MAX_PARTICIPANTS_TILES,
     maxVisibleParticipants: MAX_DOMINANT_SPEAKERS
   });

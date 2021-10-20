@@ -45,7 +45,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants: participants,
       dominantSpeakers: ['2', '1'],
-      visibleParticipants: result,
+      lastVisibleParticipants: result,
       maxTiles: 8,
       maxVisibleParticipants: 4
     });
@@ -56,7 +56,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     let result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '3', '5', '7'],
-      visibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -65,7 +65,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '3', '5', '7'],
-      visibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
       maxTiles: 5,
       maxVisibleParticipants: 4
     });
@@ -86,7 +86,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     const result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '3', '5', '7'],
-      visibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -98,7 +98,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     let result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '2', '3', '4'],
-      visibleParticipants: [{ userId: '3' }, { userId: '4' }],
+      lastVisibleParticipants: [{ userId: '3' }, { userId: '4' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -108,7 +108,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '2', '3', '4'],
-      visibleParticipants: [{ userId: '2' }, { userId: '1' }],
+      lastVisibleParticipants: [{ userId: '2' }, { userId: '1' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -120,7 +120,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     let result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '2', '3', '4'],
-      visibleParticipants: [{ userId: '1' }, { userId: '2' }],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -130,7 +130,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['5', '2', '3', '4'],
-      visibleParticipants: [{ userId: '11' }, { userId: '10' }],
+      lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -142,7 +142,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     let result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '2'],
-      visibleParticipants: [{ userId: '1' }, { userId: '2' }],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -152,7 +152,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '2'],
-      visibleParticipants: [{ userId: '2' }],
+      lastVisibleParticipants: [{ userId: '2' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -165,7 +165,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     const result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: customDominantSpeakers,
-      visibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
       maxTiles: customDominantSpeakers.length,
       maxVisibleParticipants: 4
     });
@@ -178,7 +178,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     let result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '2', '3', '4'],
-      visibleParticipants,
+      lastVisibleParticipants: visibleParticipants,
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -187,7 +187,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['3', '2', '1', '4'],
-      visibleParticipants,
+      lastVisibleParticipants: visibleParticipants,
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -198,7 +198,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     const result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '1', '3', '7'],
-      visibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
@@ -210,7 +210,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     let result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['5', '7', '8'],
-      visibleParticipants: [],
+      lastVisibleParticipants: [],
       maxTiles: 8,
       maxVisibleParticipants: 3
     });
@@ -221,7 +221,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '3', '5'],
-      visibleParticipants: [],
+      lastVisibleParticipants: [],
       maxTiles: 8,
       maxVisibleParticipants: 4
     });
@@ -232,7 +232,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['1', '3', '5'],
-      visibleParticipants: [],
+      lastVisibleParticipants: [],
       maxTiles: 3,
       maxVisibleParticipants: 4
     });
@@ -244,7 +244,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     const result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['5', '7', '8'],
-      visibleParticipants: participants,
+      lastVisibleParticipants: participants,
       maxTiles: 8,
       maxVisibleParticipants: 3
     });
@@ -256,7 +256,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     let result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['5', '7', '8'],
-      visibleParticipants: [{ userId: '3' }, { userId: '5' }, { userId: '8' }, { userId: '4' }, { userId: '1' }],
+      lastVisibleParticipants: [{ userId: '3' }, { userId: '5' }, { userId: '8' }, { userId: '4' }, { userId: '1' }],
       maxTiles: 8,
       maxVisibleParticipants: 3
     });
@@ -266,7 +266,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     result = smartDominantSpeakerParticipants({
       participants,
       dominantSpeakers: ['5', '7', '8'],
-      visibleParticipants: result,
+      lastVisibleParticipants: result,
       maxTiles: 8,
       maxVisibleParticipants: 3
     });

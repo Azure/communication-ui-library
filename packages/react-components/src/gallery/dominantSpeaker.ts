@@ -16,7 +16,7 @@ type SmartDominantSpeakerParticipantsArgs = {
    * Array containing currently rendered (visible)
    * participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
    */
-  visibleParticipants?: VideoGalleryRemoteParticipant[];
+  lastVisibleParticipants?: VideoGalleryRemoteParticipant[];
   /**
    * Maximum number of tiles to calculate.
    */
@@ -36,7 +36,7 @@ type SmartDominantSpeakerParticipantsArgs = {
 export const smartDominantSpeakerParticipants = (
   args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
-  const { participants, dominantSpeakers = [], visibleParticipants = [], maxTiles, maxVisibleParticipants } = args;
+  const { participants, dominantSpeakers = [], lastVisibleParticipants = [], maxTiles, maxVisibleParticipants } = args;
 
   // Don't apply any logic if total number of video streams is less than Max dominant speakers.
   if (participants.length <= maxVisibleParticipants) {
@@ -46,40 +46,39 @@ export const smartDominantSpeakerParticipants = (
   // Only use the Max allowed dominant speakers.
   const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxVisibleParticipants);
 
-  let visibleParticipantIds = visibleParticipants.map((p) => p.userId);
-  const visibleDominantSpeakerIds = visibleParticipants.map((p) => p.userId).slice(0, maxVisibleParticipants);
-  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleDominantSpeakerIds.includes(id));
+  let lastVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId);
+  const newVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId).slice(0, maxVisibleParticipants);
+  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !newVisibleParticipantIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
   for (let index = 0; index < maxVisibleParticipants; index++) {
-    const visibleDominantSpeakerId = visibleDominantSpeakerIds[index];
+    const visibleDominantSpeakerId = newVisibleParticipantIds[index];
     if (visibleDominantSpeakerId === undefined || !dominantSpeakerIds.includes(visibleDominantSpeakerId)) {
       const replacement = newDominantSpeakerIds.shift();
       if (!replacement) break;
-      visibleDominantSpeakerIds[index] = replacement;
+      newVisibleParticipantIds[index] = replacement;
     }
   }
 
-  // We create a new array of participants by concatinating the array consisting
-  // of updated dominant speakers and array containing currently visible
-  // participants (after removing the updated dominant speakers from it).
-  // This new array will help us sort our final result in a way that minimizes re-ordering.
-  visibleParticipantIds = visibleParticipantIds.filter((p) => !visibleDominantSpeakerIds.includes(p));
-  visibleParticipantIds = visibleDominantSpeakerIds.concat(visibleParticipantIds);
+  const removedVisibleParticipantIds = lastVisibleParticipantIds.filter((p) => !newVisibleParticipantIds.includes(p));
+  for (const visibleParticipantId of removedVisibleParticipantIds) {
+    newVisibleParticipantIds.push(visibleParticipantId);
+  }
+
   // Converting array to a hashmap for faster searching
   const visibleParticipantIdsMap = {};
-  visibleParticipantIds.forEach((userId) => {
+  newVisibleParticipantIds.forEach((userId) => {
     visibleParticipantIdsMap[userId] = true;
   });
 
   // Add additional participants to the final list of visible participants if the list has less than Max visible participants.
-  const emptySlots = maxTiles - visibleParticipantIds.length;
+  const emptySlots = maxTiles - newVisibleParticipantIds.length;
   if (emptySlots > 0) {
     for (let index = 0; index < emptySlots; index++) {
       const filler = participants.find((p) => !visibleParticipantIdsMap[p.userId]);
       if (filler) {
         visibleParticipantIdsMap[filler.userId] = true;
-        visibleParticipantIds.push(filler.userId);
+        newVisibleParticipantIds.push(filler.userId);
       }
     }
   }
@@ -88,7 +87,7 @@ export const smartDominantSpeakerParticipants = (
 
   // Sort the new video participants to match the order of last visible participants.
   newVisibleParticipants.sort((a, b) => {
-    return visibleParticipantIds.indexOf(a.userId) - visibleParticipantIds.indexOf(b.userId);
+    return newVisibleParticipantIds.indexOf(a.userId) - newVisibleParticipantIds.indexOf(b.userId);
   });
 
   return newVisibleParticipants.slice(0, maxTiles);
