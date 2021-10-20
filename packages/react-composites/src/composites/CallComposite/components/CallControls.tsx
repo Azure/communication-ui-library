@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette } from '@fluentui/react';
+import { DefaultButton, DefaultPalette as palette } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
@@ -68,7 +68,47 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean;
+
+  /**
+   * Inject custom buttons in the call controls.
+   */
+  customButtons?: CustomCallControlsButton[];
 };
+
+/**
+ * Placement for a custom button injected in the {@link CallControls}.
+ *
+ * 'first': Place the button on the left end (right end in rtl mode).
+ * 'afterCameraButton': Place the button on the right (left in rtl mode) of the camera button.
+ * ... and so on.
+ *
+ * It is an error to place the button in reference to another button that has
+ * been disabled via {@link CallControlOptions}.
+ *
+ * Multiple buttons placed in the same position are appeneded in order.
+ * E.g., if two buttons are placed 'first', they'll both appear on the left end (right end in rtl mode)
+ * in the order provided.
+ *
+ * @alpha
+ */
+export type ControlBarButtonPlacement =
+  | 'first'
+  | 'afterCameraButton'
+  | 'afterEndCallButton'
+  | 'afterMicrophoneButton'
+  | 'afterOptionsButton'
+  | 'afterParticipantsButton'
+  | 'afterScreenShareButton';
+
+/**
+ * A custom button to inject in the {@link CallControls}.
+ *
+ * @alpha
+ */
+export interface CustomCallControlsButton {
+  button: DefaultButton;
+  placement: ControlBarButtonPlacement;
+}
 
 /**
  * @private

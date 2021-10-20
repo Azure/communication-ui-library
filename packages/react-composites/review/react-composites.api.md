@@ -22,6 +22,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
+import { DefaultButton } from '@fluentui/react';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -242,6 +243,7 @@ export type CallControlOptions = {
     optionsButton?: boolean;
     participantsButton?: boolean;
     screenShareButton?: boolean;
+    customButtons?: CustomCallControlsButton[];
 };
 
 // @public
@@ -396,6 +398,9 @@ export interface CompositeStrings {
     chat: ChatCompositeStrings;
 }
 
+// @alpha
+export type ControlBarButtonPlacement = 'first' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+
 // @public
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
@@ -410,6 +415,14 @@ export const createAzureCommunicationChatAdapterFromClient: (chatClient: Statefu
 
 // @alpha
 export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+
+// @alpha
+export interface CustomCallControlsButton {
+    // (undocumented)
+    button: DefaultButton;
+    // (undocumented)
+    placement: ControlBarButtonPlacement;
+}
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
@@ -637,6 +650,10 @@ export type ParticipantsRemovedListener = (event: {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// Warnings were encountered during analysis:
+//
+// src/composites/CallComposite/components/CallControls.tsx:75:3 - (ae-incompatible-release-tags) The symbol "customButtons" is marked as @public, but its signature references "CustomCallControlsButton" which is marked as @alpha
 
 // (No @packageDocumentation comment for this package)
 

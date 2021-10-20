@@ -27,6 +27,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { CreateViewOptions } from '@azure/communication-calling';
+import { DefaultButton } from '@fluentui/react';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
@@ -335,6 +336,7 @@ export type CallControlOptions = {
     optionsButton?: boolean;
     participantsButton?: boolean;
     screenShareButton?: boolean;
+    customButtons?: CustomCallControlsButton[];
 };
 
 // @public
@@ -860,6 +862,9 @@ export const ControlBar: (props: ControlBarProps) => JSX.Element;
 // @public
 export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
+// @alpha
+export type ControlBarButtonPlacement = 'first' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
     labelKey?: string;
@@ -928,6 +933,14 @@ export type CustomAvatarOptions = {
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
 };
+
+// @alpha
+export interface CustomCallControlsButton {
+    // (undocumented)
+    button: DefaultButton;
+    // (undocumented)
+    placement: ControlBarButtonPlacement;
+}
 
 // @public
 export interface CustomMessage extends MessageCommon {
@@ -2062,5 +2075,9 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
     overlayContainer?: IStyle;
     videoContainer?: IStyle;
 }
+
+// Warnings were encountered during analysis:
+//
+// /workspaces/communication-ui-library/packages/react-composites/src/composites/CallComposite/components/CallControls.tsx:75:3 - (ae-incompatible-release-tags) The symbol "customButtons" is marked as @public, but its signature references "CustomCallControlsButton" which is marked as @alpha
 
 ```

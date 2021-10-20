@@ -3,7 +3,11 @@
 
 export { CallComposite } from './CallComposite';
 export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
-export type { CallControlOptions } from './components/CallControls';
+export type {
+  CallControlOptions,
+  CustomCallControlsButton,
+  ControlBarButtonPlacement
+} from './components/CallControls';
 
 export * from './adapter';
 export * from './Strings';
