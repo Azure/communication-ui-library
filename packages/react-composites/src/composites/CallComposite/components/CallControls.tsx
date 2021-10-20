@@ -83,7 +83,7 @@ export type CallControlOptions = {
  * ... and so on.
  *
  * It is an error to place the button in reference to another button that has
- * been disabled via {@link CallControlOptions}.
+ * been hidden via an {@link CallControlOptions} field.
  *
  * Multiple buttons placed in the same position are appeneded in order.
  * E.g., if two buttons are placed 'first', they'll both appear on the left end (right end in rtl mode)
@@ -192,12 +192,31 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   return (
     <ControlBar layout="dockedBottom">
+      <FilteredCustomButtons options={options} placement={'first'} />
       {microphoneButton}
+      <FilteredCustomButtons options={options} placement={'afterMicrophoneButton'} />
       {cameraButton}
+      <FilteredCustomButtons options={options} placement={'afterCameraButton'} />
       {screenShareButton}
+      <FilteredCustomButtons options={options} placement={'afterScreenShareButton'} />
       {participantButton}
+      <FilteredCustomButtons options={options} placement={'afterParticipantsButton'} />
       {optionsButton}
+      <FilteredCustomButtons options={options} placement={'afterOptionsButton'} />
       {endCallButton}
+      <FilteredCustomButtons options={options} placement={'afterEndCallButton'} />
     </ControlBar>
   );
+};
+
+const FilteredCustomButtons = (props: {
+  options?: CallControlOptions;
+  placement: ControlBarButtonPlacement;
+}): JSX.Element => {
+  const { options, placement } = props;
+  if (!options || !options.customButtons) {
+    return <></>;
+  }
+  const buttons = options.customButtons.filter((button) => button.placement === placement);
+  return <>{buttons}</>;
 };
