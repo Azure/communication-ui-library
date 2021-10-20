@@ -36,7 +36,7 @@ type SmartDominantSpeakerParticipantsArgs = {
 export const smartDominantSpeakerParticipants = (
   args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
-  const { participants, dominantSpeakers = [], lastVisibleParticipants = [], maxTiles, maxVisibleParticipants } = args;
+  const { participants, dominantSpeakers = [], lastVisibleParticipants = [], maxVisibleParticipants } = args;
 
   // Don't apply any logic if total number of video streams is less than Max dominant speakers.
   if (participants.length <= maxVisibleParticipants) {
@@ -67,11 +67,7 @@ export const smartDominantSpeakerParticipants = (
 
   const newVisibleParticipantIdSet = new Set(newVisibleParticipantIds);
 
-  // Add additional participants to the final list of visible participants if the list has less than Max visible participants.
-  const emptySlots = maxTiles - newVisibleParticipantIds.length;
-  const leftoverParticipants = participants
-    .filter((p) => !newVisibleParticipantIdSet.has(p.userId))
-    .slice(0, emptySlots);
+  const leftoverParticipants = participants.filter((p) => !newVisibleParticipantIdSet.has(p.userId));
   leftoverParticipants.forEach((p) => {
     newVisibleParticipantIds.push(p.userId);
   });
@@ -79,7 +75,7 @@ export const smartDominantSpeakerParticipants = (
   const participantsMap = participantsById(participants);
   const newVisibleParticipants = newVisibleParticipantIds.map((participantId) => participantsMap[participantId]);
 
-  return newVisibleParticipants.slice(0, maxTiles);
+  return newVisibleParticipants;
 };
 
 const participantsById = (

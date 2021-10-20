@@ -147,7 +147,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     lastVisibleParticipants: remoteParticipantsRef.current,
     maxTiles: MAX_PARTICIPANTS_TILES,
     maxVisibleParticipants: MAX_DOMINANT_SPEAKERS
-  });
+  }).slice(0, MAX_PARTICIPANTS_TILES);
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {
     if (!localParticipant.isScreenSharingOn) {
