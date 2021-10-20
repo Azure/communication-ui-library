@@ -62,12 +62,12 @@ export type CallControlOptions = {
     Show or Hide participants button during a call.
    * @defaultValue true
    */
-  participantsButton?: boolean;
+  participantsButton?: boolean | { disabled: boolean };
   /**
     Show or Hide the screen share button during a call.
    * @defaultValue true
    */
-  screenShareButton?: boolean;
+  screenShareButton?: boolean | { disabled: boolean };
 };
 
 /**
@@ -122,6 +122,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...screenShareButtonProps}
       styles={checkedButtonOverrrideStyles}
       showLabel={!options?.compressedMode}
+      disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
     />
   );
 
@@ -132,6 +133,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!options?.compressedMode}
       callInvitationURL={callInvitationURL}
       onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+      disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
     />
   );
 

@@ -3,7 +3,8 @@
 
 import { CallState as CallStatus } from '@azure/communication-calling';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
-import { CallAdapterState } from '../adapter/CallAdapter';
+import { MeetingCompositePage } from '../../MeetingComposite/state/MeetingCompositePage';
+import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { CallControlOptions } from '../components/CallControls';
 
 /**
@@ -66,3 +67,8 @@ export const reduceCallControlsForMobile = (
 
   return reduceCallControlOptions;
 };
+
+/**
+ * @private
+ */
+export const isInLobbyOrConnecting = (page: CallCompositePage | MeetingCompositePage): boolean => page === 'lobby';
