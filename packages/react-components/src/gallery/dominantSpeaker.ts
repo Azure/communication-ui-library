@@ -16,15 +16,11 @@ type SmartDominantSpeakerParticipantsArgs = {
    * Array containing currently rendered (visible)
    * participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
    */
-  visibleParticipants?: VideoGalleryRemoteParticipant[];
-  /**
-   * Maximum number of tiles to calculate.
-   */
-  maxTiles: number;
+  lastVisibleParticipants?: VideoGalleryRemoteParticipant[];
   /**
    * Maximum number of dominant speakers to calculate.
    */
-  maxDominantSpeakers: number;
+  maxVisibleParticipants: number;
 };
 
 /**
@@ -36,58 +32,54 @@ type SmartDominantSpeakerParticipantsArgs = {
 export const smartDominantSpeakerParticipants = (
   args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
-  const { participants, dominantSpeakers = [], visibleParticipants = [], maxTiles, maxDominantSpeakers } = args;
+  const { participants, dominantSpeakers = [], lastVisibleParticipants = [], maxVisibleParticipants } = args;
 
   // Don't apply any logic if total number of video streams is less than Max dominant speakers.
-  if (participants.length <= maxDominantSpeakers) return participants;
+  if (participants.length <= maxVisibleParticipants) {
+    return participants;
+  }
 
   // Only use the Max allowed dominant speakers.
-  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxDominantSpeakers);
+  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxVisibleParticipants);
 
-  let visibleParticipantIds = visibleParticipants.map((p) => p.userId);
-  const visibleDominantSpeakerIds = visibleParticipantIds.slice(0, maxDominantSpeakers);
-  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleDominantSpeakerIds.includes(id));
+  const lastVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId);
+  const newVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId).slice(0, maxVisibleParticipants);
+  const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !newVisibleParticipantIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
-  for (let index = 0; index < maxDominantSpeakers; index++) {
-    const visibleDominantSpeakerId = visibleDominantSpeakerIds[index];
+  for (let index = 0; index < maxVisibleParticipants; index++) {
+    const visibleDominantSpeakerId = newVisibleParticipantIds[index];
     if (visibleDominantSpeakerId === undefined || !dominantSpeakerIds.includes(visibleDominantSpeakerId)) {
       const replacement = newDominantSpeakerIds.shift();
       if (!replacement) break;
-      visibleDominantSpeakerIds[index] = replacement;
+      newVisibleParticipantIds[index] = replacement;
     }
   }
 
-  // We create a new array of participants by concatinating the array consisting
-  // of updated dominant speakers and array containing currently visible
-  // participants (after removing the updated dominant speakers from it).
-  // This new array will help us sort our final result in a way that minimizes re-ordering.
-  visibleParticipantIds = visibleParticipantIds.filter((p) => !visibleDominantSpeakerIds.includes(p));
-  visibleParticipantIds = visibleDominantSpeakerIds.concat(visibleParticipantIds);
-  // Converting array to a hashmap for faster searching
-  const visibleParticipantIdsMap = {};
-  visibleParticipantIds.forEach((userId) => {
-    visibleParticipantIdsMap[userId] = true;
+  const removedVisibleParticipantIds = lastVisibleParticipantIds.filter((p) => !newVisibleParticipantIds.includes(p));
+  removedVisibleParticipantIds.forEach((p) => newVisibleParticipantIds.push(p));
+
+  const newVisibleParticipantIdSet = new Set(newVisibleParticipantIds);
+
+  const leftoverParticipants = participants.filter((p) => !newVisibleParticipantIdSet.has(p.userId));
+  leftoverParticipants.forEach((p) => {
+    newVisibleParticipantIds.push(p.userId);
   });
 
-  // Add additional participants to the final list of visible participants if the list has less than Max visible participants.
-  const emptySlots = maxTiles - visibleParticipantIds.length;
-  if (emptySlots > 0) {
-    for (let index = 0; index < emptySlots; index++) {
-      const filler = participants.find((p) => !visibleParticipantIdsMap[p.userId]);
-      if (filler) {
-        visibleParticipantIdsMap[filler.userId] = true;
-        visibleParticipantIds.push(filler.userId);
-      }
-    }
-  }
+  const participantsMap = participantsById(participants);
+  // newVisibleParticipantIds can contain identifiers for participants that are no longer in the call.
+  // So we ignore those IDs.
+  const newVisibleParticipants = newVisibleParticipantIds
+    .map((participantId) => participantsMap[participantId])
+    .filter((p) => !!p);
 
-  const newVisibleParticipants = participants.filter((p) => visibleParticipantIdsMap[p.userId]);
+  return newVisibleParticipants;
+};
 
-  // Sort the new video participants to match the order of last visible participants.
-  newVisibleParticipants.sort((a, b) => {
-    return visibleParticipantIds.indexOf(a.userId) - visibleParticipantIds.indexOf(b.userId);
-  });
-
-  return newVisibleParticipants.slice(0, maxTiles);
+const participantsById = (
+  participants: VideoGalleryRemoteParticipant[]
+): { [key: string]: VideoGalleryRemoteParticipant } => {
+  const response: { [key: string]: VideoGalleryRemoteParticipant } = {};
+  participants.forEach((p) => (response[p.userId] = p));
+  return response;
 };

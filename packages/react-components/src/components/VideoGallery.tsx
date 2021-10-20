@@ -144,10 +144,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   remoteParticipantsRef.current = smartDominantSpeakerParticipants({
     participants: remoteParticipants,
     dominantSpeakers,
-    visibleParticipants: remoteParticipantsRef.current,
-    maxTiles: MAX_PARTICIPANTS_TILES,
-    maxDominantSpeakers: MAX_DOMINANT_SPEAKERS
-  });
+    lastVisibleParticipants: remoteParticipantsRef.current,
+    maxVisibleParticipants: MAX_DOMINANT_SPEAKERS
+  }).slice(0, MAX_PARTICIPANTS_TILES);
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {
     if (!localParticipant.isScreenSharingOn) {
