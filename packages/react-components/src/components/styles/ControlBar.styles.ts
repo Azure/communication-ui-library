@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, IStyle, IButtonStyles, IContextualMenuStyles, concatStyleSets } from '@fluentui/react';
+import { getTheme, IStyle, IButtonStyles, IContextualMenuStyles, concatStyleSets, Theme } from '@fluentui/react';
 
 const theme = getTheme();
-const palette = theme.palette;
 
 interface IControlBarStyles {
   horizontal: IStyle;
@@ -152,20 +151,22 @@ export const controlButtonLabelStyles: IStyle = {
 /**
  * @private
  */
-export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
-  root: {
-    color: palette.white
-  },
-  rootHovered: {
-    color: palette.white
-  },
-  rootPressed: {
-    color: palette.white
-  },
-  label: {
-    color: palette.white
-  }
-});
+export const endCallControlButtonStyles = (theme: Theme): IButtonStyles =>
+  concatStyleSets(controlButtonStyles, {
+    root: {
+      color: theme.palette.white,
+      ':focus::after': { outlineColor: `${theme.palette.white} !important` }
+    },
+    rootHovered: {
+      color: theme.palette.white
+    },
+    rootPressed: {
+      color: theme.palette.white
+    },
+    label: {
+      color: theme.palette.white
+    }
+  });
 
 /**
  * making it Partial as IContextualMenuStyles has all its props non-optional and we only need title to be defined here.
