@@ -8,7 +8,8 @@ import {
   CallAdapterState,
   CallComposite,
   ControlBarButtonProps,
-  createAzureCommunicationCallAdapter
+  createAzureCommunicationCallAdapter,
+  CustomCallControlsButtonArgs
 } from '@azure/communication-react';
 import { Icon, Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -85,12 +86,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   );
 };
 
-const getCustomButtonProps = (): ControlBarButtonProps => ({
+const getCustomButtonProps = ({ compressedMode }: CustomCallControlsButtonArgs): ControlBarButtonProps => ({
   onClick: () => window.alert('You clicked a custom button'),
   onRenderOnIcon: onRenderMicOnIcon,
   onRenderOffIcon: onRenderMicOffIcon,
   strings: { label: 'customButton', offLabel: 'customOff', onLabel: 'customOn' },
-  labelKey: 'customButton'
+  labelKey: 'customButton',
+  showLabel: !compressedMode
 });
 
 const onRenderMicOnIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOn" />;
