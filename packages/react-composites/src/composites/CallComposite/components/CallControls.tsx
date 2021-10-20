@@ -95,6 +95,7 @@ export type CallControlOptions = {
  */
 export type ControlBarButtonPlacement =
   | 'first'
+  | 'last'
   | 'afterCameraButton'
   | 'afterEndCallButton'
   | 'afterMicrophoneButton'
@@ -226,6 +227,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       <FilteredCustomButtons options={options} placement={'afterOptionsButton'} />
       {endCallButton}
       <FilteredCustomButtons options={options} placement={'afterEndCallButton'} />
+      <FilteredCustomButtons options={options} placement={'last'} />
     </ControlBar>
   );
 };

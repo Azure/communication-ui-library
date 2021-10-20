@@ -862,7 +862,7 @@ export const ControlBar: (props: ControlBarProps) => JSX.Element;
 export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
 // @alpha
-export type ControlBarButtonPlacement = 'first' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
+export type ControlBarButtonPlacement = 'first' | 'last' | 'afterCameraButton' | 'afterEndCallButton' | 'afterMicrophoneButton' | 'afterOptionsButton' | 'afterParticipantsButton' | 'afterScreenShareButton';
 
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
