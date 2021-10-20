@@ -680,10 +680,17 @@ export class CallContext {
     );
   }
 
-  public setDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
+  public setDeviceManagerUnparentedView(
+    localVideoStream: LocalVideoStreamState,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
     this.setState(
       produce(this._state, (draft: CallClientState) => {
-        draft.deviceManager.unparentedViews.push(localVideoStream);
+        draft.deviceManager.unparentedViews.push({
+          source: localVideoStream.source,
+          mediaStreamType: localVideoStream.mediaStreamType,
+          view: view
+        });
       })
     );
   }

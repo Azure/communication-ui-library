@@ -241,7 +241,7 @@ async function createViewUnparentedVideo(
   // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
   internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer);
-  context.setDeviceManagerUnparentedView({ ...stream, view: convertFromSDKToDeclarativeVideoStreamRendererView(view) });
+  context.setDeviceManagerUnparentedView(stream, convertFromSDKToDeclarativeVideoStreamRendererView(view));
 }
 
 function disposeViewRemoteVideo(
