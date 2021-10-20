@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove dominant speaker processing in videoGallerySelector.",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
