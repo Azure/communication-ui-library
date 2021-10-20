@@ -27,17 +27,7 @@ const renderScreenSharePlaceholder = (): JSX.Element => (
   </Stack>
 );
 
-const renderSharePersonaPlaceholder = (): JSX.Element => (
-  <Persona
-    styles={{ root: { margin: 'auto' } }}
-    size={PersonaSize.size56}
-    hidePersonaDetails={true}
-    text={'Toby'}
-    initialsTextColor="white"
-  />
-);
-
-const MockParticipantDisplayNames = ['Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
+const MockParticipantDisplayNames = ['You', 'Michael', 'Jim', 'Pam', 'Dwight', 'Kelly', 'Ryan', 'Andy'];
 
 const aspectRatioBoxContentStyle = mergeStyles({
   position: 'absolute',
@@ -91,6 +81,7 @@ const ScreenShareLayoutStory = (args): JSX.Element => {
       {/* Side panel component in this layout */}
       <Stack.Item className={mergeStyles({ height: '100%', width: args.sidePanelWidthRatio })}>
         <Stack grow className={mergeStyles({ height: '100%', overflow: 'auto' })}>
+          {/* Local and remote participants */}
           {participantsComponents}
         </Stack>
       </Stack.Item>
@@ -103,13 +94,7 @@ const ScreenShareLayoutStory = (args): JSX.Element => {
           }}
           // A placeholder element for the screen share stream
           onRenderPlaceholder={renderScreenSharePlaceholder}
-        >
-          {/* Video component for screen sharer's stream */}
-          <VideoTile
-            // A placeholder element for screen sharer's video stream
-            onRenderPlaceholder={renderSharePersonaPlaceholder}
-          />
-        </VideoTile>
+        />
       </Stack.Item>
     </Stack>
   );
