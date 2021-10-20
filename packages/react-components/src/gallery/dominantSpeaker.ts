@@ -18,10 +18,6 @@ type SmartDominantSpeakerParticipantsArgs = {
    */
   lastVisibleParticipants?: VideoGalleryRemoteParticipant[];
   /**
-   * Maximum number of tiles to calculate.
-   */
-  maxTiles: number;
-  /**
    * Maximum number of dominant speakers to calculate.
    */
   maxVisibleParticipants: number;

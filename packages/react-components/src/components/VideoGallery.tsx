@@ -145,7 +145,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     participants: remoteParticipants,
     dominantSpeakers,
     lastVisibleParticipants: remoteParticipantsRef.current,
-    maxTiles: MAX_PARTICIPANTS_TILES,
     maxVisibleParticipants: MAX_DOMINANT_SPEAKERS
   }).slice(0, MAX_PARTICIPANTS_TILES);
 
