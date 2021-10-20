@@ -5,10 +5,18 @@ import { useVideoStreams } from '../../utils';
 export const VideoTileExample: () => JSX.Element = () => {
   const customStyles: VideoTileStylesProps = {
     root: { height: '300px', width: '400px' },
-    videoContainer: { border: '5px solid firebrick' },
+    videoContainer: { border: '5px solid red' },
     overlayContainer: { background: 'rgba(165, 13, 13, 0.5)' },
-    displayNameContainer: { top: '1rem', bottom: 'auto', right: '1rem', left: 'auto', backgroundColor: 'blue' }
+    displayNameContainer: {
+      top: '1rem',
+      bottom: 'auto',
+      right: '1rem',
+      left: 'auto',
+      backgroundColor: 'blue',
+      color: 'white'
+    }
   };
+  const videoStyles = { root: { '& video': { borderRadius: '0rem' } } };
 
   const videoStreamElement = useVideoStreams(1)[0];
 
@@ -17,7 +25,7 @@ export const VideoTileExample: () => JSX.Element = () => {
       <VideoTile
         renderElement={
           // NOTE: Replace with your own video provider. (An html element with video stream)
-          <StreamMedia videoStreamElement={videoStreamElement} />
+          <StreamMedia styles={videoStyles} videoStreamElement={videoStreamElement} />
         }
         displayName={'Jack Reacher'}
         isMirrored={true}
