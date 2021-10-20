@@ -75,16 +75,19 @@ export const smartDominantSpeakerParticipants = (
   const emptySlots = maxTiles - newVisibleParticipantIds.length;
   const leftoverParticipants = participants.filter((p) => !newVisibleParticipantIdsMap[p.userId]).slice(0, emptySlots);
   leftoverParticipants.forEach((p) => {
-    newVisibleParticipantIdsMap[p.userId] = true;
     newVisibleParticipantIds.push(p.userId);
   });
 
-  const newVisibleParticipants = participants.filter((p) => newVisibleParticipantIdsMap[p.userId]);
-
-  // Sort the new video participants to match the order of last visible participants.
-  newVisibleParticipants.sort((a, b) => {
-    return newVisibleParticipantIds.indexOf(a.userId) - newVisibleParticipantIds.indexOf(b.userId);
-  });
+  const participantsMap = participantsById(participants);
+  const newVisibleParticipants = newVisibleParticipantIds.map((participantId) => participantsMap[participantId]);
 
   return newVisibleParticipants.slice(0, maxTiles);
+};
+
+const participantsById = (
+  participants: VideoGalleryRemoteParticipant[]
+): { [key: string]: VideoGalleryRemoteParticipant } => {
+  const response: { [key: string]: VideoGalleryRemoteParticipant } = {};
+  participants.forEach((p) => (response[p.userId] = p));
+  return response;
 };
