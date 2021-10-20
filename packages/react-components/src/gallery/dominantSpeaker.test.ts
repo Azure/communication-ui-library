@@ -103,6 +103,16 @@ describe('Test smartDominantSpeakerParticipants function', () => {
     expect(result.map((p) => p.userId)).toEqual(['5', '2', '3', '4', '1', '6', '7', '8']);
   });
 
+  test('lastVisibleParticipants no longer in participants are replaced without re-ordering those that still exist', () => {
+    const result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['3', '4', '5', '2'],
+      lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['5', '2', '3', '4', '1', '6', '7', '8']);
+  });
+
   test('returns only up to maxVisibleParticipants of dominant speakers. extra dominant speakers maintain the same order', () => {
     const result = smartDominantSpeakerParticipants({
       participants,
@@ -169,5 +179,26 @@ describe('Test smartDominantSpeakerParticipants function', () => {
       maxVisibleParticipants: 3
     });
     expect(result.map((p) => p.userId)).toEqual(['7', '5', '8', '3', '4', '1', '2', '6']);
+  });
+
+  test('complicated scenario #1. 1 dominant speaker and 2 last visible participant not in participants should return all existing dominant speakers.', () => {
+    const result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['12', '3', '4', '5'],
+      lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    console.log(result);
+    expect(result.map((p) => p.userId)).toEqual(['5', '3', '4', '1', '2', '6', '7', '8']);
+  });
+
+  test('complicated scenario #2. 1 EXTRA dominant speaker and 2 last visible participant not in participants should return all existing dominant speakers.', () => {
+    const result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['12', '3', '4', '5', '6'],
+      lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['5', '6', '3', '4', '1', '2', '7', '8']);
   });
 });

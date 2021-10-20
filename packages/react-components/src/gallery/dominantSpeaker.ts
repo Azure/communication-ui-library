@@ -39,8 +39,12 @@ export const smartDominantSpeakerParticipants = (
     return participants;
   }
 
-  // Only use the Max allowed dominant speakers.
-  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxVisibleParticipants);
+  const participantsMap = participantsById(participants);
+
+  // Only use the Max allowed dominant speakers that exist in participants
+  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values())
+    .filter((id) => !!participantsMap[id])
+    .slice(0, maxVisibleParticipants);
 
   const lastVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId);
   const newVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId).slice(0, maxVisibleParticipants);
@@ -66,9 +70,7 @@ export const smartDominantSpeakerParticipants = (
     newVisibleParticipantIds.push(p.userId);
   });
 
-  const participantsMap = participantsById(participants);
-  // newVisibleParticipantIds can contain identifiers for participants that are no longer in the call.
-  // So we ignore those IDs.
+  // newVisibleParticipantIds can contain identifiers for participants that are no longer in the call. So we ignore those IDs.
   const newVisibleParticipants = newVisibleParticipantIds
     .map((participantId) => participantsMap[participantId])
     .filter((p) => !!p);
