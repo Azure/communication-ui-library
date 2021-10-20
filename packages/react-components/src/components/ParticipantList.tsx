@@ -7,7 +7,13 @@ import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
 import { ParticipantItem } from './ParticipantItem';
-import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
+import { buttonFlyoutItemStylesWithIncreasedTouchTargets } from './styles/ControlBar.styles';
+import {
+  iconStyles,
+  participantListItemStyle,
+  participantListItemStyleWithIncreasedTouchTargets,
+  participantListStyle
+} from './styles/ParticipantList.styles';
 
 /**
  * A callback for providing custom menu items for each participant in {@link ParticipantList}.
@@ -44,6 +50,11 @@ export type ParticipantListProps = {
   onParticipantRemove?: (userId: string) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /**
+   * Option to increase the touch targets of flyout menu items from 36px to 48px.
+   * Recommended for mobile devices.
+   */
+  increaseFlyoutItemTouchTargetSize?: boolean;
 };
 
 const onRenderParticipantDefault = (
@@ -51,7 +62,8 @@ const onRenderParticipantDefault = (
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: OnRenderAvatarCallback,
-  createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[]
+  createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[],
+  increaseFlyoutItemTouchTargetSize?: boolean
 ): JSX.Element | null => {
   // Try to consider CommunicationParticipant as CallParticipant
   const callingParticipant = participant as CallParticipant;
@@ -84,7 +96,11 @@ const onRenderParticipantDefault = (
   if (participant.displayName) {
     return (
       <ParticipantItem
-        styles={participantListItemStyle}
+        styles={
+          increaseFlyoutItemTouchTargetSize
+            ? participantListItemStyleWithIncreasedTouchTargets
+            : participantListItemStyle
+        }
         key={participant.userId}
         userId={participant.userId}
         displayName={participant.displayName}
@@ -135,7 +151,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onParticipantRemove,
     onRenderAvatar,
     onRenderParticipant,
-    onFetchParticipantMenuItems
+    onFetchParticipantMenuItems,
+    increaseFlyoutItemTouchTargetSize
   } = props;
 
   const ids = useIdentifiers();
@@ -151,7 +168,10 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       menuItems.push({
         key: 'remove',
         text: strings.removeButtonLabel,
-        onClick: () => onParticipantRemove(participant.userId)
+        onClick: () => onParticipantRemove(participant.userId),
+        itemProps: {
+          styles: increaseFlyoutItemTouchTargetSize ? buttonFlyoutItemStylesWithIncreasedTouchTargets : undefined
+        }
       });
     }
 
@@ -172,7 +192,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               myUserId,
               onParticipantRemove,
               onRenderAvatar,
-              createParticipantMenuItems
+              createParticipantMenuItems,
+              increaseFlyoutItemTouchTargetSize
             )
       )}
     </Stack>

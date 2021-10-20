@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, IStyle, IButtonStyles, IContextualMenuStyles, concatStyleSets } from '@fluentui/react';
+import {
+  getTheme,
+  IStyle,
+  IButtonStyles,
+  IContextualMenuStyles,
+  concatStyleSets,
+  IContextualMenuItemStyles
+} from '@fluentui/react';
+import { MINIMUM_TOUCH_TARGET_HEIGHT_REM } from '../utils/constants';
 
 const theme = getTheme();
 const palette = theme.palette;
@@ -147,6 +155,39 @@ export const controlButtonLabelStyles: IStyle = {
   cursor: 'pointer',
   display: 'block',
   margin: '0rem 0.25rem'
+};
+
+/**
+ * Default styles for button flyout items
+ *
+ * @private
+ */
+export const buttonFlyoutItemStyles: IContextualMenuItemStyles = {
+  icon: {
+    lineHeight: 0
+  },
+  checkmarkIcon: {
+    lineHeight: 0
+  }
+};
+
+/**
+ * Styles that can be applied to ensure flyout items have the minimum touch target size.
+ * @remarks Used by both the control bar buttons and the participant list button flyout
+ * @private
+ */
+export const buttonFlyoutItemStylesWithIncreasedTouchTargets: IContextualMenuItemStyles = {
+  ...buttonFlyoutItemStyles,
+  root: {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    maxHeight: 'unset'
+  },
+  linkContent: {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    maxHeight: 'unset'
+  }
 };
 
 /**

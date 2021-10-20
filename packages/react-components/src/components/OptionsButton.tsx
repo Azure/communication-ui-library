@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenuItemType, Icon, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import { ContextualMenuItemType, Icon, IContextualMenuItem, IContextualMenuProps, mergeStyles } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { buttonFlyoutItemStyles, buttonFlyoutItemStylesWithIncreasedTouchTargets } from './styles/ControlBar.styles';
 
 /**
  * A device, e.g. camera, microphone, or speaker, in the {@link OptionsButton} flyout.
@@ -104,6 +105,11 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<OptionsButtonStrings>;
+  /**
+   * Option to increase the touch targets of the button flyout menu items from 36px to 48px.
+   * Recommended for mobile devices.
+   */
+  increaseFlyoutItemTouchTargetSize?: boolean;
 }
 
 /**
@@ -147,7 +153,12 @@ const generateDefaultMenuProps = (
           key: camera.id,
           text: camera.name,
           title: camera.name,
-          iconProps: { iconName: 'OptionsCamera', styles: { root: { lineHeight: 0 } } },
+          itemProps: {
+            styles: props.increaseFlyoutItemTouchTargetSize
+              ? buttonFlyoutItemStylesWithIncreasedTouchTargets
+              : buttonFlyoutItemStyles
+          },
+          iconProps: { iconName: 'OptionsCamera' },
           canCheck: true,
           isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
@@ -171,7 +182,12 @@ const generateDefaultMenuProps = (
           key: microphone.id,
           text: microphone.name,
           title: microphone.name,
-          iconProps: { iconName: 'OptionsMic', styles: { root: { lineHeight: 0 } } },
+          itemProps: {
+            styles: props.increaseFlyoutItemTouchTargetSize
+              ? buttonFlyoutItemStylesWithIncreasedTouchTargets
+              : buttonFlyoutItemStyles
+          },
+          iconProps: { iconName: 'OptionsMic' },
           canCheck: true,
           isChecked: microphone.id === selectedMicrophone?.id,
           onClick: () => {
@@ -195,7 +211,12 @@ const generateDefaultMenuProps = (
           key: speaker.id,
           text: speaker.name,
           title: speaker.name,
-          iconProps: { iconName: 'OptionsSpeaker', styles: { root: { lineHeight: 0 } } },
+          itemProps: {
+            styles: props.increaseFlyoutItemTouchTargetSize
+              ? buttonFlyoutItemStylesWithIncreasedTouchTargets
+              : buttonFlyoutItemStyles
+          },
+          iconProps: { iconName: 'OptionsSpeaker' },
           canCheck: true,
           isChecked: speaker.id === selectedSpeaker?.id,
           onClick: () => {

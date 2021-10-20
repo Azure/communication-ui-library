@@ -13,7 +13,12 @@ import {
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import { ParticipantList, ParticipantListProps } from './ParticipantList';
-import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
+import {
+  buttonFlyoutItemStyles,
+  buttonFlyoutItemStylesWithIncreasedTouchTargets,
+  defaultParticipantListContainerStyle,
+  participantsButtonMenuPropsStyle
+} from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { formatString } from '../localization/localizationUtils';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
@@ -86,6 +91,11 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps, Particip
    * Optional strings to override in component
    */
   strings?: Partial<ParticipantsButtonStrings>;
+  /**
+   * Option to increase the touch targets of the button flyout menu items from 36px to 48px.
+   * Recommended for mobile devices.
+   */
+  increaseFlyoutItemTouchTargetSize?: boolean;
 }
 
 const onRenderPeopleIcon = (): JSX.Element => {
@@ -136,18 +146,20 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
           onRenderAvatar={onRenderAvatar}
           onParticipantRemove={onParticipantRemove}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          increaseFlyoutItemTouchTargetSize={props.increaseFlyoutItemTouchTargetSize}
         />
       </Stack>
     );
   }, [
-    excludeMe,
-    myUserId,
-    onParticipantRemove,
-    onRenderAvatar,
-    onRenderParticipant,
-    participants,
     styles?.participantListContainerStyle,
-    onFetchParticipantMenuItems
+    participants,
+    myUserId,
+    excludeMe,
+    onRenderParticipant,
+    onRenderAvatar,
+    onParticipantRemove,
+    onFetchParticipantMenuItems,
+    props.increaseFlyoutItemTouchTargetSize
   ]);
 
   const onCopyCallback = useCallback(() => {
@@ -177,6 +189,11 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
           key: 'muteAllKey',
           text: strings.muteAllButtonLabel,
           title: strings.muteAllButtonLabel,
+          itemProps: {
+            styles: props.increaseFlyoutItemTouchTargetSize
+              ? buttonFlyoutItemStylesWithIncreasedTouchTargets
+              : buttonFlyoutItemStyles
+          },
           iconProps: { iconName: 'MicOff2' },
           onClick: onMuteAllCallback
         });
@@ -190,6 +207,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     defaultParticipantList,
     onMuteAll,
     strings.muteAllButtonLabel,
+    props.increaseFlyoutItemTouchTargetSize,
     onMuteAllCallback
   ]);
 
@@ -211,6 +229,11 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       menuProps.items.push({
         key: 'participantCountKey',
         name: formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
+        itemProps: {
+          styles: props.increaseFlyoutItemTouchTargetSize
+            ? buttonFlyoutItemStylesWithIncreasedTouchTargets
+            : buttonFlyoutItemStyles
+        },
         iconProps: { iconName: 'People' },
         subMenuProps: {
           items: generateDefaultParticipantsSubMenuProps(),
@@ -227,6 +250,11 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         key: 'InviteLinkKey',
         name: strings.copyInviteLinkButtonLabel,
         title: strings.copyInviteLinkButtonLabel,
+        itemProps: {
+          styles: props.increaseFlyoutItemTouchTargetSize
+            ? buttonFlyoutItemStylesWithIncreasedTouchTargets
+            : buttonFlyoutItemStyles
+        },
         iconProps: { iconName: 'Link' },
         onClick: onCopyCallback
       });
@@ -241,6 +269,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     callInvitationURL,
     participants,
     excludeMe,
+    props.increaseFlyoutItemTouchTargetSize,
     generateDefaultParticipantsSubMenuProps,
     onCopyCallback
   ]);

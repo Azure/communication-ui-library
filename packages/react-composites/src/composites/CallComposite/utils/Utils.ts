@@ -58,6 +58,11 @@ export const reduceCallControlsForMobile = (
     reduceCallControlOptions.compressedMode = true;
   }
 
+  // Increase touch targets for mobile devices, unless developer has explicitly opted out.
+  if (reduceCallControlOptions.increaseFlyoutItemTouchTargetSize !== false) {
+    reduceCallControlOptions.increaseFlyoutItemTouchTargetSize = true;
+  }
+
   // Do not show screen share button when composite is optimized for mobile unless the developer
   // has explicitly opted in.
   if (reduceCallControlOptions.screenShareButton !== true) {

@@ -105,6 +105,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               // disable button whilst all other buttons are disabled
               disabled={!microphonePermissionGranted || !cameraPermissionGranted}
               showLabel={true}
+              increaseFlyoutItemTouchTargetSize={props.mobileView}
             />
           )}
         </ControlBar>
