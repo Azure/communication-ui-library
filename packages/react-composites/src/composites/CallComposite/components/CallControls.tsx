@@ -108,10 +108,21 @@ export type ControlBarButtonPlacement =
  * @alpha
  */
 export interface CustomCallControlsButton {
+  /**
+   * Callback to provide props for the injected button.
+   *
+   * A {@link ControlBarButton} with the provided props will be injected.
+   *
+   * Performance tip: `getProps` will be called each time {@link CallControls} is rendered.
+   * Consider memoizing for optimal performance.
+   */
   getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
   placement: ControlBarButtonPlacement;
 }
 
+/**
+ * @alpha
+ */
 export interface CustomCallControlsButtonArgs {
   /**
    * Compressed mode should decrease the size of button and hide the label

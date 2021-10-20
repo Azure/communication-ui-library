@@ -27,7 +27,6 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { CreateViewOptions } from '@azure/communication-calling';
-import { DefaultButton } from '@fluentui/react';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
@@ -936,10 +935,14 @@ export type CustomAvatarOptions = {
 
 // @alpha
 export interface CustomCallControlsButton {
-    // (undocumented)
-    button: DefaultButton;
+    getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
     // (undocumented)
     placement: ControlBarButtonPlacement;
+}
+
+// @alpha (undocumented)
+export interface CustomCallControlsButtonArgs {
+    compressedMode?: boolean;
 }
 
 // @public
@@ -2078,6 +2081,6 @@ export interface VideoTileStylesProps extends BaseCustomStylesProps {
 
 // Warnings were encountered during analysis:
 //
-// /workspaces/communication-ui-library/packages/react-composites/src/composites/CallComposite/components/CallControls.tsx:75:3 - (ae-incompatible-release-tags) The symbol "customButtons" is marked as @public, but its signature references "CustomCallControlsButton" which is marked as @alpha
+// /workspaces/communication-ui-library/packages/react-composites/src/composites/CallComposite/components/CallControls.tsx:77:3 - (ae-incompatible-release-tags) The symbol "customButtons" is marked as @public, but its signature references "CustomCallControlsButton" which is marked as @alpha
 
 ```

@@ -5,8 +5,9 @@ export { CallComposite } from './CallComposite';
 export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
 export type {
   CallControlOptions,
+  ControlBarButtonPlacement,
   CustomCallControlsButton,
-  ControlBarButtonPlacement
+  CustomCallControlsButtonArgs
 } from './components/CallControls';
 
 export * from './adapter';

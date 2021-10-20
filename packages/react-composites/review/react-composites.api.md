@@ -22,7 +22,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
-import { DefaultButton } from '@fluentui/react';
+import { ControlBarButtonProps } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -418,10 +418,14 @@ export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, cre
 
 // @alpha
 export interface CustomCallControlsButton {
-    // (undocumented)
-    button: DefaultButton;
+    getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
     // (undocumented)
     placement: ControlBarButtonPlacement;
+}
+
+// @alpha (undocumented)
+export interface CustomCallControlsButtonArgs {
+    compressedMode?: boolean;
 }
 
 // @public
@@ -653,7 +657,7 @@ export type TopicChangedListener = (event: {
 
 // Warnings were encountered during analysis:
 //
-// src/composites/CallComposite/components/CallControls.tsx:75:3 - (ae-incompatible-release-tags) The symbol "customButtons" is marked as @public, but its signature references "CustomCallControlsButton" which is marked as @alpha
+// src/composites/CallComposite/components/CallControls.tsx:77:3 - (ae-incompatible-release-tags) The symbol "customButtons" is marked as @public, but its signature references "CustomCallControlsButton" which is marked as @alpha
 
 // (No @packageDocumentation comment for this package)
 
