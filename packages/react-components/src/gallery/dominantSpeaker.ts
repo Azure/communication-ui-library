@@ -65,15 +65,13 @@ export const smartDominantSpeakerParticipants = (
     newVisibleParticipantIds.push(visibleParticipantId);
   }
 
-  // Converting array to a hashmap for faster searching
-  const newVisibleParticipantIdsMap = {};
-  newVisibleParticipantIds.forEach((userId) => {
-    newVisibleParticipantIdsMap[userId] = true;
-  });
+  const newVisibleParticipantIdSet = new Set(newVisibleParticipantIds);
 
   // Add additional participants to the final list of visible participants if the list has less than Max visible participants.
   const emptySlots = maxTiles - newVisibleParticipantIds.length;
-  const leftoverParticipants = participants.filter((p) => !newVisibleParticipantIdsMap[p.userId]).slice(0, emptySlots);
+  const leftoverParticipants = participants
+    .filter((p) => !newVisibleParticipantIdSet.has(p.userId))
+    .slice(0, emptySlots);
   leftoverParticipants.forEach((p) => {
     newVisibleParticipantIds.push(p.userId);
   });
