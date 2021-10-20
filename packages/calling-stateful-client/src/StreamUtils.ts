@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CreateViewOptions, LocalVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import {
+  CreateViewOptions,
+  LocalVideoStream,
+  VideoStreamRenderer,
+  VideoStreamRendererView
+} from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
@@ -201,9 +206,9 @@ async function createViewUnparentedVideo(
 
   internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendering', undefined);
 
+  let view: VideoStreamRendererView;
   try {
-    const view = await renderer.createView(options);
-    stream.view = convertFromSDKToDeclarativeVideoStreamRendererView(view);
+    view = await renderer.createView(options);
   } catch (e) {
     // Special case for unparented views. Since they are not tied to anything and created by us based on the calls to
     // this function we'll delete it to clean up the data since keeping it around doesn't help us and if developer wants
@@ -236,7 +241,7 @@ async function createViewUnparentedVideo(
   // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
   internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer);
-  context.setDeviceManagerUnparentedView(stream);
+  context.setDeviceManagerUnparentedView({ ...stream, view });
 }
 
 function disposeViewRemoteVideo(
