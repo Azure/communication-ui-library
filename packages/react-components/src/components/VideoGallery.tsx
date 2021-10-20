@@ -146,7 +146,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     dominantSpeakers,
     visibleParticipants: remoteParticipantsRef.current,
     maxTiles: MAX_PARTICIPANTS_TILES,
-    maxDominantSpeakers: MAX_DOMINANT_SPEAKERS
+    maxVisibleParticipants: MAX_DOMINANT_SPEAKERS
   });
 
   const screenSharingNotification = useMemo((): JSX.Element | undefined => {

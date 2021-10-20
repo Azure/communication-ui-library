@@ -24,7 +24,7 @@ type SmartDominantSpeakerParticipantsArgs = {
   /**
    * Maximum number of dominant speakers to calculate.
    */
-  maxDominantSpeakers: number;
+  maxVisibleParticipants: number;
 };
 
 /**
@@ -36,20 +36,22 @@ type SmartDominantSpeakerParticipantsArgs = {
 export const smartDominantSpeakerParticipants = (
   args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
-  const { participants, dominantSpeakers = [], visibleParticipants = [], maxTiles, maxDominantSpeakers } = args;
+  const { participants, dominantSpeakers = [], visibleParticipants = [], maxTiles, maxVisibleParticipants } = args;
 
   // Don't apply any logic if total number of video streams is less than Max dominant speakers.
-  if (participants.length <= maxDominantSpeakers) return participants;
+  if (participants.length <= maxVisibleParticipants) {
+    return participants;
+  }
 
   // Only use the Max allowed dominant speakers.
-  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxDominantSpeakers);
+  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxVisibleParticipants);
 
   let visibleParticipantIds = visibleParticipants.map((p) => p.userId);
-  const visibleDominantSpeakerIds = visibleParticipantIds.slice(0, maxDominantSpeakers);
+  const visibleDominantSpeakerIds = visibleParticipants.map((p) => p.userId).slice(0, maxVisibleParticipants);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !visibleDominantSpeakerIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
-  for (let index = 0; index < maxDominantSpeakers; index++) {
+  for (let index = 0; index < maxVisibleParticipants; index++) {
     const visibleDominantSpeakerId = visibleDominantSpeakerIds[index];
     if (visibleDominantSpeakerId === undefined || !dominantSpeakerIds.includes(visibleDominantSpeakerId)) {
       const replacement = newDominantSpeakerIds.shift();
