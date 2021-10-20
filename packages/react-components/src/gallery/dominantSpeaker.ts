@@ -18,7 +18,7 @@ type SmartDominantSpeakerParticipantsArgs = {
    */
   lastVisibleParticipants?: VideoGalleryRemoteParticipant[];
   /**
-   * Maximum number of dominant speakers to calculate.
+   * Maximum number of visible participants.
    */
   maxVisibleParticipants: number;
 };
@@ -48,8 +48,8 @@ export const smartDominantSpeakerParticipants = (
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
   for (let index = 0; index < maxVisibleParticipants; index++) {
-    const visibleDominantSpeakerId = newVisibleParticipantIds[index];
-    if (visibleDominantSpeakerId === undefined || !dominantSpeakerIds.includes(visibleDominantSpeakerId)) {
+    const newVisibleParticipantId = newVisibleParticipantIds[index];
+    if (newVisibleParticipantId === undefined || !dominantSpeakerIds.includes(newVisibleParticipantId)) {
       const replacement = newDominantSpeakerIds.shift();
       if (!replacement) break;
       newVisibleParticipantIds[index] = replacement;
