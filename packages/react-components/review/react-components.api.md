@@ -505,6 +505,7 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 // @public
 export interface OptionsButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
+    increaseFlyoutItemTouchTargetSize?: boolean;
     microphones?: OptionsDevice[];
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
@@ -586,6 +587,7 @@ export type ParticipantListProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    increaseFlyoutItemTouchTargetSize?: boolean;
 };
 
 // @public
@@ -607,6 +609,7 @@ export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element
 // @public
 export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
     callInvitationURL?: string;
+    increaseFlyoutItemTouchTargetSize?: boolean;
     onMuteAll?: () => void;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
     strings?: Partial<ParticipantsButtonStrings>;

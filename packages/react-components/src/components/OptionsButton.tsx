@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenuItemType, Icon, IContextualMenuItem, IContextualMenuProps, mergeStyles } from '@fluentui/react';
+import { ContextualMenuItemType, Icon, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';

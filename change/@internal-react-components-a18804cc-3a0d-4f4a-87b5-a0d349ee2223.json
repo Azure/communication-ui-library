@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add option to increase the flyout touch target size",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

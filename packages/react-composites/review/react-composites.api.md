@@ -242,6 +242,7 @@ export type CallControlOptions = {
     optionsButton?: boolean;
     participantsButton?: boolean;
     screenShareButton?: boolean;
+    increaseFlyoutItemTouchTargetSize?: boolean;
 };
 
 // @public
