@@ -228,6 +228,7 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     removedFromMeetingMoreDetails?: string;
     removedFromMeetingTitle: string;
+    screenSharingMessage: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
