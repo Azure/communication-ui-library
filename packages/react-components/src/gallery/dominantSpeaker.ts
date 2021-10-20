@@ -46,7 +46,7 @@ export const smartDominantSpeakerParticipants = (
   // Only use the Max allowed dominant speakers.
   const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values()).slice(0, maxVisibleParticipants);
 
-  let lastVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId);
+  const lastVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId);
   const newVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId).slice(0, maxVisibleParticipants);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !newVisibleParticipantIds.includes(id));
 
@@ -66,24 +66,20 @@ export const smartDominantSpeakerParticipants = (
   }
 
   // Converting array to a hashmap for faster searching
-  const visibleParticipantIdsMap = {};
+  const newVisibleParticipantIdsMap = {};
   newVisibleParticipantIds.forEach((userId) => {
-    visibleParticipantIdsMap[userId] = true;
+    newVisibleParticipantIdsMap[userId] = true;
   });
 
   // Add additional participants to the final list of visible participants if the list has less than Max visible participants.
   const emptySlots = maxTiles - newVisibleParticipantIds.length;
-  if (emptySlots > 0) {
-    for (let index = 0; index < emptySlots; index++) {
-      const filler = participants.find((p) => !visibleParticipantIdsMap[p.userId]);
-      if (filler) {
-        visibleParticipantIdsMap[filler.userId] = true;
-        newVisibleParticipantIds.push(filler.userId);
-      }
-    }
-  }
+  const leftoverParticipants = participants.filter((p) => !newVisibleParticipantIdsMap[p.userId]).slice(0, emptySlots);
+  leftoverParticipants.forEach((p) => {
+    newVisibleParticipantIdsMap[p.userId] = true;
+    newVisibleParticipantIds.push(p.userId);
+  });
 
-  const newVisibleParticipants = participants.filter((p) => visibleParticipantIdsMap[p.userId]);
+  const newVisibleParticipants = participants.filter((p) => newVisibleParticipantIdsMap[p.userId]);
 
   // Sort the new video participants to match the order of last visible participants.
   newVisibleParticipants.sort((a, b) => {
