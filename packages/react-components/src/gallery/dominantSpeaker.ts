@@ -61,9 +61,7 @@ export const smartDominantSpeakerParticipants = (
   }
 
   const removedVisibleParticipantIds = lastVisibleParticipantIds.filter((p) => !newVisibleParticipantIds.includes(p));
-  for (const visibleParticipantId of removedVisibleParticipantIds) {
-    newVisibleParticipantIds.push(visibleParticipantId);
-  }
+  removedVisibleParticipantIds.forEach((p) => newVisibleParticipantIds.push(p));
 
   const newVisibleParticipantIdSet = new Set(newVisibleParticipantIds);
 
@@ -73,7 +71,11 @@ export const smartDominantSpeakerParticipants = (
   });
 
   const participantsMap = participantsById(participants);
-  const newVisibleParticipants = newVisibleParticipantIds.map((participantId) => participantsMap[participantId]);
+  // newVisibleParticipantIds can contain identifiers for participants that are no longer in the call.
+  // So we ignore those IDs.
+  const newVisibleParticipants = newVisibleParticipantIds
+    .map((participantId) => participantsMap[participantId])
+    .filter((p) => !!p);
 
   return newVisibleParticipants;
 };

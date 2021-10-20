@@ -110,6 +110,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
       maxTiles: 4,
       maxVisibleParticipants: 4
     });
+    console.log(result);
     expect(result.map((p) => p.userId)).toEqual(['5', '2', '3', '4', '1', '6', '7', '8']);
   });
 
