@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, DefaultPalette as palette } from '@fluentui/react';
+import { DefaultPalette as palette } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
+  ControlBarButton,
+  ControlBarButtonProps,
   EndCallButton,
   MicrophoneButton,
   OptionsButton,
@@ -106,8 +108,16 @@ export type ControlBarButtonPlacement =
  * @alpha
  */
 export interface CustomCallControlsButton {
-  button: DefaultButton;
+  getProps: (args: CustomCallControlsButtonArgs) => ControlBarButtonProps;
   placement: ControlBarButtonPlacement;
+}
+
+export interface CustomCallControlsButtonArgs {
+  /**
+   * Compressed mode should decrease the size of button and hide the label
+   * @defaultValue false
+   */
+  compressedMode?: boolean;
 }
 
 /**
@@ -218,5 +228,11 @@ const FilteredCustomButtons = (props: {
     return <></>;
   }
   const buttons = options.customButtons.filter((button) => button.placement === placement);
-  return <>{buttons}</>;
+  return (
+    <>
+      {buttons.map((b) => (
+        <ControlBarButton {...b.getProps({ compressedMode: options.compressedMode })} />
+      ))}
+    </>
+  );
 };
