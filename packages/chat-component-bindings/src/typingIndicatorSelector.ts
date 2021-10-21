@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTypingIndicators, getParticipants, getUserId } from './baseSelectors';
-import * as reselect from 'reselect';
+import { getTypingIndicators, getParticipants, getUserId, ChatBaseSelectorProps } from './baseSelectors';
+import { createSelector } from 'reselect';
 import { ChatParticipant } from '@azure/communication-chat';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS, PARTICIPANTS_THRESHOLD } from './utils/constants';
+import { ChatClientState } from '@internal/chat-stateful-client';
 
 const filterTypingIndicators = (
   typingIndicators: TypingIndicatorReceivedEvent[],
@@ -44,11 +45,23 @@ const convertSdkTypingIndicatorsToCommunicationParticipants = (
 };
 
 /**
+ * Selector type for {@link TypingIndicator} component.
+ *
+ * @public
+ */
+export type TypingIndicatorSelector = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+) => {
+  typingUsers: CommunicationParticipant[];
+};
+
+/**
  * Selector for {@link TypingIndicator} component.
  *
  * @public
  */
-export const typingIndicatorSelector = reselect.createSelector(
+export const typingIndicatorSelector: TypingIndicatorSelector = createSelector(
   [getTypingIndicators, getParticipants, getUserId],
   (
     typingIndicators: TypingIndicatorReceivedEvent[],
