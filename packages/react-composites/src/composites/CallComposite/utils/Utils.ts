@@ -27,16 +27,24 @@ export const isCameraOn = (state: CallAdapterState): boolean => {
  *
  * @private
  */
-export const reduceCallControlsSetForMobile = (callControlOptions: CallControlOptions): CallControlOptions => {
-  const reduceCallControlOptions = callControlOptions;
+export const reduceCallControlsForMobile = (
+  callControlOptions: CallControlOptions | boolean | undefined
+): CallControlOptions | false => {
+  if (callControlOptions === false) {
+    return false;
+  }
+
+  // Ensure call controls a valid object.
+  const reduceCallControlOptions = callControlOptions === true ? {} : callControlOptions || {};
+
+  // Set to compressed mode when composite is optimized for mobile, unless developer has explicitly opted out.
+  if (reduceCallControlOptions.compressedMode !== false) {
+    reduceCallControlOptions.compressedMode = true;
+  }
 
   // Do not show screen share button when composite is optimized for mobile unless the developer
   // has explicitly opted in.
-  if (
-    reduceCallControlOptions &&
-    typeof reduceCallControlOptions !== 'boolean' &&
-    reduceCallControlOptions.screenShareButton !== true
-  ) {
+  if (reduceCallControlOptions.screenShareButton !== true) {
     reduceCallControlOptions.screenShareButton = false;
   }
 

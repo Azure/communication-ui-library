@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fixed focus outline color colored controlBar btns",
+  "packageName": "@internal/react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

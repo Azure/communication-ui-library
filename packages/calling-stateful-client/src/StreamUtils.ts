@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CreateViewOptions, LocalVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import {
+  CreateViewOptions,
+  LocalVideoStream,
+  VideoStreamRenderer,
+  VideoStreamRendererView
+} from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
@@ -201,7 +206,7 @@ async function createViewUnparentedVideo(
 
   internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendering', undefined);
 
-  let view;
+  let view: VideoStreamRendererView;
   try {
     view = await renderer.createView(options);
   } catch (e) {

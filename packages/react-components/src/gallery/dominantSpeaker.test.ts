@@ -16,126 +16,189 @@ const participants: VideoGalleryParticipant[] = [
 
 describe('Test smartDominantSpeakerParticipants function', () => {
   test('returns all participants when number of participants is less than or equal to number of dominant speakers', () => {
-    let result = smartDominantSpeakerParticipants(participants.slice(0, 3), ['1', '3', '5', '7']);
+    let result = smartDominantSpeakerParticipants({
+      participants: participants.slice(0, 3),
+      dominantSpeakers: ['1', '3', '5', '7'],
+      maxVisibleParticipants: 4
+    });
     expect(result.length).toBe(3);
 
-    result = smartDominantSpeakerParticipants(participants.slice(0, 4), ['1', '3', '5', '7']);
+    result = smartDominantSpeakerParticipants({
+      participants: participants.slice(0, 4),
+      dominantSpeakers: ['1', '3', '5', '7'],
+      maxVisibleParticipants: 4
+    });
     expect(result.length).toBe(4);
   });
 
-  test('returns no more than the MAX participants', () => {
-    let result = smartDominantSpeakerParticipants(
-      participants,
-      ['1', '3', '5', '7'],
-      [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
-      4
-    );
-    expect(result.length).toBe(4);
+  test('dominantSpeakers is less than maxVisibleParticipants should result in minimum changes', () => {
+    let result = smartDominantSpeakerParticipants({
+      participants: participants,
+      dominantSpeakers: ['1', '3'],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['1', '3', '2', '4', '5', '6', '7', '8']);
 
-    result = smartDominantSpeakerParticipants(
-      participants,
-      ['1', '3', '5', '7'],
-      [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
-      5
-    );
-    expect(result.length).toBe(5);
+    result = smartDominantSpeakerParticipants({
+      participants: participants,
+      dominantSpeakers: ['2', '1'],
+      lastVisibleParticipants: result,
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['1', '3', '2', '4', '5', '6', '7', '8']);
   });
 
   test('returns participants even when there are no visible participants', () => {
-    const result = smartDominantSpeakerParticipants(participants, ['1', '3', '5', '7'], [], 4);
-    expect(result.length).toBe(4);
+    const result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['1', '3', '5', '7'],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['1', '3', '5', '7', '2', '4', '6', '8']);
   });
 
   test('returns participants array replacing non-dominant speakers with dominant speakers', () => {
-    const result = smartDominantSpeakerParticipants(
+    const result = smartDominantSpeakerParticipants({
       participants,
-      ['1', '3', '5', '7'],
-      [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
-      4
-    );
-    const resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(['1', '5', '3', '7']);
+      dominantSpeakers: ['1', '3', '5', '7'],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['1', '5', '3', '7', '2', '4', '6', '8']);
   });
 
   test('maintains the ordering of new participants to match last visible participants', () => {
-    let result = smartDominantSpeakerParticipants(
+    let result = smartDominantSpeakerParticipants({
       participants,
-      ['1', '2', '3', '4'],
-      [{ userId: '3' }, { userId: '4' }],
-      4
-    );
-    let resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(['3', '4', '1', '2']);
+      dominantSpeakers: ['1', '2', '3', '4'],
+      lastVisibleParticipants: [{ userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['3', '4', '1', '2', '5', '6', '7', '8']);
 
-    result = smartDominantSpeakerParticipants(
+    result = smartDominantSpeakerParticipants({
       participants,
-      ['1', '2', '3', '4'],
-      [{ userId: '2' }, { userId: '1' }],
-      4
-    );
-    resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(['2', '1', '3', '4']);
+      dominantSpeakers: ['1', '2', '3', '4'],
+      lastVisibleParticipants: [{ userId: '2' }, { userId: '1' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['2', '1', '3', '4', '5', '6', '7', '8']);
   });
 
   test('returns new dominant speakers when a dominant speaker is replaced', () => {
-    let result = smartDominantSpeakerParticipants(
+    let result = smartDominantSpeakerParticipants({
       participants,
-      ['1', '2', '3', '4'],
-      [{ userId: '1' }, { userId: '2' }],
-      4
-    );
-    let resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(['1', '2', '3', '4']);
+      dominantSpeakers: ['1', '2', '3', '4'],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['1', '2', '3', '4', '5', '6', '7', '8']);
 
-    result = smartDominantSpeakerParticipants(
+    result = smartDominantSpeakerParticipants({
       participants,
-      ['5', '2', '3', '4'],
-      [{ userId: '11' }, { userId: '10' }],
-      4
-    );
-    resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(['5', '2', '3', '4']);
+      dominantSpeakers: ['5', '2', '3', '4'],
+      lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['5', '2', '3', '4', '1', '6', '7', '8']);
   });
 
-  test('returns upto MAX participants even when number of last visible participants and dominant speakers is less than MAX', () => {
-    let result = smartDominantSpeakerParticipants(participants, ['1', '2'], [{ userId: '1' }, { userId: '2' }], 4);
-    let resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(['1', '2', '3', '4']);
+  test('lastVisibleParticipants no longer in participants are replaced without re-ordering those that still exist', () => {
+    const result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['3', '4', '5', '2'],
+      lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['5', '2', '3', '4', '1', '6', '7', '8']);
+  });
 
-    result = smartDominantSpeakerParticipants(participants, ['1', '2'], [{ userId: '2' }], 4);
-    resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(['2', '1', '3', '4']);
+  test('returns only up to maxVisibleParticipants of dominant speakers. extra dominant speakers maintain the same order', () => {
+    const result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['5', '6', '7', '8'],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 3
+    });
+    expect(result.map((p) => p.userId)).toEqual(['5', '6', '7', '1', '2', '3', '4', '8']);
   });
 
   test('returns participants array always containing all dominant speakers', () => {
-    const customDominantSpeakers = ['5', '6', '7', '8'];
-    const result = smartDominantSpeakerParticipants(
+    const result = smartDominantSpeakerParticipants({
       participants,
-      customDominantSpeakers,
-      [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
-      customDominantSpeakers.length
-    );
-    const resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(customDominantSpeakers);
+      dominantSpeakers: ['5', '6', '7', '8'],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['5', '6', '7', '8', '1', '2', '3', '4']);
   });
 
   test('returns the same participants array if dominant speakers have re-ordered but are same', () => {
-    const visibleParticipants = [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }];
-    let result = smartDominantSpeakerParticipants(participants, ['1', '2', '3', '4'], visibleParticipants, 4);
-    expect(result).toEqual(visibleParticipants);
+    let result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['1', '2', '3', '4'],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['1', '2', '3', '4', '5', '6', '7', '8']);
 
-    result = smartDominantSpeakerParticipants(participants, ['3', '2', '1', '4'], visibleParticipants, 4);
-    expect(result).toEqual(visibleParticipants);
+    result = smartDominantSpeakerParticipants({
+      participants,
+      // Dominant speakers rearranged, other arguments unchanged.
+      dominantSpeakers: ['3', '2', '1', '4'],
+      lastVisibleParticipants: result.slice(0, 4),
+      maxVisibleParticipants: 4
+    });
+    // No rearrangement in result.
+    expect(result.map((p) => p.userId)).toEqual(['1', '2', '3', '4', '5', '6', '7', '8']);
   });
 
   test('returns participant only once even when there are duplicates in dominant speakers', () => {
-    const result = smartDominantSpeakerParticipants(
+    const result = smartDominantSpeakerParticipants({
       participants,
-      ['1', '1', '3', '7'],
-      [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
-      4
-    );
-    const resultUserIds = result.flatMap((p) => p.userId);
-    expect(resultUserIds).toEqual(['1', '7', '3', '4']);
+      dominantSpeakers: ['1', '1', '3', '7'],
+      lastVisibleParticipants: [{ userId: '1' }, { userId: '2' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['1', '7', '3', '4', '2', '5', '6', '8']);
+  });
+
+  test('returns last visible participants without re-ordering', () => {
+    let result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['5', '7', '8'],
+      lastVisibleParticipants: [{ userId: '3' }, { userId: '5' }, { userId: '8' }, { userId: '4' }, { userId: '1' }],
+      maxVisibleParticipants: 3
+    });
+    expect(result.map((p) => p.userId)).toEqual(['7', '5', '8', '3', '4', '1', '2', '6']);
+
+    result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['5', '7', '8'],
+      lastVisibleParticipants: result,
+      maxVisibleParticipants: 3
+    });
+    expect(result.map((p) => p.userId)).toEqual(['7', '5', '8', '3', '4', '1', '2', '6']);
+  });
+
+  test('complicated scenario #1. 1 dominant speaker and 2 last visible participant not in participants should return all existing dominant speakers.', () => {
+    const result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['12', '3', '4', '5'],
+      lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    console.log(result);
+    expect(result.map((p) => p.userId)).toEqual(['5', '3', '4', '1', '2', '6', '7', '8']);
+  });
+
+  test('complicated scenario #2. 1 EXTRA dominant speaker and 2 last visible participant not in participants should return all existing dominant speakers.', () => {
+    const result = smartDominantSpeakerParticipants({
+      participants,
+      dominantSpeakers: ['12', '3', '4', '5', '6'],
+      lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }, { userId: '3' }, { userId: '4' }],
+      maxVisibleParticipants: 4
+    });
+    expect(result.map((p) => p.userId)).toEqual(['5', '6', '3', '4', '1', '2', '7', '8']);
   });
 });

@@ -47,7 +47,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
   const isScreenShareActive = useMemo(() => {
-    return videoGalleryProps.screenShareParticipant !== undefined;
+    return (
+      videoGalleryProps.screenShareParticipant !== undefined || videoGalleryProps.localParticipant.isScreenSharingOn
+    );
   }, [videoGalleryProps]);
 
   useEffect(() => {

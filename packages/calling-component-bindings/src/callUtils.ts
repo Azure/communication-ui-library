@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState as CallStatus } from '@azure/communication-calling';
 import { DeviceManagerState, StatefulCallClient } from '@internal/calling-stateful-client';
+import { CallState as CallStatus } from '@azure/communication-calling';
 
 /**
  * Check if the call state represents being connected to a call
@@ -25,7 +25,8 @@ export const _isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
 };
 
 /**
- * Dispose of all preview (i.e. unparented) views
+ * Dispose of all preview views
+ * We assume all unparented views are local preview views.
  *
  * @private
  */

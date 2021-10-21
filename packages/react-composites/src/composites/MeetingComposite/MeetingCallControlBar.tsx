@@ -8,6 +8,7 @@ import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
 import { Stack } from '@fluentui/react';
+import { reduceCallControlsForMobile } from '../CallComposite/utils';
 
 /**
  * @private
@@ -20,17 +21,20 @@ export interface MeetingCallControlBarProps {
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
   mobileView?: boolean;
+  disableRightHandButtons: boolean;
 }
 
 /**
  * @private
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
-  const callControlsOptions: CallControlOptions = {
-    participantsButton: false,
-    screenShareButton: !props.mobileView,
-    compressedMode: props.mobileView
-  };
+  // Disable the default participants button as meetings composite has its own participants button.
+  let callControlsOptions: CallControlOptions | false = { participantsButton: false };
+
+  // Reduce the controls shown when mobile view is enabled.
+  if (props.mobileView) {
+    callControlsOptions = reduceCallControlsForMobile(callControlsOptions);
+  }
 
   /**
    * Until mobile meetings is worked on, statically set the width of the
@@ -51,12 +55,14 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           showLabel={true}
           onClick={props.onChatButtonClicked}
           data-ui-id="meeting-composite-chat-button"
+          disabled={props.disableRightHandButtons}
         />
         <PeopleButton
           checked={props.peopleButtonChecked}
           showLabel={true}
           onClick={props.onPeopleButtonClicked}
           data-ui-id="meeting-composite-people-button"
+          disabled={props.disableRightHandButtons}
         />
       </Stack.Item>
     </Stack>
