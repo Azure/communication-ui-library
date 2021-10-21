@@ -14,7 +14,7 @@ import { MediaDiagnosticChangedEvent, NetworkDiagnosticChangedEvent } from './Ca
 /**
  * @private
  */
-export class DiagnosticsSubscriber {
+export class DiagnosticsForwarder {
   private _diagnostics: DiagnosticsCallFeature;
 
   constructor(private _emitter: EventEmitter, call: Call) {
