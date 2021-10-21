@@ -42,8 +42,10 @@ import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
+import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { OutputParametricSelector } from 'reselect';
 import { OutputSelector } from 'reselect';
 import { PartialTheme } from '@fluentui/react';
@@ -216,6 +218,7 @@ export interface CallAdapterSubscribers {
     off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     off(event: 'callEnded', listener: CallEndedListener): void;
+    off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
@@ -225,6 +228,7 @@ export interface CallAdapterSubscribers {
     on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     on(event: 'callEnded', listener: CallEndedListener): void;
+    on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
@@ -1020,6 +1024,9 @@ export type DeviceManagerState = {
     unparentedViews: LocalVideoStreamState[];
 };
 
+// @public
+export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;
+
 // @beta
 export interface DiagnosticsCallFeatureState {
     media: MediaDiagnosticsState;
@@ -1197,6 +1204,11 @@ export interface LocalVideoStreamState {
     source: VideoDeviceInfo;
     view?: VideoStreamRendererViewState;
 }
+
+// @public
+export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
+    type: 'media';
+};
 
 // @beta
 export interface MediaDiagnosticsState {
@@ -1483,6 +1495,11 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
+
+// @public
+export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {
+    type: 'network';
+};
 
 // @beta
 export interface NetworkDiagnosticsState {
