@@ -31,3 +31,5 @@ export type { GetSelector as GetCallingSelector } from './hooks/usePropsFor';
 
 export { useSelector as useCallingSelector } from './hooks/useSelector';
 export { useHandlers as useCallingHandlers } from './hooks/useHandlers';
+
+export { _isInCall, _isPreviewOn } from './callUtils';
