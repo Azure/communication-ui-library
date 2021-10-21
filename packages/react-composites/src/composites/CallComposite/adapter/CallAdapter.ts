@@ -275,28 +275,28 @@ export interface CallAdapterDeviceManagement {
   /**
    * Set the camera to use in the call.
    *
-   * @param sourceId - Camera device to choose, pick one returned by  {@link CallAdapterDeviceManagement#queryCameras }
+   * @param sourceInfo - Camera device to choose, pick one returned by  {@link CallAdapterDeviceManagement#queryCameras }
    * @param options - Options to control how the camera stream is rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @public
    */
-  setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+  setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
   /**
    * Set the microphone to use in the call.
    *
-   * @param sourceId - Microphone device to choose, pick one returned by {@link CallAdapterDeviceManagement#queryMicrophones }
+   * @param sourceInfo - Microphone device to choose, pick one returned by {@link CallAdapterDeviceManagement#queryMicrophones }
    *
    * @public
    */
-  setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
+  setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
   /**
    * Set the speaker to use in the call.
    *
-   * @param sourceId - Speaker device to choose, pick one returned by {@link CallAdapterDeviceManagement#querySpeakers }
+   * @param sourceInfo - Speaker device to choose, pick one returned by {@link CallAdapterDeviceManagement#querySpeakers }
    *
    * @public
    */
-  setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+  setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
 /**
