@@ -26,13 +26,9 @@ import { VideoTile } from './VideoTile';
 
 const emptyStyles = {};
 
-<<<<<<< HEAD
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const MAX_VIDEO_PARTICIPANTS_TILES = 4;
 // Set aside only 6 dominant speakers for remaining audio participants
-=======
-const MAX_VIDEO_PARTICIPANTS_TILES = 4; // Currently the Calling JS SDK supports up to 4 remote video streams
->>>>>>> c221a61c (Put video participants in front of audio participants.)
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
