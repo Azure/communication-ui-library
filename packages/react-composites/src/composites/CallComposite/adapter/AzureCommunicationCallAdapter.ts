@@ -43,6 +43,7 @@ import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
+import { DiagnosticsSubscriber } from './DiagnosticsSubscriber';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -131,12 +132,23 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private deviceManager: StatefulDeviceManager;
   private localStream: SDKLocalVideoStream | undefined;
   private locator: TeamsMeetingLinkLocator | GroupCallLocator;
-  private call: Call | undefined;
+  // Never use directly, even internally. Use `call` property instead.
+  private _call?: Call;
   private context: CallContext;
+  private diagnosticsSubscriber?: DiagnosticsSubscriber;
   private handlers: CallingHandlers;
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
+
+  private get call(): Call | undefined {
+    return this._call;
+  }
+
+  private set call(newCall: Call | undefined) {
+    this.resetDiagnosticsSubscriber(newCall);
+    this._call = newCall;
+  }
 
   constructor(
     callClient: StatefulCallClient,
@@ -144,6 +156,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager
   ) {
+    if (this.diagnosticsSubscriber) {
+      console.log('xkcd');
+    }
     this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;
@@ -197,6 +212,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public dispose(): void {
+    this.resetDiagnosticsSubscriber();
     this.callClient.offStateChange(this.onClientStateChange);
     this.callAgent.dispose();
   }
@@ -458,6 +474,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
+  }
+
+  private resetDiagnosticsSubscriber(newCall?: Call) {
+    if (this.diagnosticsSubscriber) {
+      this.diagnosticsSubscriber.unsubscribe();
+    }
+    if (newCall) {
+      this.diagnosticsSubscriber = new DiagnosticsSubscriber(this.emitter, newCall);
+    }
   }
 
   off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
