@@ -188,7 +188,6 @@ describe('Test smartDominantSpeakerParticipants function', () => {
       lastVisibleParticipants: [{ userId: '11' }, { userId: '10' }, { userId: '3' }, { userId: '4' }],
       maxDominantSpeakers: 4
     });
-    console.log(result);
     expect(result.map((p) => p.userId)).toEqual(['5', '3', '4', '1', '2', '6', '7', '8']);
   });
 
