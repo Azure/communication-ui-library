@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, IDragOptions, Modal, Stack, concatStyleSets } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
@@ -15,16 +15,30 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
+import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
   videoGalleryContainerStyle,
-  videoWithNoRoundedBorderStyle
+  FLOATING_MODAL_POSITION_FROM_RIGHT,
+  HORIZONTAL_GALLERY_PADDING,
+  SMALL_FLOATING_MODAL_SIZE,
+  LARGE_FLOATING_MODAL_SIZE,
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE,
+  LARGE_HORIZONTAL_GALLERY_TILE_SIZE,
+  SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
+  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
+  horizontalGalleryStyle,
+  videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
 import { VideoTile } from './VideoTile';
+import { RemoteVideoTile } from './RemoteVideoTile';
+import { HorizontalGallery } from './HorizontalGallery';
+import { useContainerWidth, isNarrowWidth } from './utils/responsive';
 
 const emptyStyles = {};
+const floatingTileHostId = 'UILibraryFloatingTileHost';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const MAX_VIDEO_PARTICIPANTS_TILES = 4;
@@ -113,10 +127,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
-  const shouldFloatLocalVideo = useCallback((): boolean => {
+  const shouldFloatLocalVideo = useMemo((): boolean => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
   }, [layout, remoteParticipants.length]);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerWidth = useContainerWidth(containerRef);
+  const isNarrow = isNarrowWidth(containerWidth);
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
@@ -142,19 +159,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
   const horizontalGalleryParticipants =
     visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
-  // Concatenating gridParticipants and horizontalGallery for now.
-  // This will be removed when HorizontalGallery is added to accommodate horizontalGalleryParticipants separately
-  const allParticipants = gridParticipants.concat(horizontalGalleryParticipants);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
-  const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
+  const localVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
-    const localVideoTileStyles = shouldFloatLocalVideo() ? floatingLocalVideoTileStyle : {};
+    const localVideoTileStyles = shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {};
 
     const localVideoTileStylesThemed = concatStyleSets(localVideoTileStyles, {
       root: { borderRadius: theme.effects.roundedCorner4 }
@@ -174,7 +188,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         }
         displayName={localParticipant?.displayName}
         styles={localVideoTileStylesThemed}
-        onRenderPlaceholder={onRenderAvatar}
+        onRenderPlaceholder={localParticipant.isScreenSharingOn ? () => <></> : onRenderAvatar}
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
       />
@@ -182,6 +196,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     localParticipant,
+    localParticipant.isScreenSharingOn,
     localParticipant.videoStream,
     localParticipant.videoStream?.renderElement,
     onCreateLocalStreamView,
@@ -190,141 +205,148 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     shouldFloatLocalVideo
   ]);
 
-  const remoteParticipantTiles = onRenderRemoteVideoTile
-    ? allParticipants.map((participant) => onRenderRemoteVideoTile(participant))
-    : allParticipants.map((participant): JSX.Element => {
-        const remoteVideoStream = participant.videoStream;
+  const defaultOnRenderVideoTile = useCallback(
+    (participant: VideoGalleryRemoteParticipant, isVideoParticipant: boolean) => {
+      const remoteVideoStream = participant.videoStream;
+      return (
+        <RemoteVideoTile
+          key={participant.userId}
+          userId={participant.userId}
+          onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
+          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
+          isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
+          renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
+          remoteVideoViewOption={isVideoParticipant ? remoteVideoViewOption : undefined}
+          isMuted={participant.isMuted}
+          isSpeaking={participant.isSpeaking}
+          displayName={participant.displayName}
+          onRenderAvatar={onRenderAvatar}
+          showMuteIndicator={showMuteIndicator}
+        />
+      );
+    },
+    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOption, onRenderAvatar, showMuteIndicator]
+  );
+
+  const gridTiles = onRenderRemoteVideoTile
+    ? gridParticipants.map((participant) => onRenderRemoteVideoTile(participant))
+    : gridParticipants.map((participant): JSX.Element => {
+        return defaultOnRenderVideoTile(participant, true);
+      });
+
+  if (!shouldFloatLocalVideo && localParticipant) {
+    gridTiles.push(
+      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+        {localParticipant && localVideoTile}
+      </Stack>
+    );
+  }
+
+  const horizontalGalleryTiles = onRenderRemoteVideoTile
+    ? horizontalGalleryParticipants.map((participant) => onRenderRemoteVideoTile(participant))
+    : horizontalGalleryParticipants.map((participant): JSX.Element => {
         return (
-          <RemoteVideoTile
+          <div
             key={participant.userId}
-            userId={participant.userId}
-            onCreateRemoteStreamView={onCreateRemoteStreamView}
-            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-            isAvailable={remoteVideoStream?.isAvailable}
-            isMuted={participant.isMuted}
-            isSpeaking={participant.isSpeaking}
-            renderElement={remoteVideoStream?.renderElement}
-            displayName={participant.displayName}
-            remoteVideoViewOption={remoteVideoViewOption}
-            onRenderAvatar={onRenderAvatar}
-            showMuteIndicator={showMuteIndicator}
-          />
+            style={isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE}
+          >
+            {defaultOnRenderVideoTile(participant, shouldFloatLocalVideo)}
+          </div>
         );
       });
 
-  const floatingLocalVideoModalStyleThemed = useMemo(
-    () =>
-      concatStyleSets(floatingLocalVideoModalStyle, {
-        main: { boxShadow: theme.effects.elevation8, borderRadius: theme.effects.roundedCorner4 }
-      }),
-    [theme.effects.elevation8, theme.effects.roundedCorner4]
-  );
-
-  if (shouldFloatLocalVideo()) {
-    const floatingTileHostId = 'UILibraryFloatingTileHost';
-    return (
-      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
-        <Modal
-          isOpen={true}
-          isModeless={true}
-          dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyleThemed}
-          layerProps={{ hostId: floatingTileHostId }}
-        >
-          {localParticipant && defaultOnRenderLocalVideoTile}
-        </Modal>
-        <GridLayout styles={styles ?? emptyStyles}>{remoteParticipantTiles}</GridLayout>
-      </Stack>
-    );
-  }
+  const tilesPerHorizontalGalleryPage = getTilesPerHorizontalGalleryPage(containerWidth, isNarrow);
 
   return (
-    <GridLayout styles={styles ?? emptyStyles}>
-      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && defaultOnRenderLocalVideoTile}
+    <div ref={containerRef} className={videoGalleryOuterDivStyle}>
+      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+        {shouldFloatLocalVideo && (
+          <Modal
+            isOpen={true}
+            isModeless={true}
+            dragOptions={DRAG_OPTIONS}
+            styles={floatingLocalVideoModalStyle(theme, isNarrow)}
+            layerProps={{ hostId: floatingTileHostId }}
+          >
+            {localParticipant && localVideoTile}
+          </Modal>
+        )}
+        <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
+        {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
+          <HorizontalGallery
+            styles={horizontalGalleryStyle(isNarrow)}
+            itemsPerPage={tilesPerHorizontalGalleryPage}
+            hidePreviousButton={isNarrow}
+            hideNextButton={isNarrow}
+          >
+            {horizontalGalleryTiles}
+          </HorizontalGallery>
+        )}
       </Stack>
-      {remoteParticipantTiles}
-    </GridLayout>
+    </div>
   );
 };
 
-// Use React.memo to create memoize cache for each RemoteVideoTile
-const RemoteVideoTile = React.memo(
-  (props: {
-    userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    isAvailable?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
-    renderElement?: HTMLElement;
-    displayName?: string;
-    remoteVideoViewOption?: VideoStreamOptions;
-    onRenderAvatar?: OnRenderAvatarCallback;
-    showMuteIndicator?: boolean;
-  }) => {
-    const {
-      isAvailable,
-      isMuted,
-      isSpeaking,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId,
-      displayName,
-      onRenderAvatar,
-      showMuteIndicator
-    } = props;
+/**
+ * Helper function to get tiles per page for HorizontalGallery based on width and whether narrow widths are used.
+ */
+const getTilesPerHorizontalGalleryPage = (containerWidth: number, isNarrow: boolean): number => {
+  // To get the width available for the horizontal gallery, we start with container width and subtract modal width,
+  // modal position from right, and left and right padding of Horizontal Gallery
+  const modalWidth = isNarrow
+    ? convertRemToPx(SMALL_FLOATING_MODAL_SIZE.width)
+    : convertRemToPx(LARGE_FLOATING_MODAL_SIZE.width);
+  const modalPositionFromRight = convertRemToPx(FLOATING_MODAL_POSITION_FROM_RIGHT);
+  const horizontalGalleryPadding = convertRemToPx(HORIZONTAL_GALLERY_PADDING);
+  const horizontalGalleryWidth = containerWidth - modalWidth - modalPositionFromRight - horizontalGalleryPadding * 2;
 
-    useEffect(() => {
-      if (isAvailable && !renderElement) {
-        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
-      }
-      if (!isAvailable) {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      }
-    }, [
-      isAvailable,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId
-    ]);
+  const buttonWidth = isNarrow ? 0 : convertRemToPx(HORIZONTAL_GALLERY_BUTTON_WIDTH);
+  const tileWidth = isNarrow
+    ? convertRemToPx(SMALL_HORIZONTAL_GALLERY_TILE_SIZE.width)
+    : convertRemToPx(LARGE_HORIZONTAL_GALLERY_TILE_SIZE.width);
+  const horizontalGalleryGap = convertRemToPx(HORIZONTAL_GALLERY_GAP);
 
-    useEffect(() => {
-      return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      };
-    }, [onDisposeRemoteStreamView, userId]);
+  return calculateHorizontalGalleryTilesPerPage({
+    horizontalGalleryWidth,
+    buttonWidth,
+    tileWidth,
+    horizontalGalleryGap
+  });
+};
 
-    const renderVideoStreamElement = useMemo(() => {
-      // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
-      // implies that, after their threshold, all streams have no child (blank video)
-      if (!renderElement || !renderElement.childElementCount) {
-        // Returning `undefined` results in the placeholder with avatar being shown
-        return undefined;
-      }
+const convertRemToPx = (rem: number): number => {
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+};
 
-      const videoStyles = isSpeaking ? videoWithNoRoundedBorderStyle : {};
-
-      return <StreamMedia styles={videoStyles} videoStreamElement={renderElement} />;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [renderElement, renderElement?.childElementCount, isSpeaking]);
-
-    return (
-      <Stack className={gridStyle} key={userId} grow>
-        <VideoTile
-          userId={userId}
-          renderElement={renderVideoStreamElement}
-          displayName={displayName}
-          onRenderPlaceholder={onRenderAvatar}
-          isMuted={isMuted}
-          isSpeaking={isSpeaking}
-          showMuteIndicator={showMuteIndicator}
-        />
-      </Stack>
-    );
+const calculateHorizontalGalleryTilesPerPage = (args: {
+  horizontalGalleryWidth: number;
+  buttonWidth: number;
+  tileWidth: number;
+  horizontalGalleryGap: number;
+}): number => {
+  const { horizontalGalleryWidth, buttonWidth, tileWidth, horizontalGalleryGap } = args;
+  /** First, figure out tileSpace if there are buttons
+   *    <----horizontalGalleryWidth------->
+   *    __________________________________
+   *   | ||             ||             || |
+   *   |<||             ||             ||>|
+   *   |_||_____________||_____________||_|
+   *       <---------tileSpace-------->
+   *              OR no buttons
+   *    __________________________________
+   *   |                ||                |
+   *   |                ||                |
+   *   |________________||________________|
+   *   <-------------tileSpace----------->
+   */
+  let tileSpace = horizontalGalleryWidth;
+  if (buttonWidth !== 0) {
+    // need to subtract width of buttons
+    tileSpace -= 2 * buttonWidth;
+    // need to subtract 2 gaps for buttons
+    tileSpace -= 2 * horizontalGalleryGap;
   }
-);
+  // Then figure out how many tiles can fit in tileSpace.
+  // tileSpace = n * tileWidth + (n - 1) * gap. Isolate n and take the floor.
+  return Math.floor((tileSpace + horizontalGalleryGap) / (tileWidth + horizontalGalleryGap));
+};
