@@ -2,9 +2,8 @@
 // Licensed under the MIT license.
 import React, { useMemo } from 'react';
 import { ChatComposite, ChatAdapter } from '../ChatComposite';
-import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack } from '@fluentui/react';
+import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack, concatStyleSets } from '@fluentui/react';
 import {
-  sidePaneCloseButtonStyles,
   sidePaneContainerHiddenStyles,
   sidePaneContainerStyles,
   sidePaneContainerTokens,
@@ -15,7 +14,7 @@ import {
   scrollableContainer,
   scrollableContainerContents
 } from './styles/SidePane.styles';
-import { ParticipantList } from '@internal/react-components';
+import { ParticipantList, useTheme } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { CallAdapter } from '../CallComposite';
@@ -31,6 +30,12 @@ const SidePane = (props: {
   // between renders. An example of this is composing a chat message - a chat message that has been
   // typed but not sent should not be lost if the side panel is closed and then reopened.
   const sidePaneStyles = props.hidden ? sidePaneContainerHiddenStyles : sidePaneContainerStyles;
+  const theme = useTheme();
+  const sidePaneCloseButtonStyles = {
+    icon: { color: theme.palette.neutralSecondary },
+    iconHovered: { color: theme.palette.neutralSecondary },
+    iconPressed: { color: theme.palette.neutralSecondary }
+  };
   return (
     <Stack.Item disableShrink verticalFill styles={sidePaneStyles} tokens={sidePaneContainerTokens}>
       <Stack verticalFill data-ui-id={props.dataUiId}>
@@ -89,6 +94,13 @@ export const EmbeddedPeoplePane = (props: {
     };
   }, [participantListDefaultProps, callAdapter, chatAdapter]);
 
+  const theme = useTheme();
+  const peopleSubheadingStyleThemed = concatStyleSets(peopleSubheadingStyle, {
+    root: {
+      color: theme.palette.neutralSecondary
+    }
+  });
+
   return (
     <SidePane
       hidden={props.hidden}
@@ -100,7 +112,7 @@ export const EmbeddedPeoplePane = (props: {
         {inviteLink && (
           <DefaultButton text="Copy invite link" iconProps={{ iconName: 'Link' }} onClick={() => copy(inviteLink)} />
         )}
-        <Stack.Item styles={peopleSubheadingStyle}>In this call</Stack.Item>
+        <Stack.Item styles={peopleSubheadingStyleThemed}>In this call</Stack.Item>
         <ParticipantList {...participantListProps} />
       </Stack>
     </SidePane>

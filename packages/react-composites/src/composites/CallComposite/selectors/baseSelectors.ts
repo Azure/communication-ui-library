@@ -4,6 +4,7 @@
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
 import { CallState, DeviceManagerState, LocalVideoStreamState } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
+import { _isPreviewOn } from '@internal/calling-component-bindings';
 
 /**
  * @private
@@ -33,7 +34,7 @@ export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.ca
 /**
  * @private
  */
-export const getIsPreviewCameraOn = (state: CallAdapterState): boolean => isPreviewOn(state.devices);
+export const getIsPreviewCameraOn = (state: CallAdapterState): boolean => _isPreviewOn(state.devices);
 
 /**
  * @private
@@ -61,9 +62,3 @@ export const getIsTranscriptionActive = (state: CallAdapterState): boolean =>
  * @private
  */
 export const getIsRecordingActive = (state: CallAdapterState): boolean => !!state.call?.recording.isRecordingActive;
-
-const isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
-  // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
-  // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
-};

@@ -1,8 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IImageStyles, Icon, Image, Link, List, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
-import React, { useState } from 'react';
+import {
+  IImageStyles,
+  Icon,
+  Image,
+  Link,
+  List,
+  PrimaryButton,
+  Spinner,
+  Stack,
+  Text,
+  mergeStyles
+} from '@fluentui/react';
+import React, { useCallback, useState } from 'react';
 import {
   buttonStyle,
   buttonWithIconStyles,
@@ -21,6 +32,7 @@ import {
   infoContainerStackTokens,
   videoCameraIconStyle
 } from './styles/HomeScreen.styles';
+import { useTheme } from '@internal/react-components';
 
 import { Chat20Filled } from '@fluentui/react-icons';
 import heroSVG from '../assets/hero.svg';
@@ -82,25 +94,30 @@ export default (): JSX.Element => {
     return <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />;
   };
 
-  const onRenderListItem = (item?: string, index?: number) => {
-    const listText =
-      index !== 3 ? (
-        <Text>{item}</Text>
-      ) : (
-        <Text>
-          {item}{' '}
-          <Link href="https://docs.microsoft.com/azure/communication-services/overview" aria-label={`${item} sample`}>
-            {'sample'}
-          </Link>
-        </Text>
+  const themePrimary = useTheme().palette.themePrimary;
+
+  const onRenderListItem = useCallback(
+    (item?: string, index?: number): JSX.Element => {
+      const listText =
+        index !== 3 ? (
+          <Text>{item}</Text>
+        ) : (
+          <Text>
+            {item}{' '}
+            <Link href="https://docs.microsoft.com/azure/communication-services/overview" aria-label={`${item} sample`}>
+              {'sample'}
+            </Link>
+          </Text>
+        );
+      return (
+        <Stack horizontal tokens={listItemStackTokens} className={listItemStyle}>
+          <Icon className={mergeStyles(listIconStyle, { color: themePrimary })} iconName={iconName} />
+          {listText}
+        </Stack>
       );
-    return (
-      <Stack horizontal tokens={listItemStackTokens} className={listItemStyle}>
-        <Icon className={listIconStyle} iconName={iconName} />
-        {listText}
-      </Stack>
-    );
-  };
+    },
+    [themePrimary]
+  );
 
   const displayHomeScreen = (): JSX.Element => {
     return (

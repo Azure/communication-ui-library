@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IStackTokens, getTheme, mergeStyles } from '@fluentui/react';
-
-const palette = getTheme().palette;
+import { IButtonStyles, IStackTokens, mergeStyles } from '@fluentui/react';
 
 export const imgStyle = mergeStyles({
   width: '26.813rem',
@@ -52,8 +50,7 @@ export const listItemStyle = mergeStyles({
 });
 
 export const listIconStyle = mergeStyles({
-  marginRight: 7,
-  color: palette.themePrimary
+  marginRight: 7
 });
 
 export const headerStyle = mergeStyles({

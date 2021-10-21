@@ -14,6 +14,7 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallErrors } from '@internal/calling-stateful-client';
 import { CallParticipant } from '@internal/react-components';
+import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -129,6 +130,12 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
+// @internal
+export const _isInCall: (callStatus?: CallState | undefined) => boolean;
+
+// @internal
+export const _isPreviewOn: (deviceManager: DeviceManagerState) => boolean;
+
 // @public
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
     disabled: boolean;
@@ -221,6 +228,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: string[] | undefined;
 }, (res1: string | undefined, res2: {
 [keys: string]: RemoteParticipantState;
 } | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string, res8: DominantSpeakersInfo | undefined) => {
@@ -237,6 +245,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: string[] | undefined;
 }>;
 
 // (No @packageDocumentation comment for this package)
