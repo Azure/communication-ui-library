@@ -92,9 +92,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   // Update page based on call state
   useEffect(() => {
     if (['Connecting', 'Ringing', 'InLobby'].includes(callState ?? 'None')) {
-      adapter.setPage('lobby');
+      // adapter.setPage('lobby'); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
     } else if (isInCall(callState)) {
-      adapter.setPage('call');
+      // adapter.setPage('call'); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
     }
   }, [adapter, callState]);
 
@@ -106,9 +106,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEffect(() => {
     if (endedCall && currentCallId.current === endedCall?.id && endedCall?.callEndReason?.code === 0) {
       if (endedCall.callEndReason.subCode === ACCESS_DENIED_TEAMS_MEETING_SUB_CODE) {
-        adapter.setPage('accessDeniedTeamsMeeting');
+        // adapter.setPage('accessDeniedTeamsMeeting'); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
       } else if (REMOVED_FROM_CALL_SUB_CODES.includes(endedCall.callEndReason.subCode ?? -1)) {
-        adapter.setPage('removedFromCall');
+        // adapter.setPage('removedFromCall'); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
       } else {
         //@TODO: when call ended page is implemented: adapter.setPage('leftCall');
       }
@@ -146,14 +146,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             connectingToCall: locale.strings.call.lobbyScreenConnectingToCallTitle,
             waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedTitle
           }}
-          endCallHandler={() => adapter.setPage('configuration')}
+          // endCallHandler={() => adapter.setPage('configuration')} // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
+          endCallHandler={() => undefined}
           options={props.options}
         />
       );
     case 'call':
       return (
         <CallPage
-          endCallHandler={() => adapter.setPage('configuration')}
+          // endCallHandler={() => adapter.setPage('configuration')}  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
+          endCallHandler={() => undefined}
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}

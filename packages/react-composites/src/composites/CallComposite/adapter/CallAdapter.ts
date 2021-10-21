@@ -12,7 +12,7 @@ import type {
 
 import { VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationUserKind, CommunicationIdentifierKind } from '@azure/communication-common';
-import type { AdapterState, Disposable, AdapterPages, AdapterError, AdapterErrors } from '../../common/adapters';
+import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -396,7 +396,6 @@ export interface CallAdapterSubscribers {
 export interface CallAdapter
   extends AdapterState<CallAdapterState>,
     Disposable,
-    AdapterPages<CallCompositePage>,
     CallAdapterCallManagement,
     CallAdapterDeviceManagement,
     CallAdapterSubscribers {}
