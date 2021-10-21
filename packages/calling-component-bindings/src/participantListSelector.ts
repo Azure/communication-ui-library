@@ -2,14 +2,15 @@
 // Licensed under the MIT license.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import * as reselect from 'reselect';
+import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
+import { createSelector } from 'reselect';
 import {
   getIdentifier,
   getDisplayName,
   getRemoteParticipants,
   getIsScreenSharingOn,
-  getIsMuted
+  getIsMuted,
+  CallingBaseSelectorProps
 } from './baseSelectors';
 import { CallParticipant } from '@internal/react-components';
 
@@ -33,11 +34,24 @@ const convertRemoteParticipantsToCommunicationParticipants = (
 };
 
 /**
+ * Selector type for {@link ParticipantList} component.
+ *
+ * @public
+ */
+export type ParticipantListSelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  participants: CallParticipant[];
+  myUserId: string;
+};
+
+/**
  * Selects data that drives {@link ParticipantList} component.
  *
  * @public
  */
-export const participantListSelector = reselect.createSelector(
+export const participantListSelector: ParticipantListSelector = createSelector(
   [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted],
   (
     userId,

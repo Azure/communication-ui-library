@@ -3,10 +3,15 @@
 
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
-import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
+import { CallClientState, RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
+import {
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant,
+  VideoGalleryStream
+} from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
+  CallingBaseSelectorProps,
   getDisplayName,
   getDominantSpeakers,
   getIdentifier,
@@ -109,10 +114,25 @@ const dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): un
 };
 
 /**
+ * Selector type for {@link VideoGallery} component.
+ *
+ * @public
+ */
+export type VideoGallerySelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+  localParticipant: VideoGalleryLocalParticipant;
+  remoteParticipants: VideoGalleryRemoteParticipant[];
+  dominantSpeakers: string[] | undefined;
+};
+
+/**
  * Provides data attributes to {@link VideoGallery} component.
  * @public
  */
-export const videoGallerySelector = createSelector(
+export const videoGallerySelector: VideoGallerySelector = createSelector(
   [
     getScreenShareRemoteParticipant,
     getRemoteParticipants,
