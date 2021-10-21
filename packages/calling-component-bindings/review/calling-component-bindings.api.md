@@ -14,6 +14,7 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallErrors } from '@internal/calling-stateful-client';
 import { CallParticipant } from '@internal/react-components';
+import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -128,6 +129,12 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
+
+// @internal
+export const _isInCall: (callStatus?: CallState | undefined) => boolean;
+
+// @internal
+export const _isPreviewOn: (deviceManager: DeviceManagerState) => boolean;
 
 // @public
 export const microphoneButtonSelector: reselect.OutputParametricSelector<CallClientState, CallingBaseSelectorProps, {
