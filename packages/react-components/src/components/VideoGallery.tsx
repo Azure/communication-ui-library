@@ -26,8 +26,8 @@ import { VideoTile } from './VideoTile';
 
 const emptyStyles = {};
 
-const MAX_PARTICIPANTS_TILES = 100;
-const MAX_DOMINANT_SPEAKERS = 6;
+const MAX_VIDEO_PARTICIPANTS_TILES = 4; // Currently the Calling JS SDK supports up to 4 remote video streams
+const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
  * Props for {@link VideoGallery}.
@@ -115,14 +115,34 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
   }, [layout, remoteParticipants.length]);
 
-  const remoteParticipantsRef = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
-  remoteParticipantsRef.current = smartDominantSpeakerParticipants({
-    participants: remoteParticipants,
+  visibleVideoParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
     dominantSpeakers,
-    lastVisibleParticipants: remoteParticipantsRef.current,
-    maxVisibleParticipants: MAX_DOMINANT_SPEAKERS
-  }).slice(0, MAX_PARTICIPANTS_TILES);
+    lastVisibleParticipants: visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable),
+    maxDominantSpeakers: MAX_VIDEO_PARTICIPANTS_TILES
+  }).slice(0, MAX_VIDEO_PARTICIPANTS_TILES);
+
+  // This set will be used to filter out participants already in visibleVideoParticipants
+  const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
+  visibleAudioParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsSet.has(p.userId)) ?? [],
+    dominantSpeakers,
+    lastVisibleParticipants: visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsSet.has(p.userId)),
+    maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
+  });
+
+  // If there are no video participants, we assign all audio participants as grid participants and assign
+  // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
+  const gridParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
+  const horizontalGalleryParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
+  // Concatenating gridParticipants and horizontalGallery for now.
+  // This will be removed when HorizontalGallery is added to accommodate horizontalGalleryParticipants separately
+  const allParticipants = gridParticipants.concat(horizontalGalleryParticipants);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -174,11 +194,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const remoteParticipantTiles = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return remoteParticipantsRef.current.map((participant) => onRenderRemoteVideoTile(participant));
+      return allParticipants.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
-    return remoteParticipantsRef.current.map((participant): JSX.Element => {
+    return allParticipants.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
@@ -198,6 +218,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       );
     });
   }, [
+    allParticipants,
     onRenderRemoteVideoTile,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
