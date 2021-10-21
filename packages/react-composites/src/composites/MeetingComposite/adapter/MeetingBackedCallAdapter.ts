@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { MeetingAdapter } from './MeetingAdapter';
-import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
-import { callPageToMeetingPage, meetingPageToCallPage } from '../state/MeetingCompositePage';
+import { CallAdapter, CallAdapterState } from '../../CallComposite';
+import { meetingPageToCallPage } from '../state/MeetingCompositePage';
 import { VideoStreamOptions } from '@internal/react-components';
 import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@azure/communication-calling';
 import { MeetingAdapterState, MeetingState } from '..';
@@ -79,7 +79,8 @@ export class MeetingBackedCallAdapter implements CallAdapter {
   };
   public getState = (): CallAdapterState => callAdapterStateFromMeetingAdapterState(this.meetingAdapter.getState());
   public dispose = (): void => this.meetingAdapter.dispose();
-  public setPage = (page: CallCompositePage): void => this.meetingAdapter.setPage(callPageToMeetingPage(page));
+  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
+  // public setPage = (page: CallCompositePage): void => this.meetingAdapter.setPage(callPageToMeetingPage(page));
   public joinCall = (microphoneOn?: boolean): Call | undefined => {
     return this.meetingAdapter.joinMeeting(microphoneOn);
   };

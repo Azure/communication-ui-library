@@ -23,9 +23,8 @@ import {
   MessageSentListener
 } from '../../ChatComposite';
 import { MeetingAdapterState } from '../state/MeetingAdapterState';
-import { MeetingCompositePage } from '../state/MeetingCompositePage';
 
-import type { AdapterState, Disposable, AdapterPages } from '../../common/adapters';
+import type { AdapterState, Disposable } from '../../common/adapters';
 import { Call } from '@azure/communication-calling';
 
 /**
@@ -136,7 +135,6 @@ export interface MeetingAdapter
   extends MeetingAdapterMeetingManagement,
     AdapterState<MeetingAdapterState>,
     Disposable,
-    AdapterPages<MeetingCompositePage>,
     MeetingAdapterSubscriptions {}
 
 /**

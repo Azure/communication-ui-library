@@ -100,7 +100,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   }, [showPeople]);
 
   const endCallClick = (): void => {
-    meetingAdapter.setPage('configuration');
+    // meetingAdapter.setPage('configuration'); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
   };
 
   const isInLobbyOrConnecting = !!(currentPage && isInLobbyOrConnectingFn(currentPage));

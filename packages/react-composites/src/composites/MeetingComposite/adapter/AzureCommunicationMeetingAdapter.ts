@@ -35,7 +35,6 @@ import {
   mergeChatAdapterStateIntoMeetingAdapterState
 } from '../state/MeetingAdapterState';
 import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
-import { MeetingCompositePage, meetingPageToCallPage } from '../state/MeetingCompositePage';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 
@@ -132,7 +131,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
     this.removeParticipant.bind(this);
-    this.setPage.bind(this);
+    // this.setPage.bind(this); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
     this.fetchInitialData.bind(this);
@@ -185,10 +184,10 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.chatAdapter.dispose();
     this.callAdapter.dispose();
   }
-  /** Set the page of the Meeting Composite. */
-  public setPage(page: MeetingCompositePage): void {
-    this.callAdapter.setPage(meetingPageToCallPage(page));
-  }
+  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
+  // public setPage(page: MeetingCompositePage): void {
+  //   this.callAdapter.setPage(meetingPageToCallPage(page));
+  // }
   /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
     await this.chatAdapter.removeParticipant(userId);

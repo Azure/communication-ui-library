@@ -25,7 +25,6 @@ import {
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
-  CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,
   CallAdapterState,
@@ -79,9 +78,10 @@ class CallContext {
     return this.state;
   }
 
-  public setPage(page: CallCompositePage): void {
-    this.setState({ ...this.state, page });
-  }
+  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
+  // public setPage(page: CallCompositePage): void {
+  //   this.setState({ ...this.state, page });
+  // }
 
   public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
     this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
@@ -188,7 +188,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
     this.removeParticipant.bind(this);
-    this.setPage.bind(this);
+    // this.setPage.bind(this); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
     this.on.bind(this);
@@ -413,9 +413,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   };
 
-  public setPage(page: CallCompositePage): void {
-    this.context.setPage(page);
-  }
+  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
+  // public setPage(page: CallCompositePage): void {
+  //   this.context.setPage(page);
+  // }
 
   private onRemoteParticipantsUpdated({
     added,
