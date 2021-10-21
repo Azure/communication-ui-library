@@ -156,9 +156,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager
   ) {
-    if (this.diagnosticsForwarder) {
-      console.log('xkcd');
-    }
     this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;
