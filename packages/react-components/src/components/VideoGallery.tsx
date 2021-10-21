@@ -134,15 +134,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
-  // If there are no video participants, we assign all audio participants as grid participants and assign
-  // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
-  const gridParticipants =
-    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
-  const horizontalGalleryParticipants =
-    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
-  // Concatenating gridParticipants and horizontalGallery for now.
-  // This will be removed when HorizontalGallery is added to accommodate horizontalGalleryParticipants separately
-  const allParticipants = gridParticipants.concat(horizontalGalleryParticipants);
+  const allParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
