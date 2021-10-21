@@ -244,8 +244,12 @@ export type CallControlOptions = {
     endCallButton?: boolean;
     microphoneButton?: boolean;
     optionsButton?: boolean;
-    participantsButton?: boolean;
-    screenShareButton?: boolean;
+    participantsButton?: boolean | {
+        disabled: boolean;
+    };
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
 };
 
 // @public
