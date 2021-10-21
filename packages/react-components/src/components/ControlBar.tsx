@@ -15,7 +15,7 @@ const mainDivStyle: IStyle = { position: 'relative', height: '100%', width: '100
  *
  * @public
  */
-export type ControlBarLayoutType =
+export type ControlBarLayout =
   | 'horizontal'
   | 'vertical'
   | 'dockedTop'
@@ -50,7 +50,7 @@ export interface ControlBarProps {
    * `floatingRight`
    * Defaults to a `horizontal` layout.
    */
-  layout?: ControlBarLayoutType;
+  layout?: ControlBarLayout;
 }
 
 /**

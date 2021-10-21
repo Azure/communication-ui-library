@@ -622,7 +622,7 @@ export type ChatHandlers = {
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
-    attached?: MessageAttachedStatus | boolean;
+    attached?: MessageAttachedStatus;
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -850,8 +850,6 @@ export interface ContentSystemMessage extends SystemMessageCommon {
     // (undocumented)
     content: string;
     // (undocumented)
-    messageType: 'system';
-    // (undocumented)
     systemMessageType: 'content';
 }
 
@@ -882,12 +880,12 @@ export interface ControlBarButtonStrings {
 export type ControlBarButtonStyles = IButtonStyles;
 
 // @public
-export type ControlBarLayoutType = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
+export type ControlBarLayout = 'horizontal' | 'vertical' | 'dockedTop' | 'dockedBottom' | 'dockedLeft' | 'dockedRight' | 'floatingTop' | 'floatingBottom' | 'floatingLeft' | 'floatingRight';
 
 // @public
 export interface ControlBarProps {
     children?: React_2.ReactNode;
-    layout?: ControlBarLayoutType;
+    layout?: ControlBarLayout;
     styles?: BaseCustomStylesProps;
 }
 
@@ -1331,7 +1329,7 @@ export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | '
 export type Message = ChatMessage | SystemMessage | CustomMessage;
 
 // @public
-export type MessageAttachedStatus = 'bottom' | 'top';
+export type MessageAttachedStatus = 'bottom' | 'top' | boolean;
 
 // @public
 export interface MessageCommon {
@@ -1549,8 +1547,6 @@ export interface OptionsDevice {
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
     // (undocumented)
-    messageType: 'system';
-    // (undocumented)
     participants: CommunicationParticipant[];
     // (undocumented)
     systemMessageType: 'participantAdded';
@@ -1617,8 +1613,6 @@ export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: 
 
 // @public
 export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
-    // (undocumented)
-    messageType: 'system';
     // (undocumented)
     participants: CommunicationParticipant[];
     // (undocumented)
@@ -1838,6 +1832,8 @@ export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSy
 export interface SystemMessageCommon extends MessageCommon {
     // (undocumented)
     iconName: string;
+    // (undocumented)
+    messageType: 'system';
 }
 
 // @public
@@ -1850,8 +1846,6 @@ export type TopicChangedListener = (event: {
 
 // @public
 export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
-    // (undocumented)
-    messageType: 'system';
     // (undocumented)
     systemMessageType: 'topicUpdated';
     // (undocumented)
