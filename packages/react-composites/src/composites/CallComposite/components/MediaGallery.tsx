@@ -43,15 +43,17 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
-  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
-
-  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
   const isScreenShareActive = useMemo(() => {
     return (
       videoGalleryProps.screenShareParticipant !== undefined || videoGalleryProps.localParticipant.isScreenSharingOn
     );
   }, [videoGalleryProps]);
 
+  // When transitioning to the call page we need to trigger onStartLocalVideo() to
+  // transition the local preview camera setting into the call. @TODO: Can we simply
+  // have the callHandlers handle this transition logic.
+  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
+  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
   useEffect(() => {
     if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
       props.onStartLocalVideo();

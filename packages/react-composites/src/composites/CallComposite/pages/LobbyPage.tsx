@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ErrorBar } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
@@ -9,9 +9,10 @@ import { CallArrangement } from '../components/CallArrangement';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyTile } from '../components/LobbyTile';
-import { getCallStatus } from '../selectors/baseSelectors';
+import { getCallStatus, getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { reduceCallControlsForMobile } from '../utils';
+import { MediaGallery } from '../components/MediaGallery';
 
 /**
  * @private
@@ -37,10 +38,28 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const devicePermissions = useSelector(devicePermissionSelector);
   const errorBarProps = usePropsFor(ErrorBar);
   const lobbyProps = useSelector(lobbySelector);
-  const lobbyHandlers = useHandlers(LobbyTile);
+  const lobbyTileHandlers = useHandlers(LobbyTile);
 
   const callState = useSelector(getCallStatus);
-  const callStateText = callState === 'InLobby' ? props.strings.waitingToBeAdmitted : props.strings.connectingToCall;
+  const inLobby = callState === 'InLobby';
+  const callStateText = inLobby ? props.strings.waitingToBeAdmitted : props.strings.connectingToCall;
+
+  // When transitioning to the lobby page we need to trigger onStartLocalVideo() to
+  // transition the local preview camera setting into the call. This matches the logic
+  // used in the MediaGallery. @TODO: Can we simply have the callHandlers handle this
+  // transition logic.
+  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
+  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
+  const isVideoStreamOn = lobbyProps.localParticipantVideoStream.isAvailable;
+  const mediaGalleryHandlers = useHandlers(MediaGallery);
+  useEffect(() => {
+    if (inLobby) {
+      if (isPreviewCameraOn && !isVideoStreamOn && !isButtonStatusSynced) {
+        mediaGalleryHandlers.onStartLocalVideo();
+      }
+      setIsButtonStatusSynced(true);
+    }
+  }, [inLobby, isButtonStatusSynced, isPreviewCameraOn, isVideoStreamOn, mediaGalleryHandlers, props]);
 
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = props.options?.mobileView
@@ -62,7 +81,11 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
         }
       }
       onRenderGalleryContent={() => (
-        <LobbyTile {...lobbyProps} {...lobbyHandlers} overlay={{ text: callStateText, overlayIcon: () => <>☕</> }} />
+        <LobbyTile
+          {...lobbyProps}
+          {...lobbyTileHandlers}
+          overlay={{ text: callStateText, overlayIcon: () => <>☕</> }}
+        />
       )}
       dataUiId={'lobby-page'}
     />

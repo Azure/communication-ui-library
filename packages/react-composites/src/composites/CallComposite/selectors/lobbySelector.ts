@@ -15,7 +15,7 @@ export const lobbySelector = reselect.createSelector(
   (callStatus, deviceManager, localVideoStreams) => {
     let localVideoStream: LocalVideoStreamState | undefined;
     if (_isInCall(callStatus.callStatus)) {
-      localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
+      localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
     } else if (_isPreviewOn(deviceManager)) {
       // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
       // handle cases where 'Preview' view is in progress and not necessary completed.

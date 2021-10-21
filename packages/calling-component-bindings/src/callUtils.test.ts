@@ -55,6 +55,6 @@ describe('callUtils tests', () => {
     expect(_isPreviewOn({ ...deviceManagerMock, unparentedViews: [invalidLocalVideoStreamMock] })).toEqual(false);
 
     // true when there is a valid unparented view
-    expect(_isPreviewOn({ ...deviceManagerMock, unparentedViews: [validLocalVideoStreamMock] })).toEqual(false);
+    expect(_isPreviewOn({ ...deviceManagerMock, unparentedViews: [validLocalVideoStreamMock] })).toEqual(true);
   });
 });
