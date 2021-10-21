@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getUserId, getDisplayName, getParticipants } from './baseSelectors';
+import { getUserId, getDisplayName, getParticipants, ChatBaseSelectorProps } from './baseSelectors';
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationParticipant } from '@internal/react-components';
+import { ChatClientState } from '@internal/chat-stateful-client';
 
 const convertChatParticipantsToCommunicationParticipants = (
   chatParticipants: ChatParticipant[]
@@ -26,11 +27,24 @@ const moderatorIndex = (participants: CommunicationParticipant[]): number => {
 };
 
 /**
+ * Selector type for {@link ParticipantList} component.
+ *
+ * @public
+ */
+export type ChatParticipantListSelector = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+) => {
+  myUserId: string;
+  participants: CommunicationParticipant[];
+};
+
+/**
  * Selector for {@link ParticipantList} component.
  *
  * @public
  */
-export const chatParticipantListSelector = reselect.createSelector(
+export const chatParticipantListSelector: ChatParticipantListSelector = reselect.createSelector(
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: { [key: string]: ChatParticipant }, displayName) => {
     let participants = convertChatParticipantsToCommunicationParticipants(Object.values(chatParticipants));

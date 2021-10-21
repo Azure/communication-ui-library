@@ -1,10 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getDiagnostics, getLatestErrors } from './baseSelectors';
+import { CallingBaseSelectorProps, getDiagnostics, getLatestErrors } from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
-import { CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
+import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
+
+/**
+ * Selector type for {@link ErrorBar} component.
+ *
+ * @public
+ */
+export type ErrorBarSelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  activeErrorMessages: ActiveErrorMessage[];
+};
 
 /**
  * Select the first 3 active errors from the state for the `ErrorBar` component.
@@ -18,7 +30,7 @@ import { CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
  *
  * @public
  */
-export const errorBarSelector = createSelector(
+export const errorBarSelector: ErrorBarSelector = createSelector(
   [getLatestErrors, getDiagnostics],
   (latestErrors: CallErrors, diagnostics): { activeErrorMessages: ActiveErrorMessage[] } => {
     // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
