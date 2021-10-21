@@ -26,9 +26,13 @@ import { VideoTile } from './VideoTile';
 
 const emptyStyles = {};
 
+<<<<<<< HEAD
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const MAX_VIDEO_PARTICIPANTS_TILES = 4;
 // Set aside only 6 dominant speakers for remaining audio participants
+=======
+const MAX_VIDEO_PARTICIPANTS_TILES = 4; // Currently the Calling JS SDK supports up to 4 remote video streams
+>>>>>>> c221a61c (Put video participants in front of audio participants.)
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
@@ -136,7 +140,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
-  const allParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
+  // If there are no video participants, we assign all audio participants as grid participants and assign
+  // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
+  const gridParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
+  const horizontalGalleryParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
+  // Concatenating gridParticipants and horizontalGallery for now.
+  // This will be removed when HorizontalGallery is added to accommodate horizontalGalleryParticipants separately
+  const allParticipants = gridParticipants.concat(horizontalGalleryParticipants);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
