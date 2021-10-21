@@ -42,19 +42,14 @@ export interface RemoteRenderInfo extends RenderInfo {
  */
 export class InternalCallContext {
   // <CallId, <ParticipantKey, <StreamId, RemoteRenderInfo>>
-  private _remoteRenderInfos: Map<string, Map<string, Map<number, RemoteRenderInfo>>>;
+  private _remoteRenderInfos = new Map<string, Map<string, Map<number, RemoteRenderInfo>>>();
 
   // <CallId, LocalRenderInfo>.
-  private _localRenderInfos: Map<string, LocalRenderInfo>;
+  private _localRenderInfos = new Map<string, LocalRenderInfo>();
 
   // Used for keeping track of rendered LocalVideoStreams that are not part of a Call.
-  private _unparentedRenderInfos: Map<LocalVideoStreamState, LocalRenderInfo>;
-
-  constructor() {
-    this._remoteRenderInfos = new Map<string, Map<string, Map<number, RemoteRenderInfo>>>();
-    this._localRenderInfos = new Map<string, LocalRenderInfo>();
-    this._unparentedRenderInfos = new Map<LocalVideoStreamState, LocalRenderInfo>();
-  }
+  // The key is the stream ID. We assume each stream ID to only have one owning render info
+  private _unparentedRenderInfos = new Map<string, LocalRenderInfo>();
 
   public setCallId(newCallId: string, oldCallId: string): void {
     const remoteRenderInfos = this._remoteRenderInfos.get(oldCallId);
@@ -149,7 +144,7 @@ export class InternalCallContext {
   }
 
   public getUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): LocalRenderInfo | undefined {
-    return this._unparentedRenderInfos.get(localVideoStream);
+    return this._unparentedRenderInfos.get(localVideoStream.source.id);
   }
 
   public setUnparentedRenderInfo(
@@ -158,11 +153,11 @@ export class InternalCallContext {
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {
-    this._unparentedRenderInfos.set(statefulStream, { stream, status, renderer });
+    this._unparentedRenderInfos.set(statefulStream.source.id, { stream, status, renderer });
   }
 
   public deleteUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): void {
-    this._unparentedRenderInfos.delete(localVideoStream);
+    this._unparentedRenderInfos.delete(localVideoStream.source.id);
   }
 
   // UnparentedRenderInfos are not cleared as they are not part of the Call state.
