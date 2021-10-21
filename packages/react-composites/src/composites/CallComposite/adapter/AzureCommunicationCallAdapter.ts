@@ -43,7 +43,7 @@ import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
-import { DiagnosticsSubscriber } from './DiagnosticsSubscriber';
+import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -135,7 +135,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   // Never use directly, even internally. Use `call` property instead.
   private _call?: Call;
   private context: CallContext;
-  private diagnosticsSubscriber?: DiagnosticsSubscriber;
+  private diagnosticsForwarder?: DiagnosticsForwarder;
   private handlers: CallingHandlers;
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
@@ -146,7 +146,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   private set call(newCall: Call | undefined) {
-    this.resetDiagnosticsSubscriber(newCall);
+    this.resetDiagnosticsForwarder(newCall);
     this._call = newCall;
   }
 
@@ -156,7 +156,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager
   ) {
-    if (this.diagnosticsSubscriber) {
+    if (this.diagnosticsForwarder) {
       console.log('xkcd');
     }
     this.bindPublicMethods();
@@ -212,7 +212,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public dispose(): void {
-    this.resetDiagnosticsSubscriber();
+    this.resetDiagnosticsForwarder();
     this.callClient.offStateChange(this.onClientStateChange);
     this.callAgent.dispose();
   }
@@ -476,12 +476,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
   }
 
-  private resetDiagnosticsSubscriber(newCall?: Call) {
-    if (this.diagnosticsSubscriber) {
-      this.diagnosticsSubscriber.unsubscribe();
+  private resetDiagnosticsForwarder(newCall?: Call) {
+    if (this.diagnosticsForwarder) {
+      this.diagnosticsForwarder.unsubscribe();
     }
     if (newCall) {
-      this.diagnosticsSubscriber = new DiagnosticsSubscriber(this.emitter, newCall);
+      this.diagnosticsForwarder = new DiagnosticsForwarder(this.emitter, newCall);
     }
   }
 
