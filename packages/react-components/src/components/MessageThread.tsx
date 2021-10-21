@@ -854,8 +854,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             }
           }
 
-          console.log('function: ' + onUpdateMessage);
-
           return memoizedMessageFn(
             key ?? 'id_' + index,
             message,
