@@ -41,6 +41,7 @@ export interface CallingTheme {
         callRed: string;
         callRedDark: string;
         callRedDarker: string;
+        iconWhite: string;
     };
 }
 
@@ -748,6 +749,7 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;

@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import { ContextualMenu, IDragOptions, Modal, Stack, concatStyleSets } from '@fluentui/react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import {
@@ -21,9 +22,12 @@ import {
   videoGalleryContainerStyle,
   videoWithNoRoundedBorderStyle
 } from './styles/VideoGallery.styles';
-import { VideoTile, VideoTileStylesProps } from './VideoTile';
+import { VideoTile } from './VideoTile';
 
 const emptyStyles = {};
+
+const MAX_PARTICIPANTS_TILES = 100;
+const MAX_DOMINANT_SPEAKERS = 6;
 
 /**
  * Props for {@link VideoGallery}.
@@ -46,6 +50,8 @@ export interface VideoGalleryProps {
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
+  /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
+  dominantSpeakers?: string[];
   /** Local video view options */
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */
@@ -87,9 +93,10 @@ const DRAG_OPTIONS: IDragOptions = {
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const {
     localParticipant,
-    remoteParticipants,
+    remoteParticipants = [],
     localVideoViewOption,
     remoteVideoViewOption,
+    dominantSpeakers,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
@@ -105,8 +112,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const theme = useTheme();
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
-    return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
-  }, [layout, remoteParticipants]);
+    return !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  }, [layout, remoteParticipants.length]);
+
+  const remoteParticipantsRef = useRef<VideoGalleryRemoteParticipant[]>([]);
+
+  remoteParticipantsRef.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants,
+    dominantSpeakers,
+    lastVisibleParticipants: remoteParticipantsRef.current,
+    maxVisibleParticipants: MAX_DOMINANT_SPEAKERS
+  }).slice(0, MAX_PARTICIPANTS_TILES);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -116,10 +132,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
-    let localVideoTileStyles: VideoTileStylesProps = {};
-    if (shouldFloatLocalVideo()) {
-      localVideoTileStyles = floatingLocalVideoTileStyle(theme);
-    }
+    const localVideoTileStyles = shouldFloatLocalVideo() ? floatingLocalVideoTileStyle : {};
+
+    const localVideoTileStylesThemed = concatStyleSets(localVideoTileStyles, {
+      root: { borderRadius: theme.effects.roundedCorner4 }
+    });
 
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
@@ -134,7 +151,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           ) : undefined
         }
         displayName={localParticipant?.displayName}
-        styles={localVideoTileStyles}
+        styles={localVideoTileStylesThemed}
         onRenderPlaceholder={onRenderAvatar}
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
@@ -154,14 +171,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of RemoteParticipants.
    */
-  const defaultOnRenderRemoteParticipants = useMemo(() => {
+  const remoteParticipantTiles = useMemo(() => {
     // If user provided a custom onRender function return that function.
     if (onRenderRemoteVideoTile) {
-      return remoteParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
+      return remoteParticipantsRef.current.map((participant) => onRenderRemoteVideoTile(participant));
     }
 
     // Else return Remote Stream Video Tiles
-    return remoteParticipants?.map((participant): JSX.Element => {
+    return remoteParticipantsRef.current.map((participant): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
@@ -181,7 +198,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       );
     });
   }, [
-    remoteParticipants,
     onRenderRemoteVideoTile,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
@@ -189,6 +205,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderAvatar,
     showMuteIndicator
   ]);
+
+  const floatingLocalVideoModalStyleThemed = useMemo(
+    () =>
+      concatStyleSets(floatingLocalVideoModalStyle, {
+        main: { boxShadow: theme.effects.elevation8, borderRadius: theme.effects.roundedCorner4 }
+      }),
+    [theme.effects.elevation8, theme.effects.roundedCorner4]
+  );
 
   if (shouldFloatLocalVideo()) {
     const floatingTileHostId = 'UILibraryFloatingTileHost';
@@ -198,12 +222,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isOpen={true}
           isModeless={true}
           dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyle(theme)}
+          styles={floatingLocalVideoModalStyleThemed}
           layerProps={{ hostId: floatingTileHostId }}
         >
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
-        <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+        <GridLayout styles={styles ?? emptyStyles}>{remoteParticipantTiles}</GridLayout>
       </Stack>
     );
   }
@@ -213,7 +237,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
-      {defaultOnRenderRemoteParticipants}
+      {remoteParticipantTiles}
     </GridLayout>
   );
 };

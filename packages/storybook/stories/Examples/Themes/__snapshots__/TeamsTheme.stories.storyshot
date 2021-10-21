@@ -268,18 +268,18 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     }
                   >
                     <div
-                      className="ms-Stack css-24"
+                      className="ms-Stack css-25"
                       data-ui-id="video-tile"
                     >
                       <div
-                        className="ms-Stack css-25"
+                        className="ms-Stack css-26"
                       >
                         <div
-                          className="ms-Stack css-27"
+                          className="ms-Stack css-28"
                         >
                           <div
                             aria-label=""
-                            className="ms-Persona ms-Persona--size48 root-28"
+                            className="ms-Persona ms-Persona--size48 root-29"
                             style={
                               Object {
                                 "height": 100,
@@ -288,11 +288,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             }
                           >
                             <div
-                              className="ms-Persona-coin ms-Persona--size48 coin-35"
+                              className="ms-Persona-coin ms-Persona--size48 coin-36"
                               role="presentation"
                             >
                               <div
-                                className="ms-Persona-imageArea imageArea-37"
+                                className="ms-Persona-imageArea imageArea-38"
                                 role="presentation"
                                 style={
                                   Object {
@@ -303,7 +303,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                               >
                                 <div
                                   aria-hidden="true"
-                                  className="ms-Persona-initials initials-40"
+                                  className="ms-Persona-initials initials-41"
                                   style={
                                     Object {
                                       "height": 100,
@@ -321,13 +321,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         </div>
                       </div>
                       <div
-                        className="ms-Stack css-85 css-43"
+                        className="ms-Stack css-85 css-44"
                       >
                         <div
-                          className="ms-StackItem css-44"
+                          className="ms-StackItem css-45"
                         >
                           <span
-                            className="css-45"
+                            className="css-46"
                           >
                             Michael
                           </span>
