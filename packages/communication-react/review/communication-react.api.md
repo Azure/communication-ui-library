@@ -321,6 +321,7 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     removedFromMeetingMoreDetails?: string;
     removedFromMeetingTitle: string;
+    screenSharingMessage: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -777,7 +778,6 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
-    videoGallery: VideoGalleryStrings;
 }
 
 // @public
@@ -1962,6 +1962,7 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
@@ -1976,7 +1977,6 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
-    strings?: Partial<VideoGalleryStrings>;
     styles?: BaseCustomStylesProps;
 }
 
@@ -2001,6 +2001,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: string[] | undefined;
 }, (res1: string | undefined, res2: {
 [keys: string]: RemoteParticipantState;
 } | undefined, res3: LocalVideoStreamState[] | undefined, res4: boolean | undefined, res5: boolean | undefined, res6: string | undefined, res7: string, res8: DominantSpeakersInfo | undefined) => {
@@ -2017,6 +2018,7 @@ renderElement: HTMLElement | undefined;
 };
 };
 remoteParticipants: VideoGalleryRemoteParticipant[];
+dominantSpeakers: string[] | undefined;
 }>;
 
 // @public
@@ -2025,11 +2027,6 @@ export interface VideoGalleryStream {
     isAvailable?: boolean;
     isMirrored?: boolean;
     renderElement?: HTMLElement;
-}
-
-// @public
-export interface VideoGalleryStrings {
-    screenSharingMessage: string;
 }
 
 // @public

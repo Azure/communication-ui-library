@@ -40,7 +40,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-104 css-9"
+                className="ms-Stack css-96 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -65,7 +65,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                             className="ms-Persona-initials initials-30"
                           >
                             <span>
-                              M
+                              Y
                             </span>
                           </div>
                         </div>
@@ -73,7 +73,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-93 css-33"
+                    className="ms-Stack css-85 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -81,7 +81,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                       <span
                         className="css-35"
                       >
-                        Michael
+                        You
                       </span>
                     </div>
                   </div>
@@ -92,7 +92,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-104 css-9"
+                className="ms-Stack css-96 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -117,7 +117,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                             className="ms-Persona-initials initials-36"
                           >
                             <span>
-                              J
+                              M
                             </span>
                           </div>
                         </div>
@@ -125,7 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-93 css-33"
+                    className="ms-Stack css-85 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -133,7 +133,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                       <span
                         className="css-35"
                       >
-                        Jim
+                        Michael
                       </span>
                     </div>
                   </div>
@@ -144,7 +144,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-104 css-9"
+                className="ms-Stack css-96 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -169,7 +169,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                             className="ms-Persona-initials initials-37"
                           >
                             <span>
-                              P
+                              J
                             </span>
                           </div>
                         </div>
@@ -177,7 +177,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-93 css-33"
+                    className="ms-Stack css-85 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -185,7 +185,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                       <span
                         className="css-35"
                       >
-                        Pam
+                        Jim
                       </span>
                     </div>
                   </div>
@@ -196,7 +196,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-104 css-9"
+                className="ms-Stack css-96 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -221,7 +221,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                             className="ms-Persona-initials initials-38"
                           >
                             <span>
-                              D
+                              P
                             </span>
                           </div>
                         </div>
@@ -229,7 +229,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-93 css-33"
+                    className="ms-Stack css-85 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -237,7 +237,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                       <span
                         className="css-35"
                       >
-                        Dwight
+                        Pam
                       </span>
                     </div>
                   </div>
@@ -248,7 +248,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-104 css-9"
+                className="ms-Stack css-96 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -273,7 +273,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                             className="ms-Persona-initials initials-39"
                           >
                             <span>
-                              K
+                              D
                             </span>
                           </div>
                         </div>
@@ -281,7 +281,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-93 css-33"
+                    className="ms-Stack css-85 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -289,7 +289,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                       <span
                         className="css-35"
                       >
-                        Kelly
+                        Dwight
                       </span>
                     </div>
                   </div>
@@ -300,7 +300,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-104 css-9"
+                className="ms-Stack css-96 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -325,6 +325,58 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                             className="ms-Persona-initials initials-40"
                           >
                             <span>
+                              K
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="ms-Stack css-85 css-33"
+                  >
+                    <div
+                      className="ms-StackItem css-34"
+                    >
+                      <span
+                        className="css-35"
+                      >
+                        Kelly
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ms-Stack css-8"
+            >
+              <div
+                className="ms-Stack css-96 css-9"
+              >
+                <div
+                  className="ms-Stack css-16"
+                  data-ui-id="video-tile"
+                >
+                  <div
+                    className="ms-Stack css-17"
+                  >
+                    <div
+                      className="ms-Persona ms-Persona--size56 root-18"
+                    >
+                      <div
+                        className="ms-Persona-coin ms-Persona--size56 coin-25"
+                        role="presentation"
+                      >
+                        <div
+                          className="ms-Persona-imageArea imageArea-27"
+                          role="presentation"
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="ms-Persona-initials initials-30"
+                          >
+                            <span>
                               R
                             </span>
                           </div>
@@ -333,7 +385,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-93 css-33"
+                    className="ms-Stack css-85 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -352,7 +404,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-104 css-9"
+                className="ms-Stack css-96 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -385,7 +437,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-93 css-33"
+                    className="ms-Stack css-85 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -413,47 +465,12 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-17"
             >
               <div
-                className="ms-Stack css-44"
+                className="ms-Stack css-43"
               >
                 <div
-                  className="ms-Stack css-45"
+                  className="ms-Stack css-44"
                 >
                   Your Screen Share Stream
-                </div>
-              </div>
-            </div>
-            <div
-              className="ms-Stack css-131 css-46"
-            >
-              <div
-                className="ms-Stack css-16"
-                data-ui-id="video-tile"
-              >
-                <div
-                  className="ms-Stack css-17"
-                >
-                  <div
-                    className="ms-Persona ms-Persona--size56 root-18"
-                  >
-                    <div
-                      className="ms-Persona-coin ms-Persona--size56 coin-25"
-                      role="presentation"
-                    >
-                      <div
-                        className="ms-Persona-imageArea imageArea-27"
-                        role="presentation"
-                      >
-                        <div
-                          aria-hidden="true"
-                          className="ms-Persona-initials initials-47"
-                        >
-                          <span>
-                            T
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

@@ -58,6 +58,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const isDarkTheme = isDarkThemed(theme);
   const componentStyles = concatStyleSets(
     isDarkTheme ? darkThemeCallButtonStyles : lightThemeCallButtonStyles,
+    { root: { ':focus::after': { outlineColor: `${theme.palette.white} !important` } } },
     styles ?? {}
   );
 

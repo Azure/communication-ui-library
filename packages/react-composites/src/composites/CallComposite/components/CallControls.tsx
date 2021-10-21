@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
@@ -15,7 +14,11 @@ import {
 } from '@internal/react-components';
 import React, { useCallback, useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '../styles/CallControls.styles';
+import {
+  checkedButtonOverrideStyles,
+  groupCallLeaveButtonCompressedStyle,
+  groupCallLeaveButtonStyle
+} from '../styles/CallControls.styles';
 
 /**
  * @private
@@ -92,11 +95,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
-  const checkedButtonOverrrideStyles = useMemo(
-    () => ({
-      rootChecked: { background: theme.palette.themePrimary, color: palette.white },
-      label: screenShareButtonProps.checked ? { color: palette.white } : {}
-    }),
+  const checkedScreenShareButtonOverrideStyles = useMemo(
+    () => checkedButtonOverrideStyles(theme, screenShareButtonProps.checked),
     [screenShareButtonProps.checked, theme.palette.themePrimary]
   );
 
@@ -120,7 +120,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <ScreenShareButton
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
-      styles={checkedButtonOverrrideStyles}
+      styles={checkedScreenShareButtonOverrideStyles}
       showLabel={!options?.compressedMode}
     />
   );

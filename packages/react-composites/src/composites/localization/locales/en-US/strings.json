@@ -10,6 +10,7 @@
     "lobbyScreenWaitingToBeAdmittedTitle": "Waiting to be admitted",
     "microphonePermissionDenied": "Your browser is blocking access to your microphone",
     "removedFromMeetingTitle": "You were removed from the meeting",
+    "screenSharingMessage": "You are sharing your screen",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call"
   },
