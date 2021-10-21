@@ -46,11 +46,6 @@ import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calli
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
-<<<<<<< HEAD
-import { OutputParametricSelector } from 'reselect';
-import { OutputSelector } from 'reselect';
-=======
->>>>>>> origin/main
 import { PartialTheme } from '@fluentui/react';
 import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
