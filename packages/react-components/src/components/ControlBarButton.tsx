@@ -9,9 +9,9 @@ import {
   Text,
   concatStyleSets,
   mergeStyles,
-  useTheme,
   IButtonStyles
 } from '@fluentui/react';
+import { useTheme } from '../theming';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
 
 /**

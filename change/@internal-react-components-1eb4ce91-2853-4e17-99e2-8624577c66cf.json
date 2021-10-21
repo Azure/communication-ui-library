@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Theme palette and effects acquired from theme context for VideoTile, Video Gallery, floating ControlBar and EndCallButton.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

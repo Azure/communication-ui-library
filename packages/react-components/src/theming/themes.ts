@@ -13,6 +13,7 @@ export interface CallingTheme {
     callRed: string;
     callRedDark: string;
     callRedDarker: string;
+    iconWhite: string;
   };
 }
 
@@ -49,7 +50,8 @@ export const lightTheme: PartialTheme & CallingTheme = {
   callingPalette: {
     callRed: '#c4314b',
     callRedDark: '#a42e43',
-    callRedDarker: '#8b2c3d'
+    callRedDarker: '#8b2c3d',
+    iconWhite: '#ffffff'
   }
 };
 
@@ -86,6 +88,7 @@ export const darkTheme: PartialTheme & CallingTheme = {
   callingPalette: {
     callRed: '#a42e43',
     callRedDark: '#8b2c3d',
-    callRedDarker: '#772a38'
+    callRedDarker: '#772a38',
+    iconWhite: '#ffffff'
   }
 };

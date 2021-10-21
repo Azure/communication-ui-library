@@ -41,6 +41,7 @@ export interface CallingTheme {
         callRed: string;
         callRedDark: string;
         callRedDarker: string;
+        iconWhite: string;
     };
 }
 
