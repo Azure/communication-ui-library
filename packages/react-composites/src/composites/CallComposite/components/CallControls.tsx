@@ -57,17 +57,17 @@ export type CallControlOptions = {
    */
   microphoneButton?: boolean;
   /**
-    Show or Hide Options button during a call.
+   * Show or Hide Options button during a call.
    * @defaultValue true
    */
   optionsButton?: boolean;
   /**
-    Show or Hide participants button during a call.
+   * Show, Hide or Disable participants button during a call.
    * @defaultValue true
    */
   participantsButton?: boolean | { disabled: boolean };
   /**
-    Show or Hide the screen share button during a call.
+   * Show, Hide or Disable the screen share button during a call.
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
