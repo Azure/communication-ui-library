@@ -319,8 +319,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       if (!_isInCall(this.call?.state)) {
         this.context.setIsLocalMicrophoneEnabled(false);
+      } else if (!this.call?.isMuted) {
+        await this.handlers.onToggleMicrophone();
       }
-      await this.call?.mute();
     });
   }
 
@@ -328,8 +329,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       if (!_isInCall(this.call?.state)) {
         this.context.setIsLocalMicrophoneEnabled(true);
+      } else if (this.call?.isMuted) {
+        await this.handlers.onToggleMicrophone();
       }
-      await this.call?.unmute();
     });
   }
 
