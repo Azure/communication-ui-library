@@ -152,9 +152,9 @@ export interface CallAdapterDeviceManagement {
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
-    setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-    setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+    setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
+    setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
 // @public
