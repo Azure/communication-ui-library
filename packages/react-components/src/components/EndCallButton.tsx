@@ -8,7 +8,6 @@ import { useTheme } from '../theming';
 import { darkTheme, lightTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { endCallControlButtonStyles } from './styles/ControlBar.styles';
 
 /**
  * Strings of {@link EndCallButton} that can be overridden.
@@ -55,20 +54,11 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.endCallButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  const isDarkTheme = isDarkThemed(useTheme());
+  const theme = useTheme();
+  const isDarkTheme = isDarkThemed(theme);
   const componentStyles = concatStyleSets(
-    endCallControlButtonStyles,
-    {
-      root: {
-        background: isDarkTheme ? darkTheme.callingPalette.callRed : lightTheme.callingPalette.callRed
-      },
-      rootHovered: {
-        background: isDarkTheme ? darkTheme.callingPalette.callRedDark : lightTheme.callingPalette.callRedDark
-      },
-      rootPressed: {
-        background: isDarkTheme ? darkTheme.callingPalette.callRedDarker : lightTheme.callingPalette.callRedDarker
-      }
-    },
+    isDarkTheme ? darkThemeCallButtonStyles : lightThemeCallButtonStyles,
+    { root: { ':focus::after': { outlineColor: `${theme.palette.white} !important` } } },
     styles ?? {}
   );
 
@@ -82,4 +72,40 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
       labelKey={props.labelKey ?? 'endCallButtonLabel'}
     />
   );
+};
+
+const darkThemeCallButtonStyles = {
+  root: {
+    color: darkTheme.callingPalette.iconWhite,
+    background: darkTheme.callingPalette.callRed
+  },
+  rootHovered: {
+    color: darkTheme.callingPalette.iconWhite,
+    background: darkTheme.callingPalette.callRed
+  },
+  rootPressed: {
+    color: darkTheme.callingPalette.iconWhite,
+    background: darkTheme.callingPalette.callRed
+  },
+  label: {
+    color: darkTheme.callingPalette.iconWhite
+  }
+};
+
+const lightThemeCallButtonStyles = {
+  root: {
+    color: lightTheme.callingPalette.iconWhite,
+    background: lightTheme.callingPalette.callRed
+  },
+  rootHovered: {
+    color: lightTheme.callingPalette.iconWhite,
+    background: lightTheme.callingPalette.callRed
+  },
+  rootPressed: {
+    color: lightTheme.callingPalette.iconWhite,
+    background: lightTheme.callingPalette.callRed
+  },
+  label: {
+    color: lightTheme.callingPalette.iconWhite
+  }
 };

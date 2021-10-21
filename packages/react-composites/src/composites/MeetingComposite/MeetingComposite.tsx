@@ -13,13 +13,10 @@ import { FluentThemeProvider } from '@internal/react-components';
 import { MeetingAdapter } from './adapter/MeetingAdapter';
 import { MeetingBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
-import {
-  hasJoinedCall as hasJoinedCallFn,
-  isInLobbyOrConnecting as isInLobbyOrConnectingFn,
-  MeetingCompositePage
-} from './state/MeetingCompositePage';
+import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
+import { isInLobbyOrConnecting as isInLobbyOrConnectingFn } from '../CallComposite/utils';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -145,7 +142,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onPeopleButtonClicked={togglePeople}
             onEndCallClick={endCallClick}
             mobileView={props.options?.mobileView}
-            disableRightHandButtons={isInLobbyOrConnecting}
+            disableButtonsForLobbyPage={isInLobbyOrConnecting}
           />
         )}
       </Stack>

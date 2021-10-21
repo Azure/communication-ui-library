@@ -1,18 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  getTheme,
-  IStyle,
-  IButtonStyles,
-  IContextualMenuStyles,
-  concatStyleSets,
-  IContextualMenuItemStyles
-} from '@fluentui/react';
+import { IStyle, IButtonStyles, IContextualMenuStyles, IContextualMenuItemStyles } from '@fluentui/react';
 import { MINIMUM_TOUCH_TARGET_HEIGHT_REM } from '../utils/constants';
-
-const theme = getTheme();
-const palette = theme.palette;
 
 interface IControlBarStyles {
   horizontal: IStyle;
@@ -77,8 +67,6 @@ export const controlBarStyles: IControlBarStyles = {
   floatingTop: {
     flexFlow: 'row nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation16,
-    borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
     top: '1rem',
@@ -90,8 +78,6 @@ export const controlBarStyles: IControlBarStyles = {
   floatingBottom: {
     flexFlow: 'row nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation16,
-    borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
     bottom: '1rem',
@@ -103,8 +89,6 @@ export const controlBarStyles: IControlBarStyles = {
   floatingLeft: {
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation16,
-    borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
     top: '50%',
@@ -115,8 +99,6 @@ export const controlBarStyles: IControlBarStyles = {
   floatingRight: {
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    boxShadow: theme.effects.elevation16,
-    borderRadius: theme.effects.roundedCorner6,
     overflow: 'hidden',
     position: 'absolute',
     top: '50%',
@@ -189,24 +171,6 @@ export const buttonFlyoutItemStylesWithIncreasedTouchTargets: IContextualMenuIte
     maxHeight: 'unset'
   }
 };
-
-/**
- * @private
- */
-export const endCallControlButtonStyles: IButtonStyles = concatStyleSets(controlButtonStyles, {
-  root: {
-    color: palette.white
-  },
-  rootHovered: {
-    color: palette.white
-  },
-  rootPressed: {
-    color: palette.white
-  },
-  label: {
-    color: palette.white
-  }
-});
 
 /**
  * making it Partial as IContextualMenuStyles has all its props non-optional and we only need title to be defined here.

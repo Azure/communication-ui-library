@@ -21,7 +21,7 @@ export interface MeetingCallControlBarProps {
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
   mobileView?: boolean;
-  disableRightHandButtons: boolean;
+  disableButtonsForLobbyPage: boolean;
 }
 
 /**
@@ -29,7 +29,10 @@ export interface MeetingCallControlBarProps {
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   // Disable the default participants button as meetings composite has its own participants button.
-  let callControlsOptions: CallControlOptions | false = { participantsButton: false };
+  let callControlsOptions: CallControlOptions | false = {
+    participantsButton: false,
+    screenShareButton: props.mobileView ? false : { disabled: props.disableButtonsForLobbyPage }
+  };
 
   // Reduce the controls shown when mobile view is enabled.
   if (props.mobileView) {
@@ -55,14 +58,14 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
           showLabel={true}
           onClick={props.onChatButtonClicked}
           data-ui-id="meeting-composite-chat-button"
-          disabled={props.disableRightHandButtons}
+          disabled={props.disableButtonsForLobbyPage}
         />
         <PeopleButton
           checked={props.peopleButtonChecked}
           showLabel={true}
           onClick={props.onPeopleButtonClicked}
           data-ui-id="meeting-composite-people-button"
-          disabled={props.disableRightHandButtons}
+          disabled={props.disableButtonsForLobbyPage}
         />
       </Stack.Item>
     </Stack>

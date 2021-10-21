@@ -7,8 +7,8 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
-import { ErrorBar as ErrorBarComponent } from '@azure/communication-react';
-import { mergeStyles, useTheme } from '@fluentui/react';
+import { ErrorBar as ErrorBarComponent, useTheme } from '@azure/communication-react';
+import { mergeStyles } from '@fluentui/react';
 import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';

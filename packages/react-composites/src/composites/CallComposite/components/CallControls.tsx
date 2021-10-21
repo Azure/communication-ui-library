@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
@@ -15,7 +14,11 @@ import {
 } from '@internal/react-components';
 import React, { useCallback, useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '../styles/CallControls.styles';
+import {
+  checkedButtonOverrideStyles,
+  groupCallLeaveButtonCompressedStyle,
+  groupCallLeaveButtonStyle
+} from '../styles/CallControls.styles';
 
 /**
  * @private
@@ -54,20 +57,20 @@ export type CallControlOptions = {
    */
   microphoneButton?: boolean;
   /**
-    Show or Hide Options button during a call.
+   * Show or Hide Options button during a call.
    * @defaultValue true
    */
   optionsButton?: boolean;
   /**
-    Show or Hide participants button during a call.
+   * Show, Hide or Disable participants button during a call.
    * @defaultValue true
    */
-  participantsButton?: boolean;
+  participantsButton?: boolean | { disabled: boolean };
   /**
-    Show or Hide the screen share button during a call.
+   * Show, Hide or Disable the screen share button during a call.
    * @defaultValue true
    */
-  screenShareButton?: boolean;
+  screenShareButton?: boolean | { disabled: boolean };
   /**
    * Option to increase the touch targets of the button flyout menu items from 36px to 48px.
    * Recommended for mobile devices.
@@ -97,11 +100,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     onEndCallClick();
   }, [hangUpButtonProps, onEndCallClick]);
 
-  const checkedButtonOverrrideStyles = useMemo(
-    () => ({
-      rootChecked: { background: theme.palette.themePrimary, color: palette.white },
-      label: screenShareButtonProps.checked ? { color: palette.white } : {}
-    }),
+  const checkedScreenShareButtonOverrideStyles = useMemo(
+    () => checkedButtonOverrideStyles(theme, screenShareButtonProps.checked),
     [screenShareButtonProps.checked, theme.palette.themePrimary]
   );
 
@@ -125,8 +125,9 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <ScreenShareButton
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
-      styles={checkedButtonOverrrideStyles}
+      styles={checkedScreenShareButtonOverrideStyles}
       showLabel={!options?.compressedMode}
+      disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
     />
   );
 
@@ -137,6 +138,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!options?.compressedMode}
       callInvitationURL={callInvitationURL}
       onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+      disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
       increaseFlyoutItemTouchTargetSize={options?.increaseFlyoutItemTouchTargetSize}
     />
   );

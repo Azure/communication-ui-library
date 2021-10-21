@@ -33,10 +33,5 @@ export function meetingPageToCallPage(page: MeetingCompositePage): CallComposite
 /**
  * @private
  */
-export const isInLobbyOrConnecting = (page: MeetingCompositePage) => page === 'lobby';
-
-/**
- * @private
- */
-export const hasJoinedCall = (page: MeetingCompositePage, callStatus: CallState) =>
+export const hasJoinedCall = (page: MeetingCompositePage, callStatus: CallState): boolean =>
   page === 'meeting' && callStatus === 'Connected';
