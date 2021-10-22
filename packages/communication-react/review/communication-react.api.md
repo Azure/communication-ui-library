@@ -1960,7 +1960,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
-    dominantSpeakers: string[] | undefined;
+    dominantSpeakers?: string[];
 };
 
 // @public
