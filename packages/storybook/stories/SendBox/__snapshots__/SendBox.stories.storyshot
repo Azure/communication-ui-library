@@ -44,7 +44,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 >
                   <textarea
                     aria-invalid={false}
-                    aria-label="Type"
                     className="ms-TextField-field ms-TextField--unresizable css-63 css-58 field-10"
                     data-ui-id="sendbox-textfield"
                     disabled={false}

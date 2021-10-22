@@ -1167,8 +1167,8 @@ export type IsSpeakingChangedListener = (event: {
 
 // @public
 export interface JumpToNewMessageButtonProps {
-    // (undocumented)
     onClick: () => void;
+    text: string;
 }
 
 // @public
@@ -1423,10 +1423,15 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
+    editBoxPlaceholderText: string;
+    editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
     friday: string;
+    liveAuthorIntro: string;
     monday: string;
+    newMessagesIndicator: string;
+    noDisplayNameSub: string;
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
@@ -1560,7 +1565,9 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    mutedIconLabel: string;
     removeButtonLabel: string;
+    sharingIconLabel: string;
 }
 
 // @public
