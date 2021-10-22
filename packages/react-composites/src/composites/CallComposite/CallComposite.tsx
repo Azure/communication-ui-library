@@ -31,10 +31,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   adapter: CallAdapter;
   callInvitationUrl?: string;
   /**
-   * A callback function that can be used to provide custom data to an Avatar.
-   */
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  /**
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
