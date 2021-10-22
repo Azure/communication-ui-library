@@ -456,7 +456,7 @@ export interface CallState {
 }
 
 // @public
-export const CameraButton: (props: CameraButtonProps) => JSX.Element;
+export function CameraButton(props: CameraButtonProps): JSX.Element;
 
 // @public
 export interface CameraButtonProps extends ControlBarButtonProps {
