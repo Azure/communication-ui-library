@@ -10,7 +10,6 @@ import {
   CallAdapter,
   createAzureCommunicationCallAdapter,
   CallComposite,
-  CompositeLocale,
   COMPOSITE_LOCALE_FR_FR,
   COMPOSITE_LOCALE_EN_US
 } from '../../../../src';
@@ -52,11 +51,10 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let locale: CompositeLocale;
+  let locale = COMPOSITE_LOCALE_EN_US;
   if (useFrLocale) {
     locale = COMPOSITE_LOCALE_FR_FR;
   } else if (showCallDescription) {
-    locale = COMPOSITE_LOCALE_EN_US;
     locale.strings.call.configurationPageCallDetails =
       'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
   }

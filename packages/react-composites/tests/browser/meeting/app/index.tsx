@@ -22,7 +22,7 @@ const endpointUrl = verifyParamExists(params.endpointUrl, 'endpointUrl');
 const threadId = verifyParamExists(params.threadId, 'threadId');
 
 function App(): JSX.Element {
-  const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter>(undefined);
+  const [meetingAdapter, setMeetingAdapter] = useState<MeetingAdapter | undefined>(undefined);
 
   useEffect(() => {
     const initialize = async (): Promise<void> => {
