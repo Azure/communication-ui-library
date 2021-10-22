@@ -73,4 +73,68 @@ export interface CallCompositeStrings {
    * Message to let user know they are sharing their screen.
    */
   screenSharingMessage: string;
+  /**
+   * Text for link to MS privacy policy in Compliance Banner.
+   */
+  privacyPolicy: string;
+  /**
+   * Text for link to learn more about a specific subject.
+   */
+  learnMore: string;
+  /**
+   * Message to let user know the meeting is only being recorded (no transcription).
+   */
+  nowOnlyRecording: string;
+  /**
+   * Message to let user know the meeting is only being transcripted (no recording).
+   */
+  nowOnlyTranscription: string;
+  /**
+   * Message to let user know recording and transcription of the meeting are saved.
+   */
+  recordingAndTranscriptionSaved: string;
+  /**
+   * Message to let user know recording and transcription of the meeting have started.
+   */
+  recordingAndTranscriptionStarted: string;
+  /**
+   * Message to let user know recording and transcription of the meeting have stopped.
+   */
+  recordingAndTranscriptionStopped: string;
+  /**
+   * Message to let user know recording of the meeting is being saved.
+   */
+  recordingSaving: string;
+  /**
+   * Message to let user know recording of the meeting has started.
+   */
+  recordingStarted: string;
+  /**
+   * Message to let user know recording of the meeting has stopped.
+   */
+  recordingStopped: string;
+  /**
+   * Message to let user know they are giving consent to meeting being transcripted.
+   */
+  transcriptionConsent: string;
+  /**
+   * Message to let user know transcription of the meeting is being saved.
+   */
+  transcriptionSaving: string;
+  /**
+   * Message to let user know transcription of the meeting has started.
+   */
+  trancriptionStarted: string;
+  /**
+   * Message to let user know the transcription of the meeting has stopped.
+   */
+  transcriptionStopped: string;
+  /**
+   * Text for close button.
+   */
+  close: string;
+  /**
+   * Message to let user know the screen another user is sharing is being loaded.
+   */
+  sharingScreenLoading: string;
 }
