@@ -8,7 +8,7 @@ import {
   CallClient,
   CallFeatureFactoryType,
   DeviceManager,
-  DiagnosticsCallFeature,
+  UserFacingDiagnosticsFeature,
   IncomingCall,
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
@@ -21,7 +21,9 @@ import {
   Transfer,
   TransferCallFeature,
   TransferRequestedEvent,
-  TransferToParticipant,
+  TransferToCallLocator,
+  TransferToCallOptions,
+  TransferToParticipantLocator,
   TransferToParticipantOptions
 } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
@@ -110,10 +112,16 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
 export class MockTransferCallFeatureImpl implements TransferCallFeature {
   public name = 'Transfer';
   public emitter = new EventEmitter();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
+  transfer(target: TransferToParticipantLocator, transferOptions?: TransferToParticipantOptions): Transfer;
+  transfer(target: TransferToCallLocator, transferOptions?: TransferToCallOptions): Transfer;
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  transfer(
+    target: TransferToParticipantLocator | TransferToCallLocator,
+    transferOptions?: TransferToParticipantOptions | TransferToCallOptions
+  ): Transfer {
     throw new Error('Method not implemented.');
   }
+  /* eslint-enable @typescript-eslint/no-unused-vars */
   on(event: 'transferRequested', listener: TransferRequestedEvent): void {
     this.emitter.on(event, listener);
   }
@@ -140,7 +148,7 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
 /**
  * @private
  */
-export class StubDiagnosticsCallFeatureImpl implements DiagnosticsCallFeature {
+export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeature {
   public name = 'Diagnosticss';
   public media = {
     getLatest(): LatestMediaDiagnostics {
@@ -304,10 +312,14 @@ export function createMockApiFeatures(
         name: 'Default',
         isRecordingActive: false,
         isTranscriptionActive: false,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        transfer(target: TransferToParticipant, transferOptions?: TransferToParticipantOptions): Transfer {
+        /* eslint-disable @typescript-eslint/no-unused-vars */
+        transfer(
+          target: TransferToParticipantLocator | TransferToCallLocator,
+          transferOptions?: TransferToParticipantOptions | TransferToCallOptions
+        ): Transfer {
           return addMockEmitter({ state: 'None' });
         },
+        /* eslint-enable @typescript-eslint/no-unused-vars */
         media: {
           getLatest(): LatestMediaDiagnostics {
             return {};

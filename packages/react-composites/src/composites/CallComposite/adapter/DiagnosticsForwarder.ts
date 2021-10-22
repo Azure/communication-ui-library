@@ -3,7 +3,7 @@
 
 import {
   Call,
-  DiagnosticsCallFeature,
+  UserFacingDiagnosticsFeature,
   Features,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs
@@ -15,11 +15,11 @@ import { MediaDiagnosticChangedEvent, NetworkDiagnosticChangedEvent } from './Ca
  * @private
  */
 export class DiagnosticsForwarder {
-  private _diagnostics: DiagnosticsCallFeature;
+  private _diagnostics: UserFacingDiagnosticsFeature;
   private _emitter: EventEmitter;
 
   constructor(emitter: EventEmitter, call: Call) {
-    this._diagnostics = call.api(Features.Diagnostics);
+    this._diagnostics = call.api(Features.UserFacingDiagnostics);
     this._emitter = emitter;
     this.subscribe();
   }
