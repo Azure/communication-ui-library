@@ -129,64 +129,64 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
     case TRANSCRIPTION_STOPPED_STILL_RECORDING:
       return (
         <>
-          <b>{strings.call.transcriptionStopped}</b>
-          {` ${strings.call.nowOnlyRecording}`}
+          <b>{strings.call.complianceBannerTranscriptionStopped}</b>
+          {` ${strings.call.complianceBannerNowOnlyRecording}`}
           <PrivacyPolicy linkText={strings.call.privacyPolicy } />
         </>
       );
     case RECORDING_STOPPED_STILL_TRANSCRIBING:
       return (
         <>
-          <b>{strings.call.recordingStopped}</b>
-          {` ${strings.call.nowOnlyTranscription}`}
+          <b>{strings.call.complianceBannerRecordingStopped}</b>
+          {` ${strings.call.complianceBannerNowOnlyTranscription}`}
           <PrivacyPolicy linkText={strings.call.privacyPolicy } />
         </>
       );
     case RECORDING_AND_TRANSCRIPTION_STOPPED:
       return (
         <>
-          <b>{strings.call.recordingAndTranscriptionSaved}</b>
-          {` ${strings.call.recordingAndTranscriptionStopped}`}
+          <b>{strings.call.complianceBannerRecordingAndTranscriptionSaved}</b>
+          {` ${strings.call.complianceBannerRecordingAndTranscriptionStopped}`}
           <LearnMore linkText={strings.call.learnMore } />
         </>
       );
     case RECORDING_AND_TRANSCRIPTION_STARTED:
       return (
         <>
-          <b>{strings.call.recordingAndTranscriptionStarted}</b>
-          {` ${strings.call.transcriptionConsent}`}
+          <b>{strings.call.complianceBannerRecordingAndTranscriptionStarted}</b>
+          {` ${strings.call.complianceBannerTranscriptionConsent}`}
           <PrivacyPolicy linkText={strings.call.privacyPolicy } />
         </>
       );
     case TRANSCRIPTION_STARTED:
       return (
         <>
-          <b>{strings.call.trancriptionStarted}</b>
-          {` ${strings.call.transcriptionConsent}`}
+          <b>{strings.call.complianceBannerTrancriptionStarted}</b>
+          {` ${strings.call.complianceBannerTranscriptionConsent}`}
           <PrivacyPolicy linkText={strings.call.privacyPolicy } />
         </>
       );
     case RECORDING_STOPPED:
       return (
         <>
-          <b>{strings.call.recordingSaving}</b>
-          {` ${strings.call.recordingStopped}`}
+          <b>{strings.call.complianceBannerRecordingSaving}</b>
+          {` ${strings.call.complianceBannerRecordingStopped}`}
           <LearnMore linkText={strings.call.learnMore } />
         </>
       );
     case RECORDING_STARTED:
       return (
         <>
-          <b>{strings.call.recordingStarted}</b>
-          {` ${strings.call.transcriptionConsent}`}
+          <b>{strings.call.complianceBannerRecordingStarted}</b>
+          {` ${strings.call.complianceBannerTranscriptionConsent}`}
           <PrivacyPolicy linkText={strings.call.privacyPolicy } />
         </>
       );
     case TRANSCRIPTION_STOPPED:
       return (
         <>
-          <b>{strings.call.transcriptionSaving}</b>
-          {` ${strings.call.transcriptionStopped}`}
+          <b>{strings.call.complianceBannerTranscriptionSaving}</b>
+          {` ${strings.call.complianceBannerTranscriptionStopped}`}
           <LearnMore linkText={strings.call.learnMore } />
         </>
       );

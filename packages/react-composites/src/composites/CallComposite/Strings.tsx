@@ -82,53 +82,53 @@ export interface CallCompositeStrings {
    */
   learnMore: string;
   /**
-   * Message to let user know the meeting is only being recorded (no transcription).
+   * Message to let user know the meeting is only being recorded (no transcription) in ComplianceBanner.
    */
-  nowOnlyRecording: string;
+  complianceBannerNowOnlyRecording: string;
   /**
-   * Message to let user know the meeting is only being transcripted (no recording).
+   * Message to let user know the meeting is only being transcripted (no recording) in ComplianceBanner.
    */
-  nowOnlyTranscription: string;
+  complianceBannerNowOnlyTranscription: string;
   /**
-   * Message to let user know recording and transcription of the meeting are saved.
+   * Message to let user know recording and transcription of the meeting are saved in ComplianceBanner.
    */
-  recordingAndTranscriptionSaved: string;
+  complianceBannerRecordingAndTranscriptionSaved: string;
   /**
-   * Message to let user know recording and transcription of the meeting have started.
+   * Message to let user know recording and transcription of the meeting have started in ComplianceBanner.
    */
-  recordingAndTranscriptionStarted: string;
+  complianceBannerRecordingAndTranscriptionStarted: string;
   /**
-   * Message to let user know recording and transcription of the meeting have stopped.
+   * Message to let user know recording and transcription of the meeting have stopped in ComplianceBanner.
    */
-  recordingAndTranscriptionStopped: string;
+  complianceBannerRecordingAndTranscriptionStopped: string;
   /**
-   * Message to let user know recording of the meeting is being saved.
+   * Message to let user know recording of the meeting is being saved in ComplianceBanner.
    */
-  recordingSaving: string;
+  complianceBannerRecordingSaving: string;
   /**
-   * Message to let user know recording of the meeting has started.
+   * Message to let user know recording of the meeting has started in ComplianceBanner.
    */
-  recordingStarted: string;
+  complianceBannerRecordingStarted: string;
   /**
-   * Message to let user know recording of the meeting has stopped.
+   * Message to let user know recording of the meeting has stopped in ComplianceBanner.
    */
-  recordingStopped: string;
+  complianceBannerRecordingStopped: string;
   /**
-   * Message to let user know they are giving consent to meeting being transcripted.
+   * Message to let user know they are giving consent to meeting being transcripted in ComplianceBanner.
    */
-  transcriptionConsent: string;
+  complianceBannerTranscriptionConsent: string;
   /**
-   * Message to let user know transcription of the meeting is being saved.
+   * Message to let user know transcription of the meeting is being saved in ComplianceBanner.
    */
-  transcriptionSaving: string;
+  complianceBannerTranscriptionSaving: string;
   /**
-   * Message to let user know transcription of the meeting has started.
+   * Message to let user know transcription of the meeting has started in ComplianceBanner.
    */
-  trancriptionStarted: string;
+  complianceBannerTrancriptionStarted: string;
   /**
-   * Message to let user know the transcription of the meeting has stopped.
+   * Message to let user know the transcription of the meeting has stopped in ComplianceBanner.
    */
-  transcriptionStopped: string;
+  complianceBannerTranscriptionStopped: string;
   /**
    * Text for close button.
    */
