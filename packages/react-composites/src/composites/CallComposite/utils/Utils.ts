@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { MeetingCompositePage } from '../../MeetingComposite/state/MeetingCompositePage';
+import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { _isPreviewOn } from '@internal/calling-component-bindings';
-import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallControlOptions } from '../components/CallControls';
 
 /**
@@ -50,3 +51,8 @@ export const reduceCallControlsForMobile = (
 
   return reduceCallControlOptions;
 };
+
+/**
+ * @private
+ */
+export const isInLobbyOrConnecting = (page: CallCompositePage | MeetingCompositePage): boolean => page === 'lobby';

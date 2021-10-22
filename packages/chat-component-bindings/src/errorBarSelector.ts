@@ -1,10 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getLatestErrors } from './baseSelectors';
+import { ChatBaseSelectorProps, getLatestErrors } from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
-import { ChatError, ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
+import { ChatClientState, ChatError, ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
+
+/**
+ * Selector type for {@link ErrorBar} component.
+ *
+ * @public
+ */
+export type ErrorBarSelector = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+) => {
+  activeErrorMessages: ActiveErrorMessage[];
+};
 
 /**
  * Select the first fiew active errors from the state for the {@link ErrorBar} component.
@@ -18,7 +30,7 @@ import { ChatError, ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-
  *
  * @public
  */
-export const errorBarSelector = createSelector(
+export const errorBarSelector: ErrorBarSelector = createSelector(
   [getLatestErrors],
   (latestErrors): { activeErrorMessages: ActiveErrorMessage[] } => {
     // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.

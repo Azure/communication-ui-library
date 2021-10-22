@@ -9,19 +9,22 @@ export type { AzureCommunicationCallAdapterArgs } from './AzureCommunicationCall
 
 export type {
   CallAdapter,
-  CallAdapterClientState,
-  CallAdapterState,
-  CallAdapterUiState,
   CallAdapterCallManagement,
+  CallAdapterClientState,
   CallAdapterDeviceManagement,
+  CallAdapterState,
   CallAdapterSubscribers,
+  CallAdapterUiState,
   CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,
+  DiagnosticChangedEventListner,
   DisplayNameChangedListener,
-  IsMutedChangedListener,
   IsLocalScreenSharingActiveChangedListener,
+  IsMutedChangedListener,
   IsSpeakingChangedListener,
+  MediaDiagnosticChangedEvent,
+  NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
   ParticipantsLeftListener
 } from './CallAdapter';
