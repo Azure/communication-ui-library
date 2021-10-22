@@ -7,7 +7,9 @@ import type {
   VideoDeviceInfo,
   Call,
   PermissionConstraints,
-  RemoteParticipant
+  RemoteParticipant,
+  MediaDiagnosticChangedEventArgs,
+  NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
 
 import { VideoStreamOptions } from '@internal/react-components';
@@ -117,6 +119,33 @@ export type DisplayNameChangedListener = (event: {
  * @public
  */
 export type CallEndedListener = (event: { callId: string }) => void;
+
+/**
+ * Payload for {@link DiagnosticChangedEventListner} where there is a change in a media diagnostic.
+ *
+ * @public
+ */
+export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
+  type: 'media';
+};
+
+/**
+ * Payload for {@link DiagnosticChangedEventListner} where there is a change in a network diagnostic.
+ *
+ * @public
+ */
+export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {
+  type: 'network';
+};
+
+/**
+ * Callback for {@link CallAdapterSubscribers} 'diagnosticChanged' event.
+ *
+ * @public
+ */
+export type DiagnosticChangedEventListner = (
+  event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
+) => void;
 
 /**
  * Functionality for managing the current call.
@@ -275,28 +304,28 @@ export interface CallAdapterDeviceManagement {
   /**
    * Set the camera to use in the call.
    *
-   * @param sourceId - Camera device to choose, pick one returned by  {@link CallAdapterDeviceManagement#queryCameras }
+   * @param sourceInfo - Camera device to choose, pick one returned by  {@link CallAdapterDeviceManagement#queryCameras }
    * @param options - Options to control how the camera stream is rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @public
    */
-  setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+  setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
   /**
    * Set the microphone to use in the call.
    *
-   * @param sourceId - Microphone device to choose, pick one returned by {@link CallAdapterDeviceManagement#queryMicrophones }
+   * @param sourceInfo - Microphone device to choose, pick one returned by {@link CallAdapterDeviceManagement#queryMicrophones }
    *
    * @public
    */
-  setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
+  setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
   /**
    * Set the speaker to use in the call.
    *
-   * @param sourceId - Speaker device to choose, pick one returned by {@link CallAdapterDeviceManagement#querySpeakers }
+   * @param sourceInfo - Speaker device to choose, pick one returned by {@link CallAdapterDeviceManagement#querySpeakers }
    *
    * @public
    */
-  setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+  setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
 /**
@@ -346,6 +375,12 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'callEnded', listener: CallEndedListener): void;
   /**
+   * Subscribe function for 'diagnosticChanged' event.
+   *
+   * This event fires whenever there is a change in user facing diagnostics about the ongoing call.
+   */
+  on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
+  /**
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
@@ -382,6 +417,10 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'callEnded' event.
    */
   off(event: 'callEnded', listener: CallEndedListener): void;
+  /**
+   * Unsubscribe function for 'diagnosticChanged' event.
+   */
+  off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
   /**
    * Unsubscribe function for 'error' event.
    */

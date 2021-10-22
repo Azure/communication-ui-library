@@ -12,6 +12,7 @@ import { LobbyTile } from '../components/LobbyTile';
 import { getCallStatus, getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { reduceCallControlsForMobile } from '../utils';
+import { CallControlOptions } from '../components/CallControls';
 import { MediaGallery } from '../components/MediaGallery';
 
 /**
@@ -62,9 +63,11 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   }, [inLobby, isButtonStatusSynced, isPreviewCameraOn, isVideoStreamOn, mediaGalleryHandlers, props]);
 
   // Reduce the controls shown when mobile view is enabled.
-  const callControlOptions = props.options?.mobileView
+  let callControlOptions = props.options?.mobileView
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
+
+  callControlOptions = disableLobbyPageControls(callControlOptions);
 
   return (
     <CallArrangement
@@ -90,4 +93,27 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       dataUiId={'lobby-page'}
     />
   );
+};
+
+const disableLobbyPageControls = (
+  callControlOptions: CallControlOptions | boolean | undefined
+): CallControlOptions | boolean | undefined => {
+  let newOptions = callControlOptions;
+  if (newOptions !== false) {
+    if (newOptions === true || newOptions === undefined) {
+      newOptions = {
+        participantsButton: { disabled: true },
+        screenShareButton: { disabled: true }
+      };
+    } else {
+      if (newOptions.participantsButton !== false) {
+        newOptions.participantsButton = { disabled: true };
+      }
+      if (newOptions.screenShareButton !== false) {
+        newOptions.screenShareButton = { disabled: true };
+      }
+    }
+  }
+
+  return newOptions;
 };
