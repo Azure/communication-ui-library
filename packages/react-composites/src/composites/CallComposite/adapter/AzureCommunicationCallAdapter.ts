@@ -37,7 +37,7 @@ import {
   ParticipantsLeftListener,
   DiagnosticChangedEventListner
 } from './CallAdapter';
-import { isCameraOn } from '../utils';
+import { getCallCompositePage, isCameraOn } from '../utils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
@@ -95,12 +95,15 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
+    const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
+    const page = getCallCompositePage(call?.state ?? 'None', latestEndedCall);
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
-      endedCall: findLatestEndedCall(clientState.callsEnded),
+      page,
+      endedCall: latestEndedCall,
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
         call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
@@ -430,8 +433,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   };
 
-  public setPage(page: CallCompositePage): void {
-    this.context.setPage(page);
+  public setPage(): void {
+    // this.context.setPage(page); /** todo [jaburnsi]: this will be removed in followup cleanup PR */
   }
 
   private onRemoteParticipantsUpdated({
