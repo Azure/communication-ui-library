@@ -143,6 +143,40 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   });
 });
 
+test.describe('Call Composite E2E End Experience Pages', () => {
+  // Make sure tests can still run well after retries
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(buildUrl(serverUrl, user));
+      await waitForCallCompositeToLoad(page);
+    }
+
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test('Left call page should show when end call button clicked', async ({ pages }) => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-hangup-button'));
+    expect(await page.screenshot()).toMatchSnapshot(`left-call-page.png`);
+  });
+
+  test('Removed from call page should show when you are removed by another user', async ({ pages }) => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-hangup-button'));
+    expect(await page.screenshot()).toMatchSnapshot(`left-call-page.png`);
+  });
+});
+
 const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
     await page.click(dataUiId('call-composite-camera-button'));
