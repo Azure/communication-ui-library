@@ -112,14 +112,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             connectingToCall: locale.strings.call.lobbyScreenConnectingToCallTitle,
             waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedTitle
           }}
-          endCallHandler={() => undefined /** todo [jaburnsi]: removed in followup cleanup PR */}
           options={props.options}
         />
       );
     case 'call':
       return (
         <CallPage
-          endCallHandler={() => undefined /** todo [jaburnsi]: removed in followup cleanup PR */}
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
