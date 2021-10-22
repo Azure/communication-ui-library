@@ -14,7 +14,7 @@ import { CallIdRef } from './CallIdRef';
 /**
  * @private
  */
-export class DiagnosticsSubscriber {
+export class UserFacingDiagnosticsSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _diagnostics: UserFacingDiagnosticsFeature;

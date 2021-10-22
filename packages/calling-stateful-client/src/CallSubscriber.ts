@@ -15,7 +15,7 @@ import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
-import { DiagnosticsSubscriber } from './DiagnosticsSubscriber';
+import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -28,7 +28,7 @@ export class CallSubscriber {
   private _context: CallContext;
   private _internalContext: InternalCallContext;
 
-  private _diagnosticsSubscriber: DiagnosticsSubscriber;
+  private _diagnosticsSubscriber: UserFacingDiagnosticsSubscriber;
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _receivedTransferSubscriber: ReceivedTransferSubscriber;
   private _recordingSubscriber: RecordingSubscriber;
