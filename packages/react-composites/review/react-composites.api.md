@@ -206,7 +206,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -227,11 +227,13 @@ export interface CallCompositeStrings {
     defaultPlaceHolder: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    leftCallMoreDetails?: string;
+    leftCallTitle: string;
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
-    removedFromMeetingMoreDetails?: string;
-    removedFromMeetingTitle: string;
+    removedFromCallMoreDetails?: string;
+    removedFromCallTitle: string;
     screenSharingMessage: string;
     soundLabel: string;
     startCallButtonLabel: string;
@@ -579,7 +581,7 @@ export type MeetingCompositeOptions = {
 };
 
 // @alpha
-export type MeetingCompositePage = 'configuration' | 'lobby' | 'meeting' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
+export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @alpha
 export type MeetingCompositeProps = {
