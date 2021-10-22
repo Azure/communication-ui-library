@@ -40,7 +40,7 @@ export class CallSubscriber {
     this._context = context;
     this._internalContext = internalContext;
 
-    this._diagnosticsSubscriber = new DiagnosticsSubscriber(
+    this._diagnosticsSubscriber = new UserFacingDiagnosticsSubscriber(
       this._callIdRef,
       this._context,
       this._call.api(Features.UserFacingDiagnostics)
