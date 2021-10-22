@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update message type",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -5,6 +5,9 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { typingIndicatorSelector } from './typingIndicatorSelector';
 
+// TODO: Make it type safe when update unit tests
+const typingIndicatorSelectorResultFunc = (typingIndicatorSelector as any).resultFunc;
+
 describe('typingIndicatorSelector tests', () => {
   test('should filter typing indicators from participant that is the user', async (): Promise<void> => {
     const orderedTypingIndicators: TypingIndicatorReceivedEvent[] = [
@@ -23,7 +26,7 @@ describe('typingIndicatorSelector tests', () => {
         displayName: 'User1'
       }
     };
-    const result = typingIndicatorSelector.resultFunc(
+    const result = typingIndicatorSelectorResultFunc(
       orderedTypingIndicators,
       participants,
       toFlatCommunicationIdentifier({
@@ -62,7 +65,7 @@ describe('typingIndicatorSelector tests', () => {
         displayName: 'User2'
       }
     };
-    const result = typingIndicatorSelector.resultFunc(
+    const result = typingIndicatorSelectorResultFunc(
       orderedTypingIndicators,
       participants,
       toFlatCommunicationIdentifier({
@@ -122,7 +125,7 @@ describe('typingIndicatorSelector tests', () => {
         displayName: 'User4'
       }
     };
-    const result = typingIndicatorSelector.resultFunc(
+    const result = typingIndicatorSelectorResultFunc(
       orderedTypingIndicators,
       participants,
       toFlatCommunicationIdentifier({
@@ -179,7 +182,7 @@ describe('typingIndicatorSelector tests', () => {
         displayName: 'User7'
       }
     };
-    const result = typingIndicatorSelector.resultFunc(
+    const result = typingIndicatorSelectorResultFunc(
       orderedTypingIndicators,
       participants,
       toFlatCommunicationIdentifier({
@@ -207,7 +210,7 @@ describe('typingIndicatorSelector tests', () => {
     Array.from(Array(20).keys()).forEach(
       (num) => (participants[`${num}`] = { id: `${num}`, displayName: `User${num}` })
     );
-    const result = typingIndicatorSelector.resultFunc(
+    const result = typingIndicatorSelectorResultFunc(
       orderedTypingIndicators,
       participants,
       toFlatCommunicationIdentifier({

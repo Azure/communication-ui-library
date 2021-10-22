@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuItemStyles, IStackStyles, IStackItemStyles, IStackTokens, getTheme } from '@fluentui/react';
-
-const theme = getTheme();
-const palette = theme.palette;
+import { IStackStyles, IStackItemStyles, IStackTokens } from '@fluentui/react';
 
 /**
  * @private
@@ -50,15 +47,6 @@ export const sidePaneHeaderStyles: IStackItemStyles = {
 /**
  * @private
  */
-export const sidePaneCloseButtonStyles: Partial<IContextualMenuItemStyles> = {
-  icon: { color: palette.neutralSecondary },
-  iconHovered: { color: palette.neutralSecondary },
-  iconPressed: { color: palette.neutralSecondary }
-};
-
-/**
- * @private
- */
 export const paneBodyContainer: IStackStyles = { root: { flexDirection: 'column', display: 'flex' } };
 
 /**
@@ -76,8 +64,7 @@ export const scrollableContainerContents: IStackItemStyles = { root: { flexGrow:
  */
 export const peopleSubheadingStyle: IStackItemStyles = {
   root: {
-    fontSize: '0.75rem',
-    color: palette.neutralSecondary
+    fontSize: '0.75rem'
   }
 };
 

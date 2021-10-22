@@ -6,9 +6,10 @@ import { concatStyleSets, Icon, mergeStyles } from '@fluentui/react';
 
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from './styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
+import { MessageThreadStrings } from './MessageThread';
+import { formatString } from '../localization/localizationUtils';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-const TEXT_EXCEEDS_LIMIT = `Your message is over the limit of ${MAXIMUM_LENGTH_OF_MESSAGE} characters`;
 
 const onRenderCancelIcon = (color: string): JSX.Element => {
   const className = mergeStyles(inputBoxIcon, { color });
@@ -27,13 +28,14 @@ export type EditBoxProps = {
   onCancel?: () => void;
   onSubmit: (text: string) => void;
   initialValue: string;
+  strings: MessageThreadStrings;
 };
 
 /**
  * @private
  */
 export const EditBox = (props: EditBoxProps): JSX.Element => {
-  const { onCancel, onSubmit, initialValue } = props;
+  const { onCancel, onSubmit, initialValue, strings } = props;
   const [textValue, setTextValue] = useState<string>(initialValue);
   const [textValueOverflow, setTextValueOverflow] = useState(false);
   const theme = useTheme();
@@ -52,7 +54,9 @@ export const EditBox = (props: EditBoxProps): JSX.Element => {
     setTextValue(newValue);
   };
 
-  const textTooLongMessage = textValueOverflow ? TEXT_EXCEEDS_LIMIT : undefined;
+  const textTooLongMessage = textValueOverflow
+    ? formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
+    : undefined;
 
   const onRenderThemedCancelIcon = useCallback(
     () => onRenderCancelIcon(theme.palette.neutralSecondary),
@@ -71,6 +75,7 @@ export const EditBox = (props: EditBoxProps): JSX.Element => {
   return (
     <InputBoxComponent
       inputClassName={editBoxStyle}
+      placeholderText={strings.editBoxPlaceholderText}
       textValue={textValue}
       onChange={setText}
       onEnterKeyDown={() => {

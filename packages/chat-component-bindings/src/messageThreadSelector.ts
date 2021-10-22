@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
+import { ChatBaseSelectorProps, getChatMessages, getIsLargeGroup, getLatestReadTime, getUserId } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
@@ -25,7 +25,11 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
-    if (messageType === 'text' || messageType === 'richtext/html') {
+    if (
+      messageType === ACSKnownMessageType.text ||
+      messageType === ACSKnownMessageType.richtextHtml ||
+      messageType === ACSKnownMessageType.html
+    ) {
       return convertToUiChatMessage(chatMessage, userId, isSeen, isLargeGroup);
     } else {
       return convertToUiSystemMessage(chatMessage);
@@ -91,11 +95,25 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): SystemMessage
 };
 
 /**
- * Select for {@link MessageThread} component.
+ * Selector type for {@link MessageThread} component.
  *
  * @public
  */
-export const messageThreadSelector = createSelector(
+export type MessageThreadSelector = (
+  state: ChatClientState,
+  props: ChatBaseSelectorProps
+) => {
+  userId: string;
+  showMessageStatus: boolean;
+  messages: Message[];
+};
+
+/**
+ * Selector for {@link MessageThread} component.
+ *
+ * @public
+ */
+export const messageThreadSelector: MessageThreadSelector = createSelector(
   [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup],
   (userId, chatMessages, latestReadTime, isLargeGroup) => {
     // A function takes parameter above and generate return value

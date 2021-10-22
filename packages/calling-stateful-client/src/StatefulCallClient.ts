@@ -9,7 +9,7 @@ import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView } from './StreamUtils';
 import {
-  CommunicationIdentifierKind,
+  CommunicationIdentifier,
   CommunicationUserIdentifier,
   CommunicationUserKind,
   getIdentifierKind
@@ -99,7 +99,7 @@ export interface StatefulCallClient extends CallClient {
    */
   createView(
     callId: string | undefined,
-    participantId: CommunicationIdentifierKind | undefined,
+    participantId: CommunicationIdentifier | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState,
     options?: CreateViewOptions
   ): Promise<void>;
@@ -129,7 +129,7 @@ export interface StatefulCallClient extends CallClient {
    */
   disposeView(
     callId: string | undefined,
-    participantId: CommunicationIdentifierKind | undefined,
+    participantId: CommunicationIdentifier | undefined,
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 }
@@ -281,21 +281,23 @@ export const createStatefulCallClientWithDeps = (
     configurable: false,
     value: (
       callId: string | undefined,
-      participantId: CommunicationIdentifierKind | string | undefined,
+      participantId: CommunicationIdentifier | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
     ): Promise<void> => {
-      return createView(context, internalContext, callId, participantId, stream, options);
+      const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
+      return createView(context, internalContext, callId, participantIdKind, stream, options);
     }
   });
   Object.defineProperty(callClient, 'disposeView', {
     configurable: false,
     value: (
       callId: string | undefined,
-      participantId: CommunicationIdentifierKind | string | undefined,
+      participantId: CommunicationIdentifier | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState
     ): void => {
-      disposeView(context, internalContext, callId, participantId, stream);
+      const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
+      disposeView(context, internalContext, callId, participantIdKind, stream);
     }
   });
 

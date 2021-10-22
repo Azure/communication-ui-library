@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(you)",
     "menuTitle": "More Options",
-    "removeButtonLabel": "Remove"
+    "removeButtonLabel": "Remove",
+    "sharingIconLabel": "Sharing",
+    "mutedIconLabel": "Muted"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -65,7 +67,12 @@
     "participantLeft": "left the chat.",
     "editMessage": "Edit",
     "removeMessage": "Remove",
-    "editedTag": "Edited"
+    "editedTag": "Edited",
+    "liveAuthorIntro": "{author} says",
+    "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
+    "editBoxPlaceholderText": "Edit your message",
+    "newMessagesIndicator": "New messages",
+    "noDisplayNameSub": "No name"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -81,8 +88,5 @@
     "speakingWhileMuted": "Your microphone is muted",
     "startScreenShareGeneric": "Failed to start screen sharing",
     "stopScreenShareGeneric": "Failed to stop screen sharing"
-  },
-  "videoGallery": {
-    "screenSharingMessage": "you are sharing your screen"
   }
 }

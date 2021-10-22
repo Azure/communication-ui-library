@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, Icon, IDragOptions, Modal, Stack, Text, mergeStyles } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import { ContextualMenu, IDragOptions, Modal, Stack, concatStyleSets } from '@fluentui/react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
-import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import {
   BaseCustomStylesProps,
@@ -19,29 +19,17 @@ import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
-  screenSharingContainer,
-  screenSharingNotificationIconContainer,
-  screenSharingNotificationIconStyle,
-  screenSharingNotificationContainerCameraOnStyles,
-  screenSharingNotificationContainerCameraOffStyles,
-  screenSharingNotificationTextStyle,
   videoGalleryContainerStyle,
   videoWithNoRoundedBorderStyle
 } from './styles/VideoGallery.styles';
-import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
-import { VideoTile, VideoTileStylesProps } from './VideoTile';
+import { VideoTile } from './VideoTile';
 
 const emptyStyles = {};
 
-/**
- * Strings of {@link VideoGalleryStrings} that can be overridden.
- *
- * @public
- */
-export interface VideoGalleryStrings {
-  /** Message to let user know they are sharing their screen. */
-  screenSharingMessage: string;
-}
+// Currently the Calling JS SDK supports up to 4 remote video streams
+const MAX_VIDEO_PARTICIPANTS_TILES = 4;
+// Set aside only 6 dominant speakers for remaining audio participants
+const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
  * Props for {@link VideoGallery}.
@@ -64,6 +52,8 @@ export interface VideoGalleryProps {
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
+  /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
+  dominantSpeakers?: string[];
   /** Local video view options */
   localVideoViewOption?: VideoStreamOptions;
   /** Remote videos view options */
@@ -87,11 +77,6 @@ export interface VideoGalleryProps {
    * @defaultValue `true`
    */
   showMuteIndicator?: boolean;
-
-  /**
-   * Optional strings to override in component
-   */
-  strings?: Partial<VideoGalleryStrings>;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -110,9 +95,10 @@ const DRAG_OPTIONS: IDragOptions = {
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const {
     localParticipant,
-    remoteParticipants,
+    remoteParticipants = [],
     localVideoViewOption,
     remoteVideoViewOption,
+    dominantSpeakers,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
@@ -126,52 +112,31 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const ids = useIdentifiers();
   const theme = useTheme();
-  const localeStrings = useLocale().strings.videoGallery;
 
   const shouldFloatLocalVideo = useCallback((): boolean => {
-    return !!(layout === 'floatingLocalVideo' && remoteParticipants && remoteParticipants.length > 0);
-  }, [layout, remoteParticipants]);
+    return !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  }, [layout, remoteParticipants.length]);
 
-  const screenSharingNotification = useMemo((): JSX.Element | undefined => {
-    if (!localParticipant.isScreenSharingOn) {
-      return undefined;
-    }
+  const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
-    const screenSharingNotificationContainerStyle = mergeStyles(
-      localParticipant.videoStream?.renderElement
-        ? screenSharingNotificationContainerCameraOnStyles(theme)
-        : screenSharingNotificationContainerCameraOffStyles(theme),
-      getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralSecondary')
-    );
+  visibleVideoParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
+    dominantSpeakers,
+    lastVisibleParticipants: visibleVideoParticipants.current,
+    maxDominantSpeakers: MAX_VIDEO_PARTICIPANTS_TILES
+  }).slice(0, MAX_VIDEO_PARTICIPANTS_TILES);
 
-    const screenSharingNotificationIconThemedStyle = mergeStyles(
-      screenSharingNotificationIconStyle,
-      getVideoTileOverrideColor(!!localParticipant.videoStream?.renderElement, theme, 'neutralTertiary')
-    );
+  // This set will be used to filter out participants already in visibleVideoParticipants
+  const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
+  visibleAudioParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsSet.has(p.userId)) ?? [],
+    dominantSpeakers,
+    lastVisibleParticipants: visibleAudioParticipants.current,
+    maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
+  });
 
-    return (
-      <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
-        <Stack
-          horizontalAlign={'center'}
-          verticalAlign={'center'}
-          className={screenSharingNotificationContainerStyle}
-          tokens={{ childrenGap: '1rem' }}
-        >
-          <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainer}>
-            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconThemedStyle} />
-          </Stack>
-          <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
-            {props.strings?.screenSharingMessage ?? localeStrings.screenSharingMessage}
-          </Text>
-        </Stack>
-      </Stack>
-    );
-  }, [
-    localParticipant.isScreenSharingOn,
-    localParticipant.videoStream,
-    localParticipant.videoStream?.renderElement,
-    theme
-  ]);
+  const allParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -181,10 +146,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
-    let localVideoTileStyles: VideoTileStylesProps = {};
-    if (shouldFloatLocalVideo()) {
-      localVideoTileStyles = floatingLocalVideoTileStyle(theme);
-    }
+    const localVideoTileStyles = shouldFloatLocalVideo() ? floatingLocalVideoTileStyle : {};
+
+    const localVideoTileStylesThemed = concatStyleSets(localVideoTileStyles, {
+      root: { borderRadius: theme.effects.roundedCorner4 }
+    });
 
     if (localVideoStream && !localVideoStream.renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
@@ -199,18 +165,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           ) : undefined
         }
         displayName={localParticipant?.displayName}
-        styles={localVideoTileStyles}
-        onRenderPlaceholder={localParticipant.isScreenSharingOn ? () => <></> : onRenderAvatar}
+        styles={localVideoTileStylesThemed}
+        onRenderPlaceholder={onRenderAvatar}
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
-      >
-        {screenSharingNotification}
-      </VideoTile>
+      />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     localParticipant,
-    localParticipant.isScreenSharingOn,
     localParticipant.videoStream,
     localParticipant.videoStream?.renderElement,
     onCreateLocalStreamView,
@@ -219,44 +182,35 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     shouldFloatLocalVideo
   ]);
 
-  /**
-   * Utility function for memoized rendering of RemoteParticipants.
-   */
-  const defaultOnRenderRemoteParticipants = useMemo(() => {
-    // If user provided a custom onRender function return that function.
-    if (onRenderRemoteVideoTile) {
-      return remoteParticipants?.map((participant) => onRenderRemoteVideoTile(participant));
-    }
+  const remoteParticipantTiles = onRenderRemoteVideoTile
+    ? allParticipants.map((participant) => onRenderRemoteVideoTile(participant))
+    : allParticipants.map((participant): JSX.Element => {
+        const remoteVideoStream = participant.videoStream;
+        return (
+          <RemoteVideoTile
+            key={participant.userId}
+            userId={participant.userId}
+            onCreateRemoteStreamView={onCreateRemoteStreamView}
+            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+            isAvailable={remoteVideoStream?.isAvailable}
+            isMuted={participant.isMuted}
+            isSpeaking={participant.isSpeaking}
+            renderElement={remoteVideoStream?.renderElement}
+            displayName={participant.displayName}
+            remoteVideoViewOption={remoteVideoViewOption}
+            onRenderAvatar={onRenderAvatar}
+            showMuteIndicator={showMuteIndicator}
+          />
+        );
+      });
 
-    // Else return Remote Stream Video Tiles
-    return remoteParticipants?.map((participant): JSX.Element => {
-      const remoteVideoStream = participant.videoStream;
-      return (
-        <RemoteVideoTile
-          key={participant.userId}
-          userId={participant.userId}
-          onCreateRemoteStreamView={onCreateRemoteStreamView}
-          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-          isAvailable={remoteVideoStream?.isAvailable}
-          isMuted={participant.isMuted}
-          isSpeaking={participant.isSpeaking}
-          renderElement={remoteVideoStream?.renderElement}
-          displayName={participant.displayName}
-          remoteVideoViewOption={remoteVideoViewOption}
-          onRenderAvatar={onRenderAvatar}
-          showMuteIndicator={showMuteIndicator}
-        />
-      );
-    });
-  }, [
-    remoteParticipants,
-    onRenderRemoteVideoTile,
-    onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
-    remoteVideoViewOption,
-    onRenderAvatar,
-    showMuteIndicator
-  ]);
+  const floatingLocalVideoModalStyleThemed = useMemo(
+    () =>
+      concatStyleSets(floatingLocalVideoModalStyle, {
+        main: { boxShadow: theme.effects.elevation8, borderRadius: theme.effects.roundedCorner4 }
+      }),
+    [theme.effects.elevation8, theme.effects.roundedCorner4]
+  );
 
   if (shouldFloatLocalVideo()) {
     const floatingTileHostId = 'UILibraryFloatingTileHost';
@@ -266,12 +220,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isOpen={true}
           isModeless={true}
           dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyle(theme)}
+          styles={floatingLocalVideoModalStyleThemed}
           layerProps={{ hostId: floatingTileHostId }}
         >
           {localParticipant && defaultOnRenderLocalVideoTile}
         </Modal>
-        <GridLayout styles={styles ?? emptyStyles}>{defaultOnRenderRemoteParticipants}</GridLayout>
+        <GridLayout styles={styles ?? emptyStyles}>{remoteParticipantTiles}</GridLayout>
       </Stack>
     );
   }
@@ -281,7 +235,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && defaultOnRenderLocalVideoTile}
       </Stack>
-      {defaultOnRenderRemoteParticipants}
+      {remoteParticipantTiles}
     </GridLayout>
   );
 };

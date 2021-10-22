@@ -24,9 +24,11 @@ import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
+import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import type { PermissionConstraints } from '@azure/communication-calling';
@@ -147,9 +149,9 @@ export interface CallAdapterDeviceManagement {
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
-    setCamera(sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    setMicrophone(sourceId: AudioDeviceInfo): Promise<void>;
-    setSpeaker(sourceId: AudioDeviceInfo): Promise<void>;
+    setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
+    setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
 }
 
 // @public
@@ -165,6 +167,7 @@ export interface CallAdapterSubscribers {
     off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     off(event: 'callEnded', listener: CallEndedListener): void;
+    off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
@@ -174,6 +177,7 @@ export interface CallAdapterSubscribers {
     on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     on(event: 'callEnded', listener: CallEndedListener): void;
+    on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
@@ -223,6 +227,7 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     removedFromMeetingMoreDetails?: string;
     removedFromMeetingTitle: string;
+    screenSharingMessage: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -234,8 +239,12 @@ export type CallControlOptions = {
     endCallButton?: boolean;
     microphoneButton?: boolean;
     optionsButton?: boolean;
-    participantsButton?: boolean;
-    screenShareButton?: boolean;
+    participantsButton?: boolean | {
+        disabled: boolean;
+    };
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
 };
 
 // @public
@@ -441,6 +450,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
 };
 
 // @public
+export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;
+
+// @public
 export type DisplayNameChangedListener = (event: {
     participantId: CommunicationIdentifierKind;
     displayName: string;
@@ -467,6 +479,11 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
+
+// @public
+export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
+    type: 'media';
+};
 
 // @alpha
 export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, MeetingAdapterSubscriptions {
@@ -604,6 +621,11 @@ export type MessageReceivedListener = (event: {
 
 // @public
 export type MessageSentListener = MessageReceivedListener;
+
+// @public
+export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {
+    type: 'network';
+};
 
 // @public
 export type ParticipantsAddedListener = (event: {

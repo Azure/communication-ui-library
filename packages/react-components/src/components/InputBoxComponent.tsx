@@ -14,7 +14,7 @@ import {
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
-import { useTheme } from '../theming/FluentThemeProvider';
+import { useTheme } from '../theming';
 
 /**
  * @private
@@ -104,7 +104,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           resizable={false}
           componentRef={textFieldRef}
           id={id}
-          ariaLabel={'Type'}
           inputClassName={mergedTextFiledStyle}
           placeholder={placeholderText}
           value={textValue}

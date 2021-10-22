@@ -69,4 +69,8 @@ export interface CallCompositeStrings {
    * Text shown to the user on the lobby screen when waiting to be admitted to a call.
    */
   lobbyScreenWaitingToBeAdmittedTitle: string;
+  /**
+   * Message to let user know they are sharing their screen.
+   */
+  screenSharingMessage: string;
 }
