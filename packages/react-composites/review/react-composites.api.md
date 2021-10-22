@@ -216,19 +216,35 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    close: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    learnMore: string;
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+    nowOnlyRecording: string;
+    nowOnlyTranscription: string;
+    privacyPolicy: string;
+    recordingAndTranscriptionSaved: string;
+    recordingAndTranscriptionStarted: string;
+    recordingAndTranscriptionStopped: string;
+    recordingSaving: string;
+    recordingStarted: string;
+    recordingStopped: string;
     removedFromMeetingMoreDetails?: string;
     removedFromMeetingTitle: string;
     screenSharingMessage: string;
+    sharingScreenLoading: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    trancriptionStarted: string;
+    transcriptionConsent: string;
+    transcriptionSaving: string;
+    transcriptionStopped: string;
 }
 
 // @public
