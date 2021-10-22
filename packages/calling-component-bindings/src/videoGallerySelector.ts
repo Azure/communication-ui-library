@@ -125,7 +125,7 @@ export type VideoGallerySelector = (
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
-  dominantSpeakers: string[] | undefined;
+  dominantSpeakers?: string[];
 };
 
 /**

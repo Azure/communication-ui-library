@@ -24,7 +24,9 @@ import {
   MicrosoftTeamsUserKind,
   PhoneNumberIdentifier,
   PhoneNumberKind,
-  UnknownIdentifierKind
+  UnknownIdentifierKind,
+  MicrosoftTeamsUserIdentifier,
+  UnknownIdentifier
 } from '@azure/communication-common';
 
 /**
@@ -34,7 +36,7 @@ import {
  * @beta
  */
 export interface TransferRequest {
-  targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
+  targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifier;
 }
 
 /**
@@ -52,7 +54,11 @@ export interface Transfer {
    * Added by {@link StatefulClientClient}, stores the targetParticipant passed to
    * {@link @azure/communication-calling#TransferCallFeature.transfer}
    */
-  targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
+  targetParticipant:
+    | CommunicationUserIdentifier
+    | PhoneNumberIdentifier
+    | MicrosoftTeamsUserIdentifier
+    | UnknownIdentifier;
   /**
    * Proxy of {@link @azure/communication-calling#Transfer.state}.
    */

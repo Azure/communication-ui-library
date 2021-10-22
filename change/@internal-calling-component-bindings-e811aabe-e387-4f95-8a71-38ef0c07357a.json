@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "bump calling sdk to 1.2.3-beta.1",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

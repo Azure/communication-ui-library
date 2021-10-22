@@ -44,6 +44,7 @@ import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
@@ -1167,8 +1168,8 @@ export type IsSpeakingChangedListener = (event: {
 
 // @public
 export interface JumpToNewMessageButtonProps {
-    // (undocumented)
     onClick: () => void;
+    text: string;
 }
 
 // @public
@@ -1423,10 +1424,15 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
+    editBoxPlaceholderText: string;
+    editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
     friday: string;
+    liveAuthorIntro: string;
     monday: string;
+    newMessagesIndicator: string;
+    noDisplayNameSub: string;
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
@@ -1560,7 +1566,9 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    mutedIconLabel: string;
     removeButtonLabel: string;
+    sharingIconLabel: string;
 }
 
 // @public
@@ -1834,7 +1842,7 @@ export interface Transfer {
     error?: TransferErrorCode;
     id: number;
     state: TransferState;
-    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
+    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier;
 }
 
 // @beta
@@ -1846,7 +1854,7 @@ export interface TransferCallFeatureState {
 // @beta
 export interface TransferRequest {
     // (undocumented)
-    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
+    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifier;
 }
 
 // @public
@@ -1953,7 +1961,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
-    dominantSpeakers: string[] | undefined;
+    dominantSpeakers?: string[];
 };
 
 // @public
