@@ -4,7 +4,7 @@
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { Browser, Page } from '@playwright/test';
+import { Browser, ConsoleMessage, Page } from '@playwright/test';
 import { v1 } from 'uuid';
 import { CHAT_TOPIC_NAME } from './constants';
 import { CONNECTION_STRING } from './nodeConstants';
@@ -21,6 +21,19 @@ export const usePagePerParticipant = async ({ serverUrl, users, browser }, use) 
   await use(pages);
 };
 
+// Ignore known, non-impactful, unfixable console log errors. This should only ignore errors we *CANNOT* fix.
+// All console errors should be fixed before considering adding to this function.
+const shouldIgnoreConsoleError = (error: ConsoleMessage): boolean => {
+  // ignore SDK telemetry throttling error
+  return (
+    error
+      .text()
+      .includes(
+        'Failed to load resource: the server responded with a status of 403 (No events are from an allowed domain.)'
+      ) && error.location().url.includes('events.data.microsoft.com/OneCollector')
+  );
+};
+
 /**
  * Creates a page to be tested for each participant in a browser page.
  * To be used in a playwright fixture's 'pages'.
@@ -31,7 +44,7 @@ export const usePagePerParticipantWithCallPermissions = async ({ browser, server
     users.map(async (user) => {
       const page = await loadNewPageWithPermissionsForCalls(browser, buildUrl(serverUrl, user));
       page.on('console', (msg) => {
-        if (msg.type() === 'error') {
+        if (msg.type() === 'error' && !shouldIgnoreConsoleError(msg)) {
           console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
         }
       });
