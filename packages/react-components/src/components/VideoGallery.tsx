@@ -121,7 +121,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   visibleVideoParticipants.current = smartDominantSpeakerParticipants({
     participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
     dominantSpeakers,
-    lastVisibleParticipants: visibleVideoParticipants.current.filter((p) => p.videoStream?.isAvailable),
+    lastVisibleParticipants: visibleVideoParticipants.current,
     maxDominantSpeakers: MAX_VIDEO_PARTICIPANTS_TILES
   }).slice(0, MAX_VIDEO_PARTICIPANTS_TILES);
 
@@ -130,7 +130,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   visibleAudioParticipants.current = smartDominantSpeakerParticipants({
     participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsSet.has(p.userId)) ?? [],
     dominantSpeakers,
-    lastVisibleParticipants: visibleAudioParticipants.current.filter((p) => !visibleVideoParticipantsSet.has(p.userId)),
+    lastVisibleParticipants: visibleAudioParticipants.current,
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
