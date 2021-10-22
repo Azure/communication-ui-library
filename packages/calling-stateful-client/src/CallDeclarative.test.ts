@@ -4,7 +4,7 @@
 import {
   CallerInfo,
   CallFeatureFactoryType,
-  DiagnosticsCallFeature,
+  UserFacingDiagnosticsFeature,
   Features,
   RecordingCallFeature,
   TranscriptionCallFeature,
@@ -41,7 +41,7 @@ jest.mock('@azure/communication-calling', () => {
       get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
         return MockTranscriptionCallFeatureImpl;
       },
-      get Diagnostics(): CallFeatureFactoryType<DiagnosticsCallFeature> {
+      get Diagnostics(): CallFeatureFactoryType<UserFacingDiagnosticsFeature> {
         return StubDiagnosticsCallFeatureImpl;
       }
     }
