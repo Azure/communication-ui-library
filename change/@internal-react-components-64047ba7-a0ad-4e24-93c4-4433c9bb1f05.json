@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "added button text to JumpToNewMessageButtonProps",
+  "comment": "added button text to JumpToNewMessageButtonProps +  strings to MessageThreadStrings and ParticipantItemStrings",
   "packageName": "@internal/react-components",
   "email": "alcail@microsoft.com",
   "dependentChangeType": "patch"
