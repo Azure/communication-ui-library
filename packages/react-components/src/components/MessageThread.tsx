@@ -40,8 +40,6 @@ import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from 
 import { ChatMessageComponent } from './ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 
-const NEW_MESSAGES = 'New Messages';
-
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
     first.messageId === second.messageId &&
@@ -171,6 +169,16 @@ export interface MessageThreadStrings {
   editMessage: string;
   /** String for removing message in floating menu */
   removeMessage: string;
+  /** String for LiveMessage introduction in ChatMessageComponent */
+  liveAuthorIntro: string;
+  /** String for warning on text limit exceeded in EditBox*/
+  editBoxTextLimit: string;
+  /** String for placeholder text in EditBox when there is no user input*/
+  editBoxPlaceholderText: string;
+  /** String for new messages indicator*/
+  newMessagesIndicator: string;
+  /** String for replacing display name when there is none*/
+  noDisplayNameSub: string;
 }
 
 /**
@@ -179,27 +187,30 @@ export interface MessageThreadStrings {
  * @public
  */
 export interface JumpToNewMessageButtonProps {
+  /** String for button text */
+  text: string;
+  /** Callback for when button is clicked */
   onClick: () => void;
 }
 
 const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.Element => {
-  const { onClick } = props;
+  const { text, onClick } = props;
   return (
     <PrimaryButton
       className={newMessageButtonStyle}
       styles={buttonWithIconStyles}
-      text={NEW_MESSAGES}
+      text={text}
       onClick={onClick}
       onRenderIcon={() => <Icon iconName="Down" className={DownIconStyle} />}
     />
   );
 };
 
-const generateParticipantsStr = (participants: CommunicationParticipant[]): string =>
+const generateParticipantsStr = (participants: CommunicationParticipant[], defaultName: string): string =>
   participants
     .map(
       (participant) =>
-        `${!participant.displayName || participant.displayName === '' ? 'No name' : participant.displayName}`
+        `${!participant.displayName || participant.displayName === '' ? defaultName : participant.displayName}`
     )
     .join(', ');
 
@@ -212,13 +223,15 @@ export type MessageRenderer = (props: MessageProps) => JSX.Element;
 
 const ParticipantSystemMessageComponent = ({
   message,
-  style
+  style,
+  defaultName
 }: {
   message: ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage;
   style?: ComponentSlotStyle;
+  defaultName: string;
 }): JSX.Element => {
   const { strings } = useLocale();
-  const participantsStr = generateParticipantsStr(message.participants);
+  const participantsStr = generateParticipantsStr(message.participants, defaultName);
   const messageSuffix =
     message.systemMessageType === 'participantAdded'
       ? strings.messageThread.participantJoined
@@ -251,7 +264,13 @@ const DefaultSystemMessage: MessageRenderer = (props: MessageProps) => {
           );
         case 'participantAdded':
         case 'participantRemoved':
-          return <ParticipantSystemMessageComponent message={message} style={props.messageContainerStyle} />;
+          return (
+            <ParticipantSystemMessageComponent
+              message={message}
+              style={props.messageContainerStyle}
+              defaultName={props.strings.noDisplayNameSub}
+            />
+          );
       }
   }
   return <></>;
@@ -911,9 +930,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         {existsNewChatMessage && !disableJumpToNewMessageButton && (
           <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
             {onRenderJumpToNewMessageButton ? (
-              onRenderJumpToNewMessageButton({ onClick: scrollToBottom })
+              onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
             ) : (
-              <DefaultJumpToNewMessageButton onClick={scrollToBottom} />
+              <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
             )}
           </div>
         )}

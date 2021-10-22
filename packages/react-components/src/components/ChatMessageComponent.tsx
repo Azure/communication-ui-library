@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useMemo, useRef, useState } from 'react';
+
 import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, IContextualMenuItem } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/react-northstar';
-import { ChatMessage } from '../types';
+import { Parser } from 'html-to-react';
+import React, { useMemo, useRef, useState } from 'react';
 import { LiveMessage } from 'react-aria-live';
 import Linkify from 'react-linkify';
+import { EditBox } from './EditBox';
+import { MessageThreadStrings } from './MessageThread';
 import {
   chatMessageMenuStyle,
   chatMessageDateStyle,
@@ -16,10 +19,9 @@ import {
 } from './styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
-import { Parser } from 'html-to-react';
+import { formatString } from '../localization/localizationUtils';
 import { useTheme } from '../theming';
-import { EditBox } from './EditBox';
-import { MessageThreadStrings } from './MessageThread';
+import { ChatMessage } from '../types';
 
 type ChatMessageProps = {
   message: ChatMessage;
@@ -38,23 +40,23 @@ const extractContent = (s: string): string => {
   return span.textContent || span.innerText;
 };
 
-const GenerateMessageContent = (message: ChatMessage): JSX.Element => {
+const GenerateMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
   switch (message.contentType) {
     case 'text':
-      return GenerateTextMessageContent(message);
+      return GenerateTextMessageContent(message, liveAuthorIntro);
     case 'html':
-      return GenerateRichTextHTMLMessageContent(message);
+      return GenerateRichTextHTMLMessageContent(message, liveAuthorIntro);
     case 'richtext/html':
-      return GenerateRichTextHTMLMessageContent(message);
+      return GenerateRichTextHTMLMessageContent(message, liveAuthorIntro);
     default:
       console.warn('unknown message content type');
       return <></>;
   }
 };
 
-const GenerateRichTextHTMLMessageContent = (message: ChatMessage): JSX.Element => {
+const GenerateRichTextHTMLMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
   const htmlToReactParser = new Parser();
-  const liveAuthor = `${message.senderDisplayName} says `;
+  const liveAuthor = formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
   return (
     <div data-ui-status={message.status}>
       <LiveMessage
@@ -66,8 +68,8 @@ const GenerateRichTextHTMLMessageContent = (message: ChatMessage): JSX.Element =
   );
 };
 
-const GenerateTextMessageContent = (message: ChatMessage): JSX.Element => {
-  const liveAuthor = `${message.senderDisplayName} says `;
+const GenerateTextMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
+  const liveAuthor = formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
   return (
     <div data-ui-status={message.status}>
       <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
@@ -136,6 +138,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
     return (
       <EditBox
         initialValue={message.content ?? ''}
+        strings={strings}
         onSubmit={async (text) => {
           onUpdateMessage && message.messageId && (await onUpdateMessage(message.messageId, text));
           setIsEditing(false);
@@ -146,7 +149,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
       />
     );
   }
-  const messageContentItem = GenerateMessageContent(message);
+  const messageContentItem = GenerateMessageContent(message, strings.liveAuthorIntro);
   return (
     <Chat.Message
       className={mergeStyles(messageContainerStyle as IStyle)}
