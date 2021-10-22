@@ -10,7 +10,6 @@ import {
   Theme,
   IStyle
 } from '@fluentui/react';
-import { HorizontalGalleryStyles } from '../HorizontalGallery';
 import { VideoTileStylesProps } from '../VideoTile';
 
 const videoBaseStyle = mergeStyles({
