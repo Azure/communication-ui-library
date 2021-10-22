@@ -23,7 +23,15 @@ export const SmartHorizontalGallery = (props: {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
 
-  const childrenPerPage = calculateChildrenPerPage({ containerWidth, childWidthRem, gapWidthRem, buttonWidthRem });
+  const leftPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingLeft) : 0;
+  const rightPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingRight) : 0;
+
+  const childrenPerPage = calculateChildrenPerPage({
+    containerWidth: containerWidth - leftPadding - rightPadding,
+    childWidthRem,
+    gapWidthRem,
+    buttonWidthRem
+  });
 
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>

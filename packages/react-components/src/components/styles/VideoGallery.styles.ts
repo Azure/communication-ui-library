@@ -97,8 +97,8 @@ export const horizontalGalleryStyle = (isNarrow: boolean): IStyle => {
     width: isNarrow
       ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE.width}rem)`
       : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE.width}rem)`,
-    marginRight: '0.5rem',
-    marginLeft: '0.5rem'
+    paddingRight: '0.5rem',
+    paddingLeft: '0.5rem'
   };
 };
 
