@@ -11,7 +11,7 @@ import { CommunicationParticipant } from './CommunicationParticipant';
  *
  * @public
  */
-export type MessageAttachedStatus = 'bottom' | 'top';
+export type MessageAttachedStatus = 'bottom' | 'top' | boolean;
 
 /**
  * Supported types of chat message content.
@@ -56,7 +56,7 @@ export interface ChatMessage extends MessageCommon {
   senderId?: string;
   senderDisplayName?: string;
   status?: MessageStatus;
-  attached?: MessageAttachedStatus | boolean;
+  attached?: MessageAttachedStatus;
   mine?: boolean;
   clientMessageId?: string;
   contentType: MessageContentType;
@@ -68,7 +68,6 @@ export interface ChatMessage extends MessageCommon {
  * @public
  */
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
-  messageType: 'system';
   systemMessageType: 'participantAdded';
 
   participants: CommunicationParticipant[];
@@ -80,7 +79,6 @@ export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
  * @public
  */
 export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
-  messageType: 'system';
   systemMessageType: 'participantRemoved';
 
   participants: CommunicationParticipant[];
@@ -92,7 +90,6 @@ export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
  * @public
  */
 export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
-  messageType: 'system';
   systemMessageType: 'topicUpdated';
 
   topic: string;
@@ -104,7 +101,6 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
  * @public
  */
 export interface ContentSystemMessage extends SystemMessageCommon {
-  messageType: 'system';
   systemMessageType: 'content';
 
   content: string;
@@ -129,6 +125,7 @@ export interface CustomMessage extends MessageCommon {
  * @public
  */
 export interface SystemMessageCommon extends MessageCommon {
+  messageType: 'system';
   iconName: string;
 }
 

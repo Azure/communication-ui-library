@@ -12,21 +12,25 @@ import {
   VideoGallery
 } from '@internal/react-components';
 import {
+  CameraButtonSelector,
   cameraButtonSelector,
+  MicrophoneButtonSelector,
   microphoneButtonSelector,
+  OptionsButtonSelector,
   optionsButtonSelector,
+  ScreenShareButtonSelector,
   screenShareButtonSelector
 } from '../callControlSelectors';
-import { videoGallerySelector } from '../videoGallerySelector';
-import { participantListSelector } from '../participantListSelector';
-import { participantsButtonSelector } from '../participantsButtonSelector';
+import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
+import { ParticipantListSelector, participantListSelector } from '../participantListSelector';
+import { ParticipantsButtonSelector, participantsButtonSelector } from '../participantsButtonSelector';
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { Common } from '@internal/acs-ui-common';
 import { AreEqual } from '@internal/acs-ui-common';
 import { CallingHandlers } from '../handlers/createHandlers';
 import { ParticipantsButton } from '@internal/react-components';
-import { errorBarSelector } from '../errorBarSelector';
+import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -61,13 +65,15 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
 };
 
 /**
- * A trivial selector that returns no data.
+ * A type for trivial selectors that return no data.
  *
- * Used as a default return value if {@link usePropsFor} is called for an unsupported Component.
+ * Used as a default return value if {@link usePropsFor} is called for a component that requires no data.
  *
  * @public
  */
-export const emptySelector = (): Record<string, never> => ({});
+export type EmptySelector = () => Record<string, never>;
+
+const emptySelector: EmptySelector = (): Record<string, never> => ({});
 
 /**
  * Specific type of the selector applicable to a given Component.
@@ -78,23 +84,23 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   Component,
   typeof VideoGallery
 > extends true
-  ? typeof videoGallerySelector
+  ? VideoGallerySelector
   : AreEqual<Component, typeof OptionsButton> extends true
-  ? typeof optionsButtonSelector
+  ? OptionsButtonSelector
   : AreEqual<Component, typeof MicrophoneButton> extends true
-  ? typeof microphoneButtonSelector
+  ? MicrophoneButtonSelector
   : AreEqual<Component, typeof CameraButton> extends true
-  ? typeof cameraButtonSelector
+  ? CameraButtonSelector
   : AreEqual<Component, typeof ScreenShareButton> extends true
-  ? typeof screenShareButtonSelector
+  ? ScreenShareButtonSelector
   : AreEqual<Component, typeof ParticipantList> extends true
-  ? typeof participantListSelector
+  ? ParticipantListSelector
   : AreEqual<Component, typeof ParticipantsButton> extends true
-  ? typeof participantsButtonSelector
+  ? ParticipantsButtonSelector
   : AreEqual<Component, typeof EndCallButton> extends true
-  ? typeof emptySelector
+  ? EmptySelector
   : AreEqual<Component, typeof ErrorBar> extends true
-  ? typeof errorBarSelector
+  ? ErrorBarSelector
   : undefined;
 
 /**

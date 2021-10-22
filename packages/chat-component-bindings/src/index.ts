@@ -8,16 +8,14 @@ export { usePropsFor as useChatPropsFor, getSelector as getChatSelector } from '
 export { useSelector as useChatSelector } from './hooks/useSelector';
 export { useHandlers as useChatHandlers } from './hooks/useHandlers';
 
-// -- TODO: these exports should be removed in favor of useSelector -- //
-export { messageThreadSelector } from './messageThreadSelector';
-export { typingIndicatorSelector } from './typingIndicatorSelector';
-export { sendBoxSelector } from './sendBoxSelector';
-export { chatParticipantListSelector } from './chatParticipantListSelector';
-export { errorBarSelector } from './errorBarSelector';
-// ---- //
-
 export type { ChatClientProviderProps } from './providers/ChatClientProvider';
 export type { ChatThreadClientProviderProps } from './providers/ChatThreadClientProvider';
 export type { ChatBaseSelectorProps } from './baseSelectors';
 export type { ChatHandlers } from './handlers/createHandlers';
 export type { GetSelector as GetChatSelector } from './hooks/usePropsFor';
+
+export type { MessageThreadSelector } from './messageThreadSelector';
+export type { SendBoxSelector } from './sendBoxSelector';
+export type { ChatParticipantListSelector } from './chatParticipantListSelector';
+export type { TypingIndicatorSelector } from './typingIndicatorSelector';
+export type { ErrorBarSelector } from './errorBarSelector';

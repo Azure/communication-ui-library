@@ -54,16 +54,19 @@ export {
   useCall,
   useDeviceManager,
   getCallingSelector,
-  screenShareButtonSelector,
-  cameraButtonSelector,
-  videoGallerySelector,
-  optionsButtonSelector,
-  emptySelector,
-  errorBarSelector as callErrorBarSelector,
-  participantListSelector,
-  microphoneButtonSelector,
-  participantsButtonSelector,
   createDefaultCallingHandlers
+} from '../../calling-component-bindings/src';
+
+export type {
+  ScreenShareButtonSelector,
+  CameraButtonSelector,
+  VideoGallerySelector,
+  OptionsButtonSelector,
+  EmptySelector,
+  ErrorBarSelector as CallErrorBarSelector,
+  ParticipantListSelector,
+  MicrophoneButtonSelector,
+  ParticipantsButtonSelector
 } from '../../calling-component-bindings/src';
 
 export {
@@ -72,12 +75,15 @@ export {
   useChatClient,
   useChatThreadClient,
   getChatSelector,
-  messageThreadSelector,
-  chatParticipantListSelector,
-  sendBoxSelector,
-  typingIndicatorSelector,
-  errorBarSelector as chatErrorBarSelector,
   createDefaultChatHandlers
+} from '../../chat-component-bindings/src';
+
+export type {
+  MessageThreadSelector,
+  TypingIndicatorSelector,
+  ChatParticipantListSelector,
+  SendBoxSelector,
+  ErrorBarSelector as ChatErrorBarSelector
 } from '../../chat-component-bindings/src';
 
 export * from '../../calling-stateful-client/src';
