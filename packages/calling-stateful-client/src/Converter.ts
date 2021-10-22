@@ -11,7 +11,12 @@ import {
   TransferRequestedEventArgs,
   Transfer
 } from '@azure/communication-calling';
-import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+import {
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier,
+  MicrosoftTeamsUserIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -152,7 +157,11 @@ export function convertSdkTransferRequestedToDeclarativeTransferRequested(
  */
 export function convertSdkTransferToDeclarativeTransfer(
   transfer: Transfer,
-  targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier,
+  targetParticipant:
+    | CommunicationUserIdentifier
+    | PhoneNumberIdentifier
+    | MicrosoftTeamsUserIdentifier
+    | UnknownIdentifier,
   transferId: number
 ): DeclarativeTransfer {
   return {
