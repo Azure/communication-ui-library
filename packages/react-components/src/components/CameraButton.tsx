@@ -57,7 +57,7 @@ const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="ControlButtonCa
  *
  * @public
  */
-export const CameraButton = (props: CameraButtonProps): JSX.Element => {
+export function CameraButton(props: CameraButtonProps): JSX.Element {
   const { localVideoViewOption, onToggleCamera } = props;
   const [waitForCamera, setWaitForCamera] = useState(false);
 
@@ -84,4 +84,4 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       labelKey={props.labelKey ?? 'cameraButtonLabel'}
     />
   );
-};
+}
