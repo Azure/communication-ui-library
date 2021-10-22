@@ -41,7 +41,8 @@ export const SmartHorizontalGallery = (props: {
 };
 
 /**
- * Helper function to calculate children per page for HorizontalGallery based on containerWidth.
+ * Helper function to calculate children per page for HorizontalGallery based on width of container, child, buttons, and
+ * gaps in between
  */
 const calculateChildrenPerPage = (args: {
   containerWidth: number;
