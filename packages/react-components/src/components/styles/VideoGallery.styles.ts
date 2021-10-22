@@ -7,7 +7,8 @@ import {
   IModalStyleProps,
   IModalStyles,
   IStyleFunctionOrObject,
-  Theme
+  Theme,
+  IStyle
 } from '@fluentui/react';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
 import { VideoTileStylesProps } from '../VideoTile';
@@ -45,11 +46,6 @@ export const SMALL_FLOATING_MODAL_SIZE = { width: 4, height: 5.5 }; //size in re
 export const LARGE_FLOATING_MODAL_SIZE = { width: 10, height: 7.5 };
 
 /**
- * Floating modal horizontal position from the right in rem
- */
-export const FLOATING_MODAL_POSITION_FROM_RIGHT = 0.5;
-
-/**
  * @private
  */
 export const floatingLocalVideoModalStyle = (
@@ -66,7 +62,7 @@ export const floatingLocalVideoModalStyle = (
     minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE.height}rem` : `${LARGE_FLOATING_MODAL_SIZE.height}rem`,
     position: 'absolute',
     bottom: '0.5rem',
-    right: `${FLOATING_MODAL_POSITION_FROM_RIGHT}rem`,
+    right: '0.5rem',
     boxShadow: theme.effects.elevation8,
     borderRadius: theme.effects.roundedCorner4
   }
@@ -94,23 +90,16 @@ export const videoWithNoRoundedBorderStyle = {
 };
 
 /**
- * Horizontal Gallery padding in rem
- */
-export const HORIZONTAL_GALLERY_PADDING = 0.5;
-
-/**
  * @private
  */
-export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
+export const horizontalGalleryStyle = (isNarrow: boolean): IStyle => {
   return {
-    root: {
-      height: isNarrow ? '6rem' : '8rem',
-      width: isNarrow
-        ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE.width}rem)`
-        : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE.width}rem)`,
-      paddingRight: `${HORIZONTAL_GALLERY_PADDING}rem`,
-      paddingLeft: `${HORIZONTAL_GALLERY_PADDING}rem`
-    }
+    height: isNarrow ? '6rem' : '8rem',
+    width: isNarrow
+      ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE.width}rem)`
+      : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE.width}rem)`,
+    marginRight: '0.5rem',
+    marginLeft: '0.5rem'
   };
 };
 

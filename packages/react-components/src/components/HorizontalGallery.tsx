@@ -22,17 +22,15 @@ export interface HorizontalGalleryProps {
   children: React.ReactNode;
   styles?: HorizontalGalleryStyles;
   itemsPerPage?: number;
-  hidePreviousButton?: boolean;
-  hideNextButton?: boolean;
 }
 
 /**
- * Renders a horizontal gallery of video tiles.
+ * Renders a horizontal gallery containing children.
  * @param props - HorizontalGalleryProps {@link @azure/communication-react#HorizontalGalleryProps}
  * @returns
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
-  const { children, itemsPerPage = 1, styles, hidePreviousButton, hideNextButton } = props;
+  const { children, itemsPerPage = 1, styles } = props;
 
   const [page, setPage] = useState(0);
 
@@ -51,8 +49,8 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     return React.Children.toArray(children).slice(start, end);
   }, [page, itemsPerPage, lastPage, children]);
 
-  const showPreviousButton = itemsPerPage > 0 && page > 0 && !hidePreviousButton;
-  const showNextButton = itemsPerPage > 0 && page < lastPage && !hideNextButton;
+  const showPreviousButton = itemsPerPage > 0 && page > 0;
+  const showNextButton = itemsPerPage > 0 && page < lastPage;
 
   const theme = useTheme();
   const borderStyles = {
