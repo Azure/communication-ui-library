@@ -96,13 +96,12 @@ class CallContext {
   public updateClientState(clientState: CallClientState): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
-    const page = getCallCompositePage(call?.state ?? 'None', latestEndedCall);
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
-      page,
+      page: getCallCompositePage(call, latestEndedCall),
       endedCall: latestEndedCall,
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
