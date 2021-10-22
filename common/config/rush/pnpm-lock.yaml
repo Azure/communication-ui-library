@@ -19543,7 +19543,6 @@ packages:
     version: 0.0.0
   file:projects/react-components.tgz:
     dependencies:
-      '@azure/communication-calling': 1.2.3-beta.1
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
