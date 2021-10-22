@@ -7,10 +7,9 @@ import React from 'react';
 const exampleIncomingCallToast = `
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { CallEnd20Filled, Call20Filled } from '@fluentui/react-icons';
-import { getTheme, mergeStyles } from '@fluentui/react';
+import { DefaultPalette, mergeStyles } from '@fluentui/react';
 
-const theme = getTheme();
-const palette = theme.palette;
+const palette = DefaultPalette;
 
 const incomingCallToastStyle = mergeStyles({
   minWidth: '20rem',
@@ -111,10 +110,9 @@ const exampleIncomingCallModal = `
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
-import { getTheme, mergeStyles } from '@fluentui/react';
+import { DefaultPalette, mergeStyles } from '@fluentui/react';
 
-const theme = getTheme();
-const palette = theme.palette;
+const palette = DefaultPalette;
 
 const incomingCallModalContainerStyle = {
   borderRadius: '0.75rem'
@@ -145,7 +143,7 @@ interface IncomingCallModalProps extends IncomingCallToastProps {
   onClickVideoToggle: () => void;
 }
 
-const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Element => {
+const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
   const {
     alertText,
     avatar,
@@ -157,10 +155,9 @@ const IncomingCallModal = (props: WithTheme<IncomingCallModalProps>): JSX.Elemen
     onClickAccept,
     onClickReject,
     onClickVideoToggle,
-    localVideoStreamElement,
-    theme
+    localVideoStreamElement
   } = props;
-  const palette = theme.palette;
+  const palette = DefaultPalette;
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(false);
   const dialogContentProps = { type: DialogType.normal, title: alertText ?? 'Incoming Video Call' };
 

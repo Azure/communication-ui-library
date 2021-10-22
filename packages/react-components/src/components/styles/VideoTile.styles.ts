@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, getTheme, mergeStyles } from '@fluentui/react';
-
-const theme = getTheme();
+import { DefaultPalette as palette, IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -11,15 +9,7 @@ const theme = getTheme();
 export const rootStyles: IStyle = {
   position: 'relative',
   height: '100%',
-  width: '100%',
-  borderRadius: theme.effects.roundedCorner4
-};
-
-/**
- * @private
- */
-export const isSpeakingStyles: IStyle = {
-  border: `0.25rem solid ${theme.palette.themePrimary}`
+  width: '100%'
 };
 
 /**
@@ -60,7 +50,6 @@ export const disabledVideoHint = mergeStyles({
   position: 'absolute',
   whiteSpace: 'nowrap',
   maxWidth: '95%',
-  borderRadius: theme.effects.roundedCorner4,
   alignItems: 'center',
   padding: '0.15rem'
 });

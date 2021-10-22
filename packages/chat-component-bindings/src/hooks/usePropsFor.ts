@@ -4,13 +4,13 @@ import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } fr
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
-import { sendBoxSelector } from '../sendBoxSelector';
-import { messageThreadSelector } from '../messageThreadSelector';
-import { typingIndicatorSelector } from '../typingIndicatorSelector';
+import { SendBoxSelector, sendBoxSelector } from '../sendBoxSelector';
+import { MessageThreadSelector, messageThreadSelector } from '../messageThreadSelector';
+import { TypingIndicatorSelector, typingIndicatorSelector } from '../typingIndicatorSelector';
 import { Common, AreEqual } from '@internal/acs-ui-common';
 import { ChatHandlers } from '../handlers/createHandlers';
-import { chatParticipantListSelector } from '../chatParticipantListSelector';
-import { errorBarSelector } from '../errorBarSelector';
+import { ChatParticipantListSelector, chatParticipantListSelector } from '../chatParticipantListSelector';
+import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 
 /**
  * Primary hook to get all hooks necessary for a chat Component.
@@ -53,15 +53,15 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   Component,
   typeof SendBox
 > extends true
-  ? typeof sendBoxSelector
+  ? SendBoxSelector
   : AreEqual<Component, typeof MessageThread> extends true
-  ? typeof messageThreadSelector
+  ? MessageThreadSelector
   : AreEqual<Component, typeof TypingIndicator> extends true
-  ? typeof typingIndicatorSelector
+  ? TypingIndicatorSelector
   : AreEqual<Component, typeof ParticipantList> extends true
-  ? typeof chatParticipantListSelector
+  ? ChatParticipantListSelector
   : AreEqual<Component, typeof ErrorBar> extends true
-  ? typeof errorBarSelector
+  ? ErrorBarSelector
   : undefined;
 
 /**

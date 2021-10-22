@@ -15,7 +15,7 @@ const mainDivStyle: IStyle = { position: 'relative', height: '100%', width: '100
  *
  * @public
  */
-export type ControlBarLayoutType =
+export type ControlBarLayout =
   | 'horizontal'
   | 'vertical'
   | 'dockedTop'
@@ -50,7 +50,7 @@ export interface ControlBarProps {
    * `floatingRight`
    * Defaults to a `horizontal` layout.
    */
-  layout?: ControlBarLayoutType;
+  layout?: ControlBarLayout;
 }
 
 /**
@@ -71,11 +71,17 @@ export const ControlBar = (props: ControlBarProps): JSX.Element => {
       background:
         isDarkThemed(theme) && layout?.startsWith('floating') ? theme.palette.neutralQuaternaryAlt : theme.palette.white
     };
+    const borderAndBoxShadowStyle = layout?.startsWith('floating')
+      ? {
+          boxShadow: theme.effects.elevation16,
+          borderRadius: theme.effects.roundedCorner6
+        }
+      : {};
     // if rtl is true and layout is either floatingTop or floatingBottom then we need to override the transform-style property
     // to translate 50% to right instead of the left
     const transformOverrideStyle =
       theme.rtl && (layout === 'floatingTop' || layout === 'floatingBottom') ? { transform: 'translateX(50%)' } : {};
-    return mergeStyles(controlBarStyle, backgroundStyle, transformOverrideStyle, styles?.root);
+    return mergeStyles(controlBarStyle, backgroundStyle, borderAndBoxShadowStyle, transformOverrideStyle, styles?.root);
   }, [layout, styles?.root, theme]);
   return (
     <div className={mergeStyles(mainDivStyle)}>

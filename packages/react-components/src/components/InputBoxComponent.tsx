@@ -14,7 +14,7 @@ import {
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
-import { useTheme } from '../theming/FluentThemeProvider';
+import { useTheme } from '../theming';
 
 /**
  * @private
