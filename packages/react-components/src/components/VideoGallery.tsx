@@ -26,8 +26,10 @@ import { VideoTile } from './VideoTile';
 
 const emptyStyles = {};
 
-const MAX_PARTICIPANTS_TILES = 100;
-const MAX_DOMINANT_SPEAKERS = 6;
+// Currently the Calling JS SDK supports up to 4 remote video streams
+const MAX_VIDEO_PARTICIPANTS_TILES = 4;
+// Set aside only 6 dominant speakers for remaining audio participants
+const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
  * Props for {@link VideoGallery}.
@@ -115,14 +117,26 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
   }, [layout, remoteParticipants.length]);
 
-  const remoteParticipantsRef = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
-  remoteParticipantsRef.current = smartDominantSpeakerParticipants({
-    participants: remoteParticipants,
+  visibleVideoParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
     dominantSpeakers,
-    lastVisibleParticipants: remoteParticipantsRef.current,
-    maxVisibleParticipants: MAX_DOMINANT_SPEAKERS
-  }).slice(0, MAX_PARTICIPANTS_TILES);
+    lastVisibleParticipants: visibleVideoParticipants.current,
+    maxDominantSpeakers: MAX_VIDEO_PARTICIPANTS_TILES
+  }).slice(0, MAX_VIDEO_PARTICIPANTS_TILES);
+
+  // This set will be used to filter out participants already in visibleVideoParticipants
+  const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
+  visibleAudioParticipants.current = smartDominantSpeakerParticipants({
+    participants: remoteParticipants?.filter((p) => !visibleVideoParticipantsSet.has(p.userId)) ?? [],
+    dominantSpeakers,
+    lastVisibleParticipants: visibleAudioParticipants.current,
+    maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
+  });
+
+  const allParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -168,43 +182,27 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     shouldFloatLocalVideo
   ]);
 
-  /**
-   * Utility function for memoized rendering of RemoteParticipants.
-   */
-  const remoteParticipantTiles = useMemo(() => {
-    // If user provided a custom onRender function return that function.
-    if (onRenderRemoteVideoTile) {
-      return remoteParticipantsRef.current.map((participant) => onRenderRemoteVideoTile(participant));
-    }
-
-    // Else return Remote Stream Video Tiles
-    return remoteParticipantsRef.current.map((participant): JSX.Element => {
-      const remoteVideoStream = participant.videoStream;
-      return (
-        <RemoteVideoTile
-          key={participant.userId}
-          userId={participant.userId}
-          onCreateRemoteStreamView={onCreateRemoteStreamView}
-          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-          isAvailable={remoteVideoStream?.isAvailable}
-          isMuted={participant.isMuted}
-          isSpeaking={participant.isSpeaking}
-          renderElement={remoteVideoStream?.renderElement}
-          displayName={participant.displayName}
-          remoteVideoViewOption={remoteVideoViewOption}
-          onRenderAvatar={onRenderAvatar}
-          showMuteIndicator={showMuteIndicator}
-        />
-      );
-    });
-  }, [
-    onRenderRemoteVideoTile,
-    onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
-    remoteVideoViewOption,
-    onRenderAvatar,
-    showMuteIndicator
-  ]);
+  const remoteParticipantTiles = onRenderRemoteVideoTile
+    ? allParticipants.map((participant) => onRenderRemoteVideoTile(participant))
+    : allParticipants.map((participant): JSX.Element => {
+        const remoteVideoStream = participant.videoStream;
+        return (
+          <RemoteVideoTile
+            key={participant.userId}
+            userId={participant.userId}
+            onCreateRemoteStreamView={onCreateRemoteStreamView}
+            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+            isAvailable={remoteVideoStream?.isAvailable}
+            isMuted={participant.isMuted}
+            isSpeaking={participant.isSpeaking}
+            renderElement={remoteVideoStream?.renderElement}
+            displayName={participant.displayName}
+            remoteVideoViewOption={remoteVideoViewOption}
+            onRenderAvatar={onRenderAvatar}
+            showMuteIndicator={showMuteIndicator}
+          />
+        );
+      });
 
   const floatingLocalVideoModalStyleThemed = useMemo(
     () =>
