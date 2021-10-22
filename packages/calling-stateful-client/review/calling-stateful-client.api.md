@@ -223,7 +223,7 @@ export interface TransferCallFeatureState {
 // @beta
 export interface TransferRequest {
     // (undocumented)
-    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
+    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifier;
 }
 
 // @public
