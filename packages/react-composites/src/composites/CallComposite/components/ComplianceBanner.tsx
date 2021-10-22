@@ -26,7 +26,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   const TRANSCRIPTION_STARTED = 5;
   const RECORDING_STOPPED = 6;
   const RECORDING_STARTED = 7;
-  const RECORDING_STOPPED_AND_SAVED = 8;
+  const TRANSCRIPTION_STOPPED = 8;
   const NO_STATE = 0;
 
   const { callTranscribeState, callRecordState } = props;
@@ -58,7 +58,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
       } else if (!callRecordState && callTranscribeState) {
         setVariant(RECORDING_STARTED);
       } else if (!callRecordState && !callTranscribeState) {
-        setVariant(RECORDING_STOPPED_AND_SAVED);
+        setVariant(TRANSCRIPTION_STOPPED);
       } else {
         setVariant(NO_STATE);
       }
@@ -151,7 +151,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
             <PrivacyPolicy />
           </>
         );
-      case RECORDING_STOPPED_AND_SAVED:
+      case TRANSCRIPTION_STOPPED:
         return (
           <>
             <b>Transcription is being saved.</b> Transcription has stopped.

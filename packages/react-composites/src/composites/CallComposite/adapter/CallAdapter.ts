@@ -22,11 +22,11 @@ import type { AdapterState, Disposable, AdapterPages, AdapterError, AdapterError
  * @public
  */
 export type CallCompositePage =
-  | 'configuration'
-  | 'lobby'
-  | 'call'
-  | 'leftCall'
   | 'accessDeniedTeamsMeeting'
+  | 'call'
+  | 'configuration'
+  | 'leftCall'
+  | 'lobby'
   | 'removedFromCall';
 
 /**

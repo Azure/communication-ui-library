@@ -10,11 +10,11 @@ import { CallCompositePage } from '../../CallComposite';
  * @alpha
  */
 export type MeetingCompositePage =
+  | 'accessDeniedTeamsMeeting'
   | 'configuration'
+  | 'leftMeeting'
   | 'lobby'
   | 'meeting'
-  | 'leftMeeting'
-  | 'accessDeniedTeamsMeeting'
   | 'removedFromMeeting';
 
 /**

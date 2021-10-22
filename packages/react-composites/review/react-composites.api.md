@@ -206,7 +206,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'leftCall' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -581,7 +581,7 @@ export type MeetingCompositeOptions = {
 };
 
 // @alpha
-export type MeetingCompositePage = 'configuration' | 'lobby' | 'meeting' | 'leftMeeting' | 'accessDeniedTeamsMeeting' | 'removedFromMeeting';
+export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @alpha
 export type MeetingCompositeProps = {
