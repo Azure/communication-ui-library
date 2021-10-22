@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "POC if using regular function syntax will allow react components to be picked up by docs",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
