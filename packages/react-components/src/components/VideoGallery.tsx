@@ -180,44 +180,27 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     shouldFloatLocalVideo
   ]);
 
-  /**
-   * Utility function for memoized rendering of RemoteParticipants.
-   */
-  const remoteParticipantTiles = useMemo(() => {
-    // If user provided a custom onRender function return that function.
-    if (onRenderRemoteVideoTile) {
-      return allParticipants.map((participant) => onRenderRemoteVideoTile(participant));
-    }
-
-    // Else return Remote Stream Video Tiles
-    return allParticipants.map((participant): JSX.Element => {
-      const remoteVideoStream = participant.videoStream;
-      return (
-        <RemoteVideoTile
-          key={participant.userId}
-          userId={participant.userId}
-          onCreateRemoteStreamView={onCreateRemoteStreamView}
-          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-          isAvailable={remoteVideoStream?.isAvailable}
-          isMuted={participant.isMuted}
-          isSpeaking={participant.isSpeaking}
-          renderElement={remoteVideoStream?.renderElement}
-          displayName={participant.displayName}
-          remoteVideoViewOption={remoteVideoViewOption}
-          onRenderAvatar={onRenderAvatar}
-          showMuteIndicator={showMuteIndicator}
-        />
-      );
-    });
-  }, [
-    allParticipants,
-    onRenderRemoteVideoTile,
-    onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
-    remoteVideoViewOption,
-    onRenderAvatar,
-    showMuteIndicator
-  ]);
+  const remoteParticipantTiles = onRenderRemoteVideoTile
+    ? allParticipants.map((participant) => onRenderRemoteVideoTile(participant))
+    : allParticipants.map((participant): JSX.Element => {
+        const remoteVideoStream = participant.videoStream;
+        return (
+          <RemoteVideoTile
+            key={participant.userId}
+            userId={participant.userId}
+            onCreateRemoteStreamView={onCreateRemoteStreamView}
+            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+            isAvailable={remoteVideoStream?.isAvailable}
+            isMuted={participant.isMuted}
+            isSpeaking={participant.isSpeaking}
+            renderElement={remoteVideoStream?.renderElement}
+            displayName={participant.displayName}
+            remoteVideoViewOption={remoteVideoViewOption}
+            onRenderAvatar={onRenderAvatar}
+            showMuteIndicator={showMuteIndicator}
+          />
+        );
+      });
 
   const floatingLocalVideoModalStyleThemed = useMemo(
     () =>
