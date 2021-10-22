@@ -96,6 +96,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <NoticePage
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
+          dataUiId={'access-denied-teams-meeting-page'}
         />
       );
     case 'removedFromCall':
@@ -103,11 +104,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <NoticePage
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
+          dataUiId={'removed-from-call-page'}
         />
       );
     case 'leftCall':
       return (
-        <NoticePage title={locale.strings.call.leftCallTitle} moreDetails={locale.strings.call.leftCallMoreDetails} />
+        <NoticePage
+          title={locale.strings.call.leftCallTitle}
+          moreDetails={locale.strings.call.leftCallMoreDetails}
+          dataUiId={'left-call-page'}
+        />
       );
     case 'lobby':
       return (
