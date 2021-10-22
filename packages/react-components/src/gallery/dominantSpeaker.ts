@@ -18,9 +18,9 @@ type SmartDominantSpeakerParticipantsArgs = {
    */
   lastVisibleParticipants?: VideoGalleryRemoteParticipant[];
   /**
-   * Maximum number of visible participants.
+   * Maximum number of dominant speaker positions to move participants in.
    */
-  maxVisibleParticipants: number;
+  maxDominantSpeakers: number;
 };
 
 /**
@@ -32,10 +32,10 @@ type SmartDominantSpeakerParticipantsArgs = {
 export const smartDominantSpeakerParticipants = (
   args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
-  const { participants, dominantSpeakers = [], lastVisibleParticipants = [], maxVisibleParticipants } = args;
+  const { participants, dominantSpeakers = [], lastVisibleParticipants = [], maxDominantSpeakers } = args;
 
-  // Don't apply any logic if total number of video streams is less than Max dominant speakers.
-  if (participants.length <= maxVisibleParticipants) {
+  // Don't apply any logic if total number of video streams is less than max dominant speakers.
+  if (participants.length <= maxDominantSpeakers) {
     return participants;
   }
 
@@ -44,14 +44,14 @@ export const smartDominantSpeakerParticipants = (
   // Only use the Max allowed dominant speakers that exist in participants
   const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values())
     .filter((id) => !!participantsMap[id])
-    .slice(0, maxVisibleParticipants);
+    .slice(0, maxDominantSpeakers);
 
   const lastVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId);
-  const newVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId).slice(0, maxVisibleParticipants);
+  const newVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId).slice(0, maxDominantSpeakers);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !newVisibleParticipantIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
-  for (let index = 0; index < maxVisibleParticipants; index++) {
+  for (let index = 0; index < maxDominantSpeakers; index++) {
     const newVisibleParticipantId = newVisibleParticipantIds[index];
     if (newVisibleParticipantId === undefined || !dominantSpeakerIds.includes(newVisibleParticipantId)) {
       const replacement = newDominantSpeakerIds.shift();

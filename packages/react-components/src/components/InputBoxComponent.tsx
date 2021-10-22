@@ -104,7 +104,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           resizable={false}
           componentRef={textFieldRef}
           id={id}
-          ariaLabel={'Type'}
           inputClassName={mergedTextFiledStyle}
           placeholder={placeholderText}
           value={textValue}
