@@ -319,7 +319,7 @@ export function createMockApiFeatures(
         ): Transfer {
           return addMockEmitter({ state: 'None' });
         },
-        /* eslint-disable @typescript-eslint/no-unused-vars */
+        /* eslint-enable @typescript-eslint/no-unused-vars */
         media: {
           getLatest(): LatestMediaDiagnostics {
             return {};
