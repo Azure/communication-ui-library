@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import {
-  DiagnosticsCallFeature,
+  UserFacingDiagnosticsFeature,
   DiagnosticChangedEventArgs,
   LatestDiagnosticValue,
   MediaDiagnosticChangedEventArgs,
@@ -17,9 +17,9 @@ import { CallIdRef } from './CallIdRef';
 export class DiagnosticsSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
-  private _diagnostics: DiagnosticsCallFeature;
+  private _diagnostics: UserFacingDiagnosticsFeature;
 
-  constructor(callIdRef: CallIdRef, context: CallContext, diagnostics: DiagnosticsCallFeature) {
+  constructor(callIdRef: CallIdRef, context: CallContext, diagnostics: UserFacingDiagnosticsFeature) {
     this._callIdRef = callIdRef;
     this._context = context;
     this._diagnostics = diagnostics;

@@ -20,6 +20,7 @@ import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
@@ -27,6 +28,7 @@ import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/commu
 import { ScalingMode } from '@azure/communication-calling';
 import { TransferErrorCode } from '@azure/communication-calling';
 import { TransferState } from '@azure/communication-calling';
+import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
@@ -209,7 +211,7 @@ export interface Transfer {
     error?: TransferErrorCode;
     id: number;
     state: TransferState;
-    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
+    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier;
 }
 
 // @beta
@@ -221,7 +223,7 @@ export interface TransferCallFeatureState {
 // @beta
 export interface TransferRequest {
     // (undocumented)
-    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
+    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
 }
 
 // @public

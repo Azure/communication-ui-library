@@ -43,7 +43,7 @@ export class CallSubscriber {
     this._diagnosticsSubscriber = new DiagnosticsSubscriber(
       this._callIdRef,
       this._context,
-      this._call.api(Features.Diagnostics)
+      this._call.api(Features.UserFacingDiagnostics)
     );
     this._participantSubscribers = new Map<string, ParticipantSubscriber>();
     this._receivedTransferSubscriber = new ReceivedTransferSubscriber(

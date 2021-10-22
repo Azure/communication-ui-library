@@ -43,6 +43,7 @@ import { IStyleFunctionOrObject } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { OutputParametricSelector } from 'reselect';
 import { OutputSelector } from 'reselect';
@@ -1868,7 +1869,7 @@ export interface Transfer {
     error?: TransferErrorCode;
     id: number;
     state: TransferState;
-    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
+    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier;
 }
 
 // @beta
@@ -1880,7 +1881,7 @@ export interface TransferCallFeatureState {
 // @beta
 export interface TransferRequest {
     // (undocumented)
-    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
+    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
 }
 
 // @public
