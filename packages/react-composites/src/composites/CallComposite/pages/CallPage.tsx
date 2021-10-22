@@ -21,7 +21,6 @@ import { reduceCallControlsForMobile } from '../utils';
  */
 export interface CallPageProps {
   callInvitationURL?: string;
-  endCallHandler(): void;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -32,14 +31,7 @@ export interface CallPageProps {
  * @private
  */
 export const CallPage = (props: CallPageProps): JSX.Element => {
-  const {
-    callInvitationURL,
-    endCallHandler,
-    onRenderAvatar,
-    onFetchAvatarPersonaData,
-    onFetchParticipantMenuItems,
-    options
-  } = props;
+  const { callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems, options } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
@@ -65,7 +57,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
       callControlProps={
         callControlOptions !== false && {
-          onEndCallClick: endCallHandler,
           callInvitationURL: callInvitationURL,
           onFetchParticipantMenuItems: onFetchParticipantMenuItems,
           options: callControlOptions

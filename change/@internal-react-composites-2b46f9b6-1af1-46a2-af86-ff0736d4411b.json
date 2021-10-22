@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove setPage API in CallAdapter and MeetingAdapter",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
