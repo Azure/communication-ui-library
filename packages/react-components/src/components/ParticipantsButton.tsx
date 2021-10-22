@@ -219,7 +219,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
           // More info: https://github.com/microsoft/fluentui/issues/18835
           calloutProps: { styles: { root: { maxWidth: '100%' } } }
         },
-        'data-ui-id': 'participant-button-participant-list'
+        'data-ui-id': 'participants-button-participants-list'
       });
     }
 

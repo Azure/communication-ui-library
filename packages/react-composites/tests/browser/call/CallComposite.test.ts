@@ -131,6 +131,31 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
   });
 
+  test('xkcd', async ({ pages }) => {
+    // TODO: Remove this function when we fix unstable contextual menu bug
+    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
+    await turnOffAllVideos(pages);
+
+    const page = pages[0];
+    await page.bringToFront();
+
+    // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+    // this is for disable transition/animation of participant list
+    await disableAnimation(page);
+
+    await page.click(dataUiId('call-composite-participants-button'), { timeout: 100 });
+    await page.click(dataUiId('participants-button-participants-list'), { timeout: 100 });
+    // There shouldbe at least one participant. Just click on the first.
+    await page.click(dataUiId('participants-list-participant-item') + ' >> nth=0', {
+      timeout: 100
+    });
+
+    // TODO: Inject a data-ui-id that we can wait for.
+    // await participantList.waitForElementState('stable', { timeout: 100 });
+
+    expect(await page.screenshot()).toMatchSnapshot(`participant-menu-item-flyout.png`);
+  });
+
   test('can turn off local video', async ({ pages }) => {
     const page = pages[0];
 
