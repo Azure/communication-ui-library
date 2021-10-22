@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -15,12 +15,8 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getCallId, getCallStatus, getEndedCall, getPage } from './selectors/baseSelectors';
+import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
-
-// @TODO: move to the AzureCommunicationCallAdapter implementation and map to an EndCallReason
-const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
-const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
 
 /**
  * Props for {@link CallComposite}.
@@ -83,37 +79,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const adapter = useAdapter();
-  const callState = useSelector(getCallStatus);
   const locale = useLocale();
-  const endedCall = useSelector(getEndedCall);
-  const callId = useSelector(getCallId);
-  const currentCallId = useRef('');
-
-  // Update page based on call state
-  useEffect(() => {
-    if (['Connecting', 'Ringing', 'InLobby'].includes(callState ?? 'None')) {
-      adapter.setPage('lobby');
-    } else if (_isInCall(callState)) {
-      adapter.setPage('call');
-    }
-  }, [adapter, callState]);
-
-  // Remember last available callId to compare against when the call ends.
-  if (callId) {
-    currentCallId.current = callId;
-  }
-  // Update page if the caller is no longer in a call
-  useEffect(() => {
-    if (endedCall && currentCallId.current === endedCall?.id && endedCall?.callEndReason?.code === 0) {
-      if (endedCall.callEndReason.subCode === ACCESS_DENIED_TEAMS_MEETING_SUB_CODE) {
-        adapter.setPage('accessDeniedTeamsMeeting');
-      } else if (REMOVED_FROM_CALL_SUB_CODES.includes(endedCall.callEndReason.subCode ?? -1)) {
-        adapter.setPage('removedFromCall');
-      } else {
-        //@TODO: when call ended page is implemented: adapter.setPage('leftCall');
-      }
-    }
-  }, [adapter, endedCall]);
 
   switch (page) {
     case 'configuration':
@@ -146,14 +112,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             connectingToCall: locale.strings.call.lobbyScreenConnectingToCallTitle,
             waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedTitle
           }}
-          endCallHandler={() => adapter.setPage('configuration')}
+          endCallHandler={() => undefined /** todo [jaburnsi]: removed in followup cleanup PR */}
           options={props.options}
         />
       );
     case 'call':
       return (
         <CallPage
-          endCallHandler={() => adapter.setPage('configuration')}
+          endCallHandler={() => undefined /** todo [jaburnsi]: removed in followup cleanup PR */}
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
