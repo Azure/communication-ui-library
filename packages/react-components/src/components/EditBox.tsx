@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+
+import { concatStyleSets, Icon, mergeStyles } from '@fluentui/react';
+import { formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../theming/FluentThemeProvider';
 import React, { useCallback, useMemo, useState } from 'react';
-import { concatStyleSets, Icon, mergeStyles } from '@fluentui/react';
 
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from './styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 import { MessageThreadStrings } from './MessageThread';
-import { formatString } from '../localization/localizationUtils';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 

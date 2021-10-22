@@ -29,6 +29,12 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @public
+export const formatSpanElements: (str: string, vars: IObjectMap<JSX.Element>) => JSX.Element[];
+
+// @public
+export const formatString: (str: string, vars: IObjectMap<string>) => string;
+
+// @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
@@ -36,6 +42,12 @@ export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, .
 
 // @internal
 export const _getApplicationId: () => string;
+
+// @public (undocumented)
+export interface IObjectMap<T> {
+    // (undocumented)
+    [key: string]: T;
+}
 
 // @public
 export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: unknown, args2: unknown) => boolean) => (callback: CallBackT) => FnRetT[];

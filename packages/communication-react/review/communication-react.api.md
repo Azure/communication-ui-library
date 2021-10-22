@@ -308,6 +308,18 @@ export interface CallCompositeStrings {
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
     close: string;
+    complianceBannerNowOnlyRecording: string;
+    complianceBannerNowOnlyTranscription: string;
+    complianceBannerRecordingAndTranscriptionSaved: string;
+    complianceBannerRecordingAndTranscriptionStarted: string;
+    complianceBannerRecordingAndTranscriptionStopped: string;
+    complianceBannerRecordingSaving: string;
+    complianceBannerRecordingStarted: string;
+    complianceBannerRecordingStopped: string;
+    complianceBannerTrancriptionStarted: string;
+    complianceBannerTranscriptionConsent: string;
+    complianceBannerTranscriptionSaving: string;
+    complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
@@ -317,25 +329,13 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
-    nowOnlyRecording: string;
-    nowOnlyTranscription: string;
     privacyPolicy: string;
-    recordingAndTranscriptionSaved: string;
-    recordingAndTranscriptionStarted: string;
-    recordingAndTranscriptionStopped: string;
-    recordingSaving: string;
-    recordingStarted: string;
-    recordingStopped: string;
     removedFromMeetingMoreDetails?: string;
     removedFromMeetingTitle: string;
     screenSharingMessage: string;
     sharingScreenLoading: string;
     soundLabel: string;
     startCallButtonLabel: string;
-    trancriptionStarted: string;
-    transcriptionConsent: string;
-    transcriptionSaving: string;
-    transcriptionStopped: string;
 }
 
 // @public

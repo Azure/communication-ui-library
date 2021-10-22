@@ -3,6 +3,7 @@
 
 import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, IContextualMenuItem } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/react-northstar';
+import { formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
 import React, { useMemo, useRef, useState } from 'react';
 import { LiveMessage } from 'react-aria-live';
@@ -19,7 +20,6 @@ import {
 } from './styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
-import { formatString } from '../localization/localizationUtils';
 import { useTheme } from '../theming';
 import { ChatMessage } from '../types';
 

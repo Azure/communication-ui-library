@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { memoizeFnAll } from '@internal/acs-ui-common';
 import { Icon, mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
+import { formatString, memoizeFnAll } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import {
   StreamMedia,
@@ -13,7 +13,6 @@ import {
   useTheme
 } from '@internal/react-components';
 import { useLocale } from '../../localization';
-import { formatString } from '../../localization/localizationUtils';
 import {
   aspectRatioBoxContentStyle,
   aspectRatioBoxStyle,
