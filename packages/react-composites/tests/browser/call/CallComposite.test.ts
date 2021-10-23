@@ -11,6 +11,8 @@ import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 
+const PER_STEP_TIMEOUT_MS = 1000;
+
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
  * uses it's file path as the camera name. This file location can differ on
@@ -209,5 +211,3 @@ const turnOffAllVideos = async (pages: Page[], timeout?: number): Promise<void> 
     }, options);
   }
 };
-
-const PER_STEP_TIMEOUT_MS = 1000;
