@@ -210,4 +210,4 @@ const turnOffAllVideos = async (pages: Page[], timeout?: number): Promise<void> 
   }
 };
 
-const PER_STEP_TIMEOUT_MS = 300;
+const PER_STEP_TIMEOUT_MS = 1000;
