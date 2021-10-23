@@ -166,10 +166,10 @@ test.describe('Call composite participant menu items injection tests', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
-  test('xkcd', async ({ pages }) => {
+  test('injected menu items appear', async ({ pages }) => {
     // TODO: Remove this function when we fix unstable contextual menu bug
     // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages, 100);
+    await turnOffAllVideos(pages, PER_STEP_TIMEOUT_MS);
 
     const page = pages[0];
     await page.bringToFront();
@@ -179,16 +179,18 @@ test.describe('Call composite participant menu items injection tests', () => {
     await disableAnimation(page);
 
     // Open participants flyout.
-    await page.click(dataUiId('call-composite-participants-button'), { timeout: 100 });
+    await page.click(dataUiId('call-composite-participants-button'), { timeout: PER_STEP_TIMEOUT_MS });
     // Open participant list flyout
-    await page.click(dataUiId('participants-button-participants-list'), { timeout: 100 });
+    await page.click(dataUiId('participants-button-participants-list'), { timeout: PER_STEP_TIMEOUT_MS });
     // There shouldbe at least one participant. Just click on the first.
     await page.click(dataUiId('participants-list-participant-item') + ' >> nth=0', {
-      timeout: 100
+      timeout: PER_STEP_TIMEOUT_MS
     });
 
-    const injectedMenuItem = await page.waitForSelector(dataUiId('test-app-participant-menu-item'), { timeout: 100 });
-    await injectedMenuItem.waitForElementState('stable', { timeout: 100 });
+    const injectedMenuItem = await page.waitForSelector(dataUiId('test-app-participant-menu-item'), {
+      timeout: PER_STEP_TIMEOUT_MS
+    });
+    await injectedMenuItem.waitForElementState('stable', { timeout: PER_STEP_TIMEOUT_MS });
 
     expect(await page.screenshot()).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
@@ -207,3 +209,5 @@ const turnOffAllVideos = async (pages: Page[], timeout?: number): Promise<void> 
     }, options);
   }
 };
+
+const PER_STEP_TIMEOUT_MS = 300;
