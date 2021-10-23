@@ -131,18 +131,30 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
   });
 
-  test('xkcd', async ({ pages }) => {
+  test('xkcd', async ({ serverUrl, users, pages }) => {
+    const page = pages[0];
+    const user = users[0];
+
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    user.groupId = newTestGuid;
+
+    await page.goto(
+      buildUrl(serverUrl, user, {
+        injectParticipantMenuItems: 'true'
+      })
+    );
+
     // TODO: Remove this function when we fix unstable contextual menu bug
     // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages);
-
-    const page = pages[0];
-    await page.bringToFront();
-
+    await turnOffAllVideos([page], 100);
     // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
     // this is for disable transition/animation of participant list
     await disableAnimation(page);
 
+    await page.bringToFront();
     await page.click(dataUiId('call-composite-participants-button'), { timeout: 100 });
     await page.click(dataUiId('participants-button-participants-list'), { timeout: 100 });
     // There shouldbe at least one participant. Just click on the first.
@@ -168,14 +180,15 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   });
 });
 
-const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
+const turnOffAllVideos = async (pages: Page[], perStepTimeout?: number): Promise<void> => {
+  const options = perStepTimeout ? { timeout: perStepTimeout } : undefined;
   for (const page of pages) {
-    await page.click(dataUiId('call-composite-camera-button'));
+    await page.click(dataUiId('call-composite-camera-button'), options);
   }
   for (const page of pages) {
     await page.bringToFront();
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 0;
-    });
+    }, options);
   }
 };
