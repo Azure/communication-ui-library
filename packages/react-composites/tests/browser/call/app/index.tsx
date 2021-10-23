@@ -78,6 +78,7 @@ function App(): JSX.Element {
 function onFetchParticipantMenuItems(): IContextualMenuItem[] {
   return [
     {
+      'data-ui-id': 'test-app-participant-menu-item',
       key: 'theOneWithRedBackground',
       className: mergeStyles({ background: 'red' }),
       href: 'https://bing.com',

@@ -178,15 +178,17 @@ test.describe('Call composite participant menu items injection tests', () => {
     // this is for disable transition/animation of participant list
     await disableAnimation(page);
 
+    // Open participants flyout.
     await page.click(dataUiId('call-composite-participants-button'), { timeout: 100 });
+    // Open participant list flyout
     await page.click(dataUiId('participants-button-participants-list'), { timeout: 100 });
     // There shouldbe at least one participant. Just click on the first.
     await page.click(dataUiId('participants-list-participant-item') + ' >> nth=0', {
       timeout: 100
     });
 
-    // TODO: Inject a data-ui-id that we can wait for.
-    // await participantList.waitForElementState('stable', { timeout: 100 });
+    const injectedMenuItem = await page.waitForSelector(dataUiId('test-app-participant-menu-item'), { timeout: 100 });
+    await injectedMenuItem.waitForElementState('stable', { timeout: 100 });
 
     expect(await page.screenshot()).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
