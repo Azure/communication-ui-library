@@ -131,43 +131,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
   });
 
-  test('xkcd', async ({ serverUrl, users, pages }) => {
-    const page = pages[0];
-    const user = users[0];
-
-    // Each test *must* join a new call to prevent test flakiness.
-    // We hit a Calling SDK service 500 error if we do not.
-    // An issue has been filed with the calling team.
-    const newTestGuid = generateGUID();
-    user.groupId = newTestGuid;
-
-    await page.goto(
-      buildUrl(serverUrl, user, {
-        injectParticipantMenuItems: 'true'
-      })
-    );
-
-    // TODO: Remove this function when we fix unstable contextual menu bug
-    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos([page], 100);
-    // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
-    // this is for disable transition/animation of participant list
-    await disableAnimation(page);
-
-    await page.bringToFront();
-    await page.click(dataUiId('call-composite-participants-button'), { timeout: 100 });
-    await page.click(dataUiId('participants-button-participants-list'), { timeout: 100 });
-    // There shouldbe at least one participant. Just click on the first.
-    await page.click(dataUiId('participants-list-participant-item') + ' >> nth=0', {
-      timeout: 100
-    });
-
-    // TODO: Inject a data-ui-id that we can wait for.
-    // await participantList.waitForElementState('stable', { timeout: 100 });
-
-    expect(await page.screenshot()).toMatchSnapshot(`participant-menu-item-flyout.png`);
-  });
-
   test('can turn off local video', async ({ pages }) => {
     const page = pages[0];
 
@@ -180,8 +143,58 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   });
 });
 
-const turnOffAllVideos = async (pages: Page[], perStepTimeout?: number): Promise<void> => {
-  const options = perStepTimeout ? { timeout: perStepTimeout } : undefined;
+test.describe('Call composite participant menu items injection tests', () => {
+  // Make sure tests can still run well after retries
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(
+        buildUrl(serverUrl, user, {
+          injectParticipantMenuItems: 'true'
+        })
+      );
+      await waitForCallCompositeToLoad(page);
+    }
+
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test('xkcd', async ({ pages }) => {
+    // TODO: Remove this function when we fix unstable contextual menu bug
+    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
+    await turnOffAllVideos(pages, 100);
+
+    const page = pages[0];
+    await page.bringToFront();
+
+    // waitForElementState('stable') does not work for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+    // this is for disable transition/animation of participant list
+    await disableAnimation(page);
+
+    await page.click(dataUiId('call-composite-participants-button'), { timeout: 100 });
+    await page.click(dataUiId('participants-button-participants-list'), { timeout: 100 });
+    // There shouldbe at least one participant. Just click on the first.
+    await page.click(dataUiId('participants-list-participant-item') + ' >> nth=0', {
+      timeout: 100
+    });
+
+    // TODO: Inject a data-ui-id that we can wait for.
+    // await participantList.waitForElementState('stable', { timeout: 100 });
+
+    expect(await page.screenshot()).toMatchSnapshot(`participant-menu-item-flyout.png`);
+  });
+});
+
+// `timeout` is applied to each individual step that waits for a condition.
+const turnOffAllVideos = async (pages: Page[], timeout?: number): Promise<void> => {
+  const options = timeout ? { timeout } : undefined;
   for (const page of pages) {
     await page.click(dataUiId('call-composite-camera-button'), options);
   }
