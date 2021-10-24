@@ -299,7 +299,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     adapter: CallAdapter;
     // (undocumented)
     callInvitationUrl?: string;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     options?: CallCompositeOptions;
 }
 
@@ -456,7 +455,7 @@ export interface CallState {
 }
 
 // @public
-export const CameraButton: (props: CameraButtonProps) => JSX.Element;
+export function CameraButton(props: CameraButtonProps): JSX.Element;
 
 // @public
 export interface CameraButtonProps extends ControlBarButtonProps {

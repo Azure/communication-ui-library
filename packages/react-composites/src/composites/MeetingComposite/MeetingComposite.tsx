@@ -16,7 +16,6 @@ import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
-import { isInLobbyOrConnecting as isInLobbyOrConnectingFn } from '../CallComposite/utils';
 
 /**
  * Props required for the {@link MeetingComposite}
@@ -96,11 +95,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setShowPeople(!showPeople);
   }, [showPeople]);
 
-  const endCallClick = (): void => {
-    // meetingAdapter.setPage('configuration'); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
-  };
-
-  const isInLobbyOrConnecting = !!(currentPage && isInLobbyOrConnectingFn(currentPage));
+  const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentMeetingState ?? 'None'));
   return (
     <FluentThemeProvider fluentTheme={props.fluentTheme}>
@@ -140,7 +135,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onChatButtonClicked={toggleChat}
             peopleButtonChecked={showPeople}
             onPeopleButtonClicked={togglePeople}
-            onEndCallClick={endCallClick}
             mobileView={props.options?.mobileView}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
           />

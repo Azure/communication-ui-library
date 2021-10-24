@@ -79,8 +79,6 @@ export class MeetingBackedCallAdapter implements CallAdapter {
   };
   public getState = (): CallAdapterState => callAdapterStateFromMeetingAdapterState(this.meetingAdapter.getState());
   public dispose = (): void => this.meetingAdapter.dispose();
-  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
-  // public setPage = (page: CallCompositePage): void => this.meetingAdapter.setPage(callPageToMeetingPage(page));
   public joinCall = (microphoneOn?: boolean): Call | undefined => {
     return this.meetingAdapter.joinMeeting(microphoneOn);
   };

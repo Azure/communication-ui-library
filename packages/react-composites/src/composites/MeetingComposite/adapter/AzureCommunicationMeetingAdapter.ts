@@ -131,7 +131,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
     this.removeParticipant.bind(this);
-    // this.setPage.bind(this); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
     this.fetchInitialData.bind(this);
@@ -184,10 +183,6 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
     this.chatAdapter.dispose();
     this.callAdapter.dispose();
   }
-  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
-  // public setPage(page: MeetingCompositePage): void {
-  //   this.callAdapter.setPage(meetingPageToCallPage(page));
-  // }
   /** Remove a participant from the Meeting. */
   public async removeParticipant(userId: string): Promise<void> {
     await this.chatAdapter.removeParticipant(userId);

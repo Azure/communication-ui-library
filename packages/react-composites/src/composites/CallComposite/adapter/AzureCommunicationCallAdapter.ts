@@ -36,7 +36,7 @@ import {
   ParticipantsLeftListener,
   DiagnosticChangedEventListner
 } from './CallAdapter';
-import { isCameraOn } from '../utils';
+import { getCallCompositePage, isCameraOn } from '../utils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
@@ -80,11 +80,6 @@ class CallContext {
     return this.state;
   }
 
-  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
-  // public setPage(page: CallCompositePage): void {
-  //   this.setState({ ...this.state, page });
-  // }
-
   public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
     this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
   }
@@ -95,12 +90,14 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
+    const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
-      endedCall: findLatestEndedCall(clientState.callsEnded),
+      page: getCallCompositePage(call, latestEndedCall),
+      endedCall: latestEndedCall,
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
         call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
@@ -201,7 +198,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
     this.removeParticipant.bind(this);
-    // this.setPage.bind(this); // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
     this.on.bind(this);
@@ -429,11 +425,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       isMuted: this.call?.isMuted
     });
   };
-
-  // DISABLING setPage FOR API REVIEW, IMPLEMENTATION NOT COMPLETE YET
-  // public setPage(page: CallCompositePage): void {
-  //   this.context.setPage(page);
-  // }
 
   private onRemoteParticipantsUpdated({
     added,
