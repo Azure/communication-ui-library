@@ -10,8 +10,8 @@ import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUt
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { CustomDataModelExampleContainer } from './snippets/CustomDataModelExampleContainer.snippet';
-import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
+import { v1 as createGUID } from 'uuid';
 
 const CustomDataModelStory = (args, context): JSX.Element => {
   const {
@@ -22,8 +22,12 @@ const CustomDataModelStory = (args, context): JSX.Element => {
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
       if (args.userId && args.token) {
-        const newProps = await createUserAndGroup(args.userId, args.token);
-        setContainerProps(newProps);
+        const containerProps = {
+          userId: args.userId,
+          token: args.token,
+          locator: createGUID()
+        };
+        setContainerProps(containerProps);
       } else {
         setContainerProps(undefined);
       }

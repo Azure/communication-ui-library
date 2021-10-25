@@ -10,8 +10,8 @@ import { defaultCallCompositeHiddenControls, controlsToAdd, getControlledTheme }
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
-import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
+import { v1 as createGUID } from 'uuid';
 
 const ThemeExampleStory = (args, context): JSX.Element => {
   const {
@@ -22,8 +22,12 @@ const ThemeExampleStory = (args, context): JSX.Element => {
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
       if (args.userId && args.token) {
-        const newProps = await createUserAndGroup(args.userId, args.token);
-        setContainerProps(newProps);
+        const containerProps = {
+          userId: args.userId,
+          token: args.token,
+          locator: createGUID()
+        };
+        setContainerProps(containerProps);
       } else {
         setContainerProps(undefined);
       }
