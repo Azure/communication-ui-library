@@ -36,6 +36,7 @@ export interface HorizontalGalleryProps {
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
   const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
+  const theme = useTheme();
 
   const [page, setPage] = useState(0);
 
@@ -57,7 +58,6 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const showPreviousButton = childrenPerPage > 0 && page > 0;
   const showNextButton = childrenPerPage > 0 && page < lastPage;
 
-  const theme = useTheme();
   const borderStyles = {
     border: `1px solid ${theme.palette.neutralLight}`,
     borderRadius: theme.effects.roundedCorner4
