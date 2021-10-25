@@ -34,7 +34,7 @@ import { useContainerWidth, isNarrowWidth } from './utils/responsive';
 import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 
 const emptyStyles = {};
-const floatingTileHostId = 'UILibraryFloatingTileHost';
+const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const MAX_VIDEO_PARTICIPANTS_TILES = 4;
@@ -123,9 +123,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
-  const shouldFloatLocalVideo = useMemo((): boolean => {
-    return !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
-  }, [layout, remoteParticipants.length]);
+  const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useContainerWidth(containerRef);
@@ -253,14 +251,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   return (
     <div ref={containerRef} className={videoGalleryOuterDivStyle}>
-      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
+      <Stack id={FLOATING_TILE_HOST_ID} grow styles={videoGalleryContainerStyle}>
         {shouldFloatLocalVideo && (
           <Modal
             isOpen={true}
             isModeless={true}
             dragOptions={DRAG_OPTIONS}
             styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-            layerProps={{ hostId: floatingTileHostId }}
+            layerProps={{ hostId: FLOATING_TILE_HOST_ID }}
           >
             {localParticipant && localVideoTile}
           </Modal>
@@ -272,7 +270,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             childWidthRem={
               isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
             }
-            buttonWidthRem={isNarrow ? undefined : HORIZONTAL_GALLERY_BUTTON_WIDTH}
+            buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
             gapWidthRem={HORIZONTAL_GALLERY_GAP}
           >
             {horizontalGalleryTiles}

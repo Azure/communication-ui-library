@@ -34,15 +34,7 @@ export const ResponsiveHorizontalGallery = (props: {
 
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
-      <HorizontalGallery
-        childrenPerPage={childrenPerPage}
-        styles={{
-          previousButton: buttonWidthRem > 0 ? { width: `${props.buttonWidthRem}rem` } : { display: 'none' },
-          nextButton: buttonWidthRem > 0 ? { width: `${props.buttonWidthRem}rem` } : { display: 'none' }
-        }}
-      >
-        {props.children}
-      </HorizontalGallery>
+      <HorizontalGallery childrenPerPage={childrenPerPage}>{props.children}</HorizontalGallery>
     </div>
   );
 };
@@ -78,7 +70,7 @@ const calculateChildrenPerPage = (args: {
    *   <-----------childrenSpace--------->
    */
   let childrenSpace = containerWidth;
-  if (buttonWidth !== 0) {
+  if (buttonWidth > 0) {
     // need to subtract width of buttons. Always leaving room for both buttons even though there may
     // not be there for first and last page.
     childrenSpace -= 2 * buttonWidth;

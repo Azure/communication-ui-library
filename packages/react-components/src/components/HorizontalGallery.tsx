@@ -55,8 +55,12 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     return React.Children.toArray(children).slice(start, end);
   }, [page, childrenPerPage, lastPage, children]);
 
-  const showPreviousButton = childrenPerPage > 0 && page > 0;
-  const showNextButton = childrenPerPage > 0 && page < lastPage;
+  if (childrenPerPage <= 0) {
+    return <></>;
+  }
+
+  const disablePreviousButton = page === 0;
+  const disableNextButton = page === lastPage;
 
   const borderStyles = {
     border: `1px solid ${theme.palette.neutralLight}`,
@@ -67,20 +71,27 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   return (
     <Stack horizontal className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
-      {showPreviousButton && (
-        <PreviousButton styles={previousButtonStyles} onClick={() => setPage(Math.max(0, page - 1))} />
-      )}
+      <PreviousButton
+        styles={previousButtonStyles}
+        onClick={() => setPage(Math.max(0, page - 1))}
+        disabled={disablePreviousButton}
+      />
       {subArrayOfChildren}
-      {showNextButton && <NextButton styles={nextButtonStyles} onClick={() => setPage(Math.min(lastPage, page + 1))} />}
+      <NextButton
+        styles={nextButtonStyles}
+        onClick={() => setPage(Math.min(lastPage, page + 1))}
+        disabled={disableNextButton}
+      />
     </Stack>
   );
 };
 
-const PreviousButton = (props: { styles: IStyle; onClick?: () => void }): JSX.Element => {
+const PreviousButton = (props: { styles: IStyle; onClick?: () => void; disabled?: boolean }): JSX.Element => {
   return (
     <DefaultButton
       className={mergeStyles(leftRightButtonStyles)}
       onClick={props.onClick}
+      disabled={props.disabled}
       styles={{ root: props.styles }}
     >
       <Icon iconName="HorizontalGalleryLeftButton" />
@@ -88,11 +99,12 @@ const PreviousButton = (props: { styles: IStyle; onClick?: () => void }): JSX.El
   );
 };
 
-const NextButton = (props: { styles: IStyle; onClick?: () => void }): JSX.Element => {
+const NextButton = (props: { styles: IStyle; onClick?: () => void; disabled?: boolean }): JSX.Element => {
   return (
     <DefaultButton
       className={mergeStyles(leftRightButtonStyles)}
       onClick={props.onClick}
+      disabled={props.disabled}
       styles={{ root: props.styles }}
     >
       <Icon iconName="HorizontalGalleryRightButton" />
