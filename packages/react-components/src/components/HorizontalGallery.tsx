@@ -8,7 +8,7 @@ import { BaseCustomStylesProps } from '../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
 
 /**
- * HorizontalGallery Component Styles.
+ * {@link HorizontalGallery} Component Styles.
  */
 export interface HorizontalGalleryStyles extends BaseCustomStylesProps {
   previousButton?: IStyle;
@@ -16,7 +16,7 @@ export interface HorizontalGalleryStyles extends BaseCustomStylesProps {
 }
 
 /**
- * HorizontalGallery Component Props.
+ * {@link HorizontalGallery} Component Props.
  */
 export interface HorizontalGalleryProps {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ export interface HorizontalGalleryProps {
 }
 
 /**
- * Renders a horizontal gallery containing children.
+ * Renders a horizontal gallery that parents children horizontally. Handles pagination based on the childrenPerPage prop.
  * @param props - HorizontalGalleryProps {@link @azure/communication-react#HorizontalGalleryProps}
  * @returns
  */
