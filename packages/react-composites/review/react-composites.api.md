@@ -24,9 +24,11 @@ import { ComponentIcons } from '@internal/react-components';
 import { ComponentLocale } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { GroupCallLocator } from '@azure/communication-calling';
+import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import type { PermissionConstraints } from '@azure/communication-calling';
@@ -53,11 +55,6 @@ export interface AdapterError extends Error {
 export type AdapterErrors = {
     [target: string]: AdapterError;
 };
-
-// @public
-export interface AdapterPages<TPage> {
-    setPage(page: TPage): void;
-}
 
 // @public
 export interface AdapterState<TState> {
@@ -116,7 +113,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -170,6 +167,7 @@ export interface CallAdapterSubscribers {
     off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     off(event: 'callEnded', listener: CallEndedListener): void;
+    off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
@@ -179,6 +177,7 @@ export interface CallAdapterSubscribers {
     on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     on(event: 'callEnded', listener: CallEndedListener): void;
+    on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
@@ -209,7 +208,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     adapter: CallAdapter;
     // (undocumented)
     callInvitationUrl?: string;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     options?: CallCompositeOptions;
 }
 
@@ -452,6 +450,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
 };
 
 // @public
+export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;
+
+// @public
 export type DisplayNameChangedListener = (event: {
     participantId: CommunicationIdentifierKind;
     displayName: string;
@@ -479,8 +480,13 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
+// @public
+export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
+    type: 'media';
+};
+
 // @alpha
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, MeetingAdapterSubscriptions {
 }
 
 // @alpha
@@ -615,6 +621,11 @@ export type MessageReceivedListener = (event: {
 
 // @public
 export type MessageSentListener = MessageReceivedListener;
+
+// @public
+export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {
+    type: 'network';
+};
 
 // @public
 export type ParticipantsAddedListener = (event: {

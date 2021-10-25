@@ -25,7 +25,6 @@ import {
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
-  CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,
   CallAdapterState,
@@ -34,14 +33,16 @@ import {
   IsLocalScreenSharingActiveChangedListener,
   IsSpeakingChangedListener,
   ParticipantsJoinedListener,
-  ParticipantsLeftListener
+  ParticipantsLeftListener,
+  DiagnosticChangedEventListner
 } from './CallAdapter';
-import { isCameraOn } from '../utils';
+import { getCallCompositePage, isCameraOn } from '../utils';
 import { VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
+import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -79,10 +80,6 @@ class CallContext {
     return this.state;
   }
 
-  public setPage(page: CallCompositePage): void {
-    this.setState({ ...this.state, page });
-  }
-
   public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
     this.setState({ ...this.state, isLocalPreviewMicrophoneEnabled });
   }
@@ -93,12 +90,14 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     const call = this.callId ? clientState.calls[this.callId] : undefined;
+    const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
     this.setState({
       ...this.state,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       call,
-      endedCall: findLatestEndedCall(clientState.callsEnded),
+      page: getCallCompositePage(call, latestEndedCall),
+      endedCall: latestEndedCall,
       devices: clientState.deviceManager,
       isLocalPreviewMicrophoneEnabled:
         call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
@@ -130,12 +129,23 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   private deviceManager: StatefulDeviceManager;
   private localStream: SDKLocalVideoStream | undefined;
   private locator: TeamsMeetingLinkLocator | GroupCallLocator;
-  private call: Call | undefined;
+  // Never use directly, even internally. Use `call` property instead.
+  private _call?: Call;
   private context: CallContext;
+  private diagnosticsForwarder?: DiagnosticsForwarder;
   private handlers: CallingHandlers;
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
+
+  private get call(): Call | undefined {
+    return this._call;
+  }
+
+  private set call(newCall: Call | undefined) {
+    this.resetDiagnosticsForwarder(newCall);
+    this._call = newCall;
+  }
 
   constructor(
     callClient: StatefulCallClient,
@@ -188,7 +198,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
     this.removeParticipant.bind(this);
-    this.setPage.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
     this.on.bind(this);
@@ -196,6 +205,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public dispose(): void {
+    this.resetDiagnosticsForwarder();
     this.callClient.offStateChange(this.onClientStateChange);
     this.callAgent.dispose();
   }
@@ -383,6 +393,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
+  on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -414,10 +425,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       isMuted: this.call?.isMuted
     });
   };
-
-  public setPage(page: CallCompositePage): void {
-    this.context.setPage(page);
-  }
 
   private onRemoteParticipantsUpdated({
     added,
@@ -458,6 +465,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.emitter.emit('callIdChanged', { callId: this.callIdChanged.bind(this) });
   }
 
+  private resetDiagnosticsForwarder(newCall?: Call) {
+    if (this.diagnosticsForwarder) {
+      this.diagnosticsForwarder.unsubscribe();
+    }
+    if (newCall) {
+      this.diagnosticsForwarder = new DiagnosticsForwarder(this.emitter, newCall);
+    }
+  }
+
   off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
   off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -466,6 +482,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
+  off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

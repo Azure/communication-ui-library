@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@azure/communication-common": "1.0.0",
-    "@azure/communication-calling": "1.2.2-beta.1",
+    "@azure/communication-calling": "1.2.3-beta.1",
     "@internal/acs-ui-common": "1.0.0-beta.6",
     "events": "~3.3.0",
     "immer": "9.0.6"

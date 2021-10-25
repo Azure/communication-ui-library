@@ -6,7 +6,6 @@ import React, { useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
-import { ParticipantItem } from './ParticipantItem';
 import { buttonFlyoutItemStylesWithIncreasedTouchTargets } from './styles/ControlBar.styles';
 import {
   iconStyles,
@@ -14,6 +13,7 @@ import {
   participantListItemStyleWithIncreasedTouchTargets,
   participantListStyle
 } from './styles/ParticipantList.styles';
+import { ParticipantItem, ParticipantItemStrings } from './ParticipantItem';
 
 /**
  * A callback for providing custom menu items for each participant in {@link ParticipantList}.
@@ -59,6 +59,7 @@ export type ParticipantListProps = {
 
 const onRenderParticipantDefault = (
   participant: CommunicationParticipant,
+  strings: ParticipantItemStrings,
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: OnRenderAvatarCallback,
@@ -84,10 +85,14 @@ const onRenderParticipantDefault = (
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
             {callingParticipant.isScreenSharing && (
-              <Icon iconName="ParticipantItemScreenShareStart" className={iconStyles} ariaLabel={'Sharing'} />
+              <Icon
+                iconName="ParticipantItemScreenShareStart"
+                className={iconStyles}
+                ariaLabel={strings.sharingIconLabel}
+              />
             )}
             {callingParticipant.isMuted && (
-              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={'Muted'} />
+              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
           </Stack>
         )
@@ -189,6 +194,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
           ? onRenderParticipant(participant)
           : onRenderParticipantDefault(
               participant,
+              strings,
               myUserId,
               onParticipantRemove,
               onRenderAvatar,

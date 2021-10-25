@@ -42,8 +42,11 @@ import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
+import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import type { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -82,11 +85,6 @@ export interface AdapterError extends Error {
 export type AdapterErrors = {
     [target: string]: AdapterError;
 };
-
-// @public
-export interface AdapterPages<TPage> {
-    setPage(page: TPage): void;
-}
 
 // @public
 export interface AdapterState<TState> {
@@ -159,7 +157,7 @@ export interface BaseCustomStylesProps {
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, AdapterPages<CallCompositePage>, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -213,6 +211,7 @@ export interface CallAdapterSubscribers {
     off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     off(event: 'callEnded', listener: CallEndedListener): void;
+    off(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
@@ -222,6 +221,7 @@ export interface CallAdapterSubscribers {
     on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
     on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
     on(event: 'callEnded', listener: CallEndedListener): void;
+    on(event: 'diagnosticChanged', listener: DiagnosticChangedEventListner): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
@@ -299,7 +299,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     adapter: CallAdapter;
     // (undocumented)
     callInvitationUrl?: string;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     options?: CallCompositeOptions;
 }
 
@@ -457,7 +456,7 @@ export interface CallState {
 }
 
 // @public
-export const CameraButton: (props: CameraButtonProps) => JSX.Element;
+export function CameraButton(props: CameraButtonProps): JSX.Element;
 
 // @public
 export interface CameraButtonProps extends ControlBarButtonProps {
@@ -1006,6 +1005,9 @@ export type DeviceManagerState = {
     unparentedViews: LocalVideoStreamState[];
 };
 
+// @public
+export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;
+
 // @beta
 export interface DiagnosticsCallFeatureState {
     media: MediaDiagnosticsState;
@@ -1161,8 +1163,8 @@ export type IsSpeakingChangedListener = (event: {
 
 // @public
 export interface JumpToNewMessageButtonProps {
-    // (undocumented)
     onClick: () => void;
+    text: string;
 }
 
 // @public
@@ -1184,6 +1186,11 @@ export interface LocalVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
+// @public
+export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
+    type: 'media';
+};
+
 // @beta
 export interface MediaDiagnosticsState {
     // (undocumented)
@@ -1191,7 +1198,7 @@ export interface MediaDiagnosticsState {
 }
 
 // @alpha
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, AdapterPages<MeetingCompositePage>, MeetingAdapterSubscriptions {
+export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, MeetingAdapterSubscriptions {
 }
 
 // @alpha
@@ -1412,10 +1419,15 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
+    editBoxPlaceholderText: string;
+    editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
     friday: string;
+    liveAuthorIntro: string;
     monday: string;
+    newMessagesIndicator: string;
+    noDisplayNameSub: string;
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
@@ -1460,6 +1472,11 @@ export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
 }
+
+// @public
+export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {
+    type: 'network';
+};
 
 // @beta
 export interface NetworkDiagnosticsState {
@@ -1545,7 +1562,9 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    mutedIconLabel: string;
     removeButtonLabel: string;
+    sharingIconLabel: string;
 }
 
 // @public
@@ -1821,7 +1840,7 @@ export interface Transfer {
     error?: TransferErrorCode;
     id: number;
     state: TransferState;
-    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier;
+    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier;
 }
 
 // @beta
@@ -1833,7 +1852,7 @@ export interface TransferCallFeatureState {
 // @beta
 export interface TransferRequest {
     // (undocumented)
-    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind;
+    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifier;
 }
 
 // @public
@@ -1940,7 +1959,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
-    dominantSpeakers: string[] | undefined;
+    dominantSpeakers?: string[];
 };
 
 // @public

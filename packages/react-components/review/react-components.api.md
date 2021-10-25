@@ -54,7 +54,7 @@ export type CallParticipant = CommunicationParticipant & {
 };
 
 // @public
-export const CameraButton: (props: CameraButtonProps) => JSX.Element;
+export function CameraButton(props: CameraButtonProps): JSX.Element;
 
 // @public
 export interface CameraButtonProps extends ControlBarButtonProps {
@@ -359,8 +359,8 @@ export type InputBoxButtonProps = {
 
 // @public
 export interface JumpToNewMessageButtonProps {
-    // (undocumented)
     onClick: () => void;
+    text: string;
 }
 
 // @public
@@ -450,10 +450,15 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    editBoxPlaceholderText: string;
+    editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
     friday: string;
+    liveAuthorIntro: string;
     monday: string;
+    newMessagesIndicator: string;
+    noDisplayNameSub: string;
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
@@ -561,7 +566,9 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
+    mutedIconLabel: string;
     removeButtonLabel: string;
+    sharingIconLabel: string;
 }
 
 // @public
