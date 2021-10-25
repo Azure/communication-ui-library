@@ -24,7 +24,7 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Theme Exam
         className="ms-Stack css-1"
       >
         <span>
-          Please provide the connection string and display name to use.
+          Please provide an access token, userId for each "participant", endpointUrl and display name to use.
         </span>
       </div>
     </div>
