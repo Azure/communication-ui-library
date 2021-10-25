@@ -1,7 +1,7 @@
 // ComplianceBanner.snippet.tsx
 
 import { Link, MessageBar } from '@fluentui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export type ComplianceBannerProps = {
   callTranscribeState?: boolean;
@@ -10,18 +10,34 @@ export type ComplianceBannerProps = {
 
 export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   const { callTranscribeState, callRecordState } = props;
-  const [previousCallTranscribeState, setPreviousCallTranscribeState] = useState<boolean | undefined>(false);
-  const [previousCallRecordState, setPreviousCallRecordState] = useState<boolean | undefined>(false);
-  const [variant, setVariant] = useState(0);
 
+  const previousCallTranscribeState = useRef<boolean | undefined>(false);
+  const previousCallRecordState = useRef<boolean | undefined>(false);
+
+  const variant = computeVariant(
+    previousCallRecordState.current,
+    previousCallTranscribeState.current,
+    callRecordState,
+    callTranscribeState
+  );
+
+  previousCallTranscribeState.current = callTranscribeState;
+  previousCallRecordState.current = callRecordState;
+
+  return <DismissableMessageBar variant={variant} />;
+};
+
+function DismissableMessageBar(props: { variant: number }) {
+  const { variant: newVariant } = props;
+
+  const [variant, setVariant] = useState(0);
+  // We drive the `MessageBar` indirectly via the `variant` state variable.
+  // This allows the `onDismiss` handler to set the `variant` state to dismiss the `MessageBar`.
+  // This means that when props change, this component renders *twice*: After the first render, this `useEffect` block
+  // updates the value of `variant` state variable, which triggers a second render to update the message in the `MessageBar`.
   useEffect(() => {
-    setVariant(
-      computeVariant(previousCallRecordState, previousCallTranscribeState, callRecordState, callTranscribeState)
-    );
-    setPreviousCallTranscribeState(callTranscribeState);
-    setPreviousCallRecordState(callRecordState);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [callTranscribeState, callRecordState]);
+    setVariant(newVariant);
+  }, [newVariant, setVariant]);
 
   return variant === NO_STATE ? (
     <></>
@@ -35,7 +51,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
       <BannerMessage variant={variant} />
     </MessageBar>
   );
-};
+}
 
 const TRANSCRIPTION_STOPPED_STILL_RECORDING = 1;
 const RECORDING_STOPPED_STILL_TRANSCRIBING = 2;
