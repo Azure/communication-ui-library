@@ -27,7 +27,6 @@ export interface LobbyPageStrings {
  * @private
  */
 export interface LobbyPageProps {
-  endCallHandler(): void;
   strings: LobbyPageStrings;
   options?: CallCompositeOptions;
 }
@@ -79,7 +78,6 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
       callControlProps={
         callControlOptions !== false && {
-          onEndCallClick: props.endCallHandler,
           options: callControlOptions
         }
       }

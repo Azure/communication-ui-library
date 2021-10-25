@@ -4,7 +4,7 @@
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
 import { CallState, DeviceManagerState, LocalVideoStreamState } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
-import { _isPreviewOn } from '@internal/calling-component-bindings';
+import { _isInCall, _isPreviewOn } from '@internal/calling-component-bindings';
 
 /**
  * @private
