@@ -8,6 +8,11 @@ import { BaseCustomStylesProps } from '../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
 
 /**
+ * {@link HorizontalGallery} default children per page
+ */
+const DEFAULT_CHILDREN_PER_PAGE = 5;
+
+/**
  * {@link HorizontalGallery} Component Styles.
  */
 export interface HorizontalGalleryStyles extends BaseCustomStylesProps {
@@ -30,7 +35,7 @@ export interface HorizontalGalleryProps {
  * @returns
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
-  const { children, childrenPerPage = 1, styles } = props;
+  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
 
   const [page, setPage] = useState(0);
 
