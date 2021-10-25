@@ -4,6 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { HorizontalGallery } from './HorizontalGallery';
+import { convertRemToPx } from './utils/common';
 import { useContainerWidth } from './utils/responsive';
 
 /**
@@ -87,8 +88,4 @@ const calculateChildrenPerPage = (args: {
   // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
   // childrenSpace = n * childWidth + (n - 1) * gap. Isolate n and take the floor.
   return Math.floor((childrenSpace + gapWidth) / (childWidth + gapWidth));
-};
-
-const convertRemToPx = (rem: number): number => {
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };

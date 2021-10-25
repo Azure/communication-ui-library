@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { RefObject, useEffect, useState, useRef } from 'react';
+import { convertRemToPx } from './common';
 
 /**
  * A utility hook for providing the width of a parent element.
@@ -41,7 +42,3 @@ const NARROW_WIDTH_REM = 30;
  */
 export const isNarrowWidth = (containerWidthRem: number): boolean =>
   containerWidthRem <= convertRemToPx(NARROW_WIDTH_REM);
-
-const convertRemToPx = (rem: number): number => {
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-};
