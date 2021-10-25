@@ -9,12 +9,10 @@ import { useContainerWidth } from './utils/responsive';
 /**
  * Wrapped HorizontalGallery that adjusts the number of items per page based on the
  * available width obtained from a ResizeObserver, width per child, gap width, and button width
- * @param props
- * @returns
  */
 export const SmartHorizontalGallery = (props: {
-  containerStyles: IStyle;
   children: React.ReactNode;
+  containerStyles: IStyle;
   childWidthRem: number;
   gapWidthRem: number;
   buttonWidthRem?: number;
