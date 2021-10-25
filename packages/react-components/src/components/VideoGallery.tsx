@@ -31,7 +31,7 @@ import {
 import { VideoTile } from './VideoTile';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { useContainerWidth, isNarrowWidth } from './utils/responsive';
-import { SmartHorizontalGallery } from './SmartHorizontalGallery';
+import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 
 const emptyStyles = {};
 const floatingTileHostId = 'UILibraryFloatingTileHost';
@@ -267,7 +267,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         )}
         <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
         {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
-          <SmartHorizontalGallery
+          <ResponsiveHorizontalGallery
             containerStyles={horizontalGalleryStyle(isNarrow)}
             childWidthRem={
               isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
@@ -276,7 +276,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             gapWidthRem={HORIZONTAL_GALLERY_GAP}
           >
             {horizontalGalleryTiles}
-          </SmartHorizontalGallery>
+          </ResponsiveHorizontalGallery>
         )}
       </Stack>
     </div>
