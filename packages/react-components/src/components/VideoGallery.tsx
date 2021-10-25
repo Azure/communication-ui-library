@@ -21,8 +21,8 @@ import {
   floatingLocalVideoTileStyle,
   gridStyle,
   videoGalleryContainerStyle,
-  SMALL_HORIZONTAL_GALLERY_TILE_SIZE,
-  LARGE_HORIZONTAL_GALLERY_TILE_SIZE,
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
   LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
   horizontalGalleryStyle,
@@ -270,7 +270,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           <SmartHorizontalGallery
             containerStyles={horizontalGalleryStyle(isNarrow)}
             childWidthRem={
-              isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE.width
+              isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
             }
             buttonWidthRem={isNarrow ? undefined : HORIZONTAL_GALLERY_BUTTON_WIDTH}
             gapWidthRem={HORIZONTAL_GALLERY_GAP}

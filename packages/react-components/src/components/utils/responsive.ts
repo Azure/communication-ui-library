@@ -32,9 +32,16 @@ export const useContainerWidth = (containerRef: RefObject<HTMLDivElement>): numb
   return width;
 };
 
-const NARROW_WIDTH = 480;
+const NARROW_WIDTH_REM = 30;
 
 /**
  * Utility function to determine if container width is narrow
+ * @param containerWidthRem  container width in rem
+ * @returns boolean
  */
-export const isNarrowWidth = (containerWidth: number): boolean => containerWidth <= NARROW_WIDTH;
+export const isNarrowWidth = (containerWidthRem: number): boolean =>
+  containerWidthRem <= convertRemToPx(NARROW_WIDTH_REM);
+
+const convertRemToPx = (rem: number): number => {
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+};
