@@ -31,11 +31,13 @@ const CustomDataModelStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.connectionString && args.displayName) {
-        const newPrerequisites = await createUserAndThread(args.connectionString, args.displayName);
+      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+        const newPrerequisites = await createUserAndThread(args.userId, args.token, args.endpointUrl, args.displayName);
         const botUserToken = await addParrotBotToThread(
-          args.connectionString,
-          newPrerequisites.token,
+          args.token,
+          args.botId,
+          args.botToken,
+          args.endpointUrl,
           newPrerequisites.threadId,
           messageArray
         );
@@ -73,7 +75,11 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Custom Data Model Example`,
   component: ChatComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    token: controlsToAdd.token,
+    userId: controlsToAdd.userId,
+    botToken: controlsToAdd.botToken,
+    botId: controlsToAdd.botUserId,
+    endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     avatar: controlsToAdd.botAvatar,
     // Hiding auto-generated controls

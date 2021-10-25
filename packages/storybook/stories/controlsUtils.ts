@@ -125,6 +125,8 @@ const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
 export const controlsToAdd = {
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
+  botToken: { control: 'text', defaultValue: '', name: 'Valid token for bot' },
+  botUserId: { control: 'text', defaultValue: '', name: 'Valid userId for bot' },
   callerImages: { control: 'file', accept: '.jpeg, .jpg, .png', defaultValue: [], name: 'Avatar' },
   callerName: { control: 'text', defaultValue: 'Maximus Aurelius', name: 'Caller Name' },
   callerNameAlt: { control: 'text', defaultValue: '1st', name: 'Caller Name Alt' },

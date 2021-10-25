@@ -2,7 +2,6 @@
 
 import { ChatClient, ChatParticipant } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient } from '@azure/communication-identity';
 import { v1 as createGUID } from 'uuid';
 import { MeetingExampleProps } from './Meeting.snippet';
 
@@ -37,16 +36,17 @@ const createNewChatThread = async (chatClient: ChatClient, participants: ChatPar
 };
 
 export const createUserCredentials = async (
-  resourceConnectionString: string,
+  token: string,
+  userId: string,
+  endpointUrl: string,
   displayName: string,
   teamsMeetingLink?: string
 ): Promise<MeetingExampleProps> => {
-  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const { user, token } = await tokenClient.createUserAndToken(['voip', 'chat']);
-  const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
 
   const locator = teamsMeetingLink ? { meetingLink: teamsMeetingLink } : { groupId: createGUID() };
+
+  const user = { communicationUserId: userId };
 
   const threadId = teamsMeetingLink
     ? getChatThreadFromTeamsLink(teamsMeetingLink)

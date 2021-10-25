@@ -17,15 +17,15 @@ const BasicStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.connectionString && args.displayName) {
-        const newProps = await createUserCredentials(args.connectionString, args.displayName);
+      if (args.token && args.userId && args.endpointUrl && args.displayName) {
+        const newProps = await createUserCredentials(args.token, args.userId, args.endpointUrl, args.displayName);
         setMeetingProps(newProps);
       } else {
         setMeetingProps(undefined);
       }
     };
     fetchToken();
-  }, [args.connectionString, args.displayName]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -41,7 +41,9 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/MeetingComposite/Basic Example`,
   component: MeetingComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    token: controlsToAdd.token,
+    userId: controlsToAdd.userId,
+    endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     // Hiding auto-generated controls
     ...defaultMeetingCompositeHiddenControls

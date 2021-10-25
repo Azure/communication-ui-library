@@ -2,31 +2,29 @@
 // Licensed under the MIT license.
 
 import { ChatClient } from '@azure/communication-chat';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationUserToken } from '@azure/communication-identity';
 import React from 'react';
 
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
 
 // Adds a bot to the thread that sends out provided canned messages one by one.
 export const addParrotBotToThread = async (
-  resourceConnectionString: string,
-  token: string,
+  userToken: string,
+  botId: string,
+  botToken: string,
+  endpointUrl: string,
   threadId: string,
   messages: string[]
 ): Promise<CommunicationUserToken> => {
-  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const bot = await tokenClient.createUserAndToken(['chat']);
-
-  const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
-  // Must use the credentials of the thread owner to add more participants.
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
+  const botIdentifier: CommunicationUserIdentifier = { communicationUserId: botId };
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userToken));
   await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: [{ id: bot.user, displayName: 'A simple bot' }]
+    participants: [{ id: botIdentifier, displayName: 'A simple bot' }]
   });
 
-  sendMessagesAsBot(bot.token, endpointUrl, threadId, messages);
-  return bot;
+  sendMessagesAsBot(botToken, endpointUrl, threadId, messages);
+  return { expiresOn: new Date(), token: botToken, user: botIdentifier };
 };
 
 const sendMessagesAsBot = async (
@@ -52,7 +50,7 @@ const sendMessagesAsBot = async (
 };
 
 export const ConfigHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide the connection string and display name to use.';
+  const emptyConfigTips = 'Please provide a token, userId for each "participant", endpointUrl and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
 

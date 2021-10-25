@@ -45,11 +45,11 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Join Existing Chat Thread`,
   component: ChatComposite,
   argTypes: {
-    endpointUrl: controlsToAdd.endpointUrl,
-    threadId: controlsToAdd.chatThreadId,
-    userId: controlsToAdd.userId,
     token: controlsToAdd.token,
+    userId: controlsToAdd.userId,
+    endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
+    threadId: controlsToAdd.chatThreadId,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
   },

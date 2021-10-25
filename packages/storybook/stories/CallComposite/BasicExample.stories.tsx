@@ -21,8 +21,8 @@ const BasicStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
-      if (args.connectionString && args.displayName) {
-        const newProps = await createUserAndGroup(args.connectionString);
+      if (!!args.userId && !!args.token && !!args.displayName) {
+        const newProps = createUserAndGroup(args.userId, args.token);
         setContainerProps(newProps);
       } else {
         setContainerProps(undefined);
@@ -56,7 +56,8 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Basic Example`,
   component: CallComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    token: controlsToAdd.token,
+    userId: controlsToAdd.userId,
     displayName: controlsToAdd.displayName,
     mobileView: controlsToAdd.mobileView,
     callInvitationURL: controlsToAdd.callInvitationURL,
