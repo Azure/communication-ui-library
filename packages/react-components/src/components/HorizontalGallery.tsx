@@ -21,7 +21,7 @@ export interface HorizontalGalleryStyles extends BaseCustomStylesProps {
 export interface HorizontalGalleryProps {
   children: React.ReactNode;
   styles?: HorizontalGalleryStyles;
-  itemsPerPage?: number;
+  childrenPerPage?: number;
 }
 
 /**
@@ -30,27 +30,27 @@ export interface HorizontalGalleryProps {
  * @returns
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
-  const { children, itemsPerPage = 1, styles } = props;
+  const { children, childrenPerPage = 1, styles } = props;
 
   const [page, setPage] = useState(0);
 
   const numberOfChildren = React.Children.count(children);
-  const lastPage = Math.ceil(numberOfChildren / itemsPerPage) - 1;
+  const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
 
   const subArrayOfChildren = useMemo(() => {
     const numberOfChildren = React.Children.count(children);
-    let start = page * itemsPerPage;
+    let start = page * childrenPerPage;
     // Check if start is greater than the last child index. If yes, set page to last page.
     if (start > numberOfChildren - 1) {
       setPage(lastPage);
-      start = page * itemsPerPage;
+      start = page * childrenPerPage;
     }
-    const end = start + itemsPerPage;
+    const end = start + childrenPerPage;
     return React.Children.toArray(children).slice(start, end);
-  }, [page, itemsPerPage, lastPage, children]);
+  }, [page, childrenPerPage, lastPage, children]);
 
-  const showPreviousButton = itemsPerPage > 0 && page > 0;
-  const showNextButton = itemsPerPage > 0 && page < lastPage;
+  const showPreviousButton = childrenPerPage > 0 && page > 0;
+  const showNextButton = childrenPerPage > 0 && page < lastPage;
 
   const theme = useTheme();
   const borderStyles = {

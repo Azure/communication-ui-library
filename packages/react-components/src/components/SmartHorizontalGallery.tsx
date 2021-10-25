@@ -36,7 +36,7 @@ export const SmartHorizontalGallery = (props: {
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
       <HorizontalGallery
-        itemsPerPage={childrenPerPage}
+        childrenPerPage={childrenPerPage}
         styles={{
           previousButton: buttonWidthRem > 0 ? { width: `${props.buttonWidthRem}rem` } : { display: 'none' },
           nextButton: buttonWidthRem > 0 ? { width: `${props.buttonWidthRem}rem` } : { display: 'none' }
