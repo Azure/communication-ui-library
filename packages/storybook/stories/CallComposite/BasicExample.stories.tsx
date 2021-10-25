@@ -17,11 +17,11 @@ const BasicStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const [containerProps, setContainerProps] = useState();
+  const [containerProps, setContainerProps] = useState<any>();
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
-      if (!!args.userId && !!args.token && !!args.displayName) {
+      if (!!args.userId && !!args.token) {
         const newProps = createUserAndGroup(args.userId, args.token);
         setContainerProps(newProps);
       } else {

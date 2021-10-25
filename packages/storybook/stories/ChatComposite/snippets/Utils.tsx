@@ -50,11 +50,12 @@ const sendMessagesAsBot = async (
 };
 
 export const ConfigHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide a token, userId for each "participant", endpointUrl and display name to use.';
+  const emptyConfigTips =
+    'Please provide an access token, userId for each "participant", endpointUrl and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
 
 export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide a token, thread id, endpoint url, and display name to use.';
+  const emptyConfigTips = 'Please provide an access token, userId, thread id, endpoint url, and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
