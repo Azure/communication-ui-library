@@ -35,9 +35,9 @@ export const videoGalleryOuterDivStyle = mergeStyles({ position: 'relative', wid
 export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'relative', height: '100%' } };
 
 /**
- * Large floating modal width and height for small screen
+ * Small floating modal width and height for small screen
  */
-export const SMALL_FLOATING_MODAL_SIZE = { width: 4, height: 5.5 }; //size in rem
+export const SMALL_FLOATING_MODAL_SIZE = { width: 4, height: 5.5 };
 
 /**
  * Large floating modal width and height for large screen
