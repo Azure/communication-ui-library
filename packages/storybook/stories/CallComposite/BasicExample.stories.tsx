@@ -12,18 +12,25 @@ import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 import { v1 as createGUID } from 'uuid';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+
+type ContainerProps = {
+  token: string;
+  userId: CommunicationUserIdentifier;
+  locator: string;
+};
 
 const BasicStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const [containerProps, setContainerProps] = useState<any>();
+  const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   useEffect(() => {
     const fetchContainerProps = async (): Promise<void> => {
       if (!!args.userId && !!args.token) {
         const containerProps = {
-          userId: args.userId,
+          userId: { communicationUserId: args.userId },
           token: args.token,
           locator: createGUID()
         };
