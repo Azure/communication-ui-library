@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, DefaultButton, Icon, IStyle, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps } from '../types';
@@ -61,13 +61,13 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const nextButtonStyles = concatStyleSets(borderStyles, styles?.nextButton) as IStyle;
 
   return (
-    <div className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
+    <Stack horizontal className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
       {showPreviousButton && (
         <PreviousButton styles={previousButtonStyles} onClick={() => setPage(Math.max(0, page - 1))} />
       )}
       {subArrayOfChildren}
       {showNextButton && <NextButton styles={nextButtonStyles} onClick={() => setPage(Math.min(lastPage, page + 1))} />}
-    </div>
+    </Stack>
   );
 };
 
