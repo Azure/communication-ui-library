@@ -8,7 +8,7 @@ import { RefObject, useEffect, useState, useRef } from 'react';
  * Returns updated width if parent/window resizes.
  * @param containerRef - Ref of a parent element whose width will be returned.
  */
-export const useContainerWidth = (containerRef: RefObject<HTMLDivElement>): number => {
+export const useContainerWidth = (containerRef: RefObject<HTMLElement>): number => {
   const [width, setWidth] = useState(0);
 
   const observer = useRef(
