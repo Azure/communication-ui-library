@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
+import { v1 as createGUID } from 'uuid';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
-import { v1 as createGUID } from 'uuid';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
 
 type ContainerProps = {
   token: string;
