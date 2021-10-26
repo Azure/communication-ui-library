@@ -263,7 +263,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
         {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
           <ResponsiveHorizontalGallery
-            containerStyles={horizontalGalleryStyle(isNarrow)}
+            containerStyles={horizontalGalleryStyle(shouldFloatLocalVideo, isNarrow)}
             childWidthRem={
               isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
             }

@@ -98,13 +98,15 @@ export const videoWithNoRoundedBorderStyle = {
 /**
  * @private
  */
-export const horizontalGalleryStyle = (isNarrow: boolean): IStyle => {
+export const horizontalGalleryStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
     maxHeight: isNarrow ? '6rem' : '8rem',
     minHeight: isNarrow ? '6rem' : '8rem',
-    width: isNarrow
-      ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`
-      : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE_REM.width}rem)`,
+    width: shouldFloatLocalVideo
+      ? isNarrow
+        ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`
+        : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE_REM.width}rem)`
+      : '100%',
     paddingRight: '0.5rem',
     paddingLeft: '0.5rem'
   };
