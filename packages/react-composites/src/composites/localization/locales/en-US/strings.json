@@ -13,7 +13,7 @@
     "screenSharingMessage": "You are sharing your screen",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call",
-    "youAreMutedMessage": "You're muted"
+    "mutedMessage": "You're muted"
   },
   "chat": {
     "chatListHeader": "In this chat"

@@ -5,16 +5,16 @@ import { Icon, Stack, Text } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../../localization';
 
-export interface YouAreMutedNotificationProps {}
+export interface MutedNotificationProps {}
 /**
  * Notify the user that they're muted.
  */
-export function YouAreMutedNotification(props: YouAreMutedNotificationProps): JSX.Element {
+export function MutedNotification(props: MutedNotificationProps): JSX.Element {
   const locale = useLocale();
   return (
     <Stack>
       <Icon iconName="LocalDeviceSettingsSpeaker" />
-      <Text>{locale.strings.call.youAreMutedMessage}</Text>
+      <Text>{locale.strings.call.mutedMessage}</Text>
     </Stack>
   );
 }
