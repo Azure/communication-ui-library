@@ -21,17 +21,17 @@ export const usePagePerParticipant = async ({ serverUrl, users, browser }, use) 
   await use(pages);
 };
 
+const KNOWN_TELEMETRY_ERROR_MESSAGES = [
+  'Failed to load resource: the server responded with a status of 403 (No events are from an allowed domain.)',
+  'Failed to load resource: the server responded with a status of 403 (All Events Throttled.)'
+];
+const KNOWN_TELEMETRY_ORIGIN = 'events.data.microsoft.com/OneCollector';
+
 // Ignore known, non-impactful, unfixable console log errors. This should only ignore errors we *CANNOT* fix.
 // All console errors should be fixed before considering adding to this function.
 const shouldIgnoreConsoleError = (error: ConsoleMessage): boolean => {
   // ignore SDK telemetry throttling error
-  return (
-    error
-      .text()
-      .includes(
-        'Failed to load resource: the server responded with a status of 403 (No events are from an allowed domain.)'
-      ) && error.location().url.includes('events.data.microsoft.com/OneCollector')
-  );
+  return KNOWN_TELEMETRY_ERROR_MESSAGES.includes(error.text()) && error.location().url.includes(KNOWN_TELEMETRY_ORIGIN);
 };
 
 /**
