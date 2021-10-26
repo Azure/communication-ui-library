@@ -55,6 +55,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     return React.Children.toArray(children).slice(start, end);
   }, [page, childrenPerPage, lastPage, children]);
 
+  // If children per page is 0 or less return empty element
   if (childrenPerPage <= 0) {
     return <></>;
   }
