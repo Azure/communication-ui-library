@@ -44,6 +44,7 @@ const containerStyle: IStyle = {
 const stackStyle = (theme: ITheme): IStyle => {
   return {
     background: theme.palette.black,
+    opacity: 0.8,
     gap: `1rem`,
     padding: `1rem`,
     borderRadius: theme.effects.roundedCorner4,
