@@ -43,15 +43,8 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
 
   const paginatedChildren: React.ReactNode[][] = useMemo(() => {
-    const paginatedChildren: React.ReactNode[][] = [];
-    if (childrenPerPage <= 0) {
-      return paginatedChildren;
-    }
-    for (let i = 0; i < Math.ceil(numberOfChildren / childrenPerPage); i++) {
-      paginatedChildren.push(React.Children.toArray(children).slice(i * childrenPerPage, (i + 1) * childrenPerPage));
-    }
-    return paginatedChildren;
-  }, [numberOfChildren, children, childrenPerPage]);
+    return bucketize(React.Children.toArray(children), childrenPerPage);
+  }, [children, childrenPerPage]);
 
   // If children per page is 0 or less return empty element
   if (childrenPerPage <= 0) {
@@ -104,3 +97,17 @@ const HorizontalGalleryNavigationButton = (props: {
     </DefaultButton>
   );
 };
+
+function bucketize<T>(arr: T[], bucketSize: number): T[][] {
+  const bucketArray: T[][] = [];
+
+  if (bucketSize <= 0) {
+    return bucketArray;
+  }
+
+  for (let i = 0; i < arr.length; i += bucketSize) {
+    bucketArray.push(arr.slice(i, i + bucketSize));
+  }
+
+  return bucketArray;
+}
