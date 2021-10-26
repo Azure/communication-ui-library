@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, IDragOptions, Modal, Stack, concatStyleSets } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { CSSProperties, useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
@@ -200,22 +200,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   const defaultOnRenderVideoTile = useCallback(
-    (participant: VideoGalleryRemoteParticipant, isVideoParticipant: boolean) => {
+    (participant: VideoGalleryRemoteParticipant, style?: CSSProperties) => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
           key={participant.userId}
           userId={participant.userId}
-          onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
-          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
-          isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
-          renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOption={isVideoParticipant ? remoteVideoViewOption : undefined}
+          onCreateRemoteStreamView={onCreateRemoteStreamView}
+          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+          isAvailable={remoteVideoStream?.isAvailable}
+          renderElement={remoteVideoStream?.renderElement}
+          remoteVideoViewOption={remoteVideoViewOption}
           isMuted={participant.isMuted}
           isSpeaking={participant.isSpeaking}
           displayName={participant.displayName}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
+          style={style}
         />
       );
     },
@@ -225,7 +226,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const gridTiles = onRenderRemoteVideoTile
     ? gridParticipants.map((participant) => onRenderRemoteVideoTile(participant))
     : gridParticipants.map((participant): JSX.Element => {
-        return defaultOnRenderVideoTile(participant, true);
+        return defaultOnRenderVideoTile(participant);
       });
 
   if (!shouldFloatLocalVideo && localParticipant) {
@@ -239,13 +240,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const horizontalGalleryTiles = onRenderRemoteVideoTile
     ? horizontalGalleryParticipants.map((participant) => onRenderRemoteVideoTile(participant))
     : horizontalGalleryParticipants.map((participant): JSX.Element => {
-        return (
-          <div
-            key={participant.userId}
-            style={isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE}
-          >
-            {defaultOnRenderVideoTile(participant, shouldFloatLocalVideo)}
-          </div>
+        return defaultOnRenderVideoTile(
+          participant,
+          isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
         );
       });
 

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
-import React, { useEffect, useMemo } from 'react';
+import { Stack, mergeStyles } from '@fluentui/react';
+import React, { CSSProperties, useEffect, useMemo } from 'react';
 import { StreamMedia } from './StreamMedia';
 import { VideoTile } from './VideoTile';
 import { VideoStreamOptions, OnRenderAvatarCallback } from '../types';
@@ -24,6 +24,7 @@ export const RemoteVideoTile = React.memo(
     remoteVideoViewOption?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
+    style?: CSSProperties;
   }) => {
     const {
       isAvailable,
@@ -74,7 +75,7 @@ export const RemoteVideoTile = React.memo(
     }, [renderElement, renderElement?.childElementCount]);
 
     return (
-      <Stack className={gridStyle} key={userId} grow>
+      <Stack className={mergeStyles(gridStyle)} key={userId} grow style={props.style}>
         <VideoTile
           userId={userId}
           renderElement={renderVideoStreamElement}
