@@ -16,16 +16,6 @@ export interface AdapterState<TState> {
 }
 
 /**
- * Functionality for interfacing with Composite adapter pages.
- *
- * @public
- */
-export interface AdapterPages<TPage> {
-  /** Set the current page of the Composite */
-  setPage(page: TPage): void;
-}
-
-/**
  * Functionality for correctly disposing a Composite.
  *
  * @public

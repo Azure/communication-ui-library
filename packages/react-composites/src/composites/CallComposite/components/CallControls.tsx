@@ -12,7 +12,7 @@ import {
   ScreenShareButton,
   useTheme
 } from '@internal/react-components';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
   checkedButtonOverrideStyles,
@@ -24,7 +24,6 @@ import {
  * @private
  */
 export type CallControlsProps = {
-  onEndCallClick(): void;
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: boolean | CallControlOptions;
@@ -77,7 +76,7 @@ export type CallControlOptions = {
  * @private
  */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
-  const { callInvitationURL, onEndCallClick, onFetchParticipantMenuItems } = props;
+  const { callInvitationURL, onFetchParticipantMenuItems } = props;
 
   const options = typeof props.options === 'boolean' ? {} : props.options;
 
@@ -89,11 +88,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
   const theme = useTheme();
-
-  const onHangUp = useCallback(async () => {
-    await hangUpButtonProps.onHangUp();
-    onEndCallClick();
-  }, [hangUpButtonProps, onEndCallClick]);
 
   const checkedScreenShareButtonOverrideStyles = useMemo(
     () => checkedButtonOverrideStyles(theme, screenShareButtonProps.checked),
@@ -146,7 +140,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <EndCallButton
       data-ui-id="call-composite-hangup-button"
       {...hangUpButtonProps}
-      onHangUp={onHangUp}
       styles={!options?.compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
       showLabel={!options?.compressedMode}
     />
