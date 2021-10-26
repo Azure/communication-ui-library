@@ -25,7 +25,14 @@ export interface HorizontalGalleryStyles extends BaseCustomStylesProps {
  */
 export interface HorizontalGalleryProps {
   children: React.ReactNode;
+  /**
+   * Styles for HorizontalGallery
+   */
   styles?: HorizontalGalleryStyles;
+  /**
+   * Children shown per page
+   * @defaultValue 5
+   */
   childrenPerPage?: number;
 }
 
