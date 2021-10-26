@@ -25,7 +25,6 @@ import {
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
-  CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,
   CallAdapterState,
@@ -79,10 +78,6 @@ class CallContext {
 
   public getState(): CallAdapterState {
     return this.state;
-  }
-
-  public setPage(page: CallCompositePage): void {
-    this.setState({ ...this.state, page });
   }
 
   public setIsLocalMicrophoneEnabled(isLocalPreviewMicrophoneEnabled: boolean): void {
@@ -203,7 +198,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
     this.removeParticipant.bind(this);
-    this.setPage.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
     this.on.bind(this);
@@ -431,10 +425,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       isMuted: this.call?.isMuted
     });
   };
-
-  public setPage(): void {
-    // this.context.setPage(page); /** todo [jaburnsi]: this will be removed in followup cleanup PR */
-  }
 
   private onRemoteParticipantsUpdated({
     added,
