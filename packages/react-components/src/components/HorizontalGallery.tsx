@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps } from '../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
@@ -42,19 +42,28 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
 
-  let start = page * childrenPerPage;
-  // Check if start is greater than the last child index. If yes, set page to last page.
-  if (start > numberOfChildren - 1) {
-    setPage(lastPage);
-    start = page * childrenPerPage;
-  }
-  const end = start + childrenPerPage;
-  const subArrayOfChildren = React.Children.toArray(children).slice(start, end);
+  const paginatedChildren: React.ReactNode[][] = useMemo(() => {
+    const paginatedChildren: React.ReactNode[][] = [];
+    if (childrenPerPage <= 0) {
+      return paginatedChildren;
+    }
+    for (let i = 0; i < Math.ceil(numberOfChildren / childrenPerPage); i++) {
+      paginatedChildren.push(React.Children.toArray(children).slice(i * childrenPerPage, (i + 1) * childrenPerPage));
+    }
+    return paginatedChildren;
+  }, [numberOfChildren, children, childrenPerPage]);
 
   // If children per page is 0 or less return empty element
   if (childrenPerPage <= 0) {
     return <></>;
   }
+
+  const firstIndexOfCurrentPage = page * childrenPerPage;
+  // Check if first index of current page is greater than the last child index. If yes, set page to last page.
+  if (firstIndexOfCurrentPage > numberOfChildren - 1) {
+    setPage(lastPage);
+  }
+  const childrenOnCurrentPage = paginatedChildren[page];
 
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;
@@ -66,7 +75,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         onClick={() => setPage(Math.max(0, page - 1))}
         disabled={disablePreviousButton}
       />
-      {subArrayOfChildren}
+      {childrenOnCurrentPage}
       <NextButton
         styles={styles?.nextButton}
         onClick={() => setPage(Math.min(lastPage, page + 1))}
