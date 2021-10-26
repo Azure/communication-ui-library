@@ -510,7 +510,6 @@ export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
 export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
-    // (undocumented)
     menuItemStyles?: IContextualMenuItemStyles;
 }
 
@@ -542,7 +541,6 @@ export interface OptionsButtonStrings {
 
 // @public
 export interface OptionsButtonStyles extends ControlBarButtonStyles {
-    // (undocumented)
     menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
 }
 
