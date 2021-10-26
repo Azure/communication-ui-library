@@ -21,7 +21,7 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
-  YouAreMuted: <MicOff20Filled />
+  Muted: <MicOff20Filled />
 };
 
 /**

@@ -315,6 +315,7 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+    mutedMessage: string;
     removedFromMeetingMoreDetails?: string;
     removedFromMeetingTitle: string;
     screenSharingMessage: string;
@@ -814,6 +815,7 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    YouAreMuted: JSX.Element;
 };
 
 // @public
@@ -962,6 +964,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    YouAreMuted: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1470,6 +1473,13 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+}
+
+// @alpha
+export function MutedNotification(props: MutedNotificationProps): JSX.Element;
+
+// @alpha
+export interface MutedNotificationProps {
 }
 
 // @public
