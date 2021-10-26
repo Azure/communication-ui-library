@@ -71,8 +71,7 @@ export const RemoteVideoTile = React.memo(
       }
 
       return <StreamMedia videoStreamElement={renderElement} />;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [renderElement, renderElement?.childElementCount]);
+    }, [renderElement]);
 
     return (
       <Stack className={mergeStyles(gridStyle)} key={userId} grow style={props.style}>
