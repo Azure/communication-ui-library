@@ -20,11 +20,14 @@ import {
 } from './ControlBarButton';
 
 /**
- * Styles for the Options button menu.
+ * Styles for the {@link OptionsButton} menu.
  *
  * @public
  */
 export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
+  /**
+   * Styles for the items inside the {@link OptionsButton} button menu.
+   */
   menuItemStyles?: IContextualMenuItemStyles;
 }
 
@@ -34,6 +37,9 @@ export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles
  * @public
  */
 export interface OptionsButtonStyles extends ControlBarButtonStyles {
+  /**
+   * Styles for the {@link OptionsButton} menu.
+   */
   menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
 }
 
