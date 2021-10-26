@@ -59,11 +59,8 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   }
 
   const firstIndexOfCurrentPage = page * childrenPerPage;
-  // Check if first index of current page is greater than the last child index. If yes, set page to last page.
-  if (firstIndexOfCurrentPage > numberOfChildren - 1) {
-    setPage(lastPage);
-  }
-  const childrenOnCurrentPage = paginatedChildren[page];
+  const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
+  const childrenOnCurrentPage = paginatedChildren[clippedPage];
 
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;
@@ -73,7 +70,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       <HorizontalGalleryNavigationButton
         icon={<Icon iconName="HorizontalGalleryLeftButton" />}
         styles={styles?.previousButton}
-        onClick={() => setPage(Math.max(0, page - 1))}
+        onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
         disabled={disablePreviousButton}
       />
       {childrenOnCurrentPage}
