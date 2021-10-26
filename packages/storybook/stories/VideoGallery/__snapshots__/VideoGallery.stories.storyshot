@@ -100,7 +100,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                                 }
                               >
                                 <span>
-                                  D
+                                  R
                                 </span>
                               </div>
                             </div>
@@ -117,7 +117,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                         <span
                           className="css-38"
                         >
-                          Daryl
+                          Rick
                         </span>
                       </div>
                     </div>
@@ -188,7 +188,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                         <span
                           className="css-38"
                         >
-                          Dwight
+                          Daryl
                         </span>
                       </div>
                     </div>
@@ -259,7 +259,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                         <span
                           className="css-38"
                         >
-                          Michael
+                          Michonne
                         </span>
                       </div>
                     </div>
@@ -313,7 +313,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                                 }
                               >
                                 <span>
-                                  K
+                                  D
                                 </span>
                               </div>
                             </div>
@@ -330,7 +330,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                         <span
                           className="css-38"
                         >
-                          Kevin
+                          Dwight
                         </span>
                       </div>
                     </div>
