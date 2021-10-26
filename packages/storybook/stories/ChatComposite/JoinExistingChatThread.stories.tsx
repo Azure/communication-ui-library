@@ -45,8 +45,8 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Join Existing Chat Thread`,
   component: ChatComposite,
   argTypes: {
-    token: controlsToAdd.token,
     userId: controlsToAdd.userId,
+    token: controlsToAdd.token,
     endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     threadId: controlsToAdd.chatThreadId,

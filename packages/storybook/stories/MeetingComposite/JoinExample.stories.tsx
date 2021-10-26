@@ -9,7 +9,7 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './MeetingCompositeDocs';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
-import { createUserCredentials } from './snippets/Server.snippet';
+import { createCallLocator } from './snippets/Server.snippet';
 import { ConfigJoinMeetingHintBanner } from './Utils';
 
 const JoinExistingMeetingStory = (args, context): JSX.Element => {
@@ -18,7 +18,7 @@ const JoinExistingMeetingStory = (args, context): JSX.Element => {
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (!!args.token && !!args.userId && !!args.endpointUrl && !!args.displayName && !!args.teamsMeetingLink) {
-        const newProps = await createUserCredentials(
+        const newProps = await createCallLocator(
           args.token,
           args.userId,
           args.endpointUrl,

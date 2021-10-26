@@ -45,8 +45,8 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Join Existing Call`,
   component: CallComposite,
   argTypes: {
-    token: controlsToAdd.token,
     userId: controlsToAdd.userId,
+    token: controlsToAdd.token,
     displayName: controlsToAdd.displayName,
     callLocator: controlsToAdd.callLocator,
     mobileView: controlsToAdd.mobileView,

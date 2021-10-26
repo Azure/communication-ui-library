@@ -35,7 +35,7 @@ const createNewChatThread = async (chatClient: ChatClient, participants: ChatPar
   return chatThread.id;
 };
 
-export const createUserCredentials = async (
+export const createCallLocator = async (
   token: string,
   userId: string,
   endpointUrl: string,

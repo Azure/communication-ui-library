@@ -3,7 +3,6 @@
 
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { CommunicationUserToken } from '@azure/communication-identity';
 import React from 'react';
 
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
@@ -16,7 +15,7 @@ export const addParrotBotToThread = async (
   endpointUrl: string,
   threadId: string,
   messages: string[]
-): Promise<CommunicationUserToken> => {
+): Promise<CommunicationUserIdentifier> => {
   const botIdentifier: CommunicationUserIdentifier = { communicationUserId: botId };
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userToken));
   await chatClient.getChatThreadClient(threadId).addParticipants({
@@ -24,7 +23,7 @@ export const addParrotBotToThread = async (
   });
 
   sendMessagesAsBot(botToken, endpointUrl, threadId, messages);
-  return { expiresOn: new Date(), token: botToken, user: botIdentifier };
+  return botIdentifier;
 };
 
 const sendMessagesAsBot = async (
@@ -51,11 +50,41 @@ const sendMessagesAsBot = async (
 
 export const ConfigHintBanner = (): JSX.Element => {
   const emptyConfigTips =
-    'Please provide an access token, userId for each "participant", endpointUrl and display name to use.';
+    'Please provide an access token, userId for each participant, endpointUrl and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
 
 export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
   const emptyConfigTips = 'Please provide an access token, userId, thread id, endpoint url, and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
+};
+
+export type ChatCompositeSetupProps = {
+  userId: CommunicationUserIdentifier;
+  token: string;
+  endpointUrl: string;
+  displayName: string;
+  threadId: string;
+};
+
+export const createThreadAndAddUser = async (
+  userId: string,
+  token: string,
+  endpointUrl: string,
+  displayName: string
+): Promise<ChatCompositeSetupProps> => {
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
+
+  const user = { communicationUserId: userId };
+  const threadId =
+    (
+      await chatClient.createChatThread(
+        { topic: 'Chat with a friendly bot' },
+        {
+          participants: [{ id: user, displayName: displayName }]
+        }
+      )
+    ).chatThread?.id ?? '';
+
+  return { userId: user, token, endpointUrl, displayName, threadId };
 };

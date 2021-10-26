@@ -10,7 +10,7 @@ import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUt
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './CustomBehaviorExampleContainer';
-import { createUserAndThread } from './snippets/Server.snippet';
+import { createThreadAndAddUser } from './snippets/Utils';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
 const messageArray = [
@@ -29,7 +29,7 @@ const CustomBehaviorStory = (args, context): JSX.Element => {
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (args.token && args.userId && args.botId && args.botToken && args.endpointUrl && args.displayName) {
-        const newProps = await createUserAndThread(args.userId, args.token, args.endpointUrl, args.displayName);
+        const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
         await addParrotBotToThread(
           args.token,
           args.botId,
@@ -64,10 +64,10 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Custom Behavior Example`,
   component: ChatComposite,
   argTypes: {
-    token: controlsToAdd.token,
     userId: controlsToAdd.userId,
-    botToken: controlsToAdd.botToken,
+    token: controlsToAdd.token,
     botId: controlsToAdd.botUserId,
+    botToken: controlsToAdd.botToken,
     endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     // Hiding auto-generated controls

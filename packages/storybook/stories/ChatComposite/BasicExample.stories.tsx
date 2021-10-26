@@ -9,8 +9,8 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
-import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
-import { createUserAndThread } from './snippets/Server.snippet';
+import { ContosoChatContainer } from './snippets/Container.snippet';
+import { ChatCompositeSetupProps, createThreadAndAddUser } from './snippets/Utils';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
 const messageArray = [
@@ -25,12 +25,12 @@ const BasicStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const [containerProps, setContainerProps] = useState<ContainerProps>();
+  const [containerProps, setContainerProps] = useState<ChatCompositeSetupProps>();
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
-        const newProps = await createUserAndThread(args.userId, args.token, args.endpointUrl, args.displayName);
+        const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
         await addParrotBotToThread(
           args.token,
           args.botId,
@@ -72,10 +72,10 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Basic Example`,
   component: ChatComposite,
   argTypes: {
-    token: controlsToAdd.token,
     userId: controlsToAdd.userId,
-    botToken: controlsToAdd.botToken,
+    token: controlsToAdd.token,
     botId: controlsToAdd.botUserId,
+    botToken: controlsToAdd.botToken,
     endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     showErrorBar: controlsToAdd.showErrorBar,
