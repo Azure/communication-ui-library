@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
+import { DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
 import { useTheme } from '../theming';
 import { BaseCustomStylesProps } from '../types';
@@ -36,7 +36,6 @@ export interface HorizontalGalleryProps {
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
   const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
-  const theme = useTheme();
 
   const [page, setPage] = useState(0);
 
@@ -63,23 +62,16 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;
 
-  const borderStyles = {
-    border: `1px solid ${theme.palette.neutralLight}`,
-    borderRadius: theme.effects.roundedCorner4
-  };
-  const previousButtonStyles = concatStyleSets(borderStyles, styles?.previousButton) as IStyle;
-  const nextButtonStyles = concatStyleSets(borderStyles, styles?.nextButton) as IStyle;
-
   return (
     <Stack horizontal className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
       <PreviousButton
-        styles={previousButtonStyles}
+        styles={styles?.previousButton}
         onClick={() => setPage(Math.max(0, page - 1))}
         disabled={disablePreviousButton}
       />
       {subArrayOfChildren}
       <NextButton
-        styles={nextButtonStyles}
+        styles={styles?.nextButton}
         onClick={() => setPage(Math.min(lastPage, page + 1))}
         disabled={disableNextButton}
       />
@@ -88,9 +80,10 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 };
 
 const PreviousButton = (props: { styles: IStyle; onClick?: () => void; disabled?: boolean }): JSX.Element => {
+  const theme = useTheme();
   return (
     <DefaultButton
-      className={mergeStyles(leftRightButtonStyles)}
+      className={mergeStyles(leftRightButtonStyles(theme))}
       onClick={props.onClick}
       disabled={props.disabled}
       styles={{ root: props.styles }}
@@ -101,9 +94,10 @@ const PreviousButton = (props: { styles: IStyle; onClick?: () => void; disabled?
 };
 
 const NextButton = (props: { styles: IStyle; onClick?: () => void; disabled?: boolean }): JSX.Element => {
+  const theme = useTheme();
   return (
     <DefaultButton
-      className={mergeStyles(leftRightButtonStyles)}
+      className={mergeStyles(leftRightButtonStyles(theme))}
       onClick={props.onClick}
       disabled={props.disabled}
       styles={{ root: props.styles }}

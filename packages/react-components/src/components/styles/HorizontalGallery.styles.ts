@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle } from '@fluentui/react';
+import { IStyle, Theme } from '@fluentui/react';
 
 /**
  * Horizontal Gallery button width in rem
@@ -11,12 +11,16 @@ export const HORIZONTAL_GALLERY_BUTTON_WIDTH = 1.75;
 /**
  * @private
  */
-export const leftRightButtonStyles: IStyle = {
-  background: 'none',
-  padding: 0,
-  height: '100%',
-  minWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
-  maxWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`
+export const leftRightButtonStyles = (theme: Theme): IStyle => {
+  return {
+    background: 'none',
+    padding: 0,
+    height: '100%',
+    minWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
+    maxWidth: `${HORIZONTAL_GALLERY_BUTTON_WIDTH}rem`,
+    border: `1px solid ${theme.palette.neutralLight}`,
+    borderRadius: theme.effects.roundedCorner4
+  };
 };
 
 /**
