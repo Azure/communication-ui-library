@@ -96,10 +96,9 @@ const HorizontalGalleryNavigationButton = (props: {
   const theme = useTheme();
   return (
     <DefaultButton
-      className={mergeStyles(leftRightButtonStyles(theme))}
+      className={mergeStyles(leftRightButtonStyles(theme), props.styles)}
       onClick={props.onClick}
       disabled={props.disabled}
-      styles={{ root: props.styles }}
     >
       {props.icon}
     </DefaultButton>
