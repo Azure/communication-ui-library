@@ -55,29 +55,16 @@ const calculateChildrenPerPage = (args: {
   const childWidth = convertRemToPx(childWidthRem);
   const gapWidth = convertRemToPx(gapWidthRem);
 
-  /** First, figure out childrenSpace if there are buttons
+  /** First compute childrenSpace from container width
    *   <-----------containerWidth--------->
    *    __________________________________
    *   | ||             ||             || |
    *   |<||             ||             ||>|
    *   |_||_____________||_____________||_|
    *       <-------childrenSpace------>
-   *              OR no buttons
-   *    __________________________________
-   *   |                ||                |
-   *   |                ||                |
-   *   |________________||________________|
-   *   <-----------childrenSpace--------->
    */
-  let childrenSpace = containerWidth;
-  if (buttonWidth > 0) {
-    // need to subtract width of buttons. Always leaving room for both buttons even though there may
-    // not be there for first and last page.
-    childrenSpace -= 2 * buttonWidth;
-    // need to subtract 2 gaps for buttons
-    childrenSpace -= 2 * gapWidth;
-  }
+  const childrenSpace = containerWidth - 2 * buttonWidth - 2 * gapWidth;
   // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
-  // childrenSpace = n * childWidth + (n - 1) * gap. Isolate n and take the floor.
+  // childrenSpace = n * childWidth + (n + 1) * gap. Isolate n and take the floor.
   return Math.floor((childrenSpace + gapWidth) / (childWidth + gapWidth));
 };
