@@ -68,6 +68,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   return (
     <Stack horizontal className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
       <HorizontalGalleryNavigationButton
+        key="previous-nav-button"
         icon={<Icon iconName="HorizontalGalleryLeftButton" />}
         styles={styles?.previousButton}
         onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
@@ -75,6 +76,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       />
       {childrenOnCurrentPage}
       <HorizontalGalleryNavigationButton
+        key="next-nav-button"
         icon={<Icon iconName="HorizontalGalleryRightButton" />}
         styles={styles?.nextButton}
         onClick={() => setPage(Math.min(lastPage, page + 1))}
