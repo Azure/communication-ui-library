@@ -28,20 +28,26 @@ export function MutedNotification(props: MutedNotificationProps): JSX.Element {
   }
 
   return (
-    <Stack horizontal className={mergeStyles(stackStyle(theme))}>
-      <Icon iconName="Muted" className={mergeStyles(iconStyle(theme))} />
-      <Text className={mergeStyles(textStyle(theme))}>{locale.strings.call.mutedMessage}</Text>
+    <Stack horizontal className={mergeStyles(containerStyle)}>
+      <Stack horizontal className={mergeStyles(stackStyle(theme))}>
+        <Icon iconName="Muted" className={mergeStyles(iconStyle(theme))} />
+        <Text className={mergeStyles(textStyle(theme))}>{locale.strings.call.mutedMessage}</Text>
+      </Stack>
     </Stack>
   );
 }
 
+const containerStyle: IStyle = {
+  justifyContent: 'center'
+};
+
 const stackStyle = (theme: ITheme): IStyle => {
   return {
     background: theme.palette.black,
-    color: 'red',
     gap: `1rem`,
     padding: `1rem`,
-    borderRadius: theme.effects.roundedCorner4
+    borderRadius: theme.effects.roundedCorner4,
+    width: 'fit-content'
   };
 };
 

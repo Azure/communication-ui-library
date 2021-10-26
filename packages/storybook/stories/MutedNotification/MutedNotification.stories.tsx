@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { MutedNotification as Component } from '@azure/communication-react';
+import { mergeStyles } from '@fluentui/react';
 import { Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -18,7 +19,11 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const MutedNotificationStory = (args): JSX.Element => {
-  return <Component speakingWhileMuted={true} />;
+  return (
+    <div className={mergeStyles({ height: '50%', width: '50%' })}>
+      <Component speakingWhileMuted={true} />
+    </div>
+  );
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
