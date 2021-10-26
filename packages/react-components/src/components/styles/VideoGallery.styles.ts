@@ -8,7 +8,8 @@ import {
   IModalStyles,
   IStyleFunctionOrObject,
   Theme,
-  IStyle
+  IStyle,
+  concatStyleSets
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
 
@@ -50,22 +51,28 @@ export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 10, height: 7.5 };
 export const floatingLocalVideoModalStyle = (
   theme: Theme,
   isNarrow?: boolean
-): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => ({
-  root: {
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden'
-  },
-  main: {
-    minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-    minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
-    position: 'absolute',
-    bottom: '0.5rem',
-    right: '0.5rem',
-    boxShadow: theme.effects.elevation8,
-    borderRadius: theme.effects.roundedCorner4
-  }
-});
+): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
+  return concatStyleSets(
+    {
+      root: {
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden'
+      },
+      main: {
+        minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
+        minHeight: isNarrow
+          ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem`
+          : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+        position: 'absolute',
+        bottom: '0.5rem',
+        boxShadow: theme.effects.elevation8,
+        borderRadius: theme.effects.roundedCorner4
+      }
+    },
+    { main: theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' } }
+  );
+};
 
 /**
  * @private
