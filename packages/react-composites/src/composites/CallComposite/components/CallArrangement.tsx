@@ -15,6 +15,7 @@ import {
   mediaGalleryContainerStyles,
   subContainerStyles
 } from '../styles/CallPage.styles';
+import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 
 /**
  * @private
@@ -23,6 +24,7 @@ export interface CallArrangementProps {
   complianceBannerProps: ComplianceBannerProps;
   permissionBannerProps: PermissionsBannerProps;
   errorBarProps: ErrorBarProps | false;
+  mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps | false;
   onRenderGalleryContent: () => JSX.Element;
   dataUiId: string;
@@ -47,6 +49,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <ErrorBar {...props.errorBarProps} />
             </Stack>
           )}
+          {!!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
         </Stack.Item>
 
         <Stack.Item styles={subContainerStyles} grow>

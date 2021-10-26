@@ -15,6 +15,7 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
 import { CallArrangement } from '../components/CallArrangement';
 import { reduceCallControlsForMobile } from '../utils';
+import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 
 /**
  * @private
@@ -41,6 +42,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const complianceBannerProps = useSelector(complianceBannerSelector);
   const errorBarProps = usePropsFor(ErrorBar);
   const devicePermissions = useSelector(devicePermissionSelector);
+  const mutedNotificationProps = useSelector(mutedNotificationSelector);
 
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = options?.mobileView
@@ -55,6 +57,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         cameraPermissionGranted: devicePermissions.video
       }}
       errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
+      mutedNotificationProps={mutedNotificationProps}
       callControlProps={
         callControlOptions !== false && {
           callInvitationURL: callInvitationURL,
