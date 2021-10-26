@@ -9,7 +9,9 @@ import { useLocale } from '../../localization';
  * @alpha
  * xkcd - should be internal
  */
-export interface MutedNotificationProps {}
+export interface MutedNotificationProps {
+  speakingWhileMuted: boolean;
+}
 
 /**
  * Notify the user that they're muted.
@@ -20,6 +22,10 @@ export interface MutedNotificationProps {}
 export function MutedNotification(props: MutedNotificationProps): JSX.Element {
   const locale = useLocale();
   const theme = useTheme();
+
+  if (!props.speakingWhileMuted) {
+    return <></>;
+  }
 
   return (
     <Stack horizontal className={mergeStyles(stackStyle(theme))}>

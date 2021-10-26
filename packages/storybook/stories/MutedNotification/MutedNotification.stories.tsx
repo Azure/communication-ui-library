@@ -18,7 +18,7 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const MutedNotificationStory = (args): JSX.Element => {
-  return <Component />;
+  return <Component speakingWhileMuted={true} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
