@@ -70,13 +70,15 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   return (
     <Stack horizontal className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
-      <PreviousButton
+      <HorizontalGalleryNavigationButton
+        icon={<Icon iconName="HorizontalGalleryLeftButton" />}
         styles={styles?.previousButton}
         onClick={() => setPage(Math.max(0, page - 1))}
         disabled={disablePreviousButton}
       />
       {childrenOnCurrentPage}
-      <NextButton
+      <HorizontalGalleryNavigationButton
+        icon={<Icon iconName="HorizontalGalleryRightButton" />}
         styles={styles?.nextButton}
         onClick={() => setPage(Math.min(lastPage, page + 1))}
         disabled={disableNextButton}
@@ -85,7 +87,12 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   );
 };
 
-const PreviousButton = (props: { styles: IStyle; onClick?: () => void; disabled?: boolean }): JSX.Element => {
+const HorizontalGalleryNavigationButton = (props: {
+  icon: JSX.Element;
+  styles: IStyle;
+  onClick?: () => void;
+  disabled?: boolean;
+}): JSX.Element => {
   const theme = useTheme();
   return (
     <DefaultButton
@@ -94,21 +101,7 @@ const PreviousButton = (props: { styles: IStyle; onClick?: () => void; disabled?
       disabled={props.disabled}
       styles={{ root: props.styles }}
     >
-      <Icon iconName="HorizontalGalleryLeftButton" />
-    </DefaultButton>
-  );
-};
-
-const NextButton = (props: { styles: IStyle; onClick?: () => void; disabled?: boolean }): JSX.Element => {
-  const theme = useTheme();
-  return (
-    <DefaultButton
-      className={mergeStyles(leftRightButtonStyles(theme))}
-      onClick={props.onClick}
-      disabled={props.disabled}
-      styles={{ root: props.styles }}
-    >
-      <Icon iconName="HorizontalGalleryRightButton" />
+      {props.icon}
     </DefaultButton>
   );
 };
