@@ -233,7 +233,7 @@ export const controlsToAdd = {
     control: 'text',
     defaultValue:
       'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin',
-    name: 'Other participants (comma separated)'
+    name: 'Remote participants (comma separated)'
   },
   remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
   screenShareLayoutWidth: {
