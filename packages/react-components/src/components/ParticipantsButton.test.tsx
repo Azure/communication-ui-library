@@ -19,7 +19,10 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('ParticipantsButton strings should be localizable and overridable', () => {
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({ participantsButton: { label: Math.random().toString() } });
-    const component = mountWithLocalization(<ParticipantsButton showLabel={true} participants={[]} />, testLocale);
+    const component = mountWithLocalization(
+      <ParticipantsButton showLabel={true} participantListProps={{ participants: [] }} />,
+      testLocale
+    );
     expect(component.text()).toBe(testLocale.strings.participantsButton.label);
   });
 
@@ -27,7 +30,11 @@ describe('ParticipantsButton strings should be localizable and overridable', () 
     const testLocale = createTestLocale({ participantsButton: { label: Math.random().toString() } });
     const participantButtonStrings = { label: Math.random().toString() };
     const component = mountWithLocalization(
-      <ParticipantsButton showLabel={true} participants={[]} strings={participantButtonStrings} />,
+      <ParticipantsButton
+        showLabel={true}
+        participantListProps={{ participants: [] }}
+        strings={participantButtonStrings}
+      />,
       testLocale
     );
     expect(component.text()).toBe(participantButtonStrings.label);

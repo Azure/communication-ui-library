@@ -26,7 +26,7 @@ export const ControlBarLayoutExample: () => JSX.Element = () => {
           <CameraButton />
           <MicrophoneButton />
           <ScreenShareButton />
-          <ParticipantsButton participants={[]} />
+          <ParticipantsButton participantListProps={{ participants: [] }} />
           <OptionsButton />
           <EndCallButton />
         </ControlBar>

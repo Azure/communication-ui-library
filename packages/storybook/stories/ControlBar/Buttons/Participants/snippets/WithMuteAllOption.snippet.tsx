@@ -42,8 +42,10 @@ export const ParticipantsButtonWithMuteAllOptionExample: () => JSX.Element = () 
   return (
     <FluentThemeProvider>
       <ParticipantsButton
-        participants={mockParticipants}
-        myUserId={'user1'}
+        participantListProps={{
+          participants: mockParticipants,
+          myUserId: 'user1'
+        }}
         callInvitationURL={mockCallLink}
         onMuteAll={onMuteAll}
       />

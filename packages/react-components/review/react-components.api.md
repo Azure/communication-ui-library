@@ -607,10 +607,11 @@ export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
     callInvitationURL?: string;
     onMuteAll?: () => void;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
+    participantListProps: ParticipantListProps;
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }

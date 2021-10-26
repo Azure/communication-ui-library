@@ -61,9 +61,13 @@ export interface ParticipantsButtonStrings {
  *
  * @public
  */
-export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
-   * Optional callback to render the participant list.
+   * Props of the participant list shown when the button is toggled.
+   */
+  participantListProps: ParticipantListProps;
+  /**
+   * Optional callback to render a custom participant list.
    */
   onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
   /**
@@ -104,20 +108,7 @@ const onRenderPeopleIcon = (): JSX.Element => {
  * @public
  */
 export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
-  const {
-    callInvitationURL,
-    styles,
-    onMuteAll,
-    onRenderIcon,
-    onRenderParticipantList,
-    participants,
-    myUserId,
-    excludeMe,
-    onRenderParticipant,
-    onRenderAvatar,
-    onParticipantRemove,
-    onFetchParticipantMenuItems
-  } = props;
+  const { callInvitationURL, styles, onMuteAll, onRenderIcon, onRenderParticipantList } = props;
 
   const onMuteAllCallback = useCallback(() => {
     if (onMuteAll) {
@@ -128,27 +119,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const defaultParticipantList = useCallback(() => {
     return (
       <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
-        <ParticipantList
-          participants={participants}
-          myUserId={myUserId}
-          excludeMe={excludeMe}
-          onRenderParticipant={onRenderParticipant}
-          onRenderAvatar={onRenderAvatar}
-          onParticipantRemove={onParticipantRemove}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        />
+        <ParticipantList {...props.participantListProps} />
       </Stack>
     );
-  }, [
-    excludeMe,
-    myUserId,
-    onParticipantRemove,
-    onRenderAvatar,
-    onRenderParticipant,
-    participants,
-    styles?.participantListContainerStyle,
-    onFetchParticipantMenuItems
-  ]);
+  }, [styles?.participantListContainerStyle, props.participantListProps]);
 
   const onCopyCallback = useCallback(() => {
     if (callInvitationURL) {
@@ -159,6 +133,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
   const localeStrings = useLocale().strings.participantsButton;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
+  const participants = props.participantListProps.participants;
   const participantCount = participants.length;
 
   const generateDefaultParticipantsSubMenuProps = useCallback((): IContextualMenuItem[] => {
@@ -193,6 +168,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onMuteAllCallback
   ]);
 
+  const excludeMe = props.participantListProps.excludeMe;
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       title: strings.menuHeader,
