@@ -73,4 +73,8 @@ export interface CallCompositeStrings {
    * Message to let user know they are sharing their screen.
    */
   screenSharingMessage: string;
+  /**
+   * Message shown to the user when they are speaking while mtued.
+   */
+  youAreMutedMessage: string;
 }

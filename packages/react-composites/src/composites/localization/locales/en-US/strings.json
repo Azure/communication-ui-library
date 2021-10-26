@@ -12,7 +12,8 @@
     "removedFromMeetingTitle": "You were removed from the meeting",
     "screenSharingMessage": "You are sharing your screen",
     "soundLabel": "Sound",
-    "startCallButtonLabel": "Start call"
+    "startCallButtonLabel": "Start call",
+    "youAreMutedMessage": "You're muted"
   },
   "chat": {
     "chatListHeader": "In this chat"
