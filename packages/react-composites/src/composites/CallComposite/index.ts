@@ -7,6 +7,3 @@ export type { CallControlOptions } from './components/CallControls';
 
 export * from './adapter';
 export * from './Strings';
-
-export { MutedNotification } from './components/MutedNotification';
-export type { MutedNotificationProps } from './components/MutedNotification';
