@@ -63,16 +63,11 @@ const MockLocalParticipant = {
   isMuted: true
 };
 
-const onlyUnique = (value: string, index: number, self: string[]): boolean => {
-  return self.indexOf(value) === index;
-};
-
 const VideoGalleryStory = (args): JSX.Element => {
   const remoteParticipants = args.remoteParticipants
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
-    .filter(onlyUnique)
     .map((p, i) => {
       return {
         userId: `user${i}`,
