@@ -15,6 +15,7 @@ import {
   mediaGalleryContainerStyles,
   subContainerStyles
 } from '../styles/CallPage.styles';
+import { NetworkReconnectOverlay } from './NetworkReconnectOverlay';
 
 /**
  * @private
@@ -35,6 +36,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow data-ui-id={props.dataUiId}>
       <>
+        <NetworkReconnectOverlay />
         <Stack.Item styles={bannersContainerStyles}>
           <Stack>
             <ComplianceBanner {...props.complianceBannerProps} />
