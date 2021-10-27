@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "added strings to Locale for Call composite",
+  "packageName": "@internal/react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

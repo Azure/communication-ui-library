@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "centralized localization utils to acs-ui-common",
+  "packageName": "@internal/acs-ui-common",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
