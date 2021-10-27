@@ -95,10 +95,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setShowPeople(!showPeople);
   }, [showPeople]);
 
-  const endCallClick = (): void => {
-    /** todo [jaburnsi]: function will be removed in followup cleanup PR */
-  };
-
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentMeetingState ?? 'None'));
   return (
@@ -139,7 +135,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onChatButtonClicked={toggleChat}
             peopleButtonChecked={showPeople}
             onPeopleButtonClicked={togglePeople}
-            onEndCallClick={endCallClick}
             mobileView={props.options?.mobileView}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
           />

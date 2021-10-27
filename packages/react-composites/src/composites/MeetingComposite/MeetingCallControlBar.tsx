@@ -15,7 +15,6 @@ import { reduceCallControlsForMobile } from '../CallComposite/utils';
  */
 export interface MeetingCallControlBarProps {
   callAdapter: CallAdapter;
-  onEndCallClick: () => void;
   chatButtonChecked: boolean;
   peopleButtonChecked: boolean;
   onChatButtonClicked: () => void;
@@ -49,7 +48,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     <Stack horizontal style={controlBarContainerStyles}>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls onEndCallClick={props.onEndCallClick} options={callControlsOptions} />
+          <CallControls options={callControlsOptions} />
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>
