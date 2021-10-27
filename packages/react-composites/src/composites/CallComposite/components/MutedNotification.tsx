@@ -28,7 +28,7 @@ export function MutedNotification(props: MutedNotificationProps): JSX.Element {
   }
 
   return (
-    <Stack horizontal className={mergeStyles(containerStyle)}>
+    <Stack horizontal horizontalAlign="center">
       <Stack horizontal className={mergeStyles(stackStyle(theme))}>
         <Icon iconName="Muted" className={mergeStyles(iconStyle(theme))} />
         <Text className={mergeStyles(textStyle(theme))}>{locale.strings.call.mutedMessage}</Text>
@@ -36,10 +36,6 @@ export function MutedNotification(props: MutedNotificationProps): JSX.Element {
     </Stack>
   );
 }
-
-const containerStyle: IStyle = {
-  justifyContent: 'center'
-};
 
 const stackStyle = (theme: ITheme): IStyle => {
   return {
