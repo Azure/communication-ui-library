@@ -60,10 +60,10 @@ function App(): JSX.Element {
 
   if (!!callAdapter && !!chatAdapter) {
     return (
-      <>
+      <div style={{ height: '100vh', width: '100vw' }}>
         {chatAdapter && <ChatComposite adapter={chatAdapter} locale={COMPOSITE_LOCALE_FR_FR} />}
         {callAdapter && <CallComposite adapter={callAdapter} locale={COMPOSITE_LOCALE_FR_FR} />}
-      </>
+      </div>
     );
   }
   if (credential === undefined) {

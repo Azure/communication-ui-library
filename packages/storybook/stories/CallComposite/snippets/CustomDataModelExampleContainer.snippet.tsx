@@ -84,7 +84,7 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
   };
 
   return (
-    <>
+    <div style={{ height: '100vh', width: '100vw' }}>
       {adapter && (
         <CallComposite
           fluentTheme={props.fluentTheme}
@@ -95,7 +95,7 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
           locale={props?.locale}
         />
       )}
-    </>
+    </div>
   );
 };
 

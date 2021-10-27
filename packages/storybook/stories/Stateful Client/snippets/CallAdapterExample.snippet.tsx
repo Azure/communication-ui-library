@@ -33,5 +33,11 @@ export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element 
     };
   }, [props, callAdapter]);
 
-  return callAdapter && <CallComposite adapter={callAdapter} />;
+  return (
+    callAdapter && (
+      <div style={{ height: '100vh', width: '100vw' }}>
+        <CallComposite adapter={callAdapter} />
+      </div>
+    )
+  );
 };

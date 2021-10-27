@@ -34,5 +34,11 @@ export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element 
     };
   }, [props, chatAdapter]);
 
-  return chatAdapter && <ChatComposite adapter={chatAdapter} />;
+  return (
+    chatAdapter && (
+      <div style={{ height: '100vh', width: '100vw' }}>
+        <ChatComposite adapter={chatAdapter} />
+      </div>
+    )
+  );
 };

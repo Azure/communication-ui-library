@@ -78,7 +78,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
   };
 
   return (
-    <>
+    <div style={{ height: '100vh', width: '100vw' }}>
       {adapter ? (
         <ChatComposite
           fluentTheme={props.fluentTheme}
@@ -90,6 +90,6 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
       ) : (
         <h3>Loading...</h3>
       )}
-    </>
+    </div>
   );
 };

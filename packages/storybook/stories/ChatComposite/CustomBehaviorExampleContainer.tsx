@@ -53,12 +53,12 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   }, [props]);
 
   return (
-    <>
+    <div style={{ height: '100vh', width: '100vw' }}>
       {adapter ? (
         <ChatComposite fluentTheme={props.fluentTheme} locale={props.locale} adapter={adapter} />
       ) : (
         <h3>Loading...</h3>
       )}
-    </>
+    </div>
   );
 };

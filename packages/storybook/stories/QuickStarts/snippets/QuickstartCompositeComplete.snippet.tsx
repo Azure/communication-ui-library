@@ -59,10 +59,10 @@ function App(): JSX.Element {
 
   if (!!callAdapter && !!chatAdapter) {
     return (
-      <>
+      <div style={{ height: '100vh', width: '100vw' }}>
         <ChatComposite adapter={chatAdapter} />
         <CallComposite adapter={callAdapter} />
-      </>
+      </div>
     );
   }
   if (credential === undefined) {
