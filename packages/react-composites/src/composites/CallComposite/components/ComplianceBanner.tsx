@@ -36,7 +36,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   return <DismissableMessageBar variant={variant} strings={strings} />;
 };
 
-function DismissableMessageBar(props: { variant: number, strings: CompositeStrings }): JSX.Element {
+function DismissableMessageBar(props: { variant: number; strings: CompositeStrings }): JSX.Element {
   const { variant: newVariant, strings } = props;
 
   const [variant, setVariant] = useState(0);
@@ -77,7 +77,7 @@ function computeVariant(
   previousCallTranscribeState: boolean | undefined,
   callRecordState: boolean | undefined,
   callTranscribeState: boolean | undefined
-) {
+): number {
   if (previousCallRecordState && previousCallTranscribeState) {
     if (callRecordState && !callTranscribeState) {
       return TRANSCRIPTION_STOPPED_STILL_RECORDING;
@@ -122,8 +122,8 @@ function computeVariant(
   return NO_STATE;
 }
 
-function BannerMessage(props: { variant: number, strings: CompositeStrings }): JSX.Element {
-  const {variant, strings } = props;
+function BannerMessage(props: { variant: number; strings: CompositeStrings }): JSX.Element {
+  const { variant, strings } = props;
 
   switch (variant) {
     case TRANSCRIPTION_STOPPED_STILL_RECORDING:
@@ -131,7 +131,7 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
         <>
           <b>{strings.call.complianceBannerTranscriptionStopped}</b>
           {` ${strings.call.complianceBannerNowOnlyRecording}`}
-          <PrivacyPolicy linkText={strings.call.privacyPolicy } />
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case RECORDING_STOPPED_STILL_TRANSCRIBING:
@@ -139,7 +139,7 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
         <>
           <b>{strings.call.complianceBannerRecordingStopped}</b>
           {` ${strings.call.complianceBannerNowOnlyTranscription}`}
-          <PrivacyPolicy linkText={strings.call.privacyPolicy } />
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case RECORDING_AND_TRANSCRIPTION_STOPPED:
@@ -147,7 +147,7 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
         <>
           <b>{strings.call.complianceBannerRecordingAndTranscriptionSaved}</b>
           {` ${strings.call.complianceBannerRecordingAndTranscriptionStopped}`}
-          <LearnMore linkText={strings.call.learnMore } />
+          <LearnMore linkText={strings.call.learnMore} />
         </>
       );
     case RECORDING_AND_TRANSCRIPTION_STARTED:
@@ -155,7 +155,7 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
         <>
           <b>{strings.call.complianceBannerRecordingAndTranscriptionStarted}</b>
           {` ${strings.call.complianceBannerTranscriptionConsent}`}
-          <PrivacyPolicy linkText={strings.call.privacyPolicy } />
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case TRANSCRIPTION_STARTED:
@@ -163,7 +163,7 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
         <>
           <b>{strings.call.complianceBannerTrancriptionStarted}</b>
           {` ${strings.call.complianceBannerTranscriptionConsent}`}
-          <PrivacyPolicy linkText={strings.call.privacyPolicy } />
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case RECORDING_STOPPED:
@@ -171,7 +171,7 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
         <>
           <b>{strings.call.complianceBannerRecordingSaving}</b>
           {` ${strings.call.complianceBannerRecordingStopped}`}
-          <LearnMore linkText={strings.call.learnMore } />
+          <LearnMore linkText={strings.call.learnMore} />
         </>
       );
     case RECORDING_STARTED:
@@ -179,7 +179,7 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
         <>
           <b>{strings.call.complianceBannerRecordingStarted}</b>
           {` ${strings.call.complianceBannerTranscriptionConsent}`}
-          <PrivacyPolicy linkText={strings.call.privacyPolicy } />
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case TRANSCRIPTION_STOPPED:
@@ -187,7 +187,7 @@ function BannerMessage(props: { variant: number, strings: CompositeStrings }): J
         <>
           <b>{strings.call.complianceBannerTranscriptionSaving}</b>
           {` ${strings.call.complianceBannerTranscriptionStopped}`}
-          <LearnMore linkText={strings.call.learnMore } />
+          <LearnMore linkText={strings.call.learnMore} />
         </>
       );
   }
