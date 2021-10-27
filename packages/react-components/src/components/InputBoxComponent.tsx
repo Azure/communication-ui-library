@@ -3,7 +3,7 @@
 
 import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
 import { Stack, TextField, mergeStyles, IStyle, ITextField, concatStyleSets } from '@fluentui/react';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStyles } from '../types';
 import {
   inputBoxStyle,
   inputBoxWrapperStyle,
@@ -19,7 +19,7 @@ import { useTheme } from '../theming';
 /**
  * @private
  */
-export interface InputBoxStylesProps extends BaseCustomStylesProps {
+export interface InputBoxStylesProps extends BaseCustomStyles {
   /** Styles for the text field. */
   textField?: IStyle;
 
