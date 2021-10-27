@@ -10,12 +10,12 @@ import {
   mergeStyles,
   Icon
 } from '@fluentui/react';
+import { _formatString } from '@internal/acs-ui-common';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import { ParticipantList, ParticipantListProps } from './ParticipantList';
 import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
-import { formatString } from '../localization/localizationUtils';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { useIdentifiers } from '../identifiers';
 
@@ -214,7 +214,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       menuProps.items.push({
         key: 'participantCountKey',
         'data-ui-id': ids.participantButtonPeopleMenuItem,
-        name: formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
+        name: _formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
         iconProps: { iconName: 'People' },
         subMenuProps: {
           items: generateDefaultParticipantsSubMenuProps(),
