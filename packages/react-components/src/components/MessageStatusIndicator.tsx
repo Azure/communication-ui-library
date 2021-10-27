@@ -6,7 +6,7 @@ import { MessageStatus } from '@internal/acs-ui-common';
 import React from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStyles } from '../types';
 import {
   MessageStatusIndicatorErrorIconStyle,
   MessageStatusIndicatorIconStyle
@@ -43,7 +43,7 @@ export interface MessageStatusIndicatorProps {
    * <MessageStatus styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: BaseCustomStylesProps;
+  styles?: BaseCustomStyles;
   /**
    * Optional strings to override in component
    */
