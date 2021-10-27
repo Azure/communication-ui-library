@@ -333,15 +333,10 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
-<<<<<<< HEAD
     mutedMessage: string;
-    removedFromMeetingMoreDetails?: string;
-    removedFromMeetingTitle: string;
-=======
     privacyPolicy: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
->>>>>>> origin/main
     screenSharingMessage: string;
     sharingScreenLoading: string;
     soundLabel: string;
