@@ -30,7 +30,7 @@ export interface ActiveErrorMessage {
 }
 
 // @public
-export interface BaseCustomStylesProps {
+export interface BaseCustomStyles {
     root?: IStyle;
 }
 
@@ -208,7 +208,7 @@ export type ControlBarLayout = 'horizontal' | 'vertical' | 'dockedTop' | 'docked
 export interface ControlBarProps {
     children?: React_2.ReactNode;
     layout?: ControlBarLayout;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -324,7 +324,7 @@ export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @internal
@@ -413,7 +413,7 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 export interface MessageStatusIndicatorProps {
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -471,7 +471,7 @@ export interface MessageThreadStrings {
 }
 
 // @public
-export interface MessageThreadStyles extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
@@ -571,7 +571,7 @@ export interface ParticipantItemStrings {
 }
 
 // @public
-export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+export interface ParticipantItemStylesProps extends BaseCustomStyles {
     avatar?: IStyle;
     iconContainer?: IStyle;
     me?: IStyle;
@@ -668,7 +668,7 @@ export interface SendBoxStrings {
 }
 
 // @public
-export interface SendBoxStylesProps extends BaseCustomStylesProps {
+export interface SendBoxStylesProps extends BaseCustomStyles {
     sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
     systemMessage?: IStyle;
@@ -682,7 +682,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 // @public
 export interface StreamMediaProps {
     isMirrored?: boolean;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
 
@@ -726,7 +726,7 @@ export interface TypingIndicatorStrings {
 }
 
 // @public
-export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
+export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
@@ -766,7 +766,7 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -808,7 +808,7 @@ export interface VideoTileProps {
 }
 
 // @public
-export interface VideoTileStylesProps extends BaseCustomStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStyles {
     displayNameContainer?: IStyle;
     overlayContainer?: IStyle;
     videoContainer?: IStyle;

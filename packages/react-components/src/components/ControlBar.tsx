@@ -3,7 +3,7 @@
 
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStyles } from '../types';
 import { controlBarStyles } from './styles/ControlBar.styles';
 import { useTheme } from '../theming';
 import { isDarkThemed } from '../theming/themeUtils';
@@ -42,7 +42,7 @@ export interface ControlBarProps {
    * <ControlBar styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: BaseCustomStylesProps;
+  styles?: BaseCustomStyles;
   /**
    * Changes the layout of the control bar.
    * Available layouts are `horizontal`, `vertical`, `dockedTop`, `dockedBottom`,

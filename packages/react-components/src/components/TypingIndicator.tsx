@@ -4,7 +4,7 @@
 import { typingIndicatorContainerStyle, typingIndicatorStringStyle } from './styles/TypingIndicator.styles';
 
 import React from 'react';
-import { BaseCustomStylesProps, CommunicationParticipant } from '../types';
+import { BaseCustomStyles, CommunicationParticipant } from '../types';
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 import { useLocale } from '../localization/LocalizationProvider';
 import { formatSpanElements } from '../localization/localizationUtils';
@@ -15,7 +15,7 @@ import { useIdentifiers } from '../identifiers';
  *
  * @public
  */
-export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
+export interface TypingIndicatorStylesProps extends BaseCustomStyles {
   /** Styles for each typing user's displayName. */
   typingUserDisplayName?: IStyle;
   /** Styles for the typing string. */
