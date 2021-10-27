@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update participantButton interface to have participantListProps property instead of extending a participantList interface directly",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
