@@ -11,6 +11,7 @@ import { moreDetailsStyles, stackItemGap, titleStyles } from '../styles/NoticePa
 export interface NoticePageProps {
   title: string;
   moreDetails?: string;
+  dataUiId: string;
 }
 
 /**
@@ -20,7 +21,7 @@ export interface NoticePageProps {
  */
 export function NoticePage(props: NoticePageProps): JSX.Element {
   return (
-    <Stack verticalFill verticalAlign="center" horizontalAlign="center">
+    <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId}>
       <Stack tokens={stackItemGap}>
         <Text className={mergeStyles(titleStyles)}>{props.title}</Text>
         <Text className={mergeStyles(moreDetailsStyles)}>{props.moreDetails}</Text>

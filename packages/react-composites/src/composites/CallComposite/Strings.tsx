@@ -54,13 +54,21 @@ export interface CallCompositeStrings {
    */
   failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
   /**
-   * Title text of the page shown to the user when they are removed from a meeting.
+   * Title text of the page shown to the user when they leave a call in the call composite.
    */
-  removedFromMeetingTitle: string;
+  leftCallTitle: string;
   /**
-   * More details text of the page shown to the user when they are removed from a meeting.
+   * More details text of the page shown to the user when they leave a call in the call composite.
    */
-  removedFromMeetingMoreDetails?: string;
+  leftCallMoreDetails?: string;
+  /**
+   * Title text of the page shown to the user when they are removed from a call in the call composite.
+   */
+  removedFromCallTitle: string;
+  /**
+   * More details text of the page shown to the user when they are removed from a call in the call composite.
+   */
+  removedFromCallMoreDetails?: string;
   /**
    * Text shown to the user on the lobby screen when connecting to a call.
    */
@@ -77,4 +85,68 @@ export interface CallCompositeStrings {
    * Message shown to the user when they are speaking while muted.
    */
   mutedMessage: string;
+  /**
+   * Text for link to MS privacy policy in Compliance Banner.
+   */
+  privacyPolicy: string;
+  /**
+   * Text for link to learn more about a specific subject.
+   */
+  learnMore: string;
+  /**
+   * Message to let user know the meeting is only being recorded (no transcription) in ComplianceBanner.
+   */
+  complianceBannerNowOnlyRecording: string;
+  /**
+   * Message to let user know the meeting is only being transcripted (no recording) in ComplianceBanner.
+   */
+  complianceBannerNowOnlyTranscription: string;
+  /**
+   * Message to let user know recording and transcription of the meeting are saved in ComplianceBanner.
+   */
+  complianceBannerRecordingAndTranscriptionSaved: string;
+  /**
+   * Message to let user know recording and transcription of the meeting have started in ComplianceBanner.
+   */
+  complianceBannerRecordingAndTranscriptionStarted: string;
+  /**
+   * Message to let user know recording and transcription of the meeting have stopped in ComplianceBanner.
+   */
+  complianceBannerRecordingAndTranscriptionStopped: string;
+  /**
+   * Message to let user know recording of the meeting is being saved in ComplianceBanner.
+   */
+  complianceBannerRecordingSaving: string;
+  /**
+   * Message to let user know recording of the meeting has started in ComplianceBanner.
+   */
+  complianceBannerRecordingStarted: string;
+  /**
+   * Message to let user know recording of the meeting has stopped in ComplianceBanner.
+   */
+  complianceBannerRecordingStopped: string;
+  /**
+   * Message to let user know they are giving consent to meeting being transcripted in ComplianceBanner.
+   */
+  complianceBannerTranscriptionConsent: string;
+  /**
+   * Message to let user know transcription of the meeting is being saved in ComplianceBanner.
+   */
+  complianceBannerTranscriptionSaving: string;
+  /**
+   * Message to let user know transcription of the meeting has started in ComplianceBanner.
+   */
+  complianceBannerTrancriptionStarted: string;
+  /**
+   * Message to let user know the transcription of the meeting has stopped in ComplianceBanner.
+   */
+  complianceBannerTranscriptionStopped: string;
+  /**
+   * Text for close button.
+   */
+  close: string;
+  /**
+   * Message to let user know the screen another user is sharing is being loaded.
+   */
+  sharingScreenLoading: string;
 }

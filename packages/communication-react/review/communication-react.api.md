@@ -34,6 +34,8 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+import { IContextualMenuItemStyles } from '@fluentui/react';
+import { IContextualMenuStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -292,7 +294,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'configuration' | 'lobby' | 'call' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -307,18 +309,41 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    close: string;
+    complianceBannerNowOnlyRecording: string;
+    complianceBannerNowOnlyTranscription: string;
+    complianceBannerRecordingAndTranscriptionSaved: string;
+    complianceBannerRecordingAndTranscriptionStarted: string;
+    complianceBannerRecordingAndTranscriptionStopped: string;
+    complianceBannerRecordingSaving: string;
+    complianceBannerRecordingStarted: string;
+    complianceBannerRecordingStopped: string;
+    complianceBannerTrancriptionStarted: string;
+    complianceBannerTranscriptionConsent: string;
+    complianceBannerTranscriptionSaving: string;
+    complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    learnMore: string;
+    leftCallMoreDetails?: string;
+    leftCallTitle: string;
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+<<<<<<< HEAD
     mutedMessage: string;
     removedFromMeetingMoreDetails?: string;
     removedFromMeetingTitle: string;
+=======
+    privacyPolicy: string;
+    removedFromCallMoreDetails?: string;
+    removedFromCallTitle: string;
+>>>>>>> origin/main
     screenSharingMessage: string;
+    sharingScreenLoading: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -1126,7 +1151,11 @@ export interface _IdentifierProviderProps {
 export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
+    participantButtonPeopleMenuItem: string;
+    participantItemMenuButton: string;
     participantList: string;
+    participantListPeopleButton: string;
+    participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
     videoGallery: string;
@@ -1292,7 +1321,7 @@ export type MeetingCompositeOptions = {
 };
 
 // @alpha
-export type MeetingCompositePage = 'configuration' | 'lobby' | 'meeting' | 'accessDeniedTeamsMeeting' | 'removedFromCall';
+export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @alpha
 export type MeetingCompositeProps = {
@@ -1499,6 +1528,11 @@ defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
+export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface OptionsButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
@@ -1510,6 +1544,7 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
     selectedSpeaker?: OptionsDevice;
     speakers?: OptionsDevice[];
     strings?: Partial<OptionsButtonStrings>;
+    styles?: OptionsButtonStyles;
 }
 
 // @public
@@ -1531,6 +1566,11 @@ export interface OptionsButtonStrings {
     microphoneMenuTooltip: string;
     speakerMenuTitle: string;
     speakerMenuTooltip: string;
+}
+
+// @public
+export interface OptionsButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
 }
 
 // @public

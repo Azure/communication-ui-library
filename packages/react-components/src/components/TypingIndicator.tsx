@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { _formatSpanElements } from '@internal/acs-ui-common';
+
 import { typingIndicatorContainerStyle, typingIndicatorStringStyle } from './styles/TypingIndicator.styles';
 
 import React from 'react';
 import { BaseCustomStylesProps, CommunicationParticipant } from '../types';
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 import { useLocale } from '../localization/LocalizationProvider';
-import { formatSpanElements } from '../localization/localizationUtils';
 import { useIdentifiers } from '../identifiers';
 
 /**
@@ -198,7 +199,7 @@ const getSpanElements = (
     };
   }
 
-  return formatSpanElements(typingString, variables);
+  return _formatSpanElements(typingString, variables);
 };
 
 const IndicatorComponent = (
