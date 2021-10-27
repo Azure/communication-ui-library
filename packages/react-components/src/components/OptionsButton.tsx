@@ -1,10 +1,43 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenuItemType, Icon, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import {
+  ContextualMenuItemType,
+  Icon,
+  IContextualMenuItem,
+  IContextualMenuItemStyles,
+  IContextualMenuProps,
+  IContextualMenuStyles,
+  merge
+} from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
-import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
+import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
+
+/**
+ * Styles for the {@link OptionsButton} menu.
+ *
+ * @public
+ */
+export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
+  /**
+   * Styles for the items inside the {@link OptionsButton} button menu.
+   */
+  menuItemStyles?: IContextualMenuItemStyles;
+}
+
+/**
+ * Styles for the Options button menu items.
+ *
+ * @public
+ */
+export interface OptionsButtonStyles extends ControlBarButtonStyles {
+  /**
+   * Styles for the {@link OptionsButton} menu.
+   */
+  menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
+}
 
 /**
  * A device, e.g. camera, microphone, or speaker, in the {@link OptionsButton} flyout.
@@ -104,6 +137,11 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<OptionsButtonStrings>;
+  /**
+   * Option to increase the touch targets of the button flyout menu items from 36px to 48px.
+   * Recommended for mobile devices.
+   */
+  styles?: OptionsButtonStyles;
 }
 
 /**
@@ -131,10 +169,14 @@ const generateDefaultMenuProps = (
   const defaultMenuProps: IContextualMenuProps = {
     items: [],
 
+    styles: props.styles?.menuStyles,
+
     // Confine the menu to the parents bounds.
     // More info: https://github.com/microsoft/fluentui/issues/18835
     calloutProps: { styles: { root: { maxWidth: '95%' } } }
   };
+
+  const menuItemStyles = merge(buttonFlyoutItemStyles, props.styles?.menuStyles?.menuItemStyles ?? {});
 
   if (cameras && selectedCamera && onSelectCamera) {
     defaultMenuProps.items.push({
@@ -148,6 +190,9 @@ const generateDefaultMenuProps = (
           text: camera.name,
           title: camera.name,
           iconProps: { iconName: 'OptionsCamera', styles: { root: { lineHeight: 0 } } },
+          itemProps: {
+            styles: menuItemStyles
+          },
           canCheck: true,
           isChecked: camera.id === selectedCamera?.id,
           onClick: () => {
@@ -172,6 +217,9 @@ const generateDefaultMenuProps = (
           text: microphone.name,
           title: microphone.name,
           iconProps: { iconName: 'OptionsMic', styles: { root: { lineHeight: 0 } } },
+          itemProps: {
+            styles: menuItemStyles
+          },
           canCheck: true,
           isChecked: microphone.id === selectedMicrophone?.id,
           onClick: () => {
@@ -196,6 +244,9 @@ const generateDefaultMenuProps = (
           text: speaker.name,
           title: speaker.name,
           iconProps: { iconName: 'OptionsSpeaker', styles: { root: { lineHeight: 0 } } },
+          itemProps: {
+            styles: menuItemStyles
+          },
           canCheck: true,
           isChecked: speaker.id === selectedSpeaker?.id,
           onClick: () => {
@@ -230,12 +281,12 @@ export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.optionsButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  const defaultMenuProps = generateDefaultMenuProps(props, strings);
+  const optionsButtonMenu = props.menuProps ?? generateDefaultMenuProps(props, strings);
 
   return (
     <ControlBarButton
       {...props}
-      menuProps={props.menuProps ?? defaultMenuProps}
+      menuProps={optionsButtonMenu}
       menuIconProps={{ hidden: true }}
       onRenderIcon={onRenderIcon ?? onRenderOptionsIcon}
       strings={strings}
