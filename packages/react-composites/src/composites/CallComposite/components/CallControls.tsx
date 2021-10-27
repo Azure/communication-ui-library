@@ -124,9 +124,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const participantButton = options?.participantsButton !== false && (
     <ParticipantsButton
       data-ui-id="call-composite-participants-button"
-      {...participantsButtonProps}
       participantListProps={{
-        ...participantsButtonProps,
+        ...participantsButtonProps.participantListProps,
         onFetchParticipantMenuItems: onFetchParticipantMenuItems
       }}
       showLabel={!options?.compressedMode}
