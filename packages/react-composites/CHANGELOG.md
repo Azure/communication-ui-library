@@ -1,8 +1,55 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.7)
+
+Wed, 27 Oct 2021 19:40:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.0.0-beta.6..@internal/react-composites_v1.0.0-beta.7)
+
+### Changes
+
+- Ensure call controls on Meeting Lobby Page match those on when the call has been joined ([PR #940](https://github.com/azure/communication-ui-library/pull/940) by 2684369+JamesBurnside@users.noreply.github.com)
+- Optimize call composite control bar on mobile ([PR #876](https://github.com/azure/communication-ui-library/pull/876) by 2684369+JamesBurnside@users.noreply.github.com)
+- added screenSharing message string ([PR #944](https://github.com/azure/communication-ui-library/pull/944) by alcail@microsoft.com)
+- Api changes according to reviews from ARB ([PR #859](https://github.com/azure/communication-ui-library/pull/859) by jinan@microsoft.com)
+- Rename an internal enum value ([PR #969](https://github.com/azure/communication-ui-library/pull/969) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix lobby screen camera and mute buttons ([PR #943](https://github.com/azure/communication-ui-library/pull/943) by 2684369+JamesBurnside@users.noreply.github.com)
+- exposing styles prop through chat composite to customize message thread ([PR #834](https://github.com/azure/communication-ui-library/pull/834) by alkwa@microsoft.com)
+- Remove setPage API in CallAdapter and MeetingAdapter ([PR #975](https://github.com/azure/communication-ui-library/pull/975) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add tsdoc to chat adapter ([PR #870](https://github.com/azure/communication-ui-library/pull/870) by jinan@microsoft.com)
+- Rename `Error.inner` to `Error.innerError` ([PR #882](https://github.com/azure/communication-ui-library/pull/882) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add events for diagnostic events to CallAdapter ([PR #963](https://github.com/azure/communication-ui-library/pull/963) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add devices button in mobile view of the call and meeting composites ([PR #866](https://github.com/azure/communication-ui-library/pull/866) by 2684369+JamesBurnside@users.noreply.github.com)
+- Swap the position of the microphone and camera buttons on the local preview to match equivalent recent change to the control bar ([PR #959](https://github.com/azure/communication-ui-library/pull/959) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update to using new ChatMessage types ([PR #830](https://github.com/azure/communication-ui-library/pull/830) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update options button icon in call controls to be a settings gear ([PR #867](https://github.com/azure/communication-ui-library/pull/867) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add left call page ([PR #977](https://github.com/azure/communication-ui-library/pull/977) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add tsdoc for calling adapter method ([PR #868](https://github.com/azure/communication-ui-library/pull/868) by jinan@microsoft.com)
+- Internal refactor of the ComplianceBanner ([PR #973](https://github.com/azure/communication-ui-library/pull/973) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add AccessDenied and RemovedFromCall pages to the Call Composite ([PR #900](https://github.com/azure/communication-ui-library/pull/900) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update message type ([PR #958](https://github.com/azure/communication-ui-library/pull/958) by jinan@microsoft.com)
+- Remove screenshare button by default on Call Composite and Meeting Composite when in mobile view ([PR #875](https://github.com/azure/communication-ui-library/pull/875) by 2684369+JamesBurnside@users.noreply.github.com)
+- remove toggleCamera api in adapter ([PR #885](https://github.com/azure/communication-ui-library/pull/885) by jinan@microsoft.com)
+- Theme palette and effects acquired from theme context for SidePane. ([PR #941](https://github.com/azure/communication-ui-library/pull/941) by miguelgamis@microsoft.com)
+- Add min width to the chat bubble ([PR #895](https://github.com/azure/communication-ui-library/pull/895) by jinan@microsoft.com)
+- Update call controls to match mobile designs ([PR #891](https://github.com/azure/communication-ui-library/pull/891) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix weird height of single-line bubble ([PR #894](https://github.com/azure/communication-ui-library/pull/894) by jinan@microsoft.com)
+- Support mobileView in call composite configuration page  ([PR #865](https://github.com/azure/communication-ui-library/pull/865) by 2684369+JamesBurnside@users.noreply.github.com)
+- bump calling sdk to 1.2.3-beta.1 ([PR #967](https://github.com/azure/communication-ui-library/pull/967) by miguelgamis@microsoft.com)
+- updating calling to use 1.2.2-beta.1 ([PR #945](https://github.com/azure/communication-ui-library/pull/945) by miguelgamis@microsoft.com)
+- Use objects for call history in state ([PR #886](https://github.com/azure/communication-ui-library/pull/886) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add Lobby as a page in adapter state ([PR #898](https://github.com/azure/communication-ui-library/pull/898) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix huge media gallery in meetings when a participant is screen sharing ([PR #871](https://github.com/azure/communication-ui-library/pull/871) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add call details to Call Composite and Meeting Composite configuration pages ([PR #869](https://github.com/azure/communication-ui-library/pull/869) by 2684369+JamesBurnside@users.noreply.github.com)
+- Disable participants and screenshare buttons on lobby screen ([PR #952](https://github.com/azure/communication-ui-library/pull/952) by 2684369+JamesBurnside@users.noreply.github.com)
+- Delete a duplicate field definition ([PR #979](https://github.com/azure/communication-ui-library/pull/979) by 82062616+prprabhu-ms@users.noreply.github.com)
+- HorizontalGallery right and left button icons exposed. ([PR #978](https://github.com/azure/communication-ui-library/pull/978) by miguelgamis@microsoft.com)
+- Replace CommunicationUserKind with CommunicationUserIdentifier in constructor ([PR #884](https://github.com/azure/communication-ui-library/pull/884) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Start triggering 'diagnosticChanged' event ([PR #964](https://github.com/azure/communication-ui-library/pull/964) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update lobby page to match the call page ([PR #902](https://github.com/azure/communication-ui-library/pull/902) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.6)
 

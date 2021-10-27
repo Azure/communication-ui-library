@@ -1,8 +1,29 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0-beta.7)
+
+Wed, 27 Oct 2021 19:40:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.0-beta.6..@internal/storybook_v1.0.0-beta.7)
+
+### Changes
+
+- bump calling sdk to 1.2.3-beta.1 ([PR #967](https://github.com/azure/communication-ui-library/pull/967) by miguelgamis@microsoft.com)
+- Add troubleshooting guide ([PR #863](https://github.com/azure/communication-ui-library/pull/863) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update examples to new ChatMessage types ([PR #830](https://github.com/azure/communication-ui-library/pull/830) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update VideoGallery story with new HorizontalGallery ([PR #978](https://github.com/azure/communication-ui-library/pull/978) by miguelgamis@microsoft.com)
+- Api changes according to reviews from ARB ([PR #859](https://github.com/azure/communication-ui-library/pull/859) by jinan@microsoft.com)
+- Drop unnecessary state variables in example ([PR #971](https://github.com/azure/communication-ui-library/pull/971) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Rename `ActiveError` to `ActiveErrorMessage` ([PR #880](https://github.com/azure/communication-ui-library/pull/880) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Updated story snapshots. ([PR #840](https://github.com/azure/communication-ui-library/pull/840) by miguelgamis@microsoft.com)
+- Rename enum value in example ([PR #969](https://github.com/azure/communication-ui-library/pull/969) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Remove usage of getTheme from IncomingCallAlertsDocs. ([PR #941](https://github.com/azure/communication-ui-library/pull/941) by miguelgamis@microsoft.com)
+- Replace CommunicationUserKind with CommunicationUserIdentifier in constructor ([PR #884](https://github.com/azure/communication-ui-library/pull/884) by 82062616+prprabhu-ms@users.noreply.github.com)
+- updating calling to use 1.2.2-beta.1 ([PR #945](https://github.com/azure/communication-ui-library/pull/945) by miguelgamis@microsoft.com)
+- updating sample code with new styles prop in chat composite ([PR #834](https://github.com/azure/communication-ui-library/pull/834) by alkwa@microsoft.com)
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0-beta.6)
 
