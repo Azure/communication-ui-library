@@ -9,8 +9,7 @@ import {
   Text,
   concatStyleSets,
   mergeStyles,
-  IButtonStyles,
-  IContextualMenuItemStyles
+  IButtonStyles
 } from '@fluentui/react';
 import { useTheme } from '../theming';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
@@ -124,18 +123,4 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
       onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
     />
   );
-};
-
-/**
- * Default styles for button flyout items
- *
- * @private
- */
-export const buttonFlyoutItemStyles: IContextualMenuItemStyles = {
-  icon: {
-    lineHeight: 0
-  },
-  checkmarkIcon: {
-    lineHeight: 0
-  }
 };

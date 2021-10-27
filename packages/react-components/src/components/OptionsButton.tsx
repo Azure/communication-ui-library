@@ -12,12 +12,8 @@ import {
 } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
-import {
-  buttonFlyoutItemStyles,
-  ControlBarButton,
-  ControlBarButtonProps,
-  ControlBarButtonStyles
-} from './ControlBarButton';
+import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
+import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
 
 /**
  * Styles for the {@link OptionsButton} menu.
