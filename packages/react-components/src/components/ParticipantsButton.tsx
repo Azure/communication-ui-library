@@ -5,11 +5,10 @@ import {
   ContextualMenuItemType,
   IContextualMenuItem,
   IContextualMenuProps,
-  Stack,
-  mergeStyles,
   Icon,
   IContextualMenuStyles,
-  IContextualMenuItemStyles
+  IContextualMenuItemStyles,
+  merge
 } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
@@ -139,18 +138,12 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
   const defaultParticipantList = useCallback(() => {
     return (
-      <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.menuStyles?.menuItemStyles?.root)}>
-        <ParticipantList
-          {...props.participantListProps}
-          styles={styles?.menuStyles?.menuItemStyles?.participantListStyles}
-        />
-      </Stack>
+      <ParticipantList
+        {...props.participantListProps}
+        styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.menuItemStyles?.participantListStyles)}
+      />
     );
-  }, [
-    styles?.menuStyles?.menuItemStyles?.root,
-    styles?.menuStyles?.menuItemStyles?.participantListStyles,
-    props.participantListProps
-  ]);
+  }, [styles?.menuStyles?.menuItemStyles?.participantListStyles, props.participantListProps]);
 
   const onCopyCallback = useCallback(() => {
     if (callInvitationURL) {
@@ -202,7 +195,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       title: strings.menuHeader,
-      className: mergeStyles(participantsButtonMenuPropsStyle, styles?.menuStyles),
+      styles: merge(participantsButtonMenuPropsStyle, styles?.menuStyles),
       items: []
     };
 

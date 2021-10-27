@@ -34,6 +34,8 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+import { IContextualMenuItemStyles } from '@fluentui/react';
+import { IContextualMenuStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -1577,6 +1579,12 @@ export interface ParticipantItemStyles extends BaseCustomStyles {
 export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
+export interface ParticipantListItemStyles extends ParticipantItemStyles {
+    // (undocumented)
+    participantSubMenuItemsStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
@@ -1585,6 +1593,7 @@ export type ParticipantListProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    styles?: ParticipantListStyles;
 };
 
 // @public
@@ -1592,6 +1601,12 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
     participants: CallParticipant[];
     myUserId: string;
 };
+
+// @public
+export interface ParticipantListStyles extends BaseCustomStyles {
+    // (undocumented)
+    participantItemStyles?: ParticipantListItemStyles;
+}
 
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
@@ -1612,6 +1627,17 @@ export type ParticipantsAddedListener = (event: {
 
 // @public
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
+
+// @public
+export interface ParticipantsButtonContextualMenuItemStyles extends IContextualMenuItemStyles {
+    participantListContainerStyles?: IStyle;
+    participantListStyles?: ParticipantListStyles;
+}
+
+// @public
+export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: ParticipantsButtonContextualMenuItemStyles;
+}
 
 // @public
 export interface ParticipantsButtonProps extends ControlBarButtonProps {
@@ -1640,7 +1666,7 @@ export interface ParticipantsButtonStrings {
 
 // @public
 export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
-    participantListContainerStyle?: IStyle;
+    menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
 // @public

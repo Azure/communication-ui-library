@@ -48,7 +48,9 @@ const mockStyles: ParticipantsButtonStyles = {
   rootHovered: { background: 'crimson', color: 'white' },
   rootExpanded: { background: 'dimgrey', color: 'white' },
   label: { color: 'white', fontStyle: 'italic' },
-  participantListContainerStyle: { border: 'solid 1px red' }
+  menuStyles: {
+    menuItemStyles: { participantListStyles: { root: { border: 'solid 1px red' } } }
+  }
 };
 
 export const ParticipantsButtonWithCustomStylesExample: () => JSX.Element = () => {
