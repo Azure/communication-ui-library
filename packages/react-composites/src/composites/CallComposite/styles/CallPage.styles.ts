@@ -70,7 +70,7 @@ export const bannersContainerStyles: IStackStyles = {
   root: {
     width: '100%',
     position: 'absolute',
-    // High enough to be above the video gallary and <NetworkReconnectOverlay/>
+    // High enough to be above the video gallary.
     zIndex: 9,
     top: 0,
     left: 0,

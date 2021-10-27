@@ -4,23 +4,26 @@
 import { IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React from 'react';
 
-export interface NetworkReconnectOverlayProps {}
+export interface NetworkReconnectOverlayProps {
+  zIndex: number;
+}
 
 export function NetworkReconnectOverlay(props: NetworkReconnectOverlayProps): JSX.Element {
   return (
-    <Stack verticalFill className={mergeStyles(networkReconnectOverlayStyle)}>
+    <Stack verticalFill className={mergeStyles(networkReconnectOverlayStyle(props.zIndex))}>
       <Stack.Item className={mergeStyles(textStyle)}>Oh noes!</Stack.Item>
     </Stack>
   );
 }
 
-const networkReconnectOverlayStyle: IStyle = {
+const networkReconnectOverlayStyle = (zIndex: number): IStyle => ({
+  height: '100%',
+  width: '100%',
   position: 'absolute',
   background: '#201f1e',
   opacity: 0.75,
-  // Higher than VideoGallery, but below the error bars etc.
-  zIndex: 5
-};
+  zIndex
+});
 
 const textStyle: IStyle = {
   fontSize: '1.75rem',

@@ -8,7 +8,8 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { ScreenShare } from './ScreenShare';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { IStackStyles, mergeStyles, Stack } from '@fluentui/react';
+import { NetworkReconnectOverlay } from './NetworkReconnectOverlay';
 
 const VideoGalleryStyles = {
   root: {
@@ -63,20 +64,35 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   const VideoGalleryMemoized = useMemo(() => {
     return (
-      <VideoGallery
-        {...videoGalleryProps}
-        localVideoViewOption={localVideoViewOption}
-        remoteVideoViewOption={remoteVideoViewOption}
-        styles={VideoGalleryStyles}
-        layout="floatingLocalVideo"
-        onRenderAvatar={(userId, options) => (
-          <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-          </Stack>
-        )}
-      />
+      <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
+        <NetworkReconnectOverlay zIndex={NETWORK_RECONNECT_OVERLAY_ZINDEX} />
+        <VideoGallery
+          {...videoGalleryProps}
+          localVideoViewOption={localVideoViewOption}
+          remoteVideoViewOption={remoteVideoViewOption}
+          styles={VideoGalleryStyles}
+          layout="floatingLocalVideo"
+          onRenderAvatar={(userId, options) => (
+            <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
+              <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+            </Stack>
+          )}
+        />
+      </Stack>
     );
   }, [props.onFetchAvatarPersonaData, videoGalleryProps]);
 
   return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
+};
+
+// Higher than <VideoGallery>
+const NETWORK_RECONNECT_OVERLAY_ZINDEX = 5;
+
+const containerStyles: IStackStyles = {
+  root: {
+    height: '100%',
+    width: '100%',
+    // Create a new stacking context for <NetworkReconnectOverlay>
+    position: 'relative'
+  }
 };
