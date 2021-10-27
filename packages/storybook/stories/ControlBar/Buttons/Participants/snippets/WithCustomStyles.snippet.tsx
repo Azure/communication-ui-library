@@ -49,7 +49,7 @@ const mockStyles: ParticipantsButtonStyles = {
   rootExpanded: { background: 'dimgrey', color: 'white' },
   label: { color: 'white', fontStyle: 'italic' },
   menuStyles: {
-    menuItemStyles: { participantListStyles: { root: { border: 'solid 1px red' } } }
+    participantListStyles: { root: { border: 'solid 1px red' } }
   }
 };
 

@@ -65,7 +65,6 @@ export type { OptionsDevice, OptionsButtonProps, OptionsButtonStrings } from './
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
-  ParticipantsButtonContextualMenuItemStyles,
   ParticipantsButtonContextualMenuStyles,
   ParticipantsButtonProps,
   ParticipantsButtonStrings,

@@ -19,23 +19,15 @@ import { formatString } from '../localization/localizationUtils';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 
 /**
- * Styles for the {@link ParticipantsButton} menu items.
- *
- * @public
- */
-export interface ParticipantsButtonContextualMenuItemStyles extends IContextualMenuItemStyles {
-  /** Styles for the {@link ParticipantList} menu item inside the {@link ParticipantsButton} menu. */
-  participantListStyles?: ParticipantListStyles;
-}
-
-/**
  * Styles for the {@link ParticipantsButton} menu.
  *
  * @public
  */
 export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
   /** Styles for the {@link ParticipantsButton} menu items. */
-  menuItemStyles?: ParticipantsButtonContextualMenuItemStyles;
+  menuItemStyles?: IContextualMenuItemStyles;
+  /** Styles for the {@link ParticipantList} menu item inside the {@link ParticipantsButton} menu. */
+  participantListStyles?: ParticipantListStyles;
 }
 
 /**
@@ -140,10 +132,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     return (
       <ParticipantList
         {...props.participantListProps}
-        styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.menuItemStyles?.participantListStyles)}
+        styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.participantListStyles)}
       />
     );
-  }, [styles?.menuStyles?.menuItemStyles?.participantListStyles, props.participantListProps]);
+  }, [styles?.menuStyles?.participantListStyles, props.participantListProps]);
 
   const onCopyCallback = useCallback(() => {
     if (callInvitationURL) {

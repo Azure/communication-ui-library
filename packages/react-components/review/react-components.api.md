@@ -585,7 +585,6 @@ export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
 export interface ParticipantListItemStyles extends ParticipantItemStyles {
-    // (undocumented)
     participantSubMenuItemsStyles?: IContextualMenuItemStyles;
 }
 
@@ -603,7 +602,6 @@ export type ParticipantListProps = {
 
 // @public
 export interface ParticipantListStyles extends BaseCustomStyles {
-    // (undocumented)
     participantItemStyles?: ParticipantListItemStyles;
 }
 
@@ -622,13 +620,9 @@ export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonContextualMenuItemStyles extends IContextualMenuItemStyles {
-    participantListStyles?: ParticipantListStyles;
-}
-
-// @public
 export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
-    menuItemStyles?: ParticipantsButtonContextualMenuItemStyles;
+    menuItemStyles?: IContextualMenuItemStyles;
+    participantListStyles?: ParticipantListStyles;
 }
 
 // @public

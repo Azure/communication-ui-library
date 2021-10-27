@@ -23,6 +23,7 @@ import { iconStyles, participantListItemStyle, participantListStyle } from './st
  * @public
  */
 export interface ParticipantListItemStyles extends ParticipantItemStyles {
+  /** Styles applied to the sub-menu of the {@link ParticipantList} {@link ParticipantItem}. */
   participantSubMenuItemsStyles?: IContextualMenuItemStyles;
 }
 
@@ -32,6 +33,7 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
  * @public
  */
 export interface ParticipantListStyles extends BaseCustomStyles {
+  /** Styles for the {@link ParticipantList} {@link ParticipantItem}. */
   participantItemStyles?: ParticipantListItemStyles;
 }
 

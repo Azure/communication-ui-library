@@ -1580,7 +1580,6 @@ export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
 export interface ParticipantListItemStyles extends ParticipantItemStyles {
-    // (undocumented)
     participantSubMenuItemsStyles?: IContextualMenuItemStyles;
 }
 
@@ -1604,7 +1603,6 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
 
 // @public
 export interface ParticipantListStyles extends BaseCustomStyles {
-    // (undocumented)
     participantItemStyles?: ParticipantListItemStyles;
 }
 
@@ -1629,13 +1627,9 @@ export type ParticipantsAddedListener = (event: {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonContextualMenuItemStyles extends IContextualMenuItemStyles {
-    participantListStyles?: ParticipantListStyles;
-}
-
-// @public
 export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
-    menuItemStyles?: ParticipantsButtonContextualMenuItemStyles;
+    menuItemStyles?: IContextualMenuItemStyles;
+    participantListStyles?: ParticipantListStyles;
 }
 
 // @public
