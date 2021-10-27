@@ -19,7 +19,7 @@ import { TOC } from './TOC';
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
-registerIcons({ icons: DEFAULT_COMPONENT_ICONS  });
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 export const parameters = {
   layout: 'fullscreen',
