@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DEFAULT_COMPONENT_ICONS, DEFAULT_COMPOSITE_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
+import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
 import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import React from 'react';
@@ -19,7 +19,7 @@ import { TOC } from './TOC';
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
-registerIcons({ icons: DEFAULT_COMPOSITE_ICONS  });
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS  });
 
 export const parameters = {
   layout: 'fullscreen',
