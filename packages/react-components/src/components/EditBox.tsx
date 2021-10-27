@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, Icon, mergeStyles } from '@fluentui/react';
-import { formatString } from '@internal/acs-ui-common';
+import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../theming/FluentThemeProvider';
 import React, { useCallback, useMemo, useState } from 'react';
 
@@ -56,7 +56,7 @@ export const EditBox = (props: EditBoxProps): JSX.Element => {
   };
 
   const textTooLongMessage = textValueOverflow
-    ? formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
+    ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
     : undefined;
 
   const onRenderThemedCancelIcon = useCallback(

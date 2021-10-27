@@ -28,11 +28,11 @@ export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
 
-// @public
-export const formatSpanElements: (str: string, vars: IObjectMap<JSX.Element>) => JSX.Element[];
+// @internal
+export const _formatSpanElements: (str: string, vars: _IObjectMap<JSX.Element>) => JSX.Element[];
 
-// @public
-export const formatString: (str: string, vars: IObjectMap<string>) => string;
+// @internal
+export const _formatString: (str: string, vars: _IObjectMap<string>) => string;
 
 // @public
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
@@ -43,8 +43,8 @@ export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, .
 // @internal
 export const _getApplicationId: () => string;
 
-// @public (undocumented)
-export interface IObjectMap<T> {
+// @internal (undocumented)
+export interface _IObjectMap<T> {
     // (undocumented)
     [key: string]: T;
 }

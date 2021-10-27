@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Icon, mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
-import { formatString, memoizeFnAll } from '@internal/acs-ui-common';
+import { _formatString, memoizeFnAll } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import {
   StreamMedia,
@@ -75,7 +75,7 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 const onRenderPlaceholder = (options, strings): JSX.Element => (
   <div className={loadingStyle}>
     <Spinner
-      label={formatString(strings.sharingScreenLoading, { sharingUser: `${options?.text}` })}
+      label={_formatString(strings.sharingScreenLoading, { sharingUser: `${options?.text}` })}
       size={SpinnerSize.xSmall}
     />
   </div>

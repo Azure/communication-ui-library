@@ -4,14 +4,14 @@
 import React from 'react';
 
 /**
- * @public
+ * @internal
  */
-export interface IObjectMap<T> {
+export interface _IObjectMap<T> {
   [key: string]: T;
 }
 
 /**
- * @public
+ * @internal
  *
  * Create an array of span elements by replacing the pattern "\{\}" in str with the elements
  * passed in as vars and creating span elements fromt the rest
@@ -25,7 +25,7 @@ export interface IObjectMap<T> {
  * @param vars - Variables to use to format the string
  * @returns formatted JSX elements
  */
-export const formatSpanElements = (str: string, vars: IObjectMap<JSX.Element>): JSX.Element[] => {
+export const _formatSpanElements = (str: string, vars: _IObjectMap<JSX.Element>): JSX.Element[] => {
   if (!str) {
     return [];
   }
@@ -54,20 +54,20 @@ export const formatSpanElements = (str: string, vars: IObjectMap<JSX.Element>): 
 };
 
 /**
- * @public
+ * @internal
  *
  * Replace the pattern "\{\}" in str with the values passed in as vars
  *
  * @example
  * ```ts
- *   formatString("hello {name}. '{name}' is a rare name.", {name: "Foo"});
+ *   _formatString("hello {name}. '{name}' is a rare name.", {name: "Foo"});
  *   // returns "hello Foo. 'Foo' is a rare name."
  * ```
  * @param str - The string to be formatted
  * @param variables - Variables to use to format the string
  * @returns a formatted string
  */
-export const formatString = (str: string, vars: IObjectMap<string>): string => {
+export const _formatString = (str: string, vars: _IObjectMap<string>): string => {
   if (!str) {
     return '';
   }

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { formatSpanElements } from '@internal/acs-ui-common';
+import { _formatSpanElements } from '@internal/acs-ui-common';
 
 import { typingIndicatorContainerStyle, typingIndicatorStringStyle } from './styles/TypingIndicator.styles';
 
@@ -199,7 +199,7 @@ const getSpanElements = (
     };
   }
 
-  return formatSpanElements(typingString, variables);
+  return _formatSpanElements(typingString, variables);
 };
 
 const IndicatorComponent = (
