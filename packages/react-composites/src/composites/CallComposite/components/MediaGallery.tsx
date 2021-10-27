@@ -10,6 +10,7 @@ import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { IStackStyles, mergeStyles, Stack } from '@fluentui/react';
 import { NetworkReconnectOverlay } from './NetworkReconnectOverlay';
+import { networkReconnectOverlaySelector } from '../selectors/networkReconnectOverlaySelector';
 
 const VideoGalleryStyles = {
   root: {
@@ -62,10 +63,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setIsButtonStatusSynced(true);
   }, [isButtonStatusSynced, isPreviewCameraOn, props]);
 
+  const networkReconnectOverlayProps = useSelector(networkReconnectOverlaySelector);
+
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
-        <NetworkReconnectOverlay zIndex={NETWORK_RECONNECT_OVERLAY_ZINDEX} />
+        <NetworkReconnectOverlay {...networkReconnectOverlayProps} zIndex={NETWORK_RECONNECT_OVERLAY_ZINDEX} />
         <VideoGallery
           {...videoGalleryProps}
           localVideoViewOption={localVideoViewOption}

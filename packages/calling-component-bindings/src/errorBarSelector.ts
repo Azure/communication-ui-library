@@ -42,11 +42,6 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     // have timestamps for errors.
     const activeErrorMessages: ActiveErrorMessage[] = [];
 
-    // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
-    if (diagnostics?.network.latest.networkReconnect?.value === 3) {
-      activeErrorMessages.push({ type: 'callingNetworkFailure' });
-    }
-
     // Prefer to show errors with privacy implications.
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.stopVideo', 'stopVideoGeneric');
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mute', 'muteGeneric');
