@@ -9,7 +9,7 @@ import { permissionsBannerContainerStyle } from '../../common/styles/Permissions
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
-  bannersContainerStyles,
+  notificationsContainerStyles,
   callControlsContainer,
   containerStyles,
   mediaGalleryContainerStyles,
@@ -34,7 +34,7 @@ export interface CallArrangementProps {
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow data-ui-id={props.dataUiId}>
-      <Stack.Item styles={bannersContainerStyles}>
+      <Stack.Item styles={notificationsContainerStyles(NOTIFICATIONS_CONTAINER_ZINDEX)}>
         <Stack>
           <ComplianceBanner {...props.complianceBannerProps} />
         </Stack>
@@ -63,3 +63,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     </Stack>
   );
 };
+
+// High enough to be above `onRenderGalleryContent()`.
+const NOTIFICATIONS_CONTAINER_ZINDEX = 9;
