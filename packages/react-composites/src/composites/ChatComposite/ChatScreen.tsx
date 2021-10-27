@@ -48,6 +48,7 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
+  messageSizePerFetch?: number;
 };
 
 /**
@@ -72,7 +73,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     styles
   } = props;
 
-  const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
 
   const adapter = useAdapter();
@@ -112,8 +112,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
-            numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
+            numberOfChatMessagesToReload={options?.messagesPerFetch}
           />
           <Stack.Item align="center" className={sendBoxParentStyle}>
             <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>

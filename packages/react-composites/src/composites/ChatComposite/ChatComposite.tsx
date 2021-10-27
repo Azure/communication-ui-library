@@ -58,6 +58,13 @@ export type ChatCompositeOptions = {
    * @defaultValue true
    */
   topic?: boolean;
+  /**
+   * Message count to fetch when chat composite tries to load more messages from history.
+   * @remark Message load usually triggers when initializing or when users scroll to the top.
+   * Smaller number for smoother experience, larger number for better rendering perf
+   * @defaultValue 10
+   */
+  messagesPerFetch?: number;
 };
 
 /**

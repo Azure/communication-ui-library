@@ -562,6 +562,7 @@ export type ChatCompositeOptions = {
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;
+    messagesPerFetch?: number;
 };
 
 // @public
