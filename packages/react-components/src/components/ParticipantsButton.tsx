@@ -17,6 +17,7 @@ import { ParticipantList, ParticipantListProps } from './ParticipantList';
 import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
+import { useIdentifiers } from '../identifiers';
 
 /**
  * Styles Props for {@link ParticipantsButton}.
@@ -119,6 +120,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onFetchParticipantMenuItems
   } = props;
 
+  const ids = useIdentifiers();
+
   const onMuteAllCallback = useCallback(() => {
     if (onMuteAll) {
       onMuteAll();
@@ -210,6 +213,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
       menuProps.items.push({
         key: 'participantCountKey',
+        'data-ui-id': ids.participantButtonPeopleMenuItem,
         name: _formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
         iconProps: { iconName: 'People' },
         subMenuProps: {
@@ -241,6 +245,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     callInvitationURL,
     participants,
     excludeMe,
+    ids.participantButtonPeopleMenuItem,
     generateDefaultParticipantsSubMenuProps,
     onCopyCallback
   ]);
