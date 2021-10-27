@@ -90,7 +90,7 @@ const getDocs: () => JSX.Element = () => {
         <ParticipantsButtonWithMuteAllOptionExample />
       </Canvas>
 
-      <Heading>ParticipantsButton with cutom styles</Heading>
+      <Heading>ParticipantsButton with custom styles</Heading>
       <Description>
         You can change the styles of `ParticipantsButton` through its `styles` props as you would customize any Button
         styles (root, label, etc..) with the addition of customizing the participant list container like shown in the
@@ -149,8 +149,10 @@ const ParticipantsStory = (args): JSX.Element => {
   return (
     <ParticipantsButton
       {...args}
-      participants={mockParticipants}
-      myUserId={myUserId}
+      participantListProps={{
+        participants: mockParticipants,
+        myUserId: myUserId
+      }}
       onMuteAll={args.isMuteAllAvailable ? onMuteAll : undefined}
     />
   );
