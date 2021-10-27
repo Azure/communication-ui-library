@@ -15,6 +15,7 @@ import {
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
+  buttonFlyoutIncreasedSizeStyles,
   checkedButtonOverrideStyles,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle
@@ -27,6 +28,11 @@ export type CallControlsProps = {
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: boolean | CallControlOptions;
+  /**
+   * Option to increase the height of the button flyout menu items from 36px to 48px.
+   * Recommended for mobile devices.
+   */
+  increaseFlyoutItemSize?: boolean;
 };
 
 /**
@@ -131,9 +137,21 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
+  const optionButtonStyles = props.increaseFlyoutItemSize
+    ? {
+        menuStyles: {
+          menuItemStyles: buttonFlyoutIncreasedSizeStyles
+        }
+      }
+    : undefined;
   const optionsButton = options?.optionsButton !== false && (
     /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
-    <OptionsButton persistMenu={true} {...optionsButtonProps} showLabel={!options?.compressedMode} />
+    <OptionsButton
+      persistMenu={true}
+      {...optionsButtonProps}
+      showLabel={!options?.compressedMode}
+      styles={optionButtonStyles}
+    />
   );
 
   const endCallButton = options?.endCallButton !== false && (

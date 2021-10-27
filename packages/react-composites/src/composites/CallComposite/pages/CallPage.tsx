@@ -62,7 +62,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         callControlOptions !== false && {
           callInvitationURL: callInvitationURL,
           onFetchParticipantMenuItems: onFetchParticipantMenuItems,
-          options: callControlOptions
+          options: callControlOptions,
+          increaseFlyoutItemSize: props.options?.mobileView
         }
       }
       onRenderGalleryContent={() =>

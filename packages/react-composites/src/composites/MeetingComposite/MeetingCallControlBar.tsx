@@ -48,7 +48,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     <Stack horizontal style={controlBarContainerStyles}>
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls options={callControlsOptions} />
+          <CallControls options={callControlsOptions} increaseFlyoutItemSize={props.mobileView} />
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>
