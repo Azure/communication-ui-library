@@ -12,11 +12,13 @@ import {
 } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
-import { ParticipantList, ParticipantListProps } from './ParticipantList';
+import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from './ParticipantList';
 import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { formatString } from '../localization/localizationUtils';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
+import { CommunicationParticipant } from '../types/CommunicationParticipant';
+import { OnRenderAvatarCallback } from '../types/OnRender';
 
 /**
  * Styles Props for {@link ParticipantsButton}.
@@ -63,14 +65,6 @@ export interface ParticipantsButtonStrings {
  */
 export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
-   * Props of the participant list shown when the button is clicked.
-   */
-  participantListProps: ParticipantListProps;
-  /**
-   * Optional callback to render a custom participant list.
-   */
-  onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
-  /**
    * Allows users to pass an object containing custom CSS styles.
    * @Example
    * ```
@@ -86,10 +80,32 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
    * CallBack to mute all remote participants
    */
   onMuteAll?: () => void;
+  /** Participants in user call or chat */
+  participants: CommunicationParticipant[];
+  /** User ID of user */
+  myUserId?: string;
+  /**
+   * If set to `true`, excludes the local participant from the participant list with use of `myUserId` props (required in this case).
+   *
+   * @defaultValue `false`
+   */
+  excludeMe?: boolean;
   /**
    * Optional strings to override in component
    */
   strings?: Partial<ParticipantsButtonStrings>;
+  /**
+   * Optional callback to render a custom participant list.
+   */
+  onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
+  /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
+  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+  /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
+  onRenderAvatar?: OnRenderAvatarCallback;
+  /** Optional callback to render the context menu for each participant  */
+  onParticipantRemove?: (userId: string) => void;
+  /** Optional callback to render custom menu items for each participant. */
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }
 
 const onRenderPeopleIcon = (): JSX.Element => {
@@ -119,10 +135,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const defaultParticipantList = useCallback(() => {
     return (
       <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
-        <ParticipantList {...props.participantListProps} />
+        <ParticipantList {...props} />
       </Stack>
     );
-  }, [styles?.participantListContainerStyle, props.participantListProps]);
+  }, [styles?.participantListContainerStyle, props]);
 
   const onCopyCallback = useCallback(() => {
     if (callInvitationURL) {
@@ -133,7 +149,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
   const localeStrings = useLocale().strings.participantsButton;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
-  const participants = props.participantListProps.participants;
+  const participants = props.participants;
   const participantCount = participants.length;
 
   const generateDefaultParticipantsSubMenuProps = useCallback((): IContextualMenuItem[] => {
@@ -168,7 +184,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onMuteAllCallback
   ]);
 
-  const excludeMe = props.participantListProps.excludeMe;
+  const excludeMe = props.excludeMe;
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       title: strings.menuHeader,
