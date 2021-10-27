@@ -71,6 +71,14 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
     );
   }, [theme, locale.strings.call.cameraTurnedOff]);
 
+  const optionsButtonStyles = props.mobileView
+    ? {
+        menuStyles: {
+          menuItemStyles: buttonFlyoutIncreasedSizeStyles
+        }
+      }
+    : undefined;
+
   return (
     <Stack
       data-ui-id="call-composite-local-preview"
@@ -106,13 +114,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               // disable button whilst all other buttons are disabled
               disabled={!microphonePermissionGranted || !cameraPermissionGranted}
               showLabel={true}
-              styles={
-                (props.mobileView || undefined) && {
-                  menuStyles: {
-                    menuItemStyles: buttonFlyoutIncreasedSizeStyles
-                  }
-                }
-              }
+              styles={optionsButtonStyles}
             />
           )}
         </ControlBar>

@@ -137,19 +137,20 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
+  const optionButtonStyles = props.increaseFlyoutItemSize
+    ? {
+        menuStyles: {
+          menuItemStyles: buttonFlyoutIncreasedSizeStyles
+        }
+      }
+    : undefined;
   const optionsButton = options?.optionsButton !== false && (
     /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
     <OptionsButton
       persistMenu={true}
       {...optionsButtonProps}
       showLabel={!options?.compressedMode}
-      styles={
-        (props.increaseFlyoutItemSize || undefined) && {
-          menuStyles: {
-            menuItemStyles: buttonFlyoutIncreasedSizeStyles
-          }
-        }
-      }
+      styles={optionButtonStyles}
     />
   );
 
