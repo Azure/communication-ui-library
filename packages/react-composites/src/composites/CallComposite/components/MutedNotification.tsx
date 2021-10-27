@@ -27,7 +27,9 @@ export function MutedNotification(props: MutedNotificationProps): JSX.Element {
     <Stack horizontal horizontalAlign="center">
       <Stack horizontal className={mergeStyles(stackStyle(theme))}>
         <Icon iconName="Muted" className={mergeStyles(iconStyle(theme))} />
-        <Text className={mergeStyles(textStyle(theme))}>{locale.strings.call.mutedMessage}</Text>
+        <Text className={mergeStyles(textStyle(theme))} aria-live={'polite'}>
+          {locale.strings.call.mutedMessage}
+        </Text>
       </Stack>
     </Stack>
   );
