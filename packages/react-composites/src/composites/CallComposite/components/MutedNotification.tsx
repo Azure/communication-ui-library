@@ -6,8 +6,7 @@ import React from 'react';
 import { useLocale } from '../../localization';
 
 /**
- * @alpha
- * xkcd - should be internal
+ * @private
  */
 export interface MutedNotificationProps {
   speakingWhileMuted: boolean;
@@ -15,9 +14,6 @@ export interface MutedNotificationProps {
 
 /**
  * Notify the user that they're muted.
- *
- * @alpha
- * xkcd - should be internal
  */
 export function MutedNotification(props: MutedNotificationProps): JSX.Element {
   const locale = useLocale();
