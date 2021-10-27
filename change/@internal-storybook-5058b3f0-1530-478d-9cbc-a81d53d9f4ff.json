@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update VideoGallery story with new HorizontalGallery",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

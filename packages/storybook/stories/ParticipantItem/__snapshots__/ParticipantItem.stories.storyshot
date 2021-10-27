@@ -94,6 +94,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
           </div>
           <div
             className="ms-Stack css-27"
+            data-ui-id="participant-item-menu-button"
             title="More Options"
           >
             <i
