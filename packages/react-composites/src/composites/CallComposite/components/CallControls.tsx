@@ -85,7 +85,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
-  const participantsButtonParticipantListProps = usePropsFor(ParticipantList);
   const optionsButtonProps = usePropsFor(OptionsButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
@@ -127,7 +126,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       data-ui-id="call-composite-participants-button"
       {...participantsButtonProps}
       participantListProps={{
-        ...participantsButtonParticipantListProps,
+        ...participantsButtonProps,
         onFetchParticipantMenuItems: onFetchParticipantMenuItems
       }}
       showLabel={!options?.compressedMode}

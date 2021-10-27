@@ -16,8 +16,10 @@ export type ParticipantsButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  participants: CallParticipant[];
-  myUserId: string;
+  participantListProps: {
+    participants: CallParticipant[];
+    myUserId: string;
+  };
 };
 
 /**
@@ -28,11 +30,13 @@ export type ParticipantsButtonSelector = (
 export const participantsButtonSelector: ParticipantsButtonSelector = createSelector(
   [participantListSelector],
   (
-    participantListProps
+    participantListSelectorProps
   ): {
-    participants: CallParticipant[];
-    myUserId: string;
+    participantListProps: {
+      participants: CallParticipant[];
+      myUserId: string;
+    };
   } => {
-    return participantListProps;
+    return { participantListProps: participantListSelectorProps };
   }
 );
