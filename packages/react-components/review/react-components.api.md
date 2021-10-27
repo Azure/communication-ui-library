@@ -623,7 +623,6 @@ export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element
 
 // @public
 export interface ParticipantsButtonContextualMenuItemStyles extends IContextualMenuItemStyles {
-    participantListContainerStyles?: IStyle;
     participantListStyles?: ParticipantListStyles;
 }
 
