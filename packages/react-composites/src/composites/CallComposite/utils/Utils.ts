@@ -113,8 +113,7 @@ export const getCallCompositePage = (
       case CallEndReasons.REMOVED_FROM_CALL:
         return 'removedFromCall';
       case CallEndReasons.LEFT_CALL:
-        // @TODO update this to 'leftPage' when the left call page is implemented
-        return 'removedFromCall';
+        return 'leftCall';
     }
   }
 

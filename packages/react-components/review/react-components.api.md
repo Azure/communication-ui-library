@@ -265,6 +265,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element;
 };
 
 // @public
@@ -344,7 +346,11 @@ export interface _IdentifierProviderProps {
 export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
+    participantButtonPeopleMenuItem: string;
+    participantItemMenuButton: string;
     participantList: string;
+    participantListPeopleButton: string;
+    participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
     videoGallery: string;
