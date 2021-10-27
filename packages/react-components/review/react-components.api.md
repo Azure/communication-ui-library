@@ -263,6 +263,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element;
 };
 
 // @public

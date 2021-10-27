@@ -31,10 +31,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   adapter: CallAdapter;
   callInvitationUrl?: string;
   /**
-   * A callback function that can be used to provide custom data to an Avatar.
-   */
-  onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  /**
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
@@ -122,14 +118,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             connectingToCall: locale.strings.call.lobbyScreenConnectingToCallTitle,
             waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedTitle
           }}
-          endCallHandler={() => undefined /** todo [jaburnsi]: removed in followup cleanup PR */}
           options={props.options}
         />
       );
     case 'call':
       return (
         <CallPage
-          endCallHandler={() => undefined /** todo [jaburnsi]: removed in followup cleanup PR */}
           onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
