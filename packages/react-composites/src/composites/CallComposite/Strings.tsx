@@ -54,13 +54,21 @@ export interface CallCompositeStrings {
    */
   failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
   /**
-   * Title text of the page shown to the user when they are removed from a meeting.
+   * Title text of the page shown to the user when they leave a call in the call composite.
    */
-  removedFromMeetingTitle: string;
+  leftCallTitle: string;
   /**
-   * More details text of the page shown to the user when they are removed from a meeting.
+   * More details text of the page shown to the user when they leave a call in the call composite.
    */
-  removedFromMeetingMoreDetails?: string;
+  leftCallMoreDetails?: string;
+  /**
+   * Title text of the page shown to the user when they are removed from a call in the call composite.
+   */
+  removedFromCallTitle: string;
+  /**
+   * More details text of the page shown to the user when they are removed from a call in the call composite.
+   */
+  removedFromCallMoreDetails?: string;
   /**
    * Text shown to the user on the lobby screen when connecting to a call.
    */
