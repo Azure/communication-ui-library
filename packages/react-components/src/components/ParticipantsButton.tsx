@@ -63,7 +63,7 @@ export interface ParticipantsButtonStrings {
  */
 export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
-   * Props of the participant list shown when the button is toggled.
+   * Props of the participant list shown when the button is clicked.
    */
   participantListProps: ParticipantListProps;
   /**
