@@ -81,4 +81,68 @@ export interface CallCompositeStrings {
    * Message to let user know they are sharing their screen.
    */
   screenSharingMessage: string;
+  /**
+   * Text for link to MS privacy policy in Compliance Banner.
+   */
+  privacyPolicy: string;
+  /**
+   * Text for link to learn more about a specific subject.
+   */
+  learnMore: string;
+  /**
+   * Message to let user know the meeting is only being recorded (no transcription) in ComplianceBanner.
+   */
+  complianceBannerNowOnlyRecording: string;
+  /**
+   * Message to let user know the meeting is only being transcripted (no recording) in ComplianceBanner.
+   */
+  complianceBannerNowOnlyTranscription: string;
+  /**
+   * Message to let user know recording and transcription of the meeting are saved in ComplianceBanner.
+   */
+  complianceBannerRecordingAndTranscriptionSaved: string;
+  /**
+   * Message to let user know recording and transcription of the meeting have started in ComplianceBanner.
+   */
+  complianceBannerRecordingAndTranscriptionStarted: string;
+  /**
+   * Message to let user know recording and transcription of the meeting have stopped in ComplianceBanner.
+   */
+  complianceBannerRecordingAndTranscriptionStopped: string;
+  /**
+   * Message to let user know recording of the meeting is being saved in ComplianceBanner.
+   */
+  complianceBannerRecordingSaving: string;
+  /**
+   * Message to let user know recording of the meeting has started in ComplianceBanner.
+   */
+  complianceBannerRecordingStarted: string;
+  /**
+   * Message to let user know recording of the meeting has stopped in ComplianceBanner.
+   */
+  complianceBannerRecordingStopped: string;
+  /**
+   * Message to let user know they are giving consent to meeting being transcripted in ComplianceBanner.
+   */
+  complianceBannerTranscriptionConsent: string;
+  /**
+   * Message to let user know transcription of the meeting is being saved in ComplianceBanner.
+   */
+  complianceBannerTranscriptionSaving: string;
+  /**
+   * Message to let user know transcription of the meeting has started in ComplianceBanner.
+   */
+  complianceBannerTrancriptionStarted: string;
+  /**
+   * Message to let user know the transcription of the meeting has stopped in ComplianceBanner.
+   */
+  complianceBannerTranscriptionStopped: string;
+  /**
+   * Text for close button.
+   */
+  close: string;
+  /**
+   * Message to let user know the screen another user is sharing is being loaded.
+   */
+  sharingScreenLoading: string;
 }
