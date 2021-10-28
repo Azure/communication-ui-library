@@ -336,8 +336,6 @@ export interface CallCompositeStrings {
     privacyPolicy: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    screenSharingMessage: string;
-    sharingScreenLoading: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -1991,7 +1989,6 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
-    // (undocumented)
     screenShareParticipant?: VideoGalleryRemoteParticipant;
     showMuteIndicator?: boolean;
     styles?: BaseCustomStylesProps;

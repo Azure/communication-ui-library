@@ -89,6 +89,7 @@ export interface VideoGalleryProps {
    * @defaultValue `true`
    */
   showMuteIndicator?: boolean;
+  /** Remote participant sharing their screen */
   screenShareParticipant?: VideoGalleryRemoteParticipant;
 }
 

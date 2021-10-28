@@ -795,7 +795,6 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
-    // (undocumented)
     screenShareParticipant?: VideoGalleryRemoteParticipant;
     showMuteIndicator?: boolean;
     styles?: BaseCustomStylesProps;
