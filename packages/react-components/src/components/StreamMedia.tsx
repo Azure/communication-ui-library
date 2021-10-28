@@ -5,7 +5,7 @@ import { mergeStyles } from '@fluentui/react';
 import React, { useEffect, useRef } from 'react';
 import { invertedVideoStyle, mediaContainer } from './styles/StreamMedia.styles';
 import { useTheme } from '../theming';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStyles } from '../types';
 
 /**
  * Props for {@link StreamMedia}.
@@ -24,7 +24,7 @@ export interface StreamMediaProps {
    * <StreamMedia styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: BaseCustomStylesProps;
+  styles?: BaseCustomStyles;
 }
 
 /**
