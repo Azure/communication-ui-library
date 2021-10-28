@@ -187,7 +187,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         onRenderAvatar={onRenderAvatar}
         onParticipantRemove={onParticipantRemove}
         onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        styles={merge(defaultParticipantListContainerStyle, styles?.participantListStyles)}
+        styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.participantListStyles)}
       />
     );
   }, [
@@ -197,7 +197,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderAvatar,
     onRenderParticipant,
     participants,
-    styles?.participantListStyles,
+    styles?.menuStyles?.participantListStyles,
     onFetchParticipantMenuItems
   ]);
 
@@ -263,7 +263,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
       menuProps.items.push({
         key: 'participantCountKey',
-        name: formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
+        name: _formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
         styles: styles?.menuStyles?.menuItemStyles,
         iconProps: { iconName: 'People' },
         subMenuProps: {
