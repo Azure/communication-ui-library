@@ -157,16 +157,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     screenShareParticipant.screenShareStream &&
     screenShareParticipant.screenShareStream.isAvailable;
 
-  // If there are no video participants, we assign all audio participants as grid participants and assign
-  // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
-  let gridParticipants =
-    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
-  let horizontalGalleryParticipants =
-    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
+  let gridParticipants: VideoGalleryRemoteParticipant[] = [];
+  let horizontalGalleryParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
 
-  if (isScreenShareAvailable || localParticipant?.isScreenSharingOn) {
-    gridParticipants = [];
-    horizontalGalleryParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
+  const screenShareActive = isScreenShareAvailable || localParticipant?.isScreenSharingOn;
+  if (!screenShareActive) {
+    // If screen sharing is not active, then assign all visible video participants as grid participants. If there are no visble video
+    // participants, assign visible audio participants as grid participants.
+    gridParticipants =
+      visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
+    horizontalGalleryParticipants = visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
   }
 
   /**
