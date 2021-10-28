@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "オフラインです",
     "accessDenied": "チャット サービスにアクセスできません- 指定されたユーザー資格情報をご確認ください",
-    "userNotInThisThread": "このチャット スレッドにはもう参加していません",
-    "sendMessageNotInThisThread": "このチャット スレッドに参加していないため、メッセージを送信できませんでした",
+    "userNotInChatThread": "このチャット スレッドにはもう参加していません",
+    "sendMessageNotInChatThread": "このチャット スレッドに参加していないため、メッセージを送信できませんでした",
     "sendMessageGeneric": "メッセージを送信できませんでした。",
     "callingNetworkFailure": "通話の接続中に問題が発生しました。オフラインのようです。",
     "startVideoGeneric": "ビデオを開始できませんでした",

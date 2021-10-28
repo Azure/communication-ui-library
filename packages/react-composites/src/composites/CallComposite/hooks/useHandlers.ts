@@ -31,7 +31,7 @@ const createCompositeHandlers = memoizeOne(
     onHangUp: async () => {
       await adapter.leaveCall();
     },
-    onParticipantRemove: async (userId) => {
+    onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);
     },
     onSelectCamera: async (deviceInfo, options) => {

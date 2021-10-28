@@ -130,7 +130,7 @@ const createChatAdapterWithStubs = async (chatClient: StubChatClient): Promise<C
     }
   };
   return await createAzureCommunicationChatAdapter({
-    endpointUrl: 'stubEndpointUrl',
+    endpoint: 'stubEndpointUrl',
     userId: { communicationUserId: 'stubUserId' },
     displayName: 'stubDisplayName',
     credential: stubCredential,

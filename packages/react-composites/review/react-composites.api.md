@@ -85,7 +85,7 @@ export type AzureCommunicationCallAdapterArgs = {
 
 // @public
 export type AzureCommunicationChatAdapterArgs = {
-    endpointUrl: string;
+    endpoint: string;
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
@@ -94,7 +94,7 @@ export type AzureCommunicationChatAdapterArgs = {
 
 // @alpha
 export type AzureCommunicationMeetingAdapterArgs = {
-    endpointUrl: string;
+    endpoint: string;
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
@@ -405,13 +405,13 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @alpha
-export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {

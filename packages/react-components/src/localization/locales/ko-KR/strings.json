@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",
     "accessDenied": "채팅 서비스에 액세스할 수 없습니다. 제공된 사용자 자격 증명을 확인하세요.",
-    "userNotInThisThread": "이 채팅 스레드에 더 이상 없습니다.",
-    "sendMessageNotInThisThread": "이 채팅 스레드에 더 이상 존재하지 않으므로 메시지를 보내지 못했습니다.",
+    "userNotInChatThread": "이 채팅 스레드에 더 이상 없습니다.",
+    "sendMessageNotInChatThread": "이 채팅 스레드에 더 이상 존재하지 않으므로 메시지를 보내지 못했습니다.",
     "sendMessageGeneric": "메시지를 보내지 못했습니다",
     "callingNetworkFailure": "통화 연결 중 - 오프라인 상태인 것 같습니다.",
     "startVideoGeneric": "비디오를 시작하지 못함",

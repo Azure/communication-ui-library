@@ -115,7 +115,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     excludeMe,
     onRenderParticipant,
     onRenderAvatar,
-    onParticipantRemove,
+    onRemoveParticipant,
     onFetchParticipantMenuItems
   } = props;
 
@@ -134,7 +134,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
           excludeMe={excludeMe}
           onRenderParticipant={onRenderParticipant}
           onRenderAvatar={onRenderAvatar}
-          onParticipantRemove={onParticipantRemove}
+          onRemoveParticipant={onRemoveParticipant}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       </Stack>
@@ -142,7 +142,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   }, [
     excludeMe,
     myUserId,
-    onParticipantRemove,
+    onRemoveParticipant,
     onRenderAvatar,
     onRenderParticipant,
     participants,
