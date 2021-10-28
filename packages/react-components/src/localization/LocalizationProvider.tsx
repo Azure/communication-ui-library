@@ -17,6 +17,7 @@ import {
   TypingIndicatorStrings
 } from '../components';
 import { LocalScreenShareStrings } from '../components/VideoGallery/LocalScreenShare';
+import { RemoteScreenShareStrings } from '../components/VideoGallery/RemoteScreenShare';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -59,8 +60,10 @@ export interface ComponentStrings {
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
-  /** Strings for ScreenShare */
+  /** Strings for LocalScreenShare */
   localScreenShare: LocalScreenShareStrings;
+  /** Strings for RemoteScreenShare */
+  remoteScreenShare: RemoteScreenShareStrings;
 }
 
 /**

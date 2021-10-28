@@ -3,10 +3,21 @@
 
 import { Spinner, SpinnerSize } from '@fluentui/react';
 import React from 'react';
+import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
-import { VideoStreamOptions, VideoGalleryRemoteParticipant, OnRenderAvatarCallback } from '../../types';
+import { VideoStreamOptions, VideoGalleryRemoteParticipant } from '../../types';
 import { videoWithNoRoundedBorderStyle, videoStreamStyle, loadingStyle } from './styles/RemoteScreenShare.styles';
+import { formatString } from '../../localization/localizationUtils';
+
+/**
+ * All strings that may be shown on the UI in the {@link RemoteScreenShare}.
+ *
+ * @public
+ */
+export interface RemoteScreenShareStrings {
+  loadingMessage: string;
+}
 
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
@@ -19,6 +30,8 @@ export const RemoteScreenShare = React.memo(
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   }) => {
     const { onCreateRemoteStreamView, screenShareParticipant } = props;
+    const locale = useLocale();
+
     const isScreenShareAvailable =
       screenShareParticipant &&
       screenShareParticipant.screenShareStream &&
@@ -38,6 +51,17 @@ export const RemoteScreenShare = React.memo(
 
     const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
 
+    const loadingMessage = screenShareParticipant?.displayName
+      ? formatString(locale.strings.remoteScreenShare.loadingMessage, {
+          participant: screenShareParticipant?.displayName
+        })
+      : undefined;
+    const spinner = (
+      <div className={loadingStyle}>
+        <Spinner label={loadingMessage} size={SpinnerSize.xSmall} />
+      </div>
+    );
+
     return (
       <VideoTile
         displayName={screenShareParticipant?.displayName}
@@ -48,18 +72,11 @@ export const RemoteScreenShare = React.memo(
             <StreamMedia styles={videoStyles} videoStreamElement={screenShareStream?.renderElement} />
           ) : undefined
         }
-        onRenderPlaceholder={onRenderPlaceholder}
+        onRenderPlaceholder={() => spinner}
         styles={{
           overlayContainer: videoStreamStyle
         }}
       />
     );
   }
-);
-
-// A non-undefined display name is needed for this render, and that is coming from VideoTile props below
-const onRenderPlaceholder: OnRenderAvatarCallback = (userId, options): JSX.Element => (
-  <div className={loadingStyle}>
-    <Spinner label={`Loading ${options?.text}'s screen`} size={SpinnerSize.xSmall} />
-  </div>
 );
