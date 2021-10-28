@@ -20,14 +20,3 @@ export const loadingStyle = mergeStyles({
   display: 'flex',
   justifyContent: 'center'
 });
-
-/**
- * @private
- */
-export const videoStreamStyle = mergeStyles({
-  position: 'absolute',
-  bottom: '.25rem',
-  right: '.25rem',
-  height: 'auto',
-  width: '25%'
-});

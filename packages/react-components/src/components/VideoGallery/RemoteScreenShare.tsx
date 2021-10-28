@@ -7,7 +7,7 @@ import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { VideoStreamOptions, VideoGalleryRemoteParticipant } from '../../types';
-import { videoWithNoRoundedBorderStyle, videoStreamStyle, loadingStyle } from './styles/RemoteScreenShare.styles';
+import { videoWithNoRoundedBorderStyle, loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
 /**
@@ -74,9 +74,6 @@ export const RemoteScreenShare = React.memo(
           ) : undefined
         }
         onRenderPlaceholder={() => spinner}
-        styles={{
-          overlayContainer: videoStreamStyle
-        }}
       />
     );
   }
