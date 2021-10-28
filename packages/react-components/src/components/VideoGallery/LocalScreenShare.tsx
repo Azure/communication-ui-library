@@ -21,6 +21,7 @@ import {
  * @public
  */
 export interface LocalScreenShareStrings {
+  /** String to notify that local user is sharing their screen */
   screenSharingMessage: string;
 }
 

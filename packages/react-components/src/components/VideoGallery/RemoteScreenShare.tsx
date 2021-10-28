@@ -16,6 +16,7 @@ import { formatString } from '../../localization/localizationUtils';
  * @public
  */
 export interface RemoteScreenShareStrings {
+  /** String to show when remote screen share stream is loading */
   loadingMessage: string;
 }
 
