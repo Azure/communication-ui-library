@@ -89,8 +89,6 @@ export interface VideoGalleryProps {
    * @defaultValue `true`
    */
   showMuteIndicator?: boolean;
-  /** Remote participant sharing their screen */
-  screenShareParticipant?: VideoGalleryRemoteParticipant;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -121,8 +119,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
-    showMuteIndicator,
-    screenShareParticipant
+    showMuteIndicator
   } = props;
 
   const ids = useIdentifiers();
@@ -152,15 +149,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
-  const isScreenShareAvailable =
-    screenShareParticipant &&
-    screenShareParticipant.screenShareStream &&
-    screenShareParticipant.screenShareStream.isAvailable;
+  const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
 
   let gridParticipants: VideoGalleryRemoteParticipant[] = [];
   let horizontalGalleryParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
 
-  const screenShareActive = isScreenShareAvailable || localParticipant?.isScreenSharingOn;
+  const screenShareActive = screenShareParticipant || localParticipant?.isScreenSharingOn;
   if (!screenShareActive) {
     // If screen sharing is not active, then assign all visible video participants as grid participants. If there are no visble video
     // participants, assign visible audio participants as grid participants.
@@ -284,7 +278,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         </Modal>
       )}
       <Stack styles={videoGalleryContainerStyle}>
-        {isScreenShareAvailable ? (
+        {screenShareParticipant ? (
           remoteScreenShareComponent
         ) : localParticipant?.isScreenSharingOn ? (
           localScreenShareStreamComponent
