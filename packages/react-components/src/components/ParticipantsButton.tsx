@@ -175,13 +175,13 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       </Stack>
     );
   }, [
-    styles?.participantListContainerStyle,
-    participants,
-    myUserId,
     excludeMe,
-    onRenderParticipant,
-    onRenderAvatar,
+    myUserId,
     onParticipantRemove,
+    onRenderAvatar,
+    onRenderParticipant,
+    participants,
+    styles?.participantListContainerStyle,
     onFetchParticipantMenuItems
   ]);
 

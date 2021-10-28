@@ -131,10 +131,10 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <ParticipantsButton
       data-ui-id="call-composite-participants-button"
       {...participantsButtonProps}
-      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
       showLabel={!options?.compressedMode}
       callInvitationURL={callInvitationURL}
       disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
+      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
     />
   );
 
