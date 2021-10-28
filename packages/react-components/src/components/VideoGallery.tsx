@@ -362,19 +362,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant]);
 
   return (
-    <div ref={containerRef} className={videoGalleryOuterDivStyle}>
-      <Stack id={FLOATING_TILE_HOST_ID} styles={videoGalleryContainerStyle}>
-        {shouldFloatLocalVideo && (
-          <Modal
-            isOpen={true}
-            isModeless={true}
-            dragOptions={DRAG_OPTIONS}
-            styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-            layerProps={{ hostId: FLOATING_TILE_HOST_ID }}
-          >
-            {localParticipant && localVideoTile}
-          </Modal>
-        )}
+    <div id={FLOATING_TILE_HOST_ID} ref={containerRef} className={videoGalleryOuterDivStyle}>
+      {shouldFloatLocalVideo && (
+        <Modal
+          isOpen={true}
+          isModeless={true}
+          dragOptions={DRAG_OPTIONS}
+          styles={floatingLocalVideoModalStyle(theme, isNarrow)}
+          layerProps={{ hostId: FLOATING_TILE_HOST_ID }}
+        >
+          {localParticipant && localVideoTile}
+        </Modal>
+      )}
+      <Stack styles={videoGalleryContainerStyle}>
         {isScreenShareAvailable ? (
           screenShareStreamComponent
         ) : localParticipant?.isScreenSharingOn ? (
