@@ -319,9 +319,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       <VideoTile
         displayName={localParticipant?.displayName}
         isMuted={localParticipant?.isMuted}
-        renderElement={undefined}
         onRenderPlaceholder={() => <></>}
-        styles={{ root: { padding: '0.5rem' } }}
       >
         {localScreenSharingNotification}
       </VideoTile>
