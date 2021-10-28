@@ -78,7 +78,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
       callControlProps={
         callControlOptions !== false && {
-          options: callControlOptions
+          options: callControlOptions,
+          increaseFlyoutItemSize: props.options?.mobileView
         }
       }
       onRenderGalleryContent={() => (

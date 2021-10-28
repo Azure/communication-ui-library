@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add data-ui-ids for components of the participant button",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

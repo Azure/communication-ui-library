@@ -56,7 +56,13 @@ export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
 
 export { OptionsButton } from './OptionsButton';
-export type { OptionsDevice, OptionsButtonProps, OptionsButtonStrings } from './OptionsButton';
+export type {
+  OptionsDevice,
+  OptionsButtonProps,
+  OptionsButtonStrings,
+  OptionsButtonStyles,
+  OptionsButtonContextualMenuStyles
+} from './OptionsButton';
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {

@@ -10,6 +10,7 @@ import {
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
+import { IDS } from '../common/constants';
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
@@ -140,6 +141,53 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       return document.querySelectorAll('video').length === 1;
     });
     expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
+  });
+});
+
+test.describe('Call Composite E2E Call Ended Pages', () => {
+  // Make sure tests can still run well after retries
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(buildUrl(serverUrl, user));
+      await waitForCallCompositeToLoad(page);
+    }
+
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test('Left call page should show when end call button clicked', async ({ pages }) => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-hangup-button'));
+    await page.waitForSelector(dataUiId('left-call-page'));
+    expect(await page.screenshot()).toMatchSnapshot(`left-call-page.png`);
+  });
+
+  test('Removed from call page should show when you are removed by another user', async ({ pages }) => {
+    // page[0] user will remove page[1] user
+    const page0 = pages[0];
+    const page1 = pages[1];
+
+    // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+    // this is for disable transition/animation of participant list
+    await disableAnimation(page0);
+    await page0.bringToFront();
+    await page0.click(dataUiId('call-composite-participants-button')); // open participant flyout
+    await page0.click(dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
+    await page0.click(dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
+    await page0.click(dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
+
+    await page1.bringToFront();
+    await page1.waitForSelector(dataUiId('removed-from-call-page'));
+    expect(await page1.screenshot()).toMatchSnapshot(`remove-from-call-page.png`);
   });
 });
 
