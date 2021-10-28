@@ -52,16 +52,11 @@ export const RemoteScreenShare = React.memo(
 
     const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
 
-    const screenShareLoadingMessage = screenShareParticipant?.displayName
+    const loadingMessage = screenShareParticipant?.displayName
       ? _formatString(locale.strings.remoteScreenShare.screenShareLoadingMessage, {
           participant: screenShareParticipant?.displayName
         })
-      : undefined;
-    const spinner = (
-      <Stack verticalAlign="center" className={loadingStyle}>
-        <Spinner label={screenShareLoadingMessage} size={SpinnerSize.xSmall} />
-      </Stack>
-    );
+      : '';
 
     return (
       <VideoTile
@@ -73,8 +68,16 @@ export const RemoteScreenShare = React.memo(
             <StreamMedia styles={videoStyles} videoStreamElement={screenShareStream?.renderElement} />
           ) : undefined
         }
-        onRenderPlaceholder={() => spinner}
+        onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
       />
     );
   }
 );
+
+const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element => {
+  return (
+    <Stack verticalAlign="center" className={loadingStyle}>
+      <Spinner label={props.loadingMessage} size={SpinnerSize.xSmall} />
+    </Stack>
+  );
+};
