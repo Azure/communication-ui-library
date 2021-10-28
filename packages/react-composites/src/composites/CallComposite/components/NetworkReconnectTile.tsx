@@ -26,13 +26,12 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
   const palette = useTheme().palette;
   const strings = useLocale().strings.call;
 
-  console.log('xkcd', props);
   return (
     <ExpandedLocalVideoTile
       localParticipantVideoStream={props.localParticipantVideoStream}
       onCreateLocalStreamView={props.onCreateLocalStreamView}
       overlayContent={
-        <Stack data-ui-id="xkcd" verticalFill horizontalAlign="center" verticalAlign="center">
+        <Stack verticalFill horizontalAlign="center" verticalAlign="center">
           <Stack horizontal className={mergeStyles(titleContainerStyle)}>
             <Icon iconName="NetworkReconnectIcon" className={mergeStyles(titleStyle)} />
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
