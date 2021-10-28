@@ -230,9 +230,9 @@ test.describe('Call composite participant menu items injection tests', () => {
     // Open participants flyout.
     await page.click(dataUiId('call-composite-participants-button'), { timeout: PER_STEP_TIMEOUT_MS });
     // Open participant list flyout
-    await page.click(dataUiId('participants-button-participants-list'), { timeout: PER_STEP_TIMEOUT_MS });
+    await page.click(dataUiId(IDS.participantButtonPeopleMenuItem), { timeout: PER_STEP_TIMEOUT_MS });
     // There shouldbe at least one participant. Just click on the first.
-    await page.click(dataUiId('participants-list-participant-item') + ' >> nth=0', {
+    await page.click(dataUiId(IDS.participantItemMenuButton) + ' >> nth=0', {
       timeout: PER_STEP_TIMEOUT_MS
     });
 

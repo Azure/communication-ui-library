@@ -164,7 +164,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   return (
     <div
-      data-ui-id="participants-list-participant-item"
       ref={containerRef}
       role={'menuitem'}
       data-is-focusable={true}

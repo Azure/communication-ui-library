@@ -222,8 +222,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
           // Confine the menu to the parents bounds.
           // More info: https://github.com/microsoft/fluentui/issues/18835
           calloutProps: { styles: { root: { maxWidth: '100%' } } }
-        },
-        'data-ui-id': 'participants-button-participants-list'
+        }
       });
     }
 
