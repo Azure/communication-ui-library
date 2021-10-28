@@ -156,7 +156,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       menuItems.push({
         key: 'remove',
         text: strings.removeButtonLabel,
-        onClick: () => onRemoveParticipant(participant.userId)
+        onClick: () => onRemoveParticipant(participant.userId),
+        'data-ui-id': ids.participantListRemoveParticipantButton
       });
     }
 
