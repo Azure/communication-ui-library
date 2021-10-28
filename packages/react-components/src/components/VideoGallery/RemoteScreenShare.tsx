@@ -8,7 +8,7 @@ import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { VideoStreamOptions, VideoGalleryRemoteParticipant } from '../../types';
 import { videoWithNoRoundedBorderStyle, videoStreamStyle, loadingStyle } from './styles/RemoteScreenShare.styles';
-import { formatString } from '../../localization/localizationUtils';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * All strings that may be shown on the UI in the {@link RemoteScreenShare}.
@@ -53,7 +53,7 @@ export const RemoteScreenShare = React.memo(
     const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
 
     const loadingMessage = screenShareParticipant?.displayName
-      ? formatString(locale.strings.remoteScreenShare.loadingMessage, {
+      ? _formatString(locale.strings.remoteScreenShare.loadingMessage, {
           participant: screenShareParticipant?.displayName
         })
       : undefined;
