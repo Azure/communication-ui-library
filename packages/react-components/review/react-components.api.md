@@ -295,7 +295,16 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
-    callingNetworkFailure: string;
+    callCameraAlreadyInUse: string;
+    callLocalVideoFreeze: string;
+    callMacOsCameraAccessDenied: string;
+    callMacOsMicrophoneAccessDenied: string;
+    callMacOsScreenShareAccessDenied: string;
+    callMicrophoneAccessDenied: string;
+    callMicrophoneMutedBySystem: string;
+    callNetworkQualityLow: string;
+    callNoMicrophoneFound: string;
+    callNoSpeakerFound: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;

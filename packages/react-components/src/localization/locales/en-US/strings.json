@@ -87,6 +87,16 @@
     "unmuteGeneric": "Failed to unmute microphone",
     "speakingWhileMuted": "Your microphone is muted",
     "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing"
+    "stopScreenShareGeneric": "Failed to stop screen sharing",
+    "callNetworkQualityLow": "xkcd",
+    "callNoSpeakerFound": "xkcd",
+    "callNoMicrophoneFound": "xkcd",
+    "callMicrophoneAccessDenied": "xkcd",
+    "callMicrophoneMutedBySystem": "xkcd",
+    "callMacOsMicrophoneAccessDenied": "xkcd",
+    "callLocalVideoFreeze": "xkcd",
+    "callCameraAlreadyInUse": "xkcd",
+    "callMacOsCameraAccessDenied": "xkcd",
+    "callMacOsScreenShareAccessDenied": "xkcd"
   }
 }

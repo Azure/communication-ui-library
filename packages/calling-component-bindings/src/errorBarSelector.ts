@@ -43,8 +43,35 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     const activeErrorMessages: ActiveErrorMessage[] = [];
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
-    if (diagnostics?.network.latest.networkReconnect?.value === 3) {
-      activeErrorMessages.push({ type: 'callingNetworkFailure' });
+    if (
+      diagnostics?.network.latest.networkReceiveQuality?.value === 3 ||
+      diagnostics?.network.latest.networkReceiveQuality?.value == 2
+    ) {
+      activeErrorMessages.push({ type: 'callNetworkQualityLow' });
+    }
+    if (diagnostics?.media.latest.noSpeakerDevicesEnumerated) {
+      activeErrorMessages.push({ type: 'callNoSpeakerFound' });
+    }
+    if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated) {
+      activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
+    }
+    if (diagnostics?.media.latest.microphoneNotFunctioning) {
+      activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
+    }
+    if (diagnostics?.media.latest.microphoneMuteUnexpectedly) {
+      activeErrorMessages.push({ type: 'callMicrophoneMutedBySystem' });
+    }
+    if (diagnostics?.media.latest.microphonePermissionDenied) {
+      activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
+    }
+    if (diagnostics?.media.latest.cameraFreeze) {
+      activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
+    }
+    if (diagnostics?.media.latest.cameraPermissionDenied) {
+      activeErrorMessages.push({ type: 'callMacOsCameraAccessDenied' });
+    }
+    if (diagnostics?.media.latest.screenshareRecordingDisabled) {
+      activeErrorMessages.push({ type: 'callMacOsScreenShareAccessDenied' });
     }
 
     // Prefer to show errors with privacy implications.
