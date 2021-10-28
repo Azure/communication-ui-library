@@ -159,18 +159,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   // If there are no video participants, we assign all audio participants as grid participants and assign
   // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
-  const gridParticipants =
-    isScreenShareAvailable || localParticipant?.isScreenSharingOn
-      ? []
-      : visibleVideoParticipants.current.length > 0
-      ? visibleVideoParticipants.current
-      : visibleAudioParticipants.current;
-  const horizontalGalleryParticipants =
-    isScreenShareAvailable || localParticipant?.isScreenSharingOn
-      ? visibleVideoParticipants.current.concat(visibleAudioParticipants.current)
-      : visibleVideoParticipants.current.length > 0
-      ? visibleAudioParticipants.current
-      : [];
+  let gridParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
+  let horizontalGalleryParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
+
+  if (isScreenShareAvailable || localParticipant?.isScreenSharingOn) {
+    gridParticipants = [];
+    horizontalGalleryParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
+  }
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
