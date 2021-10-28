@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, Theme } from '@fluentui/react';
+import { DefaultPalette as palette, IButtonStyles, IContextualMenuItemStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -35,7 +35,7 @@ export const groupCallLeaveButtonCompressedStyle = {
 /**
  * @private
  */
-export const checkedButtonOverrideStyles = (theme: Theme, isChecked?: boolean) => ({
+export const checkedButtonOverrideStyles = (theme: Theme, isChecked?: boolean): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,
     color: palette.white,
@@ -43,3 +43,23 @@ export const checkedButtonOverrideStyles = (theme: Theme, isChecked?: boolean) =
   },
   label: isChecked ? { color: palette.white } : {}
 });
+
+const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
+
+/**
+ * Styles that can be applied to ensure flyout items have the minimum touch target size.
+ *
+ * @private
+ */
+export const buttonFlyoutIncreasedSizeStyles: IContextualMenuItemStyles = {
+  root: {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    maxHeight: 'unset'
+  },
+  linkContent: {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    maxHeight: 'unset'
+  }
+};

@@ -3,10 +3,10 @@
 
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
-import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -24,7 +24,7 @@ import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
  *
  * @public
  */
-export interface VideoTileStylesProps extends BaseCustomStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStyles {
   /** Styles for video container. */
   videoContainer?: IStyle;
   /** Styles for container overlayed on the video container. */
@@ -134,7 +134,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     })
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (videoTileRef.current) {
       observer.current.observe(videoTileRef.current);
     }
