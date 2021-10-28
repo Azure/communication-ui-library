@@ -282,7 +282,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         key: 'InviteLinkKey',
         name: strings.copyInviteLinkButtonLabel,
         title: strings.copyInviteLinkButtonLabel,
-        styles: styles?.menuStyles?.menuItemStyles,
+        itemProps: { styles: styles?.menuStyles?.menuItemStyles },
         iconProps: { iconName: 'Link' },
         onClick: onCopyCallback
       });
