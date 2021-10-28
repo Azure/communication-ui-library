@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Spinner, SpinnerSize } from '@fluentui/react';
+import { Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
@@ -58,9 +58,9 @@ export const RemoteScreenShare = React.memo(
         })
       : undefined;
     const spinner = (
-      <div className={loadingStyle}>
+      <Stack verticalAlign="center" className={loadingStyle}>
         <Spinner label={screenShareLoadingMessage} size={SpinnerSize.xSmall} />
-      </div>
+      </Stack>
     );
 
     return (
