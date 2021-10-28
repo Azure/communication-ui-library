@@ -172,9 +172,9 @@ const ControlBarStory: (
         <MicrophoneButton showLabel={args.showLabel} checked={args.checked} />
         <ScreenShareButton showLabel={args.showLabel} checked={args.checked} />
         <ParticipantsButton
+          showLabel={args.showLabel}
           participants={mockParticipants}
           myUserId={'user1'}
-          showLabel={args.showLabel}
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />

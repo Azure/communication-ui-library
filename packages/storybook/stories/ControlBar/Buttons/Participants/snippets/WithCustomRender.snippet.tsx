@@ -80,11 +80,11 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
         showLabel={true}
         participants={mockParticipants}
         myUserId={'user1'}
-        onRenderAvatar={(userId?, options?) => customOnRenderAvatar(userId, options)}
         callInvitationURL={mockCallLink}
         onMuteAll={onMuteAll}
         onRenderIcon={customOnRenderIcon}
         onRenderText={customOnRenderText}
+        onRenderAvatar={(userId?, options?) => customOnRenderAvatar(userId, options)}
       />
     </FluentThemeProvider>
   );

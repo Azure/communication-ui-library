@@ -80,6 +80,10 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
    */
   excludeMe?: boolean;
   /**
+   * Callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`
+   */
+  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+  /**
    * Callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.
    */
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -133,8 +137,20 @@ const onRenderPeopleIcon = (): JSX.Element => {
  * @public
  */
 export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
-  // Participant Button specific props
-  const { callInvitationURL, styles, onMuteAll, onRenderIcon, onRenderParticipantList } = props;
+  const {
+    callInvitationURL,
+    styles,
+    onMuteAll,
+    onRenderIcon,
+    onRenderParticipantList,
+    participants,
+    myUserId,
+    excludeMe,
+    onRenderParticipant,
+    onRenderAvatar,
+    onParticipantRemove,
+    onFetchParticipantMenuItems
+  } = props;
 
   const ids = useIdentifiers();
 
@@ -148,23 +164,25 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     return (
       <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
         <ParticipantList
-          participants={props.participants}
-          myUserId={props.myUserId}
-          excludeMe={props.excludeMe}
-          onRenderAvatar={props.onRenderAvatar}
-          onParticipantRemove={props.onParticipantRemove}
-          onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+          participants={participants}
+          myUserId={myUserId}
+          excludeMe={excludeMe}
+          onRenderParticipant={onRenderParticipant}
+          onRenderAvatar={onRenderAvatar}
+          onParticipantRemove={onParticipantRemove}
+          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         />
       </Stack>
     );
   }, [
     styles?.participantListContainerStyle,
-    props.participants,
-    props.myUserId,
-    props.excludeMe,
-    props.onRenderAvatar,
-    props.onParticipantRemove,
-    props.onFetchParticipantMenuItems
+    participants,
+    myUserId,
+    excludeMe,
+    onRenderParticipant,
+    onRenderAvatar,
+    onParticipantRemove,
+    onFetchParticipantMenuItems
   ]);
 
   const onCopyCallback = useCallback(() => {
@@ -176,7 +194,6 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
   const localeStrings = useLocale().strings.participantsButton;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
-  const participants = props.participants;
   const participantCount = participants.length;
 
   const generateDefaultParticipantsSubMenuProps = useCallback((): IContextualMenuItem[] => {
@@ -211,7 +228,6 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onMuteAllCallback
   ]);
 
-  const excludeMe = props.excludeMe;
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       title: strings.menuHeader,
