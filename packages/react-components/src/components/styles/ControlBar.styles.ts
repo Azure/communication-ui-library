@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, IButtonStyles, IContextualMenuStyles } from '@fluentui/react';
+import { IStyle, IButtonStyles, IContextualMenuStyles, IContextualMenuItemStyles } from '@fluentui/react';
 
 interface IControlBarStyles {
   horizontal: IStyle;
@@ -157,4 +157,18 @@ export const participantsButtonMenuPropsStyle: Partial<IContextualMenuStyles> = 
  */
 export const defaultParticipantListContainerStyle: IStyle = {
   maxHeight: '20rem'
+};
+
+/**
+ * Default styles for button flyout items
+ *
+ * @private
+ */
+export const buttonFlyoutItemStyles: IContextualMenuItemStyles = {
+  icon: {
+    lineHeight: 0
+  },
+  checkmarkIcon: {
+    lineHeight: 0
+  }
 };
