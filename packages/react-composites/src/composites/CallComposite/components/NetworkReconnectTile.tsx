@@ -8,6 +8,27 @@ import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
 import { FontWeights, Icon, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
 
+const containerStyle: IStyle = {
+  gap: `1.5rem`
+};
+
+const titleContainerStyle: IStyle = {
+  gap: `1rem`
+};
+
+const titleStyle = (palette, isVideoReady): IStyle => ({
+  fontSize: '1.25rem',
+  fontWeight: FontWeights.semibold,
+  color: isVideoReady ? 'white' : palette.neutralPrimary,
+  textAlign: 'center'
+});
+
+const moreDetailsStyle = (palette, isVideoReady): IStyle => ({
+  fontSize: '1rem',
+  color: isVideoReady ? 'white' : palette.neutralPrimary,
+  textAlign: 'center'
+});
+
 /**
  * @private
  */
@@ -31,7 +52,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
       localParticipantVideoStream={props.localParticipantVideoStream}
       onCreateLocalStreamView={props.onCreateLocalStreamView}
       overlayContent={
-        <Stack verticalFill horizontalAlign="center" verticalAlign="center">
+        <Stack verticalFill horizontalAlign="center" verticalAlign="center" className={mergeStyles(containerStyle)}>
           <Stack horizontal className={mergeStyles(titleContainerStyle)}>
             <Icon iconName="NetworkReconnectIcon" className={mergeStyles(titleStyle)} />
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
@@ -46,20 +67,3 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
     />
   );
 };
-
-const titleContainerStyle: IStyle = {
-  gap: `1rem`
-};
-
-const titleStyle = (palette, isVideoReady): IStyle => ({
-  fontSize: '1.25rem',
-  fontWeight: FontWeights.semibold,
-  color: isVideoReady ? 'white' : palette.neutralPrimary,
-  textAlign: 'center'
-});
-
-const moreDetailsStyle = (palette, isVideoReady): IStyle => ({
-  fontSize: '1rem',
-  color: isVideoReady ? 'white' : palette.neutralPrimary,
-  textAlign: 'center'
-});
