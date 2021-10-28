@@ -17,7 +17,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
-import { BaseCustomStylesProps, OnRenderAvatarCallback } from '../types';
+import { BaseCustomStyles, OnRenderAvatarCallback } from '../types';
 import {
   iconContainerStyle,
   iconStyles,
@@ -31,7 +31,7 @@ import {
  *
  * @public
  */
-export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+export interface ParticipantItemStylesProps extends BaseCustomStyles {
   /** Styles for the avatar. */
   avatar?: IStyle;
   /** Styles for the (You) string. */

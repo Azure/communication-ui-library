@@ -8,7 +8,7 @@ import { IStyle } from '@fluentui/react';
  *
  * @public
  */
-export interface BaseCustomStylesProps {
+export interface BaseCustomStyles {
   /** Styles for the root container. */
   root?: IStyle;
 }

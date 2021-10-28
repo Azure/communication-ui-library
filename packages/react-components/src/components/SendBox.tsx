@@ -4,7 +4,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
 import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
@@ -18,7 +18,7 @@ const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
  *
  * @public
  */
-export interface SendBoxStylesProps extends BaseCustomStylesProps {
+export interface SendBoxStylesProps extends BaseCustomStyles {
   /** Styles for the text field. */
   textField?: IStyle;
   /** styles for the text field container */
