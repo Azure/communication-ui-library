@@ -16,6 +16,7 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings
 } from '../components';
+import { ScreenShareStrings } from '../components/VideoGallery';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 
 /**
@@ -58,6 +59,8 @@ export interface ComponentStrings {
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
+  /** Strings for ScreenShare */
+  screenShare: ScreenShareStrings;
 }
 
 /**

@@ -1,7 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, IDragOptions, Modal, Stack, concatStyleSets } from '@fluentui/react';
+import {
+  ContextualMenu,
+  IDragOptions,
+  Modal,
+  Stack,
+  concatStyleSets,
+  Icon,
+  Text,
+  Spinner,
+  SpinnerSize
+} from '@fluentui/react';
 import React, { CSSProperties, useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
@@ -26,12 +36,21 @@ import {
   SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
   LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
   horizontalGalleryStyle,
-  videoGalleryOuterDivStyle
+  videoGalleryOuterDivStyle,
+  videoWithNoRoundedBorderStyle,
+  loadingStyle,
+  videoStreamStyle,
+  screenSharingContainer,
+  screenSharingNotificationContainer,
+  screenSharingNotificationIconContainer,
+  screenSharingNotificationIconStyle,
+  screenSharingNotificationTextStyle
 } from './styles/VideoGallery.styles';
 import { VideoTile } from './VideoTile';
 import { RemoteVideoTile } from './RemoteVideoTile';
 import { useContainerWidth, isNarrowWidth } from './utils/responsive';
 import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
+import { useLocale } from '../localization';
 
 const emptyStyles = {};
 const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
@@ -40,6 +59,15 @@ const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
 const MAX_VIDEO_PARTICIPANTS_TILES = 4;
 // Set aside only 6 dominant speakers for remaining audio participants
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
+
+/**
+ * All strings that may be shown on the UI in the {@link VideoGallery}.
+ *
+ * @public
+ */
+export interface ScreenShareStrings {
+  screenSharingMessage: string;
+}
 
 /**
  * Props for {@link VideoGallery}.
@@ -87,6 +115,7 @@ export interface VideoGalleryProps {
    * @defaultValue `true`
    */
   showMuteIndicator?: boolean;
+  screenShareParticipant?: VideoGalleryRemoteParticipant;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -117,11 +146,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
-    showMuteIndicator
+    showMuteIndicator,
+    screenShareParticipant
   } = props;
 
   const ids = useIdentifiers();
   const theme = useTheme();
+  const locale = useLocale();
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
@@ -147,12 +178,25 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
+  const isScreenShareAvailable =
+    screenShareParticipant &&
+    screenShareParticipant.screenShareStream &&
+    screenShareParticipant.screenShareStream.isAvailable;
+
   // If there are no video participants, we assign all audio participants as grid participants and assign
   // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
   const gridParticipants =
-    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
+    isScreenShareAvailable || localParticipant?.isScreenSharingOn
+      ? []
+      : visibleVideoParticipants.current.length > 0
+      ? visibleVideoParticipants.current
+      : visibleAudioParticipants.current;
   const horizontalGalleryParticipants =
-    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
+    isScreenShareAvailable || localParticipant?.isScreenSharingOn
+      ? visibleVideoParticipants.current.concat(visibleAudioParticipants.current)
+      : visibleVideoParticipants.current.length > 0
+      ? visibleAudioParticipants.current
+      : [];
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -182,7 +226,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         }
         displayName={localParticipant?.displayName}
         styles={localVideoTileStylesThemed}
-        onRenderPlaceholder={localParticipant.isScreenSharingOn ? () => <></> : onRenderAvatar}
+        onRenderPlaceholder={onRenderAvatar}
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
       />
@@ -246,9 +290,80 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         );
       });
 
+  const localScreenSharingNotification = useMemo((): JSX.Element | undefined => {
+    if (!localParticipant || !localParticipant.isScreenSharingOn) {
+      return undefined;
+    }
+
+    return (
+      <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
+        <Stack
+          horizontalAlign={'center'}
+          verticalAlign={'center'}
+          className={screenSharingNotificationContainer(theme)}
+          tokens={{ childrenGap: '1rem' }}
+        >
+          <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainer}>
+            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconStyle(theme)} />
+          </Stack>
+          <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
+            {locale.strings.screenShare.screenSharingMessage}
+          </Text>
+        </Stack>
+      </Stack>
+    );
+  }, [localParticipant, theme, locale.strings.screenShare.screenSharingMessage]);
+
+  const localScreenShareStreamComponent = useMemo(() => {
+    return (
+      <VideoTile
+        displayName={localParticipant?.displayName}
+        isMuted={localParticipant?.isMuted}
+        renderElement={undefined}
+        onRenderPlaceholder={() => <></>}
+        styles={{ root: { padding: '0.5rem' } }}
+      >
+        {localScreenSharingNotification}
+      </VideoTile>
+    );
+  }, [localParticipant?.displayName, localParticipant?.isMuted, localScreenSharingNotification]);
+
+  const screenShareStreamComponent = useMemo(() => {
+    if (!isScreenShareAvailable) {
+      return;
+    }
+    const screenShareStream = screenShareParticipant?.screenShareStream;
+    const videoStream = screenShareParticipant?.videoStream;
+    if (screenShareStream?.isAvailable && !screenShareStream?.renderElement) {
+      screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
+    }
+    if (videoStream?.isAvailable && !videoStream?.renderElement) {
+      screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
+    }
+
+    const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
+
+    return (
+      <VideoTile
+        displayName={screenShareParticipant?.displayName}
+        isMuted={screenShareParticipant?.isMuted}
+        isSpeaking={screenShareParticipant?.isSpeaking}
+        renderElement={
+          screenShareStream?.renderElement ? (
+            <StreamMedia styles={videoStyles} videoStreamElement={screenShareStream?.renderElement} />
+          ) : undefined
+        }
+        onRenderPlaceholder={onRenderPlaceholder}
+        styles={{
+          overlayContainer: videoStreamStyle
+        }}
+      />
+    );
+  }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant]);
+
   return (
     <div ref={containerRef} className={videoGalleryOuterDivStyle}>
-      <Stack id={FLOATING_TILE_HOST_ID} grow styles={videoGalleryContainerStyle}>
+      <Stack id={FLOATING_TILE_HOST_ID} styles={videoGalleryContainerStyle}>
         {shouldFloatLocalVideo && (
           <Modal
             isOpen={true}
@@ -260,7 +375,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {localParticipant && localVideoTile}
           </Modal>
         )}
-        <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
+        {isScreenShareAvailable ? (
+          screenShareStreamComponent
+        ) : localParticipant?.isScreenSharingOn ? (
+          localScreenShareStreamComponent
+        ) : (
+          <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
+        )}
         {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
           <ResponsiveHorizontalGallery
             containerStyles={horizontalGalleryStyle(shouldFloatLocalVideo, isNarrow)}
@@ -277,3 +398,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     </div>
   );
 };
+
+// A non-undefined display name is needed for this render, and that is coming from VideoTile props below
+const onRenderPlaceholder: OnRenderAvatarCallback = (userId, options): JSX.Element => (
+  <div className={loadingStyle}>
+    <Spinner label={`Loading ${options?.text}'s screen`} size={SpinnerSize.xSmall} />
+  </div>
+);

@@ -78,5 +78,5 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [props.onFetchAvatarPersonaData, videoGalleryProps]);
 
-  return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
+  return VideoGalleryMemoized;
 };

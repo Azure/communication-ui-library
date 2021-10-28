@@ -88,5 +88,8 @@
     "speakingWhileMuted": "Your microphone is muted",
     "startScreenShareGeneric": "Failed to start screen sharing",
     "stopScreenShareGeneric": "Failed to stop screen sharing"
+  },
+  "screenShare": {
+    "screenSharingMessage": "You are sharing your screen"
   }
 }
