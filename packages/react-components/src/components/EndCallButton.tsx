@@ -58,7 +58,6 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const isDarkTheme = isDarkThemed(theme);
   const componentStyles = concatStyleSets(
     isDarkTheme ? darkThemeCallButtonStyles : lightThemeCallButtonStyles,
-    { root: { ':focus::after': { outlineColor: `${theme.palette.white} !important` } } },
     styles ?? {}
   );
 
@@ -77,7 +76,8 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
 const darkThemeCallButtonStyles = {
   root: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRed
+    background: darkTheme.callingPalette.callRed,
+    ':focus::after': { outlineColor: `${darkTheme.callingPalette.iconWhite} !important` }
   },
   rootHovered: {
     color: darkTheme.callingPalette.iconWhite,
@@ -95,7 +95,8 @@ const darkThemeCallButtonStyles = {
 const lightThemeCallButtonStyles = {
   root: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRed
+    background: lightTheme.callingPalette.callRed,
+    ':focus::after': { outlineColor: `${lightTheme.callingPalette.iconWhite} !important` }
   },
   rootHovered: {
     color: lightTheme.callingPalette.iconWhite,
