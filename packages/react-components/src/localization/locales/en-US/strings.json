@@ -93,6 +93,6 @@
     "screenSharingMessage": "You are sharing your screen"
   },
   "remoteScreenShare": {
-    "loadingMessage": "Loading {participant}'s screen`"
+    "screenShareLoadingMessage": "Loading {participant}'s screen`"
   }
 }

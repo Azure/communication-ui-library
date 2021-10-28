@@ -17,7 +17,7 @@ import { _formatString } from '@internal/acs-ui-common';
  */
 export interface RemoteScreenShareStrings {
   /** String to show when remote screen share stream is loading */
-  loadingMessage: string;
+  screenShareLoadingMessage: string;
 }
 
 /**
@@ -52,14 +52,14 @@ export const RemoteScreenShare = React.memo(
 
     const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
 
-    const loadingMessage = screenShareParticipant?.displayName
-      ? _formatString(locale.strings.remoteScreenShare.loadingMessage, {
+    const screenShareLoadingMessage = screenShareParticipant?.displayName
+      ? _formatString(locale.strings.remoteScreenShare.screenShareLoadingMessage, {
           participant: screenShareParticipant?.displayName
         })
       : undefined;
     const spinner = (
       <div className={loadingStyle}>
-        <Spinner label={loadingMessage} size={SpinnerSize.xSmall} />
+        <Spinner label={screenShareLoadingMessage} size={SpinnerSize.xSmall} />
       </div>
     );
 
