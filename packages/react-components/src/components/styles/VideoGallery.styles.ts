@@ -91,36 +91,6 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
 /**
  * @private
  */
-export const videoWithNoRoundedBorderStyle = {
-  root: {
-    '& video': { borderRadius: '0rem' }
-  }
-};
-
-/**
- * @private
- */
-export const loadingStyle = mergeStyles({
-  height: '100%',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center'
-});
-
-/**
- * @private
- */
-export const videoStreamStyle = mergeStyles({
-  position: 'absolute',
-  bottom: '.25rem',
-  right: '.25rem',
-  height: 'auto',
-  width: '25%'
-});
-
-/**
- * @private
- */
 export const screenSharingNotificationContainer = (theme: Theme): string =>
   mergeStyles({
     backgroundColor: 'inherit',

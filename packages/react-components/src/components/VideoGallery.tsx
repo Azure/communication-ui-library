@@ -1,17 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  ContextualMenu,
-  IDragOptions,
-  Modal,
-  Stack,
-  concatStyleSets,
-  Icon,
-  Text,
-  Spinner,
-  SpinnerSize
-} from '@fluentui/react';
+import { ContextualMenu, IDragOptions, Modal, Stack, concatStyleSets, Icon, Text } from '@fluentui/react';
 import React, { CSSProperties, useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
@@ -37,9 +27,6 @@ import {
   LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
   horizontalGalleryStyle,
   videoGalleryOuterDivStyle,
-  videoWithNoRoundedBorderStyle,
-  loadingStyle,
-  videoStreamStyle,
   screenSharingContainer,
   screenSharingNotificationContainer,
   screenSharingNotificationIconContainer,
@@ -51,6 +38,7 @@ import { RemoteVideoTile } from './RemoteVideoTile';
 import { useContainerWidth, isNarrowWidth } from './utils/responsive';
 import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 import { useLocale } from '../localization';
+import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 
 const emptyStyles = {};
 const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
@@ -326,38 +314,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
   }, [localParticipant?.displayName, localParticipant?.isMuted, localScreenSharingNotification]);
 
-  const screenShareStreamComponent = useMemo(() => {
-    if (!isScreenShareAvailable) {
-      return;
-    }
-    const screenShareStream = screenShareParticipant?.screenShareStream;
-    const videoStream = screenShareParticipant?.videoStream;
-    if (screenShareStream?.isAvailable && !screenShareStream?.renderElement) {
-      screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
-    }
-    if (videoStream?.isAvailable && !videoStream?.renderElement) {
-      screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
-    }
-
-    const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
-
-    return (
-      <VideoTile
-        displayName={screenShareParticipant?.displayName}
-        isMuted={screenShareParticipant?.isMuted}
-        isSpeaking={screenShareParticipant?.isSpeaking}
-        renderElement={
-          screenShareStream?.renderElement ? (
-            <StreamMedia styles={videoStyles} videoStreamElement={screenShareStream?.renderElement} />
-          ) : undefined
-        }
-        onRenderPlaceholder={onRenderPlaceholder}
-        styles={{
-          overlayContainer: videoStreamStyle
-        }}
-      />
-    );
-  }, [isScreenShareAvailable, onCreateRemoteStreamView, screenShareParticipant]);
+  const remoteScreenShareComponent = (
+    <RemoteScreenShare
+      screenShareParticipant={screenShareParticipant}
+      onCreateRemoteStreamView={onCreateRemoteStreamView}
+    />
+  );
 
   return (
     <div id={FLOATING_TILE_HOST_ID} ref={containerRef} className={videoGalleryOuterDivStyle}>
@@ -374,7 +336,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       )}
       <Stack styles={videoGalleryContainerStyle}>
         {isScreenShareAvailable ? (
-          screenShareStreamComponent
+          remoteScreenShareComponent
         ) : localParticipant?.isScreenSharingOn ? (
           localScreenShareStreamComponent
         ) : (
@@ -396,10 +358,3 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     </div>
   );
 };
-
-// A non-undefined display name is needed for this render, and that is coming from VideoTile props below
-const onRenderPlaceholder: OnRenderAvatarCallback = (userId, options): JSX.Element => (
-  <div className={loadingStyle}>
-    <Spinner label={`Loading ${options?.text}'s screen`} size={SpinnerSize.xSmall} />
-  </div>
-);
