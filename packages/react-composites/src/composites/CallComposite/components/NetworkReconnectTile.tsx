@@ -4,7 +4,7 @@
 import React from 'react';
 import { VideoGalleryStream, useTheme, VideoStreamOptions } from '@internal/react-components';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
-import { Icon, mergeStyles, Stack } from '@fluentui/react';
+import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import {
   containerStyle,
@@ -39,13 +39,14 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
         <Stack verticalFill horizontalAlign="center" verticalAlign="center" className={mergeStyles(containerStyle)}>
           <Stack horizontal className={mergeStyles(titleContainerStyle)}>
             <Icon iconName="NetworkReconnectIcon" className={mergeStyles(titleStyle)} />
-            <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
+            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'polite'}>
               {strings.networkReconnectTitle}
-            </Stack.Item>
+            </Text>
+            <Stack.Item className={mergeStyles()}></Stack.Item>
           </Stack>
-          <Stack.Item className={mergeStyles(moreDetailsStyle(palette, isVideoReady))}>
+          <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live={'polite'}>
             {strings.networkReconnectMoreDetails}
-          </Stack.Item>
+          </Text>
         </Stack>
       }
     />
