@@ -13,11 +13,13 @@ import {
 import { _formatString } from '@internal/acs-ui-common';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
-import { ParticipantList, ParticipantListProps } from './ParticipantList';
+import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from './ParticipantList';
 import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { useIdentifiers } from '../identifiers';
+import { CommunicationParticipant } from '../types/CommunicationParticipant';
+import { OnRenderAvatarCallback } from '../types/OnRender';
 
 /**
  * Styles Props for {@link ParticipantsButton}.
@@ -62,9 +64,39 @@ export interface ParticipantsButtonStrings {
  *
  * @public
  */
-export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
-   * Optional callback to render the participant list.
+   * Participants in user call or chat
+   */
+  participants: CommunicationParticipant[];
+  /**
+   * User ID of user
+   */
+  myUserId?: string;
+  /**
+   * If set to `true`, excludes the local participant from the participant list with use of `myUserId` props (required in this case).
+   *
+   * @defaultValue `false`
+   */
+  excludeMe?: boolean;
+  /**
+   * Callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`
+   */
+  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+  /**
+   * Callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
+  /**
+   * Callback to render the context menu for each participant
+   */
+  onParticipantRemove?: (userId: string) => void;
+  /**
+   * Callback to render custom menu items for each participant.
+   */
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /**
+   * Optional callback to render a custom participant list.
    */
   onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
   /**

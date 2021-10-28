@@ -1653,10 +1653,17 @@ export type ParticipantsAddedListener = (event: {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
     callInvitationURL?: string;
+    excludeMe?: boolean;
+    myUserId?: string;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onMuteAll?: () => void;
+    onParticipantRemove?: (userId: string) => void;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
+    participants: CommunicationParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
