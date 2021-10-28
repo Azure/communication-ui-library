@@ -56,10 +56,8 @@ export const ParticipantsButtonWithCustomStylesExample: () => JSX.Element = () =
     <FluentThemeProvider>
       <ParticipantsButton
         showLabel={true}
-        participantListProps={{
-          participants: mockParticipants,
-          myUserId: 'user1'
-        }}
+        participants={mockParticipants}
+        myUserId={'user1'}
         callInvitationURL={mockCallLink}
         onMuteAll={onMuteAll}
         styles={mockStyles}

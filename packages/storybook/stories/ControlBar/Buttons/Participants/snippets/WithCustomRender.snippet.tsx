@@ -78,11 +78,9 @@ export const ParticipantsButtonWithCustomRenderExample: () => JSX.Element = () =
     <FluentThemeProvider>
       <ParticipantsButton
         showLabel={true}
-        participantListProps={{
-          participants: mockParticipants,
-          myUserId: 'user1',
-          onRenderAvatar: (userId?, options?) => customOnRenderAvatar(userId, options)
-        }}
+        participants={mockParticipants}
+        myUserId={'user1'}
+        onRenderAvatar={(userId?, options?) => customOnRenderAvatar(userId, options)}
         callInvitationURL={mockCallLink}
         onMuteAll={onMuteAll}
         onRenderIcon={customOnRenderIcon}
