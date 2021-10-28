@@ -41,7 +41,7 @@ export type ParticipantListProps = {
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
   onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
-  onParticipantRemove?: (userId: string) => void;
+  onRemoveParticipant?: (userId: string) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
@@ -50,7 +50,7 @@ const onRenderParticipantDefault = (
   participant: CommunicationParticipant,
   strings: ParticipantItemStrings,
   myUserId?: string,
-  onParticipantRemove?: (userId: string) => void,
+  onRemoveParticipant?: (userId: string) => void,
   onRenderAvatar?: OnRenderAvatarCallback,
   createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[]
 ): JSX.Element | null => {
@@ -137,7 +137,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     excludeMe = false,
     myUserId,
     participants,
-    onParticipantRemove,
+    onRemoveParticipant,
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems
@@ -152,11 +152,11 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
 
   const createParticipantMenuItems = (participant): IContextualMenuItem[] => {
     let menuItems: IContextualMenuItem[] = [];
-    if (participant.userId !== myUserId && onParticipantRemove) {
+    if (participant.userId !== myUserId && onRemoveParticipant) {
       menuItems.push({
         key: 'remove',
         text: strings.removeButtonLabel,
-        onClick: () => onParticipantRemove(participant.userId)
+        onClick: () => onRemoveParticipant(participant.userId)
       });
     }
 
@@ -176,7 +176,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               participant,
               strings,
               myUserId,
-              onParticipantRemove,
+              onRemoveParticipant,
               onRenderAvatar,
               createParticipantMenuItems
             )

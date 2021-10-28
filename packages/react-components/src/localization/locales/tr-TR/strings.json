@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
     "accessDenied": "Sohbet hizmetlerine erişilemedi. Lütfen sağlanan kullanıcı kimlik bilgilerini denetleyin",
-    "userNotInThisThread": "Artık bu sohbet yazışması içinde değilsiniz",
-    "sendMessageNotInThisThread": "Artık bu sohbet yazışması içinde olmadığınız için ileti gönderilemedi",
+    "userNotInChatThread": "Artık bu sohbet yazışması içinde değilsiniz",
+    "sendMessageNotInChatThread": "Artık bu sohbet yazışması içinde olmadığınız için ileti gönderilemedi",
     "sendMessageGeneric": "İleti gönderilemedi",
     "callingNetworkFailure": "Arama bağlanırken sorun oluştu; çevrimdışı görünüyorsunuz",
     "startVideoGeneric": "Video başlatılamadı",

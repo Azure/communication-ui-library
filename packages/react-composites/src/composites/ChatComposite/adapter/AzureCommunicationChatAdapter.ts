@@ -181,7 +181,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   async removeParticipant(userId: string): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.handlers.onParticipantRemove(userId);
+      await this.handlers.onRemoveParticipant(userId);
     });
   }
 
@@ -320,7 +320,7 @@ const convertEventType = (type: string): ChatMessageType => {
  * @public
  */
 export type AzureCommunicationChatAdapterArgs = {
-  endpointUrl: string;
+  endpoint: string;
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
@@ -335,7 +335,7 @@ export type AzureCommunicationChatAdapterArgs = {
  * @public
  */
 export const createAzureCommunicationChatAdapter = async ({
-  endpointUrl,
+  endpoint: endpointUrl,
   userId,
   displayName,
   credential,

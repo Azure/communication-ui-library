@@ -510,7 +510,7 @@ export type MessageThreadProps = {
   /**
    * Whether disable the editing feature, false by default
    */
-  editDisabled?: boolean;
+  disableEditing?: boolean;
 
   /**
    * Optional strings to override in component
@@ -547,7 +547,7 @@ export type MessageProps = {
   /**
    * Whether edit feature is disabled or not
    */
-  editDisabled?: boolean;
+  disableEditing?: boolean;
   /**
    * Optional callback to edit a message.
    *

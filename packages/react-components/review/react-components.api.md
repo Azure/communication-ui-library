@@ -296,14 +296,14 @@ export interface ErrorBarStrings {
     callingNetworkFailure: string;
     muteGeneric: string;
     sendMessageGeneric: string;
-    sendMessageNotInThisThread: string;
+    sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
     unmuteGeneric: string;
-    userNotInThisThread: string;
+    userNotInChatThread: string;
 }
 
 // @public
@@ -400,7 +400,7 @@ export type MessageProps = {
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    editDisabled?: boolean;
+    disableEditing?: boolean;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
 };
@@ -446,7 +446,7 @@ export type MessageThreadProps = {
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    editDisabled?: boolean;
+    disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
 
@@ -590,7 +590,7 @@ export type ParticipantListProps = {
     excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
-    onParticipantRemove?: (userId: string) => void;
+    onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 };
 

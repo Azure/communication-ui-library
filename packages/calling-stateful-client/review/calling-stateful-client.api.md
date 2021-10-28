@@ -127,7 +127,7 @@ export interface DiagnosticsCallFeatureState {
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
-    endTime: Date | undefined;
+    endTime?: Date;
     id: string;
     startTime: Date;
 }
