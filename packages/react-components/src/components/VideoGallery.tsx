@@ -7,7 +7,7 @@ import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import {
-  BaseCustomStylesProps,
+  BaseCustomStyles,
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -57,7 +57,7 @@ export interface VideoGalleryProps {
    * <VideoGallery styles={{ root: { border: 'solid 1px red' } }} />
    * ```
    */
-  styles?: BaseCustomStylesProps;
+  styles?: BaseCustomStyles;
   /** Layout of the video tiles. */
   layout?: 'default' | 'floatingLocalVideo';
   /** Local video particpant */

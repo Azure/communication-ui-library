@@ -10,7 +10,7 @@ export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } fro
 export * from './theming';
 
 export type {
-  BaseCustomStylesProps,
+  BaseCustomStyles,
   CallParticipant,
   ChatMessage,
   CommunicationParticipant,

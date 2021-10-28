@@ -6,7 +6,7 @@ import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
-import { BaseCustomStylesProps, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -24,7 +24,7 @@ import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
  *
  * @public
  */
-export interface VideoTileStylesProps extends BaseCustomStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStyles {
   /** Styles for video container. */
   videoContainer?: IStyle;
   /** Styles for container overlayed on the video container. */
