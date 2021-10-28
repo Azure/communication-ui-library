@@ -88,9 +88,12 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   );
 };
 
+/**
+ * @private
+ */
 export const isNetworkHealthy = (value: DiagnosticQuality | boolean | undefined): boolean => {
   // We know that the value is actually of type DiagnosticQuality for this diagnostic.
   // We ignore any boolen values, considering the network to still be healthy.
-  // Thus, only values > 1 indicate network problems.
-  return value === true || value === false || value === undefined || value === 1;
+  // Thus, only DiagnosticQuality.Poor or .Bad indicate network problems.
+  return value === true || value === false || value === undefined || value === DiagnosticQuality.Good;
 };
