@@ -14,9 +14,10 @@ import {
   Stack
 } from '@fluentui/react';
 import React, { useMemo, useRef, useState } from 'react';
+import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
-import { BaseCustomStylesProps, OnRenderAvatarCallback } from '../types';
+import { BaseCustomStyles, OnRenderAvatarCallback } from '../types';
 import {
   iconContainerStyle,
   iconStyles,
@@ -30,7 +31,7 @@ import {
  *
  * @public
  */
-export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+export interface ParticipantItemStylesProps extends BaseCustomStyles {
   /** Styles for the avatar. */
   avatar?: IStyle;
   /** Styles for the (You) string. */
@@ -107,6 +108,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const localeStrings = useLocale().strings.participantItem;
+  const ids = useIdentifiers();
 
   const isMeText = props.strings?.isMeText ?? localeStrings.isMeText;
   const menuTitle = props.strings?.menuTitle ?? localeStrings.menuTitle;
@@ -144,6 +146,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         horizontalAlign="end"
         className={mergeStyles(menuButtonContainerStyle)}
         title={menuTitle}
+        data-ui-id={ids.participantItemMenuButton}
       >
         <Icon
           iconName={itemHovered ? 'ParticipantItemOptionsHovered' : 'ParticipantItemOptions'}
@@ -151,7 +154,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         />
       </Stack>
     ),
-    [itemHovered, menuTitle]
+    [itemHovered, menuTitle, ids.participantItemMenuButton]
   );
 
   const onDismissMenu = (): void => {

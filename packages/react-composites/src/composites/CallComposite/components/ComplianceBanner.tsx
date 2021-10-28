@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, MessageBar } from '@fluentui/react';
+import { CompositeStrings, useLocale } from '../../localization';
 
 /**
  * @private
@@ -20,6 +21,8 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   const previousCallTranscribeState = useRef<boolean | undefined>(false);
   const previousCallRecordState = useRef<boolean | undefined>(false);
 
+  const strings = useLocale().strings;
+
   const variant = computeVariant(
     previousCallRecordState.current,
     previousCallTranscribeState.current,
@@ -30,11 +33,11 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   previousCallTranscribeState.current = callTranscribeState;
   previousCallRecordState.current = callRecordState;
 
-  return <DismissableMessageBar variant={variant} />;
+  return <DismissableMessageBar variant={variant} strings={strings} />;
 };
 
-function DismissableMessageBar(props: { variant: number }) {
-  const { variant: newVariant } = props;
+function DismissableMessageBar(props: { variant: number; strings: CompositeStrings }): JSX.Element {
+  const { variant: newVariant, strings } = props;
 
   const [variant, setVariant] = useState(0);
   // We drive the `MessageBar` indirectly via the `variant` state variable.
@@ -52,9 +55,9 @@ function DismissableMessageBar(props: { variant: number }) {
       onDismiss={() => {
         setVariant(NO_STATE);
       }}
-      dismissButtonAriaLabel="Close"
+      dismissButtonAriaLabel={strings.call.close}
     >
-      <BannerMessage variant={variant} />
+      <BannerMessage variant={variant} strings={strings} />
     </MessageBar>
   );
 }
@@ -74,7 +77,7 @@ function computeVariant(
   previousCallTranscribeState: boolean | undefined,
   callRecordState: boolean | undefined,
   callTranscribeState: boolean | undefined
-) {
+): number {
   if (previousCallRecordState && previousCallTranscribeState) {
     if (callRecordState && !callTranscribeState) {
       return TRANSCRIPTION_STOPPED_STILL_RECORDING;
@@ -119,85 +122,94 @@ function computeVariant(
   return NO_STATE;
 }
 
-function BannerMessage(props: { variant: number }): JSX.Element {
-  switch (props.variant) {
+function BannerMessage(props: { variant: number; strings: CompositeStrings }): JSX.Element {
+  const { variant, strings } = props;
+
+  switch (variant) {
     case TRANSCRIPTION_STOPPED_STILL_RECORDING:
       return (
         <>
-          <b>Transcription has stopped.</b> You are now only recording this meeting.
-          <PrivacyPolicy />
+          <b>{strings.call.complianceBannerTranscriptionStopped}</b>
+          {` ${strings.call.complianceBannerNowOnlyRecording}`}
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case RECORDING_STOPPED_STILL_TRANSCRIBING:
       return (
         <>
-          <b>Recording has stopped.</b> You are now only transcribing this meeting.
-          <PrivacyPolicy />
+          <b>{strings.call.complianceBannerRecordingStopped}</b>
+          {` ${strings.call.complianceBannerNowOnlyTranscription}`}
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case RECORDING_AND_TRANSCRIPTION_STOPPED:
       return (
         <>
-          <b>Recording and transcription are being saved. </b> Recording and transcription have stopped.
-          <LearnMore />
+          <b>{strings.call.complianceBannerRecordingAndTranscriptionSaved}</b>
+          {` ${strings.call.complianceBannerRecordingAndTranscriptionStopped}`}
+          <LearnMore linkText={strings.call.learnMore} />
         </>
       );
     case RECORDING_AND_TRANSCRIPTION_STARTED:
       return (
         <>
-          <b>Recording and transcription have started.</b> By joining, you are giving consent for this meeting to be
-          transcribed.
-          <PrivacyPolicy />
+          <b>{strings.call.complianceBannerRecordingAndTranscriptionStarted}</b>
+          {` ${strings.call.complianceBannerTranscriptionConsent}`}
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case TRANSCRIPTION_STARTED:
       return (
         <>
-          <b>Transcription has started.</b> By joining, you are giving consent for this meeting to be transcribed.
-          <PrivacyPolicy />
+          <b>{strings.call.complianceBannerTrancriptionStarted}</b>
+          {` ${strings.call.complianceBannerTranscriptionConsent}`}
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case RECORDING_STOPPED:
       return (
         <>
-          <b>Recording is being saved.</b> Recording has stopped.
-          <LearnMore />
+          <b>{strings.call.complianceBannerRecordingSaving}</b>
+          {` ${strings.call.complianceBannerRecordingStopped}`}
+          <LearnMore linkText={strings.call.learnMore} />
         </>
       );
     case RECORDING_STARTED:
       return (
         <>
-          <b>Recording has started.</b> By joining, you are giving consent for this meeting to be transcribed.
-          <PrivacyPolicy />
+          <b>{strings.call.complianceBannerRecordingStarted}</b>
+          {` ${strings.call.complianceBannerTranscriptionConsent}`}
+          <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
       );
     case TRANSCRIPTION_STOPPED:
       return (
         <>
-          <b>Transcription is being saved.</b> Transcription has stopped.
-          <LearnMore />
+          <b>{strings.call.complianceBannerTranscriptionSaving}</b>
+          {` ${strings.call.complianceBannerTranscriptionStopped}`}
+          <LearnMore linkText={strings.call.learnMore} />
         </>
       );
   }
   return <></>;
 }
 
-function PrivacyPolicy(): JSX.Element {
+function PrivacyPolicy(props: { linkText: string }): JSX.Element {
   return (
     <Link href="https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule" target="_blank" underline>
-      Privacy policy
+      {props.linkText}
     </Link>
   );
 }
 
-function LearnMore(): JSX.Element {
+function LearnMore(props: { linkText: string }): JSX.Element {
   return (
     <Link
       href="https://support.microsoft.com/office/record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24"
       target="_blank"
       underline
     >
-      Learn more
+      {props.linkText}
     </Link>
   );
 }

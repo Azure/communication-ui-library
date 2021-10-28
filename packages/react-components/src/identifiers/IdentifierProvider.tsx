@@ -19,8 +19,16 @@ import React, { createContext, useContext } from 'react';
 export interface _Identifiers {
   /** `data-ui-id` value for `SendBox` Component */
   sendboxTextField: string;
+  /** `data-ui-id` value for `ParticipantButton` Component's People menu item */
+  participantButtonPeopleMenuItem: string;
+  /** `data-ui-id` value for `ParticipantItem` Component's Menu button */
+  participantItemMenuButton: string;
   /** `data-ui-id` value for `ParticipantList` Component */
   participantList: string;
+  /** `data-ui-id` value for `ParticipantList` Component's People Button */
+  participantListPeopleButton: string;
+  /** `data-ui-id` value for `ParticipantList` Component's Remove Participant Button */
+  participantListRemoveParticipantButton: string;
   /** `data-ui-id` value for `MessageThread` components message content */
   messageContent: string;
   /** `data-ui-id` value for `MessageThread` components message timestamp */
@@ -35,7 +43,11 @@ export interface _Identifiers {
 
 const defaultIdentifiers: _Identifiers = {
   sendboxTextField: 'sendbox-textfield',
+  participantButtonPeopleMenuItem: 'participant-button-people-menu-item',
+  participantItemMenuButton: 'participant-item-menu-button',
   participantList: 'participant-list',
+  participantListPeopleButton: 'participant-list-people-button',
+  participantListRemoveParticipantButton: 'participant-list-remove-participant-button',
   messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',
   typingIndicator: 'typing-indicator',

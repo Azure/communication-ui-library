@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import { ContextualMenu, IDragOptions, Modal, Stack, concatStyleSets } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { CSSProperties, useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import {
-  BaseCustomStylesProps,
+  BaseCustomStyles,
   OnRenderAvatarCallback,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -15,16 +15,26 @@ import {
 } from '../types';
 import { GridLayout } from './GridLayout';
 import { StreamMedia } from './StreamMedia';
+import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
   videoGalleryContainerStyle,
-  videoWithNoRoundedBorderStyle
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
+  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
+  horizontalGalleryStyle,
+  videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
 import { VideoTile } from './VideoTile';
+import { RemoteVideoTile } from './RemoteVideoTile';
+import { useContainerWidth, isNarrowWidth } from './utils/responsive';
+import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 
 const emptyStyles = {};
+const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const MAX_VIDEO_PARTICIPANTS_TILES = 4;
@@ -45,7 +55,7 @@ export interface VideoGalleryProps {
    * <VideoGallery styles={{ root: { border: 'solid 1px red' } }} />
    * ```
    */
-  styles?: BaseCustomStylesProps;
+  styles?: BaseCustomStyles;
   /** Layout of the video tiles. */
   layout?: 'default' | 'floatingLocalVideo';
   /** Local video particpant */
@@ -113,10 +123,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
-  const shouldFloatLocalVideo = useCallback((): boolean => {
-    return !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
-  }, [layout, remoteParticipants.length]);
+  const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerWidth = useContainerWidth(containerRef);
+  const isNarrow = isNarrowWidth(containerWidth);
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
@@ -136,17 +147,22 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
-  const allParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
+  // If there are no video participants, we assign all audio participants as grid participants and assign
+  // an empty array as horizontal gallery partipants to avoid rendering the horizontal gallery.
+  const gridParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
+  const horizontalGalleryParticipants =
+    visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
-  const defaultOnRenderLocalVideoTile = useMemo((): JSX.Element => {
+  const localVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
 
     if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
 
-    const localVideoTileStyles = shouldFloatLocalVideo() ? floatingLocalVideoTileStyle : {};
+    const localVideoTileStyles = shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {};
 
     const localVideoTileStylesThemed = concatStyleSets(localVideoTileStyles, {
       root: { borderRadius: theme.effects.roundedCorner4 }
@@ -166,7 +182,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         }
         displayName={localParticipant?.displayName}
         styles={localVideoTileStylesThemed}
-        onRenderPlaceholder={onRenderAvatar}
+        onRenderPlaceholder={localParticipant.isScreenSharingOn ? () => <></> : onRenderAvatar}
         isMuted={localParticipant.isMuted}
         showMuteIndicator={showMuteIndicator}
       />
@@ -174,6 +190,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     localParticipant,
+    localParticipant.isScreenSharingOn,
     localParticipant.videoStream,
     localParticipant.videoStream?.renderElement,
     onCreateLocalStreamView,
@@ -182,141 +199,81 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     shouldFloatLocalVideo
   ]);
 
-  const remoteParticipantTiles = onRenderRemoteVideoTile
-    ? allParticipants.map((participant) => onRenderRemoteVideoTile(participant))
-    : allParticipants.map((participant): JSX.Element => {
-        const remoteVideoStream = participant.videoStream;
-        return (
-          <RemoteVideoTile
-            key={participant.userId}
-            userId={participant.userId}
-            onCreateRemoteStreamView={onCreateRemoteStreamView}
-            onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-            isAvailable={remoteVideoStream?.isAvailable}
-            isMuted={participant.isMuted}
-            isSpeaking={participant.isSpeaking}
-            renderElement={remoteVideoStream?.renderElement}
-            displayName={participant.displayName}
-            remoteVideoViewOption={remoteVideoViewOption}
-            onRenderAvatar={onRenderAvatar}
-            showMuteIndicator={showMuteIndicator}
-          />
+  const defaultOnRenderVideoTile = useCallback(
+    (participant: VideoGalleryRemoteParticipant, style?: CSSProperties) => {
+      const remoteVideoStream = participant.videoStream;
+      return (
+        <RemoteVideoTile
+          key={participant.userId}
+          userId={participant.userId}
+          onCreateRemoteStreamView={onCreateRemoteStreamView}
+          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+          isAvailable={remoteVideoStream?.isAvailable}
+          renderElement={remoteVideoStream?.renderElement}
+          remoteVideoViewOption={remoteVideoViewOption}
+          isMuted={participant.isMuted}
+          isSpeaking={participant.isSpeaking}
+          displayName={participant.displayName}
+          onRenderAvatar={onRenderAvatar}
+          showMuteIndicator={showMuteIndicator}
+          style={style}
+        />
+      );
+    },
+    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOption, onRenderAvatar, showMuteIndicator]
+  );
+
+  const gridTiles = onRenderRemoteVideoTile
+    ? gridParticipants.map((participant) => onRenderRemoteVideoTile(participant))
+    : gridParticipants.map((participant): JSX.Element => {
+        return defaultOnRenderVideoTile(participant);
+      });
+
+  if (!shouldFloatLocalVideo && localParticipant) {
+    gridTiles.push(
+      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
+        {localParticipant && localVideoTile}
+      </Stack>
+    );
+  }
+
+  const horizontalGalleryTiles = onRenderRemoteVideoTile
+    ? horizontalGalleryParticipants.map((participant) => onRenderRemoteVideoTile(participant))
+    : horizontalGalleryParticipants.map((participant): JSX.Element => {
+        return defaultOnRenderVideoTile(
+          participant,
+          isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
         );
       });
 
-  const floatingLocalVideoModalStyleThemed = useMemo(
-    () =>
-      concatStyleSets(floatingLocalVideoModalStyle, {
-        main: { boxShadow: theme.effects.elevation8, borderRadius: theme.effects.roundedCorner4 }
-      }),
-    [theme.effects.elevation8, theme.effects.roundedCorner4]
-  );
-
-  if (shouldFloatLocalVideo()) {
-    const floatingTileHostId = 'UILibraryFloatingTileHost';
-    return (
-      <Stack id={floatingTileHostId} grow styles={videoGalleryContainerStyle}>
-        <Modal
-          isOpen={true}
-          isModeless={true}
-          dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyleThemed}
-          layerProps={{ hostId: floatingTileHostId }}
-        >
-          {localParticipant && defaultOnRenderLocalVideoTile}
-        </Modal>
-        <GridLayout styles={styles ?? emptyStyles}>{remoteParticipantTiles}</GridLayout>
-      </Stack>
-    );
-  }
-
   return (
-    <GridLayout styles={styles ?? emptyStyles}>
-      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && defaultOnRenderLocalVideoTile}
+    <div ref={containerRef} className={videoGalleryOuterDivStyle}>
+      <Stack id={FLOATING_TILE_HOST_ID} grow styles={videoGalleryContainerStyle}>
+        {shouldFloatLocalVideo && (
+          <Modal
+            isOpen={true}
+            isModeless={true}
+            dragOptions={DRAG_OPTIONS}
+            styles={floatingLocalVideoModalStyle(theme, isNarrow)}
+            layerProps={{ hostId: FLOATING_TILE_HOST_ID }}
+          >
+            {localParticipant && localVideoTile}
+          </Modal>
+        )}
+        <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
+        {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
+          <ResponsiveHorizontalGallery
+            containerStyles={horizontalGalleryStyle(shouldFloatLocalVideo, isNarrow)}
+            childWidthRem={
+              isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
+            }
+            buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
+            gapWidthRem={HORIZONTAL_GALLERY_GAP}
+          >
+            {horizontalGalleryTiles}
+          </ResponsiveHorizontalGallery>
+        )}
       </Stack>
-      {remoteParticipantTiles}
-    </GridLayout>
+    </div>
   );
 };
-
-// Use React.memo to create memoize cache for each RemoteVideoTile
-const RemoteVideoTile = React.memo(
-  (props: {
-    userId: string;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    isAvailable?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
-    renderElement?: HTMLElement;
-    displayName?: string;
-    remoteVideoViewOption?: VideoStreamOptions;
-    onRenderAvatar?: OnRenderAvatarCallback;
-    showMuteIndicator?: boolean;
-  }) => {
-    const {
-      isAvailable,
-      isMuted,
-      isSpeaking,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId,
-      displayName,
-      onRenderAvatar,
-      showMuteIndicator
-    } = props;
-
-    useEffect(() => {
-      if (isAvailable && !renderElement) {
-        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
-      }
-      if (!isAvailable) {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      }
-    }, [
-      isAvailable,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId
-    ]);
-
-    useEffect(() => {
-      return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      };
-    }, [onDisposeRemoteStreamView, userId]);
-
-    const renderVideoStreamElement = useMemo(() => {
-      // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
-      // implies that, after their threshold, all streams have no child (blank video)
-      if (!renderElement || !renderElement.childElementCount) {
-        // Returning `undefined` results in the placeholder with avatar being shown
-        return undefined;
-      }
-
-      const videoStyles = isSpeaking ? videoWithNoRoundedBorderStyle : {};
-
-      return <StreamMedia styles={videoStyles} videoStreamElement={renderElement} />;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [renderElement, renderElement?.childElementCount, isSpeaking]);
-
-    return (
-      <Stack className={gridStyle} key={userId} grow>
-        <VideoTile
-          userId={userId}
-          renderElement={renderVideoStreamElement}
-          displayName={displayName}
-          onRenderPlaceholder={onRenderAvatar}
-          isMuted={isMuted}
-          isSpeaking={isSpeaking}
-          showMuteIndicator={showMuteIndicator}
-        />
-      </Stack>
-    );
-  }
-);

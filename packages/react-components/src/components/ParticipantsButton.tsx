@@ -10,13 +10,14 @@ import {
   mergeStyles,
   Icon
 } from '@fluentui/react';
+import { _formatString } from '@internal/acs-ui-common';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import { ParticipantList, ParticipantListProps } from './ParticipantList';
 import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
-import { formatString } from '../localization/localizationUtils';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
+import { useIdentifiers } from '../identifiers';
 
 /**
  * Styles Props for {@link ParticipantsButton}.
@@ -110,6 +111,8 @@ const onRenderPeopleIcon = (): JSX.Element => {
 export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element => {
   const { callInvitationURL, styles, onMuteAll, onRenderIcon, onRenderParticipantList } = props;
 
+  const ids = useIdentifiers();
+
   const onMuteAllCallback = useCallback(() => {
     if (onMuteAll) {
       onMuteAll();
@@ -186,7 +189,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
       menuProps.items.push({
         key: 'participantCountKey',
-        name: formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
+        'data-ui-id': ids.participantButtonPeopleMenuItem,
+        name: _formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
         iconProps: { iconName: 'People' },
         subMenuProps: {
           items: generateDefaultParticipantsSubMenuProps(),
@@ -217,6 +221,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     callInvitationURL,
     participants,
     excludeMe,
+    ids.participantButtonPeopleMenuItem,
     generateDefaultParticipantsSubMenuProps,
     onCopyCallback
   ]);
