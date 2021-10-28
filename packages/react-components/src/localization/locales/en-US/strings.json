@@ -89,7 +89,7 @@
     "startScreenShareGeneric": "Failed to start screen sharing",
     "stopScreenShareGeneric": "Failed to stop screen sharing"
   },
-  "screenShare": {
+  "localScreenShare": {
     "screenSharingMessage": "You are sharing your screen"
   }
 }

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ContextualMenu, IDragOptions, Modal, Stack, concatStyleSets, Icon, Text } from '@fluentui/react';
+import { concatStyleSets, ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
 import React, { CSSProperties, useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
@@ -14,31 +14,26 @@ import {
   VideoStreamOptions
 } from '../types';
 import { GridLayout } from './GridLayout';
+import { RemoteVideoTile } from './RemoteVideoTile';
+import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 import { StreamMedia } from './StreamMedia';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   gridStyle,
-  videoGalleryContainerStyle,
-  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
-  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
   horizontalGalleryStyle,
-  videoGalleryOuterDivStyle,
-  screenSharingContainer,
-  screenSharingNotificationContainer,
-  screenSharingNotificationIconContainer,
-  screenSharingNotificationIconStyle,
-  screenSharingNotificationTextStyle
+  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
+  videoGalleryContainerStyle,
+  videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
-import { VideoTile } from './VideoTile';
-import { RemoteVideoTile } from './RemoteVideoTile';
-import { useContainerWidth, isNarrowWidth } from './utils/responsive';
-import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
-import { useLocale } from '../localization';
+import { isNarrowWidth, useContainerWidth } from './utils/responsive';
+import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
+import { VideoTile } from './VideoTile';
 
 const emptyStyles = {};
 const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
@@ -47,15 +42,6 @@ const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
 const MAX_VIDEO_PARTICIPANTS_TILES = 4;
 // Set aside only 6 dominant speakers for remaining audio participants
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
-
-/**
- * All strings that may be shown on the UI in the {@link VideoGallery}.
- *
- * @public
- */
-export interface ScreenShareStrings {
-  screenSharingMessage: string;
-}
 
 /**
  * Props for {@link VideoGallery}.
@@ -140,7 +126,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const ids = useIdentifiers();
   const theme = useTheme();
-  const locale = useLocale();
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
@@ -278,41 +263,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         );
       });
 
-  const localScreenSharingNotification = useMemo((): JSX.Element | undefined => {
-    if (!localParticipant || !localParticipant.isScreenSharingOn) {
-      return undefined;
-    }
-
-    return (
-      <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
-        <Stack
-          horizontalAlign={'center'}
-          verticalAlign={'center'}
-          className={screenSharingNotificationContainer(theme)}
-          tokens={{ childrenGap: '1rem' }}
-        >
-          <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainer}>
-            <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconStyle(theme)} />
-          </Stack>
-          <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
-            {locale.strings.screenShare.screenSharingMessage}
-          </Text>
-        </Stack>
-      </Stack>
-    );
-  }, [localParticipant, theme, locale.strings.screenShare.screenSharingMessage]);
-
-  const localScreenShareStreamComponent = useMemo(() => {
-    return (
-      <VideoTile
-        displayName={localParticipant?.displayName}
-        isMuted={localParticipant?.isMuted}
-        onRenderPlaceholder={() => <></>}
-      >
-        {localScreenSharingNotification}
-      </VideoTile>
-    );
-  }, [localParticipant?.displayName, localParticipant?.isMuted, localScreenSharingNotification]);
+  const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
   const remoteScreenShareComponent = (
     <RemoteScreenShare
