@@ -10,24 +10,43 @@ import { CallCompositePage } from '../../CallComposite';
  * @alpha
  */
 export type MeetingCompositePage =
+  | 'accessDeniedTeamsMeeting'
   | 'configuration'
+  | 'leftMeeting'
   | 'lobby'
   | 'meeting'
-  | 'accessDeniedTeamsMeeting'
-  | 'removedFromCall';
+  | 'removedFromMeeting';
 
 /**
  * @private
  */
 export function callPageToMeetingPage(page: CallCompositePage): MeetingCompositePage {
-  return page === 'call' ? 'meeting' : page;
+  switch (page) {
+    case 'call':
+      return 'meeting';
+    case 'leftCall':
+      return 'leftMeeting';
+    case 'removedFromCall':
+      return 'removedFromMeeting';
+    default:
+      return page;
+  }
 }
 
 /**
  * @private
  */
 export function meetingPageToCallPage(page: MeetingCompositePage): CallCompositePage {
-  return page === 'meeting' ? 'call' : page;
+  switch (page) {
+    case 'meeting':
+      return 'call';
+    case 'leftMeeting':
+      return 'leftCall';
+    case 'removedFromMeeting':
+      return 'removedFromCall';
+    default:
+      return page;
+  }
 }
 
 /**

@@ -19,6 +19,7 @@ import { useSelector } from '../hooks/useSelector';
 import { getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { localPreviewSelector } from '../selectors/localPreviewSelector';
+import { buttonFlyoutIncreasedSizeStyles } from '../styles/CallControls.styles';
 import {
   cameraOffLabelStyle,
   localPreviewContainerStyleDesktop,
@@ -70,6 +71,14 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
     );
   }, [theme, locale.strings.call.cameraTurnedOff]);
 
+  const optionsButtonStyles = props.mobileView
+    ? {
+        menuStyles: {
+          menuItemStyles: buttonFlyoutIncreasedSizeStyles
+        }
+      }
+    : undefined;
+
   return (
     <Stack
       data-ui-id="call-composite-local-preview"
@@ -105,6 +114,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               // disable button whilst all other buttons are disabled
               disabled={!microphonePermissionGranted || !cameraPermissionGranted}
               showLabel={true}
+              styles={optionsButtonStyles}
             />
           )}
         </ControlBar>

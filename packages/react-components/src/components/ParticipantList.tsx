@@ -190,7 +190,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         onClick: () => onParticipantRemove(participant.userId),
         itemProps: {
           styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
-        }
+        },
+        'data-ui-id': ids.participantListRemoveParticipantButton
       });
     }
 

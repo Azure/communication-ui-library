@@ -265,6 +265,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     EditBoxSubmit: JSX.Element;
     MessageEdit: JSX.Element;
     MessageRemove: JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element;
 };
 
 // @public
@@ -344,7 +346,11 @@ export interface _IdentifierProviderProps {
 export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
+    participantButtonPeopleMenuItem: string;
+    participantItemMenuButton: string;
     participantList: string;
+    participantListPeopleButton: string;
+    participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
     videoGallery: string;
@@ -509,6 +515,11 @@ defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
+export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface OptionsButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
@@ -520,6 +531,7 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
     selectedSpeaker?: OptionsDevice;
     speakers?: OptionsDevice[];
     strings?: Partial<OptionsButtonStrings>;
+    styles?: OptionsButtonStyles;
 }
 
 // @public
@@ -531,6 +543,11 @@ export interface OptionsButtonStrings {
     microphoneMenuTooltip: string;
     speakerMenuTitle: string;
     speakerMenuTooltip: string;
+}
+
+// @public
+export interface OptionsButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
 }
 
 // @public
