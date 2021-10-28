@@ -4,30 +4,14 @@
 import React from 'react';
 import { VideoGalleryStream, useTheme, VideoStreamOptions } from '@internal/react-components';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
-
-import { FontWeights, Icon, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { Icon, mergeStyles, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
-
-const containerStyle: IStyle = {
-  gap: `1.5rem`
-};
-
-const titleContainerStyle: IStyle = {
-  gap: `1rem`
-};
-
-const titleStyle = (palette, isVideoReady): IStyle => ({
-  fontSize: '1.25rem',
-  fontWeight: FontWeights.semibold,
-  color: isVideoReady ? 'white' : palette.neutralPrimary,
-  textAlign: 'center'
-});
-
-const moreDetailsStyle = (palette, isVideoReady): IStyle => ({
-  fontSize: '1rem',
-  color: isVideoReady ? 'white' : palette.neutralPrimary,
-  textAlign: 'center'
-});
+import {
+  containerStyle,
+  moreDetailsStyle,
+  titleContainerStyle,
+  titleStyle
+} from '../styles/NetworkReconnectTile.styles';
 
 /**
  * @private
