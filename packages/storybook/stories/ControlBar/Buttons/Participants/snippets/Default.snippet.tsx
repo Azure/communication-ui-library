@@ -35,11 +35,7 @@ const mockParticipants: CallParticipant[] = [
 export const ParticipantsButtonDefaultExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton
-        participantListProps={{
-          participants: mockParticipants
-        }}
-      />
+      <ParticipantsButton participants={mockParticipants} />
     </FluentThemeProvider>
   );
 };

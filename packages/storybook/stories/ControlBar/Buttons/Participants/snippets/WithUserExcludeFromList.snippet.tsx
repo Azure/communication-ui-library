@@ -35,13 +35,7 @@ const mockParticipants: CallParticipant[] = [
 export const ParticipantsButtonWithUserExcludeFromListExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton
-        participantListProps={{
-          participants: mockParticipants,
-          myUserId: 'user1',
-          excludeMe: true
-        }}
-      />
+      <ParticipantsButton participants={mockParticipants} myUserId={'user1'} excludeMe={true} />
     </FluentThemeProvider>
   );
 };

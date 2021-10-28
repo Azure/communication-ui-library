@@ -35,13 +35,7 @@ const mockParticipants: CallParticipant[] = [
 export const ParticipantsButtonWithLabelExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton
-        showLabel={true}
-        participantListProps={{
-          participants: mockParticipants,
-          myUserId: 'user1'
-        }}
-      />
+      <ParticipantsButton showLabel={true} participants={mockParticipants} />
     </FluentThemeProvider>
   );
 };

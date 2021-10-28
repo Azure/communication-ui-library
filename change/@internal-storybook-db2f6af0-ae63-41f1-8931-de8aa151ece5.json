@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "update story code to match new interface",
+  "comment": "fix a spelling typo",
   "packageName": "@internal/storybook",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "none"

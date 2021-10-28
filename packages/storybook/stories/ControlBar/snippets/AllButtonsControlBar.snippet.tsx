@@ -77,10 +77,8 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
           }}
         />
         <ParticipantsButton
-          participantListProps={{
-            participants: mockParticipants,
-            myUserId: 'user1'
-          }}
+          participants={mockParticipants}
+          myUserId={'user1'}
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />

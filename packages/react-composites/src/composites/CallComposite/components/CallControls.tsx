@@ -9,7 +9,6 @@ import {
   OptionsButton,
   ParticipantMenuItemsCallback,
   ParticipantsButton,
-  ParticipantList,
   ScreenShareButton,
   useTheme
 } from '@internal/react-components';
@@ -130,12 +129,10 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const participantButton = options?.participantsButton !== false && (
     <ParticipantsButton
       data-ui-id="call-composite-participants-button"
-      participantListProps={{
-        ...participantsButtonProps.participantListProps,
-        onFetchParticipantMenuItems: onFetchParticipantMenuItems
-      }}
+      {...participantsButtonProps}
       showLabel={!options?.compressedMode}
       callInvitationURL={callInvitationURL}
+      onFetchParticipantMenuItems={onFetchParticipantMenuItems}
       disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
     />
   );

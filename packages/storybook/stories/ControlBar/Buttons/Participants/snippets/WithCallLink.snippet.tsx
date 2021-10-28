@@ -37,13 +37,7 @@ const mockCallLink = 'URL to invite new participants to the current call (https:
 export const ParticipantsButtonWithCallLinkExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <ParticipantsButton
-        participantListProps={{
-          participants: mockParticipants,
-          myUserId: 'user1'
-        }}
-        callInvitationURL={mockCallLink}
-      />
+      <ParticipantsButton participants={mockParticipants} myUserId={'user1'} callInvitationURL={mockCallLink} />
     </FluentThemeProvider>
   );
 };

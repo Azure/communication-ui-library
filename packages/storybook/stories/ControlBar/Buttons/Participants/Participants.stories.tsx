@@ -149,10 +149,8 @@ const ParticipantsStory = (args): JSX.Element => {
   return (
     <ParticipantsButton
       {...args}
-      participantListProps={{
-        participants: mockParticipants,
-        myUserId: myUserId
-      }}
+      participants={mockParticipants}
+      myUserId={myUserId}
       onMuteAll={args.isMuteAllAvailable ? onMuteAll : undefined}
     />
   );
