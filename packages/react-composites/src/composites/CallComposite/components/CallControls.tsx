@@ -132,8 +132,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...participantsButtonProps}
       showLabel={!options?.compressedMode}
       callInvitationURL={callInvitationURL}
-      disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
       onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+      disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
     />
   );
 
