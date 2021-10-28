@@ -40,7 +40,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-97 css-9"
+                className="ms-Stack css-122 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -73,7 +73,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-86 css-33"
+                    className="ms-Stack css-83 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -92,7 +92,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-97 css-9"
+                className="ms-Stack css-122 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -125,7 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-86 css-33"
+                    className="ms-Stack css-83 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -144,7 +144,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-97 css-9"
+                className="ms-Stack css-122 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -177,7 +177,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-86 css-33"
+                    className="ms-Stack css-83 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -196,7 +196,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-97 css-9"
+                className="ms-Stack css-122 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -229,7 +229,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-86 css-33"
+                    className="ms-Stack css-83 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -248,7 +248,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-97 css-9"
+                className="ms-Stack css-122 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -281,7 +281,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-86 css-33"
+                    className="ms-Stack css-83 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -300,7 +300,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-97 css-9"
+                className="ms-Stack css-122 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -333,7 +333,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-86 css-33"
+                    className="ms-Stack css-83 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -352,7 +352,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-97 css-9"
+                className="ms-Stack css-122 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -385,7 +385,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-86 css-33"
+                    className="ms-Stack css-83 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
@@ -404,7 +404,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
               className="ms-Stack css-8"
             >
               <div
-                className="ms-Stack css-97 css-9"
+                className="ms-Stack css-122 css-9"
               >
                 <div
                   className="ms-Stack css-16"
@@ -437,7 +437,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/Screen Share Layou
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-86 css-33"
+                    className="ms-Stack css-83 css-33"
                   >
                     <div
                       className="ms-StackItem css-34"
