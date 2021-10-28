@@ -6,7 +6,7 @@ import { mergeStyles, Theme } from '@fluentui/react';
 /**
  * @private
  */
-export const screenSharingContainer = mergeStyles({
+export const screenSharingContainerStyle = mergeStyles({
   width: '100%',
   height: '100%'
 });
@@ -14,7 +14,7 @@ export const screenSharingContainer = mergeStyles({
 /**
  * @private
  */
-export const screenSharingNotificationContainer = (theme: Theme): string =>
+export const screenSharingNotificationContainerStyle = (theme: Theme): string =>
   mergeStyles({
     backgroundColor: 'inherit',
     padding: '1rem',
@@ -26,7 +26,7 @@ export const screenSharingNotificationContainer = (theme: Theme): string =>
 /**
  * @private
  */
-export const screenSharingNotificationIconContainer = mergeStyles({
+export const screenSharingNotificationIconContainerStyle = mergeStyles({
   height: '2rem',
   lineHeight: 0
 });

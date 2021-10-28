@@ -8,9 +8,9 @@ import { useTheme } from '../../theming';
 import { VideoGalleryLocalParticipant } from '../../types';
 import { VideoTile } from '../VideoTile';
 import {
-  screenSharingContainer,
-  screenSharingNotificationContainer,
-  screenSharingNotificationIconContainer,
+  screenSharingContainerStyle,
+  screenSharingNotificationContainerStyle,
+  screenSharingNotificationIconContainerStyle,
   screenSharingNotificationIconStyle,
   screenSharingNotificationTextStyle
 } from './styles/LocalScreenShare.styles';
@@ -41,14 +41,14 @@ export const LocalScreenShare = React.memo((props: { localParticipant: VideoGall
   }
 
   const localScreenSharingNotification = (
-    <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainer}>
+    <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainerStyle}>
       <Stack
         horizontalAlign={'center'}
         verticalAlign={'center'}
-        className={screenSharingNotificationContainer(theme)}
+        className={screenSharingNotificationContainerStyle(theme)}
         tokens={{ childrenGap: '1rem' }}
       >
-        <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainer}>
+        <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainerStyle}>
           <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconStyle(theme)} />
         </Stack>
         <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
