@@ -26,8 +26,6 @@
     "microphonePermissionDenied": "Your browser is blocking access to your microphone",
     "privacyPolicy": "Privacy policy",
     "removedFromCallTitle": "You were removed from the call",
-    "screenSharingMessage": "You are sharing your screen",
-    "sharingScreenLoading": "Loading {sharingUser}'s screen",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call"
   },
