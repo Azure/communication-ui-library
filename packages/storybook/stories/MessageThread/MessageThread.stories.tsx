@@ -23,7 +23,7 @@ import {
   GenerateMockNewChatMessageFromOthers,
   GenerateMockHistoryChatMessages,
   GenerateMockChatMessages,
-  MessageThreadContainerStyles,
+  MessageThreadStoryContainerStyles,
   MessageThreadStyles,
   GenerateMockSystemMessage,
   GenerateMockCustomMessage,
@@ -198,7 +198,7 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   return (
-    <Stack style={MessageThreadContainerStyles}>
+    <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
         styles={MessageThreadStyles}
         userId={UserOne.senderId}
@@ -221,7 +221,7 @@ const MessageThreadStory = (args): JSX.Element => {
         }}
       />
       {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
-      Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
+        Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
         <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
         <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
