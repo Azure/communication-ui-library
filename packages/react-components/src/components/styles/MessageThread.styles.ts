@@ -16,6 +16,11 @@ const AVATAR_WIDTH_REM = 2;
 const AVATAR_MESSAGE_GAP_REM = 0.5;
 const MESSAGE_AMOUNT_OUT_FROM_EDGE_REM = 2;
 
+// Avatars should display on top of chat messages when the chat thread is narrow
+const MESSAGE_AVATAR_OVERLAP_REM = 0.425;
+const CHAT_MESSAGE_ZINDEX = 1;
+const AVATAR_ZINDEX = 2;
+
 /**
  * @private
  */
@@ -72,10 +77,14 @@ export const chatMessageDateStyle: CSSProperties = {
 /**
  * @private
  */
-export const defaultChatItemMessageContainer: ComponentSlotStyle = {
-  marginRight: '0rem',
-  marginLeft: `${AVATAR_MESSAGE_GAP_REM}rem`,
-  width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`
+export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): ComponentSlotStyle => {
+  const messageAvatarGap = overlapAvatarAndMessage ? -MESSAGE_AVATAR_OVERLAP_REM : AVATAR_MESSAGE_GAP_REM;
+  return {
+    marginRight: '0rem',
+    marginLeft: `${messageAvatarGap}rem`,
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
+    zIndex: CHAT_MESSAGE_ZINDEX
+  };
 };
 
 /**
@@ -104,7 +113,8 @@ export const gutterWithAvatar: ComponentSlotStyle = {
   position: 'relative',
   float: 'left',
   display: 'block',
-  visibility: 'visible'
+  visibility: 'visible',
+  zIndex: AVATAR_ZINDEX
 };
 
 /**
