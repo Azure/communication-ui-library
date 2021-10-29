@@ -2,31 +2,28 @@
 // Licensed under the MIT license.
 
 import { ChatClient } from '@azure/communication-chat';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import React from 'react';
 
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
 
 // Adds a bot to the thread that sends out provided canned messages one by one.
 export const addParrotBotToThread = async (
-  resourceConnectionString: string,
-  token: string,
+  userToken: string,
+  botId: string,
+  botToken: string,
+  endpointUrl: string,
   threadId: string,
   messages: string[]
-): Promise<CommunicationUserToken> => {
-  const tokenClient = new CommunicationIdentityClient(resourceConnectionString);
-  const bot = await tokenClient.createUserAndToken(['chat']);
-
-  const endpointUrl = new URL(resourceConnectionString.replace('endpoint=', '').split(';')[0]).toString();
-  // Must use the credentials of the thread owner to add more participants.
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
+): Promise<CommunicationUserIdentifier> => {
+  const botIdentifier: CommunicationUserIdentifier = { communicationUserId: botId };
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userToken));
   await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: [{ id: bot.user, displayName: 'A simple bot' }]
+    participants: [{ id: botIdentifier, displayName: 'A simple bot' }]
   });
 
-  sendMessagesAsBot(bot.token, endpointUrl, threadId, messages);
-  return bot;
+  sendMessagesAsBot(botToken, endpointUrl, threadId, messages);
+  return botIdentifier;
 };
 
 const sendMessagesAsBot = async (
@@ -52,11 +49,42 @@ const sendMessagesAsBot = async (
 };
 
 export const ConfigHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide the connection string and display name to use.';
+  const emptyConfigTips =
+    'Please provide an access token, userId for each participant, endpointUrl and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
 
 export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide a token, thread id, endpoint url, and display name to use.';
+  const emptyConfigTips = 'Please provide an access token, userId, thread id, endpoint url, and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
+};
+
+export type ChatCompositeSetupProps = {
+  userId: CommunicationUserIdentifier;
+  token: string;
+  endpointUrl: string;
+  displayName: string;
+  threadId: string;
+};
+
+export const createThreadAndAddUser = async (
+  userId: string,
+  token: string,
+  endpointUrl: string,
+  displayName: string
+): Promise<ChatCompositeSetupProps> => {
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
+
+  const user = { communicationUserId: userId };
+  const threadId =
+    (
+      await chatClient.createChatThread(
+        { topic: 'Chat with a friendly bot' },
+        {
+          participants: [{ id: user, displayName: displayName }]
+        }
+      )
+    ).chatThread?.id ?? '';
+
+  return { userId: user, token, endpointUrl, displayName, threadId };
 };
