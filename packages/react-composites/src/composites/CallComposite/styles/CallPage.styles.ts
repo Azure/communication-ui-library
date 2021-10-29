@@ -66,14 +66,13 @@ export const mediaGalleryContainerStyles: IStackItemStyles = {
 /**
  * @private
  */
-export const bannersContainerStyles: IStackStyles = {
+export const notificationsContainerStyles = (zIndex: number): IStackStyles => ({
   root: {
     width: '100%',
     position: 'absolute',
-    // High enough to be above the video gallary.
-    zIndex: 9,
     top: 0,
     left: 0,
-    padding: '1rem'
+    padding: '1rem',
+    zIndex
   }
-};
+});
