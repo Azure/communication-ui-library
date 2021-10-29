@@ -38,7 +38,7 @@ export { ParticipantList } from './ParticipantList';
 export type { ParticipantListProps, ParticipantMenuItemsCallback } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings } from './VideoGallery';
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
@@ -76,6 +76,3 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
-
-export type { LocalScreenShareStrings } from './VideoGallery/LocalScreenShare';
-export type { RemoteScreenShareStrings } from './VideoGallery/RemoteScreenShare';

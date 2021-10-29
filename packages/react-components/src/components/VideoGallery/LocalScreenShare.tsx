@@ -16,16 +16,6 @@ import {
 } from './styles/LocalScreenShare.styles';
 
 /**
- * All strings that may be shown on the UI in the {@link LocalScreenShare}.
- *
- * @public
- */
-export interface LocalScreenShareStrings {
-  /** String to notify that local user is sharing their screen */
-  screenIsBeingSharedMessage: string;
-}
-
-/**
  * A memoized version of local screen share component. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.
  * https://reactjs.org/docs/react-api.html#reactmemo
@@ -52,7 +42,7 @@ export const LocalScreenShare = React.memo((props: { localParticipant: VideoGall
           <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconStyle(theme)} />
         </Stack>
         <Text className={screenSharingNotificationTextStyle} aria-live="polite">
-          {locale.strings.localScreenShare.screenIsBeingSharedMessage}
+          {locale.strings.videoGallery.screenIsBeingSharedMessage}
         </Text>
       </Stack>
     </Stack>

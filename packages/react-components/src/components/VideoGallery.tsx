@@ -44,6 +44,18 @@ const MAX_VIDEO_PARTICIPANTS_TILES = 4;
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
+ * All strings that may be shown on the UI in the {@link VideoGallery}.
+ *
+ * @public
+ */
+export interface VideoGalleryStrings {
+  /** String to notify that local user is sharing their screen */
+  screenIsBeingSharedMessage: string;
+  /** String to show when remote screen share stream is loading */
+  screenShareLoadingMessage: string;
+}
+
+/**
  * Props for {@link VideoGallery}.
  *
  * @public
@@ -89,6 +101,8 @@ export interface VideoGalleryProps {
    * @defaultValue `true`
    */
   showMuteIndicator?: boolean;
+
+  strings?: VideoGalleryStrings;
 }
 
 const DRAG_OPTIONS: IDragOptions = {

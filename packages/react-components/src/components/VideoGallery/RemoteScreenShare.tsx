@@ -11,16 +11,6 @@ import { videoWithNoRoundedBorderStyle, loadingStyle } from './styles/RemoteScre
 import { _formatString } from '@internal/acs-ui-common';
 
 /**
- * All strings that may be shown on the UI in the {@link RemoteScreenShare}.
- *
- * @public
- */
-export interface RemoteScreenShareStrings {
-  /** String to show when remote screen share stream is loading */
-  screenShareLoadingMessage: string;
-}
-
-/**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.
  * https://reactjs.org/docs/react-api.html#reactmemo
@@ -45,7 +35,7 @@ export const RemoteScreenShare = React.memo(
     const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
 
     const loadingMessage = screenShareParticipant?.displayName
-      ? _formatString(locale.strings.remoteScreenShare.screenShareLoadingMessage, {
+      ? _formatString(locale.strings.videoGallery.screenShareLoadingMessage, {
           participant: screenShareParticipant?.displayName
         })
       : '';

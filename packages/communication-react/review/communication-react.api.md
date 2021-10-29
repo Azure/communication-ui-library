@@ -773,17 +773,16 @@ export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
-    localScreenShare: LocalScreenShareStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
     optionsButton: OptionsButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
-    remoteScreenShare: RemoteScreenShareStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    videoGallery: VideoGalleryStrings;
 }
 
 // @public
@@ -1205,11 +1204,6 @@ export type LocalizationProviderProps = {
     locale: ComponentLocale;
     children: React_2.ReactNode;
 };
-
-// @public
-export interface LocalScreenShareStrings {
-    screenIsBeingSharedMessage: string;
-}
 
 // @public
 export interface LocalVideoStreamState {
@@ -1721,11 +1715,6 @@ export interface RemoteParticipantState {
 }
 
 // @public
-export interface RemoteScreenShareStrings {
-    screenShareLoadingMessage: string;
-}
-
-// @public
 export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
@@ -1990,6 +1979,8 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
+    // (undocumented)
+    strings?: VideoGalleryStrings;
     styles?: BaseCustomStyles;
 }
 
@@ -2013,6 +2004,12 @@ export interface VideoGalleryStream {
     isAvailable?: boolean;
     isMirrored?: boolean;
     renderElement?: HTMLElement;
+}
+
+// @public
+export interface VideoGalleryStrings {
+    screenIsBeingSharedMessage: string;
+    screenShareLoadingMessage: string;
 }
 
 // @public

@@ -89,10 +89,8 @@
     "startScreenShareGeneric": "Failed to start screen sharing",
     "stopScreenShareGeneric": "Failed to stop screen sharing"
   },
-  "localScreenShare": {
-    "screenIsBeingSharedMessage": "You are sharing your screen"
-  },
-  "remoteScreenShare": {
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen"
   }
 }
