@@ -9,8 +9,8 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
-import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
-import { createUserAndThread } from './snippets/Server.snippet';
+import { ContosoChatContainer } from './snippets/Container.snippet';
+import { ChatCompositeSetupProps, createThreadAndAddUser } from './snippets/Utils';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
 const messageArray = [
@@ -25,20 +25,27 @@ const BasicStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const [containerProps, setContainerProps] = useState<ContainerProps>();
+  const [containerProps, setContainerProps] = useState<ChatCompositeSetupProps>();
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.connectionString && args.displayName) {
-        const newProps = await createUserAndThread(args.connectionString, args.displayName);
-        await addParrotBotToThread(args.connectionString, newProps.token, newProps.threadId, messageArray);
-        setContainerProps({ ...newProps });
+      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+        const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
+        await addParrotBotToThread(
+          args.token,
+          args.botId,
+          args.botToken,
+          args.endpointUrl,
+          newProps.threadId,
+          messageArray
+        );
+        setContainerProps(newProps);
       } else {
         setContainerProps(undefined);
       }
     };
     fetchToken();
-  }, [args.connectionString, args.displayName]);
+  }, [args.userId, args.token, args.botId, args.botToken, args.endpointUrl, args.displayName]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -65,7 +72,11 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Basic Example`,
   component: ChatComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    userId: controlsToAdd.userId,
+    token: controlsToAdd.token,
+    botId: controlsToAdd.botUserId,
+    botToken: controlsToAdd.botToken,
+    endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     showErrorBar: controlsToAdd.showErrorBar,
     showParticipants: controlsToAdd.showChatParticipants,

@@ -13,7 +13,7 @@ import {
   CustomDataModelExampleContainer,
   CustomDataModelExampleContainerProps
 } from './snippets/CustomDataModelExampleContainer.snippet';
-import { createUserAndThread } from './snippets/Server.snippet';
+import { createThreadAndAddUser } from './snippets/Utils';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
 const messageArray = [
@@ -31,17 +31,25 @@ const CustomDataModelStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.connectionString && args.displayName) {
-        const newPrerequisites = await createUserAndThread(args.connectionString, args.displayName);
-        const botUserToken = await addParrotBotToThread(
-          args.connectionString,
-          newPrerequisites.token,
+      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+        const newPrerequisites = await createThreadAndAddUser(
+          args.userId,
+          args.token,
+          args.endpointUrl,
+          args.displayName
+        );
+        const botUser = await addParrotBotToThread(
+          args.token,
+          args.botId,
+          args.botToken,
+          args.endpointUrl,
           newPrerequisites.threadId,
           messageArray
         );
         setContainerProps({
           ...newPrerequisites,
-          botUserId: toFlatCommunicationIdentifier(botUserToken.user)
+          botUserId: toFlatCommunicationIdentifier(botUser),
+          botAvatar: args.avatar
         });
       } else {
         setContainerProps(undefined);
@@ -73,7 +81,11 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Custom Data Model Example`,
   component: ChatComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    userId: controlsToAdd.userId,
+    token: controlsToAdd.token,
+    botId: controlsToAdd.botUserId,
+    botToken: controlsToAdd.botToken,
+    endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     avatar: controlsToAdd.botAvatar,
     // Hiding auto-generated controls
