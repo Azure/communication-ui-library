@@ -22,7 +22,7 @@ import {
  */
 export interface LocalScreenShareStrings {
   /** String to notify that local user is sharing their screen */
-  screenSharingMessage: string;
+  screenIsBeingSharedMessage: string;
 }
 
 /**
@@ -41,18 +41,18 @@ export const LocalScreenShare = React.memo((props: { localParticipant: VideoGall
   }
 
   const localScreenSharingNotification = (
-    <Stack horizontalAlign={'center'} verticalAlign={'center'} className={screenSharingContainerStyle}>
+    <Stack horizontalAlign="center" verticalAlign="center" className={screenSharingContainerStyle}>
       <Stack
-        horizontalAlign={'center'}
-        verticalAlign={'center'}
+        horizontalAlign="center"
+        verticalAlign="center"
         className={screenSharingNotificationContainerStyle(theme)}
         tokens={{ childrenGap: '1rem' }}
       >
-        <Stack horizontal verticalAlign={'center'} className={screenSharingNotificationIconContainerStyle}>
+        <Stack horizontal verticalAlign="center" className={screenSharingNotificationIconContainerStyle}>
           <Icon iconName="ControlButtonScreenShareStart" className={screenSharingNotificationIconStyle(theme)} />
         </Stack>
-        <Text className={screenSharingNotificationTextStyle} aria-live={'polite'}>
-          {locale.strings.localScreenShare.screenSharingMessage}
+        <Text className={screenSharingNotificationTextStyle} aria-live="polite">
+          {locale.strings.localScreenShare.screenIsBeingSharedMessage}
         </Text>
       </Stack>
     </Stack>

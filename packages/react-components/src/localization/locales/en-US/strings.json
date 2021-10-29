@@ -90,9 +90,9 @@
     "stopScreenShareGeneric": "Failed to stop screen sharing"
   },
   "localScreenShare": {
-    "screenSharingMessage": "You are sharing your screen"
+    "screenIsBeingSharedMessage": "You are sharing your screen"
   },
   "remoteScreenShare": {
-    "screenShareLoadingMessage": "Loading {participant}'s screen`"
+    "screenShareLoadingMessage": "Loading {participant}'s screen"
   }
 }

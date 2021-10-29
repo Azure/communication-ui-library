@@ -387,7 +387,7 @@ export type LocalizationProviderProps = {
 
 // @public
 export interface LocalScreenShareStrings {
-    screenSharingMessage: string;
+    screenIsBeingSharedMessage: string;
 }
 
 // @public
@@ -657,7 +657,7 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
 
 // @public
 export interface RemoteScreenShareStrings {
-    loadingMessage: string;
+    screenShareLoadingMessage: string;
 }
 
 // @public
@@ -795,7 +795,6 @@ export interface VideoGalleryProps {
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
-    screenShareParticipant?: VideoGalleryRemoteParticipant;
     showMuteIndicator?: boolean;
     styles?: BaseCustomStyles;
 }
