@@ -39,6 +39,17 @@ jobs:
       - name: Build Projects
         run: rush build
 
+      - name: Package Calling Sample Artifact
+        run: rushx package
+        working-directory: ./samples/Calling
+
+      - name: 'Deploy Calling Sample WebApp'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: acs-ui-dev-web-call-hero-beta-validation2
+          publish-profile: ${{ secrets.AZURE_BETA_GROUPCALLING_WEBAPP_PUBLISH_PROFILE }}
+          package: ./samples/Calling/dist
+
       - name: Package Chat Sample Artifact
         run: rushx package
         working-directory: ./samples/Chat
