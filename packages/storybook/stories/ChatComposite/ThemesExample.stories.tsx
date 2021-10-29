@@ -10,7 +10,7 @@ import { defaultChatCompositeHiddenControls, controlsToAdd, getControlledTheme }
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
-import { createUserAndThread } from './snippets/Server.snippet';
+import { createThreadAndAddUser } from './snippets/Utils';
 import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
 
 const messageArray = [
@@ -29,16 +29,23 @@ const ThemeStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.connectionString && args.displayName) {
-        const newProps = await createUserAndThread(args.connectionString, args.displayName);
-        await addParrotBotToThread(args.connectionString, newProps.token, newProps.threadId, messageArray);
+      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+        const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
+        await addParrotBotToThread(
+          args.token,
+          args.botId,
+          args.botToken,
+          args.endpointUrl,
+          newProps.threadId,
+          messageArray
+        );
         setContainerProps(newProps);
       } else {
         setContainerProps(undefined);
       }
     };
     fetchToken();
-  }, [args.connectionString, args.displayName]);
+  }, [args.userId, args.token, args.botId, args.botToken, args.endpointUrl, args.displayName]);
 
   const theme: PartialTheme = {
     ...getControlledTheme(args.theme),
@@ -66,7 +73,11 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Theme Example`,
   component: ChatComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    userId: controlsToAdd.userId,
+    token: controlsToAdd.token,
+    botId: controlsToAdd.botUserId,
+    botToken: controlsToAdd.botToken,
+    endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     theme: controlsToAdd.theme,
     font: controlsToAdd.font,

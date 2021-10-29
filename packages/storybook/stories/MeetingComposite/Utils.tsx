@@ -5,11 +5,12 @@ import React from 'react';
 import { CompositeConnectionParamsErrMessage } from '../CompositeStringUtils';
 
 export const ConfigHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide the connection string and display name to use.';
+  const emptyConfigTips = 'Please provide an access token, userId, endpointUrl and display name to use.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
 
 export const ConfigJoinMeetingHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide the connection string, display name and Teams meeting link to use.';
+  const emptyConfigTips =
+    'Please provide the an access token, userId, endpointUrl, display name, and teams meeting link.';
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
