@@ -19,7 +19,7 @@ While the release branch is active, some changes might be merged into the branch
 - First land the change as a PR into `main`.
 - Then, cherry-pick the change as a separate PR onto the release branch.
 
-This process has the following benevits:
+This process has the following benefits:
 
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 -  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off. This avoids non-trivial merge conflicts when the release branch is eventually merged back into `main`.
