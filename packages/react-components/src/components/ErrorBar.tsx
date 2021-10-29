@@ -208,7 +208,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
         <MessageBar
           {...props}
           key={error.type}
-          messageBarType={MessageBarType.error}
+          messageBarType={messageBarType(error.type)}
           onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
         >
           {strings[error.type]}
@@ -294,4 +294,22 @@ const errorsToShow = (
     // Error has an associated timestamp, so compare with last dismissal.
     return error.timestamp > dismissal.dismissedAt;
   });
+};
+
+const messageBarType = (errorType: ErrorType): MessageBarType => {
+  switch (errorType) {
+    case 'callNetworkQualityLow':
+    case 'callNoSpeakerFound':
+    case 'callNoMicrophoneFound':
+    case 'callMicrophoneAccessDenied':
+    case 'callMicrophoneMutedBySystem':
+    case 'callMacOsMicrophoneAccessDenied':
+    case 'callLocalVideoFreeze':
+    case 'callCameraAlreadyInUse':
+    case 'callMacOsCameraAccessDenied':
+    case 'callMacOsScreenShareAccessDenied':
+      return MessageBarType.warning;
+    default:
+      return MessageBarType.error;
+  }
 };
