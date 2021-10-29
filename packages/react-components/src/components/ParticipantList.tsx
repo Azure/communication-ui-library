@@ -1,13 +1,41 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IContextualMenuItem, PersonaPresence, Stack } from '@fluentui/react';
+import {
+  Icon,
+  IContextualMenuItem,
+  IContextualMenuItemStyles,
+  merge,
+  mergeStyles,
+  PersonaPresence,
+  Stack
+} from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
-import { CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
-import { ParticipantItem, ParticipantItemStrings } from './ParticipantItem';
+import { BaseCustomStyles, CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
+import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
+
+/**
+ * Styles for the {@link ParticipantList} {@link ParticipantItem}.
+ *
+ * @public
+ */
+export interface ParticipantListItemStyles extends ParticipantItemStyles {
+  /** Styles applied to the sub-menu of the {@link ParticipantList} {@link ParticipantItem}. */
+  participantSubMenuItemsStyles?: IContextualMenuItemStyles;
+}
+
+/**
+ * Styles for the {@link ParticipantList}.
+ *
+ * @public
+ */
+export interface ParticipantListStyles extends BaseCustomStyles {
+  /** Styles for the {@link ParticipantList} {@link ParticipantItem}. */
+  participantItemStyles?: ParticipantListItemStyles;
+}
 
 /**
  * A callback for providing custom menu items for each participant in {@link ParticipantList}.
@@ -44,6 +72,8 @@ export type ParticipantListProps = {
   onParticipantRemove?: (userId: string) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /** Styles for the {@link ParticipantList} */
+  styles?: ParticipantListStyles;
 };
 
 const onRenderParticipantDefault = (
@@ -52,7 +82,8 @@ const onRenderParticipantDefault = (
   myUserId?: string,
   onParticipantRemove?: (userId: string) => void,
   onRenderAvatar?: OnRenderAvatarCallback,
-  createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[]
+  createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[],
+  styles?: ParticipantListItemStyles
 ): JSX.Element | null => {
   // Try to consider CommunicationParticipant as CallParticipant
   const callingParticipant = participant as CallParticipant;
@@ -89,7 +120,7 @@ const onRenderParticipantDefault = (
   if (participant.displayName) {
     return (
       <ParticipantItem
-        styles={participantListItemStyle}
+        styles={styles}
         key={participant.userId}
         userId={participant.userId}
         displayName={participant.displayName}
@@ -157,6 +188,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         key: 'remove',
         text: strings.removeButtonLabel,
         onClick: () => onParticipantRemove(participant.userId),
+        itemProps: {
+          styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
+        },
         'data-ui-id': ids.participantListRemoveParticipantButton
       });
     }
@@ -168,8 +202,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     return menuItems;
   };
 
+  const participantItemStyles = merge(participantListItemStyle, props.styles?.participantItemStyles);
   return (
-    <Stack data-ui-id={ids.participantList} className={participantListStyle}>
+    <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
       {displayedParticipants.map((participant: CommunicationParticipant) =>
         onRenderParticipant
           ? onRenderParticipant(participant)
@@ -179,7 +214,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               myUserId,
               onParticipantRemove,
               onRenderAvatar,
-              createParticipantMenuItems
+              createParticipantMenuItems,
+              participantItemStyles
             )
       )}
     </Stack>
