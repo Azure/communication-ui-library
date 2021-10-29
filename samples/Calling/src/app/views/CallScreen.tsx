@@ -50,19 +50,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         console.log('Adapter error event:', e);
       });
       adapter.onStateChange((state: CallAdapterState) => {
-        switch (state.page) {
-          case 'accessDeniedTeamsMeeting':
-            document.title = `error - ${webAppTitle}`;
-            break;
-          case 'leftCall':
-            document.title = `end call - ${webAppTitle}`;
-            break;
-          case 'removedFromCall':
-            document.title = `end call - ${webAppTitle}`;
-            break;
-          default:
-            document.title = `${state.page} - ${webAppTitle}`;
-        }
+        const pageTitle = convertPageStateToString(state);
+        document.title = `${pageTitle} - ${webAppTitle}`;
       });
       setAdapter(adapter);
       adapterRef.current = adapter;
@@ -86,4 +75,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       options={{ mobileView: isMobileSession }}
     />
   );
+};
+
+const convertPageStateToString = (state: CallAdapterState): string => {
+  switch (state.page) {
+    case 'accessDeniedTeamsMeeting':
+      return 'error';
+    case 'leftCall':
+      return 'end call';
+    case 'removedFromCall':
+      return 'end call';
+    default:
+      return `${state.page}`;
+  }
 };
