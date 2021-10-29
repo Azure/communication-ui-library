@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
+import { ParticipantListItemStyles } from '../ParticipantList';
 
 /**
  * @private
@@ -14,7 +15,7 @@ export const participantListStyle = mergeStyles({
 /**
  * @private
  */
-export const participantListItemStyle = {
+export const participantListItemStyle: ParticipantListItemStyles = {
   root: {
     paddingLeft: '1rem',
     paddingRight: '1rem'
