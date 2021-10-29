@@ -9,7 +9,7 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './MeetingCompositeDocs';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
-import { createUserCredentials } from './snippets/Server.snippet';
+import { createCallLocator } from './snippets/Server.snippet';
 import { ConfigJoinMeetingHintBanner } from './Utils';
 
 const JoinExistingMeetingStory = (args, context): JSX.Element => {
@@ -17,15 +17,21 @@ const JoinExistingMeetingStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (!!args.connectionString && !!args.displayName && !!args.teamsMeetingLink) {
-        const newProps = await createUserCredentials(args.connectionString, args.displayName, args.teamsMeetingLink);
+      if (!!args.token && !!args.userId && !!args.endpointUrl && !!args.displayName && !!args.teamsMeetingLink) {
+        const newProps = await createCallLocator(
+          args.token,
+          args.userId,
+          args.endpointUrl,
+          args.displayName,
+          args.teamsMeetingLink
+        );
         setMeetingProps(newProps);
       } else {
         setMeetingProps(undefined);
       }
     };
     fetchToken();
-  }, [args.connectionString, args.displayName, args.teamsMeetingLink]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.teamsMeetingLink]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -45,7 +51,9 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/MeetingComposite/Join Example`,
   component: MeetingComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    token: controlsToAdd.token,
+    userId: controlsToAdd.userId,
+    endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     teamsMeetingLink: controlsToAdd.teamsMeetingLink,
     // Hiding auto-generated controls

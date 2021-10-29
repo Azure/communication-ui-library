@@ -1,0 +1,59 @@
+name: Deploy beta validation samples
+
+on:
+  push:
+    branches:
+      - 'release/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-samples:
+    name: Build and Deploy samples
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+
+      - name: Install Rush
+        run: npm install -g @microsoft/rush@5.47.0
+
+      - name: Install Dependencies
+        run: rush install
+
+      - name: Build Projects
+        run: rush build
+
+      - name: Package Calling Sample Artifact
+        run: rushx package
+        working-directory: ./samples/Calling
+
+      - name: 'Deploy Calling Sample WebApp'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: acs-ui-dev-web-call-hero-beta-validation2
+          publish-profile: ${{ secrets.AZURE_BETA_GROUPCALLING_WEBAPP_PUBLISH_PROFILE }}
+          package: ./samples/Calling/dist
+
+      - name: Package Chat Sample Artifact
+        run: rushx package
+        working-directory: ./samples/Chat
+
+      - name: 'Deploy Chat Sample WebApp'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: acs-ui-dev-web-chat-hero-beta-validation2
+          publish-profile: ${{ secrets.AZURE_BETA_GROUPCHAT_WEBAPP_PUBLISH_PROFILE }}
+          package: ./samples/Chat/dist
