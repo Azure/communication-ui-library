@@ -62,6 +62,9 @@ export const buttonFlyoutIncreasedSizeStyles: IContextualMenuItemStyles = {
     height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
     lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
     maxHeight: 'unset'
+  },
+  icon: {
+    maxHeight: 'unset'
   }
 };
 
