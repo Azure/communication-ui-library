@@ -19158,6 +19158,7 @@ packages:
       immer: 9.0.6
       jest: 26.6.0
       prettier: 2.3.1
+      react: 16.14.0
       rimraf: 2.7.1
       rollup: 2.42.4
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
@@ -19165,7 +19166,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-2POaptjouZZ2xp9nQGZrSCuCnZGdobvfyzNef/3iucMPqES2gqdT/+xTDI3xpU6sm9vIn3uaOE5hwQyTi54oNA==
+      integrity: sha512-fTB+V9yr9+POPCOJCu+vkLI1eWauLHZMveikRQqtSFctSdsf0kGECq01aA55AaP/LzPyfoNhNJE06QSOWcxnag==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
@@ -19616,7 +19617,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-aSYIDDpCBafeaGwlNnHd/7ffqXbOBHmh4C6VMx937kUcInn6RGq5cgONR0e/TTlY10xZ7qO6PWFTJ98dQ1NNCg==
+      integrity: sha512-xVtDPH/oT1DEsfTdWvv7ljSKTwtkClUXulcuEPAYgAg+pWW/I2KtjMdh4ZH/UimvnSR58FtH+TK4PMLP9+4njA==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:

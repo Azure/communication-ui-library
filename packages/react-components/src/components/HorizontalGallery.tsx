@@ -4,7 +4,7 @@
 import { DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
 import { useTheme } from '../theming';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStyles } from '../types';
 import { horizontalGalleryContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
 
 /**
@@ -15,7 +15,7 @@ const DEFAULT_CHILDREN_PER_PAGE = 5;
 /**
  * {@link HorizontalGallery} Component Styles.
  */
-export interface HorizontalGalleryStyles extends BaseCustomStylesProps {
+export interface HorizontalGalleryStyles extends BaseCustomStyles {
   previousButton?: IStyle;
   nextButton?: IStyle;
 }

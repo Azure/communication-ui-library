@@ -10,6 +10,8 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+import { IContextualMenuItemStyles } from '@fluentui/react';
+import { IContextualMenuStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -30,7 +32,7 @@ export interface ActiveErrorMessage {
 }
 
 // @public
-export interface BaseCustomStylesProps {
+export interface BaseCustomStyles {
     root?: IStyle;
 }
 
@@ -208,7 +210,7 @@ export type ControlBarLayout = 'horizontal' | 'vertical' | 'dockedTop' | 'docked
 export interface ControlBarProps {
     children?: React_2.ReactNode;
     layout?: ControlBarLayout;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -326,7 +328,7 @@ export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @internal
@@ -344,7 +346,11 @@ export interface _IdentifierProviderProps {
 export interface _Identifiers {
     messageContent: string;
     messageTimestamp: string;
+    participantButtonPeopleMenuItem: string;
+    participantItemMenuButton: string;
     participantList: string;
+    participantListPeopleButton: string;
+    participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
     videoGallery: string;
@@ -415,7 +421,7 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 export interface MessageStatusIndicatorProps {
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -473,7 +479,7 @@ export interface MessageThreadStrings {
 }
 
 // @public
-export interface MessageThreadStyles extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
@@ -509,6 +515,11 @@ defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
+export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface OptionsButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
@@ -520,6 +531,7 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
     selectedSpeaker?: OptionsDevice;
     speakers?: OptionsDevice[];
     strings?: Partial<OptionsButtonStrings>;
+    styles?: OptionsButtonStyles;
 }
 
 // @public
@@ -531,6 +543,11 @@ export interface OptionsButtonStrings {
     microphoneMenuTooltip: string;
     speakerMenuTitle: string;
     speakerMenuTooltip: string;
+}
+
+// @public
+export interface OptionsButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
 }
 
 // @public
@@ -559,7 +576,7 @@ export interface ParticipantItemProps {
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
     strings?: Partial<ParticipantItemStrings>;
-    styles?: ParticipantItemStylesProps;
+    styles?: ParticipantItemStyles;
     userId?: string;
 }
 
@@ -573,7 +590,7 @@ export interface ParticipantItemStrings {
 }
 
 // @public
-export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+export interface ParticipantItemStyles extends BaseCustomStyles {
     avatar?: IStyle;
     iconContainer?: IStyle;
     me?: IStyle;
@@ -584,6 +601,11 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
+export interface ParticipantListItemStyles extends ParticipantItemStyles {
+    participantSubMenuItemsStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
@@ -592,7 +614,13 @@ export type ParticipantListProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onParticipantRemove?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    styles?: ParticipantListStyles;
 };
+
+// @public
+export interface ParticipantListStyles extends BaseCustomStyles {
+    participantItemStyles?: ParticipantListItemStyles;
+}
 
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
@@ -609,10 +637,23 @@ export interface ParticipantRemovedSystemMessage extends SystemMessageCommon {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
+export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+    participantListStyles?: ParticipantListStyles;
+}
+
+// @public
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
     callInvitationURL?: string;
+    excludeMe?: boolean;
+    myUserId?: string;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onMuteAll?: () => void;
+    onParticipantRemove?: (userId: string) => void;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
+    participants: CommunicationParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
@@ -628,7 +669,7 @@ export interface ParticipantsButtonStrings {
 
 // @public
 export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
-    participantListContainerStyle?: IStyle;
+    menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
 // @public
@@ -669,7 +710,7 @@ export interface SendBoxStrings {
 }
 
 // @public
-export interface SendBoxStylesProps extends BaseCustomStylesProps {
+export interface SendBoxStylesProps extends BaseCustomStyles {
     sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
     systemMessage?: IStyle;
@@ -683,7 +724,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 // @public
 export interface StreamMediaProps {
     isMirrored?: boolean;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
 
@@ -727,7 +768,7 @@ export interface TypingIndicatorStrings {
 }
 
 // @public
-export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
+export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
@@ -767,7 +808,7 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -809,7 +850,7 @@ export interface VideoTileProps {
 }
 
 // @public
-export interface VideoTileStylesProps extends BaseCustomStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStyles {
     displayNameContainer?: IStyle;
     overlayContainer?: IStyle;
     videoContainer?: IStyle;

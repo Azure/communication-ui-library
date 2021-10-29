@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { memoizeFnAll } from '@internal/acs-ui-common';
 import { Icon, mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
+import { _formatString, memoizeFnAll } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import {
-  OnRenderAvatarCallback,
   StreamMedia,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -73,9 +72,12 @@ const memoizeAllRemoteParticipants = memoizeFnAll(
 );
 
 // A non-undefined display name is needed for this render, and that is coming from VideoTile props below
-const onRenderPlaceholder: OnRenderAvatarCallback = (userId, options): JSX.Element => (
+const onRenderPlaceholder = (options, strings): JSX.Element => (
   <div className={loadingStyle}>
-    <Spinner label={`Loading ${options?.text}'s screen`} size={SpinnerSize.xSmall} />
+    <Spinner
+      label={_formatString(strings.sharingScreenLoading, { sharingUser: `${options?.text}` })}
+      size={SpinnerSize.xSmall}
+    />
   </div>
 );
 
@@ -167,7 +169,7 @@ export const ScreenShare = (props: ScreenShareProps): JSX.Element => {
             <StreamMedia styles={videoStyles} videoStreamElement={screenShareStream?.renderElement} />
           ) : undefined
         }
-        onRenderPlaceholder={onRenderPlaceholder}
+        onRenderPlaceholder={(userId, options) => onRenderPlaceholder(options, locale.strings.call)}
         styles={{
           overlayContainer: videoStreamStyle
         }}

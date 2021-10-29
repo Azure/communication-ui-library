@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { BaseCustomStylesProps, VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
+import { BaseCustomStyles, VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -34,7 +34,7 @@ const MockRemoteParticipants = [
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const CustomStyleVideoGalleryExample: () => JSX.Element = () => {
-  const customStyles: BaseCustomStylesProps = {
+  const customStyles: BaseCustomStyles = {
     root: {
       border: 'solid 5px red'
     }
