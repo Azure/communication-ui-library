@@ -4,32 +4,31 @@
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
+import { v1 as createGUID } from 'uuid';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { CustomDataModelExampleContainer } from './snippets/CustomDataModelExampleContainer.snippet';
-import { createUserAndGroup } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
 const CustomDataModelStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const [containerProps, setContainerProps] = useState();
 
-  useEffect(() => {
-    const fetchContainerProps = async (): Promise<void> => {
-      if (args.connectionString && args.displayName) {
-        const newProps = await createUserAndGroup(args.connectionString);
-        setContainerProps(newProps);
-      } else {
-        setContainerProps(undefined);
-      }
-    };
-    fetchContainerProps();
-  }, [args.connectionString, args.displayName]);
+  const containerProps = useMemo(() => {
+    if (args.userId && args.token) {
+      const containerProps = {
+        userId: args.userId,
+        token: args.token,
+        locator: createGUID()
+      };
+      return containerProps;
+    }
+    return undefined;
+  }, [args.userId && args.token]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -57,7 +56,8 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Custom Data Model Example`,
   component: CallComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    userId: controlsToAdd.userId,
+    token: controlsToAdd.token,
     displayName: controlsToAdd.displayName,
     avatarInitials: controlsToAdd.avatarInitials,
     mobileView: controlsToAdd.mobileView,
