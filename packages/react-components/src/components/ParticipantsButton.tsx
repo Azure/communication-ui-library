@@ -264,7 +264,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       menuProps.items.push({
         key: 'participantCountKey',
         name: _formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
-        styles: styles?.menuStyles?.menuItemStyles,
+        itemProps: { styles: styles?.menuStyles?.menuItemStyles },
         iconProps: { iconName: 'People' },
         subMenuProps: {
           items: generateDefaultParticipantsSubMenuProps(),
