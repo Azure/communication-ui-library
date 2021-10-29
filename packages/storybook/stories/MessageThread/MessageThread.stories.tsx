@@ -24,7 +24,6 @@ import {
   GenerateMockHistoryChatMessages,
   GenerateMockChatMessages,
   MessageThreadStoryContainerStyles,
-  MessageThreadStyles,
   GenerateMockSystemMessage,
   GenerateMockCustomMessage,
   GetAvatarUrlByUserId
