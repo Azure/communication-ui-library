@@ -9,7 +9,7 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './MeetingCompositeDocs';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
-import { createUserCredentials } from './snippets/Server.snippet';
+import { createCallLocator } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './Utils';
 
 const BasicStory = (args, context): JSX.Element => {
@@ -17,15 +17,15 @@ const BasicStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.connectionString && args.displayName) {
-        const newProps = await createUserCredentials(args.connectionString, args.displayName);
+      if (args.token && args.userId && args.endpointUrl && args.displayName) {
+        const newProps = await createCallLocator(args.token, args.userId, args.endpointUrl, args.displayName);
         setMeetingProps(newProps);
       } else {
         setMeetingProps(undefined);
       }
     };
     fetchToken();
-  }, [args.connectionString, args.displayName]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -41,7 +41,9 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/MeetingComposite/Basic Example`,
   component: MeetingComposite,
   argTypes: {
-    connectionString: controlsToAdd.connectionString,
+    token: controlsToAdd.token,
+    userId: controlsToAdd.userId,
+    endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     // Hiding auto-generated controls
     ...defaultMeetingCompositeHiddenControls

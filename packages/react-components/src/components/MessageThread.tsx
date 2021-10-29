@@ -24,7 +24,7 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
-  BaseCustomStylesProps,
+  BaseCustomStyles,
   ChatMessage,
   CustomMessage,
   SystemMessage,
@@ -116,7 +116,7 @@ const didUserSendTheLatestMessage = (
  *
  * @public
  */
-export interface MessageThreadStyles extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStyles {
   /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
   /** Styles for new message container. */
