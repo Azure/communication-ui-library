@@ -7,7 +7,11 @@ export const TEST_PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
 
 export const IDS = {
   sendboxTextField: 'sendbox-textfield',
+  participantButtonPeopleMenuItem: 'participant-button-people-menu-item',
+  participantItemMenuButton: 'participant-item-menu-button',
   participantList: 'participant-list',
+  participantListPeopleButton: 'participant-list-people-button',
+  participantListRemoveParticipantButton: 'participant-list-remove-participant-button',
   messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',
   typingIndicator: 'typing-indicator',

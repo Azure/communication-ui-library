@@ -10,6 +10,9 @@ import {
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
+import { IDS } from '../common/constants';
+
+const PER_STEP_TIMEOUT_MS = 1000;
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
@@ -143,14 +146,115 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   });
 });
 
-const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
+test.describe('Call Composite E2E Call Ended Pages', () => {
+  // Make sure tests can still run well after retries
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(buildUrl(serverUrl, user));
+      await waitForCallCompositeToLoad(page);
+    }
+
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test('Left call page should show when end call button clicked', async ({ pages }) => {
+    const page = pages[0];
+    await page.bringToFront();
+    await page.click(dataUiId('call-composite-hangup-button'));
+    await page.waitForSelector(dataUiId('left-call-page'));
+    expect(await page.screenshot()).toMatchSnapshot(`left-call-page.png`);
+  });
+
+  test('Removed from call page should show when you are removed by another user', async ({ pages }) => {
+    // page[0] user will remove page[1] user
+    const page0 = pages[0];
+    const page1 = pages[1];
+
+    // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+    // this is for disable transition/animation of participant list
+    await disableAnimation(page0);
+    await page0.bringToFront();
+    await page0.click(dataUiId('call-composite-participants-button')); // open participant flyout
+    await page0.click(dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
+    await page0.click(dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
+    await page0.click(dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
+
+    await page1.bringToFront();
+    await page1.waitForSelector(dataUiId('removed-from-call-page'));
+    expect(await page1.screenshot()).toMatchSnapshot(`remove-from-call-page.png`);
+  });
+});
+
+test.describe('Call composite participant menu items injection tests', () => {
+  // Make sure tests can still run well after retries
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    // Each test *must* join a new call to prevent test flakiness.
+    // We hit a Calling SDK service 500 error if we do not.
+    // An issue has been filed with the calling team.
+    const newTestGuid = generateGUID();
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      const user = users[i];
+      user.groupId = newTestGuid;
+
+      await page.goto(
+        buildUrl(serverUrl, user, {
+          injectParticipantMenuItems: 'true'
+        })
+      );
+      await waitForCallCompositeToLoad(page);
+    }
+    await loadCallPageWithParticipantVideos(pages);
+  });
+
+  test('injected menu items appear', async ({ pages }) => {
+    // TODO: Remove this function when we fix unstable contextual menu bug
+    // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
+    await turnOffAllVideos(pages, PER_STEP_TIMEOUT_MS);
+
+    const page = pages[0];
+    await page.bringToFront();
+
+    // waitForElementState('stable') does not work for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+    // this is for disable transition/animation of participant list
+    await disableAnimation(page);
+
+    // Open participants flyout.
+    await page.click(dataUiId('call-composite-participants-button'), { timeout: PER_STEP_TIMEOUT_MS });
+    // Open participant list flyout
+    await page.click(dataUiId(IDS.participantButtonPeopleMenuItem), { timeout: PER_STEP_TIMEOUT_MS });
+    // There shouldbe at least one participant. Just click on the first.
+    await page.click(dataUiId(IDS.participantItemMenuButton) + ' >> nth=0', {
+      timeout: PER_STEP_TIMEOUT_MS
+    });
+
+    const injectedMenuItem = await page.waitForSelector(dataUiId('test-app-participant-menu-item'), {
+      timeout: PER_STEP_TIMEOUT_MS
+    });
+    await injectedMenuItem.waitForElementState('stable', { timeout: PER_STEP_TIMEOUT_MS });
+
+    expect(await page.screenshot()).toMatchSnapshot(`participant-menu-item-flyout.png`);
+  });
+});
+
+// `timeout` is applied to each individual step that waits for a condition.
+const turnOffAllVideos = async (pages: Page[], timeout?: number): Promise<void> => {
+  const options = timeout ? { timeout } : undefined;
   for (const page of pages) {
-    await page.click(dataUiId('call-composite-camera-button'));
+    await page.click(dataUiId('call-composite-camera-button'), options);
   }
   for (const page of pages) {
     await page.bringToFront();
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 0;
-    });
+    }, options);
   }
 };

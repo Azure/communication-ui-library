@@ -21,426 +21,412 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-56"
+        className="css-85"
       >
         <div
-          className="css-57"
-          style={
-            Object {
-              "gridAutoFlow": "column",
-              "gridTemplateRows": "repeat(3, 1fr)",
-            }
-          }
+          className="ms-Stack css-1"
+          id="UILibraryFloatingTileHost"
         >
+          <span
+            className="ms-layer"
+          />
           <div
-            className="css-57"
-            style={
-              Object {
-                "gridRow": "auto / span -1",
-                "gridTemplateColumns": "repeat(2, 1fr)",
-                "gridTemplateRows": "repeat(-1, 1fr)",
-              }
-            }
+            className="css-56"
           >
             <div
-              className="ms-Stack css-84 css-1"
-              data-ui-id="video-gallery"
+              className="css-57"
+              style={
+                Object {
+                  "gridAutoFlow": "column",
+                  "gridTemplateRows": "repeat(2, 1fr)",
+                }
+              }
             >
               <div
-                className="ms-Stack css-9"
-                data-ui-id="video-tile"
+                className="css-57"
+                style={
+                  Object {
+                    "gridRow": "auto / span 2",
+                    "gridTemplateColumns": "repeat(2, 1fr)",
+                    "gridTemplateRows": "repeat(2, 1fr)",
+                  }
+                }
               >
                 <div
-                  className="ms-Stack css-10"
+                  className="ms-Stack css-84 css-10"
                 >
                   <div
-                    className="ms-Stack css-12"
+                    className="ms-Stack css-17"
+                    data-ui-id="video-tile"
                   >
                     <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 root-13"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
+                      className="ms-Stack css-18"
                     >
                       <div
-                        className="ms-Persona-coin ms-Persona--size48 coin-20"
-                        role="presentation"
+                        className="ms-Stack css-20"
                       >
                         <div
-                          className="ms-Persona-imageArea imageArea-22"
-                          role="presentation"
+                          aria-label=""
+                          className="ms-Persona ms-Persona--size48 root-21"
                           style={
                             Object {
                               "height": 100,
-                              "width": 100,
+                              "minWidth": 100,
                             }
                           }
                         >
                           <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials initials-25"
-                            style={
-                              Object {
-                                "height": 100,
-                                "width": 100,
-                              }
-                            }
+                            className="ms-Persona-coin ms-Persona--size48 coin-28"
+                            role="presentation"
                           >
-                            <span>
-                              Y
-                            </span>
+                            <div
+                              className="ms-Persona-imageArea imageArea-30"
+                              role="presentation"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <div
+                                aria-hidden="true"
+                                className="ms-Persona-initials initials-33"
+                                style={
+                                  Object {
+                                    "height": 100,
+                                    "width": 100,
+                                  }
+                                }
+                              >
+                                <span>
+                                  R
+                                </span>
+                              </div>
+                            </div>
                           </div>
                         </div>
+                      </div>
+                    </div>
+                    <div
+                      className="ms-Stack css-86 css-36"
+                    >
+                      <div
+                        className="ms-StackItem css-37"
+                      >
+                        <span
+                          className="css-38"
+                        >
+                          Rick
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-85 css-28"
+                  className="ms-Stack css-84 css-10"
                 >
                   <div
-                    className="ms-StackItem css-29"
+                    className="ms-Stack css-17"
+                    data-ui-id="video-tile"
                   >
-                    <span
-                      className="css-30"
+                    <div
+                      className="ms-Stack css-18"
                     >
-                      You
-                    </span>
-                  </div>
-                  <div
-                    className="ms-StackItem css-31"
-                  >
-                    <i
-                      aria-hidden={true}
-                      className="root-37"
-                      data-icon-name="VideoTileMicOff"
-                    >
-                      <span
-                        aria-hidden={true}
-                        className="root-span"
+                      <div
+                        className="ms-Stack css-20"
                       >
-                        <svg
-                          className="svg"
-                          fill="currentColor"
-                          height={16}
-                          viewBox="0 0 16 16"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div
+                          aria-label=""
+                          className="ms-Persona ms-Persona--size48 root-21"
+                          style={
+                            Object {
+                              "height": 100,
+                              "minWidth": 100,
+                            }
+                          }
                         >
-                          <path
-                            d="M10.8 11.52l3.35 3.33a.5.5 0 00.7-.7l-13-13a.5.5 0 10-.7.7L5.5 6.21V8a2.5 2.5 0 003.88 2.09l.72.71A3.5 3.5 0 014.5 8a.5.5 0 10-1 0 4.5 4.5 0 004 4.47v1.03a.5.5 0 101 0v-1.03c.87-.1 1.66-.44 2.3-.95z"
-                          />
-                          <path
-                            d="M12.06 9.94l-.76-.76c.13-.37.2-.77.2-1.18a.5.5 0 011 0c0 .7-.16 1.35-.44 1.94z"
-                          />
-                          <path
-                            d="M10.48 8.35l-4.8-4.79a2.5 2.5 0 014.82.94V8c0 .12 0 .24-.02.35z"
-                          />
-                        </svg>
-                      </span>
-                    </i>
+                          <div
+                            className="ms-Persona-coin ms-Persona--size48 coin-28"
+                            role="presentation"
+                          >
+                            <div
+                              className="ms-Persona-imageArea imageArea-30"
+                              role="presentation"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <div
+                                aria-hidden="true"
+                                className="ms-Persona-initials initials-39"
+                                style={
+                                  Object {
+                                    "height": 100,
+                                    "width": 100,
+                                  }
+                                }
+                              >
+                                <span>
+                                  D
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="ms-Stack css-86 css-36"
+                    >
+                      <div
+                        className="ms-StackItem css-37"
+                      >
+                        <span
+                          className="css-38"
+                        >
+                          Daryl
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="ms-Stack css-84 css-10"
+                >
+                  <div
+                    className="ms-Stack css-17"
+                    data-ui-id="video-tile"
+                  >
+                    <div
+                      className="ms-Stack css-18"
+                    >
+                      <div
+                        className="ms-Stack css-20"
+                      >
+                        <div
+                          aria-label=""
+                          className="ms-Persona ms-Persona--size48 root-21"
+                          style={
+                            Object {
+                              "height": 100,
+                              "minWidth": 100,
+                            }
+                          }
+                        >
+                          <div
+                            className="ms-Persona-coin ms-Persona--size48 coin-28"
+                            role="presentation"
+                          >
+                            <div
+                              className="ms-Persona-imageArea imageArea-30"
+                              role="presentation"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <div
+                                aria-hidden="true"
+                                className="ms-Persona-initials initials-40"
+                                style={
+                                  Object {
+                                    "height": 100,
+                                    "width": 100,
+                                  }
+                                }
+                              >
+                                <span>
+                                  M
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="ms-Stack css-86 css-36"
+                    >
+                      <div
+                        className="ms-StackItem css-37"
+                      >
+                        <span
+                          className="css-38"
+                        >
+                          Michonne
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="ms-Stack css-84 css-10"
+                >
+                  <div
+                    className="ms-Stack css-17"
+                    data-ui-id="video-tile"
+                  >
+                    <div
+                      className="ms-Stack css-18"
+                    >
+                      <div
+                        className="ms-Stack css-20"
+                      >
+                        <div
+                          aria-label=""
+                          className="ms-Persona ms-Persona--size48 root-21"
+                          style={
+                            Object {
+                              "height": 100,
+                              "minWidth": 100,
+                            }
+                          }
+                        >
+                          <div
+                            className="ms-Persona-coin ms-Persona--size48 coin-28"
+                            role="presentation"
+                          >
+                            <div
+                              className="ms-Persona-imageArea imageArea-30"
+                              role="presentation"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <div
+                                aria-hidden="true"
+                                className="ms-Persona-initials initials-41"
+                                style={
+                                  Object {
+                                    "height": 100,
+                                    "width": 100,
+                                  }
+                                }
+                              >
+                                <span>
+                                  D
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="ms-Stack css-86 css-36"
+                    >
+                      <div
+                        className="ms-StackItem css-37"
+                      >
+                        <span
+                          className="css-38"
+                        >
+                          Dwight
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div
-            className="css-57"
-            style={
-              Object {
-                "gridRow": "auto / span 4",
-                "gridTemplateColumns": "repeat(1, 1fr)",
-                "gridTemplateRows": "repeat(4, 1fr)",
-              }
-            }
+            className="css-42"
           >
             <div
-              className="ms-Stack css-84 css-32"
+              className="ms-Stack css-44"
             >
-              <div
-                className="ms-Stack css-9"
-                data-ui-id="video-tile"
+              <button
+                aria-disabled={true}
+                className="ms-Button ms-Button--default is-disabled root-46"
+                data-is-focusable={false}
+                disabled={true}
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
               >
-                <div
-                  className="ms-Stack css-10"
+                <span
+                  className="ms-Button-flexContainer flexContainer-47"
+                  data-automationid="splitbuttonprimary"
                 >
-                  <div
-                    className="ms-Stack css-12"
-                  >
-                    <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 root-13"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
-                    >
-                      <div
-                        className="ms-Persona-coin ms-Persona--size48 coin-20"
-                        role="presentation"
-                      >
-                        <div
-                          className="ms-Persona-imageArea imageArea-22"
-                          role="presentation"
-                          style={
-                            Object {
-                              "height": 100,
-                              "width": 100,
-                            }
-                          }
-                        >
-                          <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials initials-25"
-                            style={
-                              Object {
-                                "height": 100,
-                                "width": 100,
-                              }
-                            }
-                          >
-                            <span>
-                              R
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="ms-Stack css-85 css-28"
-                >
-                  <div
-                    className="ms-StackItem css-29"
+                  <i
+                    aria-hidden={true}
+                    className="root-37"
+                    data-icon-name="HorizontalGalleryLeftButton"
                   >
                     <span
-                      className="css-30"
+                      aria-hidden={true}
+                      className="root-span"
                     >
-                      Rick
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="ms-Stack css-84 css-32"
-            >
-              <div
-                className="ms-Stack css-9"
-                data-ui-id="video-tile"
-              >
-                <div
-                  className="ms-Stack css-10"
-                >
-                  <div
-                    className="ms-Stack css-12"
-                  >
-                    <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 root-13"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
-                    >
-                      <div
-                        className="ms-Persona-coin ms-Persona--size48 coin-20"
-                        role="presentation"
+                      <svg
+                        className="svg"
+                        fill="currentColor"
+                        height={20}
+                        viewBox="0 0 20 20"
+                        width={20}
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <div
-                          className="ms-Persona-imageArea imageArea-22"
-                          role="presentation"
-                          style={
-                            Object {
-                              "height": 100,
-                              "width": 100,
-                            }
-                          }
-                        >
-                          <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials initials-33"
-                            style={
-                              Object {
-                                "height": 100,
-                                "width": 100,
-                              }
-                            }
-                          >
-                            <span>
-                              D
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="ms-Stack css-85 css-28"
+                        <path
+                          d="M12.35 15.85a.5.5 0 01-.7 0L6.16 10.4a.55.55 0 010-.78l5.49-5.47a.5.5 0 01.7.71L7.2 10l5.16 5.15c.2.2.2.5 0 .7z"
+                        />
+                      </svg>
+                    </span>
+                  </i>
+                </span>
+              </button>
+              <button
+                className="ms-Button ms-Button--default root-54"
+                data-is-focusable={true}
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                type="button"
+              >
+                <span
+                  className="ms-Button-flexContainer flexContainer-47"
+                  data-automationid="splitbuttonprimary"
                 >
-                  <div
-                    className="ms-StackItem css-29"
+                  <i
+                    aria-hidden={true}
+                    className="root-37"
+                    data-icon-name="HorizontalGalleryRightButton"
                   >
                     <span
-                      className="css-30"
+                      aria-hidden={true}
+                      className="root-span"
                     >
-                      Daryl
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="ms-Stack css-84 css-32"
-            >
-              <div
-                className="ms-Stack css-9"
-                data-ui-id="video-tile"
-              >
-                <div
-                  className="ms-Stack css-10"
-                >
-                  <div
-                    className="ms-Stack css-12"
-                  >
-                    <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 root-13"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
-                    >
-                      <div
-                        className="ms-Persona-coin ms-Persona--size48 coin-20"
-                        role="presentation"
+                      <svg
+                        className="svg"
+                        fill="currentColor"
+                        height={20}
+                        viewBox="0 0 20 20"
+                        width={20}
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <div
-                          className="ms-Persona-imageArea imageArea-22"
-                          role="presentation"
-                          style={
-                            Object {
-                              "height": 100,
-                              "width": 100,
-                            }
-                          }
-                        >
-                          <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials initials-34"
-                            style={
-                              Object {
-                                "height": 100,
-                                "width": 100,
-                              }
-                            }
-                          >
-                            <span>
-                              M
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="ms-Stack css-85 css-28"
-                >
-                  <div
-                    className="ms-StackItem css-29"
-                  >
-                    <span
-                      className="css-30"
-                    >
-                      Michonne
+                        <path
+                          d="M7.65 4.15c.2-.2.5-.2.7 0l5.49 5.46c.21.22.21.57 0 .78l-5.49 5.46a.5.5 0 01-.7-.7L12.8 10 7.65 4.85a.5.5 0 010-.7z"
+                        />
+                      </svg>
                     </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="ms-Stack css-84 css-32"
-            >
-              <div
-                className="ms-Stack css-9"
-                data-ui-id="video-tile"
-              >
-                <div
-                  className="ms-Stack css-10"
-                >
-                  <div
-                    className="ms-Stack css-12"
-                  >
-                    <div
-                      aria-label=""
-                      className="ms-Persona ms-Persona--size48 root-13"
-                      style={
-                        Object {
-                          "height": 100,
-                          "minWidth": 100,
-                        }
-                      }
-                    >
-                      <div
-                        className="ms-Persona-coin ms-Persona--size48 coin-20"
-                        role="presentation"
-                      >
-                        <div
-                          className="ms-Persona-imageArea imageArea-22"
-                          role="presentation"
-                          style={
-                            Object {
-                              "height": 100,
-                              "width": 100,
-                            }
-                          }
-                        >
-                          <div
-                            aria-hidden="true"
-                            className="ms-Persona-initials initials-35"
-                            style={
-                              Object {
-                                "height": 100,
-                                "width": 100,
-                              }
-                            }
-                          >
-                            <span>
-                              D
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="ms-Stack css-85 css-28"
-                >
-                  <div
-                    className="ms-StackItem css-29"
-                  >
-                    <span
-                      className="css-30"
-                    >
-                      Dwight
-                    </span>
-                  </div>
-                </div>
-              </div>
+                  </i>
+                </span>
+              </button>
             </div>
           </div>
         </div>

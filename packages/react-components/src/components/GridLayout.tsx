@@ -3,7 +3,7 @@
 
 import { mergeStyles } from '@fluentui/react';
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { BaseCustomStylesProps } from '../types';
+import { BaseCustomStyles } from '../types';
 import { gridLayoutStyle, gridStyle } from './styles/GridLayout.styles';
 
 /**
@@ -20,7 +20,7 @@ export interface GridLayoutProps {
    * <GridLayout styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: BaseCustomStylesProps;
+  styles?: BaseCustomStyles;
 }
 
 /**

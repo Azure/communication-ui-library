@@ -233,8 +233,9 @@ export const controlsToAdd = {
   },
   remoteParticipantNames: {
     control: 'text',
-    defaultValue: 'Rick, Daryl, Michonne, Dwight',
-    name: 'Other participants (comma separated)'
+    defaultValue:
+      'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin',
+    name: 'Remote participants (comma separated)'
   },
   remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
   screenShareLayoutWidth: {
@@ -277,7 +278,12 @@ export const controlsToAdd = {
   token: { control: 'text', defaultValue: '', name: 'Valid token for user' },
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
   userId: { control: 'text', defaultValue: '', name: 'User identifier for user' },
-  videoGallerylayout: { control: 'select', options: VIDEO_GALLERY_LAYOUTS, defaultValue: 'default', name: 'Layout' },
+  videoGallerylayout: {
+    control: 'select',
+    options: VIDEO_GALLERY_LAYOUTS,
+    defaultValue: 'floatingLocalVideo',
+    name: 'Layout'
+  },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
   videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' }
 };
