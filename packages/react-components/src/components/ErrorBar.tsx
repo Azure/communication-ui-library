@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
+import { IIconProps, IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
 
 /**
@@ -209,6 +209,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           {...props}
           key={error.type}
           messageBarType={messageBarType(error.type)}
+          messageBarIconProps={messageBarIconProps(error.type)}
           onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
         >
           {strings[error.type]}
@@ -312,4 +313,21 @@ const messageBarType = (errorType: ErrorType): MessageBarType => {
     default:
       return MessageBarType.error;
   }
+};
+
+const messageBarIconProps = (errorType: ErrorType): IIconProps | undefined => {
+  const iconName = customIconName[errorType];
+  return iconName ? { iconName } : undefined;
+};
+
+const customIconName = {
+  callNetworkQualityLow: 'errorBarCallNetworkQualityLow',
+  callNoSpeakerFound: 'errorBarCallNoSpeakerFound',
+  callNoMicrophoneFound: 'errorBarCallNoMicrophoneFound',
+  callMicrophoneAccessDenied: 'errorBarCallMicrophoneAccessDenied',
+  callMicrophoneMutedBySystem: 'errorBarCallMicrophoneMutedBySystem',
+  callMacOsMicrophoneAccessDenied: 'errorBarCallMacOsMicrophoneAccessDenied',
+  callLocalVideoFreeze: 'errorBarCallLocalVideoFreeze',
+  callCameraAlreadyInUse: 'errorBarCallCameraAlreadyInUse',
+  callMacOsCameraAccessDenied: 'errorBarCallMacOsCameraAccessDenied'
 };
