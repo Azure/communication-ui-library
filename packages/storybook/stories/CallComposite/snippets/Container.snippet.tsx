@@ -71,7 +71,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
 
   if (adapter) {
     return (
-      <div style={{ height: '90v', width: '90vw' }}>
+      <div style={{ height: '90vh', width: '90vw' }}>
         <CallComposite
           adapter={adapter}
           fluentTheme={props.fluentTheme}
