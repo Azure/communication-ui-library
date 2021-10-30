@@ -5,6 +5,7 @@ import { CallingBaseSelectorProps, getDiagnostics, getLatestErrors } from './bas
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
+import { DiagnosticQuality } from '@azure/communication-calling';
 
 /**
  * Selector type for {@link ErrorBar} component.
@@ -44,8 +45,8 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
-      diagnostics?.network.latest.networkReceiveQuality?.value === 3 ||
-      diagnostics?.network.latest.networkReceiveQuality?.value == 2
+      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
+      diagnostics?.network.latest.networkReceiveQuality?.value == DiagnosticQuality.Poor
     ) {
       activeErrorMessages.push({ type: 'callNetworkQualityLow' });
     }
