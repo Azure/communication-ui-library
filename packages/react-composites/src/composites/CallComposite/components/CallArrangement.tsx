@@ -9,12 +9,15 @@ import { permissionsBannerContainerStyle } from '../../common/styles/Permissions
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
-  bannersContainerStyles,
+  notificationsContainerStyles,
   callControlsContainer,
   containerStyles,
   mediaGalleryContainerStyles,
   subContainerStyles
 } from '../styles/CallPage.styles';
+
+// High enough to be above `onRenderGalleryContent()`.
+const NOTIFICATIONS_CONTAINER_ZINDEX = 9;
 
 /**
  * @private
@@ -34,34 +37,32 @@ export interface CallArrangementProps {
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow data-ui-id={props.dataUiId}>
-      <>
-        <Stack.Item styles={bannersContainerStyles}>
+      <Stack.Item styles={notificationsContainerStyles(NOTIFICATIONS_CONTAINER_ZINDEX)}>
+        <Stack>
+          <ComplianceBanner {...props.complianceBannerProps} />
+        </Stack>
+        <Stack style={permissionsBannerContainerStyle}>
+          <PermissionsBanner {...props.permissionBannerProps} />
+        </Stack>
+        {props.errorBarProps !== false && (
           <Stack>
-            <ComplianceBanner {...props.complianceBannerProps} />
+            <ErrorBar {...props.errorBarProps} />
           </Stack>
-          <Stack style={permissionsBannerContainerStyle}>
-            <PermissionsBanner {...props.permissionBannerProps} />
-          </Stack>
-          {props.errorBarProps !== false && (
-            <Stack>
-              <ErrorBar {...props.errorBarProps} />
-            </Stack>
-          )}
-        </Stack.Item>
-
-        <Stack.Item styles={subContainerStyles} grow>
-          {props.onRenderGalleryContent && (
-            <Stack grow styles={mediaGalleryContainerStyles}>
-              {props.onRenderGalleryContent()}
-            </Stack>
-          )}
-        </Stack.Item>
-        {props.callControlProps !== false && (
-          <Stack.Item className={callControlsContainer}>
-            <CallControls {...props.callControlProps} />
-          </Stack.Item>
         )}
-      </>
+      </Stack.Item>
+
+      <Stack.Item styles={subContainerStyles} grow>
+        {props.onRenderGalleryContent && (
+          <Stack grow styles={mediaGalleryContainerStyles}>
+            {props.onRenderGalleryContent()}
+          </Stack>
+        )}
+      </Stack.Item>
+      {props.callControlProps !== false && (
+        <Stack.Item className={callControlsContainer}>
+          <CallControls {...props.callControlProps} />
+        </Stack.Item>
+      )}
     </Stack>
   );
 };
