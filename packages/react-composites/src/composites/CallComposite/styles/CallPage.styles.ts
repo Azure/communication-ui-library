@@ -68,12 +68,6 @@ export const mediaGalleryContainerStyles: IStackItemStyles = {
  */
 export const bannersContainerStyles: IStackStyles = {
   root: {
-    width: '100%',
-    position: 'absolute',
-    // High enough to be above the video gallary.
-    zIndex: 9,
-    top: 0,
-    left: 0,
-    padding: '1rem'
+    width: '100%'
   }
 };
