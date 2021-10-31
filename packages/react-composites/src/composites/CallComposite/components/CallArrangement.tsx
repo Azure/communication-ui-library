@@ -37,7 +37,7 @@ export interface CallArrangementProps {
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow data-ui-id={props.dataUiId}>
-      <Stack.Item styles={notificationsContainerStyles(NOTIFICATIONS_CONTAINER_ZINDEX)}>
+      <Stack.Item styles={notificationsContainerStyles}>
         <Stack>
           <ComplianceBanner {...props.complianceBannerProps} />
         </Stack>

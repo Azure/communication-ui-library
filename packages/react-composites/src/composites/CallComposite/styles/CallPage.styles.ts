@@ -66,13 +66,8 @@ export const mediaGalleryContainerStyles: IStackItemStyles = {
 /**
  * @private
  */
-export const notificationsContainerStyles = (zIndex: number): IStackStyles => ({
+export const notificationsContainerStyles: IStackStyles = {
   root: {
-    width: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    padding: '1rem',
-    zIndex
+    width: '100%'
   }
-});
+};
