@@ -78,10 +78,6 @@ export interface CallCompositeStrings {
    */
   lobbyScreenWaitingToBeAdmittedTitle: string;
   /**
-   * Message to let user know they are sharing their screen.
-   */
-  screenSharingMessage: string;
-  /**
    * Text for link to MS privacy policy in Compliance Banner.
    */
   privacyPolicy: string;
@@ -141,10 +137,6 @@ export interface CallCompositeStrings {
    * Text for close button.
    */
   close: string;
-  /**
-   * Message to let user know the screen another user is sharing is being loaded.
-   */
-  sharingScreenLoading: string;
   /**
    * Title text of the page shown to the user when there is intermittent network failure during a call.
    */

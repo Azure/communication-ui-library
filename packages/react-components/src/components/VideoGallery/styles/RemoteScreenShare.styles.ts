@@ -1,22 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
 import { mergeStyles } from '@fluentui/react';
 
 /**
  * @private
  */
-export const gridLayoutStyle = mergeStyles({
-  width: '100%',
-  height: '100%'
-});
+export const videoWithNoRoundedBorderStyle = {
+  root: {
+    '& video': { borderRadius: '0rem' }
+  }
+};
 
 /**
  * @private
  */
-export const gridStyle = mergeStyles({
-  width: '100%',
+export const loadingStyle = mergeStyles({
   height: '100%',
-  display: 'grid',
-  gridGap: '0.5rem'
+  width: '100%'
 });

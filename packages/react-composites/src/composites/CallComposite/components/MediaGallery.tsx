@@ -5,7 +5,6 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { ScreenShare } from './ScreenShare';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
@@ -43,11 +42,6 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
-  const isScreenShareActive = useMemo(() => {
-    return (
-      videoGalleryProps.screenShareParticipant !== undefined || videoGalleryProps.localParticipant.isScreenSharingOn
-    );
-  }, [videoGalleryProps]);
 
   // When transitioning to the call page we need to trigger onStartLocalVideo() to
   // transition the local preview camera setting into the call. @TODO: Can we simply
@@ -78,5 +72,5 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [props.onFetchAvatarPersonaData, videoGalleryProps]);
 
-  return isScreenShareActive ? <ScreenShare {...videoGalleryProps} /> : VideoGalleryMemoized;
+  return VideoGalleryMemoized;
 };
