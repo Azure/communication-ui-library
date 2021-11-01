@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fixed EndCall button outline color regression",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
