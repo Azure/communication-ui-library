@@ -42,7 +42,7 @@ export const checkedButtonOverrideStyles = (theme: Theme, isChecked?: boolean): 
   rootChecked: {
     background: theme.palette.themePrimary,
     color: palette.white,
-    ':focus::after': { outlineColor: `${palette.white} !important` }
+    ':focus::after': { outlineColor: `${palette.white} !important` } // added !important to avoid override by FluentUI button styles
   },
   label: isChecked ? { color: palette.white } : {}
 });

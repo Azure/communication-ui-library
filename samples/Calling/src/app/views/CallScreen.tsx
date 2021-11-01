@@ -50,12 +50,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         console.log('Adapter error event:', e);
       });
       adapter.onStateChange((state: CallAdapterState) => {
-        if (document.title.includes('end call')) {
-          // CallComposite sets page to 'configuration' when ending call
-          // End call is handled at the App level, so no need to change the title again here
-          return;
-        }
-        document.title = `${state.page} - ${webAppTitle}`;
+        const pageTitle = convertPageStateToString(state);
+        document.title = `${pageTitle} - ${webAppTitle}`;
       });
       setAdapter(adapter);
       adapterRef.current = adapter;
@@ -79,4 +75,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       options={{ mobileView: isMobileSession }}
     />
   );
+};
+
+const convertPageStateToString = (state: CallAdapterState): string => {
+  switch (state.page) {
+    case 'accessDeniedTeamsMeeting':
+      return 'error';
+    case 'leftCall':
+      return 'end call';
+    case 'removedFromCall':
+      return 'end call';
+    default:
+      return `${state.page}`;
+  }
 };
