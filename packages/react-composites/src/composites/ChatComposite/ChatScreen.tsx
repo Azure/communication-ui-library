@@ -96,7 +96,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       return (
         <AvatarPersona
           userId={userId}
-          hidePersonalDetails={true}
+          hidePersonaDetails={true}
           {...defaultOptions}
           dataProvider={onFetchAvatarPersonaData}
         />
