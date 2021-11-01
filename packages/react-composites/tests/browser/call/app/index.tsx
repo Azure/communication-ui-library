@@ -17,7 +17,7 @@ import {
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
-import { LatestMediaDiagnostics, MediaDiagnostics } from '@azure/communication-calling';
+import memoizeOne from 'memoize-one';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -81,19 +81,19 @@ class ProxyCallAdapter implements ProxyHandler<CallAdapter> {
       case 'getState': {
         return (...args: Parameters<CallAdapter['getState']>) => {
           const state = target.getState(...args);
-          return unsetSpeakingWhileMicrophoneIsMuted(state);
+          return memoizedUnsetSpeakingWhileMicrophoneIsMuted(state);
         };
       }
       case 'onStateChange': {
         return (...args: Parameters<CallAdapter['onStateChange']>) => {
           const [handler] = args;
-          return target.onStateChange((state) => handler(unsetSpeakingWhileMicrophoneIsMuted(state)));
+          return target.onStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
         };
       }
       case 'offStateChange': {
         return (...args: Parameters<CallAdapter['offStateChange']>) => {
           const [handler] = args;
-          return target.offStateChange((state) => handler(unsetSpeakingWhileMicrophoneIsMuted(state)));
+          return target.offStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
         };
       }
       default:
@@ -105,7 +105,7 @@ class ProxyCallAdapter implements ProxyHandler<CallAdapter> {
 // This diagnostic gets flakily set to true only in our test harness.
 // The suspected reason is due to flakiness in how chrome handles the `--mute-audio` CLI flag.
 const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapterState => {
-  if (state.call?.diagnostics.media.latest) {
+  if (!!state.call?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
     return {
       ...state,
       call: {
@@ -119,5 +119,14 @@ const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapt
   }
   return state;
 };
+
+/**
+ * It is essential to memoize this function.
+ *
+ * This function is called from both `getState` and `onStateChange`. Each time, *a new state object is returned.
+ * If we don't memoize it, business logic that depends on both `getState` and `onStateChange` is returned
+ * differnt objects even though there is no change in the underlying state. This causes spurious renders / render loops.
+ */
+const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
 
 ReactDOM.render(<App />, document.getElementById('root'));
