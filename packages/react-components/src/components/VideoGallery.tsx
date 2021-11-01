@@ -226,17 +226,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   const defaultOnRenderVideoTile = useCallback(
-    (participant: VideoGalleryRemoteParticipant, style?: CSSProperties) => {
+    (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean, style?: CSSProperties) => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
           key={participant.userId}
           userId={participant.userId}
-          onCreateRemoteStreamView={onCreateRemoteStreamView}
-          onDisposeRemoteStreamView={onDisposeRemoteStreamView}
-          isAvailable={remoteVideoStream?.isAvailable}
-          renderElement={remoteVideoStream?.renderElement}
-          remoteVideoViewOption={remoteVideoViewOption}
+          onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
+          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
+          isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
+          renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
+          remoteVideoViewOption={isVideoParticipant ? remoteVideoViewOption : undefined}
           isMuted={participant.isMuted}
           isSpeaking={participant.isSpeaking}
           displayName={participant.displayName}
@@ -252,7 +252,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const gridTiles = onRenderRemoteVideoTile
     ? gridParticipants.map((participant) => onRenderRemoteVideoTile(participant))
     : gridParticipants.map((participant): JSX.Element => {
-        return defaultOnRenderVideoTile(participant);
+        return defaultOnRenderVideoTile(participant, true);
       });
 
   if (!shouldFloatLocalVideo && localParticipant) {
@@ -268,6 +268,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     : horizontalGalleryParticipants.map((participant): JSX.Element => {
         return defaultOnRenderVideoTile(
           participant,
+          false,
           isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
         );
       });
