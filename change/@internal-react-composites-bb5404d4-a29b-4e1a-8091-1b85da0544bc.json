@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removed Screenshare component in MediaGallery. VideoGallery component expected to handle screensharing.",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
