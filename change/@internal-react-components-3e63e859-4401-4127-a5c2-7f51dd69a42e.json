@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Improve the styling of the message thread when at narrow width - partially float the avatar on the padding of the message.",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
