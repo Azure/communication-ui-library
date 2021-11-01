@@ -9,7 +9,6 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
-const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 export const getDocs: () => JSX.Element = () => {
   return (
@@ -35,7 +34,6 @@ export const getDocs: () => JSX.Element = () => {
         created beforehand. Typically, the user and thread are created on a Contoso-owned service and authentication
         tokens are served to the client application that then passes it to the ChatComposite.
       </Description>
-      <Source code={serverText} />
 
       <Heading>Theming</Heading>
       <Description>

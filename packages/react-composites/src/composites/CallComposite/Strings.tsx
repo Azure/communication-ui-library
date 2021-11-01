@@ -137,4 +137,12 @@ export interface CallCompositeStrings {
    * Text for close button.
    */
   close: string;
+  /**
+   * Title text of the page shown to the user when there is intermittent network failure during a call.
+   */
+  networkReconnectTitle: string;
+  /**
+   * More details text of the page shown to the user when there is intermittent network failure during a call.
+   */
+  networkReconnectMoreDetails: string;
 }
