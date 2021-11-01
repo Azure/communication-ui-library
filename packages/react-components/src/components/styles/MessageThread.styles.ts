@@ -9,22 +9,12 @@ import { IButtonStyles, mergeStyles } from '@fluentui/react';
 // that can contain a message and a timestamp.
 const CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM = 6.25;
 
-/**
- * @private
- */
-export const messageAvatarContainerStyle = (backgroundColor: string): string =>
-  mergeStyles({
-    width: '2rem',
-    minWidth: '2rem',
-    height: '2rem',
-    backgroundColor: backgroundColor,
-    borderRadius: '50%',
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    fontFamily: 'Segoe UI Regular',
-    fontSize: '1rem' // 16px
-  });
+// Chat messages should span just short of the width of the container.
+// When calculating the width of a message we also must take into account
+// the width of the avatar/gutter and the gap between the message and avatar/gutter.
+const AVATAR_WIDTH_REM = 2;
+const AVATAR_MESSAGE_GAP_REM = 0.5;
+const MESSAGE_AMOUNT_OUT_FROM_EDGE_REM = 2;
 
 /**
  * @private
@@ -82,17 +72,10 @@ export const chatMessageDateStyle: CSSProperties = {
 /**
  * @private
  */
-export const defaultMyChatItemMessageContainer: ComponentSlotStyle = {
-  marginRight: '0rem',
-  marginLeft: '0rem'
-};
-
-/**
- * @private
- */
 export const defaultChatItemMessageContainer: ComponentSlotStyle = {
   marginRight: '0rem',
-  marginLeft: '0rem'
+  marginLeft: `${AVATAR_MESSAGE_GAP_REM}rem`,
+  width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`
 };
 
 /**
@@ -117,6 +100,7 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
  * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
+  width: `${AVATAR_WIDTH_REM}`,
   position: 'relative',
   float: 'left',
   display: 'block',
@@ -127,9 +111,7 @@ export const gutterWithAvatar: ComponentSlotStyle = {
  * @private
  */
 export const gutterWithHiddenAvatar: ComponentSlotStyle = {
-  position: 'relative',
-  float: 'left',
-  display: 'block',
+  ...gutterWithAvatar,
   visibility: 'hidden',
   // we use this hidden avatar just as a width placeholder
   // the placeholder is needed for responsive bubble width
