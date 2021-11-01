@@ -34,6 +34,5 @@ export const HORIZONTAL_GALLERY_GAP = 0.5;
 export const horizontalGalleryContainerStyle: IStyle = {
   height: '100%',
   width: '100%',
-  paddingBottom: '0.5rem',
   gap: `${HORIZONTAL_GALLERY_GAP}rem`
 };

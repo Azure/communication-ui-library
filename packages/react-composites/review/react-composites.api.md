@@ -246,8 +246,6 @@ export interface CallCompositeStrings {
     privacyPolicy: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    screenSharingMessage: string;
-    sharingScreenLoading: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
