@@ -101,8 +101,8 @@ export interface VideoGalleryProps {
    * @defaultValue `true`
    */
   showMuteIndicator?: boolean;
-
-  strings?: VideoGalleryStrings;
+  /** Optional strings to override in component  */
+  strings?: Partial<VideoGalleryStrings>;
 }
 
 const DRAG_OPTIONS: IDragOptions = {

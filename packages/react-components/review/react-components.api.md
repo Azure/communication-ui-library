@@ -827,8 +827,7 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
-    // (undocumented)
-    strings?: VideoGalleryStrings;
+    strings?: Partial<VideoGalleryStrings>;
     styles?: BaseCustomStyles;
 }
 
