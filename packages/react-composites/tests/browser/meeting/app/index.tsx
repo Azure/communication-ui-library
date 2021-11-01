@@ -6,9 +6,15 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { _IdentifierProvider } from '@internal/react-components';
-import { MeetingAdapter, createAzureCommunicationMeetingAdapter, MeetingComposite } from '../../../../src';
+import {
+  MeetingAdapter,
+  MeetingAdapterState,
+  createAzureCommunicationMeetingAdapter,
+  MeetingComposite
+} from '../../../../src';
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
+import memoizeOne from 'memoize-one';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -27,17 +33,15 @@ function App(): JSX.Element {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const credential = new AzureCommunicationTokenCredential(token);
-
-      setMeetingAdapter(
-        await createAzureCommunicationMeetingAdapter({
-          userId: { communicationUserId: userId },
-          displayName,
-          credential,
-          callLocator: { groupId: groupId },
-          endpointUrl,
-          chatThreadId: threadId
-        })
-      );
+      const adapter = await createAzureCommunicationMeetingAdapter({
+        userId: { communicationUserId: userId },
+        displayName,
+        credential,
+        callLocator: { groupId: groupId },
+        endpointUrl,
+        chatThreadId: threadId
+      });
+      setMeetingAdapter(wrapAdapterForTests(adapter));
     };
 
     initialize();
@@ -64,5 +68,64 @@ function App(): JSX.Element {
     </div>
   );
 }
+
+const wrapAdapterForTests = (adapter: MeetingAdapter): MeetingAdapter => {
+  return new Proxy(adapter, new ProxyMeetingAdapter());
+};
+
+class ProxyMeetingAdapter implements ProxyHandler<MeetingAdapter> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public get<P extends keyof MeetingAdapter>(target: MeetingAdapter, prop: P): any {
+    switch (prop) {
+      case 'getState': {
+        return (...args: Parameters<MeetingAdapter['getState']>) => {
+          const state = target.getState(...args);
+          return memoizedUnsetSpeakingWhileMicrophoneIsMuted(state);
+        };
+      }
+      case 'onStateChange': {
+        return (...args: Parameters<MeetingAdapter['onStateChange']>) => {
+          const [handler] = args;
+          return target.onStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
+        };
+      }
+      case 'offStateChange': {
+        return (...args: Parameters<MeetingAdapter['offStateChange']>) => {
+          const [handler] = args;
+          return target.offStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
+        };
+      }
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
+}
+
+// This diagnostic gets flakily set to true only in our test harness.
+// The suspected reason is due to flakiness in how chrome handles the `--mute-audio` CLI flag.
+const unsetSpeakingWhileMicrophoneIsMuted = (state: MeetingAdapterState): MeetingAdapterState => {
+  if (state.meeting?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
+    return {
+      ...state,
+      meeting: {
+        ...state.meeting,
+        diagnostics: {
+          ...state.meeting.diagnostics,
+          media: { latest: { ...state.meeting.diagnostics.media.latest, speakingWhileMicrophoneIsMuted: undefined } }
+        }
+      }
+    };
+  }
+  return state;
+};
+
+/**
+ * It is essential to memoize this function.
+ *
+ * This function is called from both `getState` and `onStateChange`. Each time, *a new state object is returned.
+ * If we don't memoize it, business logic that depends on both `getState` and `onStateChange` is returned
+ * differnt objects even though there is no change in the underlying state. This causes spurious renders / render loops.
+ */
+const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
 
 ReactDOM.render(<App />, document.getElementById('root'));
