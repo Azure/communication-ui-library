@@ -38,6 +38,7 @@ import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { ChatMessageComponent } from './ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
+import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -282,6 +283,7 @@ const memoizeAllMessages = memoizeFnAll(
     showMessageDate: boolean,
     showMessageStatus: boolean,
     onRenderAvatar: OnRenderAvatarCallback | undefined,
+    shouldOverlapAvatarAndMessage: boolean,
     styles: MessageThreadStyles | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
@@ -322,7 +324,7 @@ const memoizeAllMessages = memoizeFnAll(
 
         const chatItemMessageStyle =
           (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
-          defaultChatItemMessageContainer;
+          defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
 
         const chatGutterStyles =
           message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
@@ -624,6 +626,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const chatThreadRef = useRef<HTMLElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
+  // When the chat thread is narrow, we want to overlap the avatar on top of the chat message to save space
+  const chatThreadWidth = useContainerWidth(chatThreadRef);
+  const shouldOverlapAvatarAndMessage = isNarrowWidth(chatThreadWidth);
+
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
     messagesRef.current = messagesWithAttachedValue;
@@ -880,6 +886,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageDate,
             showMessageStatus,
             onRenderAvatar,
+            shouldOverlapAvatarAndMessage,
             styles,
             onRenderMessageStatus,
             defaultStatusRenderer,
@@ -900,6 +907,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageDate,
       showMessageStatus,
       onRenderAvatar,
+      shouldOverlapAvatarAndMessage,
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,
