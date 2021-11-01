@@ -979,6 +979,15 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageRemove: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    errorBarCallNetworkQualityLow: JSX.Element;
+    errorBarCallNoSpeakerFound: JSX.Element;
+    errorBarCallNoMicrophoneFound: JSX.Element;
+    errorBarCallMicrophoneAccessDenied: JSX.Element;
+    errorBarCallMicrophoneMutedBySystem: JSX.Element;
+    errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAlreadyInUse: JSX.Element;
+    errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
 
 // @public
@@ -1017,6 +1026,15 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageRemove: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    errorBarCallNetworkQualityLow: JSX.Element;
+    errorBarCallNoSpeakerFound: JSX.Element;
+    errorBarCallNoMicrophoneFound: JSX.Element;
+    errorBarCallMicrophoneAccessDenied: JSX.Element;
+    errorBarCallMicrophoneMutedBySystem: JSX.Element;
+    errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAlreadyInUse: JSX.Element;
+    errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
 
 // @public
@@ -1081,7 +1099,16 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
-    callingNetworkFailure: string;
+    callCameraAlreadyInUse: string;
+    callLocalVideoFreeze: string;
+    callMacOsCameraAccessDenied: string;
+    callMacOsMicrophoneAccessDenied: string;
+    callMacOsScreenShareAccessDenied: string;
+    callMicrophoneAccessDenied: string;
+    callMicrophoneMutedBySystem: string;
+    callNetworkQualityLow: string;
+    callNoMicrophoneFound: string;
+    callNoSpeakerFound: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInThisThread: string;

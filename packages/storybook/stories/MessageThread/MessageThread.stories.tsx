@@ -199,7 +199,6 @@ const MessageThreadStory = (args): JSX.Element => {
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
-        styles={MessageThreadStyles}
         userId={UserOne.senderId}
         messages={chatMessages}
         showMessageDate={args.showMessageDate}

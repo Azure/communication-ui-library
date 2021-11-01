@@ -84,7 +84,6 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       imageInitials={data?.imageInitials ?? props.imageInitials}
       initialsColor={data?.initialsColor ?? props.initialsColor}
       initialsTextColor={data?.initialsTextColor ?? props.initialsTextColor ?? 'white'}
-      hidePersonaDetails={true}
     />
   );
 };
