@@ -9,19 +9,11 @@ import {
   SystemMessage
 } from '@azure/communication-react';
 
-export const MessageThreadContainerStyles = {
+export const MessageThreadStoryContainerStyles = {
   width: '100%',
   height: '100%',
   maxWidth: '50rem',
-  maxHeight: '30rem'
-};
-
-export const MessageThreadStyles = {
-  root: {
-    margin: '20px auto',
-    border: '1px solid',
-    padding: '0 10px'
-  }
+  padding: '1rem'
 };
 
 export const UserOne = {
