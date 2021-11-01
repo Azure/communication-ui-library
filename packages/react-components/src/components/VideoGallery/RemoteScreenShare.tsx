@@ -24,11 +24,7 @@ export const RemoteScreenShare = React.memo(
     const locale = useLocale();
 
     const screenShareStream = screenShareParticipant?.screenShareStream;
-    const videoStream = screenShareParticipant?.videoStream;
     if (screenShareStream?.isAvailable && !screenShareStream?.renderElement) {
-      screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
-    }
-    if (videoStream?.isAvailable && !videoStream?.renderElement) {
       screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
     }
 
