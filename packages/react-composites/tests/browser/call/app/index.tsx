@@ -18,6 +18,7 @@ import {
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
+import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -31,7 +32,7 @@ const userId = verifyParamExists(params.userId, 'userId');
 // Optional params
 const useFrLocale = Boolean(params.useFrLocale);
 const showCallDescription = Boolean(params.showCallDescription);
-// const customDataModel = params.customDataModel;
+const injectParticipantMenuItems = Boolean(params.injectParticipantMenuItems);
 
 function App(): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
@@ -53,11 +54,8 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let locale: CompositeLocale;
-  if (useFrLocale) {
-    locale = COMPOSITE_LOCALE_FR_FR;
-  } else if (showCallDescription) {
-    locale = COMPOSITE_LOCALE_EN_US;
+  const locale = useFrLocale ? COMPOSITE_LOCALE_FR_FR : COMPOSITE_LOCALE_EN_US;
+  if (showCallDescription) {
     locale.strings.call.configurationPageCallDetails =
       'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
   }
@@ -65,7 +63,14 @@ function App(): JSX.Element {
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <_IdentifierProvider identifiers={IDS}>
-        {callAdapter && <CallComposite adapter={callAdapter} locale={locale} options={{ mobileView: isMobile() }} />}
+        {callAdapter && (
+          <CallComposite
+            adapter={callAdapter}
+            locale={locale}
+            options={{ mobileView: isMobile() }}
+            onFetchParticipantMenuItems={injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined}
+          />
+        )}
       </_IdentifierProvider>
     </div>
   );
@@ -128,5 +133,28 @@ const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapt
  * differnt objects even though there is no change in the underlying state. This causes spurious renders / render loops.
  */
 const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
+
+function onFetchParticipantMenuItems(): IContextualMenuItem[] {
+  return [
+    {
+      'data-ui-id': 'test-app-participant-menu-item',
+      key: 'theOneWithRedBackground',
+      className: mergeStyles({ background: 'red' }),
+      href: 'https://bing.com',
+      text: 'I feel so blue'
+    },
+    {
+      key: 'shareSplit',
+      split: true,
+      subMenuProps: {
+        items: [
+          { key: 'sharetotwittersplit', text: 'Share to Twitter' },
+          { key: 'sharetofacebooksplit', text: 'Share to Facebook' }
+        ]
+      },
+      text: 'Share w/ Split'
+    }
+  ];
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from './CompositeStringUtils';
@@ -91,7 +92,7 @@ const defaultTypingUsers = [
   }
 ];
 
-const errorOptions = [
+const errorOptions: ErrorType[] = [
   'unableToReachChatService',
   'accessDenied',
   'userNotInThisThread',
@@ -102,7 +103,17 @@ const errorOptions = [
   'muteGeneric',
   'unmuteGeneric',
   'startScreenShareGeneric',
-  'stopScreenShareGeneric'
+  'stopScreenShareGeneric',
+  'callNetworkQualityLow',
+  'callNoSpeakerFound',
+  'callNoMicrophoneFound',
+  'callMicrophoneAccessDenied',
+  'callMicrophoneMutedBySystem',
+  'callMacOsMicrophoneAccessDenied',
+  'callLocalVideoFreeze',
+  'callCameraAlreadyInUse',
+  'callMacOsCameraAccessDenied',
+  'callMacOsScreenShareAccessDenied'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
@@ -125,6 +136,8 @@ const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
 export const controlsToAdd = {
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
+  botToken: { control: 'text', defaultValue: '', name: 'Valid token for bot' },
+  botUserId: { control: 'text', defaultValue: '', name: 'User identifier for bot' },
   callerImages: { control: 'file', accept: '.jpeg, .jpg, .png', defaultValue: [], name: 'Avatar' },
   callerName: { control: 'text', defaultValue: 'Maximus Aurelius', name: 'Caller Name' },
   callerNameAlt: { control: 'text', defaultValue: '1st', name: 'Caller Name Alt' },

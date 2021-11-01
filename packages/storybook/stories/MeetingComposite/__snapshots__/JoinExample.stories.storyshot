@@ -24,7 +24,7 @@ exports[`storybook snapshot tests Storyshots Composites/MeetingComposite/Join Ex
         className="ms-Stack css-1"
       >
         <span>
-          Please provide the connection string, display name and Teams meeting link to use.
+          Please provide the an access token, userId, endpointUrl, display name, and teams meeting link.
         </span>
       </div>
     </div>

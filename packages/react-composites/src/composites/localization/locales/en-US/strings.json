@@ -24,6 +24,8 @@
     "lobbyScreenConnectingToCallTitle": "Joining call",
     "lobbyScreenWaitingToBeAdmittedTitle": "Waiting to be admitted",
     "microphonePermissionDenied": "Your browser is blocking access to your microphone",
+    "networkReconnectMoreDetails": "Looks like something went wrong. We're trying to get back into the call.",
+    "networkReconnectTitle": "Hold on",
     "privacyPolicy": "Privacy policy",
     "removedFromCallTitle": "You were removed from the call",
     "screenSharingMessage": "You are sharing your screen",

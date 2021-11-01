@@ -240,7 +240,12 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+<<<<<<< HEAD
     mutedMessage: string;
+=======
+    networkReconnectMoreDetails: string;
+    networkReconnectTitle: string;
+>>>>>>> origin/main
     privacyPolicy: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
@@ -400,7 +405,11 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+<<<<<<< HEAD
     Muted: JSX.Element;
+=======
+    NetworkReconnectIcon: JSX.Element;
+>>>>>>> origin/main
 };
 
 // @public
@@ -439,7 +448,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+<<<<<<< HEAD
     Muted: JSX.Element;
+=======
+    NetworkReconnectIcon: JSX.Element;
+>>>>>>> origin/main
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -469,6 +482,15 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageRemove: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    errorBarCallNetworkQualityLow: JSX.Element;
+    errorBarCallNoSpeakerFound: JSX.Element;
+    errorBarCallNoMicrophoneFound: JSX.Element;
+    errorBarCallMicrophoneAccessDenied: JSX.Element;
+    errorBarCallMicrophoneMutedBySystem: JSX.Element;
+    errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAlreadyInUse: JSX.Element;
+    errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
 
 // @public

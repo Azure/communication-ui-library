@@ -149,4 +149,12 @@ export interface CallCompositeStrings {
    * Message to let user know the screen another user is sharing is being loaded.
    */
   sharingScreenLoading: string;
+  /**
+   * Title text of the page shown to the user when there is intermittent network failure during a call.
+   */
+  networkReconnectTitle: string;
+  /**
+   * More details text of the page shown to the user when there is intermittent network failure during a call.
+   */
+  networkReconnectMoreDetails: string;
 }
