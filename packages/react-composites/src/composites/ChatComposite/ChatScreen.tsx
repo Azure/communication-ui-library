@@ -93,7 +93,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
-      return <AvatarPersona userId={userId} {...defaultOptions} dataProvider={onFetchAvatarPersonaData} />;
+      return (
+        <AvatarPersona
+          userId={userId}
+          hidePersonaDetails={true}
+          {...defaultOptions}
+          dataProvider={onFetchAvatarPersonaData}
+        />
+      );
     },
     [onFetchAvatarPersonaData]
   );
