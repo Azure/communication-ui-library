@@ -16,9 +16,6 @@ import {
   subContainerStyles
 } from '../styles/CallPage.styles';
 
-// High enough to be above `onRenderGalleryContent()`.
-const NOTIFICATIONS_CONTAINER_ZINDEX = 9;
-
 /**
  * @private
  */
