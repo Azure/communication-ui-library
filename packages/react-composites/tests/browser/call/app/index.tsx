@@ -81,6 +81,7 @@ const wrapAdapterForTests = (adapter: CallAdapter): CallAdapter => {
 };
 
 class ProxyCallAdapter implements ProxyHandler<CallAdapter> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof CallAdapter>(target: CallAdapter, prop: P): any {
     switch (prop) {
       case 'getState': {
@@ -110,7 +111,7 @@ class ProxyCallAdapter implements ProxyHandler<CallAdapter> {
 // This diagnostic gets flakily set to true only in our test harness.
 // The suspected reason is due to flakiness in how chrome handles the `--mute-audio` CLI flag.
 const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapterState => {
-  if (!!state.call?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
+  if (state.call?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
     return {
       ...state,
       call: {
