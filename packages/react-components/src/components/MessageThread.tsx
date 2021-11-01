@@ -12,7 +12,6 @@ import {
   newMessageButtonStyle,
   messageStatusContainerStyle,
   noMessageStatusStyle,
-  defaultMyChatItemMessageContainer,
   defaultChatItemMessageContainer,
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
@@ -317,11 +316,14 @@ const memoizeAllMessages = memoizeFnAll(
 
         const personaOptions: IPersona = {
           hidePersonalDetails: true,
-          size: PersonaSize.size32
+          size: PersonaSize.size32,
+          text: message.senderDisplayName
         };
 
-        const myChatItemMessageStyle = styles?.myChatItemMessageContainer || defaultMyChatItemMessageContainer;
-        const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
+        const chatItemMessageStyle =
+          (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
+          defaultChatItemMessageContainer;
+
         const chatGutterStyles =
           message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
@@ -338,8 +340,7 @@ const memoizeAllMessages = memoizeFnAll(
           },
           contentPosition: message.mine ? 'end' : 'start',
           message: {
-            className: mergeStyles({ width: 'calc(100% - 5rem)' }),
-            styles: message.mine ? myChatItemMessageStyle : chatItemMessageStyle,
+            styles: chatItemMessageStyle,
             content: (
               <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
                 {chatMessageComponent}
