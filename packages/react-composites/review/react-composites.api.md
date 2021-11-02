@@ -237,7 +237,9 @@ export interface CallCompositeStrings {
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
+    lobbyScreenConnectingToCallMoreDetails?: string;
     lobbyScreenConnectingToCallTitle: string;
+    lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
     mutedMessage: string;
