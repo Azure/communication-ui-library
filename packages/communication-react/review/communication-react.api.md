@@ -1709,7 +1709,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     myUserId?: string;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onMuteAll?: () => void;
-    onParticipantRemove?: (userId: string) => void;
+    onRemoveParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
