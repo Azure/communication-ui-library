@@ -37,7 +37,7 @@ function App(): JSX.Element {
       const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
         setChatAdapter(
           await createAzureCommunicationChatAdapter({
-            endpointUrl,
+            endpoint: endpointUrl,
             userId: { communicationUserId: userId },
             displayName,
             credential,

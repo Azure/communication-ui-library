@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "Você está offline",
     "accessDenied": "Não é possível acessar os serviços de chat - verifique as credenciais do usuário fornecidas",
-    "userNotInThisThread": "Você não está mais neste tópico de chat",
-    "sendMessageNotInThisThread": "Falha ao enviar mensagem porque você não está mais neste thread de chat",
+    "userNotInChatThread": "Você não está mais neste tópico de chat",
+    "sendMessageNotInChatThread": "Falha ao enviar mensagem porque você não está mais neste thread de chat",
     "sendMessageGeneric": "Falha ao enviar mensagem",
     "callingNetworkFailure": "Chamada de conexão desabilitar - parece que você está offline",
     "startVideoGeneric": "Falha ao iniciar o vídeo",

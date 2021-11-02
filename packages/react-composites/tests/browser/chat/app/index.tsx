@@ -21,7 +21,7 @@ const params = Object.fromEntries(urlSearchParams.entries());
 // Required params
 const displayName = verifyParamExists(params.displayName, 'displayName');
 const token = verifyParamExists(params.token, 'token');
-const endpointUrl = verifyParamExists(params.endpointUrl, 'endpointUrl');
+const endpoint = verifyParamExists(params.endpointUrl, 'endpointUrl');
 const threadId = verifyParamExists(params.threadId, 'threadId');
 const userId = verifyParamExists(params.userId, 'userId');
 
@@ -36,7 +36,7 @@ function App(): JSX.Element {
     const initialize = async (): Promise<void> => {
       setChatAdapter(
         await createAzureCommunicationChatAdapter({
-          endpointUrl,
+          endpoint,
           userId: { communicationUserId: userId },
           displayName,
           credential: new AzureCommunicationTokenCredential(token),

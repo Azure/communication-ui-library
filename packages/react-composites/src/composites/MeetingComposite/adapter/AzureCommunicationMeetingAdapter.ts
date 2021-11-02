@@ -393,7 +393,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
  * @alpha
  */
 export type AzureCommunicationMeetingAdapterArgs = {
-  endpointUrl: string;
+  endpoint: string;
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
@@ -411,7 +411,7 @@ export const createAzureCommunicationMeetingAdapter = async ({
   userId,
   displayName,
   credential,
-  endpointUrl,
+  endpoint,
   chatThreadId,
   callLocator
 }: AzureCommunicationMeetingAdapterArgs): Promise<MeetingAdapter> => {
@@ -423,7 +423,7 @@ export const createAzureCommunicationMeetingAdapter = async ({
   });
 
   const chatAdapter = await createAzureCommunicationChatAdapter({
-    endpointUrl,
+    endpoint,
     userId,
     displayName,
     credential,
