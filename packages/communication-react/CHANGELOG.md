@@ -11,19 +11,30 @@ Mon, 1 Nov 2021 12:57:14 GMT
 
 ### Changes
 
-* Improved how participants are ordered in the `VideoGallery`
+* Updated the package to use calling sdk beta 1.2.3-beta.1
+* Improved how participants are ordered in the `VideoGallery` using underlying Calling SDK dominant speaking
 * Improved how video tiles are laid out in the `VideoGallery`
 * Messages in the `MessageThread` make better use of empty space
 * Accessibility improvements across calling and chat composites
 * Removed onToggleCamera API. Use startCamer and stopCamera instead
 * Removed setPage API. Developers can access the current page through `adapter.getState()` and modify the page by interacting with the UI.
-* Updated callsEnded and incomingCallsEnded to represent ended calls as [key:string]: CallState instead of CallState[]
+* Exposed additional diagnostic events through the `CallAdapter`
+* Removed screenshare button by default on Call Composite and Meeting Composite when in mobile view
+* Update options button icon to a settings gear
+* Updated the Lobby Page call controls to match the Call Page controls
+* Updated the "connecting to call" page UI in the Call Composite
+* Optimized Configuration Page, Lobby Page and Call Page for mobile in the Call Composite
+* Disable Participants button and Screenshare button on the Call Composite lobby screen
 
 ### Bug fixes
 
-* Fixed issue where messages from a Teams client would fail to render in `MessageThread`
+* Fixed issue where messages from a Teams client would fail to render in `MessageThread` and `ChatComposite`
 * `CallControl` items are consistent between Lobby and Call screen
 * Maintain position in `MessageThread` when fetching additional messages
+* Fixed browser camera indicator still showing in use after turning it off
+* Fixed issue where some message thread strings could not be set through the ChatComposite interface
+* Fix box-shadow showing below the Call Composite controls bar
+* Fixed issue where some message thread strings could not be set through the ChatComposite interface
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.6)
 
