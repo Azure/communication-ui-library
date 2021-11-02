@@ -2,9 +2,14 @@
 // Licensed under the MIT license.
 
 import React, { useEffect } from 'react';
-import { IStackStyles, mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { StreamMedia, VideoGalleryStream, VideoTile, useTheme, VideoStreamOptions } from '@internal/react-components';
-import { IPalette, IStyle } from '@fluentui/react';
+import {
+  containerStyles,
+  overlayBackgroundStyles,
+  overlayContentStyles,
+  videoTileStyles
+} from '../styles/ExpandedLocalVideoTile.styles';
 
 const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
 
@@ -38,7 +43,7 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
     }
   }, [isVideoReady, videoStream, props, renderElement]);
 
-  console.log(darkenedOverlayStyles(palette, isVideoReady));
+  console.log(overlayBackgroundStyles(palette, isVideoReady));
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       <VideoTile
@@ -48,7 +53,8 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
       >
         {props.overlayContent && (
           <>
-            <Stack verticalFill className={mergeStyles(darkenedOverlayStyles(palette, isVideoReady))}>
+            <Stack className={mergeStyles(overlayBackgroundStyles(palette, isVideoReady))} />
+            <Stack horizontalAlign="center" verticalAlign="center" className={mergeStyles(overlayContentStyles)}>
               {props.overlayContent}
             </Stack>
           </>
@@ -56,26 +62,4 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
       </VideoTile>
     </Stack>
   );
-};
-
-const containerStyles: IStackStyles = {
-  root: {
-    height: '100%',
-    width: '100%',
-    position: 'relative'
-  }
-};
-
-const darkenedOverlayStyles: (palette: IPalette, isVideoReady: boolean) => IStyle = (palette, isVideoReady) => {
-  const colorWithAlpha = (isVideoReady ? '#000000' : palette.neutralLight) + '60';
-  return {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    background: colorWithAlpha
-  };
-};
-
-const videoTileStyles = {
-  root: { height: '100%', width: '100%' }
 };
