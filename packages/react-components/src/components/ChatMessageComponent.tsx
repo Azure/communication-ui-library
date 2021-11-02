@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, IContextualMenuItem } from '@fluentui/react';
-import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/react-northstar';
+import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
 import React, { useMemo, useRef, useState } from 'react';
@@ -22,6 +22,7 @@ import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import { ChatMessage } from '../types';
+import { attachLongTouchPressEvent } from './utils/longPress';
 
 type ChatMessageProps = {
   message: ChatMessage;
@@ -94,6 +95,7 @@ const GenerateTextMessageContent = (message: ChatMessage, liveAuthorIntro: strin
 export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
+  const messageRef = useRef<HTMLElement | null>(null);
 
   const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
   const [isEditing, setIsEditing] = useState(false);
@@ -150,29 +152,38 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
     );
   }
   const messageContentItem = GenerateMessageContent(message, strings.liveAuthorIntro);
-  return (
-    <Chat.Message
-      className={mergeStyles(messageContainerStyle as IStyle)}
-      styles={messageContainerStyle}
-      content={messageContentItem}
-      author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
-      mine={message.mine}
-      timestamp={
-        <Text data-ui-id={ids.messageTimestamp}>
-          {message.createdOn
-            ? showDate
-              ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-              : formatTimeForChatMessage(message.createdOn)
-            : undefined}
-        </Text>
-      }
-      details={
-        message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
-      }
-      positionActionMenu={false}
-      actionMenu={!disableEditing && message.status !== 'sending' && message.mine ? actionMenu : undefined}
-    />
+  const chatMessage = (
+    <Ref innerRef={messageRef}>
+      <Chat.Message
+        className={mergeStyles(messageContainerStyle as IStyle)}
+        styles={messageContainerStyle}
+        content={messageContentItem}
+        author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
+        mine={message.mine}
+        timestamp={
+          <Text data-ui-id={ids.messageTimestamp}>
+            {message.createdOn
+              ? showDate
+                ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
+                : formatTimeForChatMessage(message.createdOn)
+              : undefined}
+          </Text>
+        }
+        details={
+          message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
+        }
+        positionActionMenu={false}
+        actionMenu={!disableEditing && message.status !== 'sending' && message.mine ? actionMenu : undefined}
+      />
+    </Ref>
   );
+
+  if (messageRef.current) {
+    // Follow up PR will implement the callback for the long press
+    attachLongTouchPressEvent(messageRef.current, () => alert('long press!'));
+  }
+
+  return chatMessage;
 };
 
 const MoreMenu = ({
