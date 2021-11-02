@@ -14,7 +14,8 @@ const hideTopicStatement = `
 <ChatComposite options={{ topic: false}}>
 `;
 const showParticipantStatement = `
-<ChatComposite options={{ participantPage: true}}>
+// Caution: the Participant Pane is a beta feature
+<ChatComposite options={{ participantPane: true}}>
 `;
 
 export const getDocs: () => JSX.Element = () => {
@@ -73,7 +74,8 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={hideTopicStatement} />
       <Description>
         You can also show a `Participant Pane` to the right hand side of the chat that has support for removing users.
-        The Participant pane feature is in `beta` currently.
+        The Participant pane is a `beta` feature. Currently it does not support mobile views and is subject to breaking
+        changes.
       </Description>
       <Source code={showParticipantStatement} />
 
