@@ -180,7 +180,9 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
 
   if (messageRef.current) {
     // Follow up PR will implement the callback for the long press
-    attachLongTouchPressEvent(messageRef.current, () => alert('long press!'));
+    attachLongTouchPressEvent(messageRef.current, () => {
+      console.log('Long press event!');
+    });
   }
 
   return chatMessage;

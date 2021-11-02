@@ -15,11 +15,20 @@ const CANCEL_ON_MOVEMENT = true;
 // Singleton that tracks whether there is an active touchstart event.
 let longPressTimerHandle: number | undefined = undefined;
 
+const clearLongPressTimeout = (): void => {
+  clearTimeout(longPressTimerHandle);
+  longPressTimerHandle = undefined;
+};
+
+const disableContextMenu = (e: MouseEvent): void => {
+  e.preventDefault();
+};
+
 /**
  * Attach a long press event on an element.
  *
  * @remarks
- * This disables the context menu that would usually show on long touch in a mobile browser.
+ * This disables the context menu for the target that would usually show on long touch in a mobile browser.
  * This is intentionally set to only work with touch events.
  * The long press is cancelled on movement.
  *
@@ -27,13 +36,13 @@ let longPressTimerHandle: number | undefined = undefined;
  *
  * @private
  */
-export function attachLongTouchPressEvent<T extends HTMLElement>(target: T, callback: () => void): void {
-  const clearLongPressTimeout = (): void => {
-    clearTimeout(longPressTimerHandle);
-  };
-
+export function attachLongTouchPressEvent(target: HTMLElement, callback: () => void): void {
   target.addEventListener('touchstart', (e) => {
+    // Disable context menu that would normally show on long press
+    target.addEventListener('contextmenu', disableContextMenu);
+
     clearLongPressTimeout();
+
     longPressTimerHandle = window.setTimeout(() => {
       e.stopPropagation();
       callback();
@@ -53,10 +62,5 @@ export function attachLongTouchPressEvent<T extends HTMLElement>(target: T, call
     if (CANCEL_ON_MOVEMENT) {
       clearLongPressTimeout();
     }
-  });
-
-  // Disable context menu that would normally show on long press
-  target.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
   });
 }
