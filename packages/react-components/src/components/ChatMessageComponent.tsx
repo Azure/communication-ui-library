@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, IContextualMenuItem } from '@fluentui/react';
+import {
+  IStyle,
+  mergeStyles,
+  Link,
+  ContextualMenu,
+  DirectionalHint,
+  IContextualMenuItem,
+  Target
+} from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
@@ -89,6 +97,12 @@ const GenerateTextMessageContent = (message: ChatMessage, liveAuthorIntro: strin
   );
 };
 
+enum ActionMenuState {
+  Closed,
+  OpenByClick,
+  OpenByLongTouchPress
+}
+
 /**
  * @private
  */
@@ -99,6 +113,10 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
 
   const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
   const [isEditing, setIsEditing] = useState(false);
+
+  const actionMenuEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
+  const [actionMenuOpen, setActionMenuOpen] = useState(ActionMenuState.Closed);
+  const [isTouchStartActive, setIsTouchStartActive] = useState(false);
 
   const menuClass = mergeStyles(chatActionsCSS, {
     'ul&': { boxShadow: theme.effects.elevation4, backgroundColor: theme.palette.white }
@@ -113,6 +131,11 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         {
           children: (
             <MoreMenu
+              showActionButton={!isTouchStartActive && actionMenuOpen !== ActionMenuState.OpenByLongTouchPress}
+              showActionMenu={actionMenuOpen !== ActionMenuState.Closed}
+              onActionButtonClick={() => setActionMenuOpen(ActionMenuState.OpenByClick)}
+              onActionMenuDismiss={() => setActionMenuOpen(ActionMenuState.Closed)}
+              contextMenuTarget={actionMenuOpen === ActionMenuState.OpenByLongTouchPress ? messageRef : undefined}
               onEditClick={() => {
                 setIsEditing(true);
               }}
@@ -128,7 +151,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         }
       ]
     }),
-    [menuClass, message.messageId, onDeleteMessage, strings]
+    [actionMenuOpen, isTouchStartActive, menuClass, message.messageId, onDeleteMessage, strings]
   );
 
   if (message.messageType !== 'chat') {
@@ -173,71 +196,79 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
           message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
         }
         positionActionMenu={false}
-        actionMenu={!disableEditing && message.status !== 'sending' && message.mine ? actionMenu : undefined}
+        actionMenu={actionMenuEnabled ? actionMenu : undefined}
       />
     </Ref>
   );
 
-  if (messageRef.current) {
+  if (actionMenuEnabled && messageRef.current) {
+    messageRef.current.addEventListener('touchstart', () => setIsTouchStartActive(true));
+    messageRef.current.addEventListener('touchend', () => setIsTouchStartActive(true));
+
     attachLongTouchPressEvent(messageRef.current, () => {
-      // Follow up PR will implement the callback for the long press
-      console.log('Long press event!');
+      setActionMenuOpen(ActionMenuState.OpenByLongTouchPress);
     });
   }
 
   return chatMessage;
 };
 
-const MoreMenu = ({
-  onEditClick,
-  onRemoveClick,
-  strings
-}: {
+const MoreMenu = (props: {
+  onActionButtonClick: () => void;
+  onActionMenuDismiss: () => void;
   onEditClick: () => void;
   onRemoveClick: () => void;
   strings: MessageThreadStrings;
+  showActionButton: boolean;
+  showActionMenu: boolean;
+  contextMenuTarget?: Target;
 }): JSX.Element => {
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const [menuHidden, setMenuHidden] = useState(true);
+  const menuButtonRef = useRef<HTMLElement | null>(null);
 
   const menuItems = useMemo(
     (): IContextualMenuItem[] => [
       {
         key: 'Edit',
-        text: strings.editMessage,
+        text: props.strings.editMessage,
         iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
-        onClick: onEditClick
+        onClick: props.onEditClick
       },
       {
         key: 'Remove',
-        text: strings.removeMessage,
+        text: props.strings.removeMessage,
         iconProps: {
           iconName: 'MessageRemove',
           styles: menuIconStyleSet
         },
-        onClick: onRemoveClick
+        onClick: props.onRemoveClick
       }
     ],
-    [onEditClick, onRemoveClick, strings]
+    [props.onEditClick, props.onRemoveClick, props.strings.editMessage, props.strings.removeMessage]
   );
 
   return (
-    <div ref={menuRef}>
-      <MoreIcon
-        className={iconWrapperStyle}
-        onClick={() => setMenuHidden(false)}
-        {...{
-          outline: true
-        }}
-      />
-      <ContextualMenu
-        items={menuItems}
-        hidden={menuHidden}
-        target={menuRef}
-        onDismiss={() => setMenuHidden(true)}
-        directionalHint={DirectionalHint.bottomLeftEdge}
-        className={chatMessageMenuStyle}
-      />
+    <div>
+      {props.showActionButton && (
+        <Ref innerRef={menuButtonRef}>
+          <MoreIcon
+            className={iconWrapperStyle}
+            onClick={props.onActionButtonClick}
+            {...{
+              outline: true
+            }}
+          />
+        </Ref>
+      )}
+      {
+        <ContextualMenu
+          items={menuItems}
+          hidden={!props.showActionMenu}
+          target={props.contextMenuTarget ?? menuButtonRef}
+          onDismiss={props.onActionMenuDismiss}
+          directionalHint={DirectionalHint.topRightEdge}
+          className={chatMessageMenuStyle}
+        />
+      }
     </div>
   );
 };
