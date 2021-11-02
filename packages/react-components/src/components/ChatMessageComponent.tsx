@@ -24,7 +24,8 @@ import {
   chatActionsCSS,
   iconWrapperStyle,
   menuIconStyleSet,
-  chatMessageEditedTagStyle
+  chatMessageEditedTagStyle,
+  menuItemIncreasedSizeStyles
 } from './styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
@@ -142,6 +143,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
               onRemoveClick={async () => {
                 onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
               }}
+              increaseFlyoutItemSize={actionMenuOpen === ActionMenuState.OpenByLongTouchPress}
               strings={strings}
             />
           ),
@@ -222,6 +224,11 @@ const MoreMenu = (props: {
   showActionButton: boolean;
   showActionMenu: boolean;
   contextMenuTarget?: Target;
+  /**
+   * Increase the height of the flyout items.
+   * Recommended when interacting with the chat message using touch.
+   */
+  increaseFlyoutItemSize: boolean;
 }): JSX.Element => {
   const menuButtonRef = useRef<HTMLElement | null>(null);
 
@@ -230,12 +237,14 @@ const MoreMenu = (props: {
       {
         key: 'Edit',
         text: props.strings.editMessage,
+        itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
         iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
         onClick: props.onEditClick
       },
       {
         key: 'Remove',
         text: props.strings.removeMessage,
+        itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
         iconProps: {
           iconName: 'MessageRemove',
           styles: menuIconStyleSet
@@ -243,7 +252,13 @@ const MoreMenu = (props: {
         onClick: props.onRemoveClick
       }
     ],
-    [props.onEditClick, props.onRemoveClick, props.strings.editMessage, props.strings.removeMessage]
+    [
+      props.increaseFlyoutItemSize,
+      props.onEditClick,
+      props.onRemoveClick,
+      props.strings.editMessage,
+      props.strings.removeMessage
+    ]
   );
 
   return (
