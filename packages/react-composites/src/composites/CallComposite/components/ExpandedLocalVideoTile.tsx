@@ -38,6 +38,7 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
     }
   }, [isVideoReady, videoStream, props, renderElement]);
 
+  console.log(darkenedOverlayStyles(palette, isVideoReady));
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       <VideoTile
@@ -47,8 +48,9 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
       >
         {props.overlayContent && (
           <>
-            <Stack verticalFill className={mergeStyles(darkenedOverlayStyles(palette, isVideoReady))}></Stack>
-            {props.overlayContent}
+            <Stack verticalFill className={mergeStyles(darkenedOverlayStyles(palette, isVideoReady))}>
+              {props.overlayContent}
+            </Stack>
           </>
         )}
       </VideoTile>
@@ -65,10 +67,12 @@ const containerStyles: IStackStyles = {
 };
 
 const darkenedOverlayStyles: (palette: IPalette, isVideoReady: boolean) => IStyle = (palette, isVideoReady) => {
+  const colorWithAlpha = (isVideoReady ? '#000000' : palette.neutralLight) + '60';
   return {
     position: 'absolute',
-    background: isVideoReady ? '#201f1e' : palette.neutralLight,
-    opacity: 0.75
+    height: '100%',
+    width: '100%',
+    background: colorWithAlpha
   };
 };
 
