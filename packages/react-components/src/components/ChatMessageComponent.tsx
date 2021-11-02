@@ -3,6 +3,7 @@
 
 import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, IContextualMenuItem } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/react-northstar';
+import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
 import React, { useMemo, useRef, useState } from 'react';
 import { LiveMessage } from 'react-aria-live';
@@ -19,7 +20,6 @@ import {
 } from './styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
-import { formatString } from '../localization/localizationUtils';
 import { useTheme } from '../theming';
 import { ChatMessage } from '../types';
 
@@ -27,7 +27,7 @@ type ChatMessageProps = {
   message: ChatMessage;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
-  editDisabled?: boolean;
+  disableEditing?: boolean;
   onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
   strings: MessageThreadStrings;
@@ -56,7 +56,7 @@ const GenerateMessageContent = (message: ChatMessage, liveAuthorIntro: string): 
 
 const GenerateRichTextHTMLMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
   const htmlToReactParser = new Parser();
-  const liveAuthor = formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
+  const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
   return (
     <div data-ui-status={message.status}>
       <LiveMessage
@@ -69,7 +69,7 @@ const GenerateRichTextHTMLMessageContent = (message: ChatMessage, liveAuthorIntr
 };
 
 const GenerateTextMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
-  const liveAuthor = formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
+  const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
   return (
     <div data-ui-status={message.status}>
       <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
@@ -95,7 +95,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
-  const { message, onUpdateMessage, onDeleteMessage, editDisabled, showDate, messageContainerStyle, strings } = props;
+  const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
   const [isEditing, setIsEditing] = useState(false);
 
   const menuClass = mergeStyles(chatActionsCSS, {
@@ -170,7 +170,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
       }
       positionActionMenu={false}
-      actionMenu={!editDisabled && message.status !== 'sending' && message.mine ? actionMenu : undefined}
+      actionMenu={!disableEditing && message.status !== 'sending' && message.mine ? actionMenu : undefined}
     />
   );
 };

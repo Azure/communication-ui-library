@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
     "accessDenied": "無法存取聊天服務 - 請檢查提供的使用者認證",
-    "userNotInThisThread": "您已不在此聊天對話中",
-    "sendMessageNotInThisThread": "無法傳送訊息，因為您已不在此聊天對話中",
+    "userNotInChatThread": "您已不在此聊天對話中",
+    "sendMessageNotInChatThread": "無法傳送訊息，因為您已不在此聊天對話中",
     "sendMessageGeneric": "無法傳送訊息",
     "callingNetworkFailure": "連線通話發生錯誤 - 您似乎已離線",
     "startVideoGeneric": "無法啟動影片",

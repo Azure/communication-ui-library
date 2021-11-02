@@ -17,7 +17,7 @@ export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element 
       const createAdapter = async (): Promise<void> => {
         setChatAdapter(
           await createAzureCommunicationChatAdapter({
-            endpointUrl: props.endpointUrl,
+            endpoint: props.endpointUrl,
             userId: props.userId,
             displayName: props.displayName,
             credential: new AzureCommunicationTokenCredential(props.accessToken),

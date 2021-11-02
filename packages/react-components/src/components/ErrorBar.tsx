@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
+import { IIconProps, IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
 
 /**
@@ -49,25 +49,20 @@ export interface ErrorBarStrings {
   /**
    * User is no longer on the thread.
    *
-   * See also: {@link ErrorBarStrings.sendMessageNotInThisThread} for a more specific error.
+   * See also: {@link ErrorBarStrings.sendMessageNotInChatThread} for a more specific error.
    */
-  userNotInThisThread: string;
+  userNotInChatThread: string;
 
   /**
    * Sending message failed because user is no longer on the thread.
    */
-  sendMessageNotInThisThread: string;
+  sendMessageNotInChatThread: string;
 
   /**
    * A generic message when sending message fails.
    * Prefer more specific error strings when possible.
    */
   sendMessageGeneric: string;
-
-  /**
-   * Detected bad network connection via the Calling SDK.
-   */
-  callingNetworkFailure: string;
 
   /**
    * A generic message when starting video fails.
@@ -98,6 +93,58 @@ export interface ErrorBarStrings {
    * A generic message when stopping screenshare fails.
    */
   stopScreenShareGeneric: string;
+
+  /**
+   * Message shown when poor network quality is detected during a call.
+   */
+  callNetworkQualityLow: string;
+
+  /**
+   * Message shown on failure to detect audio output devices.
+   */
+  callNoSpeakerFound: string;
+
+  /**
+   * Message shown on failure to detect audio input devices.
+   */
+  callNoMicrophoneFound: string;
+
+  /**
+   * Message shown when microphone can be enumerated but access is blocked by the system.
+   */
+  callMicrophoneAccessDenied: string;
+
+  /**
+   * Message shown when microphone is muted by the system (not by local or remote participants)
+   */
+  callMicrophoneMutedBySystem: string;
+
+  /**
+   * Mac OS specific message shown when microphone can be enumerated but access is
+   * blocked by the system.
+   */
+  callMacOsMicrophoneAccessDenied: string;
+
+  /**
+   * Message shown when poor network causes local video stream to be frozen.
+   */
+  callLocalVideoFreeze: string;
+
+  /**
+   * Message shown when local video fails to start because camera is already in use by
+   * another applciation.
+   */
+  callCameraAlreadyInUse: string;
+
+  /**
+   * Mac OS specific message shown when system denies access to camera.
+   */
+  callMacOsCameraAccessDenied: string;
+
+  /**
+   * Mac OS specific message shown when system denies sharing local screen on a call.
+   */
+  callMacOsScreenShareAccessDenied: string;
 }
 
 /**
@@ -133,7 +180,7 @@ export interface ActiveErrorMessage {
  *
  * This component internally tracks dismissed by the user.
  *   * Errors that have an associated timestamp: The error is shown on the UI again if it occurs after being dismissed.
- *   * Errors that do not have a timestamp: The error is dismissed until it dissappears from the props.
+ *   * Errors that do not have a timestamp: The error is dismissed until it disappears from the props.
  *         If the error recurs, it is shown in the UI.
  *
  * Uses {@link @fluentui/react#MessageBar} UI element.
@@ -161,7 +208,8 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
         <MessageBar
           {...props}
           key={error.type}
-          messageBarType={MessageBarType.error}
+          messageBarType={messageBarType(error.type)}
+          messageBarIconProps={messageBarIconProps(error.type)}
           onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
         >
           {strings[error.type]}
@@ -247,4 +295,39 @@ const errorsToShow = (
     // Error has an associated timestamp, so compare with last dismissal.
     return error.timestamp > dismissal.dismissedAt;
   });
+};
+
+const messageBarType = (errorType: ErrorType): MessageBarType => {
+  switch (errorType) {
+    case 'callNetworkQualityLow':
+    case 'callNoSpeakerFound':
+    case 'callNoMicrophoneFound':
+    case 'callMicrophoneAccessDenied':
+    case 'callMicrophoneMutedBySystem':
+    case 'callMacOsMicrophoneAccessDenied':
+    case 'callLocalVideoFreeze':
+    case 'callCameraAlreadyInUse':
+    case 'callMacOsCameraAccessDenied':
+    case 'callMacOsScreenShareAccessDenied':
+      return MessageBarType.warning;
+    default:
+      return MessageBarType.error;
+  }
+};
+
+const messageBarIconProps = (errorType: ErrorType): IIconProps | undefined => {
+  const iconName = customIconName[errorType];
+  return iconName ? { iconName } : undefined;
+};
+
+const customIconName = {
+  callNetworkQualityLow: 'errorBarCallNetworkQualityLow',
+  callNoSpeakerFound: 'errorBarCallNoSpeakerFound',
+  callNoMicrophoneFound: 'errorBarCallNoMicrophoneFound',
+  callMicrophoneAccessDenied: 'errorBarCallMicrophoneAccessDenied',
+  callMicrophoneMutedBySystem: 'errorBarCallMicrophoneMutedBySystem',
+  callMacOsMicrophoneAccessDenied: 'errorBarCallMacOsMicrophoneAccessDenied',
+  callLocalVideoFreeze: 'errorBarCallLocalVideoFreeze',
+  callCameraAlreadyInUse: 'errorBarCallCameraAlreadyInUse',
+  callMacOsCameraAccessDenied: 'errorBarCallMacOsCameraAccessDenied'
 };

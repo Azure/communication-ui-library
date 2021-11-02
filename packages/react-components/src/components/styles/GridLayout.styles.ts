@@ -8,8 +8,7 @@ import { mergeStyles } from '@fluentui/react';
  */
 export const gridLayoutStyle = mergeStyles({
   width: '100%',
-  height: '100%',
-  padding: '0.5rem'
+  height: '100%'
 });
 
 /**

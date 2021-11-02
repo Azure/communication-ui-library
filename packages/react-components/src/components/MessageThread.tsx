@@ -12,7 +12,6 @@ import {
   newMessageButtonStyle,
   messageStatusContainerStyle,
   noMessageStatusStyle,
-  defaultMyChatItemMessageContainer,
   defaultChatItemMessageContainer,
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
@@ -24,7 +23,7 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
-  BaseCustomStylesProps,
+  BaseCustomStyles,
   ChatMessage,
   CustomMessage,
   SystemMessage,
@@ -39,6 +38,7 @@ import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { ChatMessageComponent } from './ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
+import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -116,7 +116,7 @@ const didUserSendTheLatestMessage = (
  *
  * @public
  */
-export interface MessageThreadStyles extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStyles {
   /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
   /** Styles for new message container. */
@@ -283,6 +283,7 @@ const memoizeAllMessages = memoizeFnAll(
     showMessageDate: boolean,
     showMessageStatus: boolean,
     onRenderAvatar: OnRenderAvatarCallback | undefined,
+    shouldOverlapAvatarAndMessage: boolean,
     styles: MessageThreadStyles | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
@@ -317,11 +318,14 @@ const memoizeAllMessages = memoizeFnAll(
 
         const personaOptions: IPersona = {
           hidePersonalDetails: true,
-          size: PersonaSize.size32
+          size: PersonaSize.size32,
+          text: message.senderDisplayName
         };
 
-        const myChatItemMessageStyle = styles?.myChatItemMessageContainer || defaultMyChatItemMessageContainer;
-        const chatItemMessageStyle = styles?.chatItemMessageContainer || defaultChatItemMessageContainer;
+        const chatItemMessageStyle =
+          (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
+          defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
+
         const chatGutterStyles =
           message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
@@ -338,8 +342,7 @@ const memoizeAllMessages = memoizeFnAll(
           },
           contentPosition: message.mine ? 'end' : 'start',
           message: {
-            className: mergeStyles({ width: 'calc(100% - 5rem)' }),
-            styles: message.mine ? myChatItemMessageStyle : chatItemMessageStyle,
+            styles: chatItemMessageStyle,
             content: (
               <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
                 {chatMessageComponent}
@@ -508,9 +511,14 @@ export type MessageThreadProps = {
   onDeleteMessage?: (messageId: string) => Promise<void>;
 
   /**
-   * Whether disable the editing feature, false by default
+  /**
+   * Disable editing messages.
+   *
+   * @remarks This removes the action menu on messages.
+   *
+   * @defaultValue `false`
    */
-  editDisabled?: boolean;
+  disableEditing?: boolean;
 
   /**
    * Optional strings to override in component
@@ -545,9 +553,13 @@ export type MessageProps = {
    */
   showDate?: boolean;
   /**
-   * Whether edit feature is disabled or not
+   * Disable editing messages.
+   *
+   * @remarks This removes the action menu on messages.
+   *
+   * @defaultValue `false`
    */
-  editDisabled?: boolean;
+  disableEditing?: boolean;
   /**
    * Optional callback to edit a message.
    *
@@ -622,6 +634,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const chatScrollDivRef = useRef<HTMLElement>(null);
   const chatThreadRef = useRef<HTMLElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
+
+  // When the chat thread is narrow, we want to overlap the avatar on top of the chat message to save space
+  const chatThreadWidth = useContainerWidth(chatThreadRef);
+  const shouldOverlapAvatarAndMessage = isNarrowWidth(chatThreadWidth);
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
@@ -879,6 +895,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageDate,
             showMessageStatus,
             onRenderAvatar,
+            shouldOverlapAvatarAndMessage,
             styles,
             onRenderMessageStatus,
             defaultStatusRenderer,
@@ -899,6 +916,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageDate,
       showMessageStatus,
       onRenderAvatar,
+      shouldOverlapAvatarAndMessage,
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,

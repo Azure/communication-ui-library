@@ -34,6 +34,8 @@ import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
+import { IContextualMenuItemStyles } from '@fluentui/react';
+import { IContextualMenuStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -124,7 +126,7 @@ export type AzureCommunicationCallAdapterArgs = {
 
 // @public
 export type AzureCommunicationChatAdapterArgs = {
-    endpointUrl: string;
+    endpoint: string;
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
@@ -133,7 +135,7 @@ export type AzureCommunicationChatAdapterArgs = {
 
 // @alpha
 export type AzureCommunicationMeetingAdapterArgs = {
-    endpointUrl: string;
+    endpoint: string;
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
@@ -152,7 +154,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public
-export interface BaseCustomStylesProps {
+export interface BaseCustomStyles {
     root?: IStyle;
 }
 
@@ -307,19 +309,36 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    close: string;
+    complianceBannerNowOnlyRecording: string;
+    complianceBannerNowOnlyTranscription: string;
+    complianceBannerRecordingAndTranscriptionSaved: string;
+    complianceBannerRecordingAndTranscriptionStarted: string;
+    complianceBannerRecordingAndTranscriptionStopped: string;
+    complianceBannerRecordingSaving: string;
+    complianceBannerRecordingStarted: string;
+    complianceBannerRecordingStopped: string;
+    complianceBannerTrancriptionStarted: string;
+    complianceBannerTranscriptionConsent: string;
+    complianceBannerTranscriptionSaving: string;
+    complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+    mutedMessage: string;
+    networkReconnectMoreDetails: string;
+    networkReconnectTitle: string;
+    privacyPolicy: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    screenSharingMessage: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -390,7 +409,7 @@ export type CallingHandlers = {
     onHangUp: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
+    onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -605,7 +624,7 @@ export type ChatHandlers = {
     onSendMessage: (content: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
-    onParticipantRemove: (userId: string) => Promise<void>;
+    onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onUpdateMessage: (messageId: string, content: string) => Promise<void>;
@@ -766,6 +785,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    videoGallery: VideoGalleryStrings;
 }
 
 // @public
@@ -816,6 +836,8 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    Muted: JSX.Element;
+    NetworkReconnectIcon: JSX.Element;
 };
 
 // @public
@@ -874,7 +896,7 @@ export type ControlBarLayout = 'horizontal' | 'vertical' | 'dockedTop' | 'docked
 export interface ControlBarProps {
     children?: React_2.ReactNode;
     layout?: ControlBarLayout;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -884,13 +906,13 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @alpha
-export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -958,6 +980,15 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageRemove: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    errorBarCallNetworkQualityLow: JSX.Element;
+    errorBarCallNoSpeakerFound: JSX.Element;
+    errorBarCallNoMicrophoneFound: JSX.Element;
+    errorBarCallMicrophoneAccessDenied: JSX.Element;
+    errorBarCallMicrophoneMutedBySystem: JSX.Element;
+    errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAlreadyInUse: JSX.Element;
+    errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
 
 // @public
@@ -966,6 +997,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    Muted: JSX.Element;
+    NetworkReconnectIcon: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -995,6 +1028,15 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageRemove: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    errorBarCallNetworkQualityLow: JSX.Element;
+    errorBarCallNoSpeakerFound: JSX.Element;
+    errorBarCallNoMicrophoneFound: JSX.Element;
+    errorBarCallMicrophoneAccessDenied: JSX.Element;
+    errorBarCallMicrophoneMutedBySystem: JSX.Element;
+    errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAlreadyInUse: JSX.Element;
+    errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
 
 // @public
@@ -1059,17 +1101,26 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
-    callingNetworkFailure: string;
+    callCameraAlreadyInUse: string;
+    callLocalVideoFreeze: string;
+    callMacOsCameraAccessDenied: string;
+    callMacOsMicrophoneAccessDenied: string;
+    callMacOsScreenShareAccessDenied: string;
+    callMicrophoneAccessDenied: string;
+    callMicrophoneMutedBySystem: string;
+    callNetworkQualityLow: string;
+    callNoMicrophoneFound: string;
+    callNoSpeakerFound: string;
     muteGeneric: string;
     sendMessageGeneric: string;
-    sendMessageNotInThisThread: string;
+    sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
     unmuteGeneric: string;
-    userNotInThisThread: string;
+    userNotInChatThread: string;
 }
 
 // @public
@@ -1107,7 +1158,7 @@ export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @internal
@@ -1140,7 +1191,7 @@ export interface _Identifiers {
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
-    endTime: Date | undefined;
+    endTime?: Date;
     id: string;
     startTime: Date;
 }
@@ -1352,7 +1403,7 @@ export type MessageProps = {
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    editDisabled?: boolean;
+    disableEditing?: boolean;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
 };
@@ -1384,7 +1435,7 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 export interface MessageStatusIndicatorProps {
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -1415,7 +1466,7 @@ export type MessageThreadProps = {
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    editDisabled?: boolean;
+    disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
 
@@ -1449,7 +1500,7 @@ export interface MessageThreadStrings {
 }
 
 // @public
-export interface MessageThreadStyles extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
@@ -1502,6 +1553,11 @@ defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
 
 // @public
+export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export interface OptionsButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     microphones?: OptionsDevice[];
@@ -1513,6 +1569,7 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
     selectedSpeaker?: OptionsDevice;
     speakers?: OptionsDevice[];
     strings?: Partial<OptionsButtonStrings>;
+    styles?: OptionsButtonStyles;
 }
 
 // @public
@@ -1534,6 +1591,11 @@ export interface OptionsButtonStrings {
     microphoneMenuTooltip: string;
     speakerMenuTitle: string;
     speakerMenuTooltip: string;
+}
+
+// @public
+export interface OptionsButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
 }
 
 // @public
@@ -1562,7 +1624,7 @@ export interface ParticipantItemProps {
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
     strings?: Partial<ParticipantItemStrings>;
-    styles?: ParticipantItemStylesProps;
+    styles?: ParticipantItemStyles;
     userId?: string;
 }
 
@@ -1576,7 +1638,7 @@ export interface ParticipantItemStrings {
 }
 
 // @public
-export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+export interface ParticipantItemStyles extends BaseCustomStyles {
     avatar?: IStyle;
     iconContainer?: IStyle;
     me?: IStyle;
@@ -1587,14 +1649,20 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
+export interface ParticipantListItemStyles extends ParticipantItemStyles {
+    participantSubMenuItemsStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
     excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
-    onParticipantRemove?: (userId: string) => void;
+    onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    styles?: ParticipantListStyles;
 };
 
 // @public
@@ -1602,6 +1670,11 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
     participants: CallParticipant[];
     myUserId: string;
 };
+
+// @public
+export interface ParticipantListStyles extends BaseCustomStyles {
+    participantItemStyles?: ParticipantListItemStyles;
+}
 
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
@@ -1624,10 +1697,23 @@ export type ParticipantsAddedListener = (event: {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
+export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+    participantListStyles?: ParticipantListStyles;
+}
+
+// @public
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
     callInvitationURL?: string;
+    excludeMe?: boolean;
+    myUserId?: string;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onMuteAll?: () => void;
+    onRemoveParticipant?: (userId: string) => void;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
+    participants: CommunicationParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
@@ -1649,7 +1735,7 @@ export interface ParticipantsButtonStrings {
 
 // @public
 export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
-    participantListContainerStyle?: IStyle;
+    menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
 // @public
@@ -1746,7 +1832,7 @@ export interface SendBoxStrings {
 }
 
 // @public
-export interface SendBoxStylesProps extends BaseCustomStylesProps {
+export interface SendBoxStylesProps extends BaseCustomStyles {
     sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
     systemMessage?: IStyle;
@@ -1805,7 +1891,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 // @public
 export interface StreamMediaProps {
     isMirrored?: boolean;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
 
@@ -1887,7 +1973,7 @@ export interface TypingIndicatorStrings {
 }
 
 // @public
-export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
+export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
@@ -1951,7 +2037,8 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
-    styles?: BaseCustomStylesProps;
+    strings?: Partial<VideoGalleryStrings>;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -1974,6 +2061,12 @@ export interface VideoGalleryStream {
     isAvailable?: boolean;
     isMirrored?: boolean;
     renderElement?: HTMLElement;
+}
+
+// @public
+export interface VideoGalleryStrings {
+    screenIsBeingSharedMessage: string;
+    screenShareLoadingMessage: string;
 }
 
 // @public
@@ -2008,7 +2101,7 @@ export interface VideoTileProps {
 }
 
 // @public
-export interface VideoTileStylesProps extends BaseCustomStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStyles {
     displayNameContainer?: IStyle;
     overlayContainer?: IStyle;
     videoContainer?: IStyle;

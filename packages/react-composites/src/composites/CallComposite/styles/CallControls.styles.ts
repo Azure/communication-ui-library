@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, Theme } from '@fluentui/react';
+import { DefaultPalette as palette, IButtonStyles, IContextualMenuItemStyles, Theme } from '@fluentui/react';
+import { OptionsButtonStyles, ParticipantsButtonStyles } from '@internal/react-components';
+
+const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
 /**
  * @private
@@ -35,11 +38,58 @@ export const groupCallLeaveButtonCompressedStyle = {
 /**
  * @private
  */
-export const checkedButtonOverrideStyles = (theme: Theme, isChecked?: boolean) => ({
+export const checkedButtonOverrideStyles = (theme: Theme, isChecked?: boolean): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,
     color: palette.white,
-    ':focus::after': { outlineColor: `${palette.white} !important` }
+    ':focus::after': { outlineColor: `${palette.white} !important` } // added !important to avoid override by FluentUI button styles
   },
   label: isChecked ? { color: palette.white } : {}
 });
+
+/**
+ * Styles that can be applied to ensure flyout items have the minimum touch target size.
+ *
+ * @private
+ */
+export const buttonFlyoutIncreasedSizeStyles: IContextualMenuItemStyles = {
+  root: {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    maxHeight: 'unset'
+  },
+  linkContent: {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    maxHeight: 'unset'
+  },
+  icon: {
+    maxHeight: 'unset'
+  }
+};
+
+/**
+ * @private
+ */
+export const participantButtonWithIncreasedTouchTargets: ParticipantsButtonStyles = {
+  menuStyles: {
+    menuItemStyles: buttonFlyoutIncreasedSizeStyles,
+    participantListStyles: {
+      participantItemStyles: {
+        root: {
+          height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`
+        },
+        participantSubMenuItemsStyles: buttonFlyoutIncreasedSizeStyles
+      }
+    }
+  }
+};
+
+/**
+ * @private
+ */
+export const optionsButtonWithIncreasedTouchTargets: OptionsButtonStyles = {
+  menuStyles: {
+    menuItemStyles: buttonFlyoutIncreasedSizeStyles
+  }
+};
