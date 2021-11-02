@@ -24,7 +24,7 @@ const displayName = verifyParamExists(params.displayName, 'displayName');
 const token = verifyParamExists(params.token, 'token');
 const groupId = verifyParamExists(params.groupId, 'groupId');
 const userId = verifyParamExists(params.userId, 'userId');
-const endpointUrl = verifyParamExists(params.endpointUrl, 'endpointUrl');
+const endpoint = verifyParamExists(params.endpointUrl, 'endpointUrl');
 const threadId = verifyParamExists(params.threadId, 'threadId');
 
 function App(): JSX.Element {
@@ -38,7 +38,7 @@ function App(): JSX.Element {
         displayName,
         credential,
         callLocator: { groupId: groupId },
-        endpointUrl,
+        endpoint,
         chatThreadId: threadId
       });
       setMeetingAdapter(wrapAdapterForTests(adapter));
