@@ -4,6 +4,27 @@ This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be m
 
 <!-- Start content -->
 
+## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.7)
+
+Mon, 1 Nov 2021 12:57:14 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.6..1.0.0-beta.7)
+
+### Changes
+
+* Improved how participants are ordered in the `VideoGallery`
+* Improved how video tiles are laid out in the `VideoGallery`
+* Messages in the `MessageThread` make better use of empty space
+* Accessibility improvements across calling and chat composites
+* Removed onToggleCamera API. Use startCamer and stopCamera instead
+* Removed setPage API. Developers can access the current page through `adapter.getState()` and modify the page by interacting with the UI.
+* Updated callsEnded and incomingCallsEnded to represent ended calls as [key:string]: CallState instead of CallState[]
+
+### Bug fixes
+
+* Fixed issue where messages from a Teams client would fail to render in `MessageThread`
+* `CallControl` items are consistent between Lobby and Call screen
+* Maintain position in `MessageThread` when fetching additional messages
+
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.6)
 
 Tue, 28 Sep 2021 19:19:18 GMT
