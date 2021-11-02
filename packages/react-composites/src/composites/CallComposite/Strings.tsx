@@ -78,6 +78,10 @@ export interface CallCompositeStrings {
    */
   lobbyScreenWaitingToBeAdmittedTitle: string;
   /**
+   * Message shown to the user when they are speaking while muted.
+   */
+  mutedMessage: string;
+  /**
    * Text for link to MS privacy policy in Compliance Banner.
    */
   privacyPolicy: string;

@@ -29,7 +29,8 @@
     "privacyPolicy": "Privacy policy",
     "removedFromCallTitle": "You were removed from the call",
     "soundLabel": "Sound",
-    "startCallButtonLabel": "Start call"
+    "startCallButtonLabel": "Start call",
+    "mutedMessage": "You're muted"
   },
   "chat": {
     "chatListHeader": "In this chat"

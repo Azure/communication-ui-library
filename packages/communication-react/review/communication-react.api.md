@@ -333,6 +333,7 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+    mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
     privacyPolicy: string;
@@ -835,6 +836,7 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
 };
 
@@ -995,6 +997,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
