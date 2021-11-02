@@ -11,7 +11,7 @@ import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
  * @private
  */
 export interface LobbyOverlayProps {
-  overlayIcon: () => JSX.Element;
+  overlayIcon: JSX.Element;
   title: string;
   moreDetails?: string;
 }
@@ -42,7 +42,7 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
         props.overlayProps ? (
           <Stack verticalFill horizontalAlign="center" verticalAlign="center">
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
-              {props.overlayProps.overlayIcon()}
+              {props.overlayProps.overlayIcon}
             </Stack.Item>
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
               {props.overlayProps.title}

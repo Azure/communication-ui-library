@@ -16,6 +16,7 @@ import { CallControlOptions } from '../components/CallControls';
 import { MediaGallery } from '../components/MediaGallery';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
+import { Icon } from '@fluentui/react';
 
 /**
  * @private
@@ -110,5 +111,5 @@ const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOve
   moreDetails: inLobby
     ? strings.lobbyScreenWaitingToBeAdmittedMoreDetails
     : strings.lobbyScreenConnectingToCallMoreDetails,
-  overlayIcon: () => <>☕</>
+  overlayIcon: inLobby ? <Icon iconName="lobbyScreenWaitingToBeAdmitted" /> : <Icon iconName="lobbyScreenConnecting" />
 });
