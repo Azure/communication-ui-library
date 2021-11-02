@@ -508,7 +508,13 @@ export type MessageThreadProps = {
   onDeleteMessage?: (messageId: string) => Promise<void>;
 
   /**
-   * Whether disable the editing feature, false by default
+  /**
+   * Disable editing messages.
+   *
+   * @remarks This removes the action menu on messages.
+   *
+   * @defaultValue `false`
+   */
    */
   disableEditing?: boolean;
 
