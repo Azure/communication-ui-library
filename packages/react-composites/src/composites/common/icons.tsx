@@ -18,7 +18,7 @@ import React from 'react';
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
-  lobbyScreenConnecting: <>☕</>,
+  lobbyScreenConnectingToCall: <>☕</>,
   lobbyScreenWaitingToBeAdmitted: <>☕</>,
   LocalDeviceSettingsCamera: <Video20Filled />,
   LocalDeviceSettingsMic: <MicOn20Filled />,

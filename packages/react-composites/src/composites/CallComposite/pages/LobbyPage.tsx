@@ -106,10 +106,17 @@ const disableLobbyPageControls = (
   return newOptions;
 };
 
-const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
-  title: inLobby ? strings.lobbyScreenWaitingToBeAdmittedTitle : strings.lobbyScreenConnectingToCallTitle,
-  moreDetails: inLobby
-    ? strings.lobbyScreenWaitingToBeAdmittedMoreDetails
-    : strings.lobbyScreenConnectingToCallMoreDetails,
-  overlayIcon: inLobby ? <Icon iconName="lobbyScreenWaitingToBeAdmitted" /> : <Icon iconName="lobbyScreenConnecting" />
+const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps =>
+  inLobby ? overlayPropsWaitingToBeAdmitted(strings, inLobby) : overlayPropsConnectingToCall(strings, inLobby);
+
+const overlayPropsConnectingToCall = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
+  title: strings.lobbyScreenConnectingToCallTitle,
+  moreDetails: strings.lobbyScreenConnectingToCallMoreDetails,
+  overlayIcon: <Icon iconName="lobbyScreenConnectingToCall" />
+});
+
+const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
+  title: strings.lobbyScreenWaitingToBeAdmittedTitle,
+  moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
+  overlayIcon: <Icon iconName="lobbyScreenWaitingToBeAdmitted" />
 });
