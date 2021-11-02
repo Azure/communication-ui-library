@@ -5,19 +5,38 @@ import {
   ContextualMenuItemType,
   IContextualMenuItem,
   IContextualMenuProps,
-  IStyle,
-  Stack,
-  mergeStyles,
-  Icon
+  Icon,
+  IContextualMenuStyles,
+  IContextualMenuItemStyles,
+  merge
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
-import { ParticipantList, ParticipantListProps } from './ParticipantList';
+import {
+  ParticipantList,
+  ParticipantListProps,
+  ParticipantListStyles,
+  ParticipantMenuItemsCallback
+} from './ParticipantList';
 import { defaultParticipantListContainerStyle, participantsButtonMenuPropsStyle } from './styles/ControlBar.styles';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { useIdentifiers } from '../identifiers';
+import { CommunicationParticipant } from '../types/CommunicationParticipant';
+import { OnRenderAvatarCallback } from '../types/OnRender';
+
+/**
+ * Styles for the {@link ParticipantsButton} menu.
+ *
+ * @public
+ */
+export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
+  /** Styles for the {@link ParticipantsButton} menu items. */
+  menuItemStyles?: IContextualMenuItemStyles;
+  /** Styles for the {@link ParticipantList} menu item inside the {@link ParticipantsButton} menu. */
+  participantListStyles?: ParticipantListStyles;
+}
 
 /**
  * Styles Props for {@link ParticipantsButton}.
@@ -25,8 +44,8 @@ import { useIdentifiers } from '../identifiers';
  * @public
  */
 export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
-  /** Styles of ParticipantList container */
-  participantListContainerStyle?: IStyle;
+  /** Styles of the {@link ParticipantsButton} menu flyout */
+  menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
 /**
@@ -62,9 +81,39 @@ export interface ParticipantsButtonStrings {
  *
  * @public
  */
-export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
-   * Optional callback to render the participant list.
+   * Participants in user call or chat
+   */
+  participants: CommunicationParticipant[];
+  /**
+   * User ID of user
+   */
+  myUserId?: string;
+  /**
+   * If set to `true`, excludes the local participant from the participant list with use of `myUserId` props (required in this case).
+   *
+   * @defaultValue `false`
+   */
+  excludeMe?: boolean;
+  /**
+   * Callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`
+   */
+  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+  /**
+   * Callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
+  /**
+   * Callback to render the context menu for each participant
+   */
+  onRemoveParticipant?: (userId: string) => void;
+  /**
+   * Callback to render custom menu items for each participant.
+   */
+  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /**
+   * Optional callback to render a custom participant list.
    */
   onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
   /**
@@ -130,17 +179,16 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
   const defaultParticipantList = useCallback(() => {
     return (
-      <Stack className={mergeStyles(defaultParticipantListContainerStyle, styles?.participantListContainerStyle)}>
-        <ParticipantList
-          participants={participants}
-          myUserId={myUserId}
-          excludeMe={excludeMe}
-          onRenderParticipant={onRenderParticipant}
-          onRenderAvatar={onRenderAvatar}
-          onRemoveParticipant={onRemoveParticipant}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        />
-      </Stack>
+      <ParticipantList
+        participants={participants}
+        myUserId={myUserId}
+        excludeMe={excludeMe}
+        onRenderParticipant={onRenderParticipant}
+        onRenderAvatar={onRenderAvatar}
+        onRemoveParticipant={onRemoveParticipant}
+        onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+        styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.participantListStyles)}
+      />
     );
   }, [
     excludeMe,
@@ -149,7 +197,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderAvatar,
     onRenderParticipant,
     participants,
-    styles?.participantListContainerStyle,
+    styles?.menuStyles?.participantListStyles,
     onFetchParticipantMenuItems
   ]);
 
@@ -180,6 +228,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
           key: 'muteAllKey',
           text: strings.muteAllButtonLabel,
           title: strings.muteAllButtonLabel,
+          styles: styles?.menuStyles?.menuItemStyles,
           iconProps: { iconName: 'MicOff2' },
           onClick: onMuteAllCallback
         });
@@ -193,13 +242,14 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     defaultParticipantList,
     onMuteAll,
     strings.muteAllButtonLabel,
+    styles?.menuStyles?.menuItemStyles,
     onMuteAllCallback
   ]);
 
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       title: strings.menuHeader,
-      styles: participantsButtonMenuPropsStyle,
+      styles: merge(participantsButtonMenuPropsStyle, styles?.menuStyles),
       items: []
     };
 
@@ -213,8 +263,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
       menuProps.items.push({
         key: 'participantCountKey',
-        'data-ui-id': ids.participantButtonPeopleMenuItem,
         name: _formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
+        itemProps: { styles: styles?.menuStyles?.menuItemStyles },
         iconProps: { iconName: 'People' },
         subMenuProps: {
           items: generateDefaultParticipantsSubMenuProps(),
@@ -222,7 +272,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
           // Confine the menu to the parents bounds.
           // More info: https://github.com/microsoft/fluentui/issues/18835
           calloutProps: { styles: { root: { maxWidth: '100%' } } }
-        }
+        },
+        'data-ui-id': ids.participantButtonPeopleMenuItem
       });
     }
 
@@ -231,6 +282,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         key: 'InviteLinkKey',
         name: strings.copyInviteLinkButtonLabel,
         title: strings.copyInviteLinkButtonLabel,
+        itemProps: { styles: styles?.menuStyles?.menuItemStyles },
         iconProps: { iconName: 'Link' },
         onClick: onCopyCallback
       });
@@ -241,6 +293,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     strings.menuHeader,
     strings.participantsListButtonLabel,
     strings.copyInviteLinkButtonLabel,
+    styles?.menuStyles,
     participantCount,
     callInvitationURL,
     participants,

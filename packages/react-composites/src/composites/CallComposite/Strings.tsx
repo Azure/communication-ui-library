@@ -78,9 +78,9 @@ export interface CallCompositeStrings {
    */
   lobbyScreenWaitingToBeAdmittedTitle: string;
   /**
-   * Message to let user know they are sharing their screen.
+   * Message shown to the user when they are speaking while muted.
    */
-  screenSharingMessage: string;
+  mutedMessage: string;
   /**
    * Text for link to MS privacy policy in Compliance Banner.
    */
@@ -142,7 +142,11 @@ export interface CallCompositeStrings {
    */
   close: string;
   /**
-   * Message to let user know the screen another user is sharing is being loaded.
+   * Title text of the page shown to the user when there is intermittent network failure during a call.
    */
-  sharingScreenLoading: string;
+  networkReconnectTitle: string;
+  /**
+   * More details text of the page shown to the user when there is intermittent network failure during a call.
+   */
+  networkReconnectMoreDetails: string;
 }

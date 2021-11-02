@@ -9,7 +9,6 @@ import React from 'react';
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
-const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 const cssSnippet = `
 html,
@@ -43,7 +42,6 @@ export const getDocs: () => JSX.Element = () => {
         Typically, the user and group call or teams meeting are created on a Contoso-owned service and provided to the
         client application that then passes it to the CallComposite.
       </Description>
-      <Source code={serverText} />
 
       <Heading>Styling</Heading>
       <Description>

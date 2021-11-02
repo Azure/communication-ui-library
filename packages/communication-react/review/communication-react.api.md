@@ -154,7 +154,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public
-export interface BaseCustomStylesProps {
+export interface BaseCustomStyles {
     root?: IStyle;
 }
 
@@ -333,11 +333,12 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+    mutedMessage: string;
+    networkReconnectMoreDetails: string;
+    networkReconnectTitle: string;
     privacyPolicy: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    screenSharingMessage: string;
-    sharingScreenLoading: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -784,6 +785,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    videoGallery: VideoGalleryStrings;
 }
 
 // @public
@@ -834,6 +836,8 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    Muted: JSX.Element;
+    NetworkReconnectIcon: JSX.Element;
 };
 
 // @public
@@ -892,7 +896,7 @@ export type ControlBarLayout = 'horizontal' | 'vertical' | 'dockedTop' | 'docked
 export interface ControlBarProps {
     children?: React_2.ReactNode;
     layout?: ControlBarLayout;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -976,6 +980,15 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageRemove: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    errorBarCallNetworkQualityLow: JSX.Element;
+    errorBarCallNoSpeakerFound: JSX.Element;
+    errorBarCallNoMicrophoneFound: JSX.Element;
+    errorBarCallMicrophoneAccessDenied: JSX.Element;
+    errorBarCallMicrophoneMutedBySystem: JSX.Element;
+    errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAlreadyInUse: JSX.Element;
+    errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
 
 // @public
@@ -984,6 +997,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    Muted: JSX.Element;
+    NetworkReconnectIcon: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1013,6 +1028,15 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageRemove: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    errorBarCallNetworkQualityLow: JSX.Element;
+    errorBarCallNoSpeakerFound: JSX.Element;
+    errorBarCallNoMicrophoneFound: JSX.Element;
+    errorBarCallMicrophoneAccessDenied: JSX.Element;
+    errorBarCallMicrophoneMutedBySystem: JSX.Element;
+    errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAlreadyInUse: JSX.Element;
+    errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
 
 // @public
@@ -1077,7 +1101,16 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
-    callingNetworkFailure: string;
+    callCameraAlreadyInUse: string;
+    callLocalVideoFreeze: string;
+    callMacOsCameraAccessDenied: string;
+    callMacOsMicrophoneAccessDenied: string;
+    callMacOsScreenShareAccessDenied: string;
+    callMicrophoneAccessDenied: string;
+    callMicrophoneMutedBySystem: string;
+    callNetworkQualityLow: string;
+    callNoMicrophoneFound: string;
+    callNoSpeakerFound: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -1125,7 +1158,7 @@ export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @internal
@@ -1402,7 +1435,7 @@ export const MessageStatusIndicator: (props: MessageStatusIndicatorProps) => JSX
 export interface MessageStatusIndicatorProps {
     status?: MessageStatus;
     strings?: MessageStatusIndicatorStrings;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -1467,7 +1500,7 @@ export interface MessageThreadStrings {
 }
 
 // @public
-export interface MessageThreadStyles extends BaseCustomStylesProps {
+export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
@@ -1591,7 +1624,7 @@ export interface ParticipantItemProps {
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     presence?: PersonaPresence;
     strings?: Partial<ParticipantItemStrings>;
-    styles?: ParticipantItemStylesProps;
+    styles?: ParticipantItemStyles;
     userId?: string;
 }
 
@@ -1605,7 +1638,7 @@ export interface ParticipantItemStrings {
 }
 
 // @public
-export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
+export interface ParticipantItemStyles extends BaseCustomStyles {
     avatar?: IStyle;
     iconContainer?: IStyle;
     me?: IStyle;
@@ -1616,6 +1649,11 @@ export interface ParticipantItemStylesProps extends BaseCustomStylesProps {
 export const ParticipantList: (props: ParticipantListProps) => JSX.Element;
 
 // @public
+export interface ParticipantListItemStyles extends ParticipantItemStyles {
+    participantSubMenuItemsStyles?: IContextualMenuItemStyles;
+}
+
+// @public
 export type ParticipantListProps = {
     participants: CommunicationParticipant[];
     myUserId?: string;
@@ -1624,6 +1662,7 @@ export type ParticipantListProps = {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    styles?: ParticipantListStyles;
 };
 
 // @public
@@ -1631,6 +1670,11 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
     participants: CallParticipant[];
     myUserId: string;
 };
+
+// @public
+export interface ParticipantListStyles extends BaseCustomStyles {
+    participantItemStyles?: ParticipantListItemStyles;
+}
 
 // @public
 export type ParticipantMenuItemsCallback = (participantUserId: string, userId?: string, defaultMenuItems?: IContextualMenuItem[]) => IContextualMenuItem[];
@@ -1653,10 +1697,23 @@ export type ParticipantsAddedListener = (event: {
 export const ParticipantsButton: (props: ParticipantsButtonProps) => JSX.Element;
 
 // @public
-export interface ParticipantsButtonProps extends ControlBarButtonProps, ParticipantListProps {
+export interface ParticipantsButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+    participantListStyles?: ParticipantListStyles;
+}
+
+// @public
+export interface ParticipantsButtonProps extends ControlBarButtonProps {
     callInvitationURL?: string;
+    excludeMe?: boolean;
+    myUserId?: string;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onMuteAll?: () => void;
+    onParticipantRemove?: (userId: string) => void;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
+    participants: CommunicationParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
@@ -1678,7 +1735,7 @@ export interface ParticipantsButtonStrings {
 
 // @public
 export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
-    participantListContainerStyle?: IStyle;
+    menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
 // @public
@@ -1775,7 +1832,7 @@ export interface SendBoxStrings {
 }
 
 // @public
-export interface SendBoxStylesProps extends BaseCustomStylesProps {
+export interface SendBoxStylesProps extends BaseCustomStyles {
     sendMessageIcon?: IStyle;
     sendMessageIconContainer?: IStyle;
     systemMessage?: IStyle;
@@ -1834,7 +1891,7 @@ export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 // @public
 export interface StreamMediaProps {
     isMirrored?: boolean;
-    styles?: BaseCustomStylesProps;
+    styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
 
@@ -1916,7 +1973,7 @@ export interface TypingIndicatorStrings {
 }
 
 // @public
-export interface TypingIndicatorStylesProps extends BaseCustomStylesProps {
+export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
@@ -1980,7 +2037,8 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
-    styles?: BaseCustomStylesProps;
+    strings?: Partial<VideoGalleryStrings>;
+    styles?: BaseCustomStyles;
 }
 
 // @public
@@ -2003,6 +2061,12 @@ export interface VideoGalleryStream {
     isAvailable?: boolean;
     isMirrored?: boolean;
     renderElement?: HTMLElement;
+}
+
+// @public
+export interface VideoGalleryStrings {
+    screenIsBeingSharedMessage: string;
+    screenShareLoadingMessage: string;
 }
 
 // @public
@@ -2037,7 +2101,7 @@ export interface VideoTileProps {
 }
 
 // @public
-export interface VideoTileStylesProps extends BaseCustomStylesProps {
+export interface VideoTileStylesProps extends BaseCustomStyles {
     displayNameContainer?: IStyle;
     overlayContainer?: IStyle;
     videoContainer?: IStyle;

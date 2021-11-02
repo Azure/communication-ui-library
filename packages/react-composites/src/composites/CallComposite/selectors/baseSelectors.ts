@@ -2,7 +2,12 @@
 // Licensed under the MIT license.
 
 import { CallState as SDKCallStatus } from '@azure/communication-calling';
-import { CallState, DeviceManagerState, LocalVideoStreamState } from '@internal/calling-stateful-client';
+import {
+  CallState,
+  DeviceManagerState,
+  DiagnosticsCallFeatureState,
+  LocalVideoStreamState
+} from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn } from '@internal/calling-component-bindings';
 
@@ -62,3 +67,9 @@ export const getIsTranscriptionActive = (state: CallAdapterState): boolean =>
  * @private
  */
 export const getIsRecordingActive = (state: CallAdapterState): boolean => !!state.call?.recording.isRecordingActive;
+
+/**
+ * @private
+ */
+export const getUserFacingDiagnostics = (state: CallAdapterState): DiagnosticsCallFeatureState | undefined =>
+  state.call?.diagnostics;

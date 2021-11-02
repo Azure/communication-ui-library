@@ -32,13 +32,18 @@ export { StreamMedia } from './StreamMedia';
 export type { StreamMediaProps } from './StreamMedia';
 
 export { ParticipantItem } from './ParticipantItem';
-export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStylesProps } from './ParticipantItem';
+export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 
 export { ParticipantList } from './ParticipantList';
-export type { ParticipantListProps, ParticipantMenuItemsCallback } from './ParticipantList';
+export type {
+  ParticipantListProps,
+  ParticipantMenuItemsCallback,
+  ParticipantListStyles,
+  ParticipantListItemStyles
+} from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings } from './VideoGallery';
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
@@ -66,6 +71,7 @@ export type {
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
+  ParticipantsButtonContextualMenuStyles,
   ParticipantsButtonProps,
   ParticipantsButtonStrings,
   ParticipantsButtonStyles
