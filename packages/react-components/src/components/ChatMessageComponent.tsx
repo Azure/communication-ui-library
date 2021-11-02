@@ -179,8 +179,8 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   );
 
   if (messageRef.current) {
-    // Follow up PR will implement the callback for the long press
     attachLongTouchPressEvent(messageRef.current, () => {
+      // Follow up PR will implement the callback for the long press
       console.log('Long press event!');
     });
   }
