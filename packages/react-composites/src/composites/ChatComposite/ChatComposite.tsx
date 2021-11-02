@@ -49,8 +49,10 @@ export type ChatCompositeOptions = {
    */
   errorBar?: boolean;
   /**
-   * Show or hide the participant pane. Hidden if set to `false`
-   * @defaultValue true
+   * Show or hide the participant pane. This feature is in beta and not supported on mobile or narrow screen views.
+   * @defaultValue false
+   *
+   * @beta
    */
   participantPane?: boolean;
   /**
