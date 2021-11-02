@@ -515,7 +515,6 @@ export type MessageThreadProps = {
    *
    * @defaultValue `false`
    */
-   */
   disableEditing?: boolean;
 
   /**
@@ -551,7 +550,11 @@ export type MessageProps = {
    */
   showDate?: boolean;
   /**
-   * Whether edit feature is disabled or not
+   * Disable editing messages.
+   *
+   * @remarks This removes the action menu on messages.
+   *
+   * @defaultValue `false`
    */
   disableEditing?: boolean;
   /**
