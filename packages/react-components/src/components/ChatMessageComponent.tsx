@@ -27,7 +27,7 @@ type ChatMessageProps = {
   message: ChatMessage;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
-  editDisabled?: boolean;
+  disableEditing?: boolean;
   onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
   strings: MessageThreadStrings;
@@ -95,7 +95,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
-  const { message, onUpdateMessage, onDeleteMessage, editDisabled, showDate, messageContainerStyle, strings } = props;
+  const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
   const [isEditing, setIsEditing] = useState(false);
 
   const menuClass = mergeStyles(chatActionsCSS, {
@@ -170,7 +170,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
       }
       positionActionMenu={false}
-      actionMenu={!editDisabled && message.status !== 'sending' && message.mine ? actionMenu : undefined}
+      actionMenu={!disableEditing && message.status !== 'sending' && message.mine ? actionMenu : undefined}
     />
   );
 };

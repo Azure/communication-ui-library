@@ -95,8 +95,8 @@ const defaultTypingUsers = [
 const errorOptions: ErrorType[] = [
   'unableToReachChatService',
   'accessDenied',
-  'userNotInThisThread',
-  'sendMessageNotInThisThread',
+  'userNotInChatThread',
+  'sendMessageNotInChatThread',
   'sendMessageGeneric',
   'startVideoGeneric',
   'stopVideoGeneric',

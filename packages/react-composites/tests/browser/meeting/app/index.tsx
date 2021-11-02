@@ -24,7 +24,7 @@ const displayName = verifyParamExists(params.displayName, 'displayName');
 const token = verifyParamExists(params.token, 'token');
 const groupId = verifyParamExists(params.groupId, 'groupId');
 const userId = verifyParamExists(params.userId, 'userId');
-const endpointUrl = verifyParamExists(params.endpointUrl, 'endpointUrl');
+const endpoint = verifyParamExists(params.endpointUrl, 'endpointUrl');
 const threadId = verifyParamExists(params.threadId, 'threadId');
 
 function App(): JSX.Element {
@@ -38,7 +38,7 @@ function App(): JSX.Element {
         displayName,
         credential,
         callLocator: { groupId: groupId },
-        endpointUrl,
+        endpoint,
         chatThreadId: threadId
       });
       setMeetingAdapter(wrapAdapterForTests(adapter));
@@ -56,7 +56,7 @@ function App(): JSX.Element {
   else if (!displayName) return <h3>ERROR: No Display name set.</h3>;
   else if (!groupId) return <h3>ERROR: No groupId set.</h3>;
   else if (!userId) return <h3>ERROR: No userId set.</h3>;
-  else if (!endpointUrl) return <h3>ERROR: No endpointUrl set.</h3>;
+  else if (!endpoint) return <h3>ERROR: No endpoint set.</h3>;
   else if (!threadId) return <h3>ERROR: No threadId set.</h3>;
   else if (!meetingAdapter) return <h3>Initializing meeting adapters...</h3>;
 
