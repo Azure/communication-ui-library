@@ -20,16 +20,7 @@ import { useLocale } from '../../localization';
 /**
  * @private
  */
-export interface LobbyPageStrings {
-  connectingToCall: string;
-  waitingToBeAdmitted: string;
-}
-
-/**
- * @private
- */
 export interface LobbyPageProps {
-  strings: LobbyPageStrings;
   options?: CallCompositeOptions;
 }
 
