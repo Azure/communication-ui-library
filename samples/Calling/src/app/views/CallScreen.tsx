@@ -52,6 +52,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter.onStateChange((state: CallAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${webAppTitle}`;
+
+        if (state.call?.state === 'Connected') {
+          console.log(`CallId: ${state.call.id}`);
+        }
       });
       setAdapter(adapter);
       adapterRef.current = adapter;
