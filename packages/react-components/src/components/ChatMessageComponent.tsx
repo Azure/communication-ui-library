@@ -110,40 +110,41 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const messageActionButtonRef = useRef<HTMLElement | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  // We do not show the chat message action button if the chat message is selected via touch
-  const [showChatMessageActionButton, setShowChatMessageActionButton] = useState(true);
-  useEffect(() => {
-    if (messageRef.current) {
-      messageRef.current.addEventListener('mousemove', () => setShowChatMessageActionButton(false));
-    }
-  }, []);
+  // Control when the chat message action button is allowed to show. It should show when hovered over, or when the
+  // chat message is navigated to via keyboard, but not on touch events.
+  const [allowChatActionButtonShow, setAllowChatActionButtonShow] = useState(true);
 
   // The chat message action flyout should target the Chat.Message action menu if clicked,
   // or target the chat message if opened via long touch press.
-  const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState(messageActionButtonRef);
+  // False indicates the action menu should not be being shown.
+  const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState<
+    React.MutableRefObject<HTMLElement | null> | false
+  >(false);
 
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
   const actionMenuProps =
-    !chatActionsEnabled || !showChatMessageActionButton
+    !chatActionsEnabled || !allowChatActionButtonShow
       ? undefined
       : chatMessageActionMenuProps({
           menuButtonRef: messageActionButtonRef,
           onActionButtonClick: () => {
+            // Open chat action flyout, and set the context menu to target the chat message action button
+            console.log('bye there');
             setChatMessageActionFlyoutTarget(messageActionButtonRef);
-            setChatMessageActionFlyoutShowing(true);
           },
           theme
         });
 
-  const [chatMessageActionFlyoutShowing, setChatMessageActionFlyoutShowing] = useState(false);
-
   const longTouchPressProps = useLongPress(
     () => {
+      // Open chat action flyout, and set the context menu to target the chat message
       setChatMessageActionFlyoutTarget(messageRef);
-      setChatMessageActionFlyoutShowing(true);
     },
     {
-      onStart: () => setShowChatMessageActionButton(false),
+      // Don't show the action button when clicked via touch events
+      onStart: () => setAllowChatActionButtonShow(false),
+      // If the touch press didn't complete, allow the action menu to be shown on hover/focus again
+      onCancel: () => setAllowChatActionButtonShow(true),
       captureEvent: true,
       cancelOnMovement: true,
       detect: LongPressDetectEvents.TOUCH
@@ -200,9 +201,12 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
 
       {chatActionsEnabled && (
         <ChatMessageActionFlyout
-          hidden={!chatMessageActionFlyoutShowing}
-          target={chatMessageActionFlyoutTarget}
-          onDismiss={() => setChatMessageActionFlyoutShowing(false)}
+          hidden={!chatMessageActionFlyoutTarget}
+          target={chatMessageActionFlyoutTarget ?? undefined}
+          onDismiss={() => {
+            setChatMessageActionFlyoutTarget(false);
+            setAllowChatActionButtonShow(true);
+          }}
           onEditClick={() => {
             setIsEditing(true);
           }}
@@ -223,7 +227,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
  * This is the 3 dots that appear when hovering over one of your own chat messages.
  */
 const chatMessageActionMenuProps = (menuProps: {
-  menuButtonRef: React.MutableRefObject<HTMLElement | null>;
+  menuButtonRef: React.MutableRefObject<HTMLElement | null> | undefined;
   onActionButtonClick: () => void;
   theme: Theme;
 }): MenuProps => {
@@ -259,7 +263,7 @@ const chatMessageActionMenuProps = (menuProps: {
 };
 
 interface ChatMessageActionFlyoutProps {
-  target: Target;
+  target?: Target;
   hidden: boolean;
   strings: MessageThreadStrings;
   onEditClick: () => void;
