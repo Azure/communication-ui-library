@@ -1,8 +1,37 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.7)
+
+Wed, 27 Oct 2021 19:40:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.0-beta.6..@internal/react-components_v1.0.0-beta.7)
+
+### Changes
+
+- VideoTile persona coin now resizes more smoothly. GridLayout resize updates more smoothly. ([PR #899](https://github.com/azure/communication-ui-library/pull/899) by miguelgamis@microsoft.com)
+- Add function `smartDominantSpeakerParticipants` for calculating smart dominant speaker tiles ([PR #827](https://github.com/azure/communication-ui-library/pull/827) by anjulgarg@live.com)
+- Theme palette and effects acquired from theme context for VideoTile, Video Gallery, floating ControlBar and EndCallButton. ([PR #941](https://github.com/azure/communication-ui-library/pull/941) by miguelgamis@microsoft.com)
+- Put video participants in front of audio participants in VideoGallery. ([PR #956](https://github.com/azure/communication-ui-library/pull/956) by miguelgamis@microsoft.com)
+- Add data-ui-ids for components of the participant button ([PR #980](https://github.com/azure/communication-ui-library/pull/980) by 2684369+JamesBurnside@users.noreply.github.com)
+- added button text to JumpToNewMessageButtonProps +  strings to MessageThreadStrings and ParticipantItemStrings ([PR #966](https://github.com/azure/communication-ui-library/pull/966) by alcail@microsoft.com)
+- GridLayout updated to fill entire rectangle and to respond to resizing. ([PR #840](https://github.com/azure/communication-ui-library/pull/840) by miguelgamis@microsoft.com)
+- added VideoGelleryStrings with screenSharingMessage string ([PR #897](https://github.com/azure/communication-ui-library/pull/897) by alcail@microsoft.com)
+- Fix weird height of single-line bubble ([PR #894](https://github.com/azure/communication-ui-library/pull/894) by jinan@microsoft.com)
+- adding new style container to customize each chat item in the message thread ([PR #834](https://github.com/azure/communication-ui-library/pull/834) by alkwa@microsoft.com)
+- Add min-width to align left edge of chat ([PR #895](https://github.com/azure/communication-ui-library/pull/895) by jinan@microsoft.com)
+- Remove permanent box shadow on control bar ([PR #891](https://github.com/azure/communication-ui-library/pull/891) by 2684369+JamesBurnside@users.noreply.github.com)
+- Replace generic ChatMessage types with discriminating unions ([PR #830](https://github.com/azure/communication-ui-library/pull/830) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix spelling - sendboxTextfield to sendboxTextField ([PR #851](https://github.com/azure/communication-ui-library/pull/851) by 2684369+JamesBurnside@users.noreply.github.com)
+- Prop `dominantSpeakers` added to VideoGallery to reorder remoteParticipants with new algorithm. ([PR #951](https://github.com/azure/communication-ui-library/pull/951) by miguelgamis@microsoft.com)
+- Rename `ActiveError` to `ActiveErrorMessage` ([PR #880](https://github.com/azure/communication-ui-library/pull/880) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update message type ([PR #958](https://github.com/azure/communication-ui-library/pull/958) by jinan@microsoft.com)
+- Fix options button flyout from going out of screen bounds  ([PR #866](https://github.com/azure/communication-ui-library/pull/866) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update options button icon to a settings gear ([PR #867](https://github.com/azure/communication-ui-library/pull/867) by 2684369+JamesBurnside@users.noreply.github.com)
+- Added HorizontalGallery in VideoGallery to accomodate audio only participants. ([PR #978](https://github.com/azure/communication-ui-library/pull/978) by miguelgamis@microsoft.com)
+- moved screensharing message from component to composite strings ([PR #944](https://github.com/azure/communication-ui-library/pull/944) by alcail@microsoft.com)
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.6)
 

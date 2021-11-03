@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add tsdoc to chat adapter",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

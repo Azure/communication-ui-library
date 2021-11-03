@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove screenshare button by default on Call Composite and Meeting Composite when in mobile view",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
