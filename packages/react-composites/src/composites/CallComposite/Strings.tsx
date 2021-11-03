@@ -74,9 +74,17 @@ export interface CallCompositeStrings {
    */
   lobbyScreenConnectingToCallTitle: string;
   /**
+   * Optional addition details shown to the user on the lobby screen when connection to a call.
+   */
+  lobbyScreenConnectingToCallMoreDetails?: string;
+  /**
    * Text shown to the user on the lobby screen when waiting to be admitted to a call.
    */
   lobbyScreenWaitingToBeAdmittedTitle: string;
+  /**
+   * Optional additional details shown to the user on the lobby screen when waiting to be admitted to a call.
+   */
+  lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
   /**
    * Message shown to the user when they are speaking while muted.
    */
