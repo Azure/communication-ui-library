@@ -14,7 +14,7 @@ import {
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { LiveMessage } from 'react-aria-live';
 import Linkify from 'react-linkify';
 import { EditBox } from './EditBox';
