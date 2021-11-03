@@ -86,11 +86,11 @@ export const EmbeddedPeoplePane = (props: {
   const participantListDefaultProps = usePropsFor(ParticipantList);
 
   const participantListProps = useMemo(() => {
-    const onParticipantRemove = async (participantId: string): Promise<void> =>
+    const onRemoveParticipant = async (participantId: string): Promise<void> =>
       removeParticipantFromMeeting(callAdapter, chatAdapter, participantId);
     return {
       ...participantListDefaultProps,
-      onParticipantRemove
+      onRemoveParticipant
     };
   }, [participantListDefaultProps, callAdapter, chatAdapter]);
 

@@ -44,7 +44,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const adapter = await createAzureCommunicationChatAdapter({
-        endpointUrl: endpointUrl,
+        endpoint: endpointUrl,
         userId: { communicationUserId: userId },
         displayName: displayName,
         credential: createAutoRefreshingCredential(userId, token),

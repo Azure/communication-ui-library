@@ -93,7 +93,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
-      return <AvatarPersona userId={userId} {...defaultOptions} dataProvider={onFetchAvatarPersonaData} />;
+      return (
+        <AvatarPersona
+          userId={userId}
+          hidePersonaDetails={true}
+          {...defaultOptions}
+          dataProvider={onFetchAvatarPersonaData}
+        />
+      );
     },
     [onFetchAvatarPersonaData]
   );
@@ -126,7 +133,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} styles={sendBoxStyles} />
           </Stack.Item>
         </Stack>
-        {options?.participantPane !== false && (
+        {options?.participantPane === true && (
           <Stack className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>

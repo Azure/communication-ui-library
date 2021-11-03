@@ -49,14 +49,14 @@ export interface ErrorBarStrings {
   /**
    * User is no longer on the thread.
    *
-   * See also: {@link ErrorBarStrings.sendMessageNotInThisThread} for a more specific error.
+   * See also: {@link ErrorBarStrings.sendMessageNotInChatThread} for a more specific error.
    */
-  userNotInThisThread: string;
+  userNotInChatThread: string;
 
   /**
    * Sending message failed because user is no longer on the thread.
    */
-  sendMessageNotInThisThread: string;
+  sendMessageNotInChatThread: string;
 
   /**
    * A generic message when sending message fails.
@@ -180,7 +180,7 @@ export interface ActiveErrorMessage {
  *
  * This component internally tracks dismissed by the user.
  *   * Errors that have an associated timestamp: The error is shown on the UI again if it occurs after being dismissed.
- *   * Errors that do not have a timestamp: The error is dismissed until it dissappears from the props.
+ *   * Errors that do not have a timestamp: The error is dismissed until it disappears from the props.
  *         If the error recurs, it is shown in the UI.
  *
  * Uses {@link @fluentui/react#MessageBar} UI element.
