@@ -157,14 +157,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   if (!shouldFloatLocalVideo && localParticipant) {
     gridTiles.push(
-      <Stack
-        key="grid-tile-local"
-        data-ui-id={ids.videoGallery}
-        horizontalAlign="center"
-        verticalAlign="center"
-        className={gridStyle}
-        grow
-      >
+      <Stack key="grid-tile-local" horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
         {localParticipant && localVideoTile}
       </Stack>
     );
@@ -192,7 +185,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     : null;
 
   return (
-    <div id={FLOATING_TILE_HOST_ID} ref={containerRef} className={videoGalleryOuterDivStyle}>
+    <div
+      id={FLOATING_TILE_HOST_ID}
+      data-ui-id={ids.videoGallery}
+      ref={containerRef}
+      className={videoGalleryOuterDivStyle}
+    >
       {shouldFloatLocalVideo && (
         <Modal
           isOpen={true}
