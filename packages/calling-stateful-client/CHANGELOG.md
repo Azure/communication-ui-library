@@ -1,8 +1,24 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.7)
+
+Wed, 27 Oct 2021 19:40:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.0-beta.6..@internal/calling-stateful-client_v1.0.0-beta.7)
+
+### Changes
+
+- Use objects for call history in state ([PR #886](https://github.com/azure/communication-ui-library/pull/886) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Replace CommunicationUserKind with CommunicationUserIdentifier in constructor ([PR #884](https://github.com/azure/communication-ui-library/pull/884) by 82062616+prprabhu-ms@users.noreply.github.com)
+- bump calling sdk to 1.2.3-beta.1 ([PR #967](https://github.com/azure/communication-ui-library/pull/967) by miguelgamis@microsoft.com)
+- Api changes according to reviews from ARB ([PR #859](https://github.com/azure/communication-ui-library/pull/859) by jinan@microsoft.com)
+- Fix browser camera indicator still showing in use after turning it off ([PR #949](https://github.com/azure/communication-ui-library/pull/949) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update message type ([PR #958](https://github.com/azure/communication-ui-library/pull/958) by jinan@microsoft.com)
+- Rename `Error.inner` to `Error.innerError` ([PR #882](https://github.com/azure/communication-ui-library/pull/882) by 82062616+prprabhu-ms@users.noreply.github.com)
+- updating calling to use 1.2.2-beta.1 ([PR #945](https://github.com/azure/communication-ui-library/pull/945) by miguelgamis@microsoft.com)
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.6)
 

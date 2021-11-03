@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "VideoTile persona coin now resizes more smoothly. GridLayout resize updates more smoothly.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

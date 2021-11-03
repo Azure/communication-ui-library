@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Theme palette and effects acquired from theme context for SidePane.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

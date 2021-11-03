@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Disabled Chat Composite Participant Pane by default - mark as `@beta` feature",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

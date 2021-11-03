@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix options button flyout from going out of screen bounds ",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
