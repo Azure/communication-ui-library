@@ -1,0 +1,34 @@
+{
+  "name": "sample-automation-tests",
+  "version": "1.0.0",
+  "description": "Automation tests for samples.",
+  "private": true,
+  "scripts": {
+    "test": "echo skip",
+    "test:e2e:bundle": "cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test tests",
+    "update:snapshot:bundle": "cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test tests --update-snapshots",
+    "lint": "echo skip",
+    "lint:fix": "echo skip",
+    "prettier": "",
+    "prettier:check": ""
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@azure/communication-react": "1.0.0-beta.6",
+    "@azure/communication-common": "1.0.0",
+    "uuid": "^8.1.0",
+    "cross-env": "~7.0.3"
+  },
+  "devDependencies": {
+    "@azure/communication-chat": "1.1.0",
+    "@azure/communication-identity": "1.0.0",
+    "@playwright/test": "~1.15.1",
+    "@types/node-static": "~0.7.7",
+    "@types/node": "^14.14.10",
+    "dotenv": "~10.0.0",
+    "node-static": "~0.7.11",
+    "playwright": "~1.15.1",
+    "rimraf": "^2.6.2",
+    "typescript": "4.3.5"
+  }
+}
