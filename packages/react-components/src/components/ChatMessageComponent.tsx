@@ -117,17 +117,18 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   // or target the chat message if opened via long touch press.
   const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState(messageActionButtonRef);
 
-  const actionMenuEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
-  const actionMenuProps = !showChatMessageActionButton
-    ? undefined
-    : chatMessageActionMenuProps({
-        menuButtonRef: messageActionButtonRef,
-        onActionButtonClick: () => {
-          setChatMessageActionFlyoutTarget(messageActionButtonRef);
-          setChatMessageActionFlyoutShowing(true);
-        },
-        theme
-      });
+  const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
+  const actionMenuProps =
+    !chatActionsEnabled || !showChatMessageActionButton
+      ? undefined
+      : chatMessageActionMenuProps({
+          menuButtonRef: messageActionButtonRef,
+          onActionButtonClick: () => {
+            setChatMessageActionFlyoutTarget(messageActionButtonRef);
+            setChatMessageActionFlyoutShowing(true);
+          },
+          theme
+        });
 
   const [chatMessageActionFlyoutShowing, setChatMessageActionFlyoutShowing] = useState(false);
 
@@ -190,22 +191,24 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
             message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
           }
           positionActionMenu={false}
-          actionMenu={actionMenuEnabled ? actionMenuProps : undefined}
+          actionMenu={actionMenuProps}
         />
       </div>
 
-      <ChatMessageActionFlyout
-        hidden={!chatMessageActionFlyoutShowing}
-        target={chatMessageActionFlyoutTarget}
-        onDismiss={() => setChatMessageActionFlyoutShowing(false)}
-        onEditClick={() => {
-          setIsEditing(true);
-        }}
-        onRemoveClick={async () => {
-          onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
-        }}
-        strings={strings}
-      />
+      {chatActionsEnabled && (
+        <ChatMessageActionFlyout
+          hidden={!chatMessageActionFlyoutShowing}
+          target={chatMessageActionFlyoutTarget}
+          onDismiss={() => setChatMessageActionFlyoutShowing(false)}
+          onEditClick={() => {
+            setIsEditing(true);
+          }}
+          onRemoveClick={async () => {
+            onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
+          }}
+          strings={strings}
+        />
+      )}
     </>
   );
 
