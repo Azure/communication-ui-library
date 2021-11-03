@@ -22,6 +22,7 @@ import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import { ChatMessage } from '../types';
+import { useLongPress, LongPressDetectEvents } from 'use-long-press';
 
 type ChatMessageProps = {
   message: ChatMessage;
@@ -99,6 +100,12 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
   const [hideContextMenu, setHideContextMenu] = useState<boolean>(true);
 
+  const longPressProps = useLongPress(() => console.log('Long press finished'), {
+    captureEvent: true,
+    cancelOnMovement: true,
+    detect: LongPressDetectEvents.TOUCH
+  });
+
   const menuClass = mergeStyles(chatActionsCSS, {
     'ul&': { boxShadow: theme.effects.elevation4, backgroundColor: theme.palette.white }
   });
@@ -156,29 +163,34 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
     );
   }
   const messageContentItem = GenerateMessageContent(message, strings.liveAuthorIntro);
-  return (
-    <Chat.Message
-      className={mergeStyles(messageContainerStyle as IStyle)}
-      styles={messageContainerStyle}
-      content={messageContentItem}
-      author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
-      mine={message.mine}
-      timestamp={
-        <Text data-ui-id={ids.messageTimestamp}>
-          {message.createdOn
-            ? showDate
-              ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-              : formatTimeForChatMessage(message.createdOn)
-            : undefined}
-        </Text>
-      }
-      details={
-        message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
-      }
-      positionActionMenu={false}
-      actionMenu={!disableEditing && message.status !== 'sending' && message.mine ? actionMenu : undefined}
-    />
+
+  const chatMessage = (
+    <div {...longPressProps}>
+      <Chat.Message
+        className={mergeStyles(messageContainerStyle as IStyle)}
+        styles={messageContainerStyle}
+        content={messageContentItem}
+        author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
+        mine={message.mine}
+        timestamp={
+          <Text data-ui-id={ids.messageTimestamp}>
+            {message.createdOn
+              ? showDate
+                ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
+                : formatTimeForChatMessage(message.createdOn)
+              : undefined}
+          </Text>
+        }
+        details={
+          message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
+        }
+        positionActionMenu={false}
+        actionMenu={!disableEditing && message.status !== 'sending' && message.mine ? actionMenu : undefined}
+      />
+    </div>
   );
+
+  return chatMessage;
 };
 
 const MoreMenu = ({
