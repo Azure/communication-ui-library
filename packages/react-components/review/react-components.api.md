@@ -381,6 +381,7 @@ export type InputBoxButtonProps = {
     onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     className?: string;
     id?: string;
+    ariaLabel?: string;
 };
 
 // @public
@@ -476,7 +477,9 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    editBoxCancelButton: string;
     editBoxPlaceholderText: string;
+    editBoxSubmitButton: string;
     editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;

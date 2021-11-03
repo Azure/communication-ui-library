@@ -1200,6 +1200,7 @@ export type InputBoxButtonProps = {
     onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     className?: string;
     id?: string;
+    ariaLabel?: string;
 };
 
 // @public
@@ -1477,7 +1478,9 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 
 // @public
 export interface MessageThreadStrings {
+    editBoxCancelButton: string;
     editBoxPlaceholderText: string;
+    editBoxSubmitButton: string;
     editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
