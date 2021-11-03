@@ -31,7 +31,7 @@ export const sendBoxStyle = mergeStyles({
  * @private
  */
 export const sendButtonStyle = mergeStyles({
-  margin: 'auto .6rem'
+  margin: '.6rem'
 });
 
 /**

@@ -92,7 +92,7 @@ export const inputButtonStyle = mergeStyles({
 export const inputButtonContainerStyle = (rtl?: boolean): string =>
   mergeStyles({
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'baseline',
     justifyContent: 'center',
     position: 'absolute',
     margin: 'auto',
