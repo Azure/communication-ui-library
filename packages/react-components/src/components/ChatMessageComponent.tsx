@@ -14,7 +14,7 @@ import {
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { LiveMessage } from 'react-aria-live';
 import Linkify from 'react-linkify';
 import { EditBox } from './EditBox';
@@ -112,6 +112,11 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
 
   // We do not show the chat message action button if the chat message is selected via touch
   const [showChatMessageActionButton, setShowChatMessageActionButton] = useState(true);
+  useEffect(() => {
+    if (messageRef.current) {
+      messageRef.current.addEventListener('mousemove', () => setShowChatMessageActionButton(false));
+    }
+  }, []);
 
   // The chat message action flyout should target the Chat.Message action menu if clicked,
   // or target the chat message if opened via long touch press.
@@ -139,8 +144,6 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
     },
     {
       onStart: () => setShowChatMessageActionButton(false),
-      onCancel: () => setTimeout(() => setShowChatMessageActionButton(true), 500),
-      onFinish: () => setTimeout(() => setShowChatMessageActionButton(true), 500),
       captureEvent: true,
       cancelOnMovement: true,
       detect: LongPressDetectEvents.TOUCH
