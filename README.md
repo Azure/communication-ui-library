@@ -19,7 +19,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
 * "I want to see what this library can do!"
   * Check out our [Storybook](https://azure.github.io/communication-ui-library) and [Sample Apps](#samples)
 * "I want to write my own communication application"
-  * We recommend checking out our comprehensive documentation first to make the best decision for your application: <https://docs.microsoft.com/azure/communication-services/concepts/ui-framework/ui-sdk-overview>
+  * We recommend checking out our [comprehensive documentation](https://azure.github.io/communication-ui-library/?path=/story/overview--page) first to make the best decision for your application.
 * "I want more information on the packages available to use"
   * Check out our [npm packages](#npm-packages) on offer
 * "I want to submit a fix for a package in this repo"
