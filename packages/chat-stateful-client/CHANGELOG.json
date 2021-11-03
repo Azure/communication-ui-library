@@ -2,6 +2,53 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/chat-stateful-client_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add missing comments of chat stateful client",
+            "author": "jinan@microsoft.com",
+            "commit": "15cd167d77c2b64210ee3f14a00a27a4e3ec23e6",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Add release tags to all public API",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "124e02693fd0042365dd1f3d636ecc72eb5837ea",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Replace CommunicationUserKind with CommunicationUserIdentifier in constructor",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "00728707d25910c9fb7b030aca112828541492ac",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Rename `Error.inner` to `Error.innerError`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "adab866a9c328d8bd01af921334967555099e77f",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Hot fix for quick remove participant",
+            "author": "jinan@microsoft.com",
+            "commit": "a769b2e297d99956281394e080ef7ff48942138d",
+            "package": "@internal/chat-stateful-client"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/chat-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 19:19:18 GMT",
       "tag": "@internal/chat-stateful-client_v1.0.0-beta.6",
       "version": "1.0.0-beta.6",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Disable participants and screenshare buttons on lobby screen",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
