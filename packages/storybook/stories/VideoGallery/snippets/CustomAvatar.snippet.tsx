@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
+import {
+  VideoGallery as VideoGalleryComponent,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant,
+  RemoteScreenShare,
+  LocalScreenShare,
+  LocalVideoTile,
+  RemoteVideoTile
+} from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -83,12 +91,27 @@ export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
     }
   };
 
+  const onRenderTile = (
+    participant: VideoGalleryLocalParticipant | VideoGalleryRemoteParticipant,
+    type: 'participant' | 'screenshare' | 'localParticipant' | 'localScreenshare'
+  ): JSX.Element => {
+    if (type === 'screenshare') {
+      return <RemoteScreenShare screenShareParticipant={participant} />;
+    } else if (type === 'localScreenshare') {
+      return <LocalScreenShare localParticipant={participant} />;
+    } else if (type === 'localParticipant') {
+      return <LocalVideoTile participant={participant} />;
+    }
+
+    return <RemoteVideoTile participant={participant} showMuteIndicator={true} onRenderAvatar={onRenderAvatar} />;
+  };
+
   return (
     <Stack style={{ height: '30rem' }}>
       <VideoGalleryComponent
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        onRenderAvatar={onRenderAvatar}
+        onRenderTile={onRenderTile}
       />
     </Stack>
   );
