@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add support for opening chat message context menu with a long touch press",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

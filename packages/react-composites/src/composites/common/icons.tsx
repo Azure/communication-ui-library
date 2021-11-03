@@ -18,6 +18,8 @@ import React from 'react';
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
+  lobbyScreenConnectingToCall: <>☕</>,
+  lobbyScreenWaitingToBeAdmitted: <>☕</>,
   LocalDeviceSettingsCamera: <Video20Filled />,
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
