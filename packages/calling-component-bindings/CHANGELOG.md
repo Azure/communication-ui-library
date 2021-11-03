@@ -1,8 +1,26 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.7)
+
+Wed, 27 Oct 2021 19:40:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.0.0-beta.6..@internal/calling-component-bindings_v1.0.0-beta.7)
+
+### Changes
+
+- updating calling to use 1.2.2-beta.1 ([PR #945](https://github.com/azure/communication-ui-library/pull/945) by miguelgamis@microsoft.com)
+- Remove selector instance from export Add types for selectors ([PR #962](https://github.com/azure/communication-ui-library/pull/962) by jinan@microsoft.com)
+- Add function `smartDominantSpeakerParticipants` for calculating smart dominant speaker tiles ([PR #827](https://github.com/azure/communication-ui-library/pull/827) by anjulgarg@live.com)
+- Rename `ActiveError` to `ActiveErrorMessage` ([PR #880](https://github.com/azure/communication-ui-library/pull/880) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Remove dominant speaker processing in videoGallerySelector. ([PR #951](https://github.com/azure/communication-ui-library/pull/951) by miguelgamis@microsoft.com)
+- Disable old unstable implementation of dominant speaker logic ([PR #890](https://github.com/azure/communication-ui-library/pull/890) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Changed dominantSpeakers type format of videoGallerySelector. ([PR #956](https://github.com/azure/communication-ui-library/pull/956) by miguelgamis@microsoft.com)
+- bump calling sdk to 1.2.3-beta.1 ([PR #967](https://github.com/azure/communication-ui-library/pull/967) by miguelgamis@microsoft.com)
+- Fix camera and mic selectors to interact with the local preview mic/camera settings when a call has not yet been joined ([PR #943](https://github.com/azure/communication-ui-library/pull/943) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix browser camera indicator still showing in use after turning it off ([PR #949](https://github.com/azure/communication-ui-library/pull/949) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.6)
 

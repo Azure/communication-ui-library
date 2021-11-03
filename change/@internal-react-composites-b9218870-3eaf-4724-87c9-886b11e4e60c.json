@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "added isSpeaking dependency on mute state",
-  "packageName": "@internal/react-composites",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

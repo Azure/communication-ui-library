@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Optimize call composite control bar on mobile",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

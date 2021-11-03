@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Changed dominantSpeakers type format of videoGallerySelector.",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
