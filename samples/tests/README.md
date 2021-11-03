@@ -15,11 +15,12 @@ This is an automation tests folder for UI Library Samples, which contains all UI
 
 ## Folder structure
 If you are adding new tests for samples, please follow this folder structure:
-.
-├── [Sample Folder Name]                   # Tests for the sample folder
-├── common                                 # utils and common code for testing
-├── .env                                   # Environment file which setup a connection string for local tests
-├── playwright.config.ts                   # playwright config file
-├── globalSetup.ts                         # Setting up file server for automation test
-├── package.json                   
-└── README.md
+
+    .
+    ├── [Sample Folder Name]                   # Tests for the sample folder
+    ├── common                                 # utils and common code for testing
+    ├── .env                                   # Environment file which setup a connection string for local tests
+    ├── playwright.config.ts                   # playwright config file
+    ├── globalSetup.ts                         # Setting up file server for automation test
+    ├── package.json                   
+    └── README.md
