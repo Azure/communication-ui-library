@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix browser camera indicator still showing in use after turning it off",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

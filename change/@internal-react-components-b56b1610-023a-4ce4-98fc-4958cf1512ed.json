@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove permanent box shadow on control bar",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

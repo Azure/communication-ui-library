@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove selector instance from export Add types for selectors",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
