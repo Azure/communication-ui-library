@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add tsdoc for calling adapter method",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

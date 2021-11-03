@@ -370,7 +370,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async removeParticipant(userId: string): Promise<void> {
-    this.handlers.onParticipantRemove(userId);
+    this.handlers.onRemoveParticipant(userId);
   }
 
   public getState(): CallAdapterState {

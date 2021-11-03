@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  MicOff20Filled,
   CallMissed20Filled,
   MicOn20Filled,
   Speaker220Filled,
@@ -21,6 +22,7 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
+  Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />
 };
 

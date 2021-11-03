@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added HorizontalGallery in VideoGallery to accomodate audio only participants.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

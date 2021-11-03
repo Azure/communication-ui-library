@@ -7,9 +7,9 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 
 export const loadChatComposite = async function (args, htmlElement, props) {
-  const { userId, token, endpointUrl, threadId, displayName } = args;
+  const { userId, token, endpoint, threadId, displayName } = args;
   const adapter = await createAzureCommunicationChatAdapter({
-    endpointUrl,
+    endpoint,
     userId,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),

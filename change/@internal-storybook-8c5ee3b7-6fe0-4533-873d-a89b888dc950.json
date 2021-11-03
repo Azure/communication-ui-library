@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove usage of getTheme from IncomingCallAlertsDocs.",
-  "packageName": "@internal/storybook",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

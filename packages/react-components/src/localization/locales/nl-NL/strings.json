@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "U bent offline",
     "accessDenied": "Kan geen toegang krijgen tot chatservices. Controleer de opgegeven gebruikersreferenties",
-    "userNotInThisThread": "U bent niet meer aanwezig in deze chatthread",
-    "sendMessageNotInThisThread": "Verzenden van bericht is mislukt omdat u zich niet meer in deze chatthread bevindt",
+    "userNotInChatThread": "U bent niet meer aanwezig in deze chatthread",
+    "sendMessageNotInChatThread": "Verzenden van bericht is mislukt omdat u zich niet meer in deze chatthread bevindt",
     "sendMessageGeneric": "Kan bericht niet verzenden",
     "callingNetworkFailure": "Er zijn problemen met het verbinden van een gesprek - Het lijkt erop dat u offline bent",
     "startVideoGeneric": "Kan video niet starten",

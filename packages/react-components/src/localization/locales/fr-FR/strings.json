@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",
     "accessDenied": "Impossible d’accéder aux services de conversation. Vérifiez les informations d’identification de l’utilisateur fournies",
-    "userNotInThisThread": "Vous n’est plus dans ce thread de conversation",
-    "sendMessageNotInThisThread": "Échec de l’envoi du message car vous n’êtes plus dans ce thread de conversation",
+    "userNotInChatThread": "Vous n’est plus dans ce thread de conversation",
+    "sendMessageNotInChatThread": "Échec de l’envoi du message car vous n’êtes plus dans ce thread de conversation",
     "sendMessageGeneric": "Échec de l’envoi du message",
     "callingNetworkFailure": "Perturbation de l’appel de connexion : vous semblez être hors connexion",
     "startVideoGeneric": "Échec du démarrage de la vidéo",

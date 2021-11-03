@@ -511,9 +511,14 @@ export type MessageThreadProps = {
   onDeleteMessage?: (messageId: string) => Promise<void>;
 
   /**
-   * Whether disable the editing feature, false by default
+  /**
+   * Disable editing messages.
+   *
+   * @remarks This removes the action menu on messages.
+   *
+   * @defaultValue `false`
    */
-  editDisabled?: boolean;
+  disableEditing?: boolean;
 
   /**
    * Optional strings to override in component
@@ -548,9 +553,13 @@ export type MessageProps = {
    */
   showDate?: boolean;
   /**
-   * Whether edit feature is disabled or not
+   * Disable editing messages.
+   *
+   * @remarks This removes the action menu on messages.
+   *
+   * @defaultValue `false`
    */
-  editDisabled?: boolean;
+  disableEditing?: boolean;
   /**
    * Optional callback to edit a message.
    *
