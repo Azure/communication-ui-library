@@ -34,7 +34,8 @@
     "@internal/acs-ui-common": "1.0.0-beta.7",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
-    "html-to-react": "~1.4.5"
+    "html-to-react": "~1.4.5",
+    "use-long-press": "~1.1.1"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",
