@@ -843,6 +843,7 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
+    maxVideoStreams?: number;
     onRenderTile: (props: VideoGalleryLocalParticipant | VideoGalleryRemoteParticipant, type: 'participant' | 'screenshare' | 'localParticipant' | 'localScreenshare') => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     strings?: Partial<VideoGalleryStrings>;
