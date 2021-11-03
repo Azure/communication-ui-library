@@ -987,6 +987,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     errorBarCallMicrophoneMutedBySystem: JSX.Element;
     errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
     errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAccessDenied: JSX.Element;
     errorBarCallCameraAlreadyInUse: JSX.Element;
     errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
@@ -1035,6 +1036,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     errorBarCallMicrophoneMutedBySystem: JSX.Element;
     errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
     errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAccessDenied: JSX.Element;
     errorBarCallCameraAlreadyInUse: JSX.Element;
     errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
@@ -1101,6 +1103,7 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callCameraAccessDenied: string;
     callCameraAlreadyInUse: string;
     callLocalVideoFreeze: string;
     callMacOsCameraAccessDenied: string;
