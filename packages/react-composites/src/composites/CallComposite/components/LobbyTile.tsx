@@ -4,7 +4,7 @@
 import React from 'react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { VideoGalleryStream, useTheme, VideoStreamOptions } from '@internal/react-components';
-import { moreDetailsStyle, titleStyle } from '../styles/LobbyTile.styles';
+import { moreDetailsStyle, overlayContainerStyle, titleStyle } from '../styles/LobbyTile.styles';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
 
 /**
@@ -40,7 +40,12 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
       onCreateLocalStreamView={props.onCreateLocalStreamView}
       overlayContent={
         props.overlayProps ? (
-          <Stack verticalFill horizontalAlign="center" verticalAlign="center">
+          <Stack
+            verticalFill
+            horizontalAlign="center"
+            verticalAlign="center"
+            className={mergeStyles(overlayContainerStyle)}
+          >
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
               {props.overlayProps.overlayIcon}
             </Stack.Item>
