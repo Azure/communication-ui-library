@@ -2,6 +2,71 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/calling-stateful-client_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use objects for call history in state",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "da6d448333e8dd1fbb9f2eb08a3ecd2b3e482bde",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Replace CommunicationUserKind with CommunicationUserIdentifier in constructor",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "00728707d25910c9fb7b030aca112828541492ac",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "bump calling sdk to 1.2.3-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5b6f038700dc756a80946aac2aefc0f580cd82e7",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Api changes according to reviews from ARB",
+            "author": "jinan@microsoft.com",
+            "commit": "8908e99a94cbd5e22ee6afcdb7f9caafc5c4c25b",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Fix browser camera indicator still showing in use after turning it off",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "aa001a001bba36180909fd653f7cb114a5477a0e",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Update message type",
+            "author": "jinan@microsoft.com",
+            "commit": "b563d672084416e4555fca408d1dce33978f54e1",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Rename `Error.inner` to `Error.innerError`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "adab866a9c328d8bd01af921334967555099e77f",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "updating calling to use 1.2.2-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "dbca58a3e5bf2d7ec873f81078b093ce87bd6cde",
+            "package": "@internal/calling-stateful-client"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/calling-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 19:19:18 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.0-beta.6",
       "version": "1.0.0-beta.6",

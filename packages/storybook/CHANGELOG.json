@@ -2,6 +2,185 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/storybook_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "bump calling sdk to 1.2.3-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5b6f038700dc756a80946aac2aefc0f580cd82e7",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add troubleshooting guide",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "49ae69bd1a0890dd301a39472f131b281b3a6c15",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update examples to new ChatMessage types",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "963d3980a0b05a656409e5cd06b948222cc7e9ee",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update VideoGallery story with new HorizontalGallery",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "80b0ca85fc12fe7f866055686a86c7afb9e3695c",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Api changes according to reviews from ARB",
+            "author": "jinan@microsoft.com",
+            "commit": "8908e99a94cbd5e22ee6afcdb7f9caafc5c4c25b",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Drop unnecessary state variables in example",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "93f97e4dad3de82af81aa771dc5e201f95f04316",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Rename `ActiveError` to `ActiveErrorMessage`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8d0dfc3d925ab7317739bdddbe86c8216ac73a14",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updated story snapshots.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "499dbaba28287c36c7faca2415a256d68a943b35",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Rename enum value in example",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "39addec10efbe531faeec36f8620bb9e3c910459",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Remove usage of getTheme from IncomingCallAlertsDocs.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5cdacae89e418d6c9efe773aab114d9caaf6dde8",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Replace CommunicationUserKind with CommunicationUserIdentifier in constructor",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "00728707d25910c9fb7b030aca112828541492ac",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updating calling to use 1.2.2-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "dbca58a3e5bf2d7ec873f81078b093ce87bd6cde",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updating sample code with new styles prop in chat composite",
+            "author": "alkwa@microsoft.com",
+            "commit": "c7dccf8002e93f5b69acde7278ea9d7b947a851f",
+            "package": "@internal/storybook"
+          }
+        ],
+        "none": [
+          {
+            "comment": "updated ScreenSharing to have sharer tile to be added to side panel with remote participants",
+            "author": "alcail@microsoft.com",
+            "commit": "c1b9db392006ac124d185eccdb64019fb60daa23",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6ccfecfe6e42cfb5a951f3378c2d47195f067ce1",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updating snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "91a5d5c94984f2119617909f5dddf218e3887927",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated storybook snapshots",
+            "author": "alcail@microsoft.com",
+            "commit": "2b32e2fbcb5453cc77c71a0b3ef29021f3c21571",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "hide onUpdate/onDelete Message and EditDisabled controls in MessageThread story",
+            "author": "alcail@microsoft.com",
+            "commit": "be45c87f84490fa38cf3714fdaa84bc1efb7491f",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "fixed VideoTile styling snippet",
+            "author": "alcail@microsoft.com",
+            "commit": "c065e88d8e2a5ce02763f5717362d19555c8ba12",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update jest snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5abb84dad1060c30c71c5bb6d763ffd75a9747d5",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated call of Primary/Default buttons",
+            "author": "alcail@microsoft.com",
+            "commit": "e1198f91affb5182035739e476b8f9a1f0b76e5d",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Refactor banner example",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "9e4fcafde1f0da1162a08a2f4b807be00a687aef",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f99cc6ab294d0d371d512ca432fd86d70fb14c5a",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "8d117c4f2c4a37cef8b2b313cfafac5947bd47fd",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "hide strings control in VideoGallery story",
+            "author": "alcail@microsoft.com",
+            "commit": "3fc7255cb471312d804b29b51ceee18b6559301d",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update jest snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "c7230f97bf1770f07ab32294bd21a3224e12c116",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6e9ff00295b972174ad3b33aff9132f7813f7958",
+            "package": "@internal/storybook"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 19:19:18 GMT",
       "tag": "@internal/storybook_v1.0.0-beta.6",
       "version": "1.0.0-beta.6",

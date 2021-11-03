@@ -2,6 +2,185 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/react-components_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "VideoTile persona coin now resizes more smoothly. GridLayout resize updates more smoothly.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5e42d6158020ab479d5f850fb98ea33387db98ee",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add function `smartDominantSpeakerParticipants` for calculating smart dominant speaker tiles",
+            "author": "anjulgarg@live.com",
+            "commit": "7a635376e5b97413b2be0bf7137abbabf9497db1",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Theme palette and effects acquired from theme context for VideoTile, Video Gallery, floating ControlBar and EndCallButton.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5cdacae89e418d6c9efe773aab114d9caaf6dde8",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Put video participants in front of audio participants in VideoGallery.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "bd30fc16b3ce5cde00ef9b80db5f1c3336bab283",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add data-ui-ids for components of the participant button",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "8d117c4f2c4a37cef8b2b313cfafac5947bd47fd",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "added button text to JumpToNewMessageButtonProps +  strings to MessageThreadStrings and ParticipantItemStrings",
+            "author": "alcail@microsoft.com",
+            "commit": "2b32e2fbcb5453cc77c71a0b3ef29021f3c21571",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "GridLayout updated to fill entire rectangle and to respond to resizing.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "499dbaba28287c36c7faca2415a256d68a943b35",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "added VideoGelleryStrings with screenSharingMessage string",
+            "author": "alcail@microsoft.com",
+            "commit": "3fc7255cb471312d804b29b51ceee18b6559301d",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix weird height of single-line bubble",
+            "author": "jinan@microsoft.com",
+            "commit": "daf5739575d1d8247885868ff9f29da7325b9362",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "adding new style container to customize each chat item in the message thread",
+            "author": "alkwa@microsoft.com",
+            "commit": "c7dccf8002e93f5b69acde7278ea9d7b947a851f",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add min-width to align left edge of chat",
+            "author": "jinan@microsoft.com",
+            "commit": "656ad7af53ff7b2051040d0a4a224f66a6549278",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Remove permanent box shadow on control bar",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6e9ff00295b972174ad3b33aff9132f7813f7958",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Replace generic ChatMessage types with discriminating unions",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "963d3980a0b05a656409e5cd06b948222cc7e9ee",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix spelling - sendboxTextfield to sendboxTextField",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "691ff2abe9ea0ed788de7920fc72cb7fb5d0f084",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Prop `dominantSpeakers` added to VideoGallery to reorder remoteParticipants with new algorithm.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "f531b581d3ba70190c46cff21263998c651f6a70",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Rename `ActiveError` to `ActiveErrorMessage`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8d0dfc3d925ab7317739bdddbe86c8216ac73a14",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update message type",
+            "author": "jinan@microsoft.com",
+            "commit": "b563d672084416e4555fca408d1dce33978f54e1",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix options button flyout from going out of screen bounds ",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "91a5d5c94984f2119617909f5dddf218e3887927",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update options button icon to a settings gear",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6ccfecfe6e42cfb5a951f3378c2d47195f067ce1",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Added HorizontalGallery in VideoGallery to accomodate audio only participants.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "80b0ca85fc12fe7f866055686a86c7afb9e3695c",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "moved screensharing message from component to composite strings",
+            "author": "alcail@microsoft.com",
+            "commit": "c1b9db392006ac124d185eccdb64019fb60daa23",
+            "package": "@internal/react-components"
+          }
+        ],
+        "none": [
+          {
+            "comment": "removed video stream border radius when speaking",
+            "author": "alcail@microsoft.com",
+            "commit": "c065e88d8e2a5ce02763f5717362d19555c8ba12",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "POC if using regular function syntax will allow react components to be picked up by docs",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f7f44cd5b3cacd106543aa05ad5f0a0f10a854a8",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Updated EditBox styles to blue box + grey buttons",
+            "author": "alcail@microsoft.com",
+            "commit": "be45c87f84490fa38cf3714fdaa84bc1efb7491f",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "fixed focus outline color colored controlBar btns",
+            "author": "alcail@microsoft.com",
+            "commit": "cfb8726ed4a76ef872de0afba761ac6238239a49",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "remove random console log that is in our codebase",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "742209249f63fac1677c62cd67005ceb4c777a03",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "updated call of Primary/Default buttons",
+            "author": "alcail@microsoft.com",
+            "commit": "e1198f91affb5182035739e476b8f9a1f0b76e5d",
+            "package": "@internal/react-components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 19:19:18 GMT",
       "tag": "@internal/react-components_v1.0.0-beta.6",
       "version": "1.0.0-beta.6",

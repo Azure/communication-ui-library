@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "moved screensharing message from component to composite strings",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}
