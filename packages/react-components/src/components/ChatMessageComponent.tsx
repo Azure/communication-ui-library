@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles, Link, ContextualMenu, DirectionalHint, IContextualMenuItem } from '@fluentui/react';
-import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
+import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
 import React, { useMemo, useRef, useState } from 'react';
