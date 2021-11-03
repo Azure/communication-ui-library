@@ -10533,6 +10533,7 @@ packages:
     resolution:
       integrity: sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
   /formidable/1.2.2:
+    deprecated: 'Please upgrade to latest, formidable@v2 or formidable@v3! Check these notes: https://bit.ly/2ZEqIau'
     dev: false
     resolution:
       integrity: sha512-V8gLm+41I/8kguQ4/o1D3RIHRmhYFG4pnNyonvua+40rqcEmT4+V71yaZ3B457xbbgCsCfjSPi65u/W6vK1U5Q==
@@ -18163,6 +18164,17 @@ packages:
         optional: true
     resolution:
       integrity: sha512-d2TEuG6nSLKQLAfW3By8mKr8HurOlTkul0sOpxbClIv4SQ4iOd7BYr7VIzdbktUCnv7dua/60xzd8igMU6jmyw==
+  /use-long-press/1.1.1_react@16.14.0:
+    dependencies:
+      react: 16.14.0
+    dev: false
+    engines:
+      node: '>=10'
+      npm: '>=5'
+    peerDependencies:
+      react: ^16.8.0
+    resolution:
+      integrity: sha512-tqf6zDZ06g/Rt8rw+/jaekrdBTmrFXxjHHd2QgMlOhvs1fwOb9VA9d+DmkTPeNtL/byaJ8YeHTOwmluwxhXRLA==
   /use/3.1.1:
     dev: false
     engines:
@@ -19612,12 +19624,13 @@ packages:
       ts-node: 9.1.1_typescript@4.3.5
       type-fest: 1.2.3
       typescript: 4.3.5
+      use-long-press: 1.1.1_react@16.14.0
       uuid: 8.3.2
       webpack: 5.38.1
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-xVtDPH/oT1DEsfTdWvv7ljSKTwtkClUXulcuEPAYgAg+pWW/I2KtjMdh4ZH/UimvnSR58FtH+TK4PMLP9+4njA==
+      integrity: sha512-oN8QgjJ2i8+Ud8FafOdScRvICqXrrbOtXF06Yxc5iU9DxRlUJ6oChkaq70NaNe799gRk8yr54Jzu296ra/D+ww==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:

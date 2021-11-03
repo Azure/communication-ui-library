@@ -22,7 +22,7 @@ import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import { ChatMessage } from '../types';
-import { attachLongTouchPressEvent } from './utils/longPress';
+import { useLongPress, LongPressDetectEvents } from 'use-long-press';
 
 type ChatMessageProps = {
   message: ChatMessage;
@@ -95,10 +95,15 @@ const GenerateTextMessageContent = (message: ChatMessage, liveAuthorIntro: strin
 export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
-  const messageRef = useRef<HTMLElement | null>(null);
 
   const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
   const [isEditing, setIsEditing] = useState(false);
+
+  const longPressProps = useLongPress(() => console.log('Long press finished'), {
+    captureEvent: true,
+    cancelOnMovement: true,
+    detect: LongPressDetectEvents.TOUCH
+  });
 
   const menuClass = mergeStyles(chatActionsCSS, {
     'ul&': { boxShadow: theme.effects.elevation4, backgroundColor: theme.palette.white }
@@ -152,8 +157,9 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
     );
   }
   const messageContentItem = GenerateMessageContent(message, strings.liveAuthorIntro);
+
   const chatMessage = (
-    <Ref innerRef={messageRef}>
+    <div {...longPressProps}>
       <Chat.Message
         className={mergeStyles(messageContainerStyle as IStyle)}
         styles={messageContainerStyle}
@@ -175,15 +181,8 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         positionActionMenu={false}
         actionMenu={!disableEditing && message.status !== 'sending' && message.mine ? actionMenu : undefined}
       />
-    </Ref>
+    </div>
   );
-
-  if (messageRef.current) {
-    attachLongTouchPressEvent(messageRef.current, () => {
-      // Follow up PR will implement the callback for the long press
-      console.log('Long press event!');
-    });
-  }
 
   return chatMessage;
 };
