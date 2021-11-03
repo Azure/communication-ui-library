@@ -118,8 +118,8 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   // or target the chat message if opened via long touch press.
   // False indicates the action menu should not be being shown.
   const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState<
-    React.MutableRefObject<HTMLElement | null> | false
-  >(false);
+    React.MutableRefObject<HTMLElement | null> | undefined
+  >(undefined);
 
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
   const actionMenuProps =
@@ -204,7 +204,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
           hidden={!chatMessageActionFlyoutTarget}
           target={chatMessageActionFlyoutTarget ?? undefined}
           onDismiss={() => {
-            setChatMessageActionFlyoutTarget(false);
+            setChatMessageActionFlyoutTarget(undefined);
             setAllowChatActionButtonShow(true);
           }}
           onEditClick={() => {
@@ -227,7 +227,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
  * This is the 3 dots that appear when hovering over one of your own chat messages.
  */
 const chatMessageActionMenuProps = (menuProps: {
-  menuButtonRef: React.MutableRefObject<HTMLElement | null> | undefined;
+  menuButtonRef: React.MutableRefObject<HTMLElement | null>;
   onActionButtonClick: () => void;
   theme: Theme;
 }): MenuProps => {
