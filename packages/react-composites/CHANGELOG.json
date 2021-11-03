@@ -2,6 +2,389 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/react-composites_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "none": [
+          {
+            "comment": "Enable mobile UI regression tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0d59f0f4625035adcf019fd2a7b984b630a39800",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add config for playwright tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "d7b00102fc2bb2fd03a372f5d41c69655f187488",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "fixed focus outline color colored controlBar btns",
+            "author": "alcail@microsoft.com",
+            "commit": "cfb8726ed4a76ef872de0afba761ac6238239a49",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove an annoying error message in the ui test runs",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a8cfbb4fb2ffc4d9f5a41fc9aa0a20570a994d2d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update UI tests to use shared files",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a78d93ac326bdfaff20aed930d292899a8a2c342",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "make mobile meeting composite bar somewhat usable",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "247d4a5294c4744150080b26c563b30609e31736",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Code refactor - make call page use a pure component",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "12803631274091d66e92d455feb8fbb01968d034",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Updated Chat styles to ensure zooming in at 400%",
+            "author": "alcail@microsoft.com",
+            "commit": "7ef24af4569cbd55c6572cd2651ac749baa93e88",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "updated call of Primary/Default buttons",
+            "author": "alcail@microsoft.com",
+            "commit": "e1198f91affb5182035739e476b8f9a1f0b76e5d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "update call composite folder strucuture",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a28227b5425704d318790270365bac1a14947bd1",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "UI test code cleanup",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "691ff2abe9ea0ed788de7920fc72cb7fb5d0f084",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "removed video stream border radius when speaking",
+            "author": "alcail@microsoft.com",
+            "commit": "c065e88d8e2a5ce02763f5717362d19555c8ba12",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "UI flakiness fixes",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b4e0d7e3e5f1f4c52a2b67e09d8b7303e4fb5275",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Drive composite page state by call state and not setPage functions",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "468b7d5b38f21daf07dd156349381d6626b9aae7",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add unified e2e test cmd",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2551054ad06d42b0be2849deea288c3312bb470a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Load env variables in e2e tests",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "c35c504e06d2efefcad228c1ca23e08748faa39b",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "updated screen sharing experience with new design (no more popup)",
+            "author": "alcail@microsoft.com",
+            "commit": "3fc7255cb471312d804b29b51ceee18b6559301d",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "added isSpeaking dependency on mute state",
+            "author": "alcail@microsoft.com",
+            "commit": "0dff57815f44afe77fe3add68858c54b65db3cb7",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Try fix flakey UI tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f1cfc015268363a5ee9e4f26838244e2d3c7a8a0",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add UI tests for ending experience pages",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "8d117c4f2c4a37cef8b2b313cfafac5947bd47fd",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update UI snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "1e98211a97211fd55d9271179be398e41f9c5cab",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update UI tests to no longer have threshold and fixup meeting UI tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "34f06f9d7f56bec7c6d395f834485571ba206c05",
+            "package": "@internal/react-composites"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Ensure call controls on Meeting Lobby Page match those on when the call has been joined",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2ee5d407a286ffe88b24a257cdc80d545e8e2584",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Optimize call composite control bar on mobile",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a6f2f7155b595089fd60015bae874d602a9775d7",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "added screenSharing message string",
+            "author": "alcail@microsoft.com",
+            "commit": "c1b9db392006ac124d185eccdb64019fb60daa23",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Api changes according to reviews from ARB",
+            "author": "jinan@microsoft.com",
+            "commit": "8908e99a94cbd5e22ee6afcdb7f9caafc5c4c25b",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Rename an internal enum value",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "39addec10efbe531faeec36f8620bb9e3c910459",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix lobby screen camera and mute buttons",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "fb3754a13b4236d7a4b5f6972ba37af2092c9db9",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "exposing styles prop through chat composite to customize message thread",
+            "author": "alkwa@microsoft.com",
+            "commit": "c7dccf8002e93f5b69acde7278ea9d7b947a851f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove setPage API in CallAdapter and MeetingAdapter",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2f0f94a1cfb24db7413916287f776b475a4659c0",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add tsdoc to chat adapter",
+            "author": "jinan@microsoft.com",
+            "commit": "90c08b330e97ba41d98c2804a02c558d0c41087f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Rename `Error.inner` to `Error.innerError`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "adab866a9c328d8bd01af921334967555099e77f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add events for diagnostic events to CallAdapter",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "7d4fcead80215fb7faecb7573829189f59964b0f",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add devices button in mobile view of the call and meeting composites",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "91a5d5c94984f2119617909f5dddf218e3887927",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Swap the position of the microphone and camera buttons on the local preview to match equivalent recent change to the control bar",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0a763b5211815a58c83e06085964ebf22a59690e",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update to using new ChatMessage types",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "963d3980a0b05a656409e5cd06b948222cc7e9ee",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update options button icon in call controls to be a settings gear",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6ccfecfe6e42cfb5a951f3378c2d47195f067ce1",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add left call page",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3dc7e7d6ddb24bbcd4df5b7a9559991fa47161f5",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add tsdoc for calling adapter method",
+            "author": "jinan@microsoft.com",
+            "commit": "e538ca4de183db9e59f3a19d5ea1bd75b5fb731e",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Internal refactor of the ComplianceBanner",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "57bfd0382b5041c01c7fab45dd26a2fad89b06e7",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add AccessDenied and RemovedFromCall pages to the Call Composite",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "c7230f97bf1770f07ab32294bd21a3224e12c116",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update message type",
+            "author": "jinan@microsoft.com",
+            "commit": "b563d672084416e4555fca408d1dce33978f54e1",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove screenshare button by default on Call Composite and Meeting Composite when in mobile view",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "4546b23b578450325dd7223a36678bd414fac145",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "remove toggleCamera api in adapter",
+            "author": "jinan@microsoft.com",
+            "commit": "37d2494490854487e3e8c2ee0785ba7885c25fc3",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Theme palette and effects acquired from theme context for SidePane.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5cdacae89e418d6c9efe773aab114d9caaf6dde8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add min width to the chat bubble",
+            "author": "jinan@microsoft.com",
+            "commit": "656ad7af53ff7b2051040d0a4a224f66a6549278",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update call controls to match mobile designs",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6e9ff00295b972174ad3b33aff9132f7813f7958",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix weird height of single-line bubble",
+            "author": "jinan@microsoft.com",
+            "commit": "daf5739575d1d8247885868ff9f29da7325b9362",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Support mobileView in call composite configuration page ",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f99cc6ab294d0d371d512ca432fd86d70fb14c5a",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "bump calling sdk to 1.2.3-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5b6f038700dc756a80946aac2aefc0f580cd82e7",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "updating calling to use 1.2.2-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "dbca58a3e5bf2d7ec873f81078b093ce87bd6cde",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Use objects for call history in state",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "da6d448333e8dd1fbb9f2eb08a3ecd2b3e482bde",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add Lobby as a page in adapter state",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "d1d0f3183ea1ee986dde5c78f8780f930e453262",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix huge media gallery in meetings when a participant is screen sharing",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "c69114862488117d20a8311edd2b29877e7deea0",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add call details to Call Composite and Meeting Composite configuration pages",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5abb84dad1060c30c71c5bb6d763ffd75a9747d5",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Disable participants and screenshare buttons on lobby screen",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0123158b83a25c8b7b42e1e5a8f2c865eaecc812",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Delete a duplicate field definition",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "0613885372e65aa74b2cdc42f69c4e0e213b2b81",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "HorizontalGallery right and left button icons exposed.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "80b0ca85fc12fe7f866055686a86c7afb9e3695c",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Replace CommunicationUserKind with CommunicationUserIdentifier in constructor",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "00728707d25910c9fb7b030aca112828541492ac",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Start triggering 'diagnosticChanged' event",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "64343fe0f950ab708511583c176624438834ad77",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update lobby page to match the call page",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "c6c93d42f8254837cf0002f1b4ab63a9b17ec85a",
+            "package": "@internal/react-composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 19:19:18 GMT",
       "tag": "@internal/react-composites_v1.0.0-beta.6",
       "version": "1.0.0-beta.6",

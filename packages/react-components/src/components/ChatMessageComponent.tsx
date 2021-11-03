@@ -30,7 +30,7 @@ import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import { ChatMessage } from '../types';
-import { attachLongTouchPressEvent } from './utils/longPress';
+import { useLongPress, LongPressDetectEvents } from 'use-long-press';
 
 type ChatMessageProps = {
   message: ChatMessage;
@@ -109,14 +109,23 @@ enum ActionMenuState {
 export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
-  const messageRef = useRef<HTMLElement | null>(null);
 
   const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
+  const messageRef = useRef<HTMLElement | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
   const actionMenuEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
   const [actionMenuOpen, setActionMenuOpen] = useState(ActionMenuState.Closed);
   const [isTouchStartActive, setIsTouchStartActive] = useState(false);
+
+  const longPressProps = useLongPress(() => setActionMenuOpen(ActionMenuState.OpenByLongTouchPress), {
+    onStart: () => setIsTouchStartActive(true),
+    onFinish: () => setIsTouchStartActive(false),
+    onCancel: () => setIsTouchStartActive(false),
+    captureEvent: true,
+    cancelOnMovement: true,
+    detect: LongPressDetectEvents.TOUCH
+  });
 
   const menuClass = mergeStyles(chatActionsCSS, {
     'ul&': { boxShadow: theme.effects.elevation4, backgroundColor: theme.palette.white }
@@ -175,8 +184,9 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
     );
   }
   const messageContentItem = GenerateMessageContent(message, strings.liveAuthorIntro);
+
   const chatMessage = (
-    <Ref innerRef={messageRef}>
+    <div ref={messageRef} {...longPressProps}>
       <Chat.Message
         className={mergeStyles(messageContainerStyle as IStyle)}
         styles={messageContainerStyle}
@@ -198,17 +208,8 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         positionActionMenu={false}
         actionMenu={actionMenuEnabled ? actionMenu : undefined}
       />
-    </Ref>
+    </div>
   );
-
-  if (actionMenuEnabled && messageRef.current) {
-    messageRef.current.addEventListener('touchstart', () => setIsTouchStartActive(true));
-    messageRef.current.addEventListener('touchend', () => setIsTouchStartActive(true));
-
-    attachLongTouchPressEvent(messageRef.current, () => {
-      setActionMenuOpen(ActionMenuState.OpenByLongTouchPress);
-    });
-  }
 
   return chatMessage;
 };

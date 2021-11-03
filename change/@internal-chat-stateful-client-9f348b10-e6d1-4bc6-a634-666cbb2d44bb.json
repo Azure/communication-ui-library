@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Hot fix for quick remove participant",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
