@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { VideoGalleryStream, useTheme, VideoStreamOptions } from '@internal/react-components';
-import { moreDetailsStyle, titleStyle } from '../styles/LobbyTile.styles';
+import { moreDetailsStyle, overlayContainerStyle, titleStyle } from '../styles/LobbyTile.styles';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
 
 /**
@@ -62,9 +62,4 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
       }
     />
   );
-};
-
-const overlayContainerStyle: IStyle = {
-  // Ensure some space around the text on a narrow viewport.
-  margin: '1rem'
 };
