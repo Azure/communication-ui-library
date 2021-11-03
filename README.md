@@ -16,6 +16,8 @@ We have interactive storybook pages in our storybook 📖 to try out features an
 
 If you're wondering where to get started, here are a few scenarios to help you get going:
 
+* "What is Azure Communication Services?"
+  * Take a look at our conceptual documentation on [Azure Communication Services](https://docs.microsoft.com/azure/communication-services/overview), [Client-Server Architecture](https://docs.microsoft.com/azure/communication-services/concepts/client-and-server-architecture), [Authentication](https://docs.microsoft.com/azure/communication-services/concepts/authentication), [Calling](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/about-call-types) and [Chat](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts?branch=pr-en-us-152137).
 * "I want to see what this library can do!"
   * Check out our [Storybook](https://azure.github.io/communication-ui-library) and [Sample Apps](#samples)
 * "I want to write my own communication application"
