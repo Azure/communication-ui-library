@@ -72,10 +72,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     ): JSX.Element => {
       if (type === 'screenshare') {
         return <RemoteScreenShare {...videoGalleryProps} screenShareParticipant={participant} />;
-      } else if (type === 'localParticipant') {
-        return <LocalVideoTile {...videoGalleryProps} participant={participant} />;
       } else if (type === 'localScreenshare') {
         return <LocalScreenShare localParticipant={participant} />;
+      } else if (type === 'localParticipant') {
+        return <LocalVideoTile {...videoGalleryProps} participant={participant} />;
       }
 
       return (

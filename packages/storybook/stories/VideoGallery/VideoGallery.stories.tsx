@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
+import {
+  VideoGallery as VideoGalleryComponent,
+  RemoteScreenShare,
+  RemoteVideoTile,
+  LocalScreenShare,
+  LocalVideoTile,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant
+} from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -76,8 +84,24 @@ const VideoGalleryStory = (args): JSX.Element => {
       };
     });
 
+  const onRenderTile = (
+    participant: VideoGalleryLocalParticipant | VideoGalleryRemoteParticipant,
+    type: 'participant' | 'screenshare' | 'localParticipant' | 'localScreenshare'
+  ): JSX.Element => {
+    if (type === 'screenshare') {
+      return <RemoteScreenShare screenShareParticipant={participant} />;
+    } else if (type === 'localScreenshare') {
+      return <LocalScreenShare localParticipant={participant} />;
+    } else if (type === 'localParticipant') {
+      return <LocalVideoTile participant={participant} />;
+    }
+
+    return <RemoteVideoTile participant={participant} showMuteIndicator={true} />;
+  };
+
   return (
     <VideoGalleryComponent
+      onRenderTile={onRenderTile}
       layout={args.layout}
       localParticipant={MockLocalParticipant}
       remoteParticipants={remoteParticipants}
