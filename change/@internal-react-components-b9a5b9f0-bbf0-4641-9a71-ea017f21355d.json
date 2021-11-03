@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix spelling - sendboxTextfield to sendboxTextField",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
