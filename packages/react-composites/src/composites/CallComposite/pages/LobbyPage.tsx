@@ -6,7 +6,6 @@ import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
-import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyTile } from '../components/LobbyTile';
 import { getCallStatus, getIsPreviewCameraOn } from '../selectors/baseSelectors';
@@ -35,7 +34,6 @@ export interface LobbyPageProps {
  * @private
  */
 export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
-  const devicePermissions = useSelector(devicePermissionSelector);
   const errorBarProps = usePropsFor(ErrorBar);
   const lobbyProps = useSelector(lobbySelector);
   const lobbyTileHandlers = useHandlers(LobbyTile);
@@ -71,10 +69,6 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   return (
     <CallArrangement
       complianceBannerProps={{}}
-      permissionBannerProps={{
-        microphonePermissionGranted: devicePermissions.audio,
-        cameraPermissionGranted: devicePermissions.video
-      }}
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
       callControlProps={
         callControlOptions !== false && {
