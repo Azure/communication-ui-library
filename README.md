@@ -46,5 +46,5 @@ We look forward to building an amazing open source library with you!
 ## Further Reading
 
 * [Repo Documentation](./docs/README.md)
-* [Conceptual Documentation](https://docs.microsoft.com/azure/communication-services/concepts/ui-framework/ui-sdk-overview)
-* [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstart-ui-components--page)
+* [Conceptual Documentation](https://azure.github.io/communication-ui-library/?path=/story/overview--page)
+* [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstarts-composites--page)
