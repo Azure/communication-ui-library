@@ -1,8 +1,21 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0-beta.7)
+
+Wed, 27 Oct 2021 19:40:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.0.0-beta.6..@internal/chat-stateful-client_v1.0.0-beta.7)
+
+### Changes
+
+- Add missing comments of chat stateful client ([PR #841](https://github.com/azure/communication-ui-library/pull/841) by jinan@microsoft.com)
+- Add release tags to all public API ([PR #846](https://github.com/azure/communication-ui-library/pull/846) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Replace CommunicationUserKind with CommunicationUserIdentifier in constructor ([PR #884](https://github.com/azure/communication-ui-library/pull/884) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Rename `Error.inner` to `Error.innerError` ([PR #882](https://github.com/azure/communication-ui-library/pull/882) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Hot fix for quick remove participant ([PR #845](https://github.com/azure/communication-ui-library/pull/845) by jinan@microsoft.com)
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0-beta.6)
 

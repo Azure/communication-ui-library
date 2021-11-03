@@ -2,6 +2,89 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "updating calling to use 1.2.2-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "dbca58a3e5bf2d7ec873f81078b093ce87bd6cde",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Remove selector instance from export Add types for selectors",
+            "author": "jinan@microsoft.com",
+            "commit": "a177869815ae6351e3a8834c8fed7d0e39073b35",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add function `smartDominantSpeakerParticipants` for calculating smart dominant speaker tiles",
+            "author": "anjulgarg@live.com",
+            "commit": "7a635376e5b97413b2be0bf7137abbabf9497db1",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Rename `ActiveError` to `ActiveErrorMessage`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8d0dfc3d925ab7317739bdddbe86c8216ac73a14",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Remove dominant speaker processing in videoGallerySelector.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "f531b581d3ba70190c46cff21263998c651f6a70",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Disable old unstable implementation of dominant speaker logic",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "7c21a5bec3c6ea80e537f7b5b2e5295ce16e638f",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Changed dominantSpeakers type format of videoGallerySelector.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "bd30fc16b3ce5cde00ef9b80db5f1c3336bab283",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "bump calling sdk to 1.2.3-beta.1",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5b6f038700dc756a80946aac2aefc0f580cd82e7",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix camera and mic selectors to interact with the local preview mic/camera settings when a call has not yet been joined",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "fb3754a13b4236d7a4b5f6972ba37af2092c9db9",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Fix browser camera indicator still showing in use after turning it off",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "aa001a001bba36180909fd653f7cb114a5477a0e",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "added isSpeaking dependency on mute state",
+            "author": "alcail@microsoft.com",
+            "commit": "0dff57815f44afe77fe3add68858c54b65db3cb7",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 19:19:18 GMT",
       "tag": "@internal/calling-component-bindings_v1.0.0-beta.6",
       "version": "1.0.0-beta.6",
