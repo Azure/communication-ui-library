@@ -152,8 +152,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
       onMouseLeave={() => {
         setIsMouseOverIcon(false);
       }}
-    >
-      {onRenderIcon(props, isMouseOverIcon)}
-    </IconButton>
+      onRenderIcon={() => onRenderIcon(props, isMouseOverIcon)}
+    />
   );
 };
