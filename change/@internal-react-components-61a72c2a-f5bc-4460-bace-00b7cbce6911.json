@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove tile rendering props from VideoGallery and replace with onRenderTile callback",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

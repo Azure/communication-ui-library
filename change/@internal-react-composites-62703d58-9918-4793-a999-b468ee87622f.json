@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "MediaGallery updated to use new VideoGallery api",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
