@@ -178,11 +178,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const localScreenShareStreamComponent = localParticipant?.isScreenSharingOn
     ? onRenderTile(localParticipant, 'localScreenshare')
-    : null;
+    : undefined;
 
   const remoteScreenShareComponent = screenShareParticipant
     ? onRenderTile(screenShareParticipant, 'screenshare')
-    : null;
+    : undefined;
 
   return (
     <div
