@@ -12,18 +12,6 @@ import {
   concatStyleSets
 } from '@fluentui/react';
 
-const videoBaseStyle = mergeStyles({
-  border: 0
-});
-
-/**
- * @private
- */
-export const gridStyle = mergeStyles(videoBaseStyle, {
-  width: '100%',
-  height: '100%'
-});
-
 /**
  * @private
  */

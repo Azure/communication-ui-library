@@ -13,7 +13,6 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './style
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
-  gridStyle,
   horizontalGalleryStyle,
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
@@ -147,20 +146,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     horizontalGalleryParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
   }
 
-  const localVideoTile = (
-    <Stack className={floatingLocalVideoTileStyle(theme)}>{onRenderTile(localParticipant, 'localParticipant')}</Stack>
-  );
+  const localVideoTile = onRenderTile(localParticipant, 'localParticipant');
+
+  const floatingLocalVideoTile = <Stack className={floatingLocalVideoTileStyle(theme)}>{localVideoTile}</Stack>;
 
   const gridTiles = gridParticipants.map((participant, i): JSX.Element => {
     return <Stack key={`grid-tile-${i}`}>{onRenderTile(participant, 'participant')}</Stack>;
   });
 
   if (!shouldFloatLocalVideo && localParticipant) {
-    gridTiles.push(
-      <Stack key="grid-tile-local" horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && localVideoTile}
-      </Stack>
-    );
+    gridTiles.push(<Stack key="grid-tile-local">{localVideoTile}</Stack>);
   }
   const horizontalGalleryTiles = horizontalGalleryParticipants.map((participant, i): JSX.Element => {
     if (i + gridParticipants.length >= maxVideoStreams) {
@@ -199,7 +194,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           styles={floatingLocalVideoModalStyle(theme, isNarrow)}
           layerProps={{ hostId: FLOATING_TILE_HOST_ID }}
         >
-          {localParticipant && localVideoTile}
+          {localParticipant && floatingLocalVideoTile}
         </Modal>
       )}
       <Stack styles={videoGalleryContainerStyle}>
