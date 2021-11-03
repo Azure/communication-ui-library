@@ -1240,11 +1240,23 @@ export type LocalizationProviderProps = {
 };
 
 // @public
+export const LocalScreenShare: React_2.MemoExoticComponent<(props: {
+    localParticipant: VideoGalleryLocalParticipant;
+}) => JSX.Element | null>;
+
+// @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
     view?: VideoStreamRendererViewState;
 }
+
+// @public
+export const LocalVideoTile: React_2.MemoExoticComponent<(props: {
+    participant?: VideoGalleryParticipant | undefined;
+    onCreateLocalStreamView?: ((options?: VideoStreamOptions | undefined) => Promise<void>) | undefined;
+    onRenderAvatar?: OnRenderAvatarCallback | undefined;
+}) => JSX.Element>;
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
@@ -1773,12 +1785,28 @@ export interface RemoteParticipantState {
 }
 
 // @public
+export const RemoteScreenShare: React_2.MemoExoticComponent<(props: {
+    screenShareParticipant?: VideoGalleryRemoteParticipant | undefined;
+    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void>) | undefined;
+}) => JSX.Element>;
+
+// @public
 export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
     mediaStreamType: MediaStreamType;
     view?: VideoStreamRendererViewState;
 }
+
+// @public
+export const RemoteVideoTile: React_2.MemoExoticComponent<(props: {
+    participant: VideoGalleryRemoteParticipant;
+    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void>) | undefined;
+    onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
+    onRenderAvatar?: OnRenderAvatarCallback | undefined;
+    showMuteIndicator?: boolean | undefined;
+    styles?: VideoTileStylesProps | undefined;
+}) => JSX.Element>;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -2025,18 +2053,8 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
-    localVideoViewOption?: VideoStreamOptions;
-    onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
-    onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-    onDisposeLocalStreamView?: () => void;
-    // (undocumented)
-    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    onRenderAvatar?: OnRenderAvatarCallback;
-    onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
-    onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onRenderTile: (props: VideoGalleryLocalParticipant | VideoGalleryRemoteParticipant, type: 'participant' | 'screenshare' | 'localParticipant' | 'localScreenshare') => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    remoteVideoViewOption?: VideoStreamOptions;
-    showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: BaseCustomStyles;
 }

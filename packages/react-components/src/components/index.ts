@@ -44,6 +44,10 @@ export type {
 
 export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings } from './VideoGallery';
+export { RemoteVideoTile } from './VideoGallery/RemoteVideoTile';
+export { LocalVideoTile } from './VideoGallery/LocalVideoTile';
+export { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
+export { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';

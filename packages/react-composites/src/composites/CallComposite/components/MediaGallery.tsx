@@ -1,8 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo, useState, useEffect } from 'react';
-import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import {
+  VideoGallery,
+  OnRenderAvatarCallback,
+  VideoGalleryLocalParticipant,
+  VideoGalleryRemoteParticipant,
+  RemoteVideoTile,
+  RemoteScreenShare,
+  LocalVideoTile,
+  LocalScreenShare
+} from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
@@ -16,15 +25,6 @@ const VideoGalleryStyles = {
     minWidth: '6rem'
   }
 };
-
-const localVideoViewOption = {
-  scalingMode: 'Crop',
-  isMirrored: true
-} as VideoStreamOptions;
-
-const remoteVideoViewOption = {
-  scalingMode: 'Crop'
-} as VideoStreamOptions;
 
 /**
  * @private
@@ -48,6 +48,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   // have the callHandlers handle this transition logic.
   const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
   const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
+
+  const onRenderAvatar = useCallback(
+    (userId, options): JSX.Element => (
+      <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
+        <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+      </Stack>
+    ),
+    [props.onFetchAvatarPersonaData]
+  );
+
   useEffect(() => {
     if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
       props.onStartLocalVideo();
@@ -55,22 +65,42 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setIsButtonStatusSynced(true);
   }, [isButtonStatusSynced, isPreviewCameraOn, props]);
 
+  const onRenderTile = useCallback(
+    (
+      participant: VideoGalleryLocalParticipant | VideoGalleryRemoteParticipant,
+      type: 'participant' | 'screenshare' | 'localParticipant' | 'localScreenshare'
+    ): JSX.Element => {
+      if (type === 'screenshare') {
+        return <RemoteScreenShare {...videoGalleryProps} screenShareParticipant={participant} />;
+      } else if (type === 'localParticipant') {
+        return <LocalVideoTile {...videoGalleryProps} participant={participant} />;
+      } else if (type === 'localScreenshare') {
+        return <LocalScreenShare localParticipant={participant} />;
+      }
+
+      return (
+        <RemoteVideoTile
+          {...videoGalleryProps}
+          participant={participant}
+          showMuteIndicator={true}
+          onRenderAvatar={onRenderAvatar}
+        />
+      );
+    },
+    [videoGalleryProps, onRenderAvatar]
+  );
+
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <VideoGallery
-        {...videoGalleryProps}
-        localVideoViewOption={localVideoViewOption}
-        remoteVideoViewOption={remoteVideoViewOption}
+        localParticipant={videoGalleryProps.localParticipant}
+        remoteParticipants={videoGalleryProps.remoteParticipants}
+        onRenderTile={onRenderTile}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
-        onRenderAvatar={(userId, options) => (
-          <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-          </Stack>
-        )}
       />
     );
-  }, [props.onFetchAvatarPersonaData, videoGalleryProps]);
+  }, [videoGalleryProps.localParticipant, videoGalleryProps.remoteParticipants, onRenderTile]);
 
   return VideoGalleryMemoized;
 };

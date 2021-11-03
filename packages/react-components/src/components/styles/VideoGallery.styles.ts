@@ -11,7 +11,6 @@ import {
   IStyle,
   concatStyleSets
 } from '@fluentui/react';
-import { VideoTileStylesProps } from '../VideoTile';
 
 const videoBaseStyle = mergeStyles({
   border: 0
@@ -79,14 +78,14 @@ export const floatingLocalVideoModalStyle = (
 /**
  * @private
  */
-export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
-  root: {
+export const floatingLocalVideoTileStyle = (theme: Theme): string =>
+  mergeStyles({
     position: 'absolute',
     zIndex: 1,
     height: '100%',
-    width: '100%'
-  }
-};
+    width: '100%',
+    boxShadow: theme.effects.elevation4
+  });
 
 /**
  * @private

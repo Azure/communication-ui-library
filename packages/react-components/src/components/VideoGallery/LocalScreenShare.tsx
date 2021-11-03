@@ -19,6 +19,8 @@ import {
  * A memoized version of local screen share component. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.
  * https://reactjs.org/docs/react-api.html#reactmemo
+ *
+ * @public
  */
 export const LocalScreenShare = React.memo((props: { localParticipant: VideoGalleryLocalParticipant }) => {
   const { localParticipant } = props;
