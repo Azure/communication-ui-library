@@ -42,6 +42,7 @@
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
+    "use-long-press": "~1.1.1",
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
