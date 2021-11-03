@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
-import { Stack, TextField, mergeStyles, IStyle, ITextField, concatStyleSets } from '@fluentui/react';
+import { Stack, TextField, mergeStyles, IStyle, ITextField, concatStyleSets, IconButton } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
   inputBoxStyle,
@@ -130,28 +130,30 @@ export type InputBoxButtonProps = {
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   className?: string;
   id?: string;
+  ariaLabel?: string;
 };
 
 /**
  * @private
  */
 export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
-  const { onRenderIcon, onClick, className, id } = props;
-  const [isMouseOverSendIcon, setIsMouseOverSendIcon] = useState(false);
+  const { onRenderIcon, onClick, ariaLabel, className, id } = props;
+  const [isMouseOverIcon, setIsMouseOverIcon] = useState(false);
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
   return (
-    <div
+    <IconButton
       className={mergedButtonStyle}
+      ariaLabel={ariaLabel}
       onClick={onClick}
       id={id}
       onMouseEnter={() => {
-        setIsMouseOverSendIcon(true);
+        setIsMouseOverIcon(true);
       }}
       onMouseLeave={() => {
-        setIsMouseOverSendIcon(false);
+        setIsMouseOverIcon(false);
       }}
     >
-      {onRenderIcon(props, isMouseOverSendIcon)}
-    </div>
+      {onRenderIcon(props, isMouseOverIcon)}
+    </IconButton>
   );
 };
