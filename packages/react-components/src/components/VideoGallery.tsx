@@ -28,7 +28,7 @@ const emptyStyles = {};
 const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
-const MAX_VIDEO_PARTICIPANTS_TILES = 4;
+const MAX_VIDEO_STREAMS = 4;
 // Set aside only 6 dominant speakers for remaining audio participants
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
@@ -72,6 +72,9 @@ export interface VideoGalleryProps {
     props: VideoGalleryLocalParticipant | VideoGalleryRemoteParticipant,
     type: 'participant' | 'screenshare' | 'localParticipant' | 'localScreenshare'
   ) => JSX.Element;
+  /** Maximum number of participants that can have their video stream on. The floating local video is not
+   * counted if layout property is 'floatingLocalVideo' */
+  maxVideoStreams?: number;
   /** Optional strings to override in component  */
   strings?: Partial<VideoGalleryStrings>;
 }
@@ -90,7 +93,15 @@ const DRAG_OPTIONS: IDragOptions = {
  * @public
  */
 export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
-  const { localParticipant, remoteParticipants = [], dominantSpeakers, styles, layout, onRenderTile } = props;
+  const {
+    localParticipant,
+    remoteParticipants = [],
+    dominantSpeakers,
+    styles,
+    layout,
+    maxVideoStreams = MAX_VIDEO_STREAMS,
+    onRenderTile
+  } = props;
 
   const ids = useIdentifiers();
   const theme = useTheme();
@@ -107,8 +118,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
     dominantSpeakers,
     lastVisibleParticipants: visibleVideoParticipants.current,
-    maxDominantSpeakers: MAX_VIDEO_PARTICIPANTS_TILES
-  }).slice(0, MAX_VIDEO_PARTICIPANTS_TILES);
+    maxDominantSpeakers: MAX_VIDEO_STREAMS
+  }).slice(0, maxVideoStreams);
 
   // This set will be used to filter out participants already in visibleVideoParticipants
   const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
@@ -159,6 +170,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
   }
   const horizontalGalleryTiles = horizontalGalleryParticipants.map((participant, i): JSX.Element => {
+    if (i + gridParticipants.length >= maxVideoStreams) {
+      participant.videoStream = undefined;
+    }
     return (
       <Stack
         key={`horizontal-gallery-tile-${i}`}
