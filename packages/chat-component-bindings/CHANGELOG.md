@@ -1,8 +1,23 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.7)
+
+Wed, 27 Oct 2021 19:40:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.0.0-beta.6..@internal/chat-component-bindings_v1.0.0-beta.7)
+
+### Changes
+
+- Rename `Error.inner` to `Error.innerError` ([PR #882](https://github.com/azure/communication-ui-library/pull/882) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Refactor message.attached logic ([PR #893](https://github.com/azure/communication-ui-library/pull/893) by jinan@microsoft.com)
+- Add release tags to all public API ([PR #846](https://github.com/azure/communication-ui-library/pull/846) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update to new ChatMessage types ([PR #830](https://github.com/azure/communication-ui-library/pull/830) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix html message type not rendering ([PR #946](https://github.com/azure/communication-ui-library/pull/946) by jinan@microsoft.com)
+- Remove selector instance from export Add types for selectors ([PR #962](https://github.com/azure/communication-ui-library/pull/962) by jinan@microsoft.com)
+- Rename `ActiveError` to `ActiveErrorMessage` ([PR #880](https://github.com/azure/communication-ui-library/pull/880) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.6)
 
