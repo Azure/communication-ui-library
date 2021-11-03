@@ -31,7 +31,7 @@ export const overlayBackgroundStyles: (palette: IPalette, isVideoReady: boolean)
     position: 'absolute',
     height: '100%',
     width: '100%',
-    background: isVideoReady ? '#000000' : palette.neutralLight,
+    background: isVideoReady ? 'black' : palette.neutralLight,
     opacity: 0.6,
     zIndex: OVERLAY_BACKGROUND_ZINDEX
   };

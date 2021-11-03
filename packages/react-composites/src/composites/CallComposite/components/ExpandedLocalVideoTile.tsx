@@ -42,8 +42,6 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
         props.onCreateLocalStreamView(localVideoViewOption).catch((err) => console.log('Can not render video', err));
     }
   }, [isVideoReady, videoStream, props, renderElement]);
-
-  console.log(overlayBackgroundStyles(palette, isVideoReady));
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
       <VideoTile
