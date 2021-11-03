@@ -8,12 +8,13 @@ import {
   ContextualMenu,
   DirectionalHint,
   IContextualMenuItem,
-  Target
+  Target,
+  Theme
 } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { LiveMessage } from 'react-aria-live';
 import Linkify from 'react-linkify';
 import { EditBox } from './EditBox';
@@ -97,12 +98,6 @@ const GenerateTextMessageContent = (message: ChatMessage, liveAuthorIntro: strin
   );
 };
 
-enum ActionMenuState {
-  Closed,
-  OpenByClick,
-  OpenByLongTouchPress
-}
-
 /**
  * @private
  */
@@ -111,56 +106,44 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const theme = useTheme();
 
   const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
-  const messageRef = useRef<HTMLElement | null>(null);
+  const messageRef = useRef<HTMLDivElement | null>(null);
+  const messageActionButtonRef = useRef<HTMLElement | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
+  // We do not show the chat message action button if the chat message is selected via touch
+  const [showChatMessageActionButton, setShowChatMessageActionButton] = useState(true);
+
+  // The chat message action flyout should target the Chat.Message action menu if clicked,
+  // or target the chat message if opened via long touch press.
+  const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState(messageActionButtonRef);
+
   const actionMenuEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
-  const [actionMenuOpen, setActionMenuOpen] = useState(ActionMenuState.Closed);
-  const [isTouchStartActive, setIsTouchStartActive] = useState(false);
+  const actionMenuProps = !showChatMessageActionButton
+    ? undefined
+    : chatMessageActionMenuProps({
+        menuButtonRef: messageActionButtonRef,
+        onActionButtonClick: () => {
+          setChatMessageActionFlyoutTarget(messageActionButtonRef);
+          setChatMessageActionFlyoutShowing(true);
+        },
+        theme
+      });
 
-  const longPressProps = useLongPress(() => setActionMenuOpen(ActionMenuState.OpenByLongTouchPress), {
-    onStart: () => setIsTouchStartActive(true),
-    onFinish: () => setIsTouchStartActive(false),
-    onCancel: () => setIsTouchStartActive(false),
-    captureEvent: true,
-    cancelOnMovement: true,
-    detect: LongPressDetectEvents.TOUCH
-  });
+  const [chatMessageActionFlyoutShowing, setChatMessageActionFlyoutShowing] = useState(false);
 
-  const menuClass = mergeStyles(chatActionsCSS, {
-    'ul&': { boxShadow: theme.effects.elevation4, backgroundColor: theme.palette.white }
-  });
-
-  const actionMenu: MenuProps = useMemo(
-    (): MenuProps => ({
-      iconOnly: true,
-      activeIndex: -1,
-      className: menuClass,
-      items: [
-        {
-          children: (
-            <MoreMenu
-              showActionButton={!isTouchStartActive && actionMenuOpen !== ActionMenuState.OpenByLongTouchPress}
-              showActionMenu={actionMenuOpen !== ActionMenuState.Closed}
-              onActionButtonClick={() => setActionMenuOpen(ActionMenuState.OpenByClick)}
-              onActionMenuDismiss={() => setActionMenuOpen(ActionMenuState.Closed)}
-              contextMenuTarget={actionMenuOpen === ActionMenuState.OpenByLongTouchPress ? messageRef : undefined}
-              onEditClick={() => {
-                setIsEditing(true);
-              }}
-              onRemoveClick={async () => {
-                onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
-              }}
-              strings={strings}
-            />
-          ),
-
-          key: 'menuButton',
-          indicator: false
-        }
-      ]
-    }),
-    [actionMenuOpen, isTouchStartActive, menuClass, message.messageId, onDeleteMessage, strings]
+  const longTouchPressProps = useLongPress(
+    () => {
+      setChatMessageActionFlyoutTarget(messageRef);
+      setChatMessageActionFlyoutShowing(true);
+    },
+    {
+      onStart: () => setShowChatMessageActionButton(false),
+      onCancel: () => setTimeout(() => setShowChatMessageActionButton(true), 500),
+      onFinish: () => setTimeout(() => setShowChatMessageActionButton(true), 500),
+      captureEvent: true,
+      cancelOnMovement: true,
+      detect: LongPressDetectEvents.TOUCH
+    }
   );
 
   if (message.messageType !== 'chat') {
@@ -186,46 +169,102 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const messageContentItem = GenerateMessageContent(message, strings.liveAuthorIntro);
 
   const chatMessage = (
-    <div ref={messageRef} {...longPressProps}>
-      <Chat.Message
-        className={mergeStyles(messageContainerStyle as IStyle)}
-        styles={messageContainerStyle}
-        content={messageContentItem}
-        author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
-        mine={message.mine}
-        timestamp={
-          <Text data-ui-id={ids.messageTimestamp}>
-            {message.createdOn
-              ? showDate
-                ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
-                : formatTimeForChatMessage(message.createdOn)
-              : undefined}
-          </Text>
-        }
-        details={
-          message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
-        }
-        positionActionMenu={false}
-        actionMenu={actionMenuEnabled ? actionMenu : undefined}
+    <>
+      <div ref={messageRef} {...longTouchPressProps}>
+        <Chat.Message
+          className={mergeStyles(messageContainerStyle as IStyle)}
+          styles={messageContainerStyle}
+          content={messageContentItem}
+          author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
+          mine={message.mine}
+          timestamp={
+            <Text data-ui-id={ids.messageTimestamp}>
+              {message.createdOn
+                ? showDate
+                  ? formatTimestampForChatMessage(message.createdOn, new Date(), strings)
+                  : formatTimeForChatMessage(message.createdOn)
+                : undefined}
+            </Text>
+          }
+          details={
+            message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
+          }
+          positionActionMenu={false}
+          actionMenu={actionMenuEnabled ? actionMenuProps : undefined}
+        />
+      </div>
+
+      <ChatMessageActionFlyout
+        hidden={!chatMessageActionFlyoutShowing}
+        target={chatMessageActionFlyoutTarget}
+        onDismiss={() => setChatMessageActionFlyoutShowing(false)}
+        onEditClick={() => {
+          setIsEditing(true);
+        }}
+        onRemoveClick={async () => {
+          onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
+        }}
+        strings={strings}
       />
-    </div>
+    </>
   );
 
   return chatMessage;
 };
 
-const MoreMenu = (props: {
+/**
+ * Props for the Chat.Message action menu.
+ * This is the 3 dots that appear when hovering over one of your own chat messages.
+ */
+const chatMessageActionMenuProps = (menuProps: {
+  menuButtonRef: React.MutableRefObject<HTMLElement | null>;
   onActionButtonClick: () => void;
-  onActionMenuDismiss: () => void;
+  theme: Theme;
+}): MenuProps => {
+  const menuClass = mergeStyles(chatActionsCSS, {
+    'ul&': { boxShadow: menuProps.theme.effects.elevation4, backgroundColor: menuProps.theme.palette.white }
+  });
+
+  const actionMenuProps: MenuProps = {
+    iconOnly: true,
+    activeIndex: -1,
+    className: menuClass,
+    items: [
+      {
+        children: (
+          <Ref innerRef={menuProps.menuButtonRef}>
+            <MoreIcon
+              className={iconWrapperStyle}
+              onClick={() => menuProps.onActionButtonClick()}
+              {...{
+                outline: true
+              }}
+            />
+          </Ref>
+        ),
+
+        key: 'menuButton',
+        indicator: false
+      }
+    ]
+  };
+
+  return actionMenuProps;
+};
+
+interface ChatMessageActionFlyoutProps {
+  target: Target;
+  hidden: boolean;
+  strings: MessageThreadStrings;
   onEditClick: () => void;
   onRemoveClick: () => void;
-  strings: MessageThreadStrings;
-  showActionButton: boolean;
-  showActionMenu: boolean;
-  contextMenuTarget?: Target;
-}): JSX.Element => {
-  const menuButtonRef = useRef<HTMLElement | null>(null);
+  onDismiss: () => void;
+}
 
+/**
+ * Chat message actions flyout that contains actions such as Edit Message, or Remove Message.
+ */
+const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
   const menuItems = useMemo(
     (): IContextualMenuItem[] => [
       {
@@ -248,28 +287,13 @@ const MoreMenu = (props: {
   );
 
   return (
-    <div>
-      {props.showActionButton && (
-        <Ref innerRef={menuButtonRef}>
-          <MoreIcon
-            className={iconWrapperStyle}
-            onClick={props.onActionButtonClick}
-            {...{
-              outline: true
-            }}
-          />
-        </Ref>
-      )}
-      {
-        <ContextualMenu
-          items={menuItems}
-          hidden={!props.showActionMenu}
-          target={props.contextMenuTarget ?? menuButtonRef}
-          onDismiss={props.onActionMenuDismiss}
-          directionalHint={DirectionalHint.topRightEdge}
-          className={chatMessageMenuStyle}
-        />
-      }
-    </div>
+    <ContextualMenu
+      items={menuItems}
+      hidden={props.hidden}
+      target={props.target}
+      onDismiss={props.onDismiss}
+      directionalHint={DirectionalHint.topRightEdge}
+      className={chatMessageMenuStyle}
+    />
   );
 };
