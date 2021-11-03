@@ -32,7 +32,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
 
     const createAdapter = async (): Promise<void> => {
       const newAdapter = await createAzureCommunicationChatAdapter({
-        endpointUrl: props.endpointUrl,
+        endpoint: props.endpointUrl,
         userId: props.userId,
         displayName: props.displayName,
         credential: new AzureCommunicationTokenCredential(props.token),
@@ -55,7 +55,12 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   return (
     <>
       {adapter ? (
-        <ChatComposite fluentTheme={props.fluentTheme} locale={props.locale} adapter={adapter} />
+        <ChatComposite
+          fluentTheme={props.fluentTheme}
+          locale={props.locale}
+          adapter={adapter}
+          options={{ participantPane: true }}
+        />
       ) : (
         <h3>Loading...</h3>
       )}

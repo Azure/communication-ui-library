@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",
     "accessDenied": "Auf die Chatdienste kann nicht zugegriffen werden. Überprüfen Sie die angegebenen Benutzeranmeldeinformationen.",
-    "userNotInThisThread": "Sie sind nicht mehr in diesem Chatthread vertreten.",
-    "sendMessageNotInThisThread": "Fehler beim Senden der Nachricht, weil Sie sich nicht mehr in diesem Chatthread befinden.",
+    "userNotInChatThread": "Sie sind nicht mehr in diesem Chatthread vertreten.",
+    "sendMessageNotInChatThread": "Fehler beim Senden der Nachricht, weil Sie sich nicht mehr in diesem Chatthread befinden.",
     "sendMessageGeneric": "Fehler beim Senden der Nachricht",
     "callingNetworkFailure": "Problematische Anrufverbindung – Sie scheinen offline zu sein",
     "startVideoGeneric": "Video konnte nicht gestartet werden",

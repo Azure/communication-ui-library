@@ -61,7 +61,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       if (error !== undefined) {
         if (sendMessageError !== undefined) {
           activeErrorMessages.push({
-            type: 'sendMessageNotInThisThread',
+            type: 'sendMessageNotInChatThread',
             // Set the latest timestamp of all the errors that translated to an active error.
             timestamp:
               sendMessageError.timestamp > (error.timestamp ?? 0) ? sendMessageError.timestamp : error.timestamp
@@ -106,7 +106,7 @@ const latestAccessDeniedError = (latestErrors: ChatErrors): ActiveErrorMessage |
 };
 
 const latestNotInThisThreadError = (latestErrors: ChatErrors): ActiveErrorMessage | undefined => {
-  return latestActiveErrorSatisfying(latestErrors, 'userNotInThisThread', (error: ChatError): boolean => {
+  return latestActiveErrorSatisfying(latestErrors, 'userNotInChatThread', (error: ChatError): boolean => {
     if (!error || !error.innerError) {
       return false;
     }

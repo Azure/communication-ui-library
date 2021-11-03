@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "你已脱机",
     "accessDenied": "无法访问聊天服务 - 请检查提供的用户凭据",
-    "userNotInThisThread": "你不再处于此聊天会话中",
-    "sendMessageNotInThisThread": "无法发送消息，因为你不再在此聊天会话中",
+    "userNotInChatThread": "你不再处于此聊天会话中",
+    "sendMessageNotInChatThread": "无法发送消息，因为你不再在此聊天会话中",
     "sendMessageGeneric": "未能发送消息",
     "callingNetworkFailure": "正在连接呼叫 - 你似乎处于脱机状态",
     "startVideoGeneric": "无法启动视频",

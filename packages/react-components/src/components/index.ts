@@ -43,7 +43,7 @@ export type {
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings } from './VideoGallery';
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
