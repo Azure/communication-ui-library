@@ -129,7 +129,6 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
           menuButtonRef: messageActionButtonRef,
           onActionButtonClick: () => {
             // Open chat action flyout, and set the context menu to target the chat message action button
-            console.log('bye there');
             setChatMessageActionFlyoutTarget(messageActionButtonRef);
           },
           theme
