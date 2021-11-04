@@ -36,10 +36,11 @@ export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStyle
 
 export { ParticipantList } from './ParticipantList';
 export type {
+  ParticipantListItemStyles,
+  ParticipantListParticipant,
   ParticipantListProps,
-  ParticipantMenuItemsCallback,
   ParticipantListStyles,
-  ParticipantListItemStyles
+  ParticipantMenuItemsCallback
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';

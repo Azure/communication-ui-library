@@ -49,13 +49,25 @@ export type ParticipantMenuItemsCallback = (
 ) => IContextualMenuItem[];
 
 /**
+ * Participants displayed in a {@link ParticipantList}.
+ *
+ * @public
+ */
+export interface ParticipantListParticipant extends CommunicationParticipant {
+  /**
+   * If true, local participant can remove this participant from the roster.
+   */
+  isRemovable: boolean;
+}
+
+/**
  * Props for {@link ParticipantList}.
  *
  * @public
  */
 export type ParticipantListProps = {
   /** Participants in user call or chat */
-  participants: CommunicationParticipant[];
+  participants: ParticipantListParticipant[];
   /** User ID of user */
   myUserId?: string;
   /**

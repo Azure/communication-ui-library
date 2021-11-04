@@ -15,6 +15,7 @@ import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import {
   ParticipantList,
+  ParticipantListParticipant,
   ParticipantListProps,
   ParticipantListStyles,
   ParticipantMenuItemsCallback
@@ -85,7 +86,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
    * Participants in user call or chat
    */
-  participants: CommunicationParticipant[];
+  participants: ParticipantListParticipant[];
   /**
    * User ID of user
    */

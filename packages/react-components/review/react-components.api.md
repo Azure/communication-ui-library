@@ -630,8 +630,13 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 }
 
 // @public
+export interface ParticipantListParticipant extends CommunicationParticipant {
+    isRemovable: boolean;
+}
+
+// @public
 export type ParticipantListProps = {
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     myUserId?: string;
     excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
@@ -677,7 +682,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
