@@ -98,6 +98,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
 
   const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
   const [isEditing, setIsEditing] = useState(false);
+  const [hideContextMenu, setHideContextMenu] = useState<boolean>(true);
 
   const longPressProps = useLongPress(() => console.log('Long press finished'), {
     captureEvent: true,
@@ -114,16 +115,21 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
       iconOnly: true,
       activeIndex: -1,
       className: menuClass,
+      onItemClick: () => {
+        setHideContextMenu(false);
+      },
       items: [
         {
           children: (
             <MoreMenu
+              hideContextMenu={hideContextMenu}
               onEditClick={() => {
                 setIsEditing(true);
               }}
               onRemoveClick={async () => {
                 onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
               }}
+              onDismiss={() => setHideContextMenu(true)}
               strings={strings}
             />
           ),
@@ -133,7 +139,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
         }
       ]
     }),
-    [menuClass, message.messageId, onDeleteMessage, strings]
+    [menuClass, message.messageId, onDeleteMessage, strings, hideContextMenu]
   );
 
   if (message.messageType !== 'chat') {
@@ -188,16 +194,19 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
 };
 
 const MoreMenu = ({
+  hideContextMenu,
   onEditClick,
   onRemoveClick,
+  onDismiss,
   strings
 }: {
+  hideContextMenu: boolean;
   onEditClick: () => void;
   onRemoveClick: () => void;
+  onDismiss: () => void;
   strings: MessageThreadStrings;
 }): JSX.Element => {
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const [menuHidden, setMenuHidden] = useState(true);
 
   const menuItems = useMemo(
     (): IContextualMenuItem[] => [
@@ -224,16 +233,15 @@ const MoreMenu = ({
     <div ref={menuRef}>
       <MoreIcon
         className={iconWrapperStyle}
-        onClick={() => setMenuHidden(false)}
         {...{
           outline: true
         }}
       />
       <ContextualMenu
         items={menuItems}
-        hidden={menuHidden}
+        hidden={hideContextMenu}
         target={menuRef}
-        onDismiss={() => setMenuHidden(true)}
+        onDismiss={() => onDismiss()}
         directionalHint={DirectionalHint.bottomLeftEdge}
         className={chatMessageMenuStyle}
       />

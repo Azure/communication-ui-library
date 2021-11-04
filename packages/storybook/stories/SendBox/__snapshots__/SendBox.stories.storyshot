@@ -62,37 +62,49 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
             <div
               className="css-4"
             >
-              <div
-                className="css-64 css-59"
+              <button
+                className="ms-Button ms-Button--icon css-64 css-59 root-19"
+                data-is-focusable={true}
                 id="sendIconWrapper"
                 onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyPress={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                type="button"
               >
-                <i
-                  aria-hidden={true}
-                  className="root-37 css-60 root-19"
-                  data-icon-name="SendBoxSend"
+                <span
+                  className="ms-Button-flexContainer flexContainer-20"
+                  data-automationid="splitbuttonprimary"
                 >
-                  <span
+                  <i
                     aria-hidden={true}
-                    className="root-span"
+                    className="root-37 css-60 root-27"
+                    data-icon-name="SendBoxSend"
                   >
-                    <svg
-                      className="svg"
-                      fill="currentColor"
-                      height={20}
-                      viewBox="0 0 20 20"
-                      width={20}
-                      xmlns="http://www.w3.org/2000/svg"
+                    <span
+                      aria-hidden={true}
+                      className="root-span"
                     >
-                      <path
-                        d="M2.72 2.05l15.36 7.57a.5.5 0 010 .9L2.72 18.07a.5.5 0 01-.7-.58l1.97-7.43-1.97-7.44a.5.5 0 01.7-.58zm.54 1.38l1.61 6.09.07-.02H12a.5.5 0 01.09 1H5a.5.5 0 01-.1 0l-1.63 6.2 13.45-6.63L3.26 3.43z"
-                      />
-                    </svg>
-                  </span>
-                </i>
-              </div>
+                      <svg
+                        className="svg"
+                        fill="currentColor"
+                        height={20}
+                        viewBox="0 0 20 20"
+                        width={20}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M2.72 2.05l15.36 7.57a.5.5 0 010 .9L2.72 18.07a.5.5 0 01-.7-.58l1.97-7.43-1.97-7.44a.5.5 0 01.7-.58zm.54 1.38l1.61 6.09.07-.02H12a.5.5 0 01.09 1H5a.5.5 0 01-.1 0l-1.63 6.2 13.45-6.63L3.26 3.43z"
+                        />
+                      </svg>
+                    </span>
+                  </i>
+                </span>
+              </button>
             </div>
           </div>
         </div>

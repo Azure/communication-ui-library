@@ -72,7 +72,9 @@
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
-    "noDisplayNameSub": "No name"
+    "noDisplayNameSub": "No name",
+    "editBoxCancelButton": "Cancel",
+    "editBoxSubmitButton": "Submit"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

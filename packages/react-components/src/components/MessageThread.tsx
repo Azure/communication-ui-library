@@ -179,6 +179,10 @@ export interface MessageThreadStrings {
   newMessagesIndicator: string;
   /** String for replacing display name when there is none*/
   noDisplayNameSub: string;
+  /** String for Cancel button in EditBox*/
+  editBoxCancelButton: string;
+  /** String for Submit in EditBox when there is no user input*/
+  editBoxSubmitButton: string;
 }
 
 /**
