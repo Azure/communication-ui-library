@@ -10,15 +10,15 @@ import {
   iconWrapperStyle,
   chatMessageEditedTagStyle,
   chatMessageDateStyle
-} from './styles/ChatMessageComponent.styles';
-import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
-import { useIdentifiers } from '../identifiers/IdentifierProvider';
-import { useTheme } from '../theming';
+} from '../styles/ChatMessageComponent.styles';
+import { formatTimeForChatMessage, formatTimestampForChatMessage } from '../utils/Datetime';
+import { useIdentifiers } from '../../identifiers/IdentifierProvider';
+import { useTheme } from '../../theming';
 import { useLongPress, LongPressDetectEvents } from 'use-long-press';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
-import { ChatMessage } from '../types/ChatMessage';
-import { MessageThreadStrings } from './MessageThread';
+import { ChatMessage } from '../../types/ChatMessage';
+import { MessageThreadStrings } from '../MessageThread';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;

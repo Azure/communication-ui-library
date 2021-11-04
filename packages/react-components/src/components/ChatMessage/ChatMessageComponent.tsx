@@ -5,8 +5,8 @@ import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
-import { MessageThreadStrings } from './MessageThread';
-import { ChatMessage } from '../types';
+import { MessageThreadStrings } from '../MessageThread';
+import { ChatMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 
 type ChatMessageComponentProps = {
@@ -37,7 +37,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   if (props.message.messageType !== 'chat') {
     return <></>;
   } else if (isEditing) {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     return (
       <ChatMessageComponentAsEditBox
         initialValue={props.message.content ?? ''}
