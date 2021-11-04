@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from './MessageThread';
 import { ChatMessage } from '../types';
-import { ChatMessageComponentAsMessage } from './ChatMessageComponentAsMessage';
+import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 
 type ChatMessageComponentProps = {
   message: ChatMessage;
@@ -50,7 +50,11 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         ? await props.onDeleteMessage(props.message.messageId)
         : undefined;
     return (
-      <ChatMessageComponentAsMessage {...props} onRemoveClick={onRemoveClick} onEditClick={() => setIsEditing(true)} />
+      <ChatMessageComponentAsMessageBubble
+        {...props}
+        onRemoveClick={onRemoveClick}
+        onEditClick={() => setIsEditing(true)}
+      />
     );
   }
 };

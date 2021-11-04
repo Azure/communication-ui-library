@@ -20,7 +20,7 @@ import { GenerateMessageContent } from './utils/chatMessageContentGenerators';
 import { ChatMessage } from '../types/ChatMessage';
 import { MessageThreadStrings } from './MessageThread';
 
-type ChatMessageComponentAsMessageProps = {
+type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
@@ -31,7 +31,7 @@ type ChatMessageComponentAsMessageProps = {
 };
 
 /** @private */
-export const ChatMessageComponentAsMessage = (props: ChatMessageComponentAsMessageProps): JSX.Element => {
+export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
