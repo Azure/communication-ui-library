@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Prop `dominantSpeakers` added to VideoGallery to reorder remoteParticipants with new algorithm.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add local and remote screensharing views into the VideoGallery component.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

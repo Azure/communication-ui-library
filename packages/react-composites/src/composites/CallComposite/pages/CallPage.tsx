@@ -11,10 +11,10 @@ import { useSelector } from '../hooks/useSelector';
 import { MediaGallery } from '../components/MediaGallery';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
-import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
 import { CallArrangement } from '../components/CallArrangement';
 import { reduceCallControlsForMobile } from '../utils';
+import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
 import { DiagnosticQuality } from '@azure/communication-calling';
 import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
@@ -43,7 +43,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const mediaGalleryHandlers = useHandlers(MediaGallery);
   const complianceBannerProps = useSelector(complianceBannerSelector);
   const errorBarProps = usePropsFor(ErrorBar);
-  const devicePermissions = useSelector(devicePermissionSelector);
+  const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
 
   // Reduce the controls shown when mobile view is enabled.
@@ -54,11 +54,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   return (
     <CallArrangement
       complianceBannerProps={{ ...complianceBannerProps }}
-      permissionBannerProps={{
-        microphonePermissionGranted: devicePermissions.audio,
-        cameraPermissionGranted: devicePermissions.video
-      }}
       errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
+      mutedNotificationProps={mutedNotificationProps}
       callControlProps={
         callControlOptions !== false && {
           callInvitationURL: callInvitationURL,

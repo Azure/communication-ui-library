@@ -2,6 +2,65 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:40:46 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.7",
+      "version": "1.0.0-beta.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename `Error.inner` to `Error.innerError`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "adab866a9c328d8bd01af921334967555099e77f",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Refactor message.attached logic",
+            "author": "jinan@microsoft.com",
+            "commit": "31882842673d3613b38f87206f2887faddf62d54",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add release tags to all public API",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "124e02693fd0042365dd1f3d636ecc72eb5837ea",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update to new ChatMessage types",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "963d3980a0b05a656409e5cd06b948222cc7e9ee",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Fix html message type not rendering",
+            "author": "jinan@microsoft.com",
+            "commit": "a096aefc769115301e42a491034ec6ce98f17ecb",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Remove selector instance from export Add types for selectors",
+            "author": "jinan@microsoft.com",
+            "commit": "a177869815ae6351e3a8834c8fed7d0e39073b35",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Rename `ActiveError` to `ActiveErrorMessage`",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8d0dfc3d925ab7317739bdddbe86c8216ac73a14",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.6",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "fb99740af680a42e5d0b42a5475ad2efa9bd7fb8",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 19:19:18 GMT",
       "tag": "@internal/chat-component-bindings_v1.0.0-beta.6",
       "version": "1.0.0-beta.6",

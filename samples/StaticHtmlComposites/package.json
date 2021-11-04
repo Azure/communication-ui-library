@@ -7,7 +7,7 @@
     "build": "rushx clean && webpack --mode=production",
     "clean": "rimraf dist",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
-    "start:app": "webpack serve",
+    "start:app": "webpack serve --config webpack.config.dev.js",
     "test": "echo skip",
     "test:e2e": "playwright test tests",
     "update:snapshot": "playwright test tests --update-snapshots",
@@ -18,7 +18,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.0.0-beta.6",
+    "@azure/communication-react": "1.0.0-beta.7",
     "@azure/communication-common": "1.0.0",
     "react": "~16.14.0",
     "react-dom": "16.13.1",

@@ -66,8 +66,8 @@
   "errorBar": {
     "unableToReachChatService": "Sin conexión",
     "accessDenied": "No se puede acceder a los servicios de chat. Compruebe las credenciales de usuario proporcionadas.",
-    "userNotInThisThread": "Ya no está en este hilo de chat",
-    "sendMessageNotInThisThread": "No se pudo enviar el mensaje porque ya no está en este hilo de chat",
+    "userNotInChatThread": "Ya no está en este hilo de chat",
+    "sendMessageNotInChatThread": "No se pudo enviar el mensaje porque ya no está en este hilo de chat",
     "sendMessageGeneric": "Error al enviar el mensaje",
     "callingNetworkFailure": "Problema al conectar la llamada; parece que no hay conexión",
     "startVideoGeneric": "No se pudo iniciar el vídeo",

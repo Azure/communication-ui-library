@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "GridLayout updated to fill entire rectangle and to respond to resizing.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

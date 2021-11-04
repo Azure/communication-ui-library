@@ -35,14 +35,14 @@
 
     const threadId = testParams.threadId ?? (await service.createChatThread());
     testParams.threadId ?? (await service.addChatUser(threadId, user, displayName));
-    const endpointUrl = testParams.endpointUrl ?? (await service.getEndpointUrl());
+    const endpoint = testParams.endpointUrl ?? (await service.getEndpointUrl());
 
     // Chat composite sample code starts here
     const chatAdapter = await chatComposite.loadChatComposite(
       {
         displayName: displayName,
         threadId: threadId,
-        endpointUrl: endpointUrl,
+        endpoint: endpoint,
         userId: user,
         token: token
       },

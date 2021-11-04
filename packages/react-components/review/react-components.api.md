@@ -167,6 +167,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    videoGallery: VideoGalleryStrings;
 }
 
 // @public
@@ -274,6 +275,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     errorBarCallMicrophoneMutedBySystem: JSX.Element;
     errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
     errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAccessDenied: JSX.Element;
     errorBarCallCameraAlreadyInUse: JSX.Element;
     errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
@@ -304,6 +306,7 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callCameraAccessDenied: string;
     callCameraAlreadyInUse: string;
     callLocalVideoFreeze: string;
     callMacOsCameraAccessDenied: string;
@@ -316,14 +319,14 @@ export interface ErrorBarStrings {
     callNoSpeakerFound: string;
     muteGeneric: string;
     sendMessageGeneric: string;
-    sendMessageNotInThisThread: string;
+    sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
     unmuteGeneric: string;
-    userNotInThisThread: string;
+    userNotInChatThread: string;
 }
 
 // @public
@@ -381,6 +384,7 @@ export type InputBoxButtonProps = {
     onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     className?: string;
     id?: string;
+    ariaLabel?: string;
 };
 
 // @public
@@ -424,7 +428,7 @@ export type MessageProps = {
     strings: MessageThreadStrings;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
-    editDisabled?: boolean;
+    disableEditing?: boolean;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
 };
@@ -470,13 +474,15 @@ export type MessageThreadProps = {
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    editDisabled?: boolean;
+    disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
 
 // @public
 export interface MessageThreadStrings {
+    editBoxCancelButton: string;
     editBoxPlaceholderText: string;
+    editBoxSubmitButton: string;
     editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
@@ -630,7 +636,7 @@ export type ParticipantListProps = {
     excludeMe?: boolean;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
-    onParticipantRemove?: (userId: string) => void;
+    onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     styles?: ParticipantListStyles;
 };
@@ -667,7 +673,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     myUserId?: string;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onMuteAll?: () => void;
-    onParticipantRemove?: (userId: string) => void;
+    onRemoveParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
@@ -826,6 +832,7 @@ export interface VideoGalleryProps {
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
+    strings?: Partial<VideoGalleryStrings>;
     styles?: BaseCustomStyles;
 }
 
@@ -841,6 +848,12 @@ export interface VideoGalleryStream {
     isAvailable?: boolean;
     isMirrored?: boolean;
     renderElement?: HTMLElement;
+}
+
+// @public
+export interface VideoGalleryStrings {
+    screenIsBeingSharedMessage: string;
+    screenShareLoadingMessage: string;
 }
 
 // @public

@@ -12,7 +12,19 @@ See the [release checklist](../references/release-checklist.md) for tasks that m
 
 ### Release branches
 
-A release branch is created for each new version and beta release we do (alpha version are excluded from this). The release branch is a short lived branch used to ensure high release quality. The release branch is merged into main at the end of its lifecycle, however, any bug fixes submitted to this branch while active should also be cherry-picked into main to ensure minimal merge conflicts. The final release of the package is created off the release branch, the release branch can then be merged into main and closed.
+A release branch is created for each new beta and stable release (alpha version are excluded from this). The release branch is a short lived branch used to ensure high release quality.
+
+While the release branch is active, some changes might be merged into the branch (for bug fixes, features deemed necessary for the release). PRs into the release branch should follow this process when possible:
+
+- First land the change as a PR into `main`.
+- Then, cherry-pick the change as a separate PR onto the release branch.
+
+This process has the following benefits:
+
+- The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
+-  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off. This avoids non-trivial merge conflicts when the release branch is eventually merged back into `main`.
+
+When ready to release to NPM, a new package is created off the release branch and the release branch is then merged into `main` and deleted. A git tag is added to the released git-version.
 
 ## Creating a release through GitHub actions (Preferred)
 

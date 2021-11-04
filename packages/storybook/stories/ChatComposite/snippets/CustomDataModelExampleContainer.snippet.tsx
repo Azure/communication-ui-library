@@ -32,7 +32,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
       const createAdapter = async (): Promise<void> => {
         setAdapter(
           await createAzureCommunicationChatAdapter({
-            endpointUrl: props.endpointUrl,
+            endpoint: props.endpointUrl,
             userId: props.userId,
             // Data model injection: The display name for the local user comes from Contoso's data model.
             displayName: props.displayName,
@@ -86,6 +86,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           locale={props.locale}
+          options={{ participantPane: true }}
         />
       ) : (
         <h3>Loading...</h3>

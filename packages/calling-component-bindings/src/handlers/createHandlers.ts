@@ -42,7 +42,7 @@ export type CallingHandlers = {
   onHangUp: () => Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void>;
   onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void>;
-  onParticipantRemove: (userId: string) => Promise<void>;
+  onRemoveParticipant: (userId: string) => Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -284,7 +284,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       await disposeAllLocalPreviewViews(callClient);
     };
 
-    const onParticipantRemove = async (userId: string): Promise<void> => {
+    const onRemoveParticipant = async (userId: string): Promise<void> => {
       await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
     };
 
@@ -301,7 +301,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       onToggleScreenShare,
       onCreateLocalStreamView,
       onCreateRemoteStreamView,
-      onParticipantRemove,
+      onRemoveParticipant,
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView
