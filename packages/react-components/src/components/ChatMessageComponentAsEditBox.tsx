@@ -35,7 +35,7 @@ export type EditBoxProps = {
 /**
  * @private
  */
-export const EditBox = (props: EditBoxProps): JSX.Element => {
+export const ChatMessageComponentAsEditBox = (props: EditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, initialValue, strings } = props;
   const [textValue, setTextValue] = useState<string>(initialValue);
   const [textValueOverflow, setTextValueOverflow] = useState(false);
