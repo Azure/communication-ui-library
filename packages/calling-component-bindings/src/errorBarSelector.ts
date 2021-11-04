@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingBaseSelectorProps, getDiagnostics, getLatestErrors } from './baseSelectors';
+import { CallingBaseSelectorProps, getDeviceManager, getDiagnostics, getLatestErrors } from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
@@ -32,8 +32,8 @@ export type ErrorBarSelector = (
  * @public
  */
 export const errorBarSelector: ErrorBarSelector = createSelector(
-  [getLatestErrors, getDiagnostics],
-  (latestErrors: CallErrors, diagnostics): { activeErrorMessages: ActiveErrorMessage[] } => {
+  [getLatestErrors, getDiagnostics, getDeviceManager],
+  (latestErrors: CallErrors, diagnostics, deviceManager): { activeErrorMessages: ActiveErrorMessage[] } => {
     // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
     // There are several options for the ordering:
     //   - Sorted by when the errors happened (latest first / oldest first).
@@ -56,7 +56,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated) {
       activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
     }
-    if (diagnostics?.media.latest.microphoneNotFunctioning) {
+    if (deviceManager.deviceAccess?.audio === false || diagnostics?.media.latest.microphoneNotFunctioning) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
     }
     if (diagnostics?.media.latest.microphoneMuteUnexpectedly) {
@@ -65,9 +65,15 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.microphonePermissionDenied) {
       activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
     }
-    if (diagnostics?.media.latest.cameraFreeze) {
-      activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
+
+    if (deviceManager.deviceAccess?.video === false) {
+      activeErrorMessages.push({ type: 'callCameraAccessDenied' });
+    } else {
+      if (diagnostics?.media.latest.cameraFreeze) {
+        activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
+      }
     }
+
     if (diagnostics?.media.latest.cameraPermissionDenied) {
       activeErrorMessages.push({ type: 'callMacOsCameraAccessDenied' });
     }

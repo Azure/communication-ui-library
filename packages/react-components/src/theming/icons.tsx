@@ -90,6 +90,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   errorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
   errorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
   errorBarCallLocalVideoFreeze: <WifiWarning20Filled />,
+  errorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
   errorBarCallCameraAlreadyInUse: <VideoProhibited16Filled />,
   errorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />
 };
