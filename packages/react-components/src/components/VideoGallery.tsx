@@ -101,10 +101,11 @@ export interface VideoGalleryProps {
   showMuteIndicator?: boolean;
   /** Optional strings to override in component  */
   strings?: Partial<VideoGalleryStrings>;
-  /** Maximum number of participant remote video streams that is rendered. */
-  maxRemoteVideoStreams: number;
-  /** Maximum number of participants in the grid */
-  maxGridParticipants: number;
+  /**
+   * Maximum number of participant remote video streams that is rendered.
+   * @defaultValue 4
+   */
+  maxRemoteVideoStreams?: number;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
