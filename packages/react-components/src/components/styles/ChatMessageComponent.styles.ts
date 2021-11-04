@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, IStyle, FontWeights, Theme } from '@fluentui/react';
+import { mergeStyles, IStyle, FontWeights, Theme, IContextualMenuItemStyles } from '@fluentui/react';
+
+const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
 /**
  * @private
@@ -50,6 +52,32 @@ export const chatMessageMenuStyle = mergeStyles({
 });
 
 /**
+ * Styles that can be applied to ensure flyout items have the minimum touch target size.
+ *
  * @private
  */
-export const menuIconStyleSet = { root: { height: 28, width: 20 } };
+export const menuItemIncreasedSizeStyles: IContextualMenuItemStyles = {
+  root: {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    maxHeight: 'unset'
+  },
+  linkContent: {
+    height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
+    maxHeight: 'unset'
+  },
+  icon: {
+    maxHeight: 'unset'
+  }
+};
+
+/**
+ * @private
+ */
+export const menuIconStyleSet = {
+  root: {
+    height: 'calc(100% - 8px)', // Adjust for the pixel margin Fluent applies
+    width: '1.25rem'
+  }
+};
