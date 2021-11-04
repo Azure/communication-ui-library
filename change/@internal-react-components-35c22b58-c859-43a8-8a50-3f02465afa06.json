@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "removed InputBoxButtonProps from public API and updated onRenderIcon in SendBox component",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
