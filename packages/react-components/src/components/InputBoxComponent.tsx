@@ -121,12 +121,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 };
 
 /**
- * Props for dispalying a send button besides the text input area.
+ * Props for displaying a send button besides the text input area.
  *
- * @public
+ * @private
  */
 export type InputBoxButtonProps = {
-  onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+  onRenderIcon: (isMouseOverIcon: boolean) => JSX.Element;
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   className?: string;
   id?: string;
@@ -152,7 +152,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
       onMouseLeave={() => {
         setIsMouseOverIcon(false);
       }}
-      onRenderIcon={() => onRenderIcon(props, isMouseOverIcon)}
+      onRenderIcon={() => onRenderIcon(isMouseOverIcon)}
     />
   );
 };

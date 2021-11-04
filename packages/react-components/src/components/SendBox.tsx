@@ -8,7 +8,7 @@ import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
-import { InputBoxButton, InputBoxButtonProps, InputBoxComponent } from './InputBoxComponent';
+import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -82,9 +82,9 @@ export interface SendBoxProps {
   supportNewline?: boolean;
   /**
    * Optional callback to render send button icon to the right of the SendBox.
-   * @defaultValue SendIcon
+   * @defaultValue SendBoxSendHovered icon when mouse over icon and SendBoxSend icon otherwise
    */
-  onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+  onRenderIcon?: (isMouseOverIcon: boolean) => JSX.Element;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -178,11 +178,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   const onRenderSendIcon = useCallback(
-    (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) =>
+    (isMouseOverIcon: boolean) =>
       onRenderIcon ? (
-        onRenderIcon(props, isMouseOverSendIcon)
+        onRenderIcon(isMouseOverIcon)
       ) : (
-        <Icon iconName={isMouseOverSendIcon ? 'SendBoxSendHovered' : 'SendBoxSend'} className={mergedSendIconStyle} />
+        <Icon iconName={isMouseOverIcon ? 'SendBoxSendHovered' : 'SendBoxSend'} className={mergedSendIconStyle} />
       ),
     [mergedSendIconStyle, onRenderIcon]
   );
