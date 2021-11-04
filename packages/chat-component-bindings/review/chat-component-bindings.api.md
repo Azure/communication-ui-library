@@ -16,6 +16,7 @@ import { ErrorBar } from '@internal/react-components';
 import { Message } from '@internal/react-components';
 import { MessageThread } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
+import { ParticipantListParticipant } from '@internal/react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { SendBox } from '@internal/react-components';
@@ -51,7 +52,7 @@ export type ChatHandlers = {
 // @public
 export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBaseSelectorProps) => {
     myUserId: string;
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
 };
 
 // @public
