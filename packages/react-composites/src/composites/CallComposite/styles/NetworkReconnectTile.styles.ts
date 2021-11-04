@@ -7,6 +7,8 @@ import { FontWeights, IStyle } from '@fluentui/react';
  * @private
  */
 export const containerStyle: IStyle = {
+  // Ensure some space around the text on a narrow viewport.
+  margin: '1rem',
   gap: `1.5rem`
 };
 

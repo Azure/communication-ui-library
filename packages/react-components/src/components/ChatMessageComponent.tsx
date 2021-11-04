@@ -109,6 +109,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const messageRef = useRef<HTMLDivElement | null>(null);
   const messageActionButtonRef = useRef<HTMLElement | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [hideContextMenu, setHideContextMenu] = useState<boolean>(true);
 
   // Control when the chat message action button is allowed to show. It should show when hovered over, or when the
   // chat message is navigated to via keyboard, but not on touch events.
