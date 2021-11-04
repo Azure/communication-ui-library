@@ -6,5 +6,5 @@
   },
   "typeRoots": ["../node_modules/@types"],
   "exclude": ["dist", "node_modules"],
-  "include": ["./browser/**/*.test.ts", "browser/fixture.ts"]
+  "include": ["StaticHtmlComposites/**/*.test.ts", "StaticHtmlComposites/fixture.ts"]
 }
