@@ -7,6 +7,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ParticipantListParticipant } from '@internal/react-components';
 import { ChatClientState } from '@internal/chat-stateful-client';
+import { getIdentifierKind } from '@azure/communication-common';
 
 const convertChatParticipantsToCommunicationParticipants = (
   chatParticipants: ChatParticipant[]
@@ -15,8 +16,9 @@ const convertChatParticipantsToCommunicationParticipants = (
     return {
       userId: toFlatCommunicationIdentifier(participant.id),
       displayName: participant.displayName,
-      // xkcd: FIXME
-      isRemovable: true
+      // ACS users can not remove Teams users.
+      // Removing phone numbers or unknown types of users is undefined.
+      isRemovable: getIdentifierKind(participant.id).kind == 'communicationUser'
     };
   });
 };
