@@ -1,30 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  IStyle,
-  mergeStyles,
-  Link,
-  ContextualMenu,
-  DirectionalHint,
-  IContextualMenuItem,
-  Target,
-  Theme
-} from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle, MoreIcon, MenuProps, Ref } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser } from 'html-to-react';
-import React, { useMemo, useRef, useState } from 'react';
-import { LiveMessage } from 'react-aria-live';
-import Linkify from 'react-linkify';
+import React, { useRef, useState } from 'react';
 import { EditBox } from './EditBox';
 import { MessageThreadStrings } from './MessageThread';
 import {
-  chatMessageMenuStyle,
   chatMessageDateStyle,
   chatActionsCSS,
   iconWrapperStyle,
-  menuIconStyleSet,
   chatMessageEditedTagStyle
 } from './styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './utils/Datetime';
@@ -32,6 +18,8 @@ import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import { ChatMessage } from '../types';
 import { useLongPress, LongPressDetectEvents } from 'use-long-press';
+import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
+import { GenerateMessageContent } from './utils/chatMessageContentGenerators';
 
 type ChatMessageProps = {
   message: ChatMessage;
@@ -41,61 +29,6 @@ type ChatMessageProps = {
   onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
   strings: MessageThreadStrings;
-};
-
-// https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-const extractContent = (s: string): string => {
-  const span = document.createElement('span');
-  span.innerHTML = s;
-  return span.textContent || span.innerText;
-};
-
-const GenerateMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
-  switch (message.contentType) {
-    case 'text':
-      return GenerateTextMessageContent(message, liveAuthorIntro);
-    case 'html':
-      return GenerateRichTextHTMLMessageContent(message, liveAuthorIntro);
-    case 'richtext/html':
-      return GenerateRichTextHTMLMessageContent(message, liveAuthorIntro);
-    default:
-      console.warn('unknown message content type');
-      return <></>;
-  }
-};
-
-const GenerateRichTextHTMLMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
-  const htmlToReactParser = new Parser();
-  const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
-  return (
-    <div data-ui-status={message.status}>
-      <LiveMessage
-        message={`${message.mine ? '' : liveAuthor} ${extractContent(message.content || '')}`}
-        aria-live="polite"
-      />
-      {htmlToReactParser.parse(message.content)}
-    </div>
-  );
-};
-
-const GenerateTextMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
-  const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
-  return (
-    <div data-ui-status={message.status}>
-      <LiveMessage message={`${message.mine ? '' : liveAuthor} ${message.content}`} aria-live="polite" />
-      <Linkify
-        componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
-          return (
-            <Link href={decoratedHref} key={key}>
-              {decoratedText}
-            </Link>
-          );
-        }}
-      >
-        {message.content}
-      </Linkify>
-    </div>
-  );
 };
 
 /**
@@ -122,17 +55,15 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   >(undefined);
 
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
-  const actionMenuProps =
-    !chatActionsEnabled || !allowChatActionButtonShow
-      ? undefined
-      : chatMessageActionMenuProps({
-          menuButtonRef: messageActionButtonRef,
-          onActionButtonClick: () => {
-            // Open chat action flyout, and set the context menu to target the chat message action button
-            setChatMessageActionFlyoutTarget(messageActionButtonRef);
-          },
-          theme
-        });
+  const actionMenuProps = chatMessageActionMenuProps({
+    enabled: chatActionsEnabled && allowChatActionButtonShow,
+    menuButtonRef: messageActionButtonRef,
+    onActionButtonClick: () => {
+      // Open chat action flyout, and set the context menu to target the chat message action button
+      setChatMessageActionFlyoutTarget(messageActionButtonRef);
+    },
+    theme
+  });
 
   const longTouchPressProps = useLongPress(
     () => {
@@ -198,6 +129,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
             actionMenuProps
               ? {
                   ...actionMenuProps,
+                  // Force show the action button while the flyout is open and targetting it
                   showActionMenu: chatMessageActionFlyoutTarget === messageActionButtonRef ? true : undefined
                 }
               : undefined
@@ -233,10 +165,15 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
  * This is the 3 dots that appear when hovering over one of your own chat messages.
  */
 const chatMessageActionMenuProps = (menuProps: {
+  enabled: boolean;
   menuButtonRef: React.MutableRefObject<HTMLElement | null>;
   onActionButtonClick: () => void;
   theme: Theme;
-}): MenuProps => {
+}): MenuProps | undefined => {
+  if (!menuProps.enabled) {
+    return undefined;
+  }
+
   const menuClass = mergeStyles(chatActionsCSS, {
     'ul&': { boxShadow: menuProps.theme.effects.elevation4, backgroundColor: menuProps.theme.palette.white }
   });
@@ -266,50 +203,4 @@ const chatMessageActionMenuProps = (menuProps: {
   };
 
   return actionMenuProps;
-};
-
-interface ChatMessageActionFlyoutProps {
-  target?: Target;
-  hidden: boolean;
-  strings: MessageThreadStrings;
-  onEditClick: () => void;
-  onRemoveClick: () => void;
-  onDismiss: () => void;
-}
-
-/**
- * Chat message actions flyout that contains actions such as Edit Message, or Remove Message.
- */
-const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JSX.Element => {
-  const menuItems = useMemo(
-    (): IContextualMenuItem[] => [
-      {
-        key: 'Edit',
-        text: props.strings.editMessage,
-        iconProps: { iconName: 'MessageEdit', styles: menuIconStyleSet },
-        onClick: props.onEditClick
-      },
-      {
-        key: 'Remove',
-        text: props.strings.removeMessage,
-        iconProps: {
-          iconName: 'MessageRemove',
-          styles: menuIconStyleSet
-        },
-        onClick: props.onRemoveClick
-      }
-    ],
-    [props.onEditClick, props.onRemoveClick, props.strings.editMessage, props.strings.removeMessage]
-  );
-
-  return (
-    <ContextualMenu
-      items={menuItems}
-      hidden={props.hidden}
-      target={props.target}
-      onDismiss={props.onDismiss}
-      directionalHint={DirectionalHint.topRightEdge}
-      className={chatMessageMenuStyle}
-    />
-  );
 };
