@@ -131,6 +131,11 @@ export interface ErrorBarStrings {
   callLocalVideoFreeze: string;
 
   /**
+   * Message shown when camera can be enumerated but access is blocked by the system.
+   */
+  callCameraAccessDenied: string;
+
+  /**
    * Message shown when local video fails to start because camera is already in use by
    * another applciation.
    */
@@ -306,6 +311,7 @@ const messageBarType = (errorType: ErrorType): MessageBarType => {
     case 'callMicrophoneMutedBySystem':
     case 'callMacOsMicrophoneAccessDenied':
     case 'callLocalVideoFreeze':
+    case 'callCameraAccessDenied':
     case 'callCameraAlreadyInUse':
     case 'callMacOsCameraAccessDenied':
     case 'callMacOsScreenShareAccessDenied':
@@ -320,7 +326,7 @@ const messageBarIconProps = (errorType: ErrorType): IIconProps | undefined => {
   return iconName ? { iconName } : undefined;
 };
 
-const customIconName = {
+const customIconName: Partial<{ [key in ErrorType]: string }> = {
   callNetworkQualityLow: 'errorBarCallNetworkQualityLow',
   callNoSpeakerFound: 'errorBarCallNoSpeakerFound',
   callNoMicrophoneFound: 'errorBarCallNoMicrophoneFound',
@@ -328,6 +334,7 @@ const customIconName = {
   callMicrophoneMutedBySystem: 'errorBarCallMicrophoneMutedBySystem',
   callMacOsMicrophoneAccessDenied: 'errorBarCallMacOsMicrophoneAccessDenied',
   callLocalVideoFreeze: 'errorBarCallLocalVideoFreeze',
+  callCameraAccessDenied: 'errorBarCallCameraAccessDenied',
   callCameraAlreadyInUse: 'errorBarCallCameraAlreadyInUse',
   callMacOsCameraAccessDenied: 'errorBarCallMacOsCameraAccessDenied'
 };
