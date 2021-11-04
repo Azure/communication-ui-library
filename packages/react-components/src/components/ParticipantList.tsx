@@ -186,7 +186,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
 
-  const createParticipantMenuItems = (participant): IContextualMenuItem[] => {
+  const createParticipantMenuItems = (participant: ParticipantListParticipant): IContextualMenuItem[] => {
     let menuItems: IContextualMenuItem[] = [];
     if (participant.userId !== myUserId && onRemoveParticipant) {
       menuItems.push({
@@ -196,6 +196,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         itemProps: {
           styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
         },
+        disabled: !participant.isRemovable,
         'data-ui-id': ids.participantListRemoveParticipantButton
       });
     }

@@ -13,6 +13,7 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
+import { getIdentifierKind } from '@azure/communication-common';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
@@ -29,8 +30,9 @@ const convertRemoteParticipantsToParticipantListParticipants = (
       isMuted: participant.isMuted,
       isScreenSharing: isScreenSharing,
       isSpeaking: participant.isSpeaking,
-      // xkcd: FIXME
-      isRemovable: true
+      // ACS users can not remove Teams users.
+      // Removing phone numbers or unknown types of users is undefined.
+      isRemovable: getIdentifierKind(participant.identifier).kind == 'communicationUser'
     };
   });
 };
