@@ -60,9 +60,13 @@ function App(): JSX.Element {
 
   if (!!callAdapter && !!chatAdapter) {
     return (
-      <div style={{ height: '100vh', width: '100vw' }}>
-        {chatAdapter && <ChatComposite adapter={chatAdapter} locale={COMPOSITE_LOCALE_FR_FR} />}
-        {callAdapter && <CallComposite adapter={callAdapter} locale={COMPOSITE_LOCALE_FR_FR} />}
+      <div style={{ height: '100vh', display: 'flex' }}>
+        <div style={{ width: '50vw' }}>
+          <ChatComposite adapter={chatAdapter} locale={COMPOSITE_LOCALE_FR_FR} />
+        </div>
+        <div style={{ width: '50vw' }}>
+          <CallComposite adapter={callAdapter} locale={COMPOSITE_LOCALE_FR_FR} />
+        </div>
       </div>
     );
   }

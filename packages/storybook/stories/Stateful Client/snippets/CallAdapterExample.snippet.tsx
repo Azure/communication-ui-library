@@ -10,7 +10,7 @@ type CallAdapterExampleProps = {
   displayName: string;
 };
 
-export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element | undefined => {
+export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element => {
   const [callAdapter, setCallAdapter] = useState<CallAdapter>();
   useEffect(() => {
     if (props) {
@@ -34,10 +34,8 @@ export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element 
   }, [props, callAdapter]);
 
   return (
-    callAdapter && (
-      <div style={{ height: '100vh', width: '100vw' }}>
-        <CallComposite adapter={callAdapter} />
-      </div>
-    )
+    <div style={{ height: '100vh', width: '100vw' }}>
+      {callAdapter ? <CallComposite adapter={callAdapter} /> : <>Initializing</>}
+    </div>
   );
 };

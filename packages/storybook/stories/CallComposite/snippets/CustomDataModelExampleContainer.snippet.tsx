@@ -1,4 +1,5 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CallCompositeOptions } from '@azure/communication-react';
 import {
   AvatarPersonaData,
   CallAdapter,
@@ -19,6 +20,7 @@ export type ContainerProps = {
   callInvitationURL?: string;
   fluentTheme?: PartialTheme | Theme;
   locale?: CompositeLocale;
+  options?: CallCompositeOptions;
 };
 
 export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Element => {
@@ -93,6 +95,7 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           callInvitationUrl={props?.callInvitationURL}
           locale={props?.locale}
+          options={props?.options}
         />
       )}
     </div>
