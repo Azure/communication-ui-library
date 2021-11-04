@@ -21,7 +21,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-87"
+        className="css-85"
+        data-ui-id="video-gallery"
         id="UILibraryFloatingTileHost"
       >
         <span
@@ -53,35 +54,42 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 }
               >
                 <div
-                  className="ms-Stack css-86 css-10"
+                  className="ms-Stack css-16"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-17"
-                    data-ui-id="video-tile"
                   >
                     <div
-                      className="ms-Stack css-18"
+                      className="ms-Stack css-19"
                     >
                       <div
-                        className="ms-Stack css-20"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 root-20"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          aria-label=""
-                          className="ms-Persona ms-Persona--size48 root-21"
-                          style={
-                            Object {
-                              "height": 100,
-                              "minWidth": 100,
-                            }
-                          }
+                          className="ms-Persona-coin ms-Persona--size48 coin-27"
+                          role="presentation"
                         >
                           <div
-                            className="ms-Persona-coin ms-Persona--size48 coin-28"
+                            className="ms-Persona-imageArea imageArea-29"
                             role="presentation"
+                            style={
+                              Object {
+                                "height": 100,
+                                "width": 100,
+                              }
+                            }
                           >
                             <div
-                              className="ms-Persona-imageArea imageArea-30"
-                              role="presentation"
+                              aria-hidden="true"
+                              className="ms-Persona-initials initials-32"
                               style={
                                 Object {
                                   "height": 100,
@@ -89,70 +97,66 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                                 }
                               }
                             >
-                              <div
-                                aria-hidden="true"
-                                className="ms-Persona-initials initials-33"
-                                style={
-                                  Object {
-                                    "height": 100,
-                                    "width": 100,
-                                  }
-                                }
-                              >
-                                <span>
-                                  R
-                                </span>
-                              </div>
+                              <span>
+                                R
+                              </span>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div
+                    className="ms-Stack css-83 css-35"
+                  >
                     <div
-                      className="ms-Stack css-83 css-36"
+                      className="ms-StackItem css-36"
                     >
-                      <div
-                        className="ms-StackItem css-37"
+                      <span
+                        className="css-37"
                       >
-                        <span
-                          className="css-38"
-                        >
-                          Rick
-                        </span>
-                      </div>
+                        Rick
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-86 css-10"
+                  className="ms-Stack css-16"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-17"
-                    data-ui-id="video-tile"
                   >
                     <div
-                      className="ms-Stack css-18"
+                      className="ms-Stack css-19"
                     >
                       <div
-                        className="ms-Stack css-20"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 root-20"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          aria-label=""
-                          className="ms-Persona ms-Persona--size48 root-21"
-                          style={
-                            Object {
-                              "height": 100,
-                              "minWidth": 100,
-                            }
-                          }
+                          className="ms-Persona-coin ms-Persona--size48 coin-27"
+                          role="presentation"
                         >
                           <div
-                            className="ms-Persona-coin ms-Persona--size48 coin-28"
+                            className="ms-Persona-imageArea imageArea-29"
                             role="presentation"
+                            style={
+                              Object {
+                                "height": 100,
+                                "width": 100,
+                              }
+                            }
                           >
                             <div
-                              className="ms-Persona-imageArea imageArea-30"
-                              role="presentation"
+                              aria-hidden="true"
+                              className="ms-Persona-initials initials-38"
                               style={
                                 Object {
                                   "height": 100,
@@ -160,70 +164,66 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                                 }
                               }
                             >
-                              <div
-                                aria-hidden="true"
-                                className="ms-Persona-initials initials-39"
-                                style={
-                                  Object {
-                                    "height": 100,
-                                    "width": 100,
-                                  }
-                                }
-                              >
-                                <span>
-                                  D
-                                </span>
-                              </div>
+                              <span>
+                                D
+                              </span>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div
+                    className="ms-Stack css-83 css-35"
+                  >
                     <div
-                      className="ms-Stack css-83 css-36"
+                      className="ms-StackItem css-36"
                     >
-                      <div
-                        className="ms-StackItem css-37"
+                      <span
+                        className="css-37"
                       >
-                        <span
-                          className="css-38"
-                        >
-                          Daryl
-                        </span>
-                      </div>
+                        Daryl
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-86 css-10"
+                  className="ms-Stack css-16"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-17"
-                    data-ui-id="video-tile"
                   >
                     <div
-                      className="ms-Stack css-18"
+                      className="ms-Stack css-19"
                     >
                       <div
-                        className="ms-Stack css-20"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 root-20"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          aria-label=""
-                          className="ms-Persona ms-Persona--size48 root-21"
-                          style={
-                            Object {
-                              "height": 100,
-                              "minWidth": 100,
-                            }
-                          }
+                          className="ms-Persona-coin ms-Persona--size48 coin-27"
+                          role="presentation"
                         >
                           <div
-                            className="ms-Persona-coin ms-Persona--size48 coin-28"
+                            className="ms-Persona-imageArea imageArea-29"
                             role="presentation"
+                            style={
+                              Object {
+                                "height": 100,
+                                "width": 100,
+                              }
+                            }
                           >
                             <div
-                              className="ms-Persona-imageArea imageArea-30"
-                              role="presentation"
+                              aria-hidden="true"
+                              className="ms-Persona-initials initials-39"
                               style={
                                 Object {
                                   "height": 100,
@@ -231,70 +231,66 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                                 }
                               }
                             >
-                              <div
-                                aria-hidden="true"
-                                className="ms-Persona-initials initials-40"
-                                style={
-                                  Object {
-                                    "height": 100,
-                                    "width": 100,
-                                  }
-                                }
-                              >
-                                <span>
-                                  M
-                                </span>
-                              </div>
+                              <span>
+                                M
+                              </span>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div
+                    className="ms-Stack css-83 css-35"
+                  >
                     <div
-                      className="ms-Stack css-83 css-36"
+                      className="ms-StackItem css-36"
                     >
-                      <div
-                        className="ms-StackItem css-37"
+                      <span
+                        className="css-37"
                       >
-                        <span
-                          className="css-38"
-                        >
-                          Michonne
-                        </span>
-                      </div>
+                        Michonne
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-86 css-10"
+                  className="ms-Stack css-16"
+                  data-ui-id="video-tile"
                 >
                   <div
                     className="ms-Stack css-17"
-                    data-ui-id="video-tile"
                   >
                     <div
-                      className="ms-Stack css-18"
+                      className="ms-Stack css-19"
                     >
                       <div
-                        className="ms-Stack css-20"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 root-20"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          aria-label=""
-                          className="ms-Persona ms-Persona--size48 root-21"
-                          style={
-                            Object {
-                              "height": 100,
-                              "minWidth": 100,
-                            }
-                          }
+                          className="ms-Persona-coin ms-Persona--size48 coin-27"
+                          role="presentation"
                         >
                           <div
-                            className="ms-Persona-coin ms-Persona--size48 coin-28"
+                            className="ms-Persona-imageArea imageArea-29"
                             role="presentation"
+                            style={
+                              Object {
+                                "height": 100,
+                                "width": 100,
+                              }
+                            }
                           >
                             <div
-                              className="ms-Persona-imageArea imageArea-30"
-                              role="presentation"
+                              aria-hidden="true"
+                              className="ms-Persona-initials initials-40"
                               style={
                                 Object {
                                   "height": 100,
@@ -302,37 +298,26 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                                 }
                               }
                             >
-                              <div
-                                aria-hidden="true"
-                                className="ms-Persona-initials initials-41"
-                                style={
-                                  Object {
-                                    "height": 100,
-                                    "width": 100,
-                                  }
-                                }
-                              >
-                                <span>
-                                  D
-                                </span>
-                              </div>
+                              <span>
+                                D
+                              </span>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div
+                    className="ms-Stack css-83 css-35"
+                  >
                     <div
-                      className="ms-Stack css-83 css-36"
+                      className="ms-StackItem css-36"
                     >
-                      <div
-                        className="ms-StackItem css-37"
+                      <span
+                        className="css-37"
                       >
-                        <span
-                          className="css-38"
-                        >
-                          Dwight
-                        </span>
-                      </div>
+                        Dwight
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -340,14 +325,14 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
             </div>
           </div>
           <div
-            className="css-42"
+            className="css-41"
           >
             <div
-              className="ms-Stack css-44"
+              className="ms-Stack css-43"
             >
               <button
                 aria-disabled={true}
-                className="ms-Button ms-Button--default is-disabled root-46"
+                className="ms-Button ms-Button--default is-disabled root-45"
                 data-is-focusable={false}
                 disabled={true}
                 onClick={[Function]}
@@ -359,7 +344,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-47"
+                  className="ms-Button-flexContainer flexContainer-46"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
@@ -388,7 +373,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </span>
               </button>
               <button
-                className="ms-Button ms-Button--default root-54"
+                className="ms-Button ms-Button--default root-53"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -399,7 +384,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-47"
+                  className="ms-Button-flexContainer flexContainer-46"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
