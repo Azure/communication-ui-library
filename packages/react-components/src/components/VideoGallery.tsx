@@ -21,7 +21,6 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './style
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
-  gridStyle,
   horizontalGalleryStyle,
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
@@ -39,7 +38,7 @@ const emptyStyles = {};
 const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
-const MAX_VIDEO_PARTICIPANTS_TILES = 4;
+const DEFAULT_MAX_VIDEO_STREAMS = 4;
 // Set aside only 6 dominant speakers for remaining audio participants
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
@@ -103,6 +102,8 @@ export interface VideoGalleryProps {
   showMuteIndicator?: boolean;
   /** Optional strings to override in component  */
   strings?: Partial<VideoGalleryStrings>;
+  /** Maximum number of participant video streams that is rendered. Local video is not included in count if layout prop is 'floatingLocalVideo' */
+  maxVideoStreams: number;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -133,7 +134,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
-    showMuteIndicator
+    showMuteIndicator,
+    maxVideoStreams = DEFAULT_MAX_VIDEO_STREAMS
   } = props;
 
   const ids = useIdentifiers();
@@ -151,8 +153,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
     dominantSpeakers,
     lastVisibleParticipants: visibleVideoParticipants.current,
-    maxDominantSpeakers: MAX_VIDEO_PARTICIPANTS_TILES
-  }).slice(0, MAX_VIDEO_PARTICIPANTS_TILES);
+    maxDominantSpeakers: maxVideoStreams
+  }).slice(0, maxVideoStreams);
 
   // This set will be used to filter out participants already in visibleVideoParticipants
   const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
@@ -256,19 +258,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       });
 
   if (!shouldFloatLocalVideo && localParticipant) {
-    gridTiles.push(
-      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && localVideoTile}
-      </Stack>
-    );
+    gridTiles.push(localVideoTile);
   }
 
   const horizontalGalleryTiles = onRenderRemoteVideoTile
     ? horizontalGalleryParticipants.map((participant) => onRenderRemoteVideoTile(participant))
-    : horizontalGalleryParticipants.map((participant): JSX.Element => {
+    : horizontalGalleryParticipants.map((participant, i): JSX.Element => {
         return defaultOnRenderVideoTile(
           participant,
-          false,
+          i + gridParticipants.length < maxVideoStreams,
           isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
         );
       });
@@ -283,7 +281,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   return (
-    <div id={FLOATING_TILE_HOST_ID} ref={containerRef} className={videoGalleryOuterDivStyle}>
+    <div
+      id={FLOATING_TILE_HOST_ID}
+      data-ui-id={ids.videoGallery}
+      ref={containerRef}
+      className={videoGalleryOuterDivStyle}
+    >
       {shouldFloatLocalVideo && (
         <Modal
           isOpen={true}
