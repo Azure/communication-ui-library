@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 async function globalSetup() {
-  var file = new Server(path.resolve(process.cwd(), 'dist'));
+  var file = new Server(path.resolve(process.cwd(), process.env.SERVE_PATH));
   const server = http
     .createServer(function (req, res) {
       file.serve(req, res);

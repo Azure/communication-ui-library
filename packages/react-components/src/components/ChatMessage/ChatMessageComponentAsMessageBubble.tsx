@@ -46,6 +46,9 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     React.MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
 
+  // Track if the action menu was opened by touch - if so we increase the touch targets for the items
+  const actionFlyoutLastOpenedByTouch = useRef(false);
+
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
   const actionMenuProps = chatMessageActionMenuProps({
     enabled: chatActionsEnabled && allowChatActionButtonShow,
@@ -53,6 +56,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
     menuButtonRef: messageActionButtonRef,
     onActionButtonClick: () => {
+      actionFlyoutLastOpenedByTouch.current = false;
+
       // Open chat action flyout, and set the context menu to target the chat message action button
       setChatMessageActionFlyoutTarget(messageActionButtonRef);
     },
@@ -61,6 +66,8 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
 
   const longTouchPressProps = useLongPress(
     () => {
+      actionFlyoutLastOpenedByTouch.current = true;
+
       // Open chat action flyout, and set the context menu to target the chat message
       setChatMessageActionFlyoutTarget(messageRef);
     },
@@ -114,6 +121,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
         <ChatMessageActionFlyout
           hidden={!chatMessageActionFlyoutTarget}
           target={chatMessageActionFlyoutTarget}
+          increaseFlyoutItemSize={actionFlyoutLastOpenedByTouch.current}
           onDismiss={onActionFlyoutDismiss}
           onEditClick={onEditClick}
           onRemoveClick={onRemoveClick}
