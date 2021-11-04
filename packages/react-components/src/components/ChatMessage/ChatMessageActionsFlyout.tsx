@@ -4,15 +4,16 @@
 import { ContextualMenu, DirectionalHint, IContextualMenuItem, Target } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
-import { MessageThreadStrings } from './MessageThread';
-import { chatMessageMenuStyle, menuIconStyleSet } from './styles/ChatMessageComponent.styles';
+import { MessageThreadStrings } from '../MessageThread';
+import { chatMessageMenuStyle, menuIconStyleSet } from '../styles/ChatMessageComponent.styles';
 
-interface ChatMessageActionFlyoutProps {
+/** @private */
+export interface ChatMessageActionFlyoutProps {
   target?: Target;
   hidden: boolean;
   strings: MessageThreadStrings;
-  onEditClick: () => void;
-  onRemoveClick: () => void;
+  onEditClick?: () => void;
+  onRemoveClick?: () => void;
   onDismiss: () => void;
 }
 

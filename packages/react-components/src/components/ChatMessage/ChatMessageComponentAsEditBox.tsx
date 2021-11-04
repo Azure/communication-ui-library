@@ -22,10 +22,8 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
   return <Icon iconName={'EditBoxSubmit'} className={className} />;
 };
 
-/**
- * @private
- */
-export type EditBoxProps = {
+/** @private */
+export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: () => void;
   onSubmit: (text: string) => void;
   initialValue: string;
@@ -35,7 +33,7 @@ export type EditBoxProps = {
 /**
  * @private
  */
-export const ChatMessageComponentAsEditBox = (props: EditBoxProps): JSX.Element => {
+export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, initialValue, strings } = props;
   const [textValue, setTextValue] = useState<string>(initialValue);
   const [textValueOverflow, setTextValueOverflow] = useState(false);

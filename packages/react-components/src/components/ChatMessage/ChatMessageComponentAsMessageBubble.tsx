@@ -4,7 +4,7 @@
 import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 import { Chat, Text, MoreIcon, MenuProps, Ref, ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   chatActionsCSS,
   iconWrapperStyle,
@@ -16,7 +16,7 @@ import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
 import { useLongPress, LongPressDetectEvents } from 'use-long-press';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
-import { GenerateMessageContent } from './utils/chatMessageContentGenerators';
+import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../types/ChatMessage';
 import { MessageThreadStrings } from './MessageThread';
 
@@ -26,7 +26,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   showDate?: boolean;
   disableEditing?: boolean;
   onEditClick: () => void;
-  onRemoveClick?: () => Promise<void>;
+  onRemoveClick?: () => void;
   strings: MessageThreadStrings;
 };
 
@@ -79,7 +79,14 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
     }
   );
 
-  const messageContentItem = GenerateMessageContent(message, strings.liveAuthorIntro);
+  const onActionFlyoutDismiss = useCallback((): void => {
+    // When the flyout dismiss is called, since we control if the action flyout is visible
+    // or not we need to set the target to undefined here to actually hide the action flyout
+    setChatMessageActionFlyoutTarget(undefined);
+    // Now the flyout has been dismissed, ensure that the action menu button is allowed to be shown.
+    // This was previously set to false when the flyout is opened via a touch event.
+    setAllowChatActionButtonShow(true);
+  }, [setAllowChatActionButtonShow, setChatMessageActionFlyoutTarget]);
 
   const chatMessage = (
     <>
@@ -87,7 +94,7 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
         <Chat.Message
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
-          content={messageContentItem}
+          content={<ChatMessageContent message={message} liveAuthorIntro={strings.liveAuthorIntro} />}
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
           timestamp={
@@ -110,17 +117,10 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
       {chatActionsEnabled && (
         <ChatMessageActionFlyout
           hidden={!chatMessageActionFlyoutTarget}
-          target={chatMessageActionFlyoutTarget ?? undefined}
-          onDismiss={() => {
-            setChatMessageActionFlyoutTarget(undefined);
-            setAllowChatActionButtonShow(true);
-          }}
-          onEditClick={() => {
-            onEditClick();
-          }}
-          onRemoveClick={async () => {
-            onRemoveClick && (await onRemoveClick());
-          }}
+          target={chatMessageActionFlyoutTarget}
+          onDismiss={onActionFlyoutDismiss}
+          onEditClick={onEditClick}
+          onRemoveClick={onRemoveClick}
           strings={strings}
         />
       )}

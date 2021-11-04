@@ -5,19 +5,19 @@ import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
 import Linkify from 'react-linkify';
-import { ChatMessage } from '../../types/ChatMessage';
+import { ChatMessage } from '../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 
 /** @private */
-export const GenerateMessageContent = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
-  switch (message.contentType) {
+export const ChatMessageContent = (props: { message: ChatMessage; liveAuthorIntro: string }): JSX.Element => {
+  switch (props.message.contentType) {
     case 'text':
-      return MessageContentAsText(message, liveAuthorIntro);
+      return MessageContentAsText(props.message, props.liveAuthorIntro);
     case 'html':
-      return MessageContentAsRichTextHTML(message, liveAuthorIntro);
+      return MessageContentAsRichTextHTML(props.message, props.liveAuthorIntro);
     case 'richtext/html':
-      return MessageContentAsRichTextHTML(message, liveAuthorIntro);
+      return MessageContentAsRichTextHTML(props.message, props.liveAuthorIntro);
     default:
       console.warn('unknown message content type');
       return <></>;

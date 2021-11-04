@@ -3,7 +3,7 @@
 
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from './MessageThread';
 import { ChatMessage } from '../types';
@@ -25,6 +25,15 @@ type ChatMessageComponentProps = {
 export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
 
+  const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
+
+  const { onDeleteMessage, message } = props;
+  const onRemoveClick = useCallback(() => {
+    if (onDeleteMessage && message.messageId) {
+      onDeleteMessage(message.messageId);
+    }
+  }, [message.messageId, onDeleteMessage]);
+
   if (props.message.messageType !== 'chat') {
     return <></>;
   } else if (isEditing) {
@@ -45,16 +54,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
       />
     );
   } else {
-    const onRemoveClick = async (): Promise<void | undefined> =>
-      props.onDeleteMessage && props.message.messageId
-        ? await props.onDeleteMessage(props.message.messageId)
-        : undefined;
-    return (
-      <ChatMessageComponentAsMessageBubble
-        {...props}
-        onRemoveClick={onRemoveClick}
-        onEditClick={() => setIsEditing(true)}
-      />
-    );
+    return <ChatMessageComponentAsMessageBubble {...props} onRemoveClick={onRemoveClick} onEditClick={onEditClick} />;
   }
 };
