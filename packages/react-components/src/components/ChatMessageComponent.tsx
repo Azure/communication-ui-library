@@ -34,14 +34,38 @@ type ChatMessageProps = {
 /**
  * @private
  */
-export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
+export const EditableChatMessage = (props: ChatMessageProps): JSX.Element => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  if (props.message.messageType !== 'chat') {
+    return <></>;
+  } else if (isEditing) {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    return (
+      <EditBox
+        initialValue={props.message.content ?? ''}
+        strings={props.strings}
+        onSubmit={async (text) => {
+          props.onUpdateMessage &&
+            props.message.messageId &&
+            (await props.onUpdateMessage(props.message.messageId, text));
+          setIsEditing(false);
+        }}
+        onCancel={() => {
+          setIsEditing(false);
+        }}
+      />
+    );
+  } else {
+    return <ChatMessageComponent {...props} onEditClick={() => setIsEditing(true)} />;
+  }
+};
+
+const ChatMessageComponent = (props: ChatMessageProps & { onEditClick: () => void }): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
 
-  const { message, onUpdateMessage, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings } = props;
-  const messageRef = useRef<HTMLDivElement | null>(null);
-  const messageActionButtonRef = useRef<HTMLElement | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const { message, onDeleteMessage, disableEditing, showDate, messageContainerStyle, strings, onEditClick } = props;
 
   // Control when the chat message action button is allowed to show. It should show when hovered over, or when the
   // chat message is navigated to via keyboard, but not on touch events.
@@ -50,6 +74,8 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   // The chat message action flyout should target the Chat.Message action menu if clicked,
   // or target the chat message if opened via long touch press.
   // Undefined indicates the action menu should not be being shown.
+  const messageRef = useRef<HTMLDivElement | null>(null);
+  const messageActionButtonRef = useRef<HTMLElement | null>(null);
   const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState<
     React.MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
@@ -83,26 +109,6 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
     }
   );
 
-  if (message.messageType !== 'chat') {
-    return <></>;
-  }
-
-  if (isEditing) {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    return (
-      <EditBox
-        initialValue={message.content ?? ''}
-        strings={strings}
-        onSubmit={async (text) => {
-          onUpdateMessage && message.messageId && (await onUpdateMessage(message.messageId, text));
-          setIsEditing(false);
-        }}
-        onCancel={() => {
-          setIsEditing(false);
-        }}
-      />
-    );
-  }
   const messageContentItem = GenerateMessageContent(message, strings.liveAuthorIntro);
 
   const chatMessage = (
@@ -140,7 +146,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
             setAllowChatActionButtonShow(true);
           }}
           onEditClick={() => {
-            setIsEditing(true);
+            onEditClick();
           }}
           onRemoveClick={async () => {
             onDeleteMessage && message.messageId && (await onDeleteMessage(message.messageId));
