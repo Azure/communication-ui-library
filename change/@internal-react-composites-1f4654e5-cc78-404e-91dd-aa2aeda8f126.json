@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "exposing styles prop through chat composite to customize message thread",
-  "packageName": "@internal/react-composites",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

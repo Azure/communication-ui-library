@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updating calling to use 1.2.2-beta.1",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -133,7 +133,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} styles={sendBoxStyles} />
           </Stack.Item>
         </Stack>
-        {options?.participantPane !== false && (
+        {options?.participantPane === true && (
           <Stack className={participantListWrapper}>
             <Stack className={participantListStack}>
               <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>

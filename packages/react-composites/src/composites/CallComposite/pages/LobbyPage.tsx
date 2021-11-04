@@ -6,28 +6,21 @@ import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
-import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { LobbyTile } from '../components/LobbyTile';
+import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
 import { getCallStatus, getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { reduceCallControlsForMobile } from '../utils';
 import { CallControlOptions } from '../components/CallControls';
 import { MediaGallery } from '../components/MediaGallery';
-
-/**
- * @private
- */
-export interface LobbyPageStrings {
-  connectingToCall: string;
-  waitingToBeAdmitted: string;
-}
+import { CallCompositeStrings } from '../Strings';
+import { useLocale } from '../../localization';
+import { Icon } from '@fluentui/react';
 
 /**
  * @private
  */
 export interface LobbyPageProps {
-  strings: LobbyPageStrings;
   options?: CallCompositeOptions;
 }
 
@@ -35,14 +28,13 @@ export interface LobbyPageProps {
  * @private
  */
 export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
-  const devicePermissions = useSelector(devicePermissionSelector);
   const errorBarProps = usePropsFor(ErrorBar);
   const lobbyProps = useSelector(lobbySelector);
   const lobbyTileHandlers = useHandlers(LobbyTile);
+  const strings = useLocale().strings.call;
 
   const callState = useSelector(getCallStatus);
   const inLobby = callState === 'InLobby';
-  const callStateText = inLobby ? props.strings.waitingToBeAdmitted : props.strings.connectingToCall;
 
   // When transitioning to the lobby page we need to trigger onStartLocalVideo() to
   // transition the local preview camera setting into the call. This matches the logic
@@ -71,10 +63,6 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   return (
     <CallArrangement
       complianceBannerProps={{}}
-      permissionBannerProps={{
-        microphonePermissionGranted: devicePermissions.audio,
-        cameraPermissionGranted: devicePermissions.video
-      }}
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
       callControlProps={
         callControlOptions !== false && {
@@ -83,11 +71,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
         }
       }
       onRenderGalleryContent={() => (
-        <LobbyTile
-          {...lobbyProps}
-          {...lobbyTileHandlers}
-          overlay={{ text: callStateText, overlayIcon: () => <>☕</> }}
-        />
+        <LobbyTile {...lobbyProps} {...lobbyTileHandlers} overlayProps={overlayProps(strings, inLobby)} />
       )}
       dataUiId={'lobby-page'}
     />
@@ -113,6 +97,20 @@ const disableLobbyPageControls = (
       }
     }
   }
-
   return newOptions;
 };
+
+const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps =>
+  inLobby ? overlayPropsWaitingToBeAdmitted(strings, inLobby) : overlayPropsConnectingToCall(strings, inLobby);
+
+const overlayPropsConnectingToCall = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
+  title: strings.lobbyScreenConnectingToCallTitle,
+  moreDetails: strings.lobbyScreenConnectingToCallMoreDetails,
+  overlayIcon: <Icon iconName="lobbyScreenConnectingToCall" />
+});
+
+const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
+  title: strings.lobbyScreenWaitingToBeAdmittedTitle,
+  moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
+  overlayIcon: <Icon iconName="lobbyScreenWaitingToBeAdmitted" />
+});

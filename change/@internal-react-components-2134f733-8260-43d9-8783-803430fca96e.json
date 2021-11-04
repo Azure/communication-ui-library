@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Put video participants in front of audio participants in VideoGallery.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
