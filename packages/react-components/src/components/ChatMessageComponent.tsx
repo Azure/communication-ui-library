@@ -194,7 +194,14 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
             message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
           }
           positionActionMenu={false}
-          actionMenu={actionMenuProps}
+          actionMenu={
+            actionMenuProps
+              ? {
+                  ...actionMenuProps,
+                  showActionMenu: chatMessageActionFlyoutTarget === messageActionButtonRef ? true : undefined
+                }
+              : undefined
+          }
         />
       </div>
 
@@ -238,13 +245,13 @@ const chatMessageActionMenuProps = (menuProps: {
     iconOnly: true,
     activeIndex: -1,
     className: menuClass,
+    onItemClick: () => menuProps.onActionButtonClick(),
     items: [
       {
         children: (
           <Ref innerRef={menuProps.menuButtonRef}>
             <MoreIcon
               className={iconWrapperStyle}
-              onClick={() => menuProps.onActionButtonClick()}
               {...{
                 outline: true
               }}
