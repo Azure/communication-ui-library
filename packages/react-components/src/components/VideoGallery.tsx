@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
-import React, { CSSProperties, useCallback, useMemo, useRef } from 'react';
+import { concatStyleSets, ContextualMenu, IDragOptions, Modal, Stack, mergeStyles } from '@fluentui/react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
@@ -21,11 +21,10 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './style
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
+  horizontalGalleryContainerStyle,
   horizontalGalleryStyle,
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
@@ -38,7 +37,7 @@ const emptyStyles = {};
 const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
-const DEFAULT_MAX_VIDEO_STREAMS = 4;
+const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
 // Set aside only 6 dominant speakers for remaining audio participants
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
@@ -102,8 +101,10 @@ export interface VideoGalleryProps {
   showMuteIndicator?: boolean;
   /** Optional strings to override in component  */
   strings?: Partial<VideoGalleryStrings>;
-  /** Maximum number of participant video streams that is rendered. Local video is not included in count if layout prop is 'floatingLocalVideo' */
-  maxVideoStreams: number;
+  /** Maximum number of participant remote video streams that is rendered. */
+  maxRemoteVideoStreams: number;
+  /** Maximum number of participants in the grid */
+  maxGridParticipants: number;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -135,11 +136,34 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     onRenderAvatar,
     showMuteIndicator,
-    maxVideoStreams = DEFAULT_MAX_VIDEO_STREAMS
+    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS
   } = props;
 
   const ids = useIdentifiers();
   const theme = useTheme();
+
+  const defaultOnRenderVideoTile = useCallback(
+    (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
+      const remoteVideoStream = participant.videoStream;
+      return (
+        <RemoteVideoTile
+          key={participant.userId}
+          userId={participant.userId}
+          onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
+          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
+          isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
+          renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
+          remoteVideoViewOption={isVideoParticipant ? remoteVideoViewOption : undefined}
+          isMuted={participant.isMuted}
+          isSpeaking={participant.isSpeaking}
+          displayName={participant.displayName}
+          onRenderAvatar={onRenderAvatar}
+          showMuteIndicator={showMuteIndicator}
+        />
+      );
+    },
+    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOption, onRenderAvatar, showMuteIndicator]
+  );
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
@@ -153,8 +177,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
     dominantSpeakers,
     lastVisibleParticipants: visibleVideoParticipants.current,
-    maxDominantSpeakers: maxVideoStreams
-  }).slice(0, maxVideoStreams);
+    maxDominantSpeakers: maxRemoteVideoStreams
+  }).slice(0, maxRemoteVideoStreams);
 
   // This set will be used to filter out participants already in visibleVideoParticipants
   const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
@@ -165,21 +189,32 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
+  const videoTiles = onRenderRemoteVideoTile
+    ? visibleVideoParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
+    : visibleVideoParticipants.current.map((participant): JSX.Element => {
+        return defaultOnRenderVideoTile(participant, true);
+      });
+
+  const audioTiles = onRenderRemoteVideoTile
+    ? visibleAudioParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
+    : visibleAudioParticipants.current.map((participant): JSX.Element => {
+        return defaultOnRenderVideoTile(participant, false);
+      });
+
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
 
-  let gridParticipants: VideoGalleryRemoteParticipant[] = [];
-  let horizontalGalleryParticipants: VideoGalleryRemoteParticipant[] = [];
+  let gridTiles: JSX.Element[] = [];
+  let horizontalGalleryTiles: JSX.Element[] = [];
 
   const screenShareActive = screenShareParticipant || localParticipant?.isScreenSharingOn;
-  if (!screenShareActive) {
-    // If screen sharing is not active then assign all visible video participants as grid participants.
-    // If there no visible participants then assign audio participants as grid participants.
-    gridParticipants =
-      visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
-    horizontalGalleryParticipants = visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
-  } else {
+  if (screenShareActive) {
     // If screen sharing is active, assign video and audio participants as horizontal gallery participants
-    horizontalGalleryParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
+    horizontalGalleryTiles = videoTiles.concat(audioTiles);
+  } else {
+    // If screen sharing is not active then assign all video tiles as grid tiles.
+    // If there are no video tiles then assign audio tiles as grid tiles.
+    gridTiles = videoTiles.length > 0 ? videoTiles : audioTiles;
+    horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles : [];
   }
 
   /**
@@ -227,49 +262,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     shouldFloatLocalVideo
   ]);
 
-  const defaultOnRenderVideoTile = useCallback(
-    (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean, style?: CSSProperties) => {
-      const remoteVideoStream = participant.videoStream;
-      return (
-        <RemoteVideoTile
-          key={participant.userId}
-          userId={participant.userId}
-          onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
-          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
-          isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
-          renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOption={isVideoParticipant ? remoteVideoViewOption : undefined}
-          isMuted={participant.isMuted}
-          isSpeaking={participant.isSpeaking}
-          displayName={participant.displayName}
-          onRenderAvatar={onRenderAvatar}
-          showMuteIndicator={showMuteIndicator}
-          style={style}
-        />
-      );
-    },
-    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOption, onRenderAvatar, showMuteIndicator]
-  );
-
-  const gridTiles = onRenderRemoteVideoTile
-    ? gridParticipants.map((participant) => onRenderRemoteVideoTile(participant))
-    : gridParticipants.map((participant): JSX.Element => {
-        return defaultOnRenderVideoTile(participant, true);
-      });
-
   if (!shouldFloatLocalVideo && localParticipant) {
     gridTiles.push(localVideoTile);
   }
-
-  const horizontalGalleryTiles = onRenderRemoteVideoTile
-    ? horizontalGalleryParticipants.map((participant) => onRenderRemoteVideoTile(participant))
-    : horizontalGalleryParticipants.map((participant, i): JSX.Element => {
-        return defaultOnRenderVideoTile(
-          participant,
-          i + gridParticipants.length < maxVideoStreams,
-          isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
-        );
-      });
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
@@ -306,9 +301,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         ) : (
           <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
         )}
-        {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
+        {horizontalGalleryTiles && horizontalGalleryTiles.length > 0 && (
           <ResponsiveHorizontalGallery
-            containerStyles={horizontalGalleryStyle(shouldFloatLocalVideo, isNarrow)}
+            containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
+            horizontalGalleryStyles={horizontalGalleryStyle(isNarrow)}
             childWidthRem={
               isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
             }

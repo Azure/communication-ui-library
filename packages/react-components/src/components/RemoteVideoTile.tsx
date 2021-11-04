@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack, mergeStyles } from '@fluentui/react';
-import React, { CSSProperties, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import { VideoTile } from './VideoTile';
-import { VideoStreamOptions, OnRenderAvatarCallback } from '../types';
-import { gridStyle } from './styles/VideoGallery.styles';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
@@ -26,7 +24,6 @@ export const RemoteVideoTile = React.memo(
     remoteVideoViewOption?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
-    style?: CSSProperties;
   }) => {
     const {
       isAvailable,
@@ -76,17 +73,16 @@ export const RemoteVideoTile = React.memo(
     }, [renderElement]);
 
     return (
-      <Stack className={mergeStyles(gridStyle)} key={userId} grow style={props.style}>
-        <VideoTile
-          userId={userId}
-          renderElement={renderVideoStreamElement}
-          displayName={displayName}
-          onRenderPlaceholder={onRenderAvatar}
-          isMuted={isMuted}
-          isSpeaking={isSpeaking}
-          showMuteIndicator={showMuteIndicator}
-        />
-      </Stack>
+      <VideoTile
+        key={userId}
+        userId={userId}
+        renderElement={renderVideoStreamElement}
+        displayName={displayName}
+        onRenderPlaceholder={onRenderAvatar}
+        isMuted={isMuted}
+        isSpeaking={isSpeaking}
+        showMuteIndicator={showMuteIndicator}
+      />
     );
   }
 );
