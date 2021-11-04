@@ -3,12 +3,12 @@
 
 import { concatStyleSets, Icon, ITextField, mergeStyles } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
-import { useTheme } from '../theming/FluentThemeProvider';
+import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from './styles/EditBox.styles';
-import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
-import { MessageThreadStrings } from './MessageThread';
+import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
+import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
+import { MessageThreadStrings } from '../MessageThread';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -22,10 +22,8 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
   return <Icon iconName={'EditBoxSubmit'} className={className} />;
 };
 
-/**
- * @private
- */
-export type EditBoxProps = {
+/** @private */
+export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: () => void;
   onSubmit: (text: string) => void;
   initialValue: string;
@@ -35,7 +33,7 @@ export type EditBoxProps = {
 /**
  * @private
  */
-export const EditBox = (props: EditBoxProps): JSX.Element => {
+export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, initialValue, strings } = props;
   const [textValue, setTextValue] = useState<string>(initialValue);
   const [textValueOverflow, setTextValueOverflow] = useState(false);
