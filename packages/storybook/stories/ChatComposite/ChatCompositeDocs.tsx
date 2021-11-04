@@ -10,6 +10,14 @@ const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
 
+const hideTopicStatement = `
+<ChatComposite options={{ topic: false}}>
+`;
+const showParticipantStatement = `
+// Caution: the Participant Pane is a beta feature
+<ChatComposite options={{ participantPane: true}}>
+`;
+
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -57,6 +65,19 @@ export const getDocs: () => JSX.Element = () => {
         Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
         accepts an object where you can provide a custom JSX element against an icon name key.
       </Description>
+
+      <Heading>Hiding/Showing UI Elements</Heading>
+      <Description>
+        Some UI elements of the composite can be hidden if desired using the ChatAdapter `options` interface. Currently
+        we support hiding the `Topic Header`:
+      </Description>
+      <Source code={hideTopicStatement} />
+      <Description>
+        You can also show a `Participant Pane` to the right hand side of the chat that has support for removing users.
+        The Participant pane is a `beta` feature. Currently it does not support mobile views and is subject to breaking
+        changes.
+      </Description>
+      <Source code={showParticipantStatement} />
 
       <Heading>Custom Data Model</Heading>
       <Description>

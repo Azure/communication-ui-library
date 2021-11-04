@@ -21,15 +21,15 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-85"
+        className="css-87"
+        id="UILibraryFloatingTileHost"
       >
+        <span
+          className="ms-layer"
+        />
         <div
-          className="ms-Stack css-1"
-          id="UILibraryFloatingTileHost"
+          className="ms-Stack css-9"
         >
-          <span
-            className="ms-layer"
-          />
           <div
             className="css-56"
           >
@@ -53,7 +53,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 }
               >
                 <div
-                  className="ms-Stack css-84 css-10"
+                  className="ms-Stack css-86 css-10"
                 >
                   <div
                     className="ms-Stack css-17"
@@ -109,7 +109,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                       </div>
                     </div>
                     <div
-                      className="ms-Stack css-86 css-36"
+                      className="ms-Stack css-83 css-36"
                     >
                       <div
                         className="ms-StackItem css-37"
@@ -124,7 +124,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-84 css-10"
+                  className="ms-Stack css-86 css-10"
                 >
                   <div
                     className="ms-Stack css-17"
@@ -180,7 +180,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                       </div>
                     </div>
                     <div
-                      className="ms-Stack css-86 css-36"
+                      className="ms-Stack css-83 css-36"
                     >
                       <div
                         className="ms-StackItem css-37"
@@ -195,7 +195,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-84 css-10"
+                  className="ms-Stack css-86 css-10"
                 >
                   <div
                     className="ms-Stack css-17"
@@ -251,7 +251,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                       </div>
                     </div>
                     <div
-                      className="ms-Stack css-86 css-36"
+                      className="ms-Stack css-83 css-36"
                     >
                       <div
                         className="ms-StackItem css-37"
@@ -266,7 +266,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-84 css-10"
+                  className="ms-Stack css-86 css-10"
                 >
                   <div
                     className="ms-Stack css-17"
@@ -322,7 +322,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                       </div>
                     </div>
                     <div
-                      className="ms-Stack css-86 css-36"
+                      className="ms-Stack css-83 css-36"
                     >
                       <div
                         className="ms-StackItem css-37"

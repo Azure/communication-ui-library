@@ -44,7 +44,7 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
             displayName: props.displayName,
             credential,
             callLocator: props.locator,
-            endpointUrl: props.endpointUrl,
+            endpoint: props.endpointUrl,
             chatThreadId: props.threadId
           })
         );

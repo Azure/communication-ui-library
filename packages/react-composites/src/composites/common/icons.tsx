@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MicOn20Filled, Speaker220Filled, Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
+import {
+  MicOff20Filled,
+  CallMissed20Filled,
+  MicOn20Filled,
+  Speaker220Filled,
+  Video20Filled,
+  VideoOff20Filled
+} from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 
@@ -11,10 +18,14 @@ import React from 'react';
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
+  lobbyScreenConnectingToCall: <>☕</>,
+  lobbyScreenWaitingToBeAdmitted: <>☕</>,
   LocalDeviceSettingsCamera: <Video20Filled />,
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
-  LocalPreviewPlaceholder: <VideoOff20Filled />
+  LocalPreviewPlaceholder: <VideoOff20Filled />,
+  Muted: <MicOff20Filled />,
+  NetworkReconnectIcon: <CallMissed20Filled />
 };
 
 /**

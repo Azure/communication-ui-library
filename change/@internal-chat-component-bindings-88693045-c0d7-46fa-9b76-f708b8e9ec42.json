@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Refactor message.attached logic",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

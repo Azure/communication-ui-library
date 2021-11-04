@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update to new ChatMessage types",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

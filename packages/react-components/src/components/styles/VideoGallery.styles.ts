@@ -33,7 +33,9 @@ export const videoGalleryOuterDivStyle = mergeStyles({ position: 'relative', wid
 /**
  * @private
  */
-export const videoGalleryContainerStyle: IStackStyles = { root: { position: 'relative', height: '100%' } };
+export const videoGalleryContainerStyle: IStackStyles = {
+  root: { position: 'relative', height: '100%', padding: '0.5rem', gap: '0.5rem' }
+};
 
 /**
  * Small floating modal width and height in rem for small screen
@@ -89,26 +91,20 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
 /**
  * @private
  */
-export const videoWithNoRoundedBorderStyle = {
-  root: {
-    '& video': { borderRadius: '0rem' }
-  }
-};
-
-/**
- * @private
- */
 export const horizontalGalleryStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
-    maxHeight: isNarrow ? '6rem' : '8rem',
-    minHeight: isNarrow ? '6rem' : '8rem',
+    maxHeight: isNarrow
+      ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
+      : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
+    minHeight: isNarrow
+      ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
+      : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
     width: shouldFloatLocalVideo
       ? isNarrow
         ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`
         : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE_REM.width}rem)`
       : '100%',
-    paddingRight: '0.5rem',
-    paddingLeft: '0.5rem'
+    paddingRight: '0.5rem'
   };
 };
 

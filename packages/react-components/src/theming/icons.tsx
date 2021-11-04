@@ -29,7 +29,11 @@ import {
   Video20Regular,
   VideoOff20Filled,
   ChevronLeft20Regular,
-  ChevronRight20Regular
+  ChevronRight20Regular,
+  WifiWarning20Filled,
+  SpeakerMute16Filled,
+  MicProhibited16Filled,
+  VideoProhibited16Filled
 } from '@fluentui/react-icons';
 import React from 'react';
 
@@ -78,5 +82,15 @@ export const DEFAULT_COMPONENT_ICONS = {
   MessageEdit: <Edit20Regular />,
   MessageRemove: <Delete20Regular />,
   HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
-  HorizontalGalleryRightButton: <ChevronRight20Regular />
+  HorizontalGalleryRightButton: <ChevronRight20Regular />,
+  errorBarCallNetworkQualityLow: <WifiWarning20Filled />,
+  errorBarCallNoSpeakerFound: <SpeakerMute16Filled />,
+  errorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
+  errorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
+  errorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
+  errorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
+  errorBarCallLocalVideoFreeze: <WifiWarning20Filled />,
+  errorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
+  errorBarCallCameraAlreadyInUse: <VideoProhibited16Filled />,
+  errorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />
 };

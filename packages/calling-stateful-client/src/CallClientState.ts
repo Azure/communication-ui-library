@@ -368,7 +368,7 @@ export interface IncomingCallState {
    * Stores the local date when the call ended on the client. This property is added by the stateful layer and is not a
    * proxy of SDK state. It is undefined if the call is not ended yet.
    */
-  endTime: Date | undefined;
+  endTime?: Date;
 }
 
 /**

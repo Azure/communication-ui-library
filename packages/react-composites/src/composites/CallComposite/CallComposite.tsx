@@ -112,15 +112,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
     case 'lobby':
-      return (
-        <LobbyPage
-          strings={{
-            connectingToCall: locale.strings.call.lobbyScreenConnectingToCallTitle,
-            waitingToBeAdmitted: locale.strings.call.lobbyScreenWaitingToBeAdmittedTitle
-          }}
-          options={props.options}
-        />
-      );
+      return <LobbyPage options={props.options} />;
     case 'call':
       return (
         <CallPage

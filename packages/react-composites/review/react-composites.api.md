@@ -85,7 +85,7 @@ export type AzureCommunicationCallAdapterArgs = {
 
 // @public
 export type AzureCommunicationChatAdapterArgs = {
-    endpointUrl: string;
+    endpoint: string;
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
@@ -94,7 +94,7 @@ export type AzureCommunicationChatAdapterArgs = {
 
 // @alpha
 export type AzureCommunicationMeetingAdapterArgs = {
-    endpointUrl: string;
+    endpoint: string;
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
@@ -237,14 +237,17 @@ export interface CallCompositeStrings {
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
+    lobbyScreenConnectingToCallMoreDetails?: string;
     lobbyScreenConnectingToCallTitle: string;
+    lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+    mutedMessage: string;
+    networkReconnectMoreDetails: string;
+    networkReconnectTitle: string;
     privacyPolicy: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    screenSharingMessage: string;
-    sharingScreenLoading: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -395,10 +398,14 @@ export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
 export const COMPOSITE_ONLY_ICONS: {
+    lobbyScreenConnectingToCall: JSX.Element;
+    lobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    Muted: JSX.Element;
+    NetworkReconnectIcon: JSX.Element;
 };
 
 // @public
@@ -423,20 +430,24 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: TeamsMeetingLinkLocator | GroupCallLocator) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapter: ({ endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @alpha
-export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpointUrl, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
+export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
+    lobbyScreenConnectingToCall: JSX.Element;
+    lobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
     LocalPreviewPlaceholder: JSX.Element;
+    Muted: JSX.Element;
+    NetworkReconnectIcon: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -466,6 +477,16 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageRemove: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    errorBarCallNetworkQualityLow: JSX.Element;
+    errorBarCallNoSpeakerFound: JSX.Element;
+    errorBarCallNoMicrophoneFound: JSX.Element;
+    errorBarCallMicrophoneAccessDenied: JSX.Element;
+    errorBarCallMicrophoneMutedBySystem: JSX.Element;
+    errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAccessDenied: JSX.Element;
+    errorBarCallCameraAlreadyInUse: JSX.Element;
+    errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
 
 // @public

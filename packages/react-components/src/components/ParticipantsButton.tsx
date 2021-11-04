@@ -107,7 +107,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
    * Callback to render the context menu for each participant
    */
-  onParticipantRemove?: (userId: string) => void;
+  onRemoveParticipant?: (userId: string) => void;
   /**
    * Callback to render custom menu items for each participant.
    */
@@ -165,7 +165,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     excludeMe,
     onRenderParticipant,
     onRenderAvatar,
-    onParticipantRemove,
+    onRemoveParticipant,
     onFetchParticipantMenuItems
   } = props;
 
@@ -185,7 +185,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         excludeMe={excludeMe}
         onRenderParticipant={onRenderParticipant}
         onRenderAvatar={onRenderAvatar}
-        onParticipantRemove={onParticipantRemove}
+        onRemoveParticipant={onRemoveParticipant}
         onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         styles={merge(defaultParticipantListContainerStyle, styles?.menuStyles?.participantListStyles)}
       />
@@ -193,7 +193,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   }, [
     excludeMe,
     myUserId,
-    onParticipantRemove,
+    onRemoveParticipant,
     onRenderAvatar,
     onRenderParticipant,
     participants,
@@ -264,7 +264,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       menuProps.items.push({
         key: 'participantCountKey',
         name: _formatString(strings.participantsListButtonLabel, { numParticipants: `${participantCountWithoutMe}` }),
-        styles: styles?.menuStyles?.menuItemStyles,
+        itemProps: { styles: styles?.menuStyles?.menuItemStyles },
         iconProps: { iconName: 'People' },
         subMenuProps: {
           items: generateDefaultParticipantsSubMenuProps(),
@@ -282,7 +282,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         key: 'InviteLinkKey',
         name: strings.copyInviteLinkButtonLabel,
         title: strings.copyInviteLinkButtonLabel,
-        styles: styles?.menuStyles?.menuItemStyles,
+        itemProps: { styles: styles?.menuStyles?.menuItemStyles },
         iconProps: { iconName: 'Link' },
         onClick: onCopyCallback
       });

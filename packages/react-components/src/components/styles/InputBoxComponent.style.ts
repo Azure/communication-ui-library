@@ -78,14 +78,12 @@ export const textFieldStyle = (errorColor: string, hasErrorMessage: boolean, dis
  */
 export const inputButtonStyle = mergeStyles({
   color: 'grey',
-  cursor: 'pointer',
-  display: 'flex',
-  justifyContent: 'center',
   margin: 'auto',
-  top: '0',
-  bottom: '0',
   width: '1.0625rem',
-  height: '1.0625rem'
+  height: '1.0625rem',
+  '&:hover': {
+    backgroundColor: 'transparent'
+  }
 });
 
 /**
@@ -94,6 +92,7 @@ export const inputButtonStyle = mergeStyles({
 export const inputButtonContainerStyle = (rtl?: boolean): string =>
   mergeStyles({
     display: 'flex',
+    alignItems: 'baseline',
     justifyContent: 'center',
     position: 'absolute',
     margin: 'auto',

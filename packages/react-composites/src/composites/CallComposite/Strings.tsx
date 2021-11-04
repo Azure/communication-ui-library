@@ -74,13 +74,21 @@ export interface CallCompositeStrings {
    */
   lobbyScreenConnectingToCallTitle: string;
   /**
+   * Optional addition details shown to the user on the lobby screen when connection to a call.
+   */
+  lobbyScreenConnectingToCallMoreDetails?: string;
+  /**
    * Text shown to the user on the lobby screen when waiting to be admitted to a call.
    */
   lobbyScreenWaitingToBeAdmittedTitle: string;
   /**
-   * Message to let user know they are sharing their screen.
+   * Optional additional details shown to the user on the lobby screen when waiting to be admitted to a call.
    */
-  screenSharingMessage: string;
+  lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
+  /**
+   * Message shown to the user when they are speaking while muted.
+   */
+  mutedMessage: string;
   /**
    * Text for link to MS privacy policy in Compliance Banner.
    */
@@ -142,7 +150,11 @@ export interface CallCompositeStrings {
    */
   close: string;
   /**
-   * Message to let user know the screen another user is sharing is being loaded.
+   * Title text of the page shown to the user when there is intermittent network failure during a call.
    */
-  sharingScreenLoading: string;
+  networkReconnectTitle: string;
+  /**
+   * More details text of the page shown to the user when there is intermittent network failure during a call.
+   */
+  networkReconnectMoreDetails: string;
 }

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import { COMPOSITE_STRING_CONNECTIONSTRING } from './CompositeStringUtils';
@@ -91,18 +92,28 @@ const defaultTypingUsers = [
   }
 ];
 
-const errorOptions = [
+const errorOptions: ErrorType[] = [
   'unableToReachChatService',
   'accessDenied',
-  'userNotInThisThread',
-  'sendMessageNotInThisThread',
+  'userNotInChatThread',
+  'sendMessageNotInChatThread',
   'sendMessageGeneric',
   'startVideoGeneric',
   'stopVideoGeneric',
   'muteGeneric',
   'unmuteGeneric',
   'startScreenShareGeneric',
-  'stopScreenShareGeneric'
+  'stopScreenShareGeneric',
+  'callNetworkQualityLow',
+  'callNoSpeakerFound',
+  'callNoMicrophoneFound',
+  'callMicrophoneAccessDenied',
+  'callMicrophoneMutedBySystem',
+  'callMacOsMicrophoneAccessDenied',
+  'callLocalVideoFreeze',
+  'callCameraAlreadyInUse',
+  'callMacOsCameraAccessDenied',
+  'callMacOsScreenShareAccessDenied'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];

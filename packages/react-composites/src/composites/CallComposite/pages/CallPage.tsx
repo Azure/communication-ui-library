@@ -11,10 +11,13 @@ import { useSelector } from '../hooks/useSelector';
 import { MediaGallery } from '../components/MediaGallery';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
-import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
 import { CallArrangement } from '../components/CallArrangement';
 import { reduceCallControlsForMobile } from '../utils';
+import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
+import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
+import { DiagnosticQuality } from '@azure/communication-calling';
+import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
 
 /**
  * @private
@@ -40,7 +43,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const mediaGalleryHandlers = useHandlers(MediaGallery);
   const complianceBannerProps = useSelector(complianceBannerSelector);
   const errorBarProps = usePropsFor(ErrorBar);
-  const devicePermissions = useSelector(devicePermissionSelector);
+  const mutedNotificationProps = useSelector(mutedNotificationSelector);
+  const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
 
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = options?.mobileView
@@ -50,11 +54,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   return (
     <CallArrangement
       complianceBannerProps={{ ...complianceBannerProps }}
-      permissionBannerProps={{
-        microphonePermissionGranted: devicePermissions.audio,
-        cameraPermissionGranted: devicePermissions.video
-      }}
       errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
+      mutedNotificationProps={mutedNotificationProps}
       callControlProps={
         callControlOptions !== false && {
           callInvitationURL: callInvitationURL,
@@ -65,12 +66,16 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       }
       onRenderGalleryContent={() =>
         callStatus === 'Connected' ? (
-          <MediaGallery
-            {...mediaGalleryProps}
-            {...mediaGalleryHandlers}
-            onRenderAvatar={onRenderAvatar}
-            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          />
+          isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
+            <MediaGallery
+              {...mediaGalleryProps}
+              {...mediaGalleryHandlers}
+              onRenderAvatar={onRenderAvatar}
+              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            />
+          ) : (
+            <NetworkReconnectTile {...networkReconnectTileProps} />
+          )
         ) : (
           <></>
         )
@@ -78,4 +83,14 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       dataUiId={'call-page'}
     />
   );
+};
+
+/**
+ * @private
+ */
+export const isNetworkHealthy = (value: DiagnosticQuality | boolean | undefined): boolean => {
+  // We know that the value is actually of type DiagnosticQuality for this diagnostic.
+  // We ignore any boolen values, considering the network to still be healthy.
+  // Thus, only DiagnosticQuality.Poor or .Bad indicate network problems.
+  return value === true || value === false || value === undefined || value === DiagnosticQuality.Good;
 };

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove random console log that is in our codebase",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
