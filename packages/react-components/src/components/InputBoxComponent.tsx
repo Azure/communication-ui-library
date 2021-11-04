@@ -126,7 +126,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
  * @private
  */
 export type InputBoxButtonProps = {
-  onRenderIcon: (isMouseOverIcon: boolean) => JSX.Element;
+  onRenderIcon: (isHover: boolean) => JSX.Element;
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   className?: string;
   id?: string;
@@ -138,7 +138,7 @@ export type InputBoxButtonProps = {
  */
 export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   const { onRenderIcon, onClick, ariaLabel, className, id } = props;
-  const [isMouseOverIcon, setIsMouseOverIcon] = useState(false);
+  const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
   return (
     <IconButton
@@ -147,12 +147,12 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
       onClick={onClick}
       id={id}
       onMouseEnter={() => {
-        setIsMouseOverIcon(true);
+        setIsHover(true);
       }}
       onMouseLeave={() => {
-        setIsMouseOverIcon(false);
+        setIsHover(false);
       }}
-      onRenderIcon={() => onRenderIcon(isMouseOverIcon)}
+      onRenderIcon={() => onRenderIcon(isHover)}
     />
   );
 };

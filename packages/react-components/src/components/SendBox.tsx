@@ -84,7 +84,7 @@ export interface SendBoxProps {
    * Optional callback to render send button icon to the right of the SendBox.
    * @defaultValue SendBoxSendHovered icon when mouse over icon and SendBoxSend icon otherwise
    */
-  onRenderIcon?: (isMouseOverIcon: boolean) => JSX.Element;
+  onRenderIcon?: (isHover: boolean) => JSX.Element;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -178,11 +178,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   const onRenderSendIcon = useCallback(
-    (isMouseOverIcon: boolean) =>
+    (isHover: boolean) =>
       onRenderIcon ? (
-        onRenderIcon(isMouseOverIcon)
+        onRenderIcon(isHover)
       ) : (
-        <Icon iconName={isMouseOverIcon ? 'SendBoxSendHovered' : 'SendBoxSend'} className={mergedSendIconStyle} />
+        <Icon iconName={isHover ? 'SendBoxSendHovered' : 'SendBoxSend'} className={mergedSendIconStyle} />
       ),
     [mergedSendIconStyle, onRenderIcon]
   );
