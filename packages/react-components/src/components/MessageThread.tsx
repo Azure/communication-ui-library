@@ -36,7 +36,7 @@ import {
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
-import { ChatMessageComponent } from './ChatMessageComponent';
+import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 
@@ -169,7 +169,7 @@ export interface MessageThreadStrings {
   editMessage: string;
   /** String for removing message in floating menu */
   removeMessage: string;
-  /** String for LiveMessage introduction in ChatMessageComponent */
+  /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
   /** String for warning on text limit exceeded in EditBox*/
   editBoxTextLimit: string;
