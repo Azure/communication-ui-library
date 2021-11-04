@@ -12,18 +12,7 @@ import {
   concatStyleSets
 } from '@fluentui/react';
 import { VideoTileStylesProps } from '../VideoTile';
-
-const videoBaseStyle = mergeStyles({
-  border: 0
-});
-
-/**
- * @private
- */
-export const gridStyle = mergeStyles(videoBaseStyle, {
-  width: '100%',
-  height: '100%'
-});
+import { HorizontalGalleryStyles } from '../HorizontalGallery';
 
 /**
  * @private
@@ -91,7 +80,7 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
 /**
  * @private
  */
-export const horizontalGalleryStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
+export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
     maxHeight: isNarrow
       ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
@@ -105,6 +94,17 @@ export const horizontalGalleryStyle = (shouldFloatLocalVideo: boolean, isNarrow:
         : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE_REM.width}rem)`
       : '100%',
     paddingRight: '0.5rem'
+  };
+};
+
+/**
+ * @private
+ */
+export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
+  return {
+    root: {
+      '> *': isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
+    }
   };
 };
 

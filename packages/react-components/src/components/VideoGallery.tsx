@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
-import React, { CSSProperties, useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useTheme } from '../theming';
@@ -21,12 +21,10 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './style
 import {
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
-  gridStyle,
+  horizontalGalleryContainerStyle,
   horizontalGalleryStyle,
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  LARGE_HORIZONTAL_GALLERY_TILE_STYLE,
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  SMALL_HORIZONTAL_GALLERY_TILE_STYLE,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
@@ -39,7 +37,7 @@ const emptyStyles = {};
 const FLOATING_TILE_HOST_ID = 'UILibraryFloatingTileHost';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
-const MAX_VIDEO_PARTICIPANTS_TILES = 4;
+const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
 // Set aside only 6 dominant speakers for remaining audio participants
 const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
@@ -103,6 +101,11 @@ export interface VideoGalleryProps {
   showMuteIndicator?: boolean;
   /** Optional strings to override in component  */
   strings?: Partial<VideoGalleryStrings>;
+  /**
+   * Maximum number of participant remote video streams that is rendered.
+   * @defaultValue 4
+   */
+  maxRemoteVideoStreams?: number;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -133,7 +136,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
-    showMuteIndicator
+    showMuteIndicator,
+    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS
   } = props;
 
   const ids = useIdentifiers();
@@ -151,8 +155,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
     dominantSpeakers,
     lastVisibleParticipants: visibleVideoParticipants.current,
-    maxDominantSpeakers: MAX_VIDEO_PARTICIPANTS_TILES
-  }).slice(0, MAX_VIDEO_PARTICIPANTS_TILES);
+    maxDominantSpeakers: maxRemoteVideoStreams
+  }).slice(0, maxRemoteVideoStreams);
 
   // This set will be used to filter out participants already in visibleVideoParticipants
   const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
@@ -162,23 +166,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     lastVisibleParticipants: visibleAudioParticipants.current,
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
-
-  const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
-
-  let gridParticipants: VideoGalleryRemoteParticipant[] = [];
-  let horizontalGalleryParticipants: VideoGalleryRemoteParticipant[] = [];
-
-  const screenShareActive = screenShareParticipant || localParticipant?.isScreenSharingOn;
-  if (!screenShareActive) {
-    // If screen sharing is not active then assign all visible video participants as grid participants.
-    // If there no visible participants then assign audio participants as grid participants.
-    gridParticipants =
-      visibleVideoParticipants.current.length > 0 ? visibleVideoParticipants.current : visibleAudioParticipants.current;
-    horizontalGalleryParticipants = visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
-  } else {
-    // If screen sharing is active, assign video and audio participants as horizontal gallery participants
-    horizontalGalleryParticipants = visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
-  }
 
   /**
    * Utility function for memoized rendering of LocalParticipant.
@@ -200,6 +187,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     return (
       <VideoTile
+        key={localParticipant.userId}
         userId={localParticipant.userId}
         renderElement={
           localVideoStream?.renderElement ? (
@@ -226,7 +214,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   const defaultOnRenderVideoTile = useCallback(
-    (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean, style?: CSSProperties) => {
+    (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
       return (
         <RemoteVideoTile
@@ -242,36 +230,43 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           displayName={participant.displayName}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
-          style={style}
         />
       );
     },
     [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOption, onRenderAvatar, showMuteIndicator]
   );
 
-  const gridTiles = onRenderRemoteVideoTile
-    ? gridParticipants.map((participant) => onRenderRemoteVideoTile(participant))
-    : gridParticipants.map((participant): JSX.Element => {
+  const videoTiles = onRenderRemoteVideoTile
+    ? visibleVideoParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
+    : visibleVideoParticipants.current.map((participant): JSX.Element => {
         return defaultOnRenderVideoTile(participant, true);
       });
 
-  if (!shouldFloatLocalVideo && localParticipant) {
-    gridTiles.push(
-      <Stack data-ui-id={ids.videoGallery} horizontalAlign="center" verticalAlign="center" className={gridStyle} grow>
-        {localParticipant && localVideoTile}
-      </Stack>
-    );
+  const audioTiles = onRenderRemoteVideoTile
+    ? visibleAudioParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
+    : visibleAudioParticipants.current.map((participant): JSX.Element => {
+        return defaultOnRenderVideoTile(participant, false);
+      });
+
+  const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
+  const screenShareActive = screenShareParticipant || localParticipant?.isScreenSharingOn;
+
+  let gridTiles: JSX.Element[] = [];
+  let horizontalGalleryTiles: JSX.Element[] = [];
+
+  if (screenShareActive) {
+    // If screen sharing is active, assign video and audio participants as horizontal gallery participants
+    horizontalGalleryTiles = videoTiles.concat(audioTiles);
+  } else {
+    // If screen sharing is not active, then assign all video tiles as grid tiles.
+    // If there are no video tiles, then assign audio tiles as grid tiles.
+    gridTiles = videoTiles.length > 0 ? videoTiles : audioTiles;
+    horizontalGalleryTiles = videoTiles.length > 0 ? audioTiles : [];
   }
 
-  const horizontalGalleryTiles = onRenderRemoteVideoTile
-    ? horizontalGalleryParticipants.map((participant) => onRenderRemoteVideoTile(participant))
-    : horizontalGalleryParticipants.map((participant): JSX.Element => {
-        return defaultOnRenderVideoTile(
-          participant,
-          false,
-          isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
-        );
-      });
+  if (!shouldFloatLocalVideo && localParticipant) {
+    gridTiles.push(localVideoTile);
+  }
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
@@ -283,7 +278,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   return (
-    <div id={FLOATING_TILE_HOST_ID} ref={containerRef} className={videoGalleryOuterDivStyle}>
+    <div
+      id={FLOATING_TILE_HOST_ID}
+      data-ui-id={ids.videoGallery}
+      ref={containerRef}
+      className={videoGalleryOuterDivStyle}
+    >
       {shouldFloatLocalVideo && (
         <Modal
           isOpen={true}
@@ -301,11 +301,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         ) : localParticipant?.isScreenSharingOn ? (
           localScreenShareStreamComponent
         ) : (
-          <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
+          <GridLayout key="grid-layout" styles={styles ?? emptyStyles}>
+            {gridTiles}
+          </GridLayout>
         )}
-        {horizontalGalleryParticipants && horizontalGalleryParticipants.length > 0 && (
+        {horizontalGalleryTiles && horizontalGalleryTiles.length > 0 && (
           <ResponsiveHorizontalGallery
-            containerStyles={horizontalGalleryStyle(shouldFloatLocalVideo, isNarrow)}
+            key="responsive-horizontal-gallery"
+            containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
+            horizontalGalleryStyles={horizontalGalleryStyle(isNarrow)}
             childWidthRem={
               isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
             }
