@@ -639,9 +639,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const chatThreadRef = useRef<HTMLElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
-  // When the chat thread is narrow, we want to overlap the avatar on top of the chat message to save space
+  // When the chat thread is narrow, we perform space optimizations such as overlapping
+  // the avatar on top of the chat message and moving the chat accept/reject edit buttons
+  // to a new line
   const chatThreadWidth = useContainerWidth(chatThreadRef);
-  const shouldOverlapAvatarAndMessage = isNarrowWidth(chatThreadWidth);
+  const isNarrow = isNarrowWidth(chatThreadWidth);
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
@@ -845,7 +847,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
       if (messageProps.message.messageType === 'chat') {
-        return <ChatMessageComponent {...messageProps} message={messageProps.message} />;
+        return (
+          <ChatMessageComponent
+            {...messageProps}
+            message={messageProps.message}
+            inlineAcceptRejectEditButtons={!isNarrow}
+          />
+        );
       }
       return <></>;
     },
@@ -899,7 +907,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageDate,
             showMessageStatus,
             onRenderAvatar,
-            shouldOverlapAvatarAndMessage,
+            isNarrow,
             styles,
             onRenderMessageStatus,
             defaultStatusRenderer,
@@ -920,7 +928,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageDate,
       showMessageStatus,
       onRenderAvatar,
-      shouldOverlapAvatarAndMessage,
+      isNarrow,
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,

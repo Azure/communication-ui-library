@@ -190,6 +190,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   return (
     <InputBoxComponent
       data-ui-id={ids.sendboxTextField}
+      inlineChildren={true}
       disabled={disabled}
       errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
       textFieldRef={sendTextFieldRef}
