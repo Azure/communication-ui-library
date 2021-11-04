@@ -1675,7 +1675,7 @@ export type ParticipantListProps = {
     participants: ParticipantListParticipant[];
     myUserId?: string;
     excludeMe?: boolean;
-    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
