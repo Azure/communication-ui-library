@@ -4,6 +4,7 @@
   "description": "Automation tests for samples.",
   "private": true,
   "scripts": {
+    "build": "echo skip",
     "test": "echo skip",
     "test:e2e:bundle": "cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test tests",
     "update:snapshot:bundle": "cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test tests --update-snapshots",
@@ -14,7 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.0.0-beta.6",
+    "@azure/communication-react": "1.0.0-beta.7",
     "@azure/communication-common": "1.0.0",
     "uuid": "^8.1.0",
     "cross-env": "~7.0.3"
