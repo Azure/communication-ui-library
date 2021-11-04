@@ -38,7 +38,6 @@ const MessageContentAsRichTextHTML = (message: ChatMessage, liveAuthorIntro: str
   );
 };
 
-/** @private */
 const MessageContentAsText = (message: ChatMessage, liveAuthorIntro: string): JSX.Element => {
   const liveAuthor = _formatString(liveAuthorIntro, { author: `${message.senderDisplayName}` });
   return (
