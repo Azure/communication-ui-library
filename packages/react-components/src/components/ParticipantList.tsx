@@ -13,7 +13,13 @@ import {
 import React, { useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
-import { BaseCustomStyles, CallParticipant, CommunicationParticipant, OnRenderAvatarCallback } from '../types';
+import {
+  BaseCustomStyles,
+  CallParticipantListParticipant,
+  CommunicationParticipant,
+  OnRenderAvatarCallback,
+  ParticipantListParticipant
+} from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 
@@ -47,18 +53,6 @@ export type ParticipantMenuItemsCallback = (
   userId?: string,
   defaultMenuItems?: IContextualMenuItem[]
 ) => IContextualMenuItem[];
-
-/**
- * Participants displayed in a {@link ParticipantList}.
- *
- * @public
- */
-export interface ParticipantListParticipant extends CommunicationParticipant {
-  /**
-   * If true, local participant can remove this participant from the roster.
-   */
-  isRemovable: boolean;
-}
 
 /**
  * Props for {@link ParticipantList}.
@@ -97,8 +91,7 @@ const onRenderParticipantDefault = (
   createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[],
   styles?: ParticipantListItemStyles
 ): JSX.Element | null => {
-  // Try to consider CommunicationParticipant as CallParticipant
-  const callingParticipant = participant as CallParticipant;
+  const callingParticipant = participant as CallParticipantListParticipant;
 
   let presence: PersonaPresence | undefined = undefined;
   if (callingParticipant) {

@@ -48,7 +48,7 @@ export interface CallingTheme {
 }
 
 // @public
-export type CallParticipant = CommunicationParticipant & {
+export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
     isScreenSharing?: boolean;
     isMuted?: boolean;
@@ -630,9 +630,9 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 }
 
 // @public
-export interface ParticipantListParticipant extends CommunicationParticipant {
+export type ParticipantListParticipant = CommunicationParticipant & {
     isRemovable: boolean;
-}
+};
 
 // @public
 export type ParticipantListProps = {

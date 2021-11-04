@@ -37,7 +37,6 @@ export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStyle
 export { ParticipantList } from './ParticipantList';
 export type {
   ParticipantListItemStyles,
-  ParticipantListParticipant,
   ParticipantListProps,
   ParticipantListStyles,
   ParticipantMenuItemsCallback

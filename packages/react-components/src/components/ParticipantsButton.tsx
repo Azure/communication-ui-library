@@ -15,7 +15,6 @@ import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo } from 'react';
 import {
   ParticipantList,
-  ParticipantListParticipant,
   ParticipantListProps,
   ParticipantListStyles,
   ParticipantMenuItemsCallback
@@ -26,6 +25,7 @@ import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from 
 import { useIdentifiers } from '../identifiers';
 import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
+import { ParticipantListParticipant } from '../types';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
