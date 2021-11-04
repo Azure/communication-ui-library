@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, ContextualMenu, IDragOptions, Modal, Stack, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, ContextualMenu, IDragOptions, Modal, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
