@@ -187,6 +187,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     return (
       <VideoTile
+        key={localParticipant.userId}
         userId={localParticipant.userId}
         renderElement={
           localVideoStream?.renderElement ? (
@@ -300,10 +301,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         ) : localParticipant?.isScreenSharingOn ? (
           localScreenShareStreamComponent
         ) : (
-          <GridLayout styles={styles ?? emptyStyles}>{gridTiles}</GridLayout>
+          <GridLayout key="grid-layout" styles={styles ?? emptyStyles}>
+            {gridTiles}
+          </GridLayout>
         )}
         {horizontalGalleryTiles && horizontalGalleryTiles.length > 0 && (
           <ResponsiveHorizontalGallery
+            key="responsive-horizontal-gallery"
             containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
             horizontalGalleryStyles={horizontalGalleryStyle(isNarrow)}
             childWidthRem={
