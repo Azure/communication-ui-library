@@ -16,7 +16,6 @@ import { useLocale } from '../localization';
 import {
   BaseCustomStyles,
   CallParticipantListParticipant,
-  CommunicationParticipant,
   OnRenderAvatarCallback,
   ParticipantListParticipant
 } from '../types';
@@ -71,7 +70,7 @@ export type ParticipantListProps = {
    */
   excludeMe?: boolean;
   /** Optional callback to render each participant. If no callback is provided, each participant will be rendered with `ParticipantItem`  */
-  onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+  onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
   onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
@@ -83,12 +82,12 @@ export type ParticipantListProps = {
 };
 
 const onRenderParticipantDefault = (
-  participant: CommunicationParticipant,
+  participant: ParticipantListParticipant,
   strings: ParticipantItemStrings,
   myUserId?: string,
   onRemoveParticipant?: (userId: string) => void,
   onRenderAvatar?: OnRenderAvatarCallback,
-  createParticipantMenuItems?: (participant: CommunicationParticipant) => IContextualMenuItem[],
+  createParticipantMenuItems?: (participant: ParticipantListParticipant) => IContextualMenuItem[],
   styles?: ParticipantListItemStyles
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
@@ -141,10 +140,10 @@ const onRenderParticipantDefault = (
 };
 
 const getParticipantsForDefaultRender = (
-  participants: CommunicationParticipant[],
+  participants: ParticipantListParticipant[],
   excludeMe: boolean,
   myUserId: string | undefined
-): CommunicationParticipant[] => {
+): ParticipantListParticipant[] => {
   if (!excludeMe || !myUserId) {
     return [...participants];
   }
@@ -182,7 +181,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const ids = useIdentifiers();
   const strings = useLocale().strings.participantItem;
 
-  const displayedParticipants: CommunicationParticipant[] = useMemo(() => {
+  const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
 
@@ -211,7 +210,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const participantItemStyles = merge(participantListItemStyle, props.styles?.participantItemStyles);
   return (
     <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
-      {displayedParticipants.map((participant: CommunicationParticipant) =>
+      {displayedParticipants.map((participant: ParticipantListParticipant) =>
         onRenderParticipant
           ? onRenderParticipant(participant)
           : onRenderParticipantDefault(
