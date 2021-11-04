@@ -57,6 +57,8 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
   const actionMenuProps = chatMessageActionMenuProps({
     enabled: chatActionsEnabled && allowChatActionButtonShow,
+    // Force show the action button while the flyout is open and targeting the action menu button
+    forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
     menuButtonRef: messageActionButtonRef,
     onActionButtonClick: () => {
       // Open chat action flyout, and set the context menu to target the chat message action button
@@ -125,15 +127,7 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
             message.editedOn ? <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div> : undefined
           }
           positionActionMenu={false}
-          actionMenu={
-            actionMenuProps
-              ? {
-                  ...actionMenuProps,
-                  // Force show the action button while the flyout is open and targetting it
-                  showActionMenu: chatMessageActionFlyoutTarget === messageActionButtonRef ? true : undefined
-                }
-              : undefined
-          }
+          actionMenu={actionMenuProps}
         />
       </div>
 
@@ -160,16 +154,23 @@ export const ChatMessageComponent = (props: ChatMessageProps): JSX.Element => {
   return chatMessage;
 };
 
+type ChatMessageActionMenuProps = MenuProps & {
+  showActionMenu?: boolean | undefined;
+};
+
 /**
  * Props for the Chat.Message action menu.
  * This is the 3 dots that appear when hovering over one of your own chat messages.
  */
 const chatMessageActionMenuProps = (menuProps: {
+  /** Whether the action menu button is enabled, if not this will always return undefined */
   enabled: boolean;
+  /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
+  forceShow: boolean;
   menuButtonRef: React.MutableRefObject<HTMLElement | null>;
   onActionButtonClick: () => void;
   theme: Theme;
-}): MenuProps | undefined => {
+}): ChatMessageActionMenuProps | undefined => {
   if (!menuProps.enabled) {
     return undefined;
   }
@@ -178,7 +179,8 @@ const chatMessageActionMenuProps = (menuProps: {
     'ul&': { boxShadow: menuProps.theme.effects.elevation4, backgroundColor: menuProps.theme.palette.white }
   });
 
-  const actionMenuProps: MenuProps = {
+  const actionMenuProps: ChatMessageActionMenuProps = {
+    showActionMenu: menuProps.forceShow === true ? true : undefined,
     iconOnly: true,
     activeIndex: -1,
     className: menuClass,
