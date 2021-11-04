@@ -22,7 +22,7 @@ type ChatMessageComponentProps = {
 /**
  * @private
  */
-export const EditableChatMessage = (props: ChatMessageComponentProps): JSX.Element => {
+export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
 
   if (props.message.messageType !== 'chat') {

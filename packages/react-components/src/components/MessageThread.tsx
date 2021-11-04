@@ -36,7 +36,7 @@ import {
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
-import { EditableChatMessage } from './ChatMessageComponent';
+import { ChatMessageComponent } from './ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 
@@ -845,7 +845,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
       if (messageProps.message.messageType === 'chat') {
-        return <EditableChatMessage {...messageProps} message={messageProps.message} />;
+        return <ChatMessageComponent {...messageProps} message={messageProps.message} />;
       }
       return <></>;
     },
