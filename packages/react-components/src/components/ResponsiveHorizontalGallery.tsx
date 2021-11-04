@@ -3,7 +3,7 @@
 
 import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef } from 'react';
-import { HorizontalGallery } from './HorizontalGallery';
+import { HorizontalGallery, HorizontalGalleryStyles } from './HorizontalGallery';
 import { convertRemToPx } from './utils/common';
 import { useContainerWidth } from './utils/responsive';
 
@@ -14,6 +14,7 @@ import { useContainerWidth } from './utils/responsive';
 export const ResponsiveHorizontalGallery = (props: {
   children: React.ReactNode;
   containerStyles: IStyle;
+  horizontalGalleryStyles: HorizontalGalleryStyles;
   childWidthRem: number;
   gapWidthRem: number;
   buttonWidthRem?: number;
@@ -34,7 +35,9 @@ export const ResponsiveHorizontalGallery = (props: {
 
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
-      <HorizontalGallery childrenPerPage={childrenPerPage}>{props.children}</HorizontalGallery>
+      <HorizontalGallery childrenPerPage={childrenPerPage} styles={props.horizontalGalleryStyles}>
+        {props.children}
+      </HorizontalGallery>
     </div>
   );
 };
