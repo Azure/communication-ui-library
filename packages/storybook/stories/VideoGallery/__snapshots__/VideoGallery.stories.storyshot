@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-85"
+        className="css-84"
         data-ui-id="video-gallery"
         id="UILibraryFloatingTileHost"
       >
@@ -107,7 +107,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-83 css-35"
+                    className="ms-Stack css-82 css-35"
                   >
                     <div
                       className="ms-StackItem css-36"
@@ -174,7 +174,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-83 css-35"
+                    className="ms-Stack css-82 css-35"
                   >
                     <div
                       className="ms-StackItem css-36"
@@ -241,7 +241,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-83 css-35"
+                    className="ms-Stack css-82 css-35"
                   >
                     <div
                       className="ms-StackItem css-36"
@@ -308,7 +308,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-83 css-35"
+                    className="ms-Stack css-82 css-35"
                   >
                     <div
                       className="ms-StackItem css-36"

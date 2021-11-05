@@ -48,7 +48,7 @@ export interface CallingTheme {
 }
 
 // @public
-export type CallParticipant = CommunicationParticipant & {
+export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
     isScreenSharing?: boolean;
     isMuted?: boolean;
@@ -379,15 +379,6 @@ export interface _Identifiers {
 }
 
 // @public
-export type InputBoxButtonProps = {
-    onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
-    onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    className?: string;
-    id?: string;
-    ariaLabel?: string;
-};
-
-// @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
     text: string;
@@ -630,11 +621,16 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 }
 
 // @public
+export type ParticipantListParticipant = CommunicationParticipant & {
+    isRemovable: boolean;
+};
+
+// @public
 export type ParticipantListProps = {
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     myUserId?: string;
     excludeMe?: boolean;
-    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -677,7 +673,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
@@ -717,7 +713,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+    onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;

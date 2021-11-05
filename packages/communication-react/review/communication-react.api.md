@@ -431,7 +431,7 @@ export interface CallingTheme {
 }
 
 // @public
-export type CallParticipant = CommunicationParticipant & {
+export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
     isScreenSharing?: boolean;
     isMuted?: boolean;
@@ -668,7 +668,7 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 // @public
 export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBaseSelectorProps) => {
     myUserId: string;
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
 };
 
 // @public
@@ -1206,15 +1206,6 @@ export interface IncomingCallState {
 }
 
 // @public
-export type InputBoxButtonProps = {
-    onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
-    onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    className?: string;
-    id?: string;
-    ariaLabel?: string;
-};
-
-// @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
     isScreenSharingOn: boolean;
 }) => void;
@@ -1666,11 +1657,16 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 }
 
 // @public
+export type ParticipantListParticipant = CommunicationParticipant & {
+    isRemovable: boolean;
+};
+
+// @public
 export type ParticipantListProps = {
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     myUserId?: string;
     excludeMe?: boolean;
-    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -1679,7 +1675,7 @@ export type ParticipantListProps = {
 
 // @public
 export type ParticipantListSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    participants: CallParticipant[];
+    participants: CallParticipantListParticipant[];
     myUserId: string;
 };
 
@@ -1725,14 +1721,14 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
 
 // @public
 export type ParticipantsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    participants: CallParticipant[];
+    participants: CallParticipantListParticipant[];
     myUserId: string;
 };
 
@@ -1821,7 +1817,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+    onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
