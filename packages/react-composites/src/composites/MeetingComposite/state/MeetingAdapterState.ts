@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationIdentifierKind } from '@azure/communication-signaling';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
