@@ -6,7 +6,8 @@ import {
   AvatarPersonaData,
   ChatAdapter,
   ChatComposite,
-  createAzureCommunicationChatAdapter
+  createAzureCommunicationChatAdapter,
+  fromFlatCommunicationIdentifier
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -45,7 +46,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     (async () => {
       const adapter = await createAzureCommunicationChatAdapter({
         endpoint: endpointUrl,
-        userId: { communicationUserId: userId },
+        userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
         displayName: displayName,
         credential: createAutoRefreshingCredential(userId, token),
         threadId: threadId
