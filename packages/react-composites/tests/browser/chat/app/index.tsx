@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -14,6 +14,7 @@ import {
 } from '../../../../src';
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
+import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -37,7 +38,7 @@ function App(): JSX.Element {
       setChatAdapter(
         await createAzureCommunicationChatAdapter({
           endpoint,
-          userId: { communicationUserId: userId },
+          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
           displayName,
           credential: new AzureCommunicationTokenCredential(token),
           threadId

@@ -17,7 +17,7 @@ export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element 
       const createAdapter = async (): Promise<void> => {
         setCallAdapter(
           await createAzureCommunicationCallAdapter({
-            userId: { communicationUserId: props.userId.communicationUserId },
+            userId: props.userId,
             displayName: props.displayName,
             credential: new AzureCommunicationTokenCredential(props.accessToken),
             locator: props.callLocator

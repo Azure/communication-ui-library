@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -15,6 +15,7 @@ import {
 import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
+import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -34,7 +35,7 @@ function App(): JSX.Element {
     const initialize = async (): Promise<void> => {
       const credential = new AzureCommunicationTokenCredential(token);
       const adapter = await createAzureCommunicationMeetingAdapter({
-        userId: { communicationUserId: userId },
+        userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
         displayName,
         credential,
         callLocator: { groupId: groupId },
