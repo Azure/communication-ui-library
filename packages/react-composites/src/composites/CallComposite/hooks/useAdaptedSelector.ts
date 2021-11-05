@@ -9,8 +9,7 @@ import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
-import { CommunicationUserKind } from '@azure/communication-common';
-
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 /**
  * @private
  */
@@ -77,7 +76,7 @@ export const useSelectorWithAdaptation = <
 
 const memoizeState = memoizeOne(
   (
-    userId: CommunicationUserKind,
+    userId: CommunicationIdentifierKind,
     deviceManager: DeviceManagerState,
     calls: { [key: string]: CallState },
     latestErrors: CallErrors,
@@ -98,8 +97,7 @@ const memoizeCalls = memoizeOne((call?: CallState): { [key: string]: CallState }
 
 const adaptCompositeState = (compositeState: CallAdapterState): CallClientState => {
   return memoizeState(
-    // xkcd: FIXME
-    compositeState.userId as CommunicationUserKind,
+    compositeState.userId,
     compositeState.devices,
     memoizeCalls(compositeState.call),
     // This is an unsafe type expansion.
