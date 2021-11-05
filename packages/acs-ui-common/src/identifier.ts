@@ -27,9 +27,6 @@ const TEAMS_VISITOR_PREFIX = '8:teamsvisitor:';
  */
 export const toFlatCommunicationIdentifier = (identifier: CommunicationIdentifier): string => {
   if (isCommunicationUserIdentifier(identifier)) {
-    if (identifier.communicationUserId.startsWith(COMMUNICATION_USER_PREFIX + COMMUNICATION_USER_PREFIX)) {
-      throw new Error(`xkcd gungho userID value ${identifier.communicationUserId}`);
-    }
     return identifier.communicationUserId;
   }
   if (isMicrosoftTeamsUserIdentifier(identifier)) {
@@ -56,9 +53,6 @@ export const toFlatCommunicationIdentifier = (identifier: CommunicationIdentifie
  * @public
  */
 export const fromFlatCommunicationIdentifier = (id: string): CommunicationIdentifier => {
-  if (id.startsWith(COMMUNICATION_USER_PREFIX + COMMUNICATION_USER_PREFIX)) {
-    throw new Error(`xkcd gungho flat userID ${id}`);
-  }
   if (id.startsWith(COMMUNICATION_USER_PREFIX)) {
     // The prefix is preserved for this variant of the identifier.
     return { communicationUserId: id };
