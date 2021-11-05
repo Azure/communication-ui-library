@@ -7,10 +7,12 @@ import { BaseCustomStyles } from '../types';
 import {
   inputBoxStyle,
   inputBoxWrapperStyle,
-  inputButtonContainerStyle,
   inputButtonStyle,
   textFieldStyle,
-  textContainerStyle
+  textContainerStyle,
+  inlineButtonsContainerStyle,
+  newLineButtonsContainerStyle,
+  inputBoxNewLineSpaceAffordance
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -32,6 +34,10 @@ export interface InputBoxStylesProps extends BaseCustomStyles {
 
 type InputBoxComponentProps = {
   children: ReactNode;
+  /**
+   * Inline child elements passed in. Setting to false will mean they are on a new line.
+   */
+  inlineChildren: boolean;
   'data-ui-id'?: string;
   id?: string;
   textValue: string;
@@ -71,7 +77,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const theme = useTheme();
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
-  const mergedTextFiledStyle = mergeStyles(inputBoxStyle, inputClassName);
+  const mergedTextFiledStyle = mergeStyles(
+    inputBoxStyle,
+    inputClassName,
+    props.inlineChildren ? {} : inputBoxNewLineSpaceAffordance
+  );
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(
@@ -114,19 +124,24 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           disabled={disabled}
           errorMessage={errorMessage}
         />
-        <div className={inputButtonContainerStyle(theme.rtl)}>{children}</div>
+        <Stack
+          horizontal
+          className={mergeStyles(props.inlineChildren ? inlineButtonsContainerStyle : newLineButtonsContainerStyle)}
+        >
+          {children}
+        </Stack>
       </div>
     </Stack>
   );
 };
 
 /**
- * Props for dispalying a send button besides the text input area.
+ * Props for displaying a send button besides the text input area.
  *
- * @public
+ * @private
  */
 export type InputBoxButtonProps = {
-  onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+  onRenderIcon: (isHover: boolean) => JSX.Element;
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   className?: string;
   id?: string;
@@ -138,7 +153,7 @@ export type InputBoxButtonProps = {
  */
 export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   const { onRenderIcon, onClick, ariaLabel, className, id } = props;
-  const [isMouseOverIcon, setIsMouseOverIcon] = useState(false);
+  const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
   return (
     <IconButton
@@ -147,12 +162,12 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
       onClick={onClick}
       id={id}
       onMouseEnter={() => {
-        setIsMouseOverIcon(true);
+        setIsHover(true);
       }}
       onMouseLeave={() => {
-        setIsMouseOverIcon(false);
+        setIsHover(false);
       }}
-      onRenderIcon={() => onRenderIcon(props, isMouseOverIcon)}
+      onRenderIcon={() => onRenderIcon(isHover)}
     />
   );
 };
