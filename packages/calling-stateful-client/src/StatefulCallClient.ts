@@ -8,12 +8,7 @@ import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView } from './StreamUtils';
-import {
-  CommunicationIdentifier,
-  CommunicationUserIdentifier,
-  CommunicationUserKind,
-  getIdentifierKind
-} from '@azure/communication-common';
+import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -250,7 +245,7 @@ export const createStatefulCallClient = (
 ): StatefulCallClient => {
   return createStatefulCallClientWithDeps(
     new CallClient(),
-    new CallContext(getIdentifierKind(args.userId) as CommunicationUserKind, options?.maxStateChangeListeners),
+    new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
     new InternalCallContext()
   );
 };

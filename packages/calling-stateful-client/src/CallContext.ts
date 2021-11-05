@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationUserKind } from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
   DeviceAccess,
@@ -56,7 +56,7 @@ export class CallContext {
   private _atomicId: number;
   private _batchMode: boolean;
 
-  constructor(userId: CommunicationUserKind, maxListeners = 50) {
+  constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._state = {
       calls: {},
       callsEnded: {},
