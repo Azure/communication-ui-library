@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "updating snippets to set width and height on parent containers of composites",
+  "packageName": "@internal/storybook",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
