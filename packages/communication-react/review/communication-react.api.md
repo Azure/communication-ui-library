@@ -1919,7 +1919,7 @@ export interface SystemMessageCommon extends MessageCommon {
 }
 
 // @public
-export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
+export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
 // @public
 export type TopicChangedListener = (event: {
