@@ -47,7 +47,7 @@ function App(): JSX.Element {
         );
         setCallAdapter(
           await createAzureCommunicationCallAdapter({
-            userId: { communicationUserId: userId },
+            userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
             displayName,
             credential,
             locator: { groupId }
