@@ -35,7 +35,6 @@ A React library providing UI components and  making it simple for you to build m
 
 ## Samples
 
-🚧 We are working on polishing up the samples in this repo 🚧.
 
 Check out [Storybook](https://azure.github.io/communication-ui-library) to try out the UI Library today!
 
