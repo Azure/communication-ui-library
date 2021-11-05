@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import {
-  CallParticipant,
+  CallParticipantListParticipant,
   CameraButton,
   ControlBar as ControlBarComponent,
   EndCallButton,
@@ -29,34 +29,38 @@ const CustomButtonsExampleText = require('!!raw-loader!./snippets/CustomButtons.
 const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/CustomControlBarStyles.snippet.tsx').default;
 const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
 
-const mockParticipants: CallParticipant[] = [
+const mockParticipants: CallParticipantListParticipant[] = [
   {
     userId: 'user1',
     displayName: 'You',
     state: 'Connected',
     isMuted: true,
-    isScreenSharing: false
+    isScreenSharing: false,
+    isRemovable: true
   },
   {
     userId: 'user2',
     displayName: 'Hal Jordan',
     state: 'Connected',
     isMuted: true,
-    isScreenSharing: true
+    isScreenSharing: true,
+    isRemovable: true
   },
   {
     userId: 'user3',
     displayName: 'Barry Allen',
     state: 'Idle',
     isMuted: false,
-    isScreenSharing: false
+    isScreenSharing: false,
+    isRemovable: true
   },
   {
     userId: 'user4',
     displayName: 'Bruce Wayne',
     state: 'Connecting',
     isMuted: false,
-    isScreenSharing: false
+    isScreenSharing: false,
+    isRemovable: false
   }
 ];
 

@@ -5,16 +5,20 @@ import { getUserId, getDisplayName, getParticipants, ChatBaseSelectorProps } fro
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatParticipant } from '@azure/communication-chat';
-import { CommunicationParticipant } from '@internal/react-components';
+import { ParticipantListParticipant } from '@internal/react-components';
 import { ChatClientState } from '@internal/chat-stateful-client';
+import { getIdentifierKind } from '@azure/communication-common';
 
 const convertChatParticipantsToCommunicationParticipants = (
   chatParticipants: ChatParticipant[]
-): CommunicationParticipant[] => {
+): ParticipantListParticipant[] => {
   return chatParticipants.map((participant: ChatParticipant) => {
     return {
       userId: toFlatCommunicationIdentifier(participant.id),
-      displayName: participant.displayName
+      displayName: participant.displayName,
+      // ACS users can not remove Teams users.
+      // Removing phone numbers or unknown types of users is undefined.
+      isRemovable: getIdentifierKind(participant.id).kind == 'communicationUser'
     };
   });
 };
@@ -22,7 +26,7 @@ const convertChatParticipantsToCommunicationParticipants = (
 /**
  * get the index of moderator to help updating its display name if they are the local user or removing them from list of participants otherwise
  */
-const moderatorIndex = (participants: CommunicationParticipant[]): number => {
+const moderatorIndex = (participants: ParticipantListParticipant[]): number => {
   return participants.map((p) => p.displayName).indexOf(undefined);
 };
 
@@ -36,7 +40,7 @@ export type ChatParticipantListSelector = (
   props: ChatBaseSelectorProps
 ) => {
   myUserId: string;
-  participants: CommunicationParticipant[];
+  participants: ParticipantListParticipant[];
 };
 
 /**

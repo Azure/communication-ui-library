@@ -33,6 +33,13 @@ export const inputBoxStyle = mergeStyles({
 });
 
 /**
+ * @private
+ */
+export const inputBoxNewLineSpaceAffordance: IStyle = {
+  marginBottom: '2rem'
+};
+
+/**
  *
  * @private
  */
@@ -89,15 +96,20 @@ export const inputButtonStyle = mergeStyles({
 /**
  * @private
  */
-export const inputButtonContainerStyle = (rtl?: boolean): string =>
-  mergeStyles({
-    display: 'flex',
-    alignItems: 'baseline',
-    justifyContent: 'center',
-    position: 'absolute',
-    margin: 'auto',
-    top: '0',
-    bottom: '0',
-    right: !rtl ? '0.3rem' : undefined,
-    left: rtl ? '0.3rem' : undefined
-  });
+export const inlineButtonsContainerStyle: IStyle = {
+  position: 'absolute',
+  right: '0.3rem',
+  top: '0',
+  bottom: '0',
+  gap: '0.25rem'
+};
+
+/**
+ * @private
+ */
+export const newLineButtonsContainerStyle: IStyle = {
+  position: 'absolute',
+  right: '0.8rem',
+  bottom: '0.8rem',
+  gap: '1rem'
+};

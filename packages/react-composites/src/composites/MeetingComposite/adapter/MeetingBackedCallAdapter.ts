@@ -9,6 +9,8 @@ import { AudioDeviceInfo, VideoDeviceInfo, Call, PermissionConstraints } from '@
 import { MeetingAdapterState, MeetingState } from '..';
 import { CallState } from '@internal/calling-stateful-client';
 import { callParticipantsFromMeetingParticipants } from '../state/MeetingParticipants';
+import { getIdentifierKind } from '@azure/communication-common';
+import { CommunicationUserKind } from '@azure/communication-signaling';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -40,7 +42,7 @@ function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterSta
   return {
     isLocalPreviewMicrophoneEnabled: meetingState.isLocalPreviewMicrophoneEnabled,
     page: meetingPageToCallPage(meetingState.page),
-    userId: { kind: 'communicationUser', communicationUserId: meetingState.userId.communicationUserId },
+    userId: getIdentifierKind(meetingState.userId) as CommunicationUserKind,
     displayName: meetingState.displayName,
     call: meetingState.meeting ? callStateFromMeetingState(meetingState.meeting) : undefined,
     devices: meetingState.devices,

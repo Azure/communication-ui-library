@@ -28,6 +28,11 @@ export type ChatMessageComponentAsEditBoxProps = {
   onSubmit: (text: string) => void;
   initialValue: string;
   strings: MessageThreadStrings;
+  /**
+   * Inline the accept and reject edit buttons when editing a message.
+   * Setting to false will mean they are on a new line inside the editable chat message.
+   */
+  inlineEditButtons: boolean;
 };
 
 /**
@@ -78,9 +83,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   return (
     <InputBoxComponent
+      inlineChildren={props.inlineEditButtons}
       id={'editbox'}
       textFieldRef={editTextFieldRef}
-      inputClassName={editBoxStyle}
+      inputClassName={editBoxStyle(props.inlineEditButtons)}
       placeholderText={strings.editBoxPlaceholderText}
       textValue={textValue}
       onChange={setText}

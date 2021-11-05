@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ParticipantList as ParticipantListComponent } from '@azure/communication-react';
+import { ParticipantList as ParticipantListComponent, ParticipantListParticipant } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Title, Heading, Description, Canvas, Props } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -81,13 +81,14 @@ const getDocs: () => JSX.Element = () => {
 const ParticipantListStory: (args) => JSX.Element = (args) => {
   const participantsControls = [...args.remoteParticipants, ...args.localParticipant];
 
-  const mockParticipants = participantsControls.map((p, i) => {
+  const mockParticipants: ParticipantListParticipant[] = participantsControls.map((p, i) => {
     return {
       userId: `userId ${i}`,
       displayName: p.name,
       state: p.status,
       isMuted: p.isMuted,
-      isScreenSharing: p.isScreenSharing
+      isScreenSharing: p.isScreenSharing,
+      isRemovable: true
     };
   });
 
@@ -104,7 +105,7 @@ const ParticipantListStory: (args) => JSX.Element = (args) => {
         participants={mockParticipants}
         myUserId={myUserId}
         excludeMe={args.excludeMe}
-        onParticipantRemove={onParticipantRemove}
+        onRemoveParticipant={onParticipantRemove}
       />
     </Stack>
   );

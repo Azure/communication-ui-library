@@ -17,6 +17,11 @@ type ChatMessageComponentProps = {
   onUpdateMessage?: (messageId: string, content: string) => Promise<void>;
   onDeleteMessage?: (messageId: string) => Promise<void>;
   strings: MessageThreadStrings;
+  /**
+   * Inline the accept and reject edit buttons when editing a message.
+   * Setting to false will mean they are on a new line inside the editable chat message.
+   */
+  inlineAcceptRejectEditButtons: boolean;
 };
 
 /**
@@ -40,6 +45,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     return (
       <ChatMessageComponentAsEditBox
         initialValue={props.message.content ?? ''}
+        inlineEditButtons={props.inlineAcceptRejectEditButtons}
         strings={props.strings}
         onSubmit={async (text) => {
           props.onUpdateMessage &&

@@ -12,7 +12,7 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
-import { CallParticipant } from '@internal/react-components';
+import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
@@ -152,13 +152,13 @@ export const optionsButtonSelector: OptionsButtonSelector;
 
 // @public
 export type ParticipantListSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    participants: CallParticipant[];
+    participants: CallParticipantListParticipant[];
     myUserId: string;
 };
 
 // @public
 export type ParticipantsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    participants: CallParticipant[];
+    participants: CallParticipantListParticipant[];
     myUserId: string;
 };
 

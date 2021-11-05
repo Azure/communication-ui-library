@@ -14,6 +14,7 @@ import {
   TransferCallFeature,
   VideoStreamRendererView
 } from '@azure/communication-calling';
+import { CommunicationUserKind } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallError } from './CallClientState';
 import { CallContext } from './CallContext';
@@ -74,12 +75,13 @@ jest.mock('@azure/communication-calling', () => {
 
 describe('Stateful call client', () => {
   test('should allow developer to specify userId and provide access to it in state', async () => {
+    const userId: CommunicationUserKind = { kind: 'communicationUser', communicationUserId: 'someUser' };
     const client = createStatefulCallClientWithDeps(
       createMockCallClient(),
-      new CallContext({ kind: 'communicationUser', communicationUserId: 'someUser' }),
+      new CallContext(userId),
       new InternalCallContext()
     );
-    expect(client.getState().userId.communicationUserId).toBe('someUser');
+    expect(client.getState().userId).toEqual(userId);
   });
 
   test('should update callAgent state and have displayName when callAgent is created', async () => {
