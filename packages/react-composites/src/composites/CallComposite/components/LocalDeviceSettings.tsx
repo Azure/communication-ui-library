@@ -141,9 +141,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           props.microphonePermissionGranted
             ? props.selectedMicrophone
               ? props.selectedMicrophone.id
-              : props.microphones
-              ? props.microphones[0]?.id
-              : ''
+              : defaultDeviceId(props.microphones)
             : 'deniedOrUnknown'
         }
         onChange={(
@@ -160,9 +158,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         styles={dropDownStyles(theme)}
         disabled={props.speakers.length === 0}
         options={getDropDownList(props.speakers)}
-        defaultSelectedKey={
-          props.selectedSpeaker ? props.selectedSpeaker.id : props.speakers ? props.speakers[0]?.id : ''
-        }
+        defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
         onChange={(
           event: React.FormEvent<HTMLDivElement>,
           option?: IDropdownOption | undefined,
@@ -174,4 +170,15 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
       />
     </Stack>
   );
+};
+
+const defaultDeviceId = (devices: AudioDeviceInfo[]): string => {
+  if (devices.length === 0) {
+    return '';
+  }
+  const defaultDevice = devices.find((device) => device.isSystemDefault);
+  if (defaultDevice) {
+    return defaultDevice.id;
+  }
+  return devices[0].id;
 };
