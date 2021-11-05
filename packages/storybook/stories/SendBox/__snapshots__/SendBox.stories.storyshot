@@ -60,10 +60,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               </div>
             </div>
             <div
-              className="css-4"
+              className="ms-Stack css-19"
             >
               <button
-                className="ms-Button ms-Button--icon css-64 css-59 root-19"
+                className="ms-Button ms-Button--icon css-64 css-59 root-20"
                 data-is-focusable={true}
                 id="sendIconWrapper"
                 onClick={[Function]}
@@ -77,12 +77,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-20"
+                  className="ms-Button-flexContainer flexContainer-21"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37 css-60 root-27"
+                    className="root-37 css-60 root-28"
                     data-icon-name="SendBoxSend"
                   >
                     <span
