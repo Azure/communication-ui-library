@@ -16,6 +16,7 @@ import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationIdentifierKind as CommunicationIdentifierKind_2 } from '@azure/communication-signaling';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -533,7 +534,7 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
     meeting: MeetingState | undefined;
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationIdentifierKind_2;
 }
 
 // @alpha

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-signaling';
 import { CallAdapter, CallAdapterClientState, CallAdapterState, CallAdapterUiState } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { callPageToMeetingPage, MeetingCompositePage } from './MeetingCompositePage';
@@ -29,7 +29,7 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
   /** ID of the meeting participant using this Meeting Adapter. */
-  userId: CommunicationUserIdentifier;
+  userId: CommunicationIdentifierKind;
   /** Display name of the meeting participant using this Meeting Adapter. */
   displayName: string | undefined;
   /** State of the current Meeting. */
