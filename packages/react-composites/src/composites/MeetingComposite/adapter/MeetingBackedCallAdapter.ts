@@ -41,8 +41,7 @@ function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterSta
   return {
     isLocalPreviewMicrophoneEnabled: meetingState.isLocalPreviewMicrophoneEnabled,
     page: meetingPageToCallPage(meetingState.page),
-    // xkcd: FIXME
-    userId: meetingState.userId as CommunicationUserKind,
+    userId: meetingState.userId,
     displayName: meetingState.displayName,
     call: meetingState.meeting ? callStateFromMeetingState(meetingState.meeting) : undefined,
     devices: meetingState.devices,
