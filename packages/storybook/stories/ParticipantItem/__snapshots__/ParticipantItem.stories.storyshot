@@ -28,7 +28,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
         }
       >
         <div
-          className="css-80"
+          className="css-79"
           data-is-focusable={true}
           onClick={[Function]}
           onMouseEnter={[Function]}
@@ -99,7 +99,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant Item Part
           >
             <i
               aria-hidden={true}
-              className="root-37 css-81"
+              className="root-37 css-80"
               data-icon-name="ParticipantItemOptions"
             >
               <span
