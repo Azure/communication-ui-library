@@ -1206,15 +1206,6 @@ export interface IncomingCallState {
 }
 
 // @public
-export type InputBoxButtonProps = {
-    onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
-    onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    className?: string;
-    id?: string;
-    ariaLabel?: string;
-};
-
-// @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
     isScreenSharingOn: boolean;
 }) => void;
@@ -1821,7 +1812,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+    onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;

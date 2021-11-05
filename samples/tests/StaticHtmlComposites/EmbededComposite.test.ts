@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { encodeQueryData, createChatThreadAndUsers } from './utils';
+import { encodeQueryData, createChatThreadAndUsers } from '../common/utils';
 import * as path from 'path';
 import dotenv from 'dotenv';
 

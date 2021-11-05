@@ -379,15 +379,6 @@ export interface _Identifiers {
 }
 
 // @public
-export type InputBoxButtonProps = {
-    onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
-    onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    className?: string;
-    id?: string;
-    ariaLabel?: string;
-};
-
-// @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
     text: string;
@@ -717,7 +708,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+    onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
