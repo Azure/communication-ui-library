@@ -56,7 +56,7 @@ export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT ext
 export type MessageStatus = 'delivered' | 'sending' | 'seen' | 'failed';
 
 // @public
-export const toFlatCommunicationIdentifier: (id: CommunicationIdentifier) => string;
+export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
 // (No @packageDocumentation comment for this package)
 

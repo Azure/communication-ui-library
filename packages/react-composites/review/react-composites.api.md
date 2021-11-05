@@ -15,7 +15,7 @@ import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import type { CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -134,7 +134,7 @@ export interface CallAdapterCallManagement {
 
 // @public
 export type CallAdapterClientState = {
-    userId: CommunicationUserKind;
+    userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
@@ -237,7 +237,9 @@ export interface CallCompositeStrings {
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
+    lobbyScreenConnectingToCallMoreDetails?: string;
     lobbyScreenConnectingToCallTitle: string;
+    lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
     mutedMessage: string;
@@ -323,7 +325,7 @@ export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public
 export type ChatCompositeClientState = {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName: string;
     thread: ChatThreadClientState;
     latestErrors: AdapterErrors;
@@ -396,6 +398,8 @@ export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
 export const COMPOSITE_ONLY_ICONS: {
+    lobbyScreenConnectingToCall: JSX.Element;
+    lobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
@@ -436,6 +440,8 @@ export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, cre
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
+    lobbyScreenConnectingToCall: JSX.Element;
+    lobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
     LocalDeviceSettingsMic: JSX.Element;
     LocalDeviceSettingsSpeaker: JSX.Element;
@@ -478,6 +484,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     errorBarCallMicrophoneMutedBySystem: JSX.Element;
     errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
     errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAccessDenied: JSX.Element;
     errorBarCallCameraAlreadyInUse: JSX.Element;
     errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
@@ -526,7 +533,7 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
     meeting: MeetingState | undefined;
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationIdentifierKind;
 }
 
 // @alpha

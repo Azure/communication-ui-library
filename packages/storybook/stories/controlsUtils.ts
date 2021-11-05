@@ -309,7 +309,8 @@ export const defaultCallCompositeHiddenControls = {
   locale: hiddenControl,
   onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl,
-  options: hiddenControl
+  options: hiddenControl,
+  callInvitationUrl: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
