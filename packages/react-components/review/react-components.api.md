@@ -48,7 +48,7 @@ export interface CallingTheme {
 }
 
 // @public
-export type CallParticipant = CommunicationParticipant & {
+export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
     isScreenSharing?: boolean;
     isMuted?: boolean;
@@ -621,11 +621,16 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 }
 
 // @public
+export type ParticipantListParticipant = CommunicationParticipant & {
+    isRemovable: boolean;
+};
+
+// @public
 export type ParticipantListProps = {
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     myUserId?: string;
     excludeMe?: boolean;
-    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -668,7 +673,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
