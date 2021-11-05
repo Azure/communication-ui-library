@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallParticipant } from '@internal/react-components';
+import { CallParticipantListParticipant } from '@internal/react-components';
 import { participantListSelector } from './participantListSelector';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallingBaseSelectorProps } from '.';
@@ -16,7 +16,7 @@ export type ParticipantsButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  participants: CallParticipant[];
+  participants: CallParticipantListParticipant[];
   myUserId: string;
 };
 
@@ -30,7 +30,7 @@ export const participantsButtonSelector: ParticipantsButtonSelector = createSele
   (
     participantListProps
   ): {
-    participants: CallParticipant[];
+    participants: CallParticipantListParticipant[];
     myUserId: string;
   } => {
     return participantListProps;

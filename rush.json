@@ -78,6 +78,11 @@
       "reviewCategory": "sample"
     },
     {
+      "packageName": "sample-automation-tests",
+      "projectFolder": "samples/tests",
+      "reviewCategory": "sample"
+    },
+    {
       "packageName": "sample-static-html-composites",
       "projectFolder": "samples/StaticHtmlComposites",
       "reviewCategory": "sample"

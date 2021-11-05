@@ -48,7 +48,7 @@ export interface CallingTheme {
 }
 
 // @public
-export type CallParticipant = CommunicationParticipant & {
+export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
     isScreenSharing?: boolean;
     isMuted?: boolean;
@@ -275,6 +275,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     errorBarCallMicrophoneMutedBySystem: JSX.Element;
     errorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
     errorBarCallLocalVideoFreeze: JSX.Element;
+    errorBarCallCameraAccessDenied: JSX.Element;
     errorBarCallCameraAlreadyInUse: JSX.Element;
     errorBarCallMacOsCameraAccessDenied: JSX.Element;
 };
@@ -305,6 +306,7 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    callCameraAccessDenied: string;
     callCameraAlreadyInUse: string;
     callLocalVideoFreeze: string;
     callMacOsCameraAccessDenied: string;
@@ -375,14 +377,6 @@ export interface _Identifiers {
     videoGallery: string;
     videoTile: string;
 }
-
-// @public
-export type InputBoxButtonProps = {
-    onRenderIcon: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
-    onClick: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    className?: string;
-    id?: string;
-};
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -477,7 +471,9 @@ export type MessageThreadProps = {
 
 // @public
 export interface MessageThreadStrings {
+    editBoxCancelButton: string;
     editBoxPlaceholderText: string;
+    editBoxSubmitButton: string;
     editBoxTextLimit: string;
     editedTag: string;
     editMessage: string;
@@ -625,11 +621,16 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 }
 
 // @public
+export type ParticipantListParticipant = CommunicationParticipant & {
+    isRemovable: boolean;
+};
+
+// @public
 export type ParticipantListProps = {
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     myUserId?: string;
     excludeMe?: boolean;
-    onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
+    onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -672,7 +673,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderParticipant?: (participant: CommunicationParticipant) => JSX.Element | null;
     onRenderParticipantList?: (props: ParticipantListProps) => JSX.Element | null;
-    participants: CommunicationParticipant[];
+    participants: ParticipantListParticipant[];
     strings?: Partial<ParticipantsButtonStrings>;
     styles?: ParticipantsButtonStyles;
 }
@@ -712,7 +713,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
-    onRenderIcon?: (props: InputBoxButtonProps, isMouseOverSendIcon: boolean) => JSX.Element;
+    onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
@@ -816,6 +817,7 @@ export interface VideoGalleryProps {
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
     localVideoViewOption?: VideoStreamOptions;
+    maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;

@@ -54,16 +54,18 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
 
   if (adapter) {
     return (
-      <ChatComposite
-        adapter={adapter}
-        fluentTheme={props.fluentTheme}
-        options={{
-          errorBar: props.errorBar,
-          participantPane: props.participants,
-          topic: props.topic
-        }}
-        locale={props.locale}
-      />
+      <div style={{ height: '90vh', width: '90vw' }}>
+        <ChatComposite
+          adapter={adapter}
+          fluentTheme={props.fluentTheme}
+          options={{
+            errorBar: props.errorBar,
+            participantPane: props.participants,
+            topic: props.topic
+          }}
+          locale={props.locale}
+        />
+      </div>
     );
   }
   if (credential === undefined) {

@@ -25,6 +25,7 @@ import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from 
 import { useIdentifiers } from '../identifiers';
 import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
+import { ParticipantListParticipant } from '../types';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
@@ -85,7 +86,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
    * Participants in user call or chat
    */
-  participants: CommunicationParticipant[];
+  participants: ParticipantListParticipant[];
   /**
    * User ID of user
    */

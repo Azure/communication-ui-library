@@ -19,6 +19,8 @@ import { IDS } from '../../common/constants';
 import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import memoizeOne from 'memoize-one';
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
+import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CommunicationUserIdentifier } from '@azure/communication-signaling';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -40,7 +42,7 @@ function App(): JSX.Element {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       const newAdapter = await createAzureCommunicationCallAdapter({
-        userId: { communicationUserId: userId },
+        userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
         displayName,
         credential: new AzureCommunicationTokenCredential(token),
         locator: { groupId: groupId }

@@ -72,7 +72,9 @@
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
-    "noDisplayNameSub": "No name"
+    "noDisplayNameSub": "No name",
+    "editBoxCancelButton": "Cancel",
+    "editBoxSubmitButton": "Submit"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -95,6 +97,7 @@
     "callMicrophoneMutedBySystem": "You are muted by your system.",
     "callMacOsMicrophoneAccessDenied": "Unable to access microphone. Grant microphone permission in your macOS privacy settings.",
     "callLocalVideoFreeze": "Network bandwidth is poor. Your video may appear paused for others on the call.",
+    "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",
     "callCameraAlreadyInUse": "Unable to access camera. It may already be in use by another application.",
     "callMacOsCameraAccessDenied": "MacOS is blocking access to your camera. Update your privacy settings to allow this browser to access your camera.",
     "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen."

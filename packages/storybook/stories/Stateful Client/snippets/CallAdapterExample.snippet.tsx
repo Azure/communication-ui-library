@@ -10,14 +10,14 @@ type CallAdapterExampleProps = {
   displayName: string;
 };
 
-export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element | undefined => {
+export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element => {
   const [callAdapter, setCallAdapter] = useState<CallAdapter>();
   useEffect(() => {
     if (props) {
       const createAdapter = async (): Promise<void> => {
         setCallAdapter(
           await createAzureCommunicationCallAdapter({
-            userId: { communicationUserId: props.userId.communicationUserId },
+            userId: props.userId,
             displayName: props.displayName,
             credential: new AzureCommunicationTokenCredential(props.accessToken),
             locator: props.callLocator
@@ -33,5 +33,9 @@ export const CallAdapterExample = (props: CallAdapterExampleProps): JSX.Element 
     };
   }, [props, callAdapter]);
 
-  return callAdapter && <CallComposite adapter={callAdapter} />;
+  return (
+    <div style={{ height: '100vh', width: '100vw' }}>
+      {callAdapter ? <CallComposite adapter={callAdapter} /> : <>Initializing</>}
+    </div>
+  );
 };

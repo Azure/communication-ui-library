@@ -1,37 +1,41 @@
 import {
-  CallParticipant,
-  CommunicationParticipant,
+  CallParticipantListParticipant,
   FluentThemeProvider,
   ParticipantList,
-  ParticipantItem
+  ParticipantItem,
+  ParticipantListParticipant
 } from '@azure/communication-react';
 import { Icon, IContextualMenuItem, PersonaPresence, Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 
-const mockParticipants = [
+const mockParticipants: CallParticipantListParticipant[] = [
   {
     userId: 'user1',
     displayName: 'You',
     state: 'Connected',
-    isMuted: true
+    isMuted: true,
+    isRemovable: true
   },
   {
     userId: 'user2',
     displayName: 'Peter Parker',
     state: 'Connected',
-    isMuted: false
+    isMuted: false,
+    isRemovable: true
   },
   {
     userId: 'user3',
     displayName: 'Matthew Murdock',
     state: 'Idle',
-    isMuted: false
+    isMuted: false,
+    isRemovable: true
   },
   {
     userId: 'user4',
     displayName: 'Frank Castiglione',
     state: 'Connecting',
-    isMuted: false
+    isMuted: false,
+    isRemovable: false
   }
 ];
 
@@ -40,11 +44,10 @@ export const InteractiveCallParticipantListExample: () => JSX.Element = () => {
 
   const mockMyUserId = 'user1';
 
-  const onRenderParticipant = (participant: CommunicationParticipant): JSX.Element => {
+  const onRenderParticipant = (participant: ParticipantListParticipant): JSX.Element => {
     const participantIndex = participants.map((p) => p.userId).indexOf(participant.userId);
 
-    // Try to consider CommunicationParticipant as CallParticipant
-    const callingParticipant = participants[participantIndex] as CallParticipant;
+    const callingParticipant = participants[participantIndex] as CallParticipantListParticipant;
 
     let presence: PersonaPresence | undefined = undefined;
     if (callingParticipant) {

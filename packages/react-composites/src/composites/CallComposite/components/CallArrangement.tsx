@@ -4,8 +4,6 @@
 import { Stack } from '@fluentui/react';
 import { ErrorBar, ErrorBarProps } from '@internal/react-components';
 import React from 'react';
-import { PermissionsBanner, PermissionsBannerProps } from '../../common/PermissionsBanner';
-import { permissionsBannerContainerStyle } from '../../common/styles/PermissionsBanner.styles';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
@@ -25,7 +23,6 @@ const NOTIFICATIONS_CONTAINER_ZINDEX = 9;
  */
 export interface CallArrangementProps {
   complianceBannerProps: ComplianceBannerProps;
-  permissionBannerProps: PermissionsBannerProps;
   errorBarProps: ErrorBarProps | false;
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps | false;
@@ -42,9 +39,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       <Stack.Item styles={notificationsContainerStyles(NOTIFICATIONS_CONTAINER_ZINDEX)}>
         <Stack>
           <ComplianceBanner {...props.complianceBannerProps} />
-        </Stack>
-        <Stack style={permissionsBannerContainerStyle}>
-          <PermissionsBanner {...props.permissionBannerProps} />
         </Stack>
         {props.errorBarProps !== false && (
           <Stack>
