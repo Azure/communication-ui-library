@@ -98,7 +98,8 @@ const memoizeCalls = memoizeOne((call?: CallState): { [key: string]: CallState }
 
 const adaptCompositeState = (compositeState: CallAdapterState): CallClientState => {
   return memoizeState(
-    compositeState.userId,
+    // xkcd: FIXME
+    compositeState.userId as CommunicationUserKind,
     compositeState.devices,
     memoizeCalls(compositeState.call),
     // This is an unsafe type expansion.

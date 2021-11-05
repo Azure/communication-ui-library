@@ -135,7 +135,7 @@ export interface CallAdapterCallManagement {
 
 // @public
 export type CallAdapterClientState = {
-    userId: CommunicationUserKind;
+    userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
