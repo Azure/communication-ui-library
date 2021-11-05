@@ -30,16 +30,16 @@ export interface CallScreenProps {
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, callLocator, displayName, webAppTitle, onCallEnded } = props;
   const [adapter, setAdapter] = useState<CallAdapter>();
-  const [callId, setCallId] = useState<string>();
+  const callIdRef = useRef<string>();
   const adapterRef = useRef<CallAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
 
   useEffect(() => {
-    if (!callId) {
+    if (!callIdRef.current) {
       return;
     }
-    console.log(`Call Id: ${callId}`);
-  }, [callId]);
+    console.log(`Call Id: ${callIdRef.current}`);
+  }, [callIdRef.current]);
 
   useEffect(() => {
     (async () => {
@@ -61,7 +61,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${webAppTitle}`;
 
-        setCallId(state?.call?.id);
+        callIdRef.current = state?.call?.id;
       });
       setAdapter(adapter);
       adapterRef.current = adapter;
