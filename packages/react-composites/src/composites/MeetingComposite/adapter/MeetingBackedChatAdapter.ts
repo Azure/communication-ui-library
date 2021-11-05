@@ -3,7 +3,6 @@
 
 import { MeetingAdapter } from './MeetingAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ErrorBarStrings } from '@internal/react-components';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { MeetingAdapterState, MeetingState } from '..';
@@ -27,7 +26,7 @@ function ChatAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterSta
   if (!meetingState.meeting) throw 'Cannot get chat adapter state. Meeting state is undefined.';
 
   return {
-    userId: toFlatCommunicationIdentifier(meetingState.userId),
+    userId: meetingState.userId,
     displayName: meetingState.displayName || '',
     thread: chatThreadStateFromMeetingState(meetingState.meeting),
     latestErrors: {} //@TODO: latest errors not supported in meeting composite yet.

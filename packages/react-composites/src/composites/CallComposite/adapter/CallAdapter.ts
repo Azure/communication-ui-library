@@ -13,7 +13,7 @@ import type {
 } from '@azure/communication-calling';
 
 import { VideoStreamOptions } from '@internal/react-components';
-import type { CommunicationUserKind, CommunicationIdentifierKind } from '@azure/communication-common';
+import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -45,7 +45,7 @@ export type CallAdapterUiState = {
  * @public
  */
 export type CallAdapterClientState = {
-  userId: CommunicationUserKind;
+  userId: CommunicationIdentifierKind;
   displayName?: string;
   call?: CallState;
   devices: DeviceManagerState;
