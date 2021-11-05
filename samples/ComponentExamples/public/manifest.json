@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ACS Component Examples",
+  "name": "A demo page for examples of Azure Communication Services UI Library",
   "icons": [
     {
       "src": "favicon.ico",

@@ -10,7 +10,7 @@ const messageContainerStyle = {
 };
 
 export const ComponentExample = (): JSX.Element => {
-  // usePropsFor will get all the pros and handlers to run the component
+  // usePropsFor will get all the props (including handlers) to run the component
   // Check component list supports usePropsFor() here: https://azure.github.io/communication-ui-library/iframe.html?id=statefulclient-reacthooks-usepropsfor--page&viewMode=story#usepropsfor-chat-app-example
   const sendBoxProps = usePropsFor(SendBox);
   const messageThreadProps = usePropsFor(MessageThread);
