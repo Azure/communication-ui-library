@@ -3,7 +3,7 @@
 
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { ChatMessage, ChatParticipant } from '@azure/communication-chat';
-import type { CommunicationUserKind } from '@azure/communication-common';
+import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterErrors, AdapterError } from '../../common/adapters';
 
 /**
@@ -23,8 +23,7 @@ export type ChatAdapterUiState = {
  * @public
  */
 export type ChatCompositeClientState = {
-  // Properties from backend services
-  userId: string;
+  userId: CommunicationIdentifierKind;
   displayName: string;
   thread: ChatThreadClientState;
   /**
