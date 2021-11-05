@@ -3,13 +3,12 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatClientState, ChatErrors, ChatThreadClientState } from '@internal/chat-stateful-client';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { ChatAdapterState } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 import memoizeOne from 'memoize-one';
-import { CommunicationIdentifierKind, getIdentifierKind } from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 
 /**
  * @private
@@ -93,7 +92,7 @@ const memoizeThreads = memoizeOne((thread: ChatThreadClientState) => ({ [thread.
 
 const adaptCompositeState = (compositeState: ChatAdapterState): ChatClientState => {
   return memoizeState(
-    getIdentifierKind(fromFlatCommunicationIdentifier(compositeState.userId)),
+    compositeState.userId,
     compositeState.displayName,
     memoizeThreads(compositeState.thread),
     // This is an unsafe type expansion.

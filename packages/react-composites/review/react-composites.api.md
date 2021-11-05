@@ -326,7 +326,7 @@ export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public
 export type ChatCompositeClientState = {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName: string;
     thread: ChatThreadClientState;
     latestErrors: AdapterErrors;

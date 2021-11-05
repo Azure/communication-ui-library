@@ -41,7 +41,7 @@ class ChatContext {
     this.threadId = threadId;
     if (!thread) throw 'Cannot find threadId, please initialize thread before use!';
     this.state = {
-      userId: toFlatCommunicationIdentifier(clientState.userId),
+      userId: clientState.userId,
       displayName: clientState.displayName,
       thread,
       latestErrors: clientState.latestErrors
@@ -73,7 +73,7 @@ class ChatContext {
     const thread = clientState.threads[this.threadId];
     if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
     this.setState({
-      userId: toFlatCommunicationIdentifier(clientState.userId),
+      userId: clientState.userId,
       displayName: clientState.displayName,
       thread,
       latestErrors: clientState.latestErrors
