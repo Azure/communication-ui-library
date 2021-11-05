@@ -1,6 +1,6 @@
 # UI Library Component and Binding Examples 
 
-This folder contains several mini examples of ACS UI Library component and binding.
+This folder contains several small examples of ACS UI Library component and binding.
 
 ## When should I use component instead of composite
 
