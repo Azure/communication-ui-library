@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { useSelector, getChatSelector, ChatClientState } from '@azure/communication-react';
+import { useSelector, getChatSelector, ChatClientState, useChatThreadClient } from '@azure/communication-react';
 import { Message } from '@azure/communication-react';
 import { MessageThread } from '@azure/communication-react';
-import { useChatThreadClient } from '@internal/chat-component-bindings';
 import React, { useEffect } from 'react';
 
 const customMessageContainerStyle = {

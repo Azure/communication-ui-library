@@ -4,7 +4,7 @@
     "outDir": "./dist/dist-esm",
     "baseUrl": "./src",
     "paths": {
-      "@azure/communication-react": ["../../../packages/communication-react/src"]
+      "@azure/communication-react": ["../../../packages/communication-react"]
     }
   },
   "typeRoots": ["./node_modules/@types"],
