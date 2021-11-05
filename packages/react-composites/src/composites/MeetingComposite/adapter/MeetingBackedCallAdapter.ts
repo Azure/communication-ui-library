@@ -40,7 +40,7 @@ function callAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterSta
   return {
     isLocalPreviewMicrophoneEnabled: meetingState.isLocalPreviewMicrophoneEnabled,
     page: meetingPageToCallPage(meetingState.page),
-    userId: { kind: 'communicationUser', communicationUserId: meetingState.userId.communicationUserId },
+    userId: meetingState.userId,
     displayName: meetingState.displayName,
     call: meetingState.meeting ? callStateFromMeetingState(meetingState.meeting) : undefined,
     devices: meetingState.devices,

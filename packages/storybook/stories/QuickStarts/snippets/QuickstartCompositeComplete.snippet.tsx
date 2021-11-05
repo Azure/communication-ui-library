@@ -1,11 +1,12 @@
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
   CallAdapter,
   createAzureCommunicationCallAdapter,
   ChatComposite,
   ChatAdapter,
-  createAzureCommunicationChatAdapter
+  createAzureCommunicationChatAdapter,
+  fromFlatCommunicationIdentifier
 } from '@azure/communication-react';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -39,7 +40,7 @@ function App(): JSX.Element {
       setChatAdapter(
         await createAzureCommunicationChatAdapter({
           endpoint: endpointUrl,
-          userId: { communicationUserId: userId },
+          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
           displayName,
           credential: new AzureCommunicationTokenCredential(token),
           threadId
@@ -47,7 +48,7 @@ function App(): JSX.Element {
       );
       setCallAdapter(
         await createAzureCommunicationCallAdapter({
-          userId: { communicationUserId: userId },
+          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
           displayName,
           credential: new AzureCommunicationTokenCredential(token),
           locator: { groupId }
@@ -59,10 +60,14 @@ function App(): JSX.Element {
 
   if (!!callAdapter && !!chatAdapter) {
     return (
-      <>
-        <ChatComposite adapter={chatAdapter} />
-        <CallComposite adapter={callAdapter} />
-      </>
+      <div style={{ height: '100vh', display: 'flex' }}>
+        <div style={{ width: '50vw' }}>
+          <ChatComposite adapter={chatAdapter} />
+        </div>
+        <div style={{ width: '50vw' }}>
+          <CallComposite adapter={callAdapter} />
+        </div>
+      </div>
     );
   }
   if (credential === undefined) {

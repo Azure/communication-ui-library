@@ -36,7 +36,7 @@ import {
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
-import { ChatMessageComponent } from './ChatMessageComponent';
+import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 
@@ -169,7 +169,7 @@ export interface MessageThreadStrings {
   editMessage: string;
   /** String for removing message in floating menu */
   removeMessage: string;
-  /** String for LiveMessage introduction in ChatMessageComponent */
+  /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
   /** String for warning on text limit exceeded in EditBox*/
   editBoxTextLimit: string;
@@ -179,6 +179,10 @@ export interface MessageThreadStrings {
   newMessagesIndicator: string;
   /** String for replacing display name when there is none*/
   noDisplayNameSub: string;
+  /** String for Cancel button in EditBox*/
+  editBoxCancelButton: string;
+  /** String for Submit in EditBox when there is no user input*/
+  editBoxSubmitButton: string;
 }
 
 /**
@@ -635,9 +639,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const chatThreadRef = useRef<HTMLElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
-  // When the chat thread is narrow, we want to overlap the avatar on top of the chat message to save space
+  // When the chat thread is narrow, we perform space optimizations such as overlapping
+  // the avatar on top of the chat message and moving the chat accept/reject edit buttons
+  // to a new line
   const chatThreadWidth = useContainerWidth(chatThreadRef);
-  const shouldOverlapAvatarAndMessage = isNarrowWidth(chatThreadWidth);
+  const isNarrow = isNarrowWidth(chatThreadWidth);
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
@@ -841,12 +847,18 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
       if (messageProps.message.messageType === 'chat') {
-        return <ChatMessageComponent {...messageProps} message={messageProps.message} />;
+        return (
+          <ChatMessageComponent
+            {...messageProps}
+            message={messageProps.message}
+            inlineAcceptRejectEditButtons={!isNarrow}
+          />
+        );
       }
       return <></>;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [new Date().toDateString()]
+    [new Date().toDateString(), isNarrow]
   );
 
   const localeStrings = useLocale().strings.messageThread;
@@ -895,7 +907,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             showMessageDate,
             showMessageStatus,
             onRenderAvatar,
-            shouldOverlapAvatarAndMessage,
+            isNarrow,
             styles,
             onRenderMessageStatus,
             defaultStatusRenderer,
@@ -916,7 +928,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageDate,
       showMessageStatus,
       onRenderAvatar,
-      shouldOverlapAvatarAndMessage,
+      isNarrow,
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,

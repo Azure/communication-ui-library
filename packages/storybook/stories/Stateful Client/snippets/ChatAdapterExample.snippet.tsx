@@ -10,7 +10,7 @@ type ChatAdapterExampleProps = {
   displayName: string;
 };
 
-export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element | undefined => {
+export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element => {
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
   useEffect(() => {
     if (props) {
@@ -34,5 +34,9 @@ export const ChatAdapterExample = (props: ChatAdapterExampleProps): JSX.Element 
     };
   }, [props, chatAdapter]);
 
-  return chatAdapter && <ChatComposite adapter={chatAdapter} />;
+  return (
+    <div style={{ height: '100vh', width: '100vw' }}>
+      {chatAdapter ? <ChatComposite adapter={chatAdapter} /> : <>Initializing </>}
+    </div>
+  );
 };

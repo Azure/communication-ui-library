@@ -37,6 +37,7 @@ import {
 import { createAzureCommunicationChatAdapter } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 type MeetingAdapterStateChangedHandler = (newState: MeetingAdapterState) => void;
 
@@ -150,7 +151,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
   }
   /** Leave current Meeting. */
   public async leaveMeeting(): Promise<void> {
-    await this.chatAdapter.removeParticipant(this.chatAdapter.getState().userId);
+    await this.chatAdapter.removeParticipant(toFlatCommunicationIdentifier(this.chatAdapter.getState().userId));
     await this.callAdapter.leaveCall();
   }
   /** Start a new Meeting. */

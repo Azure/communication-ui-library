@@ -7,7 +7,8 @@ import {
   CallAdapter,
   CallAdapterState,
   CallComposite,
-  createAzureCommunicationCallAdapter
+  createAzureCommunicationCallAdapter,
+  toFlatCommunicationIdentifier
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -36,9 +37,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const adapter = await createAzureCommunicationCallAdapter({
-        userId: { communicationUserId: userId.communicationUserId },
-        displayName: displayName,
-        credential: createAutoRefreshingCredential(userId.communicationUserId, token),
+        userId,
+        displayName,
+        credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
         locator: callLocator
       });
       adapter.on('callEnded', () => {

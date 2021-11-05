@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, Icon, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, Icon, ITextField, mergeStyles } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
-import { useTheme } from '../theming/FluentThemeProvider';
-import React, { useCallback, useMemo, useState } from 'react';
+import { useTheme } from '../../theming/FluentThemeProvider';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from './styles/EditBox.styles';
-import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
-import { MessageThreadStrings } from './MessageThread';
+import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
+import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
+import { MessageThreadStrings } from '../MessageThread';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -22,24 +22,32 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
   return <Icon iconName={'EditBoxSubmit'} className={className} />;
 };
 
-/**
- * @private
- */
-export type EditBoxProps = {
+/** @private */
+export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: () => void;
   onSubmit: (text: string) => void;
   initialValue: string;
   strings: MessageThreadStrings;
+  /**
+   * Inline the accept and reject edit buttons when editing a message.
+   * Setting to false will mean they are on a new line inside the editable chat message.
+   */
+  inlineEditButtons: boolean;
 };
 
 /**
  * @private
  */
-export const EditBox = (props: EditBoxProps): JSX.Element => {
+export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, initialValue, strings } = props;
   const [textValue, setTextValue] = useState<string>(initialValue);
   const [textValueOverflow, setTextValueOverflow] = useState(false);
+  const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
+
+  useEffect(() => {
+    editTextFieldRef.current?.focus();
+  }, []);
 
   const setText = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -75,7 +83,10 @@ export const EditBox = (props: EditBoxProps): JSX.Element => {
 
   return (
     <InputBoxComponent
-      inputClassName={editBoxStyle}
+      inlineChildren={props.inlineEditButtons}
+      id={'editbox'}
+      textFieldRef={editTextFieldRef}
+      inputClassName={editBoxStyle(props.inlineEditButtons)}
       placeholderText={strings.editBoxPlaceholderText}
       textValue={textValue}
       onChange={setText}
@@ -89,6 +100,7 @@ export const EditBox = (props: EditBoxProps): JSX.Element => {
     >
       <InputBoxButton
         className={editingButtonStyle}
+        ariaLabel={strings.editBoxCancelButton}
         onRenderIcon={onRenderThemedCancelIcon}
         onClick={() => {
           onCancel && onCancel();
@@ -97,6 +109,7 @@ export const EditBox = (props: EditBoxProps): JSX.Element => {
       />
       <InputBoxButton
         className={editingButtonStyle}
+        ariaLabel={strings.editBoxSubmitButton}
         onRenderIcon={onRenderThemedSubmitIcon}
         onClick={(e) => {
           if (!textValueOverflow && textValue !== '') {

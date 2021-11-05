@@ -11,7 +11,7 @@ export * from './theming';
 
 export type {
   BaseCustomStyles,
-  CallParticipant,
+  CallParticipantListParticipant,
   ChatMessage,
   CommunicationParticipant,
   ContentSystemMessage,
@@ -23,6 +23,7 @@ export type {
   MessageContentType,
   OnRenderAvatarCallback,
   ParticipantAddedSystemMessage,
+  ParticipantListParticipant,
   ParticipantRemovedSystemMessage,
   SystemMessage,
   SystemMessageCommon,

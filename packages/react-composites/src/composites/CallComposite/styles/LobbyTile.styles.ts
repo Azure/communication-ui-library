@@ -6,6 +6,14 @@ import { IPalette, IStyle } from '@fluentui/react';
 /**
  * @private
  */
+export const overlayContainerStyle: IStyle = {
+  // Ensure some space around the text on a narrow viewport.
+  margin: '1rem'
+};
+
+/**
+ * @private
+ */
 export const titleStyle: (palette: IPalette, isVideoReady: boolean) => IStyle = (palette, isVideoReady) => {
   return {
     fontSize: '1.75rem',
