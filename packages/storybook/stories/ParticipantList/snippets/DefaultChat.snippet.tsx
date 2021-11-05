@@ -1,24 +1,28 @@
-import { CommunicationParticipant, ParticipantList } from '@azure/communication-react';
+import { ParticipantListParticipant, ParticipantList } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
 export const DefaultChatParticipantListExample: () => JSX.Element = () => {
-  const mockParticipants: CommunicationParticipant[] = [
+  const mockParticipants: ParticipantListParticipant[] = [
     {
       userId: 'user 1',
-      displayName: 'You'
+      displayName: 'You',
+      isRemovable: true
     },
     {
       userId: 'user 2',
-      displayName: 'Hal Jordan'
+      displayName: 'Hal Jordan',
+      isRemovable: true
     },
     {
       userId: 'user 3',
-      displayName: 'Barry Allen'
+      displayName: 'Barry Allen',
+      isRemovable: true
     },
     {
       userId: 'user 4',
-      displayName: 'Bruce Wayne'
+      displayName: 'Bruce Wayne',
+      isRemovable: true
     }
   ];
 

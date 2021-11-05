@@ -12,11 +12,12 @@ import {
   getIsMuted,
   CallingBaseSelectorProps
 } from './baseSelectors';
-import { CallParticipant } from '@internal/react-components';
+import { CallParticipantListParticipant } from '@internal/react-components';
+import { getIdentifierKind } from '@azure/communication-common';
 
-const convertRemoteParticipantsToCommunicationParticipants = (
+const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
-): CallParticipant[] => {
+): CallParticipantListParticipant[] => {
   return remoteParticipants.map((participant: RemoteParticipantState) => {
     const isScreenSharing = Object.values(participant.videoStreams).some(
       (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
@@ -28,7 +29,10 @@ const convertRemoteParticipantsToCommunicationParticipants = (
       state: participant.state,
       isMuted: participant.isMuted,
       isScreenSharing: isScreenSharing,
-      isSpeaking: participant.isSpeaking
+      isSpeaking: participant.isSpeaking,
+      // ACS users can not remove Teams users.
+      // Removing phone numbers or unknown types of users is undefined.
+      isRemovable: getIdentifierKind(participant.identifier).kind == 'communicationUser'
     };
   });
 };
@@ -42,7 +46,7 @@ export type ParticipantListSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  participants: CallParticipant[];
+  participants: CallParticipantListParticipant[];
   myUserId: string;
 };
 
@@ -60,18 +64,20 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isScreenSharingOn,
     isMuted
   ): {
-    participants: CallParticipant[];
+    participants: CallParticipantListParticipant[];
     myUserId: string;
   } => {
     const participants = remoteParticipants
-      ? convertRemoteParticipantsToCommunicationParticipants(Object.values(remoteParticipants))
+      ? convertRemoteParticipantsToParticipantListParticipants(Object.values(remoteParticipants))
       : [];
     participants.push({
       userId: userId,
       displayName: displayName,
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
-      state: 'Connected'
+      state: 'Connected',
+      // Local participant can never remove themselves.
+      isRemovable: false
     });
     return {
       participants: participants,

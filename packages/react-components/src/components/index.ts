@@ -16,8 +16,6 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
 
-export type { InputBoxButtonProps } from './InputBoxComponent';
-
 export { MessageThread } from './MessageThread';
 export type {
   MessageProps,
@@ -36,10 +34,10 @@ export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStyle
 
 export { ParticipantList } from './ParticipantList';
 export type {
+  ParticipantListItemStyles,
   ParticipantListProps,
-  ParticipantMenuItemsCallback,
   ParticipantListStyles,
-  ParticipantListItemStyles
+  ParticipantMenuItemsCallback
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
