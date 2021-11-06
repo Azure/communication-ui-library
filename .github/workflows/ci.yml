@@ -352,7 +352,7 @@ jobs:
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
             })
 
-    build_static_html_composites_sample:
+  build_component_examples:
     name: Build And Test Component+Binding Examples
     runs-on: ubuntu-latest
     steps:
