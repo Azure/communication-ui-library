@@ -14,7 +14,7 @@ Check our storybook page to see more details on (Composite vs Component)[https:/
 
 ## Run examples
 
-1. Edit appsettings.json, replace `[CONNECTION STRING]` with your own connection string.
+1. Edit ../Server/appsettings.json, replace `[CONNECTION STRING]` with your own connection string.
 2. Run `rush build`
 3. Run `rushx start`
 4. Visit `localhost:3000` to check the demo page.

@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatClient } from '@azure/communication-chat';
+import { getToken } from './getToken';
+import { getEndpointUrl } from './getEndpointUrl';
+import { loadConfigFromUrlQuery } from './loadConfigFromUrlQuery';
 
 export type IdentityType = {
   userId: string;
@@ -12,22 +14,26 @@ export type IdentityType = {
   threadId: string;
 };
 
-const CONNECTION_STRING = require('../../appsettings.json')['ResourceConnectionString'];
 const TOPIC_NAME = 'My Chat Topic';
 
 export const createChatThreadAndUsers = async (displayName: string): Promise<IdentityType> => {
-  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
-  const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
-  const userAndToken: CommunicationUserToken = await tokenClient.createUserAndToken(['chat', 'voip']);
+  // If there is a config object from Url Query, directly return the config
+  const configFromQuery = loadConfigFromUrlQuery();
+  if (configFromQuery.token) {
+    return configFromQuery;
+  }
+
+  const userAndToken = await getToken();
+  const endpointUrl = await getEndpointUrl();
 
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndToken.token));
   const threadId = (await chatClient.createChatThread({ topic: TOPIC_NAME })).chatThread?.id ?? '';
   await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: [{ id: userAndToken.user, displayName }]
+    participants: [{ id: { communicationUserId: userAndToken.identity }, displayName }]
   });
 
   return {
-    userId: userAndToken.user.communicationUserId,
+    userId: userAndToken.identity,
     token: userAndToken.token,
     endpointUrl,
     displayName,

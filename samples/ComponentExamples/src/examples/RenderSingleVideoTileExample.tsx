@@ -69,12 +69,14 @@ export const RenderVideoTileExample = (): JSX.Element => {
     <>
       <h3> Render single video stream in your own component </h3>
       <span>Click camera button to see what happens:</span>
-      <CameraButton {...cameraButtonProps} />
+      <CameraButton {...cameraButtonProps} id="camera-button" />
       <div style={videoTileContainerStyle}>
         <VideoTile renderElement={mediaStreamComponent} />
       </div>
       <span>Or you can try custom logic to start local video: </span>
-      <button onClick={onStartLocalVideo}> start local video </button>
+      <button data-ui-id="custom-start-button" onClick={onStartLocalVideo}>
+        start local video
+      </button>
     </>
   );
 };
