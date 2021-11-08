@@ -180,7 +180,7 @@ export interface CallAdapterCallManagement {
 
 // @public
 export type CallAdapterClientState = {
-    userId: CommunicationUserKind;
+    userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
     devices: DeviceManagerState;
@@ -277,7 +277,7 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     latestErrors: CallErrors;
-    userId: CommunicationUserKind;
+    userId: CommunicationIdentifierKind;
 }
 
 // @public
@@ -571,7 +571,7 @@ export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public
 export type ChatCompositeClientState = {
-    userId: string;
+    userId: CommunicationIdentifierKind;
     displayName: string;
     thread: ChatThreadClientState;
     latestErrors: AdapterErrors;
@@ -1266,7 +1266,7 @@ export interface MeetingAdapter extends MeetingAdapterMeetingManagement, Adapter
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
     meeting: MeetingState | undefined;
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationIdentifierKind;
 }
 
 // @alpha

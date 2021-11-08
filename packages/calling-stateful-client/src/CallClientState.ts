@@ -26,7 +26,8 @@ import {
   PhoneNumberKind,
   UnknownIdentifierKind,
   MicrosoftTeamsUserIdentifier,
-  UnknownIdentifier
+  UnknownIdentifier,
+  CommunicationIdentifierKind
 } from '@azure/communication-common';
 
 /**
@@ -474,7 +475,7 @@ export interface CallClientState {
    * developer for easier access to userId. Must be passed in at initialization of the {@link StatefulCallClient}.
    * Completely controlled by the developer.
    */
-  userId: CommunicationUserKind;
+  userId: CommunicationIdentifierKind;
   /**
    * Stores the latest error for each API method.
    *
