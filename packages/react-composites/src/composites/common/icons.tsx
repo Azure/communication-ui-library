@@ -13,7 +13,11 @@ import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-compone
 import React from 'react';
 import { mergeStyles, Text } from '@fluentui/react';
 
-const CoffeeIcon = (): JSX.Element => <Text className={mergeStyles(coffeeIconStyle)}>☕</Text>;
+const CoffeeIcon = (): JSX.Element => (
+  <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
+    ☕
+  </Text>
+);
 
 const coffeeIconStyle = {
   // Fluent wraps all icons with <i> so we must force the fontStyle back to normal.
