@@ -9,7 +9,8 @@ import { ComplianceBanner, ComplianceBannerProps } from '../components/Complianc
 import {
   notificationsContainerStyles,
   callControlsContainer,
-  containerStyles,
+  containerStyleDesktop,
+  containerStyleMobile,
   mediaGalleryContainerStyles,
   subContainerStyles
 } from '../styles/CallPage.styles';
@@ -28,6 +29,7 @@ export interface CallArrangementProps {
   callControlProps: CallControlsProps | false;
   onRenderGalleryContent: () => JSX.Element;
   dataUiId: string;
+  mobileView: boolean;
 }
 
 /**
@@ -35,7 +37,13 @@ export interface CallArrangementProps {
  */
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow data-ui-id={props.dataUiId}>
+    <Stack
+      horizontalAlign="center"
+      verticalAlign="center"
+      className={props.mobileView ? containerStyleMobile : containerStyleDesktop}
+      grow
+      data-ui-id={props.dataUiId}
+    >
       <Stack.Item styles={notificationsContainerStyles(NOTIFICATIONS_CONTAINER_ZINDEX)}>
         <Stack>
           <ComplianceBanner {...props.complianceBannerProps} />
@@ -55,6 +63,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           </Stack>
         )}
       </Stack.Item>
+
       {props.callControlProps !== false && (
         <Stack.Item className={callControlsContainer}>
           <CallControls {...props.callControlProps} />
