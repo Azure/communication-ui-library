@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(自分)",
     "menuTitle": "その他のオプション",
-    "removeButtonLabel": "削除"
+    "removeButtonLabel": "削除",
+    "sharingIconLabel": "共有",
+    "mutedIconLabel": "ミュート状態"
   },
   "typingIndicator": {
     "singleUser": "{user} さんが入力しています...",
@@ -12,7 +14,8 @@
     "delimiter": ","
   },
   "sendBox": {
-    "placeholderText": "メッセージを入力"
+    "placeholderText": "メッセージを入力",
+    "textTooLong": "メッセージの長さが上限を超えています。"
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "送信しました",
@@ -61,7 +64,17 @@
     "friday": "金曜日",
     "saturday": "土曜日",
     "participantJoined": "チャットに参加しました。",
-    "participantLeft": "チャットから退出しました。"
+    "participantLeft": "チャットから退出しました。",
+    "editMessage": "編集",
+    "removeMessage": "削除",
+    "editedTag": "編集済み",
+    "liveAuthorIntro": "{author} さんの発言",
+    "editBoxTextLimit": "メッセージが{limitNumber}文字の制限を超えています",
+    "editBoxPlaceholderText": "メッセージを編集する",
+    "newMessagesIndicator": "新しいメッセージ",
+    "noDisplayNameSub": "名前がありません",
+    "editBoxCancelButton": "取り消し",
+    "editBoxSubmitButton": "送信"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "マイクのミュートを解除できませんでした",
     "speakingWhileMuted": "マイクがミュートになっています",
     "startScreenShareGeneric": "画面の共有を開始できませんでした",
-    "stopScreenShareGeneric": "画面の共有を停止できませんでした"
+    "stopScreenShareGeneric": "画面の共有を停止できませんでした",
+    "callNetworkQualityLow": "ネットワークの品質が低くなっています。",
+    "callNoSpeakerFound": "スピーカーまたはヘッドフォンが見つかりません。音声デバイスを接続して通話を聞きます。",
+    "callNoMicrophoneFound": "マイクが見つかりません。オーディオ入力デバイスを接続します。",
+    "callMicrophoneAccessDenied": "マイクにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
+    "callMicrophoneMutedBySystem": "システムによってミュートになっています。",
+    "callMacOsMicrophoneAccessDenied": "マイクにアクセスできません。macOS のプライバシー設定でマイクへのアクセス許可を付与します。",
+    "callLocalVideoFreeze": "ネットワーク帯域幅が不十分です。通話中に他のユーザーのビデオが一時停止している可能性があります。",
+    "callCameraAccessDenied": "カメラにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
+    "callCameraAlreadyInUse": "カメラにアクセスできません。別のアプリケーションによって既に使用されている可能性があります。",
+    "callMacOsCameraAccessDenied": "MacOS がカメラへのアクセスをブロックしています。プライバシー設定を更新して、このブラウザーがカメラにアクセスできるようにします。",
+    "callMacOsScreenShareAccessDenied": "MacOS は画面の共有をブロックしています。プライバシー設定を更新して、このブラウザーで画面を録画できるようにします。"
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "画面を共有しています",
+    "screenShareLoadingMessage": "{participant} の画面を読み込んでいます"
   }
 }
