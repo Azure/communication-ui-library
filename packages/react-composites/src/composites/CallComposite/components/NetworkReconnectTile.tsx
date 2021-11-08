@@ -33,7 +33,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
 
   const handlers = useHandlers(ExpandedLocalVideoTile);
   // This tile may be shown at the beginning of a call.
-  // So we need to transition local video the the call.
+  // So we need to transition local video to the call.
   useLocalVideoStartTrigger(!!props.localParticipantVideoStream.isAvailable);
 
   return (
