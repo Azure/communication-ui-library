@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
-import { useSelector } from '../hooks/useSelector';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
+import { useLocalVideoStartTrigger } from '../hooks/useLocalVideoStartTrigger';
 
 const VideoGalleryStyles = {
   root: {
@@ -43,17 +42,7 @@ export interface MediaGalleryProps {
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
 
-  // When transitioning to the call page we need to trigger onStartLocalVideo() to
-  // transition the local preview camera setting into the call. @TODO: Can we simply
-  // have the callHandlers handle this transition logic.
-  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
-  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
-  useEffect(() => {
-    if (isPreviewCameraOn && !props.isVideoStreamOn && !isButtonStatusSynced) {
-      props.onStartLocalVideo();
-    }
-    setIsButtonStatusSynced(true);
-  }, [isButtonStatusSynced, isPreviewCameraOn, props]);
+  useLocalVideoStartTrigger(!!props.isVideoStreamOn);
 
   const VideoGalleryMemoized = useMemo(() => {
     return (
