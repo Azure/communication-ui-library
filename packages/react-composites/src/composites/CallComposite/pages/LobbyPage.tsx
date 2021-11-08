@@ -9,7 +9,6 @@ import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
 import { getCallStatus } from '../selectors/baseSelectors';
-import { useHandlers } from '../hooks/useHandlers';
 import { reduceCallControlsForMobile } from '../utils';
 import { CallControlOptions } from '../components/CallControls';
 import { CallCompositeStrings } from '../Strings';
@@ -30,7 +29,6 @@ export interface LobbyPageProps {
 export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const lobbyProps = useSelector(lobbySelector);
-  const lobbyTileHandlers = useHandlers(LobbyTile);
   const strings = useLocale().strings.call;
 
   const callState = useSelector(getCallStatus);
@@ -55,9 +53,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
           increaseFlyoutItemSize: props.options?.mobileView
         }
       }
-      onRenderGalleryContent={() => (
-        <LobbyTile {...lobbyProps} {...lobbyTileHandlers} overlayProps={overlayProps(strings, inLobby)} />
-      )}
+      onRenderGalleryContent={() => <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby)} />}
       dataUiId={'lobby-page'}
     />
   );
