@@ -9,6 +9,9 @@ import { useSelector } from './useSelector';
 
 /**
  * @private
+ *
+ * `shouldTransition` is an extra predicate that controls whether this hooks actually transitions the call.
+ * The rule of hooks disallows calling the hook conditionally, so this predicate can be used to make the decision.
  */
 export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, shouldTransition?: boolean): void => {
   // Once a call is joined, we need to transition the local preview camera setting into the call.

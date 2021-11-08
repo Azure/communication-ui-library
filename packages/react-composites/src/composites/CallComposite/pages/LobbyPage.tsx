@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ErrorBar } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
@@ -8,11 +8,10 @@ import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
-import { getCallStatus, getIsPreviewCameraOn } from '../selectors/baseSelectors';
+import { getCallStatus } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { reduceCallControlsForMobile } from '../utils';
 import { CallControlOptions } from '../components/CallControls';
-import { MediaGallery } from '../components/MediaGallery';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { Icon } from '@fluentui/react';
