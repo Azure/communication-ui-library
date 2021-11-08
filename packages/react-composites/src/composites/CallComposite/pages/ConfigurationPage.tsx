@@ -10,7 +10,7 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { useSelector } from '../hooks/useSelector';
 import { OptionsButton } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -49,15 +49,15 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   const locale = useLocale();
   const title = (
-    <Text className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
+    <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
       {locale.strings.call.configurationPageTitle}
-    </Text>
+    </Stack.Item>
   );
 
   const callDescription = locale.strings.call.configurationPageCallDetails && (
-    <Text className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}>
+    <Stack.Item className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}>
       {locale.strings.call.configurationPageCallDetails}
-    </Text>
+    </Stack.Item>
   );
 
   return (
