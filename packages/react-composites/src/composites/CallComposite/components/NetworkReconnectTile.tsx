@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { VideoGalleryStream, useTheme, VideoStreamOptions } from '@internal/react-components';
+import { VideoGalleryStream, useTheme } from '@internal/react-components';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
 import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
 import { useLocale } from '../../localization';
@@ -12,13 +12,14 @@ import {
   titleContainerStyle,
   titleStyle
 } from '../styles/NetworkReconnectTile.styles';
+import { useLocalVideoStartTrigger } from '../hooks/useLocalVideoStartTrigger';
+import { useHandlers } from '../hooks/useHandlers';
 
 /**
  * @private
  */
 export interface NetworkReconnectTileProps {
   localParticipantVideoStream: VideoGalleryStream;
-  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
 }
 
 /**
@@ -27,14 +28,17 @@ export interface NetworkReconnectTileProps {
 export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Element => {
   const videoStream = props.localParticipantVideoStream;
   const isVideoReady = videoStream?.isAvailable ?? false;
-
   const palette = useTheme().palette;
   const strings = useLocale().strings.call;
+
+  const handlers = useHandlers(ExpandedLocalVideoTile);
+  // This tile may be shown at the beginning of a call.
+  // So we need to transition local video the the call.
+  useLocalVideoStartTrigger(!!props.localParticipantVideoStream.isAvailable);
 
   return (
     <ExpandedLocalVideoTile
       localParticipantVideoStream={props.localParticipantVideoStream}
-      onCreateLocalStreamView={props.onCreateLocalStreamView}
       overlayContent={
         <Stack verticalFill horizontalAlign="center" verticalAlign="center" className={mergeStyles(containerStyle)}>
           <Stack horizontal className={mergeStyles(titleContainerStyle)}>
@@ -49,6 +53,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
           </Text>
         </Stack>
       }
+      {...handlers}
     />
   );
 };
