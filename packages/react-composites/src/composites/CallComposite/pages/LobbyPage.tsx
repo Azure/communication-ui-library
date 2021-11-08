@@ -16,6 +16,7 @@ import { MediaGallery } from '../components/MediaGallery';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { Icon } from '@fluentui/react';
+import { useLocalVideoStartTrigger } from '../hooks/useLocalVideoStartTrigger';
 
 /**
  * @private
@@ -36,22 +37,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const callState = useSelector(getCallStatus);
   const inLobby = callState === 'InLobby';
 
-  // When transitioning to the lobby page we need to trigger onStartLocalVideo() to
-  // transition the local preview camera setting into the call. This matches the logic
-  // used in the MediaGallery. @TODO: Can we simply have the callHandlers handle this
-  // transition logic.
-  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
-  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
-  const isVideoStreamOn = lobbyProps.localParticipantVideoStream.isAvailable;
-  const mediaGalleryHandlers = useHandlers(MediaGallery);
-  useEffect(() => {
-    if (inLobby) {
-      if (isPreviewCameraOn && !isVideoStreamOn && !isButtonStatusSynced) {
-        mediaGalleryHandlers.onStartLocalVideo();
-      }
-      setIsButtonStatusSynced(true);
-    }
-  }, [inLobby, isButtonStatusSynced, isPreviewCameraOn, isVideoStreamOn, mediaGalleryHandlers, props]);
+  useLocalVideoStartTrigger(lobbyProps.localParticipantVideoStream.isAvailable, inLobby);
 
   // Reduce the controls shown when mobile view is enabled.
   let callControlOptions = props.options?.mobileView
