@@ -46,7 +46,6 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
             <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'polite'}>
               {strings.networkReconnectTitle}
             </Text>
-            <Stack.Item className={mergeStyles()}></Stack.Item>
           </Stack>
           <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live={'polite'}>
             {strings.networkReconnectMoreDetails}
