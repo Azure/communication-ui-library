@@ -7,6 +7,10 @@ import React from 'react';
 const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
+const mobileViewSnippet = `
+<MeetingComposite options={mobileView: true} />
+`;
+
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -32,6 +36,18 @@ export const getDocs: () => JSX.Element = () => {
         service and provided to the client application that then passes it to the MeetingComposite.
       </Description>
       <Source code={serverText} />
+
+      <Heading>Running in a Mobile browser</Heading>
+      <Description>
+        MeetingComposite has been designed for both desktop views and mobile views. By default the MeetingComposite UI
+        is optimized for desktop views and *does not* do any automatic detection if it is running on a mobile. To have
+        an optimized UI on mobile you can use the `mobileView` flag:
+      </Description>
+      <Source code={mobileViewSnippet} />
+      <Description>
+        You can try out the mobile view in the [MeetingComposite Basic
+        Example](./?path=/story/composites-meeting-basicexample--basic-example).
+      </Description>
 
       <Heading>Theming</Heading>
       <Description>
