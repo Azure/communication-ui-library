@@ -59,7 +59,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Running in a Mobile browser</Heading>
       <Description>
         CallComposite has been designed for both desktop views and mobile views. By default the CallComposite UI is
-        optimized for desktop views and *does not* do any automatic detection if it is running on a mobile. To have an
+        optimized for desktop views and does not do any automatic detection if it is running on a mobile. To have an
         optimized UI on mobile you can use the `mobileView` flag:
       </Description>
       <Source code={mobileViewSnippet} />
