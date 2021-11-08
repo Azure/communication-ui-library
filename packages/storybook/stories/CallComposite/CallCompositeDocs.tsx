@@ -11,7 +11,7 @@ const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 
 const mobileViewSnippet = `
-<CallComposite options={mobileView: true} />
+<CallComposite options={{ mobileView: true }} />
 `;
 
 const cssSnippet = `
