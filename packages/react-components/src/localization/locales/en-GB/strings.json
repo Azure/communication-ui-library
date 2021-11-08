@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(you)",
     "menuTitle": "More Options",
-    "removeButtonLabel": "Remove"
+    "removeButtonLabel": "Remove",
+    "sharingIconLabel": "Sharing",
+    "mutedIconLabel": "Muted"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -12,7 +14,8 @@
     "delimiter": ", "
   },
   "sendBox": {
-    "placeholderText": "Enter a message"
+    "placeholderText": "Enter a message",
+    "textTooLong": "Your message length is over the maximum limit."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Sent",
@@ -61,7 +64,17 @@
     "friday": "Friday",
     "saturday": "Saturday",
     "participantJoined": "joined the chat.",
-    "participantLeft": "left the chat."
+    "participantLeft": "left the chat.",
+    "editMessage": "Edit",
+    "removeMessage": "Remove",
+    "editedTag": "Edited",
+    "liveAuthorIntro": "{author} says",
+    "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
+    "editBoxPlaceholderText": "Edit your message",
+    "newMessagesIndicator": "New messages",
+    "noDisplayNameSub": "No name",
+    "editBoxCancelButton": "Cancel",
+    "editBoxSubmitButton": "Submit"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "Failed to unmute microphone",
     "speakingWhileMuted": "Your microphone is muted",
     "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing"
+    "stopScreenShareGeneric": "Failed to stop screen sharing",
+    "callNetworkQualityLow": "Network quality is low.",
+    "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
+    "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",
+    "callMicrophoneAccessDenied": "Unable to access microphone. Click the lock in the address bar to grant permission to this webpage.",
+    "callMicrophoneMutedBySystem": "You are muted by your system.",
+    "callMacOsMicrophoneAccessDenied": "Unable to access microphone. Grant microphone permission in your macOS privacy settings.",
+    "callLocalVideoFreeze": "Network bandwidth is poor. Your video may appear paused for others on the call.",
+    "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",
+    "callCameraAlreadyInUse": "Unable to access camera. It may already be in use by another application.",
+    "callMacOsCameraAccessDenied": "MacOS is blocking access to your camera. Update your privacy settings to allow this browser to access your camera.",
+    "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "You are sharing your screen",
+    "screenShareLoadingMessage": "Loading {participant}'s screen"
   }
 }
