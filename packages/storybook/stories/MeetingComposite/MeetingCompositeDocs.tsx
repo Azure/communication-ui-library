@@ -39,9 +39,11 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Running in a Mobile browser</Heading>
       <Description>
-        MeetingComposite has been designed for both desktop views and mobile views. By default the MeetingComposite UI
-        is optimized for desktop views and does not do any automatic detection if it is running on a mobile. To have an
-        optimized UI on mobile you can use the `mobileView` flag:
+        MeetingComposite has been designed for both desktop views and mobile views. The MeetingComposite does not detect
+        if it is running on mobile device vs desktop, and by default the MeetingComposite UI is optimized for desktop
+        views. If you are running the MeetingComposite on a mobile device we recommend making use of the `mobileView`
+        flag. This prop can be set at any time and immediately updates the composite UI to be optimized for a mobile
+        device.
       </Description>
       <Source code={mobileViewSnippet} />
       <Description>
