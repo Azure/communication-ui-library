@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(Вы)",
     "menuTitle": "Дополнительные параметры",
-    "removeButtonLabel": "Удалить"
+    "removeButtonLabel": "Удалить",
+    "sharingIconLabel": "Общий доступ",
+    "mutedIconLabel": "Микрофон отключен"
   },
   "typingIndicator": {
     "singleUser": "{user} вводит текст...",
@@ -12,7 +14,8 @@
     "delimiter": "; "
   },
   "sendBox": {
-    "placeholderText": "Введите сообщение"
+    "placeholderText": "Введите сообщение",
+    "textTooLong": "Длина сообщения превышает максимально допустимую."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Отправлено",
@@ -61,7 +64,17 @@
     "friday": "Пятница",
     "saturday": "Суббота",
     "participantJoined": "присоединился к чату.",
-    "participantLeft": "покинул чат."
+    "participantLeft": "покинул чат.",
+    "editMessage": "Изменить",
+    "removeMessage": "Удалить",
+    "editedTag": "Изменено",
+    "liveAuthorIntro": "{author} говорит",
+    "editBoxTextLimit": "Превышено предельное число символов в {limitNumber} сообщении",
+    "editBoxPlaceholderText": "Отредактируйте сообщение",
+    "newMessagesIndicator": "Новые сообщения",
+    "noDisplayNameSub": "Без имени",
+    "editBoxCancelButton": "Отмена",
+    "editBoxSubmitButton": "Отправить"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "Не удалось включить микрофон",
     "speakingWhileMuted": "Микрофон отключен",
     "startScreenShareGeneric": "Не удалось начать демонстрацию экрана",
-    "stopScreenShareGeneric": "Не удалось остановить демонстрацию экрана"
+    "stopScreenShareGeneric": "Не удалось остановить демонстрацию экрана",
+    "callNetworkQualityLow": "Качество работы сети: низкое.",
+    "callNoSpeakerFound": "Динамики и наушники не найдены. Подключите звуковое устройство, чтобы услышать звонок.",
+    "callNoMicrophoneFound": "Микрофоны не найдены. Подключение звукового устройства ввода.",
+    "callMicrophoneAccessDenied": "Не удается получить доступ к микрофону. Щелкните блокировку в адресной строке, чтобы предоставить разрешение на эту веб-страницу.",
+    "callMicrophoneMutedBySystem": "Система отключила ваш микрофон.",
+    "callMacOsMicrophoneAccessDenied": "Не удается получить доступ к микрофону. Предоставьте разрешение на доступ к микрофону в параметрах конфиденциальности macOS.",
+    "callLocalVideoFreeze": "Низкая пропускная способность сети. Ваше видео может отображаться как приостановленное для других участников вызова.",
+    "callCameraAccessDenied": "Не удается получить доступ к камере. Щелкните блокировку в адресной строке, чтобы предоставить разрешение на эту веб-страницу.",
+    "callCameraAlreadyInUse": "Не удается получить доступ к камере. Возможно, оно уже используется другим приложением.",
+    "callMacOsCameraAccessDenied": "MacOS блокирует доступ к камере. Обновите параметры конфиденциальности, чтобы разрешить этому браузеру доступ к камере.",
+    "callMacOsScreenShareAccessDenied": "MacOS блокирует демонстрацию экрана. Обновите параметры конфиденциальности, чтобы разрешить этому браузеру записывать ваш экран."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
+    "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}"
   }
 }
