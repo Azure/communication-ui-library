@@ -17,6 +17,7 @@ import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
+import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 
 /**
  * Props for {@link CallComposite}.
@@ -156,12 +157,14 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   return (
     <BaseComposite {...props}>
       <CallAdapterProvider adapter={adapter}>
-        <MainScreen
-          callInvitationUrl={callInvitationUrl}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          options={options}
-        />
+        <div className={props.options?.mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop}>
+          <MainScreen
+            callInvitationUrl={callInvitationUrl}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            options={options}
+          />
+        </div>
       </CallAdapterProvider>
     </BaseComposite>
   );
