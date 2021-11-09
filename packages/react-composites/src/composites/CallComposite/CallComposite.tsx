@@ -103,6 +103,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'removed-from-call-page'}
         />
       );
+    case 'joinCallFailedDueToNoNetwork':
+      return (
+        <NoticePage
+          title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
+          moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
+          dataUiId={'join-call-failed-due-to-no-network-page'}
+        />
+      );
     case 'leftCall':
       return (
         <NoticePage
