@@ -235,7 +235,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public joinCall(microphoneOn?: boolean): Call | undefined {
-    console.log('xkcd', this.getState());
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     } else {
