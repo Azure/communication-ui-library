@@ -7,7 +7,9 @@ import { IStyle, IStackTokens } from '@fluentui/react';
  * @private
  */
 export const containerStyle: IStyle = {
-  width: '22.5rem'
+  maxWidth: '22.5rem',
+  // Ensure some space around the text on a narrow viewport.
+  margin: '1rem'
 };
 
 /**
