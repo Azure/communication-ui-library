@@ -201,7 +201,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -232,6 +232,8 @@ export interface CallCompositeStrings {
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
+    failedToJoinCallDueToNoNetworkMoreDetails?: string;
+    failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     learnMore: string;
@@ -398,6 +400,7 @@ export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
 export const COMPOSITE_ONLY_ICONS: {
+    failedToJoinCallDueToNoNetworkIcon: JSX.Element;
     lobbyScreenConnectingToCall: JSX.Element;
     lobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
@@ -440,6 +443,7 @@ export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, cre
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
+    failedToJoinCallDueToNoNetworkIcon: JSX.Element;
     lobbyScreenConnectingToCall: JSX.Element;
     lobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
@@ -614,7 +618,7 @@ export type MeetingCompositeOptions = {
 };
 
 // @alpha
-export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
+export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @alpha
 export type MeetingCompositeProps = {
