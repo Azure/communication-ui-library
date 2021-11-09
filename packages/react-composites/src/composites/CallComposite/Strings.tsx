@@ -54,6 +54,14 @@ export interface CallCompositeStrings {
    */
   failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
   /**
+   * Title text of the page shown to the user when joining a call fails due to a network problem.
+   */
+  failedToJoinCallDueToNoNetworkTitle: string;
+  /**
+   * More details text of the page shown to the user when joining a call fails due to a network problem.
+   */
+  failedToJoinCallDueToNoNetworkMoreDetails?: string;
+  /**
    * Title text of the page shown to the user when they leave a call in the call composite.
    */
   leftCallTitle: string;
