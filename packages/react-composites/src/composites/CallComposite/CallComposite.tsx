@@ -91,6 +91,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'accessDeniedTeamsMeeting':
       return (
         <NoticePage
+          iconName="NoticePageAccessDeniedTeamsMeeting"
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
@@ -99,6 +100,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'removedFromCall':
       return (
         <NoticePage
+          iconName="NoticePageRemovedFromCall"
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
@@ -107,15 +109,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'joinCallFailedDueToNoNetwork':
       return (
         <NoticePage
+          iconName="NoticePageJoinCallFailedDueToNoNetwork"
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
-          iconName="NoticePageJoinCallFailedDueToNoNetwork"
           dataUiId={'join-call-failed-due-to-no-network-page'}
         />
       );
     case 'leftCall':
       return (
         <NoticePage
+          iconName="NoticePageLeftCall"
           title={locale.strings.call.leftCallTitle}
           moreDetails={locale.strings.call.leftCallMoreDetails}
           dataUiId={'left-call-page'}

@@ -9,9 +9,9 @@ import { moreDetailsStyles, stackItemGap, titleStyles } from '../styles/NoticePa
  * @private
  */
 export interface NoticePageProps {
+  iconName: string;
   title: string;
   moreDetails?: string;
-  iconName?: string;
   dataUiId: string;
 }
 
