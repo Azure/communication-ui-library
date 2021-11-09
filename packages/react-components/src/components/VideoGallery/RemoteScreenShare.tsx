@@ -7,8 +7,9 @@ import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { VideoStreamOptions, VideoGalleryRemoteParticipant } from '../../types';
-import { videoWithNoRoundedBorderStyle, loadingStyle } from './styles/RemoteScreenShare.styles';
+import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
+import { videoWithNoRoundedBorderStyle } from '../styles/VideoGallery.styles';
 
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance

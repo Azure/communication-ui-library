@@ -9,7 +9,6 @@ import { useLocale } from '../../localization';
 import {
   dropDownStyles,
   dropDownTitleIconStyles,
-  localSettingsContainer,
   mainStackTokens,
   optionIconStyles
 } from '../styles/LocalDeviceSettings.styles';
@@ -93,7 +92,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   // 'microphone'. This needs investigation on how we want to handle this and maybe needs follow up with SDK team.
 
   return (
-    <Stack data-ui-id="call-composite-device-settings" className={localSettingsContainer} tokens={mainStackTokens}>
+    <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
       <Dropdown
         data-ui-id="call-composite-local-camera-settings"
         label={cameraLabel}

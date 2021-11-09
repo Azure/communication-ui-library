@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -17,6 +17,7 @@ import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
+import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 
 /**
  * Props for {@link CallComposite}.
@@ -74,6 +75,7 @@ type MainScreenProps = {
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
+
   const adapter = useAdapter();
   const locale = useLocale();
 
@@ -101,6 +103,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
+        />
+      );
+    case 'joinCallFailedDueToNoNetwork':
+      return (
+        <NoticePage
+          title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
+          moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
+          iconName="NoticePageJoinCallFailedDueToNoNetwork"
+          dataUiId={'join-call-failed-due-to-no-network-page'}
         />
       );
     case 'leftCall':
@@ -143,15 +154,22 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       adapter.querySpeakers();
     })();
   }, [adapter]);
+
+  const mainScreenContainerClassName = useMemo(() => {
+    return options?.mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
+  }, [options?.mobileView]);
+
   return (
     <BaseComposite {...props}>
       <CallAdapterProvider adapter={adapter}>
-        <MainScreen
-          callInvitationUrl={callInvitationUrl}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          options={options}
-        />
+        <div className={mainScreenContainerClassName}>
+          <MainScreen
+            callInvitationUrl={callInvitationUrl}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            options={options}
+          />
+        </div>
       </CallAdapterProvider>
     </BaseComposite>
   );

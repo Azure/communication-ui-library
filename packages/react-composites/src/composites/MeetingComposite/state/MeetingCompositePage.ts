@@ -12,6 +12,7 @@ import { CallCompositePage } from '../../CallComposite';
 export type MeetingCompositePage =
   | 'accessDeniedTeamsMeeting'
   | 'configuration'
+  | 'joinMeetingFailedDueToNoNetwork'
   | 'leftMeeting'
   | 'lobby'
   | 'meeting'
@@ -28,6 +29,8 @@ export function callPageToMeetingPage(page: CallCompositePage): MeetingComposite
       return 'leftMeeting';
     case 'removedFromCall':
       return 'removedFromMeeting';
+    case 'joinCallFailedDueToNoNetwork':
+      return 'joinMeetingFailedDueToNoNetwork';
     default:
       return page;
   }
@@ -44,6 +47,8 @@ export function meetingPageToCallPage(page: MeetingCompositePage): CallComposite
       return 'leftCall';
     case 'removedFromMeeting':
       return 'removedFromCall';
+    case 'joinMeetingFailedDueToNoNetwork':
+      return 'joinCallFailedDueToNoNetwork';
     default:
       return page;
   }

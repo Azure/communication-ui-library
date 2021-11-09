@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(você)",
     "menuTitle": "Mais opções",
-    "removeButtonLabel": "Remover"
+    "removeButtonLabel": "Remover",
+    "sharingIconLabel": "Compartilhamento",
+    "mutedIconLabel": "Silenciado"
   },
   "typingIndicator": {
     "singleUser": "{user} está digitando ...",
@@ -12,7 +14,8 @@
     "delimiter": ", "
   },
   "sendBox": {
-    "placeholderText": "Inserir uma mensagem"
+    "placeholderText": "Inserir uma mensagem",
+    "textTooLong": "O comprimento da mensagem está acima do limite máximo."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Enviado",
@@ -61,7 +64,17 @@
     "friday": "Sexta-feira",
     "saturday": "Sábado",
     "participantJoined": "ingressou no chat.",
-    "participantLeft": "saiu do chat."
+    "participantLeft": "saiu do chat.",
+    "editMessage": "Editar",
+    "removeMessage": "Remover",
+    "editedTag": "Editado",
+    "liveAuthorIntro": "{author} disse",
+    "editBoxTextLimit": "Sua mensagem está acima do limite de {limitNumber} caracteres",
+    "editBoxPlaceholderText": "Edite sua mensagem",
+    "newMessagesIndicator": "Novas mensagens",
+    "noDisplayNameSub": "Sem nome",
+    "editBoxCancelButton": "Cancelar",
+    "editBoxSubmitButton": "Enviar"
   },
   "errorBar": {
     "unableToReachChatService": "Você está offline",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "Falha ao desativar mudo do microfone",
     "speakingWhileMuted": "O microfone está com o mudo ativado",
     "startScreenShareGeneric": "Falha ao iniciar o compartilhamento de tela",
-    "stopScreenShareGeneric": "Falha ao interromper o compartilhamento de tela"
+    "stopScreenShareGeneric": "Falha ao interromper o compartilhamento de tela",
+    "callNetworkQualityLow": "A qualidade da rede é baixa.",
+    "callNoSpeakerFound": "Nenhum alto-falante ou fone de ouvido encontrado. Conecte um dispositivo de áudio para ouvir a chamada.",
+    "callNoMicrophoneFound": "Nenhum microfone encontrado. Conecte um dispositivo de entrada de áudio.",
+    "callMicrophoneAccessDenied": "Não é possível acessar o microfone. Clique no bloqueio na barra de endereços para conceder permissão a esta página da Web.",
+    "callMicrophoneMutedBySystem": "Você está com as notificações desativada pelo sistema.",
+    "callMacOsMicrophoneAccessDenied": "Não é possível acessar o microfone. Conceda permissão ao microfone nas configurações de privacidade do macOS.",
+    "callLocalVideoFreeze": "A largura de banda da rede é ruim. Seu vídeo pode aparecer em pausa para outras pessoas na chamada.",
+    "callCameraAccessDenied": "Não é possível acessar a câmera. Clique no bloqueio na barra de endereços para conceder permissão a esta página da Web.",
+    "callCameraAlreadyInUse": "Não é possível acessar a câmera. Talvez ele já esteja em uso por outro aplicativo.",
+    "callMacOsCameraAccessDenied": "O MacOS está bloqueando o acesso à sua câmera. Atualize suas configurações de privacidade para permitir que este navegador acesse sua câmera.",
+    "callMacOsScreenShareAccessDenied": "O MacOS está bloqueando o compartilhamento de tela. Atualize suas configurações de privacidade para permitir que este navegador grave sua tela."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
+    "screenShareLoadingMessage": "Carregando a tela do {participant}"
   }
 }
