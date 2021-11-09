@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix for preventing video resize when isSpeaking indicator appears",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
