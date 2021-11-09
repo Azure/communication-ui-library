@@ -11,6 +11,7 @@ import {
   disabledVideoHint,
   displayNameStyle,
   iconContainerStyle,
+  isSpeakingBorderDiv,
   overlayContainerStyles,
   rootStyles,
   tileInfoStackItemStyle,
@@ -172,21 +173,26 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const isSpeakingStyles = {
-    border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : 'transparent'}`
-  };
-
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
         data-ui-id={ids.videoTile}
         className={mergeStyles(
           rootStyles,
-          isSpeakingStyles,
-          { background: theme.palette.neutralLighter, borderRadius: theme.effects.roundedCorner4 },
+          {
+            background: theme.palette.neutralLighter,
+            borderRadius: theme.effects.roundedCorner4
+          },
           styles?.root
         )}
       >
+        <div
+          className={mergeStyles(isSpeakingBorderDiv, {
+            borderRadius: theme.effects.roundedCorner4,
+            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : 'transparent'}`
+          })}
+        />
+
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
