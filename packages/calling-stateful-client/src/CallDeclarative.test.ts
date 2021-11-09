@@ -3,7 +3,7 @@
 
 import {
   CallerInfo,
-  CallFeatureFactoryType,
+  CallFeatureApiFactory,
   UserFacingDiagnosticsFeature,
   Features,
   RecordingCallFeature,
@@ -32,17 +32,17 @@ jest.mock('@azure/communication-calling', () => {
       }
     },
     Features: {
-      get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
-        return MockRecordingCallFeatureImpl;
+      get Recording(): CallFeatureApiFactory<RecordingCallFeature> {
+        return { callApiCtor: MockRecordingCallFeatureImpl };
       },
-      get Transfer(): CallFeatureFactoryType<TransferCallFeature> {
-        return MockTransferCallFeatureImpl;
+      get Transfer(): CallFeatureApiFactory<TransferCallFeature> {
+        return { callApiCtor: MockTransferCallFeatureImpl };
       },
-      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
-        return MockTranscriptionCallFeatureImpl;
+      get Transcription(): CallFeatureApiFactory<TranscriptionCallFeature> {
+        return { callApiCtor: MockTranscriptionCallFeatureImpl };
       },
-      get Diagnostics(): CallFeatureFactoryType<UserFacingDiagnosticsFeature> {
-        return StubDiagnosticsCallFeatureImpl;
+      get Diagnostics(): CallFeatureApiFactory<UserFacingDiagnosticsFeature> {
+        return { callApiCtor: StubDiagnosticsCallFeatureImpl };
       }
     }
   };
@@ -60,14 +60,14 @@ describe('declarative call', () => {
     mockCall.isScreenSharingOn = false;
     mockCall.localVideoStreams = [];
     mockCall.remoteParticipants = [];
-    mockCall.api = createMockApiFeatures(new Map());
+    mockCall.feature = createMockApiFeatures(new Map());
 
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
     const declarativeCall = callDeclaratify(mockCall, context);
 
-    const declarativeTransfer = declarativeCall.api(Features.Transfer);
+    const declarativeTransfer = declarativeCall.feature(Features.Transfer);
 
     const transfer = declarativeTransfer.transfer({ targetParticipant: { communicationUserId: 'a' } }) as any;
 
@@ -92,14 +92,14 @@ describe('declarative call', () => {
     mockCall.isScreenSharingOn = false;
     mockCall.localVideoStreams = [];
     mockCall.remoteParticipants = [];
-    mockCall.api = createMockApiFeatures(new Map());
+    mockCall.feature = createMockApiFeatures(new Map());
 
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
     const declarativeCall = callDeclaratify(mockCall, context) as DeclarativeCall;
 
-    const declarativeTransfer = declarativeCall.api(Features.Transfer);
+    const declarativeTransfer = declarativeCall.feature(Features.Transfer);
 
     const transfer = declarativeTransfer.transfer({ targetParticipant: { communicationUserId: 'a' } }) as any;
 

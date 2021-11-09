@@ -4,7 +4,7 @@
 import {
   Call,
   CallAgent,
-  CallFeatureFactoryType,
+  CallFeatureApiFactory,
   CollectionUpdatedEvent,
   UserFacingDiagnosticsFeature,
   GroupChatCallLocator,
@@ -15,7 +15,9 @@ import {
   RecordingCallFeature,
   StartCallOptions,
   TranscriptionCallFeature,
-  TransferCallFeature
+  TransferCallFeature,
+  CallAgentApiFeature,
+  CallAgentFeatureApiFactory
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
@@ -47,17 +49,17 @@ mockoutObjectFreeze();
 jest.mock('@azure/communication-calling', () => {
   return {
     Features: {
-      get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
-        return MockRecordingCallFeatureImpl;
+      get Recording(): CallFeatureApiFactory<RecordingCallFeature> {
+        return { callApiCtor: MockRecordingCallFeatureImpl };
       },
-      get Transfer(): CallFeatureFactoryType<TransferCallFeature> {
-        return MockTransferCallFeatureImpl;
+      get Transfer(): CallFeatureApiFactory<TransferCallFeature> {
+        return { callApiCtor: MockTransferCallFeatureImpl };
       },
-      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
-        return MockTranscriptionCallFeatureImpl;
+      get Transcription(): CallFeatureApiFactory<TranscriptionCallFeature> {
+        return { callApiCtor: MockTranscriptionCallFeatureImpl };
       },
-      get Diagnostics(): CallFeatureFactoryType<UserFacingDiagnosticsFeature> {
-        return StubDiagnosticsCallFeatureImpl;
+      get Diagnostics(): CallFeatureApiFactory<UserFacingDiagnosticsFeature> {
+        return { callApiCtor: StubDiagnosticsCallFeatureImpl };
       }
     }
   };
@@ -94,6 +96,9 @@ class MockCallAgent implements CallAgent {
   }
   dispose(): Promise<void> {
     return Promise.resolve();
+  }
+  feature<TFeature extends CallAgentApiFeature>(factory: CallAgentFeatureApiFactory<TFeature>): TFeature {
+    throw new Error('Not implemented');
   }
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
@@ -140,6 +145,9 @@ class MockCallAgentWithMultipleCalls implements CallAgent {
     const call = createMockCall(mockCallId);
     call.remoteParticipants = [remoteParticipant];
     return call;
+  }
+  feature<TFeature extends CallAgentApiFeature>(factory: CallAgentFeatureApiFactory<TFeature>): TFeature {
+    throw new Error('Not implemented');
   }
   dispose(): Promise<void> {
     return Promise.resolve();
