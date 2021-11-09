@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(我)",
     "menuTitle": "更多选项",
-    "removeButtonLabel": "删除"
+    "removeButtonLabel": "删除",
+    "sharingIconLabel": "共享",
+    "mutedIconLabel": "已静音"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在键入...",
@@ -12,7 +14,8 @@
     "delimiter": "、 "
   },
   "sendBox": {
-    "placeholderText": "输入消息"
+    "placeholderText": "输入消息",
+    "textTooLong": "你的消息长度超过了最大限制。"
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "已发送",
@@ -61,7 +64,17 @@
     "friday": "星期五",
     "saturday": "星期六",
     "participantJoined": "已加入聊天。",
-    "participantLeft": "已退出聊天。"
+    "participantLeft": "已退出聊天。",
+    "editMessage": "编辑",
+    "removeMessage": "删除",
+    "editedTag": "已编辑",
+    "liveAuthorIntro": "{author} 说",
+    "editBoxTextLimit": "你的消息超过了{limitNumber}个字符的限制",
+    "editBoxPlaceholderText": "编辑消息",
+    "newMessagesIndicator": "新消息",
+    "noDisplayNameSub": "无名称",
+    "editBoxCancelButton": "取消",
+    "editBoxSubmitButton": "提交"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "无法取消麦克风静音",
     "speakingWhileMuted": "你的麦克风已静音",
     "startScreenShareGeneric": "无法启动屏幕共享",
-    "stopScreenShareGeneric": "无法停止屏幕共享"
+    "stopScreenShareGeneric": "无法停止屏幕共享",
+    "callNetworkQualityLow": "网络质量低。",
+    "callNoSpeakerFound": "找不到扬声器或耳机。连接音频设备以收听呼叫。",
+    "callNoMicrophoneFound": "找不到麦克风。连接音频输入设备。",
+    "callMicrophoneAccessDenied": "无法访问麦克风。单击地址栏中的锁定以授予对此网页的权限。",
+    "callMicrophoneMutedBySystem": "系统已将你设为静音。",
+    "callMacOsMicrophoneAccessDenied": "无法访问麦克风。在 macOS 隐私设置中授予麦克风权限。",
+    "callLocalVideoFreeze": "网络带宽较差。你的视频可能会在通话中为其他人暂停。",
+    "callCameraAccessDenied": "无法访问照相机。单击地址栏中的锁定以授予对此网页的权限。",
+    "callCameraAlreadyInUse": "无法访问照相机。它可能已被其他应用程序使用。",
+    "callMacOsCameraAccessDenied": "MacOS 正在阻止访问你的相机。更新你的隐私设置以允许此浏览器访问你的相机。",
+    "callMacOsScreenShareAccessDenied": "MacOS 正在阻止屏幕共享。更新你的隐私设置以允许此浏览器录制你的屏幕。"
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "你正在共享你的屏幕",
+    "screenShareLoadingMessage": "正在加载 {participant} 的屏幕"
   }
 }

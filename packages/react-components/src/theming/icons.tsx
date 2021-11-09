@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { mergeStyles } from '@fluentui/react';
 import {
   CallEnd20Filled,
   Checkmark20Regular,
@@ -46,6 +47,15 @@ import React from 'react';
  */
 export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
 
+const WifiWarning16Filled = (): JSX.Element => (
+  // All ErrorBar icons are 16px x 16px (when 1rem = 16 px).
+  // There is no 16px version of this icon in the fluent icon package, so scale the larger
+  // one down to required size.
+  <div className={mergeStyles({ transform: 'scale(0.8)' })}>
+    <WifiWarning20Filled />
+  </div>
+);
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -83,13 +93,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   MessageRemove: <Delete20Regular />,
   HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
   HorizontalGalleryRightButton: <ChevronRight20Regular />,
-  errorBarCallNetworkQualityLow: <WifiWarning20Filled />,
+  errorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   errorBarCallNoSpeakerFound: <SpeakerMute16Filled />,
   errorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
   errorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
   errorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
   errorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
-  errorBarCallLocalVideoFreeze: <WifiWarning20Filled />,
+  errorBarCallLocalVideoFreeze: <WifiWarning16Filled />,
   errorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
   errorBarCallCameraAlreadyInUse: <VideoProhibited16Filled />,
   errorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />

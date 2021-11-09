@@ -7,10 +7,25 @@ import {
   MicOn20Filled,
   Speaker220Filled,
   Video20Filled,
-  VideoOff20Filled
+  VideoOff20Filled,
+  WifiWarning20Filled
 } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
+import { mergeStyles, Text } from '@fluentui/react';
+
+const CoffeeIcon = (): JSX.Element => (
+  <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
+    ☕
+  </Text>
+);
+
+const coffeeIconStyle = {
+  // Fluent wraps all icons with <i> so we must force the fontStyle back to normal.
+  fontStyle: 'normal',
+  // By default our icons are 20px x 20px (for 1rem = 16px), make this a bit bigger for lobby.
+  fontSize: '2rem'
+};
 
 /**
  * The default set of icons used by the composites directly (i.e. not via the components defined in this library).
@@ -18,14 +33,15 @@ import React from 'react';
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
-  lobbyScreenConnectingToCall: <>☕</>,
-  lobbyScreenWaitingToBeAdmitted: <>☕</>,
+  lobbyScreenConnectingToCall: <CoffeeIcon />,
+  lobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
   Muted: <MicOff20Filled />,
-  NetworkReconnectIcon: <CallMissed20Filled />
+  NetworkReconnectIcon: <CallMissed20Filled />,
+  NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />
 };
 
 /**
