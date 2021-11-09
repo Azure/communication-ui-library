@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { mergeStyles, Stack, Text } from '@fluentui/react';
+import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
 import { moreDetailsStyles, stackItemGap, titleStyles } from '../styles/NoticePage.styles';
 
 /**
@@ -11,6 +11,7 @@ import { moreDetailsStyles, stackItemGap, titleStyles } from '../styles/NoticePa
 export interface NoticePageProps {
   title: string;
   moreDetails?: string;
+  iconName?: string;
   dataUiId: string;
 }
 
@@ -23,6 +24,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
   return (
     <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId}>
       <Stack tokens={stackItemGap}>
+        {props.iconName && <Icon iconName={props.iconName} />}
         <Text className={mergeStyles(titleStyles)}>{props.title}</Text>
         <Text className={mergeStyles(moreDetailsStyles)}>{props.moreDetails}</Text>
       </Stack>
