@@ -113,6 +113,9 @@ export const getCallCompositePage = (
       case CallEndReasons.REMOVED_FROM_CALL:
         return 'removedFromCall';
       case CallEndReasons.LEFT_CALL:
+        if (previousCall.diagnostics.network.latest.noNetwork) {
+          return 'joinCallFailedDueToNoNetwork';
+        }
         return 'leftCall';
     }
   }
