@@ -209,7 +209,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        {showLabel && (displayName || (showMuteIndicator && isMuted !== undefined)) && (
+        {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
           <Stack horizontal className={tileInfoContainerStyle}>
             <Stack horizontal className={tileInfoStyle}>
               {displayName && (
