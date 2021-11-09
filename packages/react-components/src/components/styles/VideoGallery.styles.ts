@@ -137,3 +137,12 @@ export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
   maxHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
   maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`
 };
+
+/**
+ * @private
+ */
+export const videoWithNoRoundedBorderStyle = {
+  root: {
+    '& video': { borderRadius: '0rem' }
+  }
+};
