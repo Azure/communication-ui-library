@@ -315,48 +315,49 @@ export function createMockApiFeatures(
   cache: Map<CallFeatureApiFactory<any>, CallApiFeature>
 ): <FeatureT extends CallApiFeature>(cls: CallFeatureApiFactory<FeatureT>) => FeatureT {
   return <FeatureT extends CallApiFeature>(cls: CallFeatureApiFactory<FeatureT>): FeatureT => {
-    const feature = cache.get(cls);
-    if (feature) {
-      return feature as FeatureT;
-    } else {
-      // Default one if none provided
-      const generic = addMockEmitter({
-        name: 'Default',
-        isRecordingActive: false,
-        isTranscriptionActive: false,
-        /* eslint-disable @typescript-eslint/no-unused-vars */
-        transfer(
-          target: TransferToParticipantLocator | TransferToCallLocator,
-          transferOptions?: TransferToParticipantOptions | TransferToCallOptions
-        ): Transfer {
-          return addMockEmitter({ state: 'None' });
-        },
-        /* eslint-enable @typescript-eslint/no-unused-vars */
-        media: {
-          getLatest(): LatestMediaDiagnostics {
-            return {};
-          },
-          on(): void {
-            /* Stub to appease types */
-          },
-          off(): void {
-            /* Stub to appease types */
-          }
-        },
-        network: {
-          getLatest(): LatestNetworkDiagnostics {
-            return {};
-          },
-          on(): void {
-            /* Stub to appease types */
-          },
-          off(): void {
-            /* Stub to appease types */
-          }
-        }
-      });
-      return generic;
+    for (const [key, feature] of cache.entries()) {
+      if (cls && key.callApiCtor === cls.callApiCtor) {
+        return feature as FeatureT;
+      }
     }
+
+    // Default one if none provided
+    const generic = addMockEmitter({
+      name: 'Default',
+      isRecordingActive: false,
+      isTranscriptionActive: false,
+      /* eslint-disable @typescript-eslint/no-unused-vars */
+      transfer(
+        target: TransferToParticipantLocator | TransferToCallLocator,
+        transferOptions?: TransferToParticipantOptions | TransferToCallOptions
+      ): Transfer {
+        return addMockEmitter({ state: 'None' });
+      },
+      /* eslint-enable @typescript-eslint/no-unused-vars */
+      media: {
+        getLatest(): LatestMediaDiagnostics {
+          return {};
+        },
+        on(): void {
+          /* Stub to appease types */
+        },
+        off(): void {
+          /* Stub to appease types */
+        }
+      },
+      network: {
+        getLatest(): LatestNetworkDiagnostics {
+          return {};
+        },
+        on(): void {
+          /* Stub to appease types */
+        },
+        off(): void {
+          /* Stub to appease types */
+        }
+      }
+    });
+    return generic;
   };
 }
 

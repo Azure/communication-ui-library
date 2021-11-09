@@ -14,7 +14,6 @@ import { CallContext } from './CallContext';
 import { callDeclaratify, DeclarativeCall } from './CallDeclarative';
 import { convertSdkCallToDeclarativeCall } from './Converter';
 import {
-  addMockEmitter,
   createMockApiFeatures,
   createMockCall,
   MockRecordingCallFeatureImpl,
@@ -26,11 +25,6 @@ import {
 
 jest.mock('@azure/communication-calling', () => {
   return {
-    TransferCallFeature: {
-      transfer: () => {
-        return addMockEmitter({ state: 'None' });
-      }
-    },
     Features: {
       get Recording(): CallFeatureApiFactory<RecordingCallFeature> {
         return { callApiCtor: MockRecordingCallFeatureImpl };
@@ -51,7 +45,7 @@ jest.mock('@azure/communication-calling', () => {
 const mockCallId = 'a';
 
 describe('declarative call', () => {
-  test('proxies api() to return a DeclarativeTransferCallFeature which proxies transfer() in state', async () => {
+  test('proxies feature() to return a DeclarativeTransferCallFeature which proxies transfer() in state', async () => {
     const mockCall = createMockCall(mockCallId);
     mockCall.callerInfo = { identifier: { kind: 'communicationUser' } } as CallerInfo;
     mockCall.state = 'None';

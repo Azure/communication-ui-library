@@ -38,7 +38,7 @@ class ProxyCall implements ProxyHandler<Call> {
 
   public get<P extends keyof Call>(target: Call, prop: P): any {
     switch (prop) {
-      case 'api': {
+      case 'feature': {
         return <TFeature extends CallApiFeature>(cls: CallFeatureApiFactory<TFeature>): TFeature => {
           const feature = target.feature(cls) as any;
           if (feature.transfer) {
