@@ -31,18 +31,18 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
         }
       >
         <div
-          className="ms-Stack css-10"
+          className="ms-Stack css-9"
           data-ui-id="video-tile"
         >
           <div
-            className="ms-Stack css-11"
+            className="ms-Stack css-10"
           >
             <div
-              className="ms-Stack css-13"
+              className="ms-Stack css-12"
             >
               <div
                 aria-label=""
-                className="ms-Persona ms-Persona--size48 root-14"
+                className="ms-Persona ms-Persona--size48 root-13"
                 style={
                   Object {
                     "height": 100,
@@ -51,11 +51,11 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
                 }
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size48 coin-21"
+                  className="ms-Persona-coin ms-Persona--size48 coin-20"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-23"
+                    className="ms-Persona-imageArea imageArea-22"
                     role="presentation"
                     style={
                       Object {
@@ -66,7 +66,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-26"
+                      className="ms-Persona-initials initials-25"
                       style={
                         Object {
                           "height": 100,
@@ -84,42 +84,43 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
             </div>
           </div>
           <div
-            className="ms-Stack css-83 css-29"
+            className="ms-Stack css-83 css-2"
           >
             <div
-              className="ms-StackItem css-30"
+              className="ms-Stack css-84 css-28"
             >
               <span
-                className="css-31"
+                className="css-29"
+                title="Holly"
               >
                 Holly
               </span>
             </div>
           </div>
           <div
-            className="ms-Stack css-32"
+            className="ms-Stack css-30"
           >
             <div
-              className="ms-Stack css-10"
+              className="ms-Stack css-9"
               data-ui-id="video-tile"
             >
               <div
-                className="ms-Stack css-11"
+                className="ms-Stack css-10"
               >
                 <div
-                  className="ms-Persona ms-Persona--size56 root-33"
+                  className="ms-Persona ms-Persona--size56 root-31"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size56 coin-21"
+                    className="ms-Persona-coin ms-Persona--size56 coin-20"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-37"
+                      className="ms-Persona-imageArea imageArea-35"
                       role="presentation"
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-40"
+                        className="ms-Persona-initials initials-38"
                       >
                         <span>
                           T
