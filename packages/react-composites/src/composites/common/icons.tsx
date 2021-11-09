@@ -33,7 +33,6 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
-  noticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   lobbyScreenConnectingToCall: <CoffeeIcon />,
   lobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
@@ -41,7 +40,8 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
   Muted: <MicOff20Filled />,
-  NetworkReconnectIcon: <CallMissed20Filled />
+  NetworkReconnectIcon: <CallMissed20Filled />,
+  NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />
 };
 
 /**
