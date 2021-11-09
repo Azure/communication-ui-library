@@ -294,7 +294,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -325,6 +325,8 @@ export interface CallCompositeStrings {
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     defaultPlaceHolder: string;
+    failedToJoinCallDueToNoNetworkMoreDetails?: string;
+    failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     learnMore: string;
@@ -842,6 +844,7 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
 };
 
 // @public
@@ -1006,6 +1009,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1347,7 +1351,7 @@ export type MeetingCompositeOptions = {
 };
 
 // @alpha
-export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
+export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @alpha
 export type MeetingCompositeProps = {
@@ -2104,6 +2108,7 @@ export interface VideoTileProps {
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     renderElement?: JSX.Element | null;
+    showLabel?: boolean;
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
     userId?: string;

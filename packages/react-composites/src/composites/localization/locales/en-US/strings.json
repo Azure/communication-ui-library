@@ -18,6 +18,8 @@
     "complianceBannerTranscriptionStopped": "Transcription has stopped.",
     "configurationPageTitle": "Start a call",
     "defaultPlaceHolder": "Select an option",
+    "failedToJoinCallDueToNoNetworkTitle": "Call disconnected",
+    "failedToJoinCallDueToNoNetworkMoreDetails": "Call was disconnected due to a network issue. Check your connection and join again.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Access to the meeting was denied",
     "learnMore": "Learn more",
     "leftCallTitle": "You have left the call",

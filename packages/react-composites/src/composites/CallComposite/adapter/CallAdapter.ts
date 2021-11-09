@@ -25,6 +25,7 @@ export type CallCompositePage =
   | 'accessDeniedTeamsMeeting'
   | 'call'
   | 'configuration'
+  | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'lobby'
   | 'removedFromCall';
