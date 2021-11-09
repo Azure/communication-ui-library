@@ -76,7 +76,8 @@ export const videoHint = mergeStyles(disabledVideoHint, {
  * @private
  */
 export const displayNameStyle: IStyle = {
-  padding: '0.1rem',
+  paddingLeft: '0.1rem',
+  paddingRight: '0.1rem',
   fontSize: '0.75rem',
   fontWeight: 600,
   // Text component will take body color by default (white in Dark Mode), so forcing it to be parent container color
@@ -90,13 +91,12 @@ export const displayNameStyle: IStyle = {
  * @private
  */
 export const iconContainerStyle: IStyle = {
-  padding: '0.1rem',
   height: '100%',
   alignItems: 'center',
   '& svg': {
     display: 'block'
   },
-  maxWidth: '1.2rem'
+  maxWidth: '1rem'
 };
 
 /**
