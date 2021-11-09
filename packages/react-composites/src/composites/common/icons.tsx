@@ -36,8 +36,8 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
-  lobbyScreenConnectingToCall: <CoffeeIcon />,
-  lobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
+  LobbyScreenConnectingToCall: <CoffeeIcon />,
+  LobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
   LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
@@ -108,13 +108,37 @@ export type CallCompositeIcons = Partial<
     | 'ControlButtonParticipants'
     | 'ControlButtonScreenShareStart'
     | 'ControlButtonScreenShareStop'
+    | 'ErrorBarCallCameraAccessDenied'
+    | 'ErrorBarCallCameraAlreadyInUse'
+    | 'ErrorBarCallLocalVideoFreeze'
+    | 'ErrorBarCallMacOsCameraAccessDenied'
+    | 'ErrorBarCallMacOsMicrophoneAccessDenied'
+    | 'ErrorBarCallMicrophoneAccessDenied'
+    | 'ErrorBarCallMicrophoneMutedBySystem'
+    | 'ErrorBarCallNetworkQualityLow'
+    | 'ErrorBarCallNoMicrophoneFound'
+    | 'ErrorBarCallNoSpeakerFound'
+    | 'HorizontalGalleryLeftButton'
+    | 'HorizontalGalleryRightButton'
+    | 'LobbyScreenConnectingToCall'
+    | 'LobbyScreenWaitingToBeAdmitted'
+    | 'LocalDeviceSettingsCamera'
+    | 'LocalDeviceSettingsMic'
+    | 'LocalDeviceSettingsSpeaker'
+    | 'LocalPreviewPlaceholder'
+    | 'Muted'
+    | 'NetworkReconnectIcon'
+    | 'NoticePageAccessDeniedTeamsMeeting'
+    | 'NoticePageJoinCallFailedDueToNoNetwork'
+    | 'NoticePageLeftCall'
+    | 'NoticePageRemovedFromCall'
     | 'OptionsCamera'
     | 'OptionsMic'
     | 'OptionsSpeaker'
-    | 'ParticipantItemScreenShareStart'
     | 'ParticipantItemMicOff'
     | 'ParticipantItemOptions'
     | 'ParticipantItemOptionsHovered'
+    | 'ParticipantItemScreenShareStart'
     | 'VideoTileMicOff'
   >
 >;

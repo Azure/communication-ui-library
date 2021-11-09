@@ -31,18 +31,21 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
         }
       >
         <div
-          className="ms-Stack css-9"
+          className="ms-Stack css-10"
           data-ui-id="video-tile"
         >
           <div
-            className="ms-Stack css-10"
+            className="css-6"
+          />
+          <div
+            className="ms-Stack css-11"
           >
             <div
-              className="ms-Stack css-12"
+              className="ms-Stack css-13"
             >
               <div
                 aria-label=""
-                className="ms-Persona ms-Persona--size48 root-13"
+                className="ms-Persona ms-Persona--size48 root-14"
                 style={
                   Object {
                     "height": 100,
@@ -51,11 +54,11 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
                 }
               >
                 <div
-                  className="ms-Persona-coin ms-Persona--size48 coin-20"
+                  className="ms-Persona-coin ms-Persona--size48 coin-21"
                   role="presentation"
                 >
                   <div
-                    className="ms-Persona-imageArea imageArea-22"
+                    className="ms-Persona-imageArea imageArea-23"
                     role="presentation"
                     style={
                       Object {
@@ -66,7 +69,7 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
                   >
                     <div
                       aria-hidden="true"
-                      className="ms-Persona-initials initials-25"
+                      className="ms-Persona-initials initials-26"
                       style={
                         Object {
                           "height": 100,
@@ -84,13 +87,13 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
             </div>
           </div>
           <div
-            className="ms-Stack css-83 css-2"
+            className="ms-Stack css-82 css-2"
           >
             <div
-              className="ms-Stack css-84 css-28"
+              className="ms-Stack css-83 css-29"
             >
               <span
-                className="css-29"
+                className="css-30"
                 title="Holly"
               >
                 Holly
@@ -98,29 +101,32 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
             </div>
           </div>
           <div
-            className="ms-Stack css-30"
+            className="ms-Stack css-31"
           >
             <div
-              className="ms-Stack css-9"
+              className="ms-Stack css-10"
               data-ui-id="video-tile"
             >
               <div
-                className="ms-Stack css-10"
+                className="css-6"
+              />
+              <div
+                className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Persona ms-Persona--size56 root-31"
+                  className="ms-Persona ms-Persona--size56 root-32"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size56 coin-20"
+                    className="ms-Persona-coin ms-Persona--size56 coin-21"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-35"
+                      className="ms-Persona-imageArea imageArea-36"
                       role="presentation"
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-38"
+                        className="ms-Persona-initials initials-39"
                       >
                         <span>
                           T
