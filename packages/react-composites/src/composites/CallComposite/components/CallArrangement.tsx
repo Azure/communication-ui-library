@@ -3,7 +3,7 @@
 
 import { Stack } from '@fluentui/react';
 import { ErrorBar, ErrorBarProps } from '@internal/react-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
@@ -36,11 +36,15 @@ export interface CallArrangementProps {
  * @private
  */
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
+  const containerClassName = useMemo(() => {
+    return props.mobileView ? containerStyleMobile : containerStyleDesktop;
+  }, [props.mobileView ? containerStyleMobile : containerStyleDesktop]);
+
   return (
     <Stack
       horizontalAlign="center"
       verticalAlign="center"
-      className={props.mobileView ? containerStyleMobile : containerStyleDesktop}
+      className={containerClassName}
       grow
       data-ui-id={props.dataUiId}
     >

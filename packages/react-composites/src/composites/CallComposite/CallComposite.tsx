@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -154,10 +154,15 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       adapter.querySpeakers();
     })();
   }, [adapter]);
+
+  const mainScreenContainerClassName = useMemo(() => {
+    return options?.mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
+  }, [options?.mobileView]);
+
   return (
     <BaseComposite {...props}>
       <CallAdapterProvider adapter={adapter}>
-        <div className={props.options?.mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop}>
+        <div className={mainScreenContainerClassName}>
           <MainScreen
             callInvitationUrl={callInvitationUrl}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
