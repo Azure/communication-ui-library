@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -68,9 +68,8 @@ export const disabledVideoHint = mergeStyles({
  * @private
  */
 export const videoHint = mergeStyles(disabledVideoHint, {
-  // This will appear on top of the video stream, so no dependency on theme and thus the direct use of default palette
-  backgroundColor: palette.white,
-  opacity: 0.8
+  // This will appear on top of the video stream, so no dependency on theme and explicitly use a translucent white
+  backgroundColor: 'rgba(255,255,255,0.8)'
 });
 
 /**

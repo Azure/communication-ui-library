@@ -54,14 +54,6 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
 /**
  * @private
  */
-export const localSettingsContainer = mergeStyles({
-  minWidth: '12.5rem',
-  maxWidth: '18.75rem'
-});
-
-/**
- * @private
- */
 export const dropDownTitleIconStyles = mergeStyles({
   overflow: 'hidden',
   textOverflow: 'ellipsis',

@@ -18,8 +18,7 @@ export const buttonStyle = mergeStyles({
   fontWeight: 600,
   fontSize: '0.875rem', // 14px
   height: '2.75rem',
-  width: '100%',
-  maxWidth: '18.75rem'
+  width: '100%'
 });
 
 /**
