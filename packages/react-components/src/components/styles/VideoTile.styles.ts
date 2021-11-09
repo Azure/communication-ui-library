@@ -44,8 +44,7 @@ export const tileInfoContainerStyle = mergeStyles({
   position: 'absolute',
   bottom: '0.5rem',
   left: '0.5rem',
-  minWidth: 'calc(100% - 1rem)',
-  maxWidth: 'calc(100% - 1rem)',
+  width: 'calc(100% - 1rem)',
   minHeight: '1.3rem',
   maxHeight: '1.3rem'
 });
