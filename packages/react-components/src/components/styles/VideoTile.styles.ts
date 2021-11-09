@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
