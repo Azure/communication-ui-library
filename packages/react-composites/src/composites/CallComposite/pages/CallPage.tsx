@@ -64,6 +64,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           increaseFlyoutItemSize: props.options?.mobileView
         }
       }
+      mobileView={options?.mobileView ?? false}
       onRenderGalleryContent={() =>
         callStatus === 'Connected' ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
