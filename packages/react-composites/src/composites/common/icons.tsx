@@ -33,7 +33,7 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
-  joinCallFailedDueToNoNetworkNoticeIcon: <WifiWarning20Filled />,
+  noticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   lobbyScreenConnectingToCall: <CoffeeIcon />,
   lobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
