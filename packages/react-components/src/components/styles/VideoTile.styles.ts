@@ -40,7 +40,7 @@ export const overlayContainerStyles: IStyle = {
 /**
  * @private
  */
-export const videoHintContainer = mergeStyles({
+export const tileInfoContainerStyle = mergeStyles({
   position: 'absolute',
   bottom: '0.5rem',
   left: '0.5rem',
