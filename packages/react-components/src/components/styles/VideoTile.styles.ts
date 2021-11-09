@@ -44,9 +44,7 @@ export const tileInfoContainerStyle = mergeStyles({
   position: 'absolute',
   bottom: '0.5rem',
   left: '0.5rem',
-  width: 'calc(100% - 1rem)',
-  minHeight: '1.3rem',
-  maxHeight: '1.3rem'
+  width: 'calc(100% - 1rem)'
 });
 
 /**
@@ -94,8 +92,7 @@ export const iconContainerStyle: IStyle = {
   alignItems: 'center',
   '& svg': {
     display: 'block'
-  },
-  maxWidth: '1rem'
+  }
 };
 
 /**
