@@ -165,11 +165,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const isSpeakingStyles = isSpeaking
-    ? {
-        border: `0.25rem solid ${theme.palette.themePrimary}`
-      }
-    : {};
+  const isSpeakingStyles = {
+    border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : 'transparent'}`
+  };
 
   return (
     <Ref innerRef={videoTileRef}>
