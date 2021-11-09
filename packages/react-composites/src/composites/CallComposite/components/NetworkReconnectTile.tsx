@@ -12,8 +12,8 @@ import {
   titleContainerStyle,
   titleStyle
 } from '../styles/NetworkReconnectTile.styles';
-import { useLocalVideoStartTrigger } from '../hooks/useLocalVideoStartTrigger';
 import { useHandlers } from '../hooks/useHandlers';
+import { useLocalVideoStartTrigger } from './MediaGallery';
 
 /**
  * @private

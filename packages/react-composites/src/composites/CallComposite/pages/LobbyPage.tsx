@@ -14,7 +14,7 @@ import { CallControlOptions } from '../components/CallControls';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { Icon } from '@fluentui/react';
-import { useLocalVideoStartTrigger } from '../hooks/useLocalVideoStartTrigger';
+import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 
 /**
  * @private
