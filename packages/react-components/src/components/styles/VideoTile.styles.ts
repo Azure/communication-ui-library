@@ -94,10 +94,3 @@ export const iconContainerStyle: IStyle = {
     display: 'block'
   }
 };
-
-/**
- * @private
- */
-export const tileInfoStackItemStyle: IStyle = {
-  display: 'flex'
-};
