@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -17,6 +17,7 @@ import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
+import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 
 /**
  * Props for {@link CallComposite}.
@@ -156,15 +157,22 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       adapter.querySpeakers();
     })();
   }, [adapter]);
+
+  const mainScreenContainerClassName = useMemo(() => {
+    return options?.mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
+  }, [options?.mobileView]);
+
   return (
     <BaseComposite {...props}>
       <CallAdapterProvider adapter={adapter}>
-        <MainScreen
-          callInvitationUrl={callInvitationUrl}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          options={options}
-        />
+        <div className={mainScreenContainerClassName}>
+          <MainScreen
+            callInvitationUrl={callInvitationUrl}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            options={options}
+          />
+        </div>
       </CallAdapterProvider>
     </BaseComposite>
   );

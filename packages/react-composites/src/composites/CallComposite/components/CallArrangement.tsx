@@ -3,13 +3,14 @@
 
 import { Stack } from '@fluentui/react';
 import { ErrorBar, ErrorBarProps } from '@internal/react-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
   notificationsContainerStyles,
   callControlsContainer,
-  containerStyles,
+  containerStyleDesktop,
+  containerStyleMobile,
   mediaGalleryContainerStyles,
   subContainerStyles
 } from '../styles/CallPage.styles';
@@ -28,14 +29,25 @@ export interface CallArrangementProps {
   callControlProps: CallControlsProps | false;
   onRenderGalleryContent: () => JSX.Element;
   dataUiId: string;
+  mobileView: boolean;
 }
 
 /**
  * @private
  */
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
+  const containerClassName = useMemo(() => {
+    return props.mobileView ? containerStyleMobile : containerStyleDesktop;
+  }, [props.mobileView ? containerStyleMobile : containerStyleDesktop]);
+
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow data-ui-id={props.dataUiId}>
+    <Stack
+      horizontalAlign="center"
+      verticalAlign="center"
+      className={containerClassName}
+      grow
+      data-ui-id={props.dataUiId}
+    >
       <Stack.Item styles={notificationsContainerStyles(NOTIFICATIONS_CONTAINER_ZINDEX)}>
         <Stack>
           <ComplianceBanner {...props.complianceBannerProps} />
@@ -55,6 +67,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           </Stack>
         )}
       </Stack.Item>
+
       {props.callControlProps !== false && (
         <Stack.Item className={callControlsContainer}>
           <CallControls {...props.callControlProps} />
