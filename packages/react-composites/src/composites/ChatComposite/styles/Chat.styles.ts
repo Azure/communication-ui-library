@@ -1,10 +1,33 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 import { MessageThreadStyles, SendBoxStylesProps, TypingIndicatorStylesProps } from '@internal/react-components';
 
 const MESSAGE_THREAD_WIDTH = '41.25rem';
+
+const chatScreenContainerStyle: IStyle = {
+  height: '100%',
+  width: '100%'
+};
+
+/**
+ * @private
+ */
+export const chatScreenContainerStyleDesktop = mergeStyles({
+  ...chatScreenContainerStyle,
+  minWidth: '30rem', // max of min-width of composite pages (Call page)
+  minHeight: '22rem' // max height of min-height of composite pages (Configuration page)
+});
+
+/**
+ * @private
+ */
+export const chatScreenContainerStyleMobile = mergeStyles({
+  ...chatScreenContainerStyle,
+  minWidth: '19.5rem', // max of min-width of composite pages (Call page)
+  minHeight: '21rem' // max height of min-height of composite pages (Configuration page)
+});
 
 /**
  * @private

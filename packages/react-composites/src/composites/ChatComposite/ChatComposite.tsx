@@ -2,11 +2,12 @@
 // Licensed under the MIT license.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
+import { chatScreenContainerStyleDesktop, chatScreenContainerStyleMobile } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
 
 /**
@@ -43,6 +44,13 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
  */
 export type ChatCompositeOptions = {
   /**
+   * Choose to use the composite form optimized for use on a mobile device.
+   * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
+   * @defaultValue false
+   * @alpha
+   */
+  mobileView?: boolean;
+  /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    * Hide or show the error bar.
    * @defaultValue true
@@ -77,16 +85,22 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems
   } = props;
 
+  const chatScreenContainerClassName = useMemo(() => {
+    return options?.mobileView ? chatScreenContainerStyleMobile : chatScreenContainerStyleDesktop;
+  }, [options?.mobileView]);
+
   return (
     <BaseComposite {...props}>
       <ChatAdapterProvider adapter={adapter}>
-        <ChatScreen
-          options={options}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onRenderTypingIndicator={onRenderTypingIndicator}
-          onRenderMessage={onRenderMessage}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        />
+        <div className={chatScreenContainerClassName}>
+          <ChatScreen
+            options={options}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onRenderTypingIndicator={onRenderTypingIndicator}
+            onRenderMessage={onRenderMessage}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          />
+        </div>
       </ChatAdapterProvider>
     </BaseComposite>
   );
