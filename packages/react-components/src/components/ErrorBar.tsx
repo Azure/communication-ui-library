@@ -327,14 +327,14 @@ const messageBarIconProps = (errorType: ErrorType): IIconProps | undefined => {
 };
 
 const customIconName: Partial<{ [key in ErrorType]: string }> = {
-  callNetworkQualityLow: 'errorBarCallNetworkQualityLow',
-  callNoSpeakerFound: 'errorBarCallNoSpeakerFound',
-  callNoMicrophoneFound: 'errorBarCallNoMicrophoneFound',
-  callMicrophoneAccessDenied: 'errorBarCallMicrophoneAccessDenied',
-  callMicrophoneMutedBySystem: 'errorBarCallMicrophoneMutedBySystem',
-  callMacOsMicrophoneAccessDenied: 'errorBarCallMacOsMicrophoneAccessDenied',
-  callLocalVideoFreeze: 'errorBarCallLocalVideoFreeze',
-  callCameraAccessDenied: 'errorBarCallCameraAccessDenied',
-  callCameraAlreadyInUse: 'errorBarCallCameraAlreadyInUse',
-  callMacOsCameraAccessDenied: 'errorBarCallMacOsCameraAccessDenied'
+  callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
+  callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
+  callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
+  callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
+  callMicrophoneMutedBySystem: 'ErrorBarCallMicrophoneMutedBySystem',
+  callMacOsMicrophoneAccessDenied: 'ErrorBarCallMacOsMicrophoneAccessDenied',
+  callLocalVideoFreeze: 'ErrorBarCallLocalVideoFreeze',
+  callCameraAccessDenied: 'ErrorBarCallCameraAccessDenied',
+  callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
+  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
 };
