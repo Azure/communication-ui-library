@@ -106,11 +106,11 @@ const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOve
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
   title: strings.lobbyScreenConnectingToCallTitle,
   moreDetails: strings.lobbyScreenConnectingToCallMoreDetails,
-  overlayIcon: <Icon iconName="lobbyScreenConnectingToCall" />
+  overlayIcon: <Icon iconName="LobbyScreenConnectingToCall" />
 });
 
 const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
   title: strings.lobbyScreenWaitingToBeAdmittedTitle,
   moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
-  overlayIcon: <Icon iconName="lobbyScreenWaitingToBeAdmitted" />
+  overlayIcon: <Icon iconName="LobbyScreenWaitingToBeAdmitted" />
 });
