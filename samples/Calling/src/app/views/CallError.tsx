@@ -17,14 +17,13 @@ import {
 } from '../styles/EndCall.styles';
 
 export interface CallErrorProps {
+  title: string;
+  reason: string;
   rejoinHandler(): void;
   homeHandler(): void;
-  title?: string;
-  reason?: string;
 }
 
 export const CallError = (props: CallErrorProps): JSX.Element => {
-  const title = props.title ?? 'Error joining the Call';
   const goHomePage = 'Go to Homepage';
   const rejoinCall = 'Retry Call';
 
@@ -39,7 +38,7 @@ export const CallError = (props: CallErrorProps): JSX.Element => {
     >
       <Stack tokens={upperStackTokens}>
         <Text role={'heading'} aria-level={1} className={endCallTitleStyle}>
-          {title}
+          {props.title}
         </Text>
         <Stack horizontal tokens={buttonsStackTokens}>
           <PrimaryButton
@@ -56,19 +55,7 @@ export const CallError = (props: CallErrorProps): JSX.Element => {
             onClick={props.homeHandler}
           />
         </Stack>
-        <div className={bottomStackFooterStyle}>
-          {props.reason ? (
-            props.reason
-          ) : (
-            <>
-              Common reasons for this error:
-              <ul>
-                <li>Incorrect Teams Meeting URL</li>
-                <li>Incorrect Group Call ID</li>
-              </ul>
-            </>
-          )}
-        </div>
+        <div className={bottomStackFooterStyle}>{props.reason}</div>
       </Stack>
     </Stack>
   );
