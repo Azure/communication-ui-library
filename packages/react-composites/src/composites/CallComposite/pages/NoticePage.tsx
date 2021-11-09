@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
-import { moreDetailsStyles, stackItemGap, titleStyles } from '../styles/NoticePage.styles';
+import { containerStyle, moreDetailsStyles, stackItemGap, titleStyles } from '../styles/NoticePage.styles';
 
 /**
  * @private
@@ -23,7 +23,7 @@ export interface NoticePageProps {
 export function NoticePage(props: NoticePageProps): JSX.Element {
   return (
     <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId}>
-      <Stack tokens={stackItemGap}>
+      <Stack className={mergeStyles(containerStyle)} tokens={stackItemGap}>
         {props.iconName && <Icon iconName={props.iconName} />}
         <Text className={mergeStyles(titleStyles)}>{props.title}</Text>
         <Text className={mergeStyles(moreDetailsStyles)}>{props.moreDetails}</Text>
