@@ -6,15 +6,24 @@ import { IStyle, IStackTokens } from '@fluentui/react';
 /**
  * @private
  */
+export const containerStyle: IStyle = {
+  maxWidth: '22.5rem',
+  // Ensure some space around the text on a narrow viewport.
+  margin: '1rem'
+};
+
+/**
+ * @private
+ */
 export const stackItemGap: IStackTokens = {
-  childrenGap: '1.5rem'
+  childrenGap: '1rem'
 };
 
 /**
  * @private
  */
 export const titleStyles: IStyle = {
-  fontSize: '1.375rem',
+  fontSize: '1.25rem',
   fontWeight: 600
 };
 
@@ -22,5 +31,5 @@ export const titleStyles: IStyle = {
  * @private
  */
 export const moreDetailsStyles: IStyle = {
-  fontSize: '0.875 rem'
+  fontSize: '1rem'
 };
