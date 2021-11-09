@@ -7,7 +7,8 @@ import {
   MicOn20Filled,
   Speaker220Filled,
   Video20Filled,
-  VideoOff20Filled
+  VideoOff20Filled,
+  WifiWarning20Filled
 } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
@@ -32,6 +33,7 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS = {
+  failedToJoinCallDueToNoNetworkIcon: <WifiWarning20Filled />,
   lobbyScreenConnectingToCall: <CoffeeIcon />,
   lobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,

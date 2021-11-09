@@ -74,6 +74,7 @@ type MainScreenProps = {
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
+
   const adapter = useAdapter();
   const locale = useLocale();
 
@@ -108,6 +109,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <NoticePage
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
+          iconName="failedToJoinCallDueToNoNetworkIcon"
           dataUiId={'join-call-failed-due-to-no-network-page'}
         />
       );
