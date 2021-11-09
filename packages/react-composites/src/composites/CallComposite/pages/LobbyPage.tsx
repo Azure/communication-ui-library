@@ -53,6 +53,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
           increaseFlyoutItemSize: props.options?.mobileView
         }
       }
+      mobileView={props.options?.mobileView ?? false}
       onRenderGalleryContent={() => <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby)} />}
       dataUiId={'lobby-page'}
     />
