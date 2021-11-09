@@ -20,7 +20,7 @@ export const configurationStackTokensMobile: IStackTokens = {
 const configurationContainerStyle: IStyle = {
   height: '100%',
   width: '100%',
-  minHeight: 'auto'
+  padding: '0.5rem'
 };
 
 /**
@@ -28,8 +28,8 @@ const configurationContainerStyle: IStyle = {
  */
 export const configurationContainerStyleDesktop = mergeStyles({
   ...configurationContainerStyle,
-  padding: '1rem', //half childrenGap from Stack
-  minWidth: '14.5rem' // max of min-width from stack items + padding * 2 = 12.5 + 1 * 2
+  minWidth: '25rem', // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
+  minHeight: '22rem' // max height of SelectionContainer + padding * 2 = 21 + 0.5 * 2
 });
 
 /**
@@ -37,14 +37,17 @@ export const configurationContainerStyleDesktop = mergeStyles({
  */
 export const configurationContainerStyleMobile = mergeStyles({
   ...configurationContainerStyle,
-  padding: '0.5rem' // half childrenGap from Stack
+  minWidth: '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
+  minHeight: '21rem'
 });
 
 /**
  * @private
  */
 export const selectionContainerStyle = mergeStyles({
-  minWidth: '12.5rem',
+  width: '50%',
+  minWidth: '11rem',
+  maxWidth: '18.75rem',
   padding: '0.5rem'
 });
 
@@ -54,8 +57,7 @@ export const selectionContainerStyle = mergeStyles({
 export const titleContainerStyleDesktop = mergeStyles({
   fontSize: '1.25rem',
   lineHeight: '1.75rem',
-  fontWeight: 600,
-  width: '12.5rem'
+  fontWeight: 600
 });
 
 /**
@@ -87,8 +89,7 @@ const callDetailsStyle: IStyle = {
  * @private
  */
 export const callDetailsStyleDesktop = mergeStyles({
-  ...callDetailsStyle,
-  maxWidth: '18.75rem'
+  ...callDetailsStyle
 });
 
 /**

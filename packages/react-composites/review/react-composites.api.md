@@ -408,7 +408,10 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
+    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
     NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
+    NoticePageLeftCall: JSX.Element;
+    NoticePageRemovedFromCall: JSX.Element;
 };
 
 // @public
@@ -451,7 +454,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
+    NoticePageAccessDeniedTeamsMeeting: JSX.Element;
     NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
+    NoticePageLeftCall: JSX.Element;
+    NoticePageRemovedFromCall: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
