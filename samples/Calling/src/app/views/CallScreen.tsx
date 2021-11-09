@@ -25,7 +25,6 @@ export interface CallScreenProps {
   displayName: string;
   webAppTitle: string;
   onCallEnded: () => void;
-  onCallError: (e: Error) => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
