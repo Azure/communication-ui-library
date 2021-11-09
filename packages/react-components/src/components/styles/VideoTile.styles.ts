@@ -40,18 +40,28 @@ export const overlayContainerStyles: IStyle = {
 /**
  * @private
  */
+export const videoHintContainer = mergeStyles({
+  position: 'absolute',
+  bottom: '0.5rem',
+  left: '0.5rem',
+  minWidth: 'calc(100% - 1rem)',
+  maxWidth: 'calc(100% - 1rem)',
+  minHeight: '1.3rem',
+  maxHeight: '1.3rem'
+});
+
+/**
+ * @private
+ */
 export const disabledVideoHint = mergeStyles({
   backgroundColor: 'inherit',
-  bottom: '0.46875rem',
   boxShadow: 'none',
   textAlign: 'left',
-  left: '0.5rem',
   overflow: 'hidden',
-  position: 'absolute',
   whiteSpace: 'nowrap',
-  maxWidth: '95%',
   alignItems: 'center',
-  padding: '0.15rem'
+  padding: '0.15rem',
+  maxWidth: '100%'
 });
 
 /**
@@ -60,8 +70,7 @@ export const disabledVideoHint = mergeStyles({
 export const videoHint = mergeStyles(disabledVideoHint, {
   // This will appear on top of the video stream, so no dependency on theme and thus the direct use of default palette
   backgroundColor: palette.white,
-  opacity: 0.8,
-  padding: '0.15rem'
+  opacity: 0.8
 });
 
 /**
@@ -72,7 +81,10 @@ export const displayNameStyle: IStyle = {
   fontSize: '0.75rem',
   fontWeight: 600,
   // Text component will take body color by default (white in Dark Mode), so forcing it to be parent container color
-  color: 'inherit'
+  color: 'inherit',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  maxWidth: '100%'
 };
 
 /**
@@ -84,7 +96,8 @@ export const iconContainerStyle: IStyle = {
   alignItems: 'center',
   '& svg': {
     display: 'block'
-  }
+  },
+  maxWidth: '1.2rem'
 };
 
 /**

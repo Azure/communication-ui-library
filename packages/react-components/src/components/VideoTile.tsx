@@ -15,7 +15,8 @@ import {
   rootStyles,
   tileInfoStackItemStyle,
   videoContainerStyles,
-  videoHint
+  videoHint,
+  videoHintContainer
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
@@ -210,16 +211,18 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         )}
 
         {showLabel && (displayName || (showMuteIndicator && isMuted !== undefined)) && (
-          <Stack horizontal className={tileInfoContainerStyle}>
+          <Stack horizontal className={videoHintContainer}>
             {displayName && (
-              <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>
-                <Text className={mergeStyles(displayNameStyle)}>{displayName}</Text>
-              </Stack.Item>
-            )}
-            {showMuteIndicator && isMuted && (
-              <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
-                <Icon iconName="VideoTileMicOff" />
-              </Stack.Item>
+              <Stack horizontal className={mergeStyles({ maxWidth: 'calc(100% - 1.2rem)' }, tileInfoContainerStyle)}>
+                <Text className={mergeStyles(displayNameStyle)} title={displayName}>
+                  {displayName}
+                </Text>
+                {showMuteIndicator && isMuted && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon iconName="VideoTileMicOff" />
+                  </Stack>
+                )}
+              </Stack>
             )}
           </Stack>
         )}
