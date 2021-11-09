@@ -400,7 +400,6 @@ export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 
 // @public
 export const COMPOSITE_ONLY_ICONS: {
-    failedToJoinCallDueToNoNetworkIcon: JSX.Element;
     lobbyScreenConnectingToCall: JSX.Element;
     lobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
@@ -409,6 +408,7 @@ export const COMPOSITE_ONLY_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
 };
 
 // @public
@@ -443,7 +443,6 @@ export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, cre
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    failedToJoinCallDueToNoNetworkIcon: JSX.Element;
     lobbyScreenConnectingToCall: JSX.Element;
     lobbyScreenWaitingToBeAdmitted: JSX.Element;
     LocalDeviceSettingsCamera: JSX.Element;
@@ -452,6 +451,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalPreviewPlaceholder: JSX.Element;
     Muted: JSX.Element;
     NetworkReconnectIcon: JSX.Element;
+    NoticePageJoinCallFailedDueToNoNetwork: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
