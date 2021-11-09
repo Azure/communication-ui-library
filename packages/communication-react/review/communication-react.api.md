@@ -2108,6 +2108,7 @@ export interface VideoTileProps {
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     renderElement?: JSX.Element | null;
+    showLabel?: boolean;
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
     userId?: string;
