@@ -58,7 +58,13 @@ export interface VideoTileProps {
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
   onRenderPlaceholder?: OnRenderAvatarCallback;
   /**
+   * Show label on the VideoTile
+   * @defaultValue true
+   */
+  showLabel?: boolean;
+  /**
    * Whether to display a mute icon beside the user's display name.
+   * @defaultValue true
    */
   showMuteIndicator?: boolean;
   /**
@@ -112,6 +118,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isMuted,
     onRenderPlaceholder,
     renderElement,
+    showLabel = true,
     showMuteIndicator = true,
     styles,
     userId,
@@ -200,7 +207,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        {(displayName || (showMuteIndicator && isMuted !== undefined)) && (
+        {showLabel && (displayName || (showMuteIndicator && isMuted !== undefined)) && (
           <Stack horizontal className={tileInfoContainerStyle}>
             {displayName && (
               <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>

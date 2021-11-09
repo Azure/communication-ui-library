@@ -194,6 +194,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             <StreamMedia videoStreamElement={localVideoStream.renderElement} />
           ) : undefined
         }
+        showLabel={!(shouldFloatLocalVideo && isNarrow)}
         displayName={localParticipant?.displayName}
         styles={localVideoTileStylesThemed}
         onRenderPlaceholder={onRenderAvatar}
@@ -207,6 +208,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localParticipant.isScreenSharingOn,
     localParticipant.videoStream,
     localParticipant.videoStream?.renderElement,
+    isNarrow,
     onCreateLocalStreamView,
     onRenderLocalVideoTile,
     onRenderAvatar,
