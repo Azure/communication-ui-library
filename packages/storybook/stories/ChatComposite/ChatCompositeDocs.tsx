@@ -79,6 +79,12 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={showParticipantStatement} />
 
+      <Heading>Running in a Mobile browser</Heading>
+      <Description>
+        Unlike the CallComposite and MeetingComposite, the ChatComposite has no `mobileView` flag. Instead the composite
+        is responsive to the container it is in and should perform optimally on mobile and desktop automatically.
+      </Description>
+
       <Heading>Custom Data Model</Heading>
       <Description>
         It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers

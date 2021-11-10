@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -17,6 +17,7 @@ import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
+import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 
 /**
  * Props for {@link CallComposite}.
@@ -91,6 +92,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'accessDeniedTeamsMeeting':
       return (
         <NoticePage
+          iconName="NoticePageAccessDeniedTeamsMeeting"
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
@@ -99,6 +101,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'removedFromCall':
       return (
         <NoticePage
+          iconName="NoticePageRemovedFromCall"
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
@@ -107,15 +110,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'joinCallFailedDueToNoNetwork':
       return (
         <NoticePage
+          iconName="NoticePageJoinCallFailedDueToNoNetwork"
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
-          iconName="NoticePageJoinCallFailedDueToNoNetwork"
           dataUiId={'join-call-failed-due-to-no-network-page'}
         />
       );
     case 'leftCall':
       return (
         <NoticePage
+          iconName="NoticePageLeftCall"
           title={locale.strings.call.leftCallTitle}
           moreDetails={locale.strings.call.leftCallMoreDetails}
           dataUiId={'left-call-page'}
@@ -153,15 +157,22 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       adapter.querySpeakers();
     })();
   }, [adapter]);
+
+  const mainScreenContainerClassName = useMemo(() => {
+    return options?.mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
+  }, [options?.mobileView]);
+
   return (
     <BaseComposite {...props}>
       <CallAdapterProvider adapter={adapter}>
-        <MainScreen
-          callInvitationUrl={callInvitationUrl}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          options={options}
-        />
+        <div className={mainScreenContainerClassName}>
+          <MainScreen
+            callInvitationUrl={callInvitationUrl}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            options={options}
+          />
+        </div>
       </CallAdapterProvider>
     </BaseComposite>
   );

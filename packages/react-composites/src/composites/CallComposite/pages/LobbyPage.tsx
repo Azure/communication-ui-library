@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ErrorBar } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
@@ -8,14 +8,13 @@ import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
-import { getCallStatus, getIsPreviewCameraOn } from '../selectors/baseSelectors';
-import { useHandlers } from '../hooks/useHandlers';
+import { getCallStatus } from '../selectors/baseSelectors';
 import { reduceCallControlsForMobile } from '../utils';
 import { CallControlOptions } from '../components/CallControls';
-import { MediaGallery } from '../components/MediaGallery';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { Icon } from '@fluentui/react';
+import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 
 /**
  * @private
@@ -30,28 +29,12 @@ export interface LobbyPageProps {
 export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const lobbyProps = useSelector(lobbySelector);
-  const lobbyTileHandlers = useHandlers(LobbyTile);
   const strings = useLocale().strings.call;
 
   const callState = useSelector(getCallStatus);
   const inLobby = callState === 'InLobby';
 
-  // When transitioning to the lobby page we need to trigger onStartLocalVideo() to
-  // transition the local preview camera setting into the call. This matches the logic
-  // used in the MediaGallery. @TODO: Can we simply have the callHandlers handle this
-  // transition logic.
-  const [isButtonStatusSynced, setIsButtonStatusSynced] = useState(false);
-  const isPreviewCameraOn = useSelector(getIsPreviewCameraOn);
-  const isVideoStreamOn = lobbyProps.localParticipantVideoStream.isAvailable;
-  const mediaGalleryHandlers = useHandlers(MediaGallery);
-  useEffect(() => {
-    if (inLobby) {
-      if (isPreviewCameraOn && !isVideoStreamOn && !isButtonStatusSynced) {
-        mediaGalleryHandlers.onStartLocalVideo();
-      }
-      setIsButtonStatusSynced(true);
-    }
-  }, [inLobby, isButtonStatusSynced, isPreviewCameraOn, isVideoStreamOn, mediaGalleryHandlers, props]);
+  useLocalVideoStartTrigger(lobbyProps.localParticipantVideoStream.isAvailable, inLobby);
 
   // Reduce the controls shown when mobile view is enabled.
   let callControlOptions = props.options?.mobileView
@@ -70,9 +53,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
           increaseFlyoutItemSize: props.options?.mobileView
         }
       }
-      onRenderGalleryContent={() => (
-        <LobbyTile {...lobbyProps} {...lobbyTileHandlers} overlayProps={overlayProps(strings, inLobby)} />
-      )}
+      mobileView={props.options?.mobileView ?? false}
+      onRenderGalleryContent={() => <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby)} />}
       dataUiId={'lobby-page'}
     />
   );
@@ -106,11 +88,11 @@ const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOve
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
   title: strings.lobbyScreenConnectingToCallTitle,
   moreDetails: strings.lobbyScreenConnectingToCallMoreDetails,
-  overlayIcon: <Icon iconName="lobbyScreenConnectingToCall" />
+  overlayIcon: <Icon iconName="LobbyScreenConnectingToCall" />
 });
 
 const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => ({
   title: strings.lobbyScreenWaitingToBeAdmittedTitle,
   moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
-  overlayIcon: <Icon iconName="lobbyScreenWaitingToBeAdmitted" />
+  overlayIcon: <Icon iconName="LobbyScreenWaitingToBeAdmitted" />
 });

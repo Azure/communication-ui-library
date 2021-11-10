@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackItemStyles, IStackStyles, mergeStyles } from '@fluentui/react';
+import { IStackItemStyles, IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -17,7 +17,8 @@ export const callControlsStyles: IStackItemStyles = {
  */
 export const callControlsContainer = mergeStyles({
   width: '100%',
-  height: '3.875rem',
+  height: '100%',
+  maxHeight: '4rem',
   padding: '0.0625rem 0',
 
   flexDirection: 'row',
@@ -32,17 +33,28 @@ export const callControlsContainer = mergeStyles({
   }
 });
 
+const containerStyle: IStyle = {
+  height: '100%',
+  width: '100%',
+  position: 'relative',
+  minHeight: '15rem' // linked to minimum space allocated to media gallery
+};
+
 /**
  * @private
  */
-export const containerStyles: IStackStyles = {
-  root: {
-    height: '100%',
-    width: '100%',
-    position: 'relative',
-    minHeight: '15rem' // linked to minimum space allocated to media gallery
-  }
-};
+export const containerStyleDesktop = mergeStyles({
+  ...containerStyle,
+  minWidth: '30rem'
+});
+
+/**
+ * @private
+ */
+export const containerStyleMobile = mergeStyles({
+  ...containerStyle,
+  minWidth: '19.5rem'
+});
 
 /**
  * @private
