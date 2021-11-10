@@ -24,7 +24,7 @@ const ParticipantListWithExcludedUserExampleText =
 const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Participant List</Title>
+      <Title>ParticipantList</Title>
       <Description>Component that renders a list of all calling or chat participants.</Description>
 
       <Heading>Default example for Chat</Heading>
