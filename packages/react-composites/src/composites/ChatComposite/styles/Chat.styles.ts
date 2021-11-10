@@ -8,7 +8,8 @@ const MESSAGE_THREAD_WIDTH = '41.25rem';
 
 const chatScreenContainerStyle: IStyle = {
   height: '100%',
-  width: '100%'
+  width: '100%',
+  minHeight: '20rem'
 };
 
 /**
@@ -16,8 +17,7 @@ const chatScreenContainerStyle: IStyle = {
  */
 export const chatScreenContainerStyleDesktop = mergeStyles({
   ...chatScreenContainerStyle,
-  minWidth: '30rem', // max of min-width of composite pages (Call page)
-  minHeight: '22rem' // max height of min-height of composite pages (Configuration page)
+  minWidth: '30rem'
 });
 
 /**
@@ -25,8 +25,7 @@ export const chatScreenContainerStyleDesktop = mergeStyles({
  */
 export const chatScreenContainerStyleMobile = mergeStyles({
   ...chatScreenContainerStyle,
-  minWidth: '19.5rem', // max of min-width of composite pages (Call page)
-  minHeight: '21rem' // max height of min-height of composite pages (Configuration page)
+  minWidth: '19.5rem'
 });
 
 /**
