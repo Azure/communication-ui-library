@@ -16,7 +16,6 @@ import {
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
-  controlBarContainerStyles,
   checkedButtonOverrideStyles,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,

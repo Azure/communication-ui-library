@@ -10,6 +10,7 @@ import { PeopleButton } from './PeopleButton';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
+import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 
 /**
  * @private
@@ -46,7 +47,10 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
 
   return (
-    <Stack horizontal className={mergeStyles(temporaryMeetingControlBarStyles, controlBarContainerStyles)}>
+    <Stack
+      horizontal
+      className={mergeStyles(temporaryMeetingControlBarStyles, callControlsContainerStyles, controlBarContainerStyles)}
+    >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <CallControls options={callControlsOptions} increaseFlyoutItemSize={props.mobileView} />
