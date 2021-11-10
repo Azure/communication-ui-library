@@ -94,7 +94,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'seen':
       return (
         <TooltipHost content={strings.seenTooltipText}>
-          <Icon iconName="MessageSeen" className={mergeStyles({ color: theme.palette.black }, styles?.root)} />
+          <Icon iconName="MessageSeen" className={mergeStyles({ color: theme.palette.themePrimary }, styles?.root)} />
         </TooltipHost>
       );
     case 'delivered':
