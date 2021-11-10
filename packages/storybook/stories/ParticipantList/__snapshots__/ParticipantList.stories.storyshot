@@ -210,7 +210,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         tabIndex={-1}
                       >
                         <div
-                          className="ms-FocusZone css-58 ms-ContextualMenu is-open root-27"
+                          className="ms-FocusZone css-57 ms-ContextualMenu is-open root-27"
                           data-focuszone-id="FocusZone11"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
@@ -442,7 +442,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         tabIndex={-1}
                       >
                         <div
-                          className="ms-FocusZone css-58 ms-ContextualMenu is-open root-27"
+                          className="ms-FocusZone css-57 ms-ContextualMenu is-open root-27"
                           data-focuszone-id="FocusZone12"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
@@ -678,7 +678,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
                         tabIndex={-1}
                       >
                         <div
-                          className="ms-FocusZone css-58 ms-ContextualMenu is-open root-27"
+                          className="ms-FocusZone css-57 ms-ContextualMenu is-open root-27"
                           data-focuszone-id="FocusZone13"
                           onFocus={[Function]}
                           onKeyDown={[Function]}
