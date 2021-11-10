@@ -16,10 +16,12 @@ We have interactive storybook pages in our storybook 📖 to try out features an
 
 If you're wondering where to get started, here are a few scenarios to help you get going:
 
+* "What is Azure Communication Services?"
+  * Take a look at our conceptual documentation on [Azure Communication Services](https://docs.microsoft.com/azure/communication-services/overview), [Client-Server Architecture](https://docs.microsoft.com/azure/communication-services/concepts/client-and-server-architecture), [Authentication](https://docs.microsoft.com/azure/communication-services/concepts/authentication), [Calling](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/about-call-types) and [Chat](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts?branch=pr-en-us-152137).
 * "I want to see what this library can do!"
   * Check out our [Storybook](https://azure.github.io/communication-ui-library) and [Sample Apps](#samples)
 * "I want to write my own communication application"
-  * We recommend checking out our comprehensive documentation first to make the best decision for your application: <https://docs.microsoft.com/azure/communication-services/concepts/ui-framework/ui-sdk-overview>
+  * We recommend checking out our [comprehensive documentation](https://azure.github.io/communication-ui-library/?path=/story/overview--page) first to make the best decision for your application.
 * "I want more information on the packages available to use"
   * Check out our [npm packages](#npm-packages) on offer
 * "I want to submit a fix for a package in this repo"
@@ -33,9 +35,8 @@ A React library providing UI components and  making it simple for you to build m
 
 ## Samples
 
-🚧 We are working on polishing up the samples in this repo 🚧.
 
-Check out [Storybook](https://azure.github.io/communication-ui-library) to try out this UI Library today!
+Check out [Storybook](https://azure.github.io/communication-ui-library) to try out the UI Library today!
 
 ## Contributing to the Packages or Samples
 
@@ -46,5 +47,5 @@ We look forward to building an amazing open source library with you!
 ## Further Reading
 
 * [Repo Documentation](./docs/README.md)
-* [Conceptual Documentation](https://docs.microsoft.com/azure/communication-services/concepts/ui-framework/ui-sdk-overview)
-* [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstart-ui-components--page)
+* [Conceptual Documentation](https://azure.github.io/communication-ui-library/?path=/story/overview--page)
+* [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstarts-composites--page)
