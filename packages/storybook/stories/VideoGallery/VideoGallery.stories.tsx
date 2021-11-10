@@ -21,8 +21,12 @@ const importStatement = `import { VideoGallery } from '@azure/communication-reac
 const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Video Gallery</Title>
-      <Description of={VideoGalleryComponent} />
+      <Title>VideoGallery</Title>
+      <Description>
+        VideoGallery represents a layout of video tiles for a specific call. It displays a
+        [VideoTile](./?path=/docs/ui-components-videotile--video-tile) for the local user as well as for each remote
+        participant who has joined the call.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />

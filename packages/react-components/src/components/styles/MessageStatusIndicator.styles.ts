@@ -3,6 +3,9 @@
 
 import { mergeStyles } from '@fluentui/react';
 
+/** @private */
+export const MESSAGE_STATUS_INDICATOR_SIZE_REM = 1;
+
 /**
  * ErrorIcon seems designed slightly smaller than other icons we try to match the size and then fix positioning here.
  *
@@ -17,5 +20,7 @@ export const MessageStatusIndicatorErrorIconStyle = mergeStyles({
  * @private
  */
 export const MessageStatusIndicatorIconStyle = mergeStyles({
-  fontSize: '1rem'
+  fontSize: `${MESSAGE_STATUS_INDICATOR_SIZE_REM}rem`,
+  width: `${MESSAGE_STATUS_INDICATOR_SIZE_REM}rem`,
+  height: `${MESSAGE_STATUS_INDICATOR_SIZE_REM}rem`
 });

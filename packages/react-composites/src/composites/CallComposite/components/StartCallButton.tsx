@@ -14,13 +14,15 @@ export interface StartCallButtonProps {
   onClickHandler: () => void;
   isDisabled: boolean;
   className?: string;
+  /** If set, the button is intended to rejoin an existing call. */
+  rejoinCall?: boolean;
 }
 
 /**
  * @private
  */
 export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
-  const { isDisabled, onClickHandler } = props;
+  const { isDisabled, onClickHandler, rejoinCall } = props;
   const locale = useLocale();
 
   return (
@@ -29,7 +31,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
       disabled={isDisabled}
       className={mergeStyles(buttonStyle, props.className)}
       styles={buttonWithIconStyles}
-      text={locale.strings.call.startCallButtonLabel}
+      text={rejoinCall ? locale.strings.call.rejoinCallButtonLabel : locale.strings.call.startCallButtonLabel}
       onClick={onClickHandler}
       onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
     />

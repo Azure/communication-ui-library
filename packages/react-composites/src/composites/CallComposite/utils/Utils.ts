@@ -100,9 +100,21 @@ export const getCallCompositePage = (
   call: CallState | undefined,
   previousCall: CallState | undefined
 ): CallCompositePage => {
-  if (!call && !previousCall) {
-    // No call state - show starting page (configuration)
-    return 'configuration';
+  // Must check for ongoing call *before* looking at any previous calls.
+  // If the composite completes one call and joins another, the previous calls
+  // will be populated, but not relevant for determining the page.
+  if (call) {
+    if (_isInCall(call?.state)) {
+      return 'call';
+    }
+
+    if (isInLobbyOrConnecting(call?.state)) {
+      return 'lobby';
+    }
+
+    // When the call object has been constructed after clicking , but before 'connecting' has been
+    // set on the call object, we want to show the connecting screen (which is part of the lobby page currently)
+    return 'lobby';
   }
 
   if (previousCall) {
@@ -120,15 +132,6 @@ export const getCallCompositePage = (
     }
   }
 
-  if (isInLobbyOrConnecting(call?.state)) {
-    return 'lobby';
-  }
-
-  if (_isInCall(call?.state)) {
-    return 'call';
-  }
-
-  // When the call object has been constructed after clicking , but before 'connecting' has been
-  // set on the call object, we want to show the connecting screen (which is part of the lobby page currently)
-  return 'lobby';
+  // No call state - show starting page (configuration)
+  return 'configuration';
 };

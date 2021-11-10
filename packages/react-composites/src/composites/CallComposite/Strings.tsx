@@ -22,6 +22,10 @@ export interface CallCompositeStrings {
    */
   startCallButtonLabel: string;
   /**
+   * Text in button to rejoin an ended call.
+   */
+  rejoinCallButtonLabel: string;
+  /**
    * Placeholder text for local device settings dropdowns.
    */
   defaultPlaceHolder: string;

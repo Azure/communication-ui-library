@@ -4,6 +4,7 @@
 import { CSSProperties } from 'react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonStyles, mergeStyles } from '@fluentui/react';
+import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -37,7 +38,9 @@ export const messageThreadContainerStyle = mergeStyles({
  * @private
  */
 export const noMessageStatusStyle = mergeStyles({
-  width: '1.25rem'
+  // This should match the size of the message status indicator icon to ensure
+  // multiple messages sent by the user are aligned correctly.
+  width: `${MESSAGE_STATUS_INDICATOR_SIZE_REM}rem`
 });
 
 /**
