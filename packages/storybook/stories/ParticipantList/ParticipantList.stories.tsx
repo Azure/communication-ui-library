@@ -25,7 +25,7 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>Participant List</Title>
-      <Description of={ParticipantListComponent} />
+      <Description>Component that renders a list of all calling or chat participants.</Description>
 
       <Heading>Default example for Chat</Heading>
       <Description>
