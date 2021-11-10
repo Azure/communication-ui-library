@@ -248,6 +248,7 @@ export interface CallCompositeStrings {
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
     privacyPolicy: string;
+    rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     soundLabel: string;
