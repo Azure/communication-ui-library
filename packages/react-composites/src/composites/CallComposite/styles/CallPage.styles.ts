@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStackItemStyles, IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
+import { controlBarContainerStyles } from './CallControls.styles';
 
 const VIDEO_GALLERY_Z_INDEX = 1;
 const CONTROL_BAR_Z_INDEX = VIDEO_GALLERY_Z_INDEX + 1;
@@ -10,7 +11,7 @@ const NOTIFICATION_CONTAINER_Z_INDEX = Math.max(CONTROL_BAR_Z_INDEX, VIDEO_GALLE
 /**
  * @private
  */
-export const callControlsContainerStyles = mergeStyles({
+export const callControlsContainerStyles = mergeStyles(controlBarContainerStyles, {
   zIndex: CONTROL_BAR_Z_INDEX
 });
 

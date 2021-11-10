@@ -161,7 +161,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   );
 
   return (
-    <Stack styles={controlBarContainerStyles} horizontalAlign="center">
+    <Stack horizontalAlign="center">
       <Stack.Item>
         <ControlBar layout="horizontal">
           {microphoneButton}
