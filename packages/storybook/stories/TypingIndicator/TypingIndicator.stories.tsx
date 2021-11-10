@@ -22,7 +22,9 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>TypingIndicator</Title>
-      <Description of={TypingIndicatorComponent} />
+      <Description>
+        Component to notify the local user when one or more participants in the chat thread are typing.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
