@@ -7,7 +7,8 @@ import {
   MicOn20Filled,
   Speaker220Filled,
   Video20Filled,
-  VideoOff20Filled
+  VideoOff20Filled,
+  WifiWarning20Filled
 } from '@fluentui/react-icons';
 import { ComponentIcons, DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
@@ -39,7 +40,8 @@ export const COMPOSITE_ONLY_ICONS = {
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
   Muted: <MicOff20Filled />,
-  NetworkReconnectIcon: <CallMissed20Filled />
+  NetworkReconnectIcon: <CallMissed20Filled />,
+  NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />
 };
 
 /**
