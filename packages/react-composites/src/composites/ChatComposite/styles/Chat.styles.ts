@@ -17,7 +17,7 @@ const chatScreenContainerStyle: IStyle = {
  */
 export const chatScreenContainerStyleDesktop = mergeStyles({
   ...chatScreenContainerStyle,
-  minWidth: '30rem'
+  minWidth: '24.25rem'
 });
 
 /**
