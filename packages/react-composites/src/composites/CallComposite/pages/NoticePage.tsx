@@ -7,9 +7,7 @@ import {
   containerStyle,
   moreDetailsStyles,
   containerItemGap,
-  textContainerStyle,
   titleStyles,
-  textContainerItemGap,
   rejoinCallButtonContainerStyles
 } from '../styles/NoticePage.styles';
 import { useAdapter } from '../adapter/CallAdapterProvider';
