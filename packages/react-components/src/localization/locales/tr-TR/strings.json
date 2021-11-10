@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(siz)",
     "menuTitle": "Diğer Seçenekler",
-    "removeButtonLabel": "Kaldır"
+    "removeButtonLabel": "Kaldır",
+    "sharingIconLabel": "Paylaşım",
+    "mutedIconLabel": "Ses kapatıldı"
   },
   "typingIndicator": {
     "singleUser": "{user} yazıyor...",
@@ -12,7 +14,8 @@
     "delimiter": ", "
   },
   "sendBox": {
-    "placeholderText": "Bir mesaj girin"
+    "placeholderText": "Bir mesaj girin",
+    "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Gönderilen",
@@ -61,7 +64,17 @@
     "friday": "Cuma",
     "saturday": "Cumartesi",
     "participantJoined": "sohbete katıldı.",
-    "participantLeft": "sohbetten ayrıldı."
+    "participantLeft": "sohbetten ayrıldı.",
+    "editMessage": "Düzenle",
+    "removeMessage": "Kaldır",
+    "editedTag": "Düzenlendi",
+    "liveAuthorIntro": "{author} şöyle diyor:",
+    "editBoxTextLimit": "İletiniz en fazla {limitNumber} aşıyor",
+    "editBoxPlaceholderText": "İletinizi düzenleyin",
+    "newMessagesIndicator": "Yeni iletiler",
+    "noDisplayNameSub": "Ad yok",
+    "editBoxCancelButton": "İptal",
+    "editBoxSubmitButton": "Gönder"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "Mikrofonun sesi açılamadı",
     "speakingWhileMuted": "Mikrofonunuzun sesi kapalı",
     "startScreenShareGeneric": "Ekran paylaşımı başlatılamadı",
-    "stopScreenShareGeneric": "Ekran paylaşımı durdurulamadı"
+    "stopScreenShareGeneric": "Ekran paylaşımı durdurulamadı",
+    "callNetworkQualityLow": "Ağ kalitesi düşük.",
+    "callNoSpeakerFound": "Hoparlör veya kulaklık bulunamadı. Aramayı dinlemek için bir ses aygıtı bağlayın.",
+    "callNoMicrophoneFound": "Mikrofon bulunamadı. Ses giriş cihazı bağlan.",
+    "callMicrophoneAccessDenied": "Mikrofona erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
+    "callMicrophoneMutedBySystem": "Sisteminiz tarafından sessize alındınız.",
+    "callMacOsMicrophoneAccessDenied": "Mikrofona erişilemiyor. macOS gizlilik ayarlarınızda mikrofon izni verin.",
+    "callLocalVideoFreeze": "Ağ bant genişliği düşük. Görüntülü aramada başkaları için duraklatılmış görünüyor olabilir.",
+    "callCameraAccessDenied": "Kameraya erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
+    "callCameraAlreadyInUse": "Kameraya erişemiyor. Başka bir uygulama tarafından zaten kullanılıyor olabilir.",
+    "callMacOsCameraAccessDenied": "MacOS kameranıza erişimi engelliyor. Bu tarayıcının kameranıza erişmesine izin vermek için gizlilik ayarlarınızı güncelleştirin.",
+    "callMacOsScreenShareAccessDenied": "MacOS ekran paylaşımını engelliyor. Bu tarayıcının ekranınızı kaydetmesini izin vermek için gizlilik ayarlarınızı güncelleştirin."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
+    "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme"
   }
 }

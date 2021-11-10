@@ -10,6 +10,10 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 
+const mobileViewSnippet = `
+<CallComposite options={{ mobileView: true }} />
+`;
+
 const cssSnippet = `
 html,
 body,
@@ -51,6 +55,19 @@ export const getDocs: () => JSX.Element = () => {
         following css to your primary css file:
       </Description>
       <Source code={cssSnippet} />
+
+      <Heading>Running in a Mobile browser</Heading>
+      <Description>
+        CallComposite has been designed for both desktop views and mobile views. The CallComposite does not detect if it
+        is running on mobile device vs desktop, and by default the CallComposite UI is optimized for desktop views. If
+        you are running the CallComposite on a mobile device we recommend making use of the `mobileView` flag. This prop
+        can be set at any time and immediately updates the composite UI to be optimized for a mobile device.
+      </Description>
+      <Source code={mobileViewSnippet} />
+      <Description>
+        You can try out the mobile view in the [CallComposite Basic
+        Example](./?path=/story/composites-call-basicexample--basic-example).
+      </Description>
 
       <Heading>Theming</Heading>
       <Description>

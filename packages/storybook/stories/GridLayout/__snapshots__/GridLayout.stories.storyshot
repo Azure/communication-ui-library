@@ -55,6 +55,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                 data-ui-id="video-tile"
               >
                 <div
+                  className="css-4"
+                />
+                <div
                   className="ms-Stack css-8"
                 >
                   <div
@@ -107,10 +110,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   className="ms-Stack css-82 css-26"
                 >
                   <div
-                    className="ms-StackItem css-27"
+                    className="ms-Stack css-83 css-27"
                   >
                     <span
                       className="css-28"
+                      title="Michael"
                     >
                       Michael
                     </span>
@@ -121,6 +125,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                 className="ms-Stack css-7"
                 data-ui-id="video-tile"
               >
+                <div
+                  className="css-4"
+                />
                 <div
                   className="ms-Stack css-8"
                 >
@@ -174,10 +181,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   className="ms-Stack css-82 css-26"
                 >
                   <div
-                    className="ms-StackItem css-27"
+                    className="ms-Stack css-83 css-27"
                   >
                     <span
                       className="css-28"
+                      title="Jim"
                     >
                       Jim
                     </span>
@@ -188,6 +196,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                 className="ms-Stack css-7"
                 data-ui-id="video-tile"
               >
+                <div
+                  className="css-4"
+                />
                 <div
                   className="ms-Stack css-8"
                 >
@@ -241,10 +252,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   className="ms-Stack css-82 css-26"
                 >
                   <div
-                    className="ms-StackItem css-27"
+                    className="ms-Stack css-83 css-27"
                   >
                     <span
                       className="css-28"
+                      title="Pam"
                     >
                       Pam
                     </span>
@@ -255,6 +267,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                 className="ms-Stack css-7"
                 data-ui-id="video-tile"
               >
+                <div
+                  className="css-4"
+                />
                 <div
                   className="ms-Stack css-8"
                 >
@@ -308,10 +323,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   className="ms-Stack css-82 css-26"
                 >
                   <div
-                    className="ms-StackItem css-27"
+                    className="ms-Stack css-83 css-27"
                   >
                     <span
                       className="css-28"
+                      title="Dwight"
                     >
                       Dwight
                     </span>

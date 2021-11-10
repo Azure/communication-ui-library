@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(您)",
     "menuTitle": "更多選項",
-    "removeButtonLabel": "移除"
+    "removeButtonLabel": "移除",
+    "sharingIconLabel": "分享",
+    "mutedIconLabel": "已靜音"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在輸入...",
@@ -12,7 +14,8 @@
     "delimiter": "， "
   },
   "sendBox": {
-    "placeholderText": "輸入訊息"
+    "placeholderText": "輸入訊息",
+    "textTooLong": "您的訊息長度超過上限。"
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "已傳送",
@@ -61,7 +64,17 @@
     "friday": "星期五",
     "saturday": "星期六",
     "participantJoined": "已加入聊天。",
-    "participantLeft": "已離開聊天。"
+    "participantLeft": "已離開聊天。",
+    "editMessage": "編輯",
+    "removeMessage": "移除",
+    "editedTag": "已編輯",
+    "liveAuthorIntro": "{author} 說",
+    "editBoxTextLimit": "您的訊息超過 {limitNumber} 個字元的限制",
+    "editBoxPlaceholderText": "編輯您的訊息",
+    "newMessagesIndicator": "新訊息",
+    "noDisplayNameSub": "沒有名稱",
+    "editBoxCancelButton": "取消",
+    "editBoxSubmitButton": "提交"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "無法將麥克風取消靜音",
     "speakingWhileMuted": "您的麥克風已設為靜音",
     "startScreenShareGeneric": "無法開始螢幕畫面分享",
-    "stopScreenShareGeneric": "無法停止螢幕畫面分享"
+    "stopScreenShareGeneric": "無法停止螢幕畫面分享",
+    "callNetworkQualityLow": "您的網路品質不佳。",
+    "callNoSpeakerFound": "找不到喇叭或耳機。請連接音訊裝置以聆聽通話。",
+    "callNoMicrophoneFound": "找不到麥克風。請連接音訊輸入裝置。",
+    "callMicrophoneAccessDenied": "無法存取麥克風。按一下網址列中的鎖定以授與此網頁的許可權。",
+    "callMicrophoneMutedBySystem": "系統已將您設為靜音。",
+    "callMacOsMicrophoneAccessDenied": "無法存取麥克風。請在您的 MacOS 隱私權設定中授與麥克風權限。",
+    "callLocalVideoFreeze": "網路頻寬不佳。通話中的其他人可能會暫停您的視訊。",
+    "callCameraAccessDenied": "無法存取相機。按一下網址列中的鎖定以授與此網頁的許可權。",
+    "callCameraAlreadyInUse": "無法存取相機。其他應用程式可能已在使用它。",
+    "callMacOsCameraAccessDenied": "MacOS 已封鎖您的相機存取權限。請更新您的隱私權設定，允許此瀏覽器存取您的相機。",
+    "callMacOsScreenShareAccessDenied": "MacOS 正在封鎖螢幕畫面分享。更新您的隱私權設定，以允許此瀏覽器錄製您的螢幕。"
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
+    "screenShareLoadingMessage": "正在載入 {participant} 的螢幕畫面"
   }
 }

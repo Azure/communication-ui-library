@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(Sie)",
     "menuTitle": "Weitere Optionen",
-    "removeButtonLabel": "Entfernen"
+    "removeButtonLabel": "Entfernen",
+    "sharingIconLabel": "Teilen",
+    "mutedIconLabel": "Stumm geschaltet"
   },
   "typingIndicator": {
     "singleUser": "{user} schreibt ...",
@@ -12,7 +14,8 @@
     "delimiter": ", "
   },
   "sendBox": {
-    "placeholderText": "Nachricht eingeben"
+    "placeholderText": "Nachricht eingeben",
+    "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Gesendet",
@@ -61,7 +64,17 @@
     "friday": "Freitag",
     "saturday": "Samstag",
     "participantJoined": "ist dem Chat beigetreten.",
-    "participantLeft": "hat den Chat verlassen."
+    "participantLeft": "hat den Chat verlassen.",
+    "editMessage": "Bearbeiten",
+    "removeMessage": "Entfernen",
+    "editedTag": "Bearbeitet",
+    "liveAuthorIntro": "{author} sagt",
+    "editBoxTextLimit": "Ihre Nachricht überschreitet das Limit von {limitNumber} Zeichen.",
+    "editBoxPlaceholderText": "Bearbeiten Sie Ihre Nachricht",
+    "newMessagesIndicator": "Neue Nachrichten",
+    "noDisplayNameSub": "Kein Name",
+    "editBoxCancelButton": "Abbrechen",
+    "editBoxSubmitButton": "Übermitteln"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "Stummschaltung des Mikrofons konnte nicht beendet werden",
     "speakingWhileMuted": "Ihr Mikrofon ist stummgeschaltet",
     "startScreenShareGeneric": "Bildschirmfreigabe konnte nicht gestartet werden",
-    "stopScreenShareGeneric": "Bildschirmfreigabe konnte nicht beendet werden"
+    "stopScreenShareGeneric": "Bildschirmfreigabe konnte nicht beendet werden",
+    "callNetworkQualityLow": "Die Netzwerkqualität ist niedrig.",
+    "callNoSpeakerFound": "Keine Lautsprecher oder Kopfhörer gefunden. Schließen Sie ein Audiogerät an, um den Anruf zu hören.",
+    "callNoMicrophoneFound": "Es wurden keine Mikrofone gefunden. Schließen Sie ein Audioeingabegerät an.",
+    "callMicrophoneAccessDenied": "Auf das Mikrofon kann nicht zugegriffen werden. Klicken Sie auf die Sperre in der Adressleiste, um dieser Webseite Berechtigungen zu erteilen.",
+    "callMicrophoneMutedBySystem": "Sie werden von Ihrem System stummgeschaltet.",
+    "callMacOsMicrophoneAccessDenied": "Auf das Mikrofon kann nicht zugegriffen werden. Erteilen Sie die Mikrofonberechtigung in Ihren macOS-Datenschutzeinstellungen.",
+    "callLocalVideoFreeze": "Die Netzwerkbandbreite ist schlecht. Ihr Video wird möglicherweise für andere Personen während des Anrufs angehalten angezeigt.",
+    "callCameraAccessDenied": "Auf die Kamera kann nicht zugegriffen werden. Klicken Sie auf die Sperre in der Adressleiste, um dieser Webseite Berechtigungen zu erteilen.",
+    "callCameraAlreadyInUse": "Auf die Kamera kann nicht zugegriffen werden. Sie wird möglicherweise bereits von einer anderen Anwendung verwendet.",
+    "callMacOsCameraAccessDenied": "MacOS blockiert den Zugriff auf Ihre Kamera. Aktualisieren Sie Ihre Datenschutzeinstellungen, damit dieser Browser auf Ihre Kamera zugreifen kann.",
+    "callMacOsScreenShareAccessDenied": "MacOS blockiert die Bildschirmfreigabe. Aktualisieren Sie Ihre Datenschutzeinstellungen, damit dieser Browser Ihren Bildschirm aufzeichnen kann."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",
+    "screenShareLoadingMessage": "Der Bildschirm von {participant} wird geladen"
   }
 }

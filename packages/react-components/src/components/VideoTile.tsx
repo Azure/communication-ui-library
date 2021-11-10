@@ -11,11 +11,12 @@ import {
   disabledVideoHint,
   displayNameStyle,
   iconContainerStyle,
+  isSpeakingBorderDiv,
   overlayContainerStyles,
   rootStyles,
-  tileInfoStackItemStyle,
   videoContainerStyles,
-  videoHint
+  videoHint,
+  tileInfoContainerStyle
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
@@ -58,7 +59,13 @@ export interface VideoTileProps {
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
   onRenderPlaceholder?: OnRenderAvatarCallback;
   /**
+   * Show label on the VideoTile
+   * @defaultValue true
+   */
+  showLabel?: boolean;
+  /**
    * Whether to display a mute icon beside the user's display name.
+   * @defaultValue true
    */
   showMuteIndicator?: boolean;
   /**
@@ -112,6 +119,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isMuted,
     onRenderPlaceholder,
     renderElement,
+    showLabel = true,
     showMuteIndicator = true,
     styles,
     userId,
@@ -153,7 +161,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
 
-  const tileInfoContainerStyle = useMemo(
+  const tileInfoStyle = useMemo(
     () =>
       mergeStyles(
         isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
@@ -165,23 +173,26 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const isSpeakingStyles = isSpeaking
-    ? {
-        border: `0.25rem solid ${theme.palette.themePrimary}`
-      }
-    : {};
-
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
         data-ui-id={ids.videoTile}
         className={mergeStyles(
           rootStyles,
-          isSpeakingStyles,
-          { background: theme.palette.neutralLighter, borderRadius: theme.effects.roundedCorner4 },
+          {
+            background: theme.palette.neutralLighter,
+            borderRadius: theme.effects.roundedCorner4
+          },
           styles?.root
         )}
       >
+        <div
+          className={mergeStyles(isSpeakingBorderDiv, {
+            borderRadius: theme.effects.roundedCorner4,
+            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : 'transparent'}`
+          })}
+        />
+
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
@@ -202,18 +213,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        {(displayName || (showMuteIndicator && isMuted !== undefined)) && (
+        {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
           <Stack horizontal className={tileInfoContainerStyle}>
-            {displayName && (
-              <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>
-                <Text className={mergeStyles(displayNameStyle)}>{displayName}</Text>
-              </Stack.Item>
-            )}
-            {showMuteIndicator && isMuted && (
-              <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
-                <Icon iconName="VideoTileMicOff" />
-              </Stack.Item>
-            )}
+            <Stack horizontal className={tileInfoStyle}>
+              {displayName && (
+                <Text className={mergeStyles(displayNameStyle)} title={displayName}>
+                  {displayName}
+                </Text>
+              )}
+              {showMuteIndicator && isMuted && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="VideoTileMicOff" />
+                </Stack>
+              )}
+            </Stack>
           </Stack>
         )}
 

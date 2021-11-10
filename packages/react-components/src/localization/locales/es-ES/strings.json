@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(tú)",
     "menuTitle": "Más opciones",
-    "removeButtonLabel": "Quitar"
+    "removeButtonLabel": "Quitar",
+    "sharingIconLabel": "Compartiendo",
+    "mutedIconLabel": "Silenciado"
   },
   "typingIndicator": {
     "singleUser": "{user} está escribiendo...",
@@ -12,7 +14,8 @@
     "delimiter": ", "
   },
   "sendBox": {
-    "placeholderText": "Escribir un mensaje"
+    "placeholderText": "Escribir un mensaje",
+    "textTooLong": "La longitud del mensaje supera el límite máximo."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Enviado",
@@ -61,7 +64,17 @@
     "friday": "Viernes",
     "saturday": "Sábado",
     "participantJoined": "se unió al chat.",
-    "participantLeft": "abandonó el chat."
+    "participantLeft": "abandonó el chat.",
+    "editMessage": "Editar",
+    "removeMessage": "Quitar",
+    "editedTag": "Editado",
+    "liveAuthorIntro": "{author} dice",
+    "editBoxTextLimit": "El mensaje supera el límite de {limitNumber} caracteres",
+    "editBoxPlaceholderText": "Editar el mensaje",
+    "newMessagesIndicator": "Mensajes nuevos",
+    "noDisplayNameSub": "Sin nombre",
+    "editBoxCancelButton": "Cancelar",
+    "editBoxSubmitButton": "Enviar"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "No se pudo reactivar el micrófono",
     "speakingWhileMuted": "El micrófono está desactivado",
     "startScreenShareGeneric": "No se pudo iniciar la pantalla compartida",
-    "stopScreenShareGeneric": "No se pudo detener la pantalla compartida"
+    "stopScreenShareGeneric": "No se pudo detener la pantalla compartida",
+    "callNetworkQualityLow": "La calidad de la red es baja.",
+    "callNoSpeakerFound": "No se encontraron altavoces ni auriculares. Conecta un dispositivo de audio para escuchar la llamada.",
+    "callNoMicrophoneFound": "No se encontraron micrófonos. Conecta un dispositivo de entrada de audio.",
+    "callMicrophoneAccessDenied": "No se puede acceder al micrófono. Haga clic en el bloqueo de la barra de direcciones para conceder permiso a esta página web.",
+    "callMicrophoneMutedBySystem": "Su sistema ha silenciado su audio.",
+    "callMacOsMicrophoneAccessDenied": "No se puede acceder al micrófono. Conceda permiso al micrófono en la configuración de privacidad de macOS.",
+    "callLocalVideoFreeze": "El ancho de banda de red es deficiente. Es posible que el vídeo aparezca pausado para otros usuarios en la llamada.",
+    "callCameraAccessDenied": "No se puede acceder a la cámara. Haga clic en el bloqueo de la barra de direcciones para conceder permiso a esta página web.",
+    "callCameraAlreadyInUse": "No se puede acceder a la cámara. Puede que ya la esté usando otra aplicación.",
+    "callMacOsCameraAccessDenied": "MacOS está bloqueando el acceso a la cámara. Actualiza la configuración de privacidad para permitir que este explorador acceda a la cámara.",
+    "callMacOsScreenShareAccessDenied": "MacOS está bloqueando el uso compartido de la pantalla. Actualice la configuración de privacidad para permitir que este explorador grabe la pantalla."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Está compartiendo su pantalla",
+    "screenShareLoadingMessage": "Cargando la pantalla de {participant}"
   }
 }

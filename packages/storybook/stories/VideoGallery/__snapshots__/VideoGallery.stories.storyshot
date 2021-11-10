@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-84"
+        className="css-85"
         data-ui-id="video-gallery"
         id="UILibraryFloatingTileHost"
       >
@@ -57,6 +57,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   className="ms-Stack css-16"
                   data-ui-id="video-tile"
                 >
+                  <div
+                    className="css-13"
+                  />
                   <div
                     className="ms-Stack css-17"
                   >
@@ -110,10 +113,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     className="ms-Stack css-82 css-35"
                   >
                     <div
-                      className="ms-StackItem css-36"
+                      className="ms-Stack css-83 css-36"
                     >
                       <span
                         className="css-37"
+                        title="Rick"
                       >
                         Rick
                       </span>
@@ -124,6 +128,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   className="ms-Stack css-16"
                   data-ui-id="video-tile"
                 >
+                  <div
+                    className="css-13"
+                  />
                   <div
                     className="ms-Stack css-17"
                   >
@@ -177,10 +184,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     className="ms-Stack css-82 css-35"
                   >
                     <div
-                      className="ms-StackItem css-36"
+                      className="ms-Stack css-83 css-36"
                     >
                       <span
                         className="css-37"
+                        title="Daryl"
                       >
                         Daryl
                       </span>
@@ -191,6 +199,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   className="ms-Stack css-16"
                   data-ui-id="video-tile"
                 >
+                  <div
+                    className="css-13"
+                  />
                   <div
                     className="ms-Stack css-17"
                   >
@@ -244,10 +255,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     className="ms-Stack css-82 css-35"
                   >
                     <div
-                      className="ms-StackItem css-36"
+                      className="ms-Stack css-83 css-36"
                     >
                       <span
                         className="css-37"
+                        title="Michonne"
                       >
                         Michonne
                       </span>
@@ -258,6 +270,9 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                   className="ms-Stack css-16"
                   data-ui-id="video-tile"
                 >
+                  <div
+                    className="css-13"
+                  />
                   <div
                     className="ms-Stack css-17"
                   >
@@ -311,10 +326,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     className="ms-Stack css-82 css-35"
                   >
                     <div
-                      className="ms-StackItem css-36"
+                      className="ms-Stack css-83 css-36"
                     >
                       <span
                         className="css-37"
+                        title="Dwight"
                       >
                         Dwight
                       </span>

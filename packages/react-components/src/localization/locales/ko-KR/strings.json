@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(나)",
     "menuTitle": "추가 옵션",
-    "removeButtonLabel": "제거"
+    "removeButtonLabel": "제거",
+    "sharingIconLabel": "공유 중",
+    "mutedIconLabel": "음소거됨"
   },
   "typingIndicator": {
     "singleUser": "{user} 님이 입력 중...",
@@ -12,7 +14,8 @@
     "delimiter": "닫는 렌즈형 흰색 괄호"
   },
   "sendBox": {
-    "placeholderText": "메시지를 입력하세요"
+    "placeholderText": "메시지를 입력하세요",
+    "textTooLong": "메시지 길이가 최대 제한을 초과했습니다."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "보냄",
@@ -61,7 +64,17 @@
     "friday": "금요일",
     "saturday": "토요일",
     "participantJoined": "채팅에 참여했습니다.",
-    "participantLeft": "이 채팅을 나갔습니다."
+    "participantLeft": "이 채팅을 나갔습니다.",
+    "editMessage": "편집",
+    "removeMessage": "제거",
+    "editedTag": "편집됨",
+    "liveAuthorIntro": "{author} 님이 말합니다.",
+    "editBoxTextLimit": "메시지가 {limitNumber} 문자 제한을 초과했습니다.",
+    "editBoxPlaceholderText": "메시지 편집",
+    "newMessagesIndicator": "새 메시지",
+    "noDisplayNameSub": "이름 없음",
+    "editBoxCancelButton": "취소",
+    "editBoxSubmitButton": "제출"
   },
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "마이크 음소거를 해제하지 못함",
     "speakingWhileMuted": "마이크가 음소거됨",
     "startScreenShareGeneric": "화면 공유를 시작하지 못함",
-    "stopScreenShareGeneric": "화면 공유를 중지하지 못함"
+    "stopScreenShareGeneric": "화면 공유를 중지하지 못함",
+    "callNetworkQualityLow": "네트워크 품질이 낮습니다.",
+    "callNoSpeakerFound": "스피커 또는 헤드폰을 찾을 수 없습니다. 오디오 장치를 연결하여 통화를 들을 수 있습니다.",
+    "callNoMicrophoneFound": "마이크를 찾을 수 없습니다. 오디오 입력 장치를 연결합니다.",
+    "callMicrophoneAccessDenied": "마이크에 액세스할 수 없습니다. 주소 표시줄에서 잠금을 클릭하여 이 웹 페이지에 권한을 부여합니다.",
+    "callMicrophoneMutedBySystem": "시스템에 의해 음소거되었습니다.",
+    "callMacOsMicrophoneAccessDenied": "마이크에 액세스할 수 없습니다. macOS 개인 정보 설정에서 마이크 권한을 부여합니다.",
+    "callLocalVideoFreeze": "네트워크 대역폭이 불량합니다. 통화 중에 다른 사람에 대해 비디오가 일시 중지된 것 같습니다.",
+    "callCameraAccessDenied": "카메라에 액세스할 수 없습니다. 주소 표시줄에서 잠금을 클릭하여 이 웹 페이지에 권한을 부여합니다.",
+    "callCameraAlreadyInUse": "카메라에 액세스할 수 없습니다. 다른 응용 프로그램에서 이미 사용 중일 수 있습니다.",
+    "callMacOsCameraAccessDenied": "MacOS에서 카메라에 대한 액세스를 차단하고 있습니다. 이 브라우저에서 카메라에 액세스할 수 있도록 개인 정보 설정을 업데이트합니다.",
+    "callMacOsScreenShareAccessDenied": "MacOS에서 화면 공유를 차단하고 있습니다. 이 브라우저에서 화면을 녹화할 수 있도록 개인 정보 설정을 업데이트합니다."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
+    "screenShareLoadingMessage": "{participant} 님의 화면 로드 중"
   }
 }

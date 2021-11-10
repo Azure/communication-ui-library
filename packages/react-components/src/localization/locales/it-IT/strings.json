@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(tu)",
     "menuTitle": "Altre opzioni",
-    "removeButtonLabel": "Rimuovi"
+    "removeButtonLabel": "Rimuovi",
+    "sharingIconLabel": "Condivisione",
+    "mutedIconLabel": "Disattivato"
   },
   "typingIndicator": {
     "singleUser": "{user} sta scrivendo ...",
@@ -12,7 +14,8 @@
     "delimiter": ", "
   },
   "sendBox": {
-    "placeholderText": "Immetti un messaggio"
+    "placeholderText": "Immetti un messaggio",
+    "textTooLong": "La lunghezza del messaggio supera il limite massimo."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Inviato",
@@ -61,7 +64,17 @@
     "friday": "Venerdì",
     "saturday": "Sabato",
     "participantJoined": "si è unito alla chat.",
-    "participantLeft": "ha abbandonato la chat."
+    "participantLeft": "ha abbandonato la chat.",
+    "editMessage": "Modifica",
+    "removeMessage": "Rimuovi",
+    "editedTag": "Modificato",
+    "liveAuthorIntro": "{author} dice",
+    "editBoxTextLimit": "Il messaggio ha superato il limite di caratteri {limitNumber}",
+    "editBoxPlaceholderText": "Modifica il messaggio",
+    "newMessagesIndicator": "Nuovi messaggi",
+    "noDisplayNameSub": "Nessun nome",
+    "editBoxCancelButton": "Annulla",
+    "editBoxSubmitButton": "Invia"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "Non è stato possibile riattivare l'audio del microfono",
     "speakingWhileMuted": "Il microfono è disattivato",
     "startScreenShareGeneric": "Non è stato possibile avviare la condivisione dello schermo",
-    "stopScreenShareGeneric": "Non è stato possibile arrestare la condivisione dello schermo"
+    "stopScreenShareGeneric": "Non è stato possibile arrestare la condivisione dello schermo",
+    "callNetworkQualityLow": "La qualità della rete è bassa.",
+    "callNoSpeakerFound": "Non sono stati trovati altoparlanti o cuffie. Connetti un dispositivo audio per ascoltare la chiamata.",
+    "callNoMicrophoneFound": "Nessun microfono trovato. Connetti un dispositivo di input audio.",
+    "callMicrophoneAccessDenied": "Impossibile accedere al microfono. Fare clic sul blocco nella barra degli indirizzi per concedere l'autorizzazione a questa pagina Web.",
+    "callMicrophoneMutedBySystem": "Il sistema disattiva l'audio.",
+    "callMacOsMicrophoneAccessDenied": "Impossibile accedere al microfono. Concedi l'autorizzazione al microfono nelle impostazioni di privacy di macOS.",
+    "callLocalVideoFreeze": "Larghezza di banda di rete insufficiente. Il video potrebbe essere sospeso per gli altri partecipanti alla chiamata.",
+    "callCameraAccessDenied": "Non è possibile accedere alla fotocamera. Fare clic sul blocco nella barra degli indirizzi per concedere l'autorizzazione a questa pagina Web.",
+    "callCameraAlreadyInUse": "Non è possibile accedere alla fotocamera. Potrebbe essere già in uso da un'altra applicazione.",
+    "callMacOsCameraAccessDenied": "MacOS sta bloccando l'accesso alla fotocamera. Aggiorna le impostazioni di privacy per consentire a questo browser di accedere alla fotocamera.",
+    "callMacOsScreenShareAccessDenied": "MacOS sta bloccando la condivisione dello schermo. Aggiorna le impostazioni di privacy per consentire a questo browser di registrare lo schermo."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Stai condividendo lo schermo",
+    "screenShareLoadingMessage": "Caricamento dello schermo di {participant}"
   }
 }

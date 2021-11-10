@@ -2,7 +2,9 @@
   "participantItem": {
     "isMeText": "(jij)",
     "menuTitle": "Meer opties",
-    "removeButtonLabel": "Verwijderen"
+    "removeButtonLabel": "Verwijderen",
+    "sharingIconLabel": "Delen",
+    "mutedIconLabel": "Gedempt"
   },
   "typingIndicator": {
     "singleUser": "{user} typt ...",
@@ -12,7 +14,8 @@
     "delimiter": ", "
   },
   "sendBox": {
-    "placeholderText": "Een bericht invoeren"
+    "placeholderText": "Een bericht invoeren",
+    "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet."
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Verzonden",
@@ -61,7 +64,17 @@
     "friday": "Vrijdag",
     "saturday": "Zaterdag",
     "participantJoined": "neemt nu deel aan de chat.",
-    "participantLeft": "heeft de chat verlaten."
+    "participantLeft": "heeft de chat verlaten.",
+    "editMessage": "Bewerken",
+    "removeMessage": "Verwijderen",
+    "editedTag": "Bewerkt",
+    "liveAuthorIntro": "{author} zegt",
+    "editBoxTextLimit": "Uw bericht heeft de limiet van {limitNumber} tekens overschreden",
+    "editBoxPlaceholderText": "Uw bericht bewerken",
+    "newMessagesIndicator": "Nieuwe berichten",
+    "noDisplayNameSub": "Geen naam",
+    "editBoxCancelButton": "Annuleren",
+    "editBoxSubmitButton": "Verzenden"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",
@@ -76,6 +89,21 @@
     "unmuteGeneric": "Kan dempen van microfoon niet opheffen",
     "speakingWhileMuted": "De microfoon is gedempt",
     "startScreenShareGeneric": "Kan scherm delen niet starten",
-    "stopScreenShareGeneric": "Kan scherm delen niet stoppen"
+    "stopScreenShareGeneric": "Kan scherm delen niet stoppen",
+    "callNetworkQualityLow": "De netwerkkwaliteit is laag.",
+    "callNoSpeakerFound": "Geen luidsprekers of hoofdtelefoon gevonden. Sluit een audioapparaat aan om het gesprek te beluisteren.",
+    "callNoMicrophoneFound": "Geen microfoons gevonden. Sluit een audio-invoerapparaat aan.",
+    "callMicrophoneAccessDenied": "Kan geen toegang krijgen tot de microfoon. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
+    "callMicrophoneMutedBySystem": "U bent gedempt door jouw systeem.",
+    "callMacOsMicrophoneAccessDenied": "Kan geen toegang krijgen tot de microfoon. Verleen microfoonmachtiging in de privacyinstellingen voor macOS.",
+    "callLocalVideoFreeze": "De netwerkbandbreedte is slecht. Je video wordt mogelijk onderbroken weergegeven voor anderen in het gesprek.",
+    "callCameraAccessDenied": "Kan geen toegang krijgen tot de camera. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
+    "callCameraAlreadyInUse": "Kan geen toegang krijgen tot de camera. Het wordt mogelijk al gebruikt door een andere toepassing.",
+    "callMacOsCameraAccessDenied": "MacOS blokkeert de toegang tot jouw camera. Werk je privacyinstellingen bij, zodat deze browser toegang heeft tot jouw camera.",
+    "callMacOsScreenShareAccessDenied": "MacOS blokkeert scherm delen. Werk je privacyinstellingen bij, zodat deze browser jouw scherm kan opnemen."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "U deelt uw scherm",
+    "screenShareLoadingMessage": "Scherm van {participant} laden"
   }
 }

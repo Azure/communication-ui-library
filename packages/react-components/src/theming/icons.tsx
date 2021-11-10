@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { mergeStyles } from '@fluentui/react';
 import {
   CallEnd20Filled,
   Checkmark20Regular,
@@ -46,6 +47,15 @@ import React from 'react';
  */
 export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
 
+const WifiWarning16Filled = (): JSX.Element => (
+  // All ErrorBar icons are 16px x 16px (when 1rem = 16 px).
+  // There is no 16px version of this icon in the fluent icon package, so scale the larger
+  // one down to required size.
+  <div className={mergeStyles({ transform: 'scale(0.8)' })}>
+    <WifiWarning20Filled />
+  </div>
+);
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -63,34 +73,34 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipants: <People20Filled />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
+  EditBoxCancel: <Dismiss20Regular />,
+  EditBoxSubmit: <Checkmark20Regular />,
+  ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
+  ErrorBarCallCameraAlreadyInUse: <VideoProhibited16Filled />,
+  ErrorBarCallLocalVideoFreeze: <WifiWarning16Filled />,
+  ErrorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />,
+  ErrorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
+  ErrorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
+  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
+  ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
+  ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
+  ErrorBarCallNoSpeakerFound: <SpeakerMute16Filled />,
+  HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
+  HorizontalGalleryRightButton: <ChevronRight20Regular />,
   MessageDelivered: <CheckmarkCircle20Regular />,
+  MessageEdit: <Edit20Regular />,
   MessageFailed: <ErrorCircle20Regular />,
+  MessageRemove: <Delete20Regular />,
   MessageSeen: <EyeShow20Filled />,
   MessageSending: <Circle20Regular />,
   OptionsCamera: <Video20Regular />,
   OptionsMic: <MicOn20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
-  ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   ParticipantItemMicOff: <MicOff16Regular />,
   ParticipantItemOptions: <MoreHorizontal20Regular />,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
+  ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
-  VideoTileMicOff: <MicOff16Filled />,
-  EditBoxCancel: <Dismiss20Regular />,
-  EditBoxSubmit: <Checkmark20Regular />,
-  MessageEdit: <Edit20Regular />,
-  MessageRemove: <Delete20Regular />,
-  HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
-  HorizontalGalleryRightButton: <ChevronRight20Regular />,
-  errorBarCallNetworkQualityLow: <WifiWarning20Filled />,
-  errorBarCallNoSpeakerFound: <SpeakerMute16Filled />,
-  errorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
-  errorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
-  errorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
-  errorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
-  errorBarCallLocalVideoFreeze: <WifiWarning20Filled />,
-  errorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
-  errorBarCallCameraAlreadyInUse: <VideoProhibited16Filled />,
-  errorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />
+  VideoTileMicOff: <MicOff16Filled />
 };

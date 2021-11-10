@@ -35,6 +35,9 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
           data-ui-id="video-tile"
         >
           <div
+            className="css-6"
+          />
+          <div
             className="ms-Stack css-11"
           >
             <div
@@ -84,42 +87,46 @@ exports[`storybook snapshot tests Storyshots Examples/Layouts/One To One Call La
             </div>
           </div>
           <div
-            className="ms-Stack css-82 css-29"
+            className="ms-Stack css-82 css-2"
           >
             <div
-              className="ms-StackItem css-30"
+              className="ms-Stack css-83 css-29"
             >
               <span
-                className="css-31"
+                className="css-30"
+                title="Holly"
               >
                 Holly
               </span>
             </div>
           </div>
           <div
-            className="ms-Stack css-32"
+            className="ms-Stack css-31"
           >
             <div
               className="ms-Stack css-10"
               data-ui-id="video-tile"
             >
               <div
+                className="css-6"
+              />
+              <div
                 className="ms-Stack css-11"
               >
                 <div
-                  className="ms-Persona ms-Persona--size56 root-33"
+                  className="ms-Persona ms-Persona--size56 root-32"
                 >
                   <div
                     className="ms-Persona-coin ms-Persona--size56 coin-21"
                     role="presentation"
                   >
                     <div
-                      className="ms-Persona-imageArea imageArea-37"
+                      className="ms-Persona-imageArea imageArea-36"
                       role="presentation"
                     >
                       <div
                         aria-hidden="true"
-                        className="ms-Persona-initials initials-40"
+                        className="ms-Persona-initials initials-39"
                       >
                         <span>
                           T

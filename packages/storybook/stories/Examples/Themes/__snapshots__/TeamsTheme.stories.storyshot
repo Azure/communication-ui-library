@@ -272,6 +272,9 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       data-ui-id="video-tile"
                     >
                       <div
+                        className="css-22"
+                      />
+                      <div
                         className="ms-Stack css-26"
                       >
                         <div
@@ -324,10 +327,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         className="ms-Stack css-82 css-44"
                       >
                         <div
-                          className="ms-StackItem css-45"
+                          className="ms-Stack css-83 css-45"
                         >
                           <span
                             className="css-46"
+                            title="Michael"
                           >
                             Michael
                           </span>

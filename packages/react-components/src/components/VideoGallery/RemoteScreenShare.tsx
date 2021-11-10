@@ -7,7 +7,7 @@ import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { VideoStreamOptions, VideoGalleryRemoteParticipant } from '../../types';
-import { videoWithNoRoundedBorderStyle, loadingStyle } from './styles/RemoteScreenShare.styles';
+import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
 /**
@@ -28,8 +28,6 @@ export const RemoteScreenShare = React.memo(
       screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
     }
 
-    const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
-
     const loadingMessage = screenShareParticipant?.displayName
       ? _formatString(locale.strings.videoGallery.screenShareLoadingMessage, {
           participant: screenShareParticipant?.displayName
@@ -43,7 +41,7 @@ export const RemoteScreenShare = React.memo(
         isSpeaking={screenShareParticipant?.isSpeaking}
         renderElement={
           screenShareStream?.renderElement ? (
-            <StreamMedia styles={videoStyles} videoStreamElement={screenShareStream?.renderElement} />
+            <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
           ) : undefined
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
