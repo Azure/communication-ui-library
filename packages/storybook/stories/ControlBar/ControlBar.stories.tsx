@@ -73,7 +73,9 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ControlBar</Title>
-      <Description of={ControlBarComponent} />
+      <Description>
+        A container for call control buttons. See [layouts](#layouts) for the different formats this control provides.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />

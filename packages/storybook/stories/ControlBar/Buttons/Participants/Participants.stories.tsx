@@ -36,10 +36,9 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ParticipantsButton</Title>
-      <Description of={ParticipantsButton} />
       <Description>
-        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
-        to each element to avoid warning for children in a list.
+        A button to show a menu containing the call or chat participants. For use with the [Control
+        Bar](./?path=/docs/ui-components-controlbar--control-bar).
       </Description>
 
       <Heading>Importing</Heading>
@@ -95,6 +94,10 @@ const getDocs: () => JSX.Element = () => {
         You can change the styles of `ParticipantsButton` through its `styles` props as you would customize any Button
         styles (root, label, etc..) with the addition of customizing the participant list container like shown in the
         example below.
+      </Description>
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
+        to each element to avoid warning for children in a list.
       </Description>
       <Canvas mdxSource={ParticipantsButtonWithCustomStylesExampleText}>
         <ParticipantsButtonWithCustomStylesExample />
