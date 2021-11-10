@@ -17,24 +17,10 @@ export const callControlsStyles: IStackItemStyles = {
  */
 export const callControlsContainer = mergeStyles({
   width: '100%',
-  height: '100%',
-  maxHeight: '4rem',
-  padding: '0.0625rem 0',
-
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginBottom: 2,
-  justifyContent: 'center',
-
-  '@media screen and (max-width: 30rem)': {
-    label: {
-      display: 'none'
-    }
-  }
+  maxHeight: '4rem'
 });
 
 const containerStyle: IStyle = {
-  height: '100%',
   width: '100%',
   position: 'relative',
   minHeight: '15rem' // linked to minimum space allocated to media gallery
@@ -62,7 +48,6 @@ export const containerStyleMobile = mergeStyles({
 export const subContainerStyles = (backgroundColor: string): IStackStyles => ({
   root: {
     width: '100%',
-    height: '100%',
     background: backgroundColor
   }
 });

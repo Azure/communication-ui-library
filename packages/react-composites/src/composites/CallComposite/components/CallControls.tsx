@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Stack } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
@@ -15,7 +16,7 @@ import {
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
-  callControlBarTopShadow,
+  controlBarContainerStyles,
   checkedButtonOverrideStyles,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,
@@ -159,16 +160,18 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const controlBarStyles = callControlBarTopShadow;
-
   return (
-    <ControlBar styles={controlBarStyles} layout="dockedBottom">
-      {microphoneButton}
-      {cameraButton}
-      {screenShareButton}
-      {participantButton}
-      {optionsButton}
-      {endCallButton}
-    </ControlBar>
+    <Stack styles={controlBarContainerStyles} horizontalAlign="center">
+      <Stack.Item>
+        <ControlBar layout="horizontal">
+          {microphoneButton}
+          {cameraButton}
+          {screenShareButton}
+          {participantButton}
+          {optionsButton}
+          {endCallButton}
+        </ControlBar>
+      </Stack.Item>
+    </Stack>
   );
 };

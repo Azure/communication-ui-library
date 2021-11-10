@@ -47,13 +47,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   return (
-    <Stack
-      horizontalAlign="center"
-      verticalAlign="center"
-      className={containerClassName}
-      grow
-      data-ui-id={props.dataUiId}
-    >
+    <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
       <Stack.Item styles={notificationsContainerStyles(NOTIFICATIONS_CONTAINER_ZINDEX)}>
         <Stack>
           <ComplianceBanner {...props.complianceBannerProps} />
@@ -68,14 +62,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
       <Stack.Item styles={callGalleryStyles} grow>
         {props.onRenderGalleryContent && (
-          <Stack grow styles={mediaGalleryContainerStyles}>
+          <Stack verticalFill styles={mediaGalleryContainerStyles}>
             {props.onRenderGalleryContent()}
           </Stack>
         )}
       </Stack.Item>
 
       {props.callControlProps !== false && (
-        <Stack.Item className={callControlsContainer}>
+        <Stack.Item>
           <CallControls {...props.callControlProps} />
         </Stack.Item>
       )}
