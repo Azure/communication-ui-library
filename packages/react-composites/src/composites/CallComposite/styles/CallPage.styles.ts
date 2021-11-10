@@ -3,21 +3,15 @@
 
 import { IStackItemStyles, IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
 
-/**
- * @private
- */
-export const callControlsStyles: IStackItemStyles = {
-  root: {
-    width: '100%'
-  }
-};
+const VIDEO_GALLERY_Z_INDEX = 1;
+const CONTROL_BAR_Z_INDEX = VIDEO_GALLERY_Z_INDEX + 1;
+const NOTIFICATION_CONTAINER_Z_INDEX = Math.max(CONTROL_BAR_Z_INDEX, VIDEO_GALLERY_Z_INDEX) + 1;
 
 /**
  * @private
  */
-export const callControlsContainer = mergeStyles({
-  width: '100%',
-  maxHeight: '4rem'
+export const callControlsContainerStyles = mergeStyles({
+  zIndex: CONTROL_BAR_Z_INDEX
 });
 
 const containerStyle: IStyle = {
@@ -45,8 +39,9 @@ export const containerStyleMobile = mergeStyles({
 /**
  * @private
  */
-export const subContainerStyles = (backgroundColor: string): IStackStyles => ({
+export const galleryParentContainerStyles = (backgroundColor: string): IStackStyles => ({
   root: {
+    zIndex: VIDEO_GALLERY_Z_INDEX,
     width: '100%',
     background: backgroundColor
   }
@@ -64,13 +59,13 @@ export const mediaGalleryContainerStyles: IStackItemStyles = {
 /**
  * @private
  */
-export const notificationsContainerStyles = (zIndex: number): IStackStyles => ({
+export const notificationsContainerStyles: IStackStyles = {
   root: {
     width: '100%',
     position: 'absolute',
     top: 0,
     left: 0,
     padding: '1rem',
-    zIndex
+    zIndex: NOTIFICATION_CONTAINER_Z_INDEX
   }
-});
+};

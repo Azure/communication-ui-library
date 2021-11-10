@@ -7,17 +7,14 @@ import React, { useMemo } from 'react';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
 import {
+  callControlsContainerStyles,
   notificationsContainerStyles,
-  callControlsContainer,
   containerStyleDesktop,
   containerStyleMobile,
   mediaGalleryContainerStyles,
-  subContainerStyles
+  galleryParentContainerStyles
 } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
-
-// High enough to be above `onRenderGalleryContent()`.
-const NOTIFICATIONS_CONTAINER_ZINDEX = 9;
 
 /**
  * @private
@@ -42,13 +39,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const theme = useTheme();
   const callGalleryStyles = useMemo(
-    () => subContainerStyles(theme.palette.neutralLighterAlt),
+    () => galleryParentContainerStyles(theme.palette.neutralLighterAlt),
     [theme.palette.neutralLighterAlt]
   );
 
   return (
     <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-      <Stack.Item styles={notificationsContainerStyles(NOTIFICATIONS_CONTAINER_ZINDEX)}>
+      <Stack.Item styles={notificationsContainerStyles}>
         <Stack>
           <ComplianceBanner {...props.complianceBannerProps} />
         </Stack>
@@ -69,7 +66,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       </Stack.Item>
 
       {props.callControlProps !== false && (
-        <Stack.Item>
+        <Stack.Item className={callControlsContainerStyles}>
           <CallControls {...props.callControlProps} />
         </Stack.Item>
       )}
