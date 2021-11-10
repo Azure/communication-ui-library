@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
+import {
+  CallAgent,
+  CallClient,
+  CallClientOptions,
+  CreateViewOptions,
+  DeviceManager
+} from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -218,6 +224,10 @@ export type StatefulCallClientArgs = {
  * @public
  */
 export type StatefulCallClientOptions = {
+  /**
+   * Options to construct the {@link @axure/communication-calling#CallClient} with.
+   */
+  callClientOptions: CallClientOptions;
   /**
    * Sets the max listeners limit of the 'stateChange' event. Defaults to the node.js EventEmitter.defaultMaxListeners
    * if not specified.
