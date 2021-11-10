@@ -19,7 +19,7 @@ export class DiagnosticsForwarder {
   private _emitter: EventEmitter;
 
   constructor(emitter: EventEmitter, call: Call) {
-    this._diagnostics = call.api(Features.UserFacingDiagnostics);
+    this._diagnostics = call.feature(Features.UserFacingDiagnostics);
     this._emitter = emitter;
     this.subscribe();
   }
