@@ -113,7 +113,7 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Participant Item`,
   component: ParticipantItemComponent,
   argTypes: {
-    displayName: { ...controlsToAdd.displayName, defaultValue: 'August (CEO)' },
+    displayName: { ...controlsToAdd.displayName, defaultValue: 'August Manning' },
     isScreenSharing: { ...controlsToAdd.isScreenSharing, defaultValue: true },
     isMuted: { ...controlsToAdd.isMuted, defaultValue: true },
     me: controlsToAdd.isMe,
