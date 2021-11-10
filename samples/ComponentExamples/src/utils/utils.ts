@@ -3,7 +3,7 @@
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatClient } from '@azure/communication-chat';
 import { getToken } from './getToken';
-import { getEndpointUrl } from './getEndpointUrl';
+import { fetchEndpointUrl } from './getEndpointUrl';
 import { loadConfigFromUrlQuery } from './loadConfigFromUrlQuery';
 
 export type IdentityType = {
@@ -20,11 +20,16 @@ export const createChatThreadAndUsers = async (displayName: string): Promise<Ide
   // If there is a config object from Url Query, directly return the config
   const configFromQuery = loadConfigFromUrlQuery();
   if (configFromQuery.token) {
+    verifyParamExists(configFromQuery, 'displayName');
+    verifyParamExists(configFromQuery, 'token');
+    verifyParamExists(configFromQuery, 'threadId');
+    verifyParamExists(configFromQuery, 'userId');
+    verifyParamExists(configFromQuery, 'endpointUrl');
     return configFromQuery;
   }
 
   const userAndToken = await getToken();
-  const endpointUrl = await getEndpointUrl();
+  const endpointUrl = await fetchEndpointUrl();
 
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndToken.token));
   const threadId = (await chatClient.createChatThread({ topic: TOPIC_NAME })).chatThread?.id ?? '';
@@ -39,4 +44,10 @@ export const createChatThreadAndUsers = async (displayName: string): Promise<Ide
     displayName,
     threadId
   };
+};
+
+export const verifyParamExists = <T>(params: T, paramName: string): void => {
+  if (!params[paramName]) {
+    throw `${paramName} was not included in the query parameters of the URL.`;
+  }
 };
