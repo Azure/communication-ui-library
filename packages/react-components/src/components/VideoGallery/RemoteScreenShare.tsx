@@ -9,7 +9,6 @@ import { VideoTile } from '../VideoTile';
 import { VideoStreamOptions, VideoGalleryRemoteParticipant } from '../../types';
 import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
-import { videoWithNoRoundedBorderStyle } from '../styles/VideoGallery.styles';
 
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
@@ -29,8 +28,6 @@ export const RemoteScreenShare = React.memo(
       screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
     }
 
-    const videoStyles = screenShareParticipant?.isSpeaking ? videoWithNoRoundedBorderStyle : {};
-
     const loadingMessage = screenShareParticipant?.displayName
       ? _formatString(locale.strings.videoGallery.screenShareLoadingMessage, {
           participant: screenShareParticipant?.displayName
@@ -44,7 +41,7 @@ export const RemoteScreenShare = React.memo(
         isSpeaking={screenShareParticipant?.isSpeaking}
         renderElement={
           screenShareStream?.renderElement ? (
-            <StreamMedia styles={videoStyles} videoStreamElement={screenShareStream?.renderElement} />
+            <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
           ) : undefined
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}

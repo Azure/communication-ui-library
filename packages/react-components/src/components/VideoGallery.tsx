@@ -116,8 +116,8 @@ const DRAG_OPTIONS: IDragOptions = {
 };
 
 /**
- * VideoGallery represents a {@link GridLayout} of video tiles for a specific call.
- * It displays a {@link VideoTile} for the local user as well as for each remote participants who joined the call.
+ * VideoGallery represents a layout of video tiles for a specific call.
+ * It displays a {@link VideoTile} for the local user as well as for each remote participant who has joined the call.
  *
  * @public
  */

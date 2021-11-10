@@ -27,7 +27,10 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ParticipantItem</Title>
-      <Description of={ParticipantItemComponent} />
+      <Description>
+        Component to render a calling or chat participant. This component can display the participant's avatar,
+        displayName, online presence as well as optional icons and context menu.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -110,9 +113,9 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Participant Item`,
   component: ParticipantItemComponent,
   argTypes: {
-    displayName: controlsToAdd.displayName,
-    isScreenSharing: controlsToAdd.isScreenSharing,
-    isMuted: controlsToAdd.isMuted,
+    displayName: { ...controlsToAdd.displayName, defaultValue: 'August Manning' },
+    isScreenSharing: { ...controlsToAdd.isScreenSharing, defaultValue: true },
+    isMuted: { ...controlsToAdd.isMuted, defaultValue: true },
     me: controlsToAdd.isMe,
     menuItemsStr: controlsToAdd.participantItemMenuItemsStr,
     // Hiding auto-generated controls
