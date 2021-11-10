@@ -13,7 +13,7 @@ import {
   COMPOSITE_LOCALE_FR_FR
 } from '../../../../src';
 import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { isMobile, verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -86,7 +86,7 @@ function App(): JSX.Element {
               : undefined
           }
           locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
-          options={{ participantPane: true }}
+          options={{ participantPane: true, mobileView: isMobile() }}
         />
       )}
     </_IdentifierProvider>

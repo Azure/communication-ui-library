@@ -113,6 +113,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
               hidden={!showChat}
               chatAdapter={chatAdapter}
               fluentTheme={props.fluentTheme}
+              mobileView={props.options?.mobileView ?? false}
               onClose={closePane}
             />
           )}

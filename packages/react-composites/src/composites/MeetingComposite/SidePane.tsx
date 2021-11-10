@@ -126,6 +126,7 @@ export const EmbeddedChatPane = (props: {
   chatAdapter: ChatAdapter;
   fluentTheme?: PartialTheme | Theme;
   hidden: boolean;
+  mobileView: boolean;
   onClose: () => void;
 }): JSX.Element => {
   return (
@@ -138,7 +139,7 @@ export const EmbeddedChatPane = (props: {
       <ChatComposite
         adapter={props.chatAdapter}
         fluentTheme={props.fluentTheme}
-        options={{ participantPane: false, topic: false }}
+        options={{ participantPane: false, topic: false, mobileView: props.mobileView }}
       />
     </SidePane>
   );
