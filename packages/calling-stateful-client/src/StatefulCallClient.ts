@@ -15,6 +15,7 @@ import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
+import { _getApplicationId } from '@internal/acs-ui-common';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -254,7 +255,7 @@ export const createStatefulCallClient = (
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
   return createStatefulCallClientWithDeps(
-    new CallClient(),
+    new CallClient(withTelemetryTag(options?.callClientOptions)),
     new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
     new InternalCallContext()
   );
@@ -307,4 +308,16 @@ export const createStatefulCallClientWithDeps = (
   });
 
   return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as StatefulCallClient;
+};
+
+const withTelemetryTag = (options?: CallClientOptions): CallClientOptions => {
+  const tags = options?.diagnostics?.tags ?? [];
+  tags.push(_getApplicationId());
+  return {
+    ...options,
+    diagnostics: {
+      ...options?.diagnostics,
+      tags
+    }
+  };
 };
