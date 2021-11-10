@@ -80,7 +80,7 @@ export const Options = OptionsStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-options`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Options`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Options`,
   component: OptionsButton,
   argTypes: {
     showLabel: controlsToAdd.showLabel,

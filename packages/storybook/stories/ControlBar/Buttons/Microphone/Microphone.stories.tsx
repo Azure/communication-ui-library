@@ -80,7 +80,7 @@ export const Microphone = MicrophoneStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-microphone`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Microphone`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Microphone`,
   component: MicrophoneButton,
   argTypes: {
     checked: controlsToAdd.checked,

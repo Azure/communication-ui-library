@@ -79,7 +79,7 @@ export const EndCall = EndCallStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-endcall`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/End Call`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/End Call`,
   component: EndCallButton,
   argTypes: {
     showLabel: controlsToAdd.showLabel,

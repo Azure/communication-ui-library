@@ -84,7 +84,7 @@ export const Default = ControlBarButtonStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-base`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Default`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Default`,
   component: ControlBarButton,
   argTypes: {
     showLabel: controlsToAdd.showLabel,
