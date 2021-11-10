@@ -15,6 +15,7 @@ import {
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
+  callControlBarTopShadow,
   checkedButtonOverrideStyles,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,
@@ -158,8 +159,10 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
+  const controlBarStyles = callControlBarTopShadow;
+
   return (
-    <ControlBar layout="dockedBottom">
+    <ControlBar styles={controlBarStyles} layout="dockedBottom">
       {microphoneButton}
       {cameraButton}
       {screenShareButton}

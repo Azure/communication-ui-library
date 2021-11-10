@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { ErrorBar, ErrorBarProps } from '@internal/react-components';
+import { ErrorBar, ErrorBarProps, useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { ComplianceBanner, ComplianceBannerProps } from '../components/ComplianceBanner';
@@ -38,7 +38,13 @@ export interface CallArrangementProps {
 export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const containerClassName = useMemo(() => {
     return props.mobileView ? containerStyleMobile : containerStyleDesktop;
-  }, [props.mobileView ? containerStyleMobile : containerStyleDesktop]);
+  }, [props.mobileView]);
+
+  const theme = useTheme();
+  const callGalleryStyles = useMemo(
+    () => subContainerStyles(theme.palette.neutralLighterAlt),
+    [theme.palette.neutralLighterAlt]
+  );
 
   return (
     <Stack
@@ -60,7 +66,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         {!!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
       </Stack.Item>
 
-      <Stack.Item styles={subContainerStyles} grow>
+      <Stack.Item styles={callGalleryStyles} grow>
         {props.onRenderGalleryContent && (
           <Stack grow styles={mediaGalleryContainerStyles}>
             {props.onRenderGalleryContent()}

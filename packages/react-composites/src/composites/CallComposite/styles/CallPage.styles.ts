@@ -59,12 +59,13 @@ export const containerStyleMobile = mergeStyles({
 /**
  * @private
  */
-export const subContainerStyles: IStackStyles = {
+export const subContainerStyles = (backgroundColor: string): IStackStyles => ({
   root: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    background: backgroundColor
   }
-};
+});
 
 /**
  * @private
