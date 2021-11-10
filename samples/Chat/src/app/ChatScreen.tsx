@@ -22,9 +22,6 @@ import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
-import MobileDetect from 'mobile-detect';
-
-const isMobileSession = !!new MobileDetect(window.navigator.userAgent).mobile();
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
@@ -42,7 +39,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapterRef = useRef<ChatAdapter>();
   const [adapter, setAdapter] = useState<ChatAdapter>();
-  const [hideParticipants, setHideParticipants] = useState<boolean>(isMobileSession);
+  const [hideParticipants, setHideParticipants] = useState<boolean>(false);
   const { currentTheme } = useSwitchableFluentTheme();
 
   useEffect(() => {
@@ -103,7 +100,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           <ChatComposite
             adapter={adapter}
             fluentTheme={currentTheme.theme}
-            options={{ participantPane: !hideParticipants, mobileView: isMobileSession }}
+            options={{ participantPane: !hideParticipants }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
         </Stack.Item>

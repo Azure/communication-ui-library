@@ -339,7 +339,6 @@ export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered'
 
 // @public
 export type ChatCompositeOptions = {
-    mobileView?: boolean;
     errorBar?: boolean;
     participantPane?: boolean;
     topic?: boolean;

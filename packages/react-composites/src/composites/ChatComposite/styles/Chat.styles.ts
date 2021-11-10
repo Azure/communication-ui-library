@@ -1,30 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { mergeStyles } from '@fluentui/react';
 import { MessageThreadStyles, SendBoxStylesProps, TypingIndicatorStylesProps } from '@internal/react-components';
 
 const MESSAGE_THREAD_WIDTH = '41.25rem';
 
-const chatScreenContainerStyle: IStyle = {
+/**
+ * @private
+ */
+export const chatScreenContainerStyle = mergeStyles({
   height: '100%',
   width: '100%',
-  minHeight: '20rem'
-};
-
-/**
- * @private
- */
-export const chatScreenContainerStyleDesktop = mergeStyles({
-  ...chatScreenContainerStyle,
-  minWidth: '24.25rem'
-});
-
-/**
- * @private
- */
-export const chatScreenContainerStyleMobile = mergeStyles({
-  ...chatScreenContainerStyle,
+  minHeight: '20rem',
   minWidth: '19.5rem'
 });
 

@@ -33,7 +33,6 @@
     "@types/react-aria-live": "^2.0.0",
     "@types/react-linkify": "^1.0.0",
     "json-stringify-safe": "^5.0.1",
-    "mobile-detect": "~1.4.5",
     "react": "~16.14.0",
     "react-aria-live": "^2.0.5",
     "react-dom": "16.13.1",
