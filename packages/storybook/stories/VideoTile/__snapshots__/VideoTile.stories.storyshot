@@ -80,11 +80,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
             </div>
           </div>
         </div>
-        <div
-          className="ms-Stack css-82 css-27"
-        >
-          
-        </div>
       </div>
     </div>
   </div>

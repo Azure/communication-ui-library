@@ -14,9 +14,9 @@ import {
   isSpeakingBorderDiv,
   overlayContainerStyles,
   rootStyles,
-  tileInfoStackItemStyle,
   videoContainerStyles,
-  videoHint
+  videoHint,
+  tileInfoContainerStyle
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
@@ -161,7 +161,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
 
-  const tileInfoContainerStyle = useMemo(
+  const tileInfoStyle = useMemo(
     () =>
       mergeStyles(
         isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
@@ -213,18 +213,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           </Stack>
         )}
 
-        {showLabel && (displayName || (showMuteIndicator && isMuted !== undefined)) && (
+        {showLabel && (displayName || (showMuteIndicator && isMuted)) && (
           <Stack horizontal className={tileInfoContainerStyle}>
-            {displayName && (
-              <Stack.Item className={mergeStyles(tileInfoStackItemStyle)}>
-                <Text className={mergeStyles(displayNameStyle)}>{displayName}</Text>
-              </Stack.Item>
-            )}
-            {showMuteIndicator && isMuted && (
-              <Stack.Item className={mergeStyles(iconContainerStyle, tileInfoStackItemStyle)}>
-                <Icon iconName="VideoTileMicOff" />
-              </Stack.Item>
-            )}
+            <Stack horizontal className={tileInfoStyle}>
+              {displayName && (
+                <Text className={mergeStyles(displayNameStyle)} title={displayName}>
+                  {displayName}
+                </Text>
+              )}
+              {showMuteIndicator && isMuted && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="VideoTileMicOff" />
+                </Stack>
+              )}
+            </Stack>
           </Stack>
         )}
 
