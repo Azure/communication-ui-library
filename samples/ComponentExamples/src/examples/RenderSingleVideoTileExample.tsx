@@ -7,7 +7,7 @@ import {
   useCallClient,
   usePropsFor
 } from '@azure/communication-react';
-import { LocalVideoStream } from '@azure/communication-calling';
+import { CallState as CallStatus, LocalVideoStream } from '@azure/communication-calling';
 import { useSelector } from '@azure/communication-react';
 import { StreamMedia } from '@azure/communication-react';
 import { VideoTile } from '@azure/communication-react';
@@ -29,6 +29,10 @@ const localStreamSelector = (
   // the latter directly comes from call instance - which is for sending request
   const localStreamState = state.calls[callId].localVideoStreams.find((item) => item.mediaStreamType === 'Video');
   return localStreamState;
+};
+
+const callStatusSelector = (state: CallClientState, { callId }: { callId: string }): CallStatus => {
+  return state.calls[callId].state;
 };
 
 // It is recommended that use usePropsFor(VideoGallery) + VideoGallery to render videos all together
@@ -54,6 +58,8 @@ export const RenderVideoTileExample = (): JSX.Element => {
 
   const localStreamState = useSelector(localStreamSelector, { callId: call?.id ?? '' });
 
+  const callStatus = useSelector(callStatusSelector);
+
   useEffect(() => {
     // Start rendering video into a html element contained in localStreamState.
     // This will trigger an update of localStreamState when element gets created
@@ -68,6 +74,10 @@ export const RenderVideoTileExample = (): JSX.Element => {
   return (
     <>
       <h3> Render single video stream in your own component </h3>
+      <div data-ui-id={callStatus === 'Connected' ? 'call-connected' : 'call-not-connected'}>
+        {' '}
+        CallStatus: {callStatus}{' '}
+      </div>
       <span>Click camera button to see what happens:</span>
       <CameraButton {...cameraButtonProps} id="camera-button" />
       <div style={videoTileContainerStyle}>

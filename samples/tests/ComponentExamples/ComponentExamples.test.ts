@@ -26,6 +26,8 @@ test.describe('Component Examples Test', () => {
   test('Whether html page is loaded right with 2 composites', async ({ page }) => {
     // Wait for message to finish sending
     await page.waitForSelector(dataUiId('sendbox-textfield'));
+    await page.waitForSelector('[id="camera-button"]');
+
     await page.type(dataUiId('sendbox-textfield'), 'Hello!');
     await page.keyboard.press('Enter');
 
@@ -35,8 +37,10 @@ test.describe('Component Examples Test', () => {
       content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
     });
 
-    // Start local video using custom start button
+    // Don't start calling test until the call is connected
+    await page.waitForSelector(dataUiId('call-connected'));
 
+    // Start local video using custom start button
     await page.click(dataUiId('custom-start-button'));
     await page.waitForFunction(() => {
       const videoNode = document.querySelector('video');
@@ -48,9 +52,6 @@ test.describe('Component Examples Test', () => {
 
     expect(await page.screenshot({ fullPage: true })).toMatchSnapshot('componentExamples-localVideoStarted.png');
 
-    // TODO: page.click on cameraButton is causing some flacky test issues(but manual click is fine)
-    // Add this timeout will ensure it is always stable - will need to be removed after figuring things out
-    await page.waitForTimeout(5000);
     await page.click('[id="camera-button"]');
 
     await page.waitForFunction(() => {
