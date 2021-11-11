@@ -39,7 +39,7 @@ export class FakeChatClient implements IChatClient {
     const thread = {
       id: nanoid(),
       createdOn: new Date(Date.now()),
-      createdBy: this.id,
+      createdBy: getIdentifierKind(this.id),
       topic: request.topic,
       participants,
       messages: []
@@ -49,7 +49,7 @@ export class FakeChatClient implements IChatClient {
       chatThread: {
         id: thread.id,
         createdOn: thread.createdOn,
-        createdBy: getIdentifierKind(thread.createdBy),
+        createdBy: thread.createdBy,
         topic: thread.topic
       }
     });
@@ -80,7 +80,7 @@ export class FakeChatClient implements IChatClient {
     if (!this.containsMe(thread.participants)) {
       throw new Error(`User ${this.id} cannot delete thread ${threadId} because they are not a participant`);
     }
-    thread.deltedOn = new Date(Date.now());
+    thread.deletedOn = new Date(Date.now());
     return Promise.resolve();
   }
 

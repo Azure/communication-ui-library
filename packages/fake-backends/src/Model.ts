@@ -1,19 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { ChatParticipant, ChatMessage, ChatThreadProperties } from '@azure/communication-chat';
 
 export interface Model {
   threads: Thread[];
 }
 
-export interface Thread {
-  id: string;
-  topic: string;
-  createdOn: Date;
-  deltedOn?: Date;
-  createdBy: CommunicationIdentifier;
+export interface Thread extends ChatThreadProperties {
   participants: ChatParticipant[];
   messages: ChatMessage[];
 }
