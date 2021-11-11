@@ -4,6 +4,7 @@
 import { nanoid } from 'nanoid';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { FakeChatClient } from './StubChatClient';
+import { Model } from './Model';
 import { IChatClient } from './types';
 
 /**
@@ -13,11 +14,14 @@ import { IChatClient } from './types';
  * Subsequent operations create participants, threads etc that are all stored in-memory.
  */
 export class FakeChatService {
+  private model: Model = new Model();
+
   public newClient(id: CommunicationIdentifier): IChatClient {
-    return new FakeChatClient();
+    return new FakeChatClient(this.model, id);
   }
 
   public newUserAndClient(): [CommunicationIdentifier, IChatClient] {
-    return [{ communicationUserId: nanoid() }, new FakeChatClient()];
+    const id = { communicationUserId: nanoid() };
+    return [id, new FakeChatClient(this.model, id)];
   }
 }

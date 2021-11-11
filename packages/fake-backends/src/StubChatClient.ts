@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { nanoid } from 'nanoid';
 import {
   AddChatParticipantsResult,
   ChatMessage,
@@ -9,35 +10,57 @@ import {
   ChatThreadClient,
   ChatThreadItem,
   ChatThreadProperties,
+  CreateChatThreadRequest,
+  CreateChatThreadOptions,
   CreateChatThreadResult,
   SendChatMessageResult
 } from '@azure/communication-chat';
+import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { Model } from './Model';
 import { IChatClient, IChatThreadClient } from './types';
 
 /**
  * A public interface compatible stub for ChatClient.
  */
 export class FakeChatClient implements IChatClient {
-  private threadClient?: IChatThreadClient;
-
-  /**
-   * @param threadClient If set, an implementation of ChatThreadClient interface that is returned for *all* calls to
-   * {@getChatThreadClient()}.
-   */
-  constructor(threadClient?: IChatThreadClient) {
-    this.threadClient = threadClient;
-  }
+  constructor(private model: Model, private id: CommunicationIdentifier) {}
 
   getChatThreadClient(): ChatThreadClient {
-    if (this.threadClient === undefined) {
-      throw Error('stub method not implemented');
-    }
-    // This is a necessary lie.
-    return this.threadClient as ChatThreadClient;
+    throw Error('stub method not implemented');
   }
-  createChatThread(): Promise<CreateChatThreadResult> {
-    return Promise.resolve({});
+  createChatThread(
+    request: CreateChatThreadRequest,
+    options?: CreateChatThreadOptions
+  ): Promise<CreateChatThreadResult> {
+    const participants = this.ensureCurrentUserInThread(options?.participants ?? []);
+    const thread = {
+      id: nanoid(),
+      createdOn: new Date(Date.now()),
+      createdBy: this.id,
+      topic: request.topic,
+      participants
+    };
+    this.model.threads.push(thread);
+    return Promise.resolve({
+      chatThread: {
+        id: thread.id,
+        createdOn: thread.createdOn,
+        createdBy: getIdentifierKind(thread.createdBy),
+        topic: thread.topic
+      }
+    });
+  }
+
+  private ensureCurrentUserInThread(participants: ChatParticipant[]): ChatParticipant[] {
+    const me = toFlatCommunicationIdentifier(this.id);
+    for (const participant of participants) {
+      if (toFlatCommunicationIdentifier(participant.id) === me) {
+        return participants;
+      }
+    }
+    return [...participants, { id: this.id }];
   }
   listChatThreads(): PagedAsyncIterableIterator<ChatThreadItem> {
     return pagedAsyncIterator([]);
