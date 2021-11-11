@@ -3,7 +3,7 @@
 
 import { nanoid } from 'nanoid';
 import { CommunicationIdentifier } from '@azure/communication-common';
-import { StubChatClient } from './StubChatClient';
+import { FakeChatClient } from './StubChatClient';
 import { IChatClient } from './types';
 
 /**
@@ -12,12 +12,12 @@ import { IChatClient } from './types';
  * The service starts out with no state - no participants and no chat threads.
  * Subsequent operations create participants, threads etc that are all stored in-memory.
  */
-export class ChatService {
+export class FakeChatService {
   public newClient(id: CommunicationIdentifier): IChatClient {
-    return new StubChatClient();
+    return new FakeChatClient();
   }
 
   public newUserAndClient(): [CommunicationIdentifier, IChatClient] {
-    return [{ communicationUserId: nanoid() }, new StubChatClient()];
+    return [{ communicationUserId: nanoid() }, new FakeChatClient()];
   }
 }

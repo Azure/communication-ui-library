@@ -18,7 +18,7 @@ import { IChatClient, IChatThreadClient } from './types';
 /**
  * A public interface compatible stub for ChatClient.
  */
-export class StubChatClient implements IChatClient {
+export class FakeChatClient implements IChatClient {
   private threadClient?: IChatThreadClient;
 
   /**
@@ -62,7 +62,7 @@ export class StubChatClient implements IChatClient {
 /**
  * A public interface compatible stub for ChatThreadClient.
  */
-export class StubChatThreadClient implements IChatThreadClient {
+export class FakeChatThreadClient implements IChatThreadClient {
   readonly threadId: string;
 
   constructor(threadId?: string) {
