@@ -7,6 +7,7 @@ import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
+import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
 
 /**
@@ -78,16 +79,18 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   } = props;
 
   return (
-    <BaseComposite {...props}>
-      <ChatAdapterProvider adapter={adapter}>
-        <ChatScreen
-          options={options}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onRenderTypingIndicator={onRenderTypingIndicator}
-          onRenderMessage={onRenderMessage}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        />
-      </ChatAdapterProvider>
-    </BaseComposite>
+    <div className={chatScreenContainerStyle}>
+      <BaseComposite {...props}>
+        <ChatAdapterProvider adapter={adapter}>
+          <ChatScreen
+            options={options}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onRenderTypingIndicator={onRenderTypingIndicator}
+            onRenderMessage={onRenderMessage}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          />
+        </ChatAdapterProvider>
+      </BaseComposite>
+    </div>
   );
 };
