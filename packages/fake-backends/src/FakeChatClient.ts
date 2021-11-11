@@ -20,7 +20,6 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { latestMessageTimestamp, Model } from './Model';
 import { IChatClient, IChatThreadClient } from './types';
-import { SourceMap } from 'module';
 
 /**
  * A public interface compatible stub for ChatClient.
@@ -73,9 +72,18 @@ export class FakeChatClient implements IChatClient {
     return pagedAsyncIterator(response);
   }
 
-  deleteChatThread(): Promise<void> {
+  deleteChatThread(threadId: string): Promise<void> {
+    const thread = this.model.threads.find((t) => t.id === threadId);
+    if (!thread) {
+      throw new Error(`No thread with id ${threadId}`);
+    }
+    if (!this.containsMe(thread.participants)) {
+      throw new Error(`User ${this.id} cannot delete thread ${threadId} because they are not a participant`);
+    }
+    thread.deltedOn = new Date(Date.now());
     return Promise.resolve();
   }
+
   startRealtimeNotifications(): Promise<void> {
     return Promise.resolve();
   }

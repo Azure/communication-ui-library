@@ -12,6 +12,7 @@ export interface Thread {
   id: string;
   topic: string;
   createdOn: Date;
+  deltedOn?: Date;
   createdBy: CommunicationIdentifier;
   participants: ChatParticipant[];
   messages: ChatMessage[];
