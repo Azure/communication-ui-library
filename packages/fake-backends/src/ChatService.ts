@@ -3,7 +3,7 @@
 
 import { nanoid } from 'nanoid';
 import { CommunicationIdentifier } from '@azure/communication-common';
-import { FakeChatClient } from './StubChatClient';
+import { FakeChatClient } from './FakeChatClient';
 import { Model } from './Model';
 import { IChatClient } from './types';
 

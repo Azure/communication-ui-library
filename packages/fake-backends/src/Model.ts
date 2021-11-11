@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-chat';
+import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 export interface Model {
@@ -14,4 +14,12 @@ export interface Thread {
   createdOn: Date;
   createdBy: CommunicationIdentifier;
   participants: ChatParticipant[];
+  messages: ChatMessage[];
 }
+
+export const latestMessageTimestamp = (messages: ChatMessage[]): Date | undefined => {
+  if (messages.length === 0) {
+    return undefined;
+  }
+  return messages[messages.length - 1].createdOn;
+};
