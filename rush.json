@@ -101,6 +101,11 @@
       "packageName": "@internal/check-treeshaking",
       "projectFolder": "tools/check-treeshaking",
       "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@internal/fake-backends",
+      "projectFolder": "packages/fake-backends",
+      "reviewCategory": "tools"
     }
   ]
 }
