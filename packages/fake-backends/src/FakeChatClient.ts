@@ -16,19 +16,30 @@ import {
   SendChatMessageResult
 } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
+import { ChatThreadDeletedEvent } from '@azure/communication-signaling';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { latestMessageTimestamp, Model } from './Model';
 import { IChatClient, IChatThreadClient } from './types';
+import { EventEmitter } from 'stream';
 
 /**
  * A public interface compatible stub for ChatClient.
  */
 export class FakeChatClient implements IChatClient {
+  private realtimeNotificationsEnabled = false;
+  private threadClients: FakeChatThreadClient[] = [];
+
   constructor(private model: Model, private id: CommunicationIdentifier) {}
 
-  getChatThreadClient(): ChatThreadClient {
-    throw Error('stub method not implemented');
+  getChatThreadClient(threadId: string): ChatThreadClient {
+    const thread = this.model.threads.find((t) => this.containsMe(t.participants));
+    if (!thread) {
+      throw new Error(`Cannot create thread client because ${this.id} is not in thread ${threadId}`);
+    }
+    const threadClient = new FakeChatThreadClient(threadId);
+    this.threadClients.push(threadClient);
+    return threadClient as IChatThreadClient as ChatThreadClient;
   }
 
   createChatThread(
@@ -38,11 +49,13 @@ export class FakeChatClient implements IChatClient {
     const participants = this.ensureCurrentUserInThread(options?.participants ?? []);
     const thread = {
       id: nanoid(),
+      version: 0,
       createdOn: new Date(Date.now()),
       createdBy: getIdentifierKind(this.id),
       topic: request.topic,
       participants,
-      messages: []
+      messages: [],
+      emitter: new EventEmitter()
     };
     this.model.threads.push(thread);
     return Promise.resolve({
@@ -77,24 +90,51 @@ export class FakeChatClient implements IChatClient {
     if (!thread) {
       throw new Error(`No thread with id ${threadId}`);
     }
-    if (!this.containsMe(thread.participants)) {
+    const me = thread.participants.find((p) => this.isMe(p.id));
+    if (!me) {
       throw new Error(`User ${this.id} cannot delete thread ${threadId} because they are not a participant`);
     }
     thread.deletedOn = new Date(Date.now());
+    thread.version++;
+
+    const eventPayload: ChatThreadDeletedEvent = {
+      deletedOn: thread.deletedOn,
+      deletedBy: {
+        id: getIdentifierKind(me.id),
+        displayName: me.displayName ?? '',
+        shareHistoryTime: me.shareHistoryTime
+      },
+      threadId: thread.id,
+      version: `${thread.version}`
+    };
+    thread.emitter.emit('chatThreadDeleted', eventPayload);
+
     return Promise.resolve();
   }
 
   startRealtimeNotifications(): Promise<void> {
+    this.realtimeNotificationsEnabled = true;
     return Promise.resolve();
   }
+
   stopRealtimeNotifications(): Promise<void> {
-    return Promise.resolve();
+    this.realtimeNotificationsEnabled = false;
+    // TODO unsubscribe from all events.
+    throw new Error('Not Implemented');
   }
-  on(): void {
-    return;
+
+  // TODO tighten the type
+  on(event: string, listener: any): void {
+    if (!this.realtimeNotificationsEnabled) {
+      throw new Error('Must enable real time notifications first');
+    }
+    // Only subscribe to events for threads for which a ChatThreadClient has been created.
+    const threadIds = new Set(this.threadClients.map((c) => c.threadId));
+    this.model.threads.filter((t) => threadIds.has(t.id)).forEach((t) => t.emitter.on(event, listener));
   }
+
   off(): void {
-    return;
+    throw new Error('Not implemented');
   }
 
   private isMe(other: CommunicationIdentifier): boolean {
@@ -110,11 +150,8 @@ export class FakeChatClient implements IChatClient {
  * A public interface compatible stub for ChatThreadClient.
  */
 export class FakeChatThreadClient implements IChatThreadClient {
-  readonly threadId: string;
+  constructor(public threadId: string) {}
 
-  constructor(threadId?: string) {
-    this.threadId = threadId ?? '';
-  }
   getProperties(): Promise<ChatThreadProperties> {
     return Promise.resolve({ id: '', topic: '', createdOn: new Date(0) });
   }
