@@ -14,7 +14,7 @@ import { IChatClient } from './types';
  * Subsequent operations create participants, threads etc that are all stored in-memory.
  */
 export class FakeChatService {
-  private model: Model = new Model();
+  private model: Model = { threads: [] };
 
   public newClient(id: CommunicationIdentifier): IChatClient {
     return new FakeChatClient(this.model, id);
