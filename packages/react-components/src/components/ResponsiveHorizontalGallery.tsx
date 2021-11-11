@@ -75,8 +75,8 @@ const calculateChildrenPerPage = (args: {
 
   const buttonWidth = convertRemToPx(buttonWidthRem);
 
-  /** We know we need to paginate. So we to subtract the buttonWidth twice and gapWidth twice from
-   * containerWidth to to compute childrenSpace
+  /** We know we need to paginate. So we need to subtract the buttonWidth twice and gapWidth twice from
+   * containerWidth to compute childrenSpace
    *   <-----------containerWidth--------->
    *    __________________________________
    *   | ||             ||             || |
