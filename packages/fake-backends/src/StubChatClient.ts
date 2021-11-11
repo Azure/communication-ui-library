@@ -3,7 +3,6 @@
 
 import {
   AddChatParticipantsResult,
-  ChatClient,
   ChatMessage,
   ChatMessageReadReceipt,
   ChatParticipant,
@@ -14,20 +13,19 @@ import {
   SendChatMessageResult
 } from '@azure/communication-chat';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
-
-type PublicInterface<T> = { [K in keyof T]: T[K] };
+import { IChatClient, IChatThreadClient } from './types';
 
 /**
  * A public interface compatible stub for ChatClient.
  */
-export class StubChatClient implements PublicInterface<ChatClient> {
-  private threadClient;
+export class StubChatClient implements IChatClient {
+  private threadClient?: IChatThreadClient;
 
   /**
    * @param threadClient If set, an implementation of ChatThreadClient interface that is returned for *all* calls to
    * {@getChatThreadClient()}.
    */
-  constructor(threadClient?: PublicInterface<ChatThreadClient>) {
+  constructor(threadClient?: IChatThreadClient) {
     this.threadClient = threadClient;
   }
 
@@ -35,7 +33,8 @@ export class StubChatClient implements PublicInterface<ChatClient> {
     if (this.threadClient === undefined) {
       throw Error('stub method not implemented');
     }
-    return this.threadClient;
+    // This is a necessary lie.
+    return this.threadClient as ChatThreadClient;
   }
   createChatThread(): Promise<CreateChatThreadResult> {
     return Promise.resolve({});
@@ -63,7 +62,7 @@ export class StubChatClient implements PublicInterface<ChatClient> {
 /**
  * A public interface compatible stub for ChatThreadClient.
  */
-export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
+export class StubChatThreadClient implements IChatThreadClient {
   readonly threadId: string;
 
   constructor(threadId?: string) {
