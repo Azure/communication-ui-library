@@ -41,7 +41,7 @@ export class Model {
     const thread = this.checkedGetThread(userId, threadId);
     const newThread = produce(thread, (draft: Thread) => action(draft));
     if (thread !== newThread) {
-      this.threads[threadId] = produce(newThread, (draft: Thread) => {
+      this.threads[threadId] = produce(newThread, (draft) => {
         draft.version++;
       });
     }
