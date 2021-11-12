@@ -16,7 +16,7 @@ import {
 import { EventEmitter } from 'events';
 
 export class ThreadEventEmitter {
-  constructor(private emitter: EventEmitter) {}
+  constructor(private emitter: EventEmitter, private async = true) {}
 
   on(event: string, listener: (...args: any[]) => void) {
     this.emitter.on(event, listener);
@@ -58,6 +58,12 @@ export class ThreadEventEmitter {
   }
 
   private emit(event: string, payload: any) {
-    this.emitter.emit(event, payload);
+    if (this.async) {
+      setImmediate(() => {
+        this.emitter.emit(event, payload);
+      });
+    } else {
+      this.emitter.emit(event, payload);
+    }
   }
 }
