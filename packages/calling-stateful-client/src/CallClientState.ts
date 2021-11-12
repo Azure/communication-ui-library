@@ -338,8 +338,6 @@ export interface CallState {
 
   /**
    * Stores the latest call diagnostics.
-   *
-   * @beta
    */
   diagnostics: DiagnosticsCallFeatureState;
 }
@@ -575,7 +573,7 @@ export type CallErrorTarget =
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
  *
- * @beta
+ * @public
  */
 export interface DiagnosticsCallFeatureState {
   /**
@@ -592,7 +590,7 @@ export interface DiagnosticsCallFeatureState {
 /**
  * State only proxy for {@link @azure/communication-calling#NetworkDiagnostics}.
  *
- * @beta
+ * @public
  */
 export interface NetworkDiagnosticsState {
   latest: LatestNetworkDiagnostics;
@@ -601,7 +599,7 @@ export interface NetworkDiagnosticsState {
 /**
  * State only proxy for {@link @azure/communication-calling#MediaDiagnostics}.
  *
- * @beta
+ * @public
  */
 export interface MediaDiagnosticsState {
   latest: LatestMediaDiagnostics;
