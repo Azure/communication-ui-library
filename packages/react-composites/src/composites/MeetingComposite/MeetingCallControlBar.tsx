@@ -7,8 +7,10 @@ import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvide
 import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
 import { PeopleButton } from './PeopleButton';
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
+import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
+import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 
 /**
  * @private
@@ -42,10 +44,13 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
    * Until mobile meetings is worked on, statically set the width of the
    * control bar such that all controls can be accessed.
    */
-  const controlBarContainerStyles = props.mobileView ? { width: '23.5rem' } : undefined;
+  const temporaryMeetingControlBarStyles = props.mobileView ? { width: '23.5rem' } : undefined;
 
   return (
-    <Stack horizontal style={controlBarContainerStyles}>
+    <Stack
+      horizontal
+      className={mergeStyles(temporaryMeetingControlBarStyles, callControlsContainerStyles, controlBarContainerStyles)}
+    >
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <CallControls options={callControlsOptions} increaseFlyoutItemSize={props.mobileView} />

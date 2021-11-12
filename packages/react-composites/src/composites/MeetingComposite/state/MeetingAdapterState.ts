@@ -15,7 +15,7 @@ import {
 /**
  * UI state pertaining to the Meeting Composite.
  *
- * @alpha
+ * @beta
  */
 export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
   /** Current page in the meeting composite. */
@@ -25,7 +25,7 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 /**
  * State from the backend services that drives Meeting Composite.
  *
- * @alpha
+ * @beta
  */
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
   /** ID of the meeting participant using this Meeting Adapter. */
@@ -42,7 +42,7 @@ export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 
  * Stateful items like Participants that apply to both calling and chat are intelligently
  * combined into one to suit the purpose of a Meeting.
  *
- * @alpha
+ * @beta
  */
 export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {}
 
