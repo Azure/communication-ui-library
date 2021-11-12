@@ -44,9 +44,20 @@ export class FakeChatThreadClient implements IChatThreadClient {
   }
 
   updateTopic(topic: string): Promise<void> {
+    const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
       thread.topic = topic;
+      thread.messages.push({
+        ...this.baseChatMessage(now),
+        type: 'topicUpdated',
+        content: {
+          topic,
+          // Verify: semantics of initiator.
+          initiator: getIdentifierKind(this.userId)
+        }
+      });
     });
+
     this.checkedGetThreadEventEmitter().chatThreadPropertiesUpdated({
       ...this.baseChatThreadEvent(),
       properties: { topic: topic },
@@ -57,19 +68,14 @@ export class FakeChatThreadClient implements IChatThreadClient {
   }
 
   sendMessage(request: SendMessageRequest): Promise<SendChatMessageResult> {
-    const me = this.checkedGetMe();
+    const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
       thread.messages.push({
-        id: `${thread.messages.length}`,
+        ...this.baseChatMessage(now),
         type: 'text',
-        sequenceId: `${thread.messages.length}`,
-        version: '0',
         content: {
           message: request.content
-        },
-        senderDisplayName: me.displayName,
-        createdOn: new Date(Date.now()),
-        sender: getIdentifierKind(me.id)
+        }
       });
     });
 
@@ -153,6 +159,15 @@ export class FakeChatThreadClient implements IChatThreadClient {
     // Verify: What happens if an existing participant is added again?
     this.modifyThreadForUser((thread) => {
       thread.participants = thread.participants.concat(request.participants);
+      thread.messages.push({
+        ...this.baseChatMessage(now),
+        type: 'participantAdded',
+        content: {
+          participants: request.participants,
+          // Verify: semantics of initiator.
+          initiator: getIdentifierKind(this.userId)
+        }
+      });
     });
 
     this.checkedGetThreadEventEmitter().participantsAdded({
@@ -175,7 +190,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     const now = new Date(Date.now());
     const flatParticipantId = toFlatCommunicationIdentifier(participant);
 
-    // Required for event payload below.
+    // Required for system message and event payload below.
     const toRemove = this.checkedGetThread().participants.find(
       (p) => toFlatCommunicationIdentifier(p.id) == flatParticipantId
     );
@@ -191,6 +206,16 @@ export class FakeChatThreadClient implements IChatThreadClient {
         throw new Error(`Participant ${participant} not found in thread ${thread.id}`);
       }
       thread.participants = newParticipants;
+
+      thread.messages.push({
+        ...this.baseChatMessage(now),
+        type: 'participantRemoved',
+        content: {
+          participants: [toRemove],
+          // Verify: semantics of initiator.
+          initiator: getIdentifierKind(this.userId)
+        }
+      });
     });
 
     this.checkedGetThreadEventEmitter().participantsRemoved({
@@ -267,6 +292,21 @@ export class FakeChatThreadClient implements IChatThreadClient {
       throw new Error(`CHECK FAILED: ${this.userId} must be in ${thread.id}`);
     }
     return me;
+  }
+
+  private baseChatMessage(
+    now: Date
+  ): Pick<ChatMessage, 'id' | 'sequenceId' | 'version' | 'senderDisplayName' | 'createdOn' | 'sender'> {
+    const thread = this.checkedGetThread();
+    const me = this.checkedGetMe();
+    return {
+      id: `${thread.messages.length}`,
+      sequenceId: `${thread.messages.length}`,
+      version: '0',
+      senderDisplayName: me.displayName,
+      createdOn: new Date(Date.now()),
+      sender: getIdentifierKind(me.id)
+    };
   }
 
   private baseChatThreadEvent(): BaseChatThreadEvent {
