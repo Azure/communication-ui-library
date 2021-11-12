@@ -39,22 +39,9 @@ const FakeStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const [userId, chatClient, chatThreadClient] = await setupFakeService(args.displayName);
-
-      const statefulChatClient = createStatefulChatClientWithDeps(chatClient, {
-        userId: userId as CommunicationUserIdentifier,
-        displayName: args.displayName,
-        endpoint: 'FAKE_ENDPIONT',
-        credential: fakeToken
-      });
-      statefulChatClient.startRealtimeNotifications();
-
-      setAdapter(
-        await createAzureCommunicationChatAdapterFromClient(
-          statefulChatClient,
-          await statefulChatClient.getChatThreadClient(chatThreadClient.threadId)
-        )
-      );
+      const [localParticipant, bot] = await setupFakeThreadWithTwoParticipants(args.displayName, 'bot');
+      sendMessages(bot.chatThreadClient, messageArray);
+      setAdapter(await initializeAdapter(localParticipant));
     })();
   }, [args.displayName]);
 
@@ -80,32 +67,61 @@ const FakeStory = (args, context): JSX.Element => {
   );
 };
 
-const setupFakeService = async (
-  displayName: string
-): Promise<[CommunicationIdentifier, ChatClient, ChatThreadClient]> => {
+interface ParticipantHandle {
+  userId: CommunicationIdentifier;
+  displayName: string;
+  chatClient: ChatClient;
+  chatThreadClient: ChatThreadClient;
+}
+
+const setupFakeThreadWithTwoParticipants = async (
+  firstDisplayName: string,
+  secondDisplayName: string
+): Promise<[ParticipantHandle, ParticipantHandle]> => {
   const fakeChatService = new FakeChatService();
-  const [botUserId, botClient] = fakeChatService.newUserAndClient();
-  const [localUserId, localClient] = fakeChatService.newUserAndClient();
-  const thread = await botClient.createChatThread(
+  const [firstUserId, firstChatClient] = fakeChatService.newUserAndClient();
+  const [secondUserId, secondChatClient] = fakeChatService.newUserAndClient();
+  const thread = await firstChatClient.createChatThread(
     {
       topic: 'Say Hello'
     },
     {
       participants: [
-        { id: botUserId, displayName: 'Friendly bot' },
-        { id: localUserId, displayName }
+        { id: firstUserId, displayName: firstDisplayName },
+        { id: secondUserId, displayName: secondDisplayName }
       ]
     }
   );
 
-  sendMessages(botClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID'), messageArray);
-
   // TODO: Just return a `ChatClient` from the fake.
   return [
-    localUserId,
-    localClient as ChatClient,
-    localClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+    {
+      userId: firstUserId,
+      displayName: firstDisplayName,
+      chatClient: firstChatClient as ChatClient,
+      chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+    },
+    {
+      userId: secondUserId,
+      displayName: secondDisplayName,
+      chatClient: secondChatClient as ChatClient,
+      chatThreadClient: secondChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
+    }
   ];
+};
+
+const initializeAdapter = async (participant: ParticipantHandle): Promise<ChatAdapter> => {
+  const statefulChatClient = createStatefulChatClientWithDeps(participant.chatClient, {
+    userId: participant.userId as CommunicationUserIdentifier,
+    displayName: participant.displayName,
+    endpoint: 'FAKE_ENDPIONT',
+    credential: fakeToken
+  });
+  statefulChatClient.startRealtimeNotifications();
+  return await createAzureCommunicationChatAdapterFromClient(
+    statefulChatClient,
+    await statefulChatClient.getChatThreadClient(participant.chatThreadClient.threadId)
+  );
 };
 
 const sendMessages = (client: ChatThreadClient, messages: string[]): void => {
