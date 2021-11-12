@@ -83,17 +83,15 @@ export class FakeChatClient implements IChatClient {
 
   deleteChatThread(threadId: string): Promise<void> {
     const thread = this.model.checkedGetThread(this.userId, threadId);
-    if (!thread) {
-      throw new Error(`No thread with id ${threadId}`);
-    }
     const me = thread.participants.find((p) => this.isMe(p.id));
     if (!me) {
-      throw new Error(`User ${this.userId} cannot delete thread ${threadId} because they are not a participant`);
+      throw new Error(`CHECK FAILED: ${this.userId} must be in ${threadId}`);
     }
+
     thread.deletedOn = new Date(Date.now());
     thread.version++;
 
-    thread.emitter.chatThreadDeleted({
+    this.model.checkedGetThreadEventEmitter(this.userId, threadId).chatThreadDeleted({
       deletedOn: thread.deletedOn,
       deletedBy: {
         id: getIdentifierKind(me.id),
@@ -124,7 +122,9 @@ export class FakeChatClient implements IChatClient {
       throw new Error('Must enable real time notifications first');
     }
     // Only subscribe to events for threads for which a ChatThreadClient has been created.
-    this.threadClients.forEach((c) => this.model.checkedGetThread(this.userId, c.threadId).emitter.on(event, listener));
+    this.threadClients.forEach((c) =>
+      this.model.checkedGetThreadEventEmitter(this.userId, c.threadId).on(event, listener)
+    );
   }
 
   off(): void {

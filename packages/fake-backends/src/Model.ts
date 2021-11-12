@@ -8,9 +8,11 @@ import { EventEmitter } from 'events';
 
 export class Model {
   private threads: { [key: string]: Thread } = {};
+  private threadEventEmitters: { [key: string]: ThreadEventEmitter } = {};
 
   public addThread(thread: Thread) {
     this.threads[thread.id] = thread;
+    this.threadEventEmitters[thread.id] = new ThreadEventEmitter(new EventEmitter());
   }
 
   public getThreadsForUser(userId: CommunicationIdentifier): Thread[] {
@@ -19,10 +21,18 @@ export class Model {
 
   public checkedGetThread(userId: CommunicationIdentifier, threadId: string): Thread {
     const thread = this.threads[threadId];
+    if (!thread) {
+      throw new Error(`No thread with id ${threadId}`);
+    }
     if (!containsUser(userId, thread.participants)) {
       throw new Error(`${userId} is not in thread ${threadId}`);
     }
     return thread;
+  }
+
+  public checkedGetThreadEventEmitter(userId: CommunicationIdentifier, threadId: string): ThreadEventEmitter {
+    this.checkedGetThread(userId, threadId);
+    return this.threadEventEmitters[threadId];
   }
 }
 
@@ -30,7 +40,6 @@ export interface Thread extends ChatThreadProperties {
   version: number;
   participants: ChatParticipant[];
   messages: ChatMessage[];
-  emitter: ThreadEventEmitter;
 }
 
 export const latestMessageTimestamp = (messages: ChatMessage[]): Date | undefined => {
