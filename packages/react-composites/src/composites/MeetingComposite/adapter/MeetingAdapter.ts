@@ -29,7 +29,7 @@ import { Call } from '@azure/communication-calling';
 
 /**
  * Functionality for managing the current meeting.
- * @alpha
+ * @beta
  */
 export interface MeetingAdapterMeetingManagement
   extends Pick<
@@ -90,7 +90,7 @@ export interface MeetingAdapterMeetingManagement
 
 /**
  * Meeting events that can be subscribed to.
- * @alpha
+ * @beta
  */
 export interface MeetingAdapterSubscriptions {
   // Meeting specific subscriptions
@@ -129,7 +129,7 @@ export interface MeetingAdapterSubscriptions {
 
 /**
  * Meeting Composite Adapter interface.
- * @alpha
+ * @beta
  */
 export interface MeetingAdapter
   extends MeetingAdapterMeetingManagement,
@@ -139,7 +139,7 @@ export interface MeetingAdapter
 
 /**
  * Events fired off by the Meeting Adapter
- * @alpha
+ * @beta
  */
 export type MeetingEvent =
   | 'participantsJoined'
