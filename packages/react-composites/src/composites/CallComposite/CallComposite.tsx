@@ -145,6 +145,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 /**
  * A customizable UI composite for calling experience.
  *
+ * @remarks Call composite min width/height are as follow:
+ * - mobile: 19.5rem x 21rem (312px x 336px, with default rem at 16px)
+ * - desktop: 30rem x 22rem (480px x 352px, with default rem at 16px)
+ *
  * @public
  */
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
@@ -163,17 +167,17 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   }, [options?.mobileView]);
 
   return (
-    <BaseComposite {...props}>
-      <CallAdapterProvider adapter={adapter}>
-        <div className={mainScreenContainerClassName}>
+    <div className={mainScreenContainerClassName}>
+      <BaseComposite {...props}>
+        <CallAdapterProvider adapter={adapter}>
           <MainScreen
             callInvitationUrl={callInvitationUrl}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             options={options}
           />
-        </div>
-      </CallAdapterProvider>
-    </BaseComposite>
+        </CallAdapterProvider>
+      </BaseComposite>
+    </div>
   );
 };
