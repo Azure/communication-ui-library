@@ -15,10 +15,9 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Model, Thread } from './Model';
 import { IChatClient, IChatThreadClient } from './types';
-import { EventEmitter } from 'stream';
 import { FakeChatThreadClient } from './FakeChatThreadClient';
 import { chatToSignalingParticipant, pagedAsyncIterator, latestMessageTimestamp } from './utils';
-import { ThreadEventEmitter } from './ThreadEventEmitter';
+import { BaseChatThreadEvent } from '@azure/communication-signaling';
 
 /**
  * A public interface compatible stub for ChatClient.
@@ -40,11 +39,12 @@ export class FakeChatClient implements IChatClient {
     request: CreateChatThreadRequest,
     options?: CreateChatThreadOptions
   ): Promise<CreateChatThreadResult> {
+    const now = new Date(Date.now());
     const participants = this.withCurrentUserInThread(options?.participants ?? []);
     const thread = {
       id: nanoid(),
       version: 0,
-      createdOn: new Date(Date.now()),
+      createdOn: now,
       createdBy: getIdentifierKind(this.userId),
       topic: request.topic,
       participants,
@@ -52,6 +52,17 @@ export class FakeChatClient implements IChatClient {
       readReceipts: []
     };
     this.model.addThread(thread);
+
+    this.model.checkedGetThreadEventEmitter(this.userId, thread.id).chatThreadCreated({
+      ...baseChatThreadEvent(thread),
+      createdOn: now,
+      properties: {
+        topic: request.topic
+      },
+      participants: participants.map((p) => chatToSignalingParticipant(p)),
+      createdBy: chatToSignalingParticipant(this.checkedGetMe(thread))
+    });
+
     return Promise.resolve({
       chatThread: {
         id: thread.id,
@@ -81,18 +92,15 @@ export class FakeChatClient implements IChatClient {
 
   deleteChatThread(threadId: string): Promise<void> {
     const now = new Date(Date.now());
-
     this.model.modifyThreadForUser(this.userId, threadId, (thread) => {
       thread.deletedOn = now;
     });
 
     const thread = this.model.checkedGetThread(this.userId, threadId);
-    const me = this.checkedGetMe(thread);
     this.model.checkedGetThreadEventEmitter(this.userId, threadId).chatThreadDeleted({
+      ...baseChatThreadEvent(thread),
       deletedOn: now,
-      deletedBy: chatToSignalingParticipant(me),
-      threadId: thread.id,
-      version: `${thread.version}`
+      deletedBy: chatToSignalingParticipant(this.checkedGetMe(thread))
     });
 
     return Promise.resolve();
@@ -140,3 +148,10 @@ export class FakeChatClient implements IChatClient {
     return me;
   }
 }
+
+const baseChatThreadEvent = (thread: Thread): BaseChatThreadEvent => {
+  return {
+    threadId: thread.id,
+    version: `${thread.version}`
+  };
+};

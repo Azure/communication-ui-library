@@ -14,9 +14,11 @@ import {
   SendChatMessageResult,
   SendMessageRequest,
   SendReadReceiptRequest,
+  SendTypingNotificationOptions,
   UpdateMessageOptions
 } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
+import { BaseChatEvent, BaseChatMessageEvent, BaseChatThreadEvent } from '@azure/communication-signaling';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { bumpMessageVersion, Model, Thread } from './Model';
@@ -46,11 +48,10 @@ export class FakeChatThreadClient implements IChatThreadClient {
       thread.topic = topic;
     });
     this.checkedGetThreadEventEmitter().chatThreadPropertiesUpdated({
+      ...this.baseChatThreadEvent(),
       properties: { topic: topic },
       updatedOn: new Date(Date.now()),
-      updatedBy: chatToSignalingParticipant(this.checkedGetMe()),
-      threadId: this.threadId,
-      version: `${this.checkedGetThread().version}`
+      updatedBy: chatToSignalingParticipant(this.checkedGetMe())
     });
     return Promise.resolve();
   }
@@ -74,6 +75,11 @@ export class FakeChatThreadClient implements IChatThreadClient {
 
     const messages = this.checkedGetThread().messages;
     const message = messages[messages.length - 1];
+
+    this.checkedGetThreadEventEmitter().chatMessageReceived({
+      ...this.baseChatMessageEvent(message),
+      message: request.content
+    });
     return Promise.resolve({ id: message.id });
   }
 
@@ -96,33 +102,64 @@ export class FakeChatThreadClient implements IChatThreadClient {
   }
 
   deleteMessage(messageId: string): Promise<void> {
+    const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
       const message = thread.messages.find((m) => m.id === messageId);
       if (!message) {
         throw new Error(`No message ${messageId} in thread ${thread.id}`);
       }
-      message.deletedOn = new Date(Date.now());
+      message.deletedOn = now;
+    });
+
+    const message = this.checkedGetThread().messages.find((m) => m.id === messageId);
+    if (!message) {
+      throw new Error(`CHECK FAILED: ${messageId} must be in ${this.threadId}`);
+    }
+    this.checkedGetThreadEventEmitter().chatMessageDeleted({
+      ...this.baseChatMessageEvent(message),
+      deletedOn: now
     });
     return Promise.resolve();
   }
 
   updateMessage(messageId: string, options?: UpdateMessageOptions): Promise<void> {
+    const now = new Date(Date.now());
+    const content = options?.content ?? '';
+
     this.modifyThreadForUser((thread) => {
       const message = thread.messages.find((m) => m.id === messageId);
       if (!message) {
         throw new Error(`No message ${messageId} in thread ${thread.id}`);
       }
-      message.content = { message: options?.content };
-      message.editedOn = new Date(Date.now());
+      message.content = { message: content };
+      message.editedOn = now;
       bumpMessageVersion(message);
+    });
+
+    const message = this.checkedGetThread().messages.find((m) => m.id === messageId);
+    if (!message) {
+      throw new Error(`CHECK FAILED: ${messageId} must be in ${this.threadId}`);
+    }
+    this.checkedGetThreadEventEmitter().chatMessageEdited({
+      ...this.baseChatMessageEvent(message),
+      message: content,
+      editedOn: now
     });
     return Promise.resolve();
   }
 
   addParticipants(request: AddParticipantsRequest): Promise<AddChatParticipantsResult> {
+    const now = new Date(Date.now());
     // Verify: What happens if an existing participant is added again?
     this.modifyThreadForUser((thread) => {
       thread.participants = thread.participants.concat(request.participants);
+    });
+
+    this.checkedGetThreadEventEmitter().participantsAdded({
+      ...this.baseChatThreadEvent(),
+      addedOn: now,
+      participantsAdded: request.participants.map((p) => chatToSignalingParticipant(p)),
+      addedBy: chatToSignalingParticipant(this.checkedGetMe())
     });
     return Promise.resolve({});
   }
@@ -135,7 +172,17 @@ export class FakeChatThreadClient implements IChatThreadClient {
   }
 
   removeParticipant(participant: CommunicationIdentifier): Promise<void> {
+    const now = new Date(Date.now());
     const flatParticipantId = toFlatCommunicationIdentifier(participant);
+
+    // Required for event payload below.
+    const toRemove = this.checkedGetThread().participants.find(
+      (p) => toFlatCommunicationIdentifier(p.id) == flatParticipantId
+    );
+    if (!toRemove) {
+      throw new Error(`Participant ${participant} not found in thread ${this.threadId}`);
+    }
+
     this.modifyThreadForUser((thread) => {
       const newParticipants = thread.participants.filter(
         (p) => toFlatCommunicationIdentifier(p.id) !== flatParticipantId
@@ -145,20 +192,47 @@ export class FakeChatThreadClient implements IChatThreadClient {
       }
       thread.participants = newParticipants;
     });
+
+    this.checkedGetThreadEventEmitter().participantsRemoved({
+      ...this.baseChatThreadEvent(),
+      removedOn: now,
+      participantsRemoved: [chatToSignalingParticipant(toRemove)],
+      removedBy: chatToSignalingParticipant(this.checkedGetMe())
+    });
     return Promise.resolve();
   }
 
-  sendTypingNotification(): Promise<boolean> {
-    return Promise.resolve(false);
+  sendTypingNotification(options?: SendTypingNotificationOptions): Promise<boolean> {
+    const now = new Date(Date.now());
+    const senderDisplayName = options?.senderDisplayName ?? this.checkedGetMe().displayName ?? '';
+
+    this.checkedGetThreadEventEmitter().typingIndicatorReceived({
+      ...this.baseChatEvent(),
+      senderDisplayName,
+      // Verify/FIXME: There is no message associated with a typing notification.
+      // What should this version refer to?
+      version: '0',
+      receivedOn: now
+    });
+    // Verify: The documentation for `sendTypingNotification` refers to backoff between attempts to send
+    // typing notification. Need to check if the implementation includes such a backoff.
+    return Promise.resolve(true);
   }
 
   sendReadReceipt(request: SendReadReceiptRequest): Promise<void> {
+    const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
       thread.readReceipts.push({
         chatMessageId: request.chatMessageId,
         sender: getIdentifierKind(this.userId),
-        readOn: new Date(Date.now())
+        readOn: now
       });
+    });
+
+    this.checkedGetThreadEventEmitter().readReceiptReceived({
+      ...this.baseChatEvent(),
+      chatMessageId: request.chatMessageId,
+      readOn: now
     });
     return Promise.resolve();
   }
@@ -193,5 +267,29 @@ export class FakeChatThreadClient implements IChatThreadClient {
       throw new Error(`CHECK FAILED: ${this.userId} must be in ${thread.id}`);
     }
     return me;
+  }
+
+  private baseChatThreadEvent(): BaseChatThreadEvent {
+    const thread = this.checkedGetThread();
+    return {
+      threadId: thread.id,
+      version: `${thread.version}`
+    };
+  }
+
+  private baseChatMessageEvent(m: ChatMessage): BaseChatMessageEvent {
+    return { ...this.baseChatEvent(), id: m.id, createdOn: m.createdOn, version: m.version, type: m.type };
+  }
+
+  private baseChatEvent(): BaseChatEvent {
+    const thread = this.checkedGetThread();
+    const me = this.checkedGetMe();
+    return {
+      threadId: thread.id,
+      sender: getIdentifierKind(me.id),
+      senderDisplayName: me.displayName ?? '',
+      // Verify/FIXME: Do we need to multicast event with each individual recepient's ID?
+      recipient: getIdentifierKind(me.id)
+    };
   }
 }
