@@ -16,10 +16,9 @@ import {
   SendChatMessageResult
 } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
-import { ChatThreadDeletedEvent } from '@azure/communication-signaling';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { latestMessageTimestamp, Model } from './Model';
+import { latestMessageTimestamp, Model, ThreadEventEmitter } from './Model';
 import { IChatClient, IChatThreadClient } from './types';
 import { EventEmitter } from 'stream';
 
@@ -55,7 +54,7 @@ export class FakeChatClient implements IChatClient {
       topic: request.topic,
       participants,
       messages: [],
-      emitter: new EventEmitter()
+      emitter: new ThreadEventEmitter(new EventEmitter())
     };
     this.model.threads.push(thread);
     return Promise.resolve({
@@ -97,7 +96,7 @@ export class FakeChatClient implements IChatClient {
     thread.deletedOn = new Date(Date.now());
     thread.version++;
 
-    const eventPayload: ChatThreadDeletedEvent = {
+    thread.emitter.chatThreadDeleted({
       deletedOn: thread.deletedOn,
       deletedBy: {
         id: getIdentifierKind(me.id),
@@ -106,8 +105,7 @@ export class FakeChatClient implements IChatClient {
       },
       threadId: thread.id,
       version: `${thread.version}`
-    };
-    thread.emitter.emit('chatThreadDeleted', eventPayload);
+    });
 
     return Promise.resolve();
   }
