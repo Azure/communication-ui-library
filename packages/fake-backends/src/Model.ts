@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant, ChatMessage, ChatThreadProperties } from '@azure/communication-chat';
+import { ChatParticipant, ChatMessage, ChatThreadProperties, ChatMessageReadReceipt } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
@@ -52,7 +52,12 @@ export interface Thread extends ChatThreadProperties {
   version: number;
   participants: ChatParticipant[];
   messages: ChatMessage[];
+  readReceipts: ChatMessageReadReceipt[];
 }
+
+export const bumpMessageVersion = (message: ChatMessage): void => {
+  message.version = `${parseInt(message.version) + 1}`;
+};
 
 const containsUser = (userId: CommunicationIdentifier, participants: ChatParticipant[]): boolean => {
   const flatUserId = toFlatCommunicationIdentifier(userId);

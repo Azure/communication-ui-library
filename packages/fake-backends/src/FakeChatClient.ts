@@ -49,7 +49,7 @@ export class FakeChatClient implements IChatClient {
       topic: request.topic,
       participants,
       messages: [],
-      emitter: new ThreadEventEmitter(new EventEmitter())
+      readReceipts: []
     };
     this.model.addThread(thread);
     return Promise.resolve({

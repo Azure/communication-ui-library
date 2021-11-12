@@ -3,16 +3,23 @@
 
 import {
   AddChatParticipantsResult,
+  AddParticipantsRequest,
   ChatMessage,
   ChatMessageReadReceipt,
   ChatParticipant,
   ChatThreadProperties,
-  SendChatMessageResult
+  ListMessagesOptions,
+  ListParticipantsOptions,
+  ListReadReceiptsOptions,
+  SendChatMessageResult,
+  SendMessageRequest,
+  SendReadReceiptRequest,
+  UpdateMessageOptions
 } from '@azure/communication-chat';
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Model, Thread } from './Model';
+import { bumpMessageVersion, Model, Thread } from './Model';
 import { ThreadEventEmitter } from './ThreadEventEmitter';
 import { IChatThreadClient } from './types';
 import { chatToSignalingParticipant, pagedAsyncIterator } from './utils';
@@ -48,38 +55,119 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve();
   }
 
-  sendMessage(): Promise<SendChatMessageResult> {
-    return Promise.resolve({ id: '' });
+  sendMessage(request: SendMessageRequest): Promise<SendChatMessageResult> {
+    const me = this.checkedGetMe();
+    this.modifyThreadForUser((thread) => {
+      thread.messages.push({
+        id: `${thread.messages.length}`,
+        type: 'text',
+        sequenceId: `${thread.messages.length}`,
+        version: '0',
+        content: {
+          message: request.content
+        },
+        senderDisplayName: me.displayName,
+        createdOn: new Date(Date.now()),
+        sender: getIdentifierKind(me.id)
+      });
+    });
+
+    const messages = this.checkedGetThread().messages;
+    const message = messages[messages.length - 1];
+    return Promise.resolve({ id: message.id });
   }
-  getMessage(): Promise<ChatMessage> {
-    return Promise.resolve({ id: '', type: 'text', sequenceId: '', version: '', createdOn: new Date(0) });
+
+  getMessage(messageId: string): Promise<ChatMessage> {
+    const message = this.checkedGetThread().messages.find((m) => m.id === messageId);
+    if (!message) {
+      throw new Error(`No message ${messageId} in thread ${this.threadId}`);
+    }
+    return Promise.resolve(message);
   }
-  listMessages(): PagedAsyncIterableIterator<ChatMessage> {
-    return pagedAsyncIterator([]);
+
+  listMessages(options?: ListMessagesOptions): PagedAsyncIterableIterator<ChatMessage> {
+    let messages = this.checkedGetThread().messages;
+    if (options?.startTime) {
+      const startTime = options.startTime;
+      // Verify: Does startTime apply to when the message was sent, or last updated?
+      messages = messages.filter((m) => m.createdOn > startTime);
+    }
+    return pagedAsyncIterator(messages);
   }
-  deleteMessage(): Promise<void> {
+
+  deleteMessage(messageId: string): Promise<void> {
+    this.modifyThreadForUser((thread) => {
+      const message = thread.messages.find((m) => m.id === messageId);
+      if (!message) {
+        throw new Error(`No message ${messageId} in thread ${thread.id}`);
+      }
+      message.deletedOn = new Date(Date.now());
+    });
     return Promise.resolve();
   }
-  updateMessage(): Promise<void> {
+
+  updateMessage(messageId: string, options?: UpdateMessageOptions): Promise<void> {
+    this.modifyThreadForUser((thread) => {
+      const message = thread.messages.find((m) => m.id === messageId);
+      if (!message) {
+        throw new Error(`No message ${messageId} in thread ${thread.id}`);
+      }
+      message.content = { message: options?.content };
+      message.editedOn = new Date(Date.now());
+      bumpMessageVersion(message);
+    });
     return Promise.resolve();
   }
-  addParticipants(): Promise<AddChatParticipantsResult> {
+
+  addParticipants(request: AddParticipantsRequest): Promise<AddChatParticipantsResult> {
+    // Verify: What happens if an existing participant is added again?
+    this.modifyThreadForUser((thread) => {
+      thread.participants = thread.participants.concat(request.participants);
+    });
     return Promise.resolve({});
   }
-  listParticipants(): PagedAsyncIterableIterator<ChatParticipant> {
-    return pagedAsyncIterator([]);
+
+  listParticipants(options?: ListParticipantsOptions): PagedAsyncIterableIterator<ChatParticipant> {
+    if (options?.skip) {
+      throw new Error(`options.skip not supported`);
+    }
+    return pagedAsyncIterator(this.checkedGetThread().participants);
   }
-  removeParticipant(): Promise<void> {
+
+  removeParticipant(participant: CommunicationIdentifier): Promise<void> {
+    const flatParticipantId = toFlatCommunicationIdentifier(participant);
+    this.modifyThreadForUser((thread) => {
+      const newParticipants = thread.participants.filter(
+        (p) => toFlatCommunicationIdentifier(p.id) !== flatParticipantId
+      );
+      if (newParticipants.length === thread.participants.length) {
+        throw new Error(`Participant ${participant} not found in thread ${thread.id}`);
+      }
+      thread.participants = newParticipants;
+    });
     return Promise.resolve();
   }
+
   sendTypingNotification(): Promise<boolean> {
     return Promise.resolve(false);
   }
-  sendReadReceipt(): Promise<void> {
+
+  sendReadReceipt(request: SendReadReceiptRequest): Promise<void> {
+    this.modifyThreadForUser((thread) => {
+      thread.readReceipts.push({
+        chatMessageId: request.chatMessageId,
+        sender: getIdentifierKind(this.userId),
+        readOn: new Date(Date.now())
+      });
+    });
     return Promise.resolve();
   }
-  listReadReceipts(): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
-    return pagedAsyncIterator([]);
+
+  listReadReceipts(options?: ListReadReceiptsOptions): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
+    if (options?.skip) {
+      throw new Error(`options.skip not supported`);
+    }
+    return pagedAsyncIterator(this.checkedGetThread().readReceipts);
   }
 
   private checkedGetThread(): Thread {
