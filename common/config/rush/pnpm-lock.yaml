@@ -19316,7 +19316,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-OGxb3zNjgr2HP9soXSprQLUnNzGr0067YkViTxsfluVWUTZ4C8evlKrprhJ9FpI7azQuGtBaDxCWCFlhsh0SGA==
+      integrity: sha512-3il75JI9Xk2oNzyt2QwxZtD2LNIm+FyYEvYTPubIT8X+jl1zFsE6IKVM6qWR5R3lmFOJHQM2MU2GNqLUsCYmvQ==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19425,6 +19425,7 @@ packages:
       jest-fetch-mock: 3.0.3
       jest-junit: 12.2.0
       json-stringify-safe: 5.0.1
+      mobile-detect: 1.4.5
       prettier: 2.3.1
       pretty-quick: 3.1.1_prettier@2.3.1
       react: 16.14.0
@@ -19444,7 +19445,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-Lk4ulDtoh+77QQryL938xfqpJ1cjt1gzTiqudeVDWP2VXr7OYR6SPg5sk8e4d7XdpuKaA6ImekMyPcWAQDZFKg==
+      integrity: sha512-4xvFUW73z+XnNlDFbxkrzTppslBKT3jmUuL5Sg6cOG9s0HWEpsEtHeuk3DLyrookMcFlo3qEGGVg7zv0FCp8Rw==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19603,7 +19604,7 @@ packages:
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-xXIPNJ9THbRekVn3rLG5pxyqjwMZYXTC/lbgRjn8O9twVrT2scAsHer7aFsBuhFOXSEjA6XjTXj7Hb3WKomwVQ==
+      integrity: sha512-trtvlIm0MTbaqecTqoSiBJX/EzmvGSfTsYWfoIOkxD6DQKSETbIudVwGWXeKCorui3xzfS7E8YYqdudmtuAeBg==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19813,7 +19814,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-automation-tests'
     resolution:
-      integrity: sha512-5SrJzYQqOFwiuf5K+dm8rav0YD8dme9v9vo7jLFJIfeY8GHIislYcZUiFNfUWu0ySqRwFLWZySg+afjJGdmteg==
+      integrity: sha512-+O5BXIs0uBTgSBbW8af3RmzKAvZ8G5AYy+l1V/idBeUUZNLPU9lqOjMH0C9oNjnf35egsyeqa3U7YCUETVVjJQ==
       tarball: file:projects/sample-automation-tests.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:

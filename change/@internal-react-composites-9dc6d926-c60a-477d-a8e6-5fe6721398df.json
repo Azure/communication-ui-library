@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "added min width and height to Chat composite",
+  "packageName": "@internal/react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

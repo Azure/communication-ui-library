@@ -163,17 +163,17 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   }, [options?.mobileView]);
 
   return (
-    <BaseComposite {...props}>
-      <CallAdapterProvider adapter={adapter}>
-        <div className={mainScreenContainerClassName}>
+    <div className={mainScreenContainerClassName}>
+      <BaseComposite {...props}>
+        <CallAdapterProvider adapter={adapter}>
           <MainScreen
             callInvitationUrl={callInvitationUrl}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             options={options}
           />
-        </div>
-      </CallAdapterProvider>
-    </BaseComposite>
+        </CallAdapterProvider>
+      </BaseComposite>
+    </div>
   );
 };
