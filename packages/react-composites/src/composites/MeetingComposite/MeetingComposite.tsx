@@ -20,7 +20,7 @@ import { ChatAdapter } from '../ChatComposite';
 /**
  * Props required for the {@link MeetingComposite}
  *
- * @alpha
+ * @beta
  */
 export type MeetingCompositeProps = {
   meetingAdapter: MeetingAdapter;
@@ -43,7 +43,7 @@ export type MeetingCompositeProps = {
 /**
  * Optional features of the {@link MeetingComposite}
  *
- * @alpha
+ * @beta
  */
 export type MeetingCompositeOptions = {
   /**
@@ -58,7 +58,7 @@ export type MeetingCompositeOptions = {
 /**
  * Meeting Composite brings together key components to provide a full meeting experience out of the box.
  *
- * @alpha
+ * @beta
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { meetingAdapter, fluentTheme } = props;
