@@ -42,7 +42,7 @@ export class FakeChatClient implements IChatClient {
     request: CreateChatThreadRequest,
     options?: CreateChatThreadOptions
   ): Promise<CreateChatThreadResult> {
-    const participants = this.ensureCurrentUserInThread(options?.participants ?? []);
+    const participants = this.withCurrentUserInThread(options?.participants ?? []);
     const thread = {
       id: nanoid(),
       version: 0,
@@ -64,7 +64,7 @@ export class FakeChatClient implements IChatClient {
     });
   }
 
-  private ensureCurrentUserInThread(participants: ChatParticipant[]): ChatParticipant[] {
+  private withCurrentUserInThread(participants: ChatParticipant[]): ChatParticipant[] {
     if (this.containsMe(participants)) {
       return participants;
     }
