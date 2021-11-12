@@ -29,6 +29,9 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         CallComposite brings together key components to provide a full calling experience out of the box.
       </Description>
+      <Description>Note that CallComposite have the following min width and height:</Description>
+      <Description>- mobile: 19.5rem x 21rem (312px x 336px, with default rem at 16px)</Description>
+      <Description>- desktop: 30rem x 22rem (480px x 352px, with default rem at 16px)</Description>
       <Heading>Basic usage</Heading>
       <Description>
         There are two parts to the composite - a `CallComposite` react component and a `CallAdapter` that connects the
