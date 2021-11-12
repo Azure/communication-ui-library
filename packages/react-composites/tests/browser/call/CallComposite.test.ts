@@ -64,6 +64,18 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
   });
 
+  test('local device buttons should show tooltips on hover', async ({ pages }) => {
+    const page = pages[0];
+    await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
+    const tooltip = await page.waitForSelector(dataUiId('microphoneButtonLabel-tooltip'));
+
+    // This will ensure no animation is happening for the callout
+    await tooltip.waitForElementState('stable');
+
+    await stubLocalCameraName(page);
+    expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
+  });
+
   test('Configuration screen should display call details', async ({ serverUrl, users, pages }) => {
     // Each test *must* join a new call to prevent test flakiness.
     // We hit a Calling SDK service 500 error if we do not.
