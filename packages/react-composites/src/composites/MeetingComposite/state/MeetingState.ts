@@ -10,7 +10,7 @@ import { meetingParticipantsFromCallParticipants } from '../state/MeetingPartici
 /**
  * State of a single Meeting.
  *
- * @alpha
+ * @beta
  */
 export interface MeetingState
   extends Pick<
