@@ -29,10 +29,10 @@ export class FakeChatClient implements IChatClient {
   private realtimeNotificationsEnabled = false;
   private threadClients: FakeChatThreadClient[] = [];
 
-  constructor(private model: Model, private id: CommunicationIdentifier) {}
+  constructor(private model: Model, private userId: CommunicationIdentifier) {}
 
   getChatThreadClient(threadId: string): ChatThreadClient {
-    this.model.checkedGetThread(this.id, threadId);
+    this.model.checkedGetThread(this.userId, threadId);
     const threadClient = new FakeChatThreadClient(threadId);
     this.threadClients.push(threadClient);
     return threadClient as IChatThreadClient as ChatThreadClient;
@@ -47,7 +47,7 @@ export class FakeChatClient implements IChatClient {
       id: nanoid(),
       version: 0,
       createdOn: new Date(Date.now()),
-      createdBy: getIdentifierKind(this.id),
+      createdBy: getIdentifierKind(this.userId),
       topic: request.topic,
       participants,
       messages: [],
@@ -68,11 +68,11 @@ export class FakeChatClient implements IChatClient {
     if (this.containsMe(participants)) {
       return participants;
     }
-    return [...participants, { id: this.id }];
+    return [...participants, { id: this.userId }];
   }
 
   listChatThreads(): PagedAsyncIterableIterator<ChatThreadItem> {
-    const threads = this.model.getThreadsForUser(this.id);
+    const threads = this.model.getThreadsForUser(this.userId);
     const response: ChatThreadItem[] = threads.map((t) => ({
       id: t.id,
       topic: t.topic,
@@ -82,13 +82,13 @@ export class FakeChatClient implements IChatClient {
   }
 
   deleteChatThread(threadId: string): Promise<void> {
-    const thread = this.model.checkedGetThread(this.id, threadId);
+    const thread = this.model.checkedGetThread(this.userId, threadId);
     if (!thread) {
       throw new Error(`No thread with id ${threadId}`);
     }
     const me = thread.participants.find((p) => this.isMe(p.id));
     if (!me) {
-      throw new Error(`User ${this.id} cannot delete thread ${threadId} because they are not a participant`);
+      throw new Error(`User ${this.userId} cannot delete thread ${threadId} because they are not a participant`);
     }
     thread.deletedOn = new Date(Date.now());
     thread.version++;
@@ -124,7 +124,7 @@ export class FakeChatClient implements IChatClient {
       throw new Error('Must enable real time notifications first');
     }
     // Only subscribe to events for threads for which a ChatThreadClient has been created.
-    this.threadClients.forEach((c) => this.model.checkedGetThread(this.id, c.threadId).emitter.on(event, listener));
+    this.threadClients.forEach((c) => this.model.checkedGetThread(this.userId, c.threadId).emitter.on(event, listener));
   }
 
   off(): void {
@@ -132,7 +132,7 @@ export class FakeChatClient implements IChatClient {
   }
 
   private isMe(other: CommunicationIdentifier): boolean {
-    return toFlatCommunicationIdentifier(other) === toFlatCommunicationIdentifier(this.id);
+    return toFlatCommunicationIdentifier(other) === toFlatCommunicationIdentifier(this.userId);
   }
 
   private containsMe(participants: ChatParticipant[]): boolean {
