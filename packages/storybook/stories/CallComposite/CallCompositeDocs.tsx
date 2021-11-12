@@ -61,10 +61,11 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Running in a Mobile browser</Heading>
       <Description>
-        CallComposite has been designed for both desktop views and mobile views. The CallComposite does not detect if it
-        is running on mobile device vs desktop, and by default the CallComposite UI is optimized for desktop views. If
-        you are running the CallComposite on a mobile device we recommend making use of the `mobileView` flag. This prop
-        can be set at any time and immediately updates the composite UI to be optimized for a mobile device.
+        CallComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may use
+        the `mobileView` property. Currently this only supports Portrait orientation and not Landscape. The
+        CallComposite does not detect if it is running on mobile device vs desktop, instead you must identify if your
+        clients device is a mobile device and set the `mobileView` flag to true. This prop can be set at any time and
+        immediately updates the composite UI to be optimized for a mobile device.
       </Description>
       <Source code={mobileViewSnippet} />
       <Description>

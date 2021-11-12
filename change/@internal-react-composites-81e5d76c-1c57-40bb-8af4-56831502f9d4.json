@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Promote mobileView property on chat and call composites from alpha to public",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

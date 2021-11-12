@@ -391,7 +391,7 @@ export class AzureCommunicationMeetingAdapter implements MeetingAdapter {
 /**
  * Arguments for {@link createAzureCommunicationMeetingAdapter}
  *
- * @alpha
+ * @beta
  */
 export type AzureCommunicationMeetingAdapterArgs = {
   endpoint: string;
@@ -406,7 +406,7 @@ export type AzureCommunicationMeetingAdapterArgs = {
  * Create a meeting adapter backed by Azure Communication services
  * to plug into the Meeting Composite.
  *
- * @alpha
+ * @beta
  */
 export const createAzureCommunicationMeetingAdapter = async ({
   userId,

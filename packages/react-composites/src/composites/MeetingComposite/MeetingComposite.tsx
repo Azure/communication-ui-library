@@ -20,7 +20,7 @@ import { ChatAdapter } from '../ChatComposite';
 /**
  * Props required for the {@link MeetingComposite}
  *
- * @alpha
+ * @beta
  */
 export type MeetingCompositeProps = {
   meetingAdapter: MeetingAdapter;
@@ -43,11 +43,11 @@ export type MeetingCompositeProps = {
 /**
  * Optional features of the {@link MeetingComposite}
  *
- * @alpha
+ * @beta
  */
 export type MeetingCompositeOptions = {
   /**
-   * Choose to use the composite form optimized for use on a mobile device.
+   * Optimizes the composite UI for use on a mobile device.
    * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
    * @defaultValue false
    * @alpha
@@ -58,7 +58,7 @@ export type MeetingCompositeOptions = {
 /**
  * Meeting Composite brings together key components to provide a full meeting experience out of the box.
  *
- * @alpha
+ * @beta
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { meetingAdapter, fluentTheme } = props;
