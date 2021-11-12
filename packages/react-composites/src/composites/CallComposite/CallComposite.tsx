@@ -47,7 +47,6 @@ export type CallCompositeOptions = {
    * Choose to use the composite form optimized for use on a mobile device.
    * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
    * @defaultValue false
-   * @alpha
    */
   mobileView?: boolean;
   /**
