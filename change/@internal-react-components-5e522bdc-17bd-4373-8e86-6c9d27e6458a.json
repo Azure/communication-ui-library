@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Display \"You\" instead of complete name in local preview.",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

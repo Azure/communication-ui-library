@@ -195,7 +195,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           ) : undefined
         }
         showLabel={!(shouldFloatLocalVideo && isNarrow)}
-        displayName={localParticipant?.displayName}
+        displayName={isNarrow ? '' : 'You'}
         styles={localVideoTileStylesThemed}
         onRenderPlaceholder={onRenderAvatar}
         isMuted={localParticipant.isMuted}
