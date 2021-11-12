@@ -20,6 +20,7 @@ import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier
 } from '@azure/communication-common';
+import { compositeLocale } from '../localizationUtils';
 
 const messageArray = [
   'Hello ACS!',
@@ -39,15 +40,19 @@ const FakeStory = (args, context): JSX.Element => {
   useEffect(() => {
     (async () => {
       const [userId, chatClient, chatThreadClient] = await setupFakeService(args.displayName);
+
+      const statefulChatClient = createStatefulChatClientWithDeps(chatClient, {
+        userId: userId as CommunicationUserIdentifier,
+        displayName: args.displayName,
+        endpoint: 'FAKE_ENDPIONT',
+        credential: fakeToken
+      });
+      statefulChatClient.startRealtimeNotifications();
+
       setAdapter(
         await createAzureCommunicationChatAdapterFromClient(
-          createStatefulChatClientWithDeps(chatClient, {
-            userId: userId as CommunicationUserIdentifier,
-            displayName: args.displayName,
-            endpoint: 'FAKE_ENDPIONT',
-            credential: fakeToken
-          }),
-          chatThreadClient
+          statefulChatClient,
+          await statefulChatClient.getChatThreadClient(chatThreadClient.threadId)
         )
       );
     })();
@@ -68,7 +73,7 @@ const FakeStory = (args, context): JSX.Element => {
             participantPane: args.showParticipants,
             topic: args.showTopic
           }}
-          locale={locale}
+          locale={compositeLocale(locale)}
         />
       </div>
     </Stack>
