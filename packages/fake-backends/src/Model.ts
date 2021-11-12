@@ -34,6 +34,13 @@ export class Model {
     this.checkedGetThread(userId, threadId);
     return this.threadEventEmitters[threadId];
   }
+
+  public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void) {
+    const thread = this.checkedGetThread(userId, threadId);
+    action(thread);
+    // TODO: Only bump version when there is a change.
+    thread.version++;
+  }
 }
 
 export interface Thread extends ChatThreadProperties {

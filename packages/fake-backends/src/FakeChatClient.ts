@@ -82,17 +82,19 @@ export class FakeChatClient implements IChatClient {
   }
 
   deleteChatThread(threadId: string): Promise<void> {
+    const now = new Date(Date.now());
+
+    this.model.modifyThreadForUser(this.userId, threadId, (thread) => {
+      thread.deletedOn = now;
+    });
+
     const thread = this.model.checkedGetThread(this.userId, threadId);
     const me = thread.participants.find((p) => this.isMe(p.id));
     if (!me) {
       throw new Error(`CHECK FAILED: ${this.userId} must be in ${threadId}`);
     }
-
-    thread.deletedOn = new Date(Date.now());
-    thread.version++;
-
     this.model.checkedGetThreadEventEmitter(this.userId, threadId).chatThreadDeleted({
-      deletedOn: thread.deletedOn,
+      deletedOn: now,
       deletedBy: {
         id: getIdentifierKind(me.id),
         displayName: me.displayName ?? '',
