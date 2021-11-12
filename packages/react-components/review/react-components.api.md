@@ -849,6 +849,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }
@@ -866,6 +867,7 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps {
     children?: React_2.ReactNode;
     displayName?: string;
+    initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;

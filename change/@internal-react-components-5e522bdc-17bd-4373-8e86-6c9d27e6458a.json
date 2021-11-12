@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Display \"You\" instead of complete name in local preview.",
+  "comment": "Display 'You' instead of complete name in local video tile",
   "packageName": "@internal/react-components",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
