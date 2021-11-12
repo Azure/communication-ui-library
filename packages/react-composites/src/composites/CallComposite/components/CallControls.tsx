@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles } from '@fluentui/react';
+import { IButtonStyles, mergeStyleSets } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
@@ -184,7 +184,4 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   );
 };
 
-const mergeButtonBaseStyles = (styles: IButtonStyles): IButtonStyles => ({
-  ...controlButtonBaseStyle,
-  ...styles
-});
+const mergeButtonBaseStyles = (styles: IButtonStyles): IButtonStyles => mergeStyleSets(controlButtonBaseStyle, styles);
