@@ -255,6 +255,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
     });
 
     this.checkedGetThreadEventEmitter().readReceiptReceived({
+      // Verify. Sender of the readReceipt? Or of the message?
+      // If the message, is this where the `recipient` in the payload matters?
       ...this.baseChatEvent(),
       chatMessageId: request.chatMessageId,
       readOn: now
