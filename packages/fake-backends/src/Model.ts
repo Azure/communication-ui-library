@@ -39,7 +39,7 @@ export class Model {
 
   public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void) {
     const thread = this.checkedGetThread(userId, threadId);
-    const newThread = produce(thread, (draft: Thread) => action(thread));
+    const newThread = produce(thread, (draft: Thread) => action(draft));
     if (thread !== newThread) {
       this.threads[threadId] = produce(newThread, (draft: Thread) => {
         draft.version++;
