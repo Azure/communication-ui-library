@@ -66,6 +66,8 @@ export type ChatCompositeOptions = {
 /**
  * A customizable UI composite for the chat experience.
  *
+ * @remarks Chat composite min width and height are respectively 19.5rem and 20rem (312px and 320px, with default rem at 16px)
+ *
  * @public
  */
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
