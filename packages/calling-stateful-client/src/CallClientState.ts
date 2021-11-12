@@ -311,6 +311,8 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#TransferCallFeature} with some differences see
    * {@link TransferCallFeatureState} for details.
+   *
+   * @beta
    */
   transfer: TransferCallFeatureState;
   /**
@@ -336,6 +338,8 @@ export interface CallState {
 
   /**
    * Stores the latest call diagnostics.
+   *
+   * @beta
    */
   diagnostics: DiagnosticsCallFeatureState;
 }

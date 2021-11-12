@@ -78,7 +78,7 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp'
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
-    // Warning: (ae-incompatible-release-tags) The symbol "diagnostics" is marked as @public, but its signature references "DiagnosticsCallFeatureState" which is marked as @beta
+    // @beta
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -98,7 +98,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    // Warning: (ae-incompatible-release-tags) The symbol "transfer" is marked as @public, but its signature references "TransferCallFeatureState" which is marked as @beta
+    // @beta
     transfer: TransferCallFeatureState;
 }
 
