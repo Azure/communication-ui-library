@@ -162,6 +162,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   return (
     <Stack horizontalAlign="center">
       <Stack.Item>
+        {/*
+            Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
+            control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
+            set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
+            dockedBottom it has position absolute and would therefore float on top of the media gallery,
+            occluding some of its content.
+         */}
         <ControlBar layout="horizontal">
           {microphoneButton}
           {cameraButton}
