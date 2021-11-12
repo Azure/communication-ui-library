@@ -2,7 +2,11 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant, ChatMessage, ChatThreadProperties } from '@azure/communication-chat';
-import { ChatThreadDeletedEvent, CommunicationIdentifier } from '@azure/communication-signaling';
+import {
+  ChatThreadDeletedEvent,
+  ChatThreadPropertiesUpdatedEvent,
+  CommunicationIdentifier
+} from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
 import produce from 'immer';
@@ -73,6 +77,10 @@ export class ThreadEventEmitter {
 
   public chatThreadDeleted(e: ChatThreadDeletedEvent) {
     this.emitter.emit('chatThreadDeleted', e);
+  }
+
+  public chatThreadPropertiesUpdated(e: ChatThreadPropertiesUpdatedEvent) {
+    this.emitter.emit('chatThreadPropertiesUpdated', e);
   }
 }
 

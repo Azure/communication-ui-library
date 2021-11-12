@@ -16,6 +16,7 @@ import {
   SendChatMessageResult
 } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
+import { ChatParticipant as SignalingChatParticipant } from '@azure/communication-signaling';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { latestMessageTimestamp, Model, Thread, ThreadEventEmitter } from './Model';
@@ -33,7 +34,7 @@ export class FakeChatClient implements IChatClient {
 
   getChatThreadClient(threadId: string): ChatThreadClient {
     this.model.checkedGetThread(this.userId, threadId);
-    const threadClient = new FakeChatThreadClient(threadId);
+    const threadClient = new FakeChatThreadClient(this.model, this.userId, threadId);
     this.threadClients.push(threadClient);
     return threadClient as IChatThreadClient as ChatThreadClient;
   }
@@ -92,11 +93,7 @@ export class FakeChatClient implements IChatClient {
     const me = this.checkedGetMe(thread);
     this.model.checkedGetThreadEventEmitter(this.userId, threadId).chatThreadDeleted({
       deletedOn: now,
-      deletedBy: {
-        id: getIdentifierKind(me.id),
-        displayName: me.displayName ?? '',
-        shareHistoryTime: me.shareHistoryTime
-      },
+      deletedBy: chatToSignalingParticipant(me),
       threadId: thread.id,
       version: `${thread.version}`
     });
@@ -151,14 +148,33 @@ export class FakeChatClient implements IChatClient {
  * A public interface compatible stub for ChatThreadClient.
  */
 export class FakeChatThreadClient implements IChatThreadClient {
-  constructor(public threadId: string) {}
+  constructor(private model: Model, private userId: CommunicationIdentifier, public threadId: string) {}
 
   getProperties(): Promise<ChatThreadProperties> {
-    return Promise.resolve({ id: '', topic: '', createdOn: new Date(0) });
+    const thread = this.checkedGetThread();
+    return Promise.resolve({
+      id: thread.id,
+      topic: thread.topic,
+      createdOn: thread.createdOn,
+      createdBy: thread.createdBy,
+      deletedOn: thread.deletedOn
+    });
   }
-  updateTopic(): Promise<void> {
+
+  updateTopic(topic: string): Promise<void> {
+    this.modifyThreadForUser((thread) => {
+      thread.topic = topic;
+    });
+    this.checkedGetThreadEventEmitter().chatThreadPropertiesUpdated({
+      properties: { topic: topic },
+      updatedOn: new Date(Date.now()),
+      updatedBy: chatToSignalingParticipant(this.checkedGetMe()),
+      threadId: this.threadId,
+      version: `${this.checkedGetThread().version}`
+    });
     return Promise.resolve();
   }
+
   sendMessage(): Promise<SendChatMessageResult> {
     return Promise.resolve({ id: '' });
   }
@@ -191,6 +207,31 @@ export class FakeChatThreadClient implements IChatThreadClient {
   }
   listReadReceipts(): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
     return pagedAsyncIterator([]);
+  }
+
+  private checkedGetThread(): Thread {
+    return this.model.checkedGetThread(this.userId, this.threadId);
+  }
+
+  private modifyThreadForUser(action: (thread: Thread) => void) {
+    this.model.modifyThreadForUser(this.userId, this.threadId, action);
+  }
+
+  private checkedGetThreadEventEmitter(): ThreadEventEmitter {
+    return this.model.checkedGetThreadEventEmitter(this.userId, this.threadId);
+  }
+
+  private isMe(other: CommunicationIdentifier): boolean {
+    return toFlatCommunicationIdentifier(other) === toFlatCommunicationIdentifier(this.userId);
+  }
+
+  private checkedGetMe(): ChatParticipant {
+    const thread = this.checkedGetThread();
+    const me = thread.participants.find((p) => this.isMe(p.id));
+    if (!me) {
+      throw new Error(`CHECK FAILED: ${this.userId} must be in ${thread.id}`);
+    }
+    return me;
   }
 }
 
@@ -245,3 +286,9 @@ export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIt
     }
   };
 };
+
+const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatParticipant => ({
+  id: getIdentifierKind(p.id),
+  displayName: p.displayName ?? '',
+  shareHistoryTime: p.shareHistoryTime
+});
