@@ -18,7 +18,7 @@ import {
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { latestMessageTimestamp, Model, ThreadEventEmitter } from './Model';
+import { latestMessageTimestamp, Model, Thread, ThreadEventEmitter } from './Model';
 import { IChatClient, IChatThreadClient } from './types';
 import { EventEmitter } from 'stream';
 
@@ -89,10 +89,7 @@ export class FakeChatClient implements IChatClient {
     });
 
     const thread = this.model.checkedGetThread(this.userId, threadId);
-    const me = thread.participants.find((p) => this.isMe(p.id));
-    if (!me) {
-      throw new Error(`CHECK FAILED: ${this.userId} must be in ${threadId}`);
-    }
+    const me = this.checkedGetMe(thread);
     this.model.checkedGetThreadEventEmitter(this.userId, threadId).chatThreadDeleted({
       deletedOn: now,
       deletedBy: {
@@ -139,6 +136,14 @@ export class FakeChatClient implements IChatClient {
 
   private containsMe(participants: ChatParticipant[]): boolean {
     return participants.some((p) => this.isMe(p.id));
+  }
+
+  private checkedGetMe(thread: Thread): ChatParticipant {
+    const me = thread.participants.find((p) => this.isMe(p.id));
+    if (!me) {
+      throw new Error(`CHECK FAILED: ${this.userId} must be in ${thread.id}`);
+    }
+    return me;
   }
 }
 
