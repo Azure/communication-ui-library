@@ -99,6 +99,6 @@ export const optionsButtonWithIncreasedTouchTargets: OptionsButtonStyles = {
  */
 export const controlButtonBaseStyle: IButtonStyles = {
   label: {
-    width: '2.25rem'
+    minWidth: '2.25rem'
   }
 };
