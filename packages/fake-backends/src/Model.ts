@@ -2,11 +2,28 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant, ChatMessage, ChatThreadProperties } from '@azure/communication-chat';
-import { ChatThreadDeletedEvent } from '@azure/communication-signaling';
+import { ChatThreadDeletedEvent, CommunicationIdentifier } from '@azure/communication-signaling';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
 
-export interface Model {
-  threads: Thread[];
+export class Model {
+  private threads: { [key: string]: Thread } = {};
+
+  public addThread(thread: Thread) {
+    this.threads[thread.id] = thread;
+  }
+
+  public getThreadsForUser(userId: CommunicationIdentifier): Thread[] {
+    return Object.values(this.threads).filter((t) => containsUser(userId, t.participants));
+  }
+
+  public checkedGetThread(userId: CommunicationIdentifier, threadId: string): Thread {
+    const thread = this.threads[threadId];
+    if (!containsUser(userId, thread.participants)) {
+      throw new Error(`${userId} is not in thread ${threadId}`);
+    }
+    return thread;
+  }
 }
 
 export interface Thread extends ChatThreadProperties {
@@ -38,3 +55,8 @@ export class ThreadEventEmitter {
     this.emitter.emit('chatThreadDeleted', e);
   }
 }
+
+const containsUser = (userId: CommunicationIdentifier, participants: ChatParticipant[]): boolean => {
+  const flatUserId = toFlatCommunicationIdentifier(userId);
+  return participants.some((p) => toFlatCommunicationIdentifier(p.id) === flatUserId);
+};

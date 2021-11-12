@@ -32,10 +32,7 @@ export class FakeChatClient implements IChatClient {
   constructor(private model: Model, private id: CommunicationIdentifier) {}
 
   getChatThreadClient(threadId: string): ChatThreadClient {
-    const thread = this.model.threads.find((t) => this.containsMe(t.participants));
-    if (!thread) {
-      throw new Error(`Cannot create thread client because ${this.id} is not in thread ${threadId}`);
-    }
+    this.model.checkedGetThread(this.id, threadId);
     const threadClient = new FakeChatThreadClient(threadId);
     this.threadClients.push(threadClient);
     return threadClient as IChatThreadClient as ChatThreadClient;
@@ -56,7 +53,7 @@ export class FakeChatClient implements IChatClient {
       messages: [],
       emitter: new ThreadEventEmitter(new EventEmitter())
     };
-    this.model.threads.push(thread);
+    this.model.addThread(thread);
     return Promise.resolve({
       chatThread: {
         id: thread.id,
@@ -75,7 +72,7 @@ export class FakeChatClient implements IChatClient {
   }
 
   listChatThreads(): PagedAsyncIterableIterator<ChatThreadItem> {
-    const threads = this.model.threads.filter((thread) => this.containsMe(thread.participants));
+    const threads = this.model.getThreadsForUser(this.id);
     const response: ChatThreadItem[] = threads.map((t) => ({
       id: t.id,
       topic: t.topic,
@@ -85,7 +82,7 @@ export class FakeChatClient implements IChatClient {
   }
 
   deleteChatThread(threadId: string): Promise<void> {
-    const thread = this.model.threads.find((t) => t.id === threadId);
+    const thread = this.model.checkedGetThread(this.id, threadId);
     if (!thread) {
       throw new Error(`No thread with id ${threadId}`);
     }
@@ -127,8 +124,7 @@ export class FakeChatClient implements IChatClient {
       throw new Error('Must enable real time notifications first');
     }
     // Only subscribe to events for threads for which a ChatThreadClient has been created.
-    const threadIds = new Set(this.threadClients.map((c) => c.threadId));
-    this.model.threads.filter((t) => threadIds.has(t.id)).forEach((t) => t.emitter.on(event, listener));
+    this.threadClients.forEach((c) => this.model.checkedGetThread(this.id, c.threadId).emitter.on(event, listener));
   }
 
   off(): void {
