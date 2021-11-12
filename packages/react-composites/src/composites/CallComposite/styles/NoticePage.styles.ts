@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, IStackTokens } from '@fluentui/react';
+import { IStyle, IStackTokens, IStackStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -15,8 +15,17 @@ export const containerStyle: IStyle = {
 /**
  * @private
  */
-export const stackItemGap: IStackTokens = {
-  childrenGap: '1rem'
+export const containerItemGap: IStackTokens = {
+  childrenGap: '0.5rem'
+};
+
+/**
+ * @private
+ */
+export const rejoinCallButtonContainerStyles: IStackStyles = {
+  root: {
+    paddingTop: '1.125rem'
+  }
 };
 
 /**

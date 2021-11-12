@@ -32,6 +32,7 @@
     "networkReconnectMoreDetails": "Looks like something went wrong. We're trying to get back into the call.",
     "networkReconnectTitle": "Hold on",
     "privacyPolicy": "Privacy policy",
+    "rejoinCallButtonLabel": "Re-join call",
     "removedFromCallMoreDetails": "Another participant removed you from the call.",
     "removedFromCallTitle": "You were removed",
     "soundLabel": "Sound",
