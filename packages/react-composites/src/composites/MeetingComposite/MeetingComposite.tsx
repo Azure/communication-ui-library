@@ -47,7 +47,7 @@ export type MeetingCompositeProps = {
  */
 export type MeetingCompositeOptions = {
   /**
-   * Choose to use the composite form optimized for use on a mobile device.
+   * Optimizes the composite UI for use on a mobile device.
    * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
    * @defaultValue false
    * @alpha
