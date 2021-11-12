@@ -5,6 +5,7 @@ import { concatStyleSets, ContextualMenu, IDragOptions, Modal, Stack } from '@fl
 import React, { useCallback, useMemo, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
+import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import {
   BaseCustomStyles,
@@ -51,6 +52,8 @@ export interface VideoGalleryStrings {
   screenIsBeingSharedMessage: string;
   /** String to show when remote screen share stream is loading */
   screenShareLoadingMessage: string;
+  /** String for local video label. Default is "You" */
+  localVideoLabel: string;
 }
 
 /**
@@ -142,6 +145,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const ids = useIdentifiers();
   const theme = useTheme();
+  const localeStrings = useLocale().strings.videoGallery;
+  const strings = { ...localeStrings, ...props.strings };
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
@@ -195,7 +200,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           ) : undefined
         }
         showLabel={!(shouldFloatLocalVideo && isNarrow)}
-        displayName={localParticipant?.displayName}
+        displayName={isNarrow ? '' : strings.localVideoLabel}
+        initialsName={localParticipant.displayName}
         styles={localVideoTileStylesThemed}
         onRenderPlaceholder={onRenderAvatar}
         isMuted={localParticipant.isMuted}

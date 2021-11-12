@@ -73,9 +73,14 @@ export interface VideoTileProps {
    */
   isMuted?: boolean;
   /**
-   * Display Name of the Participant
+   * Display Name of the Participant to be shown in the label.
+   * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
    */
   displayName?: string;
+  /** Name of the participant used to generate initials. For example, a name `John Doe` will display `JD` as initials.
+   * @remarks `displayName` is used if this property is not specified.
+   */
+  initialsName?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
@@ -115,6 +120,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const {
     children,
     displayName,
+    initialsName,
     isMirrored,
     isMuted,
     onRenderPlaceholder,
@@ -152,7 +158,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const placeholderOptions = {
     userId,
-    text: displayName,
+    text: initialsName || displayName,
     noVideoAvailableAriaLabel,
     coinSize: personaSize,
     styles: defaultPersonaStyles,
