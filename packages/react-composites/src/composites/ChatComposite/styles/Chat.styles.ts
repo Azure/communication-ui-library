@@ -9,6 +9,16 @@ const MESSAGE_THREAD_WIDTH = '41.25rem';
 /**
  * @private
  */
+export const chatScreenContainerStyle = mergeStyles({
+  height: '100%',
+  width: '100%',
+  minHeight: '20rem',
+  minWidth: '19.5rem'
+});
+
+/**
+ * @private
+ */
 export const chatContainer = mergeStyles({
   height: '100%',
   width: '100%',
