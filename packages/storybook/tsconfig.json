@@ -8,6 +8,7 @@
       "@internal/acs-ui-common": ["../acs-ui-common/src"],
       "@internal/calling-stateful-client": ["../calling-stateful-client/src"],
       "@internal/chat-stateful-client": ["../chat-stateful-client/src"],
+      "@internal/fake-backends": ["../fake-backends/src"],
       "@internal/react-components": ["../react-components/src"],
       "@internal/react-composites": ["../react-composites/src"],
       "@azure/communication-react": ["../communication-react/src"]
