@@ -25,6 +25,10 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         ChatComposite brings together key components to provide a full chat experience out of the box.
       </Description>
+      <Description>
+        Note that ChatComposite has a min width and height of respectively 19.5rem and 20rem (312px x 320px, with
+        default rem at 16px).
+      </Description>
       <Heading>Basic usage</Heading>
       <Description>
         There are two parts to the composite - a `ChatComposite` react component and a `ChatAdapter` that connects the
