@@ -56,7 +56,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 };
 
 // @public
-export function CameraButton(props: CameraButtonProps): JSX.Element;
+export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends ControlBarButtonProps {
