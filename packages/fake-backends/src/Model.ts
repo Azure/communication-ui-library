@@ -2,14 +2,11 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant, ChatMessage, ChatThreadProperties } from '@azure/communication-chat';
-import {
-  ChatThreadDeletedEvent,
-  ChatThreadPropertiesUpdatedEvent,
-  CommunicationIdentifier
-} from '@azure/communication-signaling';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
 import produce from 'immer';
+import { ThreadEventEmitter } from './ThreadEventEmitter';
 
 export class Model {
   private threads: { [key: string]: Thread } = {};
@@ -55,33 +52,6 @@ export interface Thread extends ChatThreadProperties {
   version: number;
   participants: ChatParticipant[];
   messages: ChatMessage[];
-}
-
-export const latestMessageTimestamp = (messages: ChatMessage[]): Date | undefined => {
-  if (messages.length === 0) {
-    return undefined;
-  }
-  return messages[messages.length - 1].createdOn;
-};
-
-export class ThreadEventEmitter {
-  constructor(private emitter: EventEmitter) {}
-
-  public on(event: string, listener: (...args: any[]) => void) {
-    this.emitter.on(event, listener);
-  }
-
-  public off(event: string, listener: (...args: any[]) => void) {
-    this.emitter.off(event, listener);
-  }
-
-  public chatThreadDeleted(e: ChatThreadDeletedEvent) {
-    this.emitter.emit('chatThreadDeleted', e);
-  }
-
-  public chatThreadPropertiesUpdated(e: ChatThreadPropertiesUpdatedEvent) {
-    this.emitter.emit('chatThreadPropertiesUpdated', e);
-  }
 }
 
 const containsUser = (userId: CommunicationIdentifier, participants: ChatParticipant[]): boolean => {
