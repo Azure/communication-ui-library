@@ -19643,6 +19643,7 @@ packages:
       eslint-plugin-jsdoc: 36.1.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.0_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
+      immer: 9.0.6
       jest: 26.6.0
       nanoid: 3.1.25
       prettier: 2.3.1
@@ -19652,7 +19653,7 @@ packages:
     dev: false
     name: '@rush-temp/fake-backends'
     resolution:
-      integrity: sha512-EOgcATHNoZVZVFBxmPRFqTajXiqUSA6YyYBqT4BCM4ICSO01VPHM0AEhI/nr1Kc0sfohAktMOI+Znb5UJMFyOw==
+      integrity: sha512-PdJdNVcbykWHlJ6HtA5qmjDb6FKh5UCwa7u/dfw8GLqtiiXHOfX5apk3U+1ACpE+oawc6uomd9sIlwjpIiK+aA==
       tarball: file:projects/fake-backends.tgz
     version: 0.0.0
   file:projects/react-components.tgz:

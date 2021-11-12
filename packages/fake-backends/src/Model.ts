@@ -5,6 +5,7 @@ import { ChatParticipant, ChatMessage, ChatThreadProperties } from '@azure/commu
 import { ChatThreadDeletedEvent, CommunicationIdentifier } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
+import produce from 'immer';
 
 export class Model {
   private threads: { [key: string]: Thread } = {};
@@ -37,9 +38,12 @@ export class Model {
 
   public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void) {
     const thread = this.checkedGetThread(userId, threadId);
-    action(thread);
-    // TODO: Only bump version when there is a change.
-    thread.version++;
+    const newThread = produce(thread, (draft: Thread) => action(thread));
+    if (thread !== newThread) {
+      this.threads[threadId] = produce(newThread, (draft: Thread) => {
+        draft.version++;
+      });
+    }
   }
 }
 
