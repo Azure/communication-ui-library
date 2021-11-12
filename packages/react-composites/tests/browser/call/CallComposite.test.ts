@@ -67,10 +67,11 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test('local device buttons should show tooltips on hover', async ({ pages }) => {
     const page = pages[0];
     await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
-    const tooltip = await page.waitForSelector(dataUiId('microphoneButtonLabel-tooltip'));
+    await page.waitForSelector(dataUiId('microphoneButtonLabel-tooltip'));
 
-    // This will ensure no animation is happening for the callout
-    await tooltip.waitForElementState('stable');
+    // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
+    // this is for disable transition/animation of tooltip appearing
+    await disableAnimation(page);
 
     await stubLocalCameraName(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
