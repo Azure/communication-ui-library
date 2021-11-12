@@ -69,6 +69,8 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 export interface CameraButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -192,6 +194,7 @@ export interface ControlBarButtonProps extends IButtonProps {
     showLabel?: boolean;
     strings?: ControlBarButtonStrings;
     styles?: ControlBarButtonStyles;
+    tooltipId?: string;
 }
 
 // @public
@@ -199,6 +202,9 @@ export interface ControlBarButtonStrings {
     label?: string;
     offLabel?: string;
     onLabel?: string;
+    tooltipContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -292,6 +298,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
 // @public
 export interface EndCallButtonStrings {
     label: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -519,6 +526,8 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -558,6 +567,7 @@ export interface OptionsButtonStrings {
     microphoneMenuTooltip: string;
     speakerMenuTitle: string;
     speakerMenuTooltip: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -685,6 +695,7 @@ export interface ParticipantsButtonStrings {
     menuHeader: string;
     muteAllButtonLabel: string;
     participantsListButtonLabel: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -705,6 +716,8 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
 export interface ScreenShareButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public

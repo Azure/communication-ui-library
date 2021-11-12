@@ -13,6 +13,7 @@ import {
 } from '@fluentui/react';
 import { useTheme } from '../theming';
 import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+import { ControlButtonTooltip } from './ControlButtonTooltip';
 
 /**
  * Strings of {@link ControlBarButton} that can be overridden.
@@ -32,6 +33,18 @@ export interface ControlBarButtonStrings {
    * Label of the button shown when the button is not checked.
    */
   offLabel?: string;
+  /**
+   * Tooltip content of the button. This supersedes tooltipOnContent and tooltipOffContent if used.
+   */
+  tooltipContent?: string;
+  /**
+   * Tooltip content when the button is in the checked state.
+   */
+  tooltipOnContent?: string;
+  /**
+   * Tooltip content when the button is in the unchecked state.
+   */
+  tooltipOffContent?: string;
 }
 
 /**
@@ -58,6 +71,13 @@ export interface ControlBarButtonProps extends IButtonProps {
    * Key to use for the Label component
    */
   labelKey?: string;
+
+  /**
+   * Id to use for the tooltip host.
+   *
+   * @defaultValue This uses the labelKey and appends -tooltip by default
+   */
+  tooltipId?: string;
 
   /**
    * Optional strings to override in component.
@@ -115,12 +135,20 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
     );
   }, [labelText, props?.labelKey, props?.styles?.label, theme]);
 
+  const tooltipContent =
+    props?.strings?.tooltipContent ??
+    (props?.checked ? props?.strings?.tooltipOnContent : props?.strings?.tooltipOffContent);
+
+  const tooltipId = props.tooltipId ?? props.labelKey ? props.labelKey + '-tooltip' : undefined;
+
   return (
-    <DefaultButton
-      {...props}
-      styles={componentStyles}
-      onRenderText={props.showLabel ? props.onRenderText ?? DefaultRenderText : undefined}
-      onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
-    />
+    <ControlButtonTooltip content={tooltipContent} id={tooltipId}>
+      <DefaultButton
+        {...props}
+        styles={componentStyles}
+        onRenderText={props.showLabel ? props.onRenderText ?? DefaultRenderText : undefined}
+        onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
+      />
+    </ControlButtonTooltip>
   );
 };
