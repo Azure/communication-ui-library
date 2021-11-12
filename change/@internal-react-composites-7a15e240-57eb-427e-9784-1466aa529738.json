@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Display 'You' instead of complete name in local video tile",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
