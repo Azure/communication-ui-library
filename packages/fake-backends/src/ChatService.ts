@@ -6,6 +6,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { FakeChatClient } from './FakeChatClient';
 import { Model } from './Model';
 import { IChatClient } from './types';
+import { ChatClient } from '@azure/communication-chat';
 
 /**
  * A fake Azure Communication Services chat backend.
@@ -16,12 +17,12 @@ import { IChatClient } from './types';
 export class FakeChatService {
   private model: Model = new Model();
 
-  public newClient(id: CommunicationIdentifier): IChatClient {
-    return new FakeChatClient(this.model, id);
+  public newClient(id: CommunicationIdentifier): ChatClient {
+    return new FakeChatClient(this.model, id) as IChatClient as ChatClient;
   }
 
-  public newUserAndClient(): [CommunicationIdentifier, IChatClient] {
+  public newUserAndClient(): [CommunicationIdentifier, ChatClient] {
     const id = { communicationUserId: nanoid() };
-    return [id, new FakeChatClient(this.model, id)];
+    return [id, this.newClient(id)];
   }
 }

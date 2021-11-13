@@ -40,18 +40,17 @@ export const setupFakeThreadWithTwoParticipants = async (
     }
   );
 
-  // TODO: Just return a `ChatClient` from the fake.
   return [
     {
       userId: firstUserId,
       displayName: firstDisplayName,
-      chatClient: firstChatClient as ChatClient,
+      chatClient: firstChatClient,
       chatThreadClient: firstChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
     },
     {
       userId: secondUserId,
       displayName: secondDisplayName,
-      chatClient: secondChatClient as ChatClient,
+      chatClient: secondChatClient,
       chatThreadClient: secondChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
     }
   ];
