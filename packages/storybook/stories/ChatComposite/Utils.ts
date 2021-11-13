@@ -25,7 +25,10 @@ export const setupFakeThreadWithTwoParticipants = async (
   firstDisplayName: string,
   secondDisplayName: string
 ): Promise<[ParticipantHandle, ParticipantHandle]> => {
-  const fakeChatService = new FakeChatService();
+  const fakeChatService = new FakeChatService({
+    asyncDelivery: true,
+    maxDelayMilliseconds: 3000
+  });
   const [firstUserId, firstChatClient] = fakeChatService.newUserAndClient();
   const [secondUserId, secondChatClient] = fakeChatService.newUserAndClient();
   const thread = await firstChatClient.createChatThread(
