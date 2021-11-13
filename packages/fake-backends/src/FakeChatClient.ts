@@ -13,8 +13,8 @@ import {
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Model, Thread } from './Model';
-import { IChatClient, IChatThreadClient } from './types';
+import { Model } from './Model';
+import { IChatClient, IChatThreadClient, Thread } from './types';
 import { FakeChatThreadClient } from './FakeChatThreadClient';
 import { chatToSignalingParticipant, pagedAsyncIterator, latestMessageTimestamp } from './utils';
 import { BaseChatThreadEvent } from '@azure/communication-signaling';
