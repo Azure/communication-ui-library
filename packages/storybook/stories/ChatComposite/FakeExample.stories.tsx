@@ -28,6 +28,10 @@ const FakeStory = (args, context): JSX.Element => {
 
   useEffect(() => {
     (async () => {
+      if (!args.displayName) {
+        return;
+      }
+
       const [localParticipant, bot] = await setupFakeThreadWithTwoParticipants(args.displayName, 'bot');
       sendMessages(bot.chatThreadClient, messageArray);
       setAdapter(await initializeAdapter(localParticipant));
