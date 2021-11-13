@@ -16,12 +16,13 @@ import {
 } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
-import { Thread } from './types';
+import { NetworkEventModel, Thread } from './types';
 
 export class ThreadEventEmitter {
   private emitters: { [key: string]: EventEmitter } = {};
+  private eventQueue: EventPayload[] = [];
 
-  constructor(private async = true) {}
+  constructor(private networkModel: NetworkEventModel = { asyncDelivery: false }) {}
 
   on(userId: CommunicationIdentifier, event: string, listener: (...args: any[]) => void) {
     this.getOrCreateEmitter(userId).on(event, listener);
@@ -62,14 +63,6 @@ export class ThreadEventEmitter {
     this.emit(targets, 'participantsRemoved', e);
   }
 
-  private getOrCreateEmitter(userId: CommunicationIdentifier): EventEmitter {
-    const flatUserId = toFlatCommunicationIdentifier(userId);
-    if (!this.emitters[flatUserId]) {
-      this.emitters[flatUserId] = new EventEmitter();
-    }
-    return this.emitters[flatUserId];
-  }
-
   private emit(targets: CommunicationIdentifier[], event: string, payload: any) {
     targets.forEach((target) => {
       const emitter = this.emitters[toFlatCommunicationIdentifier(target)];
@@ -77,15 +70,41 @@ export class ThreadEventEmitter {
         // Possible if this target never subscribed to any events.
         return;
       }
-      if (this.async) {
+
+      this.eventQueue.push({ emitter, event, payload });
+
+      if (this.networkModel.asyncDelivery) {
         setImmediate(() => {
           emitter.emit(event, payload);
         });
       } else {
-        emitter.emit(event, payload);
+        this.dispatchOneEvent();
       }
     });
   }
+
+  private dispatchOneEvent() {
+    if (this.eventQueue.length === 0) {
+      throw new Error(`queue must not be empty`);
+    }
+    const event = this.eventQueue[0];
+    this.eventQueue = this.eventQueue.slice(1);
+    event.emitter.emit(event.event, event.payload);
+  }
+
+  private getOrCreateEmitter(userId: CommunicationIdentifier): EventEmitter {
+    const flatUserId = toFlatCommunicationIdentifier(userId);
+    if (!this.emitters[flatUserId]) {
+      this.emitters[flatUserId] = new EventEmitter();
+    }
+    return this.emitters[flatUserId];
+  }
+}
+
+interface EventPayload {
+  emitter: EventEmitter;
+  event: string;
+  payload: any;
 }
 
 export const getThreadEventTargets = (
