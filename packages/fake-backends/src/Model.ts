@@ -4,7 +4,6 @@
 import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { EventEmitter } from 'events';
 import produce from 'immer';
 import { ThreadEventEmitter } from './ThreadEventEmitter';
 import { Thread } from './types';
@@ -15,7 +14,7 @@ export class Model {
 
   public addThread(thread: Thread) {
     this.threads[thread.id] = thread;
-    this.threadEventEmitters[thread.id] = new ThreadEventEmitter(new EventEmitter());
+    this.threadEventEmitters[thread.id] = new ThreadEventEmitter();
   }
 
   public getThreadsForUser(userId: CommunicationIdentifier): Thread[] {

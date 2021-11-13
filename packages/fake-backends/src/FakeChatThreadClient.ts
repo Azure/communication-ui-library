@@ -22,7 +22,7 @@ import { BaseChatEvent, BaseChatMessageEvent, BaseChatThreadEvent } from '@azure
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { bumpMessageVersion, Model } from './Model';
-import { ThreadEventEmitter } from './ThreadEventEmitter';
+import { getThreadEventTargets, ThreadEventEmitter } from './ThreadEventEmitter';
 import { IChatThreadClient, Thread } from './types';
 import { chatToSignalingParticipant, pagedAsyncIterator } from './utils';
 
@@ -61,12 +61,15 @@ export class FakeChatThreadClient implements IChatThreadClient {
       ];
     });
 
-    this.checkedGetThreadEventEmitter().chatThreadPropertiesUpdated({
-      ...this.baseChatThreadEvent(),
-      properties: { topic: topic },
-      updatedOn: new Date(Date.now()),
-      updatedBy: chatToSignalingParticipant(this.checkedGetMe())
-    });
+    this.checkedGetThreadEventEmitter().chatThreadPropertiesUpdated(
+      getThreadEventTargets(this.checkedGetThread(), this.userId),
+      {
+        ...this.baseChatThreadEvent(),
+        properties: { topic: topic },
+        updatedOn: new Date(Date.now()),
+        updatedBy: chatToSignalingParticipant(this.checkedGetMe())
+      }
+    );
     return Promise.resolve();
   }
 
@@ -88,10 +91,13 @@ export class FakeChatThreadClient implements IChatThreadClient {
     const messages = this.checkedGetThread().messages;
     const message = messages[messages.length - 1];
 
-    this.checkedGetThreadEventEmitter().chatMessageReceived({
-      ...this.baseChatMessageEvent(message),
-      message: request.content
-    });
+    this.checkedGetThreadEventEmitter().chatMessageReceived(
+      getThreadEventTargets(this.checkedGetThread(), this.userId),
+      {
+        ...this.baseChatMessageEvent(message),
+        message: request.content
+      }
+    );
     return Promise.resolve({ id: message.id });
   }
 
@@ -127,10 +133,13 @@ export class FakeChatThreadClient implements IChatThreadClient {
     if (!message) {
       throw new Error(`CHECK FAILED: ${messageId} must be in ${this.threadId}`);
     }
-    this.checkedGetThreadEventEmitter().chatMessageDeleted({
-      ...this.baseChatMessageEvent(message),
-      deletedOn: now
-    });
+    this.checkedGetThreadEventEmitter().chatMessageDeleted(
+      getThreadEventTargets(this.checkedGetThread(), this.userId),
+      {
+        ...this.baseChatMessageEvent(message),
+        deletedOn: now
+      }
+    );
     return Promise.resolve();
   }
 
@@ -152,7 +161,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     if (!message) {
       throw new Error(`CHECK FAILED: ${messageId} must be in ${this.threadId}`);
     }
-    this.checkedGetThreadEventEmitter().chatMessageEdited({
+    this.checkedGetThreadEventEmitter().chatMessageEdited(getThreadEventTargets(this.checkedGetThread(), this.userId), {
       ...this.baseChatMessageEvent(message),
       message: content,
       editedOn: now
@@ -179,7 +188,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
       ];
     });
 
-    this.checkedGetThreadEventEmitter().participantsAdded({
+    this.checkedGetThreadEventEmitter().participantsAdded(getThreadEventTargets(this.checkedGetThread(), this.userId), {
       ...this.baseChatThreadEvent(),
       addedOn: now,
       participantsAdded: request.participants.map((p) => chatToSignalingParticipant(p)),
@@ -230,12 +239,15 @@ export class FakeChatThreadClient implements IChatThreadClient {
       ];
     });
 
-    this.checkedGetThreadEventEmitter().participantsRemoved({
-      ...this.baseChatThreadEvent(),
-      removedOn: now,
-      participantsRemoved: [chatToSignalingParticipant(toRemove)],
-      removedBy: chatToSignalingParticipant(this.checkedGetMe())
-    });
+    this.checkedGetThreadEventEmitter().participantsRemoved(
+      getThreadEventTargets(this.checkedGetThread(), this.userId),
+      {
+        ...this.baseChatThreadEvent(),
+        removedOn: now,
+        participantsRemoved: [chatToSignalingParticipant(toRemove)],
+        removedBy: chatToSignalingParticipant(this.checkedGetMe())
+      }
+    );
     return Promise.resolve();
   }
 
@@ -243,14 +255,17 @@ export class FakeChatThreadClient implements IChatThreadClient {
     const now = new Date(Date.now());
     const senderDisplayName = options?.senderDisplayName ?? this.checkedGetMe().displayName ?? '';
 
-    this.checkedGetThreadEventEmitter().typingIndicatorReceived({
-      ...this.baseChatEvent(),
-      senderDisplayName,
-      // Verify/FIXME: There is no message associated with a typing notification.
-      // What should this version refer to?
-      version: '0',
-      receivedOn: now
-    });
+    this.checkedGetThreadEventEmitter().typingIndicatorReceived(
+      getThreadEventTargets(this.checkedGetThread(), this.userId),
+      {
+        ...this.baseChatEvent(),
+        senderDisplayName,
+        // Verify/FIXME: There is no message associated with a typing notification.
+        // What should this version refer to?
+        version: '0',
+        receivedOn: now
+      }
+    );
     // Verify: The documentation for `sendTypingNotification` refers to backoff between attempts to send
     // typing notification. Need to check if the implementation includes such a backoff.
     return Promise.resolve(true);
@@ -269,13 +284,16 @@ export class FakeChatThreadClient implements IChatThreadClient {
       ];
     });
 
-    this.checkedGetThreadEventEmitter().readReceiptReceived({
-      // Verify. Sender of the readReceipt? Or of the message?
-      // If the message, is this where the `recipient` in the payload matters?
-      ...this.baseChatEvent(),
-      chatMessageId: request.chatMessageId,
-      readOn: now
-    });
+    this.checkedGetThreadEventEmitter().readReceiptReceived(
+      getThreadEventTargets(this.checkedGetThread(), this.userId),
+      {
+        // Verify. Sender of the readReceipt? Or of the message?
+        // If the message, is this where the `recipient` in the payload matters?
+        ...this.baseChatEvent(),
+        chatMessageId: request.chatMessageId,
+        readOn: now
+      }
+    );
     return Promise.resolve();
   }
 

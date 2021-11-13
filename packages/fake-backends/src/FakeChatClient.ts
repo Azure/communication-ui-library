@@ -18,6 +18,7 @@ import { IChatClient, IChatThreadClient, Thread } from './types';
 import { FakeChatThreadClient } from './FakeChatThreadClient';
 import { chatToSignalingParticipant, pagedAsyncIterator, latestMessageTimestamp } from './utils';
 import { BaseChatThreadEvent } from '@azure/communication-signaling';
+import { getThreadEventTargets } from './ThreadEventEmitter';
 
 /**
  * A public interface compatible stub for ChatClient.
@@ -53,15 +54,17 @@ export class FakeChatClient implements IChatClient {
     };
     this.model.addThread(thread);
 
-    this.model.checkedGetThreadEventEmitter(this.userId, thread.id).chatThreadCreated({
-      ...baseChatThreadEvent(thread),
-      createdOn: now,
-      properties: {
-        topic: request.topic
-      },
-      participants: participants.map((p) => chatToSignalingParticipant(p)),
-      createdBy: chatToSignalingParticipant(this.checkedGetMe(thread))
-    });
+    this.model
+      .checkedGetThreadEventEmitter(this.userId, thread.id)
+      .chatThreadCreated(getThreadEventTargets(thread, this.userId), {
+        ...baseChatThreadEvent(thread),
+        createdOn: now,
+        properties: {
+          topic: request.topic
+        },
+        participants: participants.map((p) => chatToSignalingParticipant(p)),
+        createdBy: chatToSignalingParticipant(this.checkedGetMe(thread))
+      });
 
     return Promise.resolve({
       chatThread: {
@@ -97,11 +100,13 @@ export class FakeChatClient implements IChatClient {
     });
 
     const thread = this.model.checkedGetThread(this.userId, threadId);
-    this.model.checkedGetThreadEventEmitter(this.userId, threadId).chatThreadDeleted({
-      ...baseChatThreadEvent(thread),
-      deletedOn: now,
-      deletedBy: chatToSignalingParticipant(this.checkedGetMe(thread))
-    });
+    this.model
+      .checkedGetThreadEventEmitter(this.userId, threadId)
+      .chatThreadDeleted(getThreadEventTargets(thread, this.userId), {
+        ...baseChatThreadEvent(thread),
+        deletedOn: now,
+        deletedBy: chatToSignalingParticipant(this.checkedGetMe(thread))
+      });
 
     return Promise.resolve();
   }
@@ -124,7 +129,7 @@ export class FakeChatClient implements IChatClient {
     }
     // Only subscribe to events for threads for which a ChatThreadClient has been created.
     this.threadClients.forEach((c) =>
-      this.model.checkedGetThreadEventEmitter(this.userId, c.threadId).on(event, listener)
+      this.model.checkedGetThreadEventEmitter(this.userId, c.threadId).on(this.userId, event, listener)
     );
   }
 

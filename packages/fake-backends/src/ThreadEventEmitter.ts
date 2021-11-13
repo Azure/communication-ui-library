@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CommunicationIdentifier } from '@azure/communication-common';
 import {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
@@ -13,57 +14,84 @@ import {
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
 } from '@azure/communication-signaling';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
+import { Thread } from './types';
 
 export class ThreadEventEmitter {
-  constructor(private emitter: EventEmitter, private async = true) {}
+  private emitters: { [key: string]: EventEmitter } = {};
 
-  on(event: string, listener: (...args: any[]) => void) {
-    this.emitter.on(event, listener);
-  }
+  constructor(private async = true) {}
 
-  off(event: string, listener: (...args: any[]) => void) {
-    this.emitter.off(event, listener);
+  on(userId: CommunicationIdentifier, event: string, listener: (...args: any[]) => void) {
+    this.getOrCreateEmitter(userId).on(event, listener);
   }
 
-  chatMessageReceived(e: ChatMessageReceivedEvent) {
-    this.emit('chatMessageReceived', e);
-  }
-  chatMessageEdited(e: ChatMessageEditedEvent) {
-    this.emit('chatMessageEdited', e);
-  }
-  chatMessageDeleted(e: ChatMessageDeletedEvent) {
-    this.emit('chatMessageDeleted', e);
-  }
-  typingIndicatorReceived(e: TypingIndicatorReceivedEvent) {
-    this.emit('typingIndicatorReceived', e);
-  }
-  readReceiptReceived(e: ReadReceiptReceivedEvent) {
-    this.emit('readReceiptReceived', e);
-  }
-  chatThreadCreated(e: ChatThreadCreatedEvent) {
-    this.emit('chatThreadCreated', e);
-  }
-  chatThreadDeleted(e: ChatThreadDeletedEvent) {
-    this.emit('chatThreadDeleted', e);
-  }
-  chatThreadPropertiesUpdated(e: ChatThreadPropertiesUpdatedEvent) {
-    this.emit('chatThreadPropertiesUpdated', e);
-  }
-  participantsAdded(e: ParticipantsAddedEvent) {
-    this.emit('participantsAdded', e);
-  }
-  participantsRemoved(e: ParticipantsRemovedEvent) {
-    this.emit('participantsRemoved', e);
+  off(userId: CommunicationIdentifier, event: string, listener: (...args: any[]) => void) {
+    this.getOrCreateEmitter(userId).off(event, listener);
   }
 
-  private emit(event: string, payload: any) {
-    if (this.async) {
-      setImmediate(() => {
-        this.emitter.emit(event, payload);
-      });
-    } else {
-      this.emitter.emit(event, payload);
+  chatMessageReceived(targets: CommunicationIdentifier[], e: ChatMessageReceivedEvent) {
+    this.emit(targets, 'chatMessageReceived', e);
+  }
+  chatMessageEdited(targets: CommunicationIdentifier[], e: ChatMessageEditedEvent) {
+    this.emit(targets, 'chatMessageEdited', e);
+  }
+  chatMessageDeleted(targets: CommunicationIdentifier[], e: ChatMessageDeletedEvent) {
+    this.emit(targets, 'chatMessageDeleted', e);
+  }
+  typingIndicatorReceived(targets: CommunicationIdentifier[], e: TypingIndicatorReceivedEvent) {
+    this.emit(targets, 'typingIndicatorReceived', e);
+  }
+  readReceiptReceived(targets: CommunicationIdentifier[], e: ReadReceiptReceivedEvent) {
+    this.emit(targets, 'readReceiptReceived', e);
+  }
+  chatThreadCreated(targets: CommunicationIdentifier[], e: ChatThreadCreatedEvent) {
+    this.emit(targets, 'chatThreadCreated', e);
+  }
+  chatThreadDeleted(targets: CommunicationIdentifier[], e: ChatThreadDeletedEvent) {
+    this.emit(targets, 'chatThreadDeleted', e);
+  }
+  chatThreadPropertiesUpdated(targets: CommunicationIdentifier[], e: ChatThreadPropertiesUpdatedEvent) {
+    this.emit(targets, 'chatThreadPropertiesUpdated', e);
+  }
+  participantsAdded(targets: CommunicationIdentifier[], e: ParticipantsAddedEvent) {
+    this.emit(targets, 'participantsAdded', e);
+  }
+  participantsRemoved(targets: CommunicationIdentifier[], e: ParticipantsRemovedEvent) {
+    this.emit(targets, 'participantsRemoved', e);
+  }
+
+  private getOrCreateEmitter(userId: CommunicationIdentifier): EventEmitter {
+    const flatUserId = toFlatCommunicationIdentifier(userId);
+    if (!this.emitters[flatUserId]) {
+      this.emitters[flatUserId] = new EventEmitter();
     }
+    return this.emitters[flatUserId];
+  }
+
+  private emit(targets: CommunicationIdentifier[], event: string, payload: any) {
+    targets.forEach((target) => {
+      const emitter = this.emitters[toFlatCommunicationIdentifier(target)];
+      if (!emitter) {
+        // Possible if this target never subscribed to any events.
+        return;
+      }
+      if (this.async) {
+        setImmediate(() => {
+          emitter.emit(event, payload);
+        });
+      } else {
+        emitter.emit(event, payload);
+      }
+    });
   }
 }
+
+export const getThreadEventTargets = (
+  thread: Thread,
+  localUserId: CommunicationIdentifier
+): CommunicationIdentifier[] => {
+  const flatLocalUserId = toFlatCommunicationIdentifier(localUserId);
+  return thread.participants.filter((p) => toFlatCommunicationIdentifier(p.id) !== flatLocalUserId).map((p) => p.id);
+};
