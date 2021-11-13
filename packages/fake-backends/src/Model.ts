@@ -6,15 +6,17 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import produce from 'immer';
 import { ThreadEventEmitter } from './ThreadEventEmitter';
-import { Thread } from './types';
+import { NetworkEventModel, Thread } from './types';
 
 export class Model {
   private threads: { [key: string]: Thread } = {};
   private threadEventEmitters: { [key: string]: ThreadEventEmitter } = {};
 
+  constructor(private networkEventModel: NetworkEventModel) {}
+
   public addThread(thread: Thread) {
     this.threads[thread.id] = thread;
-    this.threadEventEmitters[thread.id] = new ThreadEventEmitter();
+    this.threadEventEmitters[thread.id] = new ThreadEventEmitter(this.networkEventModel);
   }
 
   public getThreadsForUser(userId: CommunicationIdentifier): Thread[] {

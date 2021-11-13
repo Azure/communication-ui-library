@@ -22,7 +22,7 @@ export class ThreadEventEmitter {
   private emitters: { [key: string]: EventEmitter } = {};
   private eventQueue: EventPayload[] = [];
 
-  constructor(private networkModel: NetworkEventModel = { asyncDelivery: false }) {}
+  constructor(private networkModel: NetworkEventModel) {}
 
   on(userId: CommunicationIdentifier, event: string, listener: (...args: any[]) => void) {
     this.getOrCreateEmitter(userId).on(event, listener);
@@ -74,9 +74,7 @@ export class ThreadEventEmitter {
       this.eventQueue.push({ emitter, event, payload });
 
       if (this.networkModel.asyncDelivery) {
-        setImmediate(() => {
-          emitter.emit(event, payload);
-        });
+        setTimeout(() => this.dispatchOneEvent(), Math.random() * (this.networkModel.maxDelayMilliseconds ?? 0));
       } else {
         this.dispatchOneEvent();
       }
