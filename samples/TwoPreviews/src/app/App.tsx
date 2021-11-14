@@ -4,7 +4,7 @@
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
-import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
+import { initializeIcons, registerIcons, Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import {
   buildTime,
@@ -35,7 +35,7 @@ type AppPages = 'home' | 'call' | 'endCall';
 
 const webAppTitle = document.title;
 
-const App = (): JSX.Element => {
+const SingleApp = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
 
   // User credentials to join a call with - these are retrieved from the server
@@ -132,6 +132,15 @@ const App = (): JSX.Element => {
       document.title = `error - ${webAppTitle}`;
       return <>Invalid page</>;
   }
+};
+
+const App = (): JSX.Element => {
+  return (
+    <Stack horizontal>
+      <SingleApp key="left" />
+      <SingleApp key="right" />
+    </Stack>
+  );
 };
 
 export default App;
