@@ -528,8 +528,8 @@ export const createAzureCommunicationCallAdapter = async ({
   locator
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({ userId });
-  const callAgent = await callClient.createCallAgent(credential, { displayName });
-  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
+  // const callAgent = await callClient.createCallAgent(credential, { displayName });
+  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, {} as CallAgent, locator);
   return adapter;
 };
 
