@@ -47,8 +47,7 @@ export const floatingLocalVideoModalStyle = (
     {
       root: {
         width: '100%',
-        height: '100%',
-        overflow: 'hidden'
+        height: '100%'
       },
       main: {
         minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
@@ -58,7 +57,8 @@ export const floatingLocalVideoModalStyle = (
         position: 'absolute',
         bottom: '0.5rem',
         boxShadow: theme.effects.elevation8,
-        borderRadius: theme.effects.roundedCorner4
+        borderRadius: theme.effects.roundedCorner4,
+        overflow: 'hidden'
       }
     },
     { main: theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' } }
