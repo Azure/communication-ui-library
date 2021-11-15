@@ -6,6 +6,8 @@ Before we release a new version or beta version the following checklist should b
 
 * ✅ Package version updates
   * Ensure packages to be released have the correct version number
+* ✅ Package "types" field
+  * Ensure packages to be released have the correct "types" field in their respective package.json based on whether the release is public vs beta vs alpha
 * ✅ Release documentation
   * Ensure changelogs have been generated for the released packages
 * ✅ Manual and automated tests pass
