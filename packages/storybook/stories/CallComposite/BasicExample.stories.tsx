@@ -39,8 +39,7 @@ const BasicStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          mobileView={args.mobileView}
-          options={{ errorBar: args.errorBar }}
+          options={{ mobileView: args.mobileView, errorBar: args.errorBar }}
         />
       ) : (
         <ConfigHintBanner />
