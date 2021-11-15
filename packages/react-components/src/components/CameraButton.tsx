@@ -22,6 +22,10 @@ export interface CameraButtonStrings {
   onLabel: string;
   /** Label when button is off. */
   offLabel: string;
+  /** Tooltip content when the button is on. */
+  tooltipOnContent?: string;
+  /** Tooltip content when the button is off. */
+  tooltipOffContent?: string;
 }
 
 /**

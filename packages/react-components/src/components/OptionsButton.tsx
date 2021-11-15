@@ -66,6 +66,10 @@ export interface OptionsButtonStrings {
    */
   label: string;
   /**
+   * Button tooltip content.
+   */
+  tooltipContent?: string;
+  /**
    * Title of camera menu
    */
   cameraMenuTitle: string;
