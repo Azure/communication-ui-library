@@ -31,7 +31,8 @@ export const sendBoxStyle = mergeStyles({
  * @private
  */
 export const sendButtonStyle = mergeStyles({
-  margin: '.6rem',
+  marginTop: '0.567rem',
+  marginBottom: '0.559rem',
   height: '1.25rem',
   width: '1.25rem'
 });
@@ -40,7 +41,7 @@ export const sendButtonStyle = mergeStyles({
  * @private
  */
 export const sendIconStyle = mergeStyles({
-  width: '1.0625rem',
-  height: '1.0625rem',
+  width: '1.25rem',
+  height: '1.25rem',
   margin: 'auto'
 });
