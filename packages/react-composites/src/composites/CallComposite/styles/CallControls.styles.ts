@@ -104,3 +104,12 @@ export const optionsButtonWithIncreasedTouchTargets: OptionsButtonStyles = {
     menuItemStyles: buttonFlyoutIncreasedSizeStyles
   }
 };
+
+/**
+ * @private
+ */
+export const controlButtonBaseStyle: IButtonStyles = {
+  label: {
+    minWidth: '2.25rem'
+  }
+};
