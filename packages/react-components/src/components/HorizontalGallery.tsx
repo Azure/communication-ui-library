@@ -14,6 +14,7 @@ const DEFAULT_CHILDREN_PER_PAGE = 5;
 
 /**
  * {@link HorizontalGallery} Component Styles.
+ * @public
  */
 export interface HorizontalGalleryStyles extends BaseCustomStyles {
   previousButton?: IStyle;
