@@ -62,7 +62,7 @@
     "test": "",
     "test:coverage": "",
     "check-deps": "node scripts/verifyDependencies",
-    "check-types-field": "node scripts/verifyTypeTrimmedDeclaration verify ",
+    "check-types-field": "node scripts/verifyTypeTrimmedDeclaration verify",
     "update-types-field": "node scripts/verifyTypeTrimmedDeclaration update",
     "api-extractor": "tsc && api-extractor run --local",
     "generate-doc": "api-documenter markdown -i temp -o docGen",

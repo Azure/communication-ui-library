@@ -4,10 +4,10 @@
 /**
  * Verify the 'types' field is correct in the package.json based on the supplied release type parameter.
  *
- * @param releaseCandidate - this should be 'public', 'beta' or 'alpha'.
- *
  * @command verify - this is the default. This checks the field is correct.
  * @command update - this can be used to update the field to the correct string.
+ *
+ * @param releaseCandidate - this must be 'public', 'beta' or 'alpha'.
  *
  * @examples
  *   > node .\verifyTypeTrimmedDeclaration.js verify --rc public
