@@ -9,6 +9,9 @@ on:
         description: 'Branch or tag to create release from'
         required: true
         default: 'main'
+      release-type:
+        description: 'Release type. This must be public, beta, alpha'
+        required: true
 
 jobs:
   release:
@@ -25,6 +28,13 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+
+      # Verify the github action workflow inputs are expected values
+      - name: Check release-type input
+        if: ${{ github.event.inputs.release-type != public && github.event.inputs.release-type != beta && github.event.inputs.release-type != alpha }}
+        run: |
+          echo 'Release type incorrect! It should be public, beta or alpha.'
+          exit(1)
 
       # Setup bot information for creating pull request
       # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
@@ -66,6 +76,20 @@ jobs:
       # Important to check version consistency again after bumping versions.
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
+
+      # Update the types field in the package.json
+      - name: Update package.json types field is set to public
+        if: ${{ github.event.inputs.release-type == public }}
+        run: npm run update-types-field -- --rc public
+        working-directory: ./packages/communication-react
+      - name: Update package.json types field is set to beta
+        if: ${{ github.event.inputs.release-type == beta }}
+        run: npm run update-types-field -- --rc beta
+        working-directory: ./packages/communication-react
+      - name: Update package.json types field is set to alpha
+        if: ${{ github.event.inputs.release-type == alpha }}
+        run: npm run update-types-field -- --rc alpha
+        working-directory: ./packages/communication-react
 
       # Retrieve new version to create branch with
       - name: Retrieve new version from package.json

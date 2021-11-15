@@ -34,6 +34,15 @@ jobs:
       - name: Install dependencies
         run: rush install
 
+      # Update the types field in the package.json to use the untrimmed types file
+      - name: Update package.json types field is set to alpha
+        run: npm run update-types-field -- --rc alpha
+        working-directory: ./packages/communication-react
+      # Verify the types field in the package.json was updated successfully
+      - name: Verify package.json types field is set to alpha
+        run: npm run check-types-field -- --rc alpha
+        working-directory: ./packages/communication-react
+
       # Get datetime
       - name: Get datetime for alpha release name
         id: datetime

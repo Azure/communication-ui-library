@@ -3,9 +3,12 @@ name: Release branch - Publish npm package
 on:
   workflow_dispatch:
     inputs:
+      release-type:
+        description: 'Release type. This must be public, beta, alpha'
+        required: true
       npm-tag:
         description: 'Npm tag for the release, e.g. latest, next, dev'
-        required: true
+        required: false
 
 jobs:
   publish:
@@ -26,11 +29,32 @@ jobs:
         with:
           node-version: '14.x'
 
+      # Verify the github action workflow inputs are expected values
+      - name: Check release-type input
+        if: ${{ github.event.inputs.release-type != public && github.event.inputs.release-type != beta && github.event.inputs.release-type != alpha }}
+        run: |
+          echo 'Release type incorrect! It should be public, beta or alpha.'
+          exit(1)
+
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
+
+      # Verify the types field in the package.json is correct
+      - name: Verify package.json types field is set to public
+        if: ${{ github.event.inputs.release-type == public }}
+        run: npm run check-types-field -- --rc public
+        working-directory: ./packages/communication-react
+      - name: Verify package.json types field is set to beta
+        if: ${{ github.event.inputs.release-type == beta }}
+        run: npm run check-types-field -- --rc beta
+        working-directory: ./packages/communication-react
+      - name: Verify package.json types field is set to alpha
+        if: ${{ github.event.inputs.release-type == alpha }}
+        run: npm run check-types-field -- --rc alpha
+        working-directory: ./packages/communication-react
 
       # Builds
       - name: Build Packages and Samples
