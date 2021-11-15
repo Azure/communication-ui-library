@@ -26,7 +26,8 @@ const path = require('path');
 const { exit } = require('process');
 const yargs = require('yargs');
 
-// These would need dynamically fetched from the package.json if this is used outside of this package.
+// Hard code constant values. These would need dynamically fetched from the package.json if
+// this is used outside of this package.
 const TYPES_FIELD_PREFIX = 'dist/communication-react';
 const PACKAGE_JSON_PATH = path.resolve(__dirname, '../package.json');
 
