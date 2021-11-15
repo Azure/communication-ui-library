@@ -130,7 +130,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
     case 'lobby':
-      return <LobbyPage options={props.options} />;
+      return <LobbyPage mobileView={props.mobileView} options={props.options} />;
     case 'call':
       return (
         <CallPage

@@ -46,7 +46,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   useEffect(() => {
     const updateIsMobile = (): void => setIsMobileSession(detectMobileSession());
     window.addEventListener('resize', updateIsMobile);
-    return window.removeEventListener('resize', updateIsMobile);
+    return () => window.removeEventListener('resize', updateIsMobile);
   }, []);
 
   useEffect(() => {
