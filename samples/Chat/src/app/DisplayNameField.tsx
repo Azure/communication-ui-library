@@ -9,7 +9,7 @@ import {
   labelFontStyle,
   warningStyle
 } from './styles/DisplayNameField.styles';
-import { ENTER_KEY, MAXIMUM_LENGTH_OF_NAME } from './utils/constants';
+import { ENTER_KEY } from './utils/constants';
 
 import React from 'react';
 import { TextField } from '@fluentui/react';
@@ -17,23 +17,13 @@ import { TextField } from '@fluentui/react';
 interface DisplayNameFieldProps {
   setName(displayName: string): void;
   setEmptyWarning(isEmpty: boolean): void;
-  setNameLengthExceedLimit(isNameLengthExceedLimit: boolean): void;
   isEmpty: boolean;
-  isNameLengthExceedLimit: boolean;
   defaultName?: string;
   validateName?(): void;
 }
 
 const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element => {
-  const {
-    setName,
-    setEmptyWarning,
-    setNameLengthExceedLimit,
-    isEmpty,
-    isNameLengthExceedLimit,
-    defaultName,
-    validateName
-  } = props;
+  const { setName, setEmptyWarning, isEmpty, defaultName, validateName } = props;
 
   const onNameTextChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -44,11 +34,8 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element =>
     setName(newValue);
     if (!newValue) {
       setEmptyWarning(true);
-    } else if (newValue.length > MAXIMUM_LENGTH_OF_NAME) {
-      setNameLengthExceedLimit(true);
     } else {
       setEmptyWarning(false);
-      setNameLengthExceedLimit(false);
     }
   };
 
@@ -60,7 +47,7 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element =>
         defaultValue={defaultName}
         inputClassName={inputBoxTextStyle}
         ariaLabel="Choose your name"
-        className={isEmpty || isNameLengthExceedLimit ? inputBoxWarningStyle : inputBoxStyle}
+        className={isEmpty ? inputBoxWarningStyle : inputBoxStyle}
         onChange={onNameTextChange}
         id="displayName"
         placeholder="Enter your name"
@@ -75,11 +62,6 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element =>
             <div role="alert" className={warningStyle}>
               {' '}
               Name cannot be empty{' '}
-            </div>
-          ) : isNameLengthExceedLimit ? (
-            <div role="alert" className={warningStyle}>
-              {' '}
-              Name cannot be over 10 characters{' '}
             </div>
           ) : undefined
         }
