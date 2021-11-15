@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DefaultPalette as palette, IButtonStyles, IContextualMenuItemStyles, IStyle, Theme } from '@fluentui/react';
-import { OptionsButtonStyles, ParticipantsButtonStyles } from '@internal/react-components';
+import { DevicesButtonStyles, ParticipantsButtonStyles } from '@internal/react-components';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
@@ -99,7 +99,7 @@ export const participantButtonWithIncreasedTouchTargets: ParticipantsButtonStyle
 /**
  * @private
  */
-export const optionsButtonWithIncreasedTouchTargets: OptionsButtonStyles = {
+export const devicesButtonWithIncreasedTouchTargets: DevicesButtonStyles = {
   menuStyles: {
     menuItemStyles: buttonFlyoutIncreasedSizeStyles
   }

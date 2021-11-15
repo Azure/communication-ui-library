@@ -234,7 +234,7 @@ Fri, 21 May 2021 16:16:28 GMT
   * CameraButton
   * EndCallButton
   * MicrophoneButton
-  * OptionsButton
+  * DevicesButton
   * ScreenShareButton
 * GridLayout
 * MessageStatusIndicator

@@ -1,30 +1,30 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { OptionsButton } from '@azure/communication-react';
+import { DevicesButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
-import { OptionsButtonCustomExample } from './snippets/Custom.snippet';
-import { OptionsButtonDefaultExample } from './snippets/Default.snippet';
-import { OptionsButtonWithKnobs } from './snippets/OptionsButtonWithKnobs.snippet';
-import { OptionsButtonWithLabelExample } from './snippets/WithLabel.snippet';
+import { DevicesButtonCustomExample } from './snippets/Custom.snippet';
+import { DevicesButtonDefaultExample } from './snippets/Default.snippet';
+import { DevicesButtonWithKnobs } from './snippets/DevicesButtonWithKnobs.snippet';
+import { DevicesButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
-const OptionsButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
-const OptionsButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
-const OptionsButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
+const DevicesButtonCustomExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
+const DevicesButtonDefaultExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const DevicesButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
-import { OptionsButton } from '@azure/communication-react';
+import { DevicesButton } from '@azure/communication-react';
 `;
 
 const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>OptionsButton</Title>
+      <Title>DevicesButton</Title>
       <Description>
         A button to open a menu that allows for device selection. For use with the [Control
         Bar](./?path=/docs/ui-components-controlbar--control-bar).
@@ -35,56 +35,56 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Example</Heading>
       <Description>
-        The default `OptionsButton` component shows an horizontal `More` icon with no label as in the example below.
+        The default `DevicesButton` component shows an horizontal `More` icon with no label as in the example below.
       </Description>
-      <Canvas mdxSource={OptionsButtonDefaultExampleText}>
-        <OptionsButtonDefaultExample />
+      <Canvas mdxSource={DevicesButtonDefaultExampleText}>
+        <DevicesButtonDefaultExample />
       </Canvas>
 
-      <Heading>OptionsButton with default label</Heading>
+      <Heading>DevicesButton with default label</Heading>
       <Description>
-        You can display the button label which, by default, will show below the icon as `Options`.
+        You can display the button label which, by default, will show below the icon as `Devices`.
       </Description>
-      <Canvas mdxSource={OptionsButtonWithLabelExampleText}>
-        <OptionsButtonWithLabelExample />
+      <Canvas mdxSource={DevicesButtonWithLabelExampleText}>
+        <DevicesButtonWithLabelExample />
       </Canvas>
 
-      <Heading>Custom OptionsButton Styles</Heading>
+      <Heading>Custom DevicesButton Styles</Heading>
       <Description>
-        You can change the styles of the `OptionsButton` as you would customized any Button (styles, primary,
+        You can change the styles of the `DevicesButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
       <Description>
         Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
         to each element to avoid warning for children in a list.
       </Description>
-      <Canvas mdxSource={OptionsButtonCustomExampleText}>
-        <OptionsButtonCustomExample />
+      <Canvas mdxSource={DevicesButtonCustomExampleText}>
+        <DevicesButtonCustomExample />
       </Canvas>
 
-      <Heading>OptionsButton Props</Heading>
+      <Heading>DevicesButton Props</Heading>
       <Description>
-        `OptionsButton` features all props a [FluentUI
+        `DevicesButton` features all props a [FluentUI
         Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional
         properties.
       </Description>
-      <Props of={OptionsButton} />
+      <Props of={DevicesButton} />
     </>
   );
 };
 
-const OptionsStory = (args): JSX.Element => {
-  return <OptionsButtonWithKnobs {...args} />;
+const DevicesStory = (args): JSX.Element => {
+  return <DevicesButtonWithKnobs {...args} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const Options = OptionsStory.bind({});
+export const Devices = DevicesStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-options`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Options`,
-  component: OptionsButton,
+  id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-devices`,
+  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Devices`,
+  component: DevicesButton,
   argTypes: {
     showLabel: controlsToAdd.showLabel,
     cameras: controlsToAdd.cameras,
