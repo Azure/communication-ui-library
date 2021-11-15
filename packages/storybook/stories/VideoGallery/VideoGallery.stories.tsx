@@ -55,8 +55,9 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Horizontal Gallery</Heading>
       <Description>
-        The remote participants with their video off are placed in a Horizontal Gallery in the lower section. A gif
-        element is used in the example below to simulate a remote video stream.
+        The remote participants not in the Grid Layout are placed in a Horizontal Gallery in the lower section. A gif
+        element is used to simulate a remote video stream to move the other remote participants to the Horizontal
+        Gallery in the example below.
       </Description>
       <Canvas mdxSource={WithHorizontalGalleryExampleText}>
         <WithHorizontalGalleryExample />
