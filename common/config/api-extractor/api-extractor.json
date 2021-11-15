@@ -10,7 +10,10 @@
     "enabled": true
   },
   "dtsRollup": {
-    "enabled": true
+    "enabled": true,
+    "untrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-untrimmed.d.ts",
+    "betaTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-beta.d.ts",
+    "publicTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-public.d.ts"
   },
   "messages": {
     "extractorMessageReporting": {
