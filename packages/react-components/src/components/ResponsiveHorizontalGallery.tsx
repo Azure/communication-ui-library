@@ -27,6 +27,7 @@ export const ResponsiveHorizontalGallery = (props: {
   const rightPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingRight) : 0;
 
   const childrenPerPage = calculateChildrenPerPage({
+    numberOfChildren: React.Children.count(props.children),
     containerWidth: containerWidth - leftPadding - rightPadding,
     childWidthRem,
     gapWidthRem,
@@ -47,18 +48,35 @@ export const ResponsiveHorizontalGallery = (props: {
  * gaps in between
  */
 const calculateChildrenPerPage = (args: {
+  numberOfChildren: number;
   containerWidth: number;
   childWidthRem: number;
   gapWidthRem: number;
   buttonWidthRem: number;
 }): number => {
-  const { containerWidth, buttonWidthRem, childWidthRem, gapWidthRem } = args;
+  const { numberOfChildren, containerWidth, buttonWidthRem, childWidthRem, gapWidthRem } = args;
 
-  const buttonWidth = convertRemToPx(buttonWidthRem);
   const childWidth = convertRemToPx(childWidthRem);
   const gapWidth = convertRemToPx(gapWidthRem);
 
-  /** First compute childrenSpace from container width
+  /** First check how many children can fit in containerWidth.
+   *    __________________________________
+   *   |                ||                |
+   *   |                ||                |
+   *   |________________||________________|
+   *   <-----------containerWidth--------->
+   *  containerWidth = n * childWidth + (n - 1) * gapWidth. Isolate n and take the floor.
+   */
+  const numberOfChildrenInContainer = Math.floor((containerWidth + gapWidth) / (childWidth + gapWidth));
+  // If all children fit then return numberOfChildrenInContainer
+  if (numberOfChildren <= numberOfChildrenInContainer) {
+    return numberOfChildrenInContainer;
+  }
+
+  const buttonWidth = convertRemToPx(buttonWidthRem);
+
+  /** We know we need to paginate. So we need to subtract the buttonWidth twice and gapWidth twice from
+   * containerWidth to compute childrenSpace
    *   <-----------containerWidth--------->
    *    __________________________________
    *   | ||             ||             || |
@@ -68,6 +86,6 @@ const calculateChildrenPerPage = (args: {
    */
   const childrenSpace = containerWidth - 2 * buttonWidth - 2 * gapWidth;
   // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
-  // childrenSpace = n * childWidth + (n + 1) * gap. Isolate n and take the floor.
+  // childrenSpace = n * childWidth + (n - 1) * gapWidth. Isolate n and take the floor.
   return Math.floor((childrenSpace + gapWidth) / (childWidth + gapWidth));
 };

@@ -499,6 +499,8 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 export interface CameraButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -887,6 +889,7 @@ export interface ControlBarButtonProps extends IButtonProps {
     showLabel?: boolean;
     strings?: ControlBarButtonStrings;
     styles?: ControlBarButtonStyles;
+    tooltipId?: string;
 }
 
 // @public
@@ -894,6 +897,9 @@ export interface ControlBarButtonStrings {
     label?: string;
     offLabel?: string;
     onLabel?: string;
+    tooltipContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -1105,6 +1111,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
 // @public
 export interface EndCallButtonStrings {
     label: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -1544,6 +1551,8 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -1604,6 +1613,7 @@ export interface OptionsButtonStrings {
     microphoneMenuTooltip: string;
     speakerMenuTitle: string;
     speakerMenuTooltip: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -1749,6 +1759,7 @@ export interface ParticipantsButtonStrings {
     menuHeader: string;
     muteAllButtonLabel: string;
     participantsListButtonLabel: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -1816,6 +1827,8 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 export interface ScreenShareButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -2084,6 +2097,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }
@@ -2108,6 +2122,7 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps {
     children?: React_2.ReactNode;
     displayName?: string;
+    initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;

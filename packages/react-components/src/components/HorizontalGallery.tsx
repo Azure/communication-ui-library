@@ -62,26 +62,31 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = paginatedChildren[clippedPage];
 
+  const showButtons = numberOfChildren > childrenPerPage;
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;
 
   return (
     <Stack horizontal className={mergeStyles(horizontalGalleryContainerStyle, props.styles?.root)}>
-      <HorizontalGalleryNavigationButton
-        key="previous-nav-button"
-        icon={<Icon iconName="HorizontalGalleryLeftButton" />}
-        styles={styles?.previousButton}
-        onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
-        disabled={disablePreviousButton}
-      />
+      {showButtons && (
+        <HorizontalGalleryNavigationButton
+          key="previous-nav-button"
+          icon={<Icon iconName="HorizontalGalleryLeftButton" />}
+          styles={styles?.previousButton}
+          onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
+          disabled={disablePreviousButton}
+        />
+      )}
       {childrenOnCurrentPage}
-      <HorizontalGalleryNavigationButton
-        key="next-nav-button"
-        icon={<Icon iconName="HorizontalGalleryRightButton" />}
-        styles={styles?.nextButton}
-        onClick={() => setPage(Math.min(lastPage, page + 1))}
-        disabled={disableNextButton}
-      />
+      {showButtons && (
+        <HorizontalGalleryNavigationButton
+          key="next-nav-button"
+          icon={<Icon iconName="HorizontalGalleryRightButton" />}
+          styles={styles?.nextButton}
+          onClick={() => setPage(Math.min(lastPage, page + 1))}
+          disabled={disableNextButton}
+        />
+      )}
     </Stack>
   );
 };
