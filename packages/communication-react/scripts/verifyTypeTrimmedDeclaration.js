@@ -80,17 +80,15 @@ function outputNewData(filepath, data) {
 
 function verify(argv) {
   console.log('Verifying package.json types field');
-  const releaseCandidate = argv.releaseCandidate;
   const packageData = loadPackageJson(PACKAGE_JSON_PATH);
-  verifyPackageJsonTypeField(packageData, releaseCandidate);
+  verifyPackageJsonTypeField(packageData, argv.releaseCandidate);
   console.log('✅ Verification successful');
 }
 
 function update(argv) {
   console.log('Updating package.json types field');
-  const releaseCandidate = argv.releaseCandidate;
   const packageData = loadPackageJson(PACKAGE_JSON_PATH);
-  rewriteTypesField(packageData, releaseCandidate);
+  rewriteTypesField(packageData, argv.releaseCandidate);
   outputNewData(PACKAGE_JSON_PATH, packageData);
   console.log('✅ Update successful');
 }
