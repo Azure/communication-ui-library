@@ -40,7 +40,7 @@ const CustomDataModelStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          options={{ mobileView: args.mobileView }}
+          mobileView={args.mobileView}
         />
       ) : (
         <ConfigHintBanner />

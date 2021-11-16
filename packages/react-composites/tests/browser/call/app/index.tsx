@@ -68,7 +68,7 @@ function App(): JSX.Element {
           <CallComposite
             adapter={callAdapter}
             locale={locale}
-            options={{ mobileView: isMobile() }}
+            mobileView={isMobile()}
             onFetchParticipantMenuItems={injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined}
           />
         )}

@@ -8,7 +8,7 @@ const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').def
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
 const mobileViewSnippet = `
-<MeetingComposite options={{ mobileView: true }} />
+<MeetingComposite mobileView={true} />
 `;
 
 export const getDocs: () => JSX.Element = () => {

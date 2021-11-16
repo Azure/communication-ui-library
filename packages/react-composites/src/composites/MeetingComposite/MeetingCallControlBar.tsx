@@ -21,7 +21,7 @@ export interface MeetingCallControlBarProps {
   peopleButtonChecked: boolean;
   onChatButtonClicked: () => void;
   onPeopleButtonClicked: () => void;
-  mobileView?: boolean;
+  mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
 }
 

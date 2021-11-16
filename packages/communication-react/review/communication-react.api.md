@@ -288,7 +288,6 @@ export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCame
 
 // @public
 export type CallCompositeOptions = {
-    mobileView?: boolean;
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
 };
@@ -299,8 +298,8 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
-    // (undocumented)
     callInvitationUrl?: string;
+    mobileView?: boolean;
     options?: CallCompositeOptions;
 }
 
@@ -1372,19 +1371,14 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @beta
-export type MeetingCompositeOptions = {
-    mobileView?: boolean;
-};
-
-// @beta
 export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @beta
 export type MeetingCompositeProps = {
     meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
+    mobileView?: boolean;
     meetingInvitationURL?: string;
-    options?: MeetingCompositeOptions;
 };
 
 // @beta
