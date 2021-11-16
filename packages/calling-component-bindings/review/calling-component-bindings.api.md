@@ -126,6 +126,9 @@ export const getCallingSelector: <Component extends (props: any) => JSX.Element 
 export const _isInCall: (callStatus?: CallState | undefined) => boolean;
 
 // @internal
+export const _isInLobbyOrConnecting: (callStatus: CallState | undefined) => boolean;
+
+// @internal
 export const _isPreviewOn: (deviceManager: DeviceManagerState) => boolean;
 
 // @public
