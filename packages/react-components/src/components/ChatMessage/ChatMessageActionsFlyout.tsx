@@ -63,6 +63,8 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
 
   return (
     <ContextualMenu
+      alignTargetEdge={true}
+      isBeakVisible={false}
       items={menuItems}
       hidden={props.hidden}
       target={props.target}
