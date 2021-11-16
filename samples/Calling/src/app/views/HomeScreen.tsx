@@ -39,13 +39,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   // Get display name from local storage if available
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
-  const [nameTooLongWarning, setNameTooLongWarning] = useState(false);
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
   const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
-  const buttonEnabled = displayName && !nameTooLongWarning && (!teamsCallChosen || teamsLink);
+  const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
 
   return (
     <Stack
@@ -80,12 +79,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
           </Stack>
-          <DisplayNameField
-            defaultName={displayName}
-            setName={setDisplayName}
-            isNameLengthExceedLimit={nameTooLongWarning}
-            setNameLengthExceedLimit={setNameTooLongWarning}
-          />
+          <DisplayNameField defaultName={displayName} setName={setDisplayName} />
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
