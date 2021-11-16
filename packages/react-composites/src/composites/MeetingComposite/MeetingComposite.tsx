@@ -31,12 +31,12 @@ export type MeetingCompositeProps = {
    */
   fluentTheme?: PartialTheme | Theme;
   /**
-   * Optimizes the composite UI for use on a mobile device.
-   * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
-   * @defaultValue false
-   * @alpha
+   * Optimizes the composite form factor for either desktop or mobile.
+   * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
+   * @defaultValue 'desktop'
+   * @beta
    */
-  mobileView?: boolean;
+  formFactor?: 'desktop' | 'mobile';
   /**
    * URL that can be used to copy a meeting invite to the Users clipboard.
    */
@@ -49,7 +49,7 @@ export type MeetingCompositeProps = {
  * @beta
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
-  const { meetingAdapter, fluentTheme } = props;
+  const { meetingAdapter, fluentTheme, formFactor = 'desktop' } = props;
 
   if (!meetingAdapter) {
     throw 'Meeting adapter is undefined';
@@ -91,7 +91,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
         <Stack horizontal grow>
           <Stack.Item grow>
             <CallComposite
-              mobileView={props.mobileView}
+              formFactor={formFactor}
               options={{ callControls: false }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
@@ -124,7 +124,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onChatButtonClicked={toggleChat}
             peopleButtonChecked={showPeople}
             onPeopleButtonClicked={togglePeople}
-            mobileView={props.mobileView ?? false}
+            mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
           />
         )}
