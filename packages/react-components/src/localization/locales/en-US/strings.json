@@ -41,7 +41,7 @@
   },
   "devicesButton": {
     "label": "Devices",
-    "tooltipContent": "Change device options",
+    "tooltipContent": "Manage devices",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
     "microphoneMenuTitle": "Microphone",
