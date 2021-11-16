@@ -23,7 +23,7 @@ export const videoGalleryOuterDivStyle = mergeStyles({ position: 'relative', wid
  * @private
  */
 export const videoGalleryContainerStyle: IStackStyles = {
-  root: { position: 'relative', height: '100%', padding: '0.5rem', gap: '0.5rem' }
+  root: { position: 'relative', height: '100%', width: '100%', padding: '0.5rem', gap: '0.5rem' }
 };
 
 /**
@@ -102,9 +102,7 @@ export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, 
  */
 export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
   return {
-    root: {
-      '> *': isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
-    }
+    children: isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
   };
 };
 
