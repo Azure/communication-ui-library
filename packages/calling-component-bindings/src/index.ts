@@ -28,4 +28,4 @@ export type { GetSelector as GetCallingSelector, EmptySelector } from './hooks/u
 export { useSelector as useCallingSelector } from './hooks/useSelector';
 export { useHandlers as useCallingHandlers } from './hooks/useHandlers';
 
-export { _isInCall, _isPreviewOn } from './callUtils';
+export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from './callUtils';
