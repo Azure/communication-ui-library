@@ -63,6 +63,7 @@ const MockRemoteParticipants = [
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const CustomStyleVideoGalleryExample: () => JSX.Element = () => {
+  const containerStyles = { height: '50vh' };
   const customStyles: VideoGalleryStyles = {
     root: {
       border: 'solid 5px red'
@@ -75,7 +76,7 @@ export const CustomStyleVideoGalleryExample: () => JSX.Element = () => {
     }
   };
   return (
-    <Stack style={{ height: '30rem' }}>
+    <Stack style={containerStyles}>
       <VideoGallery
         styles={customStyles}
         localParticipant={MockLocalParticipant}
