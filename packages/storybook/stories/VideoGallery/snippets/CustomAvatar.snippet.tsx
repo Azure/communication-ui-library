@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
+import { VideoGallery } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -42,7 +42,7 @@ const MockRemoteParticipants = [
 
 export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
   const onRenderAvatar = (userId, options, defaultOnRender): JSX.Element => {
-    switch (options.displayName) {
+    switch (options.text) {
       case 'You':
         return (
           <Stack>
@@ -83,9 +83,11 @@ export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
     }
   };
 
+  const containerStyle = { height: '50vh' };
+
   return (
-    <Stack style={{ height: '30rem' }}>
-      <VideoGalleryComponent
+    <Stack style={containerStyle}>
+      <VideoGallery
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
         onRenderAvatar={onRenderAvatar}
