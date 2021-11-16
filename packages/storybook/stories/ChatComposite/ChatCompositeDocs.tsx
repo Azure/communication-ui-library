@@ -85,8 +85,9 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Running in a Mobile browser</Heading>
       <Description>
-        Unlike the CallComposite and MeetingComposite, the ChatComposite has no `mobileView` flag. Instead the composite
-        is responsive to the container it is in and should perform optimally on mobile and desktop automatically.
+        Unlike the CallComposite and MeetingComposite, the ChatComposite has no `formFactor` property. Instead the
+        composite is responsive to the container it is in and should perform optimally on mobile and desktop
+        automatically.
       </Description>
 
       <Heading>Custom Data Model</Heading>

@@ -10,8 +10,8 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 
-const mobileViewSnippet = `
-<CallComposite mobileView={true} />
+const formFactorSnippet = `
+<CallComposite formFactor="mobile" />
 `;
 
 const cssSnippet = `
@@ -61,15 +61,15 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Running in a Mobile browser</Heading>
       <Description>
-        CallComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may use
-        the `mobileView` property. Currently this only supports Portrait orientation and not Landscape. The
-        CallComposite does not detect if it is running on mobile device vs desktop, instead you must identify if your
-        clients device is a mobile device and set the `mobileView` flag to true. This prop can be set at any time and
-        immediately updates the composite UI to be optimized for a mobile device.
+        CallComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may set
+        the `formFactor` property to `"mobile"`. Currently the mobile form factor only supports Portrait orientation and
+        not Landscape. The CallComposite does not detect if it is running on mobile device vs desktop, instead you must
+        identify if your clients device is a mobile device and set the `formFactor` property to `"mobile"`. This prop
+        can be set at any time and immediately updates the composite UI to be optimized for a mobile device.
       </Description>
-      <Source code={mobileViewSnippet} />
+      <Source code={formFactorSnippet} />
       <Description>
-        You can try out the mobile view in the [CallComposite Basic
+        You can try out the form factor property in the [CallComposite Basic
         Example](./?path=/story/composites-call-basicexample--basic-example).
       </Description>
 
