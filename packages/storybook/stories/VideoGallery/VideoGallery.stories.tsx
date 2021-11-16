@@ -11,10 +11,14 @@ import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet';
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
+import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
+import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 
 const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
+const FloatingLocalVideoExampleText = require('!!raw-loader!./snippets/FloatingLocalVideo.snippet.tsx').default;
+const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
 
 const importStatement = `import { VideoGallery } from '@azure/communication-react';`;
 
@@ -23,21 +27,53 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>VideoGallery</Title>
       <Description>
-        VideoGallery represents a layout of video tiles for a specific call. It displays a
-        [VideoTile](./?path=/docs/ui-components-videotile--video-tile) for the local user as well as for each remote
-        participant who has joined the call.
+        VideoGallery lays out the local user and each remote participant in a call in a
+        [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component. The VideoGallery component is made up
+        of a [Grid Layout](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), [Horizontal
+        Gallery](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), and a [Local Video
+        Tile](./?path=/docs/ui-components-videogallery--video-gallery#local-video-tile). The logic used to place each
+        [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component into which section is explained below.
       </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
 
-      <Heading>Default Example</Heading>
+      <Heading>Grid Layout</Heading>
       <Description>
-        VideoGallery is by default a grid of [VideoTile](./?path=/docs/ui-components-videotile--video-tile) components
-        representing each participant to the call.
+        If there are no remote video streams on, all participants are placed in the [Grid
+        Layout](./?path=/docs/ui-components-gridlayout--grid-layout) including the local user. Otherwise, only remote
+        participants with their video streams on are placed in the Grid Layout upto a max of `maxRemoteVideoStreams`.
+        The remaining participants are placed in the Horizontal Gallery.
       </Description>
       <Canvas mdxSource={DefaultVideoGalleryExampleText}>
         <DefaultVideoGalleryExample />
+      </Canvas>
+      <Description>
+        Note: The `maxRemoteVideoStreams` prop limits the number of remote video streams in the
+        [GridLayout](./?path=/docs/ui-components-gridlayout--grid-layout). If the number of remote participants with
+        their video stream on exceeds `maxRemoteVideoStreams` then remote participants in the `dominantSpeakers` prop
+        will be prioritized. Furthermore, the VideoGallery is designed to limit the re-ordering when the
+        `dominantSpeakers` prop is changed.
+      </Description>
+
+      <Heading>Horizontal Gallery</Heading>
+      <Description>
+        The remote participants not in the Grid Layout are placed in a Horizontal Gallery in the lower section. A gif
+        element is used to simulate a remote video stream to move the other remote participants to the Horizontal
+        Gallery in the example below.
+      </Description>
+      <Canvas mdxSource={WithHorizontalGalleryExampleText}>
+        <WithHorizontalGalleryExample />
+      </Canvas>
+
+      <Heading>Local Video Tile</Heading>
+      <Description>
+        By default, the local video tile is placed in the Grid Layout. But the local video tile can be placed in a
+        floating and draggable video tile in the bottom right corner by setting the `layout` prop to
+        &apos;floatingLocalVideo&apos;.
+      </Description>
+      <Canvas mdxSource={FloatingLocalVideoExampleText}>
+        <FloatingLocalVideoExample />
       </Canvas>
 
       <Heading>Custom Avatar</Heading>
