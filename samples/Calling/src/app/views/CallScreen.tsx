@@ -42,7 +42,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     console.log(`Call Id: ${callIdRef.current}`);
   }, [callIdRef.current]);
 
-  // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update mobileView.
+  // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
   useEffect(() => {
     const updateIsMobile = (): void => setIsMobileSession(detectMobileSession());
     window.addEventListener('resize', updateIsMobile);
@@ -90,7 +90,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       callInvitationUrl={window.location.href}
-      mobileView={isMobileSession}
+      formFactor={isMobileSession ? 'mobile' : 'desktop'}
     />
   );
 };
