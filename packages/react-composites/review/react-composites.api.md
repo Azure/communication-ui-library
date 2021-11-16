@@ -256,7 +256,7 @@ export interface CallCompositeStrings {
 
 // @public
 export type CallControlOptions = {
-    compressedMode?: boolean;
+    displayType?: 'default' | 'compact';
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;

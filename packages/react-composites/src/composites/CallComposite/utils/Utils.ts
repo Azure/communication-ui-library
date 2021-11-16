@@ -42,10 +42,8 @@ export const reduceCallControlsForMobile = (
   // Ensure call controls a valid object.
   const reduceCallControlOptions = callControlOptions === true ? {} : callControlOptions || {};
 
-  // Set to compressed mode when composite is optimized for mobile, unless developer has explicitly opted out.
-  if (reduceCallControlOptions.compressedMode !== false) {
-    reduceCallControlOptions.compressedMode = true;
-  }
+  // Set to compressed mode when composite is optimized for mobile
+  reduceCallControlOptions.displayType = 'compact';
 
   // Do not show screen share button when composite is optimized for mobile unless the developer
   // has explicitly opted in.
