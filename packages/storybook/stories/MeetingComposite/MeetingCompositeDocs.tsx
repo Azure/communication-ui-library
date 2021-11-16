@@ -47,7 +47,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={formFactorSnippet} />
       <Description>
-        You can try out the mobile view in the [MeetingComposite Basic
+        You can try out the form factor property in the [MeetingComposite Basic
         Example](./?path=/story/composites-meeting-basicexample--basic-example).
       </Description>
 

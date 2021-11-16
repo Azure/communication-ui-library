@@ -69,7 +69,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={formFactorSnippet} />
       <Description>
-        You can try out the mobile view in the [CallComposite Basic
+        You can try out the form factor property in the [CallComposite Basic
         Example](./?path=/story/composites-call-basicexample--basic-example).
       </Description>
 
