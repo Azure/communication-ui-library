@@ -28,9 +28,12 @@ const getDocs: () => JSX.Element = () => {
       <Title>VideoGallery</Title>
       <Description>
         VideoGallery lays out the local user and each remote participant in a call in a
-        [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component. The VideoGallery componet is comprised
-        ofa Grid Layout, Horizontal Gallery, and the Floating Local Video. The logic used for which section each
-        [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component is placed is explained below.
+        [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component. The VideoGallery component is made up
+        of a [Grid Layout](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), [Horizontal
+        Gallery](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), and the [Local Video
+        Tile](./?path=/docs/ui-components-videogallery--video-gallery#local-video-tile). The logic used for which
+        section each [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component is placed is explained
+        below.
       </Description>
 
       <Heading>Importing</Heading>
@@ -38,19 +41,20 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Grid Layout</Heading>
       <Description>
-        If there are no remote video streams on, all participants are placed in the Grid Layout including the local
-        user. Otherwise, only remote participants with their video streams on are placed in the Grid Layout. The
-        remaining participants are placed in the Horizontal Gallery.
+        If there are no remote video streams on, all participants are placed in the [Grid
+        Layout](./?path=/docs/ui-components-gridlayout--grid-layout) including the local user. Otherwise, only remote
+        participants with their video streams on are placed in the Grid Layout. The remaining participants are placed in
+        the Horizontal Gallery.
       </Description>
       <Canvas mdxSource={DefaultVideoGalleryExampleText}>
         <DefaultVideoGalleryExample />
       </Canvas>
       <Description>
         Note: The `maxRemoteVideoStreams` prop limits the number of remote video streams in the
-        [GridLayout](http://localhost:6006/?path=/docs/ui-components-gridlayout--grid-layout). If the number of remote
-        participants with their video stream on exceeds `maxRemoteVideoStreams` then remote participants in the
-        `dominantSpeakers` prop will be prioritized. Furthermore, the VideoGallery is designed to limit the re-ordering
-        when the `dominantSpeakers` prop is changed.
+        [GridLayout](./?path=/docs/ui-components-gridlayout--grid-layout). If the number of remote participants with
+        their video stream on exceeds `maxRemoteVideoStreams` then remote participants in the `dominantSpeakers` prop
+        will be prioritized. Furthermore, the VideoGallery is designed to limit the re-ordering when the
+        `dominantSpeakers` prop is changed.
       </Description>
 
       <Heading>Horizontal Gallery</Heading>
@@ -63,11 +67,10 @@ const getDocs: () => JSX.Element = () => {
         <WithHorizontalGalleryExample />
       </Canvas>
 
-      <Heading>Floating Local Video</Heading>
+      <Heading>Local Video Tile</Heading>
       <Description>
-        By default, the local participant is placed in the
-        [GridLayout](http://localhost:6006/?path=/docs/ui-components-gridlayout--grid-layout). But the local participant
-        can be placed in a floating and draggable video tile in the bottom right corner by setting the `layout` prop to
+        By default, the local video tile is placed in the Grid Layout. But the local video tile can be placed in a
+        floating and draggable video tile in the bottom right corner by setting the `layout` prop to
         &apos;floatingLocalVideo&apos;.
       </Description>
       <Canvas mdxSource={FloatingLocalVideoExampleText}>
