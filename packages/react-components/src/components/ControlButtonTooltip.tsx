@@ -21,6 +21,7 @@ export const ControlButtonTooltip = (props: ITooltipHostProps): JSX.Element => {
   return (
     <TooltipHost
       {...props}
+      data-ui-id={props.id}
       calloutProps={{ ...calloutProps, ...props.calloutProps }}
       styles={mergeStyleSets(hostStyles, props.styles)}
     >

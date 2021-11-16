@@ -31,11 +31,11 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    */
   adapter: CallAdapter;
   /**
-   * Optimizes the composite UI for use on a mobile device.
-   * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
-   * @defaultValue false
+   * Optimizes the composite form factor for either desktop or mobile.
+   * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
+   * @defaultValue 'desktop'
    */
-  mobileView?: boolean;
+  formFactor?: 'desktop' | 'mobile';
   /**
    * URL to invite new participants to the current call. If this is supplied, a button appears in the Participants
    * Button flyout menu.
@@ -163,7 +163,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
-    mobileView = false
+    formFactor = 'desktop'
   } = props;
   useEffect(() => {
     (async () => {
@@ -173,6 +173,8 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       adapter.querySpeakers();
     })();
   }, [adapter]);
+
+  const mobileView = formFactor === 'mobile';
 
   const mainScreenContainerClassName = useMemo(() => {
     return mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;

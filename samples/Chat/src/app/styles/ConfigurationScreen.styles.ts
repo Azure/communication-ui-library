@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { getBackgroundColor } from '../utils/utils';
-import { IButtonStyles, IStackTokens, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStackTokens, mergeStyles, Theme } from '@fluentui/react';
 
 export const responsiveLayoutStackTokens: IStackTokens = {
   childrenGap: '5.25rem 8.6875rem'
@@ -46,17 +46,21 @@ export const avatarListContainerStyle = mergeStyles({
   width: '19rem'
 });
 
-export const smallAvatarContainerStyle = (avatar: string, selectedAvatar: string): string =>
+export const smallAvatarContainerStyle = (avatar: string, selectedAvatar: string, theme: Theme): string =>
   mergeStyles({
     width: '3rem',
     height: '3rem',
-    border: avatar === selectedAvatar ? '0.125rem solid #0378D4' : '',
+    border: avatar === selectedAvatar ? `0.125rem solid ${theme.palette.themePrimary}` : '',
     backgroundColor: getBackgroundColor(avatar)?.backgroundColor,
     borderRadius: '50%',
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
-    outline: 'none'
+    outline: 'none',
+    '&:focus': {
+      border: `0.1875rem solid ${theme.palette.neutralSecondary}`,
+      borderRadius: theme.effects.roundedCorner4
+    }
   });
 
 export const largeAvatarContainerStyle = (avatar: string): string =>
