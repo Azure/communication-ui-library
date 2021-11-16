@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bugfix for disappearing lobby when joining a meeting",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
