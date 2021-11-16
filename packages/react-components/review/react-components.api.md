@@ -366,9 +366,8 @@ export interface GridLayoutStyles extends BaseCustomStyles {
 
 // @public
 export interface HorizontalGalleryStyles extends BaseCustomStyles {
-    // (undocumented)
+    children?: IStyle;
     nextButton?: IStyle;
-    // (undocumented)
     previousButton?: IStyle;
 }
 
