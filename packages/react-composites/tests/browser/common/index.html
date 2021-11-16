@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Chat Composite - Test App" />
+    <meta name="description" content="Composite - Test App" />
     <title>Composite - Test App</title>
     <style>
       /* Important: For ensuring that blinking cursor doesn't get captured in
@@ -20,6 +20,19 @@
         text-rendering: geometricprecision !important;
       }
 
+      /* Prevent animations. waitForElementState('stable') is not working for opacity
+         animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079.
+         Examples of components that currently animate are button flyouts and button tooltips */
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -ms-transition: none !important;
+        -o-transition: color 0 ease-in !important;
+        animation: none !important;
+      }
       *,
       *::before,
       *::after {
