@@ -1186,7 +1186,7 @@ export interface GridLayoutProps {
     styles?: BaseCustomStyles;
 }
 
-// @public (undocumented)
+// @public
 export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
 }
@@ -2108,7 +2108,7 @@ export interface VideoGalleryStrings {
     screenShareLoadingMessage: string;
 }
 
-// @public (undocumented)
+// @public
 export interface VideoGalleryStyles extends BaseCustomStyles {
     gridLayout?: GridLayoutStyles;
     horizontalGallery?: HorizontalGalleryStyles;

@@ -88,7 +88,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       )}
       <Stack horizontal className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
         {childrenOnCurrentPage}
-      </Stack>{' '}
+      </Stack>
       {showButtons && (
         <HorizontalGalleryNavigationButton
           key="next-nav-button"

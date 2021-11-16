@@ -58,6 +58,7 @@ export interface VideoGalleryStrings {
 }
 
 /**
+ * {@link VideoGallery} Component Styles.
  * @public
  */
 export interface VideoGalleryStyles extends BaseCustomStyles {

@@ -24,6 +24,7 @@ export interface GridLayoutProps {
 }
 
 /**
+ * {@link GridLayout} Component Styles.
  * @public
  */
 export interface GridLayoutStyles extends BaseCustomStyles {
