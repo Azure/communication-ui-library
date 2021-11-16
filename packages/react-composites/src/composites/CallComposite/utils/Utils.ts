@@ -2,9 +2,8 @@
 // Licensed under the MIT license.
 
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
-import { _isInCall, _isPreviewOn } from '@internal/calling-component-bindings';
+import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../components/CallControls';
-import { CallState as CallStatus } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
@@ -54,10 +53,6 @@ export const reduceCallControlsForMobile = (
   return reduceCallControlOptions;
 };
 
-const lobbyStatuses: CallStatus[] = ['Connecting', 'Ringing', 'InLobby'];
-const isInLobbyOrConnecting = (callStatus: CallStatus | undefined): boolean =>
-  !!callStatus && lobbyStatuses.includes(callStatus);
-
 enum CallEndReasons {
   LEFT_CALL,
   ACCESS_DENIED,
@@ -102,17 +97,16 @@ export const getCallCompositePage = (
   // If the composite completes one call and joins another, the previous calls
   // will be populated, but not relevant for determining the page.
   if (call) {
-    if (_isInCall(call?.state)) {
+    // `_isInLobbyOrConnecting` needs to be checked first because `_isInCall` also returns true when call is in lobby.
+    if (_isInLobbyOrConnecting(call?.state)) {
+      return 'lobby';
+    } else if (_isInCall(call?.state)) {
       return 'call';
-    }
-
-    if (isInLobbyOrConnecting(call?.state)) {
+    } else {
+      // When the call object has been constructed after clicking , but before 'connecting' has been
+      // set on the call object, we want to show the connecting screen (which is part of the lobby page currently)
       return 'lobby';
     }
-
-    // When the call object has been constructed after clicking , but before 'connecting' has been
-    // set on the call object, we want to show the connecting screen (which is part of the lobby page currently)
-    return 'lobby';
   }
 
   if (previousCall) {
