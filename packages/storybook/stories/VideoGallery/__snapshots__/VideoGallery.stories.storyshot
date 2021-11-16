@@ -331,8 +331,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
             className="css-43"
           >
             <div
-              className="ms-Stack css-45"
-            />
+              className="ms-Stack css-46"
+            >
+              <div
+                className="ms-Stack css-47"
+              />
+               
+            </div>
           </div>
         </div>
       </div>
