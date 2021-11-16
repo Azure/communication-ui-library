@@ -46,7 +46,7 @@ export type CallControlsProps = {
 export type CallControlOptions = {
   /**
    * Options to change how the call controls are displayed.
-   * `'compact'` will mode decreases the size of buttons and hide the labels.
+   * `'compact'` display type will decreases the size of buttons and hide the labels.
    *
    * @remarks
    * If the composite `formFactor` is set to `'mobile'`, the control bar will always use compact view.
