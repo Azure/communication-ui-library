@@ -6,7 +6,7 @@ import { test } from './fixture';
 import { createChatThreadAndUsers, loadNewPage } from '../common/fixtureHelpers';
 import { expect } from '@playwright/test';
 
-const PARTICIPANTS = ['Dorian Gutmann', 'Kathleen Carroll'];
+const PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen'];
 
 // All tests in this suite *must be run sequentially*.
 // The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.

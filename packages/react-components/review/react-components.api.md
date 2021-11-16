@@ -399,6 +399,18 @@ export interface GridLayoutProps {
     styles?: BaseCustomStyles;
 }
 
+// @public
+export interface GridLayoutStyles extends BaseCustomStyles {
+    children?: IStyle;
+}
+
+// @public
+export interface HorizontalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
 // @internal
 export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
@@ -843,7 +855,7 @@ export interface VideoGalleryProps {
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
-    styles?: BaseCustomStyles;
+    styles?: VideoGalleryStyles;
 }
 
 // @public
@@ -865,6 +877,13 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+}
+
+// @public
+export interface VideoGalleryStyles extends BaseCustomStyles {
+    gridLayout?: GridLayoutStyles;
+    horizontalGallery?: HorizontalGalleryStyles;
+    localVideo?: IStyle;
 }
 
 // @public

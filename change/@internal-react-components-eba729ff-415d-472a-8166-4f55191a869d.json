@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated VideoGalleryStyles, HorizontalGalleryStyles. Added GridLayoutStyles.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

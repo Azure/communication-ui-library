@@ -49,7 +49,10 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Custom Style</Heading>
-      <Description>Style of the VideoGallery container can be customized through its `styles` props.</Description>
+      <Description>
+        Style of the VideoGallery container can be customized through its `styles` prop. The `styles` prop is a
+        `VideoGalleryStyles` type with subproperties for each part of the VideoGallery as shown in the example below.
+      </Description>
       <Canvas mdxSource={CustomStyleVideoGalleryExampleText}>
         <CustomStyleVideoGalleryExample />
       </Canvas>

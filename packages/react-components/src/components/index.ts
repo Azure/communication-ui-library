@@ -8,7 +8,7 @@ export { ErrorBar } from './ErrorBar';
 export type { ActiveErrorMessage, ErrorBarProps, ErrorBarStrings, ErrorType } from './ErrorBar';
 
 export { GridLayout } from './GridLayout';
-export type { GridLayoutProps } from './GridLayout';
+export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
@@ -41,7 +41,8 @@ export type {
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles } from './VideoGallery';
+export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
