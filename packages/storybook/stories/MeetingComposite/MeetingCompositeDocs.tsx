@@ -7,8 +7,8 @@ import React from 'react';
 const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
-const mobileViewSnippet = `
-<MeetingComposite options={{ mobileView: true }} />
+const formFactorSnippet = `
+<MeetingComposite formFactor="mobile" />
 `;
 
 export const getDocs: () => JSX.Element = () => {
@@ -39,15 +39,15 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Running in a Mobile browser</Heading>
       <Description>
-        MeetingComposite has been designed for both desktop views and mobile views. The MeetingComposite does not detect
-        if it is running on mobile device vs desktop, and by default the MeetingComposite UI is optimized for desktop
-        views. If you are running the MeetingComposite on a mobile device we recommend making use of the `mobileView`
-        flag. This prop can be set at any time and immediately updates the composite UI to be optimized for a mobile
-        device.
+        MeetingComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may
+        set the `formFactor` property to `"mobile"`. Currently the mobile form factor only supports Portrait orientation
+        and not Landscape. The MeetingComposite does not detect if it is running on mobile device vs desktop, instead
+        you must identify if your clients device is a mobile device and set the `formFactor` property to `"mobile"`.
+        This prop can be set at any time and immediately updates the composite UI to be optimized for a mobile device.
       </Description>
-      <Source code={mobileViewSnippet} />
+      <Source code={formFactorSnippet} />
       <Description>
-        You can try out the mobile view in the [MeetingComposite Basic
+        You can try out the form factor property in the [MeetingComposite Basic
         Example](./?path=/story/composites-meeting-basicexample--basic-example).
       </Description>
 

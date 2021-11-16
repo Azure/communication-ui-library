@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { BaseCustomStyles } from '../types';
 import { gridLayoutStyle, gridStyle } from './styles/GridLayout.styles';
@@ -21,6 +21,15 @@ export interface GridLayoutProps {
    * ```
    */
   styles?: BaseCustomStyles;
+}
+
+/**
+ * {@link GridLayout} Component Styles.
+ * @public
+ */
+export interface GridLayoutStyles extends BaseCustomStyles {
+  /** Styles for each child of {@link GridLayout} */
+  children?: IStyle;
 }
 
 /**
@@ -58,8 +67,10 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   }, [numberOfChildren, currentWidth, currentHeight]);
 
   return (
-    <div ref={containerRef} className={mergeStyles(gridLayoutStyle, styles?.root)}>
-      <BiGrid gridProps={gridProps}>{children}</BiGrid>
+    <div ref={containerRef} className={gridLayoutStyle}>
+      <BiGrid gridProps={gridProps} styles={styles}>
+        {children}
+      </BiGrid>
     </div>
   );
 };
@@ -200,7 +211,7 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
  * there will be a second grid. The second grid will contain the larger cells to fill out the empty space. The first and second grid will be
  * arranged top-and-bottom if fill direction from GridProps is horizontal, otherwise they will be arranged left-and-right.
  */
-const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX.Element => {
+const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps; styles?: GridLayoutStyles }): JSX.Element => {
   const gridProps = props.gridProps;
   const numberOfChildren = React.Children.count(props.children);
 
@@ -220,13 +231,13 @@ const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX
       horizontalFill
         ? {
             gridRow: `auto / span ${blocksForSmallCells}`,
-            gridTemplateColumns: `repeat(${smallCellsPerBlock}, 1fr)`,
-            gridTemplateRows: `repeat(${blocksForSmallCells}, 1fr)`
+            gridTemplateColumns: `repeat(${smallCellsPerBlock}, minmax(0, 1fr))`,
+            gridTemplateRows: `repeat(${blocksForSmallCells}, minmax(0, 1fr))`
           }
         : {
             gridColumn: `auto / span ${blocksForSmallCells}`,
-            gridTemplateRows: `repeat(${smallCellsPerBlock}, 1fr)`,
-            gridTemplateColumns: `repeat(${blocksForSmallCells}, 1fr)`
+            gridTemplateRows: `repeat(${smallCellsPerBlock}, minmax(0, 1fr))`,
+            gridTemplateColumns: `repeat(${blocksForSmallCells}, minmax(0, 1fr))`
           },
     [horizontalFill, blocksForSmallCells, smallCellsPerBlock]
   );
@@ -237,26 +248,26 @@ const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX
         ? horizontalFill
           ? {
               gridRow: `auto / span ${blocksForBigCells}`,
-              gridTemplateColumns: `repeat(${bigCellsPerBlock}, 1fr)`,
-              gridTemplateRows: `repeat(${blocksForBigCells}, 1fr)`
+              gridTemplateColumns: `repeat(${bigCellsPerBlock}, minmax(0, 1fr))`,
+              gridTemplateRows: `repeat(${blocksForBigCells}, minmax(0, 1fr))`
             }
           : {
               gridColumn: `auto / span ${blocksForBigCells}`,
-              gridTemplateRows: `repeat(${bigCellsPerBlock}, 1fr)`,
-              gridTemplateColumns: `repeat(${blocksForBigCells}, 1fr)`
+              gridTemplateRows: `repeat(${bigCellsPerBlock}, minmax(0, 1fr))`,
+              gridTemplateColumns: `repeat(${blocksForBigCells}, minmax(0, 1fr))`
             }
         : {},
     [numBigCells, horizontalFill, blocksForBigCells, bigCellsPerBlock]
   );
 
   const smallCellsGrid = (
-    <div className={mergeStyles(gridStyle)} style={smallCellsGridStyles}>
+    <div className={mergeStyles(gridStyle, smallCellsGridStyles, { '> *': props.styles?.children })}>
       {React.Children.toArray(props.children).slice(0, numSmallCells)}
     </div>
   );
   const bigCellsGrid =
     numBigCells > 0 ? (
-      <div className={mergeStyles(gridStyle)} style={bigCellsGridStyles}>
+      <div className={mergeStyles(gridStyle, bigCellsGridStyles, { '> *': props.styles?.children })}>
         {React.Children.toArray(props.children).slice(numSmallCells)}
       </div>
     ) : null;
@@ -264,13 +275,13 @@ const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps }): JSX
   const mainGridStyles = useMemo(
     () =>
       horizontalFill
-        ? { gridAutoFlow: 'column', gridTemplateRows: `repeat(${blocks}, 1fr)` }
-        : { gridAutoFlow: 'row', gridTemplateColumns: `repeat(${blocks}, 1fr)` },
+        ? { gridAutoFlow: 'column', gridTemplateRows: `repeat(${blocks}, minmax(0, 1fr))` }
+        : { gridAutoFlow: 'row', gridTemplateColumns: `repeat(${blocks}, minmax(0, 1fr))` },
     [horizontalFill, blocks]
   );
 
   return (
-    <div className={mergeStyles(gridStyle)} style={mainGridStyles}>
+    <div className={mergeStyles(gridStyle, mainGridStyles, props.styles?.root)}>
       {smallCellsGrid}
       {bigCellsGrid}
     </div>

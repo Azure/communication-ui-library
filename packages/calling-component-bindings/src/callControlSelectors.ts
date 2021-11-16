@@ -102,11 +102,11 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
 );
 
 /**
- * Selector type for {@link OptionsButton} component.
+ * Selector type for {@link DevicesButton} component.
  *
  * @public
  */
-export type OptionsButtonSelector = (
+export type DevicesButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
@@ -119,11 +119,11 @@ export type OptionsButtonSelector = (
 };
 
 /**
- * Selector for {@link OptionsButton} component.
+ * Selector for {@link DevicesButton} component.
  *
  * @public
  */
-export const optionsButtonSelector: OptionsButtonSelector = reselect.createSelector(
+export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelector(
   [getDeviceManager],
   (deviceManager) => {
     return {

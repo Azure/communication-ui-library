@@ -61,7 +61,7 @@ export type {
   ScreenShareButtonSelector,
   CameraButtonSelector,
   VideoGallerySelector,
-  OptionsButtonSelector,
+  DevicesButtonSelector,
   EmptySelector,
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,

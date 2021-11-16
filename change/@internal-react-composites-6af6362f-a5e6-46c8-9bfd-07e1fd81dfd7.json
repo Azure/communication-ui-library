@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "moved Call container div to include BasicComposite",
+  "packageName": "@internal/react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

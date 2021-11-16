@@ -63,7 +63,15 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>MessageThread</Title>
-      <Description of={MessageThreadComponent} />
+      <Description>
+        MessageThread allows you to easily create a component for rendering chat messages, handling scrolling behavior
+        of new/old messages and customizing icons &amp; controls inside the chat thread.
+      </Description>
+      <Description>
+        MessageThread internally uses the `Chat` &amp; `Chat.Message` component from `@fluentui/react-northstar`. You
+        can checkout the details about these [two
+        components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />

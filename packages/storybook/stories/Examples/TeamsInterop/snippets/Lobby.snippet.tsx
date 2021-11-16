@@ -5,7 +5,7 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   useTheme
 } from '@azure/communication-react';
 import React from 'react';
@@ -88,7 +88,7 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
       <ControlBar layout="dockedBottom" styles={ControlBarStyles}>
         <CameraButton showLabel={true} checked={true} />
         <MicrophoneButton showLabel={true} checked={true} />
-        <OptionsButton showLabel={true} />
+        <DevicesButton showLabel={true} />
         <EndCallButton showLabel={true} style={{ borderRadius: '0.25rem', marginLeft: '0.25rem' }} />
       </ControlBar>
     </VideoTile>

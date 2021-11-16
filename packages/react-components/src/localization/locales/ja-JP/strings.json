@@ -34,7 +34,7 @@
     "onLabel": "ミュート",
     "offLabel": "ミュート解除"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "オプション",
     "cameraMenuTitle": "カメラ",
     "cameraMenuTooltip": "カメラの選択",

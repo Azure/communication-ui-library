@@ -68,7 +68,7 @@ function App(): JSX.Element {
           <CallComposite
             adapter={callAdapter}
             locale={locale}
-            options={{ mobileView: isMobile() }}
+            formFactor={isMobile() ? 'mobile' : 'desktop'}
             onFetchParticipantMenuItems={injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined}
           />
         )}
