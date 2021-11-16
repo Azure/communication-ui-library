@@ -30,10 +30,9 @@ const getDocs: () => JSX.Element = () => {
         VideoGallery lays out the local user and each remote participant in a call in a
         [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component. The VideoGallery component is made up
         of a [Grid Layout](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), [Horizontal
-        Gallery](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), and the [Local Video
-        Tile](./?path=/docs/ui-components-videogallery--video-gallery#local-video-tile). The logic used for which
-        section each [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component is placed is explained
-        below.
+        Gallery](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), and a [Local Video
+        Tile](./?path=/docs/ui-components-videogallery--video-gallery#local-video-tile). The logic used to place each
+        [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component into which section is explained below.
       </Description>
 
       <Heading>Importing</Heading>
@@ -43,8 +42,8 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         If there are no remote video streams on, all participants are placed in the [Grid
         Layout](./?path=/docs/ui-components-gridlayout--grid-layout) including the local user. Otherwise, only remote
-        participants with their video streams on are placed in the Grid Layout. The remaining participants are placed in
-        the Horizontal Gallery.
+        participants with their video streams on are placed in the Grid Layout upto a max of `maxRemoteVideoStreams`.
+        The remaining participants are placed in the Horizontal Gallery.
       </Description>
       <Canvas mdxSource={DefaultVideoGalleryExampleText}>
         <DefaultVideoGalleryExample />
