@@ -37,8 +37,6 @@ import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { checkThreadValid } from './utils/checkThreadValid';
 
-export const MAXIMUM_LENGTH_OF_NAME = 10;
-
 // These props are set by the caller of ConfigurationScreen in the JSX and not found in context
 export interface ConfigurationScreenProps {
   joinChatHandler(): void;
@@ -70,7 +68,6 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   const initializeChatSpinnerLabel = 'Initializing chat client...';
   const [name, setName] = useState('');
   const [emptyWarning, setEmptyWarning] = useState(false);
-  const [isNameLengthExceedLimit, setNameLengthExceedLimit] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(CAT);
   const [configurationScreenState, setConfigurationScreenState] = useState<number>(
     CONFIGURATIONSCREEN_SHOWING_SPINNER_LOADING
@@ -139,13 +136,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   const validateName = (): void => {
     if (!name) {
       setEmptyWarning(true);
-      setNameLengthExceedLimit(false);
-    } else if (name.length > MAXIMUM_LENGTH_OF_NAME) {
-      setEmptyWarning(false);
-      setNameLengthExceedLimit(true);
     } else {
       setEmptyWarning(false);
-      setNameLengthExceedLimit(false);
       setDisableJoinChatButton(true);
       setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT);
       setupAndJoinChatThreadWithNewUser();
@@ -198,10 +190,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           <DisplayNameField
             setName={setName}
             setEmptyWarning={setEmptyWarning}
-            setNameLengthExceedLimit={setNameLengthExceedLimit}
             validateName={validateName}
             isEmpty={emptyWarning}
-            isNameLengthExceedLimit={isNameLengthExceedLimit}
           />
           <PrimaryButton
             disabled={disableJoinChatButton}
