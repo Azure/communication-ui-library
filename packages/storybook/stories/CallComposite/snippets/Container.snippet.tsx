@@ -14,6 +14,7 @@ export type ContainerProps = {
   token: string;
   locator: string;
   displayName: string;
+  mobileView?: boolean;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   locale?: CompositeLocale;
@@ -74,6 +75,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       <div style={{ height: '90vh', width: '90vw' }}>
         <CallComposite
           adapter={adapter}
+          mobileView={props.mobileView}
           fluentTheme={props.fluentTheme}
           callInvitationUrl={props?.callInvitationURL}
           locale={props?.locale}
