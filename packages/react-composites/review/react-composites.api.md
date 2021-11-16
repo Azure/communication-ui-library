@@ -206,7 +206,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
     callInvitationUrl?: string;
-    mobileView?: boolean;
+    formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
 }
 
@@ -625,7 +625,7 @@ export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' 
 export type MeetingCompositeProps = {
     meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
-    mobileView?: boolean;
+    formFactor?: 'desktop' | 'mobile';
     meetingInvitationURL?: string;
 };
 
