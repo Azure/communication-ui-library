@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { CAT, FOX, KOALA, MONKEY, MOUSE, OCTOPUS } from './utils/utils';
+import { useTheme } from '@azure/communication-react';
 import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
@@ -72,6 +73,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
     CONFIGURATIONSCREEN_SHOWING_SPINNER_LOADING
   );
   const [disableJoinChatButton, setDisableJoinChatButton] = useState<boolean>(false);
+  const theme = useTheme();
   const { joinChatHandler, setToken, setUserId, setDisplayName, setThreadId, setEndpointUrl } = props;
 
   // Used when new user is being registered.
@@ -124,6 +126,13 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
     }
   }, [configurationScreenState]);
 
+  const smallAvatarContainerClassName = useCallback(
+    (avatar: string) => {
+      return smallAvatarContainerStyle(avatar, selectedAvatar, theme);
+    },
+    [selectedAvatar, theme]
+  );
+
   const validateName = (): void => {
     if (!name) {
       setEmptyWarning(true);
@@ -170,8 +179,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
                   key={index}
                   tabIndex={0}
                   data-is-focusable={true}
-                  className={smallAvatarContainerStyle(avatar, selectedAvatar)}
-                  onFocus={() => onAvatarChange(avatar)}
+                  className={smallAvatarContainerClassName(avatar)}
+                  onClick={() => onAvatarChange(avatar)}
                 >
                   <div className={smallAvatarStyle}>{avatar}</div>
                 </div>
