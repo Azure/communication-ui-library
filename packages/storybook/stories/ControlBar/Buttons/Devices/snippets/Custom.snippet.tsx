@@ -1,4 +1,4 @@
-import { OptionsButton } from '@azure/communication-react';
+import { DevicesButton } from '@azure/communication-react';
 import { Icon, IContextualMenuProps, Label } from '@fluentui/react';
 import React from 'react';
 
@@ -13,7 +13,7 @@ const exampleOptionsMenuProps: IContextualMenuProps = {
   ]
 };
 
-export const OptionsButtonCustomExample: () => JSX.Element = () => {
+export const DevicesButtonCustomExample: () => JSX.Element = () => {
   const customOnRenderIcon = (): JSX.Element => {
     return (
       <Icon key={'optionsCustomIconKey'} iconName={'CircleAddition'} style={{ color: 'orange', fontSize: '20px' }} />
@@ -29,7 +29,7 @@ export const OptionsButtonCustomExample: () => JSX.Element = () => {
   };
 
   return (
-    <OptionsButton
+    <DevicesButton
       key={'optionsCustomBtnKey'}
       showLabel={true}
       menuProps={exampleOptionsMenuProps}

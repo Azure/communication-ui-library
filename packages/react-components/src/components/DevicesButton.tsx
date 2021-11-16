@@ -16,31 +16,31 @@ import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from 
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
 
 /**
- * Styles for the {@link OptionsButton} menu.
+ * Styles for the {@link DevicesButton} menu.
  *
  * @public
  */
-export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
+export interface DevicesButtonContextualMenuStyles extends IContextualMenuStyles {
   /**
-   * Styles for the items inside the {@link OptionsButton} button menu.
+   * Styles for the items inside the {@link DevicesButton} button menu.
    */
   menuItemStyles?: IContextualMenuItemStyles;
 }
 
 /**
- * Styles for the Options button menu items.
+ * Styles for the Devices button menu items.
  *
  * @public
  */
-export interface OptionsButtonStyles extends ControlBarButtonStyles {
+export interface DevicesButtonStyles extends ControlBarButtonStyles {
   /**
-   * Styles for the {@link OptionsButton} menu.
+   * Styles for the {@link DevicesButton} menu.
    */
-  menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
+  menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
 /**
- * A device, e.g. camera, microphone, or speaker, in the {@link OptionsButton} flyout.
+ * A device, e.g. camera, microphone, or speaker, in the {@link DevicesButton} flyout.
  *
  * @public
  */
@@ -56,11 +56,11 @@ export interface OptionsDevice {
 }
 
 /**
- * Strings of {@link OptionsButton} that can be overridden.
+ * Strings of {@link DevicesButton} that can be overridden.
  *
  * @public
  */
-export interface OptionsButtonStrings {
+export interface DevicesButtonStrings {
   /**
    * Label of button
    */
@@ -96,11 +96,11 @@ export interface OptionsButtonStrings {
 }
 
 /**
- * Props for {@link OptionsButton}.
+ * Props for {@link DevicesButton}.
  *
  * @public
  */
-export interface OptionsButtonProps extends ControlBarButtonProps {
+export interface DevicesButtonProps extends ControlBarButtonProps {
   /**
    * Available microphones for selection
    */
@@ -140,23 +140,23 @@ export interface OptionsButtonProps extends ControlBarButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings?: Partial<OptionsButtonStrings>;
+  strings?: Partial<DevicesButtonStrings>;
   /**
    * Option to increase the touch targets of the button flyout menu items from 36px to 48px.
    * Recommended for mobile devices.
    */
-  styles?: OptionsButtonStyles;
+  styles?: DevicesButtonStyles;
 }
 
 /**
- * Generates default menuprops for an OptionsButton if the props contain device
+ * Generates default menuprops for an DevicesButton if the props contain device
  * information and device change handlers.
- * @param props OptionsButtonProps
+ * @param props DevicesButtonProps
  * @returns MenuProps
  */
 const generateDefaultMenuProps = (
-  props: OptionsButtonProps,
-  strings: OptionsButtonStrings
+  props: DevicesButtonProps,
+  strings: DevicesButtonStrings
 ): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
@@ -279,22 +279,22 @@ const onRenderOptionsIcon = (): JSX.Element => <Icon iconName="ControlButtonOpti
  *
  * @public
  */
-export const OptionsButton = (props: OptionsButtonProps): JSX.Element => {
+export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const { onRenderIcon } = props;
 
-  const localeStrings = useLocale().strings.optionsButton;
+  const localeStrings = useLocale().strings.devicesButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  const optionsButtonMenu = props.menuProps ?? generateDefaultMenuProps(props, strings);
+  const devicesButtonMenu = props.menuProps ?? generateDefaultMenuProps(props, strings);
 
   return (
     <ControlBarButton
       {...props}
-      menuProps={optionsButtonMenu}
+      menuProps={devicesButtonMenu}
       menuIconProps={{ hidden: true }}
       onRenderIcon={onRenderIcon ?? onRenderOptionsIcon}
       strings={strings}
-      labelKey={props.labelKey ?? 'optionsButtonLabel'}
+      labelKey={props.labelKey ?? 'devicesButtonLabel'}
     />
   );
 };

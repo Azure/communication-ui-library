@@ -7,7 +7,7 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   ParticipantMenuItemsCallback,
   ParticipantsButton,
   ScreenShareButton,
@@ -20,7 +20,7 @@ import {
   controlButtonBaseStyle,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,
-  optionsButtonWithIncreasedTouchTargets,
+  devicesButtonWithIncreasedTouchTargets,
   participantButtonWithIncreasedTouchTargets
 } from '../styles/CallControls.styles';
 
@@ -70,10 +70,10 @@ export type CallControlOptions = {
    */
   microphoneButton?: boolean;
   /**
-   * Show or Hide Options button during a call.
+   * Show or Hide Devices button during a call.
    * @defaultValue true
    */
-  optionsButton?: boolean;
+  devicesButton?: boolean;
   /**
    * Show, Hide or Disable participants button during a call.
    * @defaultValue true
@@ -98,7 +98,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
-  const optionsButtonProps = usePropsFor(OptionsButton);
+  const devicesButtonProps = usePropsFor(DevicesButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
   const theme = useTheme();
@@ -113,8 +113,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     [props.increaseFlyoutItemSize]
   );
 
-  const optionsButtonStyles = useMemo(
-    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? optionsButtonWithIncreasedTouchTargets : {}),
+  const devicesButtonStyles = useMemo(
+    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
 
@@ -160,13 +160,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const optionsButton = options?.optionsButton !== false && (
-    <OptionsButton
+  const devicesButton = options?.devicesButton !== false && (
+    <DevicesButton
       /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
       persistMenu={true}
-      {...optionsButtonProps}
+      {...devicesButtonProps}
       showLabel={!compactMode}
-      styles={optionsButtonStyles}
+      styles={devicesButtonStyles}
     />
   );
 
@@ -194,7 +194,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           {cameraButton}
           {screenShareButton}
           {participantButton}
-          {optionsButton}
+          {devicesButton}
           {endCallButton}
         </ControlBar>
       </Stack.Item>

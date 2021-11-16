@@ -34,7 +34,7 @@
     "onLabel": "Sesi kapat",
     "offLabel": "Sesi aç"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Seçenekler",
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Kamera Seç",

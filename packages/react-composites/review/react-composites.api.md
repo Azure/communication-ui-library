@@ -260,7 +260,7 @@ export type CallControlOptions = {
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
-    optionsButton?: boolean;
+    devicesButton?: boolean;
     participantsButton?: boolean | {
         disabled: boolean;
     };

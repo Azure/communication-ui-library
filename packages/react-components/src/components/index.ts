@@ -59,14 +59,14 @@ export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
 
-export { OptionsButton } from './OptionsButton';
+export { DevicesButton } from './DevicesButton';
 export type {
   OptionsDevice,
-  OptionsButtonProps,
-  OptionsButtonStrings,
-  OptionsButtonStyles,
-  OptionsButtonContextualMenuStyles
-} from './OptionsButton';
+  DevicesButtonProps,
+  DevicesButtonStrings,
+  DevicesButtonStyles,
+  DevicesButtonContextualMenuStyles
+} from './DevicesButton';
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {

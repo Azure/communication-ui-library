@@ -8,7 +8,7 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { OptionsButton } from '@internal/react-components';
+import { DevicesButton } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
@@ -43,7 +43,7 @@ export interface ConfigurationPageProps {
 export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element => {
   const { startCallHandler, mobileView } = props;
 
-  const options = useAdaptedSelector(getCallingSelector(OptionsButton));
+  const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
 
