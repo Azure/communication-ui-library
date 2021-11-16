@@ -66,92 +66,110 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                       <div
                         className="ms-Stack css-18"
                       >
-                        <button
-                          className="ms-Button ms-Button--default is-checked root-19"
-                          data-is-focusable={true}
-                          onClick={[Function]}
+                        <div
+                          className="ms-TooltipHost root-19"
+                          onBlurCapture={[Function]}
+                          onFocusCapture={[Function]}
                           onKeyDown={[Function]}
-                          onKeyPress={[Function]}
-                          onKeyUp={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseUp={[Function]}
-                          type="button"
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
-                          <span
-                            className="ms-Button-flexContainer flexContainer-20"
-                            data-automationid="splitbuttonprimary"
+                          <button
+                            className="ms-Button ms-Button--default is-checked root-20"
+                            data-is-focusable={true}
+                            onClick={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseUp={[Function]}
+                            type="button"
                           >
-                            <i
-                              aria-hidden={true}
-                              className="root-37"
-                              data-icon-name="ControlButtonCameraOn"
+                            <span
+                              className="ms-Button-flexContainer flexContainer-21"
+                              data-automationid="splitbuttonprimary"
                             >
-                              <span
+                              <i
                                 aria-hidden={true}
-                                className="root-span"
+                                className="root-37"
+                                data-icon-name="ControlButtonCameraOn"
                               >
-                                <svg
-                                  className="svg"
-                                  fill="currentColor"
-                                  height={20}
-                                  viewBox="0 0 20 20"
-                                  width={20}
-                                  xmlns="http://www.w3.org/2000/svg"
+                                <span
+                                  aria-hidden={true}
+                                  className="root-span"
                                 >
-                                  <path
-                                    d="M13 6.5A2.5 2.5 0 0010.5 4h-6A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.5v-7z"
-                                  />
-                                  <path
-                                    d="M14 7.93v4.15l2.76 2.35a.75.75 0 001.24-.57V6.2a.75.75 0 00-1.23-.57L14 7.93z"
-                                  />
-                                </svg>
-                              </span>
-                            </i>
-                          </span>
-                        </button>
-                        <button
-                          className="ms-Button ms-Button--default is-checked root-19"
-                          data-is-focusable={true}
-                          onClick={[Function]}
+                                  <svg
+                                    className="svg"
+                                    fill="currentColor"
+                                    height={20}
+                                    viewBox="0 0 20 20"
+                                    width={20}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M13 6.5A2.5 2.5 0 0010.5 4h-6A2.5 2.5 0 002 6.5v7A2.5 2.5 0 004.5 16h6a2.5 2.5 0 002.5-2.5v-7z"
+                                    />
+                                    <path
+                                      d="M14 7.93v4.15l2.76 2.35a.75.75 0 001.24-.57V6.2a.75.75 0 00-1.23-.57L14 7.93z"
+                                    />
+                                  </svg>
+                                </span>
+                              </i>
+                            </span>
+                          </button>
+                        </div>
+                        <div
+                          className="ms-TooltipHost root-19"
+                          onBlurCapture={[Function]}
+                          onFocusCapture={[Function]}
                           onKeyDown={[Function]}
-                          onKeyPress={[Function]}
-                          onKeyUp={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseUp={[Function]}
-                          type="button"
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
-                          <span
-                            className="ms-Button-flexContainer flexContainer-20"
-                            data-automationid="splitbuttonprimary"
+                          <button
+                            className="ms-Button ms-Button--default is-checked root-20"
+                            data-is-focusable={true}
+                            onClick={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseUp={[Function]}
+                            type="button"
                           >
-                            <i
-                              aria-hidden={true}
-                              className="root-37"
-                              data-icon-name="ControlButtonMicOn"
+                            <span
+                              className="ms-Button-flexContainer flexContainer-21"
+                              data-automationid="splitbuttonprimary"
                             >
-                              <span
+                              <i
                                 aria-hidden={true}
-                                className="root-span"
+                                className="root-37"
+                                data-icon-name="ControlButtonMicOn"
                               >
-                                <svg
-                                  className="svg"
-                                  fill="currentColor"
-                                  height={20}
-                                  viewBox="0 0 20 20"
-                                  width={20}
-                                  xmlns="http://www.w3.org/2000/svg"
+                                <span
+                                  aria-hidden={true}
+                                  className="root-span"
                                 >
-                                  <path
-                                    d="M5.5 10a.5.5 0 00-1 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02c2.8-.26 5-2.61 5-5.48a.5.5 0 00-1 0 4.5 4.5 0 11-9 0z"
-                                  />
-                                  <path
-                                    d="M13 10a3 3 0 01-6 0V5a3 3 0 016 0v5z"
-                                  />
-                                </svg>
-                              </span>
-                            </i>
-                          </span>
-                        </button>
+                                  <svg
+                                    className="svg"
+                                    fill="currentColor"
+                                    height={20}
+                                    viewBox="0 0 20 20"
+                                    width={20}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M5.5 10a.5.5 0 00-1 0 5.5 5.5 0 005 5.48v2.02a.5.5 0 001 0v-2.02c2.8-.26 5-2.61 5-5.48a.5.5 0 00-1 0 4.5 4.5 0 11-9 0z"
+                                    />
+                                    <path
+                                      d="M13 10a3 3 0 01-6 0V5a3 3 0 016 0v5z"
+                                    />
+                                  </svg>
+                                </span>
+                              </i>
+                            </span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

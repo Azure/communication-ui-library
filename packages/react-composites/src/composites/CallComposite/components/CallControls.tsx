@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { IButtonStyles, mergeStyleSets, Stack } from '@fluentui/react';
 import {
   CameraButton,
   ControlBar,
@@ -16,6 +17,7 @@ import React, { useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
   checkedButtonOverrideStyles,
+  controlButtonBaseStyle,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,
   optionsButtonWithIncreasedTouchTargets,
@@ -96,9 +98,19 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const theme = useTheme();
 
-  const checkedScreenShareButtonOverrideStyles = useMemo(
-    () => checkedButtonOverrideStyles(theme, screenShareButtonProps.checked),
+  const screenShareButtonStyles = useMemo(
+    () => mergeButtonBaseStyles(checkedButtonOverrideStyles(theme, screenShareButtonProps.checked)),
     [screenShareButtonProps.checked, theme.palette.themePrimary]
+  );
+
+  const participantsButtonStyles = useMemo(
+    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
+    [props.increaseFlyoutItemSize]
+  );
+
+  const optionsButtonStyles = useMemo(
+    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? optionsButtonWithIncreasedTouchTargets : {}),
+    [props.increaseFlyoutItemSize]
   );
 
   const microphoneButton = options?.microphoneButton !== false && (
@@ -106,6 +118,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
       showLabel={!options?.compressedMode}
+      styles={controlButtonBaseStyle}
     />
   );
 
@@ -114,6 +127,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       data-ui-id="call-composite-camera-button"
       {...cameraButtonProps}
       showLabel={!options?.compressedMode}
+      styles={controlButtonBaseStyle}
     />
   );
 
@@ -121,7 +135,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <ScreenShareButton
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
-      styles={checkedScreenShareButtonOverrideStyles}
+      styles={screenShareButtonStyles}
       showLabel={!options?.compressedMode}
       disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
     />
@@ -135,7 +149,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       callInvitationURL={callInvitationURL}
       onFetchParticipantMenuItems={onFetchParticipantMenuItems}
       disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
-      styles={props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : undefined}
+      styles={participantsButtonStyles}
     />
   );
 
@@ -145,7 +159,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       persistMenu={true}
       {...optionsButtonProps}
       showLabel={!options?.compressedMode}
-      styles={props.increaseFlyoutItemSize ? optionsButtonWithIncreasedTouchTargets : undefined}
+      styles={optionsButtonStyles}
     />
   );
 
@@ -159,13 +173,26 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   );
 
   return (
-    <ControlBar layout="dockedBottom">
-      {microphoneButton}
-      {cameraButton}
-      {screenShareButton}
-      {participantButton}
-      {optionsButton}
-      {endCallButton}
-    </ControlBar>
+    <Stack horizontalAlign="center">
+      <Stack.Item>
+        {/*
+            Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
+            control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
+            set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
+            dockedBottom it has position absolute and would therefore float on top of the media gallery,
+            occluding some of its content.
+         */}
+        <ControlBar layout="horizontal">
+          {microphoneButton}
+          {cameraButton}
+          {screenShareButton}
+          {participantButton}
+          {optionsButton}
+          {endCallButton}
+        </ControlBar>
+      </Stack.Item>
+    </Stack>
   );
 };
+
+const mergeButtonBaseStyles = (styles: IButtonStyles): IButtonStyles => mergeStyleSets(controlButtonBaseStyle, styles);

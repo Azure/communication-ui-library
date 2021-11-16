@@ -60,6 +60,10 @@ export interface ParticipantsButtonStrings {
    */
   label: string;
   /**
+   * Button tooltip content.
+   */
+  tooltipContent?: string;
+  /**
    * Header of menu pop up
    */
   menuHeader: string;

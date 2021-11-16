@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Mark StatefulCallClient `diagnostics` property as public and `transfer` property as beta",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
