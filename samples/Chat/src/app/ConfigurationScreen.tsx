@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { CAT, FOX, KOALA, MONKEY, MOUSE, OCTOPUS } from './utils/utils';
+import { useTheme } from '@azure/communication-react';
 import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
@@ -36,8 +37,6 @@ import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { checkThreadValid } from './utils/checkThreadValid';
 
-export const MAXIMUM_LENGTH_OF_NAME = 10;
-
 // These props are set by the caller of ConfigurationScreen in the JSX and not found in context
 export interface ConfigurationScreenProps {
   joinChatHandler(): void;
@@ -69,12 +68,12 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   const initializeChatSpinnerLabel = 'Initializing chat client...';
   const [name, setName] = useState('');
   const [emptyWarning, setEmptyWarning] = useState(false);
-  const [isNameLengthExceedLimit, setNameLengthExceedLimit] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(CAT);
   const [configurationScreenState, setConfigurationScreenState] = useState<number>(
     CONFIGURATIONSCREEN_SHOWING_SPINNER_LOADING
   );
   const [disableJoinChatButton, setDisableJoinChatButton] = useState<boolean>(false);
+  const theme = useTheme();
   const { joinChatHandler, setToken, setUserId, setDisplayName, setThreadId, setEndpointUrl } = props;
 
   // Used when new user is being registered.
@@ -127,16 +126,18 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
     }
   }, [configurationScreenState]);
 
+  const smallAvatarContainerClassName = useCallback(
+    (avatar: string) => {
+      return smallAvatarContainerStyle(avatar, selectedAvatar, theme);
+    },
+    [selectedAvatar, theme]
+  );
+
   const validateName = (): void => {
     if (!name) {
       setEmptyWarning(true);
-      setNameLengthExceedLimit(false);
-    } else if (name.length > MAXIMUM_LENGTH_OF_NAME) {
-      setEmptyWarning(false);
-      setNameLengthExceedLimit(true);
     } else {
       setEmptyWarning(false);
-      setNameLengthExceedLimit(false);
       setDisableJoinChatButton(true);
       setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT);
       setupAndJoinChatThreadWithNewUser();
@@ -178,8 +179,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
                   key={index}
                   tabIndex={0}
                   data-is-focusable={true}
-                  className={smallAvatarContainerStyle(avatar, selectedAvatar)}
-                  onFocus={() => onAvatarChange(avatar)}
+                  className={smallAvatarContainerClassName(avatar)}
+                  onClick={() => onAvatarChange(avatar)}
                 >
                   <div className={smallAvatarStyle}>{avatar}</div>
                 </div>
@@ -189,10 +190,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           <DisplayNameField
             setName={setName}
             setEmptyWarning={setEmptyWarning}
-            setNameLengthExceedLimit={setNameLengthExceedLimit}
             validateName={validateName}
             isEmpty={emptyWarning}
-            isNameLengthExceedLimit={isNameLengthExceedLimit}
           />
           <PrimaryButton
             disabled={disableJoinChatButton}

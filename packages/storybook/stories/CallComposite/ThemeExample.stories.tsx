@@ -47,7 +47,7 @@ const ThemeExampleStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          options={{ mobileView: args.mobileView }}
+          formFactor={args.formFactor}
         />
       ) : (
         <ConfigHintBanner />
@@ -68,7 +68,7 @@ export default {
     displayName: controlsToAdd.displayName,
     theme: controlsToAdd.theme,
     font: controlsToAdd.font,
-    mobileView: controlsToAdd.mobileView,
+    formFactor: controlsToAdd.formFactor,
     callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls

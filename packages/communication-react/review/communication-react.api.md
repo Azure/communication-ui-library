@@ -288,7 +288,6 @@ export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCame
 
 // @public
 export type CallCompositeOptions = {
-    mobileView?: boolean;
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
 };
@@ -299,8 +298,8 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
-    // (undocumented)
     callInvitationUrl?: string;
+    formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
 }
 
@@ -1187,6 +1186,18 @@ export interface GridLayoutProps {
     styles?: BaseCustomStyles;
 }
 
+// @public
+export interface GridLayoutStyles extends BaseCustomStyles {
+    children?: IStyle;
+}
+
+// @public
+export interface HorizontalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
 // @internal
 export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
@@ -1359,19 +1370,14 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @beta
-export type MeetingCompositeOptions = {
-    mobileView?: boolean;
-};
-
-// @beta
 export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @beta
 export type MeetingCompositeProps = {
     meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
+    formFactor?: 'desktop' | 'mobile';
     meetingInvitationURL?: string;
-    options?: MeetingCompositeOptions;
 };
 
 // @beta
@@ -2070,7 +2076,7 @@ export interface VideoGalleryProps {
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
-    styles?: BaseCustomStyles;
+    styles?: VideoGalleryStyles;
 }
 
 // @public
@@ -2100,6 +2106,13 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+}
+
+// @public
+export interface VideoGalleryStyles extends BaseCustomStyles {
+    gridLayout?: GridLayoutStyles;
+    horizontalGallery?: HorizontalGalleryStyles;
+    localVideo?: IStyle;
 }
 
 // @public

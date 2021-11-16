@@ -20,6 +20,7 @@ import { useLocalVideoStartTrigger } from '../components/MediaGallery';
  * @private
  */
 export interface LobbyPageProps {
+  mobileView: boolean;
   options?: CallCompositeOptions;
 }
 
@@ -37,7 +38,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   useLocalVideoStartTrigger(lobbyProps.localParticipantVideoStream.isAvailable, inLobby);
 
   // Reduce the controls shown when mobile view is enabled.
-  let callControlOptions = props.options?.mobileView
+  let callControlOptions = props.mobileView
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
 
@@ -50,10 +51,10 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       callControlProps={
         callControlOptions !== false && {
           options: callControlOptions,
-          increaseFlyoutItemSize: props.options?.mobileView
+          increaseFlyoutItemSize: props.mobileView
         }
       }
-      mobileView={props.options?.mobileView ?? false}
+      mobileView={props.mobileView}
       onRenderGalleryContent={() => <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby)} />}
       dataUiId={'lobby-page'}
     />

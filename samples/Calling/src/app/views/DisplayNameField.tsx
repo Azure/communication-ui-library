@@ -5,29 +5,18 @@ import React from 'react';
 import { TextFieldStyleProps, inputBoxStyle, inputBoxTextStyle } from '../styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
 
-export const MAXIMUM_LENGTH_OF_NAME = 10;
 export const ENTER_KEY = 13;
 
 interface DisplayNameFieldProps {
   setName(displayName: string): void;
   setEmptyWarning?(isEmpty: boolean): void;
-  setNameLengthExceedLimit?(isNameLengthExceedLimit: boolean): void;
   isEmpty?: boolean;
-  isNameLengthExceedLimit?: boolean;
   defaultName?: string;
   validateName?(): void;
 }
 
 export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
-  const {
-    setName,
-    setEmptyWarning,
-    setNameLengthExceedLimit,
-    isEmpty,
-    isNameLengthExceedLimit,
-    defaultName,
-    validateName
-  } = props;
+  const { setName, setEmptyWarning, isEmpty, defaultName, validateName } = props;
 
   const onNameTextChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -38,11 +27,8 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
     setName(newValue);
     if (setEmptyWarning && !newValue) {
       setEmptyWarning(true);
-    } else if (setNameLengthExceedLimit && newValue.length > MAXIMUM_LENGTH_OF_NAME) {
-      setNameLengthExceedLimit(true);
     } else {
       setEmptyWarning && setEmptyWarning(false);
-      setNameLengthExceedLimit && setNameLengthExceedLimit(false);
     }
   };
 
@@ -62,9 +48,7 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
         }
       }}
       styles={TextFieldStyleProps}
-      errorMessage={
-        isEmpty ? 'Name cannot be empty' : isNameLengthExceedLimit ? 'Name cannot be over 10 characters' : undefined
-      }
+      errorMessage={isEmpty ? 'Name cannot be empty' : undefined}
     />
   );
 };

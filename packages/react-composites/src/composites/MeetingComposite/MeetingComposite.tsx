@@ -31,28 +31,16 @@ export type MeetingCompositeProps = {
    */
   fluentTheme?: PartialTheme | Theme;
   /**
+   * Optimizes the composite form factor for either desktop or mobile.
+   * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
+   * @defaultValue 'desktop'
+   * @beta
+   */
+  formFactor?: 'desktop' | 'mobile';
+  /**
    * URL that can be used to copy a meeting invite to the Users clipboard.
    */
   meetingInvitationURL?: string;
-  /**
-   * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
-   */
-  options?: MeetingCompositeOptions;
-};
-
-/**
- * Optional features of the {@link MeetingComposite}
- *
- * @beta
- */
-export type MeetingCompositeOptions = {
-  /**
-   * Optimizes the composite UI for use on a mobile device.
-   * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
-   * @defaultValue false
-   * @alpha
-   */
-  mobileView?: boolean;
 };
 
 /**
@@ -61,7 +49,7 @@ export type MeetingCompositeOptions = {
  * @beta
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
-  const { meetingAdapter, fluentTheme } = props;
+  const { meetingAdapter, fluentTheme, formFactor = 'desktop' } = props;
 
   if (!meetingAdapter) {
     throw 'Meeting adapter is undefined';
@@ -103,7 +91,8 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
         <Stack horizontal grow>
           <Stack.Item grow>
             <CallComposite
-              options={{ callControls: false, mobileView: props.options?.mobileView }}
+              formFactor={formFactor}
+              options={{ callControls: false }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
             />
@@ -135,7 +124,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onChatButtonClicked={toggleChat}
             peopleButtonChecked={showPeople}
             onPeopleButtonClicked={togglePeople}
-            mobileView={props.options?.mobileView}
+            mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
           />
         )}
