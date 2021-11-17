@@ -64,7 +64,7 @@
     "check-deps": "node scripts/verifyDependencies",
     "validate-package-json-types": "node scripts/verifyTypeTrimmedDeclaration verify",
     "update-package-json-types": "node scripts/verifyTypeTrimmedDeclaration update",
-    "api-extractor": "tsc && api-extractor run --local",
+    "api-extractor": "tsc && api-extractor run --local -c api-extractor.json && api-extractor run --local -c api-extractor-report.json",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",

@@ -1,0 +1,7 @@
+{
+  "extends": "../../common/config/api-extractor/api-extractor.json",
+  "mainEntryPointFilePath": "<projectFolder>/dist/communication-react-public.d.ts",
+  "dtsRollup": {
+    "enabled": false
+  }
+}
