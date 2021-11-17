@@ -5,7 +5,7 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   ParticipantsButton,
   ScreenShareButton
 } from '@azure/communication-react';
@@ -86,7 +86,7 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />
-        <OptionsButton menuProps={exampleOptionsMenuProps} />
+        <DevicesButton menuProps={exampleOptionsMenuProps} />
         <EndCallButton
           onClick={() => {
             /*handle onClick*/

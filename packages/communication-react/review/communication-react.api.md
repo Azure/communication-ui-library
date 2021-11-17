@@ -349,11 +349,11 @@ export interface CallCompositeStrings {
 
 // @public
 export type CallControlOptions = {
-    compressedMode?: boolean;
+    displayType?: 'default' | 'compact';
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
-    optionsButton?: boolean;
+    devicesButton?: boolean;
     participantsButton?: boolean | {
         disabled: boolean;
     };
@@ -779,12 +779,12 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 // @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
+    devicesButton: DevicesButtonStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
-    optionsButton: OptionsButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -1076,6 +1076,56 @@ export type DeviceManagerState = {
 };
 
 // @public
+export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;
+
+// @public
+export interface DevicesButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
+export interface DevicesButtonProps extends ControlBarButtonProps {
+    cameras?: OptionsDevice[];
+    microphones?: OptionsDevice[];
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+    selectedCamera?: OptionsDevice;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
+    speakers?: OptionsDevice[];
+    strings?: Partial<DevicesButtonStrings>;
+    styles?: DevicesButtonStyles;
+}
+
+// @public
+export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    cameras: VideoDeviceInfo[];
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
+    selectedCamera?: VideoDeviceInfo;
+};
+
+// @public
+export interface DevicesButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
+    label: string;
+    microphoneMenuTitle: string;
+    microphoneMenuTooltip: string;
+    speakerMenuTitle: string;
+    speakerMenuTooltip: string;
+    tooltipContent?: string;
+}
+
+// @public
+export interface DevicesButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
+}
+
+// @public
 export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;
 
 // @public
@@ -1165,7 +1215,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? OptionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -1576,56 +1626,6 @@ export interface NetworkDiagnosticsState {
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
-
-// @public
-export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
-
-// @public
-export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
-    menuItemStyles?: IContextualMenuItemStyles;
-}
-
-// @public
-export interface OptionsButtonProps extends ControlBarButtonProps {
-    cameras?: OptionsDevice[];
-    microphones?: OptionsDevice[];
-    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
-    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
-    selectedCamera?: OptionsDevice;
-    selectedMicrophone?: OptionsDevice;
-    selectedSpeaker?: OptionsDevice;
-    speakers?: OptionsDevice[];
-    strings?: Partial<OptionsButtonStrings>;
-    styles?: OptionsButtonStyles;
-}
-
-// @public
-export type OptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    microphones: AudioDeviceInfo[];
-    speakers: AudioDeviceInfo[];
-    cameras: VideoDeviceInfo[];
-    selectedMicrophone?: AudioDeviceInfo;
-    selectedSpeaker?: AudioDeviceInfo;
-    selectedCamera?: VideoDeviceInfo;
-};
-
-// @public
-export interface OptionsButtonStrings {
-    cameraMenuTitle: string;
-    cameraMenuTooltip: string;
-    label: string;
-    microphoneMenuTitle: string;
-    microphoneMenuTooltip: string;
-    speakerMenuTitle: string;
-    speakerMenuTooltip: string;
-    tooltipContent?: string;
-}
-
-// @public
-export interface OptionsButtonStyles extends ControlBarButtonStyles {
-    menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
-}
 
 // @public
 export interface OptionsDevice {

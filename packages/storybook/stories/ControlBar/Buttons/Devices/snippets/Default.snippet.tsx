@@ -1,4 +1,4 @@
-import { FluentThemeProvider, OptionsButton } from '@azure/communication-react';
+import { FluentThemeProvider, DevicesButton } from '@azure/communication-react';
 import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
 
@@ -13,10 +13,10 @@ const exampleOptionsMenuProps: IContextualMenuProps = {
   ]
 };
 
-export const OptionsButtonDefaultExample: () => JSX.Element = () => {
+export const DevicesButtonDefaultExample: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
-      <OptionsButton menuProps={exampleOptionsMenuProps} />
+      <DevicesButton menuProps={exampleOptionsMenuProps} />
     </FluentThemeProvider>
   );
 };

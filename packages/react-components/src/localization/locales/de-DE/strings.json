@@ -34,7 +34,7 @@
     "onLabel": "Stumm schalten",
     "offLabel": "Stummschaltung aufheben"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Optionen",
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Kamera auswählen",

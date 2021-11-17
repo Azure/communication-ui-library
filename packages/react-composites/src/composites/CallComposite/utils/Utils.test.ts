@@ -11,31 +11,25 @@ describe('SDKUtils tests', () => {
 
       // Test defaults returned when empty object is passed in
       expect(reduceCallControlsForMobile(true)).toEqual({
-        compressedMode: true,
+        displayType: 'compact',
         screenShareButton: false
       });
 
       // Test defaults returned when empty object is passed in
       expect(reduceCallControlsForMobile(undefined)).toEqual({
-        compressedMode: true,
+        displayType: 'compact',
         screenShareButton: false
       });
 
       // Test defaults returned when empty object is passed in
       expect(reduceCallControlsForMobile({})).toEqual({
-        compressedMode: true,
-        screenShareButton: false
-      });
-
-      // Explicitly opted in for compressed mode false
-      expect(reduceCallControlsForMobile({ compressedMode: false })).toEqual({
-        compressedMode: false,
+        displayType: 'compact',
         screenShareButton: false
       });
 
       // Explicitly opted in for screenshare button true
       expect(reduceCallControlsForMobile({ screenShareButton: true })).toEqual({
-        compressedMode: true,
+        displayType: 'compact',
         screenShareButton: true
       });
     });

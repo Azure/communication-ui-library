@@ -6,7 +6,7 @@ import {
   CameraButton,
   ControlBar,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   StreamMedia,
   useTheme,
   VideoTile
@@ -42,7 +42,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const locale = useLocale();
   const cameraButtonProps = usePropsFor(CameraButton);
   const localPreviewProps = useSelector(localPreviewSelector);
-  const optionsButtonProps = usePropsFor(OptionsButton);
+  const devicesButtonProps = usePropsFor(DevicesButton);
   const { audio: microphonePermissionGranted, video: cameraPermissionGranted } = useSelector(devicePermissionSelector);
 
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
@@ -71,7 +71,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
     );
   }, [theme, locale.strings.call.cameraTurnedOff]);
 
-  const optionsButtonStyles = props.mobileView
+  const devicesButtonStyles = props.mobileView
     ? {
         menuStyles: {
           menuItemStyles: buttonFlyoutIncreasedSizeStyles
@@ -108,13 +108,13 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
             disabled={!cameraPermissionGranted}
           />
           {props.showDevicesButton && (
-            <OptionsButton
+            <DevicesButton
               data-ui-id="call-composite-local-device-settings-options-button"
-              {...optionsButtonProps}
+              {...devicesButtonProps}
               // disable button whilst all other buttons are disabled
               disabled={!microphonePermissionGranted || !cameraPermissionGranted}
               showLabel={true}
-              styles={optionsButtonStyles}
+              styles={devicesButtonStyles}
             />
           )}
         </ControlBar>
