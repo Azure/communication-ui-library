@@ -83,7 +83,7 @@ export const Devices = DevicesStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-devices`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Devices`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Devices`,
   component: DevicesButton,
   argTypes: {
     showLabel: controlsToAdd.showLabel,

@@ -25,7 +25,6 @@ function callStateFromMeetingState(meetingState: MeetingState): CallState {
     localVideoStreams: meetingState.localVideoStreams,
     transcription: meetingState.transcription,
     recording: meetingState.recording,
-    transfer: meetingState.transfer,
     screenShareRemoteParticipant: meetingState.screenShareRemoteParticipant,
     startTime: meetingState.startTime,
     endTime: meetingState.endTime,
