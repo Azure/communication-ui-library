@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add name based ascending sorting to participants returned by participantListSelector",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
