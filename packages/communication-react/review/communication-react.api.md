@@ -46,7 +46,6 @@ import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
@@ -63,8 +62,6 @@ import { ScalingMode } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { TransferErrorCode } from '@azure/communication-calling';
-import { TransferState } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-signaling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
@@ -474,8 +471,6 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    // @beta
-    transfer: TransferCallFeatureState;
 }
 
 // @public
@@ -1443,7 +1438,7 @@ export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displa
 }
 
 // @beta
-export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
+export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
     meetingEndReason?: MeetingEndReason;
     participants: {
@@ -1962,26 +1957,6 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
 // @public
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
-}
-
-// @beta
-export interface Transfer {
-    error?: TransferErrorCode;
-    id: number;
-    state: TransferState;
-    targetParticipant: CommunicationUserIdentifier | PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier;
-}
-
-// @beta
-export interface TransferCallFeatureState {
-    receivedTransferRequests: TransferRequest[];
-    requestedTransfers: Transfer[];
-}
-
-// @beta
-export interface TransferRequest {
-    // (undocumented)
-    targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifier;
 }
 
 // @public
