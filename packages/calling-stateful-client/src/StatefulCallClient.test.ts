@@ -10,7 +10,8 @@ import {
   RecordingCallFeature,
   TranscriptionCallFeature,
   VideoStreamRendererView,
-  CallFeatureFactory
+  CallFeatureFactory,
+  CallFeature
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -757,7 +758,7 @@ const prepareCallWithRemoteVideoStream = async (): Promise<PreparedCallWithRemot
 };
 
 const prepareCallWithFeatures = async (
-  feature: <TFeature extends CallApiFeature>(cls: CallFeatureApiFactory<TFeature>) => TFeature
+  feature: <TFeature extends CallFeature>(cls: CallFeatureFactory<TFeature>) => TFeature
 ): Promise<PreparedCall> => {
   const agent = createMockCallAgent();
   const client = createStatefulCallClientWithAgent(agent);
