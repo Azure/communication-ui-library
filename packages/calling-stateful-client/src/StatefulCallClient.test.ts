@@ -3,15 +3,14 @@
 
 import {
   CallAgent,
-  CallApiFeature,
-  CallFeatureApiFactory,
   DeviceManager,
   UserFacingDiagnosticsFeature,
   Features,
   LocalVideoStream,
   RecordingCallFeature,
   TranscriptionCallFeature,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  CallFeatureFactory
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -55,13 +54,13 @@ jest.mock('@azure/communication-calling', () => {
       };
     }),
     Features: {
-      get Recording(): CallFeatureApiFactory<RecordingCallFeature> {
+      get Recording(): CallFeatureFactory<RecordingCallFeature> {
         return { callApiCtor: MockRecordingCallFeatureImpl };
       },
-      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
-        return MockTranscriptionCallFeatureImpl;
+      get Transcription(): CallFeatureFactory<TranscriptionCallFeature> {
+        return { callApiCtor: MockTranscriptionCallFeatureImpl };
       },
-      get Diagnostics(): CallFeatureApiFactory<UserFacingDiagnosticsFeature> {
+      get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
         return { callApiCtor: StubDiagnosticsCallFeatureImpl };
       }
     }

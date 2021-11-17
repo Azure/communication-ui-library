@@ -13,7 +13,10 @@ import {
   MeetingLocator,
   RecordingCallFeature,
   StartCallOptions,
-  TranscriptionCallFeature
+  TranscriptionCallFeature,
+  CallFeatureFactory,
+  CallAgentFeature,
+  CallAgentFeatureFactory
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
@@ -47,8 +50,8 @@ jest.mock('@azure/communication-calling', () => {
       get Recording(): CallFeatureFactory<RecordingCallFeature> {
         return { callApiCtor: MockRecordingCallFeatureImpl };
       },
-      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
-        return MockTranscriptionCallFeatureImpl;
+      get Transcription(): CallFeatureFactory<TranscriptionCallFeature> {
+        return { callApiCtor: MockTranscriptionCallFeatureImpl };
       },
       get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
         return { callApiCtor: StubDiagnosticsCallFeatureImpl };

@@ -4,9 +4,7 @@
 import {
   Call,
   CallAgent,
-  CallApiFeature,
   CallClient,
-  CallFeatureApiFactory,
   DeviceManager,
   UserFacingDiagnosticsFeature,
   IncomingCall,
@@ -17,7 +15,9 @@ import {
   RecordingCallFeature,
   RemoteParticipant,
   RemoteVideoStream,
-  TranscriptionCallFeature
+  TranscriptionCallFeature,
+  CallFeatureFactory,
+  CallFeature
 } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
@@ -278,9 +278,9 @@ export function createMockRemoteScreenshareStream(id = 42): MockRemoteVideoStrea
  * reused on repeated calls.
  */
 export function createMockApiFeatures(
-  cache: Map<CallFeatureApiFactory<any>, CallApiFeature>
-): <FeatureT extends CallApiFeature>(cls: CallFeatureApiFactory<FeatureT>) => FeatureT {
-  return <FeatureT extends CallApiFeature>(cls: CallFeatureApiFactory<FeatureT>): FeatureT => {
+  cache: Map<CallFeatureFactory<any>, CallFeature>
+): <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>) => FeatureT {
+  return <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>): FeatureT => {
     for (const [key, feature] of cache.entries()) {
       if (cls && key.callApiCtor === cls.callApiCtor) {
         return feature as FeatureT;

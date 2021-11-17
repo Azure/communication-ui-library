@@ -86,6 +86,3 @@ export const callDeclaratify = (call: Call, context: CallContext): DeclarativeCa
 
   return new Proxy(call, proxyCall) as DeclarativeCall;
 };
-function CallFeatureFactory<T>(): any {
-  throw new Error('Function not implemented.');
-}
