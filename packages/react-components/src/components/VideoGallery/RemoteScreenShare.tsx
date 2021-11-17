@@ -38,7 +38,6 @@ export const RemoteScreenShare = React.memo(
       <VideoTile
         displayName={screenShareParticipant?.displayName}
         isMuted={screenShareParticipant?.isMuted}
-        isSpeaking={screenShareParticipant?.isSpeaking}
         renderElement={
           screenShareStream?.renderElement ? (
             <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
