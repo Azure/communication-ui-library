@@ -540,7 +540,7 @@ export class CallError extends Error {
  */
 export type CallErrorTarget =
   | 'Call.addParticipant'
-  | 'Call.api'
+  | 'Call.feature'
   | 'Call.hangUp'
   | 'Call.hold'
   | 'Call.mute'
@@ -555,11 +555,13 @@ export type CallErrorTarget =
   | 'Call.stopVideo'
   | 'Call.unmute'
   | 'CallAgent.dispose'
+  | 'CallAgent.feature'
   | 'CallAgent.join'
   | 'CallAgent.off'
   | 'CallAgent.on'
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
+  | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'

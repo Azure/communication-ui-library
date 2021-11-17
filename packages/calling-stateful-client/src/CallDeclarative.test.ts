@@ -3,7 +3,7 @@
 
 import {
   CallerInfo,
-  CallFeatureFactoryType,
+  CallFeatureApiFactory,
   UserFacingDiagnosticsFeature,
   Features,
   RecordingCallFeature,
@@ -14,7 +14,6 @@ import { CallContext } from './CallContext';
 import { callDeclaratify, DeclarativeCall } from './CallDeclarative';
 import { convertSdkCallToDeclarativeCall } from './Converter';
 import {
-  addMockEmitter,
   createMockApiFeatures,
   createMockCall,
   MockRecordingCallFeatureImpl,
@@ -26,23 +25,18 @@ import {
 
 jest.mock('@azure/communication-calling', () => {
   return {
-    TransferCallFeature: {
-      transfer: () => {
-        return addMockEmitter({ state: 'None' });
-      }
-    },
     Features: {
-      get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
-        return MockRecordingCallFeatureImpl;
+      get Recording(): CallFeatureApiFactory<RecordingCallFeature> {
+        return { callApiCtor: MockRecordingCallFeatureImpl };
       },
-      get Transfer(): CallFeatureFactoryType<TransferCallFeature> {
-        return MockTransferCallFeatureImpl;
+      get Transfer(): CallFeatureApiFactory<TransferCallFeature> {
+        return { callApiCtor: MockTransferCallFeatureImpl };
       },
-      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
-        return MockTranscriptionCallFeatureImpl;
+      get Transcription(): CallFeatureApiFactory<TranscriptionCallFeature> {
+        return { callApiCtor: MockTranscriptionCallFeatureImpl };
       },
-      get Diagnostics(): CallFeatureFactoryType<UserFacingDiagnosticsFeature> {
-        return StubDiagnosticsCallFeatureImpl;
+      get Diagnostics(): CallFeatureApiFactory<UserFacingDiagnosticsFeature> {
+        return { callApiCtor: StubDiagnosticsCallFeatureImpl };
       }
     }
   };
@@ -51,7 +45,7 @@ jest.mock('@azure/communication-calling', () => {
 const mockCallId = 'a';
 
 describe('declarative call', () => {
-  test('proxies api() to return a DeclarativeTransferCallFeature which proxies transfer() in state', async () => {
+  test('proxies feature() to return a DeclarativeTransferCallFeature which proxies transfer() in state', async () => {
     const mockCall = createMockCall(mockCallId);
     mockCall.callerInfo = { identifier: { kind: 'communicationUser' } } as CallerInfo;
     mockCall.state = 'None';
@@ -60,14 +54,14 @@ describe('declarative call', () => {
     mockCall.isScreenSharingOn = false;
     mockCall.localVideoStreams = [];
     mockCall.remoteParticipants = [];
-    mockCall.api = createMockApiFeatures(new Map());
+    mockCall.feature = createMockApiFeatures(new Map());
 
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
     const declarativeCall = callDeclaratify(mockCall, context);
 
-    const declarativeTransfer = declarativeCall.api(Features.Transfer);
+    const declarativeTransfer = declarativeCall.feature(Features.Transfer);
 
     const transfer = declarativeTransfer.transfer({ targetParticipant: { communicationUserId: 'a' } }) as any;
 
@@ -92,14 +86,14 @@ describe('declarative call', () => {
     mockCall.isScreenSharingOn = false;
     mockCall.localVideoStreams = [];
     mockCall.remoteParticipants = [];
-    mockCall.api = createMockApiFeatures(new Map());
+    mockCall.feature = createMockApiFeatures(new Map());
 
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
     context.setCall(convertSdkCallToDeclarativeCall(mockCall));
 
     const declarativeCall = callDeclaratify(mockCall, context) as DeclarativeCall;
 
-    const declarativeTransfer = declarativeCall.api(Features.Transfer);
+    const declarativeTransfer = declarativeCall.feature(Features.Transfer);
 
     const transfer = declarativeTransfer.transfer({ targetParticipant: { communicationUserId: 'a' } }) as any;
 

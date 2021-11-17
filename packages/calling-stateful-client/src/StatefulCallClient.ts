@@ -2,13 +2,20 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import { CallAgent, CallClient, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
+import {
+  CallAgent,
+  CallClient,
+  CallClientOptions,
+  CreateViewOptions,
+  DeviceManager
+} from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
+import { _getApplicationId } from '@internal/acs-ui-common';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -219,6 +226,10 @@ export type StatefulCallClientArgs = {
  */
 export type StatefulCallClientOptions = {
   /**
+   * Options to construct the {@link @axure/communication-calling#CallClient} with.
+   */
+  callClientOptions: CallClientOptions;
+  /**
    * Sets the max listeners limit of the 'stateChange' event. Defaults to the node.js EventEmitter.defaultMaxListeners
    * if not specified.
    */
@@ -244,7 +255,7 @@ export const createStatefulCallClient = (
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
   return createStatefulCallClientWithDeps(
-    new CallClient(),
+    new CallClient(withTelemetryTag(options?.callClientOptions)),
     new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
     new InternalCallContext()
   );
@@ -297,4 +308,16 @@ export const createStatefulCallClientWithDeps = (
   });
 
   return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as StatefulCallClient;
+};
+
+const withTelemetryTag = (options?: CallClientOptions): CallClientOptions => {
+  const tags = options?.diagnostics?.tags ?? [];
+  tags.push(_getApplicationId());
+  return {
+    ...options,
+    diagnostics: {
+      ...options?.diagnostics,
+      tags
+    }
+  };
 };

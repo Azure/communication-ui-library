@@ -4,7 +4,7 @@
 import {
   CallAgent,
   CallApiFeature,
-  CallFeatureFactoryType,
+  CallFeatureApiFactory,
   DeviceManager,
   UserFacingDiagnosticsFeature,
   Features,
@@ -57,17 +57,17 @@ jest.mock('@azure/communication-calling', () => {
       };
     }),
     Features: {
-      get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
-        return MockRecordingCallFeatureImpl;
+      get Recording(): CallFeatureApiFactory<RecordingCallFeature> {
+        return { callApiCtor: MockRecordingCallFeatureImpl };
       },
-      get Transfer(): CallFeatureFactoryType<TransferCallFeature> {
-        return MockTransferCallFeatureImpl;
+      get Transfer(): CallFeatureApiFactory<TransferCallFeature> {
+        return { callApiCtor: MockTransferCallFeatureImpl };
       },
-      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
-        return MockTranscriptionCallFeatureImpl;
+      get Transcription(): CallFeatureApiFactory<TranscriptionCallFeature> {
+        return { callApiCtor: MockTranscriptionCallFeatureImpl };
       },
-      get Diagnostics(): CallFeatureFactoryType<UserFacingDiagnosticsFeature> {
-        return StubDiagnosticsCallFeatureImpl;
+      get Diagnostics(): CallFeatureApiFactory<UserFacingDiagnosticsFeature> {
+        return { callApiCtor: StubDiagnosticsCallFeatureImpl };
       }
     }
   };
@@ -779,7 +779,7 @@ const prepareCallWithRemoteVideoStream = async (): Promise<PreparedCallWithRemot
 };
 
 const prepareCallWithFeatures = async (
-  api: <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>) => TFeature
+  feature: <TFeature extends CallApiFeature>(cls: CallFeatureApiFactory<TFeature>) => TFeature
 ): Promise<PreparedCall> => {
   const agent = createMockCallAgent();
   const client = createStatefulCallClientWithAgent(agent);
@@ -788,7 +788,7 @@ const prepareCallWithFeatures = async (
 
   const callId = 'preparedCallId';
   const call = createMockCall(callId);
-  call.api = api;
+  call.feature = feature;
   agent.testHelperPushCall(call);
   expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
   return {

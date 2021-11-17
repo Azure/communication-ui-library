@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallApiFeature, CallFeatureFactoryType } from '@azure/communication-calling';
+import { Call, CallApiFeature, CallFeatureApiFactory } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { transferCallFeatureDeclaratify } from './TransferCallFeatureDeclarative';
 
@@ -38,9 +38,9 @@ class ProxyCall implements ProxyHandler<Call> {
 
   public get<P extends keyof Call>(target: Call, prop: P): any {
     switch (prop) {
-      case 'api': {
-        return <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>): TFeature => {
-          const feature = target.api(cls) as any;
+      case 'feature': {
+        return <TFeature extends CallApiFeature>(cls: CallFeatureApiFactory<TFeature>): TFeature => {
+          const feature = target.feature(cls) as any;
           if (feature.transfer) {
             if (this._transfer) {
               return this._transfer as TFeature;

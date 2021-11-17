@@ -6,7 +6,7 @@ import {
   CallAgent,
   CallApiFeature,
   CallClient,
-  CallFeatureFactoryType,
+  CallFeatureApiFactory,
   DeviceManager,
   UserFacingDiagnosticsFeature,
   IncomingCall,
@@ -104,6 +104,9 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.off(event, listener);
   }
+  dispose() {
+    /* No state to clean up */
+  }
 }
 
 /**
@@ -128,6 +131,9 @@ export class MockTransferCallFeatureImpl implements TransferCallFeature {
   off(event: 'transferRequested', listener: TransferRequestedEvent): void {
     this.emitter.off(event, listener);
   }
+  dispose() {
+    /* No state to clean up */
+  }
 }
 
 /**
@@ -142,6 +148,9 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
   }
   off(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.off(event, listener);
+  }
+  dispose() {
+    /* No state to clean up */
   }
 }
 
@@ -172,6 +181,9 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
       /* Stub to appease types */
     }
   };
+  dispose() {
+    /* No state to clean up */
+  }
 }
 
 /**
@@ -210,7 +222,7 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
     id: mockCallId,
     remoteParticipants: [] as RemoteParticipant[],
     localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    api: createMockApiFeatures(new Map()),
+    feature: createMockApiFeatures(new Map()),
 
     testHelperPushRemoteParticipant(participant: RemoteParticipant): void {
       this.remoteParticipants.push(participant);
@@ -300,51 +312,52 @@ export function createMockRemoteScreenshareStream(id = 42): MockRemoteVideoStrea
  * reused on repeated calls.
  */
 export function createMockApiFeatures(
-  cache: Map<CallFeatureFactoryType<any>, CallApiFeature>
-): <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>) => FeatureT {
-  return <FeatureT extends CallApiFeature>(cls: CallFeatureFactoryType<FeatureT>): FeatureT => {
-    const feature = cache.get(cls);
-    if (feature) {
-      return feature as FeatureT;
-    } else {
-      // Default one if none provided
-      const generic = addMockEmitter({
-        name: 'Default',
-        isRecordingActive: false,
-        isTranscriptionActive: false,
-        /* eslint-disable @typescript-eslint/no-unused-vars */
-        transfer(
-          target: TransferToParticipantLocator | TransferToCallLocator,
-          transferOptions?: TransferToParticipantOptions | TransferToCallOptions
-        ): Transfer {
-          return addMockEmitter({ state: 'None' });
-        },
-        /* eslint-enable @typescript-eslint/no-unused-vars */
-        media: {
-          getLatest(): LatestMediaDiagnostics {
-            return {};
-          },
-          on(): void {
-            /* Stub to appease types */
-          },
-          off(): void {
-            /* Stub to appease types */
-          }
-        },
-        network: {
-          getLatest(): LatestNetworkDiagnostics {
-            return {};
-          },
-          on(): void {
-            /* Stub to appease types */
-          },
-          off(): void {
-            /* Stub to appease types */
-          }
-        }
-      });
-      return generic;
+  cache: Map<CallFeatureApiFactory<any>, CallApiFeature>
+): <FeatureT extends CallApiFeature>(cls: CallFeatureApiFactory<FeatureT>) => FeatureT {
+  return <FeatureT extends CallApiFeature>(cls: CallFeatureApiFactory<FeatureT>): FeatureT => {
+    for (const [key, feature] of cache.entries()) {
+      if (cls && key.callApiCtor === cls.callApiCtor) {
+        return feature as FeatureT;
+      }
     }
+
+    // Default one if none provided
+    const generic = addMockEmitter({
+      name: 'Default',
+      isRecordingActive: false,
+      isTranscriptionActive: false,
+      /* eslint-disable @typescript-eslint/no-unused-vars */
+      transfer(
+        target: TransferToParticipantLocator | TransferToCallLocator,
+        transferOptions?: TransferToParticipantOptions | TransferToCallOptions
+      ): Transfer {
+        return addMockEmitter({ state: 'None' });
+      },
+      /* eslint-enable @typescript-eslint/no-unused-vars */
+      media: {
+        getLatest(): LatestMediaDiagnostics {
+          return {};
+        },
+        on(): void {
+          /* Stub to appease types */
+        },
+        off(): void {
+          /* Stub to appease types */
+        }
+      },
+      network: {
+        getLatest(): LatestNetworkDiagnostics {
+          return {};
+        },
+        on(): void {
+          /* Stub to appease types */
+        },
+        off(): void {
+          /* Stub to appease types */
+        }
+      }
+    });
+    return generic;
   };
 }
 

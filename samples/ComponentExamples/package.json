@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@azure/communication-chat": "1.1.0",
-    "@azure/communication-calling": "1.2.3-beta.1",
+    "@azure/communication-calling": "file:../../azure-communication-calling-1.3.1-beta-rc.1.3.tar",
     "@azure/communication-common": "1.0.0",
     "@azure/communication-identity": "1.0.0",
     "@azure/communication-react": "1.0.0-beta.7",
