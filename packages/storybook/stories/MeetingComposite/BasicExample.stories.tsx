@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
+import { FloatingSingleLineBetaBanner } from '../DocBanners';
 import { getDocs } from './MeetingCompositeDocs';
 import { MeetingExperience, MeetingExampleProps } from './snippets/Meeting.snippet';
 import { createCallLocator } from './snippets/Server.snippet';
@@ -28,9 +29,12 @@ const BasicStory = (args, context): JSX.Element => {
   }, [args.token, args.userId, args.endpointUrl, args.displayName]);
 
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {meetingProps ? <MeetingExperience fluentTheme={context.theme} {...meetingProps} /> : <ConfigHintBanner />}
-    </Stack>
+    <>
+      <FloatingSingleLineBetaBanner />
+      <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
+        {meetingProps ? <MeetingExperience fluentTheme={context.theme} {...meetingProps} /> : <ConfigHintBanner />}
+      </Stack>
+    </>
   );
 };
 
