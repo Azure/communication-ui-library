@@ -28,9 +28,8 @@ const config: PlaywrightTestConfig = {
             '--lang=en-US',
             '--mute-audio'
           ]
-        },
-      },
-
+        }
+      }
     }
   ],
   globalSetup: require.resolve('./globalSetup')
