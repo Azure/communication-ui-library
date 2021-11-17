@@ -6,14 +6,23 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Call Composite - Test App" />
+    <meta name="description" content="Composite - Test App" />
     <title>Composite - Test App</title>
     <style>
+      /* Important: For ensuring that blinking cursor doesn't get captured in
+         snapshots and cause a diff in subsequent tests. */
+      * {
+        caret-color: transparent !important;
+      }
+
       /* Help with inconsistent font rendering */
       * {
         text-rendering: geometricprecision !important;
       }
 
+      /* Prevent animations. waitForElementState('stable') is not working for opacity
+         animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079.
+         Examples of components that currently animate are button flyouts and button tooltips */
       *,
       *::before,
       *::after {
