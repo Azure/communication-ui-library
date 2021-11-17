@@ -3,6 +3,7 @@
 
 import { DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
+import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import { rootStyle, childrenContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
@@ -51,14 +52,14 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   const [page, setPage] = useState(0);
 
+  const localeStrings = useLocale().strings.videoGallery;
+
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
 
   const paginatedChildren: React.ReactNode[][] = useMemo(() => {
     return bucketize(React.Children.toArray(children), childrenPerPage);
   }, [children, childrenPerPage]);
-
-  console.log('paginatedChildren: ', paginatedChildren);
 
   // If children per page is 0 or less return empty element
   if (childrenPerPage <= 0) {
@@ -69,8 +70,6 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = paginatedChildren[clippedPage];
 
-  console.log('childrenOnCurrentPage: ', childrenOnCurrentPage);
-
   const showButtons = numberOfChildren > childrenPerPage;
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;
@@ -80,6 +79,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       {showButtons && (
         <HorizontalGalleryNavigationButton
           key="previous-nav-button"
+          ariaLabel={localeStrings.previousNavButtonAriaLabel}
           icon={<Icon iconName="HorizontalGalleryLeftButton" />}
           styles={styles?.previousButton}
           onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
@@ -92,6 +92,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
       {showButtons && (
         <HorizontalGalleryNavigationButton
           key="next-nav-button"
+          ariaLabel={localeStrings.nextNavButtonAriaLabel}
           icon={<Icon iconName="HorizontalGalleryRightButton" />}
           styles={styles?.nextButton}
           onClick={() => setPage(Math.min(lastPage, page + 1))}
@@ -107,6 +108,7 @@ const HorizontalGalleryNavigationButton = (props: {
   styles: IStyle;
   onClick?: () => void;
   disabled?: boolean;
+  ariaLabel?: string;
 }): JSX.Element => {
   const theme = useTheme();
   return (
@@ -114,6 +116,7 @@ const HorizontalGalleryNavigationButton = (props: {
       className={mergeStyles(leftRightButtonStyles(theme), props.styles)}
       onClick={props.onClick}
       disabled={props.disabled}
+      aria-label={props.ariaLabel}
     >
       {props.icon}
     </DefaultButton>

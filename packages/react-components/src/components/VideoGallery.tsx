@@ -55,6 +55,10 @@ export interface VideoGalleryStrings {
   screenShareLoadingMessage: string;
   /** String for local video label. Default is "You" */
   localVideoLabel: string;
+  /** Aria label for HorizontalGallery previous navigation button */
+  previousNavButtonAriaLabel: string;
+  /** Aria label for HorizontalGallery next navigation button */
+  nextNavButtonAriaLabel: string;
 }
 
 /**

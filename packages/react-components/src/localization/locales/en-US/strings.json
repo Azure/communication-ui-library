@@ -114,6 +114,8 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
-    "localVideoLabel": "You"
+    "localVideoLabel": "You",
+    "previousNavButtonAriaLabel": "Previous participants",
+    "nextNavButtonAriaLabel": "Next participants"
   }
 }
