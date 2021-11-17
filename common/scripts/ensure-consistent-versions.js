@@ -56,7 +56,7 @@ function ensureTelemetryVersionMatches(version) {
     }
 }
 
-function main() {
+function main(){
     const packages = findAllPackageJSON(PACKAGES_DIR);
     const versions = packages.map((pkg) => readPackageVersion(pkg));
 
