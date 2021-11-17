@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update js bundle automation snapshots related to sendbutton dimensions",
+  "packageName": "@internal/react-composites",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
