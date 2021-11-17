@@ -10,6 +10,7 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -133,7 +134,7 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @alpha
+// @beta
 export type AzureCommunicationMeetingAdapterArgs = {
     endpoint: string;
     userId: CommunicationUserIdentifier;
@@ -288,7 +289,6 @@ export type CallCompositeIcons = Partial<Pick<CompositeIcons, 'ControlButtonCame
 
 // @public
 export type CallCompositeOptions = {
-    mobileView?: boolean;
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
 };
@@ -299,8 +299,8 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
-    // (undocumented)
     callInvitationUrl?: string;
+    formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
 }
 
@@ -341,6 +341,7 @@ export interface CallCompositeStrings {
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
     privacyPolicy: string;
+    rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     soundLabel: string;
@@ -349,11 +350,11 @@ export interface CallCompositeStrings {
 
 // @public
 export type CallControlOptions = {
-    compressedMode?: boolean;
+    displayType?: 'default' | 'compact';
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
-    optionsButton?: boolean;
+    devicesButton?: boolean;
     participantsButton?: boolean | {
         disabled: boolean;
     };
@@ -386,7 +387,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.api' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -455,7 +456,6 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
-    // Warning: (ae-incompatible-release-tags) The symbol "diagnostics" is marked as @public, but its signature references "DiagnosticsCallFeatureState" which is marked as @beta
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -475,12 +475,12 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    // Warning: (ae-incompatible-release-tags) The symbol "transfer" is marked as @public, but its signature references "TransferCallFeatureState" which is marked as @beta
+    // @beta
     transfer: TransferCallFeatureState;
 }
 
 // @public
-export function CameraButton(props: CameraButtonProps): JSX.Element;
+export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends ControlBarButtonProps {
@@ -499,6 +499,8 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 export interface CameraButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -778,12 +780,12 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 // @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
+    devicesButton: DevicesButtonStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
-    optionsButton: OptionsButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -887,6 +889,7 @@ export interface ControlBarButtonProps extends IButtonProps {
     showLabel?: boolean;
     strings?: ControlBarButtonStrings;
     styles?: ControlBarButtonStyles;
+    tooltipId?: string;
 }
 
 // @public
@@ -894,6 +897,9 @@ export interface ControlBarButtonStrings {
     label?: string;
     offLabel?: string;
     onLabel?: string;
+    tooltipContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -921,7 +927,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// @alpha
+// @beta
 export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @public
@@ -1071,9 +1077,59 @@ export type DeviceManagerState = {
 };
 
 // @public
+export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;
+
+// @public
+export interface DevicesButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
+export interface DevicesButtonProps extends ControlBarButtonProps {
+    cameras?: OptionsDevice[];
+    microphones?: OptionsDevice[];
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+    selectedCamera?: OptionsDevice;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
+    speakers?: OptionsDevice[];
+    strings?: Partial<DevicesButtonStrings>;
+    styles?: DevicesButtonStyles;
+}
+
+// @public
+export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    cameras: VideoDeviceInfo[];
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
+    selectedCamera?: VideoDeviceInfo;
+};
+
+// @public
+export interface DevicesButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
+    label: string;
+    microphoneMenuTitle: string;
+    microphoneMenuTooltip: string;
+    speakerMenuTitle: string;
+    speakerMenuTooltip: string;
+    tooltipContent?: string;
+}
+
+// @public
+export interface DevicesButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
+}
+
+// @public
 export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;
 
-// @beta
+// @public
 export interface DiagnosticsCallFeatureState {
     media: MediaDiagnosticsState;
     network: NetworkDiagnosticsState;
@@ -1105,6 +1161,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
 // @public
 export interface EndCallButtonStrings {
     label: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -1159,7 +1216,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? OptionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -1178,6 +1235,18 @@ export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
     styles?: BaseCustomStyles;
+}
+
+// @public
+export interface GridLayoutStyles extends BaseCustomStyles {
+    children?: IStyle;
+}
+
+// @public
+export interface HorizontalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
 }
 
 // @internal
@@ -1262,24 +1331,24 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
 };
 
-// @beta
+// @public
 export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
 }
 
-// @alpha
+// @beta
 export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, MeetingAdapterSubscriptions {
 }
 
-// @alpha
+// @beta
 export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
     displayName: string | undefined;
     meeting: MeetingState | undefined;
     userId: CommunicationIdentifierKind;
 }
 
-// @alpha
+// @beta
 export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
     joinMeeting(microphoneOn?: boolean): Call | undefined;
     leaveMeeting(): Promise<void>;
@@ -1287,11 +1356,11 @@ export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallMan
     startMeeting(participants: string[]): Call | undefined;
 }
 
-// @alpha
+// @beta
 export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {
 }
 
-// @alpha
+// @beta
 export interface MeetingAdapterSubscriptions {
     // (undocumented)
     off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
@@ -1343,43 +1412,38 @@ export interface MeetingAdapterSubscriptions {
     on(event: 'messageRead', listener: MessageReadListener): void;
 }
 
-// @alpha
+// @beta
 export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
     page: MeetingCompositePage;
 }
 
-// @alpha
+// @beta
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
-// @alpha
-export type MeetingCompositeOptions = {
-    mobileView?: boolean;
-};
-
-// @alpha
+// @beta
 export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
-// @alpha
+// @beta
 export type MeetingCompositeProps = {
     meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
+    formFactor?: 'desktop' | 'mobile';
     meetingInvitationURL?: string;
-    options?: MeetingCompositeOptions;
 };
 
-// @alpha
+// @beta
 export type MeetingEndReason = CallEndReason;
 
-// @alpha
+// @beta
 export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
 
-// @alpha
+// @beta
 export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
     id: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     meetingEndReason?: MeetingEndReason;
 }
 
-// @alpha
+// @beta
 export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
     meetingEndReason?: MeetingEndReason;
@@ -1544,6 +1608,8 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -1551,7 +1617,7 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
     type: 'network';
 };
 
-// @beta
+// @public
 export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
@@ -1561,55 +1627,6 @@ export interface NetworkDiagnosticsState {
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
-
-// @public
-export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
-
-// @public
-export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
-    menuItemStyles?: IContextualMenuItemStyles;
-}
-
-// @public
-export interface OptionsButtonProps extends ControlBarButtonProps {
-    cameras?: OptionsDevice[];
-    microphones?: OptionsDevice[];
-    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
-    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
-    selectedCamera?: OptionsDevice;
-    selectedMicrophone?: OptionsDevice;
-    selectedSpeaker?: OptionsDevice;
-    speakers?: OptionsDevice[];
-    strings?: Partial<OptionsButtonStrings>;
-    styles?: OptionsButtonStyles;
-}
-
-// @public
-export type OptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    microphones: AudioDeviceInfo[];
-    speakers: AudioDeviceInfo[];
-    cameras: VideoDeviceInfo[];
-    selectedMicrophone?: AudioDeviceInfo;
-    selectedSpeaker?: AudioDeviceInfo;
-    selectedCamera?: VideoDeviceInfo;
-};
-
-// @public
-export interface OptionsButtonStrings {
-    cameraMenuTitle: string;
-    cameraMenuTooltip: string;
-    label: string;
-    microphoneMenuTitle: string;
-    microphoneMenuTooltip: string;
-    speakerMenuTitle: string;
-    speakerMenuTooltip: string;
-}
-
-// @public
-export interface OptionsButtonStyles extends ControlBarButtonStyles {
-    menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
-}
 
 // @public
 export interface OptionsDevice {
@@ -1749,6 +1766,7 @@ export interface ParticipantsButtonStrings {
     menuHeader: string;
     muteAllButtonLabel: string;
     participantsListButtonLabel: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -1816,6 +1834,8 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 export interface ScreenShareButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -1874,6 +1894,7 @@ export type StatefulCallClientArgs = {
 
 // @public
 export type StatefulCallClientOptions = {
+    callClientOptions: CallClientOptions;
     maxStateChangeListeners?: number;
 };
 
@@ -2057,7 +2078,7 @@ export interface VideoGalleryProps {
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
-    styles?: BaseCustomStyles;
+    styles?: VideoGalleryStyles;
 }
 
 // @public
@@ -2084,8 +2105,16 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+}
+
+// @public
+export interface VideoGalleryStyles extends BaseCustomStyles {
+    gridLayout?: GridLayoutStyles;
+    horizontalGallery?: HorizontalGalleryStyles;
+    localVideo?: IStyle;
 }
 
 // @public
@@ -2108,6 +2137,7 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps {
     children?: React_2.ReactNode;
     displayName?: string;
+    initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
