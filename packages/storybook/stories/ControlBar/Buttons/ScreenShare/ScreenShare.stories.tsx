@@ -83,7 +83,7 @@ export const ScreenShare = ScreenShareStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-screenshare`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Screen Share`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Screen Share`,
   component: ScreenShareButton,
   argTypes: {
     checked: controlsToAdd.checked,

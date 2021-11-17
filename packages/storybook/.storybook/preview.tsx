@@ -9,7 +9,7 @@ import {
   COMPONENT_FOLDER_PREFIX,
   COMPOSITE_FOLDER_PREFIX,
   EXAMPLES_FOLDER_PREFIX,
-  QUICKSTARTS_FOLDER_PREFIX,
+  CONCEPTS_FOLDER_PREFIX,
   STATEFUL_CLIENT_PREFIX
 } from '../stories/constants';
 import { THEMES } from '../stories/themes';
@@ -38,14 +38,44 @@ export const parameters = {
       order: [
         'Overview',
         'Use Cases',
+        'Feedback',
+        COMPOSITE_FOLDER_PREFIX,
+        [
+          'Get Started',
+          'MeetingComposite',
+          'CallComposite',
+          'ChatComposite',
+          'Cross-Framework Support'
+        ],
+        COMPONENT_FOLDER_PREFIX,
+        [
+          'Get Started',
+          'Video Gallery',
+          'Video Tile',
+          'Grid Layout',
+          'Control Bar',
+          'Message Thread',
+          'Send Box',
+          'Message Status Indicator',
+          'Typing Indicator',
+          'Participant Item',
+          'Participant List',
+        ],
+        CONCEPTS_FOLDER_PREFIX,
+        [        
         'Styling',
         'Theming',
         'Localization',
         'Accessibility',
         'Custom User Data Model',
-        'Feedback',
+        'Error Handling',
+        'Troubleshooting',
+        'Identity'
+        ],
+        EXAMPLES_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,
         [
+          'Get Started',
           'Overview',
           'Best Practices',
           'React Hooks',
@@ -56,10 +86,6 @@ export const parameters = {
           ],
           'Adapters',
         ],
-        QUICKSTARTS_FOLDER_PREFIX,
-        COMPOSITE_FOLDER_PREFIX,
-        COMPONENT_FOLDER_PREFIX,
-        EXAMPLES_FOLDER_PREFIX
       ]
     }
   }
