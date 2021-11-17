@@ -10,7 +10,7 @@ import { meetingParticipantsFromCallParticipants } from '../state/MeetingPartici
 /**
  * State of a single Meeting.
  *
- * @alpha
+ * @beta
  */
 export interface MeetingState
   extends Pick<
@@ -22,7 +22,6 @@ export interface MeetingState
       | 'localVideoStreams'
       | 'transcription'
       | 'recording'
-      | 'transfer'
       | 'screenShareRemoteParticipant'
       | 'startTime'
       | 'endTime'
@@ -58,7 +57,6 @@ const meetingPropsFromCallState = (callState: CallState) => ({
   localVideoStreams: callState.localVideoStreams,
   transcription: callState.transcription,
   recording: callState.recording,
-  transfer: callState.transfer,
   screenShareRemoteParticipant: callState.screenShareRemoteParticipant,
   startTime: callState.startTime,
   endTime: callState.endTime,

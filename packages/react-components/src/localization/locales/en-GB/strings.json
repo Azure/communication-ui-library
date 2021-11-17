@@ -34,7 +34,7 @@
     "onLabel": "Mute",
     "offLabel": "Unmute"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Options",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
@@ -104,6 +104,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
-    "screenShareLoadingMessage": "Loading {participant}'s screen"
+    "screenShareLoadingMessage": "Loading {participant}'s screen",
+    "localVideoLabel": "You"
   }
 }

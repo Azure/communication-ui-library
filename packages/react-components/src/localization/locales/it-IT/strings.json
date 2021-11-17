@@ -34,7 +34,7 @@
     "onLabel": "Disattiva audio",
     "offLabel": "Riattiva audio"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Opzioni",
     "cameraMenuTitle": "Fotocamera",
     "cameraMenuTooltip": "Scegli la fotocamera",

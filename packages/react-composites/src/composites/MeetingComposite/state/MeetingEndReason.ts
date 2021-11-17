@@ -6,6 +6,6 @@ import { CallEndReason } from '@azure/communication-calling';
 /**
  * Describes the reason the meeting ended.
  *
- * @alpha
+ * @beta
  */
 export type MeetingEndReason = CallEndReason;

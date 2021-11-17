@@ -50,7 +50,7 @@ module.exports = (appDir) => ({
       }
     ]
   },
-  plugins: [new HtmlWebpackPlugin({ template: path.join(appDir, 'public', 'index.html') })],
+  plugins: [new HtmlWebpackPlugin({ template: path.join(__dirname, 'index.html') })],
   devServer: {
     port: 3000,
     hot: true,

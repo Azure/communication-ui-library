@@ -13,7 +13,7 @@ import { MeetingEndReason } from './MeetingEndReason';
 /**
  * Participants of a Meeting.
  *
- * @alpha
+ * @beta
  */
 export interface MeetingParticipant
   // extends Pick<ChatParticipant, 'shareHistoryTime'>,
@@ -27,7 +27,7 @@ export interface MeetingParticipant
 /**
  * Participants of a Meeting, keyed by userId.
  *
- * @alpha
+ * @beta
  */
 export type MeetingParticipants = { [keys: string]: MeetingParticipant };
 

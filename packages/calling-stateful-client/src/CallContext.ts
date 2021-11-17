@@ -2,14 +2,7 @@
 // Licensed under the MIT license.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import {
-  AudioDeviceInfo,
-  DeviceAccess,
-  DominantSpeakersInfo,
-  TransferErrorCode,
-  TransferState,
-  VideoDeviceInfo
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, DeviceAccess, DominantSpeakersInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import EventEmitter from 'events';
 import { enableMapSet, produce } from 'immer';
 import {
@@ -27,8 +20,6 @@ import {
   IncomingCallState,
   VideoStreamRendererViewState,
   CallAgentState,
-  TransferRequest,
-  Transfer,
   CallErrors,
   CallErrorTarget,
   CallError
@@ -42,10 +33,6 @@ enableMapSet();
  * @private
  */
 export const MAX_CALL_HISTORY_LENGTH = 10;
-/**
- * @private
- */
-export const MAX_TRANSFER_REQUEST_LENGTH = 10;
 
 /**
  * @private
@@ -334,56 +321,6 @@ export class CallContext {
         const call = draft.calls[callId];
         if (call) {
           call.transcription.isTranscriptionActive = isTranscriptionActive;
-        }
-      })
-    );
-  }
-
-  public setCallReceivedTransferRequest(callId: string, transfer: TransferRequest): void {
-    this.setState(
-      produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls[callId];
-        if (call) {
-          if (call.transfer.receivedTransferRequests.length >= MAX_TRANSFER_REQUEST_LENGTH) {
-            call.transfer.receivedTransferRequests.shift();
-          }
-          call.transfer.receivedTransferRequests.push(transfer);
-        }
-      })
-    );
-  }
-
-  public setCallRequestedTransfer(callId: string, transfer: Transfer): void {
-    this.setState(
-      produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls[callId];
-        if (call) {
-          if (call.transfer.requestedTransfers.length >= MAX_TRANSFER_REQUEST_LENGTH) {
-            call.transfer.requestedTransfers.shift();
-          }
-          call.transfer.requestedTransfers.push(transfer);
-        }
-      })
-    );
-  }
-
-  public setCallRequestedTransferState(
-    callId: string,
-    transferId: number,
-    state: TransferState,
-    error?: TransferErrorCode
-  ): void {
-    this.setState(
-      produce(this._state, (draft: CallClientState) => {
-        const call = draft.calls[callId];
-        if (call) {
-          for (const requestedTransfer of call.transfer.requestedTransfers) {
-            if (requestedTransfer.id === transferId) {
-              requestedTransfer.state = state;
-              requestedTransfer.error = error;
-              break;
-            }
-          }
         }
       })
     );

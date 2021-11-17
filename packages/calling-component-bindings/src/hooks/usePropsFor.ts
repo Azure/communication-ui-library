@@ -6,7 +6,7 @@ import {
   EndCallButton,
   ErrorBar,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   ParticipantList,
   ScreenShareButton,
   VideoGallery
@@ -16,8 +16,8 @@ import {
   cameraButtonSelector,
   MicrophoneButtonSelector,
   microphoneButtonSelector,
-  OptionsButtonSelector,
-  optionsButtonSelector,
+  DevicesButtonSelector,
+  devicesButtonSelector,
   ScreenShareButtonSelector,
   screenShareButtonSelector
 } from '../callControlSelectors';
@@ -85,8 +85,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   typeof VideoGallery
 > extends true
   ? VideoGallerySelector
-  : AreEqual<Component, typeof OptionsButton> extends true
-  ? OptionsButtonSelector
+  : AreEqual<Component, typeof DevicesButton> extends true
+  ? DevicesButtonSelector
   : AreEqual<Component, typeof MicrophoneButton> extends true
   ? MicrophoneButtonSelector
   : AreEqual<Component, typeof CameraButton> extends true
@@ -128,8 +128,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return cameraButtonSelector;
     case ScreenShareButton:
       return screenShareButtonSelector;
-    case OptionsButton:
-      return optionsButtonSelector;
+    case DevicesButton:
+      return devicesButtonSelector;
     case ParticipantList:
       return participantListSelector;
     case ParticipantsButton:

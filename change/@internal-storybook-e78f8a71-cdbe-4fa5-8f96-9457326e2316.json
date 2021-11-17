@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove layouts from storybook",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

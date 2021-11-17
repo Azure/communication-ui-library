@@ -109,19 +109,6 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   }, messageTimestampId);
 };
 
-export const disableAnimation = async (page: Page): Promise<void> => {
-  await page.addStyleTag({
-    content: `
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
-        animation: none !important;
-      }
-    `
-  });
-};
-
 const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const key in qArgs) {

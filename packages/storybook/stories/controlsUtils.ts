@@ -235,7 +235,12 @@ export const controlsToAdd = {
     name: 'Message Status'
   },
   microphones: { control: 'object', defaultValue: defaultControlsMicrophones, name: 'Microphones' },
-  mobileView: { control: 'boolean', defaultValue: false, name: 'Mobile View' },
+  formFactor: {
+    control: 'select',
+    options: ['desktop', 'mobile'],
+    defaultValue: 'desktop',
+    name: 'Form Factor'
+  },
   participantItemMenuItemsStr: { control: 'text', defaultValue: 'Mute, Remove', name: 'Menu items (comma separated)' },
   participantNames: {
     control: 'text',

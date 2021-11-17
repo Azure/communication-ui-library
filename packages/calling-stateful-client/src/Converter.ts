@@ -7,16 +7,8 @@ import {
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
   IncomingCall as SdkIncomingCall,
-  VideoStreamRendererView,
-  TransferRequestedEventArgs,
-  Transfer
+  VideoStreamRendererView
 } from '@azure/communication-calling';
-import {
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier,
-  MicrosoftTeamsUserIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -24,9 +16,7 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
-  TransferRequest,
-  Transfer as DeclarativeTransfer
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
 
 /**
@@ -109,7 +99,6 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
     transcription: { isTranscriptionActive: false },
-    transfer: { receivedTransferRequests: [], requestedTransfers: [] },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined
@@ -138,36 +127,5 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
     scalingMode: view.scalingMode,
     isMirrored: view.isMirrored,
     target: view.target
-  };
-}
-
-/**
- * @private
- */
-export function convertSdkTransferRequestedToDeclarativeTransferRequested(
-  transferRequested: TransferRequestedEventArgs
-): TransferRequest {
-  return {
-    targetParticipant: transferRequested.targetParticipant
-  };
-}
-
-/**
- * @private
- */
-export function convertSdkTransferToDeclarativeTransfer(
-  transfer: Transfer,
-  targetParticipant:
-    | CommunicationUserIdentifier
-    | PhoneNumberIdentifier
-    | MicrosoftTeamsUserIdentifier
-    | UnknownIdentifier,
-  transferId: number
-): DeclarativeTransfer {
-  return {
-    id: transferId,
-    targetParticipant: targetParticipant,
-    state: transfer.state,
-    error: transfer.error
   };
 }

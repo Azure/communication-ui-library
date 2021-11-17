@@ -4,7 +4,7 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   ScreenShareButton
 } from '@azure/communication-react';
 import React from 'react';
@@ -28,7 +28,7 @@ export const ControlBarExample: () => JSX.Element = () => {
             /*handle onClick*/
           }}
         />
-        <OptionsButton menuProps={undefined /*some IContextualMenuProps*/} />
+        <DevicesButton menuProps={undefined /*some IContextualMenuProps*/} />
         <EndCallButton
           onClick={() => {
             /*handle onClick*/

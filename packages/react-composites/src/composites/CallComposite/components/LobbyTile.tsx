@@ -3,9 +3,10 @@
 
 import React from 'react';
 import { mergeStyles, Stack } from '@fluentui/react';
-import { VideoGalleryStream, useTheme, VideoStreamOptions } from '@internal/react-components';
+import { VideoGalleryStream, useTheme } from '@internal/react-components';
 import { moreDetailsStyle, overlayContainerStyle, titleStyle } from '../styles/LobbyTile.styles';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
+import { useHandlers } from '../hooks/useHandlers';
 
 /**
  * @private
@@ -22,7 +23,6 @@ export interface LobbyOverlayProps {
 export interface LobbyTileProps {
   localParticipantVideoStream: VideoGalleryStream;
   overlayProps: LobbyOverlayProps;
-  onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
 }
 
 /**
@@ -33,11 +33,11 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
   const isVideoReady = videoStream?.isAvailable ?? false;
 
   const palette = useTheme().palette;
+  const handlers = useHandlers(ExpandedLocalVideoTile);
 
   return (
     <ExpandedLocalVideoTile
       localParticipantVideoStream={props.localParticipantVideoStream}
-      onCreateLocalStreamView={props.onCreateLocalStreamView}
       overlayContent={
         props.overlayProps ? (
           <Stack
@@ -60,6 +60,7 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
           </Stack>
         ) : undefined
       }
+      {...handlers}
     />
   );
 };

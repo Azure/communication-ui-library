@@ -10,6 +10,10 @@ const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').d
 const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 
+const formFactorSnippet = `
+<CallComposite formFactor="mobile" />
+`;
+
 const cssSnippet = `
 html,
 body,
@@ -25,6 +29,9 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         CallComposite brings together key components to provide a full calling experience out of the box.
       </Description>
+      <Description>Note that CallComposite has the following min width and height:</Description>
+      <Description>- mobile: 19.5rem x 21rem (312px x 336px, with default rem at 16px)</Description>
+      <Description>- desktop: 30rem x 22rem (480px x 352px, with default rem at 16px)</Description>
       <Heading>Basic usage</Heading>
       <Description>
         There are two parts to the composite - a `CallComposite` react component and a `CallAdapter` that connects the
@@ -51,6 +58,20 @@ export const getDocs: () => JSX.Element = () => {
         following css to your primary css file:
       </Description>
       <Source code={cssSnippet} />
+
+      <Heading>Running in a Mobile browser</Heading>
+      <Description>
+        CallComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may set
+        the `formFactor` property to `"mobile"`. Currently the mobile form factor only supports Portrait orientation and
+        not Landscape. The CallComposite does not detect if it is running on mobile device vs desktop, instead you must
+        identify if your clients device is a mobile device and set the `formFactor` property to `"mobile"`. This prop
+        can be set at any time and immediately updates the composite UI to be optimized for a mobile device.
+      </Description>
+      <Source code={formFactorSnippet} />
+      <Description>
+        You can try out the form factor property in the [CallComposite Basic
+        Example](./?path=/story/composites-call-basicexample--basic-example).
+      </Description>
 
       <Heading>Theming</Heading>
       <Description>

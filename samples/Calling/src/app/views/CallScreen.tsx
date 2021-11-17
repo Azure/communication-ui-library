@@ -16,7 +16,7 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
 
-const isMobileSession = !!new MobileDetect(window.navigator.userAgent).mobile();
+const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
 export interface CallScreenProps {
   token: string;
@@ -25,7 +25,6 @@ export interface CallScreenProps {
   displayName: string;
   webAppTitle: string;
   onCallEnded: () => void;
-  onCallError: (e: Error) => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -34,6 +33,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const callIdRef = useRef<string>();
   const adapterRef = useRef<CallAdapter>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
+  const [isMobileSession, setIsMobileSession] = useState<boolean>(detectMobileSession());
 
   useEffect(() => {
     if (!callIdRef.current) {
@@ -41,6 +41,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     }
     console.log(`Call Id: ${callIdRef.current}`);
   }, [callIdRef.current]);
+
+  // Whenever the sample is changed from desktop -> mobile using the emulator, make sure we update the formFactor.
+  useEffect(() => {
+    const updateIsMobile = (): void => setIsMobileSession(detectMobileSession());
+    window.addEventListener('resize', updateIsMobile);
+    return () => window.removeEventListener('resize', updateIsMobile);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -83,7 +90,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       callInvitationUrl={window.location.href}
-      options={{ mobileView: isMobileSession }}
+      formFactor={isMobileSession ? 'mobile' : 'desktop'}
     />
   );
 };

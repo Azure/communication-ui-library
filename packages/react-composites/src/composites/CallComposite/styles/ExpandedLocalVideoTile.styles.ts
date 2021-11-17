@@ -31,8 +31,8 @@ export const overlayBackgroundStyles: (palette: IPalette, isVideoReady: boolean)
     position: 'absolute',
     height: '100%',
     width: '100%',
-    background: isVideoReady ? 'black' : palette.neutralLight,
-    opacity: 0.6,
+    background: isVideoReady ? 'black' : palette.neutralLighterAlt,
+    opacity: isVideoReady ? 0.6 : 1,
     zIndex: OVERLAY_BACKGROUND_ZINDEX
   };
 };

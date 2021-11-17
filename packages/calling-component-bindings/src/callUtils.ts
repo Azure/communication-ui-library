@@ -5,12 +5,20 @@ import { DeviceManagerState, StatefulCallClient } from '@internal/calling-statef
 import { CallState as CallStatus } from '@azure/communication-calling';
 
 /**
- * Check if the call state represents being connected to a call
+ * Check if the call state represents being in the call
  *
  * @internal
  */
 export const _isInCall = (callStatus?: CallStatus): boolean =>
   !!callStatus && !['None', 'Disconnected', 'Connecting'].includes(callStatus);
+
+/**
+ * Check if the call state represents being in the lobby or waiting to be admitted.
+ *
+ * @internal
+ */
+export const _isInLobbyOrConnecting = (callStatus: CallStatus | undefined): boolean =>
+  !!callStatus && ['Connecting', 'Ringing', 'InLobby'].includes(callStatus);
 
 /**
  * Check if the device manager local video is on when not part of a call

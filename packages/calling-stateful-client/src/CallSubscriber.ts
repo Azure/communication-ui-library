@@ -9,7 +9,6 @@ import {
   convertSdkLocalStreamToDeclarativeLocalStream,
   convertSdkParticipantToDeclarativeParticipant
 } from './Converter';
-import { ReceivedTransferSubscriber } from './ReceivedTransferSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
@@ -30,7 +29,6 @@ export class CallSubscriber {
 
   private _diagnosticsSubscriber: UserFacingDiagnosticsSubscriber;
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
-  private _receivedTransferSubscriber: ReceivedTransferSubscriber;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
 
@@ -46,11 +44,6 @@ export class CallSubscriber {
       this._call.feature(Features.UserFacingDiagnostics)
     );
     this._participantSubscribers = new Map<string, ParticipantSubscriber>();
-    this._receivedTransferSubscriber = new ReceivedTransferSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.Transfer)
-    );
     this._recordingSubscriber = new RecordingSubscriber(
       this._callIdRef,
       this._context,
@@ -125,7 +118,6 @@ export class CallSubscriber {
     this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
 
     this._diagnosticsSubscriber.unsubscribe();
-    this._receivedTransferSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
   };

@@ -23,7 +23,7 @@ export const videoGalleryOuterDivStyle = mergeStyles({ position: 'relative', wid
  * @private
  */
 export const videoGalleryContainerStyle: IStackStyles = {
-  root: { position: 'relative', height: '100%', padding: '0.5rem', gap: '0.5rem' }
+  root: { position: 'relative', height: '100%', width: '100%', padding: '0.5rem', gap: '0.5rem' }
 };
 
 /**
@@ -47,8 +47,7 @@ export const floatingLocalVideoModalStyle = (
     {
       root: {
         width: '100%',
-        height: '100%',
-        overflow: 'hidden'
+        height: '100%'
       },
       main: {
         minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
@@ -58,7 +57,8 @@ export const floatingLocalVideoModalStyle = (
         position: 'absolute',
         bottom: '0.5rem',
         boxShadow: theme.effects.elevation8,
-        borderRadius: theme.effects.roundedCorner4
+        borderRadius: theme.effects.roundedCorner4,
+        overflow: 'hidden'
       }
     },
     { main: theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' } }
@@ -102,9 +102,7 @@ export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, 
  */
 export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
   return {
-    root: {
-      '> *': isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
-    }
+    children: isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
   };
 };
 
@@ -136,13 +134,4 @@ export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
   minWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`,
   maxHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
   maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`
-};
-
-/**
- * @private
- */
-export const videoWithNoRoundedBorderStyle = {
-  root: {
-    '& video': { borderRadius: '0rem' }
-  }
 };

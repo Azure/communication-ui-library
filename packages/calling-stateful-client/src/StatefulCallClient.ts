@@ -47,8 +47,6 @@ import { _getApplicationId } from '@internal/acs-ui-common';
  *   - RemoteVideoStream 'isAvailableChanged'
  *   - TranscriptionCallFeature 'isTranscriptionActiveChanged'
  *   - RecordingCallFeature 'isRecordingActiveChanged'
- *   - Transfer 'stateChanged'
- *   - TransferCallFeature 'transferRequested'
  *
  * @public
  */
