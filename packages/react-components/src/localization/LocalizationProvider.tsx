@@ -9,7 +9,7 @@ import {
   MessageStatusIndicatorStrings,
   MessageThreadStrings,
   MicrophoneButtonStrings,
-  OptionsButtonStrings,
+  DevicesButtonStrings,
   ParticipantsButtonStrings,
   ParticipantItemStrings,
   ScreenShareButtonStrings,
@@ -45,8 +45,8 @@ export interface ComponentStrings {
   microphoneButton: MicrophoneButtonStrings;
   /** Strings for EndCallButton */
   endCallButton: EndCallButtonStrings;
-  /** Strings for OptionsButton */
-  optionsButton: OptionsButtonStrings;
+  /** Strings for DevicesButton */
+  devicesButton: DevicesButtonStrings;
   /** Strings for ParticipantsButton */
   participantsButton: ParticipantsButtonStrings;
   /** Strings for ScreenShareButton */

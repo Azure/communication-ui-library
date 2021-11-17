@@ -254,7 +254,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     <span
                       className="#323130 css-23"
                     >
-                      Options
+                      Devices
                     </span>
                     <i
                       aria-hidden={true}

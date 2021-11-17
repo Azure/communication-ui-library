@@ -34,7 +34,7 @@
     "onLabel": "Désactiver le son",
     "offLabel": "Réactiver le son"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Options",
     "cameraMenuTitle": "Appareil photo",
     "cameraMenuTooltip": "Choisir une caméra",

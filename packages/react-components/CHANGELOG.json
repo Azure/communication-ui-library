@@ -558,7 +558,7 @@
             "package": "@internal/react-components"
           },
           {
-            "comment": "Video device icon updated in OptionsButton",
+            "comment": "Video device icon updated in DevicesButton",
             "author": "miguelgamis@microsoft.com",
             "commit": "64d7184d7c8970da615a40f6e6f20694384211fa",
             "package": "@internal/react-components"
@@ -890,7 +890,7 @@
             "package": "react-components"
           },
           {
-            "comment": "Fixed OptionsButton cameras, microphones, and speakers property types. OptionButton default menu props only used not empty.",
+            "comment": "Fixed DevicesButton cameras, microphones, and speakers property types. OptionButton default menu props only used not empty.",
             "author": "miguelgamis@microsoft.com",
             "commit": "fb5f67764a347ad4a52b243768d42720306f3c6c",
             "package": "react-components"
@@ -1057,7 +1057,7 @@
             "package": "@internal/react-components"
           },
           {
-            "comment": "Add default menu props and selector props to OptionsButton",
+            "comment": "Add default menu props and selector props to DevicesButton",
             "author": "anjulgarg@live.com",
             "commit": "3d8c98d16528f6808de5450aca8da091ca61b268",
             "package": "@internal/react-components"
@@ -1129,7 +1129,7 @@
             "package": "@internal/react-components"
           },
           {
-            "comment": "Add OptionsButton Component",
+            "comment": "Add DevicesButton Component",
             "author": "alcail@microsoft.com",
             "commit": "c590ee09046fa6644f0cbf771cf648d2f4ff2e95",
             "package": "@internal/react-components"
@@ -1647,7 +1647,7 @@
             "package": "@internal/react-components"
           },
           {
-            "comment": "add documentation for OptionsButton",
+            "comment": "add documentation for DevicesButton",
             "author": "alcail@microsoft.com",
             "commit": "b6485fa6f5fe2419b32cf9112b33812e994f002d",
             "package": "@internal/react-components"
