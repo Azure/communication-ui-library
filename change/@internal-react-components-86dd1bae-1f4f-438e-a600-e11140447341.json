@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix remote video border not flush with isSpeaking indicator",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update localized strings for components and composites",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
