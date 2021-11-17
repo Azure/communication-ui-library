@@ -46,7 +46,7 @@ const MessageContentAsText = (message: ChatMessage, liveAuthorIntro: string): JS
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
           return (
-            <Link href={decoratedHref} key={key}>
+            <Link target="_blank" href={decoratedHref} key={key}>
               {decoratedText}
             </Link>
           );
