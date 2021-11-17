@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
+import { DefaultButton, IButtonProps, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -103,22 +103,18 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   );
 };
 
-const HorizontalGalleryNavigationButton = (props: {
-  icon: JSX.Element;
+interface HorizontalGalleryNavigationButtonProps extends Omit<IButtonProps, 'styles'> {
   styles: IStyle;
-  onClick?: () => void;
-  disabled?: boolean;
-  ariaLabel?: string;
-}): JSX.Element => {
+  icon: JSX.Element;
+}
+
+const HorizontalGalleryNavigationButton = (props: HorizontalGalleryNavigationButtonProps): JSX.Element => {
+  const { styles, icon, ...buttonProps } = props;
+
   const theme = useTheme();
   return (
-    <DefaultButton
-      className={mergeStyles(leftRightButtonStyles(theme), props.styles)}
-      onClick={props.onClick}
-      disabled={props.disabled}
-      aria-label={props.ariaLabel}
-    >
-      {props.icon}
+    <DefaultButton className={mergeStyles(leftRightButtonStyles(theme), styles)} {...buttonProps}>
+      {icon}
     </DefaultButton>
   );
 };
