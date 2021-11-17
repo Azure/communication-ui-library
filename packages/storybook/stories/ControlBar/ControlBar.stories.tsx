@@ -195,7 +195,7 @@ export const ControlBar = ControlBarStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar`,
   component: ControlBarComponent,
   argTypes: {
     layout: controlsToAdd.controlBarLayout,

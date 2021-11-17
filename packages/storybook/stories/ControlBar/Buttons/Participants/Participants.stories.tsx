@@ -165,7 +165,7 @@ export const Participants = ParticipantsStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-participants`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Participants`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Participants`,
   component: ParticipantsButton,
   argTypes: {
     isMuteAllAvailable: controlsToAdd.isMuteAllAvailable,
