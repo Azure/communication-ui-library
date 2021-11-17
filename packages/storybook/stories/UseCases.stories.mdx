@@ -47,11 +47,6 @@ To take full advantage of these capabilities, we recommend using the UI Componen
 |              | Chat title changed                               |
 | Participants | Participant roster                               |
 
-## Supported Identities
-
-An Azure Communication Services identity is required to initialize the stateful client libraries and authenticate to the service.
-For more information on authentication, see [Authentication](https://docs.microsoft.com/azure/communication-services/concepts/authentication) and [Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript)
-
 ## Teams Interop Use Case
 
 For [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) scenarios, developers can use UI Library Components to join Teams meetings through Azure Communication Services.
@@ -95,49 +90,3 @@ Developers can hook into the stateful client to read the state, handle events an
 | Commands can be sent to the call and chat client | ✔          | ✔             | Mute or Unmute the call client or send messages on behalf of the user        |
 | Client events can be accessed and handled        | ✔          | ✔             | Handle a participant join a call or intercept a message coming into a thread |
 | UI events can be accessed and handled            | ✔          | ✔             | Handle mute button click or chat send button to add your own logic           |
-
-## Recommended Architecture
-
-![UI Library recommended architecture with client-server architecture](images/ui-library-architecture.png)
-
-Composite and Base Components are initialized using an Azure Communication Services access token. Access tokens should be procured from Azure Communication Services through a
-trusted service that you manage. See [Quickstart: Create Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript) and [Trusted Service Tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/trusted-service-tutorial) for more information.
-
-These client libraries also require the context for the call or chat they will join. Similar to user access tokens, this context should be disseminated to clients via your own trusted service. The list below summarizes the initialization and resource management functions that you need to operationalize.
-
-| Contoso Responsibilities                                 | UI Library Responsibilities                                     |
-| -------------------------------------------------------- | --------------------------------------------------------------- |
-| Provide access token from Azure                          | Pass through given access token to initialize components        |
-| Provide refresh function                                 | Refresh access token using developer provided function          |
-| Retrieve/Pass join information for call or chat          | Pass through call and chat information to initialize components |
-| Retrieve/Pass user information for any custom data model | Pass through custom data model to components to render          |
-
-## Platform support
-
-| SDK              | Windows                       | macOS                         | Ubuntu   | Linux    | Android    | iOS          |
-| ---------------- | ----------------------------- | ----------------------------- | -------- | -------- | ---------- | ------------ |
-| UI SDK - Calling | Chrome\*, new Edge            | Chrome\*, Safari\*\*          | Chrome\* | Chrome\* | Chrome\*\* | Safari\*\*\* |
-| UI SDK - Chat    | Firefox\*, Chrome\*, new Edge | Firefox\*, Chrome\*, Safari\* | Chrome\* | Chrome\* | Safari\*   |
-
-\*Note that the latest version is supported in addition to the
-previous two releases.
-
-\*\*Note that outgoing screen sharing is not supported for Chrome on Android.
-
-\*\*\*Note that Safari versions 13.1+ are supported. 1:1 calls are not supported on Safari. Outgoing video for Safari
-macOS supported only for Safari 14+/macOS 11+. Outgoing screen sharing
-is not supported on iOS, device selection(for example choosing Bluetooth headset) is limited by OS, only one device available.
-
-## Accessibility
-
-Accessibility by design is a principle across Microsoft products.
-UI Library follows this principle in making sure that all UI Components are fully accessible.
-During public preview, the UI Library will continue to improve and add accessibility feature to the UI Components.
-We expect to add more details on accessibility ahead of the UI Library being in General Availability.
-
-## Localization
-
-Localization is a key to making products that can be used across the world and by people who who speak different languages.
-UI Library will provide out of the box support for some languages and capabilities such as RTL.
-Developers can provide their own localization files to be used for the UI Library.
-These localization capabilities will be added ahead of General Availability.

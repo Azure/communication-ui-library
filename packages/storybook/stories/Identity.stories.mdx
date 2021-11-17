@@ -1,0 +1,35 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta id="identity" title="Concepts/Identity" />
+
+# Identity
+
+Azure Communication Services is an [identity-agnostic service](https://docs.microsoft.com/azure/communication-services/concepts/identity-model).
+Generating Azure Communication Services identities and tokens for users is a privileged operation.
+For more information on authentication, see [Authentication](https://docs.microsoft.com/azure/communication-services/concepts/authentication) and [Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript)
+
+Typically:
+
+- Customers deploy a secure backend service for generating Azure Communication Services identity tokens.
+- This secure service interacts with the identity service, and optionally customers' own backends to generate the Azure Communication Services identity tokens for users.
+- The identity tokens are supplied to the client application to be used with API calls to the Azure Communication Services Chat and Calling backends.
+
+## Identities for Testing
+
+For testing purposes, you can use the [identity generator](https://docs.microsoft.com/azure/communication-services/quickstarts/identity/quick-create-identity) on Azure Portal.
+
+## Recommended Architecture
+
+![UI Library recommended architecture with client-server architecture](images/ui-library-architecture.png)
+
+Composite and Base Components are initialized using an Azure Communication Services access token. Access tokens should be procured from Azure Communication Services through a
+trusted service that you manage. See [Quickstart: Create Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript) and [Trusted Service Tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/trusted-service-tutorial) for more information.
+
+These client libraries also require the context for the call or chat they will join. Similar to user access tokens, this context should be disseminated to clients via your own trusted service. The list below summarizes the initialization and resource management functions that you need to operationalize.
+
+| Contoso Responsibilities                                 | UI Library Responsibilities                                     |
+| -------------------------------------------------------- | --------------------------------------------------------------- |
+| Provide access token from Azure                          | Pass through given access token to initialize components        |
+| Provide refresh function                                 | Refresh access token using developer provided function          |
+| Retrieve/Pass join information for call or chat          | Pass through call and chat information to initialize components |
+| Retrieve/Pass user information for any custom data model | Pass through custom data model to components to render          |

@@ -83,7 +83,7 @@ export const Camera = CameraStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-camera`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Camera`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Camera`,
   component: CameraButton,
   argTypes: {
     checked: controlsToAdd.checked,
