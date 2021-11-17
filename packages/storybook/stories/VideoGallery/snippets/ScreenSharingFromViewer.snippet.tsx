@@ -12,11 +12,15 @@ const MockLocalParticipant = {
   isMuted: true
 };
 
-const mockVideoElement = document.createElement('img');
-mockVideoElement.src = 'images/hero.svg';
-mockVideoElement.style.height = decodeURIComponent('100%25');
+const mockVideoElement = document.createElement('div');
 mockVideoElement.style.width = decodeURIComponent('100%25');
-mockVideoElement.style.backgroundColor = 'lightblue';
+mockVideoElement.style.height = decodeURIComponent('100%25');
+mockVideoElement.style.textAlign = 'center';
+const imageElement = document.createElement('img');
+imageElement.src = 'images/screenshare-example.png';
+imageElement.style.maxWidth = decodeURIComponent('100%25');
+imageElement.style.maxHeight = decodeURIComponent('100%25');
+mockVideoElement.appendChild(imageElement);
 const mockScreenShareStream = {
   isAvailable: true,
   renderElement: mockVideoElement as HTMLElement

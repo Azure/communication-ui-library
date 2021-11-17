@@ -152,15 +152,20 @@ const VideoGalleryStory = (args): JSX.Element => {
     remoteParticipants[0].isScreenSharingOn = args.screenShareExperience === 'viewer';
 
     if (args.screenShareExperience === 'viewer') {
-      const renderElement = document.createElement('img');
-      renderElement.src = 'images/hero.svg';
-      renderElement.style.width = '100%';
-      renderElement.style.backgroundColor = 'lightblue';
-      const screenShareStream = {
+      const mockVideoElement = document.createElement('div');
+      mockVideoElement.style.width = '100%';
+      mockVideoElement.style.height = '100%';
+      mockVideoElement.style.textAlign = 'center';
+      const imageElement = document.createElement('img');
+      imageElement.src = 'images/screenshare-example.png';
+      imageElement.style.maxWidth = decodeURIComponent('100%25');
+      imageElement.style.maxHeight = decodeURIComponent('100%25');
+      mockVideoElement.appendChild(imageElement);
+      const mockScreenShareStream = {
         isAvailable: true,
-        renderElement: renderElement as HTMLElement
+        renderElement: mockVideoElement as HTMLElement
       };
-      remoteParticipants[0].screenShareStream = screenShareStream;
+      remoteParticipants[0].screenShareStream = mockScreenShareStream;
     }
   }
 
