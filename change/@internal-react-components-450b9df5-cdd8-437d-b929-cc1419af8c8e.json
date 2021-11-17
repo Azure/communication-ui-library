@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Aria label added to HorizontalGallery navigation buttons",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
