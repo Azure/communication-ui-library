@@ -19115,6 +19115,20 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
+  /yargs/17.2.1:
+    dependencies:
+      cliui: 7.0.4
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.2
+      y18n: 5.0.8
+      yargs-parser: 20.2.9
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-XfR8du6ua4K6uLGm5S6fA+FIJom/MdJcFNVY8geLlp2v8GYbOXD4EB1tPNZsRn4vBzKGMgb5DRZMeWuFc2GO8Q==
   /yauzl/2.10.0:
     dependencies:
       buffer-crc32: 0.2.13
@@ -19445,7 +19459,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-4xvFUW73z+XnNlDFbxkrzTppslBKT3jmUuL5Sg6cOG9s0HWEpsEtHeuk3DLyrookMcFlo3qEGGVg7zv0FCp8Rw==
+      integrity: sha512-Lk4ulDtoh+77QQryL938xfqpJ1cjt1gzTiqudeVDWP2VXr7OYR6SPg5sk8e4d7XdpuKaA6ImekMyPcWAQDZFKg==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19536,10 +19550,11 @@ packages:
       typescript: 4.3.5
       use-long-press: 1.1.1_react@16.14.0
       uuid: 8.3.2
+      yargs: 17.2.1
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-XvQhSuuKTlJBnNH3DJ0dLlG/vtMdod9KA41cFuB2nP1sIdNWtGVYD6uYUO1sID2COSKELpspAprQnIpaKargvQ==
+      integrity: sha512-xFSY69B6RlH2GRmQP2wdxNheZw/HDAoJRB6o9Vqb8WpqNMULcmaV1ecHjT9gINNyssvrNCLQ6CAprobDxYZGbg==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:

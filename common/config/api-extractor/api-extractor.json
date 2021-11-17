@@ -11,6 +11,8 @@
   },
   "dtsRollup": {
     "enabled": true
+    // Note: for release packages (e.g. @azure/communication-react) we specify public and beta
+    // trimming in the local api-extractor.json config files.
   },
   "messages": {
     "extractorMessageReporting": {

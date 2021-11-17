@@ -1,4 +1,9 @@
 {
   "extends": "../../common/config/api-extractor/api-extractor.json",
-  "mainEntryPointFilePath": "<projectFolder>/dist/dist-esm/communication-react/src/index.d.ts"
+  "mainEntryPointFilePath": "<projectFolder>/dist/dist-esm/communication-react/src/index.d.ts",
+  "dtsRollup": {
+    "untrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-untrimmed.d.ts",
+    "betaTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-beta.d.ts",
+    "publicTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-public.d.ts"
+  }
 }
