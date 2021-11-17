@@ -6,6 +6,7 @@
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
+import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -186,6 +187,7 @@ export type StatefulCallClientArgs = {
 
 // @public
 export type StatefulCallClientOptions = {
+    callClientOptions: CallClientOptions;
     maxStateChangeListeners?: number;
 };
 
