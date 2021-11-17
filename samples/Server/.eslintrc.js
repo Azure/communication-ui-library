@@ -31,7 +31,8 @@ module.exports = {
 
     '@typescript-eslint/no-explicit-any': 'error',
     // Allow unused vars for routing funtions
-    '@typescript-eslint/no-unused-vars': ['off']
+    '@typescript-eslint/no-unused-vars': ['off'],
+    curly: 'error'
   },
   overrides: [
     {
