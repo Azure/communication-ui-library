@@ -7,7 +7,7 @@ import { CallCompositePage } from '../../CallComposite';
 /**
  * Page state the Meeting composite could be in.
  *
- * @alpha
+ * @beta
  */
 export type MeetingCompositePage =
   | 'accessDeniedTeamsMeeting'

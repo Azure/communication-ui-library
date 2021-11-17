@@ -25,6 +25,10 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         ChatComposite brings together key components to provide a full chat experience out of the box.
       </Description>
+      <Description>
+        Note that ChatComposite has a min width and height of respectively 19.5rem and 20rem (312px x 320px, with
+        default rem at 16px).
+      </Description>
       <Heading>Basic usage</Heading>
       <Description>
         There are two parts to the composite - a `ChatComposite` react component and a `ChatAdapter` that connects the
@@ -78,6 +82,13 @@ export const getDocs: () => JSX.Element = () => {
         changes.
       </Description>
       <Source code={showParticipantStatement} />
+
+      <Heading>Running in a Mobile browser</Heading>
+      <Description>
+        Unlike the CallComposite and MeetingComposite, the ChatComposite has no `formFactor` property. Instead the
+        composite is responsive to the container it is in and should perform optimally on mobile and desktop
+        automatically.
+      </Description>
 
       <Heading>Custom Data Model</Heading>
       <Description>

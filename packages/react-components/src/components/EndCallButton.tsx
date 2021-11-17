@@ -19,6 +19,8 @@ export interface EndCallButtonStrings {
    * Label of button
    */
   label: string;
+  /** Tooltip content. */
+  tooltipContent?: string;
 }
 
 /**

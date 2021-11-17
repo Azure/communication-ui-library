@@ -24,10 +24,9 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ScreenShareButton</Title>
-      <Description of={ScreenShareButton} />
       <Description>
-        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, don not forget to add a unique key
-        to each element to avoid warning for children in a list.
+        A button to toggle the user's screen sharing on and off. For use with the [Control
+        Bar](./?path=/docs/ui-components-controlbar--control-bar).
       </Description>
 
       <Heading>Importing</Heading>
@@ -55,6 +54,10 @@ const getDocs: () => JSX.Element = () => {
         You can change the styles of the `ScreenShareButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
       </Description>
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
+        to each element to avoid warning for children in a list.
+      </Description>
       <Canvas mdxSource={CustomButtonExampleText}>
         <CustomScreenShareButtonExample />
       </Canvas>
@@ -80,7 +83,7 @@ export const ScreenShare = ScreenShareStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-screenshare`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Screen Share`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Screen Share`,
   component: ScreenShareButton,
   argTypes: {
     checked: controlsToAdd.checked,

@@ -25,7 +25,10 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>SendBox</Title>
-      <Description of={SendBoxComponent} />
+      <Description>
+        Component for typing and sending messages. SendBox has a callback for sending typing notification when user
+        starts entering text. It also supports an optional message below the text input field.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />

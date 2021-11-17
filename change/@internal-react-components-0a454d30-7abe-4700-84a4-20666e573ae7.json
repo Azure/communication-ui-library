@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add showLabel props to VideoTile. Do not show local preview VideoTile label when the video gallery is narrow.",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

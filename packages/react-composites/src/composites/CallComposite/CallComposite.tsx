@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -17,6 +17,7 @@ import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
+import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 
 /**
  * Props for {@link CallComposite}.
@@ -29,6 +30,16 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Composite can also be controlled using the adapter.
    */
   adapter: CallAdapter;
+  /**
+   * Optimizes the composite form factor for either desktop or mobile.
+   * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
+   * @defaultValue 'desktop'
+   */
+  formFactor?: 'desktop' | 'mobile';
+  /**
+   * URL to invite new participants to the current call. If this is supplied, a button appears in the Participants
+   * Button flyout menu.
+   */
   callInvitationUrl?: string;
   /**
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
@@ -42,13 +53,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
  * @public
  */
 export type CallCompositeOptions = {
-  /**
-   * Choose to use the composite form optimized for use on a mobile device.
-   * @remarks This is currently only optimized for Portrait mode on mobile devices and does not support landscape.
-   * @defaultValue false
-   * @alpha
-   */
-  mobileView?: boolean;
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    * Hide or show the error bar.
@@ -64,6 +68,7 @@ export type CallCompositeOptions = {
 };
 
 type MainScreenProps = {
+  mobileView: boolean;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -82,7 +87,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'configuration':
       return (
         <ConfigurationPage
-          mobileView={props.options?.mobileView ?? false}
+          mobileView={props.mobileView}
           startCallHandler={(): void => {
             adapter.joinCall();
           }}
@@ -91,6 +96,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'accessDeniedTeamsMeeting':
       return (
         <NoticePage
+          iconName="NoticePageAccessDeniedTeamsMeeting"
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
@@ -99,6 +105,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'removedFromCall':
       return (
         <NoticePage
+          iconName="NoticePageRemovedFromCall"
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
@@ -107,22 +114,23 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'joinCallFailedDueToNoNetwork':
       return (
         <NoticePage
+          iconName="NoticePageJoinCallFailedDueToNoNetwork"
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
-          iconName="NoticePageJoinCallFailedDueToNoNetwork"
           dataUiId={'join-call-failed-due-to-no-network-page'}
         />
       );
     case 'leftCall':
       return (
         <NoticePage
+          iconName="NoticePageLeftCall"
           title={locale.strings.call.leftCallTitle}
           moreDetails={locale.strings.call.leftCallMoreDetails}
           dataUiId={'left-call-page'}
         />
       );
     case 'lobby':
-      return <LobbyPage options={props.options} />;
+      return <LobbyPage mobileView={props.mobileView} options={props.options} />;
     case 'call':
       return (
         <CallPage
@@ -130,6 +138,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          mobileView={props.mobileView}
           options={props.options}
         />
       );
@@ -141,10 +150,21 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 /**
  * A customizable UI composite for calling experience.
  *
+ * @remarks Call composite min width/height are as follow:
+ * - mobile: 19.5rem x 21rem (312px x 336px, with default rem at 16px)
+ * - desktop: 30rem x 22rem (480px x 352px, with default rem at 16px)
+ *
  * @public
  */
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
-  const { adapter, callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems, options } = props;
+  const {
+    adapter,
+    callInvitationUrl,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    options,
+    formFactor = 'desktop'
+  } = props;
   useEffect(() => {
     (async () => {
       await adapter.askDevicePermission({ video: true, audio: true });
@@ -153,16 +173,26 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       adapter.querySpeakers();
     })();
   }, [adapter]);
+
+  const mobileView = formFactor === 'mobile';
+
+  const mainScreenContainerClassName = useMemo(() => {
+    return mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
+  }, [mobileView]);
+
   return (
-    <BaseComposite {...props}>
-      <CallAdapterProvider adapter={adapter}>
-        <MainScreen
-          callInvitationUrl={callInvitationUrl}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-          options={options}
-        />
-      </CallAdapterProvider>
-    </BaseComposite>
+    <div className={mainScreenContainerClassName}>
+      <BaseComposite {...props}>
+        <CallAdapterProvider adapter={adapter}>
+          <MainScreen
+            callInvitationUrl={callInvitationUrl}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            mobileView={mobileView}
+            options={options}
+          />
+        </CallAdapterProvider>
+      </BaseComposite>
+    </div>
   );
 };

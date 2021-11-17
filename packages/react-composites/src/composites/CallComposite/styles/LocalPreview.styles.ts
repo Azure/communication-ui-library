@@ -4,8 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 
 const localPreviewContainerStyle: IStyle = {
-  borderRadius: '.25rem',
-  minWidth: '12.5rem'
+  borderRadius: '.25rem'
 };
 
 /**
@@ -13,7 +12,9 @@ const localPreviewContainerStyle: IStyle = {
  */
 export const localPreviewContainerStyleDesktop = mergeStyles({
   ...localPreviewContainerStyle,
-  width: '25rem',
+  width: '50%',
+  minWidth: '11rem',
+  maxWidth: '25rem',
   height: '18.75rem',
   padding: '0.5rem'
 });

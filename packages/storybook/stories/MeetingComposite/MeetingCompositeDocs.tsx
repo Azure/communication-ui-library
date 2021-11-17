@@ -7,6 +7,10 @@ import React from 'react';
 const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
+const formFactorSnippet = `
+<MeetingComposite formFactor="mobile" />
+`;
+
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -32,6 +36,20 @@ export const getDocs: () => JSX.Element = () => {
         service and provided to the client application that then passes it to the MeetingComposite.
       </Description>
       <Source code={serverText} />
+
+      <Heading>Running in a Mobile browser</Heading>
+      <Description>
+        MeetingComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may
+        set the `formFactor` property to `"mobile"`. Currently the mobile form factor only supports Portrait orientation
+        and not Landscape. The MeetingComposite does not detect if it is running on mobile device vs desktop, instead
+        you must identify if your clients device is a mobile device and set the `formFactor` property to `"mobile"`.
+        This prop can be set at any time and immediately updates the composite UI to be optimized for a mobile device.
+      </Description>
+      <Source code={formFactorSnippet} />
+      <Description>
+        You can try out the form factor property in the [MeetingComposite Basic
+        Example](./?path=/story/composites-meeting-basicexample--basic-example).
+      </Description>
 
       <Heading>Theming</Heading>
       <Description>

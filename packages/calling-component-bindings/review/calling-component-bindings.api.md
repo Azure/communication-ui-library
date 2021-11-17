@@ -18,10 +18,10 @@ import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { DevicesButton } from '@internal/react-components';
 import { EndCallButton } from '@internal/react-components';
 import { ErrorBar } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
-import { OptionsButton } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -109,6 +109,19 @@ export const cameraButtonSelector: CameraButtonSelector;
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public
+export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    microphones: AudioDeviceInfo[];
+    speakers: AudioDeviceInfo[];
+    cameras: VideoDeviceInfo[];
+    selectedMicrophone?: AudioDeviceInfo;
+    selectedSpeaker?: AudioDeviceInfo;
+    selectedCamera?: VideoDeviceInfo;
+};
+
+// @public
+export const devicesButtonSelector: DevicesButtonSelector;
+
+// @public
 export type EmptySelector = () => Record<string, never>;
 
 // @public
@@ -117,13 +130,16 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 };
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof OptionsButton> extends true ? OptionsButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @internal
 export const _isInCall: (callStatus?: CallState | undefined) => boolean;
+
+// @internal
+export const _isInLobbyOrConnecting: (callStatus: CallState | undefined) => boolean;
 
 // @internal
 export const _isPreviewOn: (deviceManager: DeviceManagerState) => boolean;
@@ -136,19 +152,6 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export const microphoneButtonSelector: MicrophoneButtonSelector;
-
-// @public
-export type OptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    microphones: AudioDeviceInfo[];
-    speakers: AudioDeviceInfo[];
-    cameras: VideoDeviceInfo[];
-    selectedMicrophone?: AudioDeviceInfo;
-    selectedSpeaker?: AudioDeviceInfo;
-    selectedCamera?: VideoDeviceInfo;
-};
-
-// @public
-export const optionsButtonSelector: OptionsButtonSelector;
 
 // @public
 export type ParticipantListSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {

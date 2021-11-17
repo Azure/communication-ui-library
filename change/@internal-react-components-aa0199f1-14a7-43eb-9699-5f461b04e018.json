@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix text in video tile label to no longer be translucent",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

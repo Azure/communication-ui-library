@@ -4,7 +4,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
-import { videoWithNoRoundedBorderStyle } from './styles/VideoGallery.styles';
 import { VideoTile } from './VideoTile';
 
 /**
@@ -70,9 +69,8 @@ export const RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      const videoStyles = isSpeaking ? videoWithNoRoundedBorderStyle : {};
-      return <StreamMedia videoStreamElement={renderElement} styles={videoStyles} />;
-    }, [renderElement, isSpeaking]);
+      return <StreamMedia videoStreamElement={renderElement} />;
+    }, [renderElement]);
 
     return (
       <VideoTile

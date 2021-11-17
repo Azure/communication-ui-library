@@ -64,7 +64,9 @@ function App(): JSX.Element {
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <_IdentifierProvider identifiers={IDS}>
-        {meetingAdapter && <MeetingComposite meetingAdapter={meetingAdapter} options={{ mobileView: isMobile() }} />}
+        {meetingAdapter && (
+          <MeetingComposite meetingAdapter={meetingAdapter} formFactor={isMobile() ? 'mobile' : 'desktop'} />
+        )}
       </_IdentifierProvider>
     </div>
   );

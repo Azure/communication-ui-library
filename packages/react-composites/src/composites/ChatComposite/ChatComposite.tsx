@@ -7,6 +7,7 @@ import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
+import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
 
 /**
@@ -65,6 +66,8 @@ export type ChatCompositeOptions = {
 /**
  * A customizable UI composite for the chat experience.
  *
+ * @remarks Chat composite min width and height are respectively 19.5rem and 20rem (312px and 320px, with default rem at 16px)
+ *
  * @public
  */
 export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
@@ -78,16 +81,18 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
   } = props;
 
   return (
-    <BaseComposite {...props}>
-      <ChatAdapterProvider adapter={adapter}>
-        <ChatScreen
-          options={options}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          onRenderTypingIndicator={onRenderTypingIndicator}
-          onRenderMessage={onRenderMessage}
-          onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-        />
-      </ChatAdapterProvider>
-    </BaseComposite>
+    <div className={chatScreenContainerStyle}>
+      <BaseComposite {...props}>
+        <ChatAdapterProvider adapter={adapter}>
+          <ChatScreen
+            options={options}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onRenderTypingIndicator={onRenderTypingIndicator}
+            onRenderMessage={onRenderMessage}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+          />
+        </ChatAdapterProvider>
+      </BaseComposite>
+    </div>
   );
 };

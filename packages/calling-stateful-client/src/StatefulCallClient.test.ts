@@ -11,7 +11,6 @@ import {
   LocalVideoStream,
   RecordingCallFeature,
   TranscriptionCallFeature,
-  TransferCallFeature,
   VideoStreamRendererView
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
@@ -37,7 +36,6 @@ import {
   MockRemoteParticipant,
   MockRemoteVideoStream,
   MockTranscriptionCallFeatureImpl,
-  MockTransferCallFeatureImpl,
   StateChangeListener,
   stubCommunicationTokenCredential,
   StubDiagnosticsCallFeatureImpl,
@@ -60,11 +58,8 @@ jest.mock('@azure/communication-calling', () => {
       get Recording(): CallFeatureApiFactory<RecordingCallFeature> {
         return { callApiCtor: MockRecordingCallFeatureImpl };
       },
-      get Transfer(): CallFeatureApiFactory<TransferCallFeature> {
-        return { callApiCtor: MockTransferCallFeatureImpl };
-      },
-      get Transcription(): CallFeatureApiFactory<TranscriptionCallFeature> {
-        return { callApiCtor: MockTranscriptionCallFeatureImpl };
+      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
+        return MockTranscriptionCallFeatureImpl;
       },
       get Diagnostics(): CallFeatureApiFactory<UserFacingDiagnosticsFeature> {
         return { callApiCtor: StubDiagnosticsCallFeatureImpl };
@@ -531,32 +526,19 @@ describe('Stateful call client', () => {
     ).toBe(true);
   });
 
-  test('should detect transfer requests in call', async () => {
-    const transfer = addMockEmitter({ name: 'Default' });
-    const { client, callId } = await prepareCallWithFeatures(
-      createMockApiFeatures(new Map([[Features.Transfer, transfer]]))
-    );
-
-    transfer.emit('transferRequested', { targetParticipant: { communicationUserId: 'a', kind: 'communicationUser' } });
-    expect(client.getState().calls[callId]?.transfer.receivedTransferRequests.length).toBe(1);
-  });
-
   test('should not update state for an ended call', async () => {
     const recording = addMockEmitter({ name: 'Default', isRecordingActive: true });
     const transcription = addMockEmitter({ name: 'Default', isTranscriptionActive: true });
-    const transfer = addMockEmitter({ name: 'Default' });
     const { client, agent, callId } = await prepareCallWithFeatures(
       createMockApiFeatures(
         new Map<any, any>([
           [Features.Recording, recording],
-          [Features.Transcription, transcription],
-          [Features.Transfer, transfer]
+          [Features.Transcription, transcription]
         ])
       )
     );
     expect(client.getState().calls[callId]?.recording.isRecordingActive).toBe(true);
     expect(client.getState().calls[callId]?.transcription.isTranscriptionActive).toBe(true);
-    expect(client.getState().calls[callId]?.transfer.receivedTransferRequests.length).toBe(0);
 
     agent.testHelperPopCall();
     expect(await waitWithBreakCondition(() => Object.keys(client.getState().callsEnded).length === 1)).toBe(true);
@@ -570,9 +552,6 @@ describe('Stateful call client', () => {
     transcription.isTranscriptionActive = false;
     transcription.emitter.emit('isTranscriptionActiveChanged');
     expect(callEnded.transcription.isTranscriptionActive).toBe(true);
-
-    transfer.emit('transferRequested', { targetParticipant: { communicationUserId: 'a', kind: 'communicationUser' } });
-    expect(callEnded.transfer.receivedTransferRequests.length).toBe(0);
   });
 });
 

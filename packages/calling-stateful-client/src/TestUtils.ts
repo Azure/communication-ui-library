@@ -17,14 +17,7 @@ import {
   RecordingCallFeature,
   RemoteParticipant,
   RemoteVideoStream,
-  TranscriptionCallFeature,
-  Transfer,
-  TransferCallFeature,
-  TransferRequestedEvent,
-  TransferToCallLocator,
-  TransferToCallOptions,
-  TransferToParticipantLocator,
-  TransferToParticipantOptions
+  TranscriptionCallFeature
 } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
@@ -102,33 +95,6 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
     this.emitter.on(event, listener);
   }
   off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void {
-    this.emitter.off(event, listener);
-  }
-  dispose() {
-    /* No state to clean up */
-  }
-}
-
-/**
- * @private
- */
-export class MockTransferCallFeatureImpl implements TransferCallFeature {
-  public name = 'Transfer';
-  public emitter = new EventEmitter();
-  transfer(target: TransferToParticipantLocator, transferOptions?: TransferToParticipantOptions): Transfer;
-  transfer(target: TransferToCallLocator, transferOptions?: TransferToCallOptions): Transfer;
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  transfer(
-    target: TransferToParticipantLocator | TransferToCallLocator,
-    transferOptions?: TransferToParticipantOptions | TransferToCallOptions
-  ): Transfer {
-    throw new Error('Method not implemented.');
-  }
-  /* eslint-enable @typescript-eslint/no-unused-vars */
-  on(event: 'transferRequested', listener: TransferRequestedEvent): void {
-    this.emitter.on(event, listener);
-  }
-  off(event: 'transferRequested', listener: TransferRequestedEvent): void {
     this.emitter.off(event, listener);
   }
   dispose() {
@@ -326,13 +292,6 @@ export function createMockApiFeatures(
       name: 'Default',
       isRecordingActive: false,
       isTranscriptionActive: false,
-      /* eslint-disable @typescript-eslint/no-unused-vars */
-      transfer(
-        target: TransferToParticipantLocator | TransferToCallLocator,
-        transferOptions?: TransferToParticipantOptions | TransferToCallOptions
-      ): Transfer {
-        return addMockEmitter({ state: 'None' });
-      },
       /* eslint-enable @typescript-eslint/no-unused-vars */
       media: {
         getLatest(): LatestMediaDiagnostics {

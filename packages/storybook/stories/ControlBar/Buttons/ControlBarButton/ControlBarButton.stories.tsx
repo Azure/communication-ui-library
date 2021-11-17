@@ -25,10 +25,8 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ControlBarButton</Title>
-      <Description of={ControlBarButton} />
       <Description>
-        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
-        to each element to avoid warning for children in a list.
+        Default button styled for use with the [Control Bar](./?path=/docs/ui-components-controlbar--control-bar).
       </Description>
 
       <Heading>Importing</Heading>
@@ -50,6 +48,10 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         You can override the styles of the `ControlBarButton` as you would customized any Button (styles, primary,
         onRenderIcon, onRenderText, etc... ).
+      </Description>
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
+        to each element to avoid warning for children in a list.
       </Description>
       <Canvas mdxSource={CustomControlBarButtonExampleText}>
         <CustomControlBarButtonExample />
@@ -84,7 +86,7 @@ export const Default = ControlBarButtonStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-controlbar-buttons-base`,
-  title: `${COMPONENT_FOLDER_PREFIX}/ControlBar/Buttons/Default`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Control Bar/Buttons/Default`,
   component: ControlBarButton,
   argTypes: {
     showLabel: controlsToAdd.showLabel,

@@ -31,7 +31,7 @@ console.log(
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
-type AppPages = 'home' | 'call' | 'endCall' | 'callError' | 'teamsMeetingDenied' | 'removed';
+type AppPages = 'home' | 'call' | 'endCall';
 
 const webAppTitle = document.title;
 
@@ -100,32 +100,6 @@ const App = (): JSX.Element => {
       document.title = `end call - ${webAppTitle}`;
       return <EndCall rejoinHandler={() => setPage('call')} homeHandler={navigateToHomePage} />;
     }
-    case 'callError': {
-      document.title = `error - ${webAppTitle}`;
-      return <CallError rejoinHandler={() => setPage('call')} homeHandler={navigateToHomePage} />;
-    }
-    case 'teamsMeetingDenied': {
-      document.title = `error - ${webAppTitle}`;
-      return (
-        <CallError
-          title="Error joining Teams Meeting"
-          reason="Access to the Teams meeting was denied."
-          rejoinHandler={() => setPage('call')}
-          homeHandler={navigateToHomePage}
-        />
-      );
-    }
-    case 'removed': {
-      document.title = `error - ${webAppTitle}`;
-      return (
-        <CallError
-          title="Oops! You are no longer a participant of the call."
-          reason="Access to the meeting has been stopped"
-          rejoinHandler={() => setPage('call')}
-          homeHandler={navigateToHomePage}
-        />
-      );
-    }
     case 'call': {
       if (userCredentialFetchError) {
         document.title = `error - ${webAppTitle}`;
@@ -150,7 +124,6 @@ const App = (): JSX.Element => {
           displayName={displayName}
           callLocator={callLocator}
           onCallEnded={() => setPage('endCall')}
-          onCallError={() => setPage('callError')}
           webAppTitle={webAppTitle}
         />
       );

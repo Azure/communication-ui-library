@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -40,28 +40,33 @@ export const overlayContainerStyles: IStyle = {
 /**
  * @private
  */
+export const tileInfoContainerStyle = mergeStyles({
+  position: 'absolute',
+  bottom: '0.5rem',
+  left: '0.5rem',
+  width: 'calc(100% - 1rem)'
+});
+
+/**
+ * @private
+ */
 export const disabledVideoHint = mergeStyles({
   backgroundColor: 'inherit',
-  bottom: '0.46875rem',
   boxShadow: 'none',
   textAlign: 'left',
-  left: '0.5rem',
   overflow: 'hidden',
-  position: 'absolute',
   whiteSpace: 'nowrap',
-  maxWidth: '95%',
   alignItems: 'center',
-  padding: '0.15rem'
+  padding: '0.15rem',
+  maxWidth: '100%'
 });
 
 /**
  * @private
  */
 export const videoHint = mergeStyles(disabledVideoHint, {
-  // This will appear on top of the video stream, so no dependency on theme and thus the direct use of default palette
-  backgroundColor: palette.white,
-  opacity: 0.8,
-  padding: '0.15rem'
+  // This will appear on top of the video stream, so no dependency on theme and explicitly use a translucent white
+  backgroundColor: 'rgba(255,255,255,0.8)'
 });
 
 /**
@@ -72,14 +77,16 @@ export const displayNameStyle: IStyle = {
   fontSize: '0.75rem',
   fontWeight: 600,
   // Text component will take body color by default (white in Dark Mode), so forcing it to be parent container color
-  color: 'inherit'
+  color: 'inherit',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  maxWidth: '100%'
 };
 
 /**
  * @private
  */
 export const iconContainerStyle: IStyle = {
-  padding: '0.1rem',
   height: '100%',
   alignItems: 'center',
   '& svg': {
@@ -90,6 +97,11 @@ export const iconContainerStyle: IStyle = {
 /**
  * @private
  */
-export const tileInfoStackItemStyle: IStyle = {
-  display: 'flex'
+export const isSpeakingBorderDiv: IStyle = {
+  zIndex: 1,
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: '0',
+  left: '0'
 };

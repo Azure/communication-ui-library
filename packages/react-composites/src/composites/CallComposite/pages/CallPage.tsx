@@ -23,6 +23,7 @@ import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
  * @private
  */
 export interface CallPageProps {
+  mobileView: boolean;
   callInvitationURL?: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -34,7 +35,14 @@ export interface CallPageProps {
  * @private
  */
 export const CallPage = (props: CallPageProps): JSX.Element => {
-  const { callInvitationURL, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems, options } = props;
+  const {
+    callInvitationURL,
+    onRenderAvatar,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    options,
+    mobileView
+  } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
   // It seems unnecessary in this case, so we get the updated states using this approach.
@@ -47,9 +55,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
 
   // Reduce the controls shown when mobile view is enabled.
-  const callControlOptions = options?.mobileView
-    ? reduceCallControlsForMobile(options?.callControls)
-    : options?.callControls;
+  const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
   return (
     <CallArrangement
@@ -61,9 +67,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           callInvitationURL: callInvitationURL,
           onFetchParticipantMenuItems: onFetchParticipantMenuItems,
           options: callControlOptions,
-          increaseFlyoutItemSize: props.options?.mobileView
+          increaseFlyoutItemSize: mobileView
         }
       }
+      mobileView={mobileView}
       onRenderGalleryContent={() =>
         callStatus === 'Connected' ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
