@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { CallComposite } from '@azure/communication-react';
-import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
+import { MessageBar } from '@fluentui/react';
+import { Description, Heading, Props, Source, Title, Canvas } from '@storybook/addon-docs';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
@@ -68,6 +69,9 @@ export const getDocs: () => JSX.Element = () => {
         can be set at any time and immediately updates the composite UI to be optimized for a mobile device.
       </Description>
       <Source code={formFactorSnippet} />
+      <MessageBar>
+        Note: Only Protrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
+      </MessageBar>
       <Description>
         You can try out the form factor property in the [CallComposite Basic
         Example](./?path=/story/composites-call-basicexample--basic-example).
