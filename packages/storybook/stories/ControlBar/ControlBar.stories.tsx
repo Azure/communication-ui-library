@@ -16,18 +16,18 @@ import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
-import { OptionsButtonWithKnobs } from './Buttons/Options/snippets/OptionsButtonWithKnobs.snippet';
+import { DevicesButtonWithKnobs } from './Buttons/Devices/snippets/DevicesButtonWithKnobs.snippet';
 import { AllButtonsControlBarExample } from './snippets/AllButtonsControlBar.snippet';
 import { ControlBarLayoutExample } from './snippets/ControlBarLayout.snippet';
 import { CustomButtonsExample } from './snippets/CustomButtons.snippet';
 import { CustomControlBarStylesExample } from './snippets/CustomControlBarStyles.snippet';
-import { OptionsButtonExample } from './snippets/OptionsButton.snippet';
+import { DevicesButtonExample } from './snippets/DevicesButton.snippet';
 
 const AllButtonsControlBarExampleText = require('!!raw-loader!./snippets/AllButtonsControlBar.snippet.tsx').default;
 const ControlBarLayoutExampleText = require('!!raw-loader!./snippets/ControlBarLayout.snippet.tsx').default;
 const CustomButtonsExampleText = require('!!raw-loader!./snippets/CustomButtons.snippet.tsx').default;
 const CustomControlBarStylesExampleText = require('!!raw-loader!./snippets/CustomControlBarStyles.snippet.tsx').default;
-const OptionsButtonExampleText = require('!!raw-loader!./snippets/OptionsButton.snippet.tsx').default;
+const DevicesButtonExampleText = require('!!raw-loader!./snippets/DevicesButton.snippet.tsx').default;
 
 const mockParticipants: CallParticipantListParticipant[] = [
   {
@@ -127,13 +127,13 @@ const getDocs: () => JSX.Element = () => {
         <CustomButtonsExample />
       </Canvas>
 
-      <Heading>Dropdown Options Button</Heading>
+      <Heading>Dropdown Devices Button</Heading>
       <Description>
-        The `OptionsButton` can be used for any dropdown items defined through `menuProps`. For more information, check
+        The `DevicesButton` can be used for any dropdown items defined through `menuProps`. For more information, check
         out the [official Fluent UI documentation](https://developer.microsoft.com/fluentui#/controls/web/button)
       </Description>
-      <Canvas mdxSource={OptionsButtonExampleText}>
-        <OptionsButtonExample />
+      <Canvas mdxSource={DevicesButtonExampleText}>
+        <DevicesButtonExample />
       </Canvas>
 
       <Heading>ControlBar Props</Heading>
@@ -184,7 +184,7 @@ const ControlBarStory: (
           callInvitationURL={'URL to copy'}
           onMuteAll={onMuteAll}
         />
-        <OptionsButtonWithKnobs {...args} />
+        <DevicesButtonWithKnobs {...args} />
         <EndCallButton showLabel={args.showLabel} />
       </ControlBarComponent>
     </div>

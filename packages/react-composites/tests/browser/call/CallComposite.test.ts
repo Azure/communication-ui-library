@@ -1,12 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  buildUrl,
-  dataUiId,
-  disableAnimation,
-  loadCallPageWithParticipantVideos,
-  waitForCallCompositeToLoad
-} from '../common/utils';
+import { buildUrl, dataUiId, loadCallPageWithParticipantVideos, waitForCallCompositeToLoad } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
@@ -62,6 +56,15 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     });
     await stubLocalCameraName(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
+  });
+
+  test('local device buttons should show tooltips on hover', async ({ pages }) => {
+    const page = pages[0];
+
+    await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
+    await page.waitForSelector(dataUiId('microphoneButtonLabel-tooltip'));
+    await stubLocalCameraName(page);
+    expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
   });
 
   test('Configuration screen should display call details', async ({ serverUrl, users, pages }) => {
@@ -121,10 +124,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       const page = pages[idx];
       await page.bringToFront();
 
-      // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
-      // this is for disable transition/animation of participant list
-      await disableAnimation(page);
-
       await page.click(dataUiId('call-composite-participants-button'));
       const buttonCallOut = await page.waitForSelector('.ms-Callout');
       // This will ensure no animation is happening for the callout
@@ -178,9 +177,6 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     const page0 = pages[0];
     const page1 = pages[1];
 
-    // waitForElementState('stable') is not working for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
-    // this is for disable transition/animation of participant list
-    await disableAnimation(page0);
     await page0.bringToFront();
     await page0.click(dataUiId('call-composite-participants-button')); // open participant flyout
     await page0.click(dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
@@ -222,10 +218,6 @@ test.describe('Call composite participant menu items injection tests', () => {
 
     const page = pages[0];
     await page.bringToFront();
-
-    // waitForElementState('stable') does not work for opacity animation https://github.com/microsoft/playwright/issues/4055#issuecomment-777697079
-    // this is for disable transition/animation of participant list
-    await disableAnimation(page);
 
     // Open participants flyout.
     await page.click(dataUiId('call-composite-participants-button'), { timeout: PER_STEP_TIMEOUT_MS });

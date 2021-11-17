@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "HorizontalGallery not showing page navigation buttons if all participants can fit.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

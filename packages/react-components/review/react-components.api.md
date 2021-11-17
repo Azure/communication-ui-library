@@ -69,6 +69,8 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 export interface CameraButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -156,12 +158,12 @@ export interface ComponentLocale {
 // @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
+    devicesButton: DevicesButtonStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
-    optionsButton: OptionsButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -192,6 +194,7 @@ export interface ControlBarButtonProps extends IButtonProps {
     showLabel?: boolean;
     strings?: ControlBarButtonStrings;
     styles?: ControlBarButtonStyles;
+    tooltipId?: string;
 }
 
 // @public
@@ -199,6 +202,9 @@ export interface ControlBarButtonStrings {
     label?: string;
     offLabel?: string;
     onLabel?: string;
+    tooltipContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -281,6 +287,46 @@ export const DEFAULT_COMPONENT_ICONS: {
 };
 
 // @public
+export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;
+
+// @public
+export interface DevicesButtonContextualMenuStyles extends IContextualMenuStyles {
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @public
+export interface DevicesButtonProps extends ControlBarButtonProps {
+    cameras?: OptionsDevice[];
+    microphones?: OptionsDevice[];
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+    selectedCamera?: OptionsDevice;
+    selectedMicrophone?: OptionsDevice;
+    selectedSpeaker?: OptionsDevice;
+    speakers?: OptionsDevice[];
+    strings?: Partial<DevicesButtonStrings>;
+    styles?: DevicesButtonStyles;
+}
+
+// @public
+export interface DevicesButtonStrings {
+    cameraMenuTitle: string;
+    cameraMenuTooltip: string;
+    label: string;
+    microphoneMenuTitle: string;
+    microphoneMenuTooltip: string;
+    speakerMenuTitle: string;
+    speakerMenuTooltip: string;
+    tooltipContent?: string;
+}
+
+// @public
+export interface DevicesButtonStyles extends ControlBarButtonStyles {
+    menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
+}
+
+// @public
 export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
@@ -292,6 +338,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
 // @public
 export interface EndCallButtonStrings {
     label: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -350,6 +397,18 @@ export interface GridLayoutProps {
     // (undocumented)
     children: React_2.ReactNode;
     styles?: BaseCustomStyles;
+}
+
+// @public
+export interface GridLayoutStyles extends BaseCustomStyles {
+    children?: IStyle;
+}
+
+// @public
+export interface HorizontalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
 }
 
 // @internal
@@ -519,51 +578,14 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
-
-// @public
-export const OptionsButton: (props: OptionsButtonProps) => JSX.Element;
-
-// @public
-export interface OptionsButtonContextualMenuStyles extends IContextualMenuStyles {
-    menuItemStyles?: IContextualMenuItemStyles;
-}
-
-// @public
-export interface OptionsButtonProps extends ControlBarButtonProps {
-    cameras?: OptionsDevice[];
-    microphones?: OptionsDevice[];
-    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
-    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
-    selectedCamera?: OptionsDevice;
-    selectedMicrophone?: OptionsDevice;
-    selectedSpeaker?: OptionsDevice;
-    speakers?: OptionsDevice[];
-    strings?: Partial<OptionsButtonStrings>;
-    styles?: OptionsButtonStyles;
-}
-
-// @public
-export interface OptionsButtonStrings {
-    cameraMenuTitle: string;
-    cameraMenuTooltip: string;
-    label: string;
-    microphoneMenuTitle: string;
-    microphoneMenuTooltip: string;
-    speakerMenuTitle: string;
-    speakerMenuTooltip: string;
-}
-
-// @public
-export interface OptionsButtonStyles extends ControlBarButtonStyles {
-    menuStyles?: Partial<OptionsButtonContextualMenuStyles>;
-}
 
 // @public
 export interface OptionsDevice {
@@ -685,6 +707,7 @@ export interface ParticipantsButtonStrings {
     menuHeader: string;
     muteAllButtonLabel: string;
     participantsListButtonLabel: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -705,6 +728,8 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
 export interface ScreenShareButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -830,7 +855,7 @@ export interface VideoGalleryProps {
     remoteVideoViewOption?: VideoStreamOptions;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
-    styles?: BaseCustomStyles;
+    styles?: VideoGalleryStyles;
 }
 
 // @public
@@ -849,8 +874,16 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    localVideoLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+}
+
+// @public
+export interface VideoGalleryStyles extends BaseCustomStyles {
+    gridLayout?: GridLayoutStyles;
+    horizontalGallery?: HorizontalGalleryStyles;
+    localVideo?: IStyle;
 }
 
 // @public
@@ -866,6 +899,7 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 export interface VideoTileProps {
     children?: React_2.ReactNode;
     displayName?: string;
+    initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;

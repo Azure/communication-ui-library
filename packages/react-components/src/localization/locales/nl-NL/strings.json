@@ -34,7 +34,7 @@
     "onLabel": "Dempen",
     "offLabel": "Dempen opheffen"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Opties",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Camera kiezen",

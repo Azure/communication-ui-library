@@ -34,7 +34,7 @@
     "onLabel": "Отключить звук",
     "offLabel": "Включить звук"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Параметры",
     "cameraMenuTitle": "Камера",
     "cameraMenuTooltip": "Выбрать камеру",

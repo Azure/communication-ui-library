@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
+import { VideoGallery } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -34,9 +34,10 @@ const MockRemoteParticipants = [
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const DefaultVideoGalleryExample: () => JSX.Element = () => {
+  const containerStyle = { height: '50vh' };
   return (
-    <Stack style={{ height: '30rem' }}>
-      <VideoGalleryComponent localParticipant={MockLocalParticipant} remoteParticipants={MockRemoteParticipants} />
+    <Stack style={containerStyle}>
+      <VideoGallery localParticipant={MockLocalParticipant} remoteParticipants={MockRemoteParticipants} />
     </Stack>
   );
 };

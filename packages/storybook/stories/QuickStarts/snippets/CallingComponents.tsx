@@ -6,7 +6,7 @@ import {
   EndCallButton,
   GridLayout,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   ScreenShareButton,
   VideoTile
 } from '@azure/communication-react';
@@ -52,7 +52,7 @@ export const CallingComponents = (): JSX.Element => {
           checked={screenshareButtonChecked}
           onClick={() => setScreenshareButtonChecked(!screenshareButtonChecked)}
         />
-        <OptionsButton menuProps={exampleOptionsMenuProps} />
+        <DevicesButton menuProps={exampleOptionsMenuProps} />
         <EndCallButton />
       </ControlBar>
     </Stack>

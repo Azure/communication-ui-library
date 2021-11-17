@@ -4,7 +4,7 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   ParticipantsButton,
   ScreenShareButton
 } from '@azure/communication-react';
@@ -27,7 +27,7 @@ export const ControlBarLayoutExample: () => JSX.Element = () => {
           <MicrophoneButton />
           <ScreenShareButton />
           <ParticipantsButton participants={[]} />
-          <OptionsButton />
+          <DevicesButton />
           <EndCallButton />
         </ControlBar>
       </FluentThemeProvider>
