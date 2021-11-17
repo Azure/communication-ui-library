@@ -103,7 +103,8 @@ const MockLocalParticipant = {
   userId: 'user1',
   displayName: 'You',
   state: 'Connected',
-  isMuted: true
+  isMuted: true,
+  isScreenSharingOn: false
 };
 
 const VideoGalleryStory = (args): JSX.Element => {
@@ -118,6 +119,26 @@ const VideoGalleryStory = (args): JSX.Element => {
         videoStream: { isAvailable: true }
       };
     });
+
+  const localParticipant = MockLocalParticipant;
+  localParticipant.isScreenSharingOn = args.screenShareOptions === 'you';
+
+  if (remoteParticipants.length > 0) {
+    remoteParticipants[0].isScreenSharingOn = args.screenShareOptions === 'someone else';
+
+    if (args.screenShareOptions === 'someone else') {
+      remoteParticipants[0].isScreenSharingOn = args.isRemoteScreenSharing;
+      const renderElement = document.createElement('img');
+      renderElement.src = 'images/hero.svg';
+      renderElement.style.width = '100%';
+      renderElement.style.backgroundColor = 'lightblue';
+      const screenShareStream = {
+        isAvailable: true,
+        renderElement: renderElement as HTMLElement
+      };
+      remoteParticipants[0].screenShareStream = screenShareStream;
+    }
+  }
 
   return (
     <VideoGalleryComponent
@@ -139,6 +160,7 @@ export default {
   argTypes: {
     remoteParticipants: controlsToAdd.remoteParticipantNames,
     layout: controlsToAdd.videoGallerylayout,
+    screenShareOptions: controlsToAdd.screenShareOptions,
     // Hiding auto-generated controls
     styles: hiddenControl,
     localParticipant: hiddenControl,
@@ -152,7 +174,9 @@ export default {
     onDisposeRemoteStreamView: hiddenControl,
     onRenderAvatar: hiddenControl,
     showMuteIndicator: hiddenControl,
-    dominantSpeakers: hiddenControl
+    dominantSpeakers: hiddenControl,
+    strings: hiddenControl,
+    maxRemoteVideoStreams: hiddenControl
   },
   parameters: {
     docs: {

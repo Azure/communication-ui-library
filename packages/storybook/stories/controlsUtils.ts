@@ -264,6 +264,12 @@ export const controlsToAdd = {
     defaultValue: 850,
     name: 'Width (px)'
   },
+  screenShareOptions: {
+    control: 'select',
+    options: ['no sharing', 'you', 'someone else'],
+    defaultValue: 'no sharing',
+    name: 'Screen sharing options'
+  },
   screenShareSidePanelTileAspectRatio: {
     control: 'select',
     options: ['16:9', '3:2', '4:3', '5:9', '1:1'],
