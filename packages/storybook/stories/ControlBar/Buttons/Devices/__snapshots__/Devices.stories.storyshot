@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots UI Components/ControlBar/Buttons/Devices Devices 1`] = `
+exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Devices Devices 1`] = `
 <div
   className="css-61 body-0"
   dir="ltr"
