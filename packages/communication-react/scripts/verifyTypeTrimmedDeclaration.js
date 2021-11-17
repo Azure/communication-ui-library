@@ -13,12 +13,6 @@
  *   > node .\verifyTypeTrimmedDeclaration.js verify --rc public
  *   > node .\verifyTypeTrimmedDeclaration.js verify --rc beta
  *   > node .\verifyTypeTrimmedDeclaration.js update --rc public
- *
- * @remarks
- * Passing the following parameters should result in the following checks:
- *   * 'public' - "types": "dist/<package.name>-public.d.ts"
- *   * 'beta' - "types": "dist/<package.name>-beta.d.ts"
- *   * 'alpha' - "types": "dist/<package.name>-untrimmed.d.ts"
  */
 
 const fs = require('fs');
@@ -26,10 +20,11 @@ const path = require('path');
 const { exit } = require('process');
 const yargs = require('yargs');
 
-// Hard code constant values. These would need dynamically fetched from the package.json if
-// this is used outside of this package.
-const TYPES_FIELD_PREFIX = 'dist/communication-react';
 const PACKAGE_JSON_PATH = path.resolve(__dirname, '../package.json');
+
+const PUBLIC_TYPES_FIELD = 'dist/communication-react-public.d.ts';
+const BETA_TYPES_FIELD = 'dist/communication-react-beta.d.ts';
+const ALPHA_TYPES_FIELD = 'dist/communication-react-untrimmed.d.ts';
 
 function loadPackageJson(filepath) {
   const packageData = require(filepath);
@@ -44,11 +39,11 @@ function createCorrectTypeString(releaseCandidate) {
   // Add correct suffix based on release candidate
   switch (releaseCandidate) {
     case 'public':
-      return TYPES_FIELD_PREFIX + '-public.d.ts';
+      return PUBLIC_TYPES_FIELD + '-public.d.ts';
     case 'beta':
-      return TYPES_FIELD_PREFIX + '-beta.d.ts';
+      return BETA_TYPES_FIELD + '-beta.d.ts';
     case 'alpha':
-      return TYPES_FIELD_PREFIX + '-untrimmed.d.ts';
+      return ALPHA_TYPES_FIELD + '-untrimmed.d.ts';
     default:
       console.error(
         'Unknown release candidate: ',
