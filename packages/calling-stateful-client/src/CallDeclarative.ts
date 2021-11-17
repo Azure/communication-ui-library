@@ -16,21 +16,15 @@ export interface DeclarativeCall extends Call {
   unsubscribe(): void;
 }
 
-/**
- * ProxyCall proxies Call in order to intercept the Call.api function to return a DeclarativeTransferCallFeature.
- */
 class ProxyCall implements ProxyHandler<Call> {
-  // Delete this leftover from quick-cleanup
-  private _call: Call;
   private _context: CallContext;
 
-  constructor(call: Call, context: CallContext) {
-    this._call = call;
+  constructor(context: CallContext) {
     this._context = context;
   }
 
   public unsubscribe(): void {
-    /** TODO: Delete this leftover from quick-cleanup */
+    /** No subscriptions yet. But there will be one for transfer feature soon. */
   }
 
   public get<P extends keyof Call>(target: Call, prop: P): any {
@@ -84,7 +78,7 @@ class ProxyCall implements ProxyHandler<Call> {
  * @param context - CallContext from StatefulCallClient
  */
 export const callDeclaratify = (call: Call, context: CallContext): DeclarativeCall => {
-  const proxyCall = new ProxyCall(call, context);
+  const proxyCall = new ProxyCall(context);
   Object.defineProperty(call, 'unsubscribe', {
     configurable: false,
     value: () => proxyCall.unsubscribe()
