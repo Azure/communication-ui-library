@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -12,12 +12,18 @@ import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
+import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
+import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 
 const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const FloatingLocalVideoExampleText = require('!!raw-loader!./snippets/FloatingLocalVideo.snippet.tsx').default;
+const ScreenSharingFromPresenterExampleText =
+  require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
+const ScreenSharingFromViewerExampleText =
+  require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
 const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
 
 const importStatement = `import { VideoGallery } from '@azure/communication-react';`;
@@ -74,6 +80,25 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={FloatingLocalVideoExampleText}>
         <FloatingLocalVideoExample />
+      </Canvas>
+
+      <Heading>Screen sharing experience</Heading>
+      <Description>
+        The screen shared is the only element placed in the GridLayout and all remote participants are placed in the
+        Horizontal Gallery in the lower section. To be able to view this screen share, the sharing participant should
+        have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see
+        `localParticipant` and `remoteParticipants` props).
+      </Description>
+      <Subheading>From a presenter point of view</Subheading>
+      <Canvas mdxSource={ScreenSharingFromPresenterExampleText}>
+        <ScreenSharingFromPresenterExample />
+      </Canvas>
+      <Subheading>From a viewer point of view</Subheading>
+      <Description>
+        Note that in this example, we substitute the screenshare video stream with an image just for mocking experience.
+      </Description>
+      <Canvas mdxSource={ScreenSharingFromViewerExampleText}>
+        <ScreenSharingFromViewerExample />
       </Canvas>
 
       <Heading>Custom Avatar</Heading>
