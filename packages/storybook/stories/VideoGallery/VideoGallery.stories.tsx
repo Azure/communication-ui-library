@@ -82,7 +82,7 @@ const getDocs: () => JSX.Element = () => {
         <FloatingLocalVideoExample />
       </Canvas>
 
-      <Heading>Screen sharing experience</Heading>
+      <Heading>Screen Sharing Experience</Heading>
       <Description>
         The screen shared is the only element placed in the GridLayout and all remote participants are placed in the
         Horizontal Gallery in the lower section. To be able to view this screen share, the sharing participant should
