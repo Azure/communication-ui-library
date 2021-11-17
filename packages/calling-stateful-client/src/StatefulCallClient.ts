@@ -40,8 +40,6 @@ import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind
  *   - RemoteVideoStream 'isAvailableChanged'
  *   - TranscriptionCallFeature 'isTranscriptionActiveChanged'
  *   - RecordingCallFeature 'isRecordingActiveChanged'
- *   - Transfer 'stateChanged'
- *   - TransferCallFeature 'transferRequested'
  *
  * @public
  */

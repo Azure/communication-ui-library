@@ -14,84 +14,15 @@ import {
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
-  TransferErrorCode,
-  TransferState,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import {
-  CommunicationUserIdentifier,
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
-  PhoneNumberIdentifier,
   PhoneNumberKind,
   UnknownIdentifierKind,
-  MicrosoftTeamsUserIdentifier,
-  UnknownIdentifier,
   CommunicationIdentifierKind
 } from '@azure/communication-common';
-
-/**
- * State only version of {@link @azure/communication-calling#TransferRequestedEventArgs}. At the time of writing
- * Transfer Call is experimental. Not tested and not ready for consumption.
- *
- * @beta
- */
-export interface TransferRequest {
-  targetParticipant: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifier;
-}
-
-/**
- * State only version of {@link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is
- * experimental. Not tested and not ready for consumption.
- *
- * @beta
- */
-export interface Transfer {
-  /**
-   * Added by Declarative and used internally.
-   */
-  id: number;
-  /**
-   * Added by {@link StatefulClientClient}, stores the targetParticipant passed to
-   * {@link @azure/communication-calling#TransferCallFeature.transfer}
-   */
-  targetParticipant:
-    | CommunicationUserIdentifier
-    | PhoneNumberIdentifier
-    | MicrosoftTeamsUserIdentifier
-    | UnknownIdentifier;
-  /**
-   * Proxy of {@link @azure/communication-calling#Transfer.state}.
-   */
-  state: TransferState;
-  /**
-   * Proxy of {@link @azure/communication-calling#Transfer.error}.
-   */
-  error?: TransferErrorCode;
-}
-
-/**
- * Holds all the state found in {@link @azure/communication-calling#TransferCallFeature} and
- * {@link @azure/communication-calling#Transfer}. At the time of writing Transfer Call is experimental. Not tested and
- * not ready for consumption.
- *
- * @beta
- */
-export interface TransferCallFeatureState {
-  /**
-   * These are requests received in the {@link @azure/communication-calling#TransferCallFeature}'s 'transferRequested'
-   * event. Only MAX_TRANSFER_REQUEST_LENGTH number of TransferRequest are kept in this array with the older ones being
-   * replaced by newer ones. To accept/reject a transfer request, the {@link @azure/communication-calling#Call} must be
-   * used (TODO: do we want to provide an API?).
-   */
-  receivedTransferRequests: TransferRequest[];
-  /**
-   * These are requests initiated by the local user using {@link StatefulCallClient.transfer}. Only
-   * MAX_TRANSFER_REQUEST_LENGTH number of TransferRequest are kept in this array with the older ones being replaced by
-   * newer ones.
-   */
-  requestedTransfers: Transfer[];
-}
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -308,13 +239,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
   recording: RecordingCallFeatureState;
-  /**
-   * Proxy of {@link @azure/communication-calling#TransferCallFeature} with some differences see
-   * {@link TransferCallFeatureState} for details.
-   *
-   * @beta
-   */
-  transfer: TransferCallFeatureState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.

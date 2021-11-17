@@ -14,8 +14,7 @@ import {
   MeetingLocator,
   RecordingCallFeature,
   StartCallOptions,
-  TranscriptionCallFeature,
-  TransferCallFeature
+  TranscriptionCallFeature
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
@@ -35,7 +34,6 @@ import {
   mockoutObjectFreeze,
   MockRecordingCallFeatureImpl,
   MockTranscriptionCallFeatureImpl,
-  MockTransferCallFeatureImpl,
   StateChangeListener,
   stubCommunicationTokenCredential,
   StubDiagnosticsCallFeatureImpl,
@@ -49,9 +47,6 @@ jest.mock('@azure/communication-calling', () => {
     Features: {
       get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
         return MockRecordingCallFeatureImpl;
-      },
-      get Transfer(): CallFeatureFactoryType<TransferCallFeature> {
-        return MockTransferCallFeatureImpl;
       },
       get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
         return MockTranscriptionCallFeatureImpl;
