@@ -34,7 +34,7 @@
     "onLabel": "음소거",
     "offLabel": "음소거 해제"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "옵션",
     "cameraMenuTitle": "카메라",
     "cameraMenuTooltip": "카메라 선택",

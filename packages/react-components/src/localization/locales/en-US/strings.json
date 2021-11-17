@@ -39,9 +39,9 @@
     "tooltipOnContent": "Mute microphone",
     "tooltipOffContent": "Unmute microphone"
   },
-  "optionsButton": {
-    "label": "Options",
-    "tooltipContent": "Device Options",
+  "devicesButton": {
+    "label": "Devices",
+    "tooltipContent": "Manage devices",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
     "microphoneMenuTitle": "Microphone",

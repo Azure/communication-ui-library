@@ -4,7 +4,7 @@ import {
   EndCallButton,
   FluentThemeProvider,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   ScreenShareButton,
   darkTheme
 } from '@azure/communication-react';
@@ -17,7 +17,7 @@ export const DarkControlBar = (): JSX.Element => {
         <CameraButton />
         <MicrophoneButton />
         <ScreenShareButton />
-        <OptionsButton />
+        <DevicesButton />
         <EndCallButton />
       </ControlBar>
     </FluentThemeProvider>
