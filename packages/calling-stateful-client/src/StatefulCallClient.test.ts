@@ -3,15 +3,15 @@
 
 import {
   CallAgent,
-  CallApiFeature,
-  CallFeatureFactoryType,
   DeviceManager,
   UserFacingDiagnosticsFeature,
   Features,
   LocalVideoStream,
   RecordingCallFeature,
   TranscriptionCallFeature,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  CallFeatureFactory,
+  CallFeature
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -55,14 +55,14 @@ jest.mock('@azure/communication-calling', () => {
       };
     }),
     Features: {
-      get Recording(): CallFeatureFactoryType<RecordingCallFeature> {
-        return MockRecordingCallFeatureImpl;
+      get Recording(): CallFeatureFactory<RecordingCallFeature> {
+        return { callApiCtor: MockRecordingCallFeatureImpl };
       },
-      get Transcription(): CallFeatureFactoryType<TranscriptionCallFeature> {
-        return MockTranscriptionCallFeatureImpl;
+      get Transcription(): CallFeatureFactory<TranscriptionCallFeature> {
+        return { callApiCtor: MockTranscriptionCallFeatureImpl };
       },
-      get Diagnostics(): CallFeatureFactoryType<UserFacingDiagnosticsFeature> {
-        return StubDiagnosticsCallFeatureImpl;
+      get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
+        return { callApiCtor: StubDiagnosticsCallFeatureImpl };
       }
     }
   };
@@ -758,7 +758,7 @@ const prepareCallWithRemoteVideoStream = async (): Promise<PreparedCallWithRemot
 };
 
 const prepareCallWithFeatures = async (
-  api: <TFeature extends CallApiFeature>(cls: CallFeatureFactoryType<TFeature>) => TFeature
+  feature: <TFeature extends CallFeature>(cls: CallFeatureFactory<TFeature>) => TFeature
 ): Promise<PreparedCall> => {
   const agent = createMockCallAgent();
   const client = createStatefulCallClientWithAgent(agent);
@@ -767,7 +767,7 @@ const prepareCallWithFeatures = async (
 
   const callId = 'preparedCallId';
   const call = createMockCall(callId);
-  call.api = api;
+  call.feature = feature;
   agent.testHelperPushCall(call);
   expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
   return {
