@@ -3,7 +3,7 @@
 
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
-import { DetailedBetaBanner } from '../DocBanners';
+import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;

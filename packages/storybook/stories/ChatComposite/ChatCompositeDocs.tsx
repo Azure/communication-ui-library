@@ -4,7 +4,7 @@
 import { ChatComposite } from '@azure/communication-react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
 import React from 'react';
-import { SingleLineBetaBanner } from '../DocBanners';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =

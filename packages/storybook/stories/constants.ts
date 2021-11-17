@@ -51,3 +51,5 @@ export const COMPOSITE_FOLDER_PREFIX = 'Composites';
 export const EXAMPLES_FOLDER_PREFIX = 'Examples';
 export const QUICKSTARTS_FOLDER_PREFIX = 'Quickstarts';
 export const STATEFUL_CLIENT_PREFIX = 'Stateful Client';
+
+export const MICROSOFT_AZURE_PREVIEWS_URL = 'https://azure.microsoft.com/support/legal/preview-supplemental-terms/';
