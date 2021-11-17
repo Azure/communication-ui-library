@@ -121,13 +121,12 @@ const VideoGalleryStory = (args): JSX.Element => {
     });
 
   const localParticipant = MockLocalParticipant;
-  localParticipant.isScreenSharingOn = args.screenShareOptions === 'you';
+  localParticipant.isScreenSharingOn = args.screenShareExperience === 'presenter';
 
   if (remoteParticipants.length > 0) {
-    remoteParticipants[0].isScreenSharingOn = args.screenShareOptions === 'someone else';
+    remoteParticipants[0].isScreenSharingOn = args.screenShareExperience === 'viewer';
 
-    if (args.screenShareOptions === 'someone else') {
-      remoteParticipants[0].isScreenSharingOn = args.isRemoteScreenSharing;
+    if (args.screenShareExperience === 'viewer') {
       const renderElement = document.createElement('img');
       renderElement.src = 'images/hero.svg';
       renderElement.style.width = '100%';
@@ -160,7 +159,7 @@ export default {
   argTypes: {
     remoteParticipants: controlsToAdd.remoteParticipantNames,
     layout: controlsToAdd.videoGallerylayout,
-    screenShareOptions: controlsToAdd.screenShareOptions,
+    screenShareExperience: controlsToAdd.screenShareExperience,
     // Hiding auto-generated controls
     styles: hiddenControl,
     localParticipant: hiddenControl,

@@ -254,11 +254,11 @@ export const controlsToAdd = {
     name: 'Remote participants (comma separated)'
   },
   remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
-  screenShareOptions: {
+  screenShareExperience: {
     control: 'select',
-    options: ['no sharing', 'you', 'someone else'],
-    defaultValue: 'no sharing',
-    name: 'Screen sharing options'
+    options: ['none', 'presenter', 'viewer'],
+    defaultValue: 'none',
+    name: 'Screen sharing experience'
   },
   sendBoxWarningMessage: {
     control: 'text',
