@@ -2104,6 +2104,8 @@ export interface VideoGalleryStream {
 // @public
 export interface VideoGalleryStrings {
     localVideoLabel: string;
+    nextNavButtonAriaLabel: string;
+    previousNavButtonAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
 }
