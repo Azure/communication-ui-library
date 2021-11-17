@@ -41,18 +41,18 @@ export class CallSubscriber {
     this._diagnosticsSubscriber = new UserFacingDiagnosticsSubscriber(
       this._callIdRef,
       this._context,
-      this._call.api(Features.UserFacingDiagnostics)
+      this._call.feature(Features.UserFacingDiagnostics)
     );
     this._participantSubscribers = new Map<string, ParticipantSubscriber>();
     this._recordingSubscriber = new RecordingSubscriber(
       this._callIdRef,
       this._context,
-      this._call.api(Features.Recording)
+      this._call.feature(Features.Recording)
     );
     this._transcriptionSubscriber = new TranscriptionSubscriber(
       this._callIdRef,
       this._context,
-      this._call.api(Features.Transcription)
+      this._call.feature(Features.Transcription)
     );
 
     this.subscribe();
@@ -65,7 +65,7 @@ export class CallSubscriber {
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.on('isMutedChanged', this.isMuteChanged);
-    this._call.api(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
+    this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
 
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (this._call.localVideoStreams.length > 0) {
@@ -214,7 +214,7 @@ export class CallSubscriber {
   };
 
   private dominantSpeakersChanged = (): void => {
-    const dominantSpeakers = this._call.api(Features.DominantSpeakers).dominantSpeakers;
+    const dominantSpeakers = this._call.feature(Features.DominantSpeakers).dominantSpeakers;
     this._context.setCallDominantSpeakers(this._callIdRef.callId, dominantSpeakers);
   };
 }
