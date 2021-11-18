@@ -6,129 +6,37 @@ This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be m
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.8)
 
-acs-ui-common
+Wed, 17 Nov 2021 22:21:27 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.7..1.0.0-beta.8)
 
-- centralized localization utils to acs-ui-common ([PR #974](https://github.com/azure/communication-ui-library/pull/974) by alcail@microsoft.com)
-- Fully implement identifier to/from MRI conversion ([PR #1038](https://github.com/azure/communication-ui-library/pull/1038) by 82062616+prprabhu-ms@users.noreply.github.com)
+### Changes
 
-calling-component-bindings
+* Bump headless calling SDK to 1.3.1-beta.1
+* [Breaking API change] API polish based on Azure Review Board feedback
+* `ChatComposite`: Improved responsive experience when editing messages in the message thread
+* `ChatComposite`: Disabled participant pane
+* `CallComposite`: Add a screen for bad network conditions
+* `CallComposite`: Add a notification UI when local participant is speaking while muted
+* `CallComposite`: Make end call pages uniform, add button to return to call
+* `CallComposite`: Use `HorizontalGallery` for local and remote screen share streams
+* `CallComposite`: Add tooltips to control bar buttons
+* Expose User Facing Diagnostics API in `StatefulCallClient` and `CallAdapter`
+* Expose more ariaLabel and text strings via the localization API, more styling props
 
-- Disallow removing Teams participants from call ([PR #1035](https://github.com/azure/communication-ui-library/pull/1035) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add an internal util function for checking if a call is in lobby ([PR #1091](https://github.com/azure/communication-ui-library/pull/1091) by anjulgarg@live.com)
-- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
-- Translate several UFDs to ErrorBar notifications ([PR #1008](https://github.com/azure/communication-ui-library/pull/1008) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Bump headless calling SDK to 1.3.1-beta.1 ([PR #1056](https://github.com/azure/communication-ui-library/pull/1056) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add ErrorBar messages when missing device permissions ([PR #1031](https://github.com/azure/communication-ui-library/pull/1031) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Update OptionsButton to DevicesButton ([PR #1084](https://github.com/azure/communication-ui-library/pull/1084) by 2684369+JamesBurnside@users.noreply.github.com)
-- Drop error bar for networkReconnect condition ([PR #997](https://github.com/azure/communication-ui-library/pull/997) by 82062616+prprabhu-ms@users.noreply.github.com)
+### Bug Fixes
 
-calling-stateful-client
-
-
-- Bump headless calling SDK to 1.3.1-beta.1 ([PR #1056](https://github.com/azure/communication-ui-library/pull/1056) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
-- Remove call transfer feature ([PR #1105](https://github.com/azure/communication-ui-library/pull/1105) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add diagnostics hint and expose diagnostics API ([PR #1067](https://github.com/azure/communication-ui-library/pull/1067) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Fix manual conversions of userID ([PR #1038](https://github.com/azure/communication-ui-library/pull/1038) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Mark StatefulCallClient `diagnostics` property as public and `transfer` property as beta ([PR #1072](https://github.com/azure/communication-ui-library/pull/1072) by 2684369+JamesBurnside@users.noreply.github.com)
-- Generalize state.userId type ([PR #1039](https://github.com/azure/communication-ui-library/pull/1039) by 82062616+prprabhu-ms@users.noreply.github.com)
-
-chat-component-bindings
-
-
-- Update MessageThread selector to filter out unsupported messages ([PR #1007](https://github.com/azure/communication-ui-library/pull/1007) by 2684369+JamesBurnside@users.noreply.github.com)
-- Disallow removing Teams participants from chat ([PR #1035](https://github.com/azure/communication-ui-library/pull/1035) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
-
-react-components
-
-
-- added ariaLabel in InputBoxButtonProps and strings for EditBox buttons in MessageThreadStrings ([PR #1025](https://github.com/azure/communication-ui-library/pull/1025) by alcail@microsoft.com)
-- update snapshot for test ([PR #1040](https://github.com/azure/communication-ui-library/pull/1040) by jinan@microsoft.com)
-- Fix remote video border not flush with isSpeaking indicator ([PR #1045](https://github.com/azure/communication-ui-library/pull/1045) by anjulgarg@live.com)
-- HorizontalGallery not showing page navigation buttons if all participants can fit. ([PR #1069](https://github.com/azure/communication-ui-library/pull/1069) by miguelgamis@microsoft.com)
-- Update localized strings for components and composites ([PR #1047](https://github.com/azure/communication-ui-library/pull/1047) by anjulgarg@live.com)
-- Add support for opening chat message context menu with a long touch press ([PR #1019](https://github.com/azure/communication-ui-library/pull/1019) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix remote video streams in VideoGallery when screensharing is active. ([PR #1032](https://github.com/azure/communication-ui-library/pull/1032) by miguelgamis@microsoft.com)
-- Fix text in video tile label to no longer be translucent ([PR #1058](https://github.com/azure/communication-ui-library/pull/1058) by 2684369+JamesBurnside@users.noreply.github.com)
-- Expose participant list styling through the participant button interface ([PR #990](https://github.com/azure/communication-ui-library/pull/990) by 2684369+JamesBurnside@users.noreply.github.com)
-- Improved responsive experience when editing messages in the message thread ([PR #1036](https://github.com/azure/communication-ui-library/pull/1036) by 2684369+JamesBurnside@users.noreply.github.com)
-- fixing send button dimensions to respect icon dimensions ([PR #1082](https://github.com/azure/communication-ui-library/pull/1082) by 79329532+alkwa-msft@users.noreply.github.com)
-- Add ErrorBar message types for missing device permissions ([PR #1031](https://github.com/azure/communication-ui-library/pull/1031) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Ensure message thread links open in a new tab ([PR #1101](https://github.com/azure/communication-ui-library/pull/1101) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update participantButton interface to have required properties for participant list directly instead of extending a participantList interface directly ([PR #988](https://github.com/azure/communication-ui-library/pull/988) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
-- VideoTile displayName text padding added all around. ([PR #1070](https://github.com/azure/communication-ui-library/pull/1070) by miguelgamis@microsoft.com)
-- Fix for preventing video resize when isSpeaking indicator appears ([PR #1052](https://github.com/azure/communication-ui-library/pull/1052) by anjulgarg@live.com)
-- Updated VideoGalleryStyles, HorizontalGalleryStyles. Added GridLayoutStyles. ([PR #1093](https://github.com/azure/communication-ui-library/pull/1093) by miguelgamis@microsoft.com)
-- Scale down icon to fit ErrorBar size ([PR #1043](https://github.com/azure/communication-ui-library/pull/1043) by 82062616+prprabhu-ms@users.noreply.github.com)
-- centralized localization utils to acs-ui-common ([PR #974](https://github.com/azure/communication-ui-library/pull/974) by alcail@microsoft.com)
-- Uniformly capitalize icon names and fix intellisense ([PR #1054](https://github.com/azure/communication-ui-library/pull/1054) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add showLabel props to VideoTile. Do not show local preview VideoTile label when the video gallery is narrow. ([PR #1048](https://github.com/azure/communication-ui-library/pull/1048) by 2684369+JamesBurnside@users.noreply.github.com)
-- Add local and remote screensharing views into the VideoGallery component. ([PR #999](https://github.com/azure/communication-ui-library/pull/999) by miguelgamis@microsoft.com)
-- Support disabling menu to remove participants from roster ([PR #1035](https://github.com/azure/communication-ui-library/pull/1035) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add tooltips to control bar buttons ([PR #1077](https://github.com/azure/communication-ui-library/pull/1077) by 2684369+JamesBurnside@users.noreply.github.com)
-- ensuring edit/delete context menu is adjacent to its corresponding message ([PR #1100](https://github.com/azure/communication-ui-library/pull/1100) by 79329532+alkwa-msft@users.noreply.github.com)
-- Add more error types to ErrorBar ([PR #1008](https://github.com/azure/communication-ui-library/pull/1008) by 82062616+prprabhu-ms@users.noreply.github.com)
-- VideoTile label text truncation on overflow.  ([PR #1059](https://github.com/azure/communication-ui-library/pull/1059) by miguelgamis@microsoft.com)
-- Add more data-ui-id tags for e2e tests ([PR #982](https://github.com/azure/communication-ui-library/pull/982) by 82062616+prprabhu-ms@users.noreply.github.com)
-- removed InputBoxButtonProps from public API and updated onRenderIcon in SendBox component ([PR #1033](https://github.com/azure/communication-ui-library/pull/1033) by alcail@microsoft.com)
-- Improve the styling of the message thread when at narrow width - partially float the avatar on the padding of the message. ([PR #1013](https://github.com/azure/communication-ui-library/pull/1013) by 2684369+JamesBurnside@users.noreply.github.com)
-- Rename baseCustomStylesProps to baseCustomStyles ([PR #989](https://github.com/azure/communication-ui-library/pull/989) by 2684369+JamesBurnside@users.noreply.github.com)
-- Bugfix for permanent camera disable when it is being used elsewhere ([PR #1050](https://github.com/azure/communication-ui-library/pull/1050) by anjulgarg@live.com)
-- Update message status indicator icons and sizes ([PR #1062](https://github.com/azure/communication-ui-library/pull/1062) by 2684369+JamesBurnside@users.noreply.github.com)
-- Local VideoTile in VideoGallery overflow fix ([PR #1089](https://github.com/azure/communication-ui-library/pull/1089) by miguelgamis@microsoft.com)
-- Display 'You' instead of complete name in local video tile ([PR #1076](https://github.com/azure/communication-ui-library/pull/1076) by anjulgarg@live.com)
-- Improve touch target size for editing chat messages ([PR #1022](https://github.com/azure/communication-ui-library/pull/1022) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update OptionsButton to DevicesButton ([PR #1084](https://github.com/azure/communication-ui-library/pull/1084) by 2684369+JamesBurnside@users.noreply.github.com)
-- Add ability to style the options button flyouts ([PR #985](https://github.com/azure/communication-ui-library/pull/985) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix chat initials not showing in the message thread ([PR #1011](https://github.com/azure/communication-ui-library/pull/1011) by 2684369+JamesBurnside@users.noreply.github.com)
-
-react-composites
-
-
-- Bugfix for disappearing lobby when joining a meeting ([PR #1091](https://github.com/azure/communication-ui-library/pull/1091) by anjulgarg@live.com)
-- Make lobby screen strings and icons customizable ([PR #1023](https://github.com/azure/communication-ui-library/pull/1023) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Rename compressedMode CallCompositeOption to displayType ([PR #1096](https://github.com/azure/communication-ui-library/pull/1096) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update snapshots ([PR #1013](https://github.com/azure/communication-ui-library/pull/1013) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix for preventing video resize when isSpeaking indicator appears ([PR #1052](https://github.com/azure/communication-ui-library/pull/1052) by anjulgarg@live.com)
-- Update localized strings for components and composites ([PR #1047](https://github.com/azure/communication-ui-library/pull/1047) by anjulgarg@live.com)
-- Make lobby icon not be italicized ([PR #1044](https://github.com/azure/communication-ui-library/pull/1044) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Generalize adapterState.userId type ([PR #1039](https://github.com/azure/communication-ui-library/pull/1039) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Update js bundle automation snapshots related to sendbutton dimensions ([PR #1082](https://github.com/azure/communication-ui-library/pull/1082) by 79329532+alkwa-msft@users.noreply.github.com)
-- Optimize participant button flyout when on mobile ([PR #1002](https://github.com/azure/communication-ui-library/pull/1002) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix manual conversions of userId ([PR #1038](https://github.com/azure/communication-ui-library/pull/1038) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Uniformly capitalize icon names and fix intellisense ([PR #1054](https://github.com/azure/communication-ui-library/pull/1054) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add new icons for components ([PR #1008](https://github.com/azure/communication-ui-library/pull/1008) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Notify local participant when speaking while muted ([PR #987](https://github.com/azure/communication-ui-library/pull/987) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Remove call transfer from MeetingState ([PR #1105](https://github.com/azure/communication-ui-library/pull/1105) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Update call end pages to be more uniform ([PR #1053](https://github.com/azure/communication-ui-library/pull/1053) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Use system default to initialize audio devices ([PR #1037](https://github.com/azure/communication-ui-library/pull/1037) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Update composite automation snapshots ([PR #1070](https://github.com/azure/communication-ui-library/pull/1070) by miguelgamis@microsoft.com)
-- Display 'You' instead of complete name in local video tile ([PR #1076](https://github.com/azure/communication-ui-library/pull/1076) by anjulgarg@live.com)
-- Promote mobileView property on chat and call composites from alpha to public ([PR #1075](https://github.com/azure/communication-ui-library/pull/1075) by 2684369+JamesBurnside@users.noreply.github.com)
-- Make mobileView prop a top level property on the composite ([PR #1083](https://github.com/azure/communication-ui-library/pull/1083) by 2684369+JamesBurnside@users.noreply.github.com)
-- Replace old permissions banner with ErrorBar messages ([PR #1031](https://github.com/azure/communication-ui-library/pull/1031) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Display 'You' instead of complete name in local video tile ([PR #1076](https://github.com/azure/communication-ui-library/pull/1076) by anjulgarg@live.com)
-- Fix background of lobby page and call gallery. Add drop shadow to the call controls bar in the Call Composite. ([PR #1066](https://github.com/azure/communication-ui-library/pull/1066) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update composite automation snapshots ([PR #1059](https://github.com/azure/communication-ui-library/pull/1059) by miguelgamis@microsoft.com)
-- Bump headless calling SDK to 1.3.1-beta.1 ([PR #1056](https://github.com/azure/communication-ui-library/pull/1056) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Make all button width consistent in desktop mode ([PR #1078](https://github.com/azure/communication-ui-library/pull/1078) by jinan@microsoft.com)
-- Update call composite options button to have larger flyout items when on mobile view ([PR #986](https://github.com/azure/communication-ui-library/pull/986) by 2684369+JamesBurnside@users.noreply.github.com)
-- Add a button to rejoin call from end call page ([PR #1060](https://github.com/azure/communication-ui-library/pull/1060) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Removed Screenshare component in MediaGallery. VideoGallery component expected to handle screensharing. ([PR #999](https://github.com/azure/communication-ui-library/pull/999) by miguelgamis@microsoft.com)
-- Add an interstitial for intermittent network failure ([PR #997](https://github.com/azure/communication-ui-library/pull/997) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Rename mobileView prop to formFactor ([PR #1095](https://github.com/azure/communication-ui-library/pull/1095) by 2684369+JamesBurnside@users.noreply.github.com)
-- update snapshot for test ([PR #1040](https://github.com/azure/communication-ui-library/pull/1040) by jinan@microsoft.com)
-- added strings to Locale for Call composite ([PR #974](https://github.com/azure/communication-ui-library/pull/974) by alcail@microsoft.com)
-- Add NoticePage for failure to join due to network issue ([PR #1051](https://github.com/azure/communication-ui-library/pull/1051) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Fix camera button toggle on no-network tile ([PR #1049](https://github.com/azure/communication-ui-library/pull/1049) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
-- Fix chat initials not showing in the chat composite ([PR #1011](https://github.com/azure/communication-ui-library/pull/1011) by 2684369+JamesBurnside@users.noreply.github.com)
-- Make lobby and no network interstitial darker and responsive ([PR #1021](https://github.com/azure/communication-ui-library/pull/1021) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Add more data-ui-id tags for e2e tests ([PR #982](https://github.com/azure/communication-ui-library/pull/982) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Disabled Chat Composite Participant Pane by default - mark as `@beta` feature ([PR #1018](https://github.com/azure/communication-ui-library/pull/1018) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update meeting composite to be marked @beta instead of @alpha ([PR #1074](https://github.com/azure/communication-ui-library/pull/1074) by 2684369+JamesBurnside@users.noreply.github.com)
+* Fully implement identifier to/from MRI conversion
+* Many UI improvements to make the composites responsive to different form factors
+* Disallow removing Teams participants from call and chat
+* `ChatComposite`: Update MessageThread selector to filter out unsupported messages
+* `ChatComposite`: Ensure message thread links open in a new tab
+* `ChatComposite`: Ensuring edit/delete context menu is adjacent to its corresponding message
+* `ChatComposite`: Fix chat initials not showing in the message thread
+* `CallComposite`: `VideoTile` fixes related to isSpeaking indicator
+* `CallComposite`: Do not show page navigation buttons in `HorizontalGallery` if all participants can fit
+* `CallComposite`: VideoTile label text truncation on overflow, opacity fix
+* `CallComposite`: Respect system defaults for audio / video devices
+* `CallComposite`: Make all button width consistent in desktop mode
 
 ## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.7)
 
