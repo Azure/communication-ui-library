@@ -2,6 +2,21 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/chat-stateful-client_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/chat-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:40:46 GMT",
       "tag": "@internal/chat-stateful-client_v1.0.0-beta.7",
       "version": "1.0.0-beta.7",

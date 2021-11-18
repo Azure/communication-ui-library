@@ -2,6 +2,65 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/calling-stateful-client_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump headless calling SDK to 1.3.1-beta.1",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a0790e82c1b27c4e5daa31d5134e6a3930789131",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Update according to azure review",
+            "author": "jinan@microsoft.com",
+            "commit": "6708f87c37794a4411c7a1eb2586fa996aeb7757",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Remove call transfer feature",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "693bb11e7c57bcd04ad87a6bb4c18fb252151ebb",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Add diagnostics hint and expose diagnostics API",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "8bc918f5d693cd0a38b58dfa6e8793e0652d9553",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Fix manual conversions of userID",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "81e2d46cedeb9aa982315deecf4cf4603167cb8a",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Mark StatefulCallClient `diagnostics` property as public and `transfer` property as beta",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e6ea81c96401ba5c6c03005c2f77125f29d3a919",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Generalize state.userId type",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "ed1887cb95ae95dcd9043f979dd15a393c654cde",
+            "package": "@internal/calling-stateful-client"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/calling-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:40:46 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.0-beta.7",
       "version": "1.0.0-beta.7",

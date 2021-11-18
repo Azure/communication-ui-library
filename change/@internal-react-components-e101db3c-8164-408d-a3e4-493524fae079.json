@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "VideoTile displayName text padding added all around.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

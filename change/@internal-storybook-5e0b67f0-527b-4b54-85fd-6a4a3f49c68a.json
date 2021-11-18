@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix remote video border not flush with isSpeaking indicator",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

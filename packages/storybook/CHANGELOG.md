@@ -1,8 +1,37 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0-beta.8)
+
+Wed, 17 Nov 2021 22:21:27 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.0-beta.7..@internal/storybook_v1.0.0-beta.8)
+
+### Changes
+
+- Fix for preventing video resize when isSpeaking indicator appears ([PR #1052](https://github.com/azure/communication-ui-library/pull/1052) by anjulgarg@live.com)
+- updated storyshots ([PR #1059](https://github.com/azure/communication-ui-library/pull/1059) by miguelgamis@microsoft.com)
+- VideoGallery docs update. ([PR #1089](https://github.com/azure/communication-ui-library/pull/1089) by miguelgamis@microsoft.com)
+- Update OptionsButton to DevicesButton ([PR #1084](https://github.com/azure/communication-ui-library/pull/1084) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update participant datatype in stories ([PR #1035](https://github.com/azure/communication-ui-library/pull/1035) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Remove layouts from storybook ([PR #1097](https://github.com/azure/communication-ui-library/pull/1097) by anjulgarg@live.com)
+- Improve message thread example ([PR #1010](https://github.com/azure/communication-ui-library/pull/1010) by 2684369+JamesBurnside@users.noreply.github.com)
+- undefined ([PR #987](https://github.com/azure/communication-ui-library/pull/987) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Updated storybook snapshots ([PR #999](https://github.com/azure/communication-ui-library/pull/999) by miguelgamis@microsoft.com)
+- Fix manual conversions of userId ([PR #1038](https://github.com/azure/communication-ui-library/pull/1038) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Updated custom styles documentation for VideoGallery. ([PR #1093](https://github.com/azure/communication-ui-library/pull/1093) by miguelgamis@microsoft.com)
+- update snapshots ([PR #1036](https://github.com/azure/communication-ui-library/pull/1036) by 2684369+JamesBurnside@users.noreply.github.com)
+- updated storybook snapshot ([PR #1069](https://github.com/azure/communication-ui-library/pull/1069) by miguelgamis@microsoft.com)
+- Bump headless calling SDK to 1.3.1-beta.1 ([PR #1056](https://github.com/azure/communication-ui-library/pull/1056) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix remote video border not flush with isSpeaking indicator ([PR #1045](https://github.com/azure/communication-ui-library/pull/1045) by anjulgarg@live.com)
+- updating snippets to set width and height on parent containers of composites ([PR #996](https://github.com/azure/communication-ui-library/pull/996) by 79329532+alkwa-msft@users.noreply.github.com)
+- Cleanup component descriptions ([PR #1065](https://github.com/azure/communication-ui-library/pull/1065) by 2684369+JamesBurnside@users.noreply.github.com)
+- Updated storybook snapshots. ([PR #1032](https://github.com/azure/communication-ui-library/pull/1032) by miguelgamis@microsoft.com)
+- Add new error types to ErrorBar story ([PR #1008](https://github.com/azure/communication-ui-library/pull/1008) by 82062616+prprabhu-ms@users.noreply.github.com)
+- updating storybook to not use resource connection strings ([PR #983](https://github.com/azure/communication-ui-library/pull/983) by 79329532+alkwa-msft@users.noreply.github.com)
+- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
 
 ## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0-beta.7)
 
