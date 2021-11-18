@@ -18,35 +18,41 @@ import { getIdentifierKind } from '@azure/communication-common';
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
 ): CallParticipantListParticipant[] => {
-  return remoteParticipants
-    .map((participant: RemoteParticipantState) => {
-      const isScreenSharing = Object.values(participant.videoStreams).some(
-        (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
-      );
+  return (
+    remoteParticipants
+      // temporarily hiding lobby participants in ACS clients till we can admit users through ACS clients
+      .filter((participant: RemoteParticipantState) => {
+        participant.state !== 'InLobby';
+      })
+      .map((participant: RemoteParticipantState) => {
+        const isScreenSharing = Object.values(participant.videoStreams).some(
+          (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
+        );
 
-      return {
-        userId: toFlatCommunicationIdentifier(participant.identifier),
-        displayName: participant.displayName,
-        state: participant.state,
-        isMuted: participant.isMuted,
-        isScreenSharing: isScreenSharing,
-        isSpeaking: participant.isSpeaking,
-        // ACS users can not remove Teams users.
-        // Removing phone numbers or unknown types of users is undefined.
-        isRemovable: getIdentifierKind(participant.identifier).kind === 'communicationUser'
-      };
-    })
-    .sort((a, b) => {
-      const nameA = a.displayName?.toLowerCase() || '';
-      const nameB = b.displayName?.toLowerCase() || '';
-      if (nameA < nameB) {
-        return -1;
-      } else if (nameA > nameB) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+        return {
+          userId: toFlatCommunicationIdentifier(participant.identifier),
+          displayName: participant.displayName,
+          state: participant.state,
+          isMuted: participant.isMuted,
+          isScreenSharing: isScreenSharing,
+          isSpeaking: participant.isSpeaking,
+          // ACS users can not remove Teams users.
+          // Removing phone numbers or unknown types of users is undefined.
+          isRemovable: getIdentifierKind(participant.identifier).kind === 'communicationUser'
+        };
+      })
+      .sort((a, b) => {
+        const nameA = a.displayName?.toLowerCase() || '';
+        const nameB = b.displayName?.toLowerCase() || '';
+        if (nameA < nameB) {
+          return -1;
+        } else if (nameA > nameB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      })
+  );
 };
 
 /**
