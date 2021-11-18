@@ -23,11 +23,208 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       <div
         className="css-85"
         data-ui-id="video-gallery"
-        id="UILibraryFloatingTileHost"
       >
         <span
           className="ms-layer"
-        />
+        >
+          <div
+            className="ms-Fabric ms-Layer-content content-48"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onDoubleClick={[Function]}
+            onDrag={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragExit={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onFocus={[Function]}
+            onInput={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            onMouseUp={[Function]}
+            onSubmit={[Function]}
+            onTouchCancel={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+          >
+            <div
+              aria-modal={false}
+              onKeyDown={[Function]}
+              role="dialog"
+              style={
+                Object {
+                  "outline": "none",
+                  "overflowY": undefined,
+                }
+              }
+            >
+              <div
+                className="ms-Modal is-open root-1"
+              >
+                <div
+                  className="ms-Dialog-main main-2"
+                  id="ModalFocusTrapZone1"
+                  onBlurCapture={[Function]}
+                  onFocusCapture={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseUp={[Function]}
+                  onTouchEnd={[Function]}
+                  onTouchStart={[Function]}
+                  style={
+                    Object {
+                      "transform": "translate(0px, 0px)",
+                    }
+                  }
+                >
+                  <div
+                    aria-hidden={true}
+                    data-is-visible={true}
+                    style={
+                      Object {
+                        "pointerEvents": "none",
+                        "position": "fixed",
+                      }
+                    }
+                    tabIndex={0}
+                  />
+                  <div
+                    className="ms-Modal-scrollableContent scrollableContent-3"
+                    data-is-scrollable={true}
+                  >
+                    <div
+                      className="ms-Stack css-52"
+                      data-ui-id="video-tile"
+                    >
+                      <div
+                        className="css-15"
+                      />
+                      <div
+                        className="ms-Stack css-19"
+                      >
+                        <div
+                          className="ms-Stack css-21"
+                        >
+                          <div
+                            aria-label=""
+                            className="ms-Persona ms-Persona--size48 root-22"
+                            style={
+                              Object {
+                                "height": 100,
+                                "minWidth": 100,
+                              }
+                            }
+                          >
+                            <div
+                              className="ms-Persona-coin ms-Persona--size48 coin-29"
+                              role="presentation"
+                            >
+                              <div
+                                className="ms-Persona-imageArea imageArea-31"
+                                role="presentation"
+                                style={
+                                  Object {
+                                    "height": 100,
+                                    "width": 100,
+                                  }
+                                }
+                              >
+                                <div
+                                  aria-hidden="true"
+                                  className="ms-Persona-initials initials-34"
+                                  style={
+                                    Object {
+                                      "height": 100,
+                                      "width": 100,
+                                    }
+                                  }
+                                >
+                                  <span>
+                                    Y
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className="ms-Stack css-82 css-37"
+                      >
+                        <div
+                          className="ms-Stack css-83 css-38"
+                        >
+                          <span
+                            className="css-39"
+                            title="You"
+                          >
+                            You
+                          </span>
+                          <div
+                            className="ms-Stack css-53"
+                          >
+                            <i
+                              aria-hidden={true}
+                              className="root-37"
+                              data-icon-name="VideoTileMicOff"
+                            >
+                              <span
+                                aria-hidden={true}
+                                className="root-span"
+                              >
+                                <svg
+                                  className="svg"
+                                  fill="currentColor"
+                                  height={16}
+                                  viewBox="0 0 16 16"
+                                  width={16}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M10.8 11.52l3.35 3.33a.5.5 0 00.7-.7l-13-13a.5.5 0 10-.7.7L5.5 6.21V8a2.5 2.5 0 003.88 2.09l.72.71A3.5 3.5 0 014.5 8a.5.5 0 10-1 0 4.5 4.5 0 004 4.47v1.03a.5.5 0 101 0v-1.03c.87-.1 1.66-.44 2.3-.95z"
+                                  />
+                                  <path
+                                    d="M12.06 9.94l-.76-.76c.13-.37.2-.77.2-1.18a.5.5 0 011 0c0 .7-.16 1.35-.44 1.94z"
+                                  />
+                                  <path
+                                    d="M10.48 8.35l-4.8-4.79a2.5 2.5 0 014.82.94V8c0 .12 0 .24-.02.35z"
+                                  />
+                                </svg>
+                              </span>
+                            </i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    aria-hidden={true}
+                    data-is-visible={true}
+                    style={
+                      Object {
+                        "pointerEvents": "none",
+                        "position": "fixed",
+                      }
+                    }
+                    tabIndex={0}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </span>
         <div
           className="ms-Stack css-9"
         >
