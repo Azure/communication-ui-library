@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adding info message to storybook about unsupported landscape mode",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

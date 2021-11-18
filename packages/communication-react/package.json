@@ -1,6 +1,6 @@
 {
   "name": "@azure/communication-react",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0-beta.8",
   "sideEffects": false,
   "description": "React library for building modern communication user experiences utilizing Azure Communication Services",
   "keywords": [
@@ -72,12 +72,12 @@
     "postpack": "copyfiles -E \"./*.tgz\" release"
   },
   "devDependencies": {
-    "@internal/calling-component-bindings": "1.0.0-beta.7",
-    "@internal/calling-stateful-client": "1.0.0-beta.7",
-    "@internal/chat-component-bindings": "1.0.0-beta.7",
-    "@internal/chat-stateful-client": "1.0.0-beta.7",
-    "@internal/react-components": "1.0.0-beta.7",
-    "@internal/react-composites": "1.0.0-beta.7",
+    "@internal/calling-component-bindings": "1.0.0-beta.8",
+    "@internal/calling-stateful-client": "1.0.0-beta.8",
+    "@internal/chat-component-bindings": "1.0.0-beta.8",
+    "@internal/chat-stateful-client": "1.0.0-beta.8",
+    "@internal/react-components": "1.0.0-beta.8",
+    "@internal/react-composites": "1.0.0-beta.8",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.18.0",
     "@rollup/plugin-json": "~4.1.0",
