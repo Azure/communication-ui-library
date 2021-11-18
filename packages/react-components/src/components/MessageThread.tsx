@@ -720,7 +720,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         scrollToBottom();
       }
     }
-
     setIsAtBottomOfScrollRef(atBottom);
   }, [scrollToBottom, sendMessageStatusIfAtBottom]);
 
