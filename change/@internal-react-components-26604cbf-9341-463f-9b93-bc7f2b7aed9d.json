@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "ensuring edit/delete context menu is adjacent to its corresponding message",
-  "packageName": "@internal/react-components",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

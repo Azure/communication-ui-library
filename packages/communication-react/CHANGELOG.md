@@ -1,8 +1,42 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Tue, 28 Sep 2021 19:19:18 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.8)
+
+Wed, 17 Nov 2021 22:21:27 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.7..1.0.0-beta.8)
+
+### Changes
+
+* Bump headless calling SDK to 1.3.1-beta.1
+* [Breaking API change] API polish based on Azure Review Board feedback
+* `ChatComposite`: Improved responsive experience when editing messages in the message thread
+* `ChatComposite`: Disabled participant pane
+* `CallComposite`: Add a screen for bad network conditions
+* `CallComposite`: Add a notification UI when local participant is speaking while muted
+* `CallComposite`: Make end call pages uniform, add button to return to call
+* `CallComposite`: Use `HorizontalGallery` for local and remote screen share streams
+* `CallComposite`: Add tooltips to control bar buttons
+* Expose User Facing Diagnostics API in `StatefulCallClient` and `CallAdapter`
+* Expose more ariaLabel and text strings via the localization API, more styling props
+
+### Bug Fixes
+
+* Fully implement identifier to/from MRI conversion
+* Many UI improvements to make the composites responsive to different form factors
+* Disallow removing Teams participants from call and chat
+* `ChatComposite`: Update MessageThread selector to filter out unsupported messages
+* `ChatComposite`: Ensure message thread links open in a new tab
+* `ChatComposite`: Ensuring edit/delete context menu is adjacent to its corresponding message
+* `ChatComposite`: Fix chat initials not showing in the message thread
+* `CallComposite`: `VideoTile` fixes related to isSpeaking indicator
+* `CallComposite`: Do not show page navigation buttons in `HorizontalGallery` if all participants can fit
+* `CallComposite`: VideoTile label text truncation on overflow, opacity fix
+* `CallComposite`: Respect system defaults for audio / video devices
+* `CallComposite`: Make all button width consistent in desktop mode
 
 ## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.7)
 

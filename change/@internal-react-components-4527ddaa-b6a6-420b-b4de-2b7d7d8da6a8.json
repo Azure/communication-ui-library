@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bugfix for permanent camera disable when it is being used elsewhere",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

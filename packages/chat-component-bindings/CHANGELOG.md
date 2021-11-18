@@ -1,8 +1,19 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.8)
+
+Wed, 17 Nov 2021 22:21:27 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.0.0-beta.7..@internal/chat-component-bindings_v1.0.0-beta.8)
+
+### Changes
+
+- Update MessageThread selector to filter out unsupported messages ([PR #1007](https://github.com/azure/communication-ui-library/pull/1007) by 2684369+JamesBurnside@users.noreply.github.com)
+- Disallow removing Teams participants from chat ([PR #1035](https://github.com/azure/communication-ui-library/pull/1035) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
 
 ## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.7)
 

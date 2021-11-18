@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { MessageBar } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
 
@@ -40,12 +41,15 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Running in a Mobile browser</Heading>
       <Description>
         MeetingComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may
-        set the `formFactor` property to `"mobile"`. Currently the mobile form factor only supports Portrait orientation
-        and not Landscape. The MeetingComposite does not detect if it is running on mobile device vs desktop, instead
-        you must identify if your clients device is a mobile device and set the `formFactor` property to `"mobile"`.
-        This prop can be set at any time and immediately updates the composite UI to be optimized for a mobile device.
+        set the `formFactor` property to `"mobile"`. The MeetingComposite does not detect if it is running on mobile
+        device vs desktop, instead you must identify if your clients device is a mobile device and set the `formFactor`
+        property to `"mobile"`. This prop can be set at any time and immediately updates the composite UI to be
+        optimized for a mobile device.
       </Description>
       <Source code={formFactorSnippet} />
+      <MessageBar>
+        Note: Only Protrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
+      </MessageBar>
       <Description>
         You can try out the form factor property in the [MeetingComposite Basic
         Example](./?path=/story/composites-meeting-basicexample--basic-example).
