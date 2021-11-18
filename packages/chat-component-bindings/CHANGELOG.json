@@ -2,6 +2,41 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/chat-component-bindings_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update MessageThread selector to filter out unsupported messages",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f87bf0c6588a4fff9469a130d0492ce429a57779",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Disallow removing Teams participants from chat",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48c62fcdd5d112821d158000f171055632e1ee9",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Update according to azure review",
+            "author": "jinan@microsoft.com",
+            "commit": "6708f87c37794a4411c7a1eb2586fa996aeb7757",
+            "package": "@internal/chat-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/chat-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:40:46 GMT",
       "tag": "@internal/chat-component-bindings_v1.0.0-beta.7",
       "version": "1.0.0-beta.7",
