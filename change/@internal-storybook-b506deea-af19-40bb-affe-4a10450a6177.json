@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix typo and remove duplicate fields in story page",
-  "packageName": "@internal/storybook",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}

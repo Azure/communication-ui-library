@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add an interstitial for intermittent network failure",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

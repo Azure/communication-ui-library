@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update to Storybook ToC to improve information architecture ",
-  "packageName": "@internal/storybook",
-  "email": "dademath@microsoft.com",
-  "dependentChangeType": "none"
-}

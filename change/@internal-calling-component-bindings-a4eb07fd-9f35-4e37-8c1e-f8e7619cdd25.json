@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add ErrorBar messages when missing device permissions",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
