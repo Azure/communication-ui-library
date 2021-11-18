@@ -310,7 +310,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   return (
     <div
-      id={containerRef.current?.id}
       data-ui-id={ids.videoGallery}
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
