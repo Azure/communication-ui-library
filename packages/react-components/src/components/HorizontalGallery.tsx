@@ -58,8 +58,6 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
     return bucketize(React.Children.toArray(children), childrenPerPage);
   }, [children, childrenPerPage]);
 
-  console.log('paginatedChildren: ', paginatedChildren);
-
   // If children per page is 0 or less return empty element
   if (childrenPerPage <= 0) {
     return <></>;
