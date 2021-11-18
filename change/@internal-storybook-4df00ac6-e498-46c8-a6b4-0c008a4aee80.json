@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add storybook docs and a video about generating access token",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
