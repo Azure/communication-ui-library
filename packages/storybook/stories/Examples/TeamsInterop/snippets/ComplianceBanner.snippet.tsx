@@ -8,21 +8,41 @@ export type ComplianceBannerProps = {
   callRecordState?: boolean;
 };
 
-export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
-  const { callTranscribeState, callRecordState } = props;
+type CachedComplianceBannerProps = {
+  latest: ComplianceBannerProps;
+  previous: ComplianceBannerProps;
+};
 
-  const previousCallTranscribeState = useRef<boolean | undefined>(false);
-  const previousCallRecordState = useRef<boolean | undefined>(false);
+export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
+  const cachedProps = useRef<CachedComplianceBannerProps>({
+    latest: {
+      callTranscribeState: false,
+      callRecordState: false
+    },
+    previous: {
+      callTranscribeState: false,
+      callRecordState: false
+    }
+  });
+
+  // Only update cached props if there is _some_ change in the latest props.
+  // This ensures that state machine is only updated if there is an actual change in the props.
+  if (
+    props.callRecordState !== cachedProps.current.latest.callRecordState ||
+    props.callTranscribeState !== cachedProps.current.latest.callTranscribeState
+  ) {
+    cachedProps.current = {
+      latest: props,
+      previous: cachedProps.current.latest
+    };
+  }
 
   const variant = computeVariant(
-    previousCallRecordState.current,
-    previousCallTranscribeState.current,
-    callRecordState,
-    callTranscribeState
+    cachedProps.current.previous.callRecordState,
+    cachedProps.current.previous.callTranscribeState,
+    cachedProps.current.latest.callRecordState,
+    cachedProps.current.latest.callTranscribeState
   );
-
-  previousCallTranscribeState.current = callTranscribeState;
-  previousCallRecordState.current = callRecordState;
 
   return <DismissableMessageBar variant={variant} />;
 };
