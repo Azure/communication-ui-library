@@ -135,11 +135,7 @@ export const EmbeddedChatPane = (props: {
       onClose={props.onClose}
       dataUiId={'meeting-composite-chat-pane'}
     >
-      <ChatComposite
-        adapter={props.chatAdapter}
-        fluentTheme={props.fluentTheme}
-        options={{ participantPane: false, topic: false }}
-      />
+      <ChatComposite adapter={props.chatAdapter} fluentTheme={props.fluentTheme} options={{ topic: false }} />
     </SidePane>
   );
 };

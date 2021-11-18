@@ -131,16 +131,6 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @beta
-export type AzureCommunicationMeetingAdapterArgs = {
-    endpoint: string;
-    userId: CommunicationUserIdentifier;
-    displayName: string;
-    credential: CommunicationTokenCredential;
-    chatThreadId: string;
-    callLocator: TeamsMeetingLinkLocator | GroupCallLocator;
-};
-
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
@@ -582,7 +572,6 @@ export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered'
 // @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
-    participantPane?: boolean;
     topic?: boolean;
 };
 
@@ -921,9 +910,6 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
-
-// @beta
-export const createAzureCommunicationMeetingAdapter: ({ userId, displayName, credential, endpoint, chatThreadId, callLocator }: AzureCommunicationMeetingAdapterArgs) => Promise<MeetingAdapter>;
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -1330,124 +1316,6 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
 export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
-}
-
-// @beta
-export interface MeetingAdapter extends MeetingAdapterMeetingManagement, AdapterState<MeetingAdapterState>, Disposable, MeetingAdapterSubscriptions {
-}
-
-// @beta
-export interface MeetingAdapterClientState extends Pick<CallAdapterClientState, 'devices' | 'isTeamsCall'> {
-    displayName: string | undefined;
-    meeting: MeetingState | undefined;
-    userId: CommunicationIdentifierKind;
-}
-
-// @beta
-export interface MeetingAdapterMeetingManagement extends Pick<CallAdapterCallManagement, 'startCamera' | 'stopCamera' | 'mute' | 'unmute' | 'startScreenShare' | 'stopScreenShare' | 'createStreamView' | 'disposeStreamView'>, Pick<CallAdapterDeviceManagement, 'setCamera' | 'setMicrophone' | 'setSpeaker' | 'askDevicePermission' | 'queryCameras' | 'queryMicrophones' | 'querySpeakers'>, Pick<ChatAdapterThreadManagement, 'fetchInitialData' | 'sendMessage' | 'sendReadReceipt' | 'sendTypingIndicator' | 'loadPreviousChatMessages' | 'updateMessage' | 'deleteMessage'> {
-    joinMeeting(microphoneOn?: boolean): Call | undefined;
-    leaveMeeting(): Promise<void>;
-    removeParticipant(userId: string): Promise<void>;
-    startMeeting(participants: string[]): Call | undefined;
-}
-
-// @beta
-export interface MeetingAdapterState extends MeetingAdapterUiState, MeetingAdapterClientState {
-}
-
-// @beta
-export interface MeetingAdapterSubscriptions {
-    // (undocumented)
-    off(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
-    off(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
-    off(event: 'meetingEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    off(event: 'error', listener: (e: Error) => void): void;
-    // (undocumented)
-    off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
-    off(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    off(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
-    off(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    off(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
-    off(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
-    off(event: 'messageRead', listener: MessageReadListener): void;
-    // (undocumented)
-    on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
-    // (undocumented)
-    on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
-    // (undocumented)
-    on(event: 'meetingEnded', listener: CallEndedListener): void;
-    // (undocumented)
-    on(event: 'error', listener: (e: Error) => void): void;
-    // (undocumented)
-    on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
-    // (undocumented)
-    on(event: 'callIdChanged', listener: CallIdChangedListener): void;
-    // (undocumented)
-    on(event: 'isLocalScreenSharingActiveChanged', listener: IsLocalScreenSharingActiveChangedListener): void;
-    // (undocumented)
-    on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
-    // (undocumented)
-    on(event: 'messageReceived', listener: MessageReceivedListener): void;
-    // (undocumented)
-    on(event: 'messageSent', listener: MessageSentListener): void;
-    // (undocumented)
-    on(event: 'messageRead', listener: MessageReadListener): void;
-}
-
-// @beta
-export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocalPreviewMicrophoneEnabled'> {
-    page: MeetingCompositePage;
-}
-
-// @beta
-export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
-
-// @beta
-export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
-
-// @beta
-export type MeetingCompositeProps = {
-    meetingAdapter: MeetingAdapter;
-    fluentTheme?: PartialTheme | Theme;
-    formFactor?: 'desktop' | 'mobile';
-    meetingInvitationURL?: string;
-};
-
-// @beta
-export type MeetingEndReason = CallEndReason;
-
-// @beta
-export type MeetingEvent = 'participantsJoined' | 'participantsLeft' | 'meetingEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'error';
-
-// @beta
-export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displayName' | 'state' | 'videoStreams' | 'isMuted' | 'isSpeaking'> {
-    id: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
-    meetingEndReason?: MeetingEndReason;
-}
-
-// @beta
-export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
-    id: string;
-    meetingEndReason?: MeetingEndReason;
-    participants: {
-        [key: string]: MeetingParticipant;
-    };
-    participantsEnded: {
-        [keys: string]: MeetingParticipant;
-    };
 }
 
 // @public

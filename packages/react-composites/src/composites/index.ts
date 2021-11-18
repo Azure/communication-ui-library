@@ -5,7 +5,6 @@ export type { Disposable, AdapterState } from './common/adapters';
 
 export * from './ChatComposite';
 export * from './CallComposite';
-export * from './MeetingComposite';
 export type { AvatarPersonaData, AvatarPersonaDataCallback } from './common/AvatarPersona';
 export * from './common/icons';
 export * from './localization/locales';

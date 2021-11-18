@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FocusZone, mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
   MessageProps,
   MessageRenderer,
   MessageThread,
-  ParticipantList,
   SendBox,
   TypingIndicator,
   ParticipantMenuItemsCallback,
@@ -18,7 +17,6 @@ import {
 } from '@internal/react-components';
 import React, { useCallback, useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { useLocale } from '../localization';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
@@ -28,11 +26,7 @@ import {
   chatArea,
   chatContainer,
   chatWrapper,
-  listHeader,
   participantListContainerPadding,
-  participantListStack,
-  participantListStyle,
-  participantListWrapper,
   messageThreadChatCompositeStyles,
   sendBoxChatCompositeStyles,
   typingIndicatorChatCompositeStyles
@@ -67,7 +61,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onRenderMessage,
     onRenderTypingIndicator,
-    onFetchParticipantMenuItems,
+    // onFetchParticipantMenuItems,  // Removed for GA release
     options,
     styles
   } = props;
@@ -81,11 +75,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     adapter.fetchInitialData();
   }, [adapter]);
 
-  const locale = useLocale();
-  const chatListHeader = locale.strings.chat.chatListHeader;
-
   const messageThreadProps = usePropsFor(MessageThread);
-  const participantListProps = usePropsFor(ParticipantList);
   const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
@@ -133,27 +123,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <SendBox {...sendBoxProps} styles={sendBoxStyles} />
           </Stack.Item>
         </Stack>
-        {options?.participantPane === true && (
-          <Stack className={participantListWrapper}>
-            <Stack className={participantListStack}>
-              <Stack.Item className={listHeader}>{chatListHeader}</Stack.Item>
-              <FocusZone className={participantListStyle}>
-                <ParticipantList
-                  {...participantListProps}
-                  onRenderAvatar={(userId, options) => (
-                    <AvatarPersona
-                      data-ui-id="chat-composite-participant-custom-avatar"
-                      userId={userId}
-                      {...options}
-                      dataProvider={onFetchAvatarPersonaData}
-                    />
-                  )}
-                  onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-                />
-              </FocusZone>
-            </Stack>
-          </Stack>
-        )}
       </Stack>
     </Stack>
   );
