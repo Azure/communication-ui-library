@@ -11,6 +11,7 @@ export const TextFieldStyleProps = {
 
 export const inputBoxStyle = mergeStyles({
   boxSizing: 'border-box',
+  width: '18.75rem',
   borderRadius: '0.125rem'
 });
 
