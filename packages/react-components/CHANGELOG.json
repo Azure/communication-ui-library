@@ -2,6 +2,305 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/react-components_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "added ariaLabel in InputBoxButtonProps and strings for EditBox buttons in MessageThreadStrings",
+            "author": "alcail@microsoft.com",
+            "commit": "e3dcf801af52f82213fa700d67ad7ce00147a972",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "update snapshot for test",
+            "author": "jinan@microsoft.com",
+            "commit": "e225ff3343d6f439d595a92ac38b3d082a45b4b5",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix remote video border not flush with isSpeaking indicator",
+            "author": "anjulgarg@live.com",
+            "commit": "3f35ecd254418b3313fc483154fbe549f10aa917",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "HorizontalGallery not showing page navigation buttons if all participants can fit.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "9b94452f586a52a7312c84c2ca6882440b3362ff",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update localized strings for components and composites",
+            "author": "anjulgarg@live.com",
+            "commit": "27102c93c1cabdffef69bcc720a52434a21664dc",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add support for opening chat message context menu with a long touch press",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5faa95d7f133121ddb2dd75327f43554fb82bf81",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix remote video streams in VideoGallery when screensharing is active.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a7f168f979666929178ce3ec415551e8f46569ab",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix text in video tile label to no longer be translucent",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "414d5658826af548eefb9a240f74843d2e91cd63",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Expose participant list styling through the participant button interface",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "1bf4dcdb671f057891effb9d606dded849758b56",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Improved responsive experience when editing messages in the message thread",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "d45b28d6447d99daac6978d82c7f9f0e4b586758",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "fixing send button dimensions to respect icon dimensions",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "235bc44cf0cf99e15d3c88bc1a8b839be0f850d6",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add ErrorBar message types for missing device permissions",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "70d11a4c599f636222166ded8381f51b1b3f3559",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Ensure message thread links open in a new tab",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "b2c6287e3df3fd9e7ffe17b1723f2f8c9ccdff89",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update participantButton interface to have required properties for participant list directly instead of extending a participantList interface directly",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6b65a6b512f8e1e27b6c02deddde1c21f7a650ff",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update according to azure review",
+            "author": "jinan@microsoft.com",
+            "commit": "6708f87c37794a4411c7a1eb2586fa996aeb7757",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "VideoTile displayName text padding added all around.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "725100289b2418fb103a72076f7d0978426cb6e5",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix for preventing video resize when isSpeaking indicator appears",
+            "author": "anjulgarg@live.com",
+            "commit": "0bd0362cb140de8db6f04648c93147ca727c663f",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Updated VideoGalleryStyles, HorizontalGalleryStyles. Added GridLayoutStyles.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "0c69e161cfd05a310e13c127bdbf13a21b9d6969",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Scale down icon to fit ErrorBar size",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a91927383eaa7f349a0e50388d0f98abaf21ab98",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "centralized localization utils to acs-ui-common",
+            "author": "alcail@microsoft.com",
+            "commit": "db7764ba1b4d3db5cf2bb02dbffc01408fc707c6",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Uniformly capitalize icon names and fix intellisense",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "142311984d070b322242b6044e7bfbad4391be81",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add showLabel props to VideoTile. Do not show local preview VideoTile label when the video gallery is narrow.",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "11b48cc7627fe98ab530d85aba44a40bf50f4d44",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add local and remote screensharing views into the VideoGallery component.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "7064ed0e277acf4841455148e7683388aa2cfb29",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Support disabling menu to remove participants from roster",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48c62fcdd5d112821d158000f171055632e1ee9",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add tooltips to control bar buttons",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3f5406a7b34fd00d7f081ef5742309bad06c766a",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "ensuring edit/delete context menu is adjacent to its corresponding message",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "c4d4acfd32817c245a8dcbdbfc068afb2e3fb92e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add more error types to ErrorBar",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "c748caf9977b71ec0a33ff5a995f315a85e4d2c5",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "VideoTile label text truncation on overflow. ",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5ce7c0263f67f8537e50e4d81db4f34504df9fb7",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add more data-ui-id tags for e2e tests",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "685a8232ed1b303c0026fa64b40d6f5cab021a27",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "removed InputBoxButtonProps from public API and updated onRenderIcon in SendBox component",
+            "author": "alcail@microsoft.com",
+            "commit": "50fff1a465055ccdcef260f6b6cdf7bad3d50aaa",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Improve the styling of the message thread when at narrow width - partially float the avatar on the padding of the message.",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "2ee67c4ed555ed456fd36ea95d3f7608b93ef3a9",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Rename baseCustomStylesProps to baseCustomStyles",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "533b227ac6719ff4fb074a9f5023735cd1dabe4e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bugfix for permanent camera disable when it is being used elsewhere",
+            "author": "anjulgarg@live.com",
+            "commit": "af591ffe3ce088da446c3f0068c0abf68abbf0c5",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update message status indicator icons and sizes",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e9715754144e082f1eae221ef734d253ec739e0e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Local VideoTile in VideoGallery overflow fix",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "581d4a972110b81c05b424c1b78bca0a56198490",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Display 'You' instead of complete name in local video tile",
+            "author": "anjulgarg@live.com",
+            "commit": "f2c155d5396e2e1ff417adfdb8cf7b1e509befee",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Improve touch target size for editing chat messages",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "91653f55b0fef0cbb6043d0b6253e204802f810b",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update OptionsButton to DevicesButton",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "82d840c4537580b2fba4561b73a0990d105c1142",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add ability to style the options button flyouts",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "965188cb83fcd13f41e64ef0484ab8159fd4eed9",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix chat initials not showing in the message thread",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f033fb014aa6ef488ae697212c44a965fcf51fe2",
+            "package": "@internal/react-components"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Correct how style is applied in menu item",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "84f90137ced87664a8efe1105edb2e9f7834c857",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Open chat message context menu on long press",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "8b6061097c40a5dd7f707d6962541ca21b344338",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add data-ui-id to control bar button tooltip",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5d7c220d06b7e13f611bac966cc979c9276be49b",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update doc comment",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f177ff70121650fad4ecb700eba57a30506529a6",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Revert previous changes to camera button function signature that was used for testing",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6f83df6033ed97a4fd21feb17052fd72954251a3",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Small refactor to how messages asre styled",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "ebf63d15dd1b5d1998ad3a874a3b788e735af5fb",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "fixed EndCall button outline color regression",
+            "author": "alcail@microsoft.com",
+            "commit": "420c3c4b05d6f0366de04fa898c5870680898af5",
+            "package": "@internal/react-components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:40:46 GMT",
       "tag": "@internal/react-components_v1.0.0-beta.7",
       "version": "1.0.0-beta.7",
@@ -558,7 +857,7 @@
             "package": "@internal/react-components"
           },
           {
-            "comment": "Video device icon updated in OptionsButton",
+            "comment": "Video device icon updated in DevicesButton",
             "author": "miguelgamis@microsoft.com",
             "commit": "64d7184d7c8970da615a40f6e6f20694384211fa",
             "package": "@internal/react-components"
@@ -890,7 +1189,7 @@
             "package": "react-components"
           },
           {
-            "comment": "Fixed OptionsButton cameras, microphones, and speakers property types. OptionButton default menu props only used not empty.",
+            "comment": "Fixed DevicesButton cameras, microphones, and speakers property types. OptionButton default menu props only used not empty.",
             "author": "miguelgamis@microsoft.com",
             "commit": "fb5f67764a347ad4a52b243768d42720306f3c6c",
             "package": "react-components"
@@ -1057,7 +1356,7 @@
             "package": "@internal/react-components"
           },
           {
-            "comment": "Add default menu props and selector props to OptionsButton",
+            "comment": "Add default menu props and selector props to DevicesButton",
             "author": "anjulgarg@live.com",
             "commit": "3d8c98d16528f6808de5450aca8da091ca61b268",
             "package": "@internal/react-components"
@@ -1129,7 +1428,7 @@
             "package": "@internal/react-components"
           },
           {
-            "comment": "Add OptionsButton Component",
+            "comment": "Add DevicesButton Component",
             "author": "alcail@microsoft.com",
             "commit": "c590ee09046fa6644f0cbf771cf648d2f4ff2e95",
             "package": "@internal/react-components"
@@ -1647,7 +1946,7 @@
             "package": "@internal/react-components"
           },
           {
-            "comment": "add documentation for OptionsButton",
+            "comment": "add documentation for DevicesButton",
             "author": "alcail@microsoft.com",
             "commit": "b6485fa6f5fe2419b32cf9112b33812e994f002d",
             "package": "@internal/react-components"

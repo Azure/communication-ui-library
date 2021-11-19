@@ -8,7 +8,7 @@ export { ErrorBar } from './ErrorBar';
 export type { ActiveErrorMessage, ErrorBarProps, ErrorBarStrings, ErrorType } from './ErrorBar';
 
 export { GridLayout } from './GridLayout';
-export type { GridLayoutProps } from './GridLayout';
+export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
@@ -41,7 +41,8 @@ export type {
 } from './ParticipantList';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings } from './VideoGallery';
+export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles } from './VideoGallery';
+export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { CameraButton } from './CameraButton';
 export type { CameraButtonProps, CameraButtonStrings } from './CameraButton';
@@ -58,14 +59,14 @@ export type { EndCallButtonProps, EndCallButtonStrings } from './EndCallButton';
 export { MicrophoneButton } from './MicrophoneButton';
 export type { MicrophoneButtonProps, MicrophoneButtonStrings } from './MicrophoneButton';
 
-export { OptionsButton } from './OptionsButton';
+export { DevicesButton } from './DevicesButton';
 export type {
   OptionsDevice,
-  OptionsButtonProps,
-  OptionsButtonStrings,
-  OptionsButtonStyles,
-  OptionsButtonContextualMenuStyles
-} from './OptionsButton';
+  DevicesButtonProps,
+  DevicesButtonStrings,
+  DevicesButtonStyles,
+  DevicesButtonContextualMenuStyles
+} from './DevicesButton';
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {

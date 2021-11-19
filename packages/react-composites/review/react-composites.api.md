@@ -206,7 +206,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
     adapter: CallAdapter;
     callInvitationUrl?: string;
-    mobileView?: boolean;
+    formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
 }
 
@@ -256,11 +256,11 @@ export interface CallCompositeStrings {
 
 // @public
 export type CallControlOptions = {
-    compressedMode?: boolean;
+    displayType?: 'default' | 'compact';
     cameraButton?: boolean;
     endCallButton?: boolean;
     microphoneButton?: boolean;
-    optionsButton?: boolean;
+    devicesButton?: boolean;
     participantsButton?: boolean | {
         disabled: boolean;
     };
@@ -625,7 +625,7 @@ export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' 
 export type MeetingCompositeProps = {
     meetingAdapter: MeetingAdapter;
     fluentTheme?: PartialTheme | Theme;
-    mobileView?: boolean;
+    formFactor?: 'desktop' | 'mobile';
     meetingInvitationURL?: string;
 };
 
@@ -642,7 +642,7 @@ export interface MeetingParticipant extends Pick<RemoteParticipantState, 'displa
 }
 
 // @beta
-export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'transfer' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
+export interface MeetingState extends Pick<CallState, 'callerInfo' | 'state' | 'isMuted' | 'isScreenSharingOn' | 'localVideoStreams' | 'transcription' | 'recording' | 'screenShareRemoteParticipant' | 'startTime' | 'endTime' | 'diagnostics' | 'dominantSpeakers'>, Pick<ChatThreadClientState, 'chatMessages' | 'threadId' | 'properties' | 'readReceipts' | 'typingIndicators' | 'latestReadTime'> {
     id: string;
     meetingEndReason?: MeetingEndReason;
     participants: {

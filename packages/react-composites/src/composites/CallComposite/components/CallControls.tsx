@@ -7,7 +7,7 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
-  OptionsButton,
+  DevicesButton,
   ParticipantMenuItemsCallback,
   ParticipantsButton,
   ScreenShareButton,
@@ -20,7 +20,7 @@ import {
   controlButtonBaseStyle,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,
-  optionsButtonWithIncreasedTouchTargets,
+  devicesButtonWithIncreasedTouchTargets,
   participantButtonWithIncreasedTouchTargets
 } from '../styles/CallControls.styles';
 
@@ -45,10 +45,15 @@ export type CallControlsProps = {
  */
 export type CallControlOptions = {
   /**
-   * Compressed mode decreases the size of buttons in control bar and hides label
-   * @defaultValue false
+   * Options to change how the call controls are displayed.
+   * `'compact'` display type will decreases the size of buttons and hide the labels.
+   *
+   * @remarks
+   * If the composite `formFactor` is set to `'mobile'`, the control bar will always use compact view.
+   *
+   * @defaultValue 'default'
    */
-  compressedMode?: boolean;
+  displayType?: 'default' | 'compact';
   /**
    * Show or Hide Camera Button during a call
    * @defaultValue true
@@ -65,10 +70,10 @@ export type CallControlOptions = {
    */
   microphoneButton?: boolean;
   /**
-   * Show or Hide Options button during a call.
+   * Show or Hide Devices button during a call.
    * @defaultValue true
    */
-  optionsButton?: boolean;
+  devicesButton?: boolean;
   /**
    * Show, Hide or Disable participants button during a call.
    * @defaultValue true
@@ -93,7 +98,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
-  const optionsButtonProps = usePropsFor(OptionsButton);
+  const devicesButtonProps = usePropsFor(DevicesButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
   const theme = useTheme();
@@ -108,16 +113,18 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     [props.increaseFlyoutItemSize]
   );
 
-  const optionsButtonStyles = useMemo(
-    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? optionsButtonWithIncreasedTouchTargets : {}),
+  const devicesButtonStyles = useMemo(
+    () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
+
+  const compactMode = options?.displayType === 'compact';
 
   const microphoneButton = options?.microphoneButton !== false && (
     <MicrophoneButton
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
-      showLabel={!options?.compressedMode}
+      showLabel={!compactMode}
       styles={controlButtonBaseStyle}
     />
   );
@@ -126,7 +133,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <CameraButton
       data-ui-id="call-composite-camera-button"
       {...cameraButtonProps}
-      showLabel={!options?.compressedMode}
+      showLabel={!compactMode}
       styles={controlButtonBaseStyle}
     />
   );
@@ -136,7 +143,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
       styles={screenShareButtonStyles}
-      showLabel={!options?.compressedMode}
+      showLabel={!compactMode}
       disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
     />
   );
@@ -145,7 +152,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <ParticipantsButton
       data-ui-id="call-composite-participants-button"
       {...participantsButtonProps}
-      showLabel={!options?.compressedMode}
+      showLabel={!compactMode}
       callInvitationURL={callInvitationURL}
       onFetchParticipantMenuItems={onFetchParticipantMenuItems}
       disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
@@ -153,13 +160,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const optionsButton = options?.optionsButton !== false && (
-    /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
-    <OptionsButton
+  const devicesButton = options?.devicesButton !== false && (
+    <DevicesButton
+      /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
       persistMenu={true}
-      {...optionsButtonProps}
-      showLabel={!options?.compressedMode}
-      styles={optionsButtonStyles}
+      {...devicesButtonProps}
+      showLabel={!compactMode}
+      styles={devicesButtonStyles}
     />
   );
 
@@ -167,8 +174,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <EndCallButton
       data-ui-id="call-composite-hangup-button"
       {...hangUpButtonProps}
-      styles={!options?.compressedMode ? groupCallLeaveButtonStyle : groupCallLeaveButtonCompressedStyle}
-      showLabel={!options?.compressedMode}
+      styles={compactMode ? groupCallLeaveButtonCompressedStyle : groupCallLeaveButtonStyle}
+      showLabel={!compactMode}
     />
   );
 
@@ -187,7 +194,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           {cameraButton}
           {screenShareButton}
           {participantButton}
-          {optionsButton}
+          {devicesButton}
           {endCallButton}
         </ControlBar>
       </Stack.Item>

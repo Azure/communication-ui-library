@@ -34,7 +34,7 @@
     "onLabel": "靜音",
     "offLabel": "取消靜音"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "選項",
     "cameraMenuTitle": "攝影機",
     "cameraMenuTooltip": "選擇攝影機",

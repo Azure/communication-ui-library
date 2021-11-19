@@ -34,7 +34,7 @@
     "onLabel": "Mute",
     "offLabel": "Unmute"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Options",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",

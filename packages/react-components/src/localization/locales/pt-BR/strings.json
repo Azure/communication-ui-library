@@ -34,7 +34,7 @@
     "onLabel": "Mudo",
     "offLabel": "Desativar mudo"
   },
-  "optionsButton": {
+  "devicesButton": {
     "label": "Opções",
     "cameraMenuTitle": "Câmera",
     "cameraMenuTooltip": "Escolher Câmera",

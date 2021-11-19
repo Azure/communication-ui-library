@@ -1,19 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { MessageBar } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
 import React from 'react';
+import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 const containerText = require('!!raw-loader!./snippets/Meeting.snippet.tsx').default;
 const serverText = require('!!raw-loader!./snippets/Server.snippet.tsx').default;
 
-const mobileViewSnippet = `
-<MeetingComposite mobileView={true} />
+const formFactorSnippet = `
+<MeetingComposite formFactor="mobile" />
 `;
 
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
+      <DetailedBetaBanner />
       <Title>MeetingComposite</Title>
       <Description>
         MeetingComposite brings together key components to provide a full meeting experience out of the box.
@@ -40,14 +43,17 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Running in a Mobile browser</Heading>
       <Description>
         MeetingComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may
-        use the `mobileView` property. Currently this only supports Portrait orientation and not Landscape. The
-        MeetingComposite does not detect if it is running on mobile device vs desktop, instead you must identify if your
-        clients device is a mobile device and set the `mobileView` flag to true. This prop can be set at any time and
-        immediately updates the composite UI to be optimized for a mobile device.
+        set the `formFactor` property to `"mobile"`. The MeetingComposite does not detect if it is running on mobile
+        device vs desktop, instead you must identify if your clients device is a mobile device and set the `formFactor`
+        property to `"mobile"`. This prop can be set at any time and immediately updates the composite UI to be
+        optimized for a mobile device.
       </Description>
-      <Source code={mobileViewSnippet} />
+      <Source code={formFactorSnippet} />
+      <MessageBar>
+        Note: Only Protrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
+      </MessageBar>
       <Description>
-        You can try out the mobile view in the [MeetingComposite Basic
+        You can try out the form factor property in the [MeetingComposite Basic
         Example](./?path=/story/composites-meeting-basicexample--basic-example).
       </Description>
 
