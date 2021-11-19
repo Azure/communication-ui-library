@@ -22,31 +22,31 @@ export const getBackgroundColor = (avatar: string): { backgroundColor: string } 
   switch (avatar) {
     case CAT:
       return {
-        backgroundColor: 'rgba(255, 250, 228, 1)'
+        backgroundColor: 'rgb(255, 250, 228)'
       };
     case MOUSE:
       return {
-        backgroundColor: 'rgba(33, 131, 196, 0.1)'
+        backgroundColor: 'rgb(232, 242, 249)'
       };
     case KOALA:
       return {
-        backgroundColor: 'rgba(197, 179, 173, 0.3)'
+        backgroundColor: 'rgb(237, 232, 230)'
       };
     case OCTOPUS:
       return {
-        backgroundColor: 'rgba(255, 240, 245, 1)'
+        backgroundColor: 'rgb(255, 240, 245)'
       };
     case MONKEY:
       return {
-        backgroundColor: 'rgba(255, 245, 222, 1)'
+        backgroundColor: 'rgb(255, 245, 222)'
       };
     case FOX:
       return {
-        backgroundColor: 'rgba(255, 231, 205, 1)'
+        backgroundColor: 'rgb(255, 231, 205)'
       };
     default:
       return {
-        backgroundColor: 'rgba(255, 250, 228, 1)'
+        backgroundColor: 'rgb(255, 250, 228)'
       };
   }
 };
