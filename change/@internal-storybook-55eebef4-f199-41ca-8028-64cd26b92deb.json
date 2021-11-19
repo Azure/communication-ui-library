@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Updates to Quickstarts. Added Call Stateful Quickstart.",
+  "packageName": "@internal/storybook",
+  "email": "dademath@microsoft.com",
+  "dependentChangeType": "none"
+}
