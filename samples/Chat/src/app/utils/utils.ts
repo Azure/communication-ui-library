@@ -22,7 +22,7 @@ export const getBackgroundColor = (avatar: string): { backgroundColor: string } 
   switch (avatar) {
     case CAT:
       return {
-        backgroundColor: 'rgb(255, 250, 228,)'
+        backgroundColor: 'rgb(255, 250, 228)'
       };
     case MOUSE:
       return {
