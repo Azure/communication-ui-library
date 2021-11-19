@@ -59,7 +59,7 @@ const ERROR_TEXT_THREAD_INVALID = 'Thread Id is not valid, please revisit home p
 const ERROR_TEXT_THREAD_NOT_RECORDED = 'Thread id is not recorded in server';
 const ERROR_TEXT_THREAD_NULL = 'Thread id is null';
 const INITIALIZE_CHAT_SPINNER_LABEL = 'Initializing chat client...';
-const JOIN_BTN_TEXT = 'Join chat';
+const JOIN_BUTTON_TEXT = 'Join chat';
 const LOADING_SPINNER_LABEL = 'Loading...';
 const NAME_DEFAULT = 'Name';
 
@@ -219,7 +219,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
             disabled={disableJoinChatButton}
             className={buttonStyle}
             styles={buttonWithIconStyles}
-            text={JOIN_BTN_TEXT}
+            text={JOIN_BUTTON_TEXT}
             onClick={validateName}
             onRenderIcon={() => <Chat20Filled className={chatIconStyle} />}
           />
