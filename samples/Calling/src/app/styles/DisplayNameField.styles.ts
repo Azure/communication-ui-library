@@ -4,9 +4,6 @@
 import { mergeStyles } from '@fluentui/react';
 
 export const TextFieldStyleProps = {
-  wrapper: {
-    height: '2.3rem'
-  },
   fieldGroup: {
     height: '2.3rem'
   }
