@@ -17,7 +17,9 @@ export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
  * as buttons would show their onHover state.
  */
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
-  await pageClick(page, selector);
+  await page.click(selector);
+
+  // Move the mouse of the screen
   await page.mouse.move(-1, -1);
 };
 
