@@ -68,7 +68,7 @@ module.exports = {
   root: true,
   settings: {
     react: {
-      // 'mdx/code-blocks': true,
+      'mdx/code-blocks': true,
       version: 'detect'
     }
   },
