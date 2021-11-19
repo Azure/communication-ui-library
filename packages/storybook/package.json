@@ -13,7 +13,7 @@
     "snapshot:update": "npm run test -- --update-snapshot",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
-    "lint": "eslint \"*/**/*.{ts,tsx}\"",
+    "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx,mdx}\"",
     "lint:fix": "npm run lint -- --fix",
     "lint:quiet": "npm run lint -- --quiet"
   },
@@ -78,6 +78,7 @@
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "~2.22.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-mdx": "1.16.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-react": "^7.18.3",

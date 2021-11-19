@@ -53,7 +53,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
   // to avoid costly re-fetching of data.
   // A 3rd Party utility such as Lodash (_.memoize) can be used to memoize the callback.
   const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       if (userId === props.botUserId) {
         return resolve({
           imageInitials: props.botAvatar,
