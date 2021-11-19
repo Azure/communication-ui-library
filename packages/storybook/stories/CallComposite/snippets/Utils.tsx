@@ -10,9 +10,9 @@ export const ConfigHintBanner = (): JSX.Element => {
     <p>
       Please provide an{' '}
       <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
-        access token
-      </a>
-      , userId and display name to use.
+        access token, userId
+      </a>{' '}
+      and display name to use.
     </p>
   );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
@@ -23,9 +23,9 @@ export const ConfigJoinCallHintBanner = (): JSX.Element => {
     <p>
       Please provide an{' '}
       <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
-        access token
+        access token, userId
       </a>
-      , userId, display name, and a group call Id (or a teams meeting link).
+      , display name, and a group call Id (or a teams meeting link).
     </p>
   );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
