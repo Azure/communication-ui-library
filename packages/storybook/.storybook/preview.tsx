@@ -75,9 +75,9 @@ export const parameters = {
         EXAMPLES_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,
         [
+          'Overview',
           'Get Started (Call)',
           'Get Started (Chat)',
-          'Overview',
           'Best Practices',
           'React Hooks',
           [

@@ -101,23 +101,24 @@ As part of the constants that need to be populated is the `groupId` which is a G
 
 ## Add Providers
 
-Next we will add three providers that will encapsulate our UI components.
-First, the `FluentThemeProvider` which provides visual theme to the underlying components.
-Second, the `CallClientProvider` which provides state from the `statefulCallClient` to the components.
-For this provider, we will pass the `statefulCallClient` as a prop to the provider.
-Third, the `CallAgentProvider` which provides state from the `CallAgent` to the components.
-For this provider, we will pass the `CallAgent` as a prop to the provider.
-Finally, we will add the 'CallProvider' which provides the `Call` objects state down to the components.
-For this provider, we will pass the `Call` as a prop to the provider.
+Next we will add four providers that will encapsulate our UI components.
+
+1. The `FluentThemeProvider` which provides visual theme to the underlying components.
+2. The `CallClientProvider` which provides state from the `statefulCallClient` to the components.
+   For this provider, we will pass the `statefulCallClient` as a prop to the provider.
+3. The `CallAgentProvider` which provides state from the `CallAgent` to the components.
+   For this provider, we will pass the `CallAgent` as a prop to the provider.
+4. we will add the 'CallProvider' which provides the `Call` objects state down to the components.
+   For this provider, we will pass the `Call` as a prop to the provider.
 
 `App.tsx`
 
 <Source code={CallAppStatefulProviders} />
 
-## Compose Chat Components
+## Compose Call Components
 
 Now that we have our structure ready, we will now create our call experience using UI Components.
-For Chat, we will use the [VideoGallery](./?path=/story/ui-components-videogallery--video-gallery) and [ControlBar](./?path=/story/ui-components-controlbar--control-bar) components.
+For Call, we will use the [VideoGallery](./?path=/story/ui-components-videogallery--video-gallery) and [ControlBar](./?path=/story/ui-components-controlbar--control-bar) components.
 To start add the code below to a new file `CallComponentsStateful.tsx`.
 For more information on getting started with UI Components follow the [quickstart](./?path=/story/quickstarts-uicomponents--page)
 Here we will use the `usePropsFor` hook to connect our components to the stateful clients.
