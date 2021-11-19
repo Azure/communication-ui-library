@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video Gallery 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-85"
+        className="css-84"
         data-ui-id="video-gallery"
         id="UILibraryFloatingTileHost"
       >
@@ -32,13 +32,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           className="ms-Stack css-9"
         >
           <div
-            className="css-56"
+            className="css-55"
           >
             <div
-              className="css-57 css-11"
+              className="css-56 css-11"
             >
               <div
-                className="css-57 css-10"
+                className="css-56 css-10"
               >
                 <div
                   className="ms-Stack css-18"
@@ -97,10 +97,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-82 css-37"
+                    className="ms-Stack css-81 css-37"
                   >
                     <div
-                      className="ms-Stack css-83 css-38"
+                      className="ms-Stack css-82 css-38"
                     >
                       <span
                         className="css-39"
@@ -168,10 +168,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-82 css-37"
+                    className="ms-Stack css-81 css-37"
                   >
                     <div
-                      className="ms-Stack css-83 css-38"
+                      className="ms-Stack css-82 css-38"
                     >
                       <span
                         className="css-39"
@@ -239,10 +239,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-82 css-37"
+                    className="ms-Stack css-81 css-37"
                   >
                     <div
-                      className="ms-Stack css-83 css-38"
+                      className="ms-Stack css-82 css-38"
                     >
                       <span
                         className="css-39"
@@ -310,10 +310,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-82 css-37"
+                    className="ms-Stack css-81 css-37"
                   >
                     <div
-                      className="ms-Stack css-83 css-38"
+                      className="ms-Stack css-82 css-38"
                     >
                       <span
                         className="css-39"
