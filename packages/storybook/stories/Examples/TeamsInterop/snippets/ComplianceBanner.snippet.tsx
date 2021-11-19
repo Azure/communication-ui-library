@@ -1,7 +1,7 @@
 // ComplianceBanner.snippet.tsx
 
 import { Link, MessageBar } from '@fluentui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 
 export type ComplianceBannerProps = {
   callTranscribeState?: boolean;
@@ -47,7 +47,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   return <DismissableMessageBar variant={variant} />;
 };
 
-function DismissableMessageBar(props: { variant: number }) {
+function DismissableMessageBar(props: { variant: number }): ReactElement {
   const { variant: newVariant } = props;
 
   const [variant, setVariant] = useState(0);
@@ -88,7 +88,7 @@ function computeVariant(
   previousCallTranscribeState: boolean | undefined,
   callRecordState: boolean | undefined,
   callTranscribeState: boolean | undefined
-) {
+): number {
   if (previousCallRecordState && previousCallTranscribeState) {
     if (callRecordState && !callTranscribeState) {
       return TRANSCRIPTION_STOPPED_STILL_RECORDING;
