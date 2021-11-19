@@ -5,8 +5,8 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
   const avatarStyle = {
     borderRadius: 20,
     display: 'inline-block',
-    width: '32px',
-    height: '32px'
+    width: '2rem',
+    height: '2rem'
   };
   const imageMap = {
     ['1']: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
