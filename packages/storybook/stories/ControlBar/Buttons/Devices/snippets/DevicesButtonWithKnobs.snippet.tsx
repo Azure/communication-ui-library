@@ -5,7 +5,7 @@ import { DevicesButton, DevicesButtonProps } from '@azure/communication-react';
 import React, { useState } from 'react';
 import { defaultControlsCameras, defaultControlsMicrophones, defaultControlsSpeakers } from '../../../../controlsUtils';
 
-export const DevicesButtonWithKnobs = (args: any): JSX.Element => {
+export const DevicesButtonWithKnobs = (args: unknown): JSX.Element => {
   const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string }>(defaultControlsCameras[0]);
   const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(
     defaultControlsMicrophones[0]
