@@ -43,7 +43,8 @@
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
     "use-long-press": "~1.1.1",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "type-fest": "~2.5.4"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",
@@ -54,9 +55,17 @@
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
   "scripts": {
+    "copy-original": "cpx ../*/src/** ./preprocess-dist & renamer --find src --replace preprocessed ./preprocess-dist/**",
+    "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
+    "preprocess:public": "cross-env FLAVOR=public rushx preprocess",
+    "preprocess:beta": "cross-env FLAVOR=beta rushx preprocess",
+    "copy-preprocess": "cpx ../*/preprocessed/** ./preprocess-dist & renamer --find preprocessed --replace src ./preprocess-dist/**",
+    "clean:preprocess": "rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
     "build": "rushx clean && rushx check-deps && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent",
     "build:esm": "ttsc",
+    "build:public": "rushx copy-original && rushx preprocess:public && rushx copy-preprocess && ttsc -project tsconfig.preprocess.json && rushx build:cjs && api-extractor run --local && rushx clean:preprocess",
+    "build:beta": "rushx copy-original && rushx preprocess:beta && rushx copy-preprocess && ttsc -project tsconfig.preprocess.json && rushx build:cjs && api-extractor run --local && rushx clean:preprocess",
     "build:watch": "",
     "clean": "rimraf dist",
     "test": "",
@@ -72,6 +81,11 @@
     "postpack": "copyfiles -E \"./*.tgz\" release"
   },
   "devDependencies": {
+    "@azure/core-auth": "1.3.2",
+    "@babel/core": "~7.16.0",
+    "@babel/cli": "~7.16.0",
+    "@babel/plugin-syntax-typescript": "~7.16.0",
+    "babel-plugin-conditional-compilation": "~0.0.1",
     "@internal/calling-component-bindings": "1.0.0-beta.7",
     "@internal/calling-stateful-client": "1.0.0-beta.7",
     "@internal/chat-component-bindings": "1.0.0-beta.7",
@@ -124,7 +138,12 @@
     "ts-node": "^9.1.1",
     "ttypescript": "~1.5.12",
     "typescript": "4.3.5",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "cpx": "~1.5.0",
+    "renamer": "~4.0.0",
+    "cross-env": "~7.0.3",
+    "rename-cli": "~6.2.1",
+    "babel-plugin-transform-strip-block": "~0.0.4"
   },
   "beachball": {
     "shouldPublish": false

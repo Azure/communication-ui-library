@@ -69,6 +69,10 @@ export type LocalizationProviderProps = {
  */
 export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Element => {
   const { locale, children } = props;
+  /* beta:start */
+  console.log('beta-test1');
+  console.log('beta-test2');
+  /* beta:end */
   return (
     <LocaleContext.Provider value={locale}>
       <ComponentLocalizationProvider locale={locale.component}>{children}</ComponentLocalizationProvider>

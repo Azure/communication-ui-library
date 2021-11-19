@@ -49,6 +49,7 @@ export type ChatCompositeOptions = {
    * @defaultValue true
    */
   errorBar?: boolean;
+  /* beta:start */
   /**
    * Show or hide the participant pane. This feature is in beta and not supported on mobile or narrow screen views.
    * @defaultValue false
@@ -56,6 +57,8 @@ export type ChatCompositeOptions = {
    * @beta
    */
   participantPane?: boolean;
+  testProp?: boolean;
+  /* beta:end */
   /**
    * Show or hide the topic at the top of the chat. Hidden if set to `false`
    * @defaultValue true

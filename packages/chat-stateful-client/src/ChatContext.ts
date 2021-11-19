@@ -27,7 +27,7 @@ enableMapSet();
  */
 export class ChatContext {
   private _state: ChatClientState = {
-    userId: <UnknownIdentifierKind>{ id: '' },
+    userId: { id: '' } as UnknownIdentifierKind,
     displayName: '',
     threads: {},
     latestErrors: {} as ChatErrors
