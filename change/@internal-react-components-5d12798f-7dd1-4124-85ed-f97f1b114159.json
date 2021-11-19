@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure typing indicator wraps correctly with long names",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
