@@ -91,6 +91,8 @@ dist/
 build/
 temp/
 docGen/
+preprocessed/
+preprocess-dist/
 
 # Release outputs
 release/

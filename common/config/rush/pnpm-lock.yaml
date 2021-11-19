@@ -6160,6 +6160,17 @@ packages:
     dev: false
     resolution:
       integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=
+  /babel-plugin-transform-strip-block/0.0.4:
+    dependencies:
+      '@babel/helper-plugin-utils': 7.14.5
+      '@babel/types': 7.16.0
+    dev: false
+    engines:
+      node: '>= 10.0.0'
+      npm: '>= 6.x'
+      yarn: '>= 1.4.x'
+    resolution:
+      integrity: sha512-WZSmj2DX2j9oNYnD4yIFaj32ht0sCAJD2JQJmjO/GHDzzpYFtHDXwksWNx69O0svQiNyDz8bHvdM2rGhFfnAmw==
   /babel-preset-current-node-syntax/1.0.1_@babel+core@7.16.0:
     dependencies:
       '@babel/core': 7.16.0
@@ -19194,6 +19205,7 @@ packages:
       '@zerollup/ts-transform-paths': 1.7.18_typescript@4.3.5
       ajv: 6.12.6
       babel-plugin-conditional-compilation: 0.0.1
+      babel-plugin-transform-strip-block: 0.0.4
       copy-to-clipboard: 3.3.1
       copyfiles: 2.4.1
       cpx: 1.5.0
@@ -19243,7 +19255,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-s9NniRFg4hBMgw6O0Gvg6CHN8qAAaSNJatKN/wCGcSFjYrKpqlHBImVwwNjoTZuatw1Gv9m/0wK+fGzXAlozRQ==
+      integrity: sha512-JOwdpgY5F5ohSYHpQvGEKFw3cfNFQq2oxwq2GLTkDhkC1Qw18kShPiQEd2nRSOcLVDha7jzWoa6B92gd+eY2Hg==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
