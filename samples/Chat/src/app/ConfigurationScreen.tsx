@@ -53,6 +53,16 @@ const CONFIGURATIONSCREEN_SHOWING_JOIN_CHAT = 2;
 const CONFIGURATIONSCREEN_SHOWING_INVALID_THREAD = 3;
 const CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT = 4;
 
+const ALERT_TEXT_TRY_AGAIN = "You can't be added at this moment. Please wait at least 60 seconds to try again.";
+const AVATAR_LABEL = 'Avatar';
+const ERROR_TEXT_THREAD_INVALID = 'Thread Id is not valid, please revisit home page to create a new thread';
+const ERROR_TEXT_THREAD_NOT_RECORDED = 'Thread id is not recorded in server';
+const ERROR_TEXT_THREAD_NULL = 'Thread id is null';
+const INITIALIZE_CHAT_SPINNER_LABEL = 'Initializing chat client...';
+const JOIN_BTN_TEXT = 'Join chat';
+const LOADING_SPINNER_LABEL = 'Loading...';
+const NAME_DEFAULT = 'Name';
+
 /**
  * There are four states of ConfigurationScreen.
  * 1. Loading configuration screen state. This will show 'loading' spinner on the screen.
@@ -64,8 +74,6 @@ const CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT = 4;
  */
 export default (props: ConfigurationScreenProps): JSX.Element => {
   const avatarsList = [CAT, MOUSE, KOALA, OCTOPUS, MONKEY, FOX];
-  const loadingSpinnerLabel = 'Loading...';
-  const initializeChatSpinnerLabel = 'Initializing chat client...';
   const [name, setName] = useState('');
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(CAT);
@@ -84,7 +92,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       const endpointUrl = await getEndpointUrl();
 
       if (!threadId) {
-        throw new Error('Thread id is null');
+        throw new Error(ERROR_TEXT_THREAD_NULL);
       }
 
       setToken(token.token);
@@ -97,7 +105,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
 
       const result = await joinThread(threadId, token.identity, name);
       if (!result) {
-        alert("You can't be added at this moment. Please wait at least 60 seconds to try again.");
+        alert(ALERT_TEXT_TRY_AGAIN);
         setDisableJoinChatButton(false);
         return;
       }
@@ -114,7 +122,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
         try {
           const threadId = getThreadId();
           if (!(await checkThreadValid(threadId))) {
-            throw new Error('Thread id is not recorded in server');
+            throw new Error(ERROR_TEXT_THREAD_NOT_RECORDED);
           }
         } catch (error) {
           setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_INVALID_THREAD);
@@ -162,22 +170,36 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
         tokens={responsiveLayoutStackTokens}
         className={responsiveLayoutStyle}
       >
-        <Stack className={leftPreviewContainerStyle} tokens={leftPreviewContainerStackTokens}>
+        <Stack
+          role={'heading'}
+          aria-level={1}
+          className={leftPreviewContainerStyle}
+          tokens={leftPreviewContainerStackTokens}
+        >
           <div className={largeAvatarContainerStyle(selectedAvatar)}>
-            <div className={largeAvatarStyle}>{selectedAvatar}</div>
+            <div aria-label={`${selectedAvatar} avatar`} className={largeAvatarStyle}>
+              {selectedAvatar}
+            </div>
           </div>
-          <Text className={namePreviewStyle(name !== '')}>{name !== '' ? name : 'Name'}</Text>
+          <Text className={namePreviewStyle(name !== '')}>{name !== '' ? name : NAME_DEFAULT}</Text>
         </Stack>
         <Stack className={rightInputContainerStyle} tokens={rightInputContainerStackTokens}>
-          <Text className={labelFontStyle}>Avatar</Text>
+          <Text id={'avatar-list-label'} className={labelFontStyle}>
+            {AVATAR_LABEL}
+          </Text>
           <FocusZone direction={FocusZoneDirection.horizontal}>
-            <Stack role="list" horizontal className={avatarListContainerStyle} tokens={avatarListContainerStackTokens}>
+            <Stack
+              horizontal
+              className={avatarListContainerStyle}
+              tokens={avatarListContainerStackTokens}
+              role="list"
+              aria-labelledby={'avatar-list-label'}
+            >
               {avatarsList.map((avatar, index) => (
                 <div
                   role="listitem"
                   id={avatar}
                   key={index}
-                  tabIndex={0}
                   data-is-focusable={true}
                   className={smallAvatarContainerClassName(avatar)}
                   onClick={() => onAvatarChange(avatar)}
@@ -197,7 +219,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
             disabled={disableJoinChatButton}
             className={buttonStyle}
             styles={buttonWithIconStyles}
-            text={'Join chat'}
+            text={JOIN_BTN_TEXT}
             onClick={validateName}
             onRenderIcon={() => <Chat20Filled className={chatIconStyle} />}
           />
@@ -209,7 +231,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   const displayInvalidThreadError = (): JSX.Element => {
     return (
       <div>
-        <p>Thread Id is not valid, please revisit home page to create a new thread</p>
+        <p>{ERROR_TEXT_THREAD_INVALID}</p>
       </div>
     );
   };
@@ -223,13 +245,13 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   };
 
   if (configurationScreenState === CONFIGURATIONSCREEN_SHOWING_SPINNER_LOADING) {
-    return displaySpinner(loadingSpinnerLabel);
+    return displaySpinner(LOADING_SPINNER_LABEL);
   } else if (configurationScreenState === CONFIGURATIONSCREEN_SHOWING_JOIN_CHAT) {
     return displayWithStack(displayJoinChatArea());
   } else if (configurationScreenState === CONFIGURATIONSCREEN_SHOWING_INVALID_THREAD) {
     return displayWithStack(displayInvalidThreadError());
   } else if (configurationScreenState === CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT) {
-    return displaySpinner(initializeChatSpinnerLabel);
+    return displaySpinner(INITIALIZE_CHAT_SPINNER_LABEL);
   } else {
     throw new Error('configuration screen state ' + configurationScreenState.toString() + ' is invalid');
   }
