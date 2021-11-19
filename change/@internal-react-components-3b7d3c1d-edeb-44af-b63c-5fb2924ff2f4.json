@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix text in system messages in the MessageThread to wrap when it is too long.",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
