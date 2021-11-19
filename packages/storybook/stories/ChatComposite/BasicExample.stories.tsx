@@ -10,8 +10,12 @@ import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUt
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer } from './snippets/Container.snippet';
-import { ChatCompositeSetupProps, createThreadAndAddUser } from './snippets/Utils';
-import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
+import {
+  ChatCompositeSetupProps,
+  ConfigHintBanner,
+  addParrotBotToThread,
+  createThreadAndAddUser
+} from './snippets/Utils';
 
 const messageArray = [
   'Hello ACS!',
