@@ -144,7 +144,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     new ResizeObserver((entries): void => {
       const { width, height } = entries[0].contentRect;
       const minSize = Math.min(width, height, personaMaxSize);
-      setPersonaSize(minSize / 2);
+      setPersonaSize(minSize / 3);
     })
   );
 
