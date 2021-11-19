@@ -29,9 +29,6 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @internal
-export const _formatSpanElements: (str: string, vars: _IObjectMap<JSX.Element>) => JSX.Element[];
-
-// @internal
 export const _formatString: (str: string, vars: _IObjectMap<string>) => string;
 
 // @public

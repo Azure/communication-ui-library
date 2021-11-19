@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Message Status Indicator Message Status Indicator 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -30,7 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
       >
         <i
           aria-hidden={true}
-          className="root-37 css-66 root-3"
+          className="root-37 css-65 root-3"
           data-icon-name="MessageDelivered"
         >
           <span
