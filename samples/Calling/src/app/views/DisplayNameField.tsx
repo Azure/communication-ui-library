@@ -15,10 +15,10 @@ interface DisplayNameFieldProps {
   validateName?(): void;
 }
 
-const textFieldLabel = 'Display name';
-const textFieldId = 'displayName';
-const textFieldPlaceholder = 'Enter a name';
-const emptyFieldErrorMsg = 'Name cannot be empty';
+const TEXTFIELD_LABEL = 'Display name';
+const TEXTFIELD_ID = 'displayName';
+const TEXTFIELD_PLACEHOLDER = 'Enter a name';
+const TEXTFIELD_EMPTY_ERROR_MSG = 'Name cannot be empty';
 
 export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
   const { setName, setEmptyWarning, isEmpty, defaultName, validateName } = props;
@@ -42,19 +42,19 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
       autoComplete="off"
       defaultValue={defaultName}
       inputClassName={inputBoxTextStyle}
-      label={textFieldLabel}
+      label={TEXTFIELD_LABEL}
       required={true}
       className={inputBoxStyle}
       onChange={onNameTextChange}
-      id={textFieldId}
-      placeholder={textFieldPlaceholder}
+      id={TEXTFIELD_ID}
+      placeholder={TEXTFIELD_PLACEHOLDER}
       onKeyDown={(ev) => {
         if (ev.which === ENTER_KEY) {
           validateName && validateName();
         }
       }}
       styles={TextFieldStyleProps}
-      errorMessage={isEmpty ? emptyFieldErrorMsg : undefined}
+      errorMessage={isEmpty ? TEXTFIELD_EMPTY_ERROR_MSG : undefined}
     />
   );
 };
