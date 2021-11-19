@@ -9,6 +9,19 @@ import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 
 /**
+ * Page click helper function - USE INSTEAD OF PAGE.CLICK
+ *
+ * This functions clicks the elements then moves the mouse away to prevent
+ * hover behavior appearing non-deterministically in snapshots.
+ * Examples of this are tooltips for control bar buttons would show, as well
+ * as buttons would show their onHover state.
+ */
+export const pageClick = async (page: Page, selector: string): Promise<void> => {
+  await pageClick(page, selector);
+  await page.mouse.move(-1, -1);
+};
+
+/**
  * Wait for the ChatComposite on a page to fully load.
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
@@ -48,7 +61,7 @@ export const waitForMeetingCompositeToLoad = async (page: Page): Promise<void> =
 export const loadCallPage = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
     await page.bringToFront();
-    await page.click(dataUiId('call-composite-start-call-button'));
+    await pageClick(page, dataUiId('call-composite-start-call-button'));
 
     // Wait for call page to load (i.e. wait for connecting screen to have passed)
     await page.waitForSelector(dataUiId('call-page'));
@@ -75,8 +88,8 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
   // Start local camera and start the call
   for (const page of pages) {
     await page.bringToFront();
-    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
-    await page.click(dataUiId('call-composite-start-call-button'));
+    await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
+    await pageClick(page, dataUiId('call-composite-start-call-button'));
 
     // Wait for call page to load (i.e. wait for connecting screen to have passed)
     await page.waitForSelector(dataUiId('call-page'));

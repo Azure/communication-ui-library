@@ -6,6 +6,7 @@ import {
   buildUrl,
   dataUiId,
   loadCallPageWithParticipantVideos,
+  pageClick,
   stubMessageTimestamps,
   waitForMeetingCompositeToLoad
 } from '../common/utils';
@@ -88,7 +89,7 @@ test.describe('Meeting Composite Meeting Page Tests', () => {
 
   test('People pane opens and displays correctly', async ({ pages }) => {
     const page = pages[1];
-    await page.click(dataUiId('meeting-composite-people-button'));
+    await pageClick(page, dataUiId('meeting-composite-people-button'));
     await page.waitForSelector(dataUiId('meeting-composite-people-pane'));
     expect(await page.screenshot()).toMatchSnapshot(`meeting-gallery-screen-with-people-pane.png`);
   });

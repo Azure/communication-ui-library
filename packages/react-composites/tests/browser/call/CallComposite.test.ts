@@ -1,6 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { buildUrl, dataUiId, loadCallPageWithParticipantVideos, waitForCallCompositeToLoad } from '../common/utils';
+import {
+  buildUrl,
+  dataUiId,
+  loadCallPageWithParticipantVideos,
+  pageClick,
+  waitForCallCompositeToLoad
+} from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
@@ -47,8 +53,8 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
 
   test('local device settings can toggle camera & audio', async ({ pages }) => {
     const page = pages[0];
-    await page.click(dataUiId('call-composite-local-device-settings-microphone-button'));
-    await page.click(dataUiId('call-composite-local-device-settings-camera-button'));
+    await pageClick(page, dataUiId('call-composite-local-device-settings-microphone-button'));
+    await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await page.waitForFunction(() => {
       const videoNode = document.querySelector('video');
       const videoLoaded = videoNode?.readyState === 4;
@@ -124,7 +130,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       const page = pages[idx];
       await page.bringToFront();
 
-      await page.click(dataUiId('call-composite-participants-button'));
+      await pageClick(page, dataUiId('call-composite-participants-button'));
       const buttonCallOut = await page.waitForSelector('.ms-Callout');
       // This will ensure no animation is happening for the callout
       await buttonCallOut.waitForElementState('stable');
@@ -137,7 +143,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     const page = pages[0];
 
     await page.bringToFront();
-    await page.click(dataUiId('call-composite-camera-button'));
+    await pageClick(page, dataUiId('call-composite-camera-button'));
     await page.waitForFunction(() => {
       return document.querySelectorAll('video').length === 1;
     });
@@ -167,7 +173,7 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
   test('Left call page should show when end call button clicked', async ({ pages }) => {
     const page = pages[0];
     await page.bringToFront();
-    await page.click(dataUiId('call-composite-hangup-button'));
+    await pageClick(page, dataUiId('call-composite-hangup-button'));
     await page.waitForSelector(dataUiId('left-call-page'));
     expect(await page.screenshot()).toMatchSnapshot(`left-call-page.png`);
   });
@@ -220,11 +226,11 @@ test.describe('Call composite participant menu items injection tests', () => {
     await page.bringToFront();
 
     // Open participants flyout.
-    await page.click(dataUiId('call-composite-participants-button'), { timeout: PER_STEP_TIMEOUT_MS });
+    await pageClick(page, dataUiId('call-composite-participants-button'), { timeout: PER_STEP_TIMEOUT_MS });
     // Open participant list flyout
-    await page.click(dataUiId(IDS.participantButtonPeopleMenuItem), { timeout: PER_STEP_TIMEOUT_MS });
+    await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem), { timeout: PER_STEP_TIMEOUT_MS });
     // There shouldbe at least one participant. Just click on the first.
-    await page.click(dataUiId(IDS.participantItemMenuButton) + ' >> nth=0', {
+    await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0', {
       timeout: PER_STEP_TIMEOUT_MS
     });
 
@@ -241,7 +247,7 @@ test.describe('Call composite participant menu items injection tests', () => {
 const turnOffAllVideos = async (pages: Page[], timeout?: number): Promise<void> => {
   const options = timeout ? { timeout } : undefined;
   for (const page of pages) {
-    await page.click(dataUiId('call-composite-camera-button'), options);
+    await pageClick(page, dataUiId('call-composite-camera-button'), options);
   }
   for (const page of pages) {
     await page.bringToFront();
