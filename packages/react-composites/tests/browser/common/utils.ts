@@ -19,7 +19,7 @@ export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.click(selector);
 
-  // Move the mouse of the screen
+  // Move the mouse off the screen
   await page.mouse.move(-1, -1);
 };
 
