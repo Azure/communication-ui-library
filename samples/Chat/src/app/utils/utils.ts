@@ -26,11 +26,11 @@ export const getBackgroundColor = (avatar: string): { backgroundColor: string } 
       };
     case MOUSE:
       return {
-        backgroundColor: 'rgb(33, 131, 196)'
+        backgroundColor: 'rgb(232, 242, 249)'
       };
     case KOALA:
       return {
-        backgroundColor: 'rgb(197, 179, 173)'
+        backgroundColor: 'rgb(237, 232, 230)'
       };
     case OCTOPUS:
       return {
