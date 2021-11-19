@@ -68,6 +68,7 @@ module.exports = {
   root: true,
   settings: {
     react: {
+      'mdx/code-blocks': true,
       version: 'detect'
     }
   },
@@ -93,6 +94,14 @@ module.exports = {
       rules: {
         'react/prop-types': 'off',
         'react/jsx-key': 'off'
+      }
+    },
+    {
+      files: '*.mdx',
+      parser: 'eslint-mdx',
+      extends: 'plugin:mdx/recommended',
+      rules: {
+        'header/header': 'off'
       }
     }
   ]
