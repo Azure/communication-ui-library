@@ -3,14 +3,30 @@
 
 import React from 'react';
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
+import { MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART } from '../../constants';
 
 export const ConfigHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide an access token, userId and display name to use.';
+  const emptyConfigTips = (
+    <p>
+      Please provide an{' '}
+      <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
+        access token
+      </a>
+      , userId and display name to use.
+    </p>
+  );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
 
 export const ConfigJoinCallHintBanner = (): JSX.Element => {
-  const emptyConfigTips =
-    'Please provide an access token, userId, display name, and a group call Id (or a teams meeting link).';
+  const emptyConfigTips = (
+    <p>
+      Please provide an{' '}
+      <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
+        access token
+      </a>
+      , userId, display name, and a group call Id (or a teams meeting link).
+    </p>
+  );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };

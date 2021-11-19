@@ -6,10 +6,10 @@ import React from 'react';
 export const COMPOSITE_STRING_CONNECTIONSTRING = 'Connection String';
 export const COMPOSITE_STRING_REQUIREDCONNECTIONSTRING = 'Connection String is required to run the {0} widget.';
 
-export const CompositeConnectionParamsErrMessage = (errors: string[]): JSX.Element => (
+export const CompositeConnectionParamsErrMessage = (errors: JSX.Element[]): JSX.Element => (
   <>
-    {errors.map((error) => {
-      return error ? <span key={error}>{error}</span> : null;
+    {errors.map((error, idx) => {
+      return error ? <span key={idx}>{error}</span> : null;
     })}
   </>
 );

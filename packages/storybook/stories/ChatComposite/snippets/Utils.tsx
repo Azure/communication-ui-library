@@ -6,6 +6,7 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import React from 'react';
 
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
+import { MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART } from '../../constants';
 
 // Adds a bot to the thread that sends out provided canned messages one by one.
 export const addParrotBotToThread = async (
@@ -49,13 +50,28 @@ const sendMessagesAsBot = async (
 };
 
 export const ConfigHintBanner = (): JSX.Element => {
-  const emptyConfigTips =
-    'Please provide an access token, userId for each participant, endpointUrl and display name to use.';
+  const emptyConfigTips = (
+    <p>
+      Please provide an{' '}
+      <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
+        access token
+      </a>
+      , userId for each participant, endpointUrl and display name to use.
+    </p>
+  );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
 
 export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
-  const emptyConfigTips = 'Please provide an access token, userId, thread id, endpoint url, and display name to use.';
+  const emptyConfigTips = (
+    <p>
+      Please provide an{' '}
+      <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
+        access token
+      </a>
+      , userId, thread id, endpoint url, and display name to use.
+    </p>
+  );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
 

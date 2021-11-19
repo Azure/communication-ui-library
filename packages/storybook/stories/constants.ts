@@ -53,3 +53,6 @@ export const CONCEPTS_FOLDER_PREFIX = 'Concepts';
 export const STATEFUL_CLIENT_PREFIX = 'Stateful Client';
 
 export const MICROSOFT_AZURE_PREVIEWS_URL = 'https://azure.microsoft.com/support/legal/preview-supplemental-terms/';
+
+export const MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART =
+  'https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity';
