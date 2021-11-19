@@ -309,12 +309,12 @@ const formatInlineElements = (str: string, vars: _IObjectMap<JSX.Element>): JSX.
   let prev = 0;
   while (array !== null) {
     if (prev !== array.index) {
-      elements.push(<Text>{str.substring(prev, array.index)}</Text>);
+      elements.push(<Text key={elements.length}>{str.substring(prev, array.index)}</Text>);
     }
-    elements.push(<Text>{vars[array[0].substring(1, array[0].length - 1)]}</Text>);
+    elements.push(<Text key={elements.length}>{vars[array[0].substring(1, array[0].length - 1)]}</Text>);
     prev = regex.lastIndex;
     array = regex.exec(str);
   }
-  elements.push(<Text>{str.substring(prev)}</Text>);
+  elements.push(<Text key={elements.length}>{str.substring(prev)}</Text>);
   return elements;
 };
