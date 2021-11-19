@@ -136,7 +136,7 @@ const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
  * @param typingUsers typing users
  * @param delimiter string to separate typing users
  * @param onRenderUser optional callback to render each typing user
- * @param displayNamestyles optional additional IStyle to apply to each element containing users name
+ * @param userDisplayNameStyles optional additional IStyle to apply to each element containing users name
  * @returns element wrapping all typing users
  */
 const getUsersElement = (
