@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update meeting composite to be marked @beta instead of @alpha",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

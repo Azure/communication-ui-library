@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Translate several UFDs to ErrorBar notifications",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

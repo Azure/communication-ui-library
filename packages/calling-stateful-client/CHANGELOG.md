@@ -1,8 +1,23 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.8)
+
+Wed, 17 Nov 2021 22:21:27 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.0-beta.7..@internal/calling-stateful-client_v1.0.0-beta.8)
+
+### Changes
+
+- Bump headless calling SDK to 1.3.1-beta.1 ([PR #1056](https://github.com/azure/communication-ui-library/pull/1056) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
+- Remove call transfer feature ([PR #1105](https://github.com/azure/communication-ui-library/pull/1105) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add diagnostics hint and expose diagnostics API ([PR #1067](https://github.com/azure/communication-ui-library/pull/1067) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Fix manual conversions of userID ([PR #1038](https://github.com/azure/communication-ui-library/pull/1038) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Mark StatefulCallClient `diagnostics` property as public and `transfer` property as beta ([PR #1072](https://github.com/azure/communication-ui-library/pull/1072) by 2684369+JamesBurnside@users.noreply.github.com)
+- Generalize state.userId type ([PR #1039](https://github.com/azure/communication-ui-library/pull/1039) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.7)
 

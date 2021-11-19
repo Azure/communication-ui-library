@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix 'New Messages' not clearing when the user scrolls to the bottom of the message thread'",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

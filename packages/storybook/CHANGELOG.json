@@ -2,6 +2,244 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/storybook_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix for preventing video resize when isSpeaking indicator appears",
+            "author": "anjulgarg@live.com",
+            "commit": "0bd0362cb140de8db6f04648c93147ca727c663f",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated storyshots",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5ce7c0263f67f8537e50e4d81db4f34504df9fb7",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "VideoGallery docs update.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "581d4a972110b81c05b424c1b78bca0a56198490",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update OptionsButton to DevicesButton",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "82d840c4537580b2fba4561b73a0990d105c1142",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update participant datatype in stories",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48c62fcdd5d112821d158000f171055632e1ee9",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Remove layouts from storybook",
+            "author": "anjulgarg@live.com",
+            "commit": "6b5a9cd25ddbed7fa910d57649e72144c2887524",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Improve message thread example",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "ebf63d15dd1b5d1998ad3a874a3b788e735af5fb",
+            "package": "@internal/storybook"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "16fe225f16ee162770ee87856428f9b5e3505b2f",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updated storybook snapshots",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "7064ed0e277acf4841455148e7683388aa2cfb29",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Fix manual conversions of userId",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "81e2d46cedeb9aa982315deecf4cf4603167cb8a",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updated custom styles documentation for VideoGallery.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "0c69e161cfd05a310e13c127bdbf13a21b9d6969",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "d45b28d6447d99daac6978d82c7f9f0e4b586758",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated storybook snapshot",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "9b94452f586a52a7312c84c2ca6882440b3362ff",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bump headless calling SDK to 1.3.1-beta.1",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a0790e82c1b27c4e5daa31d5134e6a3930789131",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Fix remote video border not flush with isSpeaking indicator",
+            "author": "anjulgarg@live.com",
+            "commit": "3f35ecd254418b3313fc483154fbe549f10aa917",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updating snippets to set width and height on parent containers of composites",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "e04a6a1e7ca30a7d0e88ce5d01a10bb926f92a49",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Cleanup component descriptions",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "f177ff70121650fad4ecb700eba57a30506529a6",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updated storybook snapshots.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a7f168f979666929178ce3ec415551e8f46569ab",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add new error types to ErrorBar story",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "c748caf9977b71ec0a33ff5a995f315a85e4d2c5",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updating storybook to not use resource connection strings",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "efe1859a71b31a5bbaf3f0bc08a2f618ec341670",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update according to azure review",
+            "author": "jinan@microsoft.com",
+            "commit": "6708f87c37794a4411c7a1eb2586fa996aeb7757",
+            "package": "@internal/storybook"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix typo and remove duplicate fields in story page",
+            "author": "jinan@microsoft.com",
+            "commit": "a1b6b9c430a036d52576c3dd10301b294585b24d",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated snapshots",
+            "author": "alcail@microsoft.com",
+            "commit": "81a8ae1c792d3ae85cb1a840bfaf78578a9f6647",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "fix a spelling typo",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6b65a6b512f8e1e27b6c02deddde1c21f7a650ff",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "add mobileView docs",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6044495b70fcf91cafec25efef8bf026538aa3ff",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update mobileView description text",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0bc1ccf3fb23a08ab0bfc14d1cd9c7552cad362b",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update stories inline with change",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "1bf4dcdb671f057891effb9d606dded849758b56",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated Storybook snapshots",
+            "author": "alcail@microsoft.com",
+            "commit": "2eef97209273eaa1bceb0b0e6840b97b8165b758",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update docs to reflect prop change",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "16a0e2ceed0af565bc18785d264602946ba22acf",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "rename baseCustomStylesProps to baseCustomStyles",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "533b227ac6719ff4fb074a9f5023735cd1dabe4e",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3f5406a7b34fd00d7f081ef5742309bad06c766a",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "added doc on Call and Chat composites min w/h",
+            "author": "alcail@microsoft.com",
+            "commit": "4b8abf00612176449ce671518b9d47cc69291c19",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated Sendbox custom styles",
+            "author": "alcail@microsoft.com",
+            "commit": "e3dcf801af52f82213fa700d67ad7ce00147a972",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e9715754144e082f1eae221ef734d253ec739e0e",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update to Storybook ToC to improve information architecture ",
+            "author": "dademath@microsoft.com",
+            "commit": "ccdefffe2803ebe8e157f16a0d30885c8ad89c24",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Display participant pan in storybook by default",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "8f0b689c6a655974cf2d9406763cd49b5313a1a5",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update documentation to reflect rename",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "9f6c14108592ccbe3bde936d8fcb19fe965663ce",
+            "package": "@internal/storybook"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:40:46 GMT",
       "tag": "@internal/storybook_v1.0.0-beta.7",
       "version": "1.0.0-beta.7",
