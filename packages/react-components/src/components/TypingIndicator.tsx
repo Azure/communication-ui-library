@@ -1,15 +1,53 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _formatSpanElements } from '@internal/acs-ui-common';
+// import { _formatInlineElements } from '@internal/acs-ui-common';
 
 import { typingIndicatorContainerStyle, typingIndicatorStringStyle } from './styles/TypingIndicator.styles';
 
 import React from 'react';
 import { BaseCustomStyles, CommunicationParticipant } from '../types';
-import { IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import { useLocale } from '../localization/LocalizationProvider';
 import { useIdentifiers } from '../identifiers';
+import { _IObjectMap } from '@internal/acs-ui-common';
+
+/**
+ * @internal
+ *
+ * Create an array of span elements by replacing the pattern "\{\}" in str with the elements
+ * passed in as vars and creating inline elements from the rest
+ *
+ * @param str - The string to be formatted
+ * @param vars - Variables to use to format the string
+ * @returns formatted JSX elements
+ */
+export const _formatInlineElements = (str: string, vars: _IObjectMap<JSX.Element>): JSX.Element[] => {
+  if (!str) {
+    return [];
+  }
+  if (!vars) {
+    return [];
+  }
+
+  const elements: JSX.Element[] = [];
+
+  // regex to search for the pattern "{}"
+  const placeholdersRegex = /{(\w+)}/g;
+  const regex = RegExp(placeholdersRegex);
+  let array: RegExpExecArray | null = regex.exec(str);
+  let prev = 0;
+  while (array !== null) {
+    if (prev !== array.index) {
+      elements.push(<Text>{str.substring(prev, array.index)}</Text>);
+    }
+    elements.push(<Text>{vars[array[0].substring(1, array[0].length - 1)]}</Text>);
+    prev = regex.lastIndex;
+    array = regex.exec(str);
+  }
+  elements.push(<Text>{str.substring(prev)}</Text>);
+  return elements;
+};
 
 /**
  * Fluent styles for {@link TypingIndicator}.
@@ -137,27 +175,31 @@ const MAXIMUM_LENGTH_OF_TYPING_USERS = 35;
  * @param typingUsers typing users
  * @param delimiter string to separate typing users
  * @param onRenderUser optional callback to render each typing user
- * @param styles optional additional IStyle to apply to element containing all users
+ * @param displayNamestyles optional additional IStyle to apply to each element containing users name
  * @returns element wrapping all typing users
  */
 const getUsersElement = (
   typingUsers: CommunicationParticipant[],
   delimiter: string,
   onRenderUser?: (users: CommunicationParticipant) => JSX.Element,
-  styles?: IStyle
+  userDisplayNameStyles?: IStyle
 ): JSX.Element => {
   const userElements: JSX.Element[] = [];
   typingUsers.forEach((user, index) => {
-    userElements.push(onRenderUser ? onRenderUser(user) : <span key={`user-${index}`}>{user.displayName}</span>);
-    userElements.push(<span key={`comma-${index}`}>{`${delimiter}`}</span>);
+    userElements.push(
+      onRenderUser ? (
+        onRenderUser(user)
+      ) : (
+        <Text className={mergeStyles(userDisplayNameStyles)} key={`user-${index}`}>
+          {user.displayName}
+        </Text>
+      )
+    );
+    userElements.push(<Text key={`comma-${index}`}>{`${delimiter}`}</Text>);
   });
   // pop last comma
   userElements.pop();
-  return (
-    <Stack horizontal className={mergeStyles(typingIndicatorStringStyle, styles)}>
-      {userElements}
-    </Stack>
-  );
+  return <>{userElements}</>;
 };
 
 /**
@@ -199,7 +241,7 @@ const getSpanElements = (
     };
   }
 
-  return _formatSpanElements(typingString, variables);
+  return _formatInlineElements(typingString, variables);
 };
 
 const IndicatorComponent = (
@@ -250,14 +292,13 @@ const IndicatorComponent = (
   );
 
   return (
-    <Stack
-      horizontal
+    <div
       data-ui-id={ids.typingIndicator}
       className={mergeStyles(typingIndicatorStringStyle, styles?.typingString)}
       key="typingStringKey"
     >
       {spanElements}
-    </Stack>
+    </div>
   );
 };
 
