@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "added link to quickstart to get identities/tokens",
+  "packageName": "@internal/storybook",
+  "email": "dademath@microsoft.com",
+  "dependentChangeType": "none"
+}
