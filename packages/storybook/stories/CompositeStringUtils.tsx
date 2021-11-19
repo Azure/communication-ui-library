@@ -13,3 +13,13 @@ export const CompositeConnectionParamsErrMessage = (errors: string[]): JSX.Eleme
     })}
   </>
 );
+
+export const CreateIdentityLink = (): JSX.Element => {
+  const identityLink =
+    'https://docs.microsoft.com/azure/communication-services/quickstarts/identity/quick-create-identity';
+  return (
+    <>
+      <a href={identityLink}>Refer to our documentation for generating test identities and tokens.</a>
+    </>
+  );
+};

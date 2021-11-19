@@ -5,7 +5,7 @@ import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import React from 'react';
 
-import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
+import { CompositeConnectionParamsErrMessage, CreateIdentityLink } from '../../CompositeStringUtils';
 
 // Adds a bot to the thread that sends out provided canned messages one by one.
 export const addParrotBotToThread = async (
@@ -51,12 +51,22 @@ const sendMessagesAsBot = async (
 export const ConfigHintBanner = (): JSX.Element => {
   const emptyConfigTips =
     'Please provide an access token, userId for each participant, endpointUrl and display name to use.';
-  return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
+  return (
+    <>
+      {CompositeConnectionParamsErrMessage([emptyConfigTips])}
+      {CreateIdentityLink()}
+    </>
+  );
 };
 
 export const ConfigJoinChatThreadHintBanner = (): JSX.Element => {
   const emptyConfigTips = 'Please provide an access token, userId, thread id, endpoint url, and display name to use.';
-  return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
+  return (
+    <>
+      {CompositeConnectionParamsErrMessage([emptyConfigTips])}
+      {CreateIdentityLink()}
+    </>
+  );
 };
 
 export type ChatCompositeSetupProps = {
