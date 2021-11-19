@@ -164,6 +164,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const containerId = useRef(`video-gallery-${uuidv4()}`);
   const containerWidth = useContainerWidth(containerRef);
   const isNarrow = isNarrowWidth(containerWidth);
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
@@ -302,14 +303,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     />
   );
 
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.id = `video-gallery-${uuidv4()}`;
-    }
-  }, [containerRef]);
-
   return (
     <div
+      id={containerId.current}
       data-ui-id={ids.videoGallery}
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
@@ -320,7 +316,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isModeless={true}
           dragOptions={DRAG_OPTIONS}
           styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-          layerProps={{ hostId: containerRef.current?.id }}
+          layerProps={{ hostId: containerId.current }}
         >
           {localParticipant && localVideoTile}
         </Modal>
