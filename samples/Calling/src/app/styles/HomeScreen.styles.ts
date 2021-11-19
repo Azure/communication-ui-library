@@ -35,6 +35,9 @@ export const configContainerStackTokens: IStackTokens = {
 export const callContainerStackTokens: IStackTokens = {
   childrenGap: '0.75rem'
 };
+export const callOptionsGroupStyles = {
+  label: { padding: 0 }
+};
 export const headerStyle = mergeStyles({
   fontWeight: 600,
   fontSize: '1.25rem', // 20px
