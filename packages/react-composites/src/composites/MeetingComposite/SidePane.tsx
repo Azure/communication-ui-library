@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useMemo } from 'react';
-import { ChatComposite, ChatAdapter } from '../ChatComposite';
+import { ChatComposite, ChatAdapter, ChatCompositeProps } from '../ChatComposite';
 import { CommandBarButton, DefaultButton, PartialTheme, Theme, Stack, concatStyleSets } from '@fluentui/react';
 import {
   sidePaneContainerHiddenStyles,
@@ -123,6 +123,7 @@ export const EmbeddedPeoplePane = (props: {
  * @private
  */
 export const EmbeddedChatPane = (props: {
+  chatCompositeProps: Partial<ChatCompositeProps>;
   chatAdapter: ChatAdapter;
   fluentTheme?: PartialTheme | Theme;
   hidden: boolean;
@@ -136,6 +137,7 @@ export const EmbeddedChatPane = (props: {
       dataUiId={'meeting-composite-chat-pane'}
     >
       <ChatComposite
+        {...props.chatCompositeProps}
         adapter={props.chatAdapter}
         fluentTheme={props.fluentTheme}
         options={{ participantPane: false, topic: false }}

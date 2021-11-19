@@ -1419,12 +1419,13 @@ export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @beta
-export type MeetingCompositeProps = {
-    meetingAdapter: MeetingAdapter;
+export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
     fluentTheme?: PartialTheme | Theme;
     formFactor?: 'desktop' | 'mobile';
+    // (undocumented)
+    meetingAdapter: MeetingAdapter;
     meetingInvitationURL?: string;
-};
+}
 
 // @beta
 export type MeetingEndReason = CallEndReason;
