@@ -28,7 +28,7 @@ const BasicStory = (args, context): JSX.Element => {
       return containerProps;
     }
     return undefined;
-  }, [args.userId, args.token, args.displayName]);
+  }, [args.userId, args.token]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>

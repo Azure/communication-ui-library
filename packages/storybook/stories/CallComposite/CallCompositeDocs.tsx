@@ -3,7 +3,7 @@
 
 import { CallComposite } from '@azure/communication-react';
 import { MessageBar } from '@fluentui/react';
-import { Description, Heading, Props, Source, Title, Canvas } from '@storybook/addon-docs';
+import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
