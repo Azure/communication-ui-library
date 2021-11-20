@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import { VideoTile } from './VideoTile';
@@ -39,27 +39,12 @@ export const RemoteVideoTile = React.memo(
       showMuteIndicator
     } = props;
 
-    useEffect(() => {
-      if (isAvailable && !renderElement) {
-        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
-      }
-      if (!isAvailable) {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      }
-    }, [
-      isAvailable,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
-      remoteVideoViewOption,
-      renderElement,
-      userId
-    ]);
-
-    useEffect(() => {
-      return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      };
-    }, [onDisposeRemoteStreamView, userId]);
+    if (isAvailable && !renderElement) {
+      onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
+    }
+    if (!isAvailable) {
+      onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
+    }
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
