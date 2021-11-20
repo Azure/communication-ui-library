@@ -24,7 +24,19 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Theme Exam
         className="ms-Stack css-1"
       >
         <span>
-          Please provide an access token, userId for each participant, endpointUrl and display name to use.
+          <p>
+            Please provide an
+             
+            <a
+              href="https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity"
+              rel="noreferrer"
+              target="_blank"
+            >
+              access token, userId
+            </a>
+             
+            for each participant, endpointUrl and display name to use.
+          </p>
         </span>
       </div>
     </div>
