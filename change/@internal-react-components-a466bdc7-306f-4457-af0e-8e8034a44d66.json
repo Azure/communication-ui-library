@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed rerendering of remote screenshare when screensharer goes out of view in HorizontalGallery.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
