@@ -16,13 +16,15 @@ import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
+import { BaseCompositeProps } from '../common/BaseComposite';
+import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 
 /**
  * Props required for the {@link MeetingComposite}
  *
  * @beta
  */
-export type MeetingCompositeProps = {
+export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
   meetingAdapter: MeetingAdapter;
   /**
    * Fluent theme for the composite.
@@ -41,7 +43,7 @@ export type MeetingCompositeProps = {
    * URL that can be used to copy a meeting invite to the Users clipboard.
    */
   meetingInvitationURL?: string;
-};
+}
 
 /**
  * Meeting Composite brings together key components to provide a full meeting experience out of the box.
@@ -86,11 +88,12 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentMeetingState ?? 'None'));
   return (
-    <FluentThemeProvider fluentTheme={props.fluentTheme}>
+    <FluentThemeProvider fluentTheme={fluentTheme}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles}>
         <Stack horizontal grow>
           <Stack.Item grow>
             <CallComposite
+              {...props}
               formFactor={formFactor}
               options={{ callControls: false }}
               adapter={callAdapter}
@@ -99,9 +102,10 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
           </Stack.Item>
           {chatAdapter && hasJoinedCall && (
             <EmbeddedChatPane
+              chatCompositeProps={props}
               hidden={!showChat}
               chatAdapter={chatAdapter}
-              fluentTheme={props.fluentTheme}
+              fluentTheme={fluentTheme}
               onClose={closePane}
             />
           )}

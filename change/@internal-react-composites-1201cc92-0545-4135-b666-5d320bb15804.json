@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable icons and locales in Meeting Composite",
+  "packageName": "@internal/react-composites",
+  "email": "allenhwang@microsoft.com",
+  "dependentChangeType": "patch"
+}
