@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "removed ScreenSahreLayout story and added screen sharing option control to VideoGallery story",
+  "packageName": "@internal/storybook",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}

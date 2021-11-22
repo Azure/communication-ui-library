@@ -1,8 +1,24 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.8)
+
+Wed, 17 Nov 2021 22:21:27 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.0.0-beta.7..@internal/calling-component-bindings_v1.0.0-beta.8)
+
+### Changes
+
+- Disallow removing Teams participants from call ([PR #1035](https://github.com/azure/communication-ui-library/pull/1035) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add an internal util function for checking if a call is in lobby ([PR #1091](https://github.com/azure/communication-ui-library/pull/1091) by anjulgarg@live.com)
+- Update according to azure review ([PR #998](https://github.com/azure/communication-ui-library/pull/998) by jinan@microsoft.com)
+- Translate several UFDs to ErrorBar notifications ([PR #1008](https://github.com/azure/communication-ui-library/pull/1008) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bump headless calling SDK to 1.3.1-beta.1 ([PR #1056](https://github.com/azure/communication-ui-library/pull/1056) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add ErrorBar messages when missing device permissions ([PR #1031](https://github.com/azure/communication-ui-library/pull/1031) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Update OptionsButton to DevicesButton ([PR #1084](https://github.com/azure/communication-ui-library/pull/1084) by 2684369+JamesBurnside@users.noreply.github.com)
+- Drop error bar for networkReconnect condition ([PR #997](https://github.com/azure/communication-ui-library/pull/997) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.7)
 

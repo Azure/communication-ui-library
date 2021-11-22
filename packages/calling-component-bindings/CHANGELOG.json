@@ -2,6 +2,71 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disallow removing Teams participants from call",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e48c62fcdd5d112821d158000f171055632e1ee9",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add an internal util function for checking if a call is in lobby",
+            "author": "anjulgarg@live.com",
+            "commit": "836862e592bb443ce8632187014fa63519aa1c65",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update according to azure review",
+            "author": "jinan@microsoft.com",
+            "commit": "6708f87c37794a4411c7a1eb2586fa996aeb7757",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Translate several UFDs to ErrorBar notifications",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "c748caf9977b71ec0a33ff5a995f315a85e4d2c5",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump headless calling SDK to 1.3.1-beta.1",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a0790e82c1b27c4e5daa31d5134e6a3930789131",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Add ErrorBar messages when missing device permissions",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "70d11a4c599f636222166ded8381f51b1b3f3559",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Update OptionsButton to DevicesButton",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "82d840c4537580b2fba4561b73a0990d105c1142",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Drop error bar for networkReconnect condition",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "0b49b86aae31dce6d7718080228899f7818e0fa0",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:40:46 GMT",
       "tag": "@internal/calling-component-bindings_v1.0.0-beta.7",
       "version": "1.0.0-beta.7",

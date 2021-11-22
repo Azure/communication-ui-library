@@ -254,27 +254,11 @@ export const controlsToAdd = {
     name: 'Remote participants (comma separated)'
   },
   remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
-  screenShareLayoutWidth: {
-    control: {
-      type: 'range',
-      min: mediaGalleryWidthOptions.min,
-      max: mediaGalleryWidthOptions.max,
-      step: mediaGalleryWidthOptions.step
-    },
-    defaultValue: 850,
-    name: 'Width (px)'
-  },
-  screenShareSidePanelTileAspectRatio: {
+  screenShareExperience: {
     control: 'select',
-    options: ['16:9', '3:2', '4:3', '5:9', '1:1'],
-    defaultValue: '16:9',
-    name: 'Side Panel Tile Aspect Ratio (Width:Height)'
-  },
-  screenShareSidePanelWidthRatio: {
-    control: 'select',
-    options: ['30%', '35%', '40%', '45%', '50%'],
-    defaultValue: '30%',
-    name: 'Side Panel Width Ratio'
+    options: ['none', 'presenter', 'viewer'],
+    defaultValue: 'none',
+    name: 'Screen sharing experience'
   },
   sendBoxWarningMessage: {
     control: 'text',

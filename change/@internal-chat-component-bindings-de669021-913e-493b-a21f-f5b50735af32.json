@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update according to azure review",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

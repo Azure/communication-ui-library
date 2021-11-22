@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add NoticePage for failure to join due to network issue",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
