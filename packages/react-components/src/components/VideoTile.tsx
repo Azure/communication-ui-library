@@ -87,8 +87,10 @@ export interface VideoTileProps {
   isSpeaking?: boolean;
 }
 
-// Coin max size is set to 100px (PersonaSize.size100)
-const personaMaxSize = 200;
+// Coin max size is set to PersonaSize.size100
+const PERSONA_MAX_SIZE = 100;
+// Coin min size is set PersonaSize.size32
+const PERSONA_MIN_SIZE = 32;
 
 const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   const { text, noVideoAvailableAriaLabel, coinSize, styles, hidePersonaDetails } = props;
@@ -143,8 +145,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const observer = useRef(
     new ResizeObserver((entries): void => {
       const { width, height } = entries[0].contentRect;
-      const minSize = Math.min(width, height, personaMaxSize);
-      setPersonaSize(minSize / 2);
+      const personaSize = Math.min(width, height) / 3;
+      setPersonaSize(Math.max(Math.min(personaSize, PERSONA_MAX_SIZE), PERSONA_MIN_SIZE));
     })
   );
 
