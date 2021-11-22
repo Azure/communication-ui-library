@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layout 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -29,13 +29,13 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
         }
       >
         <div
-          className="css-56"
+          className="css-55"
         >
           <div
-            className="css-57 css-2"
+            className="css-56 css-2"
           >
             <div
-              className="css-57 css-1"
+              className="css-56 css-1"
             >
               <div
                 className="ms-Stack css-9"
@@ -94,10 +94,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-82 css-28"
+                  className="ms-Stack css-81 css-28"
                 >
                   <div
-                    className="ms-Stack css-83 css-29"
+                    className="ms-Stack css-82 css-29"
                   >
                     <span
                       className="css-30"
@@ -165,10 +165,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-82 css-28"
+                  className="ms-Stack css-81 css-28"
                 >
                   <div
-                    className="ms-Stack css-83 css-29"
+                    className="ms-Stack css-82 css-29"
                   >
                     <span
                       className="css-30"
@@ -236,10 +236,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-82 css-28"
+                  className="ms-Stack css-81 css-28"
                 >
                   <div
-                    className="ms-Stack css-83 css-29"
+                    className="ms-Stack css-82 css-29"
                   >
                     <span
                       className="css-30"
@@ -307,10 +307,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                   </div>
                 </div>
                 <div
-                  className="ms-Stack css-82 css-28"
+                  className="ms-Stack css-81 css-28"
                 >
                   <div
-                    className="ms-Stack css-83 css-29"
+                    className="ms-Stack css-82 css-29"
                   >
                     <span
                       className="css-30"
