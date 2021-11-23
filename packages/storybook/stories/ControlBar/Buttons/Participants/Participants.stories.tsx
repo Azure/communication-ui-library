@@ -176,7 +176,13 @@ export default {
     onRenderParticipantList: hiddenControl,
     styles: hiddenControl,
     onMuteAll: hiddenControl,
-    strings: hiddenControl
+    strings: hiddenControl,
+    myUserId: hiddenControl,
+    excludeMe: hiddenControl,
+    onRenderParticipant: hiddenControl,
+    onRenderAvatar: hiddenControl,
+    onRemoveParticipant: hiddenControl,
+    onFetchParticipantMenuItems: hiddenControl
   },
   parameters: {
     docs: {
