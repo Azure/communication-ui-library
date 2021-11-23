@@ -7,13 +7,16 @@ import { MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART } from '../constants';
 
 export const ConfigHintBanner = (): JSX.Element => {
   const emptyConfigTips = (
-    <p>
-      Please provide an{' '}
-      <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
-        access token, userId
-      </a>
-      , endpointUrl and display name to use.
-    </p>
+    <div>
+      <p>
+        Please provide an{' '}
+        <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
+          access token, userId
+        </a>
+        , endpointUrl and display name to use.
+      </p>
+      <p>A display name has already been set by default, but feel free to change it.</p>
+    </div>
   );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
 };
