@@ -63,7 +63,8 @@ module.exports = {
           'VariableDeclaration'
         ]
       }
-    ]
+    ],
+    curly: 'error'
   },
   root: true,
   settings: {
