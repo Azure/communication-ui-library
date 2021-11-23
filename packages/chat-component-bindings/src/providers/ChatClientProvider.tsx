@@ -40,7 +40,8 @@ export const ChatClientProvider = (props: ChatClientProviderProps): JSX.Element 
  */
 export const useChatClient = (): StatefulChatClient => {
   const chatClient = useContext(ChatClientContext);
-  if (!chatClient)
+  if (!chatClient) {
     throw 'Please wrap components with ChatClientProvider and initialize a chat client before calling the hook!';
+  }
   return chatClient;
 };
