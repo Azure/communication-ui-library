@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "VideoGallery has unique identifier for local video tile to dock.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

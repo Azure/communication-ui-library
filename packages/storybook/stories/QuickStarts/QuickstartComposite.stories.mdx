@@ -1,3 +1,4 @@
+import { Stack } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
 import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompositeAdapter.snippet.tsx';
 import QuickstartCompositeComplete from '!!raw-loader!./snippets/QuickstartCompositeComplete.snippet.tsx';
@@ -73,6 +74,18 @@ The following classes and interfaces handle some of the major features of the Az
 | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | [CallComposite](./?path=/story/composites-call-basicexample--basic-example) | Composite component that renders a calling experience with participant gallery and controls. |
 | [ChatComposite](./?path=/story/composites-chat-basicexample--basic-example) | Composite component that renders a chat experience with chat thread and input                |
+
+## Generate Access Token
+
+For setting up adapters that power the composites, we need to generate an access token to allow the adapters to interact with the Azure Communication Services back-end.
+
+Access Tokens can be generated using this [Azure Portal quickstart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) inside your Azure Communication Services dashboard as shown below.
+
+<Stack style={{ width: '100%' }}>
+  <video style={{ width: '100%' }} src="videos/generate-access-token.mp4" autoPlay="true" loop="true"></video>
+</Stack>
+
+<br />
 
 ## Set Up Adapters
 
