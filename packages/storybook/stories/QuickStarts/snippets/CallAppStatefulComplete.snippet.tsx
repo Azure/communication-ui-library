@@ -1,3 +1,4 @@
+import { Call, CallAgent } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import {
   FluentThemeProvider,
@@ -8,17 +9,18 @@ import {
   createStatefulCallClient,
   StatefulCallClient
 } from '@azure/communication-react';
-import React, { useEffect, useState } from 'react';
-import CallingComponents from './CallingComponentsStateful';
 import { registerIcons } from '@fluentui/react';
-import { Call, CallAgent } from '@azure/communication-calling';
+import React, { useEffect, useMemo, useState } from 'react';
+import CallingComponents from './CallingComponentsStateful';
 
 function App(): JSX.Element {
   registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
   const userAccessToken = '<Azure Communication Services Resource Access Token>';
   const userId = '<User Id associated to the token>';
-  const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
+  const tokenCredential = useMemo(() => {
+    return new AzureCommunicationTokenCredential(userAccessToken);
+  }, [userAccessToken]);
   const groupId = '<Generated GUID groupd id>';
   const displayName = '<Display Name>';
 
@@ -32,19 +34,19 @@ function App(): JSX.Element {
         userId: { communicationUserId: userId }
       })
     );
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     if (callAgent === undefined && statefulCallClient) {
-      const createUserAgent = async () => {
+      const createUserAgent = async (): Promise<void> => {
         setCallAgent(await statefulCallClient.createCallAgent(tokenCredential, { displayName: displayName }));
       };
       createUserAgent();
     }
-  }, [statefulCallClient, tokenCredential]);
+  }, [callAgent, statefulCallClient, tokenCredential, displayName]);
 
   useEffect(() => {
-    if (callAgent != undefined) {
+    if (callAgent !== undefined) {
       setCall(callAgent.join({ groupId }));
     }
   }, [callAgent]);

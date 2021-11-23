@@ -6,8 +6,8 @@ import {
   ChatThreadClientProvider,
   DEFAULT_COMPONENT_ICONS
 } from '@azure/communication-react';
-import React from 'react';
 import { registerIcons } from '@fluentui/react';
+import React from 'react';
 import ChatComponents from './ChatComponentsStateful';
 
 function App(): JSX.Element {
