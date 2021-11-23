@@ -95,7 +95,9 @@ const videoGalleryRemoteParticipantsMemo = (
       }
     | undefined
 ): VideoGalleryRemoteParticipant[] => {
-  if (!remoteParticipants) return [];
+  if (!remoteParticipants) {
+    return [];
+  }
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
     return Object.values(remoteParticipants)
       .filter((participant: RemoteParticipantState) => {

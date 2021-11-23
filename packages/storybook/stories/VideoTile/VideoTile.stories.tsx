@@ -113,7 +113,9 @@ export default {
     children: hiddenControl,
     styles: hiddenControl,
     renderElement: hiddenControl,
-    onRenderPlaceholder: hiddenControl
+    onRenderPlaceholder: hiddenControl,
+    showLabel: hiddenControl,
+    initialsName: hiddenControl
   },
   parameters: {
     docs: {
