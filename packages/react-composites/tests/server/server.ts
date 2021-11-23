@@ -31,7 +31,9 @@ const startServer = (appDir: string): Promise<void> => {
 
 const stopServer = (): Promise<void> =>
   new Promise((resolve, reject) => {
-    if (!server) reject(false);
+    if (!server) {
+      reject(false);
+    }
     server.close(() => {
       resolve();
     });
