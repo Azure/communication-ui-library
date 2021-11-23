@@ -3504,14 +3504,14 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-AETOoj8y4fnZyB9wRfoFIxPzrVc4kLp2t+lk9dBKOkwWKNFJSYEcBeInk4qbQdsAeCG7EyxsbsQRZ+0QfbMNwA==
+      integrity: sha1-unVNx9DyqEnSanEHLZAtdjRc4BQ=
   /@microsoft/api-extractor-model/7.12.5:
     dependencies:
       '@microsoft/tsdoc': 0.12.24
       '@rushstack/node-core-library': 3.36.2
     dev: false
     resolution:
-      integrity: sha512-oeHZW83JWjIVoCDvdwI5nsZGPxThbq4gZTLAYNeJGZE/mKEO0iayMPGmI3EllJBjwQsFvNVU+O/HGULhB2to/g==
+      integrity: sha1-KNKASGXOupzYmrTwXP+Z0W+mybg=
   /@microsoft/api-extractor-model/7.13.5:
     dependencies:
       '@microsoft/tsdoc': 0.13.2
@@ -3519,7 +3519,7 @@ packages:
       '@rushstack/node-core-library': 3.40.0
     dev: false
     resolution:
-      integrity: sha512-il6AebNltYo5hEtqXZw4DMvrwBPn6+F58TxwqmsLY+U+sSJNxaYn2jYksArrjErXVPR3gUgRMqD6zsdIkg+WEQ==
+      integrity: sha1-eDaoG6R7mmVAYu0DYeTu5pr65R4=
   /@microsoft/api-extractor/7.18.5:
     dependencies:
       '@microsoft/api-extractor-model': 7.13.5
@@ -3537,7 +3537,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-NUGS6WxexziEnroHUOI3KKVmMX02god7SLA8Y4a5GKCL5k7AHuHFqP2bpd5Otx2odfbdj15ObO7FU/XA3Oxh8w==
+      integrity: sha1-zCgE18i50PHmP9hdBEhWm3Z9sQI=
   /@microsoft/applicationinsights-analytics-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3546,7 +3546,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha512-DVL2laBpa4wKcoZcvGRrGLd9N/Xz3vzq5rRhs4PxJawM4mlABe97UpRnrDARzGIubOhTKsix2V4hB9+gUtRz7A==
+      integrity: sha1-fxUsolySaxfrnxFG8j+sd1ymobY=
   /@microsoft/applicationinsights-channel-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3555,7 +3555,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha512-Njbeqn/Z1O8NZ10gdX1FXb4Z2TK7a9SCrjZ32ieTAr9HVefaZZCG9yKTTXkp8MnDUCnwjC2wZA9xN4u2BAi+lQ==
+      integrity: sha1-7vbaXegIupcMZn/b/wN2LCOQitI=
   /@microsoft/applicationinsights-common/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-core-js': 2.6.5
@@ -3563,14 +3563,14 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha512-nwJ0UO5WZbbdU6mgiN1oZ/NLTbT/oeMVmZJtlbuQ+xCz57LODi/mPAndd4+BA3xU+4u7MhLl6GyQqX5hcyUsow==
+      integrity: sha1-S0deOI+NtgDjJxKteM0agPTOP+8=
   /@microsoft/applicationinsights-core-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-shims': 2.0.0
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha512-+Vg8Cy06Z+Mwh4W7P5hqx03ThO+l5t7TfcP+ynuS1SGFIuYKaBOwxgt/uIIon8X12sk0dGkrPsTGZMiUtXJ5Zw==
+      integrity: sha1-NNB4cN1eT/Uk7Tjd+jghhuHcfKA=
   /@microsoft/applicationinsights-dependencies-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3579,7 +3579,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha512-Iw7jKESSnD52FodfI1QCp7HCFKqAdeLK/V3iEt6ArBJ54J/DYc/wD1sI8h2N5jBak0Mk7Lmu3LiyxtemOAn8pw==
+      integrity: sha1-djpxAh23JxJo8MpeURAQ8CHXQJ4=
   /@microsoft/applicationinsights-properties-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3588,7 +3588,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha512-0etD5TkBFi4cnleGivxc02uLJIaP/sGHpyzOXfYSuLzRchKGWwX+fVhirt/acIigh+Mi8tiDuXqZ92H7DE5mbA==
+      integrity: sha1-8FFMAyzGRU5abA/8dsra1o2macs=
   /@microsoft/applicationinsights-react-js/3.0.5_react@16.14.0:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3600,15 +3600,15 @@ packages:
     peerDependencies:
       react: ^16.0.0
     resolution:
-      integrity: sha512-+cAD9NZXQZB4/5gBkLrxXywtQllTqTPDlGod2Emli0kM9JLi4P4iH/i4Gtn4OBJtjlzcjYzU91AnFrjIisxx9A==
+      integrity: sha1-jreDo93wAw0h1+aGpNwfPejmFpc=
   /@microsoft/applicationinsights-shims/1.0.3:
     dev: false
     resolution:
-      integrity: sha512-+S17aqEkOYpyBpmclhgwcEplwnxSo5AxYBdRg38GBobI1GKPSpZfnLssLzcjJ6XZCS5tqB5xjyTZs6gHj7ZJWQ==
+      integrity: sha1-nx0WurBDDyXMF2EcU3dWz039ODM=
   /@microsoft/applicationinsights-shims/2.0.0:
     dev: false
     resolution:
-      integrity: sha512-OaKew7f7acuNFgKYjMSPrRTRQi93xUyONWeeCeBlJSx7oRNJaL0TqbTvW6j5GHnSr3mhinPtAQ+rCQWASBnOrg==
+      integrity: sha1-7mIliPFOWK48BVsSQx2o7VXXGZE=
   /@microsoft/applicationinsights-web/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-analytics-js': 2.6.5
@@ -3621,15 +3621,15 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha512-ytSzE2b0InD/dGo+pObD1amwMXPWMXIGICuf3P94F5DV/Unt8rDRfex0JuNkfDJ1muH36uo5nEJMxzvtATx19g==
+      integrity: sha1-0pXfWn0LrNbiePLGCNqTeWI4acg=
   /@microsoft/dynamicproto-js/1.1.4:
     dev: false
     resolution:
-      integrity: sha512-Ot53G927ykMF8cQ3/zq4foZtdk+Tt1YpX7aUTHxBU7UHNdkEiBvBfZSq+rnlUmKCJ19VatwPG4mNzvcGpBj4og==
+      integrity: sha1-QOHArSB0P87hYEp98sV/rwqhr4c=
   /@microsoft/load-themed-styles/1.10.202:
     dev: false
     resolution:
-      integrity: sha512-pWoN9hl1vfXnPfu2tS5VndXXKMe+UEWLJXDKNGXSNpmfszVLzG8Ns0TlZHlwtgpSaSD3f0kdVDfqAek8aflD4w==
+      integrity: sha1-icvfRknrZdmyUIRKuuuOr+oaasI=
   /@microsoft/tsdoc-config/0.15.2:
     dependencies:
       '@microsoft/tsdoc': 0.13.2
@@ -3638,15 +3638,15 @@ packages:
       resolve: 1.19.0
     dev: false
     resolution:
-      integrity: sha512-mK19b2wJHSdNf8znXSMYVShAHktVr/ib0Ck2FA3lsVBSEhSI/TfXT7DJQkAYgcztTuwazGcg58ZjYdk0hTCVrA==
+      integrity: sha1-6zU8k/O2KrdL3Jq29Kgrz4AUDxQ=
   /@microsoft/tsdoc/0.12.24:
     dev: false
     resolution:
-      integrity: sha512-Mfmij13RUTmHEMi9vRUhMXD7rnGR2VvxeNYtaGtaJ4redwwjT4UXYJ+nzmVJF7hhd4pn/Fx5sncDKxMVFJSWPg==
+      integrity: sha1-MHKONOvJA1HdOv9OGNA47tLD4Jg=
   /@microsoft/tsdoc/0.13.2:
     dev: false
     resolution:
-      integrity: sha512-WrHvO8PDL8wd8T2+zBGKrMwVL5IyzR3ryWUsl0PXgEV0QHup4mTLi0QcATefGI6Gx9Anu7vthPyyyLpY0EpiQg==
+      integrity: sha1-Ow77bTkDvUntsHNpb2DpDfCO+yY=
   /@mrmlnc/readdir-enhanced/2.2.1:
     dependencies:
       call-me-maybe: 1.0.1
@@ -8333,6 +8333,18 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-xb3ZL6+L8b9JLLCx3ZdoZy4+2ECphCMo2PwqgP1tlfVq6M6YReyzBJtvWWtbDSpNr9hn96pkCiZqUcFEc+54Qg==
+  /cosmiconfig/7.0.0:
+    dependencies:
+      '@types/parse-json': 4.0.0
+      import-fresh: 3.3.0
+      parse-json: 5.2.0
+      path-type: 4.0.0
+      yaml: 1.10.2
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-pondGvTuVYDk++upghXJabWzL6Kxu6f26ljFw64Swq9v6sQPUL3EUlVDV56diOjpCayKihL6hVe8exIACU4XcA==
   /cosmiconfig/7.0.1:
     dependencies:
       '@types/parse-json': 4.0.0
@@ -11499,7 +11511,7 @@ packages:
       chalk: 4.1.2
       ci-info: 2.0.0
       compare-versions: 3.6.0
-      cosmiconfig: 7.0.1
+      cosmiconfig: 7.0.0
       find-versions: 4.0.0
       opencollective-postinstall: 2.0.3
       pkg-dir: 5.0.0
@@ -19858,6 +19870,7 @@ packages:
       '@playwright/test': 1.15.2
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
+      '@types/enzyme': 3.10.9
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
@@ -19879,6 +19892,8 @@ packages:
       copyfiles: 2.4.1
       core-js: 3.16.2
       dotenv: 10.0.0
+      enzyme: 3.11.0
+      enzyme-adapter-react-16: 1.15.6_ae67991505dc3d23647f38417e28fa3a
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -19928,7 +19943,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-upVaVFpxnRX8dsIqlTIUvaer5HHpR11umY8h50eMoYT/Fuc/fnBA5FB6E1QE+n4OqlK2a7d8u9S3q4UwbGFlag==
+      integrity: sha512-XzL1y9GL5NUWsfk/j0GzKNC0VP1gFAhBQQvuPdwsVUG2Pv6jtbaS/EUrBLqWfsOYJVBdAOrrROVsb3ewNm5QPQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -20092,7 +20107,6 @@ packages:
       core-js: 3.16.2
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
-      eslint-mdx: 1.16.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-jsx-a11y: 6.4.1_eslint@7.32.0
