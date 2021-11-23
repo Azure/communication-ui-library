@@ -23,7 +23,9 @@ function chatThreadStateFromMeetingState(meetingState: MeetingState): ChatThread
 }
 
 function ChatAdapterStateFromMeetingAdapterState(meetingState: MeetingAdapterState): ChatAdapterState {
-  if (!meetingState.meeting) throw 'Cannot get chat adapter state. Meeting state is undefined.';
+  if (!meetingState.meeting) {
+    throw 'Cannot get chat adapter state. Meeting state is undefined.';
+  }
 
   return {
     userId: meetingState.userId,

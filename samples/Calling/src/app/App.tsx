@@ -62,7 +62,9 @@ const App = (): JSX.Element => {
   }, []);
 
   const supportedBrowser = !isOnIphoneAndNotSafari();
-  if (!supportedBrowser) return <UnsupportedBrowserPage />;
+  if (!supportedBrowser) {
+    return <UnsupportedBrowserPage />;
+  }
 
   if (isMobileSession() || isSmallScreen()) {
     console.log('ACS Calling sample: This is experimental behaviour');

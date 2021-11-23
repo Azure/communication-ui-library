@@ -752,13 +752,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // we need to get previousTop before it prepend contents
   // Execute order [newMessage useEffect] => get previousTop => dom update => [messages useEffect]
   useEffect(() => {
-    if (!chatScrollDivRef.current) return;
+    if (!chatScrollDivRef.current) {
+      return;
+    }
     previousTopRef.current = chatScrollDivRef.current.scrollTop;
     previousHeightRef.current = chatScrollDivRef.current.scrollHeight;
   }, [newMessages]);
 
   useEffect(() => {
-    if (!chatScrollDivRef.current) return;
+    if (!chatScrollDivRef.current) {
+      return;
+    }
     if (previousTopRef.current === 0) {
       const currentHeight = chatScrollDivRef.current.scrollHeight;
       chatScrollDivRef.current.scrollTop =
