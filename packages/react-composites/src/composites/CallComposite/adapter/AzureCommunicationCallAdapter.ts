@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingHandlers, createDefaultCallingHandlers, _isInCall } from '@internal/calling-component-bindings';
+import {
+  CallingHandlers,
+  createDefaultCallingHandlers,
+  _isInCall,
+  _isInLobbyOrConnecting
+} from '@internal/calling-component-bindings';
 import {
   CallClientState,
   CallError,
@@ -99,8 +104,6 @@ class CallContext {
       page: getCallCompositePage(call, latestEndedCall),
       endedCall: latestEndedCall,
       devices: clientState.deviceManager,
-      isLocalPreviewMicrophoneEnabled:
-        call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
       latestErrors: clientState.latestErrors
     });
   }
@@ -331,9 +334,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async mute(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!_isInCall(this.call?.state)) {
-        this.context.setIsLocalMicrophoneEnabled(false);
-      } else if (!this.call?.isMuted) {
+      this.context.setIsLocalMicrophoneEnabled(false);
+      if (_isInCall(this.call?.state) && !this.call?.isMuted) {
         await this.handlers.onToggleMicrophone();
       }
     });
@@ -341,9 +343,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async unmute(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!_isInCall(this.call?.state)) {
-        this.context.setIsLocalMicrophoneEnabled(true);
-      } else if (this.call?.isMuted) {
+      this.context.setIsLocalMicrophoneEnabled(true);
+      if (_isInCall(this.call?.state) && this.call?.isMuted) {
         await this.handlers.onToggleMicrophone();
       }
     });
