@@ -265,7 +265,7 @@ export default {
     onRenderMessage: hiddenControl,
     onUpdateMessage: hiddenControl,
     onDeleteMessage: hiddenControl,
-    editDisabled: hiddenControl
+    disableEditing: hiddenControl
   },
   parameters: {
     docs: {
