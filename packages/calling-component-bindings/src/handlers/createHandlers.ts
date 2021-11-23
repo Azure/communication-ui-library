@@ -82,7 +82,9 @@ export const createDefaultCallingHandlers = memoizeOne(
         videoDeviceInfo = cameras && cameras.length > 0 ? cameras[0] : undefined;
         videoDeviceInfo && deviceManager?.selectCamera(videoDeviceInfo);
       }
-      if (!callId || !videoDeviceInfo) return;
+      if (!callId || !videoDeviceInfo) {
+        return;
+      }
       const stream = new LocalVideoStream(videoDeviceInfo);
       if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.startVideo(stream);
@@ -91,7 +93,9 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     const onStopLocalVideo = async (stream: LocalVideoStream): Promise<void> => {
       const callId = call?.id;
-      if (!callId) return;
+      if (!callId) {
+        return;
+      }
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.stopVideo(stream);
         await callClient.disposeView(callId, undefined, {
@@ -221,9 +225,13 @@ export const createDefaultCallingHandlers = memoizeOne(
       userId: string,
       options = { scalingMode: 'Crop' } as VideoStreamOptions
     ): Promise<void> => {
-      if (!call) return;
+      if (!call) {
+        return;
+      }
       const callState = callClient.getState().calls[call.id];
-      if (!callState) throw new Error(`Call Not Found: ${call.id}`);
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
 
       const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
@@ -251,9 +259,13 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onDisposeRemoteStreamView = async (userId: string): Promise<void> => {
-      if (!call) return;
+      if (!call) {
+        return;
+      }
       const callState = callClient.getState().calls[call.id];
-      if (!callState) throw new Error(`Call Not Found: ${call.id}`);
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
 
       const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId

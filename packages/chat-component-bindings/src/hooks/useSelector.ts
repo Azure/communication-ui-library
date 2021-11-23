@@ -49,7 +49,9 @@ export const useSelector = <
   const propRef = useRef(props);
   propRef.current = props;
   useEffect(() => {
-    if (!chatClient || !selector) return;
+    if (!chatClient || !selector) {
+      return;
+    }
     const onStateChange = (state: ChatClientState): void => {
       const newProps = selector(state, selectorProps ?? threadConfigProps);
       if (propRef.current !== newProps) {

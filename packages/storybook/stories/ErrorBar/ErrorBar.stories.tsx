@@ -82,7 +82,8 @@ export default {
   argTypes: {
     errorTypes: controlsToAdd.errorTypes,
     // Hiding auto-generated controls
-    strings: hiddenControl
+    strings: hiddenControl,
+    activeErrorMessages: hiddenControl
   },
   parameters: {
     docs: {
