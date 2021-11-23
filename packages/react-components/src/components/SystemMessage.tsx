@@ -41,7 +41,7 @@ export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   return (
     <Stack horizontal className={mergeStyles(props?.containerStyle as IStyle)}>
       {Icon}
-      <span>{content}</span>
+      <span style={{ wordBreak: 'break-word' }}>{content}</span>
     </Stack>
   );
 };

@@ -712,7 +712,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     }
 
     const atBottom =
-      Math.floor(chatScrollDivRef.current.scrollTop) >=
+      Math.ceil(chatScrollDivRef.current.scrollTop) >=
       chatScrollDivRef.current.scrollHeight - chatScrollDivRef.current.clientHeight;
     if (atBottom) {
       sendMessageStatusIfAtBottom();

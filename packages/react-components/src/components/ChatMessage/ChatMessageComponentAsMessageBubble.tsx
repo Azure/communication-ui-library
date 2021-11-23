@@ -9,7 +9,6 @@ import { chatMessageEditedTagStyle, chatMessageDateStyle } from '../styles/ChatM
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from '../utils/Datetime';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
-import { useLongPress, LongPressDetectEvents } from 'use-long-press';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
@@ -33,67 +32,43 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
 
   const { message, onRemoveClick, disableEditing, showDate, messageContainerStyle, strings, onEditClick } = props;
 
-  // Control when the chat message action button is allowed to show. It should show when hovered over, or when the
-  // chat message is navigated to via keyboard, but not on touch events.
-  const [allowChatActionButtonShow, setAllowChatActionButtonShow] = useState(true);
+  // Track if the action menu was opened by touch - if so we increase the touch targets for the items
+  const [wasInteractionByTouch, setWasInteractionByTouch] = useState(false);
 
   // The chat message action flyout should target the Chat.Message action menu if clicked,
-  // or target the chat message if opened via long touch press.
-  // Undefined indicates the action menu should not be being shown.
+  // or target the chat message if opened via touch press.
+  // Undefined indicates the flyout menu should not be being shown.
   const messageRef = useRef<HTMLDivElement | null>(null);
   const messageActionButtonRef = useRef<HTMLElement | null>(null);
   const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState<
     React.MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
 
-  // Track if the action menu was opened by touch - if so we increase the touch targets for the items
-  const actionFlyoutLastOpenedByTouch = useRef(false);
-
   const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
-  const actionMenuProps = chatMessageActionMenuProps({
-    enabled: chatActionsEnabled && allowChatActionButtonShow,
-    // Force show the action button while the flyout is open and targeting the action menu button
-    forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
-    menuButtonRef: messageActionButtonRef,
-    onActionButtonClick: () => {
-      actionFlyoutLastOpenedByTouch.current = false;
 
-      // Open chat action flyout, and set the context menu to target the chat message action button
-      setChatMessageActionFlyoutTarget(messageActionButtonRef);
-    },
-    theme
-  });
-
-  const longTouchPressProps = useLongPress(
-    () => {
-      actionFlyoutLastOpenedByTouch.current = true;
-
-      // Open chat action flyout, and set the context menu to target the chat message
-      setChatMessageActionFlyoutTarget(messageRef);
-    },
-    {
-      // Don't show the action button when clicked via touch events
-      onStart: () => setAllowChatActionButtonShow(false),
-      // If the touch press didn't complete, allow the action menu to be shown on hover/focus again
-      onCancel: () => setAllowChatActionButtonShow(true),
-      captureEvent: true,
-      cancelOnMovement: true,
-      detect: LongPressDetectEvents.TOUCH
-    }
-  );
+  const actionMenuProps = wasInteractionByTouch
+    ? undefined
+    : chatMessageActionMenuProps({
+        enabled: chatActionsEnabled,
+        menuButtonRef: messageActionButtonRef,
+        // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
+        forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
+        onActionButtonClick: () => {
+          // Open chat action flyout, and set the context menu to target the chat message action button
+          setChatMessageActionFlyoutTarget(messageActionButtonRef);
+        },
+        theme
+      });
 
   const onActionFlyoutDismiss = useCallback((): void => {
     // When the flyout dismiss is called, since we control if the action flyout is visible
     // or not we need to set the target to undefined here to actually hide the action flyout
     setChatMessageActionFlyoutTarget(undefined);
-    // Now the flyout has been dismissed, ensure that the action menu button is allowed to be shown.
-    // This was previously set to false when the flyout is opened via a touch event.
-    setAllowChatActionButtonShow(true);
-  }, [setAllowChatActionButtonShow, setChatMessageActionFlyoutTarget]);
+  }, [setChatMessageActionFlyoutTarget]);
 
   const chatMessage = (
     <>
-      <div ref={messageRef} {...longTouchPressProps}>
+      <div ref={messageRef}>
         <Chat.Message
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
@@ -114,14 +89,17 @@ export const ChatMessageComponentAsMessageBubble = (props: ChatMessageComponentA
           }
           positionActionMenu={false}
           actionMenu={actionMenuProps}
+          onTouchStart={() => setWasInteractionByTouch(true)}
+          onPointerDown={() => setWasInteractionByTouch(false)}
+          onKeyDown={() => setWasInteractionByTouch(false)}
+          onClick={() => wasInteractionByTouch && setChatMessageActionFlyoutTarget(messageRef)}
         />
       </div>
-
       {chatActionsEnabled && (
         <ChatMessageActionFlyout
           hidden={!chatMessageActionFlyoutTarget}
           target={chatMessageActionFlyoutTarget}
-          increaseFlyoutItemSize={actionFlyoutLastOpenedByTouch.current}
+          increaseFlyoutItemSize={wasInteractionByTouch}
           onDismiss={onActionFlyoutDismiss}
           onEditClick={onEditClick}
           onRemoveClick={onRemoveClick}
