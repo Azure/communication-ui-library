@@ -178,7 +178,8 @@ const generateDefaultMenuProps = (
         root: {
           // Confine the menu to the parents bounds.
           // More info: https://github.com/microsoft/fluentui/issues/18835
-          maxWidth: '100%'
+          // NB: 95% to keep some space for margin, drop shadow etc around the Callout.
+          maxWidth: '95%'
         }
       },
       // Disable dismiss on resize to work around a couple Fluent UI bugs
@@ -191,7 +192,7 @@ const generateDefaultMenuProps = (
       //
       // A side effect of this workaround is that the context menu stays open when window is resized, and may
       // get detached from original target visually. That bug is preferable to the bug when this value is not set -
-      // The Callout (freuently) gets dismissed automatically.
+      // The Callout (frequently) gets dismissed automatically.
       preventDismissOnResize: true
     }
   };
