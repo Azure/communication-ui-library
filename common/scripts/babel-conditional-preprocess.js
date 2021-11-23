@@ -20,6 +20,8 @@ exports.default = helper.declare((_api, opts) => {
         for (const comment of node.leadingComments) {
           if (new RegExp(start).test(comment.value)) {
             state.removed = true;
+          }
+          if(state.removed) {
             comment.ignore = true;
           }
         }
@@ -35,21 +37,14 @@ exports.default = helper.declare((_api, opts) => {
 
       if (node.trailingComments && node.trailingComments.length > 0) {
         for (const comment of node.trailingComments) {
+          if(state.removed) {
+            comment.ignore = true;
+          }
           if (new RegExp(end).test(comment.value)) {
             state.removed = false;
-            comment.ignore = true;
           }
         }
       }
-    }
-  }
-
-  function HandleJSXExpression(path, state) {
-    const {
-      node
-    } = path;
-    if(node.expression == undefined) {
-      node.expression = t.JSXEmptyExpression();
     }
   }
 
