@@ -123,7 +123,16 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const avatar = onRenderAvatar ? (
     onRenderAvatar(userId ?? '', avatarOptions)
   ) : (
-    <Persona className={mergeStyles({ lineHeight: '1.15rem' }, styles?.avatar)} {...avatarOptions} />
+    <Persona
+      className={mergeStyles(
+        {
+          // Prevents persona text from being vertically truncated if a global line height is less than 1.15.
+          lineHeight: '1.15rem'
+        },
+        styles?.avatar
+      )}
+      {...avatarOptions}
+    />
   );
 
   const meTextStyle = useMemo(
