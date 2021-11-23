@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Cleanup component descriptions",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

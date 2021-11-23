@@ -66,12 +66,9 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
   // It is recommended that Contoso memoize the `onFetchAvatarPersonaData` callback
   // to avoid costly re-fetching of data.
   // A 3rd Party utility such as Lodash (_.memoize) can be used to memoize the callback.
-  const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
-    new Promise((resolve, reject) => {
-      return resolve({
-        text: props.avatarInitials ? props.avatarInitials : props.displayName
-      });
-    });
+  const onFetchAvatarPersonaData = async (/* userId: string */): Promise<AvatarPersonaData> => ({
+    text: props.avatarInitials ? props.avatarInitials : props.displayName
+  });
 
   // Custom Menu Item Callback for Participant List
   const onFetchParticipantMenuItems: ParticipantMenuItemsCallback = (participantId, userId, defaultMenuItems) => {

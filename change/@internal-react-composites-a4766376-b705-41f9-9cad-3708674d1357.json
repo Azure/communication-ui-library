@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make all button width consistent in desktop mode",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

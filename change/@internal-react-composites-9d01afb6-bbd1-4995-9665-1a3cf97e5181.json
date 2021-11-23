@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "set min h/w for Call composite",
-  "packageName": "@internal/react-composites",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

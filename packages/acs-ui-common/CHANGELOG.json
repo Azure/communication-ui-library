@@ -2,6 +2,35 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Wed, 17 Nov 2021 22:21:27 GMT",
+      "tag": "@internal/acs-ui-common_v1.0.0-beta.8",
+      "version": "1.0.0-beta.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "centralized localization utils to acs-ui-common",
+            "author": "alcail@microsoft.com",
+            "commit": "db7764ba1b4d3db5cf2bb02dbffc01408fc707c6",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Fully implement identifier to/from MRI conversion",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "81e2d46cedeb9aa982315deecf4cf4603167cb8a",
+            "package": "@internal/acs-ui-common"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.7",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "5a5507a2034f691a887cb8875281319874d6ed65",
+            "package": "@internal/acs-ui-common"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:40:46 GMT",
       "tag": "@internal/acs-ui-common_v1.0.0-beta.7",
       "version": "1.0.0-beta.7",

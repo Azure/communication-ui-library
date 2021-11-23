@@ -8,6 +8,7 @@ import {
   imgStyle,
   infoContainerStyle,
   callContainerStackTokens,
+  callOptionsGroupStyles,
   configContainerStyle,
   configContainerStackTokens,
   containerStyle,
@@ -30,6 +31,7 @@ export interface HomeScreenProps {
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const imageProps = { src: heroSVG.toString() };
   const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call';
+  const callOptionsGroupLabel = 'Select a call option';
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
@@ -64,6 +66,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           <Stack tokens={callContainerStackTokens}>
             {!props.joiningExistingCall && (
               <ChoiceGroup
+                styles={callOptionsGroupStyles}
+                label={callOptionsGroupLabel}
                 defaultSelectedKey="ACSCall"
                 options={callOptions}
                 required={true}

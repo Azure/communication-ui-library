@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix chat initials not showing in the message thread",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

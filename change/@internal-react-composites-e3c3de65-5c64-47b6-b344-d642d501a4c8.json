@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix camera button toggle on no-network tile",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Revert previous changes to camera button function signature that was used for testing",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
