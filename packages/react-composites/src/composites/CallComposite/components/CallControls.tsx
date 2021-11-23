@@ -121,7 +121,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const screenShareButtonStyles = useMemo(
     () => mergeButtonBaseStyles(checkedButtonOverrideStyles(theme, screenShareButtonProps.checked)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [screenShareButtonProps.checked, theme.palette.themePrimary]
   );
 
