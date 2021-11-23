@@ -13,8 +13,7 @@ import {
   CustomDataModelExampleContainer,
   CustomDataModelExampleContainerProps
 } from './snippets/CustomDataModelExampleContainer.snippet';
-import { createThreadAndAddUser } from './snippets/Utils';
-import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
+import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
 
 const messageArray = [
   'Welcome to the custom data model example!',
@@ -56,7 +55,16 @@ const CustomDataModelStory = (args, context): JSX.Element => {
       }
     };
     fetchToken();
-  }, [args.connectionString, args.displayName]);
+  }, [
+    args.avatar,
+    args.botId,
+    args.botToken,
+    args.connectionString,
+    args.displayName,
+    args.endpointUrl,
+    args.token,
+    args.userId
+  ]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>

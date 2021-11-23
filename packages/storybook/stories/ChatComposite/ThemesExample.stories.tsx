@@ -10,8 +10,7 @@ import { defaultChatCompositeHiddenControls, controlsToAdd, getControlledTheme }
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
-import { createThreadAndAddUser } from './snippets/Utils';
-import { ConfigHintBanner, addParrotBotToThread } from './snippets/Utils';
+import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
 
 const messageArray = [
   'Welcome to the theming example!',

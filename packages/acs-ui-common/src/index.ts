@@ -4,7 +4,7 @@
 export { memoizeFnAll } from './memoizeFnAll';
 export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from './identifier';
 export { _getApplicationId } from './telemetry';
-export { _formatSpanElements, _formatString } from './localizationUtils';
+export { _formatString } from './localizationUtils';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

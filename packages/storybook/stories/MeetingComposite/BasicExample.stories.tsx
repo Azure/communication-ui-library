@@ -5,6 +5,7 @@ import { MeetingComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
+import { FloatingSingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { controlsToAdd, defaultMeetingCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './MeetingCompositeDocs';
@@ -28,9 +29,12 @@ const BasicStory = (args, context): JSX.Element => {
   }, [args.token, args.userId, args.endpointUrl, args.displayName]);
 
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {meetingProps ? <MeetingExperience fluentTheme={context.theme} {...meetingProps} /> : <ConfigHintBanner />}
-    </Stack>
+    <>
+      <FloatingSingleLineBetaBanner />
+      <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
+        {meetingProps ? <MeetingExperience fluentTheme={context.theme} {...meetingProps} /> : <ConfigHintBanner />}
+      </Stack>
+    </>
   );
 };
 

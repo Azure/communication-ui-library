@@ -67,8 +67,6 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = paginatedChildren[clippedPage];
 
-  console.log('childrenOnCurrentPage: ', childrenOnCurrentPage);
-
   const showButtons = numberOfChildren > childrenPerPage;
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;

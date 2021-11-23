@@ -28,7 +28,7 @@ const CustomDataModelStory = (args, context): JSX.Element => {
       return containerProps;
     }
     return undefined;
-  }, [args.userId && args.token]);
+  }, [args.token, args.userId]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
