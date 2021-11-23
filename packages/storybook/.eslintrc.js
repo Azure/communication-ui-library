@@ -63,7 +63,8 @@ module.exports = {
     'react/display-name': 'off',
 
     // This rule directly conflicts with allowed characters in Storybook's markdown
-    'react/no-unescaped-entities': 'off'
+    'react/no-unescaped-entities': 'off',
+    curly: 'error'
   },
   root: true,
   settings: {

@@ -78,7 +78,9 @@ export const createDefaultChatHandlers = memoizeOne(
         let isAllChatMessagesLoaded = false;
         while (remainingMessagesToGet >= 1) {
           const message = await messageIterator.next();
-          if (message.value?.type && message.value.type === 'text') remainingMessagesToGet--;
+          if (message.value?.type && message.value.type === 'text') {
+            remainingMessagesToGet--;
+          }
           // We have traversed all messages in this thread
           if (message.done) {
             isAllChatMessagesLoaded = true;

@@ -41,7 +41,8 @@ export const ChatThreadClientProvider = (props: ChatThreadClientProviderProps): 
  */
 export const useChatThreadClient = (): ChatThreadClient => {
   const chatThreadClient = useContext(ChatThreadClientContext);
-  if (!chatThreadClient)
+  if (!chatThreadClient) {
     throw 'Please wrap components with ChatThreadClientProvider and initialize a chat thread client before calling the hook.';
+  }
   return chatThreadClient;
 };
