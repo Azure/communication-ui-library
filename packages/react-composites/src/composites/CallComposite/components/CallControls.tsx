@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyleSets, Stack } from '@fluentui/react';
+import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CameraButton,
   ControlBar,
@@ -15,6 +16,8 @@ import {
 } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
+import { useSelector } from '../hooks/useSelector';
+import { getCallStatus, getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
 import {
   checkedButtonOverrideStyles,
   controlButtonBaseStyle,
@@ -94,7 +97,14 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const options = typeof props.options === 'boolean' ? {} : props.options;
 
+  const callStatus = useSelector(getCallStatus);
+  const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
+
+  /** When call is in Lobby, microphone button should display the local microphone state. */
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
+  if (_isInLobbyOrConnecting(callStatus)) {
+    microphoneButtonProps.checked = isLocalMicrophoneEnabled;
+  }
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
@@ -105,6 +115,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const screenShareButtonStyles = useMemo(
     () => mergeButtonBaseStyles(checkedButtonOverrideStyles(theme, screenShareButtonProps.checked)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [screenShareButtonProps.checked, theme.palette.themePrimary]
   );
 
