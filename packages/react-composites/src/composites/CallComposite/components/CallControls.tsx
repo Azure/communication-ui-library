@@ -113,7 +113,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     // page until the user successfully joins the call.
     microphoneButtonProps.checked = isLocalMicrophoneEnabled;
   }
-  const microphoneStrings = _isInLobbyOrConnecting(callStatus)
+  const microphoneButtonStrings = _isInLobbyOrConnecting(callStatus)
     ? {
         strings: {
           tooltipOffContent: strings.microphoneToggleInLobbyNotAllowed,
@@ -153,7 +153,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...microphoneButtonProps}
       showLabel={!compactMode}
       styles={controlButtonBaseStyle}
-      {...microphoneStrings}
+      {...microphoneButtonStrings}
     />
   );
 
