@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, mergeStyles, Modal, Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
 import { useIdentifiers } from '../identifiers/IdentifierProvider';
@@ -164,7 +164,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerId = useRef(`video-gallery-${uuidv4()}`);
   const containerWidth = useContainerWidth(containerRef);
   const isNarrow = isNarrowWidth(containerWidth);
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
@@ -303,9 +302,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     />
   );
 
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.id = `video-gallery-${uuidv4()}`;
+    }
+  }, [containerRef]);
+
   return (
     <div
-      id={containerId.current}
       data-ui-id={ids.videoGallery}
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
@@ -316,7 +320,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isModeless={true}
           dragOptions={DRAG_OPTIONS}
           styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-          layerProps={{ hostId: containerId.current }}
+          layerProps={{ hostId: containerRef.current?.id }}
         >
           {localParticipant && localVideoTile}
         </Modal>
