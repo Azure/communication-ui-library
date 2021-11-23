@@ -107,6 +107,8 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   if (_isInLobbyOrConnecting(callStatus)) {
     microphoneButtonProps.disabled = true;
+    // Lobby page should show the microphone status that was set on the local preview/configuration
+    // page until the user successfully joins the call.
     microphoneButtonProps.checked = isLocalMicrophoneEnabled;
   }
   const cameraButtonProps = usePropsFor(CameraButton);
