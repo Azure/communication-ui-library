@@ -39,7 +39,9 @@ class ChatContext {
   constructor(clientState: ChatClientState, threadId: string) {
     const thread = clientState.threads[threadId];
     this.threadId = threadId;
-    if (!thread) throw 'Cannot find threadId, please initialize thread before use!';
+    if (!thread) {
+      throw 'Cannot find threadId, please initialize thread before use!';
+    }
     this.state = {
       userId: clientState.userId,
       displayName: clientState.displayName,
@@ -71,7 +73,9 @@ class ChatContext {
 
   public updateClientState(clientState: ChatClientState): void {
     const thread = clientState.threads[this.threadId];
-    if (!thread) throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
+    if (!thread) {
+      throw 'Cannot find threadId, please make sure thread state is still in Stateful ChatClient.';
+    }
     this.setState({
       userId: clientState.userId,
       displayName: clientState.displayName,
@@ -145,6 +149,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       for await (const _page of this.chatThreadClient.listParticipants().byPage({
         // Fetch 100 participants per page by default.
         maxPageSize: 100
+        // eslint-disable-next-line curly
       }));
     } catch (e) {
       console.log(e);
@@ -310,8 +315,11 @@ const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage
 // only text/html message type will be received from event
 const convertEventType = (type: string): ChatMessageType => {
   const lowerCaseType = type.toLowerCase();
-  if (lowerCaseType === 'richtext/html' || lowerCaseType === 'html') return 'html';
-  else return 'text';
+  if (lowerCaseType === 'richtext/html' || lowerCaseType === 'html') {
+    return 'html';
+  } else {
+    return 'text';
+  }
 };
 
 /**

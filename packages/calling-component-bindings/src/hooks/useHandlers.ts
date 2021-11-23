@@ -20,7 +20,9 @@ export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement |
   const callAgent = useCallAgent();
   const deviceManager = useDeviceManager();
   const call = useCall();
-  if (!callClient) return undefined;
+  if (!callClient) {
+    return undefined;
+  }
 
   return createDefaultCallingHandlersForComponent(callClient, callAgent, deviceManager, call, component);
 };

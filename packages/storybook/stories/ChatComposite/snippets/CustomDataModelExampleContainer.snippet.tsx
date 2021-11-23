@@ -73,7 +73,9 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
         onClick: () => console.log('Custom Menu Item Clicked')
       }
     ];
-    if (defaultMenuItems) customMenuItems = customMenuItems.concat(defaultMenuItems);
+    if (defaultMenuItems) {
+      customMenuItems = customMenuItems.concat(defaultMenuItems);
+    }
     return customMenuItems;
   };
 

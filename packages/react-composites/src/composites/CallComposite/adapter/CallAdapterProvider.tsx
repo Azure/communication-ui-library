@@ -24,6 +24,8 @@ export const CallAdapterProvider = (props: CallProviderProps): JSX.Element => {
  */
 export const useAdapter = (): CallAdapter => {
   const adapter = useContext(CallAdapterContext);
-  if (!adapter) throw 'Cannot find adapter please initialize before usage.';
+  if (!adapter) {
+    throw 'Cannot find adapter please initialize before usage.';
+  }
   return adapter;
 };
