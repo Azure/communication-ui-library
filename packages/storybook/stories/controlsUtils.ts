@@ -320,5 +320,6 @@ export const defaultMeetingCompositeHiddenControls = {
   fluentTheme: hiddenControl,
   meetingInvitationURL: hiddenControl,
   rtl: hiddenControl,
-  options: hiddenControl
+  options: hiddenControl,
+  formFactor: hiddenControl
 };
