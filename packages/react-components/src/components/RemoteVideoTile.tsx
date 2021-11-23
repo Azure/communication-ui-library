@@ -39,10 +39,11 @@ export const RemoteVideoTile = React.memo(
       showMuteIndicator
     } = props;
 
-    if (isAvailable && !renderElement) {
-      onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
-    }
-    if (!isAvailable) {
+    if (isAvailable) {
+      if (!renderElement) {
+        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
+      }
+    } else {
       onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
     }
 
