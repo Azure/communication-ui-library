@@ -315,13 +315,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async startCamera(options?: VideoStreamOptions): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!isCameraOn(this.getState())) await this.handlers.onToggleCamera(options);
+      if (!isCameraOn(this.getState())) {
+        await this.handlers.onToggleCamera(options);
+      }
     });
   }
 
   public async stopCamera(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (isCameraOn(this.getState())) await this.handlers.onToggleCamera();
+      if (isCameraOn(this.getState())) {
+        await this.handlers.onToggleCamera();
+      }
     });
   }
 
@@ -347,13 +351,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async startScreenShare(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+      if (!this.call?.isScreenSharingOn) {
+        await this.handlers.onToggleScreenShare();
+      }
     });
   }
 
   public async stopScreenShare(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+      if (this.call?.isScreenSharingOn) {
+        await this.handlers.onToggleScreenShare();
+      }
     });
   }
 

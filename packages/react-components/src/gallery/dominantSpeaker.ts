@@ -55,7 +55,9 @@ export const smartDominantSpeakerParticipants = (
     const newVisibleParticipantId = newVisibleParticipantIds[index];
     if (newVisibleParticipantId === undefined || !dominantSpeakerIds.includes(newVisibleParticipantId)) {
       const replacement = newDominantSpeakerIds.shift();
-      if (!replacement) break;
+      if (!replacement) {
+        break;
+      }
       newVisibleParticipantIds[index] = replacement;
     }
   }

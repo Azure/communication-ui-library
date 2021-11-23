@@ -49,7 +49,9 @@ export const RenderVideoTileExample = (): JSX.Element => {
     const cameras = await deviceManager?.getCameras();
     const videoDeviceInfo = cameras && cameras.length > 0 ? cameras[0] : undefined;
 
-    if (!videoDeviceInfo) return;
+    if (!videoDeviceInfo) {
+      return;
+    }
 
     const stream = new LocalVideoStream(videoDeviceInfo);
 

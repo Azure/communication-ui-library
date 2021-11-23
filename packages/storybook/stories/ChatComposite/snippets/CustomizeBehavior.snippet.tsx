@@ -20,7 +20,9 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   const [adapter, setAdapter] = useState<ChatAdapter>();
 
   useEffect(() => {
-    if (!props) return;
+    if (!props) {
+      return;
+    }
 
     const createAdapter = async (): Promise<void> => {
       const chatAdapter = await createAzureCommunicationChatAdapter({
