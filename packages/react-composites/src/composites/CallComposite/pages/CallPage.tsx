@@ -1,26 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { DiagnosticQuality } from '@azure/communication-calling';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { CallCompositeOptions } from '../CallComposite';
+import { CallArrangement } from '../components/CallArrangement';
+import { MediaGallery } from '../components/MediaGallery';
+import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
 import { useHandlers } from '../hooks/useHandlers';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
-import { MediaGallery } from '../components/MediaGallery';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
-import { CallArrangement } from '../components/CallArrangement';
-import { reduceCallControlsForMobile } from '../utils';
 import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
-import { DiagnosticQuality } from '@azure/communication-calling';
-import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
-import { useAdapter } from '../adapter/CallAdapterProvider';
-import { _isInCall } from '@internal/calling-component-bindings';
-import { getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
+import { reduceCallControlsForMobile } from '../utils';
 
 /**
  * @private
@@ -56,24 +53,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
-  const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
-  const adapter = useAdapter();
 
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
-
-  /**
-   * Since toggling microphone in lobby page doesn't actually change the microphone status in the call object,
-   * we track it as a ui state attribute `isLocalMicrophoneEnabled` and force the adapter to mute/unmute the call
-   * as soon as its connected.
-   */
-  useEffect(() => {
-    if (_isInCall(callStatus) && isLocalMicrophoneEnabled) {
-      adapter.unmute();
-    } else if (_isInCall(callStatus) && !isLocalMicrophoneEnabled) {
-      adapter.mute();
-    }
-  }, [adapter, callStatus, isLocalMicrophoneEnabled]);
 
   return (
     <CallArrangement

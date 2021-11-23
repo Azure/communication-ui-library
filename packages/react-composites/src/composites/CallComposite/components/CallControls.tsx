@@ -6,9 +6,9 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CameraButton,
   ControlBar,
+  DevicesButton,
   EndCallButton,
   MicrophoneButton,
-  DevicesButton,
   ParticipantMenuItemsCallback,
   ParticipantsButton,
   ScreenShareButton,
@@ -21,9 +21,9 @@ import { getCallStatus, getLocalMicrophoneEnabled } from '../selectors/baseSelec
 import {
   checkedButtonOverrideStyles,
   controlButtonBaseStyle,
+  devicesButtonWithIncreasedTouchTargets,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,
-  devicesButtonWithIncreasedTouchTargets,
   participantButtonWithIncreasedTouchTargets
 } from '../styles/CallControls.styles';
 
@@ -100,9 +100,13 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
 
-  /** When call is in Lobby, microphone button should display the local microphone state. */
+  /**
+   * When call is in Lobby, microphone button should be disabled.
+   * This is due to to headless limitation where a call can not be muted/unmuted in lobby.
+   */
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   if (_isInLobbyOrConnecting(callStatus)) {
+    microphoneButtonProps.disabled = true;
     microphoneButtonProps.checked = isLocalMicrophoneEnabled;
   }
   const cameraButtonProps = usePropsFor(CameraButton);

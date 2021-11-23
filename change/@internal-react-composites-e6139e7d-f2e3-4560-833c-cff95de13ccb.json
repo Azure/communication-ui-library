@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add support for microphone toggle in lobby",
+  "comment": "Disable microphone toggle in lobby as it's not supported by headless SDK",
   "packageName": "@internal/react-composites",
   "email": "anjulgarg@live.com",
   "dependentChangeType": "patch"
