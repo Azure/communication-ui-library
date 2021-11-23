@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingHandlers, createDefaultCallingHandlers, _isInCall } from '@internal/calling-component-bindings';
+import {
+  CallingHandlers,
+  createDefaultCallingHandlers,
+  _isInCall,
+  _isInLobbyOrConnecting
+} from '@internal/calling-component-bindings';
 import {
   CallClientState,
   CallError,
@@ -99,8 +104,6 @@ class CallContext {
       page: getCallCompositePage(call, latestEndedCall),
       endedCall: latestEndedCall,
       devices: clientState.deviceManager,
-      isLocalPreviewMicrophoneEnabled:
-        call?.isMuted === undefined ? this.state.isLocalPreviewMicrophoneEnabled : !call?.isMuted,
       latestErrors: clientState.latestErrors
     });
   }
@@ -315,21 +318,24 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async startCamera(options?: VideoStreamOptions): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!isCameraOn(this.getState())) await this.handlers.onToggleCamera(options);
+      if (!isCameraOn(this.getState())) {
+        await this.handlers.onToggleCamera(options);
+      }
     });
   }
 
   public async stopCamera(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (isCameraOn(this.getState())) await this.handlers.onToggleCamera();
+      if (isCameraOn(this.getState())) {
+        await this.handlers.onToggleCamera();
+      }
     });
   }
 
   public async mute(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!_isInCall(this.call?.state)) {
-        this.context.setIsLocalMicrophoneEnabled(false);
-      } else if (!this.call?.isMuted) {
+      this.context.setIsLocalMicrophoneEnabled(false);
+      if (_isInCall(this.call?.state) && !this.call?.isMuted) {
         await this.handlers.onToggleMicrophone();
       }
     });
@@ -337,9 +343,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async unmute(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!_isInCall(this.call?.state)) {
-        this.context.setIsLocalMicrophoneEnabled(true);
-      } else if (this.call?.isMuted) {
+      this.context.setIsLocalMicrophoneEnabled(true);
+      if (_isInCall(this.call?.state) && this.call?.isMuted) {
         await this.handlers.onToggleMicrophone();
       }
     });
@@ -347,13 +352,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   public async startScreenShare(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+      if (!this.call?.isScreenSharingOn) {
+        await this.handlers.onToggleScreenShare();
+      }
     });
   }
 
   public async stopScreenShare(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (this.call?.isScreenSharingOn) await this.handlers.onToggleScreenShare();
+      if (this.call?.isScreenSharingOn) {
+        await this.handlers.onToggleScreenShare();
+      }
     });
   }
 

@@ -95,17 +95,23 @@ const videoGalleryRemoteParticipantsMemo = (
       }
     | undefined
 ): VideoGalleryRemoteParticipant[] => {
-  if (!remoteParticipants) return [];
+  if (!remoteParticipants) {
+    return [];
+  }
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
-    return Object.values(remoteParticipants).map((participant: RemoteParticipantState) => {
-      return memoizedFn(
-        toFlatCommunicationIdentifier(participant.identifier),
-        participant.isMuted,
-        checkIsSpeaking(participant),
-        participant.videoStreams,
-        participant.displayName
-      );
-    });
+    return Object.values(remoteParticipants)
+      .filter((participant: RemoteParticipantState) => {
+        return participant.state !== 'InLobby';
+      })
+      .map((participant: RemoteParticipantState) => {
+        return memoizedFn(
+          toFlatCommunicationIdentifier(participant.identifier),
+          participant.isMuted,
+          checkIsSpeaking(participant),
+          participant.videoStreams,
+          participant.displayName
+        );
+      });
   });
 };
 

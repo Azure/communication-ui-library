@@ -2,12 +2,13 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyleSets, Stack } from '@fluentui/react';
+import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CameraButton,
   ControlBar,
+  DevicesButton,
   EndCallButton,
   MicrophoneButton,
-  DevicesButton,
   ParticipantMenuItemsCallback,
   ParticipantsButton,
   ScreenShareButton,
@@ -15,12 +16,14 @@ import {
 } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../hooks/usePropsFor';
+import { useSelector } from '../hooks/useSelector';
+import { getCallStatus, getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
 import {
   checkedButtonOverrideStyles,
   controlButtonBaseStyle,
+  devicesButtonWithIncreasedTouchTargets,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,
-  devicesButtonWithIncreasedTouchTargets,
   participantButtonWithIncreasedTouchTargets
 } from '../styles/CallControls.styles';
 
@@ -94,7 +97,20 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const options = typeof props.options === 'boolean' ? {} : props.options;
 
+  const callStatus = useSelector(getCallStatus);
+  const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
+
+  /**
+   * When call is in Lobby, microphone button should be disabled.
+   * This is due to to headless limitation where a call can not be muted/unmuted in lobby.
+   */
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
+  if (_isInLobbyOrConnecting(callStatus)) {
+    microphoneButtonProps.disabled = true;
+    // Lobby page should show the microphone status that was set on the local preview/configuration
+    // page until the user successfully joins the call.
+    microphoneButtonProps.checked = isLocalMicrophoneEnabled;
+  }
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);

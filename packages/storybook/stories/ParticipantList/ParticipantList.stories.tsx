@@ -126,7 +126,10 @@ export default {
     myUserId: hiddenControl,
     onRenderParticipant: hiddenControl,
     onRenderAvatar: hiddenControl,
-    onParticipantRemove: hiddenControl
+    onParticipantRemove: hiddenControl,
+    onRemoveParticipant: hiddenControl,
+    onFetchParticipantMenuItems: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {
