@@ -4,15 +4,19 @@ import ChatAppStatefulComplete from '!!raw-loader!./snippets/ChatAppStatefulComp
 import ChatAppStatefulProviders from '!!raw-loader!./snippets/ChatAppStatefulProviders.snippet.tsx';
 import ChatComponentsStateful from '!!raw-loader!./snippets/ChatComponentsStateful.tsx';
 
-<Meta id="quickstarts-statefulclient" title="Stateful Client/Get Started" />
+<Meta id="quickstarts-statefulchatclient" title="Stateful Client/Get Started (Chat) " />
 
-# Quickstart: Get started with Stateful Clients
+# Quickstart: Get started with Chat Stateful Client
 
 Get started with Azure Communication Services by using the UI Library to quickly integrate communication experiences into your applications.
 In this quickstart, you'll learn how to integrate UI Library stateful clients into your application to build communication experiences.
 To learn more about how to build applications with UI Library UI Components, see [Get started with UI Components](./?path=/docs/quickstarts-uicomponents--page)
 Stateful clients make it easier for developers to build UI applications on top of Azure Communication Services by providing built-in state that UI components can use to render.
 Find more information about [Stateful client here.](./?path=/docs/statefulclient-overview--page).
+
+## Download the code
+
+You can find the completed code for this quickstart here: [Get started with Chat Stateful Client](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-starting-with-chat-stateful)
 
 ## Prerequisites
 
@@ -21,7 +25,7 @@ Find more information about [Stateful client here.](./?path=/docs/statefulclient
 - An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
 - An identity with Chat scope. Generate an identity using the [Azure Portal](https://docs.microsoft.com/azure/communication-services/quickstarts/identity/quick-create-identity).
 
-Recommended:
+**Recommended:**
 
 - Knowledge of [UI Library Components](./?path=/story/quickstarts-uicomponents--page). We will be using the UI Components in this quickstart.
 - Knowledge of Azure Communication Services [Chat patterns](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts).
@@ -37,13 +41,13 @@ We'll use the `create-react-app` template for this quickstart. For more informat
 
 ```bash
 
-npx create-react-app ui-library-starting-with-stateful --template typescript
+npx create-react-app ui-library-starting-with-chat-stateful --template typescript
 
-cd ui-library-starting-with-stateful
+cd ui-library-starting-with-chat-stateful
 
 ```
 
-At the end of this process, you should have a full application inside the folder `ui-library-starting-with-stateful`.
+At the end of this process, you should have a full application inside the folder `ui-library-starting-with-chat-stateful`.
 For this quickstart, we'll be modifying files inside the `src` folder.
 
 ### Install the Package
@@ -140,6 +144,8 @@ To run the code above use the command:
 npm run start
 
 ```
+
+![End state of stateful chat quickstart]("images/ChatEndState.png")
 
 ## Troubleshooting
 
