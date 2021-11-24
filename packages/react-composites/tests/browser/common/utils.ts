@@ -4,22 +4,12 @@
 import { IDS } from './constants';
 import { ElementHandle, JSHandle, Page } from '@playwright/test';
 import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
-import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
 export const PER_STEP_TIMEOUT_MS = 5000;
 
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
-
-async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise<T> {
-  try {
-    return await fn();
-  } catch (e) {
-    await page.screenshot({ path: `test-results/failure-screenshot-${generateGUID()}.png` });
-    throw e;
-  }
-}
 
 /**
  * Page click helper function - USE INSTEAD OF PAGE.CLICK
@@ -29,10 +19,10 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
  * Examples of this are tooltips for control bar buttons would show, as well
  * as buttons would show their onHover state.
  *
- * This function will also take a screenshot if the page.click fails for any reason.
+ * Limiting the timeout ensures there is a screenshot on failure.
  */
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
-  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
+  await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS });
 
   // Move the mouse off the screen
   await page.mouse.move(-1, -1);
@@ -40,31 +30,25 @@ export const pageClick = async (page: Page, selector: string): Promise<void> => 
 
 /**
  * Page wait for selector helper function - USE INSTEAD OF PAGE.WAITFORSELECTOR
- * Using this, when the wait for selector fails, we get a screenshot showing why it failed.
+ * Using a timeout, when the wait for selector fails, we get a screenshot showing why it failed.
  */
 export const waitForSelector = async (
   page: Page,
   selector: string
 ): Promise<ElementHandle<SVGElement | HTMLElement>> => {
-  return await screenshotOnFailure(
-    page,
-    async () => await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS })
-  );
+  return await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS });
 };
 
 /**
  * Page wait for function helper function - USE INSTEAD OF PAGE.WAITFORFUNCTION
- * Using this, when the wait for function fails, we get a screenshot showing why it failed.
+ * Using a timeout, when the wait for function fails, we get a screenshot showing why it failed.
  */
 export async function waitForFunction<R>(
   page: Page,
   pageFunction: PageFunction<R>,
   arg?: unknown
 ): Promise<SmartHandle<R>> {
-  return await screenshotOnFailure(
-    page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: PER_STEP_TIMEOUT_MS })
-  );
+  return await page.waitForFunction(pageFunction, arg, { timeout: PER_STEP_TIMEOUT_MS });
 }
 
 /**
