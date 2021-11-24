@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IDS } from '../common/constants';
-import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl } from '../common/utils';
+import {
+  dataUiId,
+  stubMessageTimestamps,
+  waitForChatCompositeToLoad,
+  buildUrl,
+  waitForFunction,
+  waitForSelector
+} from '../common/utils';
 import { test } from './fixture';
 import { createChatThreadAndUsers, loadNewPage } from '../common/fixtureHelpers';
 import { expect } from '@playwright/test';
@@ -36,13 +43,13 @@ test.describe('Chat Composite E2E Tests', () => {
     await page0.bringToFront();
     await page0.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page0.keyboard.press('Enter');
-    await page0.waitForSelector(`[data-ui-status="delivered"]`);
+    await waitForSelector(page0, `[data-ui-status="delivered"]`);
     await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('sent-messages.png');
 
     const page1 = pages[1];
     await page1.bringToFront();
-    await page1.waitForSelector(`[data-ui-status="delivered"]`);
+    await waitForSelector(page1, `[data-ui-status="delivered"]`);
     await stubMessageTimestamps(page1);
 
     // It could be too slow to get typing indicator here, which makes the test flakey
@@ -54,7 +61,7 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await page1.screenshot()).toMatchSnapshot('received-messages.png');
 
     await page0.bringToFront();
-    await page0.waitForSelector(`[data-ui-status="seen"]`);
+    await waitForSelector(page0, `[data-ui-status="seen"]`);
     await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
   });
@@ -66,7 +73,7 @@ test.describe('Chat Composite E2E Tests', () => {
     await page1.bringToFront();
     await page1.type(dataUiId(IDS.sendboxTextField), 'I am not superstitious. Just a little stitious.');
     await page0.bringToFront();
-    await page0.waitForSelector(dataUiId(IDS.typingIndicator));
+    await waitForSelector(page0, dataUiId(IDS.typingIndicator));
     const indicator0 = await page0.$(dataUiId(IDS.typingIndicator));
 
     expect(await indicator0?.innerHTML()).toContain(users[1].displayName);
@@ -92,14 +99,14 @@ test.describe('Chat Composite E2E Tests', () => {
     await page1.keyboard.press('Enter');
     // Read the message to generate stable result
     await pages[0].bringToFront();
-    await pages[0].waitForSelector(`[data-ui-status="delivered"]`);
+    await waitForSelector(pages[0], `[data-ui-status="delivered"]`);
 
     await page1.bringToFront();
-    await page1.waitForSelector(`[data-ui-status="seen"]`);
+    await waitForSelector(page1, `[data-ui-status="seen"]`);
     await page1.reload({ waitUntil: 'networkidle' });
     await waitForChatCompositeToLoad(page1);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
-    await page1.waitForSelector(`[data-ui-status="delivered"]`);
+    await waitForSelector(page1, `[data-ui-status="delivered"]`);
     await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
@@ -113,12 +120,9 @@ test.describe('Chat Composite custom data model', () => {
     await page.bringToFront();
     await page.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page.keyboard.press('Enter');
-    await page.waitForSelector(`[data-ui-status="delivered"]`);
-    await page.waitForFunction(() => {
-      return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
-    });
-    await page.waitForSelector('#custom-data-model-typing-indicator');
-    await page.waitForSelector('#custom-data-model-message');
+    await waitForSelector(page, `[data-ui-status="delivered"]`);
+    await waitForSelector(page, '#custom-data-model-typing-indicator');
+    await waitForSelector(page, '#custom-data-model-message');
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
   });
