@@ -324,6 +324,7 @@ export interface CallCompositeStrings {
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
     microphonePermissionDenied: string;
+    microphoneToggleInLobbyNotAllowed: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
