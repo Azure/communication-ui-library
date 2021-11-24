@@ -15,10 +15,13 @@ module.exports = {
       name: '@storybook/addon-essentials',
       options: {
         actions: false,
-        controls: false
+        controls: false,
+        measure: false,
+        outline: false,
+        backgrounds: false,
+        viewport: false
       }
-    },
-    '@storybook/addon-controls'
+    }
   ],
   features: {
     postcss: false,

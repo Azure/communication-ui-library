@@ -23,6 +23,7 @@ registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 export const parameters = {
   layout: 'fullscreen',
+  previewTabs: { 'storybook/docs/panel': { index: -1 } },
   docs: {
     container: props => (
       <TOC>
@@ -151,22 +152,11 @@ export const globalTypes = {
   locale: {
     name: 'Locale',
     description: 'Locale for components',
-    defaultValue: 'en_US',
-    toolbar: {
-      icon: 'globe',
-      items: Object.keys(LOCALES).map((key) => ({ title: LOCALES[key].englishName, value: key })),
-    },
+    defaultValue: 'en_US'
   },
   rtl: {
     name: 'RTL',
     description: 'Whether the direction of components is right-to-left or left-to-right',
-    defaultValue: 'ltr',
-    toolbar: {
-      icon: 'transfer',
-      items: [
-        { value: 'ltr', title: 'Left-to-right' },
-        { value: 'rtl', title: 'Right-to-left' }
-      ]
-    }
+    defaultValue: 'ltr'
   }
 };
