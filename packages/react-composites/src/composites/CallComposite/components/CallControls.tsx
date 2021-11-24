@@ -15,6 +15,7 @@ import {
   useTheme
 } from '@internal/react-components';
 import React, { useMemo } from 'react';
+import { useLocale } from '../../localization';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
@@ -99,6 +100,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
+  const strings = useLocale().strings.call;
 
   /**
    * When call is in Lobby, microphone button should be disabled.
@@ -111,6 +113,15 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     // page until the user successfully joins the call.
     microphoneButtonProps.checked = isLocalMicrophoneEnabled;
   }
+  const microphoneButtonStrings = _isInLobbyOrConnecting(callStatus)
+    ? {
+        strings: {
+          tooltipOffContent: strings.microphoneToggleInLobbyNotAllowed,
+          tooltipOnContent: strings.microphoneToggleInLobbyNotAllowed
+        }
+      }
+    : {};
+
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
@@ -142,6 +153,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...microphoneButtonProps}
       showLabel={!compactMode}
       styles={controlButtonBaseStyle}
+      {...microphoneButtonStrings}
     />
   );
 
