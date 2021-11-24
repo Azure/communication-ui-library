@@ -5,14 +5,15 @@ import {
   dataUiId,
   loadCallPageWithParticipantVideos,
   pageClick,
-  waitForCallCompositeToLoad
+  PER_STEP_TIMEOUT_MS,
+  waitForCallCompositeToLoad,
+  waitForFunction,
+  waitForSelector
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';
 import { IDS } from '../common/constants';
-
-const PER_STEP_TIMEOUT_MS = 1000;
 
 /**
  * Since we are providing a .y4m video to act as a fake video stream, chrome
@@ -55,7 +56,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     const page = pages[0];
     await pageClick(page, dataUiId('call-composite-local-device-settings-microphone-button'));
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
-    await page.waitForFunction(() => {
+    await waitForFunction(page, () => {
       const videoNode = document.querySelector('video');
       const videoLoaded = videoNode?.readyState === 4;
       return !!videoNode && videoLoaded;
@@ -68,7 +69,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     const page = pages[0];
 
     await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
-    await page.waitForSelector(dataUiId('microphoneButtonLabel-tooltip'));
+    await waitForSelector(page, dataUiId('microphoneButtonLabel-tooltip'));
     await stubLocalCameraName(page);
     expect(await page.screenshot()).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
   });
@@ -131,7 +132,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       await page.bringToFront();
 
       await pageClick(page, dataUiId('call-composite-participants-button'));
-      const buttonCallOut = await page.waitForSelector('.ms-Callout');
+      const buttonCallOut = await waitForSelector(page, '.ms-Callout');
       // This will ensure no animation is happening for the callout
       await buttonCallOut.waitForElementState('stable');
 
@@ -144,7 +145,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
     await page.bringToFront();
     await pageClick(page, dataUiId('call-composite-camera-button'));
-    await page.waitForFunction(() => {
+    await waitForFunction(page, () => {
       return document.querySelectorAll('video').length === 1;
     });
     expect(await page.screenshot()).toMatchSnapshot(`video-gallery-page-camera-toggled.png`);
@@ -174,7 +175,7 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     const page = pages[0];
     await page.bringToFront();
     await pageClick(page, dataUiId('call-composite-hangup-button'));
-    await page.waitForSelector(dataUiId('left-call-page'));
+    await waitForSelector(page, dataUiId('left-call-page'));
     expect(await page.screenshot()).toMatchSnapshot(`left-call-page.png`);
   });
 
@@ -190,7 +191,7 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     await page0.click(dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
 
     await page1.bringToFront();
-    await page1.waitForSelector(dataUiId('removed-from-call-page'));
+    await waitForSelector(page1, dataUiId('removed-from-call-page'));
     expect(await page1.screenshot()).toMatchSnapshot(`remove-from-call-page.png`);
   });
 });
@@ -220,23 +221,19 @@ test.describe('Call composite participant menu items injection tests', () => {
   test('injected menu items appear', async ({ pages }) => {
     // TODO: Remove this function when we fix unstable contextual menu bug
     // Bug link: https://skype.visualstudio.com/SPOOL/_workitems/edit/2558377/?triage=true
-    await turnOffAllVideos(pages, PER_STEP_TIMEOUT_MS);
+    await turnOffAllVideos(pages);
 
     const page = pages[0];
     await page.bringToFront();
 
     // Open participants flyout.
-    await pageClick(page, dataUiId('call-composite-participants-button'), { timeout: PER_STEP_TIMEOUT_MS });
+    await pageClick(page, dataUiId('call-composite-participants-button'));
     // Open participant list flyout
-    await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem), { timeout: PER_STEP_TIMEOUT_MS });
+    await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
     // There shouldbe at least one participant. Just click on the first.
-    await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0', {
-      timeout: PER_STEP_TIMEOUT_MS
-    });
+    await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0');
 
-    const injectedMenuItem = await page.waitForSelector(dataUiId('test-app-participant-menu-item'), {
-      timeout: PER_STEP_TIMEOUT_MS
-    });
+    const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
     await injectedMenuItem.waitForElementState('stable', { timeout: PER_STEP_TIMEOUT_MS });
 
     expect(await page.screenshot()).toMatchSnapshot(`participant-menu-item-flyout.png`);
@@ -244,15 +241,14 @@ test.describe('Call composite participant menu items injection tests', () => {
 });
 
 // `timeout` is applied to each individual step that waits for a condition.
-const turnOffAllVideos = async (pages: Page[], timeout?: number): Promise<void> => {
-  const options = timeout ? { timeout } : undefined;
+const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
   for (const page of pages) {
-    await pageClick(page, dataUiId('call-composite-camera-button'), options);
+    await pageClick(page, dataUiId('call-composite-camera-button'));
   }
   for (const page of pages) {
     await page.bringToFront();
-    await page.waitForFunction(() => {
+    await waitForFunction(page, () => {
       return document.querySelectorAll('video').length === 0;
-    }, options);
+    });
   }
 };
