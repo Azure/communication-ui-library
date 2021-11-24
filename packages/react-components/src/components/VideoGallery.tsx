@@ -191,7 +191,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const localVideoTile = useMemo((): JSX.Element => {
     const localVideoStream = localParticipant?.videoStream;
 
-    if (onRenderLocalVideoTile) return onRenderLocalVideoTile(localParticipant);
+    if (onRenderLocalVideoTile) {
+      return onRenderLocalVideoTile(localParticipant);
+    }
 
     const localVideoTileStyles = shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {};
 

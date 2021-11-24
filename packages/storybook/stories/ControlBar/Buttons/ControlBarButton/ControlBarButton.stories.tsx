@@ -95,7 +95,9 @@ export default {
     labelKey: hiddenControl,
     strings: hiddenControl,
     onRenderOnIcon: hiddenControl,
-    onRenderOffIcon: hiddenControl
+    onRenderOffIcon: hiddenControl,
+    tooltipId: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {

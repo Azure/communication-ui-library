@@ -27,7 +27,9 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string
   ): void => {
-    if (newValue === undefined) return;
+    if (newValue === undefined) {
+      return;
+    }
 
     setName(newValue);
     if (setEmptyWarning && !newValue) {

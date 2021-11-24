@@ -86,7 +86,6 @@ function App(): JSX.Element {
               : undefined
           }
           locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
-          options={{ participantPane: true }}
         />
       )}
     </_IdentifierProvider>

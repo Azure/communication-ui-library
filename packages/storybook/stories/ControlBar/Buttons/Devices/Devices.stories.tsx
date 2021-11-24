@@ -97,7 +97,8 @@ export default {
     onSelectCamera: hiddenControl,
     onSelectMicrophone: hiddenControl,
     onSelectSpeaker: hiddenControl,
-    strings: hiddenControl
+    strings: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {
