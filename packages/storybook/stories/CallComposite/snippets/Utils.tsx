@@ -11,8 +11,8 @@ export const ConfigHintBanner = (): JSX.Element => {
       Please provide an{' '}
       <a href={MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART} target="_blank" rel="noreferrer">
         access token, userId
-      </a>{' '}
-      and display name to use.
+      </a>
+      .
     </p>
   );
   return <>{CompositeConnectionParamsErrMessage([emptyConfigTips])}</>;
