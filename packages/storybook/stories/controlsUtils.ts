@@ -169,7 +169,7 @@ export const controlsToAdd = {
     name: 'Layout'
   },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
-  displayName: { control: 'text', defaultValue: '', name: 'Display Name' },
+  displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
   enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
   endpointUrl: { control: 'text', defaultValue: '', name: 'Azure Communication Services endpoint URL' },
   errorTypes: {
