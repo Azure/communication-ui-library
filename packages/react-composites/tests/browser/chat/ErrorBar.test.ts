@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 import { IDS } from '../common/constants';
 import { test } from './fixture';
-import { buildUrl, dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
+import {
+  buildUrl,
+  dataUiId,
+  stubMessageTimestamps,
+  waitForChatCompositeToLoad,
+  waitForSelector
+} from '../common/utils';
 import { Page, expect } from '@playwright/test';
 
 // All tests in this suite *must be run sequentially*.
@@ -73,9 +79,9 @@ const sendAMessage = async (page: Page): Promise<void> => {
 };
 
 const waitForSendFailure = async (page: Page): Promise<void> => {
-  await page.waitForSelector(`[data-ui-status="failed"]`);
+  await waitForSelector(page, `[data-ui-status="failed"]`);
 };
 
 const waitForSendSuccess = async (page: Page): Promise<void> => {
-  await page.waitForSelector(`[data-ui-status="delivered"]`);
+  await waitForSelector(page, `[data-ui-status="delivered"]`);
 };
