@@ -28,7 +28,7 @@ const chromeLaunchOptions = {
 };
 
 const config: PlaywrightTestConfig = {
-  timeout: 30000,
+  timeout: 60000,
 
   // Ensure tests run sequentially. All tests in this suite *must be run sequentially*.
   // The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.

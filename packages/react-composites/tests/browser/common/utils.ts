@@ -4,9 +4,10 @@
 import { IDS } from './constants';
 import { ElementHandle, JSHandle, Page } from '@playwright/test';
 import { ChatUserType, CallUserType, MeetingUserType } from './fixtureTypes';
+import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
-export const PER_STEP_TIMEOUT_MS = 3000;
+export const PER_STEP_TIMEOUT_MS = 5000;
 
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
@@ -15,7 +16,7 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
   try {
     return await fn();
   } catch (e) {
-    await page.screenshot({ path: 'test-results/failure-screenshot.png' });
+    await page.screenshot({ path: `test-results/failure-screenshot-${generateGUID()}.png` });
     throw e;
   }
 }
