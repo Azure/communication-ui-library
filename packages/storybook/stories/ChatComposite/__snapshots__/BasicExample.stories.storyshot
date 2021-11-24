@@ -24,19 +24,24 @@ exports[`storybook snapshot tests Storyshots Composites/ChatComposite/Basic Exam
         className="ms-Stack css-1"
       >
         <span>
-          <p>
-            Please provide an
-             
-            <a
-              href="https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity"
-              rel="noreferrer"
-              target="_blank"
-            >
-              access token, userId
-            </a>
-             
-            for each participant, endpointUrl and display name to use.
-          </p>
+          <div>
+            <p>
+              Please provide an
+               
+              <a
+                href="https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity"
+                rel="noreferrer"
+                target="_blank"
+              >
+                access token, userId
+              </a>
+               
+              for each participant, endpointUrl and display name to use.
+            </p>
+            <p>
+              A display name has already been set by default, but feel free to change it.
+            </p>
+          </div>
         </span>
       </div>
     </div>
