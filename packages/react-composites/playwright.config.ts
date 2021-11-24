@@ -43,6 +43,7 @@ const config: PlaywrightTestConfig = {
   // Applies to all projects
   use: {
     headless: true,
+    screenshot: 'only-on-failure',
     video: 'retain-on-failure'
   },
 
