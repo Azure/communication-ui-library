@@ -62,7 +62,14 @@ export class EventSubscriber {
   };
 
   private onChatMessageReceived = (event: ChatMessageReceivedEvent): void => {
+    // Today we are avoiding how to render these messages. In the future we can
+    // remove this condition and handle this message appropriately.
+    if (event.type.startsWith('RichText/')) {
+      return;
+    }
+
     const newMessage = this.convertEventToChatMessage(event);
+
     // Because of bug in chatMessageReceived event, if we already have that particular message in context, we want to
     // make sure to not overwrite the sequenceId when calling setChatMessage.
     const existingMessage = this.chatContext.getState().threads[event.threadId]?.chatMessages[event.id];
