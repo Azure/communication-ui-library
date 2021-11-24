@@ -59,7 +59,7 @@ const BasicStory = (args, context): JSX.Element => {
           {...containerProps}
           locale={compositeLocale(locale)}
           errorBar={args.showErrorBar}
-          participants={args.showParticipants}
+          participants={false}
           topic={args.showTopic}
         />
       ) : (
@@ -83,7 +83,6 @@ export default {
     endpointUrl: controlsToAdd.endpointUrl,
     displayName: controlsToAdd.displayName,
     showErrorBar: controlsToAdd.showErrorBar,
-    showParticipants: controlsToAdd.showChatParticipants,
     showTopic: controlsToAdd.showChatTopic,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
