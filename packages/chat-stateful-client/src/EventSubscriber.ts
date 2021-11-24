@@ -65,7 +65,6 @@ export class EventSubscriber {
     // Today we are avoiding how to render these messages. In the future we can
     // remove this condition and handle this message appropriately.
     if (event.type !== 'Text' && event.type !== 'RichText/Html') {
-      console.log('*** '+event.type)
       return;
     }
 
