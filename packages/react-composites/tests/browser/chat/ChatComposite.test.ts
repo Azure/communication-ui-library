@@ -114,9 +114,6 @@ test.describe('Chat Composite custom data model', () => {
     await page.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page.keyboard.press('Enter');
     await page.waitForSelector(`[data-ui-status="delivered"]`);
-    await page.waitForFunction(() => {
-      return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
-    });
     await page.waitForSelector('#custom-data-model-typing-indicator');
     await page.waitForSelector('#custom-data-model-message');
     await stubMessageTimestamps(page);
