@@ -64,7 +64,8 @@ export class EventSubscriber {
   private onChatMessageReceived = (event: ChatMessageReceivedEvent): void => {
     // Today we are avoiding how to render these messages. In the future we can
     // remove this condition and handle this message appropriately.
-    if (event.type !== 'Text' && event.type !== 'RichText/Html') {
+    const messageEventType = event.type.toLowerCase();
+    if (messageEventType !== 'text' && messageEventType !== 'richtext/html' && messageEventType !== 'html') {
       return;
     }
 
