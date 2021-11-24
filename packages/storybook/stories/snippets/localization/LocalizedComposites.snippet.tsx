@@ -6,58 +6,58 @@ import {
   ChatComposite,
   ChatAdapter,
   createAzureCommunicationChatAdapter,
-  COMPOSITE_LOCALE_FR_FR,
-  fromFlatCommunicationIdentifier
+  COMPOSITE_LOCALE_FR_FR
 } from '@azure/communication-react';
 import React, { useEffect, useMemo, useState } from 'react';
 
-function App(): JSX.Element {
-  const endpointUrl = '<Azure Communication Services Resource Endpoint>';
-  const userId = '<Azure Communication Services Identifier>';
-  const displayName = '<Display Name>';
-  const token = '<Azure Communication Services Access Token>';
+export type AppProps = {
+  userId: CommunicationUserIdentifier;
+  token: string;
+  displayName: string;
+  endpointUrl: string;
+  threadId: string;
+  locator: string;
+};
 
-  //Calling Variables
-  //For Group Id, developers can pass any GUID they can generate
-  const groupId = '<Developer generated GUID>';
+export const App = (props: AppProps): JSX.Element => {
   const [callAdapter, setCallAdapter] = useState<CallAdapter>();
-
-  //Chat Variables
-  const threadId = '<Get thread id from chat service>';
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
   // We can't even initialize the Chat and Call adapters without a well-formed token.
   const credential = useMemo(() => {
     try {
-      return new AzureCommunicationTokenCredential(token);
+      return new AzureCommunicationTokenCredential(props.token);
     } catch {
       console.error('Failed to construct token credential');
       return undefined;
     }
-  }, [token]);
+  }, [props.token]);
 
   useEffect(() => {
     const createAdapter = async (): Promise<void> => {
       setChatAdapter(
         await createAzureCommunicationChatAdapter({
-          endpoint: endpointUrl,
-          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-          displayName,
-          credential: new AzureCommunicationTokenCredential(token),
-          threadId
+          endpoint: props.endpointUrl,
+          userId: props.userId,
+          displayName: props.displayName,
+          credential: new AzureCommunicationTokenCredential(props.token),
+          threadId: props.threadId
         })
       );
+      const callLocator = isTeamsMeetingLink(props.locator)
+        ? { meetingLink: props.locator }
+        : { groupId: props.locator };
       setCallAdapter(
         await createAzureCommunicationCallAdapter({
-          userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-          displayName,
-          credential: new AzureCommunicationTokenCredential(token),
-          locator: { groupId }
+          userId: props.userId,
+          displayName: props.displayName,
+          credential: new AzureCommunicationTokenCredential(props.token),
+          locator: callLocator
         })
       );
     };
     createAdapter();
-  }, []);
+  }, [props]);
 
   if (!!callAdapter && !!chatAdapter) {
     return (
@@ -75,6 +75,6 @@ function App(): JSX.Element {
     return <h3>Failed to construct credential. Provided token is malformed.</h3>;
   }
   return <h3>Initializing...</h3>;
-}
+};
 
-export default App;
+const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
