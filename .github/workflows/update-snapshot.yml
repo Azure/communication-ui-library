@@ -56,11 +56,18 @@ jobs:
       - name: Build
         run: rush build -t component-examples
       - name: Update snapshot
+        id: updatesnapshots
         run: |
           cd samples/tests
           rushx update:snapshot:examples
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: samples/tests/test-results
       # Check if files have changed
       # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
       - name: Check for snapshot changes
@@ -129,11 +136,18 @@ jobs:
       - name: Build
         run: rush build -t sample-static-html-composites
       - name: Update snapshot
+        id: updatesnapshots
         run: |
           cd samples/tests
           rushx update:snapshot:bundle
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: samples/tests/test-results
       # Check if files have changed
       # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
       - name: Check for snapshot changes
@@ -200,10 +214,17 @@ jobs:
         working-directory: ./packages/react-composites
         run: rushx build:e2e
       - name: Update snapshot
+        id: updatesnapshots
         run: rushx test:e2e:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
       # Check if files have changed
       # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
       - name: Check for snapshot changes
