@@ -34,8 +34,7 @@ exports[`storybook snapshot tests Storyshots Composites/CallComposite/Basic Exam
             >
               access token, userId
             </a>
-             
-            and display name to use.
+            .
           </p>
         </span>
       </div>

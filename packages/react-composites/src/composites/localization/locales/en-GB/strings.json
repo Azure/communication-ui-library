@@ -30,7 +30,8 @@
     "removedFromCallTitle": "You were removed from the call",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call",
-    "mutedMessage": "You're muted"
+    "mutedMessage": "You're muted",
+    "microphoneToggleInLobbyNotAllowed": "Cannot mute or unmute while in lobby."
   },
   "chat": {
     "chatListHeader": "In this chat"

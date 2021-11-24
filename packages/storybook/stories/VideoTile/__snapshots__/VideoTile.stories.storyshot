@@ -21,21 +21,21 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
       }
     >
       <div
-        className="ms-Stack css-6"
+        className="ms-Stack css-7"
         data-ui-id="video-tile"
       >
         <div
           className="css-4"
         />
         <div
-          className="ms-Stack css-7"
+          className="ms-Stack css-8"
         >
           <div
-            className="ms-Stack css-9"
+            className="ms-Stack css-10"
           >
             <div
               aria-label=""
-              className="ms-Persona ms-Persona--size48 root-10"
+              className="ms-Persona ms-Persona--size48 root-11"
               style={
                 Object {
                   "height": 100,
@@ -44,11 +44,11 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
               }
             >
               <div
-                className="ms-Persona-coin ms-Persona--size48 coin-17"
+                className="ms-Persona-coin ms-Persona--size48 coin-18"
                 role="presentation"
               >
                 <div
-                  className="ms-Persona-imageArea imageArea-19"
+                  className="ms-Persona-imageArea imageArea-20"
                   role="presentation"
                   style={
                     Object {
@@ -59,7 +59,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
                 >
                   <div
                     aria-hidden="true"
-                    className="ms-Persona-initials initials-22"
+                    className="ms-Persona-initials initials-23"
                     style={
                       Object {
                         "height": 100,
@@ -67,17 +67,27 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
                       }
                     }
                   >
-                    <i
-                      aria-hidden={true}
-                      className="root-37 root-24"
-                      data-icon-name="Contact"
-                    >
-                      
-                    </i>
+                    <span>
+                      JS
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div
+          className="ms-Stack css-81 css-26"
+        >
+          <div
+            className="ms-Stack css-82 css-27"
+          >
+            <span
+              className="css-28"
+              title="John Smith"
+            >
+              John Smith
+            </span>
           </div>
         </div>
       </div>
