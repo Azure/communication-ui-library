@@ -88,7 +88,6 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           locale={props.locale}
-          options={{ participantPane: true }}
         />
       ) : (
         <h3>Loading...</h3>
