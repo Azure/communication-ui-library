@@ -29,6 +29,7 @@ import {
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   videoGalleryContainerStyle,
+  videoGalleryContainerTokens,
   videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
@@ -327,7 +328,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           {localParticipant && localVideoTile}
         </Modal>
       )}
-      <Stack horizontal={false} styles={videoGalleryContainerStyle}>
+      <Stack horizontal={false} styles={videoGalleryContainerStyle} tokens={videoGalleryContainerTokens}>
         {screenShareParticipant ? (
           remoteScreenShareComponent
         ) : localParticipant?.isScreenSharingOn ? (
