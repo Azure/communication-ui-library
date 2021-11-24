@@ -185,10 +185,10 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     const page1 = pages[1];
 
     await page0.bringToFront();
-    await page0.click(dataUiId('call-composite-participants-button')); // open participant flyout
-    await page0.click(dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
-    await page0.click(dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
-    await page0.click(dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
+    await pageClick(page0, dataUiId('call-composite-participants-button')); // open participant flyout
+    await pageClick(page0, dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
+    await pageClick(page0, dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
+    await pageClick(page0, dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
 
     await page1.bringToFront();
     await waitForSelector(page1, dataUiId('removed-from-call-page'));
