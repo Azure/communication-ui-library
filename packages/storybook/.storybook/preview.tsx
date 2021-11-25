@@ -168,23 +168,10 @@ export const globalTypes = {
     name: 'Locale',
     description: 'Locale for components',
     defaultValue: 'en_US',
-    toolbar: {
-      icon: 'globe',
-      right: '',
-      items: Object.keys(LOCALES).map((key) => ({ title: LOCALES[key].englishName, value: key })),
-    },
   },
   rtl: {
     name: 'RTL',
     description: 'Whether the direction of components is right-to-left or left-to-right',
-    defaultValue: 'ltr',
-    toolbar: {
-      icon: 'transfer',
-      right: '',
-      items: [
-        { value: 'ltr', title: 'Left-to-right' },
-        { value: 'rtl', title: 'Right-to-left' }
-      ]
-    }
+    defaultValue: 'ltr'
   }
 };
