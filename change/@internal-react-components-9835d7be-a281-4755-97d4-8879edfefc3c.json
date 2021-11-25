@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "VideoGallery gap fixed for Safari on iPhone",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
