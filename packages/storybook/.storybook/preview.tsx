@@ -106,21 +106,36 @@ const withThemeProvider = (Story: any, context: any) => {
 
   const rtl = context.globals.rtl as string === 'rtl';
 
-  return (
-    <FluentThemeProvider fluentTheme={theme} rtl={rtl}>
-      <Story {...context} theme={theme} />
-    </FluentThemeProvider>
-  );
+  if (context !== undefined) {
+    return (
+      <FluentThemeProvider fluentTheme={theme} rtl={rtl}>
+        <Story {...context} theme={theme} />
+      </FluentThemeProvider>
+    );
+  }
+  else {
+    return (
+        <Story {...context} />
+    );
+  }
 };
 
 const withLocalization = (Story: any, context: any) => {
+  console.log((context))
   const localeKey = context.globals.locale as string;
 
-  return (
-    <LocalizationProvider locale={LOCALES[localeKey].locale} >
-      <Story {...context} />
-    </LocalizationProvider>
-  );
+  if(context !== undefined) {
+    return (
+      <LocalizationProvider locale={LOCALES[localeKey].locale} >
+        <Story {...context} />
+      </LocalizationProvider>
+    );
+  }
+  else {
+    return (
+        <Story {...context} />
+    );
+  }
 };
 
 const withCenterStory = (Story: any) => {
@@ -152,11 +167,24 @@ export const globalTypes = {
   locale: {
     name: 'Locale',
     description: 'Locale for components',
-    defaultValue: 'en_US'
+    defaultValue: 'en_US',
+    toolbar: {
+      icon: 'globe',
+      right: '',
+      items: Object.keys(LOCALES).map((key) => ({ title: LOCALES[key].englishName, value: key })),
+    },
   },
   rtl: {
     name: 'RTL',
     description: 'Whether the direction of components is right-to-left or left-to-right',
-    defaultValue: 'ltr'
+    defaultValue: 'ltr',
+    toolbar: {
+      icon: 'transfer',
+      right: '',
+      items: [
+        { value: 'ltr', title: 'Left-to-right' },
+        { value: 'rtl', title: 'Right-to-left' }
+      ]
+    }
   }
 };

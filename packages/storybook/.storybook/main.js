@@ -18,10 +18,10 @@ module.exports = {
         controls: false,
         measure: false,
         outline: false,
-        backgrounds: false,
-        viewport: false
+        backgrounds: false
       }
-    }
+    },
+    '@storybook/addon-controls'
   ],
   features: {
     postcss: false,
