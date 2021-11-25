@@ -5,7 +5,7 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { _IdentifierProvider } from '@internal/react-components';
+import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import {
   ChatAdapter,
   createAzureCommunicationChatAdapter,
@@ -59,7 +59,13 @@ function App(): JSX.Element {
           adapter={chatAdapter}
           onRenderTypingIndicator={
             customDataModel
-              ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
+              ? (typingUsers) => (
+                  <text id="custom-data-model-typing-indicator">
+                    {typingUsers.length > 0
+                      ? `${typingUsers.map((user) => user.displayName).join(',')} is typing...`.toUpperCase()
+                      : 'No one is currently typing.'}
+                  </text>
+                )
               : undefined
           }
           onRenderMessage={
@@ -69,7 +75,7 @@ function App(): JSX.Element {
                     data-ui-status={messageProps.message.messageType === 'chat' ? messageProps.message.status : ''}
                     id="custom-data-model-message"
                   >
-                    Custom Message
+                    {getMessageContentInUppercase(messageProps)}
                   </text>
                 )
               : undefined
@@ -93,3 +99,23 @@ function App(): JSX.Element {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
+
+function getMessageContentInUppercase(messageProps: MessageProps): string {
+  if (
+    messageProps.message.messageType === 'chat' ||
+    messageProps.message.messageType === 'custom' ||
+    messageProps.message.systemMessageType === 'content'
+  ) {
+    return messageProps.message.content.toUpperCase();
+  } else if (messageProps.message.systemMessageType === 'topicUpdated') {
+    return messageProps.message.topic.toUpperCase();
+  } else if (messageProps.message.systemMessageType === 'participantAdded') {
+    return `Participants Added: ${messageProps.message.participants.map((p) => p.displayName).join(',')}`.toUpperCase();
+  } else if (messageProps.message.systemMessageType === 'participantRemoved') {
+    return `Participants Removed: ${messageProps.message.participants
+      .map((p) => p.displayName)
+      .join(',')}`.toUpperCase();
+  } else {
+    return 'CUSTOM MESSAGE';
+  }
+}
