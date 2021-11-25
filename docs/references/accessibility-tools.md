@@ -92,3 +92,55 @@ You will need to use the display pane of Accessibility Display preferences and u
 
 To change these preferences, go to Apple menu > System Preferences, click on Accessibility, then Display and finally Display 
 
+## Code examples
+
+### Missing focus on a TextField
+
+You will need to defined the `componentRef` prop of your `TextField` component and force the focus on this reference when the UI element is mounted.
+
+Example in [PR #1025](https://github.com/Azure/communication-ui-library/pull/1025/files) where we defined `editTextFieldRef` and force the focus on it when the 'EditBox' component mounts.
+
+### ContextualMenu not accessible through keyboard navigation
+This might due to the use of `onClick` prop directly from the button or icon and not using the `onItemClick` prop in your `MenuProps`.
+
+A good example can be found in the [first commit](https://github.com/Azure/communication-ui-library/pull/1025/commits/44caee79eefbbdf11fe123988975c1afd7961d07) of [PR #1025](https://github.com/Azure/communication-ui-library/pull/1025).
+
+### Text used as UI element label not being read by the screen reader
+
+There are 2 main options to fix this:
+1. re-think your design, and instead of using a separated `Text`, use the existing label of the FluentUI component your using (like `List`, `TextField`, etc...).
+1. add an id to your `Text` and use this id for the `aria-labelledby` property of your UI element.
+
+Those 2 methods were used in [PR #1126](https://github.com/Azure/communication-ui-library/pull/1126/files).
+1. in 'DisplayNameFiled.tsx' file, we removed the div used for `Name` label and simply used the existing `label` prop of `TextField` component. Styling can be then done through 'subComponentStyles' of its `styles` prop.
+1. in 'ConfigurationScreen.tsx' file, redefined `avatar-list-label` id and use it in the following `Stack` to make it its label.
+
+### Screen reader jumping directly on group of options
+
+This is certainly due to the group label missing in your design and code. If a group of options has no label, the screen reader focus will jump to the group itself confusing the user.
+
+To fix this, just add a label to your group of options.
+
+Example in [PR #1119](https://github.com/Azure/communication-ui-library/pull/1119/files) where we added `callOptionsGroupLabel` label to the `ChoiceGroup` component in 'HomeScreen.tsx' file.
+
+### Icons in button not respecting High Contrast theme
+
+This often comes from the fact that an icon was defined as a child of a button instead of using directly the `onRenderIcon` prop of a FluentUI button component.
+
+Example in [PR #883](https://github.com/Azure/communication-ui-library/pull/883/files) where, in 'StartCallButton.tsx' file, the `Icon` component was used directly as a child of `PrimaryButton` instead of being called inside the `onRenderIcon` prop.
+
+### Missing heading tags on a page
+
+First of all, please, use FluentUI component such as `Text` or `Label` for all isolated text you need to add in your page instead of simple `div` or `p` or `span`. This will ensure a lot of accessibility features are already taken care of.
+
+Adding a `heading` role is then as simple as adding `role` and `aria-level` properties to your component.
+
+Example in [PR #862](https://github.com/Azure/communication-ui-library/pull/862/files) where we are adding a `heading 1` tag to different pages by replacing `div` element with `Text` component defined with `role` being 'heading' and `aria-level` being '1'.
+
+### Some interactive elements or contents are not visible with zoom-in at 400%
+This often comes from missing `min-width` and `min-height` for you main component or stack in the page.
+By adding a `min-width` and a `min-height` to it, you will ensure its scrollability and thus, even if too big at 400% to be contained in the window, all of its interactive elements or contents will be accessible.
+
+Example in code are the `mainScreenContainerStyleDesktop` and `mainScreenContainerStyleMobile` defining those two properties for the main `div` of our Call composite.
+
+Just beaware of wrapped `Stack` which auto defined an 'inner stack' element of size `100% + childrenGap`. You will need to add a padding of half the childrenGap size to compensate that. A ggod example can be find in 'samples\Calling\src\app\views\HomeScreen.tsx' file with its `Stack` style defined in `containerStyle`.
