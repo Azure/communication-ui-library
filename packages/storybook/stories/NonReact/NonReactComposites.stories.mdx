@@ -25,7 +25,7 @@ const chatAdapter = await chatComposite.loadChatComposite(
   {
     displayName, // string
     threadId, // string
-    endpointUrl, // string
+    endpoint, // string
     userId, // Object { communicationUserId: string }
     token // string
   },
@@ -59,15 +59,15 @@ Check [Example](https://github.com/Azure/communication-ui-library/blob/PublicPre
 
 ```html
 <!-- Replace this url with your own CDN in production environment -->
-<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js"></script>
+<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js"></script>
 <!-- height need to be set for composite to fit the layout -->
 <div id="chat-container" style="height: 50vh"></div>
-<script>
+<script type="module">
   const chatAdapter = await chatComposite.loadChatComposite(
     {
       displayName: displayName,
       threadId: threadId,
-      endpointUrl: endpointUrl,
+      endpoint: endpoint,
       userId: user,
       token: token
     },

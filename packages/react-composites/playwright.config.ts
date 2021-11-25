@@ -28,11 +28,6 @@ const chromeLaunchOptions = {
 };
 
 const config: PlaywrightTestConfig = {
-  // Allow for more than the standard 30s (currently set to 1 minute). This is to ensure we get debug stack traces
-  // when await functions timeout. Without this, if the test itself decides to timeout, playwright gives poor feedback
-  // on what was being awaited.
-  // Note: the default timeout of 30s still applies to `page.waitForX` functions, this is just the global timeout
-  // per test.
   timeout: 60000,
 
   // Ensure tests run sequentially. All tests in this suite *must be run sequentially*.

@@ -73,7 +73,9 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
         onClick: () => console.log('Custom Menu Item Clicked')
       }
     ];
-    if (defaultMenuItems) customMenuItems = customMenuItems.concat(defaultMenuItems);
+    if (defaultMenuItems) {
+      customMenuItems = customMenuItems.concat(defaultMenuItems);
+    }
     return customMenuItems;
   };
 
@@ -86,7 +88,6 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           locale={props.locale}
-          options={{ participantPane: true }}
         />
       ) : (
         <h3>Loading...</h3>

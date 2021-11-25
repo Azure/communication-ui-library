@@ -101,6 +101,7 @@ describe('declarative chatThreadClient list iterators', () => {
   test('declarative listReadReceipts should generate latestReadTime properly', async () => {
     const context = new ChatContext();
     const pages = createMockChatClientAndDeclaratify(context).listReadReceipts().byPage();
+    // eslint-disable-next-line curly
     for await (const _page of pages);
     const latestReadTime = context.getState().threads[threadId]?.latestReadTime;
 

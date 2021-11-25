@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add eslint rule to force brackets for if, else, switch",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}
