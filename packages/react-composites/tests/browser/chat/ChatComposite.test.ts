@@ -113,7 +113,7 @@ test.describe('Chat Composite custom data model', () => {
 
   test.only('can be viewed by user[1]', async ({ serverUrl, users, page }) => {
     const testMessageText = 'How the turn tables';
-    await page.goto(buildUrl(serverUrl, users[0], { useFrLocale: 'true' }));
+    await page.goto(buildUrl(serverUrl, users[0], { customDataModel: 'true' }));
     await page.bringToFront();
     await sendMessage(page, testMessageText);
     await waitForMessageDelivered(page);
