@@ -14,6 +14,7 @@ import {
 import {
   avatarListContainerStackTokens,
   avatarListContainerStyle,
+  headerStyle,
   labelFontStyle,
   largeAvatarContainerStyle,
   largeAvatarStyle,
@@ -62,6 +63,7 @@ const INITIALIZE_CHAT_SPINNER_LABEL = 'Initializing chat client...';
 const JOIN_BUTTON_TEXT = 'Join chat';
 const LOADING_SPINNER_LABEL = 'Loading...';
 const NAME_DEFAULT = 'Name';
+const PROFILE_LABEL = 'Your profile';
 
 /**
  * There are four states of ConfigurationScreen.
@@ -170,12 +172,10 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
         tokens={responsiveLayoutStackTokens}
         className={responsiveLayoutStyle}
       >
-        <Stack
-          role={'heading'}
-          aria-level={1}
-          className={leftPreviewContainerStyle}
-          tokens={leftPreviewContainerStackTokens}
-        >
+        <Stack horizontalAlign="center" tokens={leftPreviewContainerStackTokens} className={leftPreviewContainerStyle}>
+          <Text role={'heading'} aria-level={1} className={headerStyle}>
+            {PROFILE_LABEL}
+          </Text>
           <div className={largeAvatarContainerStyle(selectedAvatar)}>
             <div aria-label={`${selectedAvatar} avatar`} className={largeAvatarStyle}>
               {selectedAvatar}

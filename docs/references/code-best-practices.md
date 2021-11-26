@@ -18,3 +18,9 @@ For components, guideline for styles is as follow:
   * there's more than 1 style
   * style is too long
 * styles depending on "theme" should be defined as functions with theme as arg, and added to the styles file.
+
+## Accessibility
+
+Accessibility by design is a principle across Microsoft products and as such we want our composites and UI components to be fully accessible.
+To satisfy this principle, please, always test accessibility when implementing a new feature as well as when updating an existing one.
+This mean at least checking keyboard navigation, zoom-in at 400% and screen reading.
