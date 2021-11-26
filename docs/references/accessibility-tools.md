@@ -88,9 +88,7 @@ To check that, go on Firefox settings and click on the ‘Colours…’ button u
 
 #### Safari
 
-You will need to use the display pane of Accessibility Display preferences and use the `Invert colors` option.
-
-To change these preferences, go to Apple menu > System Preferences, click on Accessibility, then Display and finally Display 
+For macOS, you will need to change your display preferences. Instructions on how to do it can be found [here](https://support.apple.com/lv-lv/guide/mac-help/unac089/mac). 
 
 ## Code examples
 
@@ -143,4 +141,4 @@ By adding a `min-width` and a `min-height` to it, you will ensure its scrollabil
 
 Example in code are the `mainScreenContainerStyleDesktop` and `mainScreenContainerStyleMobile` defining those two properties for the main `div` of our Call composite.
 
-Just be aware of wrapped `Stack` which auto defined an 'inner stack' element of size `100% + childrenGap`. You will need to add a padding of half the childrenGap size to compensate that. A good example can be find in 'samples\Calling\src\app\views\HomeScreen.tsx' file with its `Stack` style defined in `containerStyle`.
+Just be aware of wrapped `Stack` which auto defined an 'inner stack' element of size `100% + childrenGap`. To adjust for using multiple stacks, we suggest using a padding of half of the childrenGap size to create the correct spacing. A good example can be find in 'samples\Calling\src\app\views\HomeScreen.tsx' file with its `Stack` style defined in `containerStyle`.
