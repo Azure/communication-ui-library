@@ -11,7 +11,7 @@ import {
 } from '../common/utils';
 import { createChatThreadAndUsers } from '../common/fixtureHelpers';
 import { Page } from '@playwright/test';
-import { ChatUserType } from 'browser/common/fixtureTypes';
+import { ChatUserType } from '../common/fixtureTypes';
 
 const PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen'];
 
