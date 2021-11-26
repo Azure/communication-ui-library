@@ -247,15 +247,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return (
         <RemoteVideoTile
           key={participant.userId}
-          userId={participant.userId}
+          {...participant}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
           remoteVideoViewOption={isVideoParticipant ? remoteVideoViewOption : undefined}
-          isMuted={participant.isMuted}
-          isSpeaking={participant.isSpeaking}
-          displayName={participant.displayName}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
         />
