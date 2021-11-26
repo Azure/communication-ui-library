@@ -67,23 +67,23 @@ Note that 'Narrator' key is setup by default as being 'Caps Lock' or 'Insert' ke
 
 ### High contrast
 
-To test High Contrast, please use the High Contrast flag offered directly in your browser when it exist over any pluggins.
+To test high contrast theme, please use the high hontrast flag offered directly in your browser when it exist over any pluggins.
 
 #### Edge
 
 Find [Edge forced-colors flag](edge://flags/#forced-colors), enable the experiment and restart your browser.
-Then open Windows High Contrast settings, turn it on and choose which HC you want to test.
+Then open Windows high contrast theme settings, turn it on and choose which HC you want to test.
 
 #### Chrome
 
 Find [Chrome forced-colors flag](chrome://flags/#forced-colors), enable the experiment and restart your browser.
-Then open Windows High Contrast settings, turn it on and choose which HC you want to test.
+Then open Windows high contrast theme settings, turn it on and choose which HC you want to test.
 
 #### Firefox
 
-Firefox works with Windows High Contrast. It automatically detects if you are using a HC theme and displays everything in your HC color scheme.
+Firefox works with Windows high contrast theme. It automatically detects if you are using a HC theme and displays everything in your HC color scheme.
 
-Just make sure Firefox override colours only with High Contrast themes.
+Just make sure Firefox override colours only with high contrast themes.
 To check that, go on Firefox settings and click on the ‘Colours…’ button under ‘Language and Appearance’ section and make sure that 'Only with High contrast themes" option is selected for the color override.
 
 #### Safari
@@ -123,7 +123,7 @@ To fix this, just add a label to your group of options.
 
 Example in [PR #1119](https://github.com/Azure/communication-ui-library/pull/1119/files) where we added `callOptionsGroupLabel` label to the `ChoiceGroup` component in 'HomeScreen.tsx' file.
 
-### Icons in button not respecting High Contrast theme
+### Icons in button not respecting high contrast theme
 
 This often comes from the fact that an icon was defined as a child of a button instead of using directly the `onRenderIcon` prop of a FluentUI button component.
 
