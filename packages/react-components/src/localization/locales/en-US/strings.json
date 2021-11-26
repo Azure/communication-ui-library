@@ -60,7 +60,7 @@
     "copyInviteLinkButtonLabel": "Copy invite link"
   },
   "screenShareButton": {
-    "onLabel": "Stop",
+    "onLabel": "Stop sharing",
     "offLabel": "Share",
     "tooltipDisabledContent": "Screen sharing is disabled",
     "tooltipOnContent": "Stop sharing your screen",
