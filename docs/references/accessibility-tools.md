@@ -112,7 +112,7 @@ There are 2 main options to fix this:
 1. add an id to your `Text` and use this id for the `aria-labelledby` property of your UI element.
 
 Those 2 methods were used in [PR #1126](https://github.com/Azure/communication-ui-library/pull/1126/files).
-1. in 'DisplayNameFiled.tsx' file, we removed the div used for `Name` label and simply used the existing `label` prop of `TextField` component. Styling can be then done through 'subComponentStyles' of its `styles` prop.
+1. in 'DisplayNameField.tsx' file, we removed the div used for `Name` label and simply used the existing `label` prop of `TextField` component. Styling can be then done through 'subComponentStyles' of its `styles` prop.
 1. in 'ConfigurationScreen.tsx' file, redefined `avatar-list-label` id and use it in the following `Stack` to make it its label.
 
 ### Screen reader jumping directly on group of options
