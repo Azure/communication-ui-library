@@ -1,15 +1,73 @@
-import { ComponentIcons } from './snippets/ComponentIcons.snippet';
+import { Meta, Canvas, Source } from '@storybook/addon-docs';
+import { IconGridWithSearch } from './utils';
+import { DEFAULT_COMPONENT_ICONS, DEFAULT_COMPOSITE_ICONS } from '@azure/communication-react';
 
 <Meta id="custom-icons" title="Concepts/Custom Icons" />
 
 # Custom Icons
 
 Both the Composites and the Components allow developers to use custom icons.
+You can provide a custom React element to replace an existing icon used in Components and Composites.
 
 ## Composites
 
-## Components
+All Composites expose a prop `icons` that allows you to override the default icons used inside Composites.
+
+Here is a sample code showcasing how you can override an icon used inside Composites with custom icons.
+
+<Source
+  language="tsx"
+  code={`
+<CallComposite
+  adapter={adapter}
+  icons={{
+    LocalDeviceSettingsCamera: <p>My Custom Icon</p>
+  }}
+/>
+  `}
+/>
+
+### Default Composite Icons
+
+Below is a list of all the icons you can override Composites with their names.
 
 <Canvas withSource="none">
-  <ComponentIcons />
+  <IconGridWithSearch icons={DEFAULT_COMPOSITE_ICONS} />
+</Canvas>
+
+## Components
+
+Before you can render icons in Components, you will need to setup the icons using the following code.
+
+<Source
+  language="tsx"
+  code={`
+import { registerIcons } from '@fluentui/react';
+import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
+// If you don't want to provide custom icons, you can register the default ones included with the library.
+// This will ensure that all the icons are rendered correctly.
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
+  `}
+/>
+
+For overriding a default icon, you can provide a custom react element as shown in the example below.
+
+<Source
+  language="tsx"
+  code={`
+import { registerIcons } from '@fluentui/react';
+import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
+const customIcons = {...DEFAULT_COMPONENT_ICONS, {
+  ControlButtonCameraOff: <p>My Custom Icon</p>
+}};
+registerIcons({ icons: customIcons });
+  `}
+/>
+
+### Default Component Icons
+
+Below is a list of all the icons used inside Components with their names.
+
+<Canvas withSource="none">
+  <IconGridWithSearch icons={DEFAULT_COMPONENT_ICONS} />
 </Canvas>
