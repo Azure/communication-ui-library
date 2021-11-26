@@ -22,11 +22,12 @@ import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
 import { StreamMedia } from './StreamMedia';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
-  floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle,
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  localVideoTileContainerStyle,
+  floatingLocalVideoModalStyle,
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle
@@ -310,23 +311,29 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
   }, [containerRef]);
 
+  const horizontalGalleryPresent = horizontalGalleryTiles && horizontalGalleryTiles.length > 0;
+
   return (
     <div
       data-ui-id={ids.videoGallery}
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
-      {shouldFloatLocalVideo && (
-        <Modal
-          isOpen={true}
-          isModeless={true}
-          dragOptions={DRAG_OPTIONS}
-          styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-          layerProps={{ hostId: containerRef.current?.id }}
-        >
-          {localParticipant && localVideoTile}
-        </Modal>
-      )}
+      {shouldFloatLocalVideo &&
+        localParticipant &&
+        (horizontalGalleryPresent ? (
+          <Stack className={localVideoTileContainerStyle(theme, isNarrow)}>{localVideoTile}</Stack>
+        ) : (
+          <Modal
+            isOpen={true}
+            isModeless={true}
+            dragOptions={DRAG_OPTIONS}
+            styles={floatingLocalVideoModalStyle(theme, isNarrow)}
+            layerProps={{ hostId: containerRef.current?.id }}
+          >
+            {localVideoTile}
+          </Modal>
+        ))}
       <Stack horizontal={false} styles={videoGalleryContainerStyle}>
         {screenShareParticipant ? (
           remoteScreenShareComponent
@@ -337,7 +344,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {gridTiles}
           </GridLayout>
         )}
-        {horizontalGalleryTiles && horizontalGalleryTiles.length > 0 && (
+        {horizontalGalleryPresent && (
           <ResponsiveHorizontalGallery
             key="responsive-horizontal-gallery"
             containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}

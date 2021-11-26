@@ -68,6 +68,22 @@ export const floatingLocalVideoModalStyle = (
 /**
  * @private
  */
+export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): string =>
+  mergeStyles(
+    {
+      minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
+      minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+      position: 'absolute',
+      bottom: '0.5rem',
+      borderRadius: theme.effects.roundedCorner4,
+      overflow: 'hidden'
+    },
+    theme.rtl ? { right: '0.5rem' } : { right: '0.5rem' }
+  );
+
+/**
+ * @private
+ */
 export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
   root: {
     position: 'absolute',
