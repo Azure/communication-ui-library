@@ -67,7 +67,7 @@ Note that `Narrator` key is setup by default as being `Caps Lock` or `Insert` ke
 
 ### High contrast
 
-To test high contrast theme, please use the high hontrast flag offered directly in your browser when it exist over any pluggins.
+To test high contrast theme, please use the high contrast flag offered directly in your browser when it exist over any pluggins.
 
 #### Edge
 
@@ -101,7 +101,7 @@ You will need to defined the `componentRef` prop of your `TextField` component a
 Example in [PR #1025](https://github.com/Azure/communication-ui-library/pull/1025/files) where we defined `editTextFieldRef` and force the focus on it when the 'EditBox' component mounts.
 
 ### ContextualMenu not accessible through keyboard navigation
-This might due to the use of `onClick` prop directly from the button or icon and not using the `onItemClick` prop in your `MenuProps`.
+This might be due to the use of `onClick` prop directly from the button or icon and not using the `onItemClick` prop in your `MenuProps`.
 
 A good example can be found in the [first commit](https://github.com/Azure/communication-ui-library/pull/1025/commits/44caee79eefbbdf11fe123988975c1afd7961d07) of [PR #1025](https://github.com/Azure/communication-ui-library/pull/1025).
 
@@ -143,4 +143,4 @@ By adding a `min-width` and a `min-height` to it, you will ensure its scrollabil
 
 Example in code are the `mainScreenContainerStyleDesktop` and `mainScreenContainerStyleMobile` defining those two properties for the main `div` of our Call composite.
 
-Just beaware of wrapped `Stack` which auto defined an 'inner stack' element of size `100% + childrenGap`. You will need to add a padding of half the childrenGap size to compensate that. A ggod example can be find in 'samples\Calling\src\app\views\HomeScreen.tsx' file with its `Stack` style defined in `containerStyle`.
+Just be aware of wrapped `Stack` which auto defined an 'inner stack' element of size `100% + childrenGap`. You will need to add a padding of half the childrenGap size to compensate that. A good example can be find in 'samples\Calling\src\app\views\HomeScreen.tsx' file with its `Stack` style defined in `containerStyle`.
