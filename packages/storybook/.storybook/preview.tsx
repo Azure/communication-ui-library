@@ -46,7 +46,8 @@ export const parameters = {
           'MeetingComposite',
           'CallComposite',
           'ChatComposite',
-          'Cross-Framework Support'
+          'Adapters',
+          'Cross-Framework Support',
         ],
         COMPONENT_FOLDER_PREFIX,
         [
@@ -86,7 +87,6 @@ export const parameters = {
             'UsePropsFor',
             'UseSelector'
           ],
-          'Adapters',
         ],
       ]
     }
