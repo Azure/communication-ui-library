@@ -69,6 +69,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 export interface CameraButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -203,6 +204,7 @@ export interface ControlBarButtonStrings {
     offLabel?: string;
     onLabel?: string;
     tooltipContent?: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -578,6 +580,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -728,6 +731,7 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
 export interface ScreenShareButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
