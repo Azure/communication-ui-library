@@ -34,9 +34,13 @@ export interface ControlBarButtonStrings {
    */
   offLabel?: string;
   /**
-   * Tooltip content of the button. This supersedes tooltipOnContent and tooltipOffContent if used.
+   * Tooltip content of the button. This supersedes tooltipDisabledContent, tooltipOnContent and tooltipOffContent if used.
    */
   tooltipContent?: string;
+  /**
+   * Tooltip content when the button is disabled.
+   */
+  tooltipDisabledContent?: string;
   /**
    * Tooltip content when the button is in the checked state.
    */
@@ -137,7 +141,11 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
 
   const tooltipContent =
     props?.strings?.tooltipContent ??
-    (props?.checked ? props?.strings?.tooltipOnContent : props?.strings?.tooltipOffContent);
+    (props?.disabled
+      ? props?.strings?.tooltipDisabledContent
+      : props?.checked
+      ? props?.strings?.tooltipOnContent
+      : props?.strings?.tooltipOffContent);
 
   const tooltipId = props.tooltipId ?? props.labelKey ? props.labelKey + '-tooltip' : undefined;
 

@@ -485,6 +485,7 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 export interface CameraButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -883,6 +884,7 @@ export interface ControlBarButtonStrings {
     offLabel?: string;
     onLabel?: string;
     tooltipContent?: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -1472,6 +1474,7 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -1698,6 +1701,7 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 export interface ScreenShareButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
