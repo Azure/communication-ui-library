@@ -67,6 +67,7 @@ export const parameters = {
         [        
         'Styling',
         'Theming',
+        'Custom Icons',
         'Localization',
         'Accessibility',
         'Custom User Data Model',
