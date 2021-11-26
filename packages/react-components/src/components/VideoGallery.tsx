@@ -295,10 +295,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
-  const remoteScreenShareComponent = (
+  const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare
-      screenShareParticipant={screenShareParticipant}
+      {...screenShareParticipant}
+      renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
+      onDisposeRemoteStreamView={onDisposeRemoteStreamView}
     />
   );
 
