@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Change name contains option to options",
+  "packageName": "@internal/storybook",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
