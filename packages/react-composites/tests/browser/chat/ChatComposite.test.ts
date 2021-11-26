@@ -2,13 +2,7 @@
 // Licensed under the MIT license.
 
 import { IDS } from '../common/constants';
-import {
-  dataUiId,
-  stubMessageTimestamps,
-  waitForChatCompositeToLoad,
-  buildUrl,
-  waitForSelector
-} from '../common/utils';
+import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, waitForSelector } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import {
@@ -20,8 +14,8 @@ import {
 } from './chatTestHelpers';
 
 test.describe('Chat Composite E2E Tests', () => {
-  test.beforeEach(async ({ pages, serverUrl }) => {
-    await chatTestSetup({ pages, serverUrl });
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl });
   });
 
   test('composite pages load completely', async ({ pages }) => {
@@ -107,13 +101,13 @@ test.describe('Chat Composite E2E Tests', () => {
 });
 
 test.describe('Chat Composite custom data model', () => {
-  test.beforeEach(async ({ pages, serverUrl }) => {
-    await chatTestSetup({ pages, serverUrl });
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl, qArgs: { customDataModel: 'true' } });
   });
 
-  test('can be viewed by user[1]', async ({ serverUrl, users, page }) => {
+  test('can be viewed by user[1]', async ({ pages }) => {
     const testMessageText = 'How the turn tables';
-    await page.goto(buildUrl(serverUrl, users[0], { customDataModel: 'true' }));
+    const page = pages[0];
     await page.bringToFront();
     await sendMessage(page, testMessageText);
     await waitForMessageDelivered(page);

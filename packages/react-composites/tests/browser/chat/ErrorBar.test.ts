@@ -9,8 +9,8 @@ import { chatTestSetup, sendMessage, waitForSendMessageFailure, waitForMessageDe
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
 test.describe('ErrorBar is shown correctly', async () => {
-  test.beforeEach(async ({ pages, serverUrl }) => {
-    await chatTestSetup({ pages, serverUrl });
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl });
   });
 
   test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
