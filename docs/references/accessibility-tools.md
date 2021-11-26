@@ -67,28 +67,78 @@ Note that `Narrator` key is setup by default as being `Caps Lock` or `Insert` ke
 
 ### High contrast
 
-To test High Contrast, please use the High Contrast flag offered directly in your browser when it exist over any pluggins.
+To test high contrast theme, please use the high contrast flag offered directly in your browser when it exist over any pluggins.
 
 #### Edge
 
-Go to the Edge forced-colors flag (**edge://flags/#forced-colors**), enable the experiment and restart your browser.
-Then open Windows High Contrast settings, turn it on and choose which HC you want to test.
+Find [Edge forced-colors flag](edge://flags/#forced-colors), enable the experiment and restart your browser.
+Then open Windows high contrast theme settings, turn it on and choose which HC you want to test.
 
 #### Chrome
 
-Go to the Chrome forced-colors flag (**chrome://flags/#forced-colors**), enable the experiment and restart your browser.
-Then open Windows High Contrast settings, turn it on and choose which HC you want to test.
+Find [Chrome forced-colors flag](chrome://flags/#forced-colors), enable the experiment and restart your browser.
+Then open Windows high contrast theme settings, turn it on and choose which HC you want to test.
 
 #### Firefox
 
-Firefox works with Windows High Contrast. It automatically detects if you are using a HC theme and displays everything in your HC color scheme.
+Firefox works with Windows high contrast theme. It automatically detects if you are using a HC theme and displays everything in your HC color scheme.
 
-Just make sure Firefox override colours only with High Contrast themes.
-To check that, go on Firefox settings and click on the `Colours…` button under ‘Language and Appearance’ section and make sure that `Only with High contrast themes` option is selected for the color override.
+Just make sure Firefox override colours only with high contrast themes.
+To check that, go on Firefox settings and click on the ‘Colours…’ button under ‘Language and Appearance’ section and make sure that 'Only with High contrast themes" option is selected for the color override.
 
 #### Safari
 
-You will need to use the display pane of Accessibility Display preferences and use the `Invert colors` option.
+For macOS, you will need to change your display preferences. Instructions on how to do it can be found [here](https://support.apple.com/lv-lv/guide/mac-help/unac089/mac). 
 
-To change these preferences, go to Apple menu > System Preferences, click on Accessibility, then Display and finally Display 
+## Code examples
 
+### Missing focus on a TextField
+
+You will need to defined the `componentRef` prop of your `TextField` component and force the focus on this reference when the UI element is mounted.
+
+Example in [PR #1025](https://github.com/Azure/communication-ui-library/pull/1025/files) where we defined `editTextFieldRef` and force the focus on it when the 'EditBox' component mounts.
+
+### ContextualMenu not accessible through keyboard navigation
+This might be due to the use of `onClick` prop directly from the button or icon and not using the `onItemClick` prop in your `MenuProps`.
+
+A good example can be found in the [first commit](https://github.com/Azure/communication-ui-library/pull/1025/commits/44caee79eefbbdf11fe123988975c1afd7961d07) of [PR #1025](https://github.com/Azure/communication-ui-library/pull/1025).
+
+### Text used as UI element label not being read by the screen reader
+
+There are 2 main options to fix this:
+1. re-think your design, and instead of using a separated `Text`, use the existing label of the FluentUI component your using (like `List`, `TextField`, etc...).
+1. add an id to your `Text` and use this id for the `aria-labelledby` property of your UI element.
+
+Those 2 methods were used in [PR #1126](https://github.com/Azure/communication-ui-library/pull/1126/files).
+1. in 'DisplayNameField.tsx' file, we removed the div used for `Name` label and simply used the existing `label` prop of `TextField` component. Styling can be then done through 'subComponentStyles' of its `styles` prop.
+1. in 'ConfigurationScreen.tsx' file, redefined `avatar-list-label` id and use it in the following `Stack` to make it its label.
+
+### Screen reader jumping directly on group of options
+
+This is certainly due to the group label missing in your design and code. If a group of options has no label, the screen reader focus will jump to the group itself confusing the user.
+
+To fix this, just add a label to your group of options.
+
+Example in [PR #1119](https://github.com/Azure/communication-ui-library/pull/1119/files) where we added `callOptionsGroupLabel` label to the `ChoiceGroup` component in 'HomeScreen.tsx' file.
+
+### Icons in button not respecting high contrast theme
+
+This often comes from the fact that an icon was defined as a child of a button instead of using directly the `onRenderIcon` prop of a FluentUI button component.
+
+Example in [PR #883](https://github.com/Azure/communication-ui-library/pull/883/files) where, in 'StartCallButton.tsx' file, the `Icon` component was used directly as a child of `PrimaryButton` instead of being called inside the `onRenderIcon` prop.
+
+### Missing heading tags on a page
+
+First of all, please, use FluentUI component such as `Text` or `Label` for all isolated text you need to add in your page instead of simple `div` or `p` or `span`. This will ensure a lot of accessibility features are already taken care of.
+
+Adding a `heading` role is then as simple as adding `role` and `aria-level` properties to your component.
+
+Example in [PR #862](https://github.com/Azure/communication-ui-library/pull/862/files) where we are adding a `heading 1` tag to different pages by replacing `div` element with `Text` component defined with `role` being 'heading' and `aria-level` being '1'.
+
+### Some interactive elements or contents are not visible with zoom-in at 400%
+This often comes from missing `min-width` and `min-height` for you main component or stack in the page.
+By adding a `min-width` and a `min-height` to it, you will ensure its scrollability and thus, even if too big at 400% to be contained in the window, all of its interactive elements or contents will be accessible.
+
+Example in code are the `mainScreenContainerStyleDesktop` and `mainScreenContainerStyleMobile` defining those two properties for the main `div` of our Call composite.
+
+Just be aware of wrapped `Stack` which auto defined an 'inner stack' element of size `100% + childrenGap`. To adjust for using multiple stacks, we suggest using a padding of half of the childrenGap size to create the correct spacing. A good example can be find in 'samples\Calling\src\app\views\HomeScreen.tsx' file with its `Stack` style defined in `containerStyle`.
