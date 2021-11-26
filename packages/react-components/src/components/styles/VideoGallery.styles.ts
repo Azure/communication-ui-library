@@ -45,41 +45,26 @@ export const floatingLocalVideoModalStyle = (
 ): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
   return concatStyleSets(
     {
-      root: {
-        width: '100%',
-        height: '100%'
-      },
-      main: {
-        minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-        minHeight: isNarrow
-          ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem`
-          : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
-        position: 'absolute',
-        bottom: '0.5rem',
-        boxShadow: theme.effects.elevation8,
-        borderRadius: theme.effects.roundedCorner4,
-        overflow: 'hidden'
-      }
+      main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' } }
+    { main: { boxShadow: theme.effects.elevation8 } }
   );
 };
 
 /**
  * @private
  */
-export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): string =>
-  mergeStyles(
-    {
-      minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-      minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
-      position: 'absolute',
-      bottom: '0.5rem',
-      borderRadius: theme.effects.roundedCorner4,
-      overflow: 'hidden'
-    },
-    theme.rtl ? { right: '0.5rem' } : { right: '0.5rem' }
-  );
+export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
+  return {
+    minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
+    minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+    position: 'absolute',
+    bottom: '0.5rem',
+    borderRadius: theme.effects.roundedCorner4,
+    overflow: 'hidden',
+    ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' })
+  };
+};
 
 /**
  * @private

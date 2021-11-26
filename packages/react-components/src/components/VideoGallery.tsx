@@ -322,7 +322,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       {shouldFloatLocalVideo &&
         localParticipant &&
         (horizontalGalleryPresent ? (
-          <Stack className={localVideoTileContainerStyle(theme, isNarrow)}>{localVideoTile}</Stack>
+          <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
         ) : (
           <Modal
             isOpen={true}
