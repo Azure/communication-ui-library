@@ -18,12 +18,12 @@ const VideoGalleryStyles = {
   }
 };
 
-const localVideoViewOption = {
+const localVideoViewOptions = {
   scalingMode: 'Crop',
   isMirrored: true
 } as VideoStreamOptions;
 
-const remoteVideoViewOption = {
+const remoteVideoViewOptions = {
   scalingMode: 'Crop'
 } as VideoStreamOptions;
 
@@ -50,8 +50,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return (
       <VideoGallery
         {...videoGalleryProps}
-        localVideoViewOption={localVideoViewOption}
-        remoteVideoViewOption={remoteVideoViewOption}
+        localVideoViewOptions={localVideoViewOptions}
+        remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
         layout="floatingLocalVideo"
         onRenderAvatar={(userId, options) => (
