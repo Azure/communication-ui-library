@@ -4,7 +4,7 @@
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { DefaultPalette, IButtonStyles, Icon, mergeStyles, Theme, useTheme } from '@fluentui/react';
+import { DefaultPalette, IButtonStyles, Icon, Theme, useTheme } from '@fluentui/react';
 
 /**
  * Strings of {@link ScreenShareButton} that can be overridden.
