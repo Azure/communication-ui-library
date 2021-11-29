@@ -125,7 +125,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         <Label
           id={'call-composite-local-sound-settings-label'}
           className={mergeStyles(dropDownStyles(theme).label)}
-          disabled={!props.microphonePermissionGranted || props.speakers.length === 0} // depends on dropdowns disabled state in the sound settings stack
+          disabled={!props.microphonePermissionGranted} // follows Start button disabled state in ConfigurationPage
         >
           {soundLabel}
         </Label>
