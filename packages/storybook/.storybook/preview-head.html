@@ -1,5 +1,5 @@
 <style>
-    h1:first-of-type {
+    .sbdocs.sbdocs-h1:first-of-type {
         margin-top: 64px;
     }
 
@@ -12,7 +12,7 @@
         letter-spacing: -0.03em;
     }
 
-    h2:first-of-type {
+    .sbdocs.sbdocs-h2:first-of-type {
         margin-top: 48px;
         padding-top: 48px;
     }
@@ -29,7 +29,7 @@
         letter-spacing: -0.02em;
     }
 
-    h3:first-of-type {
+    .sbdocs.sbdocs-h3:first-of-type {
         margin-top: 32px;
     }
 
@@ -46,23 +46,17 @@
         font-size: 14px;
         font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
         line-height: 24px;
-        margin: 0px none;
+        margin: 16px 0px;
     }
 
-    .prismjs {
-        border: 1px solid #edebe9;
-        margin: 16px 0px;
-        background-color: #faf9f8;
-        box-shadow: none
+    pre {
+        background-color: #faf9f8 !important; /* we need to find a way to override the classes not made by storybook. no sbodcs tag for this one */
     }
 
     tr th {
         background-color: #faf9f8;
         text-align: left;
     }
-
-
-    /* Table 2nd row  */
 
     tr:nth-of-type(2n) {
         background-color: #faf9f8;
