@@ -94,9 +94,9 @@ export interface VideoGalleryProps {
   /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
   dominantSpeakers?: string[];
   /** Local video view options */
-  localVideoViewOption?: VideoStreamOptions;
+  localVideoViewOptions?: VideoStreamOptions;
   /** Remote videos view options */
-  remoteVideoViewOption?: VideoStreamOptions;
+  remoteVideoViewOptions?: VideoStreamOptions;
   /** Callback to create the local video stream view */
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
   /** Callback to dispose of the local video stream view */
@@ -143,8 +143,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const {
     localParticipant,
     remoteParticipants = [],
-    localVideoViewOption,
-    remoteVideoViewOption,
+    localVideoViewOptions,
+    remoteVideoViewOptions,
     dominantSpeakers,
     onRenderLocalVideoTile,
     onRenderRemoteVideoTile,
@@ -208,7 +208,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
 
     if (localVideoStream && !localVideoStream.renderElement) {
-      onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOption);
+      onCreateLocalStreamView && onCreateLocalStreamView(localVideoViewOptions);
     }
 
     return (
@@ -253,13 +253,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOption={isVideoParticipant ? remoteVideoViewOption : undefined}
+          remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
         />
       );
     },
-    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOption, onRenderAvatar, showMuteIndicator]
+    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
   );
 
   const videoTiles = onRenderRemoteVideoTile
