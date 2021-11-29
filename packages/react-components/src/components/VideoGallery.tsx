@@ -107,6 +107,7 @@ export interface VideoGalleryProps {
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /** Callback to render a remote video tile */
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+  /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
