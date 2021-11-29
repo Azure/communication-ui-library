@@ -13,7 +13,7 @@ import {
 
 const onRenderEmptyPlaceholder = (): JSX.Element => <></>;
 
-const localVideoViewOption = {
+const localVideoViewOptions = {
   scalingMode: 'Crop',
   isMirrored: true
 } as VideoStreamOptions;
@@ -39,7 +39,7 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
   useEffect(() => {
     if (videoStream && isVideoReady) {
       props.onCreateLocalStreamView &&
-        props.onCreateLocalStreamView(localVideoViewOption).catch((err) => console.log('Can not render video', err));
+        props.onCreateLocalStreamView(localVideoViewOptions).catch((err) => console.log('Can not render video', err));
     }
   }, [isVideoReady, videoStream, props, renderElement]);
   return (
