@@ -16,10 +16,13 @@ import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
 import { TOC } from './TOC';
 
+
+
 // Removing `loadTheme({})` causes storybook declaration exception.
 loadTheme({});
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
+
 
 export const parameters = {
   layout: 'fullscreen',
