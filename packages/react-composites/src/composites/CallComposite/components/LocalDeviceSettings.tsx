@@ -55,7 +55,7 @@ const onRenderTitle = (iconType: iconType, props?: IDropdownOption[]): JSX.Eleme
   );
 };
 
-const localVideoViewOption = {
+const localVideoViewOptions = {
   scalingMode: 'Crop',
   isMirrored: true
 } as VideoStreamOptions;
@@ -117,7 +117,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             : 'deniedOrUnknown'
         }
         onChange={(event, option, index) => {
-          props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOption);
+          props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
         }}
         onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
       />

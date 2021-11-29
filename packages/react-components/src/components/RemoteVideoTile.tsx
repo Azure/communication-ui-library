@@ -21,7 +21,7 @@ export const RemoteVideoTile = React.memo(
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
     displayName?: string;
-    remoteVideoViewOption?: VideoStreamOptions;
+    remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
   }) => {
@@ -31,7 +31,7 @@ export const RemoteVideoTile = React.memo(
       isSpeaking,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
-      remoteVideoViewOption,
+      remoteVideoViewOptions,
       renderElement,
       userId,
       displayName,
@@ -41,7 +41,7 @@ export const RemoteVideoTile = React.memo(
 
     useEffect(() => {
       if (isAvailable && !renderElement) {
-        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
+        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOptions);
       }
       if (!isAvailable) {
         onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
@@ -50,7 +50,7 @@ export const RemoteVideoTile = React.memo(
       isAvailable,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
-      remoteVideoViewOption,
+      remoteVideoViewOptions,
       renderElement,
       userId
     ]);

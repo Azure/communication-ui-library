@@ -470,7 +470,7 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends ControlBarButtonProps {
-    localVideoViewOption?: VideoStreamOptions;
+    localVideoViewOptions?: VideoStreamOptions;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     strings?: Partial<CameraButtonStrings>;
 }
@@ -1912,7 +1912,7 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
-    localVideoViewOption?: VideoStreamOptions;
+    localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
@@ -1923,7 +1923,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    remoteVideoViewOption?: VideoStreamOptions;
+    remoteVideoViewOptions?: VideoStreamOptions;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
