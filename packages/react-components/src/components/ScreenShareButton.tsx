@@ -4,7 +4,7 @@
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { Icon } from '@fluentui/react';
+import { DefaultPalette, IButtonStyles, Icon, mergeStyles, Theme, useTheme } from '@fluentui/react';
 
 /**
  * Strings of {@link ScreenShareButton} that can be overridden.
@@ -56,9 +56,13 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   const localeStrings = useLocale().strings.screenShareButton;
   const strings = { ...localeStrings, ...props.strings };
 
+  const theme = useTheme();
+  const styles = screenshareButtonStyles(theme);
+
   return (
     <ControlBarButton
       {...props}
+      styles={styles}
       onClick={props.onToggleScreenShare ?? props.onClick}
       onRenderOnIcon={props.onRenderOnIcon ?? onRenderScreenShareOnIcon}
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderScreenShareOffIcon}
@@ -67,3 +71,18 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
     />
   );
 };
+
+const screenshareButtonStyles = (theme: Theme): IButtonStyles => ({
+  rootChecked: {
+    background: theme.palette.themePrimary,
+    color: DefaultPalette.white,
+    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` } // added !important to avoid override by FluentUI button styles
+  },
+  rootCheckedHovered: {
+    background: theme.palette.themePrimary,
+    color: DefaultPalette.white,
+    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` } // added !important to avoid override by FluentUI button styles
+  },
+  labelHovered: { color: DefaultPalette.white },
+  labelChecked: { color: DefaultPalette.white }
+});

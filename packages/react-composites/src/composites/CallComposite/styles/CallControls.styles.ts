@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultPalette as palette, IButtonStyles, IContextualMenuItemStyles, IStyle, Theme } from '@fluentui/react';
+import { IButtonStyles, IContextualMenuItemStyles, IStyle } from '@fluentui/react';
 import { DevicesButtonStyles, ParticipantsButtonStyles } from '@internal/react-components';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
@@ -45,18 +45,6 @@ export const groupCallLeaveButtonCompressedStyle = {
     flexFlow: 'row'
   }
 };
-
-/**
- * @private
- */
-export const checkedButtonOverrideStyles = (theme: Theme, isChecked?: boolean): IButtonStyles => ({
-  rootChecked: {
-    background: theme.palette.themePrimary,
-    color: palette.white,
-    ':focus::after': { outlineColor: `${palette.white} !important` } // added !important to avoid override by FluentUI button styles
-  },
-  label: isChecked ? { color: palette.white } : {}
-});
 
 /**
  * Styles that can be applied to ensure flyout items have the minimum touch target size.

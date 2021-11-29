@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, IButtonStyles, IContextualMenuStyles, IContextualMenuItemStyles } from '@fluentui/react';
+import { IStyle, IButtonStyles, IContextualMenuStyles, IContextualMenuItemStyles, ILabelStyles } from '@fluentui/react';
 import { ParticipantListStyles } from '../ParticipantList';
 
 interface IControlBarStyles {
@@ -125,18 +125,15 @@ export const controlButtonStyles: IButtonStyles = {
   flexContainer: {
     flexFlow: 'column',
     display: 'contents'
+  },
+  label: {
+    fontSize: '0.625rem',
+    fontWeight: '400',
+    lineHeight: '1rem',
+    cursor: 'pointer',
+    display: 'block',
+    margin: '0rem 0.25rem'
   }
-};
-
-/**
- * @private
- */
-export const controlButtonLabelStyles: IStyle = {
-  fontSize: '0.625rem',
-  lineHeight: '1rem',
-  cursor: 'pointer',
-  display: 'block',
-  margin: '0rem 0.25rem'
 };
 
 /**
