@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update screenshare button background when active",
+  "packageName": "@internal/react-components",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
