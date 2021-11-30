@@ -17,15 +17,8 @@ export const responsiveLayoutStackTokens: IStackTokens = {
 };
 
 export const responsiveLayoutStyle = mergeStyles({
-  height: '100%',
-  width: '100% ',
-  // half childrenGap from Stack
-  padding: '2.25rem',
-  // max of min-width from stack items + padding width * 2 = 20 + 2.25 * 2
-  minWidth: '24.5rem',
-  minHeight: 'auto',
-  // sum of max-height of stack items + childrenGap * (#items - 1) + padding * 2 = (15.0975 + 15.875) + 4.5 * 1 + 2.25 * 2 =
-  maxHeight: '39.97255rem'
+  // height: '100%',
+  width: '100% '
 });
 
 export const leftPreviewContainerStackTokens: IStackTokens = {
@@ -33,7 +26,7 @@ export const leftPreviewContainerStackTokens: IStackTokens = {
 };
 
 export const leftPreviewContainerStyle = mergeStyles({
-  width: '10rem',
+  width: '20rem',
   minHeight: '15.0975rem',
   padding: '0.5rem'
 });
@@ -68,7 +61,8 @@ export const smallAvatarContainerStyle = (avatar: string, selectedAvatar: string
     '&:focus': {
       border: `0.1875rem solid ${theme.palette.neutralSecondary}`,
       borderRadius: theme.effects.roundedCorner4
-    }
+    },
+    cursor: 'pointer'
   });
 
 export const largeAvatarContainerStyle = (avatar: string): string =>
