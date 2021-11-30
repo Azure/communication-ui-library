@@ -1,23 +1,24 @@
 <style>
-    .sbdocs.sbdocs-h1:first-of-type {
-        margin-top: 64px;
+    .sbdocs.sbdocs-h1,
+    .sbdocs.sbdocs-h2,
+    .sbdocs.sbdocs-h3,
+    .sbdocs.sbdocs-p {
+        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #000000;
     }
 
-    .sbdocs.sbdocs-h1 {
+    .sbdocs.sbdocs-h1,
+    [class*="sbdocs-title css-"],
+    .sbdocs.sbdocs-h1:first-of-type {
         color: #000000;
         font-size: 40px;
         font-weight: 700;
-        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin: 64px 0px 32px;
+        margin: 64px 0px 32px !important;
         letter-spacing: -0.03em;
     }
 
+    .sbdocs.sbdocs-h2,
     .sbdocs.sbdocs-h2:first-of-type {
-        margin-top: 48px;
-        padding-top: 48px;
-    }
-
-    .sbdocs.sbdocs-h2 {
         color: #000000;
         font-size: 24px;
         font-weight: 600;
@@ -28,11 +29,8 @@
         letter-spacing: -0.02em;
     }
 
+    .sbdocs.sbdocs-h3,
     .sbdocs.sbdocs-h3:first-of-type {
-        margin-top: 32px;
-    }
-
-    .sbdocs.sbdocs-h3 {
         color: #000000;
         font-size: 16px;
         font-weight: 600;
@@ -46,12 +44,9 @@
         margin: 16px 0px;
     }
 
-    .docblock-source {
-        box-shadow: none !important;
-    }
-
     pre {
-        background-color: #faf9f8 !important; /* we need to find a way to override the classes not made by storybook. no sbodcs tag for this one */
+        background-color: #faf9f8 !important;
+        /* we need to find a way to override the classes not made by storybook. no sbodcs tag for this one */
         border: 0px;
         border-bottom: none;
     }
@@ -69,13 +64,19 @@
         padding: 4rem 64px;
     }
 
+    tbody,
+    .sbdocs.sbdocs-preview,
+    .docblock-argstable-body,
+    .docblock-source {
+        box-shadow: none !important;
+    }
+
+    tbody {
+        border: 1px !important;
+    }
+
     body {
         background: #faf9f8;
-        font-family: "Segoe UI",
-            "Helvetica Neue",
-            Helvetica,
-            Arial,
-            sans-serif;
         color: #605e5c;
     }
 </style>
