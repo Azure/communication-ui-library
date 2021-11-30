@@ -4,20 +4,28 @@
 import { getBackgroundColor } from '../utils/utils';
 import { IButtonStyles, IStackTokens, mergeStyles, Theme } from '@fluentui/react';
 
+export const headerStyle = mergeStyles({
+  fontWeight: 600,
+  fontSize: '1.5rem', // 36px
+  width: '100%',
+  textAlign: 'center',
+  paddingBottom: '1rem'
+});
+
 export const responsiveLayoutStackTokens: IStackTokens = {
-  childrenGap: '5.25rem 8.6875rem'
+  childrenGap: '4.5rem'
 };
 
 export const responsiveLayoutStyle = mergeStyles({
   height: '100%',
   width: '100% ',
   // half childrenGap from Stack
-  padding: '2.625rem 4.34375rem',
-  // max of min-width from stack items + padding width * 2 = 20 + 4.84375 * 2
-  minWidth: '29.6875rem',
+  padding: '2.25rem',
+  // max of min-width from stack items + padding width * 2 = 20 + 2.25 * 2
+  minWidth: '24.5rem',
   minHeight: 'auto',
-  // sum of max-height of stack items + childrenGap height * (#items - 1) + padding height * 2 = (11.5625 + 15.875) + 6.25 * 1 + 3.125 * 2 =
-  maxHeight: '39.9375rem'
+  // sum of max-height of stack items + childrenGap * (#items - 1) + padding * 2 = (15.0975 + 15.875) + 4.5 * 1 + 2.25 * 2 =
+  maxHeight: '39.97255rem'
 });
 
 export const leftPreviewContainerStackTokens: IStackTokens = {
@@ -25,8 +33,8 @@ export const leftPreviewContainerStackTokens: IStackTokens = {
 };
 
 export const leftPreviewContainerStyle = mergeStyles({
-  height: '11.563rem',
-  width: '9.313rem',
+  width: '10rem',
+  minHeight: '15.0975rem',
   padding: '0.5rem'
 });
 
