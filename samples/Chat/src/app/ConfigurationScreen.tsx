@@ -21,7 +21,6 @@ import {
   leftPreviewContainerStackTokens,
   leftPreviewContainerStyle,
   namePreviewStyle,
-  responsiveLayoutStackTokens,
   responsiveLayoutStyle,
   rightInputContainerStackTokens,
   rightInputContainerStyle,
@@ -165,66 +164,58 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   const displayJoinChatArea = (): JSX.Element => {
     return (
       <Stack horizontal wrap horizontalAlign="center" verticalAlign="center" className={responsiveLayoutStyle}>
-        <Stack.Item>
-          <Stack
-            horizontalAlign="center"
-            tokens={leftPreviewContainerStackTokens}
-            className={leftPreviewContainerStyle}
-          >
-            <Text role={'heading'} aria-level={1} className={headerStyle}>
-              {PROFILE_LABEL}
-            </Text>
-            <Stack.Item className={largeAvatarContainerStyle(selectedAvatar)}>
-              <Stack aria-label={`${selectedAvatar} avatar`} className={largeAvatarStyle}>
-                {selectedAvatar}
-              </Stack>
-            </Stack.Item>
-            <Text className={namePreviewStyle(name !== '')}>{name !== '' ? name : NAME_DEFAULT}</Text>
-          </Stack>
-        </Stack.Item>
-        <Stack.Item>
-          <Stack className={rightInputContainerStyle} tokens={rightInputContainerStackTokens}>
-            <Text id={'avatar-list-label'} className={labelFontStyle}>
-              {AVATAR_LABEL}
-            </Text>
-            <FocusZone direction={FocusZoneDirection.horizontal}>
-              <Stack
-                horizontal
-                className={avatarListContainerStyle}
-                tokens={avatarListContainerStackTokens}
-                role="list"
-                aria-labelledby={'avatar-list-label'}
-              >
-                {avatarsList.map((avatar, index) => (
-                  <div
-                    role="listitem"
-                    id={avatar}
-                    key={index}
-                    data-is-focusable={true}
-                    className={smallAvatarContainerClassName(avatar)}
-                    onClick={() => onAvatarChange(avatar)}
-                  >
-                    <div className={smallAvatarStyle}>{avatar}</div>
-                  </div>
-                ))}
-              </Stack>
-            </FocusZone>
-            <DisplayNameField
-              setName={setName}
-              setEmptyWarning={setEmptyWarning}
-              validateName={validateName}
-              isEmpty={emptyWarning}
-            />
-            <PrimaryButton
-              disabled={disableJoinChatButton}
-              className={buttonStyle}
-              styles={buttonWithIconStyles}
-              text={JOIN_BUTTON_TEXT}
-              onClick={validateName}
-              onRenderIcon={() => <Chat20Filled className={chatIconStyle} />}
-            />
-          </Stack>
-        </Stack.Item>
+        <Stack horizontalAlign="center" tokens={leftPreviewContainerStackTokens} className={leftPreviewContainerStyle}>
+          <Text role={'heading'} aria-level={1} className={headerStyle}>
+            {PROFILE_LABEL}
+          </Text>
+          <Stack.Item className={largeAvatarContainerStyle(selectedAvatar)}>
+            <Stack aria-label={`${selectedAvatar} avatar`} className={largeAvatarStyle}>
+              {selectedAvatar}
+            </Stack>
+          </Stack.Item>
+          <Text className={namePreviewStyle(name !== '')}>{name !== '' ? name : NAME_DEFAULT}</Text>
+        </Stack>
+        <Stack className={rightInputContainerStyle} tokens={rightInputContainerStackTokens}>
+          <Text id={'avatar-list-label'} className={labelFontStyle}>
+            {AVATAR_LABEL}
+          </Text>
+          <FocusZone direction={FocusZoneDirection.horizontal}>
+            <Stack
+              horizontal
+              className={avatarListContainerStyle}
+              tokens={avatarListContainerStackTokens}
+              role="list"
+              aria-labelledby={'avatar-list-label'}
+            >
+              {avatarsList.map((avatar, index) => (
+                <div
+                  role="listitem"
+                  id={avatar}
+                  key={index}
+                  data-is-focusable={true}
+                  className={smallAvatarContainerClassName(avatar)}
+                  onClick={() => onAvatarChange(avatar)}
+                >
+                  <div className={smallAvatarStyle}>{avatar}</div>
+                </div>
+              ))}
+            </Stack>
+          </FocusZone>
+          <DisplayNameField
+            setName={setName}
+            setEmptyWarning={setEmptyWarning}
+            validateName={validateName}
+            isEmpty={emptyWarning}
+          />
+          <PrimaryButton
+            disabled={disableJoinChatButton}
+            className={buttonStyle}
+            styles={buttonWithIconStyles}
+            text={JOIN_BUTTON_TEXT}
+            onClick={validateName}
+            onRenderIcon={() => <Chat20Filled className={chatIconStyle} />}
+          />
+        </Stack>
       </Stack>
     );
   };
