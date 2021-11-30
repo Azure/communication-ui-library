@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fix common label for mic and speakers in Call composite configuration page",
+  "packageName": "@internal/react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
