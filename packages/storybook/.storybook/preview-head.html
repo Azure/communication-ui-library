@@ -21,7 +21,6 @@
         color: #000000;
         font-size: 24px;
         font-weight: 600;
-        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
         margin: 48px 0px 24px;
         padding: 48px 0px 0px;
         border-top: 1px solid #EDEBE9;
@@ -37,20 +36,24 @@
         color: #000000;
         font-size: 16px;
         font-weight: 600;
-        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
         margin: 32px 0px 12px;
         letter-spacing: -0.02em;
     }
 
     .sbdocs.sbdocs-p {
         font-size: 14px;
-        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
         line-height: 24px;
         margin: 16px 0px;
     }
 
+    .docblock-source {
+        box-shadow: none !important;
+    }
+
     pre {
         background-color: #faf9f8 !important; /* we need to find a way to override the classes not made by storybook. no sbodcs tag for this one */
+        border: 0px;
+        border-bottom: none;
     }
 
     tr th {

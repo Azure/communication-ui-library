@@ -6,8 +6,31 @@ import { overviewPageImagesStackStyle } from './constants';
 
 <Stack horizontal horizontalAlign="space-between" style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
-    <h2>Azure Communication Services</h2>
-    <h1>UI Library</h1>
+    <h2
+      style={{
+        fontFamily: '"Segoe UI", sans-serif',
+        color: 'rgba(0,0,0,.5)',
+        fontSize: '1.125rem',
+        fontWeight: '500',
+        border: 'none',
+        margin: '0rem 0rem 0.25rem 0rem',
+        lineHeight: '1.5rem'
+      }}
+    >
+      Azure Communication Services
+    </h2>
+    <h1
+      style={{
+        fontFamily: '"Segoe UI", sans-serif',
+        color: '#0078D4',
+        fontWeight: '600',
+        fontSize: '2rem',
+        margin: '0rem',
+        lineHeight: '2.5rem'
+      }}
+    >
+      UI Library
+    </h1>
   </Stack.Item>
   <Stack.Item align="center">
     <img src="images/hero.svg" alt="UI Library Hero Image" style={{ maxHeight: '18.75rem' }} />
