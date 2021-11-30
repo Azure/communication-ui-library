@@ -3,7 +3,7 @@
     /* the computed selectors come from something to do with story book and their style sheets */
     /* Escape hatches only seem to work on selectors that have story book formatting - .sbdocs.sbdocs-h1 for example */
     /* !important is used to force some of the styles that go onto elements that do not get these special selectors */
-    
+
     .sbdocs.sbdocs-h1,
     .sbdocs.sbdocs-h2,
     .sbdocs.sbdocs-h3,
@@ -70,16 +70,17 @@
         background-color: #faf9f8 !important;
     }
 
-    .sbdocs.sbdocs-wrapper {
-        padding: 4rem 64px;
-    }
-
     .sbdocs.sbdocs-preview,
     .docblock-argstable-body,
     .docblock-argstable-head,
     .docblock-source {
         box-shadow: none !important;
         border: 1px solid rgba(0, 0, 0, .1);
+    }
+
+    .sbdocs.sbdocs-preview,
+    div.docblock-source {
+        margin: 16px 0px;
     }
 
     td {
