@@ -101,21 +101,25 @@ function App(): JSX.Element {
 ReactDOM.render(<App />, document.getElementById('root'));
 
 function getMessageContentInUppercase(messageProps: MessageProps): string {
-  if (
-    messageProps.message.messageType === 'chat' ||
-    messageProps.message.messageType === 'custom' ||
-    messageProps.message.systemMessageType === 'content'
-  ) {
-    return messageProps.message.content.toUpperCase();
-  } else if (messageProps.message.systemMessageType === 'topicUpdated') {
-    return messageProps.message.topic.toUpperCase();
-  } else if (messageProps.message.systemMessageType === 'participantAdded') {
-    return `Participants Added: ${messageProps.message.participants.map((p) => p.displayName).join(',')}`.toUpperCase();
-  } else if (messageProps.message.systemMessageType === 'participantRemoved') {
-    return `Participants Removed: ${messageProps.message.participants
-      .map((p) => p.displayName)
-      .join(',')}`.toUpperCase();
-  } else {
-    return 'CUSTOM MESSAGE';
+  const message = messageProps.message;
+  switch (message.messageType) {
+    case 'chat':
+    case 'custom':
+      return message.content.toUpperCase();
+    case 'system':
+      switch (message.systemMessageType) {
+        case 'content':
+          return message.content.toUpperCase();
+        case 'topicUpdated':
+          return message.topic.toUpperCase();
+        case 'participantAdded':
+          return `Participants Added: ${message.participants.map((p) => p.displayName).join(',')}`.toUpperCase();
+        case 'participantRemoved':
+          return `Participants Removed: ${message.participants.map((p) => p.displayName).join(',')}`.toUpperCase();
+        default:
+          return 'CUSTOM MESSAGE';
+      }
+    default:
+      'CUSTOM MESSAGE';
   }
 }
