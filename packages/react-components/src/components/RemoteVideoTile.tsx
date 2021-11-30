@@ -19,6 +19,7 @@ export const RemoteVideoTile = React.memo(
     isAvailable?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    isScreenSharing?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
     renderElement?: HTMLElement;
     displayName?: string;
     remoteVideoViewOptions?: VideoStreamOptions;
@@ -29,6 +30,7 @@ export const RemoteVideoTile = React.memo(
       isAvailable,
       isMuted,
       isSpeaking,
+      isScreenSharing,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOptions,
@@ -57,9 +59,11 @@ export const RemoteVideoTile = React.memo(
 
     useEffect(() => {
       return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
+        if (isScreenSharing) {
+          onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
+        }
       };
-    }, [onDisposeRemoteStreamView, userId]);
+    }, [onDisposeRemoteStreamView, userId, isScreenSharing]);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
