@@ -17,7 +17,6 @@ export const responsiveLayoutStackTokens: IStackTokens = {
 };
 
 export const responsiveLayoutStyle = mergeStyles({
-  // height: '100%',
   width: '100% '
 });
 
