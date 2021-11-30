@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
-import { Dropdown, Icon, IDropdownOption, Stack } from '@fluentui/react';
+import { Dropdown, Icon, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
 import { useTheme, VideoStreamOptions } from '@internal/react-components';
 import React from 'react';
 import { useLocale } from '../../localization';
@@ -121,52 +121,64 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         }}
         onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
       />
-      <Dropdown
-        label={soundLabel}
-        placeholder={defaultPlaceHolder}
-        styles={dropDownStyles(theme)}
-        disabled={!props.microphonePermissionGranted}
-        errorMessage={
-          props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
-            ? undefined
-            : locale.strings.call.microphonePermissionDenied
-        }
-        options={
-          props.microphonePermissionGranted
-            ? getDropDownList(props.microphones)
-            : [{ key: 'deniedOrUnknown', text: '' }]
-        }
-        defaultSelectedKey={
-          props.microphonePermissionGranted
-            ? props.selectedMicrophone
-              ? props.selectedMicrophone.id
-              : defaultDeviceId(props.microphones)
-            : 'deniedOrUnknown'
-        }
-        onChange={(
-          event: React.FormEvent<HTMLDivElement>,
-          option?: IDropdownOption | undefined,
-          index?: number | undefined
-        ) => {
-          props.onSelectMicrophone(props.microphones[index ?? 0]);
-        }}
-        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
-      />
-      <Dropdown
-        placeholder={defaultPlaceHolder}
-        styles={dropDownStyles(theme)}
-        disabled={props.speakers.length === 0}
-        options={getDropDownList(props.speakers)}
-        defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
-        onChange={(
-          event: React.FormEvent<HTMLDivElement>,
-          option?: IDropdownOption | undefined,
-          index?: number | undefined
-        ) => {
-          props.onSelectSpeaker(props.speakers[index ?? 0]);
-        }}
-        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
-      />
+      <Stack>
+        <Label
+          id={'call-composite-local-sound-settings-label'}
+          className={mergeStyles(dropDownStyles(theme).label)}
+          disabled={!props.microphonePermissionGranted} // follows Start button disabled state in ConfigurationPage
+        >
+          {soundLabel}
+        </Label>
+        <Stack data-ui-id="call-composite-sound-settings" tokens={mainStackTokens}>
+          <Dropdown
+            aria-labelledby={'call-composite-local-sound-settings-label'}
+            placeholder={defaultPlaceHolder}
+            styles={dropDownStyles(theme)}
+            disabled={!props.microphonePermissionGranted}
+            errorMessage={
+              props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
+                ? undefined
+                : locale.strings.call.microphonePermissionDenied
+            }
+            options={
+              props.microphonePermissionGranted
+                ? getDropDownList(props.microphones)
+                : [{ key: 'deniedOrUnknown', text: '' }]
+            }
+            defaultSelectedKey={
+              props.microphonePermissionGranted
+                ? props.selectedMicrophone
+                  ? props.selectedMicrophone.id
+                  : defaultDeviceId(props.microphones)
+                : 'deniedOrUnknown'
+            }
+            onChange={(
+              event: React.FormEvent<HTMLDivElement>,
+              option?: IDropdownOption | undefined,
+              index?: number | undefined
+            ) => {
+              props.onSelectMicrophone(props.microphones[index ?? 0]);
+            }}
+            onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
+          />
+          <Dropdown
+            aria-labelledby={'call-composite-local-sound-settings-label'}
+            placeholder={defaultPlaceHolder}
+            styles={dropDownStyles(theme)}
+            disabled={props.speakers.length === 0}
+            options={getDropDownList(props.speakers)}
+            defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
+            onChange={(
+              event: React.FormEvent<HTMLDivElement>,
+              option?: IDropdownOption | undefined,
+              index?: number | undefined
+            ) => {
+              props.onSelectSpeaker(props.speakers[index ?? 0]);
+            }}
+            onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
+          />
+        </Stack>
+      </Stack>
     </Stack>
   );
 };
