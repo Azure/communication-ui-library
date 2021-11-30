@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import { Spinner, SpinnerSize, Stack } from '@fluentui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
-import { VideoStreamOptions, VideoGalleryRemoteParticipant } from '../../types';
+import { VideoStreamOptions } from '../../types';
 import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
@@ -17,32 +17,50 @@ import { _formatString } from '@internal/acs-ui-common';
  */
 export const RemoteScreenShare = React.memo(
   (props: {
-    screenShareParticipant?: VideoGalleryRemoteParticipant;
+    userId: string;
+    displayName?: string;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
+    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    isAvailable?: boolean;
+    isMuted?: boolean;
+    isSpeaking?: boolean;
+    isVideoStreamOn?: boolean; // TODO: Remove this once there is a correct callback to dispose of the screenshare stream
+    renderElement?: HTMLElement;
   }) => {
-    const { onCreateRemoteStreamView, screenShareParticipant } = props;
+    const {
+      userId,
+      displayName,
+      isMuted,
+      renderElement,
+      isVideoStreamOn,
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView
+    } = props;
     const locale = useLocale();
 
-    const screenShareStream = screenShareParticipant?.screenShareStream;
-    if (screenShareStream?.isAvailable && !screenShareStream?.renderElement) {
-      screenShareParticipant && onCreateRemoteStreamView && onCreateRemoteStreamView(screenShareParticipant.userId);
+    if (!renderElement) {
+      onCreateRemoteStreamView && onCreateRemoteStreamView(userId);
     }
 
-    const loadingMessage = screenShareParticipant?.displayName
+    useEffect(() => {
+      return () => {
+        if (isVideoStreamOn) {
+          onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
+        }
+      };
+    }, [onDisposeRemoteStreamView, userId, isVideoStreamOn]);
+
+    const loadingMessage = displayName
       ? _formatString(locale.strings.videoGallery.screenShareLoadingMessage, {
-          participant: screenShareParticipant?.displayName
+          participant: displayName
         })
       : '';
 
     return (
       <VideoTile
-        displayName={screenShareParticipant?.displayName}
-        isMuted={screenShareParticipant?.isMuted}
-        renderElement={
-          screenShareStream?.renderElement ? (
-            <StreamMedia videoStreamElement={screenShareStream?.renderElement} />
-          ) : undefined
-        }
+        displayName={displayName}
+        isMuted={isMuted}
+        renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
       />
     );
