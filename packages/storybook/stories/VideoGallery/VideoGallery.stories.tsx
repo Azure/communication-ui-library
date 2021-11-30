@@ -193,7 +193,7 @@ export default {
     // Hiding auto-generated controls
     styles: hiddenControl,
     localParticipant: hiddenControl,
-    localVideoViewOption: hiddenControl,
+    localVideoViewOptions: hiddenControl,
     remoteVideoViewOption: hiddenControl,
     onCreateLocalStreamView: hiddenControl,
     onDisposeLocalStreamView: hiddenControl,
