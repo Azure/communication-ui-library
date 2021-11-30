@@ -11,8 +11,7 @@ import {
   MicrophoneButton,
   ParticipantMenuItemsCallback,
   ParticipantsButton,
-  ScreenShareButton,
-  useTheme
+  ScreenShareButton
 } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { useLocale } from '../../localization';
@@ -20,7 +19,6 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
 import {
-  checkedButtonOverrideStyles,
   controlButtonBaseStyle,
   devicesButtonWithIncreasedTouchTargets,
   groupCallLeaveButtonCompressedStyle,
@@ -128,13 +126,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
 
-  const theme = useTheme();
-
-  const screenShareButtonStyles = useMemo(
-    () => mergeButtonBaseStyles(checkedButtonOverrideStyles(theme, screenShareButtonProps.checked)),
-    [screenShareButtonProps.checked, theme.palette.themePrimary]
-  );
-
   const participantsButtonStyles = useMemo(
     () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
@@ -170,7 +161,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <ScreenShareButton
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
-      styles={screenShareButtonStyles}
       showLabel={!compactMode}
       disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
     />
