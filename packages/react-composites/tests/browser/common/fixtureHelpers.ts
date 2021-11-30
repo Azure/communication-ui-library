@@ -17,7 +17,14 @@ import { buildUrl } from './utils';
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePagePerParticipant = async ({ serverUrl, users, browser }, use) => {
-  const pages = await Promise.all(users.map(async (user) => await loadNewPage(browser, buildUrl(serverUrl, user))));
+  const pages = await Promise.all(
+    users.map(async (user) => {
+      const page = await loadNewPage(browser, buildUrl(serverUrl, user));
+      bindConsoleErrorForwarding(page);
+      return page;
+    })
+  );
+
   await use(pages);
 };
 
@@ -26,6 +33,16 @@ const KNOWN_TELEMETRY_ERROR_MESSAGES = [
   'Failed to load resource: the server responded with a status of 403 (All Events Throttled.)'
 ];
 const KNOWN_TELEMETRY_ORIGIN = 'events.data.microsoft.com/OneCollector';
+
+/**
+ * Ensure errors on the playwright browser page are forwarded to the test runner console output.
+ */
+const bindConsoleErrorForwarding = (page: Page): Page =>
+  page.on('console', (msg) => {
+    if (msg.type() === 'error' && !shouldIgnoreConsoleError(msg)) {
+      console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
+    }
+  });
 
 // Ignore known, non-impactful, unfixable console log errors. This should only ignore errors we *CANNOT* fix.
 // All console errors should be fixed before considering adding to this function.
@@ -43,11 +60,7 @@ export const usePagePerParticipantWithCallPermissions = async ({ browser, server
   const pages = await Promise.all(
     users.map(async (user) => {
       const page = await loadNewPageWithPermissionsForCalls(browser, buildUrl(serverUrl, user));
-      page.on('console', (msg) => {
-        if (msg.type() === 'error' && !shouldIgnoreConsoleError(msg)) {
-          console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
-        }
-      });
+      bindConsoleErrorForwarding(page);
       return page;
     })
   );
