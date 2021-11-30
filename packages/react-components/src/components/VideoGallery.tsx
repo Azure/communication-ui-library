@@ -107,6 +107,7 @@ export interface VideoGalleryProps {
   onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
   /** Callback to render a remote video tile */
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+  /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -247,15 +248,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return (
         <RemoteVideoTile
           key={participant.userId}
-          userId={participant.userId}
+          {...participant}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
-          isMuted={participant.isMuted}
-          isSpeaking={participant.isSpeaking}
-          displayName={participant.displayName}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
         />
@@ -298,10 +296,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
-  const remoteScreenShareComponent = (
+  const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare
-      screenShareParticipant={screenShareParticipant}
+      {...screenShareParticipant}
+      renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
+      onDisposeRemoteStreamView={onDisposeRemoteStreamView}
     />
   );
 
