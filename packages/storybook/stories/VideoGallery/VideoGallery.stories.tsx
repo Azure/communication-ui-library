@@ -100,6 +100,7 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={ScreenSharingFromViewerExampleText}>
         <ScreenSharingFromViewerExample />
       </Canvas>
+      <Source></Source>
 
       <Heading>Custom Avatar</Heading>
       <Description>

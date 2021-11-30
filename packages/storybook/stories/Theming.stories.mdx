@@ -4,6 +4,7 @@ import { DarkControlBar } from './snippets/DarkControlBar.snippet';
 import { DefaultThemeSnippet } from './snippets/DefaultTheme.snippet';
 import { ThemedButton } from './snippets/ThemedButton.snippet';
 import DarkControlBarText from '!!raw-loader!./snippets/DarkControlBar.snippet.tsx';
+import ThemedCompositesText from '!!raw-loader!./snippets/ThemedComposites.snippet.tsx';
 import DefaultThemeSnippetText from '!!raw-loader!./snippets/DefaultTheme.snippet.tsx';
 import ThemedButtonText from '!!raw-loader!./snippets/ThemedButton.snippet.tsx';
 
@@ -17,6 +18,10 @@ is a wrapping component that allows you to theme all ACS UI Library components c
 
 ## Usage
 
+###
+
+### Components
+
 ACS UI Library components are themed with a light theme by default as shown by the `ControlBar` and buttons below.
 
 <Source code={DefaultThemeSnippetText} />
@@ -27,8 +32,8 @@ ACS UI Library components are themed with a light theme by default as shown by t
 
 To theme this ControlBar, import `FluentThemeProvider` from `@azure/communication-react` and wrap it around the `ControlBar`.
 Then import `darkTheme` from `@azure/communication-react` and assign it to the `fluentTheme` property of `FluentThemeProvider`.
-The import `darkTheme` is a [Theme](https://aka.ms/fluentui#/controls/web/references/theme) object from
-Fluent UI.
+The imports `lightTheme` and `darkTheme` are [Theme](https://aka.ms/fluentui#/controls/web/references/theme) objects and are
+available from package `@azure/communication-react`.
 
 <Source code={DarkControlBarText} />
 
@@ -36,15 +41,21 @@ Fluent UI.
   <DarkControlBar />
 </Canvas>
 
+### Composites
+
+ACS UI Library composites are also themed with a light theme by default and are themed through the `fluentTheme` property.
+Example code is shown below.
+
+<Source code={ThemedCompositesText} />
+
 ## FluentThemeProvider Props
 
 <Props of={FluentThemeProvider} />
 
 ## Creating your own theme
 
-The imports `lightTheme` and `darkTheme` are available from `@azure/communication-react`. But if you wish to use your own theme,
-we strongly advise using Microsoft's [Fluent UI Theme Designer](https://aka.ms/themedesigner) to create your theme. Please ensure
-that the Accessibility checker on the same page passes when creating your own theme.
+If you wish to use your own theme, we strongly advise using Microsoft's [Fluent UI Theme Designer](https://aka.ms/themedesigner)
+to create your theme. Please ensure that the Accessibility checker on the same page passes when creating your own theme.
 
 <img src="images/accessibility_checker_pass.png" alt="Accessibility checker pass" />
 
