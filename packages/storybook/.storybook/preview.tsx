@@ -23,7 +23,6 @@ registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 export const parameters = {
   layout: 'fullscreen',
-  previewTabs: { 'storybook/docs/panel': { index: -1 } },
   docs: {
     container: props => (
       <TOC>
@@ -91,7 +90,14 @@ export const parameters = {
         ],
       ]
     }
-  }
+  },
+  viewMode: 'docs',
+  previewTabs: {
+    'storybook/docs/panel': { index: -1 },
+    'canvas' : {
+      title: 'Preview'
+    }
+ }
 };
 
 const withThemeProvider = (Story: any, context: any) => {
