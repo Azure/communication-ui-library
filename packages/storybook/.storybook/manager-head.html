@@ -83,7 +83,10 @@
 <script>
   function addUsefulLinks() {
     const linkStyle = 'color: black; text-decoration: none; text-align: center; cursor: pointer; padding: 0rem 0.5rem;';
-
+    const imageStyle = 'height: 0.75rem; margin-top: 0.125rem;';
+    const textStyle = 'margin-left: 0.25rem; font-size: 0.75rem;';
+    const linkContentStyle = 'display: flex;';
+    
     const sidebarHeader = document.getElementsByClassName('sidebar-header');
     if (sidebarHeader.length === 0) {
       // sidebar container has not loaded in the page yet, retry in 500ms
@@ -97,14 +100,14 @@
     // GitHub
     const githubImage = document.createElement('img');
     githubImage.src = './images/github.png';
-    githubImage.style = 'height: 1rem;';
+    githubImage.style = imageStyle;
 
     const githubText = document.createElement('span');
-    githubText.style = 'margin-left: 0.25rem;';
+    githubText.style = textStyle;
     githubText.innerText = 'GitHub';
 
     const repoLinkContent = document.createElement('span');
-    repoLinkContent.style = 'display: flex;';
+    repoLinkContent.style = linkContentStyle;
     repoLinkContent.append(githubImage, githubText);
 
     const repoLink = document.createElement('a');
@@ -116,14 +119,14 @@
     // npm
     const npmImage = document.createElement('img');
     npmImage.src = './images/npm.png';
-    npmImage.style = 'height: 1rem;';
+    npmImage.style = imageStyle;
 
     const npmText = document.createElement('span');
-    npmText.style = 'margin-left: 0.25rem;';
+    npmText.style = textStyle;
     npmText.innerText = 'Npm';
 
     const npmLinkContent = document.createElement('span');
-    npmLinkContent.style = 'display: flex;';
+    npmLinkContent.style = linkContentStyle;
     npmLinkContent.append(npmImage, npmText);
 
     const npmLink = document.createElement('a');
@@ -135,7 +138,7 @@
     // links container
     const usefulLinksContainer = document.createElement('div');
     usefulLinksContainer.id = 'useful-links';
-    usefulLinksContainer.style = 'display: flex; margin-top: 0.5rem; font-size: 0.875rem;';
+    usefulLinksContainer.style = 'display: flex; margin: 1rem 0rem; font-size: 0.875rem;';
 
     usefulLinksContainer.append(repoLink, npmLink);
 
