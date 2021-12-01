@@ -94,7 +94,7 @@ export const parameters = {
   previewTabs: {
     'storybook/docs/panel': { index: -1 },
     'canvas' : {
-      title: 'Try it out'
+      title: 'Preview'
     }
  }
 };
