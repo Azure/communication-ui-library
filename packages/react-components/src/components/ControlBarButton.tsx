@@ -1,18 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
-import {
-  DefaultButton,
-  IButtonProps,
-  IRenderFunction,
-  Text,
-  concatStyleSets,
-  mergeStyles,
-  IButtonStyles
-} from '@fluentui/react';
-import { useTheme } from '../theming';
-import { controlButtonLabelStyles, controlButtonStyles } from './styles/ControlBar.styles';
+import React from 'react';
+import { DefaultButton, IButtonProps, IRenderFunction, concatStyleSets, IButtonStyles } from '@fluentui/react';
+import { controlButtonStyles } from './styles/ControlBar.styles';
 import { ControlButtonTooltip } from './ControlButtonTooltip';
 
 /**
@@ -34,9 +25,13 @@ export interface ControlBarButtonStrings {
    */
   offLabel?: string;
   /**
-   * Tooltip content of the button. This supersedes tooltipOnContent and tooltipOffContent if used.
+   * Tooltip content of the button. This supersedes tooltipDisabledContent, tooltipOnContent and tooltipOffContent if used.
    */
   tooltipContent?: string;
+  /**
+   * Tooltip content when the button is disabled.
+   */
+  tooltipDisabledContent?: string;
   /**
    * Tooltip content when the button is in the checked state.
    */
@@ -119,25 +114,17 @@ const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null =>
  */
 export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(controlButtonStyles, props.styles ?? {});
-  const theme = useTheme();
 
   const labelText =
     props?.text ?? props?.strings?.label ?? (props?.checked ? props?.strings?.onLabel : props?.strings?.offLabel);
 
-  const DefaultRenderText = useCallback(() => {
-    return (
-      <Text
-        key={props?.labelKey}
-        className={mergeStyles(controlButtonLabelStyles, theme.palette.neutralPrimary, props?.styles?.label)}
-      >
-        {labelText}
-      </Text>
-    );
-  }, [labelText, props?.labelKey, props?.styles?.label, theme]);
-
   const tooltipContent =
     props?.strings?.tooltipContent ??
-    (props?.checked ? props?.strings?.tooltipOnContent : props?.strings?.tooltipOffContent);
+    (props?.disabled
+      ? props?.strings?.tooltipDisabledContent
+      : props?.checked
+      ? props?.strings?.tooltipOnContent
+      : props?.strings?.tooltipOffContent);
 
   const tooltipId = props.tooltipId ?? props.labelKey ? props.labelKey + '-tooltip' : undefined;
 
@@ -146,9 +133,11 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
       <DefaultButton
         {...props}
         styles={componentStyles}
-        onRenderText={props.showLabel ? props.onRenderText ?? DefaultRenderText : undefined}
+        onRenderText={props.showLabel && props.onRenderText ? props.onRenderText : undefined}
         onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
-      />
+      >
+        {props.showLabel ? labelText : <></>}
+      </DefaultButton>
     </ControlButtonTooltip>
   );
 };

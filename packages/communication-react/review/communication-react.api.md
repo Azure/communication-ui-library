@@ -480,7 +480,7 @@ export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
 // @public
 export interface CameraButtonProps extends ControlBarButtonProps {
-    localVideoViewOption?: VideoStreamOptions;
+    localVideoViewOptions?: VideoStreamOptions;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     strings?: Partial<CameraButtonStrings>;
 }
@@ -495,6 +495,7 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 export interface CameraButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -894,6 +895,7 @@ export interface ControlBarButtonStrings {
     offLabel?: string;
     onLabel?: string;
     tooltipContent?: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -1605,6 +1607,7 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 export interface MicrophoneButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -1831,6 +1834,7 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 export interface ScreenShareButtonStrings {
     offLabel: string;
     onLabel: string;
+    tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
@@ -2041,18 +2045,17 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: 'default' | 'floatingLocalVideo';
     localParticipant: VideoGalleryLocalParticipant;
-    localVideoViewOption?: VideoStreamOptions;
+    localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void>;
     onDisposeLocalStreamView?: () => void;
-    // (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    remoteVideoViewOption?: VideoStreamOptions;
+    remoteVideoViewOptions?: VideoStreamOptions;
     showMuteIndicator?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;

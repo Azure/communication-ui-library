@@ -1,42 +1,33 @@
 import { FluentThemeProvider } from '@azure/communication-react';
 import { Canvas, Meta, Props, Source } from '@storybook/addon-docs';
 import { DarkControlBar } from './snippets/DarkControlBar.snippet';
-import { FluentThemeProviderSnippet } from './snippets/FluentThemeProvider.snippet';
+import { DefaultThemeSnippet } from './snippets/DefaultTheme.snippet';
 import { ThemedButton } from './snippets/ThemedButton.snippet';
 import DarkControlBarText from '!!raw-loader!./snippets/DarkControlBar.snippet.tsx';
-import FluentThemeProviderSnippetText from '!!raw-loader!./snippets/FluentThemeProvider.snippet.tsx';
+import DefaultThemeSnippetText from '!!raw-loader!./snippets/DefaultTheme.snippet.tsx';
 import ThemedButtonText from '!!raw-loader!./snippets/ThemedButton.snippet.tsx';
 
-<Meta id="theming" title="Concepts/Theming" />
+<Meta id="theming" title="Concepts/Theming" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
 # Theming
 
-ACS UI SDK use components and icons from both [Fluent UI](https://developer.microsoft.com/fluentui#/controls/web)
+ACS UI Library uses components and icons from both [Fluent UI](https://aka.ms/fluentui#/controls/web)
 and [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net). The `FluentThemeProvider`
-component ensures:
-
-1. ACS UI SDK and Fluent UI components and icons are themed together
-2. Fluent React Northstar icons are provided
+is a wrapping component that allows you to theme all ACS UI Library components consistently.
 
 ## Usage
 
-To use the FluentThemeProvider, simply import it from `@azure/communication-react` and wrap it around
-ACS UI SDK components and Fluent UI components. For the example below we will provide theming and icons to
-the `ControlBar`.
+ACS UI Library components are themed with a light theme by default as shown by the `ControlBar` and buttons below.
 
-<Source code={FluentThemeProviderSnippetText} />
+<Source code={DefaultThemeSnippetText} />
 
 <Canvas withSource="none">
-  <FluentThemeProviderSnippet />
+  <DefaultThemeSnippet />
 </Canvas>
 
-`FluentThemeProvider` does two things here:
-
-1. `FluentThemeProvider` loads the icons used by components such as `CameraButton`
-2. `FluentThemeProvider` applies theme (light theme by default) to the `ControlBar`
-
-To illustrate how another theme can be applied, import `darkTheme` from `@azure/communication-react`
-and assign it to the `fluentTheme` property.
+To theme this ControlBar, import `FluentThemeProvider` from `@azure/communication-react` and wrap it around the `ControlBar`.
+Then import `darkTheme` from `@azure/communication-react` and assign it to the `fluentTheme` property of `FluentThemeProvider`.
+`darkTheme` is a [Theme](https://aka.ms/fluentui#/controls/web/references/theme) object from Fluent UI.
 
 <Source code={DarkControlBarText} />
 
@@ -44,17 +35,15 @@ and assign it to the `fluentTheme` property.
   <DarkControlBar />
 </Canvas>
 
-The dark theme is applied to the `ControlBar`. The icon colors in the predefined button components are themed correctly
-because they are built using the `DefaultButton` Fluent UI component.
-
 ## FluentThemeProvider Props
 
 <Props of={FluentThemeProvider} />
 
 ## Creating your own theme
 
-If you wish to use your own theme, we strongly advise using Microsoft's [Fluent UI Theme Designer](https://aka.ms/themedesigner).
-Please ensure that the Accessibility checker on the same page passes when creating your own theme.
+`lightTheme` and `darkTheme` are available from `@azure/communication-react`. But if you wish to use your own theme,
+we recommend using Microsoft's [Fluent UI Theme Designer](https://aka.ms/themedesigner) to create your theme. Please ensure
+that the Accessibility checker on the same page passes when creating your own theme.
 
 <img src="images/accessibility_checker_pass.png" alt="Accessibility checker pass" />
 
@@ -91,8 +80,10 @@ export const lightTheme = {
 
 ## Custom Theme Mapping
 
-The ACS UI SDK and Fluent UI components automatically handles the mapping of palette slots to components.
-If you wish to override the mapping, we advise that you use the `useTheme` hook.
+The ACS UI Library and Fluent UI components are themed with palette values from the
+[Theme](https://aka.ms/fluentui#/controls/web/references/theme) object with a mapping that is designed to work for any valid theme.
+But if you wish to override the mapping, we recommend that you use the `useTheme` hook from `@azure/communication-react` and
+use the component's `styles` prop like in the example below.
 
 <Source code={ThemedButtonText} />
 
@@ -100,7 +91,7 @@ If you wish to override the mapping, we advise that you use the `useTheme` hook.
   <ThemedButton />
 </Canvas>
 
-Should you override your own mappings, please note that ACS SDK UI components abide by the general Fluent UI
+Should you override the palette mapping, please note that ACS UI Library components abide by the general Fluent UI
 mappings. Foreground colors are used for text, icons, and outlines while background colors for component
 backgrounds. Primary colors are also used for component backgrounds or icons.
 

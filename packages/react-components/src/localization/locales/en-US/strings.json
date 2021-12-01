@@ -30,12 +30,14 @@
   "cameraButton": {
     "onLabel": "Turn off",
     "offLabel": "Turn on",
+    "tooltipDisabledContent": "Camera is disabled",
     "tooltipOnContent": "Turn off camera",
     "tooltipOffContent": "Turn on camera"
   },
   "microphoneButton": {
     "onLabel": "Mute",
     "offLabel": "Unmute",
+    "tooltipDisabledContent": "Microphone is disabled",
     "tooltipOnContent": "Mute microphone",
     "tooltipOffContent": "Unmute microphone"
   },
@@ -58,8 +60,9 @@
     "copyInviteLinkButtonLabel": "Copy invite link"
   },
   "screenShareButton": {
-    "onLabel": "Stop",
+    "onLabel": "Stop sharing",
     "offLabel": "Share",
+    "tooltipDisabledContent": "Screen sharing is disabled",
     "tooltipOnContent": "Stop sharing your screen",
     "tooltipOffContent": "Share your screen"
   },
