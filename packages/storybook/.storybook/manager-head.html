@@ -90,7 +90,6 @@
     const sidebarHeader = document.getElementsByClassName('sidebar-header');
     if (sidebarHeader.length === 0) {
       // sidebar container has not loaded in the page yet, retry in 500ms
-      console.log('sidebar-header not loaded');
       setTimeout(addUsefulLinks, 500);
       return false;
     }
