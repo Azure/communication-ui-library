@@ -27,8 +27,7 @@ ACS UI Library components are themed with a light theme by default as shown by t
 
 To theme this ControlBar, import `FluentThemeProvider` from `@azure/communication-react` and wrap it around the `ControlBar`.
 Then import `darkTheme` from `@azure/communication-react` and assign it to the `fluentTheme` property of `FluentThemeProvider`.
-The import `darkTheme` is a [Theme](https://aka.ms/fluentui#/controls/web/references/theme) object from
-Fluent UI.
+`darkTheme` is a [Theme](https://aka.ms/fluentui#/controls/web/references/theme) object from Fluent UI.
 
 <Source code={DarkControlBarText} />
 
@@ -42,8 +41,8 @@ Fluent UI.
 
 ## Creating your own theme
 
-The imports `lightTheme` and `darkTheme` are available from `@azure/communication-react`. But if you wish to use your own theme,
-we strongly advise using Microsoft's [Fluent UI Theme Designer](https://aka.ms/themedesigner) to create your theme. Please ensure
+`lightTheme` and `darkTheme` are available from `@azure/communication-react`. But if you wish to use your own theme,
+we recommend using Microsoft's [Fluent UI Theme Designer](https://aka.ms/themedesigner) to create your theme. Please ensure
 that the Accessibility checker on the same page passes when creating your own theme.
 
 <img src="images/accessibility_checker_pass.png" alt="Accessibility checker pass" />
@@ -81,9 +80,9 @@ export const lightTheme = {
 
 ## Custom Theme Mapping
 
-The ACS UI Library and Fluent UI components are themed with a palette values from the
+The ACS UI Library and Fluent UI components are themed with palette values from the
 [Theme](https://aka.ms/fluentui#/controls/web/references/theme) object with a mapping that is designed to work for any valid theme.
-But if you wish to override the mapping, we advise that you use the `useTheme` hook from `@azure/communication-react` and
+But if you wish to override the mapping, we recommend that you use the `useTheme` hook from `@azure/communication-react` and
 use the component's `styles` prop like in the example below.
 
 <Source code={ThemedButtonText} />
@@ -92,7 +91,7 @@ use the component's `styles` prop like in the example below.
   <ThemedButton />
 </Canvas>
 
-Should you override your own mappings, please note that ACS UI Library components abide by the general Fluent UI
+Should you override the palette mapping, please note that ACS UI Library components abide by the general Fluent UI
 mappings. Foreground colors are used for text, icons, and outlines while background colors for component
 backgrounds. Primary colors are also used for component backgrounds or icons.
 
