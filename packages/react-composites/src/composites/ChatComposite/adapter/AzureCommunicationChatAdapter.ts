@@ -356,10 +356,11 @@ export const createAzureCommunicationChatAdapter = async ({
     credential: credential
   });
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
+  await chatClient.startRealtimeNotifications();
 
-  chatClient.startRealtimeNotifications();
+  const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+  await adapter.fetchInitialData();
 
-  const adapter = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   return adapter;
 };
 

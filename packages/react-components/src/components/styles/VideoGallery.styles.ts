@@ -23,7 +23,14 @@ export const videoGalleryOuterDivStyle = mergeStyles({ position: 'relative', wid
  * @private
  */
 export const videoGalleryContainerStyle: IStackStyles = {
-  root: { position: 'relative', height: '100%', width: '100%', padding: '0.5rem', gap: '0.5rem' }
+  root: { position: 'relative', height: '100%', width: '100%', padding: '0.5rem' }
+};
+
+/**
+ * @private
+ */
+export const videoGalleryContainerTokens = {
+  childrenGap: '0.5rem'
 };
 
 /**
@@ -45,24 +52,25 @@ export const floatingLocalVideoModalStyle = (
 ): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
   return concatStyleSets(
     {
-      root: {
-        width: '100%',
-        height: '100%'
-      },
-      main: {
-        minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
-        minHeight: isNarrow
-          ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem`
-          : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
-        position: 'absolute',
-        bottom: '0.5rem',
-        boxShadow: theme.effects.elevation8,
-        borderRadius: theme.effects.roundedCorner4,
-        overflow: 'hidden'
-      }
+      main: localVideoTileContainerStyle(theme, isNarrow)
     },
-    { main: theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' } }
+    { main: { boxShadow: theme.effects.elevation8 } }
   );
+};
+
+/**
+ * @private
+ */
+export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
+  return {
+    minWidth: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.width}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.width}rem`,
+    minHeight: isNarrow ? `${SMALL_FLOATING_MODAL_SIZE_REM.height}rem` : `${LARGE_FLOATING_MODAL_SIZE_REM.height}rem`,
+    position: 'absolute',
+    bottom: '0.5rem',
+    borderRadius: theme.effects.roundedCorner4,
+    overflow: 'hidden',
+    ...(theme.rtl ? { left: '0.5rem' } : { right: '0.5rem' })
+  };
 };
 
 /**

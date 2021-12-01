@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add tooltip string for disabled ControlBar buttons",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "patch"
+}
