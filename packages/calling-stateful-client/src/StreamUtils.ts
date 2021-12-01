@@ -47,7 +47,8 @@ async function createViewRemoteVideo(
   }
 
   if (renderInfo.status === 'Rendering') {
-    console.warn('RemoteVideoStream rendering is already in progress');
+    // Do not log to console here as this is a very common situation due to UI rerenders while
+    // the video rendering is in progress.
     return;
   }
 
@@ -131,7 +132,8 @@ async function createViewLocalVideo(
   }
 
   if (renderInfo.status === 'Rendering') {
-    console.warn('LocalVideoStream rendering is already in progress');
+    // Do not log to console here as this is a very common situation due to UI rerenders while
+    // the video rendering is in progress.
     return;
   }
 
@@ -192,7 +194,8 @@ async function createViewUnparentedVideo(
   }
 
   if (renderInfo && renderInfo.status === 'Rendering') {
-    console.warn('Unparented LocalVideoStream rendering is already in progress');
+    // Do not log to console here as this is a very common situation due to UI rerenders while
+    // the video rendering is in progress.
     return;
   }
 
