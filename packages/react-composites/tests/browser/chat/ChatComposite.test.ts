@@ -6,7 +6,8 @@ import {
   stubMessageTimestamps,
   waitForChatCompositeToLoad,
   buildUrl,
-  waitForSelector
+  waitForSelector,
+  waitForFunction
 } from '../common/utils';
 import { test } from './fixture';
 import { createChatThreadAndUsers, loadNewPage } from '../common/fixtureHelpers';
@@ -121,7 +122,6 @@ test.describe('Chat Composite custom data model', () => {
     await page.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
     await page.keyboard.press('Enter');
     await waitForSelector(page, `[data-ui-status="delivered"]`);
-    // xkcd: fixme
     await waitForFunction(page, () => {
       return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
     });
