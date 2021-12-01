@@ -3,7 +3,7 @@
 # Note that `main` is currently *not* automaticaly merged into `features/conditional-compilation`, so
 # new alpha releases will only be created when we explicitly merge `main` into the branch (or land an unrelated PR).
 
-name: Nightly CI/CD - features/condtional-compilation branch
+name: Nightly CI/CD - feature/conditional-compilation branch
 on:
   schedule:
     # minute 0, hour 1 UTC (which is 7pm PST/ 6pm PDT), any day of month, any month, any day of the week
@@ -24,7 +24,7 @@ jobs:
       # Check-out repo
       - uses: actions/checkout@v2
         with:
-          ref: features/conditional-compilation
+          ref: feature/conditional-compilation
       # Check if any changes have been pushed to branch since last release
       - name: Check latest commit age
         id: checkChange
@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: features/conditional-compilation
+          ref: feature/conditional-compilation
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
