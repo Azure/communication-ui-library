@@ -90,7 +90,7 @@ export default {
     showLabel: controlsToAdd.showLabel,
     // Hiding auto-generated controls
     onToggleCamera: hiddenControl,
-    localVideoViewOption: hiddenControl,
+    localVideoViewOptions: hiddenControl,
     strings: hiddenControl
   },
   parameters: {

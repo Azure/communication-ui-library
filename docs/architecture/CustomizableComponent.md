@@ -129,22 +129,19 @@ Fluent UI has a rich component library and can be leveraged to build new custom 
 The following code sample shows how a custom button can be built on top of a Fluent UI `DefaultButton`
 
 ```typescript
-export const CustomButton = (props: CallControlButtonProps): JSX.Element => {
-  const { icon, label } = props;
+export const CustomButton = (props: ControlButtonProps): JSX.Element => {
+  // style set contains style for root, flexContainer, textContainer, label, etc...
+  const componentStyles = concatStyleSets(controlButtonStyles, props.styles ?? {});
   return (
     <DefaultButton
         disabled={props.disabled}
         onClick={props.onClick}
-        className={mergeStyles(controlButtonStyles, props.styles?.root)}
-        styles={{ flexContainer: props.styles?.flexContainer }}
+        showLabel={props.showLabel}
+        styles={componentStyles}
         menuIconProps={props.menuIconProps}
         menuProps={props.menuProps}
-    >
-        {icon}
-        <Stack className={mergeStyles(controlButtonLabelStyles, props.styles?.label)}>
-            {props.showLabel ? label : null}
-        </Stack>
-    </DefaultButton>
+        onRenderIcon={() => <Icon iconName={props.icon.iconName} className={iconStyle} />}
+    />
   );
 };
 ```
