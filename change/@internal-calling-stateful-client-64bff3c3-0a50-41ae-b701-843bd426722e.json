@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove spammy console log when rendering video",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

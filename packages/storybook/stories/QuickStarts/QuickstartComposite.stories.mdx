@@ -3,7 +3,11 @@ import { Meta, Source } from '@storybook/addon-docs';
 import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompositeAdapter.snippet.tsx';
 import QuickstartCompositeComplete from '!!raw-loader!./snippets/QuickstartCompositeComplete.snippet.tsx';
 
-<Meta id="quickstarts-composites" title="Composites/Get Started" />
+<Meta
+  id="quickstarts-composites"
+  title="Composites/Get Started"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
 
 # Quickstart: Get started with Composites
 
@@ -32,7 +36,8 @@ For setting up adapters that power the composites, we need to generate an access
 Access Tokens can be generated using this [Azure Portal quickstart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) inside your Azure Communication Services dashboard as shown below.
 
 <Stack style={{ width: '100%' }}>
-  <video style={{ width: '100%' }} src="videos/generate-access-token.mp4" autoPlay loop muted></video>
+  {/* Chrome is more lenient with playing muted video: https://developer.chrome.com/blog/autoplay */}
+  <video style={{ width: '100%' }} src="videos/generate-access-token.mp4" autoPlay loop muted />
 </Stack>
 
 <br />
