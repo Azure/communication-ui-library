@@ -12,44 +12,38 @@ const TABLET_WIDTH = '(max-width: 900px)';
  * @returns 
  */
 export const TOC = (props: {children: React.ReactNode}): JSX.Element => {
-
-  const [narrowDocs, setNarrowDocs] = useState(window.matchMedia(LAPTOP_WIDTH).matches);
   const [hideToc, setHideToc] = useState(window.matchMedia(TABLET_WIDTH).matches);
 
   useEffect(() => {
-    const setNarrowDocsHandler = (e: MediaQueryListEvent) => setNarrowDocs(e.matches);
     const setHideTocHandler = (e: MediaQueryListEvent) => setHideToc(e.matches);
 
-    window.matchMedia(LAPTOP_WIDTH).addEventListener('change', setNarrowDocsHandler);
     window.matchMedia(TABLET_WIDTH).addEventListener('change', setHideTocHandler);
 
     return () => {
-      window.matchMedia(LAPTOP_WIDTH).removeEventListener('change', setNarrowDocsHandler);
       window.matchMedia(TABLET_WIDTH).removeEventListener('change', setHideTocHandler);
     }
-  })
-
+  });
 
   const tocStyles = mergeStyles({
     display: hideToc ? 'none' : 'block',
-    fontFamily: 'Segoe UI Regular',
+    fontFamily: 'Segoe UI',
     fontSize: '12px',
     '& nav': { 
       top: 0,
-      maxWidth: '10rem',
-      right: 0, 
+      width: '10rem',
+      left: 'calc(100% - 11.25rem)', 
       'div > ol > li.toc-list-item': {
         padding: '0 0.5rem',
       },
       'div > ol > li > a.toc-link': {
         whiteSpace: 'break-spaces !important',
-        marginBottom: '4px',
-        marginTop: '4px',
+        marginBottom: '0.25rem',
+        marginTop: '0.25rem',
       },
       'a.toc-link': {
         whiteSpace: 'break-spaces !important',
-        marginBottom: '2px',
-        marginTop: '2px',
+        marginBottom: '0.125rem',
+        marginTop: '0.125rem',
       }
     },
   });
@@ -59,7 +53,7 @@ export const TOC = (props: {children: React.ReactNode}): JSX.Element => {
         <div className={tocStyles}>
           <TableOfContents />
         </div>
-        <div style={narrowDocs ? { maxWidth: '768px' } : {}}>
+        <div style={hideToc ? { maxWidth: '48rem' } : { maxWidth: 'calc(100% - 11.25rem)' }} >
           {props.children}
         </div>
         <div className={mergeStyles({'> button': { right: 16 }})}>
