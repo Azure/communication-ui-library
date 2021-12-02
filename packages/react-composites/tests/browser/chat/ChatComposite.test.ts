@@ -1,37 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+
 import { IDS } from '../common/constants';
-import {
-  dataUiId,
-  stubMessageTimestamps,
-  waitForChatCompositeToLoad,
-  buildUrl,
-  waitForSelector
-} from '../common/utils';
+import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, waitForSelector } from '../common/utils';
 import { test } from './fixture';
-import { createChatThreadAndUsers, loadNewPage } from '../common/fixtureHelpers';
-import { expect, Page } from '@playwright/test';
+import { expect } from '@playwright/test';
+import {
+  chatTestSetup,
+  sendMessage,
+  waitForMessageDelivered,
+  waitForMessageSeen,
+  waitForMessageWithContent
+} from './chatTestHelpers';
 
-const PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen'];
-
-// All chat tests *must be run sequentially*.
-// As such they must all be located in this file to guarantee they run sequentially.
-// The tests are not isolated, each test depends on the final-state of the chat thread after previous tests.
-//
-// We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
-// many threads using the same connection string in a short span of time.
 test.describe('Chat Composite E2E Tests', () => {
-  test.beforeEach(async ({ pages, serverUrl }) => {
-    const users = await createChatThreadAndUsers(PARTICIPANTS);
-    const pageLoadPromises: Promise<unknown>[] = [];
-    for (const idx in pages) {
-      const page = pages[idx];
-      const user = users[idx];
-      await page.goto(buildUrl(serverUrl, user));
-      pageLoadPromises.push(waitForChatCompositeToLoad(page));
-      await stubMessageTimestamps(pages[idx]);
-    }
-    await Promise.all(pageLoadPromises);
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl });
   });
 
   test('composite pages load completely', async ({ pages }) => {
@@ -39,18 +23,17 @@ test.describe('Chat Composite E2E Tests', () => {
   });
 
   test('page[1] can receive message and send readReceipt when page[0] send message', async ({ pages }) => {
+    const testMessageText = 'How the turn tables';
     const page0 = pages[0];
     await page0.bringToFront();
-    await page0.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
-    await page0.keyboard.press('Enter');
-    await waitForSelector(page0, `[data-ui-status="delivered"]`);
+    await sendMessage(page0, testMessageText);
+    await waitForMessageDelivered(page0);
     await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('sent-messages.png');
 
     const page1 = pages[1];
     await page1.bringToFront();
-    await waitForSelector(page1, `[data-ui-status="delivered"]`);
-    await stubMessageTimestamps(page1);
+    await waitForMessageWithContent(page1, testMessageText);
 
     // It could be too slow to get typing indicator here, which makes the test flakey
     // so wait for typing indicator disappearing, @Todo: stub out typing indicator instead.
@@ -58,10 +41,11 @@ test.describe('Chat Composite E2E Tests', () => {
     const typingIndicator = await page1.$(dataUiId(IDS.typingIndicator));
     typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
 
+    await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('received-messages.png');
 
     await page0.bringToFront();
-    await waitForSelector(page0, `[data-ui-status="seen"]`);
+    await waitForMessageSeen(page0);
     await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
   });
@@ -93,117 +77,43 @@ test.describe('Chat Composite E2E Tests', () => {
   });
 
   test('page[1] can rejoin the chat', async ({ pages }) => {
+    const testMessageText = 'How the turn tables';
     const page1 = pages[1];
     await page1.bringToFront();
-    await page1.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
-    await page1.keyboard.press('Enter');
+    await sendMessage(page1, testMessageText);
+
     // Read the message to generate stable result
     await pages[0].bringToFront();
-    await waitForSelector(pages[0], `[data-ui-status="delivered"]`);
+    await waitForMessageWithContent(page1, testMessageText);
 
+    // Ensure message has been marked as seen
     await page1.bringToFront();
-    await waitForSelector(page1, `[data-ui-status="seen"]`);
+    await waitForMessageSeen(page1);
+
     await page1.reload({ waitUntil: 'networkidle' });
     await waitForChatCompositeToLoad(page1);
     // Fixme: We don't pull readReceipt when initial the chat again, this should be fixed in composite
-    await waitForSelector(page1, `[data-ui-status="delivered"]`);
+    // await waitForSelector(page1, `[data-ui-status="seen"]`);
+    await waitForMessageWithContent(page1, testMessageText);
     await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });
 
 test.describe('Chat Composite custom data model', () => {
-  test('can be viewed by user[1]', async ({ browser, serverUrl }) => {
-    const user = (await createChatThreadAndUsers(PARTICIPANTS))[1];
-    const url = buildUrl(serverUrl, user, { customDataModel: 'true' });
-    const page = await loadNewPage(browser, url);
+  test.beforeEach(async ({ pages, users, serverUrl }) => {
+    await chatTestSetup({ pages, users, serverUrl, qArgs: { customDataModel: 'true' } });
+  });
+
+  test('can be viewed by user[1]', async ({ pages }) => {
+    const testMessageText = 'How the turn tables';
+    const page = pages[0];
     await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
-    await page.keyboard.press('Enter');
-    await waitForSelector(page, `[data-ui-status="delivered"]`);
+    await sendMessage(page, testMessageText);
+    await waitForMessageDelivered(page);
     await waitForSelector(page, '#custom-data-model-typing-indicator');
     await waitForSelector(page, '#custom-data-model-message');
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('custom-data-model.png');
   });
 });
-
-test.describe('Localization tests', async () => {
-  test('Participants list header should be localized', async ({ serverUrl, users, page }) => {
-    await page.goto(buildUrl(serverUrl, users[0], { useFrLocale: 'true' }));
-    await page.bringToFront();
-    await waitForChatCompositeToLoad(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('localized-chat.png');
-  });
-});
-
-test.describe('ErrorBar is shown correctly', async () => {
-  test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
-    await page.goto(buildUrl(serverUrl, users[0]));
-    await page.bringToFront();
-    await waitForChatCompositeToLoad(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');
-
-    await sendAMessage(page);
-    await waitForSendSuccess(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-send-message-with-valid-user.png');
-  });
-
-  test('with wrong thread ID', async ({ page, serverUrl, users }) => {
-    const user = users[0];
-    user.threadId = 'INCORRECT_VALUE';
-    await page.goto(buildUrl(serverUrl, users[0]));
-    await waitForChatCompositeToLoad(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
-
-    await sendAMessage(page);
-    await waitForSendFailure(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
-  });
-
-  test('with expired token', async ({ page, serverUrl, users }) => {
-    const user = users[0];
-    user.token = 'INCORRECT_VALUE' + user.token;
-    await page.goto(buildUrl(serverUrl, users[0]));
-    await waitForChatCompositeToLoad(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
-
-    await sendAMessage(page);
-    await waitForSendFailure(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
-  });
-
-  test('with wrong endpoint', async ({ page, serverUrl, users }) => {
-    const user = users[0];
-    user.endpointUrl = 'https://INCORRECT.VALUE';
-    await page.goto(buildUrl(serverUrl, users[0]));
-    await waitForChatCompositeToLoad(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
-
-    await sendAMessage(page);
-    await waitForSendFailure(page);
-    await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
-  });
-});
-
-const sendAMessage = async (page: Page): Promise<void> => {
-  await page.type(dataUiId(IDS.sendboxTextField), 'No, sir, this will not do.');
-  await page.keyboard.press('Enter');
-};
-
-const waitForSendFailure = async (page: Page): Promise<void> => {
-  await waitForSelector(page, `[data-ui-status="failed"]`);
-};
-
-const waitForSendSuccess = async (page: Page): Promise<void> => {
-  await waitForSelector(page, `[data-ui-status="delivered"]`);
-};
