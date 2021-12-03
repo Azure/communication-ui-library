@@ -2,20 +2,22 @@
 // Licensed under the MIT license.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
+import { ChatCompositeStrings } from '.';
+import { AllCompositeStrings, CompositeLocale } from '../localization';
 
 /**
  * Props for {@link ChatComposite}.
  *
  * @public
  */
-export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
+export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons, ChatCompositeStrings> {
   /**
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
@@ -70,12 +72,26 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onRenderTypingIndicator,
     onRenderMessage,
-    onFetchParticipantMenuItems
+    onFetchParticipantMenuItems,
+    locale
   } = props;
+
+  const wrappedLocale: CompositeLocale<AllCompositeStrings> | undefined = useMemo(
+    () =>
+      locale
+        ? {
+            component: locale.component,
+            strings: {
+              chat: locale.strings
+            }
+          }
+        : undefined,
+    [locale]
+  );
 
   return (
     <div className={chatScreenContainerStyle}>
-      <BaseComposite {...props}>
+      <BaseComposite {...props} locale={wrappedLocale}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
             options={options}

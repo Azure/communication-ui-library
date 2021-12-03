@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, MessageBar } from '@fluentui/react';
-import { CompositeStrings, useLocale } from '../../localization';
+import { AllCompositeStrings, useLocale } from '../../localization';
 
 /**
  * @private
@@ -56,7 +56,7 @@ export const ComplianceBanner = (props: ComplianceBannerProps): JSX.Element => {
   return <DismissableMessageBar variant={variant} strings={strings} />;
 };
 
-function DismissableMessageBar(props: { variant: number; strings: CompositeStrings }): JSX.Element {
+function DismissableMessageBar(props: { variant: number; strings: AllCompositeStrings }): JSX.Element {
   const { variant: newVariant, strings } = props;
 
   const [variant, setVariant] = useState(0);
@@ -142,7 +142,7 @@ function computeVariant(
   return NO_STATE;
 }
 
-function BannerMessage(props: { variant: number; strings: CompositeStrings }): JSX.Element {
+function BannerMessage(props: { variant: number; strings: AllCompositeStrings }): JSX.Element {
   const { variant, strings } = props;
 
   switch (variant) {

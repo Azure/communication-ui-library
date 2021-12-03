@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite } from '../CallComposite';
+import { CallComposite, CallCompositeStrings } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
@@ -15,7 +15,7 @@ import { MeetingBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
-import { ChatAdapter } from '../ChatComposite';
+import { ChatAdapter, ChatCompositeStrings } from '../ChatComposite';
 import { BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 
@@ -24,7 +24,8 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
  *
  * @beta
  */
-export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface MeetingCompositeProps
+  extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons, CallCompositeStrings & ChatCompositeStrings> {
   meetingAdapter: MeetingAdapter;
   /**
    * Fluent theme for the composite.

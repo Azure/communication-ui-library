@@ -4,8 +4,8 @@
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
-import { ChatCompositeIcons } from '..';
-import { CompositeLocale, LocalizationProvider } from '../localization';
+import { CallCompositeStrings, ChatCompositeIcons, ChatCompositeStrings } from '..';
+import { AllCompositeStrings, CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 
@@ -14,7 +14,7 @@ import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
  *
  * @public
  */
-export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
+export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>, CompositeStrings> {
   /**
    * Fluent theme for the composite.
    *
@@ -31,7 +31,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    *
    * @defaultValue English (US)
    */
-  locale?: CompositeLocale;
+  locale?: CompositeLocale<CompositeStrings>;
   /**
    * Whether composite is displayed right-to-left.
    *
@@ -58,7 +58,9 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
  * @private
  */
 export const BaseComposite = (
-  props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
+  props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons, AllCompositeStrings> & {
+    children: React.ReactNode;
+  }
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
 
@@ -74,5 +76,10 @@ export const BaseComposite = (
       {props.children}
     </FluentThemeProvider>
   );
-  return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  return locale
+    ? LocalizationProvider({
+        locale,
+        children: CompositeElement
+      })
+    : CompositeElement;
 };

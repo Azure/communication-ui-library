@@ -51,6 +51,9 @@ export class ChatContext {
   }
 
   public getState(): ChatClientState {
+    for (const threadId in this._state.threads) {
+      console.log('xkcd', threadId, this._state.threads[threadId].chatMessages);
+    }
     return this._state;
   }
 

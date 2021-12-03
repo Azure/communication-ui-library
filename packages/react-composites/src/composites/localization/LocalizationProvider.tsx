@@ -10,12 +10,12 @@ import { CallCompositeStrings } from '../CallComposite';
 import { ChatCompositeStrings } from '../ChatComposite';
 
 /**
- * Locale information for all composites exported from this library.
+ * Locale information for a composite exported from this library.
  *
  * @public
  */
-export interface CompositeLocale {
-  /** Strings used in composites directly
+export interface CompositeLocale<CompositeStrings> {
+  /** Strings used in the composite directly.
    *
    * Contrast with {@link CompositeLocale.component}, which contains strings used via the component library.
    */
@@ -30,17 +30,17 @@ export interface CompositeLocale {
  *
  * These strings are used by the composites directly, instead of by the contained components.
  *
- * @public
+ * @private
  */
-export interface CompositeStrings {
+export interface AllCompositeStrings {
   /**
    * Strings used by {@link CallComposite}.
    */
-  call: CallCompositeStrings;
+  call?: CallCompositeStrings;
   /**
    * Strings used by {@link ChatComposite}.
    */
-  chat: ChatCompositeStrings;
+  chat?: ChatCompositeStrings;
 }
 
 /**
@@ -48,7 +48,7 @@ export interface CompositeStrings {
  *
  * @private
  */
-export const LocaleContext = createContext<CompositeLocale>(COMPOSITE_LOCALE_EN_US);
+export const LocaleContext = createContext<CompositeLocale<AllCompositeStrings>>(COMPOSITE_LOCALE_EN_US);
 
 /**
  * Props to LocalizationProvider
@@ -57,7 +57,7 @@ export const LocaleContext = createContext<CompositeLocale>(COMPOSITE_LOCALE_EN_
  */
 export type LocalizationProviderProps = {
   /** Locale context to provide components */
-  locale: CompositeLocale;
+  locale: CompositeLocale<AllCompositeStrings>;
   /** Children to provide locale context. */
   children: React.ReactNode;
 };
@@ -79,4 +79,4 @@ export const LocalizationProvider = (props: LocalizationProviderProps): JSX.Elem
 /**
  * @private
  */
-export const useLocale = (): CompositeLocale => useContext(LocaleContext);
+export const useLocale = (): CompositeLocale<AllCompositeStrings> => useContext(LocaleContext);

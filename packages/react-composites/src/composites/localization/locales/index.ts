@@ -18,7 +18,7 @@ import {
   COMPONENT_LOCALE_ZH_CN,
   COMPONENT_LOCALE_ZH_TW
 } from '@internal/react-components';
-import { CompositeLocale, CompositeStrings } from '../LocalizationProvider';
+import { CompositeLocale, AllCompositeStrings } from '../LocalizationProvider';
 import en_US from './en-US/strings.json';
 import en_GB from './en-GB/strings.json';
 import de_DE from './de-DE/strings.json';
@@ -33,9 +33,10 @@ import ru_RU from './ru-RU/strings.json';
 import tr_TR from './tr-TR/strings.json';
 import zh_CN from './zh-CN/strings.json';
 import zh_TW from './zh-TW/strings.json';
+import { CallCompositeStrings, ChatCompositeStrings } from '../..';
 
-const createCompositeStrings = (localizedStrings: PartialDeep<CompositeStrings>): CompositeStrings => {
-  const strings: CompositeStrings = { ...en_US };
+const createCompositeStrings = (localizedStrings: PartialDeep<AllCompositeStrings>): AllCompositeStrings => {
+  const strings: AllCompositeStrings = { ...en_US };
   Object.keys(localizedStrings).forEach((key: string) => {
     strings[key] = { ...strings[key], ...localizedStrings[key] };
   });
@@ -47,7 +48,7 @@ const createCompositeStrings = (localizedStrings: PartialDeep<CompositeStrings>)
  *
  * @public
  */
-export const COMPOSITE_LOCALE_EN_US: CompositeLocale = {
+export const COMPOSITE_LOCALE_EN_US: CompositeLocale<ChatCompositeStrings & CallCompositeStrings> = {
   component: COMPONENT_LOCALE_EN_US,
   strings: en_US
 };

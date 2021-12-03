@@ -7,7 +7,7 @@ import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
-import { useLocale } from '../localization';
+import { AllCompositeStrings, CompositeLocale, useLocale } from '../localization';
 import { CallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallControlOptions } from './components/CallControls';
@@ -18,13 +18,14 @@ import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
+import { CallCompositeStrings } from '..';
 
 /**
  * Props for {@link CallComposite}.
  *
  * @public
  */
-export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
+export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons, CallCompositeStrings> {
   /**
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
@@ -163,7 +164,8 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
-    formFactor = 'desktop'
+    formFactor = 'desktop',
+    locale
   } = props;
   useEffect(() => {
     (async () => {
@@ -180,9 +182,21 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     return mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
   }, [mobileView]);
 
+  const wrappedLocale: CompositeLocale<AllCompositeStrings> | undefined = useMemo(
+    () =>
+      locale
+        ? {
+            component: locale.component,
+            strings: {
+              call: locale.strings
+            }
+          }
+        : undefined,
+    [locale]
+  );
   return (
     <div className={mainScreenContainerClassName}>
-      <BaseComposite {...props}>
+      <BaseComposite {...props} locale={wrappedLocale}>
         <CallAdapterProvider adapter={adapter}>
           <MainScreen
             callInvitationUrl={callInvitationUrl}
