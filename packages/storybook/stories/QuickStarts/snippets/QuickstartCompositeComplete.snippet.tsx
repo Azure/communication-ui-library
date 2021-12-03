@@ -8,7 +8,8 @@ import {
   createAzureCommunicationChatAdapter,
   fromFlatCommunicationIdentifier,
   CompositeLocale,
-  CallCompositeOptions
+  CallCompositeOptions,
+  ChatCompositeOptions
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -27,9 +28,8 @@ type CompositeProps = {
   fluentTheme?: PartialTheme | Theme; // '<Theming for the composites using FluentUi themes>'
   callInvitationURL?: string; // '<Invitation Url that will appear with a invite to call button>'
   locale?: CompositeLocale; // '<Sets Locale of buttons in the composites>'
-  options?: CallCompositeOptions; // '<Set flags for visual elements of the chat composite>'
-  errorBar?: boolean; // '<Hides and shows the Errorbar in the chat composite>'
-  topic?: boolean; // '<Allows a topic to be set for the chat composite>'
+  callCompositeOptions?: CallCompositeOptions; // '<set flags for visual elements of the call composite>'
+  chatCompositeOptions?: ChatCompositeOptions; // '<set flags for visual elements of the chat composite>'
 };
 
 const compositeProps: CompositeProps = {
@@ -55,9 +55,8 @@ function App(): JSX.Element {
     fluentTheme,
     callInvitationURL,
     locale,
-    options,
-    errorBar,
-    topic
+    callCompositeOptions,
+    chatCompositeOptions
   } = compositeProps;
 
   //Calling Variables
@@ -109,10 +108,7 @@ function App(): JSX.Element {
             adapter={chatAdapter}
             locale={locale}
             fluentTheme={fluentTheme}
-            options={{
-              errorBar: errorBar,
-              topic: topic
-            }}
+            options={chatCompositeOptions}
           />
         </div>
         <div style={{ width: '50vw' }}>
@@ -122,7 +118,7 @@ function App(): JSX.Element {
             fluentTheme={fluentTheme}
             callInvitationUrl={callInvitationURL}
             locale={locale}
-            options={options}
+            options={callCompositeOptions}
           />
         </div>
       </div>
