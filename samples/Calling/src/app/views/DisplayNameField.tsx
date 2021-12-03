@@ -1,27 +1,31 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
-import { TextFieldStyleProps, inputBoxStyle, inputBoxTextStyle } from '../styles/DisplayNameField.styles';
 import { TextField } from '@fluentui/react';
-
-export const ENTER_KEY = 13;
+import React, { useState } from 'react';
+import { inputBoxStyle, inputBoxTextStyle, TextFieldStyleProps } from '../styles/DisplayNameField.styles';
 
 interface DisplayNameFieldProps {
   setName(displayName: string): void;
   setEmptyWarning?(isEmpty: boolean): void;
   isEmpty?: boolean;
   defaultName?: string;
-  validateName?(): void;
 }
 
+const DISPLAY_NAME_MAX_CHARS = 256;
 const TEXTFIELD_LABEL = 'Display name';
 const TEXTFIELD_ID = 'displayName';
 const TEXTFIELD_PLACEHOLDER = 'Enter a name';
 const TEXTFIELD_EMPTY_ERROR_MSG = 'Name cannot be empty';
+const TEXTFIELD_EXCEEDS_MAX_CHARS = `Name cannot exceed ${DISPLAY_NAME_MAX_CHARS} characters`;
 
 export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
-  const { setName, setEmptyWarning, isEmpty, defaultName, validateName } = props;
+  const { setName, setEmptyWarning, isEmpty, defaultName } = props;
+  const [isInvalidLength, setIsInvalidLength] = useState<ConstrainBoolean>(true);
+
+  const hasValidLength = (name: string): boolean => {
+    return name.length <= DISPLAY_NAME_MAX_CHARS;
+  };
 
   const onNameTextChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -29,6 +33,14 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
   ): void => {
     if (newValue === undefined) {
       return;
+    }
+
+    if (!hasValidLength(newValue)) {
+      setIsInvalidLength(true);
+      setName('');
+      return;
+    } else {
+      setIsInvalidLength(false);
     }
 
     setName(newValue);
@@ -50,13 +62,8 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
       onChange={onNameTextChange}
       id={TEXTFIELD_ID}
       placeholder={TEXTFIELD_PLACEHOLDER}
-      onKeyDown={(ev) => {
-        if (ev.which === ENTER_KEY) {
-          validateName && validateName();
-        }
-      }}
       styles={TextFieldStyleProps}
-      errorMessage={isEmpty ? TEXTFIELD_EMPTY_ERROR_MSG : undefined}
+      errorMessage={isEmpty ? TEXTFIELD_EMPTY_ERROR_MSG : isInvalidLength ? TEXTFIELD_EXCEEDS_MAX_CHARS : undefined}
     />
   );
 };

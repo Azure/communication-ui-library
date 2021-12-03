@@ -128,7 +128,6 @@ const withThemeProvider = (Story: any, context: any) => {
 };
 
 const withLocalization = (Story: any, context: any) => {
-  console.log((context))
   const localeKey = context.globals.locale as string;
 
   if(context !== undefined) {

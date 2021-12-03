@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Gönderilemedi"
   },
   "endCallButton": {
-    "label": "Ayrıl"
+    "label": "Ayrıl",
+    "tooltipContent": "Aramadan Ayrıl"
   },
   "cameraButton": {
     "onLabel": "Kapat",
-    "offLabel": "Aç"
+    "offLabel": "Aç",
+    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipOnContent": "Kamerayı kapat",
+    "tooltipOffContent": "Kamerayı aç"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",
-    "offLabel": "Sesi aç"
+    "offLabel": "Sesi aç",
+    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipOnContent": "Mikrofonun sesini kapat",
+    "tooltipOffContent": "Mikrofonun sesini aç"
   },
   "devicesButton": {
-    "label": "Seçenekler",
+    "label": "Cihazlar",
+    "tooltipContent": "Cihazları yönet",
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Kamera Seç",
     "microphoneMenuTitle": "Mikrofon",
@@ -45,6 +53,7 @@
   },
   "participantsButton": {
     "label": "Kişiler",
+    "tooltipContent": "Katılımcıları Göster",
     "menuHeader": "Bu aramada",
     "participantsListButtonLabel": "{numParticipants} kişiler",
     "muteAllButtonLabel": "Tümünün sesini kapat",
@@ -52,7 +61,10 @@
   },
   "screenShareButton": {
     "onLabel": "Durdur",
-    "offLabel": "Paylaş"
+    "offLabel": "Paylaş",
+    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipOnContent": "Ekranınızı paylaşmayı durdurma",
+    "tooltipOffContent": "Ekranınızı paylaşın"
   },
   "messageThread": {
     "yesterday": "Dün",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
-    "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme"
+    "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme",
+    "localVideoLabel": "Siz"
   }
 }

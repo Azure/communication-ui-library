@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add display name limit in samples and document in storybook",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
