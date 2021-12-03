@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Error al enviar"
   },
   "endCallButton": {
-    "label": "Baja"
+    "label": "Baja",
+    "tooltipContent": "Abandonar llamada"
   },
   "cameraButton": {
     "onLabel": "Desactivar",
-    "offLabel": "Activar"
+    "offLabel": "Activar",
+    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipOnContent": "Desconectar la cámara",
+    "tooltipOffContent": "Activar la cámara"
   },
   "microphoneButton": {
     "onLabel": "Silenciar",
-    "offLabel": "Reactivar audio"
+    "offLabel": "Reactivar audio",
+    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipOnContent": "Silenciar micrófono",
+    "tooltipOffContent": "Reactivar micrófono"
   },
   "devicesButton": {
-    "label": "Opciones",
+    "label": "Dispositivos",
+    "tooltipContent": "Administrar dispositivos",
     "cameraMenuTitle": "Cámara",
     "cameraMenuTooltip": "Elegir cámara",
     "microphoneMenuTitle": "Micrófono",
@@ -45,6 +53,7 @@
   },
   "participantsButton": {
     "label": "Contactos",
+    "tooltipContent": "Mostrar participantes",
     "menuHeader": "En esta llamada",
     "participantsListButtonLabel": "{numParticipants} personas",
     "muteAllButtonLabel": "Silenciar a todos",
@@ -52,7 +61,10 @@
   },
   "screenShareButton": {
     "onLabel": "Detener",
-    "offLabel": "Compartir"
+    "offLabel": "Compartir",
+    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipOnContent": "Dejar de compartir la pantalla",
+    "tooltipOffContent": "Compartir la pantalla"
   },
   "messageThread": {
     "yesterday": "Ayer",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Está compartiendo su pantalla",
-    "screenShareLoadingMessage": "Cargando la pantalla de {participant}"
+    "screenShareLoadingMessage": "Cargando la pantalla de {participant}",
+    "localVideoLabel": "Tú"
   }
 }

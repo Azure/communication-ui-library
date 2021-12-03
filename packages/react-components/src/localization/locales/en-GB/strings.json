@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Failed to send"
   },
   "endCallButton": {
-    "label": "Leave"
+    "label": "Leave",
+    "tooltipContent": "Leave Call"
   },
   "cameraButton": {
     "onLabel": "Turn off",
-    "offLabel": "Turn on"
+    "offLabel": "Turn on",
+    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipOnContent": "Turn off camera",
+    "tooltipOffContent": "Turn on camera"
   },
   "microphoneButton": {
     "onLabel": "Mute",
-    "offLabel": "Unmute"
+    "offLabel": "Unmute",
+    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipOnContent": "Mute microphone",
+    "tooltipOffContent": "Unmute microphone"
   },
   "devicesButton": {
-    "label": "Options",
+    "label": "Devices",
+    "tooltipContent": "Manage devices",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose Camera",
     "microphoneMenuTitle": "Microphone",
@@ -45,6 +53,7 @@
   },
   "participantsButton": {
     "label": "People",
+    "tooltipContent": "Show Participants",
     "menuHeader": "In this call",
     "participantsListButtonLabel": "{numParticipants} people",
     "muteAllButtonLabel": "Mute all",
@@ -52,7 +61,10 @@
   },
   "screenShareButton": {
     "onLabel": "Stop",
-    "offLabel": "Share"
+    "offLabel": "Share",
+    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipOnContent": "Stop sharing your screen",
+    "tooltipOffContent": "Share your screen"
   },
   "messageThread": {
     "yesterday": "Yesterday",
