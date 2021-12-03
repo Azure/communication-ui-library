@@ -24,31 +24,23 @@ export const RemoteScreenShare = React.memo(
     isAvailable?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    isVideoStreamOn?: boolean; // TODO: Remove this once there is a correct callback to dispose of the screenshare stream
     renderElement?: HTMLElement;
   }) => {
-    const {
-      userId,
-      displayName,
-      isMuted,
-      renderElement,
-      isVideoStreamOn,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView
-    } = props;
+    const { userId, displayName, isMuted, renderElement, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
     const locale = useLocale();
 
     if (!renderElement) {
       onCreateRemoteStreamView && onCreateRemoteStreamView(userId);
     }
 
+    // TODO: VideoStream will get re-rendered when stop screen share, which will only happen for once
+    // this will be fixed when we add the optional parameter to onDisposeRemoteStreamView function
+    // and isolate disposing behaviors for screenShare and videoStream
     useEffect(() => {
       return () => {
-        if (isVideoStreamOn) {
-          onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-        }
+        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
       };
-    }, [onDisposeRemoteStreamView, userId, isVideoStreamOn]);
+    }, [onDisposeRemoteStreamView, userId]);
 
     const loadingMessage = displayName
       ? _formatString(locale.strings.videoGallery.screenShareLoadingMessage, {
