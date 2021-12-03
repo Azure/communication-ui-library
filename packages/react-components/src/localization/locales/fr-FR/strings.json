@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Échec de l'envoi"
   },
   "endCallButton": {
-    "label": "Quitter"
+    "label": "Quitter",
+    "tooltipContent": "Quitter l’appel"
   },
   "cameraButton": {
     "onLabel": "Désactiver",
-    "offLabel": "Activer"
+    "offLabel": "Activer",
+    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipOnContent": "Désactiver la caméra",
+    "tooltipOffContent": "Activer la caméra"
   },
   "microphoneButton": {
     "onLabel": "Désactiver le son",
-    "offLabel": "Réactiver le son"
+    "offLabel": "Réactiver le son",
+    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipOnContent": "Désactiver le micro",
+    "tooltipOffContent": "Activer le micro"
   },
   "devicesButton": {
-    "label": "Options",
+    "label": "Appareils",
+    "tooltipContent": "Gérer les appareils",
     "cameraMenuTitle": "Appareil photo",
     "cameraMenuTooltip": "Choisir une caméra",
     "microphoneMenuTitle": "Microphone",
@@ -45,6 +53,7 @@
   },
   "participantsButton": {
     "label": "Personnes",
+    "tooltipContent": "Afficher les participants",
     "menuHeader": "Pendant cet appel",
     "participantsListButtonLabel": "{numParticipants} contacts",
     "muteAllButtonLabel": "Désactiver tous les micros",
@@ -52,7 +61,10 @@
   },
   "screenShareButton": {
     "onLabel": "Arrêter",
-    "offLabel": "Partager"
+    "offLabel": "Partager",
+    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipOnContent": "Cesser le partage de votre écran",
+    "tooltipOffContent": "Partager votre écran"
   },
   "messageThread": {
     "yesterday": "Hier",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Vous partagez votre écran.",
-    "screenShareLoadingMessage": "Chargement de l’écran de {participant}"
+    "screenShareLoadingMessage": "Chargement de l’écran de {participant}",
+    "localVideoLabel": "Vous"
   }
 }
