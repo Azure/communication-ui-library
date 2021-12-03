@@ -66,11 +66,10 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     return calculateGridProps(numberOfChildren, currentWidth, currentHeight);
   }, [numberOfChildren, currentWidth, currentHeight]);
 
+  const cssGridStyles = useMemo(() => createGridStyles(numberOfChildren, gridProps), [numberOfChildren, gridProps]);
+
   return (
-    <div
-      ref={containerRef}
-      className={mergeStyles(gridLayoutStyle, createGridStyles(numberOfChildren, gridProps), styles?.root)}
-    >
+    <div ref={containerRef} className={mergeStyles(gridLayoutStyle, cssGridStyles, styles?.root)}>
       {children}
     </div>
   );
