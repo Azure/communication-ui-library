@@ -514,6 +514,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
  *
+ * Note: `displayName` can be a maximum of 256 characters.
+ *
  * @public
  */
 export type AzureCommunicationCallAdapterArgs = {
@@ -527,6 +529,8 @@ export type AzureCommunicationCallAdapterArgs = {
  * Create a {@link CallAdapter} backed by Azure Communication Services.
  *
  * This is the default implementation of {@link CallAdapter} provided by this library.
+ *
+ * Note: `displayName` can be a maximum of 256 characters.
  *
  * @public
  */
