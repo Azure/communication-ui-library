@@ -62,7 +62,7 @@ function App(): JSX.Element {
             customDataModel
               ? (typingUsers) => (
                   <Stack style={{ width: '100%' }}>
-                    <text id="custom-data-model-typing-indicator" style={{ alignSelf: 'center' }}>
+                    <text id="custom-data-model-typing-indicator">
                       {typingUsers.length > 0
                         ? `${typingUsers.map((user) => user.displayName).join(',')} is typing...`.toUpperCase()
                         : 'No one is currently typing.'}

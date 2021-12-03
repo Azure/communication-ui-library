@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
 import { MessageThreadStyles, SendBoxStylesProps, TypingIndicatorStylesProps } from '@internal/react-components';
 
 const MESSAGE_THREAD_WIDTH = '41.25rem';
@@ -138,4 +138,14 @@ export const messageThreadChatCompositeStyles: MessageThreadStyles = { root: { m
  */
 export const typingIndicatorChatCompositeStyles: TypingIndicatorStylesProps = {
   typingString: { maxWidth: MESSAGE_THREAD_WIDTH }
+};
+
+/**
+ * @private
+ */
+export const typingIndicatorContainerStyles: IStyle = {
+  width: '100%',
+  maxWidth: MESSAGE_THREAD_WIDTH,
+  alignSelf: 'center',
+  padding: '0.5rem 0.25rem'
 };
