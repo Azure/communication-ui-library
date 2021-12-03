@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Fehler beim Senden"
   },
   "endCallButton": {
-    "label": "Verlassen"
+    "label": "Verlassen",
+    "tooltipContent": "Anruf verlassen"
   },
   "cameraButton": {
     "onLabel": "Deaktivieren",
-    "offLabel": "Aktivieren"
+    "offLabel": "Aktivieren",
+    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipOnContent": "Kamera ausschalten",
+    "tooltipOffContent": "Kamera einschalten"
   },
   "microphoneButton": {
     "onLabel": "Stumm schalten",
-    "offLabel": "Stummschaltung aufheben"
+    "offLabel": "Stummschaltung aufheben",
+    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipOnContent": "Mikrofon stummschalten",
+    "tooltipOffContent": "Mikrofonstummschaltung aufheben"
   },
   "devicesButton": {
-    "label": "Optionen",
+    "label": "Geräte",
+    "tooltipContent": "Geräte verwalten",
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Kamera auswählen",
     "microphoneMenuTitle": "Mikrofon",
@@ -45,6 +53,7 @@
   },
   "participantsButton": {
     "label": "Personen",
+    "tooltipContent": "Teilnehmer anzeigen",
     "menuHeader": "In diesem Anruf",
     "participantsListButtonLabel": "{numParticipants} Personen",
     "muteAllButtonLabel": "Alle stumm schalten",
@@ -52,7 +61,10 @@
   },
   "screenShareButton": {
     "onLabel": "Beenden",
-    "offLabel": "Teilen"
+    "offLabel": "Teilen",
+    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipOnContent": "Freigabe Ihres Bildschirms beenden",
+    "tooltipOffContent": "Ihren Bildschirm freigeben"
   },
   "messageThread": {
     "yesterday": "Gestern",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",
-    "screenShareLoadingMessage": "Der Bildschirm von {participant} wird geladen"
+    "screenShareLoadingMessage": "Der Bildschirm von {participant} wird geladen",
+    "localVideoLabel": "Sie"
   }
 }
