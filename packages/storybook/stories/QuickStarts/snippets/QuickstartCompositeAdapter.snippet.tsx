@@ -9,7 +9,6 @@ import {
 import React, { useEffect, useMemo, useState } from 'react';
 
 export type CompositeProps = {
-  // Required fields.
   userId: string; // '<Azure Communication Services Identifier>'
   token: string; // '<Azure Communication Services Access Token>'
   endpoint: string; // '<Azure Communication Services Resource Endpoint>'
@@ -25,7 +24,6 @@ const compositeProps: CompositeProps = {
   endpoint: '<Azure Communication Services Resource Endpoint>',
   threadId: '<Get thread id from chat service>',
   groupId: '<Developer generated GUID>'
-  // Other fields are optional inputs for customizing the composites themselves
 };
 
 function App(): JSX.Element {
@@ -46,7 +44,7 @@ function App(): JSX.Element {
       console.error('Failed to construct token credential');
       return undefined;
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (credential !== undefined) {
@@ -71,7 +69,7 @@ function App(): JSX.Element {
       };
       createAdapter(credential);
     }
-  }, [credential]);
+  }, [credential, displayName, endpoint, groupId, threadId, userId]);
 
   if (!!callAdapter && !!chatAdapter) {
     return <h1>Hooray! You set up adapters 🎉🎉🎉</h1>;

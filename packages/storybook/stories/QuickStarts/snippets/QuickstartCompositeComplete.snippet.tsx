@@ -74,7 +74,7 @@ function App(): JSX.Element {
       console.error('Failed to construct token credential');
       return undefined;
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (credential !== undefined) {
@@ -99,7 +99,7 @@ function App(): JSX.Element {
       };
       createAdapter(credential);
     }
-  }, [credential]);
+  }, [credential, displayName, endpoint, groupId, threadId, userId]);
 
   if (!!callAdapter && !!chatAdapter) {
     return (
