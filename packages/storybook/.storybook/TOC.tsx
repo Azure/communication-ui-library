@@ -2,7 +2,6 @@ import { mergeStyles } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import { BackToTop, TableOfContents } from 'storybook-docs-toc';
 
-const LAPTOP_WIDTH = '(max-width: 1200px)';
 const TABLET_WIDTH = '(max-width: 900px)';
 
 /**
