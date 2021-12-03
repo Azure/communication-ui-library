@@ -66,9 +66,9 @@ export const RemoteVideoTile = React.memo(
     // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView
     // Element disposed could happen during async time gap, which still cause leaks for unused renderElement.
     // Need to do an entire cleanup when remoteTile gets disposed and make sure element gets correctly disposed
-    // TODO: Remove if condition when we isolate dispose behavior for screen share
     useEffect(() => {
       return () => {
+        // TODO: Remove if condition when we isolate dispose behavior for screen share
         if (!isScreenSharingOn) {
           onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
         }

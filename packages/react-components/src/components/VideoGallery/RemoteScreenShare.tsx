@@ -33,11 +33,9 @@ export const RemoteScreenShare = React.memo(
       onCreateRemoteStreamView && onCreateRemoteStreamView(userId);
     }
 
-    // TODO: VideoStream will get re-rendered when stop screen share, which will only happen for once
-    // this will be fixed when we add the optional parameter to onDisposeRemoteStreamView function
-    // and isolate disposing behaviors for screenShare and videoStream
     useEffect(() => {
       return () => {
+        // TODO: Isolate disposing behaviors for screenShare and videoStream
         onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
       };
     }, [onDisposeRemoteStreamView, userId]);
