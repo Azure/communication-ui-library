@@ -8,19 +8,34 @@ import {
 } from '@azure/communication-react';
 import React, { useEffect, useMemo, useState } from 'react';
 
+export type CompositeProps = {
+  // Required fields.
+  userId: string; // '<Azure Communication Services Identifier>'
+  token: string; // '<Azure Communication Services Access Token>'
+  endpoint: string; // '<Azure Communication Services Resource Endpoint>'
+  displayName: string; // '<Display Name>'
+  groupId: string; // '<Developer generated GUID>'
+  threadId: string; // '<Get thread id from chat service>'
+};
+
+const compositeProps: CompositeProps = {
+  displayName: '<Display Name>',
+  userId: '<Azure Communication Services Identifier>',
+  token: '<Azure Communication Services Access Token>',
+  endpoint: '<Azure Communication Services Resource Endpoint>',
+  threadId: '<Get thread id from chat service>',
+  groupId: '<Developer generated GUID>'
+  // Other fields are optional inputs for customizing the composites themselves
+};
+
 function App(): JSX.Element {
-  const endpointUrl = '<Azure Communication Services Resource Endpoint>';
-  const userId = '<Azure Communication Services Identifier>';
-  const displayName = '<Display Name>';
-  const token = '<Azure Communication Services Access Token>';
+  // Deconstruct the input props object
+  const { userId, token, endpoint, displayName, groupId, threadId } = compositeProps;
 
   //Calling Variables
-  //For Group Id, developers can pass any GUID they can generate
-  const groupId = '<Developer generated GUID>';
   const [callAdapter, setCallAdapter] = useState<CallAdapter>();
 
   //Chat Variables
-  const threadId = '<Get thread id from chat service>';
   const [chatAdapter, setChatAdapter] = useState<ChatAdapter>();
 
   // We can't even initialize the Chat and Call adapters without a well-formed token.
@@ -31,26 +46,26 @@ function App(): JSX.Element {
       console.error('Failed to construct token credential');
       return undefined;
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     if (credential !== undefined) {
       const createAdapter = async (credential: AzureCommunicationTokenCredential): Promise<void> => {
         setChatAdapter(
           await createAzureCommunicationChatAdapter({
-            endpoint: endpointUrl,
+            endpoint: endpoint,
             userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-            displayName,
+            displayName: displayName,
             credential,
-            threadId
+            threadId: threadId
           })
         );
         setCallAdapter(
           await createAzureCommunicationCallAdapter({
-            userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-            displayName,
-            credential,
-            locator: { groupId }
+            userId: fromFlatCommunicationIdentifier(compositeProps.userId) as CommunicationUserIdentifier,
+            displayName: displayName,
+            credential: credential,
+            locator: { meetingLink: groupId }
           })
         );
       };
