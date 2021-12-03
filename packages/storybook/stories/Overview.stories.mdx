@@ -51,8 +51,8 @@ These UI client libraries all use [Microsoft's Fluent design language](https://d
 
 In conjunction to the UI components, the UI Library exposes a _stateful client library_ for calling and chat.
 This client is agnostic to any specific state management framework and can be integrated with common state managers like Redux or React Context.
-This stateful client library can be used with the UI Components to pass props and methods for the UI Components to render data.
-For more information, see [Stateful Client Overview](./?path=/story/statefulclient-overview--page).
+This stateful client library can be used with the UI components to pass props and methods for the UI components to render data.
+For more information, see [Stateful Client Overview](./?path=/docs/statefulclient-overview--page).
 
 ## Installing UI Library
 
@@ -63,21 +63,21 @@ npm i --save @azure/communication-react
 ## Composites Overview
 
 Composites are higher-level components composed of UI components that deliver turn-key solutions for common communication scenarios using Azure Communication Services.
-Developers can easily instantiate the Composite using an Azure Communication Services access token and the required configuration attributed for call or chat.
+Developers can instantiate the composite using an Azure Communication Services access token and the required configuration attributed for call or chat.
 
-### Call composite
+### Call Composite [link](./?path=/docs/composites-call-basicexample--basic-example)
 
-[CallComposite](./?path=/story/composites-call-basicexample--basic-example) is providing a calling experience that allows users to start or join a call. Inside the experience users can configure their
+`Call Composite` is providing a calling experience that allows users to start or join a call. Inside the experience users can configure their
 devices, participate in the call with video and see other participants, including those with video turn on.
 
-Here are visual examples of Call composite where participants have their camera turned off, then some ahve them turned on.
-People speaking with microphone unmuted will have their tile appearing with a blue border.
+Here are visual examples of the `Call Composite` where participants have their camera turned off, then some have them turned on.
+People speaking with their microphone unmuted will have their tile appearing with a blue border.
 
 <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '2rem' }} style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
     <img
       src="images/callComposite_CamerasOff.png"
-      alt="Call composite where all participants have their camera turned off"
+      alt="Call Composite where all participants have their camera turned off"
     />
   </Stack.Item>
   <Stack.Item align="center">
@@ -107,13 +107,13 @@ Call Composite includes a lobby experience where the user is waiting to be admit
   </Stack.Item>
 </Stack>
 
-### Chat composite
+### Chat Composite [link](./?path=/docs/composites-chat-basicexample--basic-example)
 
-[ChatComposite](./?path=/story/composites-chat-basicexample--basic-example) is providing a chat experience where user can send and receive
+`Chat Composite` is providing a chat experience where user can send and receive
 messages. Message thread events such as typing indicators, whether the message has been successfully delivered or read, or participants entering
 and leaving the chat are displayed to the user as part of the chat thread.
 
-Here is a visual example of Chat composite.
+Here is a visual example of the `Chat Composite`.
 
 <Stack style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
@@ -123,12 +123,12 @@ Here is a visual example of Chat composite.
 
 ## UI Component Overview
 
-Pure UI Components that can be used by developers to compose communication experiences, from stitching video tiles into a grid to showcase remote participants, to organizing components to fit your applications specifications.
-UI Components support customization to give the components the right feel and look to match an applications branding and style.
+Pure UI components that can be used by developers to compose communication experiences, from stitching video tiles into a grid to showcase remote participants, to organizing components to fit your applications specifications.
+UI components support customization to give the components the right feel and look to match an applications branding and style.
 
 Following are lists of components that can be used for specific areas.
 
-### Main Components for Calling
+### UI components for Calling
 
 <Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
@@ -139,16 +139,16 @@ Following are lists of components that can be used for specific areas.
   </Stack.Item>
 </Stack>
 
-| Component                                                                          | Description                                                                                        |
-| ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [Grid Layout](./?path=/story/ui-components-gridlayout--grid-layout)                | Grid component to organize Video Tiles into an NxN grid                                            |
-| [Video Tile](./?path=/story/ui-components-videotile--video-tile)                   | Component that displays video stream when available and a default static component when not        |
-| [Control Bar](./?path=/story/ui-components-controlbar--control-bar)                | Container to organize DefaultButtons to hook up to specific call actions like mute or share screen |
-| [Video Gallery](./?path=/story/ui-components-videogallery--video-gallery)          | Turn-key video gallery component which dynamically changes as participants are added               |
-| [Participant Item](./?path=/story/ui-components-participantitem--participant-item) | Common component to render a call or chat participant including avatar and display name            |
-| [Participant List](./?path=/story/ui-components-participantlist--participant-list) | Common component to render a call or chat participant list including avatar and display name       |
+| Component                                                                         | Description                                                                                          |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [Grid Layout](./?path=/docs/ui-components-gridlayout--grid-layout)                | Grid component to organize video tiles into an NxN grid                                              |
+| [Video Tile](./?path=/docs/ui-components-videotile--video-tile)                   | Component that displays video stream when available and a default static component when not          |
+| [Control Bar](./?path=/docs/ui-components-controlbar--control-bar)                | Container to organize `DefaultButtons` to hook up to specific call actions like mute or share screen |
+| [Video Gallery](./?path=/docs/ui-components-videogallery--video-gallery)          | Turn-key video gallery component which dynamically changes as participants are added                 |
+| [Participant Item](./?path=/docs/ui-components-participantitem--participant-item) | Common component to render a call or chat participant including avatar and display name              |
+| [Participant List](./?path=/docs/ui-components-participantlist--participant-list) | Common component to render a call or chat participant list including avatar and display name         |
 
-### Main Components for Chat
+### UI components for Chat
 
 <Stack style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
@@ -156,26 +156,26 @@ Following are lists of components that can be used for specific areas.
   </Stack.Item>
 </Stack>
 
-| Component                                                                                                 | Description                                                                   |
-| --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [Message Thread](./?path=/story/ui-components-messagethread--message-thread)                              | Container that renders chat messages, system messages, and custom messages    |
-| [Send Box](./?path=/story/ui-components-sendbox--send-box)                                                | Text input component with a discrete send button                              |
-| [Message Status Indicator](./?path=/story/ui-components-messagestatusindicator--message-status-indicator) | Multi-state message status indicator component to show status of sent message |
-| [Typing indicator](./?path=/story/ui-components-typingindicator--typing-indicator)                        | Text component to render the participants who are actively typing on a thread |
+| Component                                                                                                | Description                                                                   |
+| -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [Message Thread](./?path=/docs/ui-components-messagethread--message-thread)                              | Container that renders chat messages, system messages, and custom messages    |
+| [Send Box](./?path=/docs/ui-components-sendbox--send-box)                                                | Text input component with a discrete send button                              |
+| [Message Status Indicator](./?path=/docs/ui-components-messagestatusindicator--message-status-indicator) | Multi-state message status indicator component to show status of sent message |
+| [Typing indicator](./?path=/docs/ui-components-typingindicator--typing-indicator)                        | Text component to render the participants who are actively typing on a thread |
 
-## What UI Artifact is Best for my Project?
+## What UI artifact is best for my project?
 
 Understanding these requirements will help you choose the right client library:
 
-- **How much customization do you desire?** Azure Communication core client libraries don't have a UX and are designed so you can build whatever UX you want. UI Library components provide UI assets at the cost of reduced customization.
+- **How much customization do you desire?** Azure Communication Services calling/chat SDKs don't have a UX and are designed so you can build whatever UX you want. UI Library components provide UI assets at the cost of reduced customization.
 - **What platforms are you targeting?** Different platforms have different capabilities.
 
-Details about feature availability in the [UI Library is available here](./?path=/story/usecases--page), but key trade-offs are summarized below.
+Details about feature availability in the [UI Library is available here](./?path=/docs/usecases--page), but key trade-offs are summarized below.
 
-| Client library / SDK  | Implementation Complexity | Customization Ability | Calling | Chat | [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) |
+| Client library / SDK  | Implementation complexity | Customization ability | Calling | Chat | [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) |
 | --------------------- | ------------------------- | --------------------- | ------- | ---- | ----------------------------------------------------------------------------------------------- |
-| Composite Components  | Low                       | Low                   | ✔       | ✔    | ✔                                                                                               |
-| Base Components       | Medium                    | Medium                | ✔       | ✔    | ✔                                                                                               |
+| Composite components  | Low                       | Low                   | ✔       | ✔    | ✔                                                                                               |
+| Base components       | Medium                    | Medium                | ✔       | ✔    | ✔                                                                                               |
 | Core client libraries | High                      | High                  | ✔       | ✔    | ✔                                                                                               |
 
 ## Platform support
