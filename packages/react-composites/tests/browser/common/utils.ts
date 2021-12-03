@@ -68,6 +68,16 @@ export async function waitForFunction<R>(
 }
 
 /**
+ * Wait for page fonts to have loaded. This is because we sometimes see test failures due to
+ * font differences where it looks like the Segoe UI font has not yet loaded.
+ */
+const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
+  await waitForFunction(page, async () => {
+    await document.fonts.ready;
+  });
+};
+
+/**
  * Wait for the ChatComposite on a page to fully load.
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
@@ -82,12 +92,6 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   // Only when page[1] is refreshed is when it will see the message sent by p[1]
   // By waiting 3 sec before sending a message, page[1] is able to recieve that message.
   await page.waitForTimeout(3000);
-};
-
-const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
-  await waitForFunction(page, async () => {
-    await document.fonts.ready;
-  });
 };
 
 /**
