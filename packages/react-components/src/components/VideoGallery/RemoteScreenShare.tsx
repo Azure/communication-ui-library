@@ -70,7 +70,7 @@ export const RemoteScreenShare = React.memo(
 const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element => {
   return (
     <Stack verticalAlign="center" className={loadingStyle}>
-      <Spinner label={props.loadingMessage} size={SpinnerSize.xSmall} aria-live={'polite'} />
+      <Spinner label={props.loadingMessage} size={SpinnerSize.xSmall} aria-live={'assertive'} />
     </Stack>
   );
 };
