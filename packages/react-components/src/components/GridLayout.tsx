@@ -249,7 +249,7 @@ export const createGridStyles = (numberOfItems: number, gridProps: GridProps): s
       };
 
   // If there are big cells, we are choosing to place the latest children into the big cells.
-  // Hence, the '> *:nth-last-child(-n + ${numBigCells})' CSS selector
+  // That is why we use the '> *:nth-last-child(-n + ${numBigCells})' CSS selector below
   const bigCellStyle = numBigCells
     ? {
         [`> *:nth-last-child(-n + ${numBigCells})`]: isHorizontal
@@ -262,6 +262,5 @@ export const createGridStyles = (numberOfItems: number, gridProps: GridProps): s
       }
     : {};
 
-  const gridAndCellStyles: string = mergeStyles(gridStyles, smallCellStyle, bigCellStyle);
-  return gridAndCellStyles;
+  return mergeStyles(gridStyles, smallCellStyle, bigCellStyle);
 };
