@@ -147,5 +147,5 @@ export const typingIndicatorContainerStyles: IStyle = {
   width: '100%',
   maxWidth: MESSAGE_THREAD_WIDTH,
   alignSelf: 'center',
-  padding: '0.5rem 0.25rem'
+  padding: '0rem 0.25rem'
 };
