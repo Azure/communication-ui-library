@@ -30,14 +30,14 @@
   "cameraButton": {
     "onLabel": "끄기",
     "offLabel": "켜기",
-    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipDisabledContent": "카메라가 비활성화되었습니다",
     "tooltipOnContent": "카메라 끄기",
     "tooltipOffContent": "카메라 켜기"
   },
   "microphoneButton": {
     "onLabel": "음소거",
     "offLabel": "음소거 해제",
-    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipDisabledContent": "마이크가 비활성화되었습니다",
     "tooltipOnContent": "마이크 음소거",
     "tooltipOffContent": "마이크 음소거 해제"
   },
@@ -60,9 +60,9 @@
     "copyInviteLinkButtonLabel": "초대 링크 복사"
   },
   "screenShareButton": {
-    "onLabel": "중지",
+    "onLabel": "공유 중지",
     "offLabel": "공유",
-    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipDisabledContent": "화면 공유가 비활성화되었습니다",
     "tooltipOnContent": "화면 공유 중지",
     "tooltipOffContent": "화면 공유"
   },

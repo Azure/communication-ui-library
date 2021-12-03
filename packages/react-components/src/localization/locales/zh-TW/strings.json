@@ -30,14 +30,14 @@
   "cameraButton": {
     "onLabel": "關閉",
     "offLabel": "開啟",
-    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipDisabledContent": "相機已停用",
     "tooltipOnContent": "關閉攝影機",
     "tooltipOffContent": "開啟相機"
   },
   "microphoneButton": {
     "onLabel": "靜音",
     "offLabel": "取消靜音",
-    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipDisabledContent": "麥克風已停用",
     "tooltipOnContent": "將麥克風設為靜音",
     "tooltipOffContent": "取消麥克風靜音"
   },
@@ -60,9 +60,9 @@
     "copyInviteLinkButtonLabel": "複製邀請連結"
   },
   "screenShareButton": {
-    "onLabel": "停止",
+    "onLabel": "停止分享",
     "offLabel": "分享",
-    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipDisabledContent": "視訊分享已停用",
     "tooltipOnContent": "停止螢幕畫面分享",
     "tooltipOffContent": "共用您的螢幕"
   },
