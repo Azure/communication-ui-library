@@ -13,13 +13,13 @@ import {
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 
-export type CompositeProps = {
+type CompositeProps = {
   // Required fields.
   userId: string; // '<Azure Communication Services Identifier>'
   token: string; // '<Azure Communication Services Access Token>'
   endpoint: string; // '<Azure Communication Services Resource Endpoint>'
   displayName: string; // '<Display Name>'
-  groupId: string; // '<Developer generated GUID>'
+  callId: string; // '<Developer generated GUID>'
   threadId: string; // '<Get thread id from chat service>'
 
   // Optional fields for customizing composites.
@@ -27,7 +27,7 @@ export type CompositeProps = {
   fluentTheme?: PartialTheme | Theme; // '<Theming for the composites using FluentUi themes>'
   callInvitationURL?: string; // '<Invitation Url that will appear with a invite to call button>'
   locale?: CompositeLocale; // '<Sets Locale of buttons in the composites>'
-  options?: CallCompositeOptions; // '<object that sets flags for visual elements of the composites>'
+  options?: CallCompositeOptions; // '<Set flags for visual elements of the chat composite>'
   errorBar?: boolean; // '<Hides and shows the Errorbar in the chat composite>'
   topic?: boolean; // '<Allows a topic to be set for the chat composite>'
 };
@@ -38,7 +38,7 @@ const compositeProps: CompositeProps = {
   token: '<Azure Communication Services Access Token>',
   endpoint: '<Azure Communication Services Resource Endpoint>',
   threadId: '<Get thread id from chat service>',
-  groupId: '<Developer generated GUID>'
+  callId: '<Developer generated GUID for the call>'
   // Other fields are optional inputs for customizing the composites themselves
 };
 
@@ -49,7 +49,7 @@ function App(): JSX.Element {
     token,
     endpoint,
     displayName,
-    groupId,
+    callId,
     threadId,
     formFactor,
     fluentTheme,
@@ -93,13 +93,13 @@ function App(): JSX.Element {
             userId: fromFlatCommunicationIdentifier(compositeProps.userId) as CommunicationUserIdentifier,
             displayName: displayName,
             credential: credential,
-            locator: { meetingLink: groupId }
+            locator: { meetingLink: callId }
           })
         );
       };
       createAdapter(credential);
     }
-  }, [credential, displayName, endpoint, groupId, threadId, userId]);
+  }, [credential, displayName, endpoint, callId, threadId, userId]);
 
   if (!!callAdapter && !!chatAdapter) {
     return (

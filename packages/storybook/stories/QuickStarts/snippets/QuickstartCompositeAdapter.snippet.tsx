@@ -8,12 +8,12 @@ import {
 } from '@azure/communication-react';
 import React, { useEffect, useMemo, useState } from 'react';
 
-export type CompositeProps = {
+type CompositeProps = {
   userId: string; // '<Azure Communication Services Identifier>'
   token: string; // '<Azure Communication Services Access Token>'
   endpoint: string; // '<Azure Communication Services Resource Endpoint>'
   displayName: string; // '<Display Name>'
-  groupId: string; // '<Developer generated GUID>'
+  callId: string; // '<Developer generated GUID>'
   threadId: string; // '<Get thread id from chat service>'
 };
 
@@ -23,12 +23,12 @@ const compositeProps: CompositeProps = {
   token: '<Azure Communication Services Access Token>',
   endpoint: '<Azure Communication Services Resource Endpoint>',
   threadId: '<Get thread id from chat service>',
-  groupId: '<Developer generated GUID>'
+  callId: '<Developer generated GUID>'
 };
 
 function App(): JSX.Element {
   // Deconstruct the input props object
-  const { userId, token, endpoint, displayName, groupId, threadId } = compositeProps;
+  const { userId, token, endpoint, displayName, callId, threadId } = compositeProps;
 
   //Calling Variables
   const [callAdapter, setCallAdapter] = useState<CallAdapter>();
@@ -63,13 +63,13 @@ function App(): JSX.Element {
             userId: fromFlatCommunicationIdentifier(compositeProps.userId) as CommunicationUserIdentifier,
             displayName: displayName,
             credential: credential,
-            locator: { meetingLink: groupId }
+            locator: { meetingLink: callId }
           })
         );
       };
       createAdapter(credential);
     }
-  }, [credential, displayName, endpoint, groupId, threadId, userId]);
+  }, [credential, displayName, endpoint, callId, threadId, userId]);
 
   if (!!callAdapter && !!chatAdapter) {
     return <h1>Hooray! You set up adapters 🎉🎉🎉</h1>;
