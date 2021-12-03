@@ -127,7 +127,7 @@ There is currently no GitHub action for creating a hotfix and must be done manua
 
 Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
 
-They use beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha+yyyymmdd-HHMM, then package up the npm packages and upload the packages to the azure release pipeline.
+They use beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha-yyyymmddHHMM, then package up the npm packages and upload the packages to the azure release pipeline.
 
 ### Creating beta releases
 
