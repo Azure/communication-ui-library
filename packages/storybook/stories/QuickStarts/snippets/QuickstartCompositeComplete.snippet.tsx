@@ -10,8 +10,8 @@ import {
   CompositeLocale,
   CallCompositeOptions
 } from '@azure/communication-react';
-import React, { useEffect, useMemo, useState } from 'react';
 import { PartialTheme, Theme } from '@fluentui/react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 export type CompositeProps = {
   // Required fields.
