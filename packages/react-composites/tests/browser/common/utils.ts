@@ -72,6 +72,7 @@ export async function waitForFunction<R>(
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForLoadState('networkidle');
+  await waitForPageFontsLoaded(page);
   await waitForSelector(page, dataUiId(IDS.sendboxTextField));
 
   // @TODO
@@ -83,12 +84,19 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   await page.waitForTimeout(3000);
 };
 
+const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
+  await waitForFunction(page, async () => {
+    await document.fonts.ready;
+  });
+};
+
 /**
  * Wait for the CallComposite on a page to fully load.
  */
 export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
+  await waitForPageFontsLoaded(page);
   const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'));
   await startCallButton.waitForElementState('enabled');
 };
