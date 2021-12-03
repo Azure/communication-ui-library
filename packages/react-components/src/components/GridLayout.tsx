@@ -20,7 +20,7 @@ export interface GridLayoutProps {
    * <GridLayout styles={{ root: { background: 'blue' } }} />
    * ```
    */
-  styles?: GridLayoutStyles;
+  styles?: BaseCustomStyles;
 }
 
 /**
@@ -69,9 +69,7 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   return (
     <div
       ref={containerRef}
-      className={mergeStyles(gridLayoutStyle, createGridStyles(numberOfChildren, gridProps), styles?.root, {
-        '> *': styles?.children
-      })}
+      className={mergeStyles(gridLayoutStyle, createGridStyles(numberOfChildren, gridProps), styles?.root)}
     >
       {children}
     </div>
