@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Source, Subheading, Title } from '@storybook/addon-docs';
+import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
@@ -119,7 +119,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Props</Heading>
-      <Props of={VideoGalleryComponent} />
+      <ArgsTable of={VideoGalleryComponent} />
     </>
   );
 };
