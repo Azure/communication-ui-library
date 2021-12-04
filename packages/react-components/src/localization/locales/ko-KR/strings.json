@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "보내기 실패"
   },
   "endCallButton": {
-    "label": "휴가"
+    "label": "휴가",
+    "tooltipContent": "통화 종료"
   },
   "cameraButton": {
     "onLabel": "끄기",
-    "offLabel": "켜기"
+    "offLabel": "켜기",
+    "tooltipDisabledContent": "카메라가 비활성화되었습니다",
+    "tooltipOnContent": "카메라 끄기",
+    "tooltipOffContent": "카메라 켜기"
   },
   "microphoneButton": {
     "onLabel": "음소거",
-    "offLabel": "음소거 해제"
+    "offLabel": "음소거 해제",
+    "tooltipDisabledContent": "마이크가 비활성화되었습니다",
+    "tooltipOnContent": "마이크 음소거",
+    "tooltipOffContent": "마이크 음소거 해제"
   },
   "devicesButton": {
-    "label": "옵션",
+    "label": "장치",
+    "tooltipContent": "장치 관리",
     "cameraMenuTitle": "카메라",
     "cameraMenuTooltip": "카메라 선택",
     "microphoneMenuTitle": "마이크",
@@ -45,14 +53,18 @@
   },
   "participantsButton": {
     "label": "사용자",
+    "tooltipContent": "프레젠테이션 표시",
     "menuHeader": "이 통화에서",
     "participantsListButtonLabel": "{numParticipants}명",
     "muteAllButtonLabel": "모두 음소거",
     "copyInviteLinkButtonLabel": "초대 링크 복사"
   },
   "screenShareButton": {
-    "onLabel": "중지",
-    "offLabel": "공유"
+    "onLabel": "공유 중지",
+    "offLabel": "공유",
+    "tooltipDisabledContent": "화면 공유가 비활성화되었습니다",
+    "tooltipOnContent": "화면 공유 중지",
+    "tooltipOffContent": "화면 공유"
   },
   "messageThread": {
     "yesterday": "어제",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
-    "screenShareLoadingMessage": "{participant} 님의 화면 로드 중"
+    "screenShareLoadingMessage": "{participant} 님의 화면 로드 중",
+    "localVideoLabel": "나"
   }
 }
