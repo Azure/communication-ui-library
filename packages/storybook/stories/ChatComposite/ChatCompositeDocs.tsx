@@ -19,16 +19,16 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>ChatComposite</Title>
       <Description>
-        ChatComposite brings together key components to provide a full chat experience out of the box.
+        `ChatComposite` brings together key components to provide a full chat experience out of the box.
       </Description>
       <Description>
-        Note that ChatComposite has a min width and height of respectively 19.5rem and 20rem (312px x 320px, with
+        Note that `ChatComposite` has a min width and height of respectively 19.5rem and 20rem (312px x 320px, with
         default rem at 16px).
       </Description>
-      <Heading>Basic usage</Heading>
+      <Heading>Basic Usage</Heading>
       <Description>
         There are two parts to the composite - a `ChatComposite` react component and a `ChatAdapter` that connects the
-        react component to the backend APIs.
+        react component to the underlying functionality.
       </Description>
       <Description>
         The key thing to note is that initialization of `ChatAdapter` is asynchronous. Thus, the initialization step
@@ -38,14 +38,14 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Prerequisites</Heading>
       <Description>
-        ChatComposite provides the UI for an *existing user* in an *existing thread*. Thus, the user and thread must be
-        created beforehand. Typically, the user and thread are created on a Contoso-owned service and authentication
-        tokens are served to the client application that then passes it to the ChatComposite.
+        `ChatComposite` provides the UI for an *existing user* in an *existing thread*. Thus, the user and thread must
+        be created beforehand. Typically, the user and thread are created on a Contoso-owned service and authentication
+        tokens are served to the client application that then passes it to the `ChatComposite`.
       </Description>
 
       <Heading>Theming</Heading>
       <Description>
-        ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
+        `ChatComposite` can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
         themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see theming in action or the
         [overall theming example](./?path=/story/theming--page) to see how theming works for all the components in this
         UI library.
@@ -53,7 +53,7 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Fonts</Heading>
       <Description>
-        Custom fonts can be applied to the ChatComposite using the in built theming mechanism. Look at the
+        Custom fonts can be applied to the `ChatComposite` using the in built theming mechanism. Look at the
         [ChatComposite themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see custom fonts in
         action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
         components in this UI library. Read more about fonts in [Fluent UI Typography
@@ -73,9 +73,9 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={hideTopicStatement} />
 
-      <Heading>Running in a Mobile browser</Heading>
+      <Heading>Running in a Mobile Browser</Heading>
       <Description>
-        Unlike the CallComposite and MeetingComposite, the ChatComposite has no `formFactor` property. Instead the
+        Unlike the `CallComposite`` and `MeetingComposite`, the ChatComposite has no `formFactor` property. Instead the
         composite is responsive to the container it is in and should perform optimally on mobile and desktop
         automatically.
       </Description>
@@ -105,15 +105,15 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={customBehaviorExampleText} />
 
-      <Heading>Joining existing Chat</Heading>
+      <Heading>Joining Existing Chat Thread</Heading>
       <Description>
         The [join existing chat
         thread](./?path=/story/composites-chat-joinexistingchatthread--join-existing-chat-thread) provides an easy
-        playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
-        the composite with multiple users.
+        playground to join an existing Azure Communication Services chat thread. This is useful if you want to try out
+        chat without writing any code.
       </Description>
 
-      <Heading>Chat Composite Props</Heading>
+      <Heading>ChatComposite Props</Heading>
       <Props of={ChatComposite} />
     </>
   );

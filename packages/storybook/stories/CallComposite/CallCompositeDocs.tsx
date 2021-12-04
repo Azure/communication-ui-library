@@ -28,15 +28,15 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>CallComposite</Title>
       <Description>
-        CallComposite brings together key components to provide a full calling experience out of the box.
+        `CallComposite` brings together key components to provide a full calling experience out of the box.
       </Description>
-      <Description>Note that CallComposite has the following min width and height:</Description>
+      <Description>Note that `CallComposite` has the following min width and height:</Description>
       <Description>- mobile: 19.5rem x 21rem (312px x 336px, with default rem at 16px)</Description>
       <Description>- desktop: 30rem x 22rem (480px x 352px, with default rem at 16px)</Description>
-      <Heading>Basic usage</Heading>
+      <Heading>Basic Usage</Heading>
       <Description>
-        There are two parts to the composite - a `CallComposite` react component and a `CallAdapter` that connects the
-        react component to the backend APIs.
+        The composite experience is made up of a `CallComposite` react component and a `CallAdapter` that connects the
+        react component to the underlying functionality.
       </Description>
       <Description>
         The key thing to note is that initialization of `CallAdapter` is asynchronous. Thus, the initialization step
@@ -46,31 +46,31 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Prerequisites</Heading>
       <Description>
-        CallComposite provides the UI for an *existing user* to join a call. The user must be created beforehand.
+        `CallComposite` provides the UI for an *existing user* to join a call. The user must be created beforehand.
         Typically, the user and group call or teams meeting are created on a Contoso-owned service and provided to the
-        client application that then passes it to the CallComposite.
+        client application that then passes it to the `CallComposite`.
       </Description>
 
       <Heading>Styling</Heading>
       <Description>
-        CallComposite is designed to fill the space of the parent it is in. By default these examples put the composite
-        in a container of a set height and width. If your composite is living outside of any parent container and you
-        wish for it to fill the page, we recommend ensuring your react app is set to fill the screen by adding the
-        following css to your primary css file:
+        `CallComposite` is designed to fill the space of the parent it is in. By default these examples put the
+        composite in a container of a set height and width. If your composite is living outside of any parent container
+        and you wish for it to fill the page, we recommend ensuring your react app is set to fill the screen by adding
+        the following css to your primary css file:
       </Description>
       <Source code={cssSnippet} />
 
-      <Heading>Running in a Mobile browser</Heading>
+      <Heading>Running in a Mobile Browser</Heading>
       <Description>
-        CallComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may set
-        the `formFactor` property to `"mobile"`. The CallComposite does not detect if it is running on mobile device vs
-        desktop, instead you must identify if your clients device is a mobile device and set the `formFactor` property
-        to `"mobile"`. This prop can be set at any time and immediately updates the composite UI to be optimized for a
-        mobile device.
+        `CallComposite`` by default is optimized for desktop views. To provide an optimized mobile experience, you may
+        set the `formFactor` property to `"mobile"`. The `CallComposite` does not detect if it is running on mobile
+        device vs desktop, instead you must identify if your clients device is a mobile device and set the `formFactor`
+        property to `"mobile"`. This prop can be set at any time and immediately updates the composite UI to be
+        optimized for a mobile device.
       </Description>
       <Source code={formFactorSnippet} />
       <MessageBar>
-        Note: Only Protrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
+        Note: Only protrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
       </MessageBar>
       <Description>
         You can try out the form factor property in the [CallComposite Basic
@@ -79,7 +79,7 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Theming</Heading>
       <Description>
-        CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
+        `CallComposite` can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
         theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
         [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
         UI library.
@@ -103,7 +103,7 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Fonts</Heading>
       <Description>
-        Custom fonts can be applied to the CallComposite using the in built theming mechanism. Look at the
+        Custom fonts can be applied to the `CallComposite` using the in built theming mechanism. Look at the
         [CallComposite themes canvas](./?path=/story/composites-call-themeexample--theme-example) to see custom fonts in
         action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
         components in this UI library. Read more about fonts in [Fluent UI
@@ -112,18 +112,18 @@ export const getDocs: () => JSX.Element = () => {
 
       <Heading>Icons</Heading>
       <Description>
-        Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
-        accepts an object where you can provide a custom JSX element against an icon name key.
+        Custom icons can be applied to the `CallComposite` using `icons` prop. The `icons` prop accepts an object where
+        you can provide a custom JSX element against an icon name key.
       </Description>
 
-      <Heading>Joining an existing Call</Heading>
+      <Heading>Joining an Existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
         playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
-        useful if you want to explore the composite with multiple users.
+        useful if you want to try the calling experience without writing any code.
       </Description>
 
-      <Heading>Call Composite Props</Heading>
+      <Heading>CallComposite Props</Heading>
       <Props of={CallComposite} />
     </>
   );

@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs';
 
 # UI Library Use Cases
 
-UI Library supports many use cases across Calling and Chat experiences.
+UI Library supports many use cases across calling and chat experiences.
 These capabilities are available through UI components and composites.
 For composites, these capabilities are built directly in and exposed when the composite is integrated into an application.
 For UI components, these capabilities are exposed through a combination of UI functionality and underlying stateful libraries.
@@ -15,18 +15,18 @@ To take full advantage of these capabilities, we recommend using the UI componen
 | Area                                                                                            | Use Cases                                                                                                                                                   |
 | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Call Types                                                                                      | Join Teams meeting                                                                                                                                          |
-|                                                                                                 | Join Azure Communication Services call with Group Id                                                                                                        |
+|                                                                                                 | Join Azure Communication Services group call                                                                                                                |
 | [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) | Call Lobby                                                                                                                                                  |
 |                                                                                                 | Transcription and recording alert banner                                                                                                                    |
 | Call Controls                                                                                   | Mute/unmute call                                                                                                                                            |
 |                                                                                                 | Video on/off on call                                                                                                                                        |
 |                                                                                                 | Screen sharing                                                                                                                                              |
 |                                                                                                 | End call                                                                                                                                                    |
-| Participant Gallery                                                                             | Remote participants are divided into audio and video participants                                                                                           |
+| Video Gallery                                                                                   | Remote participants are divided into audio and video participants                                                                                           |
 |                                                                                                 | Dominant speaker capabilities sort participants to show who is speaking                                                                                     |
 |                                                                                                 | Video preview available throughout call for local user                                                                                                      |
 |                                                                                                 | Default avatars available when video is off                                                                                                                 |
-|                                                                                                 | Shared screen content displayed on participant gallery                                                                                                      |
+|                                                                                                 | Shared screen content displayed on video gallery                                                                                                            |
 | Call configuration                                                                              | Microphone device management                                                                                                                                |
 |                                                                                                 | Camera device management                                                                                                                                    |
 |                                                                                                 | Speaker device management                                                                                                                                   |
@@ -72,13 +72,13 @@ For example:
 UI Library exposes patterns for developers to modify components to fit the look and feel of their application.
 These capabilities are a key area of differentiation between composites and UI components, where composites provide less customization options in favor of a simpler integration experience.
 
-| Use Case                                            | Composites | UI Components |
+| Use Case                                            | Composites | UI components |
 | --------------------------------------------------- | ---------- | ------------- |
 | Fluent based theming                                | ✔          | ✔             |
 | Experience layout is composable                     |            | ✔             |
 | CSS Styling can be used to modify style properties  |            | ✔             |
 | Icons can be replaced                               |            | ✔             |
-| Participant gallery layout can be modified          |            | ✔             |
+| Video gallery layout can be modified                |            | ✔             |
 | Call control layout can be modified                 | ✔          | ✔             |
 | Data models can be injected to modify user metadata | ✔          | ✔             |
 
@@ -89,7 +89,7 @@ Developers can hook into the stateful client to read the state, handle events an
 
 | Use Case                                         | Composites | UI Components | Example                                                                      |
 | ------------------------------------------------ | ---------- | ------------- | ---------------------------------------------------------------------------- |
-| Call/Chat client state can be accessed           | ✔          | ✔             | Check whether a all is connected or see the participants in a thread         |
+| Call/Chat client state can be accessed           | ✔          | ✔             | Check whether a call is connected or see the participants in a thread        |
 | Commands can be sent to the call and chat client | ✔          | ✔             | Mute or unmute the call client or send messages on behalf of the user        |
 | Client events can be accessed and handled        | ✔          | ✔             | Handle a participant join a call or intercept a message coming into a thread |
 | UI events can be accessed and handled            | ✔          | ✔             | Handle mute button click or chat send button to add your own logic           |

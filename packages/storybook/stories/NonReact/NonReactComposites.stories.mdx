@@ -6,21 +6,24 @@ import { Meta } from '@storybook/addon-docs';
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# Use Composites inside JavaScript-based Applications
+# Use Composites On Your Web Page
 
-If you are not using React, you can still embed a calling/chat composite into your html page with a simple `<script>` tag and several lines of code like:
+If you are not using React, you can still embed a `ChatComposite` or a `CallComposite` into your html page with a simple `<script>` tag and several lines of code:
 
 You can easily find prebuilt bundles from:
 
-[The latest bundles for chat composite](https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js)
+- ChatComposite.js [link](https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js)
+- CallComposite.js [link](https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js)
 
-[The latest bundles for call composite](https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js)
+For prototyping, we suggest importing both scripts into your HTML file.
 
-For development and prototyping purpose, import these 2 urls with `<script>` tags will be the fastest way. In production environment, we recommend that serving composite files on your own CDN will help with performance.
+\*These bundles are provided for testing purpose, for any scaled use, we suggest generating these bundles and hosting them on your own CDN.
 
-## Use Composites in html
+\*\* Currently we do not support these scripts to be used in a production setting.
 
-After importing chat/calling composite bundle, you are able to load composites using these 2 code snippets:
+## Use Composites in HTML
+
+After importing `ChatComposite` or `CallComposite` bundles, you are able to load composites using these 2 code snippets:
 
 ```tsx
 const chatAdapter = await chatComposite.loadChatComposite(
@@ -53,11 +56,11 @@ const callAdapter = await callComposite.loadCallComposite(
 );
 ```
 
-Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example) and [Call Composite Basic Example](./?path=/docs/composites-call-basicexample--basic-example) to see optional props of composites
+Check [ChatComposite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example) and [CallComposite Basic Example](./?path=/docs/composites-call-basicexample--basic-example) to see optional props of composites
 
 For more details of adapter, check [Adapters for Composites](./?path=/story/composite-adapters--page)
 
-## Example html code
+## Example HTML Code
 
 Check [Example](https://github.com/Azure/communication-ui-library/blob/PublicPreview/1.0.0-beta.3/samples/StaticHtmlComposites/index.html) for more detailed example of using calling/chat composites
 

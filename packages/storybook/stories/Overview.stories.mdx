@@ -67,17 +67,17 @@ Developers can instantiate the composite using an Azure Communication Services a
 
 ### Call Composite [link](./?path=/docs/composites-call-basicexample--basic-example)
 
-`Call Composite` is providing a calling experience that allows users to start or join a call. Inside the experience users can configure their
+`CallComposite` is providing a calling experience that allows users to start or join a call. Users can configure their
 devices, participate in the call with video and see other participants, including those with video turn on.
 
-Here are visual examples of the `Call Composite` where participants have their camera turned off, then some have them turned on.
+Here are visual examples of the `CallComposite` where participants have their camera turned off, then some have them turned on.
 People speaking with their microphone unmuted will have their tile appearing with a blue border.
 
 <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '2rem' }} style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
     <img
       src="images/callComposite_CamerasOff.png"
-      alt="Call Composite where all participants have their camera turned off"
+      alt="Call composite where all participants have their camera turned off"
     />
   </Stack.Item>
   <Stack.Item align="center">
@@ -89,7 +89,7 @@ People speaking with their microphone unmuted will have their tile appearing wit
 </Stack>
 
 When joining a Microsoft Teams call ([Teams Interop experience](./?path=/docs/examples-teamsinterop-compliancebanner--compliance-banner)), the
-Call Composite includes a lobby experience where the user is waiting to be admitted into the call.
+`CallComposite` includes a lobby experience where the user is waiting to be admitted into the call.
 
 <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
@@ -109,11 +109,11 @@ Call Composite includes a lobby experience where the user is waiting to be admit
 
 ### Chat Composite [link](./?path=/docs/composites-chat-basicexample--basic-example)
 
-`Chat Composite` is providing a chat experience where user can send and receive
+`ChatComposite` is providing a chat experience where user can send and receive
 messages. Message thread events such as typing indicators, whether the message has been successfully delivered or read, or participants entering
 and leaving the chat are displayed to the user as part of the chat thread.
 
-Here is a visual example of the `Chat Composite`.
+Here is a visual example of the `ChatComposite`.
 
 <Stack style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
@@ -167,7 +167,7 @@ Following are lists of components that can be used for specific areas.
 
 Understanding these requirements will help you choose the right client library:
 
-- **How much customization do you desire?** Azure Communication Services calling/chat SDKs don't have a UX and are designed so you can build whatever UX you want. UI Library components provide UI assets at the cost of reduced customization.
+- **How much customization do you desire?** Azure Communication Services Calling/Chat SDKs don't have a UX and are designed so you can build whatever UX you want. UI Library components provide UI assets at the cost of reduced customization.
 - **What platforms are you targeting?** Different platforms have different capabilities.
 
 Details about feature availability in the [UI Library is available here](./?path=/docs/usecases--page), but key trade-offs are summarized below.
