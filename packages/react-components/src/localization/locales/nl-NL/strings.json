@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Kan niet verzenden"
   },
   "endCallButton": {
-    "label": "Verlaten"
+    "label": "Verlaten",
+    "tooltipContent": "Gesprek verlaten"
   },
   "cameraButton": {
     "onLabel": "Uitschakelen",
-    "offLabel": "Inschakelen"
+    "offLabel": "Inschakelen",
+    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipOnContent": "Camera uitschakelen",
+    "tooltipOffContent": "Camera inschakelen"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
-    "offLabel": "Dempen opheffen"
+    "offLabel": "Dempen opheffen",
+    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipOnContent": "Microfoon uitschakelen",
+    "tooltipOffContent": "Microfoon inschakelen"
   },
   "devicesButton": {
-    "label": "Opties",
+    "label": "Apparaten",
+    "tooltipContent": "Apparaten beheren",
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Camera kiezen",
     "microphoneMenuTitle": "Microfoon",
@@ -45,6 +53,7 @@
   },
   "participantsButton": {
     "label": "Personen",
+    "tooltipContent": "Deelnemers weergeven",
     "menuHeader": "In dit gesprek",
     "participantsListButtonLabel": "{numParticipants} personen",
     "muteAllButtonLabel": "Alles dempen",
@@ -52,7 +61,10 @@
   },
   "screenShareButton": {
     "onLabel": "Stoppen",
-    "offLabel": "Delen"
+    "offLabel": "Delen",
+    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipOnContent": "Delen van uw scherm stoppen",
+    "tooltipOffContent": "Uw scherm delen"
   },
   "messageThread": {
     "yesterday": "Gisteren",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
-    "screenShareLoadingMessage": "Scherm van {participant} laden"
+    "screenShareLoadingMessage": "Scherm van {participant} laden",
+    "localVideoLabel": "U"
   }
 }

@@ -45,7 +45,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
           setAdapter(
             await createAzureCommunicationCallAdapter({
               userId: props.userId,
-              displayName: props.displayName,
+              displayName: props.displayName, // Max 256 Characters
               credential,
               locator: callLocator
             })
