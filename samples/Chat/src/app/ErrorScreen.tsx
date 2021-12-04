@@ -16,11 +16,11 @@ import {
 import React from 'react';
 
 export interface ErrorEndCallProps {
+  title: string;
   homeHandler(): void;
 }
 
 export const ErrorScreen = (props: ErrorEndCallProps): JSX.Element => {
-  const leftCall = 'Oops! You are no longer a participant for the chat thread.';
   const goHomePage = 'Go to homepage';
 
   return (
@@ -34,7 +34,7 @@ export const ErrorScreen = (props: ErrorEndCallProps): JSX.Element => {
     >
       <Stack tokens={upperStackTokens}>
         <Text role={'heading'} aria-level={1} className={endChatTitleStyle}>
-          {leftCall}
+          {props.title}
         </Text>
         <Stack horizontal tokens={buttonsStackTokens}>
           <DefaultButton
