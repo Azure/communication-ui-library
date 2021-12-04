@@ -46,7 +46,7 @@ export const RemoteVideoTile = React.memo(
         onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOptions);
       }
       // Always clean up element to make tile up to date and be able to dispose correctly
-      // TODO: Add an extra param to onDisposeRemoteStreamView(userId, flavor(optional)) when api lock is released
+      // TODO: Add an extra param to onDisposeRemoteStreamView(userId, flavor(optional)) after GA
       // and isolate dispose behavior between screen share and video
       return () => {
         if (renderElement && !isScreenSharingOn) {
