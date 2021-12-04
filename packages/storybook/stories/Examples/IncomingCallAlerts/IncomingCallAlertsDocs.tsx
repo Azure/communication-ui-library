@@ -241,7 +241,7 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>Incoming Call Alerts</Title>
       <Description>
-        The Incoming Call Alert Components alert about an incoming call. They can render a local video preview, custom
+        The `IncomingCallAlert` components alert about an incoming call. They can render a local video preview, custom
         avatar image, caller name and incoming call alert text.
       </Description>
       <Heading>Incoming Call Modal</Heading>

@@ -12,24 +12,25 @@ We are sharing some of our recommended best practices when handling state with A
 
 ## Use the Stateful Clients
 
-Managing the complex state of a calling or chat sesion can be challenging. This was a complex problem we found we were in and we think many of our developer community
-will run into this challenge themselves. We wanted to find a convenient way to store this information on the client in a way that plays nicely with our components we are offering.
-By using the stateful client for calling or chat, you are on our recommended path for powering your own communications experience using Azure Communication Services.
+Managing the complex state of a calling or chat session can be problematic. We identified managing state was going to be a common challenge for our developer community. We challenged ourselves to find a way to store this information on the client to better support our UI components.
+By using the stateful client for calling or chat scenarios, developers will be on the recommended path for powering your own communications experience. The `CallComposite` and the `ChatComposite` both internally use
+the stateful client.
 
 ## Use usePropsFor
 
-If you are using our provided UI Components, `usePropsFor` will help you get integrated with the underlying functionality quickly. This provides a series of properties our
-provided components are expecting from the stateful client to render an experience your users will be expecting. This is the fastest way to get your experience up and running with Azure Communication Services.
+If you are using our out-of-the-box UI components, `usePropsFor` will help you get integrated with the underlying functionality quickly. `UsePropsFor` is a React hook that is able to assign props to a React component
+from information held in the stateful client. This hook is able to properly map properties from the state because we are aware of relevant UI components ahead of time. If you are using your own UI components, you will
+not be able to use `usePropsFor`.
 
 ## You can use your own UI Components
 
-Today you can use `useSelector` to connect your own components to create your own experiences! We use `useSelector` under the hood when you leverage our `usePropsFor` hook.
-We wanted to ensure that developers wanting to create custom components had the same development path that we were using as well. Using this development path allows
-you to start on the path that we use as well to create amazing components.
+If you are using your own UI components, we recommend using the `useSelector` React hook. `useSelector` is designed to connect your data from the stateful client to your UI components.
+You could skip using `useSelector` however it is designed to make it simple to connect any underlying communications data to your UI components.
+The `useSelector` hook is quite versatile and we use it under the hood in our `usePropsFor` React hook.
 
 ## Populating the `DeviceManager` State
 
-When using Stateful Calling, the call related state will be automatically retrieved for you.
+When using the stateful calling client, the call related state will be automatically retrieved for you.
 However, this is not the case for `DeviceManager` state.
 To be able to retrieve `DeviceManager` state from the `StatefulCallClient`’s state, you must trigger the appropriate APIs to populate the `DeviceManager` state.
 
@@ -72,14 +73,14 @@ To debug `createView` and `disposeView`, they emit `console.warns` when used inc
 
 ## Track Changes to `callId`
 
-One major gotcha with using Stateful Calling is that `callId` may change and `callId` is used to look up data in Stateful state.
+One major gotcha with using the stateful calling client is that `callId` may change and `callId` is used to look up data in stateful state.
 If you have an old callId and the callId changed, you will not be able to access or find `CallState` in `CallClientState`.
 To work around, we recommend you do not cache the `callId` and instead cache the entire call object.
 The id in the call object will be kept up to date and when ever you access `CallClientState` use the `call.id`.
 
 ## Detecting Screenshare Participant
 
-To make Stateful Calling easier to use we added a `screenshareRemoteParticipant` property to `CallState`.
+To make the stateful calling client easier to use we added a `screenshareRemoteParticipant` property to `CallState`.
 If there is a remote participant screensharing, this will allow you to quickly look up that participant’s state by doing something like this:
 
 ```tsx
@@ -91,5 +92,5 @@ Note that this only applies to remote screenshares and not local screenshares.
 
 ## Detecting Transcription and Recording
 
-Stateful Calling will manage transcription/recording for you.
+The stateful calling client will manage transcription/recording for you.
 You only need to simply check the states under `CallState.transcription` and `CallState.recording`.

@@ -16,7 +16,7 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>Local Preview</Title>
 
-      <Heading>Basic example</Heading>
+      <Heading>Basic Example</Heading>
       <Description>
         To build a local preview, we recommend using the Fluent UI
         [Stack](https://developer.microsoft.com/fluentui#/controls/web/stack) as a container as shown in the code below.

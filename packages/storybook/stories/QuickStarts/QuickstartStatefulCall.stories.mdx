@@ -11,7 +11,7 @@ import CallComponentsStateful from '!!raw-loader!./snippets/CallComponentsStatef
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# Quickstart: Get started with Call Stateful Client
+# Quickstart: Get Started With Call Stateful Client
 
 Get started with Azure Communication Services by using the UI Library to quickly integrate communication experiences into your applications.
 In this quickstart, you'll learn how to integrate UI Library stateful clients into your application to build communication experiences.
@@ -39,7 +39,7 @@ You can find the completed code for this quickstart here: [Get started with Call
 
 For setting up adapters that power the composites, we need to generate an access token to allow the adapters to interact with the Azure Communication Services back-end.
 
-Access Tokens can be generated using this [Azure Portal quickstart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) inside your Azure Communication Services dashboard as shown below.
+Access tokens can be generated using this [Azure Portal quickstart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) inside your Azure Communication Services dashboard as shown below.
 
 <Stack style={{ width: '100%' }}>
   <video style={{ width: '100%' }} src="videos/generate-access-token.mp4" autoPlay loop muted></video>
@@ -49,7 +49,7 @@ Access Tokens can be generated using this [Azure Portal quickstart](https://docs
 
 ## Setting Up
 
-UI Library requires a React environment to be setup as described below. If you already have a React App, you can skip this section.
+UI Library requires a React environment to be setup as described below. If you already have a React app, you can skip this section.
 
 ### Set Up React App
 
@@ -126,7 +126,7 @@ Next we will add four providers that will encapsulate our UI components.
    For this provider, we will pass the `statefulCallClient` as a prop to the provider.
 3. The `CallAgentProvider` which provides state from the `CallAgent` to the components.
    For this provider, we will pass the `CallAgent` as a prop to the provider.
-4. we will add the 'CallProvider' which provides the `Call` objects state down to the components.
+4. We will add the 'CallProvider' which provides the `Call` objects state down to the components.
    For this provider, we will pass the `Call` as a prop to the provider.
 
 `App.tsx`
@@ -135,10 +135,10 @@ Next we will add four providers that will encapsulate our UI components.
 
 ## Compose Call Components
 
-Now that we have our structure ready, we will now create our call experience using UI Components.
-For Call, we will use the [VideoGallery](./?path=/story/ui-components-videogallery--video-gallery) and [ControlBar](./?path=/story/ui-components-controlbar--control-bar) components.
+Now that we have our structure ready, we will now create our call experience using UI components.
+For calling scenarios, we will use the [VideoGallery](./?path=/story/ui-components-videogallery--video-gallery) and [ControlBar](./?path=/story/ui-components-controlbar--control-bar) components.
 To start add the code below to a new file `CallComponentsStateful.tsx`.
-For more information on getting started with UI Components follow the [quickstart](./?path=/story/quickstarts-uicomponents--page)
+For more information on getting started with UI components follow the [quickstart](./?path=/story/quickstarts-uicomponents--page)
 Here we will use the `usePropsFor` hook to connect our components to the stateful clients.
 The `usePropsFor` method takes in the component for which we want props generated, in this case `VideoGallery` and `ControlBar`.
 
@@ -146,7 +146,7 @@ The `usePropsFor` method takes in the component for which we want props generate
 
 <Source code={CallComponentsStateful} />
 
-Similarly to how we used `usePropsFor` with chat UI Components, it can be used for calling UI Components.
+Similarly to how we used `usePropsFor` with chat UI components, it can be used for calling UI components.
 For more information on [usePropsFor](./?path=/story/statefulclient-reacthooks-usepropsfor--page).
 
 ## Add Components to App
@@ -182,10 +182,10 @@ Learn more about [cleaning up resources](https://docs.microsoft.com/azure/commun
 
 ## Next Steps
 
-[Try UI Library Composites](./?path=/docs/quickstarts-composites--page)
+[Try UI Library composites](./?path=/docs/quickstarts-composites--page)
 
 For more information, see the following resources:
 
-- [UI Library Use Cases](./?path=/story/use-cases--page)
-- [UI Library Styling](./?path=/story/styling--page)
-- [UI Library Theming](./?path=/story/theming--page)
+- [UI Library use cases](./?path=/story/use-cases--page)
+- [UI Library styling](./?path=/story/styling--page)
+- [UI Library theming](./?path=/story/theming--page)

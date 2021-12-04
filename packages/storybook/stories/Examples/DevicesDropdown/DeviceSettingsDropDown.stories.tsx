@@ -24,7 +24,7 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>Device Setting</Title>
 
-      <Heading>Create a dropdown of cameras to select</Heading>
+      <Heading>Create a Dropdown of Camera Devices</Heading>
       <Description>
         To build a UI component for device settings, we recommend using the Fluent UI
         [Dropdown](https://developer.microsoft.com/fluentui#/controls/web/dropdown). Using the retrieved devices from

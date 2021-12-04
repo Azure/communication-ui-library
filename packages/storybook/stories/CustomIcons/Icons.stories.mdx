@@ -6,20 +6,20 @@ import { IconGridWithSearch } from './IconGrid';
 
 # Icons
 
-Both the Composites and the Components use a set of default icons from the Fluent UI library. All the icons used in Components and Composites are displayed below with their names.
+Both the composites and the components use a set of default icons from the Fluent UI library. All the icons used in components and composites are displayed below with their names.
 
 **All the default icons can be replaced with a custom icon by providing a custom JSX element.**
-The method for providing custom icons differs between composites and components. Please read below for more details about each.
+The method for providing custom icons differs between composites and components. Please read below for more details.
 
 ## Composites
 
-There is no setup required for rendering icons inside the Composites.
+There is no setup required for rendering icons inside the `CallComposite` and `ChatComposite`.
 
 ### Custom Icons
 
-All Composites expose a prop `icons` that allows you to override the default icons used inside Composites.
+All composites expose a prop `icons` that allows you to override the default icons used inside composites.
 
-Here is a sample code showcasing how you can override an icon used inside Composites with custom icons.
+Here is a sample code showcasing how you can override an icon used inside composites with custom icons.
 
 <Source
   language="tsx"
@@ -35,7 +35,7 @@ Here is a sample code showcasing how you can override an icon used inside Compos
 
 ### Default Composite Icons
 
-Below is a list of all the default icons you can override in Composites with their names.
+Below is a list of all the default icons you can override in composites with their names.
 
 <Canvas withSource="none">
   <IconGridWithSearch icons={DEFAULT_COMPOSITE_ICONS} />
@@ -43,7 +43,7 @@ Below is a list of all the default icons you can override in Composites with the
 
 ## Components
 
-Before you can render icons in Components, you will need to setup the icons using the `registerIcons` method as shown below.
+Before you can render icons in components, you will need to setup the icons using the `registerIcons` method as shown below.
 
 <Source
   language="tsx"
@@ -76,7 +76,7 @@ registerIcons({ icons: customIcons });
 
 ### Default Component Icons
 
-Below is a list of all the default icons you can override in Components with their names.
+Below is a list of all the default icons you can override in components with their names.
 
 <Canvas withSource="none">
   <IconGridWithSearch icons={DEFAULT_COMPONENT_ICONS} />

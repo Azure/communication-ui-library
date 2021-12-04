@@ -8,7 +8,7 @@ import { Meta } from '@storybook/addon-docs';
 
 # Hooks
 
-[React Hooks](https://reactjs.org/docs/hooks-intro.html) allows developers to use state and other react features without writing a class component.
+[React hooks](https://reactjs.org/docs/hooks-intro.html) allows developers to use state and other react features without writing a class component.
 
 While you can choose any state management library such as Redux, we also provide a simple way to power react components with our Stateful SDK.
 We provide two [custom hooks](https://reactjs.org/docs/hooks-custom.html) in our library, [usePropsFor()](./?path=/docs/statefulclient-reacthooks-usepropsfor--page) and [useSelector()](./?path=/docs/statefulclient-reacthooks-useselector--page), that allow you to subscribe to changes in the SDK state and bind to our UI components.
@@ -16,14 +16,14 @@ After binding with the custom hooks a SDK state change will trigger a re-render 
 
 ## Before you Start
 
-Before you start, you need to wrap your whole App with Providers.
+Before you start, you need to wrap your whole app with providers.
 They give you access to global variables (like Stateful ChatClient/CallClient) for our hooks to consume.
 There are different Providers for building apps with varying functionality:
 
 ### Chat
 
 For your Chat app, use the `ChatClientProvider` and `ChatThreadClientProvider` to give hooks access to the `ChatClient` and `ChatThreadClient`.
-`statefulChatClient` and `chatThreadClient` instances need to be passed to the Provider when you wrap your app.
+`statefulChatClient` and `chatThreadClient` instances need to be passed to the provider when you wrap your app.
 For more information on creating them, see [Overview](./?path=/docs/statefulclient-overview--page)
 
 ```tsx
@@ -39,7 +39,7 @@ ReactDOM.render(
 
 ### Calling
 
-For your Chat app, use the `CallClientProvider`, `CallAgentProvider` and `CallProvider` to give hooks access to the `CallClient`, `CallAgentClient` and `Call`.
+For your chat app, use the `CallClientProvider`, `CallAgentProvider` and `CallProvider` to give hooks access to the `CallClient`, `CallAgentClient` and `Call`.
 `statefulCallClient`, `callAgent` and `call` instances need to be passed to the Provider when you wrap your app.
 For more information on creating them, see [Overview](./?path=/docs/statefulclient-overview--page)
 

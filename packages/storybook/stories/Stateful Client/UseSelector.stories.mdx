@@ -8,7 +8,7 @@ import { Meta } from '@storybook/addon-docs';
 
 # useSelector <a name="useSelector"></a>
 
-`useSelector` allows you to provide your own selector function that maps the stateful SDK state to your own props for your own component. It subscribes to state changes and runs the selector every time when anything changes in the state, but note that it will only trigger a component re-render when the return value of the selector changes.
+`useSelector` allows you to provide your own selector function that maps the Stateful SDK state to your own props for your own component. It subscribes to state changes and runs the selector every time when anything changes in the state, but note that it will only trigger a component re-render when the return value of the selector changes.
 
 ### When to Call useSelector
 
@@ -60,7 +60,7 @@ const threadProps = useSelector(threadSelector);
 
 ### Choose your target
 
-Similar to usePropsFor, useSelector() is context-aware. It picks out props from available context from providers. Thus, when it is under both ChatClientProvider and CallingClientProvider, it can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
+Similar to `usePropsFor`, `useSelector` is context-aware. It picks out props from available context from providers. Thus, when it is under both `ChatClientProvider` and` CallClientProvider`, it can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
 
 ```tsx
 const threadSelector = (state, props) => ({

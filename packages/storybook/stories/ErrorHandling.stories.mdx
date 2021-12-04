@@ -6,7 +6,7 @@ import { Meta } from '@storybook/addon-docs';
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# Error handling
+# Error Handling
 
 An application must properly respond to unexpected conditions for a delightful end-user experience.
 The Azure Communication Services UI library contains multiple mechanisms that an application can use for this purpose.
@@ -26,11 +26,11 @@ The Azure Communication Services client side SDKs surface these error conditions
 - Failure of API method invocations
 - Diagnostic events (e.g. call quality diagnostics)
 
-The UI library plumbs through these error conditions to its own API surfaces.
+The UI Library plumbs through these error conditions to its own API surfaces.
 In addition, it provides a UI component to directly surface these conditions to end-users in your application.
 
 Error conditions handled in this way exclude programming errors in your application,
-UI library or its dependencies. These errors are best caught upstream through robust Continuous Integration practices.
+UI Library or its dependencies. These errors are best caught upstream through robust continuous integration practices.
 
 Error conditions also exclude operational errors unrelated to Azure Communication Services
 (e.g., errors caused in your application logic due to network issues). [React error boundaries] is a popular mechanism for handling
@@ -44,14 +44,14 @@ The [`ErrorBar` component](./?path=/docs/ui-components-error-bar--error-bar) pro
 conditions in your application's UI. This component translates errors returned from client SDKs and diagnostic events into
 localizable error notifications to the user.
 
-The UI Composites in this library use `ErrorBar` to show errors. This feature can be enabled when constructing the Composite.
+The UI composites in this library use `ErrorBar` to show errors. This feature can be enabled when constructing the `CallComposite` or `ChatComposite`.
 
 ## Advanced error handling
 
 Applications that need more flexibility than what `ErrorBar` provides can leverage the error information directly.
 
-Diagnostic events update corresponding parts of the state maintained by the stateful clients (used with UI Components) and adapters
-(used with UI Composites). e.g., Call diagnostics information is stored in the `diagnostics` field of the stateful calling client state.
+Diagnostic events update corresponding parts of the state maintained by the stateful clients (used with UI components) and adapters
+(used with UI Composites). e.g., call diagnostics information is stored in the `diagnostics` field of the stateful calling client state.
 
 Similarly, the latest error returned from Azure Communication Services API methods is stored in the `latestErrors` field of the state.
 In addition, adapters also generate an `'error'` event for each error encountered in an underlying API method invocation.

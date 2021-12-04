@@ -26,7 +26,7 @@ For testing purposes, you can use the [identity generator](https://docs.microsof
 
 ![UI Library recommended architecture with client-server architecture](images/ui-library-architecture.png)
 
-Composite and Base Components are initialized using an Azure Communication Services access token. Access tokens should be procured from Azure Communication Services through a
+UI Library composites are initialized using an Azure Communication Services access token. Access tokens should be procured from Azure Communication Services through a
 trusted service that you manage. See [Quickstart: Create Access Tokens](https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript) and [Trusted Service Tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/trusted-service-tutorial) for more information.
 
 These client libraries also require the context for the call or chat they will join. Similar to user access tokens, this context should be disseminated to clients via your own trusted service. The list below summarizes the initialization and resource management functions that you need to operationalize.
