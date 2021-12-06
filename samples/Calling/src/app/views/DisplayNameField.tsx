@@ -25,7 +25,7 @@ const hasValidLength = (name: string): boolean => {
 
 export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
   const { setName, setEmptyWarning, isEmpty, defaultName } = props;
-  const [isInvalidLength, setIsInvalidLength] = useState<ConstrainBoolean>(!hasValidLength(defaultName ?? ''));
+  const [isInvalidLength, setIsInvalidLength] = useState<boolean>(!hasValidLength(defaultName ?? ''));
 
   const onNameTextChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -37,6 +37,8 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
 
     if (!hasValidLength(newValue)) {
       setIsInvalidLength(true);
+      // The button below DisplayNameField is being disabled if name is empty.
+      // To ensure that the Join Call button is disabled when the name is too long, we have to clear it from the state.
       setName('');
       return;
     } else {
