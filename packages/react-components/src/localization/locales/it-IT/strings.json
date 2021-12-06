@@ -30,14 +30,14 @@
   "cameraButton": {
     "onLabel": "Disabilita",
     "offLabel": "Abilita",
-    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipDisabledContent": "La videocamera è disabilitata",
     "tooltipOnContent": "Spegni la videocamera",
     "tooltipOffContent": "Accendi la videocamera"
   },
   "microphoneButton": {
     "onLabel": "Disattiva audio",
     "offLabel": "Riattiva audio",
-    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipDisabledContent": "Il microfono è disabilitato",
     "tooltipOnContent": "Disattiva microfono",
     "tooltipOffContent": "Riattiva microfono"
   },
@@ -60,9 +60,9 @@
     "copyInviteLinkButtonLabel": "Copia il collegamento dell’invito"
   },
   "screenShareButton": {
-    "onLabel": "Arresta",
+    "onLabel": "Interrompi condivisione",
     "offLabel": "Condividi",
-    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipDisabledContent": "La condivisione del video è disabilitata",
     "tooltipOnContent": "Interrompi condivisione dello schermo",
     "tooltipOffContent": "Condividi lo schermo"
   },
