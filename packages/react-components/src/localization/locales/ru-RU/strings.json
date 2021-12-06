@@ -30,14 +30,14 @@
   "cameraButton": {
     "onLabel": "Отключить",
     "offLabel": "Включить",
-    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipDisabledContent": "Камера отключена",
     "tooltipOnContent": "Выключить камеру",
     "tooltipOffContent": "Включить камеру"
   },
   "microphoneButton": {
     "onLabel": "Отключить звук",
     "offLabel": "Включить звук",
-    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipDisabledContent": "Микрофон отключен",
     "tooltipOnContent": "Отключить микрофон",
     "tooltipOffContent": "Включить микрофон"
   },
@@ -60,9 +60,9 @@
     "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением"
   },
   "screenShareButton": {
-    "onLabel": "Остановить",
+    "onLabel": "Отменить общий доступ",
     "offLabel": "Поделиться",
-    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipDisabledContent": "Демонстрация экрана отключена.",
     "tooltipOnContent": "Отменить общий доступ к экрану",
     "tooltipOffContent": "Общий доступ к экрану"
   },
