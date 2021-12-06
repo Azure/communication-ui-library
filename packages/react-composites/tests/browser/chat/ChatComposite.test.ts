@@ -2,9 +2,16 @@
 // Licensed under the MIT license.
 
 import { IDS } from '../common/constants';
-import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, waitForSelector } from '../common/utils';
+import {
+  buildUrl,
+  dataUiId,
+  stubMessageTimestamps,
+  waitForChatCompositeToLoad,
+  waitForFunction,
+  waitForSelector
+} from '../common/utils';
 import { test } from './fixture';
-import { expect } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import {
   chatTestSetup,
   sendMessage,
