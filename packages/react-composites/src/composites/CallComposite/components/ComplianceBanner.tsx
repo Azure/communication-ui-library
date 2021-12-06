@@ -181,7 +181,7 @@ function BannerMessage(props: { variant: number; strings: CompositeStrings }): J
     case TRANSCRIPTION_STARTED:
       return (
         <>
-          <b>{strings.call.complianceBannerTrancriptionStarted}</b>
+          <b>{strings.call.complianceBannerTranscriptionStarted}</b>
           {` ${strings.call.complianceBannerTranscriptionConsent}`}
           <PrivacyPolicy linkText={strings.call.privacyPolicy} />
         </>
