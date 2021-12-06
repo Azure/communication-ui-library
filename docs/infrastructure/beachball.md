@@ -18,7 +18,7 @@ Semantic version bumping is how we increment that version in our packages. Again
 
 Along with regular package version updates, we also produce alpha releases nightly, and beta releases when we are working towards a new major version release.
 
-* Nightly Alpha versions follow the following syntax: v.#.#.#-alpha+yyyymmdd-HHMM
+* Nightly Alpha versions follow the following syntax: v.#.#.#-alpha-yyyymmddHHMM
 * Beta versions follow the following syntax: v.#.#.#-beta.#
 
 See [creating a release](../references/creating-a-release.md) for more information.

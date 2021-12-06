@@ -152,7 +152,7 @@ export interface CallCompositeStrings {
   /**
    * Message to let user know transcription of the meeting has started in ComplianceBanner.
    */
-  complianceBannerTrancriptionStarted: string;
+  complianceBannerTranscriptionStarted: string;
   /**
    * Message to let user know the transcription of the meeting has stopped in ComplianceBanner.
    */

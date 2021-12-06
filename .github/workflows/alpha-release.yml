@@ -38,7 +38,7 @@ jobs:
       - name: Get datetime for alpha release name
         id: datetime
         run: |
-          echo "::set-output name=datetime::$(date +'%Y%m%d.%H%M')"
+          echo "::set-output name=datetime::$(date +'%Y%m%d%H%M')"
 
       # Bump alpha package versions
       - name: Bump alpha package versions

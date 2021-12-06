@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "force aria-live as ariaLve in Spinner not working",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
