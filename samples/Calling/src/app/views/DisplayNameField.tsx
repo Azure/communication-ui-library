@@ -19,13 +19,13 @@ const TEXTFIELD_PLACEHOLDER = 'Enter a name';
 const TEXTFIELD_EMPTY_ERROR_MSG = 'Name cannot be empty';
 const TEXTFIELD_EXCEEDS_MAX_CHARS = `Name cannot exceed ${DISPLAY_NAME_MAX_CHARS} characters`;
 
+const hasValidLength = (name: string): boolean => {
+  return name.length <= DISPLAY_NAME_MAX_CHARS;
+};
+
 export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
   const { setName, setEmptyWarning, isEmpty, defaultName } = props;
-  const [isInvalidLength, setIsInvalidLength] = useState<ConstrainBoolean>(true);
-
-  const hasValidLength = (name: string): boolean => {
-    return name.length <= DISPLAY_NAME_MAX_CHARS;
-  };
+  const [isInvalidLength, setIsInvalidLength] = useState<ConstrainBoolean>(!hasValidLength(defaultName ?? ''));
 
   const onNameTextChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
