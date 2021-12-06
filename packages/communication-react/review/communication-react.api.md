@@ -305,7 +305,7 @@ export interface CallCompositeStrings {
     complianceBannerRecordingSaving: string;
     complianceBannerRecordingStarted: string;
     complianceBannerRecordingStopped: string;
-    complianceBannerTrancriptionStarted: string;
+    complianceBannerTranscriptionStarted: string;
     complianceBannerTranscriptionConsent: string;
     complianceBannerTranscriptionSaving: string;
     complianceBannerTranscriptionStopped: string;
