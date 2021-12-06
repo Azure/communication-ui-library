@@ -30,7 +30,7 @@ interface ChatScreenProps {
   displayName: string;
   endpointUrl: string;
   threadId: string;
-  endChatHandler(): void;
+  endChatHandler(isParticipantRemoved: boolean): void;
   errorHandler(): void;
 }
 
@@ -57,7 +57,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           (p) => (p.id as CommunicationUserIdentifier).communicationUserId
         );
         if (removedParticipantIds.includes(userId)) {
-          endChatHandler();
+          const removedBy = (listener.removedBy.id as CommunicationUserIdentifier).communicationUserId;
+          endChatHandler(removedBy !== userId);
         }
       });
       adapter.setTopic('Your Chat sample');
