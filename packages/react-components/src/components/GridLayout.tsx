@@ -4,7 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { BaseCustomStyles } from '../types';
-import { gridLayoutStyle, gridStyle } from './styles/GridLayout.styles';
+import { gridLayoutStyle } from './styles/GridLayout.styles';
 
 /**
  * Props for {@link GridLayout}.
@@ -66,11 +66,11 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     return calculateGridProps(numberOfChildren, currentWidth, currentHeight);
   }, [numberOfChildren, currentWidth, currentHeight]);
 
+  const cssGridStyles = useMemo(() => createGridStyles(numberOfChildren, gridProps), [numberOfChildren, gridProps]);
+
   return (
-    <div ref={containerRef} className={gridLayoutStyle}>
-      <BiGrid gridProps={gridProps} styles={styles}>
-        {children}
-      </BiGrid>
+    <div ref={containerRef} className={mergeStyles(gridLayoutStyle, cssGridStyles, styles?.root)}>
+      {children}
     </div>
   );
 };
@@ -207,83 +207,59 @@ export const calculateGridProps = (numberOfItems: number, width: number, height:
 };
 
 /**
- * Grid that is made up of one or two grids. Based on the rows and columns from GridProps, if there are more cells than number of children then
- * there will be a second grid. The second grid will contain the larger cells to fill out the empty space. The first and second grid will be
- * arranged top-and-bottom if fill direction from GridProps is horizontal, otherwise they will be arranged left-and-right.
+ * Creates a styles classname with CSS Grid related styles given GridProps and the number of items to distribute as evenly as possible.
+ * @param numberOfItems - number of items to place in grid
+ * @param gridProps - GridProps that define the number of rows, number of columns, and the fill direction
+ * @returns - classname
  */
-const BiGrid = (props: { children: React.ReactNode; gridProps: GridProps; styles?: GridLayoutStyles }): JSX.Element => {
-  const gridProps = props.gridProps;
-  const numberOfChildren = React.Children.count(props.children);
-
-  const horizontalFill = gridProps.fillDirection === 'horizontal';
+export const createGridStyles = (numberOfItems: number, gridProps: GridProps): string => {
+  const isHorizontal = gridProps.fillDirection === 'horizontal';
   // Blocks are either rows or columns depending on whether we fill horizontally or vertically. Each block may differ in the number of cells.
-  const blocks = horizontalFill ? gridProps.rows : gridProps.columns;
-  const smallCellsPerBlock = Math.ceil(numberOfChildren / blocks);
-  const bigCellsPerBlock = Math.floor(numberOfChildren / blocks);
-  const totalCells = gridProps.rows * gridProps.columns;
-  const numBigCells = (totalCells - numberOfChildren) * bigCellsPerBlock;
-  const numSmallCells = numberOfChildren - numBigCells;
-  const blocksForBigCells = numBigCells / bigCellsPerBlock;
-  const blocksForSmallCells = blocks - blocksForBigCells;
+  const blocks = isHorizontal ? gridProps.rows : gridProps.columns;
+  const smallCellsPerBlock = Math.ceil(numberOfItems / blocks);
+  const bigCellsPerBlock = Math.floor(numberOfItems / blocks);
+  const numBigCells = (gridProps.rows * gridProps.columns - numberOfItems) * bigCellsPerBlock;
+  // Get grid units
+  // e.g. If some blocks have 2 big cells while others have 3 small cells, we need to work with 6 units per block
+  const units = smallCellsPerBlock * bigCellsPerBlock;
 
-  const smallCellsGridStyles = useMemo(
-    () =>
-      horizontalFill
-        ? {
-            gridRow: `auto / span ${blocksForSmallCells}`,
-            gridTemplateColumns: `repeat(${smallCellsPerBlock}, minmax(0, 1fr))`,
-            gridTemplateRows: `repeat(${blocksForSmallCells}, minmax(0, 1fr))`
-          }
-        : {
-            gridColumn: `auto / span ${blocksForSmallCells}`,
-            gridTemplateRows: `repeat(${smallCellsPerBlock}, minmax(0, 1fr))`,
-            gridTemplateColumns: `repeat(${blocksForSmallCells}, minmax(0, 1fr))`
-          },
-    [horizontalFill, blocksForSmallCells, smallCellsPerBlock]
-  );
+  const gridStyles = isHorizontal
+    ? {
+        gridTemplateColumns: `repeat(${units}, minmax(0, 1fr))`,
+        gridTemplateRows: `repeat(${blocks}, minmax(0, 1fr))`,
+        gridAutoFlow: 'row'
+      }
+    : {
+        gridTemplateColumns: `repeat(${blocks}, minmax(0, 1fr))`,
+        gridTemplateRows: `repeat(${units}, minmax(0, 1fr))`,
+        gridAutoFlow: 'column'
+      };
 
-  const bigCellsGridStyles = useMemo(
-    () =>
-      numBigCells > 0
-        ? horizontalFill
+  const smallCellStyle = isHorizontal
+    ? {
+        '> *': {
+          gridColumn: `auto / span ${units / smallCellsPerBlock}`
+        }
+      }
+    : {
+        '> *': {
+          gridRow: `auto / span ${units / smallCellsPerBlock}`
+        }
+      };
+
+  // If there are big cells, we are choosing to place the latest children into the big cells.
+  // That is why we use the '> *:nth-last-child(-n + ${numBigCells})' CSS selector below
+  const bigCellStyle = numBigCells
+    ? {
+        [`> *:nth-last-child(-n + ${numBigCells})`]: isHorizontal
           ? {
-              gridRow: `auto / span ${blocksForBigCells}`,
-              gridTemplateColumns: `repeat(${bigCellsPerBlock}, minmax(0, 1fr))`,
-              gridTemplateRows: `repeat(${blocksForBigCells}, minmax(0, 1fr))`
+              gridColumn: `auto / span ${units / bigCellsPerBlock}`
             }
           : {
-              gridColumn: `auto / span ${blocksForBigCells}`,
-              gridTemplateRows: `repeat(${bigCellsPerBlock}, minmax(0, 1fr))`,
-              gridTemplateColumns: `repeat(${blocksForBigCells}, minmax(0, 1fr))`
+              gridRow: `auto / span ${units / bigCellsPerBlock}`
             }
-        : {},
-    [numBigCells, horizontalFill, blocksForBigCells, bigCellsPerBlock]
-  );
+      }
+    : {};
 
-  const smallCellsGrid = (
-    <div className={mergeStyles(gridStyle, smallCellsGridStyles, { '> *': props.styles?.children })}>
-      {React.Children.toArray(props.children).slice(0, numSmallCells)}
-    </div>
-  );
-  const bigCellsGrid =
-    numBigCells > 0 ? (
-      <div className={mergeStyles(gridStyle, bigCellsGridStyles, { '> *': props.styles?.children })}>
-        {React.Children.toArray(props.children).slice(numSmallCells)}
-      </div>
-    ) : null;
-
-  const mainGridStyles = useMemo(
-    () =>
-      horizontalFill
-        ? { gridAutoFlow: 'column', gridTemplateRows: `repeat(${blocks}, minmax(0, 1fr))` }
-        : { gridAutoFlow: 'row', gridTemplateColumns: `repeat(${blocks}, minmax(0, 1fr))` },
-    [horizontalFill, blocks]
-  );
-
-  return (
-    <div className={mergeStyles(gridStyle, mainGridStyles, props.styles?.root)}>
-      {smallCellsGrid}
-      {bigCellsGrid}
-    </div>
-  );
+  return mergeStyles(gridStyles, smallCellStyle, bigCellStyle);
 };
