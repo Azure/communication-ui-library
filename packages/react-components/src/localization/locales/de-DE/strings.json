@@ -30,14 +30,14 @@
   "cameraButton": {
     "onLabel": "Deaktivieren",
     "offLabel": "Aktivieren",
-    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipDisabledContent": "Kamera ist deaktiviert",
     "tooltipOnContent": "Kamera ausschalten",
     "tooltipOffContent": "Kamera einschalten"
   },
   "microphoneButton": {
     "onLabel": "Stumm schalten",
     "offLabel": "Stummschaltung aufheben",
-    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipDisabledContent": "Mikrofon ist deaktiviert",
     "tooltipOnContent": "Mikrofon stummschalten",
     "tooltipOffContent": "Mikrofonstummschaltung aufheben"
   },
@@ -60,9 +60,9 @@
     "copyInviteLinkButtonLabel": "Einladungslink kopieren"
   },
   "screenShareButton": {
-    "onLabel": "Beenden",
+    "onLabel": "Nicht mehr teilen",
     "offLabel": "Teilen",
-    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipDisabledContent": "Bildschirmfreigabe ist deaktiviert",
     "tooltipOnContent": "Freigabe Ihres Bildschirms beenden",
     "tooltipOffContent": "Ihren Bildschirm freigeben"
   },
