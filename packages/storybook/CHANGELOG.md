@@ -4,10 +4,10 @@ This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.0.0-beta.9](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0-beta.9)
+## [1.0.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0)
 
 Mon, 06 Dec 2021 19:41:59 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.0-beta.8..@internal/storybook_v1.0.0-beta.9)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.0-beta.8..@internal/storybook_v1.0.0)
 
 ### Changes
 

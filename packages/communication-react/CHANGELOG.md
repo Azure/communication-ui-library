@@ -4,10 +4,10 @@ This log was last generated on Mon, 06 Dec 2021 19:41:54 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.0.0-beta.9](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.9)
+## [1.0.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0)
 
 Mon, 06 Dec 2021 19:41:54 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.5..@azure/communication-react_v1.0.0-beta.9)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.5..@azure/communication-react_v1.0.0)
 
 ### Changes
 
