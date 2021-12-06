@@ -1,8 +1,38 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.9](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.9)
+
+Mon, 06 Dec 2021 19:41:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.0.0-beta.8..@internal/react-components_v1.0.0-beta.9)
+
+### Changes
+
+- Reduce VideoGallery persona size ([PR #1129](https://github.com/azure/communication-ui-library/pull/1129) by 2684369+JamesBurnside@users.noreply.github.com)
+- VideoGallery has unique identifier for local video tile to dock. ([PR #1111](https://github.com/azure/communication-ui-library/pull/1111) by miguelgamis@microsoft.com)
+- Local video tile no longer draggable ([PR #1163](https://github.com/azure/communication-ui-library/pull/1163) by miguelgamis@microsoft.com)
+- Fix 'New Messages' not clearing when the user scrolls to the bottom of the message thread' ([PR #1115](https://github.com/azure/communication-ui-library/pull/1115) by 2684369+JamesBurnside@users.noreply.github.com)
+- Remove long press gesture on MessageThread messages ([PR #1118](https://github.com/azure/communication-ui-library/pull/1118) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update stop screen sharing label from stop to stop sharing ([PR #1164](https://github.com/azure/communication-ui-library/pull/1164) by 2684369+JamesBurnside@users.noreply.github.com)
+- Set pagesize to 50 to fix thread incomplete ([PR #1183](https://github.com/azure/communication-ui-library/pull/1183) by jinan@microsoft.com)
+- TDBuild - updating localized resource files. ([PR #1211](https://github.com/azure/communication-ui-library/pull/1211) by miguelgamis@microsoft.com)
+- Do not dismiss ParticipantsButtton and DevicesButton Callout on resize events ([PR #1138](https://github.com/azure/communication-ui-library/pull/1138) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Bugfix for vertically truncated participant names ([PR #1145](https://github.com/azure/communication-ui-library/pull/1145) by anjulgarg@live.com)
+- Dispose video when video tile gets unmounted ([PR #1198](https://github.com/azure/communication-ui-library/pull/1198) by jinan@microsoft.com)
+- Change name contains option to options ([PR #1173](https://github.com/azure/communication-ui-library/pull/1173) by jinan@microsoft.com)
+- Screenshare rerender fixed. ([PR #1175](https://github.com/azure/communication-ui-library/pull/1175) by miguelgamis@microsoft.com)
+- add tooltip string for disabled ControlBar buttons ([PR #1166](https://github.com/azure/communication-ui-library/pull/1166) by alcail@microsoft.com)
+- Add Scrollbar when editing message in chat ([PR #1158](https://github.com/azure/communication-ui-library/pull/1158) by anjulgarg@live.com)
+- Fixed gap betwen GridLayout and HorizontalGallery for Safari on IPhone SE. ([PR #1162](https://github.com/azure/communication-ui-library/pull/1162) by miguelgamis@microsoft.com)
+- Ensure typing indicator wraps correctly with long names ([PR #1123](https://github.com/azure/communication-ui-library/pull/1123) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update screenshare button background when active ([PR #1178](https://github.com/azure/communication-ui-library/pull/1178) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix text in system messages in the MessageThread to wrap when it is too long. ([PR #1120](https://github.com/azure/communication-ui-library/pull/1120) by 2684369+JamesBurnside@users.noreply.github.com)
+- TDBuild - updating localized resource files. ([PR #1197](https://github.com/azure/communication-ui-library/pull/1197) by miguelgamis@microsoft.com)
+- bugfix: Prevent participant remove flyout dismissal on resize events ([PR #1156](https://github.com/azure/communication-ui-library/pull/1156) by 82062616+prprabhu-ms@users.noreply.github.com)
+- GridLayoutProp styles prop type changed to GridLayoutStyles ([PR #1196](https://github.com/azure/communication-ui-library/pull/1196) by miguelgamis@microsoft.com)
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.8)
 

@@ -2,6 +2,35 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 19:41:59 GMT",
+      "tag": "@internal/calling-stateful-client_v1.0.0-beta.9",
+      "version": "1.0.0-beta.9",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/calling-stateful-client"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Remove spammy console log when rendering video",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f77f20518ca28186103c9778a2149c6b377cf01e",
+            "package": "@internal/calling-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Nov 2021 22:21:27 GMT",
       "tag": "@internal/calling-stateful-client_v1.0.0-beta.8",
       "version": "1.0.0-beta.8",

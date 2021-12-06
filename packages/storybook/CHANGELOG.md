@@ -1,8 +1,35 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.9](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0-beta.9)
+
+Mon, 06 Dec 2021 19:41:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.0-beta.8..@internal/storybook_v1.0.0-beta.9)
+
+### Changes
+
+- Remove references to beta-only API ([PR #1114](https://github.com/azure/communication-ui-library/pull/1114) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Change name contains option to options ([PR #1173](https://github.com/azure/communication-ui-library/pull/1173) by jinan@microsoft.com)
+- Fix ComplianceBanner auto-dismiss ([PR #1117](https://github.com/azure/communication-ui-library/pull/1117) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add beta banners to features in beta ([PR #1102](https://github.com/azure/communication-ui-library/pull/1102) by 2684369+JamesBurnside@users.noreply.github.com)
+- removing uservoice entry in feedback and updating Microsoft QA to Microsoft Q&A ([PR #1141](https://github.com/azure/communication-ui-library/pull/1141) by 79329532+alkwa-msft@users.noreply.github.com)
+- Adding info message to storybook about unsupported landscape mode ([PR #1109](https://github.com/azure/communication-ui-library/pull/1109) by anjulgarg@live.com)
+- Add google search verification meta tag ([PR #1179](https://github.com/azure/communication-ui-library/pull/1179) by anjulgarg@live.com)
+- removed ScreenSahreLayout story and added screen sharing option control to VideoGallery story ([PR #1099](https://github.com/azure/communication-ui-library/pull/1099) by alcail@microsoft.com)
+- simplifying storybook options ([PR #1157](https://github.com/azure/communication-ui-library/pull/1157) by 79329532+alkwa-msft@users.noreply.github.com)
+- removing canvas when no canvas available in storybook ([PR #1174](https://github.com/azure/communication-ui-library/pull/1174) by 79329532+alkwa-msft@users.noreply.github.com)
+- Ensure sample video autoplays ([PR #1177](https://github.com/azure/communication-ui-library/pull/1177) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add custom icon documentation to storybook ([PR #1171](https://github.com/azure/communication-ui-library/pull/1171) by anjulgarg@live.com)
+- Updated Theming docs page ([PR #1184](https://github.com/azure/communication-ui-library/pull/1184) by miguelgamis@microsoft.com)
+- Add storybook docs and a video about generating access token ([PR #1122](https://github.com/azure/communication-ui-library/pull/1122) by anjulgarg@live.com)
+- updated VideoGallery snapshot ([PR #1111](https://github.com/azure/communication-ui-library/pull/1111) by miguelgamis@microsoft.com)
+- Added available locales table in docs ([PR #1146](https://github.com/azure/communication-ui-library/pull/1146) by miguelgamis@microsoft.com)
+- Updated VideoGallery snapshot ([PR #1163](https://github.com/azure/communication-ui-library/pull/1163) by miguelgamis@microsoft.com)
+- Add display name limit in samples and document in storybook ([PR #1202](https://github.com/azure/communication-ui-library/pull/1202) by anjulgarg@live.com)
+- Bugfix for vertically truncated participant names ([PR #1145](https://github.com/azure/communication-ui-library/pull/1145) by anjulgarg@live.com)
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0-beta.8)
 

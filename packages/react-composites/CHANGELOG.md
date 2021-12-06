@@ -1,8 +1,28 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.9](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.9)
+
+Mon, 06 Dec 2021 19:41:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.0.0-beta.8..@internal/react-composites_v1.0.0-beta.9)
+
+### Changes
+
+- Fix typo in strings field ([PR #1210](https://github.com/azure/communication-ui-library/pull/1210) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Restricting typing indicator to the max width of sendbox ([PR #1191](https://github.com/azure/communication-ui-library/pull/1191) by anjulgarg@live.com)
+- Disable microphone toggle in lobby as it's not supported by headless SDK ([PR #1139](https://github.com/azure/communication-ui-library/pull/1139) by anjulgarg@live.com)
+- Immediately fetch initial chat data when creating azure communication chat adapter ([PR #1168](https://github.com/azure/communication-ui-library/pull/1168) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix ComplianceBanner auto-dismiss ([PR #1117](https://github.com/azure/communication-ui-library/pull/1117) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add localized tooltip to microphone button in lobby informing users that it is disabled. ([PR #1148](https://github.com/azure/communication-ui-library/pull/1148) by anjulgarg@live.com)
+- Remove beta-only public API ([PR #1114](https://github.com/azure/communication-ui-library/pull/1114) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Adding displayName restriction docs to API ([PR #1202](https://github.com/azure/communication-ui-library/pull/1202) by anjulgarg@live.com)
+- TDBuild - updating localized resource files. ([PR #1197](https://github.com/azure/communication-ui-library/pull/1197) by miguelgamis@microsoft.com)
+- Update composite automation snapshots ([PR #1158](https://github.com/azure/communication-ui-library/pull/1158) by anjulgarg@live.com)
+- Change name contains option to options ([PR #1173](https://github.com/azure/communication-ui-library/pull/1173) by jinan@microsoft.com)
+- Enable icons and locales in Meeting Composite ([PR #1132](https://github.com/azure/communication-ui-library/pull/1132) by allenhwang@microsoft.com)
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.0.0-beta.8)
 

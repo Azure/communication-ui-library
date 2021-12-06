@@ -2,6 +2,41 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 19:41:59 GMT",
+      "tag": "@internal/calling-component-bindings_v1.0.0-beta.9",
+      "version": "1.0.0-beta.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add name based ascending sorting to participants returned by participantListSelector",
+            "author": "anjulgarg@live.com",
+            "commit": "a5ef7d84168bb1373471539c868ed612804bc15f",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "hiding users in the lobby from acs clients",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "3c9838c6f830e8a53a4cbbcec05730e718bdc7ae",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/calling-component-bindings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Nov 2021 22:21:27 GMT",
       "tag": "@internal/calling-component-bindings_v1.0.0-beta.8",
       "version": "1.0.0-beta.8",

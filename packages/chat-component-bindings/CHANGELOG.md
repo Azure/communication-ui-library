@@ -1,8 +1,17 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0-beta.9](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.9)
+
+Mon, 06 Dec 2021 19:41:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.0.0-beta.8..@internal/chat-component-bindings_v1.0.0-beta.9)
+
+### Changes
+
+- Set pagesize to 50 to fix thread incomplete ([PR #1183](https://github.com/azure/communication-ui-library/pull/1183) by jinan@microsoft.com)
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.0.0-beta.8)
 

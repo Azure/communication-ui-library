@@ -2,6 +2,683 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 19:41:54 GMT",
+      "tag": "@azure/communication-react_v1.0.0-beta.9",
+      "version": "1.0.0-beta.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix typo in strings field",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "cd5058489810b02b9eaf66d742381cd4cf36dc66",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Restricting typing indicator to the max width of sendbox",
+            "author": "anjulgarg@live.com",
+            "commit": "d12a7471cfa82a0ea2e17f06387b89011032b767",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Disable microphone toggle in lobby as it's not supported by headless SDK",
+            "author": "anjulgarg@live.com",
+            "commit": "bce080cec67a15d87318c33745b3670aad70b6d9",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Immediately fetch initial chat data when creating azure communication chat adapter",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e28a5d6cd8536d0c6c3fffe29fbad9b8c3b93f59",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix ComplianceBanner auto-dismiss",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "1948817fad593f75a876ad437930619c733f4871",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add localized tooltip to microphone button in lobby informing users that it is disabled.",
+            "author": "anjulgarg@live.com",
+            "commit": "6eda95d6f1d23907eb81022eae7714ad9f1b36f8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove beta-only public API",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "79b7ebe1bff745ffbfa9fbc951d1f3d826611df6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Adding displayName restriction docs to API",
+            "author": "anjulgarg@live.com",
+            "commit": "e14dd19c1f1e64b27a9747fbc7f729593ab5d1e9",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "398439a4cca244e4c7e7830c27d2317d8277e686",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update composite automation snapshots",
+            "author": "anjulgarg@live.com",
+            "commit": "68cc3a4ffe0dff8f4052cc0b023416b277a09e41",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Change name contains option to options",
+            "author": "jinan@microsoft.com",
+            "commit": "9de1b92eb70adad86dbb0f0e9e1e29f1c0b25ffe",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Enable icons and locales in Meeting Composite",
+            "author": "allenhwang@microsoft.com",
+            "commit": "b8def0aca5af754f21f30007e8e8a6f948a06056",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove references to beta-only API",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "79b7ebe1bff745ffbfa9fbc951d1f3d826611df6",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Change name contains option to options",
+            "author": "jinan@microsoft.com",
+            "commit": "9de1b92eb70adad86dbb0f0e9e1e29f1c0b25ffe",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Fix ComplianceBanner auto-dismiss",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "1948817fad593f75a876ad437930619c733f4871",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add beta banners to features in beta",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6a9daaecc7a173dd21dec4e7d69f191b4f46d519",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "removing uservoice entry in feedback and updating Microsoft QA to Microsoft Q&A",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "7ad604cebfd4ad37e96372e5df42dfe8761e14dd",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Adding info message to storybook about unsupported landscape mode",
+            "author": "anjulgarg@live.com",
+            "commit": "bb58f5af9f4a1aa9215c8cc84c426629c15b5f0e",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add google search verification meta tag",
+            "author": "anjulgarg@live.com",
+            "commit": "77cd24e8dafc1da133fe168f5493dc1c65660eb1",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "removed ScreenSahreLayout story and added screen sharing option control to VideoGallery story",
+            "author": "alcail@microsoft.com",
+            "commit": "2583959374e70bbf8e9c438876c836018791286a",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "simplifying storybook options",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "559d1c4105b1047b6db26bb195c580705245ea46",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "removing canvas when no canvas available in storybook",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "5c3613316b9b0cc0e9909b9d2afa10fd5d9ccb3d",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Ensure sample video autoplays",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "e65da7b99d91acdf0852ab7e87d6c79a5b75e061",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add custom icon documentation to storybook",
+            "author": "anjulgarg@live.com",
+            "commit": "05b503c6c9a4fd8ead21b5a9a9f22fd59c70d1b7",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updated Theming docs page",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "437c87ab9f40264a6155dd9a5fa31481acbabb00",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add storybook docs and a video about generating access token",
+            "author": "anjulgarg@live.com",
+            "commit": "c0785eeb7925c1a9886ac3827c5b884fcaf70ceb",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "updated VideoGallery snapshot",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "ab3b77d94cd2e035b42467fedc01e83f64c4153e",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Added available locales table in docs",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "104d599a103b18e81d03d28aa54c35c6236ea527",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updated VideoGallery snapshot",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5ee45313ea23109c61bc32d8b6f4b37c0596e9a7",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add display name limit in samples and document in storybook",
+            "author": "anjulgarg@live.com",
+            "commit": "e14dd19c1f1e64b27a9747fbc7f729593ab5d1e9",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bugfix for vertically truncated participant names",
+            "author": "anjulgarg@live.com",
+            "commit": "babd3a24219721e46d0024cef48b51316a19a332",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Reduce VideoGallery persona size",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5367503c96b27aebee964ed8f94e02d7b90e41bc",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "VideoGallery has unique identifier for local video tile to dock.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "ab3b77d94cd2e035b42467fedc01e83f64c4153e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Local video tile no longer draggable",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5ee45313ea23109c61bc32d8b6f4b37c0596e9a7",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix 'New Messages' not clearing when the user scrolls to the bottom of the message thread'",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a22a873e79341d6290ed53d1307db28477732996",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Remove long press gesture on MessageThread messages",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "70492cd48b5bb130362070d7bb30c4ef9c8d72de",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update stop screen sharing label from stop to stop sharing",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "73924b0cb3d283136288ec6b3242c2633b624317",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Set pagesize to 50 to fix thread incomplete",
+            "author": "jinan@microsoft.com",
+            "commit": "8629d2352fe460d3a235cfb0ff16e9ca3df49e6b",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a4343a0e3000263a219f928b4b2850ec065fb4e2",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Do not dismiss ParticipantsButtton and DevicesButton Callout on resize events",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "31d9931f28599c5da675746678eb28be08d0f8bb",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bugfix for vertically truncated participant names",
+            "author": "anjulgarg@live.com",
+            "commit": "babd3a24219721e46d0024cef48b51316a19a332",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Dispose video when video tile gets unmounted",
+            "author": "jinan@microsoft.com",
+            "commit": "1ae1c38e98a624f764693fdfe85d33675a70d1b3",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Change name contains option to options",
+            "author": "jinan@microsoft.com",
+            "commit": "9de1b92eb70adad86dbb0f0e9e1e29f1c0b25ffe",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Screenshare rerender fixed.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "87fbc5009046b6c4030de775ce918fed44213fab",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "add tooltip string for disabled ControlBar buttons",
+            "author": "alcail@microsoft.com",
+            "commit": "152aba4fbc47e70693c0678a313814a9ea952d52",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add Scrollbar when editing message in chat",
+            "author": "anjulgarg@live.com",
+            "commit": "68cc3a4ffe0dff8f4052cc0b023416b277a09e41",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fixed gap betwen GridLayout and HorizontalGallery for Safari on IPhone SE.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "19f3701235451b486c13b68b797ad1182a7fb94f",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Ensure typing indicator wraps correctly with long names",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3326b0be98794385bd583434243c7b8682fcb951",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update screenshare button background when active",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "80ddf49fb8e8bc6024d2a625e7746b1383e63584",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix text in system messages in the MessageThread to wrap when it is too long.",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "aeed5f315c35d167cdcdd9c9050a5dd8d5fec9ec",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "398439a4cca244e4c7e7830c27d2317d8277e686",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "bugfix: Prevent participant remove flyout dismissal on resize events",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a8bd5d0b0eac55317c7a20695622c6fdba1f2ae8",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "GridLayoutProp styles prop type changed to GridLayoutStyles",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5049647fe2ef8db97e013a41219d7b500150d570",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "avoid rendering richtext/media messages until we can properly handle it",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "06c62baf3c0de9430b46551ce7d8cb5a30c53624",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Set pagesize to 50 to fix thread incomplete",
+            "author": "jinan@microsoft.com",
+            "commit": "8629d2352fe460d3a235cfb0ff16e9ca3df49e6b",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Remove spammy console log when rendering video",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "f77f20518ca28186103c9778a2149c6b377cf01e",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Add name based ascending sorting to participants returned by participantListSelector",
+            "author": "anjulgarg@live.com",
+            "commit": "a5ef7d84168bb1373471539c868ed612804bc15f",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "hiding users in the lobby from acs clients",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "3c9838c6f830e8a53a4cbbcec05730e718bdc7ae",
+            "package": "@internal/calling-component-bindings"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Ensure chat tests can run in isolation",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "59a106de3d82958cacf4108d30139bfd3828f907",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Esnure chat ui tests are run in order",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0ae0ac1a5b611f6336f8303bc8e5e48d25a04871",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Moved code",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "80ddf49fb8e8bc6024d2a625e7746b1383e63584",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5367503c96b27aebee964ed8f94e02d7b90e41bc",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "added aria-live prop to the video tile to help with narration.",
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "commit": "e1d980010da004404440ae2e6b8eafcb222856f1",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Screenshot failed UI tests when timeouts occur",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "84eadab3f1ee23fd955c2cdf7aaa4c6666a1b1c6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3326b0be98794385bd583434243c7b8682fcb951",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "console log errors on chat tests, improve custom data model test",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "9b7441ba47cbc2271919afc9707691e664182eac",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Try mitigate flakey tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6421c79cd069ed96a312f62c63cbf451d5750159",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "fix common label for mic and speakers in Call composite configuration page",
+            "author": "alcail@microsoft.com",
+            "commit": "533ed4ada9b89f825480ee0be5ab7bec98952332",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update use cases with latest features",
+            "author": "dademath@microsoft.com",
+            "commit": "7d0b2be5064d9ed50eaae785249c9adac24dbf12",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "set default composite display name in Storybook",
+            "author": "alcail@microsoft.com",
+            "commit": "d953f3ceda25088cdfb31fb528ae35db3f922c8d",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update jest snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "80ddf49fb8e8bc6024d2a625e7746b1383e63584",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update storybook snapshots",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5049647fe2ef8db97e013a41219d7b500150d570",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Update accessibility language to match  compliance",
+            "author": "dademath@microsoft.com",
+            "commit": "4c2a752f1038c1ba2490d907fbdbeda4ea63f903",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "d012df54372f7cefc3ff9a15fc9a4067e45e6e60",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Changed instances of CallingAdapter to CallAdapter",
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "commit": "dce537153849299ef522e6760c98766794396d86",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "fix truncation of TOC",
+            "author": "alcail@microsoft.com",
+            "commit": "9e481b37e1ab97d150aba69e6c1b64538845393f",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update Feedback story",
+            "author": "alcail@microsoft.com",
+            "commit": "d3971816bf418be9a1a272a38169509425dfaf15",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Moved the adapter page into the composites section",
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "commit": "1801d2f5942868ce5b9909a6e64393311a542f90",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update Composites and Components section in Storybook Overview page with more visuals",
+            "author": "alcail@microsoft.com",
+            "commit": "3b87fcdc591e761f2635c04a985dce81855c82ab",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Fixup story",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3326b0be98794385bd583434243c7b8682fcb951",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Updates to Quickstarts. Added Call Stateful Quickstart.",
+            "author": "dademath@microsoft.com",
+            "commit": "091d7395b438c429ccede69a747eb54f60271c65",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Enable linting for mdx files",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "069b22587093f899171555afacd1788756b715ee",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "update hidden controls in stories",
+            "author": "alcail@microsoft.com",
+            "commit": "2677655be352a53e1c657624c9b3d7f79d8b30a7",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "fix images, added generate token",
+            "author": "dademath@microsoft.com",
+            "commit": "1066ddf1456e0dfd9fb9443ab7f319521c148780",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Added preview-head.html to use css escape hatches.",
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "commit": "e652a1b464a5eeffe119cdad360d6031012565df",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "add GitHub and Npm links to Storybook header",
+            "author": "alcail@microsoft.com",
+            "commit": "7714a1cc6990ea445a981afaefc4ccedcb04a87f",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "fix security issue on incomplete string encoding",
+            "author": "alcail@microsoft.com",
+            "commit": "ec4767e5c3317c04984a7b8bfe10f95680c1add9",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Adjusted cdn in sample html, changed scripted type adjusted variable names to match static example",
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "commit": "412a1956f43fa51424ee318eeecdfc76b27a3ad0",
+            "package": "@internal/storybook"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "force aria-live as ariaLve in Spinner not working",
+            "author": "alcail@microsoft.com",
+            "commit": "d37c59f9fbdaf873471459b64b41d364ac7e4dfc",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix screenshare hover label color",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "d012df54372f7cefc3ff9a15fc9a4067e45e6e60",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "removed speaking indicator on RemoteScreenShare",
+            "author": "alcail@microsoft.com",
+            "commit": "1d335e08509ce358fd7b8082e027e809bbe53252",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Removed console log",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "2fffa71c6246e7c53100fb29eee188b20b372f57",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/chat-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/calling-stateful-client"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/calling-component-bindings"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Update unit test",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "48e23d31e16838ed393792badfa68a6839e9cea3",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Move function outside of this packlet",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3326b0be98794385bd583434243c7b8682fcb951",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Update unit test",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "23fa530e0ec2b738cf2fc04bd0c2b23dab444ba9",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/acs-ui-common"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Sep 2021 21:02:16 GMT",
       "tag": "@azure/communication-react_v1.0.0-beta.5",
       "version": "1.0.0-beta.5",

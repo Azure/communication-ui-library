@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix truncation of TOC",
-  "packageName": "@internal/storybook",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -2,6 +2,45 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 19:41:59 GMT",
+      "tag": "@internal/acs-ui-common_v1.0.0-beta.9",
+      "version": "1.0.0-beta.9",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Update unit test",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "48e23d31e16838ed393792badfa68a6839e9cea3",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Move function outside of this packlet",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3326b0be98794385bd583434243c7b8682fcb951",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Update unit test",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "23fa530e0ec2b738cf2fc04bd0c2b23dab444ba9",
+            "package": "@internal/acs-ui-common"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/acs-ui-common"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Nov 2021 22:21:27 GMT",
       "tag": "@internal/acs-ui-common_v1.0.0-beta.8",
       "version": "1.0.0-beta.8",

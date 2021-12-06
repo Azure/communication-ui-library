@@ -7,7 +7,12 @@ export const config: BeachballConfig = {
     customRenderers: {
       renderHeader,
       renderEntry
-    }
+    },
+    groups: [{
+      masterPackageName: '@azure/communication-react',
+      include: 'packages/*',
+      changelogPath: 'packages/communication-react'
+    }]
   },
   tag: "next",
   changehint: 'Run "rush changelog" to create required change files',
