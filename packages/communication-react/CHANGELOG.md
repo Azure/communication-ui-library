@@ -4,7 +4,7 @@ This log was last generated on Mon, 06 Dec 2021 19:41:54 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.0.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0)
+## [1.0.0](https://github.com/azure/communication-ui-library/tree/1.0.0)
 
 Mon, 06 Dec 2021 19:41:54 GMT
 
@@ -12,71 +12,48 @@ TODO: Release notes here.
 
 ### Changes since 1.0.0-beta.8
 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.8..@azure/communication-react_v1.0.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.8...1.0.0)
 
-  - Fix typo in strings field ([PR #1210](https://github.com/azure/communication-ui-library/pull/1210) by 82062616+prprabhu-ms@users.noreply.github.com)
-  - Restricting typing indicator to the max width of sendbox ([PR #1191](https://github.com/azure/communication-ui-library/pull/1191) by anjulgarg@live.com)
-  - Disable microphone toggle in lobby as it's not supported by headless SDK ([PR #1139](https://github.com/azure/communication-ui-library/pull/1139) by anjulgarg@live.com)
+### Changes
+
+  - Remove beta-only features for 1.0.0 release ([PR #1114](https://github.com/azure/communication-ui-library/pull/1114) by 82062616+prprabhu-ms@users.noreply.github.com)
   - Immediately fetch initial chat data when creating azure communication chat adapter ([PR #1168](https://github.com/azure/communication-ui-library/pull/1168) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fix ComplianceBanner auto-dismiss ([PR #1117](https://github.com/azure/communication-ui-library/pull/1117) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Disable microphone toggle in Teams lobby as it's not supported by headless SDK ([PR #1139](https://github.com/azure/communication-ui-library/pull/1139) by anjulgarg@live.com)
   - Add localized tooltip to microphone button in lobby informing users that it is disabled. ([PR #1148](https://github.com/azure/communication-ui-library/pull/1148) by anjulgarg@live.com)
-  - Remove beta-only public API ([PR #1114](https://github.com/azure/communication-ui-library/pull/1114) by 82062616+prprabhu-ms@users.noreply.github.com)
-  - Adding displayName restriction docs to API ([PR #1202](https://github.com/azure/communication-ui-library/pull/1202) by anjulgarg@live.com)
-  - TDBuild - updating localized resource files. ([PR #1197](https://github.com/azure/communication-ui-library/pull/1197) by miguelgamis@microsoft.com)
-  - Update composite automation snapshots ([PR #1158](https://github.com/azure/communication-ui-library/pull/1158) by anjulgarg@live.com)
-  - Change name contains option to options ([PR #1173](https://github.com/azure/communication-ui-library/pull/1173) by jinan@microsoft.com)
-  - Enable icons and locales in Meeting Composite ([PR #1132](https://github.com/azure/communication-ui-library/pull/1132) by allenhwang@microsoft.com)
-  - Remove references to beta-only API ([PR #1114](https://github.com/azure/communication-ui-library/pull/1114) by 82062616+prprabhu-ms@users.noreply.github.com)
-  - Change name contains option to options ([PR #1173](https://github.com/azure/communication-ui-library/pull/1173) by jinan@microsoft.com)
-  - Fix ComplianceBanner auto-dismiss ([PR #1117](https://github.com/azure/communication-ui-library/pull/1117) by 82062616+prprabhu-ms@users.noreply.github.com)
-  - Add beta banners to features in beta ([PR #1102](https://github.com/azure/communication-ui-library/pull/1102) by 2684369+JamesBurnside@users.noreply.github.com)
-  - removing uservoice entry in feedback and updating Microsoft QA to Microsoft Q&A ([PR #1141](https://github.com/azure/communication-ui-library/pull/1141) by 79329532+alkwa-msft@users.noreply.github.com)
-  - Adding info message to storybook about unsupported landscape mode ([PR #1109](https://github.com/azure/communication-ui-library/pull/1109) by anjulgarg@live.com)
-  - Add google search verification meta tag ([PR #1179](https://github.com/azure/communication-ui-library/pull/1179) by anjulgarg@live.com)
-  - removed ScreenSahreLayout story and added screen sharing option control to VideoGallery story ([PR #1099](https://github.com/azure/communication-ui-library/pull/1099) by alcail@microsoft.com)
-  - simplifying storybook options ([PR #1157](https://github.com/azure/communication-ui-library/pull/1157) by 79329532+alkwa-msft@users.noreply.github.com)
-  - removing canvas when no canvas available in storybook ([PR #1174](https://github.com/azure/communication-ui-library/pull/1174) by 79329532+alkwa-msft@users.noreply.github.com)
-  - Ensure sample video autoplays ([PR #1177](https://github.com/azure/communication-ui-library/pull/1177) by 82062616+prprabhu-ms@users.noreply.github.com)
-  - Add custom icon documentation to storybook ([PR #1171](https://github.com/azure/communication-ui-library/pull/1171) by anjulgarg@live.com)
-  - Updated Theming docs page ([PR #1184](https://github.com/azure/communication-ui-library/pull/1184) by miguelgamis@microsoft.com)
-  - Add storybook docs and a video about generating access token ([PR #1122](https://github.com/azure/communication-ui-library/pull/1122) by anjulgarg@live.com)
-  - updated VideoGallery snapshot ([PR #1111](https://github.com/azure/communication-ui-library/pull/1111) by miguelgamis@microsoft.com)
-  - Added available locales table in docs ([PR #1146](https://github.com/azure/communication-ui-library/pull/1146) by miguelgamis@microsoft.com)
-  - Updated VideoGallery snapshot ([PR #1163](https://github.com/azure/communication-ui-library/pull/1163) by miguelgamis@microsoft.com)
-  - Add display name limit in samples and document in storybook ([PR #1202](https://github.com/azure/communication-ui-library/pull/1202) by anjulgarg@live.com)
-  - Bugfix for vertically truncated participant names ([PR #1145](https://github.com/azure/communication-ui-library/pull/1145) by anjulgarg@live.com)
+  - Update localized resource files. ([PR #1197](https://github.com/azure/communication-ui-library/pull/1197) by miguelgamis@microsoft.com)
+  - Storybook doc improvements.
   - Reduce VideoGallery persona size ([PR #1129](https://github.com/azure/communication-ui-library/pull/1129) by 2684369+JamesBurnside@users.noreply.github.com)
-  - VideoGallery has unique identifier for local video tile to dock. ([PR #1111](https://github.com/azure/communication-ui-library/pull/1111) by miguelgamis@microsoft.com)
-  - Local video tile no longer draggable ([PR #1163](https://github.com/azure/communication-ui-library/pull/1163) by miguelgamis@microsoft.com)
-  - Fix 'New Messages' not clearing when the user scrolls to the bottom of the message thread' ([PR #1115](https://github.com/azure/communication-ui-library/pull/1115) by 2684369+JamesBurnside@users.noreply.github.com)
+  - No longer make Local video tile draggable when horizontal gallery is showing ([PR #1163](https://github.com/azure/communication-ui-library/pull/1163) by miguelgamis@microsoft.com)
   - Remove long press gesture on MessageThread messages ([PR #1118](https://github.com/azure/communication-ui-library/pull/1118) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Update stop screen sharing label from stop to stop sharing ([PR #1164](https://github.com/azure/communication-ui-library/pull/1164) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Set pagesize to 50 to fix thread incomplete ([PR #1183](https://github.com/azure/communication-ui-library/pull/1183) by jinan@microsoft.com)
-  - TDBuild - updating localized resource files. ([PR #1211](https://github.com/azure/communication-ui-library/pull/1211) by miguelgamis@microsoft.com)
-  - Do not dismiss ParticipantsButtton and DevicesButton Callout on resize events ([PR #1138](https://github.com/azure/communication-ui-library/pull/1138) by 82062616+prprabhu-ms@users.noreply.github.com)
-  - Bugfix for vertically truncated participant names ([PR #1145](https://github.com/azure/communication-ui-library/pull/1145) by anjulgarg@live.com)
-  - Dispose video when video tile gets unmounted ([PR #1198](https://github.com/azure/communication-ui-library/pull/1198) by jinan@microsoft.com)
-  - Change name contains option to options ([PR #1173](https://github.com/azure/communication-ui-library/pull/1173) by jinan@microsoft.com)
-  - Screenshare rerender fixed. ([PR #1175](https://github.com/azure/communication-ui-library/pull/1175) by miguelgamis@microsoft.com)
-  - add tooltip string for disabled ControlBar buttons ([PR #1166](https://github.com/azure/communication-ui-library/pull/1166) by alcail@microsoft.com)
+  - Add tooltip string for disabled ControlBar buttons ([PR #1166](https://github.com/azure/communication-ui-library/pull/1166) by alcail@microsoft.com)
   - Add Scrollbar when editing message in chat ([PR #1158](https://github.com/azure/communication-ui-library/pull/1158) by anjulgarg@live.com)
-  - Fixed gap betwen GridLayout and HorizontalGallery for Safari on IPhone SE. ([PR #1162](https://github.com/azure/communication-ui-library/pull/1162) by miguelgamis@microsoft.com)
-  - Ensure typing indicator wraps correctly with long names ([PR #1123](https://github.com/azure/communication-ui-library/pull/1123) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Update screenshare button background when active ([PR #1178](https://github.com/azure/communication-ui-library/pull/1178) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fix text in system messages in the MessageThread to wrap when it is too long. ([PR #1120](https://github.com/azure/communication-ui-library/pull/1120) by 2684369+JamesBurnside@users.noreply.github.com)
-  - TDBuild - updating localized resource files. ([PR #1197](https://github.com/azure/communication-ui-library/pull/1197) by miguelgamis@microsoft.com)
-  - bugfix: Prevent participant remove flyout dismissal on resize events ([PR #1156](https://github.com/azure/communication-ui-library/pull/1156) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - No longer render richtext/media messages until future support is added ([PR #1149](https://github.com/azure/communication-ui-library/pull/1149) by 79329532+alkwa-msft@users.noreply.github.com)
   - GridLayoutProp styles prop type changed to GridLayoutStyles ([PR #1196](https://github.com/azure/communication-ui-library/pull/1196) by miguelgamis@microsoft.com)
-  - avoid rendering richtext/media messages until we can properly handle it ([PR #1149](https://github.com/azure/communication-ui-library/pull/1149) by 79329532+alkwa-msft@users.noreply.github.com)
-  - Set pagesize to 50 to fix thread incomplete ([PR #1183](https://github.com/azure/communication-ui-library/pull/1183) by jinan@microsoft.com)
-  - Remove spammy console log when rendering video ([PR #1188](https://github.com/azure/communication-ui-library/pull/1188) by 82062616+prprabhu-ms@users.noreply.github.com)
-  - Add name based ascending sorting to participants returned by participantListSelector ([PR #1106](https://github.com/azure/communication-ui-library/pull/1106) by anjulgarg@live.com)
-  - hiding users in the lobby from acs clients ([PR #1112](https://github.com/azure/communication-ui-library/pull/1112) by 79329532+alkwa-msft@users.noreply.github.com)
+  - Sort to participants by name in participantListSelector ([PR #1106](https://github.com/azure/communication-ui-library/pull/1106) by anjulgarg@live.com)
+  - Hide users in a Teams lobby from the acs clients ([PR #1112](https://github.com/azure/communication-ui-library/pull/1112) by 79329532+alkwa-msft@users.noreply.github.com)
 
-## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.8)
+### Bug Fixes
+  - Fix typing indicator going outside of the max width of sendbox ([PR #1191](https://github.com/azure/communication-ui-library/pull/1191) by anjulgarg@live.com)
+  - Fix typo in complianceBannerTranscriptionStarted ([PR #1210](https://github.com/azure/communication-ui-library/pull/1210) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Fix ComplianceBanner auto-dismiss ([PR #1117](https://github.com/azure/communication-ui-library/pull/1117) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Fix option naming to options ([PR #1173](https://github.com/azure/communication-ui-library/pull/1173) by jinan@microsoft.com)
+  - Fix partially clipped text in `ParticipantItem` ([PR #1145](https://github.com/azure/communication-ui-library/pull/1145) by anjulgarg@live.com)
+  - Fix VideoGallery to have a unique identifier for local video tile to dock. ([PR #1111](https://github.com/azure/communication-ui-library/pull/1111) by miguelgamis@microsoft.com)
+  - Fix 'New Messages' not clearing when the user scrolls to the bottom of the message thread' ([PR #1115](https://github.com/azure/communication-ui-library/pull/1115) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix stop screen sharing label from stop to stop sharing ([PR #1164](https://github.com/azure/communication-ui-library/pull/1164) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix message thread not loading all messages by setting pagesize to 50 ([PR #1183](https://github.com/azure/communication-ui-library/pull/1183) by jinan@microsoft.com)
+  - Fix unwanted dismissal of ParticipantsButtton and DevicesButton Callout on resize events ([PR #1138](https://github.com/azure/communication-ui-library/pull/1138) by 82062616+prprabhu-ms@users.noreply.github.com)
+  - Fix Screenshare being rerender on page change. ([PR #1175](https://github.com/azure/communication-ui-library/pull/1175) by miguelgamis@microsoft.com)
+  - Fix gap betwen GridLayout and HorizontalGallery for Safari on IPhone SE. ([PR #1162](https://github.com/azure/communication-ui-library/pull/1162) by miguelgamis@microsoft.com)
+  - Fix typing indicator wrapping correctly for long names ([PR #1123](https://github.com/azure/communication-ui-library/pull/1123) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix text in system messages in the MessageThread to wrap when it is too long. ([PR #1120](https://github.com/azure/communication-ui-library/pull/1120) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix screenshare button background when active ([PR #1178](https://github.com/azure/communication-ui-library/pull/1178) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Remove console log when rendering video ([PR #1188](https://github.com/azure/communication-ui-library/pull/1188) by 82062616+prprabhu-ms@users.noreply.github.com)
+
+## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/1.0.0-beta.8)
 
 Wed, 17 Nov 2021 22:21:27 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.7..1.0.0-beta.8)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.7...1.0.0-beta.8)
 
 ### Changes
 
@@ -110,7 +87,7 @@ Wed, 17 Nov 2021 22:21:27 GMT
 ## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.7)
 
 Mon, 1 Nov 2021 12:57:14 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.6..1.0.0-beta.7)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.6...1.0.0-beta.7)
 
 ### Changes
 
@@ -142,7 +119,7 @@ Mon, 1 Nov 2021 12:57:14 GMT
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.6)
 
 Tue, 28 Sep 2021 19:19:18 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.5..1.0.0-beta.6)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.5...1.0.0-beta.6)
 
 ### Changes
 
@@ -159,10 +136,10 @@ Tue, 28 Sep 2021 19:19:18 GMT
 * Stop styling the `body` tag from `FluentThemeProvider` (styling leak to the host application)
 * Better themeing support in `ControlBar` component - support container border and shadow customization; support label font costumization
 
-## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.5)
+## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/1.0.0-beta.5)
 
 Mon, 13 Sep 2021 21:02:16 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.4..@azure/communication-react_v1.0.0-beta.5)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.4...1.0.0-beta.5)
 
 ### Changes
 
@@ -202,10 +179,10 @@ Mon, 13 Sep 2021 21:02:16 GMT
 * Fix Icon misalignment in ParticipantItem
 
 
-## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.4)
+## [1.0.0-beta.4](https://github.com/azure/communication-ui-library/tree/1.0.0-beta.4)
 
 Mon, 16 Aug 2021 21:18:19 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.3..@azure/communication-react_v1.0.0-beta.4)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.3...1.0.0-beta.4)
 
 ### Changes
 
@@ -255,10 +232,10 @@ Mon, 16 Aug 2021 21:18:19 GMT
   * Fix video gallery local preview position to be relative to the parent
   * Ensure call composite media gallery has a minimum height
 
-## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.3)
+## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/1.0.0-beta.3)
 
 Thu, 22 Jul 2021 17:42:41 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.2..@azure/communication-react_v1.0.0-beta.3)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.2...1.0.0-beta.3)
 
 ### Changes
 
@@ -297,10 +274,10 @@ Thu, 22 Jul 2021 17:42:41 GMT
 
 * Fixing link on "Using Composites in a non-react environment" in Storybook
 
-## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.2)
+## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.0.0-beta.2)
 
 Fri, 09 Jul 2021 20:41:33 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.0.0-beta.1..@azure/communication-react_v1.0.0-beta.2)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.1...1.0.0-beta.2)
 
 ### Changes
 
@@ -321,7 +298,7 @@ Fri, 09 Jul 2021 20:41:33 GMT
 * Adapters (What are adapters for and how you use them)
 * Using composites in a non-react environment
 
-## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.0.0-beta.1)
+## [1.0.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.0.0-beta.1)
 
 Fri, 21 May 2021 16:16:28 GMT
 
