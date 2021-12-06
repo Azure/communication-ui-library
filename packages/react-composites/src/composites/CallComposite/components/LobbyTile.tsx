@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack, Text } from '@fluentui/react';
 import { VideoGalleryStream, useTheme } from '@internal/react-components';
 import { moreDetailsStyle, overlayContainerStyle, titleStyle } from '../styles/LobbyTile.styles';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
@@ -49,13 +49,13 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
               {props.overlayProps.overlayIcon}
             </Stack.Item>
-            <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
+            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'polite'}>
               {props.overlayProps.title}
-            </Stack.Item>
+            </Text>
             {props.overlayProps.moreDetails && (
-              <Stack.Item className={mergeStyles(moreDetailsStyle(palette, isVideoReady))}>
+              <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))}>
                 {props.overlayProps.moreDetails}
-              </Stack.Item>
+              </Text>
             )}
           </Stack>
         ) : undefined
