@@ -36,9 +36,11 @@ import { useTheme } from '@internal/react-components';
 
 import { Chat20Filled } from '@fluentui/react-icons';
 import heroSVG from '../assets/hero.svg';
+import heroDarkModeSVG from '../assets/hero_dark.svg';
 import { getThreadId } from './utils/getThreadId';
 import { createThread } from './utils/createThread';
 import { ThemeSelector } from './theming/ThemeSelector';
+import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
 
 const imageStyleProps: IImageStyles = {
   image: {
@@ -60,7 +62,6 @@ const HOMESCREEN_SHOWING_LOADING_SPINNER_CREATE_THREAD = 2;
 export default (): JSX.Element => {
   const spinnerLabel = 'Creating a new chat thread...';
   const iconName = 'SkypeCircleCheck';
-  const imageProps = { src: heroSVG.toString() };
   const headerTitle = 'Exceptionally simple chat app';
   const startChatButtonText = 'Start chat';
   const listItems = [
@@ -71,6 +72,9 @@ export default (): JSX.Element => {
   ];
 
   const [homeScreenState, setHomeScreenState] = useState<number>(HOMESCREEN_SHOWING_START_CHAT_BUTTON);
+  const { currentTheme } = useSwitchableFluentTheme();
+
+  const imageProps = { src: currentTheme.name === 'Light' ? heroSVG.toString() : heroDarkModeSVG.toString() };
 
   const onCreateThread = async (): Promise<void> => {
     const exisitedThreadId = getThreadId();

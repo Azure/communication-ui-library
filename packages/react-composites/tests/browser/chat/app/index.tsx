@@ -5,7 +5,7 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { _IdentifierProvider } from '@internal/react-components';
+import { MessageProps, _IdentifierProvider } from '@internal/react-components';
 import {
   ChatAdapter,
   createAzureCommunicationChatAdapter,
@@ -15,6 +15,7 @@ import {
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { Stack } from '@fluentui/react';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -59,7 +60,15 @@ function App(): JSX.Element {
           adapter={chatAdapter}
           onRenderTypingIndicator={
             customDataModel
-              ? () => <text id="custom-data-model-typing-indicator">Someone is typing...</text>
+              ? (typingUsers) => (
+                  <Stack style={{ width: '100%' }}>
+                    <text id="custom-data-model-typing-indicator">
+                      {typingUsers.length > 0
+                        ? `${typingUsers.map((user) => user.displayName).join(',')} is typing...`.toUpperCase()
+                        : 'No one is currently typing.'}
+                    </text>
+                  </Stack>
+                )
               : undefined
           }
           onRenderMessage={
@@ -69,7 +78,7 @@ function App(): JSX.Element {
                     data-ui-status={messageProps.message.messageType === 'chat' ? messageProps.message.status : ''}
                     id="custom-data-model-message"
                   >
-                    Custom Message
+                    {getMessageContentInUppercase(messageProps)}
                   </text>
                 )
               : undefined
@@ -93,3 +102,27 @@ function App(): JSX.Element {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
+
+function getMessageContentInUppercase(messageProps: MessageProps): string {
+  const message = messageProps.message;
+  switch (message.messageType) {
+    case 'chat':
+    case 'custom':
+      return message.content.toUpperCase();
+    case 'system':
+      switch (message.systemMessageType) {
+        case 'content':
+          return message.content.toUpperCase();
+        case 'topicUpdated':
+          return message.topic.toUpperCase();
+        case 'participantAdded':
+          return `Participants Added: ${message.participants.map((p) => p.displayName).join(',')}`.toUpperCase();
+        case 'participantRemoved':
+          return `Participants Removed: ${message.participants.map((p) => p.displayName).join(',')}`.toUpperCase();
+        default:
+          return 'CUSTOM MESSAGE';
+      }
+    default:
+      'CUSTOM MESSAGE';
+  }
+}

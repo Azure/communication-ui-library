@@ -1,10 +1,15 @@
+import { Stack } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
 import ChatAppStateful from '!!raw-loader!./snippets/ChatAppStateful.snippet.tsx';
 import ChatAppStatefulComplete from '!!raw-loader!./snippets/ChatAppStatefulComplete.snippet.tsx';
 import ChatAppStatefulProviders from '!!raw-loader!./snippets/ChatAppStatefulProviders.snippet.tsx';
 import ChatComponentsStateful from '!!raw-loader!./snippets/ChatComponentsStateful.tsx';
 
-<Meta id="quickstarts-statefulchatclient" title="Stateful Client/Get Started (Chat) " />
+<Meta
+  id="quickstarts-statefulchatclient"
+  title="Stateful Client/Get Started (Chat)"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
 
 # Quickstart: Get started with Chat Stateful Client
 
@@ -30,6 +35,18 @@ You can find the completed code for this quickstart here: [Get started with Chat
 - Knowledge of [UI Library Components](./?path=/story/quickstarts-uicomponents--page). We will be using the UI Components in this quickstart.
 - Knowledge of Azure Communication Services [Chat patterns](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts).
   You will need to create a thread and a user to that thread to use the UI Library. Look at the [recommended architecture for the UI Library](./?path=/docs/usecases--page#recommended-architecture)
+
+## Generate Access Token
+
+For setting up adapters that power the composites, we need to generate an access token to allow the adapters to interact with the Azure Communication Services back-end.
+
+Access Tokens can be generated using this [Azure Portal quickstart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) inside your Azure Communication Services dashboard as shown below.
+
+<Stack style={{ width: '100%' }}>
+  <video style={{ width: '100%' }} src="videos/generate-access-token.mp4" autoPlay loop muted></video>
+</Stack>
+
+<br />
 
 ## Setting Up
 
@@ -145,7 +162,7 @@ npm run start
 
 ```
 
-![End state of stateful chat quickstart]("images/ChatEndState.png")
+![End state of stateful chat quickstart](images/ChatEndState.png)
 
 ## Troubleshooting
 

@@ -601,7 +601,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     disableJumpToNewMessageButton = false,
     showMessageDate = false,
     showMessageStatus = false,
-    numberOfChatMessagesToReload = 0,
+    numberOfChatMessagesToReload = 5,
     onMessageSeen,
     onRenderMessageStatus,
     onRenderAvatar,

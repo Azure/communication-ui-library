@@ -1,10 +1,15 @@
+import { Stack } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
 import CallAppStateful from '!!raw-loader!./snippets/CallAppStateful.snippet.tsx';
 import CallAppStatefulComplete from '!!raw-loader!./snippets/CallAppStatefulComplete.snippet.tsx';
 import CallAppStatefulProviders from '!!raw-loader!./snippets/CallAppStatefulProviders.snippet.tsx';
 import CallComponentsStateful from '!!raw-loader!./snippets/CallComponentsStateful.snippet.tsx';
 
-<Meta id="quickstarts-statefulcallclient" title="Stateful Client/Get Started (Call) " />
+<Meta
+  id="quickstarts-statefulcallclient"
+  title="Stateful Client/Get Started (Call)"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
 
 # Quickstart: Get started with Call Stateful Client
 
@@ -29,6 +34,18 @@ You can find the completed code for this quickstart here: [Get started with Call
 
 - Knowledge of [UI Library Components](./?path=/story/quickstarts-uicomponents--page). We will be using the UI Components in this quickstart.
 - Knowledge of Azure Communication Services [Call Concepts](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/about-call-types).
+
+## Generate Access Token
+
+For setting up adapters that power the composites, we need to generate an access token to allow the adapters to interact with the Azure Communication Services back-end.
+
+Access Tokens can be generated using this [Azure Portal quickstart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) inside your Azure Communication Services dashboard as shown below.
+
+<Stack style={{ width: '100%' }}>
+  <video style={{ width: '100%' }} src="videos/generate-access-token.mp4" autoPlay loop muted></video>
+</Stack>
+
+<br />
 
 ## Setting Up
 
@@ -151,7 +168,7 @@ npm run start
 
 ```
 
-![End state of stateful calling quickstart]("images/StatefulEnd.png")
+![End state of stateful calling quickstart](images/StatefulEnd.png)
 
 ## Troubleshooting
 

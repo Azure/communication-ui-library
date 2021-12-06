@@ -24,18 +24,9 @@ export const RemoteScreenShare = React.memo(
     isAvailable?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    isVideoStreamOn?: boolean; // TODO: Remove this once there is a correct callback to dispose of the screenshare stream
     renderElement?: HTMLElement;
   }) => {
-    const {
-      userId,
-      displayName,
-      isMuted,
-      renderElement,
-      isVideoStreamOn,
-      onCreateRemoteStreamView,
-      onDisposeRemoteStreamView
-    } = props;
+    const { userId, displayName, isMuted, renderElement, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
     const locale = useLocale();
 
     if (!renderElement) {
@@ -44,11 +35,10 @@ export const RemoteScreenShare = React.memo(
 
     useEffect(() => {
       return () => {
-        if (isVideoStreamOn) {
-          onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-        }
+        // TODO: Isolate disposing behaviors for screenShare and videoStream
+        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
       };
-    }, [onDisposeRemoteStreamView, userId, isVideoStreamOn]);
+    }, [onDisposeRemoteStreamView, userId]);
 
     const loadingMessage = displayName
       ? _formatString(locale.strings.videoGallery.screenShareLoadingMessage, {
@@ -70,7 +60,7 @@ export const RemoteScreenShare = React.memo(
 const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element => {
   return (
     <Stack verticalAlign="center" className={loadingStyle}>
-      <Spinner label={props.loadingMessage} size={SpinnerSize.xSmall} />
+      <Spinner label={props.loadingMessage} size={SpinnerSize.xSmall} aria-live={'assertive'} />
     </Stack>
   );
 };
