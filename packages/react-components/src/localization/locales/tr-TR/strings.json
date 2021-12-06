@@ -30,14 +30,14 @@
   "cameraButton": {
     "onLabel": "Kapat",
     "offLabel": "Aç",
-    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipDisabledContent": "Kamera devre dışı",
     "tooltipOnContent": "Kamerayı kapat",
     "tooltipOffContent": "Kamerayı aç"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",
     "offLabel": "Sesi aç",
-    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipDisabledContent": "Mikrofon devre dışı",
     "tooltipOnContent": "Mikrofonun sesini kapat",
     "tooltipOffContent": "Mikrofonun sesini aç"
   },
@@ -60,9 +60,9 @@
     "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala"
   },
   "screenShareButton": {
-    "onLabel": "Durdur",
+    "onLabel": "Paylaşımı durdur",
     "offLabel": "Paylaş",
-    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipDisabledContent": "Ekran paylaşımı devre dışı",
     "tooltipOnContent": "Ekranınızı paylaşmayı durdurma",
     "tooltipOffContent": "Ekranınızı paylaşın"
   },
