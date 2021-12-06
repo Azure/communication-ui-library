@@ -1,3 +1,4 @@
+import { ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import {
   createStatefulChatClient,
@@ -20,7 +21,7 @@ function App(): JSX.Element {
   const threadId = '<Get thread id from chat service>';
   const displayName = '<Display Name>';
 
-  //Instantiate the statefulChatClient
+  // Instantiate the statefulChatClient
   const statefulChatClient = createStatefulChatClient({
     userId: { communicationUserId: userId },
     displayName: displayName,
@@ -28,10 +29,13 @@ function App(): JSX.Element {
     credential: tokenCredential
   });
 
-  const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
-
-  //Listen to notifications
+  // Listen to notifications
   statefulChatClient.startRealtimeNotifications();
+
+  const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
+  // Fetch thread properties, participants etc.
+  // Past messages are fetched as needed when the user scrolls to them.
+  initializeThreadState(chatThreadClient);
 
   return (
     <FluentThemeProvider>
@@ -42,6 +46,13 @@ function App(): JSX.Element {
       </ChatClientProvider>
     </FluentThemeProvider>
   );
+}
+
+async function initializeThreadState(chatThreadClient: ChatThreadClient) {
+  await chatThreadClient.getProperties();
+  for await (const _page of chatThreadClient.listParticipants().byPage()) {
+    // Simply fetching participants updates the cached state in client.
+  }
 }
 
 export default App;
