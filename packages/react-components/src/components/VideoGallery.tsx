@@ -39,7 +39,6 @@ import {
   floatingLocalVideoModalStyle,
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   videoGalleryContainerStyle,
-  videoGalleryContainerTokens,
   videoGalleryOuterDivStyle
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
