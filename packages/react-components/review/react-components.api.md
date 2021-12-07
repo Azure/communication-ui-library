@@ -500,13 +500,9 @@ export interface MessageStatusIndicatorProps {
 
 // @public
 export interface MessageStatusIndicatorStrings {
-    deliveredAriaLabel?: string;
     deliveredTooltipText: string;
-    failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
-    seenAriaLabel?: string;
     seenTooltipText: string;
-    sendingAriaLabel?: string;
     sendingTooltipText: string;
 }
 

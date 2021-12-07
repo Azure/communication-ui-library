@@ -18,13 +18,9 @@
     "textTooLong": "Your message length is over the maximum limit."
   },
   "messageStatusIndicator": {
-    "deliveredAriaLabel": "Message sent",
     "deliveredTooltipText": "Sent",
-    "seenAriaLabel": "Message seen by others",
     "seenTooltipText": "Seen",
-    "sendingAriaLabel": "Message sending",
     "sendingTooltipText": "Sending",
-    "failedToSendAriaLabel": "Message failed to send",
     "failedToSendTooltipText": "Failed to send"
   },
   "endCallButton": {

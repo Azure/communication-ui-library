@@ -18,20 +18,12 @@ import {
  * @public
  */
 export interface MessageStatusIndicatorStrings {
-  /** Aria label to notify user when their message has been delivered. */
-  deliveredAriaLabel?: string;
   /** Text to display in the delivered message icon tooltip. */
   deliveredTooltipText: string;
-  /** Aria label to notify user when their message has been seen by others. */
-  seenAriaLabel?: string;
   /** Text to display in the seen message icon tooltip. */
   seenTooltipText: string;
-  /** Aria label to notify user when their message is being sent. */
-  sendingAriaLabel?: string;
   /** Text to display in the sending message icon tooltip. */
   sendingTooltipText: string;
-  /** Aria label to notify user when their message has failed to be sent. */
-  failedToSendAriaLabel?: string;
   /** Text to display in the failed message icon tooltip. */
   failedToSendTooltipText: string;
 }
@@ -78,7 +70,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         <TooltipHost content={strings.failedToSendTooltipText}>
           <Icon
             role="status"
-            aria-label={strings.failedToSendAriaLabel}
+            aria-label={strings.failedToSendTooltipText}
             iconName="MessageFailed"
             className={mergeStyles(
               MessageStatusIndicatorErrorIconStyle,
@@ -93,7 +85,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         <TooltipHost content={strings.sendingTooltipText}>
           <Icon
             role="status"
-            aria-label={strings.sendingAriaLabel}
+            aria-label={strings.sendingTooltipText}
             iconName="MessageSending"
             className={mergeStyles(
               MessageStatusIndicatorIconStyle,
@@ -108,7 +100,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         <TooltipHost content={strings.seenTooltipText}>
           <Icon
             role="status"
-            aria-label={strings.seenAriaLabel}
+            aria-label={strings.seenTooltipText}
             iconName="MessageSeen"
             className={mergeStyles({ color: theme.palette.themePrimary }, styles?.root)}
           />
@@ -119,7 +111,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         <TooltipHost content={strings.deliveredTooltipText}>
           <Icon
             role="status"
-            aria-label={strings.deliveredAriaLabel}
+            aria-label={strings.deliveredTooltipText}
             iconName="MessageDelivered"
             className={mergeStyles(
               MessageStatusIndicatorIconStyle,
