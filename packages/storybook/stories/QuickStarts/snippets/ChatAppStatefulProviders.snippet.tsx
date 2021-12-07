@@ -47,7 +47,7 @@ function App(): JSX.Element {
   );
 }
 
-async function initializeThreadState(chatThreadClient: ChatThreadClient) {
+async function initializeThreadState(chatThreadClient: ChatThreadClient): Promise<void> {
   await chatThreadClient.getProperties();
   for await (const _page of chatThreadClient.listParticipants().byPage()) {
     // Simply fetching participants updates the cached state in client.

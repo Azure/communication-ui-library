@@ -33,7 +33,7 @@ function App(): JSX.Element {
   return <>{chatThreadClient && <h1>Hooray! You set up chat client 🎉🎉🎉</h1>};</>;
 }
 
-async function initializeThreadState(chatThreadClient: ChatThreadClient) {
+async function initializeThreadState(chatThreadClient: ChatThreadClient): Promise<void> {
   await chatThreadClient.getProperties();
   for await (const _page of chatThreadClient.listParticipants().byPage()) {
     // Simply fetching participants updates the cached state in client.
