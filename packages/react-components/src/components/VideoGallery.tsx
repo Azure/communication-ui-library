@@ -346,18 +346,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {localVideoTile}
           </Modal>
         ))}
-      <Stack horizontal={false} styles={videoGalleryContainerStyle} tokens={videoGalleryContainerTokens}>
-        <LayerHost
-          id={layerHostId}
-          className={mergeStyles({
-            position: 'relative',
-            left: 0,
-            top: 0,
-            width: '100%',
-            height: '100%',
-            overflow: 'hidden'
-          })}
-        ></LayerHost>
+      <Stack horizontal={false} styles={videoGalleryContainerStyle}>
         {screenShareParticipant ? (
           remoteScreenShareComponent
         ) : localParticipant?.isScreenSharingOn ? (
@@ -381,6 +370,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             {horizontalGalleryTiles}
           </ResponsiveHorizontalGallery>
         )}
+
+        <LayerHost
+          id={layerHostId}
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden'
+          }}
+        />
       </Stack>
     </div>
   );

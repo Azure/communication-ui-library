@@ -27,13 +27,6 @@ export const videoGalleryContainerStyle: IStackStyles = {
 };
 
 /**
- * @private
- */
-export const videoGalleryContainerTokens = {
-  childrenGap: '0.5rem'
-};
-
-/**
  * Small floating modal width and height in rem for small screen
  */
 export const SMALL_FLOATING_MODAL_SIZE_REM = { width: 4, height: 5.5 };
