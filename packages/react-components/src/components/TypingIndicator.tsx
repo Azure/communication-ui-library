@@ -241,16 +241,16 @@ const getIndicatorString = (
   }
 
   if (numTypingUsers > 1 && numTypingUsersAbbreviated === 0) {
-    return strings.multipleUsers.replace('{user}', namesString);
+    return strings.multipleUsers.replace('{users}', namesString);
   }
 
   if (numTypingUsers > 1 && numTypingUsersAbbreviated === 1) {
-    return strings.multipleUsersAbbreviateOne.replace('{user}', namesString);
+    return strings.multipleUsersAbbreviateOne.replace('{users}', namesString);
   }
 
   if (numTypingUsers > 1 && numTypingUsersAbbreviated > 1) {
     return strings.multipleUsersAbbreviateMany
-      .replace('{user}', namesString)
+      .replace('{users}', namesString)
       .replace('{numOthers}', `${numTypingUsersAbbreviated}`);
   }
 
