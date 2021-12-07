@@ -20,7 +20,7 @@
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
     "deliveredTooltipText": "Sent",
-    "seenAriaLabel": "Message seen",
+    "seenAriaLabel": "Message seen by others",
     "seenTooltipText": "Seen",
     "sendingAriaLabel": "Message sending",
     "sendingTooltipText": "Sending",
