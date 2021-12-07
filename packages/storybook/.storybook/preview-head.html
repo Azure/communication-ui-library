@@ -12,17 +12,18 @@
         color: #000000;
     }
 
-    .ms-StackItem > .sbdocs.sbdocs-h1 {
-        margin-top: 0.5rem;
+    .ms-StackItem>.sbdocs.sbdocs-h1:first-of-type {
+        margin-top: 0.5rem !important;
     }
 
     .sbdocs.sbdocs-h1,
     [class*="sbdocs-title css-"],
-    .sbdocs.sbdocs-h1:first-of-type {
+    .sbdocs.sbdocs-h1:first-of-type,
+    .sbdocs.sbdocs-content>.sbdocs.sbdocs-title {
         color: #000000;
         font-size: 2.5rem;
         font-weight: 700;
-        margin: 4rem 0rem 2rem !important;
+        margin: 4rem 0rem 2rem !important; 
         letter-spacing: -0.03em;
     }
 
@@ -97,7 +98,7 @@
         border-radius: 0rem !important;
     }
 
-    .sbdocs.sbdocs-wrapper{
+    .sbdocs.sbdocs-wrapper {
         padding: 0rem 4rem;
     }
 
