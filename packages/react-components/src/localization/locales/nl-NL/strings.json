@@ -30,14 +30,14 @@
   "cameraButton": {
     "onLabel": "Uitschakelen",
     "offLabel": "Inschakelen",
-    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipDisabledContent": "Camera is uitgeschakeld",
     "tooltipOnContent": "Camera uitschakelen",
     "tooltipOffContent": "Camera inschakelen"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
     "offLabel": "Dempen opheffen",
-    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipDisabledContent": "Microfoon is uitgeschakeld",
     "tooltipOnContent": "Microfoon uitschakelen",
     "tooltipOffContent": "Microfoon inschakelen"
   },
@@ -60,9 +60,9 @@
     "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren"
   },
   "screenShareButton": {
-    "onLabel": "Stoppen",
+    "onLabel": "Delen stoppen",
     "offLabel": "Delen",
-    "tooltipDisabledContent": "Screen sharing is disabled",
+    "tooltipDisabledContent": "Scherm delen is uitgeschakeld",
     "tooltipOnContent": "Delen van uw scherm stoppen",
     "tooltipOffContent": "Uw scherm delen"
   },

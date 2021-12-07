@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control Bar 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-59 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-59"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -47,6 +47,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
+                aria-label="Turn on camera"
                 className="ms-Button ms-Button--default root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -102,6 +103,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
+                aria-label="Unmute microphone"
                 className="ms-Button ms-Button--default root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -157,6 +159,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
+                aria-label="Share your screen"
                 className="ms-Button ms-Button--default root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -209,6 +212,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
+                aria-label="Show Participants"
                 className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -274,6 +278,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
+                aria-label="Manage devices"
                 className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -336,6 +341,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
+                aria-label="Leave Call"
                 className="ms-Button ms-Button--default root-14"
                 data-is-focusable={true}
                 onClick={[Function]}

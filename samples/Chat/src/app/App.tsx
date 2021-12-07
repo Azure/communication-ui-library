@@ -18,6 +18,9 @@ console.info(`Build Date : ${getBuildTime()}`);
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
+const ERROR_PAGE_TITLE_ERROR = 'Oops! You are no longer a participant for the chat thread.';
+const ERROR_PAGE_TITLE_REMOVED = 'You have been removed from the chat.';
+
 const webAppTitle = document.title;
 
 export default (): JSX.Element => {
@@ -59,8 +62,12 @@ export default (): JSX.Element => {
               displayName={displayName}
               endpointUrl={endpointUrl}
               threadId={threadId}
-              endChatHandler={() => {
-                setPage('end');
+              endChatHandler={(isParticipantRemoved) => {
+                if (isParticipantRemoved) {
+                  setPage('removed');
+                } else {
+                  setPage('end');
+                }
               }}
               errorHandler={() => {
                 setPage('error');
@@ -76,7 +83,7 @@ export default (): JSX.Element => {
         return (
           <EndScreen
             rejoinHandler={() => {
-              setPage('configuration'); // use store information to attempt to rejoin the chat thread
+              setPage('chat'); // use stored information to attempt to rejoin the chat thread
             }}
             homeHandler={() => {
               window.location.href = window.location.origin;
@@ -86,10 +93,22 @@ export default (): JSX.Element => {
           />
         );
       }
+      case 'removed': {
+        document.title = `removed - ${webAppTitle}`;
+        return (
+          <ErrorScreen
+            title={ERROR_PAGE_TITLE_REMOVED}
+            homeHandler={() => {
+              window.location.href = window.location.origin;
+            }}
+          />
+        );
+      }
       case 'error': {
         document.title = `error - ${webAppTitle}`;
         return (
           <ErrorScreen
+            title={ERROR_PAGE_TITLE_ERROR}
             homeHandler={() => {
               window.location.href = window.location.origin;
             }}
