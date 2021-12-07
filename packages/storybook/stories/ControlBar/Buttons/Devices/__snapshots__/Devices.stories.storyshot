@@ -32,6 +32,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
           aria-controls={null}
           aria-expanded={false}
           aria-haspopup={true}
+          aria-label="Manage devices"
           className="ms-Button ms-Button--default ms-Button--hasMenu root-2"
           data-is-focusable={true}
           onClick={[Function]}
