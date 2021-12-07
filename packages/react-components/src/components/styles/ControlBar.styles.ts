@@ -26,7 +26,8 @@ export const controlBarStyles: IControlBarStyles = {
   },
   vertical: {
     flexFlow: 'column nowrap',
-    maxWidth: '3.5rem'
+    width: 'fit-content',
+    maxWidth: '8rem'
   },
   dockedTop: {
     flexFlow: 'row nowrap',
@@ -118,6 +119,8 @@ export const controlButtonStyles: IButtonStyles = {
     borderRadius: 0,
     minHeight: '3.5rem',
     minWidth: '3.5rem',
+    width: '100%',
+    maxWidth: '8rem',
     svg: {
       verticalAlign: 'text-top'
     }
@@ -132,7 +135,10 @@ export const controlButtonStyles: IButtonStyles = {
     lineHeight: '1rem',
     cursor: 'pointer',
     display: 'block',
-    margin: '0rem 0.25rem'
+    margin: '0rem 0.25rem',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   }
 };
 

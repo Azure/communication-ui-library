@@ -19,13 +19,13 @@ const TEXTFIELD_PLACEHOLDER = 'Enter a name';
 const TEXTFIELD_EMPTY_ERROR_MSG = 'Name cannot be empty';
 const TEXTFIELD_EXCEEDS_MAX_CHARS = `Name cannot exceed ${DISPLAY_NAME_MAX_CHARS} characters`;
 
+const hasValidLength = (name: string): boolean => {
+  return name.length <= DISPLAY_NAME_MAX_CHARS;
+};
+
 export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
   const { setName, setEmptyWarning, isEmpty, defaultName } = props;
-  const [isInvalidLength, setIsInvalidLength] = useState<ConstrainBoolean>(true);
-
-  const hasValidLength = (name: string): boolean => {
-    return name.length <= DISPLAY_NAME_MAX_CHARS;
-  };
+  const [isInvalidLength, setIsInvalidLength] = useState<boolean>(!hasValidLength(defaultName ?? ''));
 
   const onNameTextChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -37,6 +37,8 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
 
     if (!hasValidLength(newValue)) {
       setIsInvalidLength(true);
+      // The button below DisplayNameField is being disabled if name is empty.
+      // To ensure that the Join Call button is disabled when the name is too long, we have to clear it from the state.
       setName('');
       return;
     } else {
