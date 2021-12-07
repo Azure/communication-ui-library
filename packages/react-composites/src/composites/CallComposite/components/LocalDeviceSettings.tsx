@@ -93,34 +93,43 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
 
   return (
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
-      <Dropdown
-        data-ui-id="call-composite-local-camera-settings"
-        label={cameraLabel}
-        placeholder={defaultPlaceHolder}
-        options={
-          props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]
-        }
-        styles={dropDownStyles(theme)}
-        disabled={!props.cameraPermissionGranted}
-        errorMessage={
-          props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
-            ? undefined
-            : locale.strings.call.cameraPermissionDenied
-        }
-        defaultSelectedKey={
-          props.cameraPermissionGranted
-            ? props.selectedCamera
-              ? props.selectedCamera.id
-              : props.cameras
-              ? props.cameras[0]?.id
-              : ''
-            : 'deniedOrUnknown'
-        }
-        onChange={(event, option, index) => {
-          props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
-        }}
-        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
-      />
+      <Stack>
+        <Label
+          id={'call-composite-local-camera-settings-label'}
+          className={mergeStyles(dropDownStyles(theme).label)}
+          disabled={!props.cameraPermissionGranted} // follows dropdown disabled state
+        >
+          {cameraLabel}
+        </Label>
+        <Dropdown
+          data-ui-id="call-composite-local-camera-settings"
+          aria-labelledby={'call-composite-local-camera-settings-label'}
+          placeholder={defaultPlaceHolder}
+          options={
+            props.cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]
+          }
+          styles={dropDownStyles(theme)}
+          disabled={!props.cameraPermissionGranted}
+          errorMessage={
+            props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
+              ? undefined
+              : locale.strings.call.cameraPermissionDenied
+          }
+          defaultSelectedKey={
+            props.cameraPermissionGranted
+              ? props.selectedCamera
+                ? props.selectedCamera.id
+                : props.cameras
+                ? props.cameras[0]?.id
+                : ''
+              : 'deniedOrUnknown'
+          }
+          onChange={(event, option, index) => {
+            props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
+          }}
+          onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
+        />
+      </Stack>
       <Stack>
         <Label
           id={'call-composite-local-sound-settings-label'}
