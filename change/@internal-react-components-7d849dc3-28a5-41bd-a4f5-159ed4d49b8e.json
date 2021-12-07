@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Vertical ControlBar width set to fit-content. Maximum width of ControlBar and ControlBarButton to 8rem. Truncating long ControlBarButton labels.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
