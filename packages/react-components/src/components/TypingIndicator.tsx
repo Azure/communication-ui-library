@@ -164,6 +164,23 @@ const getUsersElement = (
 };
 
 /**
+ * Helper function to get a string of all typing users
+ * @param typingUsers typing users
+ * @param delimiter string to separate typing users
+ * @returns string of all typing users
+ */
+const getNamesString = (typingUsers: CommunicationParticipant[], delimiter: string): string => {
+  const userNames: string[] = [];
+
+  typingUsers.forEach((user) => {
+    if (user.displayName) {
+      userNames.push(user.displayName);
+    }
+  });
+  return userNames.join(delimiter);
+};
+
+/**
  * Helper function to create span elements making up the typing indicator string
  * @param strings TypingIndicatorStrings containing strings to create span elements
  * @param usersElement JSX.Element containing all typing users
@@ -203,6 +220,41 @@ const getSpanElements = (
   }
 
   return formatInlineElements(typingString, variables);
+};
+
+/**
+ * Helper function to get the string making up the typing indicator string
+ * @param strings TypingIndicatorStrings containing strings to create span elements
+ * @param namesString string of all typing users
+ * @param numTypingUsers number of total typing users
+ * @param numUserNotMentioned number of typing users abbreviated
+ * @returns typing indicator string
+ */
+const getIndicatorString = (
+  strings: TypingIndicatorStrings,
+  namesString: string,
+  numTypingUsers: number,
+  numTypingUsersAbbreviated: number
+): string | undefined => {
+  if (numTypingUsers === 1) {
+    return strings.singleUser.replace('{user}', namesString);
+  }
+
+  if (numTypingUsers > 1 && numTypingUsersAbbreviated === 0) {
+    return strings.multipleUsers.replace('{user}', namesString);
+  }
+
+  if (numTypingUsers > 1 && numTypingUsersAbbreviated === 1) {
+    return strings.multipleUsersAbbreviateOne.replace('{user}', namesString);
+  }
+
+  if (numTypingUsers > 1 && numTypingUsersAbbreviated > 1) {
+    return strings.multipleUsersAbbreviateMany
+      .replace('{user}', namesString)
+      .replace('{numOthers}', `${numTypingUsersAbbreviated}`);
+  }
+
+  return undefined;
 };
 
 const IndicatorComponent = (
@@ -252,11 +304,20 @@ const IndicatorComponent = (
     numUserNotMentioned
   );
 
+  const labelString = getIndicatorString(
+    strings,
+    getNamesString(typingUsersMentioned, strings.delimiter),
+    typingUsersMentioned.length,
+    numUserNotMentioned
+  );
+
   return (
     <div
       data-ui-id={ids.typingIndicator}
       className={mergeStyles(typingIndicatorStringStyle, styles?.typingString)}
       key="typingStringKey"
+      role="status"
+      aria-label={labelString}
     >
       {spanElements}
     </div>
