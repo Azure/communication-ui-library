@@ -28,7 +28,8 @@ export const config: BeachballConfig = {
       include: "packages/*",
       disallowedChangeTypes: [
         "major",
-        "prerelease"
+        "minor",
+        "patch"
       ]
     }
   ]
