@@ -1,7 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, mergeStyles, Modal, Stack } from '@fluentui/react';
+import {
+  concatStyleSets,
+  ContextualMenu,
+  IDragOptions,
+  IStyle,
+  LayerHost,
+  mergeStyles,
+  Modal,
+  Stack
+} from '@fluentui/react';
 import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
@@ -38,6 +47,7 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { v4 as uuidv4 } from 'uuid';
+import { useId } from '@uifabric/react-hooks';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -313,6 +323,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [containerRef]);
 
   const horizontalGalleryPresent = horizontalGalleryTiles && horizontalGalleryTiles.length > 0;
+  const layerHostId = useId('layerhost');
 
   return (
     <div
@@ -330,12 +341,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             isModeless={true}
             dragOptions={DRAG_OPTIONS}
             styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-            layerProps={{ hostId: containerRef.current?.id }}
+            layerProps={{ hostId: layerHostId }}
           >
             {localVideoTile}
           </Modal>
         ))}
       <Stack horizontal={false} styles={videoGalleryContainerStyle} tokens={videoGalleryContainerTokens}>
+        <LayerHost
+          id={layerHostId}
+          className={mergeStyles({
+            position: 'relative',
+            left: 0,
+            top: 0,
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden'
+          })}
+        ></LayerHost>
         {screenShareParticipant ? (
           remoteScreenShareComponent
         ) : localParticipant?.isScreenSharingOn ? (
