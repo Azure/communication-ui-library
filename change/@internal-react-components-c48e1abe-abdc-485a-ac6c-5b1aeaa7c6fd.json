@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add strings to APIs",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}
