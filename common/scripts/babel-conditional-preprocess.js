@@ -4,45 +4,34 @@ const helper = require('@babel/helper-plugin-utils');
 const t = require('@babel/types');
 exports.default = helper.declare((_api, opts) => {
   const {
-    identifiers
+    annotations
   } = opts;
 
-  function Handle(path, state) {
+  function Handle(path) {
     let { node } = path;
+    let removed = false;
 
-    for (const identifier of identifiers) {
+    for (const annotation of annotations) {
       const {
-        start,
-        end
-      } = identifier;
+        match
+      } = annotation;
 
       if (node.leadingComments && node.leadingComments.length > 0) {
         for (const comment of node.leadingComments) {
-          if (new RegExp(start).test(comment.value)) {
-            state.removed = true;
+          if (comment.value.includes(match)) {
+            removed = true;
           }
-          if(state.removed) {
+          if(removed) {
             comment.ignore = true;
           }
         }
       }
 
-      if (state.removed) {
+      if (removed) {
         if (path?.container?.type === 'JSXExpressionContainer') {
           path.parentPath.remove();
         } else {
           path.remove();
-        }
-      }
-
-      if (node.trailingComments && node.trailingComments.length > 0) {
-        for (const comment of node.trailingComments) {
-          if(state.removed) {
-            comment.ignore = true;
-          }
-          if (new RegExp(end).test(comment.value)) {
-            state.removed = false;
-          }
         }
       }
     }
@@ -51,44 +40,40 @@ exports.default = helper.declare((_api, opts) => {
   return {
     name: 'babel-conditional-preprocess',
     visitor: {
-      ObjectProperty(path, state) {
-        Handle(path, state);
+      ObjectProperty(path) {
+        Handle(path);
       },
 
-      FunctionDeclaration(path, state) {
-        Handle(path, state);
+      FunctionDeclaration(path) {
+        Handle(path);
       },
 
-      Statement(path, state) {
-        Handle(path, state);
+      Statement(path) {
+        Handle(path);
       },
 
-      VariableDeclaration(path, state) {
-        Handle(path, state);
+      VariableDeclaration(path) {
+        Handle(path);
       },
 
-      ImportDeclaration(path, state) {
-        Handle(path, state);
+      ImportDeclaration(path) {
+        Handle(path);
       },
 
-      ExportNamedDeclaration(path, state) {
-        Handle(path, state);
+      ExportNamedDeclaration(path) {
+        Handle(path);
       },
 
-      ExportAllDeclaration(path, state) {
-        Handle(path, state);
+      ExportAllDeclaration(path) {
+        Handle(path);
       },
 
-      TSPropertySignature(path, state) {
-        Handle(path, state);
+      TSPropertySignature(path) {
+        Handle(path);
       },
 
-      // JSXExpression(path, state) {
-      //   Handle(path, state);
-      // },
-
-      Expression(path, state) {
-        Handle(path, state);
+      Expression(path) {
+        Handle(path);
       }
     }
   };

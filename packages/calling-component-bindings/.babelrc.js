@@ -2,7 +2,7 @@ const plugins = [];
 process.env['FLAVOR'] === 'public' &&
   plugins.push([
     '../../common/scripts/babel-conditional-preprocess',
-    { identifiers: [{ start: 'beta:start', end: 'beta:end' }] }
+    { annotations: [{ match: '@conditional-compile(beta)' }] }
   ]);
 
 plugins.push([

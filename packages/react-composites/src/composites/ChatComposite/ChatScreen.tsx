@@ -32,9 +32,8 @@ import {
   participantListContainerPadding
 } from './styles/Chat.styles';
 
-/* beta:start */
+/* @conditional-compile(beta) */
 import { ParticipantContainer } from './ParticipantContainer';
-/* beta:end */
 
 /**
  * @private
@@ -121,14 +120,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           </Stack.Item>
         </Stack>
         {
-          /* beta:start */
+          /* @conditional-compile(beta) */
           options?.participantPane === true && (
             <ParticipantContainer
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
             />
           )
-          /* beta:end */
         }
       </Stack>
     </Stack>
