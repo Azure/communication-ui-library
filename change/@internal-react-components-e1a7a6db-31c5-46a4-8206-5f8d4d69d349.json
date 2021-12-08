@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fix missing status notifications for system messages, typing indicator and message status in Chat",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
