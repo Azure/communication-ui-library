@@ -66,6 +66,8 @@ function Handle(path, annotations) {
       for (const comment of node.leadingComments) {
         if (comment.value.includes(match)) {
           removed = true;
+        }
+        if (removed) {
           comment.ignore = true;
         }
       }
