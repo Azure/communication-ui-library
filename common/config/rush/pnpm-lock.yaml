@@ -2781,7 +2781,7 @@ packages:
       integrity: sha512-s/XZwVKwVzU02Nl1kCQ+Qq2q9u0uLhd7cGDh2amFgWklUGaIgu+/01gLOk95OVCNfs21cA7XZpnJxdNy0ZeEqQ==
   /@fluentui/date-time-utilities/8.2.2:
     dependencies:
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/set-version': 8.1.5
       tslib: 2.3.1
     dev: false
     resolution:
@@ -2793,16 +2793,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-XqPS7l3YoMwxdNlaYF6S2Mp0K3FmVIOIy2K3YkMc+eRxu9wFK6emr2Q/3rBhtG5u/On37NExRT7/5CTLnoi9gw==
-  /@fluentui/dom-utilities/2.1.4:
+  /@fluentui/dom-utilities/2.1.5:
     dependencies:
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/set-version': 8.1.5
       tslib: 2.3.1
     dev: false
     resolution:
-      integrity: sha512-+gsAnEjgoKB37o+tsMdSLtgqZ9z2PzpvnHx/2IqhRWjQQd7Xc7MbQsbZaQ5qfkioFHLnWGc/+WORpqKPy/sWrg==
+      integrity: sha512-OLDYV5ZGIiK/JXx/DFFib4vSa7PELvznbdAujDcX2wjt3V3Lt2N5ucv59JsVxk5LlwXjasUHJI2NZadagmnM6A==
   /@fluentui/font-icons-mdl2/8.1.8_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
       tslib: 2.3.1
     dev: false
@@ -2813,10 +2813,10 @@ packages:
       integrity: sha512-kZkCHM/mP8WWLLExz3x3wK5yQHPP4tAcvlHVqe69TbG8+3fxRGJSMOxzZO/04CFQp2A7/wOskSRtqeIBtaXJfw==
   /@fluentui/foundation-legacy/8.1.8_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/merge-styles': 8.1.4
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
+      '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
       react: 16.14.0
       tslib: 2.3.1
@@ -2834,11 +2834,18 @@ packages:
       integrity: sha512-pVY2m3IC5+LLmMzsaPApX9eKTzpOzdgQwrR3FNTE6mGx3N/+QWYM7fdF+T1ldZQt87dCRSeQnmAo5kqjtxeA/w==
   /@fluentui/merge-styles/8.1.4:
     dependencies:
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/set-version': 8.1.5
       tslib: 2.3.1
     dev: false
     resolution:
       integrity: sha512-zCAEjZyALk0CGW1H9YNJU+e/MW0P5sFJfrDvac27K4S/dIQvKnOwMUNOWRkNz3yUEt0R9vo0NtiO3cW04cZq3A==
+  /@fluentui/merge-styles/8.2.2:
+    dependencies:
+      '@fluentui/set-version': 8.1.5
+      tslib: 2.3.1
+    dev: false
+    resolution:
+      integrity: sha512-sZNwhGyceLBnV/lZyXVJEyEITU97pmNdVvziEcWl6uiWQ6AfNT3NoEw/JQCOIjofP5EL6FFv6lCOo8mktvR1hg==
   /@fluentui/react-bindings/0.57.0_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@babel/runtime': 7.15.3
@@ -2903,10 +2910,10 @@ packages:
   /@fluentui/react-focus/8.1.10_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/keyboard-key': 0.3.4
-      '@fluentui/merge-styles': 8.1.4
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
+      '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
       react: 16.14.0
       tslib: 2.3.1
@@ -2916,11 +2923,11 @@ packages:
       react: '>=16.8.0 <18.0.0'
     resolution:
       integrity: sha512-sojXA6epu2QJbFf+XqP1AHOrrWssoQJWJNuzp0MCzQOWCUlLLqRpRUHtUKZzCnrbD9G5MOW8/192m/rSPyM7eA==
-  /@fluentui/react-hooks/8.2.6_796713c4bb4631ac40b03d54b6277837:
+  /@fluentui/react-hooks/8.3.7_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/react-window-provider': 2.1.4_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/set-version': 8.1.4
-      '@fluentui/utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/react-window-provider': 2.1.5_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/set-version': 8.1.5
+      '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
       react: 16.14.0
       tslib: 2.3.1
@@ -2929,7 +2936,7 @@ packages:
       '@types/react': '>=16.8.0 <18.0.0'
       react: '>=16.8.0 <18.0.0'
     resolution:
-      integrity: sha512-nz0iycSUmGX6eBKsmW23ocmKn/HdV7c8HnMHx5fcGIQbOqOH8Hv4wq8t3RozsZBapIi/nDjpZs2UvB4zDFsg1g==
+      integrity: sha512-dZWuonNc10+r3AsWman+V0cmhV7BVTHx3Mh/lkXfcYJaspnylovTkguQafoKoXhH3BglQQ3llspwu0VM1gJCCg==
   /@fluentui/react-icons-northstar/0.57.0_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@babel/runtime': 7.15.3
@@ -3043,9 +3050,9 @@ packages:
       react-dom: '>=16.8.0 <17.0.0'
     resolution:
       integrity: sha512-fGSgL3Vp/+6t1Ysfz21FWZmqsU+iFVxOigvHnm5uKVyyRPwtaabv/F6kQ2y5isLMI2YmJaUd2i0cDJKu8ggrvw==
-  /@fluentui/react-window-provider/2.1.4_796713c4bb4631ac40b03d54b6277837:
+  /@fluentui/react-window-provider/2.1.5_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/set-version': 8.1.5
       '@types/react': 16.14.13
       react: 16.14.0
       tslib: 2.3.1
@@ -3054,7 +3061,7 @@ packages:
       '@types/react': '>=16.8.0 <18.0.0'
       react: '>=16.8.0 <18.0.0'
     resolution:
-      integrity: sha512-RztmJ7ol2eMDr3NCs2OcAA1cQjZdPPUEa4aurgh4Aq+JM/BiY0aK6S4SeFtVD7F8Q7PBOz/xwOG4HlnSMQtlsg==
+      integrity: sha512-jJduYVHpHNpHuPO/s8wYGmBDLRepgzEiK/206M4JIeY/b+l6YADyUqSBVxT5PENGiyziaz8/bRo8gqVZCyexJg==
   /@fluentui/react/8.17.4_c2a703770fc22cd5845ac34fc7d0fe24:
     dependencies:
       '@fluentui/date-time-utilities': 8.2.2
@@ -3062,12 +3069,12 @@ packages:
       '@fluentui/foundation-legacy': 8.1.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/merge-styles': 8.1.4
       '@fluentui/react-focus': 8.1.10_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/react-hooks': 8.2.6_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/react-window-provider': 2.1.4_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/react-hooks': 8.3.7_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/react-window-provider': 2.1.5_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
       '@fluentui/theme': 2.2.1_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@microsoft/load-themed-styles': 1.10.202
       '@types/react': 16.14.13
       '@types/react-dom': 16.9.14
@@ -3084,7 +3091,7 @@ packages:
       integrity: sha512-9H9kNL8p/hpVIXk0SPh7ExhX00HuBofbbeU6rnBqWbKfOdbV+iQ8INsvZWAE1JcWoaxP3iscZcM3N0ViH218HA==
   /@fluentui/scheme-utilities/8.1.6_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/set-version': 8.1.5
       '@fluentui/theme': 2.2.1_796713c4bb4631ac40b03d54b6277837
       tslib: 2.3.1
     dev: false
@@ -3093,12 +3100,12 @@ packages:
       react: '*'
     resolution:
       integrity: sha512-/i+6Edwu+l/WTP+tBlibqRCpds6DMSVuQzvW55GSDK3/Wkhch+Mt2S9CZLBsfiODBUAYzVy2vwo2mxJeGVhPkQ==
-  /@fluentui/set-version/8.1.4:
+  /@fluentui/set-version/8.1.5:
     dependencies:
       tslib: 2.3.1
     dev: false
     resolution:
-      integrity: sha512-2otMyJ+s+W+hjBD4BKjwYKKinJUDeIKYKz93qKrrJS0i3fKfftNroy9dHFlIblZ7n747L334plLi3bzQO1bnvA==
+      integrity: sha512-AfaycaduWd/aErqEmrAUWpr2gpZrkaSe6D9noXhtVH3JlreRuFM78Ji1oE4f8cpWxSA/K5qb7BT6x4z4I2Bs+A==
   /@fluentui/state/0.57.0:
     dependencies:
       '@babel/runtime': 7.15.3
@@ -3107,10 +3114,10 @@ packages:
       integrity: sha512-9WNGHMweJgx588HNO68sMdcH1lVFU3eXnc34OygDsHh/k3ctCMFaJk+KCTZRqBl60bUE3zcbFoP54BtQFuS5gg==
   /@fluentui/style-utilities/8.2.2_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/merge-styles': 8.1.4
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
+      '@fluentui/set-version': 8.1.5
       '@fluentui/theme': 2.2.1_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@microsoft/load-themed-styles': 1.10.202
       tslib: 2.3.1
     dev: false
@@ -3131,7 +3138,7 @@ packages:
     dependencies:
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/scheme-utilities': 8.1.6_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/set-version': 8.1.5
       tslib: 2.3.1
     dev: false
     peerDependencies:
@@ -3143,9 +3150,9 @@ packages:
       integrity: sha512-Lr7560zsXe+FAPhB0EOqhhVi9IxvuhkY9GnPsEW87tsPC9KOP6g/Atw2CpJ+31eYNsqWiNAt8eOLEOT9cU9Jrw==
   /@fluentui/theme/2.2.1_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/merge-styles': 8.1.4
-      '@fluentui/set-version': 8.1.4
-      '@fluentui/utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/merge-styles': 8.2.2
+      '@fluentui/set-version': 8.1.5
+      '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
       react: 16.14.0
       tslib: 2.3.1
@@ -3155,11 +3162,11 @@ packages:
       react: '>=16.8.0 <18.0.0'
     resolution:
       integrity: sha512-1G92TftVulrGXklL5upaN/WrrSzY/va39RM1eo0XO/Q3+kAhAajclQAXb7XanqOsVFcAqK1DbVvWayrY9DG2Qg==
-  /@fluentui/utilities/8.2.2_796713c4bb4631ac40b03d54b6277837:
+  /@fluentui/utilities/8.3.7_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/dom-utilities': 2.1.4
-      '@fluentui/merge-styles': 8.1.4
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/dom-utilities': 2.1.5
+      '@fluentui/merge-styles': 8.2.2
+      '@fluentui/set-version': 8.1.5
       '@types/react': 16.14.13
       react: 16.14.0
       tslib: 2.3.1
@@ -3168,7 +3175,7 @@ packages:
       '@types/react': '>=16.8.0 <18.0.0'
       react: '>=16.8.0 <18.0.0'
     resolution:
-      integrity: sha512-aM2/CgoTIssMDs7MoTla+q/VXN5Gkk4s12S8GZNp87cmEzDy008tKkiRpHj6PXZuvJL5bctZco9YQgusO0jZEg==
+      integrity: sha512-v9guLcPmX79SHUzw0wLU5LaLQiRnov1Ais9Dle6c6Mmicu8emtAb2TfCyhHQYx+Bp0TWHqkUnY6Yfp1U3COzqQ==
   /@humanwhocodes/config-array/0.5.0:
     dependencies:
       '@humanwhocodes/object-schema': 1.2.0
@@ -3504,14 +3511,14 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha1-unVNx9DyqEnSanEHLZAtdjRc4BQ=
+      integrity: sha512-AETOoj8y4fnZyB9wRfoFIxPzrVc4kLp2t+lk9dBKOkwWKNFJSYEcBeInk4qbQdsAeCG7EyxsbsQRZ+0QfbMNwA==
   /@microsoft/api-extractor-model/7.12.5:
     dependencies:
       '@microsoft/tsdoc': 0.12.24
       '@rushstack/node-core-library': 3.36.2
     dev: false
     resolution:
-      integrity: sha1-KNKASGXOupzYmrTwXP+Z0W+mybg=
+      integrity: sha512-oeHZW83JWjIVoCDvdwI5nsZGPxThbq4gZTLAYNeJGZE/mKEO0iayMPGmI3EllJBjwQsFvNVU+O/HGULhB2to/g==
   /@microsoft/api-extractor-model/7.13.5:
     dependencies:
       '@microsoft/tsdoc': 0.13.2
@@ -3519,7 +3526,7 @@ packages:
       '@rushstack/node-core-library': 3.40.0
     dev: false
     resolution:
-      integrity: sha1-eDaoG6R7mmVAYu0DYeTu5pr65R4=
+      integrity: sha512-il6AebNltYo5hEtqXZw4DMvrwBPn6+F58TxwqmsLY+U+sSJNxaYn2jYksArrjErXVPR3gUgRMqD6zsdIkg+WEQ==
   /@microsoft/api-extractor/7.18.5:
     dependencies:
       '@microsoft/api-extractor-model': 7.13.5
@@ -3537,7 +3544,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha1-zCgE18i50PHmP9hdBEhWm3Z9sQI=
+      integrity: sha512-NUGS6WxexziEnroHUOI3KKVmMX02god7SLA8Y4a5GKCL5k7AHuHFqP2bpd5Otx2odfbdj15ObO7FU/XA3Oxh8w==
   /@microsoft/applicationinsights-analytics-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3546,7 +3553,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-fxUsolySaxfrnxFG8j+sd1ymobY=
+      integrity: sha512-DVL2laBpa4wKcoZcvGRrGLd9N/Xz3vzq5rRhs4PxJawM4mlABe97UpRnrDARzGIubOhTKsix2V4hB9+gUtRz7A==
   /@microsoft/applicationinsights-channel-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3555,7 +3562,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-7vbaXegIupcMZn/b/wN2LCOQitI=
+      integrity: sha512-Njbeqn/Z1O8NZ10gdX1FXb4Z2TK7a9SCrjZ32ieTAr9HVefaZZCG9yKTTXkp8MnDUCnwjC2wZA9xN4u2BAi+lQ==
   /@microsoft/applicationinsights-common/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-core-js': 2.6.5
@@ -3563,14 +3570,14 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-S0deOI+NtgDjJxKteM0agPTOP+8=
+      integrity: sha512-nwJ0UO5WZbbdU6mgiN1oZ/NLTbT/oeMVmZJtlbuQ+xCz57LODi/mPAndd4+BA3xU+4u7MhLl6GyQqX5hcyUsow==
   /@microsoft/applicationinsights-core-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-shims': 2.0.0
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-NNB4cN1eT/Uk7Tjd+jghhuHcfKA=
+      integrity: sha512-+Vg8Cy06Z+Mwh4W7P5hqx03ThO+l5t7TfcP+ynuS1SGFIuYKaBOwxgt/uIIon8X12sk0dGkrPsTGZMiUtXJ5Zw==
   /@microsoft/applicationinsights-dependencies-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3579,7 +3586,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-djpxAh23JxJo8MpeURAQ8CHXQJ4=
+      integrity: sha512-Iw7jKESSnD52FodfI1QCp7HCFKqAdeLK/V3iEt6ArBJ54J/DYc/wD1sI8h2N5jBak0Mk7Lmu3LiyxtemOAn8pw==
   /@microsoft/applicationinsights-properties-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3588,7 +3595,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-8FFMAyzGRU5abA/8dsra1o2macs=
+      integrity: sha512-0etD5TkBFi4cnleGivxc02uLJIaP/sGHpyzOXfYSuLzRchKGWwX+fVhirt/acIigh+Mi8tiDuXqZ92H7DE5mbA==
   /@microsoft/applicationinsights-react-js/3.0.5_react@16.14.0:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3600,15 +3607,15 @@ packages:
     peerDependencies:
       react: ^16.0.0
     resolution:
-      integrity: sha1-jreDo93wAw0h1+aGpNwfPejmFpc=
+      integrity: sha512-+cAD9NZXQZB4/5gBkLrxXywtQllTqTPDlGod2Emli0kM9JLi4P4iH/i4Gtn4OBJtjlzcjYzU91AnFrjIisxx9A==
   /@microsoft/applicationinsights-shims/1.0.3:
     dev: false
     resolution:
-      integrity: sha1-nx0WurBDDyXMF2EcU3dWz039ODM=
+      integrity: sha512-+S17aqEkOYpyBpmclhgwcEplwnxSo5AxYBdRg38GBobI1GKPSpZfnLssLzcjJ6XZCS5tqB5xjyTZs6gHj7ZJWQ==
   /@microsoft/applicationinsights-shims/2.0.0:
     dev: false
     resolution:
-      integrity: sha1-7mIliPFOWK48BVsSQx2o7VXXGZE=
+      integrity: sha512-OaKew7f7acuNFgKYjMSPrRTRQi93xUyONWeeCeBlJSx7oRNJaL0TqbTvW6j5GHnSr3mhinPtAQ+rCQWASBnOrg==
   /@microsoft/applicationinsights-web/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-analytics-js': 2.6.5
@@ -3621,15 +3628,15 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-0pXfWn0LrNbiePLGCNqTeWI4acg=
+      integrity: sha512-ytSzE2b0InD/dGo+pObD1amwMXPWMXIGICuf3P94F5DV/Unt8rDRfex0JuNkfDJ1muH36uo5nEJMxzvtATx19g==
   /@microsoft/dynamicproto-js/1.1.4:
     dev: false
     resolution:
-      integrity: sha1-QOHArSB0P87hYEp98sV/rwqhr4c=
+      integrity: sha512-Ot53G927ykMF8cQ3/zq4foZtdk+Tt1YpX7aUTHxBU7UHNdkEiBvBfZSq+rnlUmKCJ19VatwPG4mNzvcGpBj4og==
   /@microsoft/load-themed-styles/1.10.202:
     dev: false
     resolution:
-      integrity: sha1-icvfRknrZdmyUIRKuuuOr+oaasI=
+      integrity: sha512-pWoN9hl1vfXnPfu2tS5VndXXKMe+UEWLJXDKNGXSNpmfszVLzG8Ns0TlZHlwtgpSaSD3f0kdVDfqAek8aflD4w==
   /@microsoft/tsdoc-config/0.15.2:
     dependencies:
       '@microsoft/tsdoc': 0.13.2
@@ -3638,15 +3645,15 @@ packages:
       resolve: 1.19.0
     dev: false
     resolution:
-      integrity: sha1-6zU8k/O2KrdL3Jq29Kgrz4AUDxQ=
+      integrity: sha512-mK19b2wJHSdNf8znXSMYVShAHktVr/ib0Ck2FA3lsVBSEhSI/TfXT7DJQkAYgcztTuwazGcg58ZjYdk0hTCVrA==
   /@microsoft/tsdoc/0.12.24:
     dev: false
     resolution:
-      integrity: sha1-MHKONOvJA1HdOv9OGNA47tLD4Jg=
+      integrity: sha512-Mfmij13RUTmHEMi9vRUhMXD7rnGR2VvxeNYtaGtaJ4redwwjT4UXYJ+nzmVJF7hhd4pn/Fx5sncDKxMVFJSWPg==
   /@microsoft/tsdoc/0.13.2:
     dev: false
     resolution:
-      integrity: sha1-Ow77bTkDvUntsHNpb2DpDfCO+yY=
+      integrity: sha512-WrHvO8PDL8wd8T2+zBGKrMwVL5IyzR3ryWUsl0PXgEV0QHup4mTLi0QcATefGI6Gx9Anu7vthPyyyLpY0EpiQg==
   /@mrmlnc/readdir-enhanced/2.2.1:
     dependencies:
       call-me-maybe: 1.0.1
@@ -8333,18 +8340,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-xb3ZL6+L8b9JLLCx3ZdoZy4+2ECphCMo2PwqgP1tlfVq6M6YReyzBJtvWWtbDSpNr9hn96pkCiZqUcFEc+54Qg==
-  /cosmiconfig/7.0.0:
-    dependencies:
-      '@types/parse-json': 4.0.0
-      import-fresh: 3.3.0
-      parse-json: 5.2.0
-      path-type: 4.0.0
-      yaml: 1.10.2
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-pondGvTuVYDk++upghXJabWzL6Kxu6f26ljFw64Swq9v6sQPUL3EUlVDV56diOjpCayKihL6hVe8exIACU4XcA==
   /cosmiconfig/7.0.1:
     dependencies:
       '@types/parse-json': 4.0.0
@@ -11511,7 +11506,7 @@ packages:
       chalk: 4.1.2
       ci-info: 2.0.0
       compare-versions: 3.6.0
-      cosmiconfig: 7.0.0
+      cosmiconfig: 7.0.1
       find-versions: 4.0.0
       opencollective-postinstall: 2.0.3
       pkg-dir: 5.0.0
@@ -19777,6 +19772,7 @@ packages:
       '@babel/core': 7.13.10
       '@babel/preset-env': 7.13.10_@babel+core@7.13.10
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-hooks': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137
       '@fluentui/react-northstar': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
       '@mdx-js/react': 1.6.22_react@16.14.0
@@ -19848,7 +19844,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-aWSTJ5h2h+XhHv9r4MKtIzrlngNsQKDgDpj3/wFX356gdOhdEzmapXJ1ilEdgPk+k2unnWx6P9nYvRPvIoeLgA==
+      integrity: sha512-YSpijfMsKW3nM0oclDNna4bV0HxCQ53z53GKE3WW3rObUSKGWeoywTjXZxIXO6JWxUclXSiAAVKj4HsvDrNygQ==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:

@@ -136,3 +136,15 @@ export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
   maxHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
   maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`
 };
+
+/**
+ * @private
+ */
+export const layerHostStyle: IStyle = {
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden'
+};
