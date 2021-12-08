@@ -7,10 +7,10 @@
     "lint": "",
     "lint:fix": "",
     "build": "",
-    "build:public": "",
+    "build:stable": "",
     "clean": "",
     "test": "",
-    "test:public": "",
+    "test:stable": "",
     "prettier": "",
     "prettier:check": ""
   },

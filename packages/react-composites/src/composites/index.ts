@@ -11,7 +11,7 @@ export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
 export type { AdapterError, AdapterErrors } from './common/adapters';
 export type { BaseCompositeProps } from './common/BaseComposite';
-/* @conditional-compile(beta) */
+/* @conditional-compile-remove-from(stable) */
 export * from './MeetingComposite';
-/* @conditional-compile(beta) */
+/* @conditional-compile-remove-from(stable) */
 export { createAzureCommunicationMeetingAdapter } from './MeetingComposite';

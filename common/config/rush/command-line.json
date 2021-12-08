@@ -33,9 +33,9 @@
     },
     {
       "commandKind": "bulk",
-      "name": "build:public",
-      "summary": "Preprocess and build the non-beta version.",
-      "description": "Preprocess and build the non-beta version.",
+      "name": "build:stable",
+      "summary": "Preprocess and build the GA version.",
+      "description": "Preprocess and build the GA version.",
       "enableParallelism": true,
       "incremental": true,
       "allowWarningsInSuccessfulBuild": true,
@@ -43,7 +43,7 @@
     },
     {
       "commandKind": "bulk",
-      "name": "test:public",
+      "name": "test:stable",
       "summary": "Run tests for non-beta version in each project.",
       "description": "Run jest tests for non-beta version in each project.",
       "enableParallelism": true,

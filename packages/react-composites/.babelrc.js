@@ -1,8 +1,8 @@
 const plugins = [];
-process.env['FLAVOR'] === 'public' &&
+process.env['FLAVOR'] === 'stable' &&
   plugins.push([
     '../../common/scripts/babel-conditional-preprocess',
-    { annotations: [{ match: '@conditional-compile(beta)' }] }
+    { annotations: [{ match: '@conditional-compile-remove-from(stable)' }] }
   ]);
 
 plugins.push([
