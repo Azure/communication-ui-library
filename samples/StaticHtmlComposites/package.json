@@ -5,10 +5,12 @@
   "private": true,
   "scripts": {
     "build": "rushx clean && webpack --mode=production",
+    "build:public": "echo skip",
     "clean": "rimraf dist",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
     "start:app": "webpack serve --config webpack.config.dev.js",
     "test": "echo skip",
+    "test:public": "echo skip",
     "test:e2e": "playwright test tests",
     "update:snapshot": "playwright test tests --update-snapshots",
     "lint": "echo skip",

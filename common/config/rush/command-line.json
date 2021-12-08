@@ -33,6 +33,25 @@
     },
     {
       "commandKind": "bulk",
+      "name": "build:public",
+      "summary": "Preprocess and build the non-beta version.",
+      "description": "Preprocess and build the non-beta version.",
+      "enableParallelism": true,
+      "incremental": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "test:public",
+      "summary": "Run tests for non-beta version in each project.",
+      "description": "Run jest tests for non-beta version in each project.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "test",
       "summary": "Run tests in each project.",
       "description": "Run jest tests in each project.",

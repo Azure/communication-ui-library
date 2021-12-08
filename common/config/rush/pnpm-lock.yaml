@@ -18864,13 +18864,18 @@ packages:
   file:projects/acs-ui-common.tgz:
     dependencies:
       '@azure/communication-common': 1.0.0
+      '@babel/cli': 7.16.0_@babel+core@7.16.0
+      '@babel/core': 7.16.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
       '@types/jest': 26.0.24
       '@types/react': 16.14.13
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.3.5
       copyfiles: 2.4.1
+      cpx: 1.5.0
+      cross-env: 7.0.3
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -18888,20 +18893,25 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-fTB+V9yr9+POPCOJCu+vkLI1eWauLHZMveikRQqtSFctSdsf0kGECq01aA55AaP/LzPyfoNhNJE06QSOWcxnag==
+      integrity: sha512-+IAkva6ae7HE8uAnY1GYptSOdfXgAowGPBRW7QPCvx2BgJ30X88QAlEDiZN8o8vKq4pXATrxPVY5tFjj0izKtw==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
     dependencies:
       '@azure/communication-calling': 1.3.1-beta.1
       '@azure/communication-common': 1.0.0
+      '@babel/cli': 7.16.0_@babel+core@7.16.0
+      '@babel/core': 7.16.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
       '@types/jest': 26.0.24
       '@types/react': 16.14.13
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.3.5
       copyfiles: 2.4.1
+      cpx: 1.5.0
+      cross-env: 7.0.3
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -18921,7 +18931,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-Rb8znQbiGzKn6ZUnyCNt0tcChxZMIgnDZHtWPeChoG+jPrOuHyAPbLuyqfOdLi+B3vhjSuRv5A+tWpk8gHxnjA==
+      integrity: sha512-fCSxwt8pfq3ZM4BX7ezigP8UBQBgViQ+mhlhHb26iZHYxnTIHylGtf3gIkXK8wq2wUWqBcT0mcRxbHETurJCLA==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -18929,13 +18939,18 @@ packages:
       '@azure/communication-calling': 1.3.1-beta.1
       '@azure/communication-common': 1.0.0
       '@azure/core-auth': 1.3.2
+      '@babel/cli': 7.16.0_@babel+core@7.16.0
+      '@babel/core': 7.16.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
       '@types/jest': 26.0.24
       '@types/react': 16.14.13
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.3.5
       copyfiles: 2.4.1
+      cpx: 1.5.0
+      cross-env: 7.0.3
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -18953,7 +18968,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-1xoFon/lQkQheWxkavPUmzWpQDhwyDlMchtHkuJ7SxMceQnytwbNoyiJ4equ1PcwGuEqtpc8wAH58eKNhrBOEw==
+      integrity: sha512-fPX1pT2SoYIiZ5gfw3RIxhNb9QyyUev9sNQV8S3ZQCyiYE+BDpVFTTiB0c3K31VZOeT2hPEhFG18w+lOD/G7WA==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19031,11 +19046,16 @@ packages:
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-paging': 1.1.3
+      '@babel/cli': 7.16.0_@babel+core@7.16.0
+      '@babel/core': 7.16.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
       '@types/jest': 26.0.24
       '@types/react': 16.14.13
+      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.3.5
       copyfiles: 2.4.1
+      cpx: 1.5.0
+      cross-env: 7.0.3
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -19054,7 +19074,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-IQGNXmydW6VreGr/ojWoSXfgv1C7fqlMHOdy4ZHnMukmHArkutHyPNcCLyA715e9zX/p3DgD8c4SJKCIdldtKw==
+      integrity: sha512-rTacBrIrCYbdZIfK2IZAXK4PxAe2/PG1hZrL5u9u9uhuYYThbkH2EZupy2ueFSzXbVxhxTppl+LdUi6t5ouehQ==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19063,13 +19083,18 @@ packages:
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
       '@azure/core-paging': 1.1.3
+      '@babel/cli': 7.16.0_@babel+core@7.16.0
+      '@babel/core': 7.16.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
       '@types/jest': 26.0.24
       '@types/react': 16.14.13
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.3.5
       copyfiles: 2.4.1
+      cpx: 1.5.0
+      cross-env: 7.0.3
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -19088,7 +19113,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-9qoPudjQNst4BkBhOAxTkO3Jeze/vQ03VHInu1BRMuMC1csQ9ewrjimFpZySWRpZg2umFY+wTIox0oEBGBm2ug==
+      integrity: sha512-8QEsRD8eR/9IamZBckadASXf2/7TzKEj7XHugDkDCx3L/RT2FQsR8q4IAqCK1gMK77q6JCLW4tE0Q54eHPmGYw==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -19255,7 +19280,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-JOwdpgY5F5ohSYHpQvGEKFw3cfNFQq2oxwq2GLTkDhkC1Qw18kShPiQEd2nRSOcLVDha7jzWoa6B92gd+eY2Hg==
+      integrity: sha512-KJsyhDyGBRMxwCA17/3OiQfeEGQocPulgJT6a8Yb6IayHCL0iSP2VWa+P01DBLuEIPRHn2Nb96fbbNa+x6RcnA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19344,6 +19369,7 @@ packages:
   file:projects/react-components.tgz:
     dependencies:
       '@azure/core-auth': 1.3.2
+      '@babel/cli': 7.16.0_@babel+core@7.16.0
       '@babel/core': 7.16.0
       '@babel/preset-env': 7.13.10_@babel+core@7.16.0
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
@@ -19367,6 +19393,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
       '@uifabric/react-hooks': 7.13.12_c2a703770fc22cd5845ac34fc7d0fe24
+      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.3.5
       ajv: 6.12.6
       babel-jest: 26.6.3_@babel+core@7.16.0
       babel-loader: 8.1.0_386beb176187a60fd7c73bb804206ca0
@@ -19374,6 +19401,8 @@ packages:
       copy-to-clipboard: 3.3.1
       copyfiles: 2.4.1
       core-js: 3.16.2
+      cpx: 1.5.0
+      cross-env: 7.0.3
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.6_ae67991505dc3d23647f38417e28fa3a
       eslint: 7.32.0
@@ -19418,7 +19447,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-ZAiMuH7adGc15XLgXzH80tBu8UbibKoZo7O0USU8GDM1Xue6ZisJxXym3ynMHQikc8OcgWyry0Xn3Cmue/xxqQ==
+      integrity: sha512-1SOHXLerBrfU+2Q4MKrr4RYvD2pVoEUm6UlDaDDCV6XFROyr19d4/zOcLQljrHrjIqnVBEy9nM3FzeIhBjj/cg==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19455,6 +19484,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
       '@uifabric/react-hooks': 7.13.12_c2a703770fc22cd5845ac34fc7d0fe24
+      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.3.5
       ajv: 6.12.6
       babel-jest: 26.6.3_@babel+core@7.16.0
       babel-loader: 8.1.0_386beb176187a60fd7c73bb804206ca0
@@ -19463,6 +19493,8 @@ packages:
       copy-to-clipboard: 3.3.1
       copyfiles: 2.4.1
       core-js: 3.16.2
+      cpx: 1.5.0
+      cross-env: 7.0.3
       dotenv: 10.0.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
@@ -19513,7 +19545,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-p7uC+p+skBIUNCk+RvWLUm/nHdjhA6T8Yv9dHlDGT1GoCuVyvvg3kuEB1KGuiygOCAFNk8l/OJafgmmKr67tdA==
+      integrity: sha512-a2r+a5PWXaQ9fstKa5llIhirFEP+H+h5WNGY7XmRA2grKmJAjvwLhrf3bRi9ola2CNut61tyfNP3TmC9xnhmSw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
