@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, FontIcon, mergeStyles, Stack } from '@fluentui/react';
+import { IStyle, FontIcon, mergeStyles, Stack, Text } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import React from 'react';
 import { systemMessageIconStyle } from './styles/SystemMessage.styles';
@@ -41,7 +41,9 @@ export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   return (
     <Stack horizontal className={mergeStyles(props?.containerStyle as IStyle)}>
       {Icon}
-      <span style={{ wordBreak: 'break-word' }}>{content}</span>
+      <Text style={{ wordBreak: 'break-word' }} role="status" title={content}>
+        {content}
+      </Text>
     </Stack>
   );
 };
