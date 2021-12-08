@@ -2,25 +2,27 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyleSets, Stack } from '@fluentui/react';
+import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CameraButton,
   ControlBar,
+  DevicesButton,
   EndCallButton,
   MicrophoneButton,
-  DevicesButton,
   ParticipantMenuItemsCallback,
   ParticipantsButton,
-  ScreenShareButton,
-  useTheme
+  ScreenShareButton
 } from '@internal/react-components';
 import React, { useMemo } from 'react';
+import { useLocale } from '../../localization';
 import { usePropsFor } from '../hooks/usePropsFor';
+import { useSelector } from '../hooks/useSelector';
+import { getCallStatus, getLocalMicrophoneEnabled } from '../selectors/baseSelectors';
 import {
-  checkedButtonOverrideStyles,
   controlButtonBaseStyle,
+  devicesButtonWithIncreasedTouchTargets,
   groupCallLeaveButtonCompressedStyle,
   groupCallLeaveButtonStyle,
-  devicesButtonWithIncreasedTouchTargets,
   participantButtonWithIncreasedTouchTargets
 } from '../styles/CallControls.styles';
 
@@ -94,19 +96,35 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const options = typeof props.options === 'boolean' ? {} : props.options;
 
+  const callStatus = useSelector(getCallStatus);
+  const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
+  const strings = useLocale().strings.call;
+
+  /**
+   * When call is in Lobby, microphone button should be disabled.
+   * This is due to to headless limitation where a call can not be muted/unmuted in lobby.
+   */
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
+  if (_isInLobbyOrConnecting(callStatus)) {
+    microphoneButtonProps.disabled = true;
+    // Lobby page should show the microphone status that was set on the local preview/configuration
+    // page until the user successfully joins the call.
+    microphoneButtonProps.checked = isLocalMicrophoneEnabled;
+  }
+  const microphoneButtonStrings = _isInLobbyOrConnecting(callStatus)
+    ? {
+        strings: {
+          tooltipOffContent: strings.microphoneToggleInLobbyNotAllowed,
+          tooltipOnContent: strings.microphoneToggleInLobbyNotAllowed
+        }
+      }
+    : {};
+
   const cameraButtonProps = usePropsFor(CameraButton);
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const participantsButtonProps = usePropsFor(ParticipantsButton);
   const devicesButtonProps = usePropsFor(DevicesButton);
   const hangUpButtonProps = usePropsFor(EndCallButton);
-
-  const theme = useTheme();
-
-  const screenShareButtonStyles = useMemo(
-    () => mergeButtonBaseStyles(checkedButtonOverrideStyles(theme, screenShareButtonProps.checked)),
-    [screenShareButtonProps.checked, theme.palette.themePrimary]
-  );
 
   const participantsButtonStyles = useMemo(
     () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? participantButtonWithIncreasedTouchTargets : {}),
@@ -126,6 +144,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...microphoneButtonProps}
       showLabel={!compactMode}
       styles={controlButtonBaseStyle}
+      {...microphoneButtonStrings}
     />
   );
 
@@ -142,7 +161,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     <ScreenShareButton
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
-      styles={screenShareButtonStyles}
       showLabel={!compactMode}
       disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
     />

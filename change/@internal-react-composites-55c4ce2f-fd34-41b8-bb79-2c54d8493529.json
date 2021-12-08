@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "removed speaking indicator on screen sharing tile",
-  "packageName": "@internal/react-composites",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

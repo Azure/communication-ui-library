@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "added ariaLabel in InputBoxButtonProps and strings for EditBox buttons in MessageThreadStrings",
-  "packageName": "@internal/react-components",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
-}

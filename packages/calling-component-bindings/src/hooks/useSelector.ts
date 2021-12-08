@@ -48,7 +48,9 @@ export const useSelector = <
   const propRef = useRef(props);
   propRef.current = props;
   useEffect(() => {
-    if (!callClient || !selector) return;
+    if (!callClient || !selector) {
+      return;
+    }
     const onStateChange = (state: CallClientState): void => {
       if (!mounted.current) {
         return;

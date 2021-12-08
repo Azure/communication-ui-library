@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add an internal util function for checking if a call is in lobby",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

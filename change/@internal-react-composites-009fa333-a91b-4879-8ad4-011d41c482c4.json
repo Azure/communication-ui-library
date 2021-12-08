@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bugfix for disappearing lobby when joining a meeting",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Improve message thread example",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

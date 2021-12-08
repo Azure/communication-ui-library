@@ -63,11 +63,13 @@ module.exports = {
     'react/display-name': 'off',
 
     // This rule directly conflicts with allowed characters in Storybook's markdown
-    'react/no-unescaped-entities': 'off'
+    'react/no-unescaped-entities': 'off',
+    curly: 'error'
   },
   root: true,
   settings: {
     react: {
+      'mdx/code-blocks': true,
       version: 'detect'
     }
   },
@@ -93,6 +95,14 @@ module.exports = {
       rules: {
         'react/prop-types': 'off',
         'react/jsx-key': 'off'
+      }
+    },
+    {
+      files: '*.mdx',
+      parser: 'eslint-mdx',
+      extends: 'plugin:mdx/recommended',
+      rules: {
+        'header/header': 'off'
       }
     }
   ]

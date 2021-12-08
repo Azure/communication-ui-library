@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update call composite options button to have larger flyout items when on mobile view",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

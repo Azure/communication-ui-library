@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "VideoTile label text truncation on overflow. ",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -71,14 +71,16 @@ export const createDefaultChatHandlers = memoizeOne(
         if (messageIterator === undefined) {
           // Lazy definition so that errors in the method call are reported correctly.
           // Also allows recovery via retries in case of transient errors.
-          messageIterator = chatThreadClient.listMessages();
+          messageIterator = chatThreadClient.listMessages({ maxPageSize: 50 });
         }
 
         let remainingMessagesToGet = messagesToLoad;
         let isAllChatMessagesLoaded = false;
         while (remainingMessagesToGet >= 1) {
           const message = await messageIterator.next();
-          if (message.value?.type && message.value.type === 'text') remainingMessagesToGet--;
+          if (message.value?.type && message.value.type === 'text') {
+            remainingMessagesToGet--;
+          }
           // We have traversed all messages in this thread
           if (message.done) {
             isAllChatMessagesLoaded = true;

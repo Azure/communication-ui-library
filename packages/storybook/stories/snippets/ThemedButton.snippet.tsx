@@ -1,5 +1,4 @@
-import { useTheme } from '@azure/communication-react';
-import { DefaultButton } from '@fluentui/react';
+import { useTheme, CameraButton } from '@azure/communication-react';
 import React from 'react';
 
 export const ThemedButton = (): JSX.Element => {
@@ -7,8 +6,11 @@ export const ThemedButton = (): JSX.Element => {
 
   const defaultButtonStyle = {
     root: {
+      background: theme.palette.neutralLighter
+    },
+    rootHovered: {
       background: theme.palette.neutralLight
     }
   };
-  return <DefaultButton text="exampleButton" styles={defaultButtonStyle} />;
+  return <CameraButton styles={defaultButtonStyle} />;
 };

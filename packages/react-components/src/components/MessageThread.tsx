@@ -601,7 +601,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     disableJumpToNewMessageButton = false,
     showMessageDate = false,
     showMessageStatus = false,
-    numberOfChatMessagesToReload = 0,
+    numberOfChatMessagesToReload = 5,
     onMessageSeen,
     onRenderMessageStatus,
     onRenderAvatar,
@@ -712,7 +712,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     }
 
     const atBottom =
-      Math.floor(chatScrollDivRef.current.scrollTop) >=
+      Math.ceil(chatScrollDivRef.current.scrollTop) >=
       chatScrollDivRef.current.scrollHeight - chatScrollDivRef.current.clientHeight;
     if (atBottom) {
       sendMessageStatusIfAtBottom();
@@ -752,13 +752,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // we need to get previousTop before it prepend contents
   // Execute order [newMessage useEffect] => get previousTop => dom update => [messages useEffect]
   useEffect(() => {
-    if (!chatScrollDivRef.current) return;
+    if (!chatScrollDivRef.current) {
+      return;
+    }
     previousTopRef.current = chatScrollDivRef.current.scrollTop;
     previousHeightRef.current = chatScrollDivRef.current.scrollHeight;
   }, [newMessages]);
 
   useEffect(() => {
-    if (!chatScrollDivRef.current) return;
+    if (!chatScrollDivRef.current) {
+      return;
+    }
     if (previousTopRef.current === 0) {
       const currentHeight = chatScrollDivRef.current.scrollHeight;
       chatScrollDivRef.current.scrollTop =

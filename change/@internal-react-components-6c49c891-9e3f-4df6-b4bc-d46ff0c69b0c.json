@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "removed speaking indicator on RemoteScreenShare",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}

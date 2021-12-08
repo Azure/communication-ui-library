@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix for preventing video resize when isSpeaking indicator appears",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

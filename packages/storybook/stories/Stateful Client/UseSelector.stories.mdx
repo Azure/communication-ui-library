@@ -1,9 +1,12 @@
 import { Meta } from '@storybook/addon-docs';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 
-<Meta id="statefulclient-reacthooks-useselector" title="Stateful Client/React Hooks/UseSelector" />
+<Meta
+  id="statefulclient-reacthooks-useselector"
+  title="Stateful Client/React Hooks/UseSelector"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
 
-## useSelector() <a name="useSelector"></a>
+# useSelector <a name="useSelector"></a>
 
 `useSelector` allows you to provide your own selector function that maps the stateful SDK state to your own props for your own component. It subscribes to state changes and runs the selector every time when anything changes in the state, but note that it will only trigger a component re-render when the return value of the selector changes.
 

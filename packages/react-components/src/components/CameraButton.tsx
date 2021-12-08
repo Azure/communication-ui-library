@@ -7,7 +7,7 @@ import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
-const defaultLocalVideoViewOption = {
+const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
   isMirrored: true
 } as VideoStreamOptions;
@@ -22,6 +22,8 @@ export interface CameraButtonStrings {
   onLabel: string;
   /** Label when button is off. */
   offLabel: string;
+  /** Tooltip content when the button is disabled. */
+  tooltipDisabledContent?: string;
   /** Tooltip content when the button is on. */
   tooltipOnContent?: string;
   /** Tooltip content when the button is off. */
@@ -43,7 +45,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
   /**
    * Options for rendering local video view.
    */
-  localVideoViewOption?: VideoStreamOptions;
+  localVideoViewOptions?: VideoStreamOptions;
 
   /**
    * Optional strings to override in component
@@ -62,7 +64,7 @@ const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="ControlButtonCa
  * @public
  */
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
-  const { localVideoViewOption, onToggleCamera } = props;
+  const { localVideoViewOptions, onToggleCamera } = props;
   const [waitForCamera, setWaitForCamera] = useState(false);
 
   const localeStrings = useLocale().strings.cameraButton;
@@ -73,12 +75,12 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     if (onToggleCamera) {
       setWaitForCamera(true);
       try {
-        await onToggleCamera(localVideoViewOption ?? defaultLocalVideoViewOption);
+        await onToggleCamera(localVideoViewOptions ?? defaultLocalVideoViewOptions);
       } finally {
         setWaitForCamera(false);
       }
     }
-  }, [localVideoViewOption, onToggleCamera]);
+  }, [localVideoViewOptions, onToggleCamera]);
 
   return (
     <ControlBarButton

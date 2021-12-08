@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update MessageThread selector to filter out unsupported messages",
-  "packageName": "@internal/chat-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

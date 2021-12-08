@@ -19,9 +19,10 @@ export const RemoteVideoTile = React.memo(
     isAvailable?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    isScreenSharing?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
     renderElement?: HTMLElement;
     displayName?: string;
-    remoteVideoViewOption?: VideoStreamOptions;
+    remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
   }) => {
@@ -29,9 +30,10 @@ export const RemoteVideoTile = React.memo(
       isAvailable,
       isMuted,
       isSpeaking,
+      isScreenSharing,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
-      remoteVideoViewOption,
+      remoteVideoViewOptions,
       renderElement,
       userId,
       displayName,
@@ -41,7 +43,7 @@ export const RemoteVideoTile = React.memo(
 
     useEffect(() => {
       if (isAvailable && !renderElement) {
-        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOption);
+        onCreateRemoteStreamView && onCreateRemoteStreamView(userId, remoteVideoViewOptions);
       }
       if (!isAvailable) {
         onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
@@ -50,16 +52,18 @@ export const RemoteVideoTile = React.memo(
       isAvailable,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
-      remoteVideoViewOption,
+      remoteVideoViewOptions,
       renderElement,
       userId
     ]);
 
     useEffect(() => {
       return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
+        if (isScreenSharing) {
+          onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
+        }
       };
-    }, [onDisposeRemoteStreamView, userId]);
+    }, [onDisposeRemoteStreamView, userId, isScreenSharing]);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which

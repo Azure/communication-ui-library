@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Local VideoTile in VideoGallery overflow fix",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -45,7 +45,8 @@ export const parameters = {
           'MeetingComposite',
           'CallComposite',
           'ChatComposite',
-          'Cross-Framework Support'
+          'Adapters',
+          'Cross-Framework Support',
         ],
         COMPONENT_FOLDER_PREFIX,
         [
@@ -65,6 +66,7 @@ export const parameters = {
         [        
         'Styling',
         'Theming',
+        'Icons',
         'Localization',
         'Accessibility',
         'Custom User Data Model',
@@ -75,8 +77,9 @@ export const parameters = {
         EXAMPLES_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,
         [
-          'Get Started',
           'Overview',
+          'Get Started (Call)',
+          'Get Started (Chat)',
           'Best Practices',
           'React Hooks',
           [
@@ -84,11 +87,17 @@ export const parameters = {
             'UsePropsFor',
             'UseSelector'
           ],
-          'Adapters',
         ],
       ]
     }
-  }
+  },
+  viewMode: 'docs',
+  previewTabs: {
+    'storybook/docs/panel': { index: -1 },
+    'canvas' : {
+      title: 'Preview'
+    }
+ }
 };
 
 const withThemeProvider = (Story: any, context: any) => {
@@ -104,21 +113,36 @@ const withThemeProvider = (Story: any, context: any) => {
 
   const rtl = context.globals.rtl as string === 'rtl';
 
-  return (
-    <FluentThemeProvider fluentTheme={theme} rtl={rtl}>
-      <Story {...context} theme={theme} />
-    </FluentThemeProvider>
-  );
+  if (context !== undefined) {
+    return (
+      <FluentThemeProvider fluentTheme={theme} rtl={rtl}>
+        <Story {...context} theme={theme} />
+      </FluentThemeProvider>
+    );
+  }
+  else {
+    return (
+        <Story {...context} />
+    );
+  }
 };
 
 const withLocalization = (Story: any, context: any) => {
+  console.log((context))
   const localeKey = context.globals.locale as string;
 
-  return (
-    <LocalizationProvider locale={LOCALES[localeKey].locale} >
-      <Story {...context} />
-    </LocalizationProvider>
-  );
+  if(context !== undefined) {
+    return (
+      <LocalizationProvider locale={LOCALES[localeKey].locale} >
+        <Story {...context} />
+      </LocalizationProvider>
+    );
+  }
+  else {
+    return (
+        <Story {...context} />
+    );
+  }
 };
 
 const withCenterStory = (Story: any) => {
@@ -151,21 +175,10 @@ export const globalTypes = {
     name: 'Locale',
     description: 'Locale for components',
     defaultValue: 'en_US',
-    toolbar: {
-      icon: 'globe',
-      items: Object.keys(LOCALES).map((key) => ({ title: LOCALES[key].englishName, value: key })),
-    },
   },
   rtl: {
     name: 'RTL',
     description: 'Whether the direction of components is right-to-left or left-to-right',
-    defaultValue: 'ltr',
-    toolbar: {
-      icon: 'transfer',
-      items: [
-        { value: 'ltr', title: 'Left-to-right' },
-        { value: 'rtl', title: 'Right-to-left' }
-      ]
-    }
+    defaultValue: 'ltr'
   }
 };

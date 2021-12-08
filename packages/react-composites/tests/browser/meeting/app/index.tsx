@@ -53,13 +53,21 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!token) return <h3>ERROR: No token set.</h3>;
-  else if (!displayName) return <h3>ERROR: No Display name set.</h3>;
-  else if (!groupId) return <h3>ERROR: No groupId set.</h3>;
-  else if (!userId) return <h3>ERROR: No userId set.</h3>;
-  else if (!endpoint) return <h3>ERROR: No endpoint set.</h3>;
-  else if (!threadId) return <h3>ERROR: No threadId set.</h3>;
-  else if (!meetingAdapter) return <h3>Initializing meeting adapters...</h3>;
+  if (!token) {
+    return <h3>ERROR: No token set.</h3>;
+  } else if (!displayName) {
+    return <h3>ERROR: No Display name set.</h3>;
+  } else if (!groupId) {
+    return <h3>ERROR: No groupId set.</h3>;
+  } else if (!userId) {
+    return <h3>ERROR: No userId set.</h3>;
+  } else if (!endpoint) {
+    return <h3>ERROR: No endpoint set.</h3>;
+  } else if (!threadId) {
+    return <h3>ERROR: No threadId set.</h3>;
+  } else if (!meetingAdapter) {
+    return <h3>Initializing meeting adapters...</h3>;
+  }
 
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>

@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -141,9 +141,14 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                     </i>
                     <span
-                      className="#323130 css-23"
+                      className="ms-Button-textContainer textContainer-16"
                     >
-                      Turn off
+                      <span
+                        className="ms-Button-label label-18"
+                        id="id__2"
+                      >
+                        Turn off
+                      </span>
                     </span>
                   </span>
                 </button>
@@ -198,9 +203,14 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                     </i>
                     <span
-                      className="#323130 css-23"
+                      className="ms-Button-textContainer textContainer-16"
                     >
-                      Mute
+                      <span
+                        className="ms-Button-label label-18"
+                        id="id__6"
+                      >
+                        Mute
+                      </span>
                     </span>
                   </span>
                 </button>
@@ -214,7 +224,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
-                  className="ms-Button ms-Button--default root-24"
+                  className="ms-Button ms-Button--default root-22"
                   data-is-focusable={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
@@ -252,13 +262,18 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                     </i>
                     <span
-                      className="#323130 css-23"
+                      className="ms-Button-textContainer textContainer-16"
                     >
-                      Devices
+                      <span
+                        className="ms-Button-label label-18"
+                        id="id__10"
+                      >
+                        Devices
+                      </span>
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-37 css-26 ms-Button-menuIcon menuIcon-25"
+                      className="ms-Icon root-37 css-24 ms-Button-menuIcon menuIcon-23"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -281,7 +296,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
-                  className="ms-Button ms-Button--default root-27"
+                  className="ms-Button ms-Button--default root-25"
                   data-is-focusable={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
@@ -325,9 +340,14 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       </span>
                     </i>
                     <span
-                      className="#323130 css-30"
+                      className="ms-Button-textContainer textContainer-16"
                     >
-                      Leave
+                      <span
+                        className="ms-Button-label label-26"
+                        id="id__14"
+                      >
+                        Leave
+                      </span>
                     </span>
                   </span>
                 </button>

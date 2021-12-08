@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updating storybook to not use resource connection strings",
-  "packageName": "@internal/storybook",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -54,12 +54,23 @@ export class EventSubscriber {
   // convert event type to chatMessage type, only possible type is 'html' and 'text' in chat event
   private convertEventType = (type: string): ChatMessageType => {
     const lowerCaseType = type.toLowerCase();
-    if (lowerCaseType === 'richtext/html' || lowerCaseType === 'html') return 'html';
-    else return 'text';
+    if (lowerCaseType === 'richtext/html' || lowerCaseType === 'html') {
+      return 'html';
+    } else {
+      return 'text';
+    }
   };
 
   private onChatMessageReceived = (event: ChatMessageReceivedEvent): void => {
+    // Today we are avoiding how to render these messages. In the future we can
+    // remove this condition and handle this message appropriately.
+    const messageEventType = event.type.toLowerCase();
+    if (messageEventType !== 'text' && messageEventType !== 'richtext/html' && messageEventType !== 'html') {
+      return;
+    }
+
     const newMessage = this.convertEventToChatMessage(event);
+
     // Because of bug in chatMessageReceived event, if we already have that particular message in context, we want to
     // make sure to not overwrite the sequenceId when calling setChatMessage.
     const existingMessage = this.chatContext.getState().threads[event.threadId]?.chatMessages[event.id];

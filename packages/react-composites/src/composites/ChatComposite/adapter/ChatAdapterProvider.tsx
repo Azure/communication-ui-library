@@ -27,6 +27,8 @@ export const ChatAdapterProvider = (props: ChatProviderProps): JSX.Element => {
  */
 export const useAdapter = (): ChatAdapter => {
   const adapter = useContext(ChatAdapterContext);
-  if (!adapter) throw 'Cannot find adapter please initialize before usage.';
+  if (!adapter) {
+    throw 'Cannot find adapter please initialize before usage.';
+  }
   return adapter;
 };

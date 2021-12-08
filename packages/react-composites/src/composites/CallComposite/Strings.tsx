@@ -169,4 +169,8 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when there is intermittent network failure during a call.
    */
   networkReconnectMoreDetails: string;
+  /**
+   * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
+   */
+  microphoneToggleInLobbyNotAllowed: string;
 }

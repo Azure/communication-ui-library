@@ -394,7 +394,9 @@ export class ChatContext {
 
   // This is a mutating function, only use it inside of a produce() function
   private filterTypingIndicatorForUser(thread: ChatThreadClientState, userId?: CommunicationIdentifierKind): void {
-    if (!userId) return;
+    if (!userId) {
+      return;
+    }
     const typingIndicators = thread.typingIndicators;
     const userIdAsKey = toFlatCommunicationIdentifier(userId);
     const filteredTypingIndicators = typingIndicators.filter(

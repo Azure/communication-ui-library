@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Composites/CallComposite/Basic Example Basic Example 1`] = `
 <div
-  className="css-61 body-0"
+  className="css-60 body-0"
   dir="ltr"
 >
   <div
-    className="css-61"
+    className="css-60"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -24,7 +24,18 @@ exports[`storybook snapshot tests Storyshots Composites/CallComposite/Basic Exam
         className="ms-Stack css-1"
       >
         <span>
-          Please provide an access token, userId and display name to use.
+          <p>
+            Please provide an
+             
+            <a
+              href="https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity"
+              rel="noreferrer"
+              target="_blank"
+            >
+              access token, userId
+            </a>
+            .
+          </p>
         </span>
       </div>
     </div>
