@@ -12,11 +12,6 @@ To onboard any new features, you will need to contact the accessibility team and
 Our Calling and Chat composites are already onboarded in the 1ES accessibility pipeline.
 Meeting, which is still in Beta, will need to be onboarded too in the near future.
 
-### Point of contact for 1ES Accessibility team
-
-Our point of contact for onboarding and testing cases is **Meghana Pogula** from 1ES Accessibility team (contact: v-mepogu@microsoft.com).
-Please contact her for any a11y questions or future onboardings.
-
 ### Testing scenarios
 
 Our testing scenarios are currently defined in our wiki for [Chat](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/22952/Chat-composite-testing-scenarios) and [Calling](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/22949/Call-composite-testing-scenarios).
@@ -48,7 +43,7 @@ Here are some very useful ones.
 In addition to their Web version, this tool is also available for Android and Windows.
 
 For a quick check, you can use their `FastPass` scenario and there go through the following tools:
-* `Automated checks` for detecting some common accessibility issues 
+* `Automated checks` for detecting some common accessibility issues
 * `Tab stops` for checking your keyboard navigation path
 
 Accessibility Insights for Windows can be used to test luminosity ratio of UI elements.
@@ -88,7 +83,7 @@ To check that, go on Firefox settings and click on the ‘Colours…’ button u
 
 #### Safari
 
-For macOS, you will need to change your display preferences. Instructions on how to do it can be found [here](https://support.apple.com/lv-lv/guide/mac-help/unac089/mac). 
+For macOS, you will need to change your display preferences. Instructions on how to do it can be found [here](https://support.apple.com/lv-lv/guide/mac-help/unac089/mac).
 
 ## Code examples
 

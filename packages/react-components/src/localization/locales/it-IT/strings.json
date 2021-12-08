@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Invio non riuscito"
   },
   "endCallButton": {
-    "label": "Permesso"
+    "label": "Permesso",
+    "tooltipContent": "Abbandona chiamata"
   },
   "cameraButton": {
     "onLabel": "Disabilita",
-    "offLabel": "Abilita"
+    "offLabel": "Abilita",
+    "tooltipDisabledContent": "La videocamera è disabilitata",
+    "tooltipOnContent": "Spegni la videocamera",
+    "tooltipOffContent": "Accendi la videocamera"
   },
   "microphoneButton": {
     "onLabel": "Disattiva audio",
-    "offLabel": "Riattiva audio"
+    "offLabel": "Riattiva audio",
+    "tooltipDisabledContent": "Il microfono è disabilitato",
+    "tooltipOnContent": "Disattiva microfono",
+    "tooltipOffContent": "Riattiva microfono"
   },
   "devicesButton": {
-    "label": "Opzioni",
+    "label": "Dispositivi",
+    "tooltipContent": "Gestisci dispositivi",
     "cameraMenuTitle": "Fotocamera",
     "cameraMenuTooltip": "Scegli la fotocamera",
     "microphoneMenuTitle": "Microfono",
@@ -45,14 +53,18 @@
   },
   "participantsButton": {
     "label": "Persone",
+    "tooltipContent": "Mostra partecipanti",
     "menuHeader": "In questa chiamata",
     "participantsListButtonLabel": "{numParticipants} persone",
     "muteAllButtonLabel": "Disattiva l'audio di tutti",
     "copyInviteLinkButtonLabel": "Copia il collegamento dell’invito"
   },
   "screenShareButton": {
-    "onLabel": "Arresta",
-    "offLabel": "Condividi"
+    "onLabel": "Interrompi condivisione",
+    "offLabel": "Condividi",
+    "tooltipDisabledContent": "La condivisione del video è disabilitata",
+    "tooltipOnContent": "Interrompi condivisione dello schermo",
+    "tooltipOffContent": "Condividi lo schermo"
   },
   "messageThread": {
     "yesterday": "Ieri",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Stai condividendo lo schermo",
-    "screenShareLoadingMessage": "Caricamento dello schermo di {participant}"
+    "screenShareLoadingMessage": "Caricamento dello schermo di {participant}",
+    "localVideoLabel": "Tu"
   }
 }

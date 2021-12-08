@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-59 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-59"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -31,11 +31,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-60 body-1"
+          className="css-59 body-1"
           dir="ltr"
         >
           <div
-            className="css-60"
+            className="css-59"
             data-uses-unhanded-props={true}
           >
             <div
@@ -69,6 +69,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Turn on camera"
                           className="ms-Button ms-Button--default root-10"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -124,6 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Unmute microphone"
                           className="ms-Button ms-Button--default root-10"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -179,6 +181,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+<<<<<<< HEAD
+=======
+                          aria-label="Share your screen"
+>>>>>>> origin/main
                           className="ms-Button ms-Button--default root-18"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -228,6 +234,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+<<<<<<< HEAD
+=======
+                          aria-label="Leave Call"
+>>>>>>> origin/main
                           className="ms-Button ms-Button--default root-19"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -286,9 +296,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-55"
+                className="css-55 css-21"
               >
                 <div
+<<<<<<< HEAD
                   className="css-56 css-22"
                 >
                   <div
@@ -310,14 +321,46 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <div
                             aria-label=""
                             className="ms-Persona ms-Persona--size48 root-33"
+=======
+                  className="ms-Stack css-28"
+                  data-ui-id="video-tile"
+                >
+                  <div
+                    className="css-25"
+                  />
+                  <div
+                    className="ms-Stack css-29"
+                  >
+                    <div
+                      className="ms-Stack css-31"
+                    >
+                      <div
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 root-32"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
+                      >
+                        <div
+                          className="ms-Persona-coin ms-Persona--size48 coin-39"
+                          role="presentation"
+                        >
+                          <div
+                            className="ms-Persona-imageArea imageArea-41"
+                            role="presentation"
+>>>>>>> origin/main
                             style={
                               Object {
                                 "height": 100,
-                                "minWidth": 100,
+                                "width": 100,
                               }
                             }
                           >
                             <div
+<<<<<<< HEAD
                               className="ms-Persona-coin ms-Persona--size48 coin-40"
                               role="presentation"
                             >
@@ -346,10 +389,25 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                                   </span>
                                 </div>
                               </div>
+=======
+                              aria-hidden="true"
+                              className="ms-Persona-initials initials-44"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
+                                }
+                              }
+                            >
+                              <span>
+                                M
+                              </span>
+>>>>>>> origin/main
                             </div>
                           </div>
                         </div>
                       </div>
+<<<<<<< HEAD
                       <div
                         className="ms-Stack css-81 css-48"
                       >
@@ -364,6 +422,22 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           </span>
                         </div>
                       </div>
+=======
+                    </div>
+                  </div>
+                  <div
+                    className="ms-Stack css-80 css-47"
+                  >
+                    <div
+                      className="ms-Stack css-81 css-48"
+                    >
+                      <span
+                        className="css-49"
+                        title="Michael"
+                      >
+                        Michael
+                      </span>
+>>>>>>> origin/main
                     </div>
                   </div>
                 </div>

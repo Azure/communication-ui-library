@@ -29,6 +29,19 @@ You can find the completed code for this quickstart here: [Get started with Comp
 - An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
 - An identity with both VoIP and Chat scopes. Generate an identity using the [Azure Portal](https://docs.microsoft.com/azure/communication-services/quickstarts/identity/quick-create-identity).
 
+## Generate Access Token
+
+For setting up adapters that power the composites, we need to generate an access token to allow the adapters to interact with the Azure Communication Services back-end.
+
+Access Tokens can be generated using this [Azure Portal quickstart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) inside your Azure Communication Services dashboard as shown below.
+
+<Stack style={{ width: '100%' }}>
+  {/* Chrome is more lenient with playing muted video: https://developer.chrome.com/blog/autoplay */}
+  <video style={{ width: '100%' }} src="videos/generate-access-token.mp4" autoPlay loop muted />
+</Stack>
+
+<br />
+
 ## Setting Up
 
 UI Library requires a React environment to be setup. Next we will do that. If you already have a React App, you can skip this section.
@@ -79,6 +92,8 @@ The following classes and interfaces handle some of the major features of the Az
 | [CallComposite](./?path=/story/composites-call-basicexample--basic-example) | Composite component that renders a calling experience with participant gallery and controls. |
 | [ChatComposite](./?path=/story/composites-chat-basicexample--basic-example) | Composite component that renders a chat experience with chat thread and input                |
 
+<<<<<<< HEAD
+
 ## Generate Access Token
 
 For setting up adapters that power the composites, we need to generate an access token to allow the adapters to interact with the Azure Communication Services back-end.
@@ -91,6 +106,10 @@ Access Tokens can be generated using this [Azure Portal quickstart](https://docs
 </Stack>
 
 <br />
+
+=======
+
+> > > > > > > origin/main
 
 ## Set Up Adapters
 
@@ -136,7 +155,7 @@ npm run start
 
 ```
 
-![End state of composite quickstart]("images/CompositeEnd.png")
+![End state of composite quickstart](images/CompositeEnd.png)
 
 ## Troubleshooting
 

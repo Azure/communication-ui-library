@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Screen Share Screen Share 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-59 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-59"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -29,6 +29,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/S
         onMouseLeave={[Function]}
       >
         <button
+          aria-label="Share your screen"
           className="ms-Button ms-Button--default root-2"
           data-is-focusable={true}
           onClick={[Function]}

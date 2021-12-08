@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-59 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-59"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -100,6 +100,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
+                  aria-label="Turn off camera"
                   className="ms-Button ms-Button--default is-checked root-14"
                   data-is-focusable={true}
                   onClick={[Function]}
@@ -162,6 +163,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
+                  aria-label="Mute microphone"
                   className="ms-Button ms-Button--default is-checked root-14"
                   data-is-focusable={true}
                   onClick={[Function]}
@@ -224,6 +226,10 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
+<<<<<<< HEAD
+=======
+                  aria-label="Manage devices"
+>>>>>>> origin/main
                   className="ms-Button ms-Button--default root-22"
                   data-is-focusable={true}
                   onClick={[Function]}
@@ -296,6 +302,10 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
+<<<<<<< HEAD
+=======
+                  aria-label="Leave Call"
+>>>>>>> origin/main
                   className="ms-Button ms-Button--default root-25"
                   data-is-focusable={true}
                   onClick={[Function]}

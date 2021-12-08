@@ -224,9 +224,9 @@ export interface CallCompositeStrings {
     complianceBannerRecordingSaving: string;
     complianceBannerRecordingStarted: string;
     complianceBannerRecordingStopped: string;
-    complianceBannerTrancriptionStarted: string;
     complianceBannerTranscriptionConsent: string;
     complianceBannerTranscriptionSaving: string;
+    complianceBannerTranscriptionStarted: string;
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;

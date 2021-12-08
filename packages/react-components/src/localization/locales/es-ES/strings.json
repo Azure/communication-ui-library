@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Error al enviar"
   },
   "endCallButton": {
-    "label": "Baja"
+    "label": "Baja",
+    "tooltipContent": "Abandonar llamada"
   },
   "cameraButton": {
     "onLabel": "Desactivar",
-    "offLabel": "Activar"
+    "offLabel": "Activar",
+    "tooltipDisabledContent": "La cámara está deshabilitada",
+    "tooltipOnContent": "Desconectar la cámara",
+    "tooltipOffContent": "Activar la cámara"
   },
   "microphoneButton": {
     "onLabel": "Silenciar",
-    "offLabel": "Reactivar audio"
+    "offLabel": "Reactivar audio",
+    "tooltipDisabledContent": "El micrófono está deshabilitado",
+    "tooltipOnContent": "Silenciar micrófono",
+    "tooltipOffContent": "Reactivar micrófono"
   },
   "devicesButton": {
-    "label": "Opciones",
+    "label": "Dispositivos",
+    "tooltipContent": "Administrar dispositivos",
     "cameraMenuTitle": "Cámara",
     "cameraMenuTooltip": "Elegir cámara",
     "microphoneMenuTitle": "Micrófono",
@@ -45,14 +53,18 @@
   },
   "participantsButton": {
     "label": "Contactos",
+    "tooltipContent": "Mostrar participantes",
     "menuHeader": "En esta llamada",
     "participantsListButtonLabel": "{numParticipants} personas",
     "muteAllButtonLabel": "Silenciar a todos",
     "copyInviteLinkButtonLabel": "Copiar vínculo de invitación"
   },
   "screenShareButton": {
-    "onLabel": "Detener",
-    "offLabel": "Compartir"
+    "onLabel": "Dejar de compartir",
+    "offLabel": "Compartir",
+    "tooltipDisabledContent": "El uso compartido de pantalla está deshabilitado",
+    "tooltipOnContent": "Dejar de compartir la pantalla",
+    "tooltipOffContent": "Compartir la pantalla"
   },
   "messageThread": {
     "yesterday": "Ayer",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Está compartiendo su pantalla",
-    "screenShareLoadingMessage": "Cargando la pantalla de {participant}"
+    "screenShareLoadingMessage": "Cargando la pantalla de {participant}",
+    "localVideoLabel": "Tú"
   }
 }

@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "送信できませんでした"
   },
   "endCallButton": {
-    "label": "退出"
+    "label": "退出",
+    "tooltipContent": "通話から退席"
   },
   "cameraButton": {
     "onLabel": "オフにする",
-    "offLabel": "オンにする"
+    "offLabel": "オンにする",
+    "tooltipDisabledContent": "カメラが無効になっています",
+    "tooltipOnContent": "カメラをオフ",
+    "tooltipOffContent": "カメラをオンにする"
   },
   "microphoneButton": {
     "onLabel": "ミュート",
-    "offLabel": "ミュート解除"
+    "offLabel": "ミュート解除",
+    "tooltipDisabledContent": "マイクが無効になっています",
+    "tooltipOnContent": "マイクをミュートにする",
+    "tooltipOffContent": "マイクのミュートを解除する"
   },
   "devicesButton": {
-    "label": "オプション",
+    "label": "デバイス",
+    "tooltipContent": "デバイスの管理",
     "cameraMenuTitle": "カメラ",
     "cameraMenuTooltip": "カメラの選択",
     "microphoneMenuTitle": "マイク",
@@ -45,14 +53,18 @@
   },
   "participantsButton": {
     "label": "ユーザー",
+    "tooltipContent": "参加者を表示する",
     "menuHeader": "この通話で",
     "participantsListButtonLabel": "{numParticipants} 人",
     "muteAllButtonLabel": "全員をミュート",
     "copyInviteLinkButtonLabel": "招待用のリンクをコピー"
   },
   "screenShareButton": {
-    "onLabel": "停止",
-    "offLabel": "共有"
+    "onLabel": "共有の停止",
+    "offLabel": "共有",
+    "tooltipDisabledContent": "画面共有が無効になっています",
+    "tooltipOnContent": "画面の共有を停止する",
+    "tooltipOffContent": "画面を共有します"
   },
   "messageThread": {
     "yesterday": "昨日",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
-    "screenShareLoadingMessage": "{participant} の画面を読み込んでいます"
+    "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
+    "localVideoLabel": "自分"
   }
 }
