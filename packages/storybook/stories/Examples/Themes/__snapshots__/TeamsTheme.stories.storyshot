@@ -69,6 +69,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Turn on camera"
                           className="ms-Button ms-Button--default root-10"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -124,6 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Unmute microphone"
                           className="ms-Button ms-Button--default root-10"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -179,6 +181,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Share your screen"
                           className="ms-Button ms-Button--default root-18"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -228,6 +231,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Leave Call"
                           className="ms-Button ms-Button--default root-19"
                           data-is-focusable={true}
                           onClick={[Function]}
