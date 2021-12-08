@@ -159,12 +159,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
-<<<<<<< HEAD
-                className="ms-Button ms-Button--default root-13"
-=======
                 aria-label="Share your screen"
                 className="ms-Button ms-Button--default root-5"
->>>>>>> origin/main
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -256,7 +252,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-37 css-14 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-37 css-13 ms-Button-menuIcon menuIcon-10"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -322,7 +318,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-37 css-14 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-37 css-13 ms-Button-menuIcon menuIcon-10"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -345,12 +341,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
-<<<<<<< HEAD
-                className="ms-Button ms-Button--default root-15"
-=======
                 aria-label="Leave Call"
                 className="ms-Button ms-Button--default root-14"
->>>>>>> origin/main
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}

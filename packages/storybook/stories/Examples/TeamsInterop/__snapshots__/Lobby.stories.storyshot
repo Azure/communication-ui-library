@@ -226,10 +226,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
-<<<<<<< HEAD
-=======
                   aria-label="Manage devices"
->>>>>>> origin/main
                   className="ms-Button ms-Button--default root-22"
                   data-is-focusable={true}
                   onClick={[Function]}
@@ -302,10 +299,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
-<<<<<<< HEAD
-=======
                   aria-label="Leave Call"
->>>>>>> origin/main
                   className="ms-Button ms-Button--default root-25"
                   data-is-focusable={true}
                   onClick={[Function]}

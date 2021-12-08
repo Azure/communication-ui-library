@@ -181,10 +181,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
-<<<<<<< HEAD
-=======
                           aria-label="Share your screen"
->>>>>>> origin/main
                           className="ms-Button ms-Button--default root-18"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -234,10 +231,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
-<<<<<<< HEAD
-=======
                           aria-label="Leave Call"
->>>>>>> origin/main
                           className="ms-Button ms-Button--default root-19"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -299,29 +293,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 className="css-55 css-21"
               >
                 <div
-<<<<<<< HEAD
-                  className="css-56 css-22"
-                >
-                  <div
-                    className="css-56 css-21"
-                  >
-                    <div
-                      className="ms-Stack css-29"
-                      data-ui-id="video-tile"
-                    >
-                      <div
-                        className="css-26"
-                      />
-                      <div
-                        className="ms-Stack css-30"
-                      >
-                        <div
-                          className="ms-Stack css-32"
-                        >
-                          <div
-                            aria-label=""
-                            className="ms-Persona ms-Persona--size48 root-33"
-=======
                   className="ms-Stack css-28"
                   data-ui-id="video-tile"
                 >
@@ -351,7 +322,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           <div
                             className="ms-Persona-imageArea imageArea-41"
                             role="presentation"
->>>>>>> origin/main
                             style={
                               Object {
                                 "height": 100,
@@ -360,36 +330,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                             }
                           >
                             <div
-<<<<<<< HEAD
-                              className="ms-Persona-coin ms-Persona--size48 coin-40"
-                              role="presentation"
-                            >
-                              <div
-                                className="ms-Persona-imageArea imageArea-42"
-                                role="presentation"
-                                style={
-                                  Object {
-                                    "height": 100,
-                                    "width": 100,
-                                  }
-                                }
-                              >
-                                <div
-                                  aria-hidden="true"
-                                  className="ms-Persona-initials initials-45"
-                                  style={
-                                    Object {
-                                      "height": 100,
-                                      "width": 100,
-                                    }
-                                  }
-                                >
-                                  <span>
-                                    M
-                                  </span>
-                                </div>
-                              </div>
-=======
                               aria-hidden="true"
                               className="ms-Persona-initials initials-44"
                               style={
@@ -402,27 +342,10 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                               <span>
                                 M
                               </span>
->>>>>>> origin/main
                             </div>
                           </div>
                         </div>
                       </div>
-<<<<<<< HEAD
-                      <div
-                        className="ms-Stack css-81 css-48"
-                      >
-                        <div
-                          className="ms-Stack css-82 css-49"
-                        >
-                          <span
-                            className="css-50"
-                            title="Michael"
-                          >
-                            Michael
-                          </span>
-                        </div>
-                      </div>
-=======
                     </div>
                   </div>
                   <div
@@ -437,7 +360,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       >
                         Michael
                       </span>
->>>>>>> origin/main
                     </div>
                   </div>
                 </div>
