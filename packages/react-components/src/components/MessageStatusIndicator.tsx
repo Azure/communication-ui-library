@@ -69,6 +69,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       return (
         <TooltipHost content={strings.failedToSendTooltipText}>
           <Icon
+            role="status"
+            aria-label={strings.failedToSendTooltipText}
             iconName="MessageFailed"
             className={mergeStyles(
               MessageStatusIndicatorErrorIconStyle,
@@ -82,6 +84,8 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
       return (
         <TooltipHost content={strings.sendingTooltipText}>
           <Icon
+            role="status"
+            aria-label={strings.sendingTooltipText}
             iconName="MessageSending"
             className={mergeStyles(
               MessageStatusIndicatorIconStyle,
@@ -94,13 +98,20 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
     case 'seen':
       return (
         <TooltipHost content={strings.seenTooltipText}>
-          <Icon iconName="MessageSeen" className={mergeStyles({ color: theme.palette.themePrimary }, styles?.root)} />
+          <Icon
+            role="status"
+            aria-label={strings.seenTooltipText}
+            iconName="MessageSeen"
+            className={mergeStyles({ color: theme.palette.themePrimary }, styles?.root)}
+          />
         </TooltipHost>
       );
     case 'delivered':
       return (
         <TooltipHost content={strings.deliveredTooltipText}>
           <Icon
+            role="status"
+            aria-label={strings.deliveredTooltipText}
             iconName="MessageDelivered"
             className={mergeStyles(
               MessageStatusIndicatorIconStyle,
