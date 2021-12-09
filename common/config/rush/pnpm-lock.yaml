@@ -2832,13 +2832,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-pVY2m3IC5+LLmMzsaPApX9eKTzpOzdgQwrR3FNTE6mGx3N/+QWYM7fdF+T1ldZQt87dCRSeQnmAo5kqjtxeA/w==
-  /@fluentui/merge-styles/8.1.4:
-    dependencies:
-      '@fluentui/set-version': 8.1.5
-      tslib: 2.3.1
-    dev: false
-    resolution:
-      integrity: sha512-zCAEjZyALk0CGW1H9YNJU+e/MW0P5sFJfrDvac27K4S/dIQvKnOwMUNOWRkNz3yUEt0R9vo0NtiO3cW04cZq3A==
   /@fluentui/merge-styles/8.2.2:
     dependencies:
       '@fluentui/set-version': 8.1.5
@@ -3067,7 +3060,7 @@ packages:
       '@fluentui/date-time-utilities': 8.2.2
       '@fluentui/font-icons-mdl2': 8.1.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/foundation-legacy': 8.1.8_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/merge-styles': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
       '@fluentui/react-focus': 8.1.10_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-hooks': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-window-provider': 2.1.5_796713c4bb4631ac40b03d54b6277837
@@ -19617,6 +19610,7 @@ packages:
       '@azure/core-http': 1.2.4
       '@azure/core-paging': 1.1.3
       '@fluentui/react': 8.17.4_c2a703770fc22cd5845ac34fc7d0fe24
+      '@fluentui/react-hooks': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-icons': 1.1.137
       '@fluentui/react-northstar': 0.57.0_c2a703770fc22cd5845ac34fc7d0fe24
       '@microsoft/api-documenter': 7.12.22
@@ -19681,7 +19675,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-G6+NjwOcu2DxPtfI0yD52QsRUTWcvjR3wBSRVxnSWCsQXlTnJ+DEkdRT9cARZqcSsGdLLvoKDs40oUhYaFGqPQ==
+      integrity: sha512-yX5Ojehui58NG9o2R2QoZTiZj5JOn4gm2hEe0POSH6dmZLQGExJx3Y9dxjQq574Whg7JFuzNYZRcqqFfGW7Upg==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
