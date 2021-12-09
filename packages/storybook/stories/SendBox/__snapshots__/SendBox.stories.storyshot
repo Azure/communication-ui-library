@@ -44,6 +44,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 >
                   <textarea
                     aria-invalid={false}
+                    aria-live="polite"
                     className="ms-TextField-field ms-TextField--unresizable css-61 css-56 field-10"
                     data-ui-id="sendbox-textfield"
                     disabled={false}
@@ -54,6 +55,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                     onInput={[Function]}
                     onKeyDown={[Function]}
                     placeholder="Enter a message"
+                    tabIndex={1}
                     value=""
                   />
                 </div>
@@ -63,6 +65,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               className="ms-Stack css-19"
             >
               <button
+                aria-label="send"
                 className="ms-Button ms-Button--icon css-62 css-57 root-20"
                 data-is-focusable={true}
                 id="sendIconWrapper"
@@ -74,6 +77,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
+                tabIndex={2}
                 type="button"
               >
                 <span
