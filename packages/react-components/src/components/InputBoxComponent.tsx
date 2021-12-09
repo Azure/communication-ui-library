@@ -107,6 +107,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
         <TextField
+          role={'textfield'}
+          tabIndex={1}
           data-ui-id={dataUiId}
           multiline
           autoAdjustHeight
@@ -157,6 +159,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
   return (
     <IconButton
+      tabIndex={2}
       className={mergedButtonStyle}
       ariaLabel={ariaLabel}
       onClick={onClick}
