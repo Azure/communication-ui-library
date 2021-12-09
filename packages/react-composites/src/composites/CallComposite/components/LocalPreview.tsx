@@ -55,7 +55,11 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const theme = useTheme();
   const onRenderPlaceholder = useCallback((): JSX.Element => {
     return (
-      <Stack className={mergeStyles({ width: '100%', height: '100%' })} verticalAlign="center">
+      <Stack
+        className={mergeStyles({ width: '100%', height: '100%' })}
+        verticalAlign="center"
+        tokens={{ childrenGap: '0.25rem' }}
+      >
         <Stack.Item align="center">
           <Icon
             iconName="LocalPreviewPlaceholder"
