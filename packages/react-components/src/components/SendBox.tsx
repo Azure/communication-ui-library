@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
 import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
@@ -128,6 +128,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
+  useEffect(() => sendTextFieldRef.current?.focus(), []);
+
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled
     if (disabled || textValueOverflow) {
@@ -221,6 +223,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         }}
         id={'sendIconWrapper'}
         className={mergedSendButtonStyle}
+        ariaLabel="send"
       />
     </InputBoxComponent>
   );

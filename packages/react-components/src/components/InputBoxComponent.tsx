@@ -107,7 +107,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
         <TextField
-          role={'textfield'}
           tabIndex={1}
           data-ui-id={dataUiId}
           multiline
@@ -125,6 +124,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           styles={mergedTextFieldStyle}
           disabled={disabled}
           errorMessage={errorMessage}
+          aria-live={'polite'}
         />
         <Stack
           horizontal
