@@ -42,7 +42,9 @@
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
-    "uuid": "^8.1.0"
+    "use-long-press": "~1.1.1",
+    "uuid": "^8.1.0",
+    "type-fest": "~2.5.4"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",
@@ -53,12 +55,19 @@
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
   "scripts": {
+    "copy-original": "cpx ../*/src/** ./preprocess-dist & renamer --find src --replace preprocessed ./preprocess-dist/**",
+    "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
+    "preprocess:stable": "cross-env FLAVOR=stable rushx preprocess",
+    "copy-preprocess": "cpx ../*/preprocessed/** ./preprocess-dist & renamer --find preprocessed --replace src ./preprocess-dist/**",
+    "clean:preprocess": "rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
     "build": "rushx clean && rushx check-deps && rushx build:esm && rushx build:cjs && api-extractor run --local",
     "build:cjs": "rollup -c --silent",
     "build:esm": "ttsc",
+    "build:stable": "rushx clean:preprocess && rushx copy-original && rushx preprocess:stable && rushx copy-preprocess && ttsc -project tsconfig.preprocess.json && rushx build:cjs && api-extractor run --local",
     "build:watch": "",
     "clean": "rimraf dist",
     "test": "",
+    "test:stable": "",
     "test:coverage": "",
     "check-deps": "node scripts/verifyDependencies",
     "api-extractor": "tsc && api-extractor run --local",
@@ -71,6 +80,9 @@
     "postpack": "copyfiles -E \"./*.tgz\" release"
   },
   "devDependencies": {
+    "@azure/core-auth": "1.3.2",
+    "@babel/core": "~7.16.0",
+    "@babel/cli": "~7.16.0",
     "@internal/calling-component-bindings": "1.0.0-beta.8",
     "@internal/calling-stateful-client": "1.0.0-beta.8",
     "@internal/chat-component-bindings": "1.0.0-beta.8",
@@ -122,7 +134,11 @@
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
     "ttypescript": "~1.5.12",
-    "typescript": "4.3.5"
+    "typescript": "4.3.5",
+    "uuid": "^8.1.0",
+    "cpx": "~1.5.0",
+    "renamer": "~4.0.0",
+    "cross-env": "~7.0.3"
   },
   "beachball": {
     "shouldPublish": false

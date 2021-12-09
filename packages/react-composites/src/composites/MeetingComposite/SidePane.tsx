@@ -140,7 +140,7 @@ export const EmbeddedChatPane = (props: {
         {...props.chatCompositeProps}
         adapter={props.chatAdapter}
         fluentTheme={props.fluentTheme}
-        options={{ participantPane: false, topic: false }}
+        options={{ topic: false, /* @conditional-compile-remove-from(stable) */ participantPane: false }}
       />
     </SidePane>
   );
