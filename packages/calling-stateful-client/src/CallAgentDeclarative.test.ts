@@ -77,9 +77,9 @@ class MockCallAgent implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
-  join(TeamsMeetingLinkLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  join(TeamsMeetingLinkLocator: any, options?: any): Call {
+  join(meetingLocator: any, options?: any): Call {
     const remoteParticipant = createMockRemoteParticipant(mockRemoteParticipantId);
     const call = createMockCall(mockCallId);
     call.remoteParticipants = [remoteParticipant];
@@ -125,9 +125,9 @@ class MockCallAgentWithMultipleCalls implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
-  join(TeamsMeetingLinkLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  join(TeamsMeetingLinkLocator: any, options?: any): Call {
+  join(meetingLocator: any, options?: any): Call {
     const remoteParticipant = createMockRemoteParticipant(mockRemoteParticipantId);
     const call = createMockCall(mockCallId);
     call.remoteParticipants = [remoteParticipant];
