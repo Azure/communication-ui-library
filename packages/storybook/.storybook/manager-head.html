@@ -15,9 +15,13 @@
 
 
 <style>
-  /* Avoid sidebar header image getting very large */
+  /* body background */
+  body {
+    background: #faf9f8 !important;
+  }
+  /* Vertically aligned imaged with items in sidebar  */
   .sidebar-header img {
-    max-height: 4rem;
+    margin-left: -0.685rem;
   }
 
   /* Reduce sidebar header image padding from 20px to 10px */
@@ -87,7 +91,7 @@
 
 <script>
   function addUsefulLinks() {
-    const linkStyle = 'color: black; text-decoration: none; text-align: center; cursor: pointer; padding: 0rem 0.5rem;';
+    const linkStyle = 'color: black; text-decoration: none; text-align: center; cursor: pointer; padding-right: 0.5rem;';
     const imageStyle = 'height: 0.75rem; margin-top: 0.125rem;';
     const textStyle = 'margin-left: 0.25rem; font-size: 0.75rem;';
     const linkContentStyle = 'display: flex;';
