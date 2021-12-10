@@ -105,7 +105,10 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
    * This is due to to headless limitation where a call can not be muted/unmuted in lobby.
    */
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
-  if (_isInLobbyOrConnecting(callStatus)) {
+  // We need to check for `callStatus` === 'None' as well since that's the first status of a call when
+  // we join an ACS or Teams interop call. If we don't handle 'None', the microphone status won't reflect
+  // the local microphone state when `callStatus` is 'None'.
+  if (_isInLobbyOrConnecting(callStatus) || callStatus === 'None') {
     microphoneButtonProps.disabled = true;
     // Lobby page should show the microphone status that was set on the local preview/configuration
     // page until the user successfully joins the call.
