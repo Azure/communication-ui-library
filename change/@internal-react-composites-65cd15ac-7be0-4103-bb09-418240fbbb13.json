@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bugfix for mic not reflecting local mic state in l",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
