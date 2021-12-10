@@ -6,17 +6,14 @@ import {
   CallAgent,
   CollectionUpdatedEvent,
   UserFacingDiagnosticsFeature,
-  GroupChatCallLocator,
   GroupLocator,
   IncomingCallEvent,
   JoinCallOptions,
-  MeetingLocator,
+  TeamsMeetingLinkLocator,
   RecordingCallFeature,
   StartCallOptions,
   TranscriptionCallFeature,
-  CallFeatureFactory,
-  CallAgentFeature,
-  CallAgentFeatureFactory
+  CallFeatureFactory
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
@@ -80,8 +77,7 @@ class MockCallAgent implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
-  join(groupChatCallLocator: GroupChatCallLocator, options?: JoinCallOptions): Call;
-  join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {
     const remoteParticipant = createMockRemoteParticipant(mockRemoteParticipantId);
@@ -91,9 +87,6 @@ class MockCallAgent implements CallAgent {
   }
   dispose(): Promise<void> {
     return Promise.resolve();
-  }
-  feature<TFeature extends CallAgentFeature>(factory: CallAgentFeatureFactory<TFeature>): TFeature {
-    throw new Error('Not implemented');
   }
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
@@ -132,17 +125,13 @@ class MockCallAgentWithMultipleCalls implements CallAgent {
     return call;
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
-  join(groupChatCallLocator: GroupChatCallLocator, options?: JoinCallOptions): Call;
-  join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {
     const remoteParticipant = createMockRemoteParticipant(mockRemoteParticipantId);
     const call = createMockCall(mockCallId);
     call.remoteParticipants = [remoteParticipant];
     return call;
-  }
-  feature<TFeature extends CallAgentFeature>(factory: CallAgentFeatureFactory<TFeature>): TFeature {
-    throw new Error('Not implemented');
   }
   dispose(): Promise<void> {
     return Promise.resolve();
