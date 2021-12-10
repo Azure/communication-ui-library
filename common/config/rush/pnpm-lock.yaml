@@ -26,13 +26,13 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-lNUmDRVGpanCsiUN3NWxFTdwmdFI53xwhkTFfHDGTYk46ca7Ind3nanJc+U6Zj9Tv+9nTCWRBscWEW1DyKOpTw==
-  /@azure/communication-calling/1.3.1-beta.1:
+  /@azure/communication-calling/1.3.2:
     dependencies:
       '@azure/communication-common': 1.1.0
       '@azure/logger': 1.0.2
     dev: false
     resolution:
-      integrity: sha512-ABmHZaXFd8aoQVST7Y48bji+A3QFZj+45HCvpkI0O2qK5u6GzKWhkjH/XRRduyzwy9OxIwvRqUjG2DmonyzClQ==
+      integrity: sha512-dO0NAHJ2KqI9NGptmQtQP1C8S4tTokyplxtr4AT5bCgF6Iywg6FbN0R/8MXmMMLb4YJyuh6ewSAXZo4z2PaN6g==
   /@azure/communication-chat/1.1.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -3504,14 +3504,14 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha1-unVNx9DyqEnSanEHLZAtdjRc4BQ=
+      integrity: sha512-AETOoj8y4fnZyB9wRfoFIxPzrVc4kLp2t+lk9dBKOkwWKNFJSYEcBeInk4qbQdsAeCG7EyxsbsQRZ+0QfbMNwA==
   /@microsoft/api-extractor-model/7.12.5:
     dependencies:
       '@microsoft/tsdoc': 0.12.24
       '@rushstack/node-core-library': 3.36.2
     dev: false
     resolution:
-      integrity: sha1-KNKASGXOupzYmrTwXP+Z0W+mybg=
+      integrity: sha512-oeHZW83JWjIVoCDvdwI5nsZGPxThbq4gZTLAYNeJGZE/mKEO0iayMPGmI3EllJBjwQsFvNVU+O/HGULhB2to/g==
   /@microsoft/api-extractor-model/7.13.5:
     dependencies:
       '@microsoft/tsdoc': 0.13.2
@@ -3519,7 +3519,7 @@ packages:
       '@rushstack/node-core-library': 3.40.0
     dev: false
     resolution:
-      integrity: sha1-eDaoG6R7mmVAYu0DYeTu5pr65R4=
+      integrity: sha512-il6AebNltYo5hEtqXZw4DMvrwBPn6+F58TxwqmsLY+U+sSJNxaYn2jYksArrjErXVPR3gUgRMqD6zsdIkg+WEQ==
   /@microsoft/api-extractor/7.18.5:
     dependencies:
       '@microsoft/api-extractor-model': 7.13.5
@@ -3537,7 +3537,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha1-zCgE18i50PHmP9hdBEhWm3Z9sQI=
+      integrity: sha512-NUGS6WxexziEnroHUOI3KKVmMX02god7SLA8Y4a5GKCL5k7AHuHFqP2bpd5Otx2odfbdj15ObO7FU/XA3Oxh8w==
   /@microsoft/applicationinsights-analytics-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3546,7 +3546,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-fxUsolySaxfrnxFG8j+sd1ymobY=
+      integrity: sha512-DVL2laBpa4wKcoZcvGRrGLd9N/Xz3vzq5rRhs4PxJawM4mlABe97UpRnrDARzGIubOhTKsix2V4hB9+gUtRz7A==
   /@microsoft/applicationinsights-channel-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3555,7 +3555,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-7vbaXegIupcMZn/b/wN2LCOQitI=
+      integrity: sha512-Njbeqn/Z1O8NZ10gdX1FXb4Z2TK7a9SCrjZ32ieTAr9HVefaZZCG9yKTTXkp8MnDUCnwjC2wZA9xN4u2BAi+lQ==
   /@microsoft/applicationinsights-common/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-core-js': 2.6.5
@@ -3563,14 +3563,14 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-S0deOI+NtgDjJxKteM0agPTOP+8=
+      integrity: sha512-nwJ0UO5WZbbdU6mgiN1oZ/NLTbT/oeMVmZJtlbuQ+xCz57LODi/mPAndd4+BA3xU+4u7MhLl6GyQqX5hcyUsow==
   /@microsoft/applicationinsights-core-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-shims': 2.0.0
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-NNB4cN1eT/Uk7Tjd+jghhuHcfKA=
+      integrity: sha512-+Vg8Cy06Z+Mwh4W7P5hqx03ThO+l5t7TfcP+ynuS1SGFIuYKaBOwxgt/uIIon8X12sk0dGkrPsTGZMiUtXJ5Zw==
   /@microsoft/applicationinsights-dependencies-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3579,7 +3579,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-djpxAh23JxJo8MpeURAQ8CHXQJ4=
+      integrity: sha512-Iw7jKESSnD52FodfI1QCp7HCFKqAdeLK/V3iEt6ArBJ54J/DYc/wD1sI8h2N5jBak0Mk7Lmu3LiyxtemOAn8pw==
   /@microsoft/applicationinsights-properties-js/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3588,7 +3588,7 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-8FFMAyzGRU5abA/8dsra1o2macs=
+      integrity: sha512-0etD5TkBFi4cnleGivxc02uLJIaP/sGHpyzOXfYSuLzRchKGWwX+fVhirt/acIigh+Mi8tiDuXqZ92H7DE5mbA==
   /@microsoft/applicationinsights-react-js/3.0.5_react@16.14.0:
     dependencies:
       '@microsoft/applicationinsights-common': 2.6.5
@@ -3600,15 +3600,15 @@ packages:
     peerDependencies:
       react: ^16.0.0
     resolution:
-      integrity: sha1-jreDo93wAw0h1+aGpNwfPejmFpc=
+      integrity: sha512-+cAD9NZXQZB4/5gBkLrxXywtQllTqTPDlGod2Emli0kM9JLi4P4iH/i4Gtn4OBJtjlzcjYzU91AnFrjIisxx9A==
   /@microsoft/applicationinsights-shims/1.0.3:
     dev: false
     resolution:
-      integrity: sha1-nx0WurBDDyXMF2EcU3dWz039ODM=
+      integrity: sha512-+S17aqEkOYpyBpmclhgwcEplwnxSo5AxYBdRg38GBobI1GKPSpZfnLssLzcjJ6XZCS5tqB5xjyTZs6gHj7ZJWQ==
   /@microsoft/applicationinsights-shims/2.0.0:
     dev: false
     resolution:
-      integrity: sha1-7mIliPFOWK48BVsSQx2o7VXXGZE=
+      integrity: sha512-OaKew7f7acuNFgKYjMSPrRTRQi93xUyONWeeCeBlJSx7oRNJaL0TqbTvW6j5GHnSr3mhinPtAQ+rCQWASBnOrg==
   /@microsoft/applicationinsights-web/2.6.5:
     dependencies:
       '@microsoft/applicationinsights-analytics-js': 2.6.5
@@ -3621,15 +3621,15 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.4
     dev: false
     resolution:
-      integrity: sha1-0pXfWn0LrNbiePLGCNqTeWI4acg=
+      integrity: sha512-ytSzE2b0InD/dGo+pObD1amwMXPWMXIGICuf3P94F5DV/Unt8rDRfex0JuNkfDJ1muH36uo5nEJMxzvtATx19g==
   /@microsoft/dynamicproto-js/1.1.4:
     dev: false
     resolution:
-      integrity: sha1-QOHArSB0P87hYEp98sV/rwqhr4c=
+      integrity: sha512-Ot53G927ykMF8cQ3/zq4foZtdk+Tt1YpX7aUTHxBU7UHNdkEiBvBfZSq+rnlUmKCJ19VatwPG4mNzvcGpBj4og==
   /@microsoft/load-themed-styles/1.10.202:
     dev: false
     resolution:
-      integrity: sha1-icvfRknrZdmyUIRKuuuOr+oaasI=
+      integrity: sha512-pWoN9hl1vfXnPfu2tS5VndXXKMe+UEWLJXDKNGXSNpmfszVLzG8Ns0TlZHlwtgpSaSD3f0kdVDfqAek8aflD4w==
   /@microsoft/tsdoc-config/0.15.2:
     dependencies:
       '@microsoft/tsdoc': 0.13.2
@@ -3638,15 +3638,15 @@ packages:
       resolve: 1.19.0
     dev: false
     resolution:
-      integrity: sha1-6zU8k/O2KrdL3Jq29Kgrz4AUDxQ=
+      integrity: sha512-mK19b2wJHSdNf8znXSMYVShAHktVr/ib0Ck2FA3lsVBSEhSI/TfXT7DJQkAYgcztTuwazGcg58ZjYdk0hTCVrA==
   /@microsoft/tsdoc/0.12.24:
     dev: false
     resolution:
-      integrity: sha1-MHKONOvJA1HdOv9OGNA47tLD4Jg=
+      integrity: sha512-Mfmij13RUTmHEMi9vRUhMXD7rnGR2VvxeNYtaGtaJ4redwwjT4UXYJ+nzmVJF7hhd4pn/Fx5sncDKxMVFJSWPg==
   /@microsoft/tsdoc/0.13.2:
     dev: false
     resolution:
-      integrity: sha1-Ow77bTkDvUntsHNpb2DpDfCO+yY=
+      integrity: sha512-WrHvO8PDL8wd8T2+zBGKrMwVL5IyzR3ryWUsl0PXgEV0QHup4mTLi0QcATefGI6Gx9Anu7vthPyyyLpY0EpiQg==
   /@mrmlnc/readdir-enhanced/2.2.1:
     dependencies:
       call-me-maybe: 1.0.1
@@ -8333,18 +8333,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-xb3ZL6+L8b9JLLCx3ZdoZy4+2ECphCMo2PwqgP1tlfVq6M6YReyzBJtvWWtbDSpNr9hn96pkCiZqUcFEc+54Qg==
-  /cosmiconfig/7.0.0:
-    dependencies:
-      '@types/parse-json': 4.0.0
-      import-fresh: 3.3.0
-      parse-json: 5.2.0
-      path-type: 4.0.0
-      yaml: 1.10.2
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-pondGvTuVYDk++upghXJabWzL6Kxu6f26ljFw64Swq9v6sQPUL3EUlVDV56diOjpCayKihL6hVe8exIACU4XcA==
   /cosmiconfig/7.0.1:
     dependencies:
       '@types/parse-json': 4.0.0
@@ -11511,7 +11499,7 @@ packages:
       chalk: 4.1.2
       ci-info: 2.0.0
       compare-versions: 3.6.0
-      cosmiconfig: 7.0.0
+      cosmiconfig: 7.0.1
       find-versions: 4.0.0
       opencollective-postinstall: 2.0.3
       pkg-dir: 5.0.0
@@ -19335,7 +19323,7 @@ packages:
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
     dependencies:
-      '@azure/communication-calling': 1.3.1-beta.1
+      '@azure/communication-calling': 1.3.2
       '@azure/communication-common': 1.0.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.5
@@ -19363,12 +19351,12 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-aup8lCRezhIi8jh4om2XZ9TkhmX1NaxLvP+x+bbCIN/xBRCHEjkcsT9O7mLg5e45nRO8Sx9seNE2D4JR2fj3Ew==
+      integrity: sha512-10h5a6q/opD5UqMzfeT2dLb0bv+qOSM9daOFMuWAQuKw7yQcwEvkMy3py5yt9gz6N1Eq+fN8oAGl2OaPeywXxQ==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
     dependencies:
-      '@azure/communication-calling': 1.3.1-beta.1
+      '@azure/communication-calling': 1.3.2
       '@azure/communication-common': 1.0.0
       '@azure/core-auth': 1.3.2
       '@microsoft/api-documenter': 7.12.22
@@ -19395,12 +19383,12 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-N3yMssBJb+sq3OXNonbB9HFlh6aba9UOf5MDPX+i6Mp2kVqmfWl9LG2Zuq5mrl4xGJ/3eRlSUWEZ/1+SAWg/kA==
+      integrity: sha512-wIzZOCvLRy+h8dLW3J5UrS6Q938MOkLL4AgTabNCneqdzeQnWQXmlvaaAwTlCXe239FVrXieltTw7HwPx5jV7Q==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
     dependencies:
-      '@azure/communication-calling': 1.3.1-beta.1
+      '@azure/communication-calling': 1.3.2
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
       '@azure/core-http': 1.2.4
@@ -19464,7 +19452,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-Ry6FVSWKRQdXwZnRhkccLmNusqPRlvaN0/cunoo6TG0hgf0+tpyjCjFOgtz8EHbMeTDH3wqJXcXlhq4Ud8b0CA==
+      integrity: sha512-y8uMqRj/WZIm14TX8WRod1Nxc2HmFxSVPTimn7xD+DYRR1piNutNufcnsnag93lF88WgYYYQ2lZuedlBMkwElA==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19615,7 +19603,7 @@ packages:
     version: 0.0.0
   file:projects/communication-react.tgz:
     dependencies:
-      '@azure/communication-calling': 1.3.1-beta.1
+      '@azure/communication-calling': 1.3.2
       '@azure/communication-chat': 1.1.0
       '@azure/communication-common': 1.0.0
       '@azure/communication-signaling': 1.0.0-beta.5
@@ -19686,12 +19674,12 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-G6+NjwOcu2DxPtfI0yD52QsRUTWcvjR3wBSRVxnSWCsQXlTnJ+DEkdRT9cARZqcSsGdLLvoKDs40oUhYaFGqPQ==
+      integrity: sha512-LubW+jYp6+EIyjEhgMWIUp/zl3CgnnC9WVsXkTqIzqvhlzuGaFM9JFomPI8Cu+L/ayO3DFKs+ANP63L/a9wmdA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
     dependencies:
-      '@azure/communication-calling': 1.3.1-beta.1
+      '@azure/communication-calling': 1.3.2
       '@azure/communication-chat': 1.1.0
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
@@ -19751,7 +19739,7 @@ packages:
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-PjVH6wSiZV3qikIj/fhR8JnnYe+zKWZdsAICHg/DjHubRvlFhFzEgQ8DJmseDpnbx9+FT+TVVUX9h4SKBnTxxQ==
+      integrity: sha512-1Db66p2GT653JUSbVGGG0PLwCBR4sOTktPCnY/M4RIZe5f85k1qp7FdW1hfc+gxlXOno0i0NIP09H6jVQAgaeg==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19853,7 +19841,7 @@ packages:
     version: 0.0.0
   file:projects/react-composites.tgz:
     dependencies:
-      '@azure/communication-calling': 1.3.1-beta.1
+      '@azure/communication-calling': 1.3.2
       '@azure/communication-chat': 1.1.0
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
@@ -19943,7 +19931,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-XzL1y9GL5NUWsfk/j0GzKNC0VP1gFAhBQQvuPdwsVUG2Pv6jtbaS/EUrBLqWfsOYJVBdAOrrROVsb3ewNm5QPQ==
+      integrity: sha512-vLvSWP1l89oF6cdetvgeDT7cvhyU7UHt8VHhto9v+lvotFdkdUd+YyRiHlCkWknA0r/8eFmSn3VtySImO9JB1A==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -20052,7 +20040,7 @@ packages:
     version: 0.0.0
   file:projects/storybook.tgz:
     dependencies:
-      '@azure/communication-calling': 1.3.1-beta.1
+      '@azure/communication-calling': 1.3.2
       '@azure/communication-chat': 1.1.0
       '@azure/communication-common': 1.0.0
       '@azure/communication-identity': 1.0.0
@@ -20149,7 +20137,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-1v9kEKGWKT84utiisX0u2ocgQc25kz2FciDZf3if4xKNeIdYzJITtPunNfQGEhpKKDOJ5MXX7k9XKKWqPIgNNw==
+      integrity: sha512-PFLv2Fh5EBkZDesPc+Fx6i/3CVdLsEueqyLJQh9kyHmSJPKDC2MBt3ld74dAbuLe/DQ0cykIWUo2ZV8DD2hgpw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
