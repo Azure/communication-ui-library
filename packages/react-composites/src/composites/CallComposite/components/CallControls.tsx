@@ -108,6 +108,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
   // We need to check for `callStatus` === 'None' as well since that's the first status of a call when
   // we join an ACS or Teams interop call. If we don't handle 'None', the microphone status won't reflect
   // the local microphone state when `callStatus` is 'None'.
+  // TODO: Ensure that mic toggle is not disabled during a non interop call as it is allowed to toggle mic in acs call while it is connecting.
   if (_isInLobbyOrConnecting(callStatus) || callStatus === 'None') {
     microphoneButtonProps.disabled = true;
     // Lobby page should show the microphone status that was set on the local preview/configuration
