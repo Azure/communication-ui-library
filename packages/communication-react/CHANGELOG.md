@@ -18,7 +18,7 @@ In the future, we will continue to evolve the composites with the latest Azure C
 
 Features:
 - 🎁 Embed composites into your web applications with a few lines of code
-- 🌈 Theme using FluentUI style theming [link](https://fluentuipr.z22.web.core.windows.net/heads/master/theming-designer/index.html)
+- 🌈 Theme using [FluentUI style theming](https://fluentuipr.z22.web.core.windows.net/heads/master/theming-designer/index.html)
 - 🎧 Listen to communication events (e.g when the call has ended)
 - 💥 Take action on behalf of the user
 
@@ -30,7 +30,7 @@ Along with the choice to build an open-source library, the UI components allow u
 
 Features:
 - ✏️ Create calling and chat clients using ReactJS
-- 🎨 Style UI components using FluentUI styling patterns [link](https://github.com/microsoft/fluentui/wiki/Component-Styling)
+- 🎨 Style UI components using [FluentUI styling patterns](https://github.com/microsoft/fluentui/wiki/Component-Styling)
 - 🏠 Layout your calling and chat components
 - 🎛️ Integrate your own custom logic
 
