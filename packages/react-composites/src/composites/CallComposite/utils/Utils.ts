@@ -104,8 +104,11 @@ export const getCallCompositePage = (
       return 'call';
     } else {
       // When the call object has been constructed after clicking , but before 'connecting' has been
-      // set on the call object, we want to show the connecting screen (which is part of the lobby page currently)
-      return 'lobby';
+      // set on the call object, we continue to show the configuration screen.
+      // The call object does not correctly reflect local device state until `call.state` moves to `connecting`.
+      // Moving to the 'lobby' page too soon leads to components that depend on the `call` object to show incorrect
+      // transitional state.
+      return 'configuration';
     }
   }
 
