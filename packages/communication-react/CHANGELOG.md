@@ -4,13 +4,42 @@ This log was last generated on Mon, 06 Dec 2021 19:41:54 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.0.0](https://github.com/azure/communication-ui-library/tree/1.0.0)
+## [v1.0.0 - Release](https://github.com/azure/communication-ui-library/tree/1.0.0)
 
 Mon, 06 Dec 2021 19:41:54 GMT
 
-TODO: Release notes here.
+We have heard from developers that building UI is a challenge. The Azure Communication Services UI Library is here to help. It offers modern calling/chat UI features which integrate seamlessly into your application. We designed this library with attention to customizability, localization, and a11y features so that you can create immersive and inclusive experiences your users love. ❤
 
-### Changes since 1.0.0-beta.8
+### Composites
+
+Composites are a low code, end-to-end solution to power your call and chat scenarios with Azure Communication Services. We designed them as an out-of-the box solution to be dropped into your application with the ability to integrate seamlessly with theming, styling and custom application logic.
+
+In the future, we will continue to evolve the composites with the latest Azure Communication Services features so you can integrate them into your application with minimal effort.
+
+Features:
+- 🎁 Embed composites into your web applications with a few lines of code
+- 🌈 Theme using [FluentUI style theming](https://fluentuipr.z22.web.core.windows.net/heads/master/theming-designer/index.html)
+- 🎧 Listen to communication events (e.g when the call has ended)
+- 💥 Take action on behalf of the user
+
+### UI Components
+
+We have also added a development experience for developers that want more control over the end-user experience. By exposing our UI components and underlying state management architecture, we seek to empower developers who want granular control over how the UI components build up into the overall communication experience. Compared to composites, the UI components offer increased flexibility at the cost of additional development effort.
+
+Along with the choice to build an open-source library, the UI components allow us to share the tools we use to make great products with you. We hope you will be excited by the level of granularity, use it in your own applications, and consider contributing back.
+
+Features:
+- ✏️ Create calling and chat clients using ReactJS
+- 🎨 Style UI components using [FluentUI styling patterns](https://github.com/microsoft/fluentui/wiki/Component-Styling)
+- 🏠 Layout your calling and chat components
+- 🎛️ Integrate your own custom logic
+
+### Storybook
+
+📕 Check out our documentation in [storybook](https://azure.github.io/communication-ui-library/) to learn more about the UI Library.
+🚀 Try out our composites and UI components today in the "Preview" tab in Storybook.
+
+## Changes since 1.0.0-beta.8
 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.0.0-beta.8...1.0.0)
 
