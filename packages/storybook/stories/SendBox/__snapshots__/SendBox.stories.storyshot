@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`] = `
 <div
-  className="css-59 body-0"
+  className="css-115 body-0"
   dir="ltr"
 >
   <div
-    className="css-59"
+    className="css-115"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -28,7 +28,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
         }
       >
         <div
-          className="ms-Stack css-60 css-5"
+          className="ms-Stack css-116 css-5"
         >
           <div
             className="css-3"
@@ -44,8 +44,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 >
                   <textarea
                     aria-invalid={false}
-                    aria-live="polite"
-                    className="ms-TextField-field ms-TextField--unresizable css-61 css-56 field-10"
+                    className="ms-TextField-field ms-TextField--unresizable css-117 css-112 field-10"
                     data-ui-id="sendbox-textfield"
                     disabled={false}
                     id="sendbox"
@@ -64,8 +63,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               className="ms-Stack css-19"
             >
               <button
-                aria-label="Send message"
-                className="ms-Button ms-Button--icon css-62 css-57 root-20"
+                className="ms-Button ms-Button--icon css-118 css-113 root-20"
                 data-is-focusable={true}
                 id="sendIconWrapper"
                 onClick={[Function]}
@@ -84,7 +82,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37 css-58 root-28"
+                    className="root-94 css-114 root-28"
                     data-icon-name="SendBoxSend"
                   >
                     <span

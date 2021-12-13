@@ -1,7 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, mergeStyles, Modal, Stack } from '@fluentui/react';
+import {
+  concatStyleSets,
+  ContextualMenu,
+  IDragOptions,
+  IStyle,
+  LayerHost,
+  mergeStyles,
+  Modal,
+  Stack
+} from '@fluentui/react';
 import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
@@ -30,14 +39,15 @@ import {
   floatingLocalVideoModalStyle,
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   videoGalleryContainerStyle,
-  videoGalleryContainerTokens,
-  videoGalleryOuterDivStyle
+  videoGalleryOuterDivStyle,
+  layerHostStyle
 } from './styles/VideoGallery.styles';
 import { isNarrowWidth, useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { VideoTile } from './VideoTile';
 import { v4 as uuidv4 } from 'uuid';
+import { useId } from '@fluentui/react-hooks';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -313,6 +323,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }, [containerRef]);
 
   const horizontalGalleryPresent = horizontalGalleryTiles && horizontalGalleryTiles.length > 0;
+  const layerHostId = useId('layerhost');
 
   return (
     <div
@@ -330,12 +341,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             isModeless={true}
             dragOptions={DRAG_OPTIONS}
             styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-            layerProps={{ hostId: containerRef.current?.id }}
+            layerProps={{ hostId: layerHostId }}
           >
             {localVideoTile}
           </Modal>
         ))}
-      <Stack horizontal={false} styles={videoGalleryContainerStyle} tokens={videoGalleryContainerTokens}>
+      <Stack horizontal={false} styles={videoGalleryContainerStyle}>
         {screenShareParticipant ? (
           remoteScreenShareComponent
         ) : localParticipant?.isScreenSharingOn ? (
@@ -346,19 +357,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           </GridLayout>
         )}
         {horizontalGalleryPresent && (
-          <ResponsiveHorizontalGallery
-            key="responsive-horizontal-gallery"
-            containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
-            horizontalGalleryStyles={concatStyleSets(horizontalGalleryStyle(isNarrow), styles?.horizontalGallery)}
-            childWidthRem={
-              isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
-            }
-            buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
-            gapWidthRem={HORIZONTAL_GALLERY_GAP}
-          >
-            {horizontalGalleryTiles}
-          </ResponsiveHorizontalGallery>
+          <div style={{ paddingTop: '0.5rem' }}>
+            <ResponsiveHorizontalGallery
+              key="responsive-horizontal-gallery"
+              containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
+              horizontalGalleryStyles={concatStyleSets(horizontalGalleryStyle(isNarrow), styles?.horizontalGallery)}
+              childWidthRem={
+                isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
+              }
+              buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
+              gapWidthRem={HORIZONTAL_GALLERY_GAP}
+            >
+              {horizontalGalleryTiles}
+            </ResponsiveHorizontalGallery>
+          </div>
         )}
+
+        <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       </Stack>
     </div>
   );
