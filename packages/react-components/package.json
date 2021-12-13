@@ -35,7 +35,8 @@
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "html-to-react": "~1.4.5",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "@fluentui/react-hooks": "~8.3.7"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",
