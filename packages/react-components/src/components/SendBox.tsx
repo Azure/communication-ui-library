@@ -45,6 +45,10 @@ export interface SendBoxStrings {
    * The warning message when send box text length is more than max limit
    */
   textTooLong: string;
+  /**
+   *
+   */
+  sendButtonText: string;
 }
 
 /**
@@ -223,7 +227,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         }}
         id={'sendIconWrapper'}
         className={mergedSendButtonStyle}
-        // ariaLabel={localeStrings.}
+        ariaLabel={localeStrings.sendButtonText}
       />
     </InputBoxComponent>
   );

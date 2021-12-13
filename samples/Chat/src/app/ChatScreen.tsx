@@ -13,11 +13,7 @@ import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ChatHeader } from './ChatHeader';
-import {
-  chatCompositeContainerStyle,
-  chatHeaderContainerStyle,
-  chatScreenContainerStyle
-} from './styles/ChatScreen.styles';
+import { chatCompositeContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';

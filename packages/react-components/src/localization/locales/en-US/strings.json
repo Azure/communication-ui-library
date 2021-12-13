@@ -15,7 +15,8 @@
   },
   "sendBox": {
     "placeholderText": "Enter a message",
-    "textTooLong": "Your message length is over the maximum limit."
+    "textTooLong": "Your message length is over the maximum limit.",
+    "sendButtonText": "Send message"
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Sent",

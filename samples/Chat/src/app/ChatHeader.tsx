@@ -27,7 +27,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   return (
     <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
       <DefaultButton
-        className={mergeStyles(leaveButtonStyle, largeLeaveButtonContainerStyle, {
+        className={mergeStyles(largeLeaveButtonContainerStyle, leaveButtonStyle, {
           color: theme.palette.neutralPrimaryAlt
         })}
         styles={buttonWithIconStyles}
@@ -39,7 +39,7 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
       />
       <IconButton
         iconProps={leaveIcon}
-        className={mergeStyles(greyIconButtonStyle, smallLeaveButtonContainerStyle, {
+        className={mergeStyles(smallLeaveButtonContainerStyle, greyIconButtonStyle, {
           color: theme.palette.neutralPrimaryAlt
         })}
         onClick={() => props.onEndChat()}
