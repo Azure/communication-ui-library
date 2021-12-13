@@ -123,7 +123,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           styles={mergedTextFieldStyle}
           disabled={disabled}
           errorMessage={errorMessage}
-          aria-live={'polite'}
         />
         <Stack
           horizontal
