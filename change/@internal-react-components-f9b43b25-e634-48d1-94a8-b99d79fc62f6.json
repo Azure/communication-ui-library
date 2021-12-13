@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add eslint rule to force brackets for if, else, switch",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}
