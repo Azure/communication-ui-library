@@ -46,7 +46,7 @@ export interface SendBoxStrings {
    */
   textTooLong: string;
   /**
-   *
+   * Aria label for send message button
    */
   sendButtonText: string;
 }
