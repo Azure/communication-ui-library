@@ -755,6 +755,7 @@ export interface SendBoxProps {
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    sendButtonText: string;
     textTooLong: string;
 }
 
