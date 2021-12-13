@@ -89,9 +89,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
     return (
       <Stack className={chatScreenContainerStyle}>
-        <Stack.Item className={chatHeaderContainerStyle}>
-          <ChatHeader onEndChat={() => adapter.removeParticipant(userId)} />
-        </Stack.Item>
         <Stack.Item className={chatCompositeContainerStyle}>
           <ChatComposite
             adapter={adapter}
@@ -99,6 +96,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
         </Stack.Item>
+        <ChatHeader onEndChat={() => adapter.removeParticipant(userId)} />
       </Stack>
     );
   }

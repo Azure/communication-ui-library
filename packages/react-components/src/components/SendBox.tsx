@@ -223,7 +223,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         }}
         id={'sendIconWrapper'}
         className={mergedSendButtonStyle}
-        ariaLabel="send"
+        // ariaLabel={localeStrings.}
       />
     </InputBoxComponent>
   );
