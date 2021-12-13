@@ -44,6 +44,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 >
                   <textarea
                     aria-invalid={false}
+                    aria-live="polite"
                     className="ms-TextField-field ms-TextField--unresizable css-117 css-112 field-10"
                     data-ui-id="sendbox-textfield"
                     disabled={false}
@@ -63,6 +64,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
               className="ms-Stack css-19"
             >
               <button
+                aria-label="Send message"
                 className="ms-Button ms-Button--icon css-118 css-113 root-20"
                 data-is-focusable={true}
                 id="sendIconWrapper"
