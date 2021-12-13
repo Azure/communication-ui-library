@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update accessibility language to match  compliance",
-  "packageName": "@internal/storybook",
-  "email": "dademath@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updated Theming docs page",
-  "packageName": "@internal/storybook",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

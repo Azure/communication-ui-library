@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bugfix for vertically truncated participant names",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
