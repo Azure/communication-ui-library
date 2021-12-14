@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { Features, GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapter,
   CallAdapterState,
   CallComposite,
   createAzureCommunicationCallAdapter,
+  createStatefulCallClient,
   toFlatCommunicationIdentifier
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
@@ -15,6 +16,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import MobileDetect from 'mobile-detect';
+import { createAzureCommunicationCallAdapterFromClient } from '@azure/communication-react';
 
 const detectMobileSession = (): boolean => !!new MobileDetect(window.navigator.userAgent).mobile();
 
@@ -51,12 +53,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const adapter = await createAzureCommunicationCallAdapter({
-        userId,
-        displayName,
-        credential: createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
-        locator: callLocator
-      });
+      const callClient = createStatefulCallClient({ userId });
+      const callAgent = await callClient.createCallAgent(
+        createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
+        { displayName }
+      );
+      const adapter = await createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
+
+      callAgent.calls[0].feature(Features.)
+
       adapter.on('callEnded', () => {
         onCallEnded();
       });

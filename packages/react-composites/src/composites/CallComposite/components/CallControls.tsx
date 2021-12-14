@@ -6,6 +6,7 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CameraButton,
   ControlBar,
+  ControlBarButton,
   DevicesButton,
   EndCallButton,
   MicrophoneButton,
@@ -213,6 +214,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
           {screenShareButton}
           {participantButton}
           {devicesButton}
+          <ControlBarButton />
           {endCallButton}
         </ControlBar>
       </Stack.Item>
