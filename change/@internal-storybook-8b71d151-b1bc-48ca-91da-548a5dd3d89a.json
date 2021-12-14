@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Changed instances of CallingAdapter to CallAdapter",
-  "packageName": "@internal/storybook",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

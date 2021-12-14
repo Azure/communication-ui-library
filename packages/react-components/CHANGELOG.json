@@ -2,6 +2,185 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 19:41:59 GMT",
+      "tag": "@internal/react-components_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "force aria-live as ariaLve in Spinner not working",
+            "author": "alcail@microsoft.com",
+            "commit": "d37c59f9fbdaf873471459b64b41d364ac7e4dfc",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix screenshare hover label color",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "d012df54372f7cefc3ff9a15fc9a4067e45e6e60",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "removed speaking indicator on RemoteScreenShare",
+            "author": "alcail@microsoft.com",
+            "commit": "1d335e08509ce358fd7b8082e027e809bbe53252",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Removed console log",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "2fffa71c6246e7c53100fb29eee188b20b372f57",
+            "package": "@internal/react-components"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Reduce VideoGallery persona size",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5367503c96b27aebee964ed8f94e02d7b90e41bc",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "VideoGallery has unique identifier for local video tile to dock.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "ab3b77d94cd2e035b42467fedc01e83f64c4153e",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Local video tile no longer draggable",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5ee45313ea23109c61bc32d8b6f4b37c0596e9a7",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix 'New Messages' not clearing when the user scrolls to the bottom of the message thread'",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "a22a873e79341d6290ed53d1307db28477732996",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Remove long press gesture on MessageThread messages",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "70492cd48b5bb130362070d7bb30c4ef9c8d72de",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update stop screen sharing label from stop to stop sharing",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "73924b0cb3d283136288ec6b3242c2633b624317",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Set pagesize to 50 to fix thread incomplete",
+            "author": "jinan@microsoft.com",
+            "commit": "8629d2352fe460d3a235cfb0ff16e9ca3df49e6b",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "a4343a0e3000263a219f928b4b2850ec065fb4e2",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Do not dismiss ParticipantsButtton and DevicesButton Callout on resize events",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "31d9931f28599c5da675746678eb28be08d0f8bb",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Bugfix for vertically truncated participant names",
+            "author": "anjulgarg@live.com",
+            "commit": "babd3a24219721e46d0024cef48b51316a19a332",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Dispose video when video tile gets unmounted",
+            "author": "jinan@microsoft.com",
+            "commit": "1ae1c38e98a624f764693fdfe85d33675a70d1b3",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Change name contains option to options",
+            "author": "jinan@microsoft.com",
+            "commit": "9de1b92eb70adad86dbb0f0e9e1e29f1c0b25ffe",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Screenshare rerender fixed.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "87fbc5009046b6c4030de775ce918fed44213fab",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "add tooltip string for disabled ControlBar buttons",
+            "author": "alcail@microsoft.com",
+            "commit": "152aba4fbc47e70693c0678a313814a9ea952d52",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Add Scrollbar when editing message in chat",
+            "author": "anjulgarg@live.com",
+            "commit": "68cc3a4ffe0dff8f4052cc0b023416b277a09e41",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fixed gap betwen GridLayout and HorizontalGallery for Safari on IPhone SE.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "19f3701235451b486c13b68b797ad1182a7fb94f",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Ensure typing indicator wraps correctly with long names",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3326b0be98794385bd583434243c7b8682fcb951",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Update screenshare button background when active",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "80ddf49fb8e8bc6024d2a625e7746b1383e63584",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "Fix text in system messages in the MessageThread to wrap when it is too long.",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "aeed5f315c35d167cdcdd9c9050a5dd8d5fec9ec",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "398439a4cca244e4c7e7830c27d2317d8277e686",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "bugfix: Prevent participant remove flyout dismissal on resize events",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "a8bd5d0b0eac55317c7a20695622c6fdba1f2ae8",
+            "package": "@internal/react-components"
+          },
+          {
+            "comment": "GridLayoutProp styles prop type changed to GridLayoutStyles",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "5049647fe2ef8db97e013a41219d7b500150d570",
+            "package": "@internal/react-components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Nov 2021 22:21:27 GMT",
       "tag": "@internal/react-components_v1.0.0-beta.8",
       "version": "1.0.0-beta.8",

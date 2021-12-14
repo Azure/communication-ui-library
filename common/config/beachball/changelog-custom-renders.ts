@@ -14,7 +14,7 @@ export async function renderHeader(renderInfo: PackageChangelogRenderInfo): Prom
 
   // Also include a compare link to the previous tag if available
   const previousTag = previousJson?.entries?.[0]?.tag;
-  const compareLink = tag && previousTag ? ` \n[Compare changes](${repoUrl}/compare/${previousTag}..${tag})` : '';
+  const compareLink = tag && previousTag ? ` \n[Compare changes](${repoUrl}/compare/${previousTag}...${tag})` : '';
 
   return `## ${header}\n\n${date.toUTCString()}${compareLink}`;
 }

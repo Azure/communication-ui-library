@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "removing uservoice entry in feedback and updating Microsoft QA to Microsoft Q&A",
-  "packageName": "@internal/storybook",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

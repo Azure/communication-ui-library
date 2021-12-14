@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Adjusted cdn in sample html, changed scripted type adjusted variable names to match static example",
-  "packageName": "@internal/storybook",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
