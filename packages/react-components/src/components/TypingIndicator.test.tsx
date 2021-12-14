@@ -9,13 +9,12 @@ import { mountWithLocalization, createTestLocale } from './utils/testUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const randomText = Math.random().toString();
 const testLocale = createTestLocale({
   typingIndicator: {
-    singleUser: '{user} ' + randomText,
-    multipleUsers: '{users} ' + randomText,
-    multipleUsersAbbreviateOne: '{users} and 1 other ' + randomText,
-    multipleUsersAbbreviateMany: '{users} and {numOthers} others ' + randomText
+    singleUser: '{user} is typing',
+    multipleUsers: '{users} are typing',
+    multipleUsersAbbreviateOne: '{users} and 1 other are typing',
+    multipleUsersAbbreviateMany: '{users} and {numOthers} others are typing'
   }
 });
 
@@ -26,7 +25,7 @@ describe('TypingIndicator should format string correctly', () => {
       testLocale
     );
 
-    const expectedString = 'Claire ' + randomText;
+    const expectedString = 'Claire is typing';
     expect(component.text()).toBe(expectedString);
     expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
   });
@@ -42,7 +41,7 @@ describe('TypingIndicator should format string correctly', () => {
       testLocale
     );
 
-    const expectedString = 'Claire, Christopher ' + randomText;
+    const expectedString = 'Claire, Christopher are typing';
     expect(component.text()).toBe(expectedString);
     expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
   });
@@ -58,7 +57,7 @@ describe('TypingIndicator should format string correctly', () => {
       testLocale
     );
 
-    const expectedString = 'Claire Romanov and 1 other ' + randomText;
+    const expectedString = 'Claire Romanov and 1 other are typing';
     expect(component.text()).toBe(expectedString);
     expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
   });
@@ -75,7 +74,7 @@ describe('TypingIndicator should format string correctly', () => {
       testLocale
     );
 
-    const expectedString = 'Claire Romanov and 2 others ' + randomText;
+    const expectedString = 'Claire Romanov and 2 others are typing';
     expect(component.text()).toBe(expectedString);
     expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
   });
