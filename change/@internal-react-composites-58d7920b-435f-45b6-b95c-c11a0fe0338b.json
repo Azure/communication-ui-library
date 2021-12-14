@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Screenshot failed UI tests when timeouts occur",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

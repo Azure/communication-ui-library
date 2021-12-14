@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update composite automation snapshots",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updating snapshots",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

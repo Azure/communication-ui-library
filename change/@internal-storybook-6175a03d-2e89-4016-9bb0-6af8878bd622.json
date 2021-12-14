@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "update Composites and Components section in Storybook Overview page with more visuals",
-  "packageName": "@internal/storybook",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}
