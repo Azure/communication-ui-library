@@ -29,7 +29,8 @@ import {
   messageThreadChatCompositeStyles,
   sendBoxChatCompositeStyles,
   typingIndicatorChatCompositeStyles,
-  participantListContainerPadding
+  participantListContainerPadding,
+  typingIndicatorContainerStyles
 } from './styles/Chat.styles';
 
 /* @conditional-compile-remove-from(stable) */
