@@ -29,7 +29,8 @@ import {
   messageThreadChatCompositeStyles,
   sendBoxChatCompositeStyles,
   typingIndicatorChatCompositeStyles,
-  participantListContainerPadding
+  participantListContainerPadding,
+  typingIndicatorContainerStyles
 } from './styles/Chat.styles';
 
 /* @conditional-compile-remove-from(stable) */
@@ -108,8 +109,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
-          <Stack.Item align="center" className={sendBoxParentStyle}>
-            <div style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
+          <Stack className={sendBoxParentStyle}>
+            <div className={mergeStyles(typingIndicatorContainerStyles)}>
               {onRenderTypingIndicator ? (
                 onRenderTypingIndicator(typingIndicatorProps.typingUsers)
               ) : (
@@ -117,7 +118,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
             </div>
             <SendBox {...sendBoxProps} styles={sendBoxStyles} />
-          </Stack.Item>
+          </Stack>
         </Stack>
         {
           /* @conditional-compile-remove-from(stable) */

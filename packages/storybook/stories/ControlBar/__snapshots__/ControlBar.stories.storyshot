@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control Bar 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-115 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-115"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -47,6 +47,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
+                aria-label="Turn on camera"
                 className="ms-Button ms-Button--default root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -63,7 +64,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37"
+                    className="root-94"
                     data-icon-name="ControlButtonCameraOff"
                   >
                     <span
@@ -102,6 +103,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
+                aria-label="Unmute microphone"
                 className="ms-Button ms-Button--default root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -118,7 +120,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37"
+                    className="root-94"
                     data-icon-name="ControlButtonMicOff"
                   >
                     <span
@@ -157,7 +159,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
-                className="ms-Button ms-Button--default root-13"
+                aria-label="Share your screen"
+                className="ms-Button ms-Button--default root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -173,7 +176,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37"
+                    className="root-94"
                     data-icon-name="ControlButtonScreenShareStart"
                   >
                     <span
@@ -209,6 +212,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
+                aria-label="Show Participants"
                 className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -225,7 +229,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37"
+                    className="root-94"
                     data-icon-name="ControlButtonParticipants"
                   >
                     <span
@@ -248,7 +252,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-37 css-14 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-94 css-13 ms-Button-menuIcon menuIcon-10"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -274,6 +278,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
+                aria-label="Manage devices"
                 className="ms-Button ms-Button--default ms-Button--hasMenu root-5"
                 data-is-focusable={true}
                 onClick={[Function]}
@@ -290,7 +295,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37"
+                    className="root-94"
                     data-icon-name="ControlButtonOptions"
                   >
                     <span
@@ -313,7 +318,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                   </i>
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-37 css-14 ms-Button-menuIcon menuIcon-10"
+                    className="ms-Icon root-94 css-13 ms-Button-menuIcon menuIcon-10"
                     data-icon-name="ChevronDown"
                     hidden={true}
                     style={
@@ -336,7 +341,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
               onMouseLeave={[Function]}
             >
               <button
-                className="ms-Button ms-Button--default root-15"
+                aria-label="Leave Call"
+                className="ms-Button ms-Button--default root-14"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -352,7 +358,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37"
+                    className="root-94"
                     data-icon-name="ControlButtonEndCall"
                   >
                     <span

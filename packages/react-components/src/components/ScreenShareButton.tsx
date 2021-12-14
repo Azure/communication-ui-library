@@ -83,6 +83,5 @@ const screenshareButtonStyles = (theme: Theme): IButtonStyles => ({
     color: DefaultPalette.white,
     ':focus::after': { outlineColor: `${DefaultPalette.white} !important` } // added !important to avoid override by FluentUI button styles
   },
-  labelHovered: { color: DefaultPalette.white },
   labelChecked: { color: DefaultPalette.white }
 });

@@ -1,8 +1,18 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0)
+
+Mon, 06 Dec 2021 19:41:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.0.0-beta.8..@internal/calling-component-bindings_v1.0.0)
+
+### Changes
+
+- Add name based ascending sorting to participants returned by participantListSelector ([PR #1106](https://github.com/azure/communication-ui-library/pull/1106) by anjulgarg@live.com)
+- hiding users in the lobby from acs clients ([PR #1112](https://github.com/azure/communication-ui-library/pull/1112) by 79329532+alkwa-msft@users.noreply.github.com)
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.0.0-beta.8)
 

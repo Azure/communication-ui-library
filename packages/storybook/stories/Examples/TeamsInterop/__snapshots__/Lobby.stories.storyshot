@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-115 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-115"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -100,6 +100,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
+                  aria-label="Turn off camera"
                   className="ms-Button ms-Button--default is-checked root-14"
                   data-is-focusable={true}
                   onClick={[Function]}
@@ -116,7 +117,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-37"
+                      className="root-94"
                       data-icon-name="ControlButtonCameraOn"
                     >
                       <span
@@ -162,6 +163,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
+                  aria-label="Mute microphone"
                   className="ms-Button ms-Button--default is-checked root-14"
                   data-is-focusable={true}
                   onClick={[Function]}
@@ -178,7 +180,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-37"
+                      className="root-94"
                       data-icon-name="ControlButtonMicOn"
                     >
                       <span
@@ -224,6 +226,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
+                  aria-label="Manage devices"
                   className="ms-Button ms-Button--default root-22"
                   data-is-focusable={true}
                   onClick={[Function]}
@@ -240,7 +243,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-37"
+                      className="root-94"
                       data-icon-name="ControlButtonOptions"
                     >
                       <span
@@ -273,7 +276,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-37 css-24 ms-Button-menuIcon menuIcon-23"
+                      className="ms-Icon root-94 css-24 ms-Button-menuIcon menuIcon-23"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -296,6 +299,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                 onMouseLeave={[Function]}
               >
                 <button
+                  aria-label="Leave Call"
                   className="ms-Button ms-Button--default root-25"
                   data-is-focusable={true}
                   onClick={[Function]}
@@ -318,7 +322,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-37"
+                      className="root-94"
                       data-icon-name="ControlButtonEndCall"
                     >
                       <span

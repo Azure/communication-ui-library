@@ -15,6 +15,7 @@ import {
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { Stack } from '@fluentui/react';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -60,11 +61,13 @@ function App(): JSX.Element {
           onRenderTypingIndicator={
             customDataModel
               ? (typingUsers) => (
-                  <text id="custom-data-model-typing-indicator">
-                    {typingUsers.length > 0
-                      ? `${typingUsers.map((user) => user.displayName).join(',')} is typing...`.toUpperCase()
-                      : 'No one is currently typing.'}
-                  </text>
+                  <Stack style={{ width: '100%' }}>
+                    <text id="custom-data-model-typing-indicator">
+                      {typingUsers.length > 0
+                        ? `${typingUsers.map((user) => user.displayName).join(',')} is typing...`.toUpperCase()
+                        : 'No one is currently typing.'}
+                    </text>
+                  </Stack>
                 )
               : undefined
           }

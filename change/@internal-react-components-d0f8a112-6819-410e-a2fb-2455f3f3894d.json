@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove long press gesture on MessageThread messages",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

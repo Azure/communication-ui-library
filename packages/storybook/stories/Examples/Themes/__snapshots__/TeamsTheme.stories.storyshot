@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-115 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-115"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -31,11 +31,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
         }
       >
         <div
-          className="css-60 body-1"
+          className="css-115 body-1"
           dir="ltr"
         >
           <div
-            className="css-60"
+            className="css-115"
             data-uses-unhanded-props={true}
           >
             <div
@@ -69,6 +69,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Turn on camera"
                           className="ms-Button ms-Button--default root-10"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -85,7 +86,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-37"
+                              className="root-94"
                               data-icon-name="ControlButtonCameraOff"
                             >
                               <span
@@ -124,6 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Unmute microphone"
                           className="ms-Button ms-Button--default root-10"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -140,7 +142,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-37"
+                              className="root-94"
                               data-icon-name="ControlButtonMicOff"
                             >
                               <span
@@ -179,6 +181,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Share your screen"
                           className="ms-Button ms-Button--default root-18"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -195,7 +198,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-37"
+                              className="root-94"
                               data-icon-name="ControlButtonScreenShareStart"
                             >
                               <span
@@ -228,6 +231,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         onMouseLeave={[Function]}
                       >
                         <button
+                          aria-label="Leave Call"
                           className="ms-Button ms-Button--default root-19"
                           data-is-focusable={true}
                           onClick={[Function]}
@@ -244,7 +248,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-37"
+                              className="root-94"
                               data-icon-name="ControlButtonEndCall"
                             >
                               <span
@@ -286,84 +290,76 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-55"
+                className="css-111 css-21"
               >
                 <div
-                  className="css-56 css-22"
+                  className="ms-Stack css-28"
+                  data-ui-id="video-tile"
                 >
                   <div
-                    className="css-56 css-21"
+                    className="css-25"
+                  />
+                  <div
+                    className="ms-Stack css-29"
                   >
                     <div
-                      className="ms-Stack css-29"
-                      data-ui-id="video-tile"
+                      className="ms-Stack css-31"
                     >
                       <div
-                        className="css-26"
-                      />
-                      <div
-                        className="ms-Stack css-30"
+                        aria-label=""
+                        className="ms-Persona ms-Persona--size48 root-32"
+                        style={
+                          Object {
+                            "height": 100,
+                            "minWidth": 100,
+                          }
+                        }
                       >
                         <div
-                          className="ms-Stack css-32"
+                          className="ms-Persona-coin ms-Persona--size48 coin-39"
+                          role="presentation"
                         >
                           <div
-                            aria-label=""
-                            className="ms-Persona ms-Persona--size48 root-33"
+                            className="ms-Persona-imageArea imageArea-41"
+                            role="presentation"
                             style={
                               Object {
                                 "height": 100,
-                                "minWidth": 100,
+                                "width": 100,
                               }
                             }
                           >
                             <div
-                              className="ms-Persona-coin ms-Persona--size48 coin-40"
-                              role="presentation"
-                            >
-                              <div
-                                className="ms-Persona-imageArea imageArea-42"
-                                role="presentation"
-                                style={
-                                  Object {
-                                    "height": 100,
-                                    "width": 100,
-                                  }
+                              aria-hidden="true"
+                              className="ms-Persona-initials initials-44"
+                              style={
+                                Object {
+                                  "height": 100,
+                                  "width": 100,
                                 }
-                              >
-                                <div
-                                  aria-hidden="true"
-                                  className="ms-Persona-initials initials-45"
-                                  style={
-                                    Object {
-                                      "height": 100,
-                                      "width": 100,
-                                    }
-                                  }
-                                >
-                                  <span>
-                                    M
-                                  </span>
-                                </div>
-                              </div>
+                              }
+                            >
+                              <span>
+                                M
+                              </span>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div
-                        className="ms-Stack css-81 css-48"
+                    </div>
+                  </div>
+                  <div
+                    className="ms-Stack css-136 css-47"
+                  >
+                    <div
+                      className="ms-Stack css-137 css-48"
+                    >
+                      <span
+                        className="css-49"
+                        title="Michael"
                       >
-                        <div
-                          className="ms-Stack css-82 css-49"
-                        >
-                          <span
-                            className="css-50"
-                            title="Michael"
-                          >
-                            Michael
-                          </span>
-                        </div>
-                      </div>
+                        Michael
+                      </span>
                     </div>
                   </div>
                 </div>

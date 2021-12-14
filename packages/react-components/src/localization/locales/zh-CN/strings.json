@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "发送失败"
   },
   "endCallButton": {
-    "label": "退出"
+    "label": "退出",
+    "tooltipContent": "离开会议"
   },
   "cameraButton": {
     "onLabel": "关闭",
-    "offLabel": "打开"
+    "offLabel": "打开",
+    "tooltipDisabledContent": "已禁用照相机",
+    "tooltipOnContent": "关闭摄像头",
+    "tooltipOffContent": "打开摄像头"
   },
   "microphoneButton": {
     "onLabel": "静音",
-    "offLabel": "取消静音"
+    "offLabel": "取消静音",
+    "tooltipDisabledContent": "已禁用麦克风",
+    "tooltipOnContent": "将麦克风静音",
+    "tooltipOffContent": "取消麦克风静音"
   },
   "devicesButton": {
-    "label": "选项",
+    "label": "设备",
+    "tooltipContent": "管理设备",
     "cameraMenuTitle": "相机",
     "cameraMenuTooltip": "选择“相机”",
     "microphoneMenuTitle": "麦克风",
@@ -45,14 +53,18 @@
   },
   "participantsButton": {
     "label": "人员",
+    "tooltipContent": "显示参与者",
     "menuHeader": "在此通话中",
     "participantsListButtonLabel": "{numParticipants} 人",
     "muteAllButtonLabel": "全部静音",
     "copyInviteLinkButtonLabel": "复制邀请链接"
   },
   "screenShareButton": {
-    "onLabel": "停止",
-    "offLabel": "共享"
+    "onLabel": "停止共享",
+    "offLabel": "共享",
+    "tooltipDisabledContent": "已禁用屏幕共享",
+    "tooltipOnContent": "停止共享屏幕",
+    "tooltipOffContent": "共享屏幕"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
-    "screenShareLoadingMessage": "正在加载 {participant} 的屏幕"
+    "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
+    "localVideoLabel": "你"
   }
 }

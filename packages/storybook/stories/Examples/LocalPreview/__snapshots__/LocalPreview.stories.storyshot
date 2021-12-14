@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Preview 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-115 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-115"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,11 +21,11 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
       }
     >
       <div
-        className="css-60 body-0"
+        className="css-115 body-0"
         dir="ltr"
       >
         <div
-          className="css-60"
+          className="css-115"
           data-uses-unhanded-props={true}
         >
           <div
@@ -75,6 +75,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           onMouseLeave={[Function]}
                         >
                           <button
+                            aria-label="Turn off camera"
                             className="ms-Button ms-Button--default is-checked root-20"
                             data-is-focusable={true}
                             onClick={[Function]}
@@ -91,7 +92,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             >
                               <i
                                 aria-hidden={true}
-                                className="root-37"
+                                className="root-94"
                                 data-icon-name="ControlButtonCameraOn"
                               >
                                 <span
@@ -127,6 +128,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                           onMouseLeave={[Function]}
                         >
                           <button
+                            aria-label="Mute microphone"
                             className="ms-Button ms-Button--default is-checked root-20"
                             data-is-focusable={true}
                             onClick={[Function]}
@@ -143,7 +145,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                             >
                               <i
                                 aria-hidden={true}
-                                className="root-37"
+                                className="root-94"
                                 data-icon-name="ControlButtonMicOn"
                               >
                                 <span

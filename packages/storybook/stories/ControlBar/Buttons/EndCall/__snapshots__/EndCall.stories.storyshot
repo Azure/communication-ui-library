@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/End Call End Call 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-115 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-115"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -29,6 +29,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/E
         onMouseLeave={[Function]}
       >
         <button
+          aria-label="Leave Call"
           className="ms-Button ms-Button--default root-2"
           data-is-focusable={true}
           onClick={[Function]}
@@ -45,7 +46,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/E
           >
             <i
               aria-hidden={true}
-              className="root-37"
+              className="root-94"
               data-icon-name="ControlButtonEndCall"
             >
               <span

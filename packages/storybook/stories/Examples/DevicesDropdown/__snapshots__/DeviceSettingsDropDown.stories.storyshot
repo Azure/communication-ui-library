@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Settings 1`] = `
 <div
-  className="css-60 body-0"
+  className="css-115 body-0"
   dir="ltr"
 >
   <div
-    className="css-60"
+    className="css-115"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -24,11 +24,11 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
         className="ms-Stack css-1"
       >
         <div
-          className="css-60 body-0"
+          className="css-115 body-0"
           dir="ltr"
         >
           <div
-            className="css-60"
+            className="css-115"
             data-uses-unhanded-props={true}
           >
             <div
@@ -71,7 +71,7 @@ exports[`storybook snapshot tests Storyshots Examples/Device Settings Device Set
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37 ms-Dropdown-caretDown caretDown-19"
+                    className="root-94 ms-Dropdown-caretDown caretDown-19"
                     data-icon-name="ChevronDown"
                   >
                     

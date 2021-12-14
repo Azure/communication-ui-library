@@ -24,18 +24,26 @@
     "failedToSendTooltipText": "Не удалось отправить"
   },
   "endCallButton": {
-    "label": "Выйти"
+    "label": "Выйти",
+    "tooltipContent": "Покинуть звонок"
   },
   "cameraButton": {
     "onLabel": "Отключить",
-    "offLabel": "Включить"
+    "offLabel": "Включить",
+    "tooltipDisabledContent": "Камера отключена",
+    "tooltipOnContent": "Выключить камеру",
+    "tooltipOffContent": "Включить камеру"
   },
   "microphoneButton": {
     "onLabel": "Отключить звук",
-    "offLabel": "Включить звук"
+    "offLabel": "Включить звук",
+    "tooltipDisabledContent": "Микрофон отключен",
+    "tooltipOnContent": "Отключить микрофон",
+    "tooltipOffContent": "Включить микрофон"
   },
   "devicesButton": {
-    "label": "Параметры",
+    "label": "Устройства",
+    "tooltipContent": "Управление устройствами",
     "cameraMenuTitle": "Камера",
     "cameraMenuTooltip": "Выбрать камеру",
     "microphoneMenuTitle": "Микрофон",
@@ -45,14 +53,18 @@
   },
   "participantsButton": {
     "label": "Люди",
+    "tooltipContent": "Показать участников",
     "menuHeader": "В этом звонке",
     "participantsListButtonLabel": "Пользователей: {numParticipants}",
     "muteAllButtonLabel": "Отключить все микрофоны",
     "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением"
   },
   "screenShareButton": {
-    "onLabel": "Остановить",
-    "offLabel": "Поделиться"
+    "onLabel": "Отменить общий доступ",
+    "offLabel": "Поделиться",
+    "tooltipDisabledContent": "Демонстрация экрана отключена.",
+    "tooltipOnContent": "Отменить общий доступ к экрану",
+    "tooltipOffContent": "Общий доступ к экрану"
   },
   "messageThread": {
     "yesterday": "Вчера",
@@ -104,6 +116,7 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
-    "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}"
+    "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}",
+    "localVideoLabel": "Вы"
   }
 }
