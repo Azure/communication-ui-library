@@ -28,7 +28,7 @@ describe('TypingIndicator should format string correctly', () => {
 
     const expectedString = 'Claire ' + randomText;
     expect(component.text()).toBe(expectedString);
-    expect(component.html().includes(`aria-label=\"${expectedString}\"`)).toBe(true);
+    expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
   });
 
   test('Two users case', async () => {
@@ -44,7 +44,7 @@ describe('TypingIndicator should format string correctly', () => {
 
     const expectedString = 'Claire, Christopher ' + randomText;
     expect(component.text()).toBe(expectedString);
-    expect(component.html().includes(`aria-label=\"${expectedString}\"`)).toBe(true);
+    expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
   });
 
   test('Two users with abbreviation case', async () => {
@@ -60,7 +60,7 @@ describe('TypingIndicator should format string correctly', () => {
 
     const expectedString = 'Claire Romanov and 1 other ' + randomText;
     expect(component.text()).toBe(expectedString);
-    expect(component.html().includes(`aria-label=\"${expectedString}\"`)).toBe(true);
+    expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
   });
 
   test('Three users with abbreviation case', async () => {
@@ -77,6 +77,6 @@ describe('TypingIndicator should format string correctly', () => {
 
     const expectedString = 'Claire Romanov and 2 others ' + randomText;
     expect(component.text()).toBe(expectedString);
-    expect(component.html().includes(`aria-label=\"${expectedString}\"`)).toBe(true);
+    expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
   });
 });
