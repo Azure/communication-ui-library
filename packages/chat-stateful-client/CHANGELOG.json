@@ -2,6 +2,35 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 19:41:59 GMT",
+      "tag": "@internal/chat-stateful-client_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/chat-stateful-client"
+          },
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/chat-stateful-client"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "avoid rendering richtext/media messages until we can properly handle it",
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "commit": "06c62baf3c0de9430b46551ce7d8cb5a30c53624",
+            "package": "@internal/chat-stateful-client"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Nov 2021 22:21:27 GMT",
       "tag": "@internal/chat-stateful-client_v1.0.0-beta.8",
       "version": "1.0.0-beta.8",

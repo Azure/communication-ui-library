@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix security issue on incomplete string encoding",
-  "packageName": "@internal/storybook",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}

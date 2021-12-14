@@ -1,8 +1,17 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Wed, 17 Nov 2021 22:21:27 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0)
+
+Mon, 06 Dec 2021 19:41:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.0.0-beta.8..@internal/calling-stateful-client_v1.0.0)
+
+### Changes
+
+- Remove spammy console log when rendering video ([PR #1188](https://github.com/azure/communication-ui-library/pull/1188) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.0.0-beta.8)
 

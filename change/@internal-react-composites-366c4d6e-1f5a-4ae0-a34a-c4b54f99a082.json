@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "separate label from dropdown for Camera devices",
-  "packageName": "@internal/react-composites",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}
