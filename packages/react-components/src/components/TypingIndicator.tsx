@@ -48,7 +48,7 @@ export interface TypingIndicatorStrings {
    *  strings={{ multipleUsers: '{users} are typing...' }}
    *  typingUsers={[
    *    { userId: 'user1', displayName: 'Claire' },
-   *    { userId: 'user2', displayName: 'Chris' }
+   *    { userId: 'user2', displayName: 'Christopher' }
    *  ]}
    * />
    * ```
@@ -63,7 +63,7 @@ export interface TypingIndicatorStrings {
    * strings={{ multipleUsersAbbreviateOne: '{users} and 1 other are typing...' }}
    * typingUsers={[
    * { userId: 'user1', displayName: 'Claire Romanov' },
-   * { userId: 'user2', displayName: 'Chris Rutherford' }
+   * { userId: 'user2', displayName: 'Christopher Rutherford' }
    * ]}
    * />
    * ```
@@ -78,7 +78,7 @@ export interface TypingIndicatorStrings {
    *  strings={{ multipleUsersAbbreviateMany: '{users} and {numOthers} others are typing...' }}
    *  typingUsers={[
    *    { userId: 'user1', displayName: 'Claire Romanov' },
-   *    { userId: 'user2', displayName: 'Chris Rutherford' },
+   *    { userId: 'user2', displayName: 'Christopher Rutherford' },
    *    { userId: 'user3', displayName: 'Jill Vernblom' }
    *  ]}
    * />
@@ -297,17 +297,12 @@ const IndicatorComponent = (
   );
 
   const numUserNotMentioned = typingUsers.length - typingUsersMentioned.length;
-  const spanElements: JSX.Element[] = getSpanElements(
-    strings,
-    usersElement,
-    typingUsersMentioned.length,
-    numUserNotMentioned
-  );
+  const spanElements: JSX.Element[] = getSpanElements(strings, usersElement, typingUsers.length, numUserNotMentioned);
 
   const labelString = getIndicatorString(
     strings,
     getNamesString(typingUsersMentioned, strings.delimiter),
-    typingUsersMentioned.length,
+    typingUsers.length,
     numUserNotMentioned
   );
 
