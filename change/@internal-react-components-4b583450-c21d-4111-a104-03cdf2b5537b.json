@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed gap betwen GridLayout and HorizontalGallery for Safari on IPhone SE.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

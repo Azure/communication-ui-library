@@ -16,6 +16,7 @@ const config: PlaywrightTestConfig = {
       name: 'chromium',
       use: {
         browserName: 'chromium',
+        permissions: ['notifications', 'camera', 'microphone'],
         launchOptions: {
           args: [
             '--font-render-hinting=none', // Ensures that fonts are rendered consistently.

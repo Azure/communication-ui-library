@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Screenshare rerender fixed.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

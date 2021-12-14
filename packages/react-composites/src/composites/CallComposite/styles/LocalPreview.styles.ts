@@ -33,7 +33,7 @@ export const localPreviewContainerStyleMobile = mergeStyles({
  */
 export const cameraOffLabelStyle = mergeStyles({
   fontFamily: 'Segoe UI Regular',
-  fontSize: '0.625rem' // 10px
+  fontSize: '0.75rem' // 12px
 });
 
 /**

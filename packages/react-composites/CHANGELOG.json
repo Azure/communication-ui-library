@@ -2,6 +2,161 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 19:41:59 GMT",
+      "tag": "@internal/react-composites_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix typo in strings field",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "cd5058489810b02b9eaf66d742381cd4cf36dc66",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Restricting typing indicator to the max width of sendbox",
+            "author": "anjulgarg@live.com",
+            "commit": "d12a7471cfa82a0ea2e17f06387b89011032b767",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Disable microphone toggle in lobby as it's not supported by headless SDK",
+            "author": "anjulgarg@live.com",
+            "commit": "bce080cec67a15d87318c33745b3670aad70b6d9",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Immediately fetch initial chat data when creating azure communication chat adapter",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "e28a5d6cd8536d0c6c3fffe29fbad9b8c3b93f59",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Fix ComplianceBanner auto-dismiss",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "1948817fad593f75a876ad437930619c733f4871",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Add localized tooltip to microphone button in lobby informing users that it is disabled.",
+            "author": "anjulgarg@live.com",
+            "commit": "6eda95d6f1d23907eb81022eae7714ad9f1b36f8",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Remove beta-only public API",
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "commit": "79b7ebe1bff745ffbfa9fbc951d1f3d826611df6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Adding displayName restriction docs to API",
+            "author": "anjulgarg@live.com",
+            "commit": "e14dd19c1f1e64b27a9747fbc7f729593ab5d1e9",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "TDBuild - updating localized resource files.",
+            "author": "miguelgamis@microsoft.com",
+            "commit": "398439a4cca244e4c7e7830c27d2317d8277e686",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update composite automation snapshots",
+            "author": "anjulgarg@live.com",
+            "commit": "68cc3a4ffe0dff8f4052cc0b023416b277a09e41",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Change name contains option to options",
+            "author": "jinan@microsoft.com",
+            "commit": "9de1b92eb70adad86dbb0f0e9e1e29f1c0b25ffe",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Enable icons and locales in Meeting Composite",
+            "author": "allenhwang@microsoft.com",
+            "commit": "b8def0aca5af754f21f30007e8e8a6f948a06056",
+            "package": "@internal/react-composites"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add eslint rule to force brackets for if, else, switch",
+            "author": "anjulgarg@live.com",
+            "commit": "694b8b7148a105add029c3b39c965600b6e45ac3",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Ensure chat tests can run in isolation",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "59a106de3d82958cacf4108d30139bfd3828f907",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Bump package version to 1.0.0-beta.8",
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "commit": "6edef280ec539406a390c3bb19efa9f306730116",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Esnure chat ui tests are run in order",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "0ae0ac1a5b611f6336f8303bc8e5e48d25a04871",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Moved code",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "80ddf49fb8e8bc6024d2a625e7746b1383e63584",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "5367503c96b27aebee964ed8f94e02d7b90e41bc",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "added aria-live prop to the video tile to help with narration.",
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "commit": "e1d980010da004404440ae2e6b8eafcb222856f1",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Screenshot failed UI tests when timeouts occur",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "84eadab3f1ee23fd955c2cdf7aaa4c6666a1b1c6",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Update snapshots",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "3326b0be98794385bd583434243c7b8682fcb951",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "console log errors on chat tests, improve custom data model test",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "9b7441ba47cbc2271919afc9707691e664182eac",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "Try mitigate flakey tests",
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "commit": "6421c79cd069ed96a312f62c63cbf451d5750159",
+            "package": "@internal/react-composites"
+          },
+          {
+            "comment": "fix common label for mic and speakers in Call composite configuration page",
+            "author": "alcail@microsoft.com",
+            "commit": "533ed4ada9b89f825480ee0be5ab7bec98952332",
+            "package": "@internal/react-composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Nov 2021 22:21:27 GMT",
       "tag": "@internal/react-composites_v1.0.0-beta.8",
       "version": "1.0.0-beta.8",

@@ -1,8 +1,17 @@
 # Change Log - @internal/chat-stateful-client
 
-This log was last generated on Wed, 27 Oct 2021 19:40:46 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0)
+
+Mon, 06 Dec 2021 19:41:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-stateful-client_v1.0.0-beta.8..@internal/chat-stateful-client_v1.0.0)
+
+### Changes
+
+- avoid rendering richtext/media messages until we can properly handle it ([PR #1149](https://github.com/azure/communication-ui-library/pull/1149) by 79329532+alkwa-msft@users.noreply.github.com)
 
 ## [1.0.0-beta.7](https://github.com/azure/communication-ui-library/tree/@internal/chat-stateful-client_v1.0.0-beta.7)
 

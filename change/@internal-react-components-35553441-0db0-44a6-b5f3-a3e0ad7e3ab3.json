@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Removed console log",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}
