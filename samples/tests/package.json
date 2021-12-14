@@ -6,6 +6,8 @@
   "scripts": {
     "build": "echo skip",
     "test": "echo skip",
+    "build:stable": "echo skip",
+    "test:stable": "echo skip",
     "test:e2e:bundle": "cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/",
     "update:snapshot:bundle": "cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/ --update-snapshots",
     "test:e2e:examples": "cross-env SERVE_PATH=../ComponentExamples/dist/build playwright test ComponentExamples/",
