@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add localized tooltip to microphone button in lobby informing users that it is disabled.",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

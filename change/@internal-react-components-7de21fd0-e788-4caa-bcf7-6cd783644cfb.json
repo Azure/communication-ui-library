@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bugfix for local video tile overlapping control bar when dragged",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

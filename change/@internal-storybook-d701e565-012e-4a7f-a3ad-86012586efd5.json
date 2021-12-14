@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update use cases with latest features",
-  "packageName": "@internal/storybook",
-  "email": "dademath@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add google search verification meta tag",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "add GitHub and Npm links to Storybook header",
-  "packageName": "@internal/storybook",
-  "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
-}
