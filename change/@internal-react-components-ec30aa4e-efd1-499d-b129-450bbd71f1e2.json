@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix TypingIndicator logic",
+  "packageName": "@internal/react-components",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
