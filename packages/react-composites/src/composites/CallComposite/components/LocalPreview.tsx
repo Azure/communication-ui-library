@@ -104,12 +104,14 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
             onToggleMicrophone={onToggleMic}
             disabled={!microphonePermissionGranted}
             showLabel={true}
+            allowDisabledFocus={true}
           />
           <CameraButton
             data-ui-id="call-composite-local-device-settings-camera-button"
             {...cameraButtonProps}
             showLabel={true}
             disabled={!cameraPermissionGranted}
+            allowDisabledFocus={true}
           />
           {props.showDevicesButton && (
             <DevicesButton
@@ -119,6 +121,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               disabled={!microphonePermissionGranted || !cameraPermissionGranted}
               showLabel={true}
               styles={devicesButtonStyles}
+              allowDisabledFocus={true}
             />
           )}
         </ControlBar>
