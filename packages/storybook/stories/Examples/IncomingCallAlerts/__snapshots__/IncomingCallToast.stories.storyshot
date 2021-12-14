@@ -24,17 +24,10 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
         className="ms-Stack css-1"
       >
         <div
-<<<<<<< HEAD
-          className="ms-Stack css-118 css-2"
+          className="ms-Stack css-174 css-2"
         >
           <div
-            className="ms-Stack css-119 css-3"
-=======
-          className="ms-Stack css-173 css-2"
-        >
-          <div
-            className="ms-Stack css-174 css-3"
->>>>>>> origin/main
+            className="ms-Stack css-175 css-3"
           >
             <div
               aria-label="Maximus Aurelius"
@@ -98,11 +91,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
             className="ms-Stack css-20"
           >
             <button
-<<<<<<< HEAD
-              className="ms-Button ms-Button--default css-121 root-21"
-=======
-              className="ms-Button ms-Button--default css-176 root-21"
->>>>>>> origin/main
+              className="ms-Button ms-Button--default css-177 root-21"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -136,11 +125,7 @@ exports[`storybook snapshot tests Storyshots Examples/Incoming Call Alerts/Incom
               </span>
             </button>
             <button
-<<<<<<< HEAD
-              className="ms-Button ms-Button--default css-120 root-21"
-=======
-              className="ms-Button ms-Button--default css-175 root-21"
->>>>>>> origin/main
+              className="ms-Button ms-Button--default css-176 root-21"
               data-is-focusable={true}
               onClick={[Function]}
               onKeyDown={[Function]}
