@@ -1,0 +1,7 @@
+{
+  "comment": "allow focus on control bar button when disabled",
+  "type": "none",
+  "packageName": "@internal/react-composites",
+  "email": "alcail@microsoft.com",
+  "dependentChangeType": "none"
+}
