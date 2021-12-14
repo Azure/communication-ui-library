@@ -7,6 +7,7 @@ import {
   CallAdapter,
   CallAdapterState,
   CallComposite,
+  CallCompositePage,
   createAzureCommunicationCallAdapter,
   createStatefulCallClient,
   toFlatCommunicationIdentifier
@@ -51,6 +52,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return () => window.removeEventListener('resize', updateIsMobile);
   }, []);
 
+  const [page, setPage] = useState<CallCompositePage>();
   useEffect(() => {
     (async () => {
       const callClient = createStatefulCallClient({ userId });
@@ -60,7 +62,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       );
       const adapter = await createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
 
-      callAgent.calls[0].feature(Features.)
+      adapter.onStateChange((state) => {
+        // when the call changes to the call page:
+        if (state.page === 'call' && page !== state.page) {
+          setPage(state.page); // track page
+
+          // callAgent.calls[0].feature(Features.)
+        }
+      });
 
       adapter.on('callEnded', () => {
         onCallEnded();
