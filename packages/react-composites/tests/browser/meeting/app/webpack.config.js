@@ -4,6 +4,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 module.exports = () => {
-  const commonConfig = require('../../common/testapp.webpack.config')(__dirname);
+  const babelConfig = require('../../../../.babelrc.js');
+  const commonConfig = require('../../common/testapp.webpack.config')(__dirname, babelConfig);
+
   return commonConfig;
 };
