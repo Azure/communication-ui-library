@@ -28,6 +28,10 @@ const getDocs: () => JSX.Element = () => {
         A button to toggle the user's camera on and off. For use with the [Control
         Bar](./?path=/docs/ui-components-controlbar--control-bar).
       </Description>
+      <Description>
+        Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be
+        changed by setting the button prop `allowDisabledFocus` to `false`.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
