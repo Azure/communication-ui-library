@@ -750,6 +750,7 @@ export interface SendBoxProps {
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
     systemMessage?: string;
+    hasFocusOnMount?: boolean;
 }
 
 // @public

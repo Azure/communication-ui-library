@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
 import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
@@ -137,9 +137,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const hasFocusOnMount = props.hasFocusOnMount ?? true;
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
-  if (hasFocusOnMount) {
-    sendTextFieldRef.current?.focus();
-  }
+  useEffect(() => {
+    if (hasFocusOnMount) {
+      sendTextFieldRef.current?.focus();
+    }
+  }, [hasFocusOnMount]);
 
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled

@@ -122,7 +122,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox {...sendBoxProps} hasFocusOnMount={options?.hasFocusOnMount} styles={sendBoxStyles} />
+            <SendBox {...sendBoxProps} hasFocusOnMount={options?.hasFocusOnSendBoxOnMount} styles={sendBoxStyles} />
           </Stack>
         </Stack>
       </Stack>

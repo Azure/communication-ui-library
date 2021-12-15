@@ -91,7 +91,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             fluentTheme={currentTheme.theme}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             options={{
-              hasFocusOnMount: true
+              hasFocusOnSendBoxOnMount: true
             }}
           />
         </Stack.Item>
