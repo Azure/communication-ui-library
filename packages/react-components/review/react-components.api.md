@@ -742,6 +742,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 // @public
 export interface SendBoxProps {
     disabled?: boolean;
+    hasFocusOnMount?: boolean;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
@@ -750,7 +751,6 @@ export interface SendBoxProps {
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
     systemMessage?: string;
-    hasFocusOnMount?: boolean;
 }
 
 // @public
