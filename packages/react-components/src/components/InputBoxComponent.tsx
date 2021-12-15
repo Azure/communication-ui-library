@@ -52,7 +52,7 @@ type InputBoxComponentProps = {
   errorMessage?: string | React.ReactElement;
   disabled?: boolean;
   styles?: InputBoxStylesProps;
-  hasFocus?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField' | false;
 };
 
 /**
@@ -73,8 +73,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     inputClassName,
     errorMessage,
     disabled,
-    children,
-    hasFocus
+    children
   } = props;
 
   const theme = useTheme();
@@ -105,14 +104,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [onEnterKeyDown, onKeyDown, supportNewline]
   );
 
-  let focusText;
-  hasFocus === 'sendBoxTextField' ? (focusText = true) : (focusText = false);
-
   return (
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
         <TextField
-          autoFocus={focusText}
+          autoFocus={props.autoFocus === 'sendBoxTextField'}
           data-ui-id={dataUiId}
           multiline
           autoAdjustHeight

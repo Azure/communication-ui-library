@@ -104,7 +104,7 @@ export interface SendBoxProps {
   /**
    * boolean to determine if the input box has focus on render or not.
    */
-  hasFocusOnMount?: 'sendBoxTextField' | false;
+  autoFocus?: 'sendBoxTextField' | false;
 }
 
 /**
@@ -125,7 +125,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onRenderIcon,
     onRenderSystemMessage,
     styles,
-    hasFocusOnMount
+    autoFocus
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -200,7 +200,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   return (
     <InputBoxComponent
-      hasFocus={hasFocusOnMount}
+      autoFocus={autoFocus}
       data-ui-id={ids.sendboxTextField}
       inlineChildren={true}
       disabled={disabled}

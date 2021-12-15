@@ -13,6 +13,7 @@ test.describe('JS Bundle Test', () => {
     // Go to the starting url before each test.
     const user = await createChatThreadAndUsers(PARTICIPANTS);
 
+    // Add styles to remove the blinking cursor during snapshot tests
     const styleContent = `
     input {
       color: transparent;
