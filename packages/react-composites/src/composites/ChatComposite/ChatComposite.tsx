@@ -56,7 +56,7 @@ export type ChatCompositeOptions = {
    */
   topic?: boolean;
   /**
-   * flag to force focus on the chat send box text field
+   * Set focus on the composite when the composite first mounts.
    */
   autoFocus?: 'sendBoxTextField' | false;
 };
