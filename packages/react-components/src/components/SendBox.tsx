@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
 import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
@@ -104,7 +104,7 @@ export interface SendBoxProps {
   /**
    * boolean to determine if the input box has focus on render or not.
    */
-  hasFocusOnMount?: boolean;
+  hasFocusOnMount?: 'sendBoxTextField' | false;
 }
 
 /**
@@ -124,7 +124,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onTyping,
     onRenderIcon,
     onRenderSystemMessage,
-    styles
+    styles,
+    hasFocusOnMount
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -134,14 +135,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
-  const hasFocusOnMount = props.hasFocusOnMount ?? true;
   const sendTextFieldRef = React.useRef<ITextField>(null);
-
-  useEffect(() => {
-    if (hasFocusOnMount) {
-      sendTextFieldRef.current?.focus();
-    }
-  }, [hasFocusOnMount]);
 
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled
@@ -206,6 +200,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   return (
     <InputBoxComponent
+      hasFocus={hasFocusOnMount}
       data-ui-id={ids.sendboxTextField}
       inlineChildren={true}
       disabled={disabled}

@@ -44,6 +44,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Send Box Send Box 1`]
                 >
                   <textarea
                     aria-invalid={false}
+                    autoFocus={false}
                     className="ms-TextField-field ms-TextField--unresizable css-117 css-112 field-10"
                     data-ui-id="sendbox-textfield"
                     disabled={false}

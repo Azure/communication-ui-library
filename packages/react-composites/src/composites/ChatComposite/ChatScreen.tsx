@@ -43,7 +43,7 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
-  hasFocusOnMount?: boolean;
+  hasFocusOnMount?: 'sendBoxTextField' | false;
 };
 
 /**
@@ -122,7 +122,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox {...sendBoxProps} hasFocusOnMount={options?.hasFocusOnSendBoxOnMount} styles={sendBoxStyles} />
+            <SendBox {...sendBoxProps} hasFocusOnMount={options?.autoFocus} styles={sendBoxStyles} />
           </Stack>
         </Stack>
       </Stack>
