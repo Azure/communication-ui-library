@@ -145,7 +145,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       showLabel={!compactMode}
       styles={controlButtonBaseStyle}
       {...microphoneButtonStrings}
-      allowDisabledFocus={true}
     />
   );
 
@@ -155,7 +154,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...cameraButtonProps}
       showLabel={!compactMode}
       styles={controlButtonBaseStyle}
-      allowDisabledFocus={true}
     />
   );
 
@@ -165,7 +163,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...screenShareButtonProps}
       showLabel={!compactMode}
       disabled={options?.screenShareButton !== true && options?.screenShareButton?.disabled}
-      allowDisabledFocus={true}
     />
   );
 
@@ -178,7 +175,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       onFetchParticipantMenuItems={onFetchParticipantMenuItems}
       disabled={options?.participantsButton !== true && options?.participantsButton?.disabled}
       styles={participantsButtonStyles}
-      allowDisabledFocus={true}
     />
   );
 
@@ -189,7 +185,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...devicesButtonProps}
       showLabel={!compactMode}
       styles={devicesButtonStyles}
-      allowDisabledFocus={true}
     />
   );
 
@@ -199,7 +194,6 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
       {...hangUpButtonProps}
       styles={compactMode ? groupCallLeaveButtonCompressedStyle : groupCallLeaveButtonStyle}
       showLabel={!compactMode}
-      allowDisabledFocus={true}
     />
   );
 
