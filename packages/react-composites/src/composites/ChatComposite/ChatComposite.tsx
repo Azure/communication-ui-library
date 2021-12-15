@@ -54,6 +54,10 @@ export type ChatCompositeOptions = {
    * @defaultValue true
    */
   topic?: boolean;
+  /**
+   * flag to force focus on the chat send box text field
+   */
+  hasFocusOnMount?: boolean;
 };
 
 /**

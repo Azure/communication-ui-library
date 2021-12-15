@@ -90,6 +90,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             adapter={adapter}
             fluentTheme={currentTheme.theme}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            options={{
+              hasFocusOnMount: true
+            }}
           />
         </Stack.Item>
         <ChatHeader onEndChat={() => adapter.removeParticipant(userId)} />

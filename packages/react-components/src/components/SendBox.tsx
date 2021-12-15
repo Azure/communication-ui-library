@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon } from '@fluentui/react';
 import { sendBoxStyle, sendBoxStyleSet, sendButtonStyle, sendIconStyle } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
@@ -48,7 +48,7 @@ export interface SendBoxStrings {
   /**
    * Aria label for send message button
    */
-  sendButtonText: string;
+  sendButtonAriaLabel: string;
 }
 
 /**
@@ -101,6 +101,10 @@ export interface SendBoxProps {
    * Optional strings to override in component
    */
   strings?: Partial<SendBoxStrings>;
+  /**
+   * boolean to determine if the input box has focus on render or not.
+   */
+  hasFocusOnMount?: boolean;
 }
 
 /**
@@ -130,9 +134,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
+  const hasFocusOnMount = props.hasFocusOnMount ?? true;
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
-  useEffect(() => sendTextFieldRef.current?.focus(), []);
+  if (hasFocusOnMount) {
+    sendTextFieldRef.current?.focus();
+  }
 
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled
@@ -227,7 +234,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         }}
         id={'sendIconWrapper'}
         className={mergedSendButtonStyle}
-        ariaLabel={localeStrings.sendButtonText}
+        ariaLabel={localeStrings.sendButtonAriaLabel}
       />
     </InputBoxComponent>
   );

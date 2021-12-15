@@ -16,7 +16,7 @@
   "sendBox": {
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
-    "sendButtonText": "Send message"
+    "sendButtonAriaLabel": "Send message"
   },
   "messageStatusIndicator": {
     "deliveredTooltipText": "Sent",

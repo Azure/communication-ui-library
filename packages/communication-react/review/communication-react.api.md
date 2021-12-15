@@ -1734,7 +1734,7 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
-    sendButtonText: string;
+    sendButtonAriaLabel: string;
     textTooLong: string;
 }
 
