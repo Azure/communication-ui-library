@@ -4,7 +4,8 @@
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { Icon } from '@fluentui/react';
+import { Icon, mergeStyles } from '@fluentui/react';
+import { useTheme } from '../theming';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -55,6 +56,24 @@ const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOf
 export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
+
+  const theme = useTheme();
+  const onRenderMicOnIcon = (): JSX.Element => (
+    <Icon
+      iconName="ControlButtonMicOn"
+      className={mergeStyles({
+        svg: { fill: props.disabled ? theme.palette.neutralTertiary : theme.palette.neutralPrimaryAlt }
+      })}
+    />
+  );
+  const onRenderMicOffIcon = (): JSX.Element => (
+    <Icon
+      iconName="ControlButtonMicOff"
+      className={mergeStyles({
+        svg: { fill: props.disabled ? theme.palette.neutralTertiary : theme.palette.neutralPrimaryAlt }
+      })}
+    />
+  );
 
   return (
     <ControlBarButton

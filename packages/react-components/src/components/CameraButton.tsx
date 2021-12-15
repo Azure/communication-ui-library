@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon } from '@fluentui/react';
+import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
+import { useTheme } from '../theming';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 
@@ -53,9 +54,6 @@ export interface CameraButtonProps extends ControlBarButtonProps {
   strings?: Partial<CameraButtonStrings>;
 }
 
-const onRenderCameraOnIcon = (): JSX.Element => <Icon iconName="ControlButtonCameraOn" />;
-const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="ControlButtonCameraOff" />;
-
 /**
  * A button to turn camera on / off.
  *
@@ -66,9 +64,25 @@ const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="ControlButtonCa
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const { localVideoViewOptions, onToggleCamera } = props;
   const [waitForCamera, setWaitForCamera] = useState(false);
-
+  const theme = useTheme();
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
+  const onRenderCameraOnIcon = (): JSX.Element => (
+    <Icon
+      iconName="ControlButtonCameraOn"
+      className={mergeStyles({
+        svg: { fill: props.disabled || waitForCamera ? theme.palette.neutralTertiary : theme.palette.neutralPrimaryAlt }
+      })}
+    />
+  );
+  const onRenderCameraOffIcon = (): JSX.Element => (
+    <Icon
+      iconName="ControlButtonCameraOff"
+      className={mergeStyles({
+        svg: { fill: props.disabled || waitForCamera ? theme.palette.neutralTertiary : theme.palette.neutralPrimaryAlt }
+      })}
+    />
+  );
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
