@@ -576,6 +576,7 @@ export type ChatCompositeIcons = Partial<Pick<CompositeIcons, 'MessageDelivered'
 export type ChatCompositeOptions = {
     errorBar?: boolean;
     topic?: boolean;
+    autoFocus?: 'sendBoxTextField' | false;
 };
 
 // @public
@@ -1719,6 +1720,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
+    autoFocus?: 'sendBoxTextField' | false;
     disabled?: boolean;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
@@ -1739,6 +1741,7 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
+    sendButtonAriaLabel: string;
     textTooLong: string;
 }
 

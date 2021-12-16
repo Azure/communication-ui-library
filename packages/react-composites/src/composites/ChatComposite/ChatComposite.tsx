@@ -37,6 +37,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    */
   options?: ChatCompositeOptions;
 }
+
 /**
  * Optional features of the {@link ChatComposite}.
  *
@@ -54,6 +55,10 @@ export type ChatCompositeOptions = {
    * @defaultValue true
    */
   topic?: boolean;
+  /**
+   * Set focus on the composite when the composite first mounts.
+   */
+  autoFocus?: 'sendBoxTextField' | false;
 };
 
 /**
