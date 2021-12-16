@@ -15,7 +15,8 @@
   },
   "sendBox": {
     "placeholderText": "Enter a message",
-    "textTooLong": "Your message length is over the maximum limit."
+    "textTooLong": "Your message length is over the maximum limit.",
+    "sendButtonAriaLabel": "Send message"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
@@ -36,7 +37,8 @@
     "offLabel": "Turn on",
     "tooltipDisabledContent": "Camera is disabled",
     "tooltipOnContent": "Turn off camera",
-    "tooltipOffContent": "Turn on camera"
+    "tooltipOffContent": "Turn on camera",
+    "tooltipVideoLoadingContent": "Video is loading"
   },
   "microphoneButton": {
     "onLabel": "Mute",

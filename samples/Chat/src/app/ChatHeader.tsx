@@ -25,25 +25,27 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   const leaveString = 'Leave';
 
   return (
-    <Stack className={chatHeaderContainerStyle} horizontal={true} horizontalAlign="end">
-      <Stack horizontal={true} verticalAlign={'center'}>
-        <div className={smallLeaveButtonContainerStyle}>
-          <IconButton
-            iconProps={leaveIcon}
-            className={mergeStyles(greyIconButtonStyle, { color: theme.palette.neutralPrimaryAlt })}
-            onClick={() => props.onEndChat()}
-          />
-        </div>
-        <div className={largeLeaveButtonContainerStyle}>
-          <DefaultButton
-            className={mergeStyles(leaveButtonStyle, { color: theme.palette.neutralPrimaryAlt })}
-            styles={buttonWithIconStyles}
-            text={leaveString}
-            onClick={() => props.onEndChat()}
-            onRenderIcon={() => <Icon iconName={leaveIcon.iconName} className={leaveIconStyle} />}
-          />
-        </div>
-      </Stack>
+    <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
+      <DefaultButton
+        className={mergeStyles(largeLeaveButtonContainerStyle, leaveButtonStyle, {
+          color: theme.palette.neutralPrimaryAlt
+        })}
+        styles={buttonWithIconStyles}
+        text={leaveString}
+        onClick={() => props.onEndChat()}
+        onRenderIcon={() => <Icon iconName={leaveIcon.iconName} className={leaveIconStyle} />}
+        aria-live={'polite'}
+        aria-label={leaveString}
+      />
+      <IconButton
+        iconProps={leaveIcon}
+        className={mergeStyles(smallLeaveButtonContainerStyle, greyIconButtonStyle, {
+          color: theme.palette.neutralPrimaryAlt
+        })}
+        onClick={() => props.onEndChat()}
+        ariaLabel={leaveString}
+        aria-live={'polite'}
+      />
     </Stack>
   );
 };

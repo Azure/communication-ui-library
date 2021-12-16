@@ -13,11 +13,7 @@ import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ChatHeader } from './ChatHeader';
-import {
-  chatCompositeContainerStyle,
-  chatHeaderContainerStyle,
-  chatScreenContainerStyle
-} from './styles/ChatScreen.styles';
+import { chatCompositeContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
@@ -86,19 +82,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             });
           })
       );
-
     return (
       <Stack className={chatScreenContainerStyle}>
-        <Stack.Item className={chatHeaderContainerStyle}>
-          <ChatHeader onEndChat={() => adapter.removeParticipant(userId)} />
-        </Stack.Item>
         <Stack.Item className={chatCompositeContainerStyle}>
           <ChatComposite
             adapter={adapter}
             fluentTheme={currentTheme.theme}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            options={{
+              autoFocus: 'sendBoxTextField'
+            }}
           />
         </Stack.Item>
+        <ChatHeader onEndChat={() => adapter.removeParticipant(userId)} />
       </Stack>
     );
   }
