@@ -72,7 +72,6 @@ export interface CameraButtonStrings {
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
-    tooltipVideoLoadingContent?: string;
 }
 
 // @public
@@ -501,13 +500,9 @@ export interface MessageStatusIndicatorProps {
 
 // @public
 export interface MessageStatusIndicatorStrings {
-    deliveredAriaLabel?: string;
     deliveredTooltipText: string;
-    failedToSendAriaLabel?: string;
     failedToSendTooltipText: string;
-    seenAriaLabel?: string;
     seenTooltipText: string;
-    sendingAriaLabel?: string;
     sendingTooltipText: string;
 }
 
@@ -746,7 +741,6 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @public
 export interface SendBoxProps {
-    autoFocus?: 'sendBoxTextField' | false;
     disabled?: boolean;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
@@ -761,7 +755,6 @@ export interface SendBoxProps {
 // @public
 export interface SendBoxStrings {
     placeholderText: string;
-    sendButtonAriaLabel: string;
     textTooLong: string;
 }
 

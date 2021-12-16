@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Merge changes from `main` to beta feature branch",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

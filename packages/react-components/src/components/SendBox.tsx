@@ -45,10 +45,6 @@ export interface SendBoxStrings {
    * The warning message when send box text length is more than max limit
    */
   textTooLong: string;
-  /**
-   * Aria label for send message button
-   */
-  sendButtonAriaLabel: string;
 }
 
 /**
@@ -101,10 +97,6 @@ export interface SendBoxProps {
    * Optional strings to override in component
    */
   strings?: Partial<SendBoxStrings>;
-  /**
-   * boolean to determine if the input box has focus on render or not.
-   */
-  autoFocus?: 'sendBoxTextField' | false;
 }
 
 /**
@@ -124,8 +116,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onTyping,
     onRenderIcon,
     onRenderSystemMessage,
-    styles,
-    autoFocus
+    styles
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -200,7 +191,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   return (
     <InputBoxComponent
-      autoFocus={autoFocus}
       data-ui-id={ids.sendboxTextField}
       inlineChildren={true}
       disabled={disabled}
@@ -231,7 +221,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         }}
         id={'sendIconWrapper'}
         className={mergedSendButtonStyle}
-        ariaLabel={localeStrings.sendButtonAriaLabel}
       />
     </InputBoxComponent>
   );

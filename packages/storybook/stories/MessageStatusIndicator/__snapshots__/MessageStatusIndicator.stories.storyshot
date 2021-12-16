@@ -29,7 +29,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Message Status Indica
         onMouseLeave={[Function]}
       >
         <i
-          aria-label="Message sent"
+          aria-label="Sent"
           className="root-94 css-120 root-3"
           data-icon-name="MessageDelivered"
           role="status"

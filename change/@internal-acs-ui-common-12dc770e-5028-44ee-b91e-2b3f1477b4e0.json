@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add conditional build for GA apis",
+  "packageName": "@internal/acs-ui-common",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

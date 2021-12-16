@@ -35,4 +35,9 @@ const config: PlaywrightTestConfig = {
   ],
   globalSetup: require.resolve('./globalSetup')
 };
+
+if (process.env['FLAVOR'] === 'stable') {
+  config.snapshotDir = './stable-snapshot';
+}
+
 export default config;

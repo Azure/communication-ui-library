@@ -89,10 +89,6 @@ const getDocs: () => JSX.Element = () => {
         imported and used as `DefaultButton` styles for easy styling. `FluentThemeProvider` is needed around
         `ControlBar` to provide theming and icons. Learn more about theming [here](./?path=/docs/theming--page).
       </Description>
-      <Description>
-        Note that for accessibility purposes, our pre-defined buttons can be focused on even when disabled. This
-        behaviour can be changed by setting the button prop `allowDisabledFocus` to `false`.
-      </Description>
       <Canvas mdxSource={AllButtonsControlBarExampleText}>
         <AllButtonsControlBarExample />
       </Canvas>

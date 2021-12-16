@@ -43,7 +43,7 @@ Here are some very useful ones.
 In addition to their Web version, this tool is also available for Android and Windows.
 
 For a quick check, you can use their `FastPass` scenario and there go through the following tools:
-* `Automated checks` for detecting some common accessibility issues 
+* `Automated checks` for detecting some common accessibility issues
 * `Tab stops` for checking your keyboard navigation path
 
 Accessibility Insights for Windows can be used to test luminosity ratio of UI elements.
@@ -83,7 +83,7 @@ To check that, go on Firefox settings and click on the ‘Colours…’ button u
 
 #### Safari
 
-For macOS, you will need to change your display preferences. Instructions on how to do it can be found [here](https://support.apple.com/lv-lv/guide/mac-help/unac089/mac). 
+For macOS, you will need to change your display preferences. Instructions on how to do it can be found [here](https://support.apple.com/lv-lv/guide/mac-help/unac089/mac).
 
 ## Code examples
 

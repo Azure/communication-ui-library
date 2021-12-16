@@ -28,10 +28,6 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         Default button styled for use with the [Control Bar](./?path=/docs/ui-components-controlbar--control-bar).
       </Description>
-      <Description>
-        Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be
-        changed by setting the button prop `allowDisabledFocus` to `false`.
-      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
