@@ -1,7 +1,7 @@
 {
-  "type": "prerelease",
+  "type": "minor",
   "comment": "add aria-label strings to MessageStatusIndicator",
   "packageName": "@internal/react-components",
   "email": "alcail@microsoft.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "minor"
 }
