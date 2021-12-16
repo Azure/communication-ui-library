@@ -71,4 +71,9 @@ const config: PlaywrightTestConfig = {
     }
   ]
 };
+
+if (process.env['FLAVOR'] === 'stable') {
+  config.snapshotDir = './stable-snapshot';
+}
+
 export default config;

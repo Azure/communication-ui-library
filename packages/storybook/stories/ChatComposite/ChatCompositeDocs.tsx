@@ -4,6 +4,7 @@
 import { ChatComposite } from '@azure/communication-react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
 import React from 'react';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
@@ -12,6 +13,10 @@ const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBeha
 
 const hideTopicStatement = `
 <ChatComposite options={{ topic: false}}>
+`;
+const showParticipantStatement = `
+// Caution: the Participant Pane is a beta feature
+<ChatComposite options={{ participantPane: true}}>
 `;
 
 export const getDocs: () => JSX.Element = () => {
@@ -72,6 +77,15 @@ export const getDocs: () => JSX.Element = () => {
         we support hiding the `Topic Header`:
       </Description>
       <Source code={hideTopicStatement} />
+
+      <Heading>Participant Pane</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        You can also show a `Participant Pane` to the right hand side of the chat that has support for removing users.
+        The Participant pane is a `beta` feature. Currently it does not support mobile views and is subject to breaking
+        changes.
+      </Description>
+      <Source code={showParticipantStatement} />
 
       <Heading>Running in a Mobile browser</Heading>
       <Description>

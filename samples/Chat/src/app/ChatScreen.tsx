@@ -35,6 +35,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapterRef = useRef<ChatAdapter>();
   const [adapter, setAdapter] = useState<ChatAdapter>();
+  const [hideParticipants, setHideParticipants] = useState<boolean>(false);
   const { currentTheme } = useSwitchableFluentTheme();
 
   useEffect(() => {
@@ -88,13 +89,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           <ChatComposite
             adapter={adapter}
             fluentTheme={currentTheme.theme}
+            options={{ participantPane: !hideParticipants }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             options={{
               autoFocus: 'sendBoxTextField'
             }}
           />
         </Stack.Item>
-        <ChatHeader onEndChat={() => adapter.removeParticipant(userId)} />
+        <ChatHeader
+          isParticipantsDisplayed={hideParticipants !== true}
+          onEndChat={() => adapter.removeParticipant(userId)}
+          setHideParticipants={setHideParticipants}
+        />
       </Stack>
     );
   }
