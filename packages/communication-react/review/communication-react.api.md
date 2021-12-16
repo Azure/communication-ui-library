@@ -488,6 +488,7 @@ export interface CameraButtonStrings {
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
+    tooltipVideoLoadingContent?: string;
 }
 
 // @public
