@@ -1,17 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS } from '../common/constants';
-import {
-  dataUiId,
-  stubMessageTimestamps,
-  waitForChatCompositeToLoad,
-  buildUrl,
-  waitForSelector
-} from '../common/utils';
-import { createChatThreadAndUsers } from '../common/fixtureHelpers';
+import { IDS } from './constants';
+import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl, waitForSelector } from './utils';
+import { createChatThreadAndUsers } from './fixtureHelpers';
 import { Page } from '@playwright/test';
-import { ChatUserType } from '../common/fixtureTypes';
+import { ChatUserType } from './fixtureTypes';
 
 const PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen'];
 
@@ -44,22 +38,27 @@ export const chatTestSetup = async ({
 };
 
 export const sendMessage = async (page: Page, message: string): Promise<void> => {
+  await page.bringToFront();
   await page.type(dataUiId(IDS.sendboxTextField), message);
   await page.keyboard.press('Enter');
 };
 
 export const waitForSendMessageFailure = async (page: Page): Promise<void> => {
+  await page.bringToFront();
   await waitForSelector(page, '[data-ui-status="failed"]');
 };
 
 export const waitForMessageDelivered = async (page: Page): Promise<void> => {
+  await page.bringToFront();
   await waitForSelector(page, '[data-ui-status="delivered"]');
 };
 
 export const waitForMessageSeen = async (page: Page): Promise<void> => {
+  await page.bringToFront();
   await waitForSelector(page, '[data-ui-status="seen"]');
 };
 
 export const waitForMessageWithContent = async (page: Page, messageContent: string): Promise<void> => {
+  await page.bringToFront();
   await waitForSelector(page, `.ui-chat__message__content :text("${messageContent}")`);
 };

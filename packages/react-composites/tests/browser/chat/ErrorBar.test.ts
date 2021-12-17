@@ -4,7 +4,12 @@
 import { stubMessageTimestamps, waitForChatCompositeToLoad, buildUrl } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { chatTestSetup, sendMessage, waitForSendMessageFailure, waitForMessageDelivered } from './chatTestHelpers';
+import {
+  chatTestSetup,
+  sendMessage,
+  waitForSendMessageFailure,
+  waitForMessageDelivered
+} from '../common/chatTestHelpers';
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
@@ -15,7 +20,6 @@ test.describe('ErrorBar is shown correctly', async () => {
 
   test('not shown when nothing is wrong', async ({ serverUrl, users, page }) => {
     await page.goto(buildUrl(serverUrl, users[0]));
-    await page.bringToFront();
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
     expect(await page.screenshot()).toMatchSnapshot('no-error-bar-for-valid-user.png');

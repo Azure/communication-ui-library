@@ -23,7 +23,6 @@ test.describe('Localization tests', async () => {
 
   test('Configuration page title and participant button in call should be localized', async ({ pages }) => {
     const page = pages[0];
-    await page.bringToFront();
     await waitForCallCompositeToLoad(page);
     expect(await page.screenshot()).toMatchSnapshot('localized-call-configuration-page.png');
 
