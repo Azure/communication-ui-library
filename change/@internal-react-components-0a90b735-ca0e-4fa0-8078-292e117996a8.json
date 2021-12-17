@@ -1,7 +1,7 @@
 {
-  "comment": "allow focus on control bar button when disabled",
-  "type": "none",
+  "comment": "Allow focus on control bar button when disabled",
+  "type": "patch",
   "packageName": "@internal/react-components",
   "email": "alcail@microsoft.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
