@@ -6,10 +6,16 @@
   "scripts": {
     "build": "echo skip",
     "test": "echo skip",
+    "build:stable": "echo skip",
+    "test:stable": "echo skip",
     "test:e2e:bundle": "cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/",
     "update:snapshot:bundle": "cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/ --update-snapshots",
     "test:e2e:examples": "cross-env SERVE_PATH=../ComponentExamples/dist/build playwright test ComponentExamples/",
     "update:snapshot:examples": "cross-env SERVE_PATH=../ComponentExamples/dist/build playwright test ComponentExamples/ --update-snapshots",
+    "test:e2e:bundle:stable": "cross-env FLAVOR=stable test:e2e:bundle",
+    "update:snapshot:bundle:stable": "cross-env FLAVOR=stable update:snapshot:bundle",
+    "test:e2e:examples:stable": "cross-env FLAVOR=stable test:e2e:examples",
+    "update:snapshot:examples:stable": "cross-env FLAVOR=stable update:snapshot:examples",
     "lint": "echo skip",
     "lint:fix": "echo skip",
     "prettier": "",
@@ -25,12 +31,12 @@
   "devDependencies": {
     "@azure/communication-chat": "1.1.0",
     "@azure/communication-identity": "1.0.0",
-    "@playwright/test": "~1.15.1",
+    "@playwright/test": "~1.17.1",
     "@types/node-static": "~0.7.7",
     "@types/node": "^14.14.10",
     "dotenv": "~10.0.0",
     "node-static": "~0.7.11",
-    "playwright": "~1.15.1",
+    "playwright": "~1.17.1",
     "rimraf": "^2.6.2",
     "typescript": "4.3.5"
   }

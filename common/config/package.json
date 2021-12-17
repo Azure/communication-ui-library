@@ -7,8 +7,10 @@
     "lint": "",
     "lint:fix": "",
     "build": "",
+    "build:stable": "",
     "clean": "",
     "test": "",
+    "test:stable": "",
     "prettier": "",
     "prettier:check": ""
   },

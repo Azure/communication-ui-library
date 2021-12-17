@@ -4,10 +4,12 @@
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
     "build": "build-storybook -s stories,public,.storybook  --quiet --loglevel warn",
+    "build:stable": "echo skip",
     "clean": "",
     "start": "start-storybook -p 6006 -s stories,./public --no-manager-cache --quiet --loglevel warn",
     "deploy-storybook": "storybook-to-ghpages --script build",
     "test": "npm run test:snippets && jest",
+    "test:stable": "echo skip",
     "test:coverage": "npm run test -- --coverage",
     "test:snippets": "tsc --p tsconfig.snippets.json",
     "snapshot:update": "npm run test -- --update-snapshot",
@@ -36,7 +38,7 @@
     "resize-observer-polyfill": "~1.5.1"
   },
   "devDependencies": {
-    "@babel/core": "7.13.10",
+    "@babel/core": "~7.16.0",
     "@babel/preset-env": "7.13.10",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",
