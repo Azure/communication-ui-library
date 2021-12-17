@@ -89,11 +89,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           <ChatComposite
             adapter={adapter}
             fluentTheme={currentTheme.theme}
-            options={{ participantPane: !hideParticipants }}
+            options={{ autoFocus: 'sendBoxTextField', participantPane: !hideParticipants }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-            options={{
-              autoFocus: 'sendBoxTextField'
-            }}
           />
         </Stack.Item>
         <ChatHeader
