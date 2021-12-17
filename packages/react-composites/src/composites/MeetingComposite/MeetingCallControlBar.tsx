@@ -43,8 +43,8 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     devicesButton: !props.meetingCallControlOptions?.devicesButton ? false : true
   };
   // Set flags for the chat button and people button specific to the meeting control bar.
-  let chatButton = props.meetingCallControlOptions?.chatButton === false ? false : true;
-  let peopleButton = props.meetingCallControlOptions?.peopleButton === false ? false : true;
+  const chatButton = props.meetingCallControlOptions?.chatButton === false ? false : true;
+  const peopleButton = props.meetingCallControlOptions?.peopleButton === false ? false : true;
   console.log(callControlsOptions);
 
   // Reduce the controls shown when mobile view is enabled.

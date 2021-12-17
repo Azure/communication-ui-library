@@ -57,26 +57,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
 export interface MeetingCallControlOptions
   extends Pick<
     CallControlOptions,
-    /**
-     * Flag that toggles the camera button in the MeetingCallControlBar component.
-     */
-    | 'cameraButton'
-    /**
-     * Flag that toggles the Microphone button in the MeetingCallControlBar component.
-     */
-    | 'microphoneButton'
-    /**
-     * Flag that toggles the Screen Share button in the MeetingCallControlBar component.
-     */
-    | 'screenShareButton'
-    /**
-     * Flag that toggles the Devices drop down and button in the MeetingCallControlBar component.
-     */
-    | 'devicesButton'
-    /**
-     * Selector that determines the display type to the CallControls component inside MeetingCallControlBar component, set to 'default' or 'compact'
-     */
-    | 'displayType'
+    'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'
   > {
   /**
    * Flag for displaying the chat button inside the MeetingCallControlBar component.
