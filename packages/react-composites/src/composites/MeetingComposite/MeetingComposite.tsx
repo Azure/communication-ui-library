@@ -60,11 +60,13 @@ export interface MeetingCallControlOptions
     'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'
   > {
   /**
-   * Flag for displaying the chat button inside the MeetingCallControlBar component.
+   * Show or hide the chat button in the meeting control bar.
+   * @defaultValue true
    */
   chatButton?: boolean;
   /**
-   * Flag for toggling the people button inside the MeetingCallControlBar component.
+   * Show or hide the people button in the meeting control bar.
+   * @defaultValue true
    */
   peopleButton?: boolean;
 }
