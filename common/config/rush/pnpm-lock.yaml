@@ -2793,13 +2793,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-XqPS7l3YoMwxdNlaYF6S2Mp0K3FmVIOIy2K3YkMc+eRxu9wFK6emr2Q/3rBhtG5u/On37NExRT7/5CTLnoi9gw==
-  /@fluentui/dom-utilities/2.1.4:
-    dependencies:
-      '@fluentui/set-version': 8.1.5
-      tslib: 2.3.1
-    dev: false
-    resolution:
-      integrity: sha512-+gsAnEjgoKB37o+tsMdSLtgqZ9z2PzpvnHx/2IqhRWjQQd7Xc7MbQsbZaQ5qfkioFHLnWGc/+WORpqKPy/sWrg==
   /@fluentui/dom-utilities/2.1.5:
     dependencies:
       '@fluentui/set-version': 8.1.5
@@ -2820,7 +2813,7 @@ packages:
       integrity: sha512-kZkCHM/mP8WWLLExz3x3wK5yQHPP4tAcvlHVqe69TbG8+3fxRGJSMOxzZO/04CFQp2A7/wOskSRtqeIBtaXJfw==
   /@fluentui/foundation-legacy/8.1.8_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/merge-styles': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
       '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
       '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
@@ -2839,13 +2832,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-pVY2m3IC5+LLmMzsaPApX9eKTzpOzdgQwrR3FNTE6mGx3N/+QWYM7fdF+T1ldZQt87dCRSeQnmAo5kqjtxeA/w==
-  /@fluentui/merge-styles/8.1.4:
-    dependencies:
-      '@fluentui/set-version': 8.1.5
-      tslib: 2.3.1
-    dev: false
-    resolution:
-      integrity: sha512-zCAEjZyALk0CGW1H9YNJU+e/MW0P5sFJfrDvac27K4S/dIQvKnOwMUNOWRkNz3yUEt0R9vo0NtiO3cW04cZq3A==
   /@fluentui/merge-styles/8.2.2:
     dependencies:
       '@fluentui/set-version': 8.1.5
@@ -2917,7 +2903,7 @@ packages:
   /@fluentui/react-focus/8.1.10_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/keyboard-key': 0.3.4
-      '@fluentui/merge-styles': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
       '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
       '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
@@ -3057,18 +3043,6 @@ packages:
       react-dom: '>=16.8.0 <17.0.0'
     resolution:
       integrity: sha512-fGSgL3Vp/+6t1Ysfz21FWZmqsU+iFVxOigvHnm5uKVyyRPwtaabv/F6kQ2y5isLMI2YmJaUd2i0cDJKu8ggrvw==
-  /@fluentui/react-window-provider/2.1.4_796713c4bb4631ac40b03d54b6277837:
-    dependencies:
-      '@fluentui/set-version': 8.1.5
-      '@types/react': 16.14.13
-      react: 16.14.0
-      tslib: 2.3.1
-    dev: false
-    peerDependencies:
-      '@types/react': '>=16.8.0 <18.0.0'
-      react: '>=16.8.0 <18.0.0'
-    resolution:
-      integrity: sha512-RztmJ7ol2eMDr3NCs2OcAA1cQjZdPPUEa4aurgh4Aq+JM/BiY0aK6S4SeFtVD7F8Q7PBOz/xwOG4HlnSMQtlsg==
   /@fluentui/react-window-provider/2.1.5_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/set-version': 8.1.5
@@ -3086,14 +3060,14 @@ packages:
       '@fluentui/date-time-utilities': 8.2.2
       '@fluentui/font-icons-mdl2': 8.1.8_796713c4bb4631ac40b03d54b6277837
       '@fluentui/foundation-legacy': 8.1.8_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/merge-styles': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
       '@fluentui/react-focus': 8.1.10_796713c4bb4631ac40b03d54b6277837
       '@fluentui/react-hooks': 8.3.7_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/react-window-provider': 2.1.4_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/set-version': 8.1.4
+      '@fluentui/react-window-provider': 2.1.5_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
       '@fluentui/theme': 2.2.1_796713c4bb4631ac40b03d54b6277837
-      '@fluentui/utilities': 8.2.2_796713c4bb4631ac40b03d54b6277837
+      '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@microsoft/load-themed-styles': 1.10.202
       '@types/react': 16.14.13
       '@types/react-dom': 16.9.14
@@ -3119,12 +3093,6 @@ packages:
       react: '*'
     resolution:
       integrity: sha512-/i+6Edwu+l/WTP+tBlibqRCpds6DMSVuQzvW55GSDK3/Wkhch+Mt2S9CZLBsfiODBUAYzVy2vwo2mxJeGVhPkQ==
-  /@fluentui/set-version/8.1.4:
-    dependencies:
-      tslib: 2.3.1
-    dev: false
-    resolution:
-      integrity: sha512-2otMyJ+s+W+hjBD4BKjwYKKinJUDeIKYKz93qKrrJS0i3fKfftNroy9dHFlIblZ7n747L334plLi3bzQO1bnvA==
   /@fluentui/set-version/8.1.5:
     dependencies:
       tslib: 2.3.1
@@ -3139,7 +3107,7 @@ packages:
       integrity: sha512-9WNGHMweJgx588HNO68sMdcH1lVFU3eXnc34OygDsHh/k3ctCMFaJk+KCTZRqBl60bUE3zcbFoP54BtQFuS5gg==
   /@fluentui/style-utilities/8.2.2_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/merge-styles': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
       '@fluentui/set-version': 8.1.5
       '@fluentui/theme': 2.2.1_796713c4bb4631ac40b03d54b6277837
       '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
@@ -3175,7 +3143,7 @@ packages:
       integrity: sha512-Lr7560zsXe+FAPhB0EOqhhVi9IxvuhkY9GnPsEW87tsPC9KOP6g/Atw2CpJ+31eYNsqWiNAt8eOLEOT9cU9Jrw==
   /@fluentui/theme/2.2.1_796713c4bb4631ac40b03d54b6277837:
     dependencies:
-      '@fluentui/merge-styles': 8.1.4
+      '@fluentui/merge-styles': 8.2.2
       '@fluentui/set-version': 8.1.5
       '@fluentui/utilities': 8.3.7_796713c4bb4631ac40b03d54b6277837
       '@types/react': 16.14.13
@@ -3187,20 +3155,6 @@ packages:
       react: '>=16.8.0 <18.0.0'
     resolution:
       integrity: sha512-1G92TftVulrGXklL5upaN/WrrSzY/va39RM1eo0XO/Q3+kAhAajclQAXb7XanqOsVFcAqK1DbVvWayrY9DG2Qg==
-  /@fluentui/utilities/8.2.2_796713c4bb4631ac40b03d54b6277837:
-    dependencies:
-      '@fluentui/dom-utilities': 2.1.4
-      '@fluentui/merge-styles': 8.1.4
-      '@fluentui/set-version': 8.1.5
-      '@types/react': 16.14.13
-      react: 16.14.0
-      tslib: 2.3.1
-    dev: false
-    peerDependencies:
-      '@types/react': '>=16.8.0 <18.0.0'
-      react: '>=16.8.0 <18.0.0'
-    resolution:
-      integrity: sha512-aM2/CgoTIssMDs7MoTla+q/VXN5Gkk4s12S8GZNp87cmEzDy008tKkiRpHj6PXZuvJL5bctZco9YQgusO0jZEg==
   /@fluentui/utilities/8.3.7_796713c4bb4631ac40b03d54b6277837:
     dependencies:
       '@fluentui/dom-utilities': 2.1.5
@@ -3957,71 +3911,6 @@ packages:
         optional: true
     resolution:
       integrity: sha512-br5Qwvh8D2OQqSXpd1g/xqXKnK0r+Jz6qVKBbWmpUcrbGOxUrf39V5oZ1876084CGn18uMdR5uvPqBv9UqtBjQ==
-  /@pnpm/constants/4.1.0:
-    dev: false
-    engines:
-      node: '>=10.16'
-    resolution:
-      integrity: sha512-kH6+y0IMPExiUnwk+BTXvaPSIp3SlBxTXK7JeW8hopJ2B8EVIwFOWLdXK85sJpr4+jxbtEn2spzLRx6Rcfh7xQ==
-  /@pnpm/error/1.4.0:
-    dev: false
-    engines:
-      node: '>=10.16'
-    resolution:
-      integrity: sha512-vxkRrkneBPVmP23kyjnYwVOtipwlSl6UfL+h+Xa3TrABJTz5rYBXemlTsU5BzST8U4pD7YDkTb3SQu+MMuIDKA==
-  /@pnpm/lockfile-file/3.2.1_@pnpm+logger@3.2.3:
-    dependencies:
-      '@pnpm/constants': 4.1.0
-      '@pnpm/error': 1.4.0
-      '@pnpm/lockfile-types': 2.2.0
-      '@pnpm/logger': 3.2.3
-      '@pnpm/merge-lockfile-changes': 1.0.1
-      '@pnpm/types': 6.4.0
-      '@zkochan/rimraf': 1.0.1
-      js-yaml: 4.1.0
-      mz: 2.7.0
-      normalize-path: 3.0.0
-      ramda: 0.27.1
-      strip-bom: 4.0.0
-      write-file-atomic: 3.0.3
-    dev: false
-    engines:
-      node: '>=10.16'
-    peerDependencies:
-      '@pnpm/logger': ^3.2.3
-    resolution:
-      integrity: sha512-2fi4XHW8OBv9KsG9G33bKw2Lb2zHRP2g7kbt61p+ha/XHW9lRwS+Br5d1AmhbXTwgitKqXvQL4zf0B8exhiZSA==
-  /@pnpm/lockfile-types/2.2.0:
-    dev: false
-    engines:
-      node: '>=10.16'
-    resolution:
-      integrity: sha512-JO+MeNdc6lKaAjUqtMSx0V2+NkGtPWIJsyXrNrGhzzazgVdr6kxJUZnuBQQ8SZUyxVAOjoTBZTOxoHcFuSfkTg==
-  /@pnpm/logger/3.2.3:
-    dependencies:
-      bole: /@zkochan/bole/3.0.4
-      ndjson: 1.5.0
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-/nZCAUeKwlv1MldtOHSPDm5SuXBy4L4SoS30gYn9ti2N5XlUrVoXDE8Hq8EYfl+Knb1GQEDz04KjfFEDVsAsvg==
-  /@pnpm/merge-lockfile-changes/1.0.1:
-    dependencies:
-      '@pnpm/lockfile-types': 2.2.0
-      ramda: 0.27.1
-      semver: 7.3.5
-    dev: false
-    engines:
-      node: '>=10.16'
-    resolution:
-      integrity: sha512-eJg3mBAoIEp5jtf/WKZ+MO0ZFpLmBZ9oYzGn166EZX7wAiSvDNxWGnfJ2tc2YeIBd6kb7OC1OoTybm7gtR6D9g==
-  /@pnpm/types/6.4.0:
-    dev: false
-    engines:
-      node: '>=10.16'
-    resolution:
-      integrity: sha512-nco4+4sZqNHn60Y4VE/fbtlShCBqipyUO+nKRPvDHqLrecMW9pzHWMVRxk4nrMRoeowj3q0rX3GYRBa8lsHTAg==
   /@popperjs/core/2.4.4:
     dev: false
     resolution:
@@ -6401,21 +6290,6 @@ packages:
       typescript: '>=3.7.2'
     resolution:
       integrity: sha512-YPVUxvWQVzRx1OBN0Pmkd58+R9FcfUJuwTaPUSoi5rKxuXMtxevTXdfi0w5mEaIH8b0DfL+wg0wFDHiJE+S2zA==
-  /@zkochan/bole/3.0.4:
-    dependencies:
-      fast-safe-stringify: 1.1.13
-      individual: 3.0.0
-    dev: false
-    resolution:
-      integrity: sha512-3iPQz6Z7A2aiKc9cxB+I4X0nKxOagBxWAl91+ukUyJ9El+DgejYgbfd4PtzUyam+JRXXydUCkKGKiWYj8EzrGw==
-  /@zkochan/rimraf/1.0.1:
-    dependencies:
-      rimraf: 3.0.2
-    dev: false
-    engines:
-      node: '>=8.15'
-    resolution:
-      integrity: sha512-GIbPASozv6Pcn68adkbBCSjzut/JkCVzF7rSnWP7VSzD9Yi896Dl09OhGaXPiGWH3CxJrfSEcgutYieFIrrbrg==
   /abab/2.0.5:
     dev: false
     resolution:
@@ -6643,10 +6517,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-28ijx2aHJGdzbs+O5SNQF65r6rrKYnkuwTYm8lZlChuoJ9P1vVzIpWO20sQTqTPDXYp6NFwk326vApTtLVFXpQ==
-  /any-promise/1.3.0:
-    dev: false
-    resolution:
-      integrity: sha1-q8av7tzqUugJzcA3au0845Y10X8=
   /anymatch/2.0.0:
     dependencies:
       micromatch: 3.1.10
@@ -7304,13 +7174,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
-  /beachball/1.53.2:
+  /beachball/2.20.0:
     dependencies:
       cosmiconfig: 6.0.0
       execa: 4.1.0
       fs-extra: 8.1.0
       git-url-parse: 11.5.0
       glob: 7.1.7
+      human-id: 2.0.1
       lodash: 4.17.21
       minimatch: 3.0.4
       p-limit: 3.1.0
@@ -7318,12 +7189,14 @@ packages:
       semver: 6.3.0
       toposort: 2.0.2
       uuid: 8.3.2
-      workspace-tools: 0.12.3
+      workspace-tools: 0.16.2
       yargs-parser: 20.2.9
     dev: false
+    engines:
+      node: '>=12.0.0'
     hasBin: true
     resolution:
-      integrity: sha512-TFZrO82gCZwAC+tFZQ0cPPEG7YCif4W0FnPT8AsqkE5kotMtU6mhfrQqCOq3jcRjX7CCv4UultI83zY4NY73JA==
+      integrity: sha512-vVdF6qDDurO66GZigUtqKuXzQM8ImlG7MgN5iTj9rvZ4RM6vy+nklu0EmqaQtqS5K6hZ4WrHDwgcR/kLa0VHpA==
   /before-after-hook/2.2.2:
     dev: false
     resolution:
@@ -10202,10 +10075,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-8EZzEP0eKkEEVX+drtd9mtuQ+/QrlfW/5MlwcwK5Nds6EkZ/tRzEexkzUY2mIssnAyVLT+TKHuRXmFNNXYUd6g==
-  /fast-safe-stringify/1.1.13:
-    dev: false
-    resolution:
-      integrity: sha1-oB6c2cnkkXFcmKdaQtXwu9EH/3Y=
   /fast-safe-stringify/2.0.8:
     dev: false
     resolution:
@@ -11528,6 +11397,10 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-EkYm5BcKUGiduxzSt3Eppko+PiNWNEpa4ySk9vTC6wDsQJW9rHSa+UhGNJoRYp7bz6Ht1eaRIa6QaJqO5rCFbA==
+  /human-id/2.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-XWoYbGsEfBB0mtUHiyihsefgf+s1tNQHj7sX1kgDxUM0IEKk8rcZIPTwUpqDdFIQbkViOLejbc0t8jBzz5jL3w==
   /human-signals/1.1.1:
     dev: false
     engines:
@@ -11662,10 +11535,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==
-  /individual/3.0.0:
-    dev: false
-    resolution:
-      integrity: sha1-58pPhfiVewGHNPKFdQ3CLsL5hi0=
   /infer-owner/1.0.4:
     dev: false
     resolution:
@@ -13872,14 +13741,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-lDmx79y1z6i7RNx0ZGCPq1bzJ6ZoDDKbvh7jxr9SJcWLkShMzXrHbYVpTdnhNM5MXpDUxCQ4DgqVttVXlBgiBQ==
-  /mz/2.7.0:
-    dependencies:
-      any-promise: 1.3.0
-      object-assign: 4.1.1
-      thenify-all: 1.6.0
-    dev: false
-    resolution:
-      integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==
   /nan/2.15.0:
     dev: false
     resolution:
@@ -13919,16 +13780,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
-  /ndjson/1.5.0:
-    dependencies:
-      json-stringify-safe: 5.0.1
-      minimist: 1.2.5
-      split2: 2.2.0
-      through2: 2.0.5
-    dev: false
-    hasBin: true
-    resolution:
-      integrity: sha1-rmA7NrE0vOw0e0UkIrC/mNWDLsg=
   /nearley/2.20.1:
     dependencies:
       commander: 2.20.3
@@ -16959,12 +16810,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw==
-  /split2/2.2.0:
-    dependencies:
-      through2: 2.0.5
-    dev: false
-    resolution:
-      integrity: sha512-RAb22TG39LhI31MbreBgIuKiIKhVsawfTgEGqKHTK87aG+ul/PB8Sqoi3I7kVdRWiCfrKxK3uo4/YUkpNvhPbw==
   /sprintf-js/1.0.3:
     dev: false
     resolution:
@@ -17627,20 +17472,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
-  /thenify-all/1.6.0:
-    dependencies:
-      thenify: 3.3.1
-    dev: false
-    engines:
-      node: '>=0.8'
-    resolution:
-      integrity: sha1-GhkY1ALY/D+Y+/I02wvMjMEOlyY=
-  /thenify/3.3.1:
-    dependencies:
-      any-promise: 1.3.0
-    dev: false
-    resolution:
-      integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==
   /throat/5.0.0:
     dev: false
     resolution:
@@ -19078,10 +18909,8 @@ packages:
     dev: false
     resolution:
       integrity: sha512-P1WjMrUB3qgJNI9jfmpZ/htmBEjFh//6l/5y8SD9hg1Ef5zTTVVoRjTrTEzPrNBQvmhMxkoTsjOXN10GWU7aCg==
-  /workspace-tools/0.12.3:
+  /workspace-tools/0.16.2:
     dependencies:
-      '@pnpm/lockfile-file': 3.2.1_@pnpm+logger@3.2.3
-      '@pnpm/logger': 3.2.3
       '@yarnpkg/lockfile': 1.1.0
       find-up: 4.1.0
       find-yarn-workspace-root: 1.2.1
@@ -19093,7 +18922,7 @@ packages:
       read-yaml-file: 2.1.0
     dev: false
     resolution:
-      integrity: sha512-Toq4VI4GJw5naWxgXNU5/mmuu6PeiCRRZDkVOoeJacqQ6r0zRGWVBxE4YXQp2SADTKdC1ATwqsE+6bcJTZUmpA==
+      integrity: sha512-Z/NHo4t39DUd50MdWiPfxICyVaCjWZc/xwZxE4a/n2nAQGgeYeg6GWBY1juULPi/BGSrjSVaDQfDCj/Y80033A==
   /wrap-ansi/5.1.0:
     dependencies:
       ansi-styles: 3.2.1
@@ -19794,7 +19623,7 @@ packages:
       '@octokit/rest': 18.0.15
       '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
       '@types/node': 14.17.9
-      beachball: 1.53.2
+      beachball: 2.20.0
       immer: 9.0.6
       rollup: 2.42.4
       rollup-plugin-sourcemaps: 0.6.3_4b45aa15ce9ce9948f319a2d6455c252
@@ -19804,7 +19633,7 @@ packages:
     dev: false
     name: '@rush-temp/config'
     resolution:
-      integrity: sha512-aW+U6rABx4RdzDv9h48Yokz179n0E6n/61rZ/CuWTHY4IgIRWSl77rIC/d8ZTEuM57IyAgCcnnKVUs7x5ek42w==
+      integrity: sha512-FIAw+L+jmb8bERFtkMxVILr7rpzOp1dlXHuKqA0yxmTTQyXjlVUW2LzG9ZFAiEc92+Upy1bpJcOxm498CN7OIQ==
       tarball: file:projects/config.tgz
     version: 0.0.0
   file:projects/react-components.tgz:

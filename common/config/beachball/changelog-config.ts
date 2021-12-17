@@ -14,6 +14,13 @@ export const config: BeachballConfig = {
       changelogPath: 'packages/communication-react'
     }]
   },
+  ignorePatterns: [
+    // do not require change files for tests or snapshots
+    "**/*.test.ts?(x)",
+    "**/tests/**",
+    "**/__snapshots__/**",
+    "**/*-snapshots/**"
+  ],
   tag: "next",
   changehint: 'Run "rush changelog" to create required change files',
   // We use package groups to bump all our internal dependent packages together.
