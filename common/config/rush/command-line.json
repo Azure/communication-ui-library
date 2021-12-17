@@ -34,7 +34,7 @@
     {
       "commandKind": "bulk",
       "name": "build:stable",
-      "summary": "Preprocess and build the GA version.",
+      "summary": "Preprocess and build only stable (non-beta) code in packages",
       "description": "Preprocess and build the GA version.",
       "enableParallelism": true,
       "incremental": true,
