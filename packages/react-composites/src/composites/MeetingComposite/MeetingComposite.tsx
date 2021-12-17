@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite } from '../CallComposite';
+import { CallComposite, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
@@ -43,6 +43,32 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
    * URL that can be used to copy a meeting invite to the Users clipboard.
    */
   meetingInvitationURL?: string;
+  /**
+   * Call control options to change what buttons show on the meeting composite control bar.
+   */
+  meetingCallControlOptions?: MeetingCallControlOptions;
+}
+
+/**
+ * Meeting Call controls to show or hide buttons on the calling control bar.
+ *
+ * @beta
+ */
+export interface MeetingCallControlOptions
+  extends Pick<
+    CallControlOptions,
+    'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'
+  > {
+  /**
+   * Show or hide the chat button in the meeting control bar.
+   * @defaultValue true
+   */
+  chatButton?: boolean;
+  /**
+   * Show or hide the people button in the meeting control bar.
+   * @defaultValue true
+   */
+  peopleButton?: boolean;
 }
 
 /**
@@ -130,6 +156,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onPeopleButtonClicked={togglePeople}
             mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
+            meetingCallControlOptions={props.meetingCallControlOptions}
           />
         )}
       </Stack>
