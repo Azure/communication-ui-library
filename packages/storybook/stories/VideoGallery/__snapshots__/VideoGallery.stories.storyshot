@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video Gallery 1`] = `
 <div
-  className="css-59 body-0"
+  className="css-115 body-0"
   dir="ltr"
 >
   <div
-    className="css-59"
+    className="css-115"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -21,7 +21,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
       }
     >
       <div
-        className="css-83"
+        className="css-139"
         data-ui-id="video-gallery"
       >
         <div
@@ -84,10 +84,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               </div>
             </div>
             <div
-              className="ms-Stack css-80 css-30"
+              className="ms-Stack css-136 css-30"
             >
               <div
-                className="ms-Stack css-81 css-31"
+                className="ms-Stack css-137 css-31"
               >
                 <span
                   className="css-32"
@@ -100,7 +100,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 >
                   <i
                     aria-hidden={true}
-                    className="root-37"
+                    className="root-94"
                     data-icon-name="VideoTileMicOff"
                   >
                     <span
@@ -136,7 +136,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
           className="ms-Stack css-34"
         >
           <div
-            className="css-55 css-35"
+            className="css-111 css-35"
           >
             <div
               className="ms-Stack css-37"
@@ -195,10 +195,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-80 css-30"
+                className="ms-Stack css-136 css-30"
               >
                 <div
-                  className="ms-Stack css-81 css-31"
+                  className="ms-Stack css-137 css-31"
                 >
                   <span
                     className="css-32"
@@ -266,10 +266,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-80 css-30"
+                className="ms-Stack css-136 css-30"
               >
                 <div
-                  className="ms-Stack css-81 css-31"
+                  className="ms-Stack css-137 css-31"
                 >
                   <span
                     className="css-32"
@@ -337,10 +337,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-80 css-30"
+                className="ms-Stack css-136 css-30"
               >
                 <div
-                  className="ms-Stack css-81 css-31"
+                  className="ms-Stack css-137 css-31"
                 >
                   <span
                     className="css-32"
@@ -408,10 +408,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 </div>
               </div>
               <div
-                className="ms-Stack css-80 css-30"
+                className="ms-Stack css-136 css-30"
               >
                 <div
-                  className="ms-Stack css-81 css-31"
+                  className="ms-Stack css-137 css-31"
                 >
                   <span
                     className="css-32"
