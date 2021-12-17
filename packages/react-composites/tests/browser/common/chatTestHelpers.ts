@@ -7,7 +7,7 @@ import { createChatThreadAndUsers } from './fixtureHelpers';
 import { Page } from '@playwright/test';
 import { ChatUserType } from './fixtureTypes';
 
-const PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen'];
+export const CHAT_PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen'];
 
 /**
  * Load both chat users for UI tests.
@@ -25,7 +25,7 @@ export const chatTestSetup = async ({
   /** optional query parameters for the page url */
   qArgs?: { [key: string]: string };
 }): Promise<void> => {
-  users = await createChatThreadAndUsers(PARTICIPANTS);
+  users = await createChatThreadAndUsers(CHAT_PARTICIPANTS);
   const pageLoadPromises: Promise<unknown>[] = [];
   for (const idx in pages) {
     const page = pages[idx];
