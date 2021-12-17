@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1`] = `
 <div
-  className="css-115 body-0"
+  className="css-59 body-0"
   dir="ltr"
 >
   <div
-    className="css-115"
+    className="css-59"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -40,7 +40,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
               >
                 <i
                   aria-hidden={true}
-                  className="root-94 icon-14"
+                  className="root-37 icon-13"
                   data-icon-name="ErrorBadge"
                 >
                   
@@ -57,7 +57,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
                 />
               </div>
               <button
-                className="ms-Button ms-Button--icon ms-MessageBar-dismissal dismissal-15"
+                className="ms-Button ms-Button--icon ms-MessageBar-dismissal dismissal-14"
                 data-is-focusable={true}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -68,12 +68,12 @@ exports[`storybook snapshot tests Storyshots UI Components/Error Bar Error Bar 1
                 type="button"
               >
                 <span
-                  className="ms-Button-flexContainer flexContainer-16"
+                  className="ms-Button-flexContainer flexContainer-15"
                   data-automationid="splitbuttonprimary"
                 >
                   <i
                     aria-hidden={true}
-                    className="ms-Icon root-94 css-23 ms-Button-icon icon-18"
+                    className="ms-Icon root-37 css-22 ms-Button-icon icon-17"
                     data-icon-name="Clear"
                     style={
                       Object {

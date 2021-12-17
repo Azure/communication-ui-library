@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/Devices Devices 1`] = `
 <div
-  className="css-115 body-0"
+  className="css-59 body-0"
   dir="ltr"
 >
   <div
-    className="css-115"
+    className="css-59"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -49,7 +49,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
           >
             <i
               aria-hidden={true}
-              className="root-94"
+              className="root-37"
               data-icon-name="ControlButtonOptions"
             >
               <span
@@ -72,7 +72,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/D
             </i>
             <i
               aria-hidden={true}
-              className="ms-Icon root-94 css-11 ms-Button-menuIcon menuIcon-7"
+              className="ms-Icon root-37 css-10 ms-Button-menuIcon menuIcon-7"
               data-icon-name="ChevronDown"
               hidden={true}
               style={

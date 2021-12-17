@@ -2,11 +2,11 @@
 
 exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layout 1`] = `
 <div
-  className="css-115 body-0"
+  className="css-59 body-0"
   dir="ltr"
 >
   <div
-    className="css-115"
+    className="css-59"
     data-uses-unhanded-props={true}
     dir="ltr"
   >
@@ -29,7 +29,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
         }
       >
         <div
-          className="css-111 css-1"
+          className="css-55 css-1"
         >
           <div
             className="ms-Stack css-8"
@@ -88,10 +88,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-136 css-27"
+              className="ms-Stack css-80 css-27"
             >
               <div
-                className="ms-Stack css-137 css-28"
+                className="ms-Stack css-81 css-28"
               >
                 <span
                   className="css-29"
@@ -159,10 +159,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-136 css-27"
+              className="ms-Stack css-80 css-27"
             >
               <div
-                className="ms-Stack css-137 css-28"
+                className="ms-Stack css-81 css-28"
               >
                 <span
                   className="css-29"
@@ -230,10 +230,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-136 css-27"
+              className="ms-Stack css-80 css-27"
             >
               <div
-                className="ms-Stack css-137 css-28"
+                className="ms-Stack css-81 css-28"
               >
                 <span
                   className="css-29"
@@ -301,10 +301,10 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
               </div>
             </div>
             <div
-              className="ms-Stack css-136 css-27"
+              className="ms-Stack css-80 css-27"
             >
               <div
-                className="ms-Stack css-137 css-28"
+                className="ms-Stack css-81 css-28"
               >
                 <span
                   className="css-29"
