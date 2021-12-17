@@ -32,15 +32,12 @@ export interface MeetingCallControlBarProps {
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
   let callControlsOptions: CallControlOptions | false = {
+    ...props.meetingCallControlOptions,
     participantsButton: false,
     screenShareButton:
       props.mobileView || !props.meetingCallControlOptions?.screenShareButton
         ? false
-        : { disabled: props.disableButtonsForLobbyPage },
-    displayType: props.meetingCallControlOptions?.displayType,
-    microphoneButton: !props.meetingCallControlOptions?.microphoneButton ? false : true,
-    cameraButton: !props.meetingCallControlOptions?.cameraButton ? false : true,
-    devicesButton: !props.meetingCallControlOptions?.devicesButton ? false : true
+        : { disabled: props.disableButtonsForLobbyPage }
   };
   // Set flags for the chat button and people button specific to the meeting control bar.
   const chatButton = props.meetingCallControlOptions?.chatButton === false ? false : true;
