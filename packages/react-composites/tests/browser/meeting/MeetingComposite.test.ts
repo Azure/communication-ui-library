@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS } from '../common/constants';
+import { IDS, TEST_PARTICIPANTS } from '../common/constants';
 import {
   buildUrl,
   dataUiId,
@@ -13,9 +13,8 @@ import {
 } from '../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
-import { v1 as generateGUID } from 'uuid';
-import { CHAT_PARTICIPANTS, sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../common/chatTestHelpers';
-import { createChatThreadAndUsers } from '../common/fixtureHelpers';
+import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../common/chatTestHelpers';
+import { createMeetingObjectsAndUsers } from '../common/fixtureHelpers';
 import { MeetingUserType } from '../common/fixtureTypes';
 
 test.describe('Meeting Composite Pre-Join Tests', () => {
@@ -91,18 +90,11 @@ export const meetingTestSetup = async ({
   /** optional query parameters for the page url */
   qArgs?: { [key: string]: string };
 }): Promise<void> => {
-  // Each test *must* join a new call to prevent test flakiness.
-  // We hit a Calling SDK service 500 error if we do not.
-  // An issue has been filed with the calling team.
-  const newTestGuid = generateGUID();
-
-  // ensure chats are always unique per test
-  users = await createChatThreadAndUsers(CHAT_PARTICIPANTS);
-  for (let i = 0; i < pages.length; i++) {
+  // ensure calls and chats are always unique per test
+  users = await createMeetingObjectsAndUsers(TEST_PARTICIPANTS);
+  for (const i in pages) {
     const page = pages[i];
     const user = users[i];
-    user.groupId = newTestGuid;
-
     await page.goto(buildUrl(serverUrl, user, qArgs));
     await waitForMeetingCompositeToLoad(page);
   }
