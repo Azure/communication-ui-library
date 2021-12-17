@@ -35,12 +35,15 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
     ...props.meetingCallControlOptions,
     participantsButton: false,
     screenShareButton:
-      props.mobileView || !props.meetingCallControlOptions?.screenShareButton
+      props.mobileView || props.meetingCallControlOptions?.screenShareButton === false
         ? false
         : { disabled: props.disableButtonsForLobbyPage }
   };
 
-  // Helper function to determine if a meeting control bar button is enabled or not.
+  /**
+   * Helper function to determine if a meeting control bar button is enabled or not.
+   * @private
+   */
   const isEnabled = (option: boolean | undefined): boolean => !(option === false);
 
   // Reduce the controls shown when mobile view is enabled.
