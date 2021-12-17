@@ -112,11 +112,11 @@ test.describe('Chat Composite custom data model', () => {
   });
 
   test('can be viewed by user[1]', async ({ pages }) => {
+    const testMessageText = 'How the turn tables';
     const page = pages[0];
     await page.bringToFront();
-    await page.type(dataUiId(IDS.sendboxTextField), 'How the turn tables');
-    await page.keyboard.press('Enter');
-    await waitForSelector(page, `[data-ui-status="delivered"]`);
+    await sendMessage(page, testMessageText);
+    await waitForMessageDelivered(page);
     await waitForFunction(page, () => {
       return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
     });
