@@ -51,6 +51,8 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
 
 /**
  * Meeting Call controls to show or hide buttons on the calling control bar.
+ *
+ * @beta
  */
 export interface MeetingCallControlOptions
   extends Pick<

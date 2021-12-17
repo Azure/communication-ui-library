@@ -618,6 +618,32 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 }
 
 // @beta
+export interface MeetingCallControlOptions extends Pick<CallControlOptions,
+/**
+* Flag that toggles the camera button in the MeetingCallControlBar component.
+*/
+'cameraButton'
+/**
+* Flag that toggles the Microphone button in the MeetingCallControlBar component.
+*/
+| 'microphoneButton'
+/**
+* Flag that toggles the Screen Share button in the MeetingCallControlBar component.
+*/
+| 'screenShareButton'
+/**
+* Flag that toggles the Devices drop down and button in the MeetingCallControlBar component.
+*/
+| 'devicesButton'
+/**
+* Selector that determines the display type to the CallControls component inside MeetingCallControlBar component, set to 'default' or 'compact'
+*/
+| 'displayType'> {
+    chatButton?: boolean;
+    peopleButton?: boolean;
+}
+
+// @beta
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @beta
@@ -629,6 +655,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
     formFactor?: 'desktop' | 'mobile';
     // (undocumented)
     meetingAdapter: MeetingAdapter;
+    meetingCallControlOptions?: MeetingCallControlOptions;
     meetingInvitationURL?: string;
 }
 
