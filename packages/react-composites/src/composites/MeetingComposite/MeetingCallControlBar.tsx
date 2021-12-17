@@ -11,7 +11,7 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-
+import { MeetingCallControlOptions } from './MeetingComposite';
 /**
  * @private
  */
@@ -23,17 +23,29 @@ export interface MeetingCallControlBarProps {
   onPeopleButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
+  meetingCallControlOptions?: MeetingCallControlOptions;
 }
 
 /**
  * @private
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
-  // Disable the default participants button as meetings composite has its own participants button.
+  // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
   let callControlsOptions: CallControlOptions | false = {
     participantsButton: false,
-    screenShareButton: props.mobileView ? false : { disabled: props.disableButtonsForLobbyPage }
+    screenShareButton:
+      props.mobileView || !props.meetingCallControlOptions?.screenShareButton
+        ? false
+        : { disabled: props.disableButtonsForLobbyPage },
+    displayType: props.meetingCallControlOptions?.displayType,
+    microphoneButton: !props.meetingCallControlOptions?.microphoneButton ? false : true,
+    cameraButton: !props.meetingCallControlOptions?.cameraButton ? false : true,
+    devicesButton: !props.meetingCallControlOptions?.devicesButton ? false : true
   };
+  // Set flags for the chat button and people button specific to the meeting control bar.
+  let chatButton = props.meetingCallControlOptions?.chatButton === false ? false : true;
+  let peopleButton = props.meetingCallControlOptions?.peopleButton === false ? false : true;
+  console.log(callControlsOptions);
 
   // Reduce the controls shown when mobile view is enabled.
   if (props.mobileView) {
@@ -57,20 +69,24 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>
-        <ChatButton
-          checked={props.chatButtonChecked}
-          showLabel={true}
-          onClick={props.onChatButtonClicked}
-          data-ui-id="meeting-composite-chat-button"
-          disabled={props.disableButtonsForLobbyPage}
-        />
-        <PeopleButton
-          checked={props.peopleButtonChecked}
-          showLabel={true}
-          onClick={props.onPeopleButtonClicked}
-          data-ui-id="meeting-composite-people-button"
-          disabled={props.disableButtonsForLobbyPage}
-        />
+        {chatButton !== false && (
+          <ChatButton
+            checked={props.chatButtonChecked}
+            showLabel={true}
+            onClick={props.onChatButtonClicked}
+            data-ui-id="meeting-composite-chat-button"
+            disabled={props.disableButtonsForLobbyPage}
+          />
+        )}
+        {peopleButton !== false && (
+          <PeopleButton
+            checked={props.peopleButtonChecked}
+            showLabel={true}
+            onClick={props.onPeopleButtonClicked}
+            data-ui-id="meeting-composite-people-button"
+            disabled={props.disableButtonsForLobbyPage}
+          />
+        )}
       </Stack.Item>
     </Stack>
   );

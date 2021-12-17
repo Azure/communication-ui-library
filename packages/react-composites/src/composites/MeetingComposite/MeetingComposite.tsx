@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo } from 'react';
 import { PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite } from '../CallComposite';
+import { CallComposite, CallControlOptions } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { EmbeddedChatPane, EmbeddedPeoplePane } from './SidePane';
 import { MeetingCallControlBar } from './MeetingCallControlBar';
@@ -43,6 +43,47 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
    * URL that can be used to copy a meeting invite to the Users clipboard.
    */
   meetingInvitationURL?: string;
+  /**
+   * Call control options to change what buttons show on the meeting composite control bar.
+   */
+  meetingCallControlOptions?: MeetingCallControlOptions;
+}
+
+/**
+ * Meeting Call controls to show or hide buttons on the calling control bar.
+ */
+export interface MeetingCallControlOptions
+  extends Pick<
+    CallControlOptions,
+    /**
+     * Flag that toggles the camera button in the MeetingCallControlBar component.
+     */
+    | 'cameraButton'
+    /**
+     * Flag that toggles the Microphone button in the MeetingCallControlBar component.
+     */
+    | 'microphoneButton'
+    /**
+     * Flag that toggles the Screen Share button in the MeetingCallControlBar component.
+     */
+    | 'screenShareButton'
+    /**
+     * Flag that toggles the Devices drop down and button in the MeetingCallControlBar component.
+     */
+    | 'devicesButton'
+    /**
+     * Selector that determines the display type to the CallControls component inside MeetingCallControlBar component, set to 'default' or 'compact'
+     */
+    | 'displayType'
+  > {
+  /**
+   * Flag for displaying the chat button inside the MeetingCallControlBar component.
+   */
+  chatButton?: boolean;
+  /**
+   * Flag for toggling the people button inside the MeetingCallControlBar component.
+   */
+  peopleButton?: boolean;
 }
 
 /**
@@ -130,6 +171,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onPeopleButtonClicked={togglePeople}
             mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
+            meetingCallControlOptions={props.meetingCallControlOptions}
           />
         )}
       </Stack>
