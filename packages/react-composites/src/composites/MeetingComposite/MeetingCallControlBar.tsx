@@ -39,9 +39,9 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         ? false
         : { disabled: props.disableButtonsForLobbyPage }
   };
-  // Set flags for the chat button and people button specific to the meeting control bar.
-  const chatButton = props.meetingCallControlOptions?.chatButton === false ? false : true;
-  const peopleButton = props.meetingCallControlOptions?.peopleButton === false ? false : true;
+
+  // Helper function to determine if a meeting control bar button is enabled or not.
+  const isEnabled = (option: boolean | undefined): boolean => !(option === false);
 
   // Reduce the controls shown when mobile view is enabled.
   if (props.mobileView) {
@@ -65,7 +65,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>
-        {chatButton !== false && (
+        {isEnabled(props.meetingCallControlOptions?.chatButton) !== false && (
           <ChatButton
             checked={props.chatButtonChecked}
             showLabel={true}
@@ -74,7 +74,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
             disabled={props.disableButtonsForLobbyPage}
           />
         )}
-        {peopleButton !== false && (
+        {isEnabled(props.meetingCallControlOptions?.peopleButton) !== false && (
           <PeopleButton
             checked={props.peopleButtonChecked}
             showLabel={true}
