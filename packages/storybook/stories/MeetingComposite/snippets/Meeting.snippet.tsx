@@ -54,7 +54,20 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
   }, [credential, props]);
 
   if (meetingAdapter) {
-    return <MeetingComposite meetingAdapter={meetingAdapter} fluentTheme={props.fluentTheme} />;
+    return (
+      <MeetingComposite
+        meetingAdapter={meetingAdapter}
+        fluentTheme={props.fluentTheme}
+        meetingCallControlOptions={{
+          cameraButton: true,
+          microphoneButton: true,
+          devicesButton: true,
+          screenShareButton: true,
+          chatButton: true,
+          peopleButton: true
+        }}
+      />
+    );
   }
 
   if (credential === undefined) {

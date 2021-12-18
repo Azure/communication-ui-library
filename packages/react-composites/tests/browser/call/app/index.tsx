@@ -11,7 +11,6 @@ import {
   CallAdapterState,
   createAzureCommunicationCallAdapter,
   CallComposite,
-  CompositeLocale,
   COMPOSITE_LOCALE_FR_FR,
   COMPOSITE_LOCALE_EN_US
 } from '../../../../src';
@@ -62,18 +61,21 @@ function App(): JSX.Element {
   }
 
   return (
-    <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
-      <_IdentifierProvider identifiers={IDS}>
-        {callAdapter && (
-          <CallComposite
-            adapter={callAdapter}
-            locale={locale}
-            formFactor={isMobile() ? 'mobile' : 'desktop'}
-            onFetchParticipantMenuItems={injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined}
-          />
-        )}
-      </_IdentifierProvider>
-    </div>
+    <>
+      {!callAdapter && 'Initializing call adapter...'}
+      {callAdapter && (
+        <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
+          <_IdentifierProvider identifiers={IDS}>
+            <CallComposite
+              adapter={callAdapter}
+              locale={locale}
+              formFactor={isMobile() ? 'mobile' : 'desktop'}
+              onFetchParticipantMenuItems={injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined}
+            />
+          </_IdentifierProvider>
+        </div>
+      )}
+    </>
   );
 }
 
