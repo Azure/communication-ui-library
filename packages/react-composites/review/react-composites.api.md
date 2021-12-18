@@ -618,6 +618,12 @@ export interface MeetingAdapterUiState extends Pick<CallAdapterUiState, 'isLocal
 }
 
 // @beta
+export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'> {
+    chatButton?: boolean;
+    peopleButton?: boolean;
+}
+
+// @beta
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @beta
@@ -629,6 +635,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
     formFactor?: 'desktop' | 'mobile';
     // (undocumented)
     meetingAdapter: MeetingAdapter;
+    meetingCallControlOptions?: MeetingCallControlOptions;
     meetingInvitationURL?: string;
 }
 
