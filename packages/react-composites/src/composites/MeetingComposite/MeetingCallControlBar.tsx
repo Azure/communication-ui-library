@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { CallControls, CallControlOptions } from '../CallComposite/components/CallControls';
+import { CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
@@ -23,7 +23,7 @@ export interface MeetingCallControlBarProps {
   onPeopleButtonClicked: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
-  meetingCallControlOptions?: MeetingCallControlOptions;
+  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
 }
 
 /**
@@ -31,14 +31,19 @@ export interface MeetingCallControlBarProps {
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
-  let callControlsOptions: CallControlOptions | false = {
-    ...props.meetingCallControlOptions,
-    participantsButton: false,
-    screenShareButton:
-      props.mobileView || props.meetingCallControlOptions?.screenShareButton === false
-        ? false
-        : { disabled: props.disableButtonsForLobbyPage }
-  };
+  let meetingCallControlOptions;
+  let callControlsOptions;
+  if (typeof props.meetingCallControlOptions === 'boolean') {
+    callControlsOptions = meetingCallControlOptions;
+  } else {
+    meetingCallControlOptions = props.meetingCallControlOptions;
+    callControlsOptions = {
+      ...meetingCallControlOptions,
+      participantsButton: false,
+      screenShareButton:
+        props.mobileView || meetingCallControlOptions === false ? false : { disabled: props.disableButtonsForLobbyPage }
+    };
+  }
 
   /**
    * Helper function to determine if a meeting control bar button is enabled or not.
@@ -47,7 +52,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   const isEnabled = (option: boolean | undefined): boolean => !(option === false);
 
   // Reduce the controls shown when mobile view is enabled.
-  if (props.mobileView) {
+  if (props.mobileView && typeof callControlsOptions !== 'boolean') {
     callControlsOptions = reduceCallControlsForMobile(callControlsOptions);
   }
 
@@ -68,7 +73,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
         </CallAdapterProvider>
       </Stack.Item>
       <Stack.Item>
-        {isEnabled(props.meetingCallControlOptions?.chatButton) !== false && (
+        {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
           <ChatButton
             checked={props.chatButtonChecked}
             showLabel={true}
@@ -77,7 +82,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
             disabled={props.disableButtonsForLobbyPage}
           />
         )}
-        {isEnabled(props.meetingCallControlOptions?.peopleButton) !== false && (
+        {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
           <PeopleButton
             checked={props.peopleButtonChecked}
             showLabel={true}

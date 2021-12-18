@@ -1,6 +1,11 @@
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { MeetingAdapter, MeetingComposite, createAzureCommunicationMeetingAdapter } from '@azure/communication-react';
+import {
+  MeetingAdapter,
+  MeetingComposite,
+  createAzureCommunicationMeetingAdapter,
+  MeetingCallControlOptions
+} from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
 
@@ -13,6 +18,7 @@ export type MeetingExampleProps = {
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
+  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
 };
 
 export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
@@ -58,14 +64,7 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
       <MeetingComposite
         meetingAdapter={meetingAdapter}
         fluentTheme={props.fluentTheme}
-        meetingCallControlOptions={{
-          cameraButton: true,
-          microphoneButton: true,
-          devicesButton: true,
-          screenShareButton: true,
-          chatButton: true,
-          peopleButton: true
-        }}
+        meetingCallControlOptions={false}
       />
     );
   }
