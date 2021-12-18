@@ -1,6 +1,18 @@
 # Build Flavors
 
-## The problem
+We release the `@azure/communication-react` package on NPM on two _channels_.
+
+* Stable channel: These use stable SemVer versions, tagged as `latest` on NPM: `1.0.0`, `1.0.1`, `1.2.1` etc.
+* Beta channel: These use `-beta.*` SemVer versions, tagged as `next` on NPM: `1.0.0-beta.1`, `1.0.1-beta.1`, `1.2.1-beta.2` etc.
+
+We release on the two channels somewhat independently: For each stable channel release, there is a corresponding beta channel release that is a super-set of the stable channel package. But the beta channel release may contain extra features (including some they may not be released in the next stable release either) and may contain updated package dependencies.
+
+We release on both channels from `main`. Thus, we must be able to build two flavors of the package from `main`:
+
+* all-inclusive flavor: Contains all features, more up-to-date, potentially beta-versioned package dependencies.
+* stable flavor: Contains only stabilized features, only stable package dependencies.
+
+Additionally, we must be able to test both these flavors, build samples for both these flavors, document both these flavors...
 
 ## Conditional Compilation
 
@@ -77,92 +89,132 @@ The conditional compilation tag can be used in the following ways:
 
   The use of conditional expressions should be avoided as much as possible, as it hurts readability of code, and makes it harder to stabilize conditionally compiled code. Prefer to extract functions to encapsulate conditioncally compiled logic like above.
 
-## Tooling support
+### Separate package dependencies
+
+    TODO: Open question on how we'll have separate version of package dependencies.
 
 
+## Tooling
+
+During development, you should consider the all-inclusive build flavor as the primary target. For example, your code editor will not recognize the conditional compilation tags specially and thus show build / lint hints for the all-inclusive flavor.
+
+For developing beta-only features, the recommended approach is:
+
+* First, using the default all-inclusive tooling to iterate on the all-inclusive build.
+* Then, use the stable flavored tooling to make sure your feature does not affect the stable build unintentionally.
+
+The following commands have
+
+<table>
+<thead>
+  <tr>
+    <td>Action</td>
+    <td>All-inclusive flavored commands(s)</td>
+    <td>Stable flavored command(s)</td>
+    <td>Notes</td>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>Build packages</td>
+    <td>
+      <code>rushx build</code>
+      <br/><code>rush build</code>
+      <br/><code>rush rebuild</code>
+    </td>
+    <td>
+      <code>rushx build:stable</code>
+      <br/><code>rush build:stable</code>
+      <br/><code>rush rebuild:stable</code>
+    </td>
+    <td>
+      It is dangerous to mix the all-inclusive and stable build commands. You <em>must</em> run <code>rush rebuild</code> or <code>rush rebuild:stable</code> when switching build flavors. Further details below.
+    </td>
+  </tr>
+  <tr>
+    <td>Run unit-tests</td>
+    <td>
+      <code>rushx test</code>
+      <br/><code>rush test</code>
+    </td>
+    <td>
+      <code>rushx test:stable</code>
+      <br/><code>rush test:stable</code>
+    </td>
+    <td>
+      As with building packages, you <em>must</em> run <code>rush rebuild</code> or <code>rush rebuild:stable</code> when switching build flavors. Further details below.
+    </td>
+  </tr>
+  <tr>
+    <td>Run e2e tests</td>
+    <td>
+      packages/react-composites: <code>rushx build:e2e:chat && rushx test:e2e:chat</code> etc.
+      <br/>samples/tests: <code>rushx build:e2e:bundle && rushx test:e2e:bundle</code> etc.
+    </td>
+    <td>
+      packages/react-composites: <code>rushx build:e2e:chat:stable && rushx test:e2e:chat:stable</code> etc.
+      <br/>samples/tests: <code>rushx build:e2e:bundle:stable && rushx test:e2e:bundle:stable</code> etc.
+    </td>
+    <td>
+      Even without build flavors, you <em>must</em> always build the sample apps used by the tests to include any changes made to the bundled code. Same applies to testing different build flavours -- always build the e2e app before running tests to make sure you are testing the right flavor.
+    </td>
+  </tr>
+  <tr>
+    <td>Update e2e test snapshots</td>
+    <td><code>rushx update:e2e</code></td>
+    <td><code>rushx update:e2e:stable</code></td>
+    <td>
+      Unlike build artifacts, snapshots for all-inclusive and stable flavored builds are stored separetely so that we can compare against golden files for both flavors. These commands update the corresponding set of snapshots.
+    </td>
+  </tr>
+  <tr>
+    <td>Run sample apps</td>
+    <td><code>rushx start</code></td>
+    <td><code>rushx start:stable</code></td>
+    <td>
+      This works for the following sample apps:
+      <ul>
+        <li>samples/Calling</li>
+        <li>samples/Chat</li>
+        <li>samples/ComponentExamples</li>
+        <li>samples/StaticHtmlComposites</li>
+      </ul>
+      Only the all-inclusive flavor is supported for samples/Server at this time (because there is no need for a stable flavored build yet).
+    </td>
+  </tr>
+</tbody>
+</table>
 
 
-build / test cycle.
+* Both the all-inclusive and stable flavored builds use the same `dist` folder for build artifacts. This allows us to effectively use `rush`'s packlet linking and `npm pack` for both flavors. But this creates the opportunity for incorrectly linking packlets built with different flavors.
+    * To avoid using the incorrect flavor of a packlet during incremental build or test, always run `rush rebuild` or `rush rebuild:stable` before using any of the following: `rushx build`, `rushx build:stable`, `rushx test`, `rushx test:stable`, `rush build`, and `rush build:stable`.
 
-* Both flavors are built into `dist` (overwrite each other).
-  * Gotcha: `rush build:stable` followed by `rushx build` (or vice-versa)
-  * Gotcha: `rush build` followed by `rush build:stable`?
+* The all-inclusive and stable flavored builds generate _separate_ API review files. This allows us to separately review API changes going into the beta and stable channels.
 
+        TODO: ^^ is not yet implemented.
 
-e2e tests.
+* The sample apps (including those used by e2e tests) also use the same output folder for different build flavors. Thus, you must build the right flavor of the app to test: `rushx build:e2e:chat && rushx test:e2e:chat` or `rushx build:e2e:chat:stable && rushx test:e2e:chat:stable`.
 
-New package.json scripts
-The only difference is env-vars being set for webpack
-* snapshots are stored in a different folder (again controlled by envvar set from package.json script)
+* The sample apps are served via `webpack`. `rushx start:stable` simply adds a `webpack` preprocessing pass via a plugin. Thus, hot-reloading works for `rushx start:stable` (and of course for `rushx start`) for changes to the sample apps and to any of the internal packlets.
 
-* Gotcha: If you build `rush build:e2e:stable` then `rush test:e2e`.
-  * Similar to existing problem of build -> test.
+* Storybook _only has the all-inclusive flavor_. Storybook is used to document all our API / components, including those in beta. Our stories should clearly document what features are in beta. We should additionally clearly mark code snippets that depend on beta-API because there might be breaking API changes affective those code snippets.
+  * We currently do not have any tooling to check that beta-API is clearly flagged in storybook content.
 
 
-webpack configs:
+## CI
 
-  samples/Calling, samples/Chat, react-composites/tests/*/app, samples/StaticHtmlComposites, samples/ComponentExamples
+    TODO: This section talks about stuff that doesn't yet exist.
 
-  * set envvar to add extra webpack plugin
-    * No `preprocess` folder, in-memory extra webpack pass.
+Our continuous integration actions include building and testing code for both the all-inclusive and stable flavors. Effectively, CI builds, tests and lints the code for the all-inclusive and stable flavors.
 
-samples/Server
-  * No `stable` support yet (don't need it).
-
-storybook:
-  * Always built off of beta API, no separate `stable` support
-  * Must call out "preview" features
-  * (TODO: Can we enforce this?) Snippets for "preview" features should be kept separate from stable features, and marked as such.
-
-## CI support
+CI also enforces `prettifier` formatting on the code, but only for the all-inclusive flavor, because the the formatting across the two flavors may be inconsistent, and editor support for formatting can only work with the all-inclusive flavor.
 
 
+## Releases
 
-### TODO
-
-* Separate checked-in API files / folder generation
-* Add `rushx:lint` and `rush:lint`
-* [Nice to have] Can we remove helper scripts from `package.json` -- `copy-original`, `preprocess`, `preprocess:stable`.
-* Merge `clean` with `clean:preprocess`.
-* Replace `rush build:stable` with `rush rebuild:stable` (no incremental).
-  * Remove `paths` from `tsconfig.preprocess.json` (so we follow `rush` setup).
-* Explore other ways to run `stable` flavor commands
-  * Pass in `--stable` to `rushx` (and `rush`?) commands?
-  * Using env-var instead of separate package.json scripts.
-* Make sure all samples have `rushx start:stable`.
-
-
-
-* Automation:
-  * CI: add build:stable, test:stable, lint:stable, test:e2e:*
-  * Add stable vs beta branch creation
-
-  * Add stable vs beta package release
-    * Just do `rush build:stable` then `npm pack`.
-
-### different depenedencies for stable vs beta
-
-### Release channels
-
-stable-channel : 1.0.0
-beta-channel   : 1.0.1-beta.1             1.1.0-beta.1                1.1.1-beta.1       1.1.1-beta.2       1.1.1-beta.3          1.1.2-beta.1          1.2.1-beta.1
-                          Added API1 to stable        Bug fix1 to stable     Bugfix2 to beta       API2 to beta       Stabilize bugfix2      Stabilize API2
-More releases >
-stable-channel : 1.0.0                                    1.1.0
-beta-channel   : 1.0.1-beta.1             1.1.0-beta.1    1.1.1-beta.1       1.1.1-beta.1       1.1.1-beta.2       1.1.1-beta.3          1.1.2-beta.1          1.2.1-beta.1
-
-stable-channel : 1.0.0                                                             1.1.1
-beta-channel   : 1.0.1-beta.1             1.1.0-beta.1                1.1.1-beta.1 1.1.2-beta.1 1.1.2-beta.2       1.1.2-beta.3          1.1.3-beta.1          1.2.1-beta.1
-
-
-* changelog
-
-* How do stable releases work?
-  * Find tag for beta version to release to stable.
-  * Create a stable release branch off of that.
-  * *If* there are no none-`none` changes in `main`, then when merginging the stable branch back, add a `patch` change to `main`.
-    * Should we do a beta release then?
-
-* We want to bump versions *only* when changes are going into stable.
-  * Adding an API that is excluded from stable, _does not_ bump versions (that's a `none` change type).
-  * When this API is included in stable, that's when we bump verion.
+    TODO: Some open questions here still being ironed out, regarding:
+        * Version tracking on stable vs beta branches
+        * Automated changelog generation, separate changelog for stable vs beta branches
+        * Automated stable and beta branch creation
+        * Automated stable and beta package release
