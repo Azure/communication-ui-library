@@ -26,12 +26,15 @@ import {
   chatArea,
   chatContainer,
   chatWrapper,
-  participantListContainerPadding,
   messageThreadChatCompositeStyles,
   sendBoxChatCompositeStyles,
   typingIndicatorChatCompositeStyles,
+  participantListContainerPadding,
   typingIndicatorContainerStyles
 } from './styles/Chat.styles';
+
+/* @conditional-compile-remove-from(stable) */
+import { ParticipantContainer } from './ParticipantContainer';
 
 /**
  * @private
@@ -43,6 +46,7 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
+  hasFocusOnMount?: 'sendBoxTextField' | false;
 };
 
 /**
@@ -58,14 +62,7 @@ export type ChatScreenStyles = {
  * @private
  */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const {
-    onFetchAvatarPersonaData,
-    onRenderMessage,
-    onRenderTypingIndicator,
-    // onFetchParticipantMenuItems,  // Removed for GA release
-    options,
-    styles
-  } = props;
+  const { onFetchAvatarPersonaData, onRenderMessage, onRenderTypingIndicator, options, styles } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   const sendBoxParentStyle = mergeStyles({ width: '100%' });
@@ -121,9 +118,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
               )}
             </div>
-            <SendBox {...sendBoxProps} styles={sendBoxStyles} />
+            <SendBox {...sendBoxProps} autoFocus={options?.autoFocus} styles={sendBoxStyles} />
           </Stack>
         </Stack>
+        {
+          /* @conditional-compile-remove-from(stable) */
+          options?.participantPane === true && (
+            <ParticipantContainer
+              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+            />
+          )
+        }
       </Stack>
     </Stack>
   );

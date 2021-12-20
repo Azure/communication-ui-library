@@ -54,50 +54,54 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <_IdentifierProvider identifiers={IDS}>
+    <>
+      {!chatAdapter && 'Initializing chat adapter...'}
       {chatAdapter && (
-        <ChatComposite
-          adapter={chatAdapter}
-          onRenderTypingIndicator={
-            customDataModel
-              ? (typingUsers) => (
-                  <Stack style={{ width: '100%' }}>
-                    <text id="custom-data-model-typing-indicator">
-                      {typingUsers.length > 0
-                        ? `${typingUsers.map((user) => user.displayName).join(',')} is typing...`.toUpperCase()
-                        : 'No one is currently typing.'}
-                    </text>
-                  </Stack>
-                )
-              : undefined
-          }
-          onRenderMessage={
-            customDataModel
-              ? (messageProps) => (
-                  <text
-                    data-ui-status={messageProps.message.messageType === 'chat' ? messageProps.message.status : ''}
-                    id="custom-data-model-message"
-                  >
-                    {getMessageContentInUppercase(messageProps)}
-                  </text>
-                )
-              : undefined
-          }
-          onFetchAvatarPersonaData={
-            customDataModel
-              ? () =>
-                  new Promise((resolve) =>
-                    resolve({
-                      imageInitials: 'CI',
-                      text: 'Custom Name'
-                    })
+        <_IdentifierProvider identifiers={IDS}>
+          <ChatComposite
+            adapter={chatAdapter}
+            onRenderTypingIndicator={
+              customDataModel
+                ? (typingUsers) => (
+                    <Stack style={{ width: '100%' }}>
+                      <text id="custom-data-model-typing-indicator">
+                        {typingUsers.length > 0
+                          ? `${typingUsers.map((user) => user.displayName).join(',')} is typing...`.toUpperCase()
+                          : 'No one is currently typing.'}
+                      </text>
+                    </Stack>
                   )
-              : undefined
-          }
-          locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
-        />
+                : undefined
+            }
+            onRenderMessage={
+              customDataModel
+                ? (messageProps) => (
+                    <text
+                      data-ui-status={messageProps.message.messageType === 'chat' ? messageProps.message.status : ''}
+                      id="custom-data-model-message"
+                    >
+                      {getMessageContentInUppercase(messageProps)}
+                    </text>
+                  )
+                : undefined
+            }
+            onFetchAvatarPersonaData={
+              customDataModel
+                ? () =>
+                    new Promise((resolve) =>
+                      resolve({
+                        imageInitials: 'CI',
+                        text: 'Custom Name'
+                      })
+                    )
+                : undefined
+            }
+            locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
+            options={{ participantPane: true }}
+          />
+        </_IdentifierProvider>
       )}
-    </_IdentifierProvider>
+    </>
   );
 }
 

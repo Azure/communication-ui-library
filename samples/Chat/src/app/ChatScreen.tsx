@@ -13,11 +13,7 @@ import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ChatHeader } from './ChatHeader';
-import {
-  chatCompositeContainerStyle,
-  chatHeaderContainerStyle,
-  chatScreenContainerStyle
-} from './styles/ChatScreen.styles';
+import { chatCompositeContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
@@ -39,6 +35,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const adapterRef = useRef<ChatAdapter>();
   const [adapter, setAdapter] = useState<ChatAdapter>();
+  const [hideParticipants, setHideParticipants] = useState<boolean>(false);
   const { currentTheme } = useSwitchableFluentTheme();
 
   useEffect(() => {
@@ -86,19 +83,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             });
           })
       );
-
     return (
       <Stack className={chatScreenContainerStyle}>
-        <Stack.Item className={chatHeaderContainerStyle}>
-          <ChatHeader onEndChat={() => adapter.removeParticipant(userId)} />
-        </Stack.Item>
         <Stack.Item className={chatCompositeContainerStyle}>
           <ChatComposite
             adapter={adapter}
             fluentTheme={currentTheme.theme}
+            options={{ autoFocus: 'sendBoxTextField', participantPane: !hideParticipants }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
         </Stack.Item>
+        <ChatHeader
+          isParticipantsDisplayed={hideParticipants !== true}
+          onEndChat={() => adapter.removeParticipant(userId)}
+          setHideParticipants={setHideParticipants}
+        />
       </Stack>
     );
   }

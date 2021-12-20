@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const babelConfig = require('./.babelrc.js');
 
-module.exports = {
+const config = {
   entry: {
     chatComposite: './src/chatComposite.js',
     callComposite: './src/callComposite.js',
@@ -43,3 +44,20 @@ module.exports = {
   },
   plugins: [new HtmlWebpackPlugin({ template: 'index.html' })]
 };
+
+if (process.env['FLAVOR'] === 'stable') {
+  if (!config.module) config.module = {};
+  if (!config.module.rules) config.module.rules = [];
+  config.module.rules.push({
+    test: /\.tsx?$/,
+    exclude: /node_modules/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        ...babelConfig
+      }
+    }
+  });
+}
+
+module.exports = config;

@@ -63,16 +63,16 @@ export const parameters = {
           'Participant List',
         ],
         CONCEPTS_FOLDER_PREFIX,
-        [        
-        'Styling',
-        'Theming',
-        'Icons',
-        'Localization',
-        'Accessibility',
-        'Custom User Data Model',
-        'Error Handling',
-        'Troubleshooting',
-        'Identity'
+        [
+          'Styling',
+          'Theming',
+          'Icons',
+          'Localization',
+          'Accessibility',
+          'Custom User Data Model',
+          'Error Handling',
+          'Troubleshooting',
+          'Identity'
         ],
         EXAMPLES_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,
@@ -94,10 +94,10 @@ export const parameters = {
   viewMode: 'docs',
   previewTabs: {
     'storybook/docs/panel': { index: -1 },
-    'canvas' : {
+    'canvas': {
       title: 'Preview'
     }
- }
+  }
 };
 
 const withThemeProvider = (Story: any, context: any) => {
@@ -106,7 +106,7 @@ const withThemeProvider = (Story: any, context: any) => {
   if (context.globals.customTheme) {
     try {
       theme = JSON.parse(context.globals.customTheme);
-    } catch(e) {
+    } catch (e) {
       console.log('Could not parse the following theme JSON: ' + context.globals.customTheme);
     }
   }
@@ -122,7 +122,7 @@ const withThemeProvider = (Story: any, context: any) => {
   }
   else {
     return (
-        <Story {...context} />
+      <Story {...context} />
     );
   }
 };
@@ -130,7 +130,7 @@ const withThemeProvider = (Story: any, context: any) => {
 const withLocalization = (Story: any, context: any) => {
   const localeKey = context.globals.locale as string;
 
-  if(context !== undefined) {
+  if (context !== undefined) {
     return (
       <LocalizationProvider locale={LOCALES[localeKey].locale} >
         <Story {...context} />
@@ -139,7 +139,7 @@ const withLocalization = (Story: any, context: any) => {
   }
   else {
     return (
-        <Story {...context} />
+      <Story {...context} />
     );
   }
 };

@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { IDS } from '../common/constants';
-import { dataUiId, stubMessageTimestamps, waitForChatCompositeToLoad, waitForSelector } from '../common/utils';
+import {
+  dataUiId,
+  stubMessageTimestamps,
+  waitForChatCompositeToLoad,
+  waitForFunction,
+  waitForSelector
+} from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
 import {
@@ -111,6 +117,9 @@ test.describe('Chat Composite custom data model', () => {
     await page.bringToFront();
     await sendMessage(page, testMessageText);
     await waitForMessageDelivered(page);
+    await waitForFunction(page, () => {
+      return document.querySelectorAll('[data-ui-id="chat-composite-participant-custom-avatar"]').length === 2;
+    });
     await waitForSelector(page, '#custom-data-model-typing-indicator');
     await waitForSelector(page, '#custom-data-model-message');
     await stubMessageTimestamps(page);

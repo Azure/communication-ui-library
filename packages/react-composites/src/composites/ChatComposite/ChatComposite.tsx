@@ -37,6 +37,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    */
   options?: ChatCompositeOptions;
 }
+
 /**
  * Optional features of the {@link ChatComposite}.
  *
@@ -49,11 +50,23 @@ export type ChatCompositeOptions = {
    * @defaultValue true
    */
   errorBar?: boolean;
+  /* @conditional-compile-remove-from(stable) */
+  /**
+   * Show or hide the participant pane. This feature is in beta and not supported on mobile or narrow screen views.
+   * @defaultValue false
+   *
+   * @beta
+   */
+  participantPane?: boolean;
   /**
    * Show or hide the topic at the top of the chat. Hidden if set to `false`
    * @defaultValue true
    */
   topic?: boolean;
+  /**
+   * Set focus on the composite when the composite first mounts.
+   */
+  autoFocus?: 'sendBoxTextField' | false;
 };
 
 /**

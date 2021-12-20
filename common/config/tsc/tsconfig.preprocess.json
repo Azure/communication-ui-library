@@ -1,0 +1,33 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@internal/chat-component-bindings": [
+        "../../packages/chat-component-bindings/preprocess"
+      ],
+      "@internal/calling-component-bindings": [
+        "../../packages/calling-component-bindings/preprocess"
+      ],
+      "@internal/acs-ui-common": [
+        "../../packages/acs-ui-common/preprocess"
+      ],
+      "@internal/calling-stateful-client": [
+        "../../packages/calling-stateful-client/preprocess"
+      ],
+      "@internal/chat-stateful-client": [
+        "../../packages/chat-stateful-client/preprocess"
+      ],
+      "@internal/react-components": [
+        "../../packages/react-components/preprocess"
+      ],
+      "@internal/react-composites": [
+        "../../packages/react-composites/preprocess"
+      ]
+    },
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths"
+      }
+    ]
+  }
+}

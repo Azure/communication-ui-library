@@ -29,6 +29,8 @@ export interface CameraButtonStrings {
   tooltipOnContent?: string;
   /** Tooltip content when the button is off. */
   tooltipOffContent?: string;
+  /** Tooltip content when the button is disabled due to video loading. */
+  tooltipVideoLoadingContent?: string;
 }
 
 /**
@@ -83,6 +85,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       })}
     />
   );
+  if (waitForCamera && strings.tooltipVideoLoadingContent) {
+    strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;
+  }
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
