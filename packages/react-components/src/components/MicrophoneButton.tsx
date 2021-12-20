@@ -43,9 +43,6 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
   strings?: Partial<MicrophoneButtonStrings>;
 }
 
-const onRenderMicOnIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOn" />;
-const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOff" />;
-
 /**
  * A button to turn microphone on / off.
  *

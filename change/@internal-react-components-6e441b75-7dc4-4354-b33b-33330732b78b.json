@@ -1,0 +1,6 @@
+{
+  "type": "patch",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
