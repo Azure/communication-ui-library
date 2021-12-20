@@ -35,6 +35,10 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   if (props.meetingCallControlOptions === false) {
     // if meeting options is a boolean assign call controls the same value.
     callControlsOptions = props.meetingCallControlOptions;
+    meetingCallControlOptions = {
+      chatButton: false,
+      peopleButton: false
+    };
   } else {
     // populate callControls with the settings from the meeting controls props
     meetingCallControlOptions = props.meetingCallControlOptions;
