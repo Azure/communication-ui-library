@@ -64,7 +64,7 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
       <MeetingComposite
         meetingAdapter={meetingAdapter}
         fluentTheme={props.fluentTheme}
-        meetingCallControlOptions={false}
+        meetingCallControlOptions={props.meetingCallControlOptions}
       />
     );
   }

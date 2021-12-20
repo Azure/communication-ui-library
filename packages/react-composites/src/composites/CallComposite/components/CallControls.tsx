@@ -94,7 +94,17 @@ export type CallControlOptions = {
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const { callInvitationURL, onFetchParticipantMenuItems } = props;
 
-  const options = typeof props.options === 'boolean' ? {} : props.options;
+  const options =
+    typeof props.options === 'boolean'
+      ? {
+          microphoneButton: false,
+          cameraButton: false,
+          participantsButton: false,
+          devicesButton: false,
+          endCallButton: false,
+          screenShareButton: false
+        }
+      : props.options;
 
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);

@@ -31,11 +31,12 @@ export interface MeetingCallControlBarProps {
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
-  let meetingCallControlOptions;
-  let callControlsOptions;
-  if (typeof props.meetingCallControlOptions === 'boolean') {
-    callControlsOptions = meetingCallControlOptions;
+  let meetingCallControlOptions, callControlsOptions;
+  if (props.meetingCallControlOptions === false) {
+    // if meeting options is a boolean assign call controls the same value.
+    callControlsOptions = props.meetingCallControlOptions;
   } else {
+    // populate callControls with the settings from the meeting controls props
     meetingCallControlOptions = props.meetingCallControlOptions;
     callControlsOptions = {
       ...meetingCallControlOptions,
