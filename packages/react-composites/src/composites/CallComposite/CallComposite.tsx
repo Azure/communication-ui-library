@@ -64,7 +64,7 @@ export type CallCompositeOptions = {
    * Can be customized by providing an object of type {@link @azure/communication-react#CallControlOptions}.
    * @defaultValue true
    */
-  callControls?: boolean | CallControlOptions;
+  callControls?: CallControlOptions;
 };
 
 type MainScreenProps = {

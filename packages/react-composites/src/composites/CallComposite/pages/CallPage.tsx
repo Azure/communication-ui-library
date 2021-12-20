@@ -55,21 +55,19 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
 
   // Reduce the controls shown when mobile view is enabled.
-  const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
+  const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls; // is this needed since the call controls object takes in a display type parameter?
 
   return (
     <CallArrangement
       complianceBannerProps={{ ...complianceBannerProps }}
       errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
       mutedNotificationProps={mutedNotificationProps}
-      callControlProps={
-        callControlOptions !== false && {
-          callInvitationURL: callInvitationURL,
-          onFetchParticipantMenuItems: onFetchParticipantMenuItems,
-          options: callControlOptions,
-          increaseFlyoutItemSize: mobileView
-        }
-      }
+      callControlProps={{
+        callInvitationURL: callInvitationURL,
+        onFetchParticipantMenuItems: onFetchParticipantMenuItems,
+        options: options?.callControls,
+        increaseFlyoutItemSize: mobileView
+      }}
       mobileView={mobileView}
       onRenderGalleryContent={() =>
         callStatus === 'Connected' ? (

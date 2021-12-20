@@ -23,7 +23,7 @@ export interface CallArrangementProps {
   complianceBannerProps: ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
   mutedNotificationProps?: MutedNotificationProps;
-  callControlProps: CallControlsProps | false;
+  callControlProps: CallControlsProps;
   onRenderGalleryContent: () => JSX.Element;
   dataUiId: string;
   mobileView: boolean;

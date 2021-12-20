@@ -48,12 +48,10 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
     <CallArrangement
       complianceBannerProps={{}}
       errorBarProps={props.options?.errorBar !== false && { ...errorBarProps }}
-      callControlProps={
-        callControlOptions !== false && {
-          options: callControlOptions,
-          increaseFlyoutItemSize: props.mobileView
-        }
-      }
+      callControlProps={{
+        options: props.options?.callControls,
+        increaseFlyoutItemSize: props.mobileView
+      }}
       mobileView={props.mobileView}
       onRenderGalleryContent={() => <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby)} />}
       dataUiId={'lobby-page'}

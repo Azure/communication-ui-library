@@ -44,9 +44,9 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
    */
   meetingInvitationURL?: string;
   /**
-   * Call control options to change what buttons show on the meeting composite control bar.
+   * Call control options to change what buttons show on the meeting composite control bar. showControlBar option hides whole bar.
    */
-  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+  meetingCallControlOptions?: MeetingCallControlOptions;
 }
 
 /**
@@ -57,7 +57,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
 export interface MeetingCallControlOptions
   extends Pick<
     CallControlOptions,
-    'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType'
+    'cameraButton' | 'microphoneButton' | 'screenShareButton' | 'devicesButton' | 'displayType' | 'showControlBar'
   > {
   /**
    * Show or hide the chat button in the meeting control bar.
@@ -121,7 +121,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             <CallComposite
               {...props}
               formFactor={formFactor}
-              options={{ callControls: false }}
+              options={{ callControls: { showControlBar: false } }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
             />

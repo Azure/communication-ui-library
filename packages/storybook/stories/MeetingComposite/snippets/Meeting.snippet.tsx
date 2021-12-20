@@ -18,7 +18,7 @@ export type MeetingExampleProps = {
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
-  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+  meetingCallControlOptions?: MeetingCallControlOptions;
 };
 
 export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {

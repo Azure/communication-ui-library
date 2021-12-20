@@ -32,7 +32,7 @@ import {
 export type CallControlsProps = {
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  options?: boolean | CallControlOptions;
+  options?: CallControlOptions;
   /**
    * Option to increase the height of the button flyout menu items from 36px to 48px.
    * Recommended for mobile devices.
@@ -86,6 +86,10 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
+  /**
+   * Hide or show the whole control bar.
+   */
+  showControlBar?: boolean;
 };
 
 /**
@@ -94,17 +98,8 @@ export type CallControlOptions = {
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const { callInvitationURL, onFetchParticipantMenuItems } = props;
 
-  const options =
-    typeof props.options === 'boolean'
-      ? {
-          microphoneButton: false,
-          cameraButton: false,
-          participantsButton: false,
-          devicesButton: false,
-          endCallButton: false,
-          screenShareButton: false
-        }
-      : props.options;
+  const showControlBar = props.options?.showControlBar;
+  const options = props.options;
 
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
@@ -148,7 +143,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
 
   const compactMode = options?.displayType === 'compact';
 
-  const microphoneButton = options?.microphoneButton !== false && (
+  const microphoneButton = options?.microphoneButton !== false && showControlBar !== false && (
     <MicrophoneButton
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
@@ -158,7 +153,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const cameraButton = options?.cameraButton !== false && (
+  const cameraButton = options?.cameraButton !== false && showControlBar !== false && (
     <CameraButton
       data-ui-id="call-composite-camera-button"
       {...cameraButtonProps}
@@ -167,7 +162,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const screenShareButton = options?.screenShareButton !== false && (
+  const screenShareButton = options?.screenShareButton !== false && showControlBar !== false && (
     <ScreenShareButton
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
@@ -176,7 +171,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const participantButton = options?.participantsButton !== false && (
+  const participantButton = options?.participantsButton !== false && showControlBar !== false && (
     <ParticipantsButton
       data-ui-id="call-composite-participants-button"
       {...participantsButtonProps}
@@ -188,7 +183,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const devicesButton = options?.devicesButton !== false && (
+  const devicesButton = options?.devicesButton !== false && showControlBar !== false && (
     <DevicesButton
       /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
       persistMenu={true}
@@ -198,7 +193,7 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     />
   );
 
-  const endCallButton = options?.endCallButton !== false && (
+  const endCallButton = options?.endCallButton !== false && showControlBar !== false && (
     <EndCallButton
       data-ui-id="call-composite-hangup-button"
       {...hangUpButtonProps}
