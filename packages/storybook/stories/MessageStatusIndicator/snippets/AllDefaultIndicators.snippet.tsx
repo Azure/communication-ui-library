@@ -4,7 +4,7 @@ import React from 'react';
 
 export const DefaultMessageStatusIndicatorsExample: () => JSX.Element = () => {
   return (
-    <Stack>
+    <Stack horizontalAlign="start">
       <MessageStatusIndicator status={'delivered' as MessageStatus} />
       <MessageStatusIndicator status={'seen' as MessageStatus} />
       <MessageStatusIndicator status={'sending' as MessageStatus} />
