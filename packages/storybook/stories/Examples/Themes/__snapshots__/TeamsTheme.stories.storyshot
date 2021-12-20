@@ -86,7 +86,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94"
+                              className="root-94 root-19"
                               data-icon-name="ControlButtonCameraOff"
                             >
                               <span
@@ -142,7 +142,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94"
+                              className="root-94 root-19"
                               data-icon-name="ControlButtonMicOff"
                             >
                               <span
@@ -182,7 +182,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       >
                         <button
                           aria-label="Share your screen"
-                          className="ms-Button ms-Button--default root-18"
+                          className="ms-Button ms-Button--default root-20"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -232,7 +232,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                       >
                         <button
                           aria-label="Leave Call"
-                          className="ms-Button ms-Button--default root-19"
+                          className="ms-Button ms-Button--default root-21"
                           data-is-focusable={true}
                           onClick={[Function]}
                           onKeyDown={[Function]}
@@ -290,24 +290,24 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                 </div>
               </div>
               <div
-                className="css-111 css-21"
+                className="css-111 css-23"
               >
                 <div
-                  className="ms-Stack css-28"
+                  className="ms-Stack css-30"
                   data-ui-id="video-tile"
                 >
                   <div
-                    className="css-25"
+                    className="css-27"
                   />
                   <div
-                    className="ms-Stack css-29"
+                    className="ms-Stack css-31"
                   >
                     <div
-                      className="ms-Stack css-31"
+                      className="ms-Stack css-33"
                     >
                       <div
                         aria-label=""
-                        className="ms-Persona ms-Persona--size48 root-32"
+                        className="ms-Persona ms-Persona--size48 root-34"
                         style={
                           Object {
                             "height": 100,
@@ -316,11 +316,11 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                         }
                       >
                         <div
-                          className="ms-Persona-coin ms-Persona--size48 coin-39"
+                          className="ms-Persona-coin ms-Persona--size48 coin-41"
                           role="presentation"
                         >
                           <div
-                            className="ms-Persona-imageArea imageArea-41"
+                            className="ms-Persona-imageArea imageArea-43"
                             role="presentation"
                             style={
                               Object {
@@ -331,7 +331,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <div
                               aria-hidden="true"
-                              className="ms-Persona-initials initials-44"
+                              className="ms-Persona-initials initials-46"
                               style={
                                 Object {
                                   "height": 100,
@@ -349,13 +349,13 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                     </div>
                   </div>
                   <div
-                    className="ms-Stack css-136 css-47"
+                    className="ms-Stack css-136 css-49"
                   >
                     <div
-                      className="ms-Stack css-137 css-48"
+                      className="ms-Stack css-137 css-50"
                     >
                       <span
-                        className="css-49"
+                        className="css-51"
                         title="Michael"
                       >
                         Michael
