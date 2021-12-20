@@ -32,7 +32,7 @@ const BasicStory = (args, context): JSX.Element => {
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.meetingCallControlOptions]);
 
   return (
     <>
