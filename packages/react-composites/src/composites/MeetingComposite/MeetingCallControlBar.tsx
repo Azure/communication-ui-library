@@ -62,7 +62,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
   const isEnabled = (option: boolean | undefined): boolean => !(option === false);
 
   // Reduce the controls shown when mobile view is enabled.
-  if (props.mobileView && typeof callControlsOptions !== 'boolean') {
+  if (props.mobileView) {
     callControlsOptions = reduceCallControlsForMobile(callControlsOptions);
   }
 
@@ -77,14 +77,11 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
       horizontal
       className={mergeStyles(temporaryMeetingControlBarStyles, callControlsContainerStyles, controlBarContainerStyles)}
     >
-      {callControlsOptions !== false && (
-        <Stack.Item grow>
-          <CallAdapterProvider adapter={props.callAdapter}>
-            <CallControls options={callControlsOptions} increaseFlyoutItemSize={props.mobileView} />
-          </CallAdapterProvider>
-        </Stack.Item>
-      )}
-
+      <Stack.Item grow>
+        <CallAdapterProvider adapter={props.callAdapter}>
+          <CallControls options={callControlsOptions} increaseFlyoutItemSize={props.mobileView} />
+        </CallAdapterProvider>
+      </Stack.Item>
       {meetingCallControlOptions !== false && (
         <Stack.Item>
           {isEnabled(meetingCallControlOptions?.chatButton) !== false && (

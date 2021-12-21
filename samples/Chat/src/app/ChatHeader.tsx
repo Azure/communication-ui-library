@@ -30,7 +30,6 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
 
   return (
     <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
-      {/** FIXME: Similar to #1235 */}
       <div className={paneButtonContainerStyle}>
         <IconButton
           onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
