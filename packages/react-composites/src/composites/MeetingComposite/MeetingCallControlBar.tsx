@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { CallControls } from '../CallComposite/components/CallControls';
+import { CallControlOptions, CallControls } from '../CallComposite/components/CallControls';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { ChatButton } from './ChatButton';
@@ -31,14 +31,17 @@ export interface MeetingCallControlBarProps {
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
-  let meetingCallControlOptions, callControlsOptions;
-  if (props.meetingCallControlOptions === false) {
+  let meetingCallControlOptions: MeetingCallControlOptions | undefined;
+  let callControlsOptions: CallControlOptions | boolean;
+  if (typeof props.meetingCallControlOptions === 'boolean') {
     // if meeting options is a boolean assign call controls the same value.
     callControlsOptions = props.meetingCallControlOptions;
-    meetingCallControlOptions = {
-      chatButton: false,
-      peopleButton: false
-    };
+    if (props.meetingCallControlOptions === false) {
+      meetingCallControlOptions = {
+        chatButton: false,
+        peopleButton: false
+      };
+    }
   } else {
     // populate callControls with the settings from the meeting controls props
     meetingCallControlOptions = props.meetingCallControlOptions;
@@ -46,7 +49,9 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
       ...meetingCallControlOptions,
       participantsButton: false,
       screenShareButton:
-        props.mobileView || meetingCallControlOptions === false ? false : { disabled: props.disableButtonsForLobbyPage }
+        props.mobileView || meetingCallControlOptions?.screenShareButton === false
+          ? false
+          : { disabled: props.disableButtonsForLobbyPage }
     };
   }
 
@@ -72,31 +77,36 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
       horizontal
       className={mergeStyles(temporaryMeetingControlBarStyles, callControlsContainerStyles, controlBarContainerStyles)}
     >
-      <Stack.Item grow>
-        <CallAdapterProvider adapter={props.callAdapter}>
-          <CallControls options={callControlsOptions} increaseFlyoutItemSize={props.mobileView} />
-        </CallAdapterProvider>
-      </Stack.Item>
-      <Stack.Item>
-        {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
-          <ChatButton
-            checked={props.chatButtonChecked}
-            showLabel={true}
-            onClick={props.onChatButtonClicked}
-            data-ui-id="meeting-composite-chat-button"
-            disabled={props.disableButtonsForLobbyPage}
-          />
-        )}
-        {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
-          <PeopleButton
-            checked={props.peopleButtonChecked}
-            showLabel={true}
-            onClick={props.onPeopleButtonClicked}
-            data-ui-id="meeting-composite-people-button"
-            disabled={props.disableButtonsForLobbyPage}
-          />
-        )}
-      </Stack.Item>
+      {callControlsOptions !== false && (
+        <Stack.Item grow>
+          <CallAdapterProvider adapter={props.callAdapter}>
+            <CallControls options={callControlsOptions} increaseFlyoutItemSize={props.mobileView} />
+          </CallAdapterProvider>
+        </Stack.Item>
+      )}
+
+      {meetingCallControlOptions !== false && (
+        <Stack.Item>
+          {isEnabled(meetingCallControlOptions?.chatButton) !== false && (
+            <ChatButton
+              checked={props.chatButtonChecked}
+              showLabel={true}
+              onClick={props.onChatButtonClicked}
+              data-ui-id="meeting-composite-chat-button"
+              disabled={props.disableButtonsForLobbyPage}
+            />
+          )}
+          {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
+            <PeopleButton
+              checked={props.peopleButtonChecked}
+              showLabel={true}
+              onClick={props.onPeopleButtonClicked}
+              data-ui-id="meeting-composite-people-button"
+              disabled={props.disableButtonsForLobbyPage}
+            />
+          )}
+        </Stack.Item>
+      )}
     </Stack>
   );
 };

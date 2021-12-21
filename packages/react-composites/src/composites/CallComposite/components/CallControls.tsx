@@ -32,7 +32,7 @@ import {
 export type CallControlsProps = {
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  options?: boolean | CallControlOptions;
+  options?: true | CallControlOptions;
   /**
    * Option to increase the height of the button flyout menu items from 36px to 48px.
    * Recommended for mobile devices.
@@ -92,19 +92,13 @@ export type CallControlOptions = {
  * @private
  */
 export const CallControls = (props: CallControlsProps): JSX.Element => {
+  // when props.options is false then we want to hide the whole control bar.
+  if (props.options === false) {
+    return <></>;
+  }
   const { callInvitationURL, onFetchParticipantMenuItems } = props;
 
-  const options =
-    typeof props.options === 'boolean'
-      ? {
-          microphoneButton: false,
-          cameraButton: false,
-          participantsButton: false,
-          devicesButton: false,
-          endCallButton: false,
-          screenShareButton: false
-        }
-      : props.options;
+  const options = typeof props.options === 'boolean' ? {} : props.options;
 
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
