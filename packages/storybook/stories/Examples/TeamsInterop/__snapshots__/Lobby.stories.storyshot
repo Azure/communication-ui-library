@@ -117,7 +117,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-94"
+                      className="root-94 root-23"
                       data-icon-name="ControlButtonCameraOn"
                     >
                       <span
@@ -180,7 +180,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-94"
+                      className="root-94 root-23"
                       data-icon-name="ControlButtonMicOn"
                     >
                       <span
@@ -227,7 +227,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
               >
                 <button
                   aria-label="Manage devices"
-                  className="ms-Button ms-Button--default root-22"
+                  className="ms-Button ms-Button--default root-24"
                   data-is-focusable={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
@@ -243,7 +243,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-94"
+                      className="root-94 root-23"
                       data-icon-name="ControlButtonOptions"
                     >
                       <span
@@ -276,7 +276,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                     </span>
                     <i
                       aria-hidden={true}
-                      className="ms-Icon root-94 css-24 ms-Button-menuIcon menuIcon-23"
+                      className="ms-Icon root-94 css-26 ms-Button-menuIcon menuIcon-25"
                       data-icon-name="ChevronDown"
                       hidden={true}
                       style={
@@ -300,7 +300,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
               >
                 <button
                   aria-label="Leave Call"
-                  className="ms-Button ms-Button--default root-25"
+                  className="ms-Button ms-Button--default root-27"
                   data-is-focusable={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
@@ -347,7 +347,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                       className="ms-Button-textContainer textContainer-16"
                     >
                       <span
-                        className="ms-Button-label label-26"
+                        className="ms-Button-label label-28"
                         id="id__14"
                       >
                         Leave
