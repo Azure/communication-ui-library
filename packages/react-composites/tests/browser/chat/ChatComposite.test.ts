@@ -17,7 +17,7 @@ import {
   waitForMessageDelivered,
   waitForMessageSeen,
   waitForMessageWithContent
-} from './chatTestHelpers';
+} from '../common/chatTestHelpers';
 
 test.describe('Chat Composite E2E Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
@@ -31,14 +31,12 @@ test.describe('Chat Composite E2E Tests', () => {
   test('page[1] can receive message and send readReceipt when page[0] send message', async ({ pages }) => {
     const testMessageText = 'How the turn tables';
     const page0 = pages[0];
-    await page0.bringToFront();
     await sendMessage(page0, testMessageText);
     await waitForMessageDelivered(page0);
     await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('sent-messages.png');
 
     const page1 = pages[1];
-    await page1.bringToFront();
     await waitForMessageWithContent(page1, testMessageText);
 
     // It could be too slow to get typing indicator here, which makes the test flakey
@@ -50,7 +48,6 @@ test.describe('Chat Composite E2E Tests', () => {
     await stubMessageTimestamps(page1);
     expect(await page1.screenshot()).toMatchSnapshot('received-messages.png');
 
-    await page0.bringToFront();
     await waitForMessageSeen(page0);
     await stubMessageTimestamps(page0);
     expect(await page0.screenshot()).toMatchSnapshot('read-message-status.png');
@@ -60,9 +57,7 @@ test.describe('Chat Composite E2E Tests', () => {
     const page0 = pages[0];
     const page1 = pages[1];
 
-    await page1.bringToFront();
     await page1.type(dataUiId(IDS.sendboxTextField), 'I am not superstitious. Just a little stitious.');
-    await page0.bringToFront();
     await waitForSelector(page0, dataUiId(IDS.typingIndicator));
     const indicator0 = await page0.$(dataUiId(IDS.typingIndicator));
 
@@ -85,15 +80,12 @@ test.describe('Chat Composite E2E Tests', () => {
   test('page[1] can rejoin the chat', async ({ pages }) => {
     const testMessageText = 'How the turn tables';
     const page1 = pages[1];
-    await page1.bringToFront();
     await sendMessage(page1, testMessageText);
 
     // Read the message to generate stable result
-    await pages[0].bringToFront();
     await waitForMessageWithContent(page1, testMessageText);
 
     // Ensure message has been marked as seen
-    await page1.bringToFront();
     await waitForMessageSeen(page1);
 
     await page1.reload({ waitUntil: 'networkidle' });
@@ -114,7 +106,6 @@ test.describe('Chat Composite custom data model', () => {
   test('can be viewed by user[1]', async ({ pages }) => {
     const testMessageText = 'How the turn tables';
     const page = pages[0];
-    await page.bringToFront();
     await sendMessage(page, testMessageText);
     await waitForMessageDelivered(page);
     await waitForFunction(page, () => {

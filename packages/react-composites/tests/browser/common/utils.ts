@@ -32,6 +32,7 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
  * This function will also take a screenshot if the page.click fails for any reason.
  */
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
+  await page.bringToFront();
   await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
 
   // Move the mouse off the screen
@@ -46,6 +47,7 @@ export const waitForSelector = async (
   page: Page,
   selector: string
 ): Promise<ElementHandle<SVGElement | HTMLElement>> => {
+  await page.bringToFront();
   return await screenshotOnFailure(
     page,
     async () => await page.waitForSelector(selector, { timeout: PER_STEP_TIMEOUT_MS })
@@ -81,6 +83,7 @@ const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
  * Wait for the ChatComposite on a page to fully load.
  */
 export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
+  await page.bringToFront();
   await page.waitForLoadState('networkidle');
   await waitForPageFontsLoaded(page);
   await waitForSelector(page, dataUiId(IDS.sendboxTextField));

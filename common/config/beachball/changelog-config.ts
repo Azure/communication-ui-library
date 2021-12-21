@@ -19,7 +19,8 @@ export const config: BeachballConfig = {
     "**/*.test.ts?(x)",
     "**/tests/**",
     "**/__snapshots__/**",
-    "**/*-snapshots/**"
+    "**/*-snapshots/**",
+    "**/playwright.config.ts"
   ],
   tag: "next",
   changehint: 'Run "rush changelog" to create required change files',
