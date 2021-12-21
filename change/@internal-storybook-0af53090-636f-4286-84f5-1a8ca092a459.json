@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bugfix for unreadable canvas code",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

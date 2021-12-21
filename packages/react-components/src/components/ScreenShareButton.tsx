@@ -4,7 +4,8 @@
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { DefaultPalette, IButtonStyles, Icon, Theme, useTheme } from '@fluentui/react';
+import { DefaultPalette, IButtonStyles, Theme, useTheme } from '@fluentui/react';
+import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
  * Strings of {@link ScreenShareButton} that can be overridden.
@@ -42,9 +43,6 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
   strings?: Partial<ScreenShareButtonStrings>;
 }
 
-const onRenderScreenShareOnIcon = (): JSX.Element => <Icon iconName="ControlButtonScreenShareStop" />;
-const onRenderScreenShareOffIcon = (): JSX.Element => <Icon iconName="ControlButtonScreenShareStart" />;
-
 /**
  * A button to start / stop screen sharing.
  *
@@ -58,6 +56,13 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
 
   const theme = useTheme();
   const styles = screenshareButtonStyles(theme);
+
+  const onRenderScreenShareOnIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonScreenShareStop" />
+  );
+  const onRenderScreenShareOffIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonScreenShareStart" />
+  );
 
   return (
     <ControlBarButton
