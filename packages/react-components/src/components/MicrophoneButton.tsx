@@ -4,7 +4,7 @@
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { Icon } from '@fluentui/react';
+import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -42,9 +42,6 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
   strings?: Partial<MicrophoneButtonStrings>;
 }
 
-const onRenderMicOnIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOn" />;
-const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOff" />;
-
 /**
  * A button to turn microphone on / off.
  *
@@ -55,6 +52,13 @@ const onRenderMicOffIcon = (): JSX.Element => <Icon iconName="ControlButtonMicOf
 export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
+
+  const onRenderMicOnIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOn" />
+  );
+  const onRenderMicOffIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonMicOff" />
+  );
 
   return (
     <ControlBarButton

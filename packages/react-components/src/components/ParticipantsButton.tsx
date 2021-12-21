@@ -5,7 +5,6 @@ import {
   ContextualMenuItemType,
   IContextualMenuItem,
   IContextualMenuProps,
-  Icon,
   IContextualMenuStyles,
   IContextualMenuItemStyles,
   merge
@@ -26,6 +25,7 @@ import { useIdentifiers } from '../identifiers';
 import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
+import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
@@ -143,10 +143,6 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
   strings?: Partial<ParticipantsButtonStrings>;
 }
 
-const onRenderPeopleIcon = (): JSX.Element => {
-  return <Icon iconName="ControlButtonParticipants" />;
-};
-
 /**
  * A button to show a menu with calling or chat participants.
  *
@@ -173,6 +169,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRemoveParticipant,
     onFetchParticipantMenuItems
   } = props;
+
+  const onRenderPeopleIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonParticipants" />
+  );
 
   const ids = useIdentifiers();
 
