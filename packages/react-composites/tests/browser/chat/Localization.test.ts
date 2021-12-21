@@ -4,7 +4,7 @@
 import { stubMessageTimestamps, waitForChatCompositeToLoad } from '../common/utils';
 import { test } from './fixture';
 import { expect } from '@playwright/test';
-import { chatTestSetup } from './chatTestHelpers';
+import { chatTestSetup } from '../common/chatTestHelpers';
 
 test.describe('Localization tests', async () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {

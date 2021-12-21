@@ -11,6 +11,7 @@ const DESKTOP_VIEWPORT = {
 
 const chromeLaunchOptions = {
   channel: 'chrome',
+  permissions: ['notifications', 'camera', 'microphone'],
   args: [
     '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
     '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
