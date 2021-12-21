@@ -136,7 +136,7 @@ export const createCallUsers =
     await use(users);
   };
 
-const createMeetingObjectsAndUsers = async (displayNames: string[]): Promise<Array<MeetingUserType>> => {
+export const createMeetingObjectsAndUsers = async (displayNames: string[]): Promise<Array<MeetingUserType>> => {
   const callId = v1();
   const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
