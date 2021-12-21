@@ -3,7 +3,6 @@
 
 import {
   ContextualMenuItemType,
-  Icon,
   IContextualMenuItem,
   IContextualMenuItemStyles,
   IContextualMenuProps,
@@ -13,6 +12,7 @@ import {
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
+import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
 
 /**
@@ -290,8 +290,6 @@ const generateDefaultMenuProps = (
   return defaultMenuProps;
 };
 
-const onRenderOptionsIcon = (): JSX.Element => <Icon iconName="ControlButtonOptions" />;
-
 /**
  * A button to open a menu that controls device options.
  *
@@ -306,6 +304,10 @@ export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const devicesButtonMenu = props.menuProps ?? generateDefaultMenuProps(props, strings);
+
+  const onRenderOptionsIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />
+  );
 
   return (
     <ControlBarButton
