@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -55,9 +55,6 @@ export interface CameraButtonProps extends ControlBarButtonProps {
   strings?: Partial<CameraButtonStrings>;
 }
 
-const onRenderCameraOnIcon = (): JSX.Element => <Icon iconName="ControlButtonCameraOn" />;
-const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="ControlButtonCameraOff" />;
-
 /**
  * A button to turn camera on / off.
  *
@@ -68,9 +65,14 @@ const onRenderCameraOffIcon = (): JSX.Element => <Icon iconName="ControlButtonCa
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const { localVideoViewOptions, onToggleCamera } = props;
   const [waitForCamera, setWaitForCamera] = useState(false);
-
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
+  const onRenderCameraOnIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />
+  );
+  const onRenderCameraOffIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />
+  );
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;
   }

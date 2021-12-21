@@ -78,16 +78,16 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
 const darkThemeCallButtonStyles = {
   root: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRed,
+    background: darkTheme.callingPalette.callRedDark,
     ':focus::after': { outlineColor: `${darkTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
   rootHovered: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRed
+    background: darkTheme.callingPalette.callRedDark
   },
   rootPressed: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRed
+    background: darkTheme.callingPalette.callRedDark
   },
   label: {
     color: darkTheme.callingPalette.iconWhite
@@ -97,16 +97,16 @@ const darkThemeCallButtonStyles = {
 const lightThemeCallButtonStyles = {
   root: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRed,
+    background: lightTheme.callingPalette.callRedDark,
     ':focus::after': { outlineColor: `${lightTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
   rootHovered: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRed
+    background: lightTheme.callingPalette.callRedDark
   },
   rootPressed: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRed
+    background: lightTheme.callingPalette.callRedDark
   },
   label: {
     color: lightTheme.callingPalette.iconWhite

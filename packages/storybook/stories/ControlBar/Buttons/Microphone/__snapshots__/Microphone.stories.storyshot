@@ -46,7 +46,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar/Buttons/M
           >
             <i
               aria-hidden={true}
-              className="root-94"
+              className="root-94 root-11"
               data-icon-name="ControlButtonMicOff"
             >
               <span
