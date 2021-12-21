@@ -358,7 +358,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Control Bar Control B
                 >
                   <i
                     aria-hidden={true}
-                    className="root-94 root-14"
+                    className="root-94"
                     data-icon-name="ControlButtonEndCall"
                   >
                     <span

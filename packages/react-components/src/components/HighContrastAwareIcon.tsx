@@ -6,9 +6,7 @@ import React from 'react';
 import { useTheme } from '../theming';
 
 /**
- * Strings of HighContrastAwareIcon that can be overridden.
- *
- * @public
+ * @private
  */
 export interface HighContrastAwareIconProps {
   /** Icon name */
@@ -20,7 +18,7 @@ export interface HighContrastAwareIconProps {
 /**
  * This is a helper component to define and unify icon colors
  *
- * @public
+ * @private
  */
 export const HighContrastAwareIcon = (props: HighContrastAwareIconProps): JSX.Element => {
   const { iconName, disabled } = props;

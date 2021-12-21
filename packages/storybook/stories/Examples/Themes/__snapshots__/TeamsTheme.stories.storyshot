@@ -248,7 +248,7 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                           >
                             <i
                               aria-hidden={true}
-                              className="root-94 root-19"
+                              className="root-94"
                               data-icon-name="ControlButtonEndCall"
                             >
                               <span

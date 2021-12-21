@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets } from '@fluentui/react';
+import { concatStyleSets, Icon } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { darkTheme, lightTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
  * Strings of {@link EndCallButton} that can be overridden.
@@ -42,6 +41,8 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   strings?: EndCallButtonStrings;
 }
 
+const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="ControlButtonEndCall" />;
+
 /**
  * A button to end an ongoing call.
  *
@@ -62,10 +63,6 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     styles ?? {}
   );
 
-  const onRenderEndCallIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonEndCall" />
-  );
-
   return (
     <ControlBarButton
       {...props}
@@ -81,16 +78,16 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
 const darkThemeCallButtonStyles = {
   root: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRed,
+    background: darkTheme.callingPalette.callRedDark,
     ':focus::after': { outlineColor: `${darkTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
   rootHovered: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRed
+    background: darkTheme.callingPalette.callRedDark
   },
   rootPressed: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRed
+    background: darkTheme.callingPalette.callRedDark
   },
   label: {
     color: darkTheme.callingPalette.iconWhite
@@ -100,16 +97,16 @@ const darkThemeCallButtonStyles = {
 const lightThemeCallButtonStyles = {
   root: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRed,
+    background: lightTheme.callingPalette.callRedDark,
     ':focus::after': { outlineColor: `${lightTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
   rootHovered: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRed
+    background: lightTheme.callingPalette.callRedDark
   },
   rootPressed: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRed
+    background: lightTheme.callingPalette.callRedDark
   },
   label: {
     color: lightTheme.callingPalette.iconWhite
