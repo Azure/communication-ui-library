@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
-import { useTheme } from '../theming';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -66,24 +65,13 @@ export interface CameraButtonProps extends ControlBarButtonProps {
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const { localVideoViewOptions, onToggleCamera } = props;
   const [waitForCamera, setWaitForCamera] = useState(false);
-  const theme = useTheme();
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
   const onRenderCameraOnIcon = (): JSX.Element => (
-    <Icon
-      iconName="ControlButtonCameraOn"
-      className={mergeStyles({
-        svg: { fill: props.disabled || waitForCamera ? theme.palette.neutralTertiary : theme.palette.neutralPrimaryAlt }
-      })}
-    />
+    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />
   );
   const onRenderCameraOffIcon = (): JSX.Element => (
-    <Icon
-      iconName="ControlButtonCameraOff"
-      className={mergeStyles({
-        svg: { fill: props.disabled || waitForCamera ? theme.palette.neutralTertiary : theme.palette.neutralPrimaryAlt }
-      })}
-    />
+    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />
   );
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;

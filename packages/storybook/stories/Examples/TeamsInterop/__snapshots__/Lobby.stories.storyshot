@@ -243,7 +243,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-94"
+                      className="root-94 root-23"
                       data-icon-name="ControlButtonOptions"
                     >
                       <span
@@ -322,7 +322,7 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
                   >
                     <i
                       aria-hidden={true}
-                      className="root-94"
+                      className="root-94 root-23"
                       data-icon-name="ControlButtonEndCall"
                     >
                       <span

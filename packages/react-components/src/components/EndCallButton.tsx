@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, Icon } from '@fluentui/react';
+import { concatStyleSets } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { darkTheme, lightTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
  * Strings of {@link EndCallButton} that can be overridden.
@@ -41,8 +42,6 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   strings?: EndCallButtonStrings;
 }
 
-const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="ControlButtonEndCall" />;
-
 /**
  * A button to end an ongoing call.
  *
@@ -61,6 +60,10 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const componentStyles = concatStyleSets(
     isDarkTheme ? darkThemeCallButtonStyles : lightThemeCallButtonStyles,
     styles ?? {}
+  );
+
+  const onRenderEndCallIcon = (): JSX.Element => (
+    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonEndCall" />
   );
 
   return (
