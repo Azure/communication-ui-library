@@ -41,5 +41,12 @@
   },
   "chat": {
     "chatListHeader": "In this chat"
+  },
+  "meeting": {
+    "peopleButtonLabel": "People",
+    "chatButtonLabel": "Chat",
+    "peoplePaneTitle": "People",
+    "peoplePaneSubHeader": "In this meeting",
+    "chatPaneTitle": "Chat"
   }
 }
