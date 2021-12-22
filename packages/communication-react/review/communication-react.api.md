@@ -1435,7 +1435,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
     formFactor?: 'desktop' | 'mobile';
     // (undocumented)
     meetingAdapter: MeetingAdapter;
-    meetingCallControlOptions?: MeetingCallControlOptions;
+    meetingCallControlOptions?: boolean | MeetingCallControlOptions;
     meetingInvitationURL?: string;
 }
 

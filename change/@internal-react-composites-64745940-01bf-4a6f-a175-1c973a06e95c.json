@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "added fix to allow for false value for meetingCallOptions to hide whole bar.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

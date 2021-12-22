@@ -129,8 +129,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
     for (const idx in pages) {
       const page = pages[idx];
-      await page.bringToFront();
-
       await pageClick(page, dataUiId('call-composite-participants-button'));
       const buttonCallOut = await waitForSelector(page, '.ms-Callout');
       // This will ensure no animation is happening for the callout
@@ -142,8 +140,6 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
   test('can turn off local video', async ({ pages }) => {
     const page = pages[0];
-
-    await page.bringToFront();
     await pageClick(page, dataUiId('call-composite-camera-button'));
     await waitForFunction(page, () => {
       return document.querySelectorAll('video').length === 1;
@@ -173,7 +169,6 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
 
   test('Left call page should show when end call button clicked', async ({ pages }) => {
     const page = pages[0];
-    await page.bringToFront();
     await pageClick(page, dataUiId('call-composite-hangup-button'));
     await waitForSelector(page, dataUiId('left-call-page'));
     expect(await page.screenshot()).toMatchSnapshot(`left-call-page.png`);
@@ -184,13 +179,11 @@ test.describe('Call Composite E2E Call Ended Pages', () => {
     const page0 = pages[0];
     const page1 = pages[1];
 
-    await page0.bringToFront();
     await pageClick(page0, dataUiId('call-composite-participants-button')); // open participant flyout
     await pageClick(page0, dataUiId(IDS.participantButtonPeopleMenuItem)); // open people sub menu
     await pageClick(page0, dataUiId(IDS.participantItemMenuButton)); // click on page[1] user to remove
     await pageClick(page0, dataUiId(IDS.participantListRemoveParticipantButton)); // click participant remove button
 
-    await page1.bringToFront();
     await waitForSelector(page1, dataUiId('removed-from-call-page'));
     expect(await page1.screenshot()).toMatchSnapshot(`remove-from-call-page.png`);
   });
@@ -224,7 +217,6 @@ test.describe('Call composite participant menu items injection tests', () => {
     await turnOffAllVideos(pages);
 
     const page = pages[0];
-    await page.bringToFront();
 
     // Open participants flyout.
     await pageClick(page, dataUiId('call-composite-participants-button'));
@@ -246,7 +238,6 @@ const turnOffAllVideos = async (pages: Page[]): Promise<void> => {
     await pageClick(page, dataUiId('call-composite-camera-button'));
   }
   for (const page of pages) {
-    await page.bringToFront();
     await waitForFunction(page, () => {
       return document.querySelectorAll('video').length === 0;
     });

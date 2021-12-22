@@ -27,17 +27,16 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   const theme = useTheme();
 
   const leaveString = 'Leave';
-  const peopleString = 'People';
 
   return (
     <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
-      <IconButton
-        onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
-        className={mergeStyles(paneButtonContainerStyle, { color: theme.palette.neutralPrimaryAlt })}
-        onClick={() => props.setHideParticipants(props.isParticipantsDisplayed)}
-        aria-live={'polite'}
-        aria-label={peopleString}
-      />
+      <div className={paneButtonContainerStyle}>
+        <IconButton
+          onRenderIcon={() => (props.isParticipantsDisplayed ? <People20Filled /> : <People20Regular />)}
+          className={mergeStyles({ color: theme.palette.neutralPrimaryAlt })}
+          onClick={() => props.setHideParticipants(props.isParticipantsDisplayed)}
+        />
+      </div>
       <DefaultButton
         className={mergeStyles(largeLeaveButtonContainerStyle, leaveButtonStyle, {
           color: theme.palette.neutralPrimaryAlt

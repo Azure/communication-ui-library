@@ -45,8 +45,9 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
   meetingInvitationURL?: string;
   /**
    * Call control options to change what buttons show on the meeting composite control bar.
+   * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
-  meetingCallControlOptions?: MeetingCallControlOptions;
+  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
 }
 
 /**

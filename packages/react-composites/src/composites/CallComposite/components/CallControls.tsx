@@ -94,8 +94,6 @@ export type CallControlOptions = {
 export const CallControls = (props: CallControlsProps): JSX.Element => {
   const { callInvitationURL, onFetchParticipantMenuItems } = props;
 
-  const options = typeof props.options === 'boolean' ? {} : props.options;
-
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
   const strings = useLocale().strings.call;
@@ -135,6 +133,12 @@ export const CallControls = (props: CallControlsProps): JSX.Element => {
     () => mergeButtonBaseStyles(props.increaseFlyoutItemSize ? devicesButtonWithIncreasedTouchTargets : {}),
     [props.increaseFlyoutItemSize]
   );
+  // when props.options is false then we want to hide the whole control bar.
+  if (props.options === false) {
+    return <></>;
+  }
+
+  const options = typeof props.options === 'boolean' ? {} : props.options;
 
   const compactMode = options?.displayType === 'compact';
 
