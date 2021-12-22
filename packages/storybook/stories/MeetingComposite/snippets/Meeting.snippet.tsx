@@ -4,7 +4,7 @@ import {
   MeetingAdapter,
   MeetingComposite,
   createAzureCommunicationMeetingAdapter,
-  MeetingCallControlOptions
+  MeetingCompositeOptions
 } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
@@ -18,7 +18,7 @@ export type MeetingExampleProps = {
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
-  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+  meetingOptions?: MeetingCompositeOptions;
 };
 
 export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
@@ -64,7 +64,7 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
       <MeetingComposite
         meetingAdapter={meetingAdapter}
         fluentTheme={props.fluentTheme}
-        meetingCallControlOptions={props.meetingCallControlOptions}
+        options={props.meetingOptions}
       />
     );
   }

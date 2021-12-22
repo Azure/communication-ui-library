@@ -44,12 +44,23 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
    */
   meetingInvitationURL?: string;
   /**
+   * Flags to enable/disable or customize UI elements of the {@link MeetingComposite}
+   */
+  options?: MeetingCompositeOptions;
+}
+
+/**
+ * Optional features of the {@link MeetingComposite}.
+ *
+ * @public
+ */
+export type MeetingCompositeOptions = {
+  /**
    * Call control options to change what buttons show on the meeting composite control bar.
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   meetingCallControlOptions?: boolean | MeetingCallControlOptions;
-}
-
+};
 /**
  * Meeting Call controls to show or hide buttons on the calling control bar.
  *
@@ -157,7 +168,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onPeopleButtonClicked={togglePeople}
             mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
-            meetingCallControlOptions={props.meetingCallControlOptions}
+            meetingCallControlOptions={props.options?.meetingCallControlOptions}
           />
         )}
       </Stack>
