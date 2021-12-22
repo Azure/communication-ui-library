@@ -24,7 +24,7 @@ const BasicStory = (args, context): JSX.Element => {
           args.userId,
           args.endpointUrl,
           args.displayName,
-          args.meetingOptions
+          args.options
         );
         setMeetingProps(newProps);
       } else {
@@ -32,7 +32,7 @@ const BasicStory = (args, context): JSX.Element => {
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.meetingOptions]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.options]);
 
   return (
     <>

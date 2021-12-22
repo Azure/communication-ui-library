@@ -43,7 +43,7 @@ export const createCallLocator = async (
   userId: string,
   endpointUrl: string,
   displayName: string,
-  meetingOptions?: MeetingCompositeOptions,
+  options?: MeetingCompositeOptions,
   teamsMeetingLink?: string
 ): Promise<MeetingExampleProps> => {
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
@@ -63,6 +63,6 @@ export const createCallLocator = async (
     endpointUrl,
     locator,
     threadId,
-    meetingOptions
+    options
   };
 };

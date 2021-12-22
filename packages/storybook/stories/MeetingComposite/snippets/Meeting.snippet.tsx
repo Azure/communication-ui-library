@@ -18,7 +18,7 @@ export type MeetingExampleProps = {
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
-  meetingOptions?: MeetingCompositeOptions;
+  options?: MeetingCompositeOptions;
 };
 
 export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
@@ -60,13 +60,7 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
   }, [credential, props]);
 
   if (meetingAdapter) {
-    return (
-      <MeetingComposite
-        meetingAdapter={meetingAdapter}
-        fluentTheme={props.fluentTheme}
-        options={props.meetingOptions}
-      />
-    );
+    return <MeetingComposite meetingAdapter={meetingAdapter} fluentTheme={props.fluentTheme} options={props.options} />;
   }
 
   if (credential === undefined) {
