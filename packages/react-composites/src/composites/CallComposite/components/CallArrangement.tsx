@@ -23,7 +23,7 @@ export interface CallArrangementProps {
   complianceBannerProps: ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
   mutedNotificationProps?: MutedNotificationProps;
-  callControlProps: CallControlsProps | false;
+  callControlProps: CallControlsProps;
   onRenderGalleryContent: () => JSX.Element;
   dataUiId: string;
   mobileView: boolean;
@@ -65,7 +65,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         )}
       </Stack.Item>
 
-      {props.callControlProps !== false && (
+      {props.callControlProps?.options !== false && (
         <Stack.Item className={callControlsContainerStyles}>
           <CallControls {...props.callControlProps} />
         </Stack.Item>

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Added functionality to story book to allow meetingCallControlOptions prop to be used by viewer.",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

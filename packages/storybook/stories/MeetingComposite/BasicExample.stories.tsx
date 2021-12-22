@@ -19,14 +19,20 @@ const BasicStory = (args, context): JSX.Element => {
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
       if (args.token && args.userId && args.endpointUrl && args.displayName) {
-        const newProps = await createCallLocator(args.token, args.userId, args.endpointUrl, args.displayName);
+        const newProps = await createCallLocator(
+          args.token,
+          args.userId,
+          args.endpointUrl,
+          args.displayName,
+          args.meetingCallControlOptions
+        );
         setMeetingProps(newProps);
       } else {
         setMeetingProps(undefined);
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.meetingCallControlOptions]);
 
   return (
     <>

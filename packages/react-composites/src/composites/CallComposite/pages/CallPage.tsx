@@ -62,14 +62,12 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       complianceBannerProps={{ ...complianceBannerProps }}
       errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
       mutedNotificationProps={mutedNotificationProps}
-      callControlProps={
-        callControlOptions !== false && {
-          callInvitationURL: callInvitationURL,
-          onFetchParticipantMenuItems: onFetchParticipantMenuItems,
-          options: callControlOptions,
-          increaseFlyoutItemSize: mobileView
-        }
-      }
+      callControlProps={{
+        callInvitationURL: callInvitationURL,
+        onFetchParticipantMenuItems: onFetchParticipantMenuItems,
+        options: callControlOptions,
+        increaseFlyoutItemSize: mobileView
+      }}
       mobileView={mobileView}
       onRenderGalleryContent={() =>
         callStatus === 'Connected' ? (
