@@ -2,7 +2,7 @@
 
 import { ChatClient, ChatParticipant } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { MeetingCompositeOptions } from '@azure/communication-react';
+import { MeetingCallControlOptions } from '@azure/communication-react';
 import { v1 as createGUID } from 'uuid';
 import { MeetingExampleProps } from './Meeting.snippet';
 
@@ -43,7 +43,7 @@ export const createCallLocator = async (
   userId: string,
   endpointUrl: string,
   displayName: string,
-  options?: MeetingCompositeOptions,
+  meetingCallControlOptions?: MeetingCallControlOptions | boolean,
   teamsMeetingLink?: string
 ): Promise<MeetingExampleProps> => {
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
@@ -63,6 +63,6 @@ export const createCallLocator = async (
     endpointUrl,
     locator,
     threadId,
-    options
+    meetingCallControlOptions
   };
 };
