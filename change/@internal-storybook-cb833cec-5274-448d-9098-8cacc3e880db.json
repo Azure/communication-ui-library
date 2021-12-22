@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add example ErrorBar to storybook docs.",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
