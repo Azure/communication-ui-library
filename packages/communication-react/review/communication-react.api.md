@@ -864,6 +864,7 @@ export interface CompositeLocale {
 export interface CompositeStrings {
     call: CallCompositeStrings;
     chat: ChatCompositeStrings;
+    meeting: MeetingCompositeStrings;
 }
 
 // @public
@@ -1437,6 +1438,15 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
     meetingAdapter: MeetingAdapter;
     meetingCallControlOptions?: boolean | MeetingCallControlOptions;
     meetingInvitationURL?: string;
+}
+
+// @public
+export interface MeetingCompositeStrings {
+    chatButtonLabel: string;
+    chatPaneTitle: string;
+    peopleButtonLabel: string;
+    peoplePaneSubHeader: string;
+    peoplePaneTitle: string;
 }
 
 // @beta

@@ -71,15 +71,15 @@ export interface MeetingCallControlOptions
   peopleButton?: boolean;
 }
 
-export interface MeetingScreenProps extends MeetingCompositeProps {
+type MeetingScreenProps = {
   meetingAdapter: MeetingAdapter;
   fluentTheme?: PartialTheme | Theme;
   formFactor?: 'desktop' | 'mobile';
   meetingInvitationURL?: string;
   meetingCallControlOptions?: boolean | MeetingCallControlOptions;
-}
+};
 
-export const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
+const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   const { meetingAdapter, fluentTheme, formFactor = 'desktop' } = props;
   if (!meetingAdapter) {
     throw 'Meeting adapter is undefined';
