@@ -645,7 +645,7 @@ export interface MeetingCompositeStrings {
     chatButtonLabel: string;
     chatPaneTitle: string;
     peopleButtonLabel: string;
-    peoplePaneSubHeader: string;
+    peoplePaneSubTitle: string;
     peoplePaneTitle: string;
 }
 
