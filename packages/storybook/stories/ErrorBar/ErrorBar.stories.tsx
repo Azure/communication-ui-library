@@ -9,12 +9,14 @@
 
 import { ErrorBar as ErrorBarComponent, useTheme } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
-import { Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
+import { ExampleErrorBar } from './snippets/ExampleErrorBar.snippet';
+
+const ExampleErrorBarText = require('!!raw-loader!./snippets/ExampleErrorBar.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
@@ -26,12 +28,16 @@ const getDocs: () => JSX.Element = () => {
         Services errors on the UI consistently.
       </Description>
       <Description>Set the `showErrorBar` feature for `ChatComposite` to use an `ErrorBar` to show errors.</Description>
-      <Subheading>Localization</Subheading>
+      <Heading>Example ErrorBar</Heading>
+      <Canvas mdxSource={ExampleErrorBarText}>
+        <ExampleErrorBar />
+      </Canvas>
+      <Heading>Localization</Heading>
       <Description>
         Similar to other UI components in this library, `ErrorBarProps` accepts all strings shown on the UI as a
         `strings` field. The `activeErrorMessages` field selects from these strings to show in the `ErrorBar` UI.
       </Description>
-      <Subheading>Dismissed messages</Subheading>
+      <Heading>Dismissed messages</Heading>
       <Description>
         User can dismiss the errors shown via `ErrorBar`. The `ErrorBar` component internally tracks dismissed errors
         and only shows a `MessageBar` for errors that have not been dismissed. When `activeErrorMessages` include a
@@ -43,7 +49,7 @@ const getDocs: () => JSX.Element = () => {
         This way, `ErrorBar` separates the tracking of active errors from the purely UI related state of `ErrorBar`
         dismissals.
       </Description>
-      <Subheading>Multiple errors</Subheading>
+      <Heading>Multiple errors</Heading>
       <Description>
         More than one error can occur at the same time. The `ErrorBar` component can show multiple active errors. To
         avoid confusing the user, it is important to be mindful to limit the total number of errors that are shown
