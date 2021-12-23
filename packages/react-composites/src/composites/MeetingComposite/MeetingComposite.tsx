@@ -178,6 +178,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
         formFactor={props.formFactor}
         meetingCallControlOptions={props.meetingCallControlOptions}
         meetingInvitationURL={props.meetingInvitationURL}
+        fluentTheme={props.fluentTheme}
       ></MeetingScreen>
     </BaseComposite>
   );
