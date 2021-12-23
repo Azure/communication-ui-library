@@ -24,7 +24,7 @@ export interface MeetingCompositeStrings {
   /**
    * Side pane People section subheader.
    */
-  peoplePaneSubHeader: string;
+  peoplePaneSubTitle: string;
   /**
    * Side pane Chat screen title.
    */

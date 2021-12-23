@@ -46,7 +46,7 @@
     "peopleButtonLabel": "People",
     "chatButtonLabel": "Chat",
     "peoplePaneTitle": "People",
-    "peoplePaneSubHeader": "In this meeting",
+    "peoplePaneSubTitle": "In this meeting",
     "chatPaneTitle": "Chat"
   }
 }
