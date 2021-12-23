@@ -3,7 +3,7 @@
 
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
@@ -52,15 +52,21 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 /**
- * A base class for composites.
- * Provides common wrappers such as FluentThemeProvider and LocalizationProvider.
+ * A single {@link React.Context} to wrap components with required providers (e.g. icons, theme, locale).
+ *
+ * English is hard: Use only once, so nested instances of this component do nothing.
  *
  * @private
  */
-export const BaseComposite = (
+export const SingletonProvider = (
   props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
+
+  const alreadyWrapped = useSingleton();
+  if (alreadyWrapped) {
+    return <>{props.children}</>;
+  }
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
@@ -74,5 +80,9 @@ export const BaseComposite = (
       {props.children}
     </FluentThemeProvider>
   );
-  return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  const localizedElement = locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  return <SingletonContext.Provider value={true}>{localizedElement}</SingletonContext.Provider>;
 };
+
+const SingletonContext = createContext<boolean>(true);
+const useSingleton = (): boolean => useContext(SingletonContext);
