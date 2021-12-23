@@ -173,7 +173,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { meetingAdapter, fluentTheme, formFactor, meetingInvitationURL, meetingCallControlOptions } = props;
   return (
-    <BaseComposite fluentTheme={fluentTheme} locale={props.locale}>
+    <BaseComposite fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
       <MeetingScreen
         {...props}
         meetingAdapter={meetingAdapter}
