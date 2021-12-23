@@ -4,8 +4,7 @@ import {
   MeetingAdapter,
   MeetingComposite,
   createAzureCommunicationMeetingAdapter,
-  MeetingCallControlOptions,
-  COMPOSITE_LOCALE_FR_FR
+  MeetingCallControlOptions
 } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
@@ -66,7 +65,6 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
         meetingAdapter={meetingAdapter}
         fluentTheme={props.fluentTheme}
         meetingCallControlOptions={props.meetingCallControlOptions}
-        locale={COMPOSITE_LOCALE_FR_FR}
       />
     );
   }
