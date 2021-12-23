@@ -628,7 +628,7 @@ export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @beta
 export type MeetingCompositeOptions = {
-    meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+    callControls?: boolean | MeetingCallControlOptions;
 };
 
 // @beta
