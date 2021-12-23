@@ -80,7 +80,7 @@ const darkThemeCallButtonStyles = {
     color: darkTheme.callingPalette.iconWhite,
     background: darkTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      background: darkTheme.callingPalette.callRed
+      forcedColorAdjust: 'none'
     },
     ':focus::after': { outlineColor: `${darkTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
@@ -88,14 +88,14 @@ const darkThemeCallButtonStyles = {
     color: darkTheme.callingPalette.iconWhite,
     background: darkTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      background: darkTheme.callingPalette.callRed
+      forcedColorAdjust: 'none'
     }
   },
   rootPressed: {
     color: darkTheme.callingPalette.iconWhite,
     background: darkTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      background: darkTheme.callingPalette.callRed
+      forcedColorAdjust: 'none'
     }
   },
   label: {
@@ -108,7 +108,7 @@ const lightThemeCallButtonStyles = {
     color: lightTheme.callingPalette.iconWhite,
     background: lightTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      background: lightTheme.callingPalette.callRed
+      forcedColorAdjust: 'none'
     },
     ':focus::after': { outlineColor: `${lightTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
@@ -116,14 +116,14 @@ const lightThemeCallButtonStyles = {
     color: lightTheme.callingPalette.iconWhite,
     background: lightTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      background: lightTheme.callingPalette.callRed
+      forcedColorAdjust: 'none'
     }
   },
   rootPressed: {
     color: lightTheme.callingPalette.iconWhite,
     background: lightTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      background: lightTheme.callingPalette.callRed
+      forcedColorAdjust: 'none'
     }
   },
   label: {
