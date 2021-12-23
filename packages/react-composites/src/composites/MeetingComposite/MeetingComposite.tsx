@@ -171,14 +171,16 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
  * @beta
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
+  const { meetingAdapter, fluentTheme, formFactor, meetingInvitationURL, meetingCallControlOptions } = props;
   return (
-    <BaseComposite fluentTheme={props.fluentTheme} locale={props.locale}>
+    <BaseComposite fluentTheme={fluentTheme} locale={props.locale}>
       <MeetingScreen
-        meetingAdapter={props.meetingAdapter}
-        formFactor={props.formFactor}
-        meetingCallControlOptions={props.meetingCallControlOptions}
-        meetingInvitationURL={props.meetingInvitationURL}
-        fluentTheme={props.fluentTheme}
+        {...props}
+        meetingAdapter={meetingAdapter}
+        formFactor={formFactor}
+        meetingCallControlOptions={meetingCallControlOptions}
+        meetingInvitationURL={meetingInvitationURL}
+        fluentTheme={fluentTheme}
       ></MeetingScreen>
     </BaseComposite>
   );
