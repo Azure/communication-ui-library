@@ -8,6 +8,7 @@ import { ComponentLocale, LocalizationProvider as ComponentLocalizationProvider 
 import { COMPOSITE_LOCALE_EN_US } from './locales';
 import { CallCompositeStrings } from '../CallComposite';
 import { ChatCompositeStrings } from '../ChatComposite';
+import { MeetingCompositeStrings } from '../MeetingComposite/Strings';
 
 /**
  * Locale information for all composites exported from this library.
@@ -41,6 +42,10 @@ export interface CompositeStrings {
    * Strings used by {@link ChatComposite}.
    */
   chat: ChatCompositeStrings;
+  /**
+   * Strings used by {@link MeetingComptosite}.
+   */
+  meeting: MeetingCompositeStrings;
 }
 
 /**
