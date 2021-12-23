@@ -74,7 +74,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     />
   );
 };
-
+// using media query to prevent windows from overwriting the button color
 const darkThemeCallButtonStyles = {
   root: {
     color: darkTheme.callingPalette.iconWhite,
