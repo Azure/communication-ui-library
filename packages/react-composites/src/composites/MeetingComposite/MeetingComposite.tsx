@@ -15,7 +15,7 @@ import { MeetingBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
-import { ChatAdapter } from '../ChatComposite';
+import { ChatAdapter, ChatCompositeProps } from '../ChatComposite';
 import { BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 
@@ -52,7 +52,7 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
 /**
  * Optional features of the {@link MeetingComposite}.
  *
- * @public
+ * @beta
  */
 export type MeetingCompositeOptions = {
   /**
@@ -123,6 +123,12 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
     setShowPeople(!showPeople);
   }, [showPeople]);
 
+  const chatProps: ChatCompositeProps = useMemo(() => {
+    return {
+      adapter: chatAdapter
+    };
+  }, [chatAdapter]);
+
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentMeetingState ?? 'None'));
   return (
@@ -140,7 +146,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
           </Stack.Item>
           {chatAdapter && hasJoinedCall && (
             <EmbeddedChatPane
-              chatCompositeProps={props}
+              chatCompositeProps={chatProps}
               hidden={!showChat}
               chatAdapter={chatAdapter}
               fluentTheme={fluentTheme}

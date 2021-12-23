@@ -285,7 +285,19 @@ export const controlsToAdd = {
     name: 'Layout'
   },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
-  videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' }
+  videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
+  meetingCallControlOptions: {
+    control: 'object',
+    defaultValue: {
+      microphoneButton: true,
+      cameraButton: true,
+      shareScreenButton: true,
+      devicesButton: true,
+      peopleButton: true,
+      chatButton: true
+    },
+    name: 'Meeting Call UI Controls'
+  }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };

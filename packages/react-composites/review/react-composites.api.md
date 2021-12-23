@@ -627,6 +627,11 @@ export interface MeetingCallControlOptions extends Pick<CallControlOptions, 'cam
 export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 
 // @beta
+export type MeetingCompositeOptions = {
+    meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+};
+
+// @beta
 export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @beta
@@ -635,8 +640,8 @@ export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeI
     formFactor?: 'desktop' | 'mobile';
     // (undocumented)
     meetingAdapter: MeetingAdapter;
-    meetingCallControlOptions?: boolean | MeetingCallControlOptions;
     meetingInvitationURL?: string;
+    options?: MeetingCompositeOptions;
 }
 
 // @beta
