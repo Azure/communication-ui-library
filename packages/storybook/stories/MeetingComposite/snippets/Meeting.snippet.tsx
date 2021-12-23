@@ -60,7 +60,7 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
   }, [credential, props]);
 
   if (meetingAdapter) {
-    const options = { meetingCallControlOptions: props.meetingCallControlOptions };
+    const options = { callControls: props.meetingCallControlOptions };
     return <MeetingComposite meetingAdapter={meetingAdapter} fluentTheme={props.fluentTheme} options={options} />;
   }
 

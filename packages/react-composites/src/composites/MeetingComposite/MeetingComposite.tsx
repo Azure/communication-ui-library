@@ -59,7 +59,7 @@ export type MeetingCompositeOptions = {
    * Call control options to change what buttons show on the meeting composite control bar.
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
-  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+  callControls?: boolean | MeetingCallControlOptions;
 };
 /**
  * Meeting Call controls to show or hide buttons on the calling control bar.
@@ -174,7 +174,7 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
             onPeopleButtonClicked={togglePeople}
             mobileView={props.formFactor === 'mobile'}
             disableButtonsForLobbyPage={isInLobbyOrConnecting}
-            meetingCallControlOptions={props.options?.meetingCallControlOptions}
+            callControls={props.options?.callControls}
           />
         )}
       </Stack>
