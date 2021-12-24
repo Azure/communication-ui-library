@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { initializeIcons, Spinner } from '@fluentui/react';
+import { DEFAULT_COMPOSITE_ICONS } from '@azure/communication-react';
+import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
 import { ChatScreen } from './ChatScreen';
 import ConfigurationScreen from './ConfigurationScreen';
@@ -15,6 +16,7 @@ console.info(`Thread chat sample using @azure/communication-chat : ${getChatSDKV
 console.info(`Build Date : ${getBuildTime()}`);
 
 initializeIcons();
+registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS } });
 
 const ERROR_PAGE_TITLE_ERROR = 'Oops! You are no longer a participant for the chat thread.';
 const ERROR_PAGE_TITLE_REMOVED = 'You have been removed from the chat.';

@@ -3,7 +3,8 @@
 
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { initializeIcons, Spinner } from '@fluentui/react';
+import { DEFAULT_COMPOSITE_ICONS } from '@azure/communication-react';
+import { initializeIcons, registerIcons, Spinner } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import {
   buildTime,
@@ -28,6 +29,7 @@ console.log(
 );
 
 initializeIcons();
+registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS } });
 
 type AppPages = 'home' | 'call' | 'endCall';
 
