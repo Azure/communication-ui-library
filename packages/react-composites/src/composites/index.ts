@@ -10,7 +10,7 @@ export * from './common/icons';
 export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
 export type { AdapterError, AdapterErrors } from './common/adapters';
-export type { SingletonProviderProps } from './common/SingletonProvider';
+export type { BaseCompositeProps } from './common/SingletonProvider';
 /* @conditional-compile-remove-from(stable) */
 export * from './MeetingComposite';
 /* @conditional-compile-remove-from(stable) */

@@ -5,7 +5,7 @@ import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { SingletonProviderProps, SingletonProvider } from '../common/SingletonProvider';
+import { BaseCompositeProps, SingletonProvider } from '../common/SingletonProvider';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
 import { CallAdapter } from './adapter/CallAdapter';
@@ -24,7 +24,7 @@ import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from 
  *
  * @public
  */
-export interface CallCompositeProps extends SingletonProviderProps<CallCompositeIcons> {
+export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
   /**
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.

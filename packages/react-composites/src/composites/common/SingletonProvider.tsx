@@ -14,7 +14,7 @@ import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
  *
  * @public
  */
-export interface SingletonProviderProps<TIcons extends Record<string, JSX.Element>> {
+export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
   /**
    * Fluent theme for the composite.
    *
@@ -60,7 +60,7 @@ export interface SingletonProviderProps<TIcons extends Record<string, JSX.Elemen
  * @private
  */
 export const SingletonProvider = (
-  props: SingletonProviderProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
+  props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
 

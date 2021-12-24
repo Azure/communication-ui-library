@@ -15,7 +15,7 @@ import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
-import { SingletonProviderProps, SingletonProvider } from '../common/SingletonProvider';
+import { BaseCompositeProps, SingletonProvider } from '../common/SingletonProvider';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 
 /**
@@ -23,7 +23,7 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
  *
  * @beta
  */
-export interface MeetingCompositeProps extends SingletonProviderProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
   meetingAdapter: MeetingAdapter;
   /**
    * Fluent theme for the composite.

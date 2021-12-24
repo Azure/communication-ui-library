@@ -3,7 +3,7 @@
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';
-import { SingletonProvider, SingletonProviderProps } from '../common/SingletonProvider';
+import { SingletonProvider, BaseCompositeProps } from '../common/SingletonProvider';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
@@ -15,7 +15,7 @@ import { ChatScreen } from './ChatScreen';
  *
  * @public
  */
-export interface ChatCompositeProps extends SingletonProviderProps<ChatCompositeIcons> {
+export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
   /**
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
