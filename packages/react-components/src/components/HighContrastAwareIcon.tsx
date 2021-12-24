@@ -24,11 +24,18 @@ export const HighContrastAwareIcon = (props: HighContrastAwareIconProps): JSX.El
   const { iconName, disabled } = props;
   const theme = useTheme();
   // setting colors for the icons using color from theme, so in dark mode or other accessibility modes, they have pre-defined contrast colors
+  // the media query is for when in specific window accessibility mode, change the svg colors
   return (
     <Icon
       iconName={iconName}
       className={mergeStyles({
-        svg: { fill: disabled ? theme.palette.neutralTertiary : theme.palette.neutralPrimaryAlt }
+        svg: {
+          fill: disabled ? theme.palette.neutralTertiary : theme.palette.neutralPrimaryAlt,
+
+          '@media (forced-colors: active) and (prefers-color-scheme: dark)': {
+            fill: disabled ? theme.palette.neutralPrimaryAlt : theme.palette.neutralTertiary
+          }
+        }
       })}
     />
   );
