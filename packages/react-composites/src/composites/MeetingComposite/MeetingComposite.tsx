@@ -14,7 +14,7 @@ import { MeetingBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
-import { ChatAdapter } from '../ChatComposite';
+import { ChatAdapter, ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 
@@ -87,7 +87,7 @@ type MeetingScreenProps = {
   fluentTheme?: PartialTheme | Theme;
   formFactor?: 'desktop' | 'mobile';
   meetingInvitationURL?: string;
-  meetingCallControlOptions?: boolean | MeetingCallControlOptions;
+  callControls?: boolean | MeetingCallControlOptions;
 };
 
 const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
@@ -147,7 +147,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
         </Stack.Item>
         {chatAdapter && hasJoinedCall && (
           <EmbeddedChatPane
-            chatCompositeProps={props}
+            chatCompositeProps={chatProps}
             hidden={!showChat}
             chatAdapter={chatAdapter}
             fluentTheme={fluentTheme}
@@ -175,7 +175,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
           onPeopleButtonClicked={togglePeople}
           mobileView={props.formFactor === 'mobile'}
           disableButtonsForLobbyPage={isInLobbyOrConnecting}
-          meetingCallControlOptions={props.meetingCallControlOptions}
+          callControls={props.callControls}
         />
       )}
     </Stack>
@@ -188,14 +188,14 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
  * @beta
  */
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
-  const { meetingAdapter, fluentTheme, formFactor, meetingInvitationURL, meetingCallControlOptions } = props;
+  const { meetingAdapter, fluentTheme, formFactor, meetingInvitationURL, options } = props;
   return (
     <BaseComposite fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
       <MeetingScreen
         {...props}
         meetingAdapter={meetingAdapter}
         formFactor={formFactor}
-        meetingCallControlOptions={meetingCallControlOptions}
+        callControls={options?.callControls}
         meetingInvitationURL={meetingInvitationURL}
         fluentTheme={fluentTheme}
       ></MeetingScreen>

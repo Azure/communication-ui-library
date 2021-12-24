@@ -291,7 +291,7 @@ export const controlsToAdd = {
     defaultValue: {
       microphoneButton: true,
       cameraButton: true,
-      shareScreenButton: true,
+      screenShareButton: true,
       devicesButton: true,
       peopleButton: true,
       chatButton: true
