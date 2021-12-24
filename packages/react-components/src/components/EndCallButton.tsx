@@ -74,20 +74,29 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     />
   );
 };
-
+// using media query to prevent windows from overwriting the button color
 const darkThemeCallButtonStyles = {
   root: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRedDark,
+    background: darkTheme.callingPalette.callRed,
+    '@media (forced-colors: active)': {
+      forcedColorAdjust: 'none'
+    },
     ':focus::after': { outlineColor: `${darkTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
   rootHovered: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRedDark
+    background: darkTheme.callingPalette.callRed,
+    '@media (forced-colors: active)': {
+      forcedColorAdjust: 'none'
+    }
   },
   rootPressed: {
     color: darkTheme.callingPalette.iconWhite,
-    background: darkTheme.callingPalette.callRedDark
+    background: darkTheme.callingPalette.callRed,
+    '@media (forced-colors: active)': {
+      forcedColorAdjust: 'none'
+    }
   },
   label: {
     color: darkTheme.callingPalette.iconWhite
@@ -97,16 +106,25 @@ const darkThemeCallButtonStyles = {
 const lightThemeCallButtonStyles = {
   root: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRedDark,
+    background: lightTheme.callingPalette.callRed,
+    '@media (forced-colors: active)': {
+      forcedColorAdjust: 'none'
+    },
     ':focus::after': { outlineColor: `${lightTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
   rootHovered: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRedDark
+    background: lightTheme.callingPalette.callRed,
+    '@media (forced-colors: active)': {
+      forcedColorAdjust: 'none'
+    }
   },
   rootPressed: {
     color: lightTheme.callingPalette.iconWhite,
-    background: lightTheme.callingPalette.callRedDark
+    background: lightTheme.callingPalette.callRed,
+    '@media (forced-colors: active)': {
+      forcedColorAdjust: 'none'
+    }
   },
   label: {
     color: lightTheme.callingPalette.iconWhite
