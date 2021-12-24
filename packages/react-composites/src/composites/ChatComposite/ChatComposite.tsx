@@ -3,7 +3,7 @@
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';
-import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
+import { SingletonProvider, SingletonProviderProps } from '../common/SingletonProvider';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
@@ -15,7 +15,7 @@ import { ChatScreen } from './ChatScreen';
  *
  * @public
  */
-export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
+export interface ChatCompositeProps extends SingletonProviderProps<ChatCompositeIcons> {
   /**
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
@@ -88,7 +88,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
 
   return (
     <div className={chatScreenContainerStyle}>
-      <BaseComposite {...props}>
+      <SingletonProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
             options={options}
@@ -98,7 +98,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           />
         </ChatAdapterProvider>
-      </BaseComposite>
+      </SingletonProvider>
     </div>
   );
 };

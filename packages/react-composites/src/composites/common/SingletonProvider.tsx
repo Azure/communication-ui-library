@@ -3,7 +3,7 @@
 
 import { PartialTheme, registerIcons, Theme } from '@fluentui/react';
 import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import { ChatCompositeIcons } from '..';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
@@ -14,7 +14,7 @@ import { CallCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
  *
  * @public
  */
-export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
+export interface SingletonProviderProps<TIcons extends Record<string, JSX.Element>> {
   /**
    * Fluent theme for the composite.
    *
@@ -52,15 +52,22 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 /**
- * A base class for composites.
- * Provides common wrappers such as FluentThemeProvider and LocalizationProvider.
+ * A single {@link React.Context} to wrap components with the required providers (locale, icons, theme).
+ *
+ *  has ability check whether it is wrapped in another Singleton provider so that nested instances know not to layer providers
+ *  causing warnings and errors.
  *
  * @private
  */
-export const BaseComposite = (
-  props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
+export const SingletonProvider = (
+  props: SingletonProviderProps<CallCompositeIcons | ChatCompositeIcons> & { children: React.ReactNode }
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
+
+  const alreadyWrapped = useSingleton();
+  if (alreadyWrapped) {
+    return <>{props.children}</>;
+  }
 
   /**
    * We register the default icon mappings merged with custom icons provided through props
@@ -74,5 +81,9 @@ export const BaseComposite = (
       {props.children}
     </FluentThemeProvider>
   );
-  return locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  const localizedElement = locale ? LocalizationProvider({ locale, children: CompositeElement }) : CompositeElement;
+  return <SingletonContext.Provider value={true}>{localizedElement}</SingletonContext.Provider>;
 };
+
+const SingletonContext = createContext<boolean>(true);
+const useSingleton = (): boolean => useContext(SingletonContext);

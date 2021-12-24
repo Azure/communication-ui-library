@@ -15,7 +15,7 @@ import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
 import { ChatAdapter } from '../ChatComposite';
-import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
+import { SingletonProviderProps, SingletonProvider } from '../common/SingletonProvider';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 
 /**
@@ -23,7 +23,7 @@ import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
  *
  * @beta
  */
-export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface MeetingCompositeProps extends SingletonProviderProps<CallCompositeIcons & ChatCompositeIcons> {
   meetingAdapter: MeetingAdapter;
   /**
    * Fluent theme for the composite.
@@ -173,7 +173,7 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
   const { meetingAdapter, fluentTheme, formFactor, meetingInvitationURL, meetingCallControlOptions } = props;
   return (
-    <BaseComposite fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
+    <SingletonProvider fluentTheme={fluentTheme} locale={props.locale} icons={props.icons}>
       <MeetingScreen
         {...props}
         meetingAdapter={meetingAdapter}
@@ -182,6 +182,6 @@ export const MeetingComposite = (props: MeetingCompositeProps): JSX.Element => {
         meetingInvitationURL={meetingInvitationURL}
         fluentTheme={fluentTheme}
       ></MeetingScreen>
-    </BaseComposite>
+    </SingletonProvider>
   );
 };

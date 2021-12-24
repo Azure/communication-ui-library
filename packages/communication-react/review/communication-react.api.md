@@ -142,16 +142,6 @@ export type AzureCommunicationMeetingAdapterArgs = {
 };
 
 // @public
-export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
-    fluentTheme?: PartialTheme | Theme;
-    icons?: TIcons;
-    locale?: CompositeLocale;
-    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-    rtl?: boolean;
-}
-
-// @public
 export interface BaseCustomStyles {
     root?: IStyle;
 }
@@ -294,7 +284,7 @@ export type CallCompositeOptions = {
 export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
-export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
+export interface CallCompositeProps extends SingletonProviderProps<CallCompositeIcons> {
     adapter: CallAdapter;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
@@ -591,7 +581,7 @@ export type ChatCompositeOptions = {
 };
 
 // @public
-export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
+export interface ChatCompositeProps extends SingletonProviderProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
@@ -1431,7 +1421,7 @@ export const MeetingComposite: (props: MeetingCompositeProps) => JSX.Element;
 export type MeetingCompositePage = 'accessDeniedTeamsMeeting' | 'configuration' | 'joinMeetingFailedDueToNoNetwork' | 'leftMeeting' | 'lobby' | 'meeting' | 'removedFromMeeting';
 
 // @beta
-export interface MeetingCompositeProps extends BaseCompositeProps<CallCompositeIcons & ChatCompositeIcons> {
+export interface MeetingCompositeProps extends SingletonProviderProps<CallCompositeIcons & ChatCompositeIcons> {
     fluentTheme?: PartialTheme | Theme;
     formFactor?: 'desktop' | 'mobile';
     // (undocumented)
@@ -1902,6 +1892,16 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     systemMessage?: IStyle;
     textField?: IStyle;
     textFieldContainer?: IStyle;
+}
+
+// @public
+export interface SingletonProviderProps<TIcons extends Record<string, JSX.Element>> {
+    fluentTheme?: PartialTheme | Theme;
+    icons?: TIcons;
+    locale?: CompositeLocale;
+    onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    rtl?: boolean;
 }
 
 // @public
