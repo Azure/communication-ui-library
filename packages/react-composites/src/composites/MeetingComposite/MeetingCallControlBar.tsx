@@ -12,6 +12,7 @@ import { reduceCallControlsForMobile } from '../CallComposite/utils';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
 import { MeetingCallControlOptions } from './MeetingComposite';
+import { useLocale } from '../localization';
 /**
  * @private
  */
@@ -30,6 +31,7 @@ export interface MeetingCallControlBarProps {
  * @private
  */
 export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.Element => {
+  const locale = useLocale();
   // Set the desired control buttons from the meetings composite. particiapantsButton is always false since there is the peopleButton.
   let meetingCallControlOptions: MeetingCallControlOptions | undefined;
   let callControlsOptions: CallControlOptions | boolean;
@@ -91,6 +93,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               onClick={props.onChatButtonClicked}
               data-ui-id="meeting-composite-chat-button"
               disabled={props.disableButtonsForLobbyPage}
+              label={locale.strings.meeting.chatButtonLabel}
             />
           )}
           {isEnabled(meetingCallControlOptions?.peopleButton) !== false && (
@@ -100,6 +103,7 @@ export const MeetingCallControlBar = (props: MeetingCallControlBarProps): JSX.El
               onClick={props.onPeopleButtonClicked}
               data-ui-id="meeting-composite-people-button"
               disabled={props.disableButtonsForLobbyPage}
+              label={locale.strings.meeting.peopleButtonLabel}
             />
           )}
         </Stack.Item>
