@@ -97,7 +97,6 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
   }
 
   const callAdapter: CallAdapter = useMemo(() => new MeetingBackedCallAdapter(meetingAdapter), [meetingAdapter]);
-  const chatAdapter: ChatAdapter = useMemo(() => new MeetingBackedChatAdapter(meetingAdapter), [meetingAdapter]);
 
   const [currentMeetingState, setCurrentMeetingState] = useState<CallState>();
   const [currentPage, setCurrentPage] = useState<MeetingCompositePage>();
@@ -126,9 +125,9 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
 
   const chatProps: ChatCompositeProps = useMemo(() => {
     return {
-      adapter: chatAdapter
+      adapter: new MeetingBackedChatAdapter(meetingAdapter)
     };
-  }, [chatAdapter]);
+  }, [meetingAdapter]);
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentMeetingState ?? 'None'));
@@ -145,22 +144,22 @@ const MeetingScreen = (props: MeetingScreenProps): JSX.Element => {
             fluentTheme={fluentTheme}
           />
         </Stack.Item>
-        {chatAdapter && hasJoinedCall && (
+        {chatProps.adapter && hasJoinedCall && (
           <EmbeddedChatPane
             chatCompositeProps={chatProps}
             hidden={!showChat}
-            chatAdapter={chatAdapter}
+            chatAdapter={chatProps.adapter}
             fluentTheme={fluentTheme}
             onClose={closePane}
           />
         )}
-        {callAdapter && chatAdapter && hasJoinedCall && (
+        {callAdapter && chatProps.adapter && hasJoinedCall && (
           <CallAdapterProvider adapter={callAdapter}>
             <EmbeddedPeoplePane
               hidden={!showPeople}
               inviteLink={props.meetingInvitationURL}
               onClose={closePane}
-              chatAdapter={chatAdapter}
+              chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
             />
           </CallAdapterProvider>
