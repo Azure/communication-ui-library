@@ -43,10 +43,10 @@
     "chatListHeader": "Neste chat"
   },
   "meeting": {
-    "peopleButtonLabel": "People",
+    "peopleButtonLabel": "Pessoas",
     "chatButtonLabel": "Chat",
-    "peoplePaneTitle": "People",
-    "peoplePaneSubTitle": "In this meeting",
+    "peoplePaneTitle": "Pessoas",
+    "peoplePaneSubTitle": "Nesta reunião",
     "chatPaneTitle": "Chat"
   }
 }
