@@ -15,12 +15,17 @@
   },
   "sendBox": {
     "placeholderText": "Een bericht invoeren",
-    "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet."
+    "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
+    "sendButtonAriaLabel": "Bericht verzenden"
   },
   "messageStatusIndicator": {
+    "deliveredAriaLabel": "Bericht verzonden",
     "deliveredTooltipText": "Verzonden",
+    "seenAriaLabel": "Bericht gezien door anderen",
     "seenTooltipText": "Gezien",
+    "sendingAriaLabel": "Bericht verzenden",
     "sendingTooltipText": "Verzenden",
+    "failedToSendAriaLabel": "Het bericht is niet verzonden",
     "failedToSendTooltipText": "Kan niet verzenden"
   },
   "endCallButton": {
@@ -32,7 +37,8 @@
     "offLabel": "Inschakelen",
     "tooltipDisabledContent": "Camera is uitgeschakeld",
     "tooltipOnContent": "Camera uitschakelen",
-    "tooltipOffContent": "Camera inschakelen"
+    "tooltipOffContent": "Camera inschakelen",
+    "tooltipVideoLoadingContent": "Video wordt geladen"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
