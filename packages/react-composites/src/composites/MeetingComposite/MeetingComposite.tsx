@@ -14,7 +14,7 @@ import { MeetingBackedCallAdapter } from './adapter/MeetingBackedCallAdapter';
 import { MeetingBackedChatAdapter } from './adapter/MeetingBackedChatAdapter';
 import { hasJoinedCall as hasJoinedCallFn, MeetingCompositePage } from './state/MeetingCompositePage';
 import { CallAdapter } from '../CallComposite';
-import { ChatAdapter, ChatCompositeProps } from '../ChatComposite';
+import { ChatCompositeProps } from '../ChatComposite';
 import { BaseComposite, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons, ChatCompositeIcons } from '../common/icons';
 
