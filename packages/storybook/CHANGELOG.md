@@ -1,8 +1,21 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Mon, 06 Dec 2021 19:41:59 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jan 2022 22:57:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.0.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.1)
+
+Tue, 04 Jan 2022 22:57:10 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.0.0...@internal/storybook_v1.0.1)
+
+### Patches
+
+- Bugfix for unreadable canvas code ([PR #1270](https://github.com/azure/communication-ui-library/pull/1270) by anjulgarg@live.com)
+- Bugfix for tooltip alignment in message status indicator storybook  ([PR #1267](https://github.com/azure/communication-ui-library/pull/1267) by anjulgarg@live.com)
+- Making mock videos in storybook cover the entire video tile ([PR #1273](https://github.com/azure/communication-ui-library/pull/1273) by anjulgarg@live.com)
+- Add example ErrorBar to storybook docs. ([PR #1268](https://github.com/azure/communication-ui-library/pull/1268) by anjulgarg@live.com)
+- Bump @azure/communication-react to v1.0.1 ([PR #1276](https://github.com/azure/communication-ui-library/pull/1276) by beachball)
 
 ## [1.0.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.0.0)
 
