@@ -3,8 +3,8 @@
 
 import { StreamMedia, VideoTile, useTheme } from '@azure/communication-react';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
+import { useBoolean } from '@fluentui/react-hooks';
 import { Call20Filled, CallEnd20Filled, Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
-import { useBoolean } from '@uifabric/react-hooks';
 import React from 'react';
 import {
   incomingCallAcceptButtonStyle,
