@@ -66,6 +66,7 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
 
   return (
     <ControlBarButton
+      // merge in props
       {...props}
       styles={styles}
       onClick={props.onToggleScreenShare ?? props.onClick}
