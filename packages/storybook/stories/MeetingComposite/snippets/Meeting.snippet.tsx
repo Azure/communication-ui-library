@@ -1,10 +1,10 @@
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  MeetingCallControlOptions,
   MeetingAdapter,
   MeetingComposite,
-  createAzureCommunicationMeetingAdapter,
-  MeetingCallControlOptions
+  createAzureCommunicationMeetingAdapter
 } from '@azure/communication-react';
 import { Theme, PartialTheme } from '@fluentui/react';
 import React, { useState, useEffect, useMemo } from 'react';
@@ -60,13 +60,8 @@ export const MeetingExperience = (props: MeetingExampleProps): JSX.Element => {
   }, [credential, props]);
 
   if (meetingAdapter) {
-    return (
-      <MeetingComposite
-        meetingAdapter={meetingAdapter}
-        fluentTheme={props.fluentTheme}
-        meetingCallControlOptions={props.meetingCallControlOptions}
-      />
-    );
+    const options = { callControls: props.meetingCallControlOptions };
+    return <MeetingComposite meetingAdapter={meetingAdapter} fluentTheme={props.fluentTheme} options={options} />;
   }
 
   if (credential === undefined) {

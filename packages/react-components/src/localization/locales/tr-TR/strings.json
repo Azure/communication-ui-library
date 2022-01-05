@@ -15,12 +15,17 @@
   },
   "sendBox": {
     "placeholderText": "Bir mesaj girin",
-    "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor."
+    "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
+    "sendButtonAriaLabel": "İleti gönder"
   },
   "messageStatusIndicator": {
+    "deliveredAriaLabel": "İleti gönderildi",
     "deliveredTooltipText": "Gönderilen",
+    "seenAriaLabel": "İleti başkaları tarafından görüldü",
     "seenTooltipText": "Görüldü",
+    "sendingAriaLabel": "İleti gönderiliyor",
     "sendingTooltipText": "Gönderiliyor",
+    "failedToSendAriaLabel": "İleti gönderilemedi",
     "failedToSendTooltipText": "Gönderilemedi"
   },
   "endCallButton": {
@@ -32,7 +37,8 @@
     "offLabel": "Aç",
     "tooltipDisabledContent": "Kamera devre dışı",
     "tooltipOnContent": "Kamerayı kapat",
-    "tooltipOffContent": "Kamerayı aç"
+    "tooltipOffContent": "Kamerayı aç",
+    "tooltipVideoLoadingContent": "Video yükleniyor"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",

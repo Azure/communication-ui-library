@@ -15,12 +15,17 @@
   },
   "sendBox": {
     "placeholderText": "메시지를 입력하세요",
-    "textTooLong": "메시지 길이가 최대 제한을 초과했습니다."
+    "textTooLong": "메시지 길이가 최대 제한을 초과했습니다.",
+    "sendButtonAriaLabel": "메시지 보내기"
   },
   "messageStatusIndicator": {
+    "deliveredAriaLabel": "메시지를 보냄",
     "deliveredTooltipText": "보냄",
+    "seenAriaLabel": "다른 사용자가 본 메시지",
     "seenTooltipText": "표시됨",
+    "sendingAriaLabel": "메시지를 보내는 중",
     "sendingTooltipText": "보내는 중",
+    "failedToSendAriaLabel": "메시지를 보내지 못함",
     "failedToSendTooltipText": "보내기 실패"
   },
   "endCallButton": {
@@ -32,7 +37,8 @@
     "offLabel": "켜기",
     "tooltipDisabledContent": "카메라가 비활성화되었습니다",
     "tooltipOnContent": "카메라 끄기",
-    "tooltipOffContent": "카메라 켜기"
+    "tooltipOffContent": "카메라 켜기",
+    "tooltipVideoLoadingContent": "비디오를 로드하는 중입니다."
   },
   "microphoneButton": {
     "onLabel": "음소거",

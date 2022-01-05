@@ -15,12 +15,17 @@
   },
   "sendBox": {
     "placeholderText": "输入消息",
-    "textTooLong": "你的消息长度超过了最大限制。"
+    "textTooLong": "你的消息长度超过了最大限制。",
+    "sendButtonAriaLabel": "发送消息"
   },
   "messageStatusIndicator": {
+    "deliveredAriaLabel": "已发送消息",
     "deliveredTooltipText": "已发送",
+    "seenAriaLabel": "其他人已查看消息",
     "seenTooltipText": "已查看",
+    "sendingAriaLabel": "消息发送",
     "sendingTooltipText": "正在发送",
+    "failedToSendAriaLabel": "消息发送失败",
     "failedToSendTooltipText": "发送失败"
   },
   "endCallButton": {
@@ -32,7 +37,8 @@
     "offLabel": "打开",
     "tooltipDisabledContent": "已禁用照相机",
     "tooltipOnContent": "关闭摄像头",
-    "tooltipOffContent": "打开摄像头"
+    "tooltipOffContent": "打开摄像头",
+    "tooltipVideoLoadingContent": "正在加载视频"
   },
   "microphoneButton": {
     "onLabel": "静音",

@@ -12,7 +12,7 @@ const onRenderOffIcon = (): JSX.Element => <People20Regular key={'peopleOffIconK
  * @private
  */
 export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
-  const strings = { label: 'People', ...props.strings };
+  const strings = { label: props.label, ...props.strings };
 
   return (
     <ControlBarButton
