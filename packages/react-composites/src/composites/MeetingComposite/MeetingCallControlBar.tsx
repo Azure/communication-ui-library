@@ -44,7 +44,6 @@ const inferMeetingCallControlOptions = (
 const inferCallControlOptions = (
   callControls?: boolean | CallControlOptions
 ): CallControlOptions | false | undefined => {
-  // let meetingParticipantButton = { participantsButton: false }; // always hide the participant button in meeting composite.
   if (typeof callControls !== 'boolean') {
     callControls === undefined
       ? (callControls = { participantsButton: false })
